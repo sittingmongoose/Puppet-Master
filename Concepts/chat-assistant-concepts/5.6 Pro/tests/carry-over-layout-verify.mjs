@@ -1,0 +1,180 @@
+#!/usr/bin/env node
+/* DL-218 port carry-over. Geometry is paired with clipping and hit tests. No CSS fixes here.
+ * --page standalone|pm7 --file <html> --json <report> [--sweep] [--looks a,b]
+ * --sweep measures every CSS width from 400 through 519; the default measures wrap boundaries.
+ */
+import { writeFileSync } from 'node:fs';
+import { chromium } from 'playwright';
+import { chatTarget, LOOKS } from './chat-target.mjs';
+import { launchGpuBrowser } from './gpu-browser.mjs';
+
+const argv = process.argv.slice(2), opt = key => { const i = argv.indexOf(key); return i < 0 ? null : argv[i + 1]; };
+const target = chatTarget(argv), results = [], errors = [];
+const looks = opt('--looks')?.split(',') || LOOKS;
+if (looks.some(l => !LOOKS.includes(l))) throw new Error('Unknown --looks value');
+const widths = argv.includes('--sweep') ? Array.from({ length: 120 }, (_, i) => i + 400) : [400, 420, 440, 459, 460, 480, 500, 519];
+const check = (id, look, size, kind, pass, measured) => {
+  results.push({ id, look, size, kind, pass: !!pass, owner: look.startsWith('nier-') ? 'c56port-nier' : 'c56port-looks', measured });
+  if (!pass) console.log(`FAIL ${id} ${look} ${kind}@${size} ${JSON.stringify(measured)}`);
+};
+const browser = await launchGpuBrowser(chromium), page = browser.contexts()[0].pages()[0];
+page.on('pageerror', e => errors.push(e.message));
+const ev = (fn, data) => page.evaluate(fn, data);
+const act = (name, data = {}) => ev(([name, data]) => {
+  const b = document.createElement('button'); Object.assign(b.dataset, data);
+  PM56_EXT.run(name, b, new Event('click')); PM56_EXT.ctx().renderApp();
+}, [name, data]);
+
+// Browser-side measurement helpers are installed after each navigation, outside product code.
+async function installMeasurements() {
+  await ev(() => {
+    const box = r => ({ left: r.left, right: r.right, top: r.top, bottom: r.bottom, width: r.width, height: r.height });
+    const cv = document.createElement('canvas').getContext('2d');
+    const ink = (el, r, text) => {
+      const cs = getComputedStyle(el); cv.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      const m = cv.measureText(text), fa = m.fontBoundingBoxAscent, fd = m.fontBoundingBoxDescent;
+      const k = fa + fd > 0 ? r.height / (fa + fd) : 1, base = r.top + (fa || parseFloat(cs.fontSize)) * k;
+      return { ...box(r), top: base - m.actualBoundingBoxAscent * k, bottom: base + m.actualBoundingBoxDescent * k };
+    };
+    const rects = el => {
+      const out = [], walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      for (let t = walk.nextNode(); t; t = walk.nextNode()) {
+        if (!t.textContent.trim()) continue;
+        const range = document.createRange(); range.selectNodeContents(t);
+        for (const r of range.getClientRects()) if (r.width && r.height) out.push(ink(t.parentElement, r, t.textContent));
+      }
+      return out;
+    };
+    const visible = el => !!el && el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden' && getComputedStyle(el).display !== 'none';
+    const inspect = el => {
+      if (!visible(el)) return { text: el?.textContent, missing: true, clipped: true };
+      let clip = { left: 0, top: 0, right: innerWidth, bottom: innerHeight };
+      for (let a = el; a; a = a.parentElement) {
+        const cs = getComputedStyle(a), r = a.getBoundingClientRect();
+        if (/hidden|clip|auto|scroll/.test(cs.overflowX)) { clip.left = Math.max(clip.left, r.left); clip.right = Math.min(clip.right, r.right); }
+        if (/hidden|clip|auto|scroll/.test(cs.overflowY)) { clip.top = Math.max(clip.top, r.top); clip.bottom = Math.min(clip.bottom, r.bottom); }
+      }
+      const rs = rects(el), clipped = !rs.length || rs.some(r => r.left < clip.left - .6 || r.right > clip.right + .6 || r.top < clip.top - .6 || r.bottom > clip.bottom + .6);
+      const hit = rs.every(r => [0.1, 0.5, 0.9].every(f => {
+        const h = document.elementFromPoint(r.left + r.width * f, r.top + r.height * .5);
+        return !!h && (el.contains(h) || h.contains(el));
+      }));
+      return { text: el.textContent.trim(), rects: rs, clip, clipped, hit };
+    };
+    const overlap = (a, b) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > .5 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > .5;
+    window.__c56layout = { box, rects, inspect, visible, overlap, ink };
+  });
+}
+
+async function sheet(kind) {
+  await ev(kind => {
+    const C = PM56_COLLAB, c = PM56_EXT.ctx(); c.switchThread('query'); C.openConfigure(kind);
+    const d = C.draft(); d.purpose = 'Make search easier to reach.'; d.wonderer = true; d.grillMe = true;
+    c.openDialog({ type: 'collab-configure' }); c.renderOverlays();
+  }, kind);
+  await page.waitForTimeout(900);
+}
+async function shelf() {
+  await page.locator('#pmOverlayRoot .pmx-shelf .pmx-q-head').scrollIntoViewIfNeeded();
+  return ev(() => {
+    const M = __c56layout, h = document.querySelector('#pmOverlayRoot .pmx-shelf .pmx-q-head');
+    const parts = ['.pmx-q-n', '.pmx-q-title', '.pmx-q-meta'].map(s => h?.querySelector(s)).filter(Boolean).map(M.inspect);
+    const overlaps = [];
+    for (let i = 0; i < parts.length; i++) for (let j = i + 1; j < parts.length; j++) {
+      if (parts[i].rects?.some(a => parts[j].rects?.some(b => M.overlap(a, b)))) overlaps.push([parts[i].text, parts[j].text]);
+    }
+    return { parts, overlaps };
+  });
+}
+async function chrome() {
+  const out = [];
+  for (const sel of ['#pmOverlayRoot .pmx-roster-head', '#pmOverlayRoot .pmx-foot .primary-button']) {
+    const el = page.locator(sel).first();
+    if (!await el.count()) { out.push({ missing: sel, clipped: true }); continue; }
+    await el.scrollIntoViewIfNeeded();
+    out.push(...await ev(sel => {
+      const M = __c56layout, el = document.querySelector(sel);
+      return (sel.includes('roster') ? [...el.querySelectorAll('.pmx-roster-col > b')].filter(c => /Persona/.test(c.textContent)) : [el]).map(M.inspect);
+    }, sel));
+  }
+  return out;
+}
+
+async function finishCrew() {
+  await ev(() => PM56_WG_DEMOS.start('crew')); await page.waitForTimeout(900);
+  await page.locator('#pmOverlayRoot [data-action="collab-modal-commit"]').click();
+  await ev(() => PM56_CLOCK.setScale(4));
+  const until = Date.now() + 120000;
+  while (Date.now() < until) {
+    const done = await ev(() => { const s = PM56_WG_DEMOS.snapshot(), r = s?.runId && PM56_COLLAB.run(s.runId); return r?.status === 'completed'; });
+    if (done) { await ev(() => PM56_CLOCK.setScale(1)); return ev(() => PM56_WG_DEMOS.snapshot().runId); }
+    for (const sel of ['.wg-agreed[data-state="open"] [data-action="wg-confirm"]', '.qs-grill [data-action="qs-accept-round"]']) {
+      const b = page.locator(sel).first(); if (await b.isVisible().catch(() => false)) await b.click();
+    }
+    await page.waitForTimeout(500);
+  }
+  throw new Error('Crew did not finish for the plate measurement');
+}
+async function plate() {
+  return ev(() => {
+    const M = __c56layout, ps = [...document.querySelectorAll('.pmx-view .pmx-plate')].filter(M.visible);
+    const out = [];
+    for (const p of ps) {
+      const pr = p.getBoundingClientRect(), texts = [...p.querySelectorAll('text')].filter(M.visible);
+      const result = texts.find(t => /got one checked result/.test(t.textContent));
+      if (!result) continue;
+      const r = M.ink(result, result.getBoundingClientRect(), result.textContent), edge = Math.min(r.left - pr.left, pr.right - r.right);
+      const geoms = [...p.querySelectorAll('path.pmx-p-line, path.pmx-p-paper, rect.pmx-p-hatchbox, line, polyline')].filter(M.visible).flatMap(el => {
+        const cs = getComputedStyle(el), m = el.getScreenCTM();
+        if (!m || !el.getTotalLength || cs.opacity === '0') return [];
+        const length = el.getTotalLength(), n = Math.max(2, Math.min(600, Math.ceil(length * Math.abs(m.a || 1) / 2))), points = [];
+        for (let i = 0; i <= n; i++) { const q = el.getPointAtLength(length * i / n); const v = new DOMPoint(q.x, q.y).matrixTransform(m); points.push([v.x, v.y]); }
+        return [{ id: el.getAttribute('data-k') || el.tagName, points, half: cs.stroke === 'none' ? 0 : parseFloat(cs.strokeWidth) * Math.abs(m.a || 1) / 2 }];
+      });
+      const after = texts.filter(t => /after both/.test(t.textContent)).map(t => {
+        const a = M.ink(t, t.getBoundingClientRect(), t.textContent);
+        const distances = geoms.map(g => ({ line: g.id, gap: Math.min(...g.points.map(([x, y]) => Math.hypot(Math.max(a.left - x, 0, x - a.right), Math.max(a.top - y, 0, y - a.bottom)))) - g.half }));
+        distances.sort((a, b) => a.gap - b.gap);
+        return { text: t.textContent, gap: distances[0]?.gap ?? null, nearest: distances.slice(0, 3), rect: a };
+      });
+      const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      out.push({ edge, after, plate: M.box(pr), result: M.box(r), hit: !!hit && p.contains(hit) });
+    }
+    return out;
+  });
+}
+
+try {
+  await page.setViewportSize({ width: 1440, height: 900 }); await target.load(page); await installMeasurements();
+  for (const look of looks) {
+    await target.theme(page, look);
+    for (const kind of ['crew', 'chat_room']) {
+      await sheet(kind);
+      for (const width of widths) {
+        await target.resize(page, { width, height: 900 }, 'window');
+        const h = await shelf();
+        check('CO-HEADER', look, width, kind, h.parts.length === 3 && !h.overlaps.length && h.parts.every(p => !p.clipped && p.hit), h);
+        const c = await chrome();
+        check('CO-CHROME', look, width, kind, c.length >= 2 && c.some(p => /Persona/.test(p.text)) && c.some(p => /3 helpers/.test(p.text)) && c.every(p => !p.clipped && p.hit), c);
+      }
+      await ev(() => { const c = PM56_EXT.ctx(); c.closeDialog(); c.renderApp(); });
+    }
+  }
+  await target.resize(page, { width: 1440, height: 900 }); await target.theme(page, 'basic-dark');
+  const run = await finishCrew(); await act('wg-open-leads', { run }); await page.waitForTimeout(600);
+  for (const look of looks) {
+    await target.theme(page, look); await target.resize(page, { width: 480, height: 900 }, 'window');
+    const view = page.locator('.pmx-view').filter({ visible: true }).first();
+    if (await view.count()) await view.evaluate(el => { let s = el; while (s && !(s.scrollHeight > s.clientHeight && /auto|scroll/.test(getComputedStyle(s).overflowY))) s = s.parentElement; if (s) s.scrollTop = 0; });
+    await page.waitForTimeout(400);
+    const p = await plate();
+    check('CO-PLATE-EDGE', look, 480, 'crew', p.length > 0 && p.every(p => p.edge >= 11.95 && p.hit), p);
+    check('CO-PLATE-AFTER', look, 480, 'crew', p.length > 0 && p.some(p => p.after.length) && p.every(p => p.after.every(a => a.gap !== null && a.gap >= 7.95)), p);
+  }
+} catch (e) { results.push({ id: 'CO-RUN', pass: false, owner: 'c56port-tests', measured: e.stack }); console.error(e); }
+finally { await browser.close(); }
+if (errors.length) results.push({ id: 'CO-PAGEERROR', pass: false, owner: 'c56port-found', measured: errors });
+const failed = results.filter(r => !r.pass), report = { page: target.kind, file: target.file, checks: results.length, failed: failed.length, results };
+if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify(report, null, 2));
+console.log(`carry-over-layout-verify (${target.kind}): ${results.length - failed.length} PASS, ${failed.length} FAIL`);
+process.exitCode = failed.length ? 1 : 0;

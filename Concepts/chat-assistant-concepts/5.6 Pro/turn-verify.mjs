@@ -11,7 +11,7 @@
  * for a person. Headless Chromium over file://.
  */
 import { chromium } from 'playwright';
-import { launchGpuBrowser } from './tests/gpu-browser.mjs';
+import { launchChatBrowser } from './tests/chat-target.mjs';
 import path from 'path';
 import fs from 'fs';
 
@@ -27,7 +27,7 @@ let group = null;
 const check = (label, ok, detail) => { results.push({ group, label, pass: !!ok, detail: detail === undefined ? null : detail }); console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${detail !== undefined ? '  ' + JSON.stringify(detail).slice(0, 220) : ''}`); return ok; };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-const browser = await launchGpuBrowser(chromium);
+const browser = await launchChatBrowser(chromium);
 async function fresh(opts = {}) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   page.__errs = []; page.on('pageerror', e => page.__errs.push(e.message));
@@ -284,8 +284,8 @@ await safe('item families', async () => {
   check('no thread overflows sideways in a ~234px chat pane', narrow.length === 0, narrow.slice(0, 4));
   /* accent budget (Basic Dark): who paints with the accent */
   const scan = await p.evaluate(() => {
-    const acc = getComputedStyle(document.body).getPropertyValue('--accent').trim();
-    const probe = document.createElement('i'); probe.style.color = acc; document.body.appendChild(probe); const accRgb = getComputedStyle(probe).color; probe.remove();
+    const acc = getComputedStyle(PM56_TEST.host).getPropertyValue('--accent').trim();
+    const probe = document.createElement('i'); probe.style.color = acc; PM56_TEST.host.appendChild(probe); const accRgb = getComputedStyle(probe).color; probe.remove();
     const ALLOW = el => el.closest('[data-family="needs"], .working-card:not(.is-done), .primary-button, .pd-build, .send-button, .tx-caret, [data-streaming], .qs, .decision-host');
     const out = [];
     const threads = ['query', 'subagents', 'recovery-scheduling', 'goal-replan', 'crew', 'visuals', 'attachments', 'route'];

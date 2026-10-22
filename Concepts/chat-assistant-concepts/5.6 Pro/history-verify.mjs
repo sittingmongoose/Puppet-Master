@@ -33,7 +33,7 @@
  * item 4 was written for.
  */
 import {chromium} from 'playwright';
-import { launchGpuBrowser } from './tests/gpu-browser.mjs';
+import { launchChatBrowser } from './tests/chat-target.mjs';
 import {pathToFileURL} from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -51,7 +51,7 @@ const results=[]; let pass=0, fail=0;
 const check=(ok,label,detail)=>{ results.push({ok:!!ok,label,detail}); ok?pass++:fail++;
   console.log(`${ok?'PASS':'FAIL'}  ${label}${ok?'':'\n        '+JSON.stringify(detail)}`); };
 
-const browser=await launchGpuBrowser(chromium);
+const browser=await launchChatBrowser(chromium);
 const bctx=await browser.newContext({viewport:{width:1440,height:1080},deviceScaleFactor:1,
   reducedMotion: REDUCED ? 'reduce' : 'no-preference'});
 /* Item 3 needs the drawer wide (see the header).  The stored width is what
@@ -201,12 +201,12 @@ const {sigs, twins:twins0} = await signatures('');
 if(REDUCED){
   check(twins0.length===0,'Reduced motion: the nine silhouettes are pairwise distinct (basic-dark)',{twins:twins0});
   for(const th of ['retro-light','friendly-dark','friendly-light']){
-    await page.evaluate(t=>PM56_DEMO.setTheme(t),th);
+    await page.evaluate(t=>PM56_TEST.setTheme(t),th);
     await page.waitForTimeout(500);
     const r = await signatures(' ['+th+']');
     check(r.twins.length===0,`Reduced motion: the nine silhouettes are pairwise distinct in ${th}`,{twins:r.twins});
   }
-  await page.evaluate(()=>PM56_DEMO.setTheme('basic-dark'));
+  await page.evaluate(()=>PM56_TEST.setTheme('basic-dark'));
   await page.waitForTimeout(400);
 }
 
@@ -801,7 +801,7 @@ await sec('item4: pinned thread animates into Pinned', async()=>{
   await page.waitForTimeout(60);
   /* `state.menu` is the honest assertion for app.js:1506 — the DOM check has to
      tolerate the Wave 3 Menus module, which clones the closing menu into
-     document.body as a `.pm56-menu-ghost` for its exit animation. */
+     PM56_TEST.host as a `.pm56-menu-ghost` for its exit animation. */
   const flip = await page.evaluate(()=>({anims:window.__phAnims,
     menuState:PM56_DEMO.getState().menu,
     liveMenu:!!document.querySelector('#pmOverlayRoot .overlay-menu')}));
@@ -995,15 +995,15 @@ await sec('regression: every theme', async()=>{
   const ids=await page.evaluate(()=>(window.PM56_DATA&&window.PM56_DATA.themes||[]).map(t=>t.id));
   const bad=[];
   for(const id of (ids.length?ids:['basic-dark'])){
-    await page.evaluate(t=>PM56_DEMO.setTheme(t),id);
+    await page.evaluate(t=>PM56_TEST.setTheme(t),id);
     await page.waitForTimeout(160);
     const r=await page.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth,
-      bw:document.body.scrollWidth,drawer:!!document.querySelector('.history-flyout')}));
+      bw:PM56_TEST.host.scrollWidth,drawer:!!document.querySelector('.history-flyout')}));
     if(r.sw>r.cw+1||r.bw>r.cw+1||!r.drawer) bad.push({id,...r});
     if(SHOTS) await shot(`theme-${id}${REDUCED?'-reduced':''}.png`);
   }
   check(bad.length===0 && BASE_THEMES.every(t=>ids.includes(t)), `No overflow and the drawer paints in all ${ids.length} themes`, {bad,ids});
-  await page.evaluate(()=>PM56_DEMO.setTheme('basic-dark'));
+  await page.evaluate(()=>PM56_TEST.setTheme('basic-dark'));
 });
 await sec('regression: other seven takes', async()=>{
   // the other seven takes must still use renderStatus(), untouched

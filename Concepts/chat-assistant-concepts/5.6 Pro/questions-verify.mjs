@@ -19,7 +19,7 @@
  *   node questions-verify.mjs --file /tmp/noq.html
  */
 import { chromium } from 'playwright';
-import { launchGpuBrowser } from './tests/gpu-browser.mjs';
+import { launchChatBrowser } from './tests/chat-target.mjs';
 import path from 'path';
 import fs from 'fs';
 import { pathToFileURL } from 'url';
@@ -41,7 +41,7 @@ async function t(name, fn) {
 }
 const must = (cond, msg) => { if (!cond) throw new Error(msg); };
 
-const browser = await launchGpuBrowser(chromium);
+const browser = await launchChatBrowser(chromium);
 const context = await browser.newContext({
   viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1,
   reducedMotion: REDUCED ? 'reduce' : 'no-preference'
@@ -987,7 +987,7 @@ await t('L4. nothing escapes the card or scrolls sideways, in all ten themes, at
     for (const w of [0, 300]) {
       for (const idx of [0, 1, 2, 3]) {
         await openLong(idx);
-        await page.evaluate(t => PM56_DEMO.setTheme(t), th);
+        await page.evaluate(t => PM56_TEST.setTheme(t), th);
         if (w) await setHostWidth(w);
         await page.waitForTimeout(260);
         const out = await askSideways();
@@ -998,7 +998,7 @@ await t('L4. nothing escapes the card or scrolls sideways, in all ten themes, at
       }
     }
   }
-  await page.evaluate(() => PM56_DEMO.setTheme('basic-dark'));
+  await page.evaluate(() => PM56_TEST.setTheme('basic-dark'));
   must(!bad.length, bad.slice(0, 6).join(' | '));
   return themes.length * 8 + ' renders';
 });
@@ -1148,14 +1148,14 @@ await t('L11. the @-file sprout opens where the body can show it', async () => {
 });
 await t('L12. NieR: an option description on the menu cursor reads in paper, like its label', async () => {
   await openLong(0);
-  await page.evaluate(() => PM56_DEMO.setTheme('nier-dark'));
+  await page.evaluate(() => PM56_TEST.setTheme('nier-dark'));
   await page.waitForTimeout(400);
   const c = await page.evaluate(() => {
     const on = document.querySelector('.qs-ask-opt.is-on');
     const L = getComputedStyle(on.querySelector('.qs-ask-opt-label')).color, D = getComputedStyle(on.querySelector('.qs-ask-opt-desc')).color;
     return { L, D, bg: getComputedStyle(on).backgroundColor };
   });
-  await page.evaluate(() => PM56_DEMO.setTheme('basic-dark'));
+  await page.evaluate(() => PM56_TEST.setTheme('basic-dark'));
   must(c.L === c.D, `description ${c.D} vs label ${c.L} on ${c.bg}`);
   return c;
 });
@@ -1220,13 +1220,13 @@ await t('E3. no take is worse than the stock surface for horizontal overflow, in
   const themes = await page.evaluate(() => PM56_DATA.themes.map(t => t.id));
   const worse = [];
   for (const th of themes) {
-    await page.evaluate(t => PM56_DEMO.setTheme(t), th);
+    await page.evaluate(t => PM56_TEST.setTheme(t), th);
     /* stock baseline: empty the slot so app.js's own decision surface renders */
     const base = await page.evaluate(() => {
       const keep = window.PM56_EXT._slots.questionSurface;
       window.PM56_EXT._slots.questionSurface = [];
       PM56_DEMO.openQuestionnaire();
-      const w = document.body.scrollWidth;
+      const w = PM56_TEST.host.scrollWidth;
       window.PM56_EXT._slots.questionSurface = keep;
       PM56_DEMO.openQuestionnaire();
       return w;
@@ -1234,11 +1234,11 @@ await t('E3. no take is worse than the stock surface for horizontal overflow, in
     await page.waitForTimeout(SETTLE);
     for (let v = 0; v < TAKE_COUNT; v++) {
       await setTake(v);
-      const mine = await page.evaluate(() => document.body.scrollWidth);
+      const mine = await page.evaluate(() => PM56_TEST.host.scrollWidth);
       if (mine > base + 4) worse.push(`${th}/t${v}: ${mine} vs stock ${base}`);
     }
   }
-  await page.evaluate(() => PM56_DEMO.setTheme('basic-dark'));
+  await page.evaluate(() => PM56_TEST.setTheme('basic-dark'));
   must(!worse.length, worse.join(' | '));
   return themes.length * TAKE_COUNT;
 });

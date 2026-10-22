@@ -6,7 +6,7 @@
  *                                                     static scans of the sources; no browser, a few seconds
  *   node tests/wonderer-grill-verify.mjs --browser    also plays every Demo Studio flow in Chromium against
  *                                                     index.html and checks what the screen shows
- *   options: --file <html> (default ./index.html), --cdp <endpoint> (attach to a running GPU browser, such as an
+ *   options: --page standalone|pm7, --file <html> (default ./index.html), --cdp <endpoint> (attach to a running GPU browser, such as an
  *            agent-browser session, instead of launching one), --json <path> (write the report)
  *
  * The browser pass imports playwright, then playwright-core. It never passes --disable-gpu.
@@ -14,6 +14,8 @@
  * leads is a target (0 to 5 allowed); leads are decided as they arrive, and nothing new reaches the team once it writes
  * the result; grilling waits on lookups; Grill Me turned on mid-run gates only the step that uses its answers; the first
  * pass runs during intake and a later pass queues behind core work. */
+import { chatTarget } from './chat-target.mjs';
+import { launchGpuBrowser } from './gpu-browser.mjs';
 import { createRequire } from 'node:module';
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
@@ -23,6 +25,7 @@ const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2), opt = n => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
 const results = [];
+const target = chatTarget(argv);
 /* the Batch 14-17 and 19 examples (2026-10-22), added once their recordings land */
 const AX_MORE = [
   { name: 'To-Do graphs · Parallel outputs, honest progress', action: 'b16-start', flow: 'parallel', moves: ['[data-action="pd-build"]'] },
@@ -353,13 +356,13 @@ async function browser() {
   for (const m of ['playwright', 'playwright-core']) { try { pw = await import(m); break; } catch (e) { } }
   if (!pw) { check('B0 a browser is available (playwright or playwright-core)', false, 'neither module resolves from ' + ROOT); return; }
   const chromium = pw.chromium || (pw.default && pw.default.chromium);
-  const cdp = opt('--cdp'), FILE = path.resolve(opt('--file') || path.join(ROOT, 'index.html'));
-  const b = cdp ? await chromium.connectOverCDP(cdp) : await chromium.launch({ headless: true, args: ['--allow-file-access-from-files', '--no-sandbox'] });
-  const ctx = cdp ? b.contexts()[0] : await b.newContext();
-  const page = cdp ? ctx.pages()[0] : await ctx.newPage();
+  const cdp = opt('--cdp');
+  const b = await launchGpuBrowser(chromium);
+  const ctx = b.contexts()[0];
+  const page = ctx.pages()[0];
   const errs = []; page.on('pageerror', e => errs.push(String(e && e.message || e)));
   await page.setViewportSize({ width: 1440, height: 900 });
-  const load = async () => { await page.goto(pathToFileURL(FILE).href); await page.waitForFunction(() => window.__PM56_BOOT_OK === true, null, { timeout: 30000 }); await page.waitForTimeout(1500); };
+  const load = async () => { await target.load(page); await target.resize(page, { width: 1440, height: 900 }); };
   const ev = (fn, a) => page.evaluate(fn, a);
   const act = (name, data) => ev(([n, d]) => { const b = document.createElement('button'); Object.assign(b.dataset, d || {}); window.PM56_EXT.run(n, b, new Event('click')); window.PM56_EXT.ctx().renderApp(); }, [name, data || {}]);
   const sleep = ms => page.waitForTimeout(ms);
@@ -383,9 +386,9 @@ async function browser() {
     /* WGV_ONLY=r1: the round 1 checks alone (a quick local loop) */
     if (process.env.WGV_ONLY === 'r1') { await reviewRound1({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=rx: the recorded-examples checks alone (2026-10-21) */
-    if (process.env.WGV_ONLY === 'rx') { await page.setViewportSize({ width: 1440, height: 900 }); await recordedExamples({ page, ev, act, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
+    if (process.env.WGV_ONLY === 'rx') { await target.resize(page, { width: 1440, height: 900 }); await recordedExamples({ page, ev, act, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=ax: every other Demo Studio example plays on its own (2026-10-22) */
-    if (process.env.WGV_ONLY === 'ax') { await page.setViewportSize({ width: 1440, height: 900 }); await otherExamples({ page, ev, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
+    if (process.env.WGV_ONLY === 'ax') { await target.resize(page, { width: 1440, height: 900 }); await otherExamples({ page, ev, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* sheets: the shelf, the plate */
     for (const [kind, who] of [['crew', 'The Coordinator'], ['chat_room', 'The Moderator'], ['brainstorm', 'The Coordinator']]) {
       await ev(k => { const C = window.PM56_COLLAB, c = window.PM56_EXT.ctx(); c.switchThread('query'); C.openConfigure(k); const d = C.draft(); d.purpose = 'Make search easier to reach.'; d.wonderer = true; d.grillMe = true; c.openDialog({ type: 'collab-configure' }); c.renderOverlays(); }, kind);
@@ -551,8 +554,10 @@ async function browser() {
     check('APR-072b the Plan is written after Confirm', written);
     await reviewRound1({ page, ev, act, sleep, startSheet, answerAll });
     await reviewRound2({ page, ev, act, sleep, startSheet, answerAll });
-    await recordedExamples({ page, ev, act, sleep });
-    await otherExamples({ page, ev, sleep });
+    if (process.env.WGV_ONLY !== 'core') {
+      await recordedExamples({ page, ev, act, sleep });
+      await otherExamples({ page, ev, sleep });
+    }
     check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | '));
   } catch (e) { check('B0 the browser pass ran to the end', false, e && e.stack || e); }
   if (cdp) await b.close().catch(() => {}); else await b.close();
@@ -598,7 +603,7 @@ const AX_EXAMPLES = [
 async function otherExamples({ page, ev, sleep }) {
   const SCALE = +(process.env.AX_SCALE || 3), only = process.env.AX_ONLY ? new RegExp(process.env.AX_ONLY, 'i') : null;
   const width = +(process.env.AX_WIDTH || 1440);
-  if (width !== 1440) await page.setViewportSize({ width, height: 900 });
+  if (width !== 1440) await target.resize(page, { width, height: 900 });
   for (const x of AX_EXAMPLES) {
     if (only && !only.test(x.name + ' ' + x.action + ' ' + x.flow)) continue;
     const label = 'AX ' + x.name + (width !== 1440 ? ' @' + width : '');
@@ -965,9 +970,9 @@ async function recordedExamples({ page, ev, act, sleep }) {
   await until(() => true, null, 300); id = await runOf('chat_room');
   await until(id => { const r = window.PM56_COLLAB.run(id), s = r.chatRoom; return s.roundsSoFar === 2 && window.PM56_ROOM.waitsFor(r) === 'last'; }, id, 60000); await fast(1); await sleep(600);
   await showAll('Chat Room at the end of its rounds (attention card, Jared’s report)', id);
-  await page.setViewportSize({ width: 480, height: 900 }); await sleep(600);
+  await target.resize(page, { width: 480, height: 900 }); await sleep(600);
   await showAll('Chat Room at the end of its rounds, 480 px', id);
-  await page.setViewportSize({ width: 1440, height: 900 }); await sleep(600);
+  await target.resize(page, { width: 1440, height: 900 }); await sleep(600);
   await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1000);
   await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'); if (i && i.checked) i.click(); }); await sleep(300);
   await sheetStart(); await fast(SCALE);
@@ -1224,7 +1229,7 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   const crewThread = await ev(id => window.PM56_COLLAB.run(id).threadId, (await ev(() => (window.PM56_COLLAB.runs().filter(r => r.kind === 'crew' && r.wonderer && r.status === 'completed').pop() || {}).id)));
   const low = {};
   for (const theme of ['basic-dark', 'basic-light', 'glass-light', 'friendly-light', 'retro-dark', 'nier-dark', 'nier-light']) {
-    await ev(t => window.PM56_DEMO.setTheme(t), theme); await sleep(400);
+    await target.theme(page, theme); await sleep(400);
     await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(700);
     const a = await measure(['.qs-ask-opt.is-on .qs-rec', '.qs-grill-note', '.qs-grill-meta']);
     await ev(t => { const c = window.PM56_EXT.ctx(); c.switchThread(t); c.renderApp(); }, crewThread); await sleep(700);
@@ -1233,7 +1238,7 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
     Object.entries({ ...a, ...b }).forEach(([k, v]) => { if (v < 4.5) low[theme + ' ' + k] = v; });
     low['n:' + theme] = Object.keys({ ...a, ...b }).length;
   }
-  await ev(() => window.PM56_DEMO.setTheme('basic-dark'));
+  await target.theme(page, 'basic-dark');
   const misses = Object.entries(low).filter(([k]) => !/^n:/.test(k)), counted = Object.entries(low).filter(([k]) => /^n:/.test(k)).map(([k, v]) => v);
   check('R1-R10 required words and the Recommended mark meet 4.5:1 on their real background in seven themes (' + counted.join('/') + ' measured)', !misses.length && counted.every(n => n >= 6), JSON.stringify(Object.fromEntries(misses)));
 }
@@ -1348,7 +1353,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   const dpT = await thread();
   const low4 = {}, n4 = {};
   for (const look of ['basic-dark', 'basic-light', 'glass-dark', 'glass-light', 'friendly-dark', 'friendly-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light']) {
-    await ev(x => window.PM56_DEMO.setTheme(x), look); await sleep(400);
+    await target.theme(page, look); await sleep(400);
     await ev(x => window.PM56_DEMO.selectThread(x), dpT); await sleep(500);
     if (!(await ev(() => !!document.querySelector('.qs-grill')))) await act('wg-open-round', { key: 'thread:' + dpT });
     await sleep(600);
@@ -1361,7 +1366,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
     Object.entries(a).forEach(([k, v]) => { if (v < 4.5) low4[look + ' ' + k] = v; });
     n4[look] = Object.keys(a).length;
   }
-  await ev(() => window.PM56_DEMO.setTheme('basic-dark')); await fast(1);
+  await target.theme(page, 'basic-dark'); await fast(1);
   check('R2-4 required words read 4.5:1 or better on the painted pixels in ten looks (the round bar over its tint, the map frontier, the source line, who asked for a pass)',
     !Object.keys(low4).length && Object.values(n4).every(n => n >= 8), JSON.stringify({ low4, n4 }));
 
@@ -1445,7 +1450,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   await fast(1);
 
   /* 9 (Opus N2): at phone width the safety note stays, the tally goes, and the foot is one row with "Accept all" */
-  await page.setViewportSize({ width: 400, height: 860 }); await sleep(500);
+  await target.resize(page, { width: 400, height: 860 }); await sleep(500);
   await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(900);
   const f9 = await ev(() => {
     const card = document.querySelector('.qs-grill'), note = card.querySelector('.qs-grill-note'), tally = card.querySelector('.qs-grill-tally'), acc = card.querySelector('[data-action="qs-accept-round"]');
@@ -1453,7 +1458,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
     const tops = [...card.querySelectorAll('.qs-grill-foot > button')].filter(vis).map(b => Math.round(b.getBoundingClientRect().top));
     return { note: vis(note), tally: vis(tally), accept: acc ? acc.innerText.replace(/\s+/g, ' ').trim() : '', rows: new Set(tops.map(x => Math.round(x / 8))).size, tops };
   });
-  await page.setViewportSize({ width: 1440, height: 900 }); await sleep(400);
+  await target.resize(page, { width: 1440, height: 900 }); await sleep(400);
   check('R2-9 at 400 px the “nothing acts until you confirm” note stays, the tally hides, and the foot is one row with “Accept all”', f9.note && !f9.tally && f9.accept === 'Accept all' && f9.rows === 1, JSON.stringify(f9));
 
   /* 10 (Opus N3): the shelf never cuts off "Never votes." or any helper: Retro at 1440 and 400, and 460-519 px */
@@ -1461,17 +1466,17 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
     return { name: b.textContent, cut: !!h && (h.scrollWidth > h.clientWidth + 1 || getComputedStyle(h).textOverflow === 'ellipsis' && getComputedStyle(h).whiteSpace === 'nowrap'), help: h ? h.textContent : '', nameClip: b.scrollWidth > b.clientWidth + 1, nameLines: Math.round(b.getBoundingClientRect().height / lh) }; }));
   const f10 = {};
   for (const [look, w] of [['retro-light', 1440], ['retro-dark', 1440], ['retro-light', 400], ['retro-dark', 400], ['basic-dark', 460], ['basic-dark', 480], ['basic-dark', 500], ['basic-dark', 519]]) {
-    await page.setViewportSize({ width: w, height: 900 }); await ev(x => window.PM56_DEMO.setTheme(x), look); await sleep(300);
+    await target.resize(page, { width: w, height: 900 }, 'window'); await target.theme(page, look); await sleep(300);
     await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1300);
     f10[look + '@' + w] = await shelf();
     await ev(() => { const c = window.PM56_EXT.ctx(); c.state.dialog = null; c.renderOverlays(); });
   }
-  await page.setViewportSize({ width: 1440, height: 900 }); await ev(() => window.PM56_DEMO.setTheme('basic-dark')); await sleep(300);
+  await target.resize(page, { width: 1440, height: 900 }); await target.theme(page, 'basic-dark'); await sleep(300);
   const bad10 = Object.entries(f10).filter(([k, v]) => !v.length || v.some(x => x.cut || x.nameClip || x.nameLines > 1) || !v.some(x => /Never votes\./.test(x.help))).map(([k, v]) => k + ' ' + JSON.stringify(v));
   check('R2-10 the shelf never cuts off a helper (“Never votes.” whole in Retro at 1440 and 400) and no name is clipped or wrapped at 460-519 px', !bad10.length, bad10.join(' | ').slice(0, 900));
 }
 if (argv.includes('--browser')) await browser();
 const failed = results.filter(r => !r.pass);
 console.log('wonderer-grill-verify: ' + results.length + ' checks, ' + failed.length + ' failed');
-if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify({ checks: results.length, failed: failed.length, results }, null, 2));
+if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify({ page: target.kind, file: target.file, checks: results.length, failed: failed.length, results }, null, 2));
 process.exitCode = failed.length ? 1 : 0;
