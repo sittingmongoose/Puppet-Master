@@ -74881,6 +74881,14 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   var THREAD_GRILL = {};            /* threadId -> Grill Me session for Plan / Deep Plan (the assistant grills) */
   var HOOKS = {};                   /* key -> {onConfirm, onRound, onKeepGoing} from whoever started a session */
   var FLASH = { key: '', at: 0 };   /* the lead a "takes up" link pointed at, lit once in the run view */
+  /* the disclosures you opened (a lead's Dossier, a pass's angles, What we agreed's map) stay open while a recording or
+     the run re-renders around them, by their data-k, the way Lens, Debug and BrainStorm keep theirs (2026-10-22) */
+  var OPEN = Object.create(null);
+  function opened(key) { return !!OPEN[key]; }
+  document.addEventListener('toggle', function (e) {
+    var d = e.target; if (!d || !d.isConnected || !d.matches || !d.matches('details.wg-dossier[data-k], details.wg-angles-disc[data-k], details.wg-agreed-map[data-k]')) return;
+    if (d.open) OPEN[d.getAttribute('data-k')] = 1; else delete OPEN[d.getAttribute('data-k')];
+  }, true);
 
   function C() { return window.PM56_COLLAB; }
   function S() { return window.PM56_SHELL; }
@@ -75088,7 +75096,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     o = o || {};
     var st = engine.status(l), pass = engine.passOf(r, l), k = r.id + ':' + l.id;
     var flash = FLASH.key === k && Date.now() - FLASH.at < 2400 ? ' data-flash="1"' : '';
-    var dossier = l.dossier ? S().pmxDisclosure({ key: 'wg-dos:' + k + (o.compact ? ':c' : ''), cls: 'wg-dossier', summary: 'Dossier', body:
+    var dossier = l.dossier ? S().pmxDisclosure({ key: 'wg-dos:' + k + (o.compact ? ':c' : ''), open: opened('wg-dos:' + k + (o.compact ? ':c' : '')), cls: 'wg-dossier', summary: 'Dossier', body:
       (l.dossier.found ? '<p><b>What it found</b> ' + esc(l.dossier.found) + '</p>' : '') + (l.dossier.why ? '<p><b>Why it’s interesting</b> ' + esc(l.dossier.why) + '</p>' : '') + (l.dossier.next ? '<p><b>Worth looking into next</b> ' + esc(l.dossier.next) + '</p>' : '') }) : '';
     var takes = list(l.takenUpBy).map(function (mid) { return list(r.messages).filter(function (m) { return m.id === mid; })[0]; }).filter(Boolean);
     var taken = o.compact || !takes.length ? '' : '<p class="wg-lead-taken">' + S().pmxGlyph('reply', 12) + '<span>Taken up by ' + esc(words(takes.map(function (m) { return m.senderName || 'a helper'; }).filter(function (v, i, a) { return a.indexOf(v) === i; }))) + '</span></p>';
@@ -75143,7 +75151,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       var n = leads.filter(function (l) { return l.angle === a.key; }).length;
       return '<li data-angle="' + esc(a.key) + '"><span class="wg-angles-name">' + angleMark(a.key, 11) + '<b>' + esc(a.name) + '</b></span><span class="wg-angles-signal">' + esc(a.signal || 'no signal recorded') + '</span><span class="wg-angles-n">' + (n ? plural(n, 'lead') : 'no lead') + '</span></li>';
     }).join('') + '</ul>';
-    return S().pmxDisclosure({ key: 'wg-ang:' + r.id + ':' + pass.id + ':' + (o.where || 'view'), cls: 'wg-angles-disc', summary: plural(pass.angles.length, 'angle') + ' explored, with what each turned up', body: body });
+    return S().pmxDisclosure({ key: 'wg-ang:' + r.id + ':' + pass.id + ':' + (o.where || 'view'), open: opened('wg-ang:' + r.id + ':' + pass.id + ':' + (o.where || 'view')), cls: 'wg-angles-disc', summary: plural(pass.angles.length, 'angle') + ' explored, with what each turned up', body: body });
   }
   /* one pass: the Wonderer's message (CWR-043). o.where: 'chat' (the main chat card) | 'view' (run views) | 'conv'.
      Three layers, all reachable here (SS-037): the summary, the angles with their signals, and a dossier per lead. */
@@ -75651,7 +75659,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     /* n2: no parentheses inside the line's own */
     var facts = a.facts.length ? '<p class="wg-agreed-facts">' + S_.pmxGlyph('flask', 12) + '<span>Looked up, not asked: ' + esc(a.facts.map(function (f) { return f.title + ': ' + f.fact; }).join('; ')) + '</span></p>' : '';
     /* the map is a part of this card, never a transcript surface of its own (IMPACT A2-18), so it sits in a plain wrapper */
-    var map = '<div class="wg-agreed-mapwrap">' + S_.pmxDisclosure({ key: 'wg-agreed-map:' + m.id, cls: 'wg-agreed-map', summary: 'How the decisions hang together', body: treeHtml(m.key, { sessionId: s.id, where: 'agreed' }) }) + '</div>';
+    var map = '<div class="wg-agreed-mapwrap">' + S_.pmxDisclosure({ key: 'wg-agreed-map:' + m.id, open: opened('wg-agreed-map:' + m.id), cls: 'wg-agreed-map', summary: 'How the decisions hang together', body: treeHtml(m.key, { sessionId: s.id, where: 'agreed' }) }) + '</div>';
     var foot = superseded ? '<p class="wg-agreed-note">' + S_.pmxStatus('skipped', 14) + '<span>You kept going after this; the newer What we agreed below replaces it.</span></p>'
       : confirmed ? '<p class="wg-agreed-note wg-agreed-done">' + S_.pmxStatus('done', 14) + '<span><b>Confirmed.</b> These are your decisions on this ' + (r ? 'run' : 'plan') + '. ' + (r ? 'The ' + lead + ' goes on with ' + esc(what) + ' now.' : 'The assistant writes the plan from them.') + '</span></p>'
         : '<div class="wg-agreed-acts"><button type="button" class="primary-button" data-action="wg-confirm" data-key="' + esc(m.key) + '">Confirm</button><button type="button" class="text-button" data-action="wg-keep-going" data-key="' + esc(m.key) + '">Keep going</button>' +
