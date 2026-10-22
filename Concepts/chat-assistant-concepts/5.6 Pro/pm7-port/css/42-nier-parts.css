@@ -50,3 +50,20 @@ html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .menu-head >
 
 /* ---------------------------------------------------------------- pod: the seat PMConcept7's Pod sits on */
 html[data-o55-nier="on"][data-o55-nier-parts~="pod"] #pmRoot.pm56-host .chat-stage .chat-float { anchor-name: --o55np-pod-seat; }
+
+/* ---------------------------------------------------------------- the Crew plate's labels in the NieR face */
+/* Looks' css/24-layout.css section 4 (8240b4e442) places the plate's labels for Inter, Poppins and IBM Plex Mono at
+   8 px or more from the linework at a 480 px panel. PM NieR Sans (M PLUS 1) is wider and its ink taller, so three
+   gaps fell under 8 px there (Astra r2 L1; tests' CO-PLATE-LINE/-AFTER): the job paper's second line to the paper's
+   foot 7.55, "after both" to the hand-out line above it 7.66, and "This chat's assistant" to the start of the dotted
+   line to You 7.93. Under NieR: the paper's two lines close up by the unit between them and the block sits 0.6 units
+   higher, so both clear the paper's outline; "after both" drops 0.97 units, to the middle of its band; the dotted line
+   starts one unit later and ends where it did (103 units long, .88 of it drawn before, (90.64 - 1) / 103 now).
+   Measured, completed Crew, NieR dark and light, panels 479-491 px: every label 8.13 px or more from every line. */
+html[data-o55-nier="on"] .pm56-host .pmx-plate .pmx-p-paper-text { padding-bottom: 1.2px; }
+html[data-o55-nier="on"] .pm56-host .pmx-plate .pmx-p-paper-text > .pmx-p-lab { margin-top: 0; }
+html[data-o55-nier="on"] .pm56-host .pmx-plate[data-pmx-kind="crew"] text.pmx-p-sub[data-pmx-part="assign"] { translate: -4px -3.5px; }
+html[data-o55-nier="on"] .pm56-host .pmx-plate .pmx-p-line[data-style="toyou"] {
+  transform-box: fill-box; transform-origin: 0 50%;
+  translate: 1px 0; scale: .8703 1;
+}
