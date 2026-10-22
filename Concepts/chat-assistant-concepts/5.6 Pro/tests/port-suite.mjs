@@ -54,8 +54,8 @@ for (const page of pages) {
     let rows = [], report;
     try { report = JSON.parse(readFileSync(json, 'utf8')); rows = report.results || []; } catch {}
     if (suite === 'hover') rows = readFileSync(log, 'utf8').split('\n').filter(l => /^(PASS|FAIL)\s/.test(l)).map(l => ({ name: l.replace(/^(PASS|FAIL)\s+/, ''), pass: l.startsWith('PASS') }));
-    const fail = rows.filter(r => r.pass === false || r.ok === false), skipped = rows.filter(r => r.skip || r.skipped);
-    const row = { page, suite, checks: rows.length, pass: rows.length - fail.length - skipped.length, fail: fail.length, skip: skipped.length, exit: exit.code, file, log,
+    const fail = rows.filter(r => r.pass === false || r.ok === false), skipped = rows.filter(r => r.skip || r.skipped || r.ok === null);
+    const row = { page, suite, checks: rows.length, counts: report?.counts, pass: rows.length - fail.length - skipped.length, fail: fail.length, skip: skipped.length, exit: exit.code, file, log,
       failures: fail.map(r => ({ id: r.id || r.name || r.label, owner: r.owner || (suite === 'wonderer' ? 'c56port-found / c56port-looks / c56port-nier / c56port-demo (see check)' : 'c56port-tests (triage)'), detail: r.measured || r.detail || r.error })) };
     if (exit.code && !fail.length) { row.fail++; row.failures.push({ id: 'HARNESS', owner: 'c56port-tests', detail: exit.error || `exit ${exit.code}; see ${log}` }); }
     summary.push(row); writeFileSync(path.join(out, 'summary.json'), JSON.stringify(summary, null, 2));

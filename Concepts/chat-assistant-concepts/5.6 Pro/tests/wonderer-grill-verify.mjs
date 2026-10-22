@@ -25,6 +25,7 @@ const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2), opt = n => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
 const results = [];
+let phase = 'node';
 const target = chatTarget(argv);
 /* the Batch 14-17 and 19 examples (2026-10-22), added once their recordings land */
 const AX_MORE = [
@@ -47,7 +48,7 @@ const AX_MORE = [
   { name: 'Simple Goal · Build a Plan as a Goal', action: 'b15-start', flow: 'plan', moves: ['[data-action="pd-build-goal"]'] },
   { name: 'Simple Goal · A future build is not a Goal yet', action: 'b15-start', flow: 'scheduled', moves: ['#pmOverlayRoot [data-action="sched-create-build"]'], max: 120000 }
 ];
-function check(name, pass, detail) { results.push({ name, pass: !!pass, detail: pass ? '' : String(detail == null ? '' : detail) }); if (!pass) console.log('FAIL  ' + name + (detail ? '  -- ' + detail : '')); }
+function check(name, pass, detail) { results.push({ name, phase, pass: !!pass, detail: pass ? '' : String(detail == null ? '' : detail) }); if (!pass) console.log('FAIL  ' + name + (detail ? '  -- ' + detail : '')); }
 const { Protocol, STATUS_WORD } = require(path.join(ROOT, 'wonderer-protocol.js'));
 const GE = require(path.join(ROOT, 'grill-protocol.js'));
 
@@ -608,7 +609,7 @@ async function otherExamples({ page, ev, sleep }) {
     if (only && !only.test(x.name + ' ' + x.action + ' ' + x.flow)) continue;
     const label = 'AX ' + x.name + (width !== 1440 ? ' @' + width : '');
     /* a fresh page for each example: what one leaves behind (a schedule, an open document) never starts the next */
-    await page.goto(page.url()); await page.waitForFunction(() => window.__PM56_BOOT_OK === true, null, { timeout: 30000 }); await sleep(600);
+    await target.load(page); await sleep(600);
     await ev(k => window.PM56_CLOCK.setScale(k), x.scale || SCALE);
     /* the recorder: guide sentences (motion time), guide buttons, trusted clicks, and when anything on screen last changed */
     await ev(() => {
@@ -631,8 +632,7 @@ async function otherExamples({ page, ev, sleep }) {
       window.__axStop = () => { mo.disconnect(); clearInterval(iv); document.removeEventListener('click', onClick, true); read(); };
     });
     /* Start, the way a person does: Demo Studio, the example's trigger (and its setup sheet's Start) */
-    await ev(() => { const b = document.createElement('button'); b.dataset.action = 'open-demo'; document.body.appendChild(b); b.click(); b.remove(); }); await sleep(300);
-    const trig = page.locator('.demo-dialog .demo-trigger[data-action="' + x.action + '"][data-flow="' + x.flow + '"]').first();
+    const trig = await target.demoTrigger(page, x.action, x.flow);
     if (!(await trig.count())) { check(label + ': is in Demo Studio', false, x.action + ' ' + x.flow); continue; }
     await trig.scrollIntoViewIfNeeded(); await trig.click();
     if (x.sheet) { await page.waitForFunction(() => !!document.querySelector('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button'), null, { timeout: 8000 }).catch(() => {}); await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click(); }
@@ -1475,8 +1475,9 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   const bad10 = Object.entries(f10).filter(([k, v]) => !v.length || v.some(x => x.cut || x.nameClip || x.nameLines > 1) || !v.some(x => /Never votes\./.test(x.help))).map(([k, v]) => k + ' ' + JSON.stringify(v));
   check('R2-10 the shelf never cuts off a helper (“Never votes.” whole in Retro at 1440 and 400) and no name is clipped or wrapped at 460-519 px', !bad10.length, bad10.join(' | ').slice(0, 900));
 }
-if (argv.includes('--browser')) await browser();
+if (argv.includes('--browser')) { phase = 'browser'; await browser(); }
 const failed = results.filter(r => !r.pass);
-console.log('wonderer-grill-verify: ' + results.length + ' checks, ' + failed.length + ' failed');
-if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify({ page: target.kind, file: target.file, checks: results.length, failed: failed.length, results }, null, 2));
+const counts = Object.fromEntries(['node', 'browser'].map(phase => [phase, { checks: results.filter(r => r.phase === phase).length, failed: failed.filter(r => r.phase === phase).length }]));
+console.log('wonderer-grill-verify: ' + results.length + ' checks, ' + failed.length + ' failed (' + counts.node.checks + ' node, ' + counts.browser.checks + ' browser)');
+if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify({ page: target.kind, file: target.file, checks: results.length, failed: failed.length, counts, results }, null, 2));
 process.exitCode = failed.length ? 1 : 0;

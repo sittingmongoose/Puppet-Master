@@ -241,10 +241,11 @@ async function newPage(opts = {}) {
    whole reason this take uses a container query. Drag the real divider rather
    than resizing the viewport, so the measurement exercises the real constraint. */
 async function setEditorPct(page, pct) {
-  const h = page.locator('[data-resize="editor"]').first();
+  const hosted = await page.evaluate(() => PM56_TEST.kind === 'pm7');
+  const h = page.locator(hosted ? '#chatResizer' : '[data-resize="editor"]').first();
   const b = await h.boundingBox();
   if (!b) return false;
-  const target = 1440 * (pct / 100);
+  const target = hosted ? await page.evaluate(pct => document.querySelector('#chatPanel').getBoundingClientRect().right - Math.min(760, Math.max(400, 1440 * (1 - pct / 100))), pct) : 1440 * (pct / 100);
   await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
   await page.mouse.down();
   await page.mouse.move(target, b.y + b.height / 2, { steps: 12 });

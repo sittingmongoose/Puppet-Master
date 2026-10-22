@@ -22,7 +22,7 @@ export function chatTarget(argv = process.argv.slice(2)) {
   }
   async function resize(page, size, surface = 'column') {
     // Sheets are window overlays. Chat breakpoints read the column, independently of the window.
-    await page.setViewportSize(kind === 'pm7' && surface === 'column' ? { width: Math.max(1440, size.width), height: size.height } : size);
+    await page.setViewportSize(kind === 'pm7' && surface === 'column' ? { width: Math.max(2400, size.width), height: size.height } : size);
     if (kind === 'pm7') {
       await page.evaluate(width => { if (window.PMW?.chatCol) { PMW.chatCol.setWidth(Math.min(760, Math.max(400, width))); PMW.chatCol.show(); } }, size.width);
     }
@@ -42,6 +42,16 @@ export function chatTarget(argv = process.argv.slice(2)) {
   }
   return { kind, file, url: url.href, ready, resize, theme,
     async load(page) { await page.goto(url.href); await ready(page); await page.waitForTimeout(1500); },
+    async demoTrigger(page, action, flow) {
+      if (kind === 'pm7') {
+        await page.evaluate(() => { if (!window.O55?.demo?.open) throw new Error('PM7 Demo Studio is unavailable'); O55.demo.open('chat'); });
+        await page.waitForTimeout(350);
+        return page.locator(`[data-chat-action="${action}"][data-chat-flow="${flow}"]`).filter({ visible: true }).first();
+      }
+      await page.evaluate(() => { const b = document.createElement('button'); b.dataset.action = 'open-demo'; document.body.appendChild(b); b.click(); b.remove(); });
+      await page.waitForTimeout(300);
+      return page.locator(`.demo-dialog .demo-trigger[data-action="${action}"][data-flow="${flow}"]`).first();
+    },
     async editor(page) { return page.evaluate(kind => {
       if (kind === 'pm7') return PM_HOME.active();
       return { tabId: PM56_EXT.ctx().state.activeEditor, kind: 'standalone' };
@@ -58,7 +68,7 @@ export async function launchChatBrowser(chromium, argv = process.argv.slice(2)) 
     installed.add(page);
     const setViewport = page.setViewportSize.bind(page);
     page.setViewportSize = async size => {
-      await setViewport(size);
+      await setViewport(target.kind === 'pm7' ? { ...size, width: Math.max(2400, size.width) } : size);
       if (target.kind === 'pm7') await page.evaluate(width => {
         if (window.PMW?.chatCol) { PMW.chatCol.setWidth(Math.min(760, Math.max(400, width))); PMW.chatCol.show(); }
       }, size.width);

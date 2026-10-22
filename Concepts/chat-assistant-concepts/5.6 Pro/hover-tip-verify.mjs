@@ -43,14 +43,17 @@ try {
 
   const sig = () => page.evaluate(() => {
     const el = document.querySelector('#pmOverlayRoot > [data-overlay="hover"]');
-    return el ? el.dataset.hoverSig : 'NONE';
+    if (el) return el.dataset.hoverSig;
+    const tag = document.querySelector('#pm-hover-tag-visual[data-open="true"]');
+    const anchor = window.PM_HOVER_TAG_CONTROLLER?.active;
+    return PM56_TEST.kind === 'pm7' && tag && anchor && PM56_TEST.host.contains(anchor) ? 'text|' + (anchor.dataset.hoverKey || anchor.dataset.pmHoverKey) : 'NONE';
   });
   // One-shot entry marker: next pointerover on key records performance.now().
   const armEntry = key => page.evaluate(k => {
     window.__entry = null;
     const h = e => {
-      const t = e.target && e.target.closest ? e.target.closest('[data-hover-tip]') : null;
-      if (t && t.dataset.hoverKey === k) { window.__entry = performance.now(); document.removeEventListener('pointerover', h); }
+      const t = e.target && e.target.closest ? e.target.closest('[data-hover-tip],[data-pm-hover-label]') : null;
+      if (t && (t.dataset.hoverKey || t.dataset.pmHoverKey) === k) { window.__entry = performance.now(); document.removeEventListener('pointerover', h); }
     };
     document.addEventListener('pointerover', h);
   }, key);
@@ -68,7 +71,7 @@ try {
   const clear = await page.evaluate(() => {
     for (let y = 300; y < 800; y += 40) for (let x = 200; x < 1600; x += 40) {
       const el = document.elementFromPoint(x, y);
-      if (el && !el.closest('[data-hover-tip],[data-hover-domain],button,a,input,select,textarea,[data-action]')) return { x, y };
+      if (el && !el.closest('[data-hover-tip],[data-pm-hover-label],[data-hover-domain],button,a,input,select,textarea,[data-action]')) return { x, y };
     }
     return null;
   });
@@ -82,20 +85,20 @@ try {
   const spots = await page.evaluate(() => {
     const vis = el => { const r = el.getBoundingClientRect(); return r.width > 4 && r.height > 4 && r.x >= 0 && r.y >= 0 && r.right <= innerWidth && r.bottom <= innerHeight; };
     const ctr = el => { const r = el.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; };
-    const tips = [...document.querySelectorAll('[data-hover-tip]')].filter(vis);
+    const tips = [...PM56_TEST.host.querySelectorAll('[data-hover-tip],[data-pm-hover-label]')].filter(vis);
     const low = tips.filter(el => el.getBoundingClientRect().y > innerHeight * 0.5);
     const pool = low.length >= 2 ? low : tips;
     let best = null;
     for (let i = 0; i < pool.length; i++) for (let j = i + 1; j < pool.length; j++) {
       const A = ctr(pool[i]), B = ctr(pool[j]);
       const d = Math.hypot(A.x - B.x, A.y - B.y);
-      if (d > 4 && (!best || d < best.d)) best = { d, A, B, ka: pool[i].dataset.hoverKey, kb: pool[j].dataset.hoverKey };
+      if (d > 4 && (!best || d < best.d)) best = { d, A, B, ka: (pool[i].dataset.hoverKey || pool[i].dataset.pmHoverKey), kb: (pool[j].dataset.hoverKey || pool[j].dataset.pmHoverKey) };
     }
     const foc = tips.find(el => /^(BUTTON|A|INPUT|SELECT|TEXTAREA)$/.test(el.tagName) || (el.tabIndex >= 0 && !el.closest('[data-hover-domain]')));
     const dom = [...document.querySelectorAll('[data-hover-domain]')].filter(vis)[0];
     return {
       pair: best ? { ...best, A: { ...best.A }, B: { ...best.B } } : null,
-      foc: foc ? { ...ctr(foc), key: foc.dataset.hoverKey, tag: foc.tagName } : null,
+      foc: foc ? { ...ctr(foc), key: foc.dataset.hoverKey || foc.dataset.pmHoverKey, tag: foc.tagName } : null,
       dom: dom ? { ...ctr(dom), key: dom.dataset.hoverDomain } : null,
     };
   });
@@ -148,7 +151,7 @@ try {
   await park();
   const fT = Date.now();
   await page.evaluate(key => {
-    document.querySelector(`[data-hover-key="${CSS.escape(key)}"]`).focus();
+    PM56_TEST.host.querySelector(`[data-hover-key="${CSS.escape(key)}"],[data-pm-hover-key="${CSS.escape(key)}"]`).focus();
   }, spots.foc.key);
   const c3 = await waitSig(spots.foc.key, 2500);
   check('focus opens ~1000ms', !c3.timeout && inBand(Date.now() - fT, 700, 1600), `open=${Date.now() - fT}ms sig=${c3.s}`);

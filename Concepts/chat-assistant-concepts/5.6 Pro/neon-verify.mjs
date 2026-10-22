@@ -270,7 +270,7 @@ check(ALL_THEMES.length === 10, `precondition: 10 themes on the page (running ${
 async function censusOf(p) {
   return p.evaluate(exc => {
     const bad = [];
-    for (const s of document.querySelectorAll('svg')) {
+    for (const s of document.querySelectorAll(PM56_TEST.kind === 'pm7' ? '.pm56-host svg, #pmds-page-chat svg' : 'svg')) {
       if (s.closest(exc)) continue;
       if (s.classList.contains('nx') || s.classList.contains('nx-brand')) continue;
       const chain = [];
@@ -281,7 +281,7 @@ async function censusOf(p) {
     }
     return {
       bad, nBad: bad.length,
-      total: document.querySelectorAll('svg').length,
+      total: document.querySelectorAll(PM56_TEST.kind === 'pm7' ? '.pm56-host svg, #pmds-page-chat svg' : 'svg').length,
       misses: (window.PM56_NEON && window.PM56_NEON.misses || []).slice(),
       glyphMissing: document.querySelectorAll('.pmx-glyph-missing').length
     };
@@ -292,10 +292,12 @@ async function openMenu(p, menu) {
   await p.locator('.overlay-menu[data-overlay="root-menu"]').first().waitFor({ timeout: 5000 });
 }
 async function openDemo(p) {
+  if (await p.evaluate(() => PM56_TEST.kind === 'pm7')) { await p.evaluate(() => O55.demo.open('chat')); await p.locator('#pmds-tab-chat').waitFor({ state: 'visible' }); return; }
   await p.locator('[data-action="open-demo"]').first().click({ timeout: 5000 });
   await p.locator('.demo-dialog').first().waitFor({ timeout: 5000 });
 }
 async function closeDemo(p) {
+  if (await p.evaluate(() => PM56_TEST.kind === 'pm7')) { await p.evaluate(() => O55.demo.close()); await p.waitForTimeout(300); return; }
   const b = p.locator('.demo-dialog [data-action="close-dialog"]').first();
   if (await b.count()) { await b.click({ timeout: 5000 }); await p.waitForTimeout(300); }
 }

@@ -6,7 +6,7 @@
  *        [--from 0]   keep only frames at or after this motion time (past 1.5s the
  *                     scene runs at full speed until a second before it)
  *        [--wide]     close the editor first, so the chat has the whole width
- *        [--gpu]      new headless mode with GPU compositing (the Mac); default is software
+ *        [--gpu]      accepted for older invocations; agent-browser always uses the GPU
  *        --scene arrive --family deliverable|needs|people|time|ledger   a live arrival
  *        --scene switch --to <thread>                                  a thread switch
  *
@@ -24,7 +24,7 @@
  * Media is review evidence only: delete it when finished.
  */
 import { chromium } from 'playwright';
-import { launchGpuBrowser } from './tests/gpu-browser.mjs';
+import { launchChatBrowser } from './tests/chat-target.mjs';
 import path from 'path';
 import fs from 'fs';
 import { execFileSync } from 'child_process';
@@ -81,14 +81,14 @@ const SCENES = {
 const sc = SCENES[SCENE];
 if (!sc) { console.error('unknown scene', SCENE); process.exit(2); }
 fs.rmSync(OUT, { recursive: true, force: true }); fs.mkdirSync(OUT, { recursive: true });
-const browser = await launchGpuBrowser(chromium);
+const browser = await launchChatBrowser(chromium);
 try {
   const page = await browser.newPage({ viewport: { width: W, height: H } });
   const errs = []; page.on('pageerror', e => errs.push(e.message));
   await page.goto('file://' + FILE);
   await page.bringToFront();
   await page.waitForTimeout(1200);
-  await page.evaluate(([t, v]) => { PM56_DEMO.completeWorking(); PM56_DEMO.setTheme(t); if (v !== 'auto' && PM56_DEMO.setVoice) PM56_DEMO.setVoice(v); }, [THEME, VOICE]);
+  await page.evaluate(([t, v]) => { PM56_DEMO.completeWorking(); PM56_TEST.setTheme(t); if (v !== 'auto' && PM56_DEMO.setVoice) PM56_DEMO.setVoice(v); }, [THEME, VOICE]);
   await page.waitForTimeout(400);
   if (WIDE) for (let i = 0; i < 4; i++) { const b = await page.$('[data-action="close-editor"]'); if (!b) break; await b.click(); await page.waitForTimeout(150); }
   await page.evaluate(sc.setup);
