@@ -11,10 +11,12 @@
    bc-open (the chat's only route into the dialog) opens or reveals the one capture browser tab on the dialog's
    fixture page; a dialog of type bc-browser opened any other way is turned into the tab after the render.
    Destination: the dialog was modal, so its captures always went to the thread it was opened over. The tab outlives
-   that, so it remembers the thread it was opened from, and what it captures goes there even after the chat shows
-   another thread, with a notice naming the thread (list and insert write into the composer, so the chat first shows
-   that thread). A thread that is gone refuses the send and says so. A browser tab the chat did not open (the "+"
-   menu, an agent's) sends to the thread on screen. */
+   that, so it remembers the thread it was opened from and that thread's composer destination, and what it captures
+   goes there even after the chat shows another thread or the composer another destination, with a notice naming the
+   thread (list and insert write into the composer, so the chat first shows that thread). Its own sends route to that
+   destination; what it writes into the thread's draft first sets the draft's destination back to it, with a notice.
+   A thread or run that is gone refuses and says so. A browser tab the chat did not open (the "+" menu, an agent's)
+   sends to the thread on screen. */
 (function () {
   'use strict';
   var W = window;
@@ -95,6 +97,29 @@
     } catch (err) { try { console.error('[pm56-surfaces] run delivery failed', err); } catch (_) {} }
   }
   function notify(title, detail) { var c = chatCtx(); try { if (c && c.toast) c.toast(title, detail || ''); } catch (_) {} }
+
+  /* The tray, Add to list and Insert write into the origin thread's draft, and the composer sends a draft to that
+     draft's own destination. So before writing, the draft takes back the destination this browser was opened for
+     (the one its own sends use, checked already by destinationFor) and the notice says so: the draft never goes to
+     Assistant or another run instead. Returns the destination's label when it changed, else null. */
+  function sameDest(a, b) {
+    if (!a || !b) return !a && !b;
+    return a.kind === b.kind && (a.refId || null) === (b.refId || null) && (a.participantId || null) === (b.participantId || null);
+  }
+  function claimDraft(dest) {
+    var o = dest.origin, C = runtime().composer, buf = bufferFor(dest.thread.id), c = chatCtx();
+    if (!o || !C || !buf) return null;   // a browser the chat did not open follows the composer on screen
+    var live = !!(c && c.state && c.state.selectedThread === dest.thread.id);
+    if (sameDest(live ? C.destination : buf.destination, o.destination)) return null;
+    var next = o.destination ? JSON.parse(JSON.stringify(o.destination)) : null;
+    buf.destination = next;
+    if (live) C.destination = next;
+    buf.revision = (buf.revision || 0) + 1;
+    buf.updated_at = iso();
+    try { if (C.flush) C.flush(); } catch (_) {}
+    return dest.route.label;
+  }
+  function claimedNote(label) { return label ? 'Its draft sends to ' + label + ' again, the destination this browser was opened for. ' : ''; }
 
   var e0 = E();
   if (e0 && typeof e0.chainAction === 'function') {
@@ -217,8 +242,10 @@
     if (!e || !e.capture || e.capture.kind === 'refused') return;
     var dest = destinationFor(e.tabId);
     if (!dest.ok) { notify('Not added', dest.why); return; }
+    var claimed = claimDraft(dest);
     attach(e.capture, dest);
-    if (!dest.onScreen) notify('Added to ' + dest.thread.title, 'The capture waits in that thread’s composer; this browser was opened from it.');
+    if (!dest.onScreen) notify('Added to ' + dest.thread.title, claimedNote(claimed) + 'The capture waits in that thread’s composer; this browser was opened from it.');
+    else if (claimed) notify('Added to the draft', claimedNote(claimed).trim());
   }
   function onSend(e) {
     if (!e || !e.what) return;
@@ -244,9 +271,14 @@
     // list and insert write into the composer on screen: the chat shows the destination thread first, and says so
     var A = W.PM56_APP;
     var run = function () { if (e.how === 'list') listLine(ref); else if (e.how === 'insert') insertAtCaret(ref); };
-    if (dest.onScreen) { run(); return; }
+    var claimed = claimDraft(dest);
+    if (dest.onScreen) {
+      if (claimed) { var ctx = chatCtx(); if (ctx && ctx.renderApp) ctx.renderApp(); notify('Sending to ' + claimed, claimedNote(claimed).trim()); }
+      run();
+      return;
+    }
     if (A && A.switchThread) A.switchThread(dest.thread.id);
-    notify('Showing ' + dest.thread.title, 'This browser was opened from that thread.');
+    notify('Showing ' + dest.thread.title, claimedNote(claimed) + 'This browser was opened from that thread.');
     (W.requestAnimationFrame || setTimeout)(run);
   }
 
