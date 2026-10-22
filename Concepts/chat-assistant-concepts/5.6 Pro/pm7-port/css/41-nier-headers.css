@@ -1,0 +1,107 @@
+/* pm7-port/css/41-nier-headers.css: PMConcept7's NieR header on the hosted chat (the port's nier lane, 2026-10-22).
+   Written already scoped (every selector names .pm56-host); nothing here applies while NieR Mode is off, and every touch
+   beyond colour waits for its part (NIER-RULES-for-new-surfaces): headers draws the YoRHa kicker band, the caps title
+   and the rule with square end caps; colours are NieR tokens only.
+
+   The run-view head (Crew, Chat Room, BrainStorm, Review: pmxView's <header class="pmx-view-head drawer-head">). The
+   chat's own NieR sheet painted it as the dialogs' full ink band, its paper text jammed against the band's edges: the
+   carry-over's four or five spacing flags per view. Hosted, that band skips .pmx-view-head (pm7-port/tools/
+   patches_nier.py), and the head takes PMConcept7's header instead, the NieR editor's head (styles.d/18-nier-theme-menu
+   .css .o55nc-pop-eye): the kind as the kicker band [ ■ CHAT ROOM ]────■ on the first row across the whole head, the run's
+   name under it (content keeps its case), the status under that, the actions beside them (under them in a narrow view, the chat's own
+   breakpoints), and the rule with a square cap at each end along the foot, clear of everything above it by 8 px or
+   more. A sticky head (the Chat Room's) keeps its opaque paper, so what scrolls under it never shows through.
+
+   The chat column's header: the stand-in's NieR (home-redesign 80-standin-chat.css: the rule under the head, the status
+   word in small caps), with PMConcept7's square end caps on the rule. */
+
+/* ---------------------------------------------------------------- run-view head: rows and the foot rule */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view > .pmx-view-head.drawer-head {
+  row-gap: 8px;
+  padding-bottom: 15px;
+}
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view:not([data-sticky="1"]):not(.room-document) > .pmx-view-head.drawer-head {
+  position: relative;
+}
+/* the rule along the foot: a hairline of ink at 45 % between two 5 px squares (PMConcept7's headers rule) */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view > .pmx-view-head.drawer-head::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; pointer-events: none;
+  background:
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left top / 5px 5px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right top / 5px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) center 2px / calc(100% - 12px) 1px no-repeat;
+}
+/* a sticky head drew its edge as a hairline shadow: the foot rule is the edge now */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view[data-sticky="1"] > .pmx-view-head.drawer-head,
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view.room-document > .pmx-view-head.drawer-head { box-shadow: none; }
+/* the Chat Room's document head pads 20 px inside the view's edges: the rule lines up with its words */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view.room-document > .pmx-view-head.drawer-head::after { left: 20px; right: 20px; }
+
+/* ---------------------------------------------------------------- the kicker band: [ ■ KIND ]──────■ */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view > .pmx-view-head > .pmx-view-kind {
+  grid-column: 1 / -1; grid-row: 1;
+  display: flex; align-items: center; gap: 9px; min-width: 0; margin: 0; padding: 3px 0 3px 9px;
+  font: 500 10.5px/1.2 var(--font-mono); letter-spacing: .26em; text-transform: uppercase; color: var(--o55-nier-ink);
+  background:
+    linear-gradient(currentColor, currentColor) 0 0 / 1px 100% no-repeat,
+    linear-gradient(currentColor, currentColor) 0 0 / 4px 1px no-repeat,
+    linear-gradient(currentColor, currentColor) 0 100% / 4px 1px no-repeat;
+}
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view > .pmx-view-head > .pmx-view-kind > span {
+  flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* the band's own square stands for the kind's mark */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view > .pmx-view-head > .pmx-view-kind > svg { display: none; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view > .pmx-view-head > .pmx-view-kind::before {
+  content: ""; flex: none; width: 6px; height: 6px; background: currentColor;
+}
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view > .pmx-view-head > .pmx-view-kind::after {
+  content: ""; flex: 1 1 auto; align-self: stretch; min-width: 24px;
+  background:
+    linear-gradient(currentColor, currentColor) 4px 0 / 1px 100% no-repeat,
+    linear-gradient(currentColor, currentColor) 0 0 / 5px 1px no-repeat,
+    linear-gradient(currentColor, currentColor) 0 100% / 5px 1px no-repeat,
+    linear-gradient(currentColor, currentColor) right center / 5px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) left 14px center / calc(100% - 22px) 1px no-repeat;
+}
+/* machine glyphs ride the kicker's rule [glyphs] (PMConcept7's editor head) */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"][data-o55-nier-parts~="glyphs"] .pm56-host .pmx-view > .pmx-view-head > .pmx-view-kind::after {
+  background:
+    linear-gradient(currentColor, currentColor) 4px 0 / 1px 100% no-repeat,
+    linear-gradient(currentColor, currentColor) 0 0 / 5px 1px no-repeat,
+    linear-gradient(currentColor, currentColor) 0 100% / 5px 1px no-repeat,
+    linear-gradient(currentColor, currentColor) right center / 5px 5px no-repeat,
+    var(--o55nw-art-glyphs) right 12px top 0 / 126px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) left 14px center / calc(100% - 22px) 1px no-repeat;
+}
+
+/* ---------------------------------------------------------------- title, status and actions under the kicker */
+/* the run's name is content, not a label: it keeps its case (the chat's own NieR rule for run and artifact names) */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view > .pmx-view-head > .pmx-view-title { grid-row: 2; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view > .pmx-view-head > .pmx-view-status { grid-row: 3; margin: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view > .pmx-view-head > .pmx-view-acts { grid-row: 2 / 4; }
+/* the chat's own narrow breakpoints put the actions on a row of their own under the status (module-shell.css 560 px,
+   room-view.css 900 px): they still do, under the kicker */
+@container pmxview (max-width: 560px) {
+  html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view > .pmx-view-head > .pmx-view-acts { grid-row: 4; }
+}
+@container pmxview (max-width: 900px) {
+  html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view.room-discussion > .pmx-view-head > .pmx-view-acts { grid-row: 4; }
+}
+
+/* ---------------------------------------------------------------- the chat column's header */
+/* the rule under the head with a square cap at each end, in place of its hairline (the header keeps its own fill) */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .chat-stage > .chat-header {
+  border-bottom-color: transparent;
+  background-image:
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45));
+  background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px;
+  background-position: left bottom, right bottom, center calc(100% - 2px);
+  background-repeat: no-repeat;
+}
+/* the status word is the head's kicker: small caps beside the thread's name, which keeps its own case */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .chat-header .chat-title > .chat-state {
+  text-transform: uppercase; letter-spacing: .08em; font-size: 11px;
+}
