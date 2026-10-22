@@ -11,6 +11,7 @@
  * for a person. Headless Chromium over file://.
  */
 import { chromium } from 'playwright';
+import { launchGpuBrowser } from './tests/gpu-browser.mjs';
 import path from 'path';
 import fs from 'fs';
 
@@ -26,7 +27,7 @@ let group = null;
 const check = (label, ok, detail) => { results.push({ group, label, pass: !!ok, detail: detail === undefined ? null : detail }); console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${detail !== undefined ? '  ' + JSON.stringify(detail).slice(0, 220) : ''}`); return ok; };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'] });
+const browser = await launchGpuBrowser(chromium);
 async function fresh(opts = {}) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   page.__errs = []; page.on('pageerror', e => page.__errs.push(e.message));

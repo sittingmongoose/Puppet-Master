@@ -19,6 +19,7 @@
  *   node questions-verify.mjs --file /tmp/noq.html
  */
 import { chromium } from 'playwright';
+import { launchGpuBrowser } from './tests/gpu-browser.mjs';
 import path from 'path';
 import fs from 'fs';
 import { pathToFileURL } from 'url';
@@ -40,7 +41,7 @@ async function t(name, fn) {
 }
 const must = (cond, msg) => { if (!cond) throw new Error(msg); };
 
-const browser = await chromium.launch({ headless: true, args: ['--disable-gpu', '--allow-file-access-from-files', '--no-sandbox'] });
+const browser = await launchGpuBrowser(chromium);
 const context = await browser.newContext({
   viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1,
   reducedMotion: REDUCED ? 'reduce' : 'no-preference'

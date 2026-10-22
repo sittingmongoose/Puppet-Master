@@ -33,6 +33,7 @@
  * item 4 was written for.
  */
 import {chromium} from 'playwright';
+import { launchGpuBrowser } from './tests/gpu-browser.mjs';
 import {pathToFileURL} from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -50,7 +51,7 @@ const results=[]; let pass=0, fail=0;
 const check=(ok,label,detail)=>{ results.push({ok:!!ok,label,detail}); ok?pass++:fail++;
   console.log(`${ok?'PASS':'FAIL'}  ${label}${ok?'':'\n        '+JSON.stringify(detail)}`); };
 
-const browser=await chromium.launch({headless:true,args:['--disable-gpu','--allow-file-access-from-files','--no-sandbox']});
+const browser=await launchGpuBrowser(chromium);
 const bctx=await browser.newContext({viewport:{width:1440,height:1080},deviceScaleFactor:1,
   reducedMotion: REDUCED ? 'reduce' : 'no-preference'});
 /* Item 3 needs the drawer wide (see the header).  The stored width is what

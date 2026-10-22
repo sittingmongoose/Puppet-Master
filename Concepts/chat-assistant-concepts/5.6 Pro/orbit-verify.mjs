@@ -37,6 +37,7 @@
  *   - the trail reader measures the painted tube (.nx-c) when there is one.
  */
 import { chromium } from 'playwright';
+import { launchGpuBrowser } from './tests/gpu-browser.mjs';
 import path from 'path';
 import fs from 'fs';
 
@@ -212,7 +213,7 @@ async function liveNodeClaims(page, nier) {
 
 /* ---- setup ---------------------------------------------------------- */
 if (!fs.existsSync(FILE)) { console.error('orbit-verify: no such file ' + FILE); process.exit(2); }
-const browser = await chromium.launch();
+const browser = await launchGpuBrowser(chromium);
 const consoleNoise = [];
 
 /* Chat WOW: the lab controls (play/pause, step, complete, reset, history) sit

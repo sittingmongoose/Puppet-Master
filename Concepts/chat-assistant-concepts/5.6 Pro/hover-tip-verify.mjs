@@ -15,6 +15,7 @@
  * Exit 0 all pass, 1 any FAIL, 2 bad invocation. Reads the built page, never edits it.
  */
 import { chromium } from 'playwright';
+import { launchGpuBrowser } from './tests/gpu-browser.mjs';
 import path from 'path';
 
 const argv = process.argv.slice(2);
@@ -31,7 +32,7 @@ const check = (label, ok, detail) => {
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const inBand = (v, lo, hi) => v >= lo && v <= hi;
 
-const browser = await chromium.launch({ headless: true, args: ['--allow-file-access-from-files', '--no-sandbox'] });
+const browser = await launchGpuBrowser(chromium);
 let code = 1;
 try {
   const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });

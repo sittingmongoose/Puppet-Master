@@ -71,6 +71,7 @@
  * WHAT IT WRITES. Nothing but stdout, and the --json file when given. It never writes a tracked file.
  */
 import { chromium } from 'playwright';
+import { launchGpuBrowser } from './tests/gpu-browser.mjs';
 import { pathToFileURL } from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -141,7 +142,7 @@ async function sec(label, fn) {
 }
 
 /* ----------------------------------------------------------------- setup */
-const browser = await chromium.launch({ headless: true, args: ['--allow-file-access-from-files', '--no-sandbox'] });
+const browser = await launchGpuBrowser(chromium);
 const consoleErrors = [], pageErrors = [];
 function watch(p) {
   p.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') consoleErrors.push(m.type() + ': ' + m.text().slice(0, 300)); });

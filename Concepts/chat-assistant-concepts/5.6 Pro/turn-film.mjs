@@ -24,6 +24,7 @@
  * Media is review evidence only: delete it when finished.
  */
 import { chromium } from 'playwright';
+import { launchGpuBrowser } from './tests/gpu-browser.mjs';
 import path from 'path';
 import fs from 'fs';
 import { execFileSync } from 'child_process';
@@ -80,9 +81,7 @@ const SCENES = {
 const sc = SCENES[SCENE];
 if (!sc) { console.error('unknown scene', SCENE); process.exit(2); }
 fs.rmSync(OUT, { recursive: true, force: true }); fs.mkdirSync(OUT, { recursive: true });
-const browser = GPU
-  ? await chromium.launch({ channel: 'chromium', args: ['--no-sandbox', '--enable-gpu', '--ignore-gpu-blocklist'] })
-  : await chromium.launch({ args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'] });
+const browser = await launchGpuBrowser(chromium);
 try {
   const page = await browser.newPage({ viewport: { width: W, height: H } });
   const errs = []; page.on('pageerror', e => errs.push(e.message));
