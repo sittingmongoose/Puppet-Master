@@ -1099,7 +1099,7 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
       row: !!row,
       path: row && row.dataset.path,
       isButton: row && row.tagName === 'BUTTON',
-      editor: PM56_TEST.editor().id
+      editor: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }
     };
   });
   check('Read/edit row opens a file: editor tab',
@@ -1143,7 +1143,7 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
   const mcpEd = await p12.evaluate(() => {
     const editor = PM56_TEST.editor(), tab = editor.tab;
     const body = PM56_TEST.editor().body;
-    return { id: PM56_TEST.editor().id, text: (body && body.textContent || '').slice(0, 240) };
+    return { id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, text: (body && body.textContent || '').slice(0, 240) };
   });
   check('MCP row opens an MCP editor doc',
     String(mcpEd.id || '').startsWith('mcp:') && /postgres\.explain|MCP/i.test(mcpEd.text || ''), mcpEd);
@@ -1155,7 +1155,7 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     if (row) row.click();
     const editor = PM56_TEST.editor(), tab = editor.tab;
     const body = PM56_TEST.editor().body;
-    return { row: !!row, id: PM56_TEST.editor().id, hasQuery: !!(body && /Search/i.test(body.textContent)) };
+    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, hasQuery: !!(body && /Search/i.test(body.textContent)) };
   });
   check('Search row opens a search editor doc',
     search.row && String(search.id || '').startsWith('search:') && search.hasQuery, search);
@@ -1167,7 +1167,7 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     if (row) row.click();
     const editor = PM56_TEST.editor(), tab = editor.tab;
     const body = PM56_TEST.editor().body;
-    return { row: !!row, id: PM56_TEST.editor().id, host: !!(body && /postgresql\.org|Fetched/i.test(body.textContent)) };
+    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, host: !!(body && /postgresql\.org|Fetched/i.test(body.textContent)) };
   });
   check('Fetch row opens a fetched-page editor doc',
     fetch.row && String(fetch.id || '').startsWith('link:') && fetch.host, fetch);
@@ -1183,7 +1183,7 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-artifact"]');
     if (row) row.click();
     const editor = PM56_TEST.editor(), tab = editor.tab;
-    return { row: !!row, id: PM56_TEST.editor().id };
+    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible } };
   });
   check('Artifact row opens dashboard-query or mermaid-runtime',
     art.row && (art.id === 'dashboard-query' || art.id === 'mermaid-runtime'), art);
@@ -1199,7 +1199,7 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-agent"]');
     if (row) row.click();
     const editor = PM56_TEST.editor(), tab = editor.tab;
-    return { row: !!row, id: PM56_TEST.editor().id, agent: row && row.dataset.id };
+    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, agent: row && row.dataset.id };
   });
   check('Agent row opens a child-agent editor tab',
     agent.row && String(agent.id || '') === 'thread-' + agent.agent, agent);
@@ -1219,7 +1219,7 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     const row = document.querySelector('.transcript-inner .working-variant-8 .rail8-row[data-action="open-change"]');
     if (row) row.click();
     const editor = PM56_TEST.editor(), tab = editor.tab;
-    return { row: !!row, editor: PM56_TEST.editor().id };
+    return { row: !!row, editor: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible } };
   });
   check('Step Rail file row opens a file: editor tab',
     railFile.row && String(railFile.editor || '').startsWith('file:'), railFile);
@@ -1262,7 +1262,7 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-change"]');
     if (row) row.click();
     const editor = PM56_TEST.editor(), tab = editor.tab;
-    return { row: !!row, path: row && row.dataset.path, editor: PM56_TEST.editor().id };
+    return { row: !!row, path: row && row.dataset.path, editor: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible } };
   });
   check('Multi Orbit B file row opens file: editor',
     orbitB.n >= 14 && orbitFile.row && String(orbitFile.editor || '').startsWith('file:'), { orbitB, orbitFile });
@@ -1282,7 +1282,7 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     const row = [...document.querySelectorAll('.transcript-inner .orbit-rows .wa-row')].find(r => r.dataset.action === 'open-work-doc' && String(r.dataset.id || '').startsWith('link:'));
     if (row) row.click();
     const editor = PM56_TEST.editor(), tab = editor.tab;
-    return { row: !!row, id: PM56_TEST.editor().id };
+    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible } };
   });
   check('Multi Orbit B fetch row opens a link doc',
     orbitFetch.row && String(orbitFetch.id || '').startsWith('link:'), orbitFetch);
