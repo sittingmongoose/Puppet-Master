@@ -74,8 +74,12 @@ def main():
   elif a.scenario=='live':
    ck('Live and frozen refs admitted with command identity',len(tray())==2 and tray()[0].get('command')=='cmd.chat.attachment.add' and tray()[1].get('normalizes_to')=='cmd.chat.attachment.add')
    click('[data-action="open-demo"]','Reopen Demo Studio for theme pass');theme_sel=p.locator('select[data-input="theme"]').filter(visible=True).first;theme_vals=theme_sel.evaluate('e=>[...e.options].map(o=>o.value)');r['themes']=theme_vals
-   for tv in theme_vals:theme_sel.select_option(tv);p.wait_for_timeout(150)
-   ck('Every theme applies without errors',len(theme_vals)>=2 and not r['errors']);click('[data-action="close-dialog"]','Close Demo Studio');shot('02-themes-applied')
+   # (2026-10-22) crossing into or out of NieR Mode plays its reboot moment, and its cover holds presses (nier-parts.js
+   # holdPresses) until the new look is painted: a person waits for it, so each pick waits until its theme is painted and
+   # the cover is gone (the old 150 ms pass pressed Close under the cover, so Demo Studio stayed open over the lab)
+   applied=[]
+   for tv in theme_vals:theme_sel.select_option(tv);p.wait_for_function('v=>PM56_EXT.ctx().state.theme===v&&!document.getElementById("o55np-reboot")',arg=tv,timeout=9000);applied.append(tv)
+   ck('Every theme applies without errors',len(theme_vals)>=2 and applied==theme_vals and p.evaluate('PM56_EXT.ctx().state.theme')==theme_vals[-1] and not r['errors']);click('[data-action="close-dialog"]','Close Demo Studio');shot('02-themes-applied')
    click('.b19-guide [data-action="b19-open-live-details"]','Open live Details through its ordinary control')
    want=p.evaluate('PM56_COMPOSER_STATE.bufferFor(PM56_EXT.ctx().thread.id).attachments[0].hash');html=p.locator('.att-details-dialog').inner_text();ck('Details shows exact captured hash',(want in html));shot('03-live-details');click('[data-action="close-dialog"]','Close Details')
    click('.b19-guide [data-action="b19-simulate-drift"]','Simulate a working-tree change')

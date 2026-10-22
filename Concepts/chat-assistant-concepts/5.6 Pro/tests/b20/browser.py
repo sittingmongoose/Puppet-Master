@@ -131,8 +131,11 @@ def main():
    ck('Escape mid-drag cancels with no send',users()==n1+2);shot('07-drag-cancelled')
    if p.locator('.bc-dialog').count():click('[data-action="bc-close"]','Close browser for the theme pass')
    click('[data-action="open-demo"]','Reopen Demo Studio for theme pass');theme_sel=p.locator('select[data-input="theme"]').filter(visible=True).first;theme_vals=theme_sel.evaluate('e=>[...e.options].map(o=>o.value)');r['themes']=theme_vals
-   for tv in theme_vals:theme_sel.select_option(tv);p.wait_for_timeout(150)
-   ck('Every theme applies without errors',len(theme_vals)>=2 and not r['errors']);click('[data-action="close-dialog"]','Close Demo Studio')
+   # (2026-10-22) crossing into or out of NieR Mode plays its reboot moment, and its cover holds presses until the new look
+   # is painted (nier-parts.js holdPresses): each pick waits until its theme is painted and the cover is gone
+   applied=[]
+   for tv in theme_vals:theme_sel.select_option(tv);p.wait_for_function('v=>PM56_EXT.ctx().state.theme===v&&!document.getElementById("o55np-reboot")',arg=tv,timeout=9000);applied.append(tv)
+   ck('Every theme applies without errors',len(theme_vals)>=2 and applied==theme_vals and p.evaluate('PM56_EXT.ctx().state.theme')==theme_vals[-1] and not r['errors']);click('[data-action="close-dialog"]','Close Demo Studio')
    if a.reduced_motion:
     ck('Reduced-motion media query honored',p.evaluate("matchMedia('(prefers-reduced-motion: reduce)').matches"))
     ck('Prompt bar carries no animation under reduced motion',p.evaluate("()=>{const el=document.querySelector('.bc-prompt-bar');if(!el)return true;const cs=getComputedStyle(el);return cs.animationName==='none'||cs.animationDuration==='0s'}"))
