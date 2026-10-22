@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L46893-L49331
 
-Source SHA256: `468dd3f4cc17c06b4cf3a8cfa126db07b9108d790f18813199b5b218d80b4a94`
+Source SHA256: `eca4d2212d4bf3f6bda4c938c8a94073862c3da15f61f59bf55e67f40d414bf8`
 
 ---
 
@@ -2397,18 +2397,18 @@ canonical_text: >-
   still own every opened tab. ACD-504 binds the hosted conversation, and ACD-500/501/502 keep the
   routing, command card and presentation requirements. The host's look settings reach the chat, its
   app modals and its hosted tab bodies in Basic, Friendly, Glass and Retro light/dark, under NieR Mode
-  and Reduce animations. The chat uses PMConcept7's NieR type and existing parts, with no scene,
-  ground, editor or reboot layer of its own. The shared questionnaire controls style Ask Card and
-  Grill Me alike; no pill, emoji or coloured side stripe is admitted (F3-648). Narrow Crew/Room shelf
-  headers, run plates, sticky run-view headers and helper sheets remain readable without overlaps or
-  clipping at 400-519 px and at the recorded 480 px plate case. Fixes alter styling and layout,
-  preserving the accepted DL-218 behavior and its tests. The host hover controller owns tags, the tab
-  strip owns close and active state, and overlays sit in the host stacking order below the Guided Tour
-  and hover tags. The existing Guided Tour's teaching surface remains while the hosted chat is hidden
-  during that tour; PWIZ-036 records the already accepted later redo. All chat demo recipes, scenarios
-  and family takes are in F3-649's one Demo Studio, and the standalone chat remains a separate
-  reference. SSYS-055 owns preference placement and binding. This is a concept port and a product
-  presentation contract; no browser result is native runtime or governance certification.
+  and Reduced Motion. The chat uses PMConcept7's NieR type and existing parts, with no scene, ground,
+  editor or reboot layer of its own. The shared questionnaire controls style Ask Card and Grill Me
+  alike; no pill, emoji or coloured side stripe is admitted (F3-648). Narrow Crew/Room shelf headers,
+  run plates, sticky run-view headers and helper sheets remain readable without overlaps or clipping
+  at 400-519 px and at the recorded 480 px plate case. Fixes alter styling and layout, preserving the
+  accepted DL-218 behavior and its tests. The host hover controller owns tags, the tab strip owns
+  close and active state, and overlays sit in the host stacking order below the Guided Tour and hover
+  tags. The existing Guided Tour's teaching surface remains while the hosted chat is hidden during
+  that tour; PWIZ-036 records the already accepted later redo. All chat demo recipes, scenarios and
+  family takes are in F3-649's one Demo Studio, and the standalone chat remains a separate reference.
+  SSYS-055 owns preference placement and binding. This is a concept port and a product presentation
+  contract; no browser result is native runtime or governance certification.
 gui_related: true
 gui_classification_reason: Defines the hosted chat surface, all-look presentation and narrow layout acceptance.
 split_recommended: false

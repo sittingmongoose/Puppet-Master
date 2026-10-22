@@ -4028,17 +4028,18 @@ canonical_text: >-
   narrow windows uses ui.chat_column.keep_open, and chat width uses
   cmd.workspace_layout.resize_surface. None is a Settings row. Activity Detail starts pinned when
   entered and explicit Unpin is temporary (ACD-453); no Activity pin default is added. The host's
-  look, fonts, Reduce animations and NieR settings reach the chat directly. A last-used chat model,
+  look, fonts, Reduced Motion and NieR settings reach the chat directly. A last-used chat model,
   effort or capability selection never becomes a global Settings default merely because the standalone
   concept saved it. The scripted stand-in remains built but off by default for Home harnesses, never a
   hosted conversation choice or an inventory row. Native Settings scope, validation, preview/apply,
   read-only refusal and storage requirements remain in force; the HTML bridge is a concept projection
   only. Added by the lead's ruling of 2026-10-22 under Jared's port brief (DL-232):
   general.interaction.thought-stream is global and display-only, Auto (While it thinks) or Expanded
-  (Always open), default Auto; Settings and New chat defaults edit the same row. It controls
-  disclosure of reasoning supplied by the model and never changes a reply or invents reasoning. The
-  current-chat ELI5 control is shown only in the chat sheet, not on the Settings page or its search;
-  its general.interaction.chat-eli5 inventory identity, run scope and override contract remain. The
+  (Always open), default Auto; Settings, New chat defaults and the composer capability menu's Thought
+  Stream choice edit the same row through the Settings transaction. It controls disclosure of
+  reasoning supplied by the model and never changes a reply or invents reasoning. The current-chat
+  ELI5 control is shown only in the chat sheet, not on the Settings page or its search; its
+  general.interaction.chat-eli5 inventory identity, run scope and override contract remain. The
   concept's existing project-only Settings adapter cannot prove separate application and project
   persistence: the renderer keeps these layers separate and discloses any session-only layer instead
   of creating a shadow store or claiming native scope support.

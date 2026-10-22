@@ -22650,8 +22650,8 @@
  },
  {
   "id": "ai.models.thread-title-model",
-  "label": "Naming chats",
-  "desc": "Renaming a chat yourself keeps your name.",
+  "label": "Name new chats",
+  "desc": "Choose automatic naming, no automatic name, or a model. A name uses the first message only; renaming the chat yourself keeps your name.",
   "type": "select",
   "options": [
    "Default",
@@ -22674,7 +22674,8 @@
    "model",
    "thread",
    "title",
-   "Chat Title Model"
+   "Chat Title Model",
+   "Naming chats"
   ]
  },
  {

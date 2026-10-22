@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L27934-L28110
 
-Source SHA256: `e0b046b393e91a8f54710617301fe908beaa94ecbb1c5cb3f742b21f427f5d17`
+Source SHA256: `cb3eb9929d527858270c5a4b35b25decad092912e5018dd54ed9659a998cf61b`
 
 ---
 
@@ -131,7 +131,7 @@ canonical_text: >-
   Goal document never returns: Goal remains in Activity Detail. The compact command card hands off to
   the existing terminal and retained-output routes, never draws an interactive shell or adds Explain.
   Presentation follows the app's Basic, Friendly, Glass and Retro light/dark looks, its fonts, NieR
-  Mode parts and Reduce animations; container width drives the chat and hosted tab bodies, while app
+  Mode parts and Reduced Motion; container width drives the chat and hosted tab bodies, while app
   modals use the window. The app's hover controller owns tags and the sheet's keyboard trap exists
   only while that sheet is open; unmodified chat shortcuts require focus in chat and Escape stops at
   the innermost surface. Settings preferences follow SSYS-055; a concept adapter exposes renderer

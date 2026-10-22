@@ -28054,7 +28054,7 @@ canonical_text: >-
   Goal document never returns: Goal remains in Activity Detail. The compact command card hands off to
   the existing terminal and retained-output routes, never draws an interactive shell or adds Explain.
   Presentation follows the app's Basic, Friendly, Glass and Retro light/dark looks, its fonts, NieR
-  Mode parts and Reduce animations; container width drives the chat and hosted tab bodies, while app
+  Mode parts and Reduced Motion; container width drives the chat and hosted tab bodies, while app
   modals use the window. The app's hover controller owns tags and the sheet's keyboard trap exists
   only while that sheet is open; unmodified chat shortcuts require focus in chat and Escape stops at
   the innermost surface. Settings preferences follow SSYS-055; a concept adapter exposes renderer

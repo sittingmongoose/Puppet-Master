@@ -4229,7 +4229,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Keeps shared host presentation and Settings control ownership single.
 split_recommended: false
-depends_on: [DL-232, DR-050, DR-054, DR-067, DR-070, DR-072, SSYS-050]
+depends_on: [DL-232, DR-050, DR-054, DR-056, DR-067, DR-070, DR-072, SSYS-050]
 unblocks: []
 acceptance_criteria:
   - "Changing an admitted preference through either visible surface updates one Settings value and both consumers without a feedback loop."

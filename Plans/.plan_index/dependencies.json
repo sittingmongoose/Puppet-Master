@@ -28933,6 +28933,11 @@
     {
       "edge_type": "depends_on",
       "from": "DR-075",
+      "to": "DR-056"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DR-075",
       "to": "DR-067"
     },
     {
@@ -112216,7 +112221,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-10-22T22:10:16Z",
+  "generated_at_utc": "2026-10-22T22:16:34Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -234438,9 +234443,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 17775,
+    "depends_on_edge_count": 17776,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21004,
+    "edge_count": 21005,
     "node_count": 7189,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3229,

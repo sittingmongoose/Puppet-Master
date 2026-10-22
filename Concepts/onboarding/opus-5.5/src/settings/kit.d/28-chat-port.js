@@ -83,9 +83,6 @@
     return true;
   }
   function models() { try { return window.PM56_APP?.ctx()?.D?.models || []; } catch (e) { return []; } }
-  const naming = O55R['ai.models.thread-title-model'] = Object.assign({}, O55R['ai.models.thread-title-model'], {
-    choices: ['Default', 'None'], options: { Default: 'Automatic (recommended)', None: 'Don’t name chats' }
-  });
   PM51.moreChoices('ai.models.thread-title-model', () => models().map(m => ({
     value: m.id, label: m.name, meta: m.status === 'ready' ? (m.provider || '') : 'Not available now'
   })));

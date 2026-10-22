@@ -6538,8 +6538,8 @@ canonical_text: >-
   adds no command, handler, physical storage family, EventRecord or claim of native readiness. Every
   row's planned-handler and unavailable-candidate boundary remains in force. Settings preferences use
   the existing Settings transaction rows, not one synthetic row per preference. The hosted surface's
-  boot, body mounting, appearance projection and one Demo Studio are local/concept dispositions and do
-  not become production wiring.
+  boot, body mounting and appearance projection are local presentation with no command or event. Demo
+  Studio is wholly outside production wiring (DR-070), not a wiring disposition.
 gui_related: true
 gui_classification_reason: Binds hosted chat producers to existing wiring rows and their reverse GUI consumers.
 split_recommended: false

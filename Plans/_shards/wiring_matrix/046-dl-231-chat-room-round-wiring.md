@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L6435-L6578
 
-Source SHA256: `af616ba422a6c7ed930ee6a7747efb5e6a0295a2ca2aea8c6feff58dcd124573`
+Source SHA256: `da8c0fb1bad078aea89f8b497d577845b29827a8e57c02aed03bd535c3678d87`
 
 ---
 
@@ -114,8 +114,8 @@ canonical_text: >-
   adds no command, handler, physical storage family, EventRecord or claim of native readiness. Every
   row's planned-handler and unavailable-candidate boundary remains in force. Settings preferences use
   the existing Settings transaction rows, not one synthetic row per preference. The hosted surface's
-  boot, body mounting, appearance projection and one Demo Studio are local/concept dispositions and do
-  not become production wiring.
+  boot, body mounting and appearance projection are local presentation with no command or event. Demo
+  Studio is wholly outside production wiring (DR-070), not a wiring disposition.
 gui_related: true
 gui_classification_reason: Binds hosted chat producers to existing wiring rows and their reverse GUI consumers.
 split_recommended: false

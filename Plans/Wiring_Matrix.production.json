@@ -7336,7 +7336,7 @@
     },
     "catalog.agents_open_thread": {
       "ui_element_id": "catalog.agents_open_thread",
-      "ui_location": "Left rail > Agents > Open Agent Thread; Assistant chat > Activity Detail > Open live transcript, live child card, and working-activity child openers",
+      "ui_location": "Left rail > Agents panel > Agent row expander > Open Agent Thread; Assistant chat > Activity Detail > Open live transcript, live child card, and working-activity child openers",
       "ui_command_id": "cmd.agents.open_thread",
       "handler_location": "handlers::agents::open_thread",
       "expected_event_types": [

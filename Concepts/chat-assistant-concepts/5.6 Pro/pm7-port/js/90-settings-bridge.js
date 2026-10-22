@@ -29,11 +29,15 @@
     });
   }
   function projection(c) { return B.eli5Project(projectId(c)); }
+  let copySheet = null, copyType = null;
   function paintPreferenceCopy(c) {
     const type = c.state.dialog?.type;
-    if (type !== 'eli5-style' && type !== 'af-settings') return;
+    if (type !== 'eli5-style' && type !== 'af-settings') { copySheet = null; copyType = null; return; }
     const sheet = document.querySelector('#pmOverlayRoot .pmx-sheet');
     if (!sheet) return;
+    const opening = sheet !== copySheet || type !== copyType;
+    copySheet = sheet; copyType = type;
+    let matched = 0;
     const example = !!c.thread?.eli5Example;
     const kept = !example && projection(c).ok;
     const replacements = new Map([
@@ -50,7 +54,14 @@
     const walker = document.createTreeWalker(sheet, NodeFilter.SHOW_TEXT);
     for (let n = walker.nextNode(); n; n = walker.nextNode()) {
       const replacement = replacements.get(n.nodeValue);
-      if (replacement) n.nodeValue = replacement;
+      if (replacement) { n.nodeValue = replacement; matched++; }
+    }
+    const text = sheet.textContent || '';
+    const projected = type === 'af-settings' ? text.includes('Session-only in this concept')
+      : kept ? text.includes('All chats lasts until reload.') && text.includes('Project default is kept.')
+        : text.includes('All chats and this example project last until reload.') && text.includes('These example choices reset on reload.');
+    if (opening && !matched && !projected) {
+      console.warn('[chat56 Settings] Hosted ELI5 copy hooks did not match; check session/project persistence wording.');
     }
     sheet.querySelectorAll('[data-hover-tip], [data-pm-hover-detail]').forEach(el => {
       for (const attr of ['data-hover-tip', 'data-pm-hover-detail']) {

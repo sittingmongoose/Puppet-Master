@@ -17009,7 +17009,9 @@ canonical_text: >-
   harnesses; it is absent as the hosted conversation and has no Settings row. The Studio-only stand-in
   swap and the fixture workspace bodies in ordinary Home tabs are concept scaffolding, not product
   settings or native tab kinds. The latter clarifies ACD-500's product exclusion while allowing the
-  demonstrations Jared asked to carry into the Studio.
+  demonstrations Jared asked to carry into the Studio. The lead also kept the existing project-only
+  Settings adapter for this port: All chats ELI5 is session-only in the concept, the gap is disclosed,
+  and no shadow global store is created.
 gui_related: true
 gui_classification_reason: Records the hosted chat replacement, shared Settings controls and preservation of the accepted tour.
 split_recommended: false
@@ -17027,7 +17029,7 @@ context_scope: chat56_pmconcept7_port
 implementation_surfaces:
   - "Plans/Decision_Log.md"
 node_compile_hint:
-  mode: owner_presentation_contract
+  mode: owner_decision_record
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
