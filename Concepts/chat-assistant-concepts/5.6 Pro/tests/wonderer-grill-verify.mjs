@@ -377,10 +377,14 @@ async function browser() {
     try { b.click(); window.PM56_EXT.ctx().renderApp(); } finally { b.remove(); }
   }, [name, data || {}]);
   const sleep = ms => page.waitForTimeout(ms);
-  const startSheet = async () => { await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click(); await sleep(1400); };
+  const startSheet = async (holdFacts = false) => {
+    await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click();
+    if (holdFacts) await ev(() => PM56_CLOCK.setScale(.01));
+    await sleep(1400);
+  };
   /* answer every round with Accept all until What we agreed is open; notes whether it waited on a lookup on the way */
-  const answerAll = async (maxMs = 30000) => {
-    let waited = false; const t0 = Date.now();
+  const answerAll = async (maxMs = 30000, resumeOnLookup = false) => {
+    let waited = false, resumed = false; const t0 = Date.now();
     await ev(() => {
       const root = window.PM56_HOST?.root?.() || document.body, tid = PM56_EXT.ctx().state.selectedThread;
       const p = window.__c56AnswerLookup = { seen: false, witness: null };
@@ -394,6 +398,7 @@ async function browser() {
     try {
     while (Date.now() - t0 < maxMs) {
       if (await ev(() => !!document.querySelector('.wg-lookup'))) waited = true;
+      if (resumeOnLookup && !resumed && (waited || await ev(() => __c56AnswerLookup.seen))) { await ev(() => PM56_CLOCK.setScale(1)); resumed = true; }
       if (await ev(() => !!document.querySelector('.wg-agreed[data-state="open"]'))) return await done(true);
       if (await ev(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'))) {
         await page.locator('.qs-grill [data-action="qs-accept-round"]').first().click({ timeout: 1500 }).catch(e => { if (!/Timeout|detached|not attached/.test(e.message)) throw e; });
@@ -402,7 +407,7 @@ async function browser() {
       await sleep(500);
     }
     return await done(false);
-    } finally { await ev(() => { window.__c56AnswerLookup?.observer.disconnect(); delete window.__c56AnswerLookup; }); }
+    } finally { await ev(resume => { window.__c56AnswerLookup?.observer.disconnect(); delete window.__c56AnswerLookup; if (resume) PM56_CLOCK.setScale(1); }, resumeOnLookup); }
   };
   const wonLanes = () => ev(() => [...document.querySelectorAll('.pmx-lane[data-k*=":"]')].filter(l => /Wonderer/.test(l.querySelector('.pmx-lane-name')?.textContent || '')).map(l => l.textContent));
   const disabledSynthesis = async run => {
@@ -452,16 +457,19 @@ async function browser() {
       await act('collab-modal-cancel').catch(() => {}); await ev(() => { const c = window.PM56_EXT.ctx(); c.closeDialog(); c.renderApp(); });
     }
     /* the Crew */
-    await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(900); await startSheet();
+    // Keep the recorded fact pending while the precondition reads run, then let
+    // its real timer finish once the lookup line has actually been painted.
+    await ev(() => { PM56_CLOCK.setScale(1); window.PM56_WG_DEMOS.start('crew'); }); await sleep(900); await startSheet(true);
     const crew = await ev(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = window.PM56_COLLAB.run(s.runId); return { id: r.id, grill: r.config.grill_me_enabled, parts: r.participants.map(p => p.additiveRoleKind), q: document.querySelector('.qs-grill-bar') ? document.querySelector('.qs-grill-bar').textContent : '', pre: [...document.querySelectorAll('.qs-ask-opt.is-on .qs-rec')].length }; });
     check('B2 a Crew with Grill Me on adds nobody', crew.grill === true && !crew.parts.some(k => /grill/.test(k)) && crew.parts.filter(k => k === 'wonderer').length === 1, JSON.stringify(crew.parts));
     check('B2b the round is the questionnaire, the Coordinator grilling, the recommended answer preselected', /The Coordinator is grilling you/.test(crew.q) && crew.pre === 1, crew.q);
     const split = await ev(id => window.PM56_CREW.claim(id, 'normalize', { epoch: window.PM56_COLLAB.run(id).stopEpoch, sourceHash: window.PM56_COLLAB.run(id).crew.input.sourceHash }), crew.id);
     check('B2c the split waits for Confirm', split.error === 'grill_me_waits_for_confirm', JSON.stringify(split));
-    const crewAns = await answerAll(40000);
+    const crewAns = await answerAll(40000, true);
     check('B2e grilling waited on a lookup instead of jumping to What we agreed', crewAns.waited, JSON.stringify(crewAns));
     const agreed = await ev(() => { const a = document.querySelector('.wg-agreed[data-state="open"]'); return a ? { rows: a.querySelectorAll('.wg-agreed-row').length, confirm: !!a.querySelector('[data-action="wg-confirm"]'), keep: !!a.querySelector('[data-action="wg-keep-going"]') } : null; });
     check('B2d What we agreed lists every decision, with Confirm and Keep going', agreed && agreed.rows === 5 && agreed.confirm && agreed.keep, JSON.stringify(agreed));
+    if (process.env.WGV_ONLY === 'b2') { check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); await b.close(); return; }
     await page.locator('.wg-agreed [data-action="wg-confirm"]').first().click();
     /* the recordings are paced for a person (2026-10-21); this pass reads their order, so it plays them 3x faster */
     const pace = k => ev(k => window.PM56_CLOCK.setScale(k), k);
