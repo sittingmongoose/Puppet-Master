@@ -149,7 +149,10 @@ async function fingerprint(clip) {
 async function hostClip() {
   const b = await page.locator('.decision-host').boundingBox();
   must(b && b.height > 10, 'decision host has no height');
-  return { x: Math.max(0, Math.round(b.x)), y: Math.max(0, Math.round(b.y)), width: Math.round(Math.min(b.width, 1440 - b.x)), height: Math.round(Math.min(b.height, 900 - b.y)) };
+  const viewport = page.viewportSize(), x = Math.max(0, Math.round(b.x)), y = Math.max(0, Math.round(b.y));
+  const width = Math.round(Math.min(b.x + b.width, viewport.width) - x), height = Math.round(Math.min(b.y + b.height, viewport.height) - y);
+  must(width > 0 && height > 0, `decision host is outside the viewport: ${JSON.stringify({ b, viewport })}`);
+  return { x, y, width, height };
 }
 const hostText = () => page.evaluate(() => (document.querySelector('.decision-host')?.textContent || '').replace(/\s+/g, ' ').trim());
 const stateOf = () => page.evaluate(() => PM56_DEMO.getState());
