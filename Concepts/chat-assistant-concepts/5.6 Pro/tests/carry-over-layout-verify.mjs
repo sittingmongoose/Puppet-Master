@@ -5,8 +5,8 @@
  */
 import { writeFileSync } from 'node:fs';
 import { chromium } from 'playwright';
-import { chatTarget, LOOKS } from './chat-target.mjs';
-import { launchGpuBrowser } from './gpu-browser.mjs';
+import { chatTarget, LOOKS, testGeometry } from './chat-target.mjs';
+import { launchGpuBrowser, gpuPage } from './gpu-browser.mjs';
 
 const argv = process.argv.slice(2), opt = key => { const i = argv.indexOf(key); return i < 0 ? null : argv[i + 1]; };
 const target = chatTarget(argv), results = [], errors = [];
@@ -18,10 +18,10 @@ const section = opt('--section') || 'all';
 if (!['all', 'sheets', 'plate'].includes(section)) throw new Error('--section all|sheets|plate');
 const widths = argv.includes('--sweep') ? Array.from({ length: 120 }, (_, i) => i + 400) : [400, 420, 440, 459, 460, 480, 500, 519];
 const check = (id, look, size, kind, pass, measured) => {
-  results.push({ id, look, size, height, kind, pass: !!pass, owner: look.startsWith('nier-') ? 'c56port-nier' : 'c56port-looks', measured });
+  results.push({ id, look, size, height, kind, pass: !!pass, owner: look.startsWith('nier-') ? 'c56port-nier' : 'c56port-looks', measured, sizeContext: testGeometry() });
   if (!pass) console.log(`FAIL ${id} ${look} ${kind}@${size} ${JSON.stringify(measured)}`);
 };
-const browser = await launchGpuBrowser(chromium), page = browser.contexts()[0].pages()[0];
+const browser = await launchGpuBrowser(chromium), page = gpuPage(browser);
 page.on('pageerror', e => errors.push(e.message));
 const ev = (fn, data) => page.evaluate(fn, data);
 const act = (name, data = {}) => ev(([name, data]) => {

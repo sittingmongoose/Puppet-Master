@@ -3,6 +3,8 @@
 import { execFileSync } from 'node:child_process';
 
 const owned = new Set();
+const pages = new WeakMap();
+export function gpuPage(browser) { return pages.get(browser); }
 export function ownGpuSession(id) { owned.add(id); return () => stop(id); }
 function stop(id) {
   if (!owned.delete(id)) return;
@@ -26,7 +28,12 @@ export async function launchGpuBrowser(chromium, argv = process.argv.slice(2)) {
   }
   try {
     const browser = await chromium.connectOverCDP(endpoint);
-    const probe = browser.contexts()[0].pages().find(p => !session?.recorder_url || !p.url().startsWith(session.recorder_url));
+    let attached;
+    if (!session) try { attached = JSON.parse(execFileSync('agent-browser', ['list'], { encoding: 'utf8', timeout: 10000 })).find(s => s.cdp_endpoint === endpoint); } catch {}
+    const recorder = session?.recorder_url || attached?.recorder_url;
+    const probe = browser.contexts()[0].pages().find(p => !recorder || !p.url().startsWith(recorder));
+    if (!probe) throw new Error('No non-recorder page in the GPU session');
+    pages.set(browser, probe);
     const renderer = await probe.evaluate(() => {
       const gl = document.createElement('canvas').getContext('webgl');
       return gl?.getParameter(gl.getExtension('WEBGL_debug_renderer_info').UNMASKED_RENDERER_WEBGL);

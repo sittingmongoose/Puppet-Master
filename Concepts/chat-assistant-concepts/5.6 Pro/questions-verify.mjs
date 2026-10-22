@@ -19,7 +19,7 @@
  *   node questions-verify.mjs --file /tmp/noq.html
  */
 import { chromium } from 'playwright';
-import { launchChatBrowser } from './tests/chat-target.mjs';
+import { launchChatBrowser, testGeometry } from './tests/chat-target.mjs';
 import path from 'path';
 import fs from 'fs';
 import { pathToFileURL } from 'url';
@@ -36,8 +36,8 @@ const url = pathToFileURL(FILE).href;
 const results = [];
 let consoleErrors = [], pageErrors = [];
 async function t(name, fn) {
-  try { const info = await fn(); results.push({ name, ok: true, info: info === undefined ? null : info }); }
-  catch (e) { results.push({ name, ok: false, error: String(e && e.message || e).slice(0, 400) }); }
+  try { const info = await fn(); results.push({ name, ok: true, sizeContext: testGeometry(), info: info === undefined ? null : info }); }
+  catch (e) { results.push({ name, ok: false, sizeContext: testGeometry(), error: String(e && e.message || e).slice(0, 400) }); }
 }
 const must = (cond, msg) => { if (!cond) throw new Error(msg); };
 

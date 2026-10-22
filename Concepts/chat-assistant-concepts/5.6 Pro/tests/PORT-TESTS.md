@@ -3,7 +3,7 @@ Run from `Concepts/chat-assistant-concepts/5.6 Pro` with `playwright` installed 
 ```sh
 node tests/port-suite.mjs --page standalone --build --out /tmp/c56port-tests/standalone
 node tests/port-suite.mjs --page pm7 --build --out /tmp/c56port-tests/pm7
-node tests/port-suite.mjs --page both --build --out /tmp/c56port-tests/integrated
+node tests/port-suite.mjs --page both --build --sweep --out /tmp/c56port-tests/integrated
 ```
 
 The runner opens GPU browsers sequentially and prints per-suite and per-page totals. Each stage has a log and JSON report; `summary.json` lists failing IDs and owners. `run.json` records the source commit, arguments and page SHA-256; each summary row also carries the page hash. `--standalone-file` and `--pm7-file` select existing builds. No built page is committed. A nonzero child exit or missing/empty report fails the run.
@@ -51,3 +51,5 @@ The host adapter keeps one set of assertions:
 The adapter reads host state and invokes host APIs. Column measurements allow the host's 1 px internal hairline. Overflow checks compare the chat host's scroll width with its own client width and independently check document overflow. The adapter does not create fake editor tabs. `--cdp` attaches to a caller-owned GPU session; callers stop it. Without it, the helper starts and stops its own `agent-browser`, including on error and SIGTERM, and prints its session ID and CDP endpoint. At most one browser is started per suite process; run at most two suite processes per lane.
 
 The layout verifier's `--section sheets|plate` supports focused reruns. Default `all` keeps both sections; final narrow-width acceptance requires `--sweep`.
+
+Each browser result includes `sizeContext`, refreshed after load, theme, viewport/column changes and pointer release. It records the actual viewport, column, inner stage and transcript sizes plus the requested size. Hosted column requests use a window at least 2400 px wide and clamp the column to 400–760 px; check names inherited from standalone retain their original wording. Recorder attachments select the session's non-recorder page. A full width sweep has a three-hour stage limit; other stages have a 45-minute limit.

@@ -33,7 +33,7 @@
  * item 4 was written for.
  */
 import {chromium} from 'playwright';
-import { launchChatBrowser } from './tests/chat-target.mjs';
+import { launchChatBrowser, testGeometry } from './tests/chat-target.mjs';
 import {pathToFileURL} from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -48,7 +48,7 @@ const SHOTS = (argv.includes('--shots') ? argv[argv.indexOf('--shots')+1] : null
 if(SHOTS) fs.mkdirSync(SHOTS,{recursive:true});
 
 const results=[]; let pass=0, fail=0;
-const check=(ok,label,detail)=>{ results.push({ok:!!ok,label,detail}); ok?pass++:fail++;
+const check=(ok,label,detail)=>{ results.push({ok:!!ok,label,detail,sizeContext:testGeometry()}); ok?pass++:fail++;
   console.log(`${ok?'PASS':'FAIL'}  ${label}${ok?'':'\n        '+JSON.stringify(detail)}`); };
 
 const browser=await launchChatBrowser(chromium);

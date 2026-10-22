@@ -14,8 +14,8 @@
  * leads is a target (0 to 5 allowed); leads are decided as they arrive, and nothing new reaches the team once it writes
  * the result; grilling waits on lookups; Grill Me turned on mid-run gates only the step that uses its answers; the first
  * pass runs during intake and a later pass queues behind core work. */
-import { chatTarget } from './chat-target.mjs';
-import { launchGpuBrowser } from './gpu-browser.mjs';
+import { chatTarget, testGeometry } from './chat-target.mjs';
+import { launchGpuBrowser, gpuPage } from './gpu-browser.mjs';
 import { createRequire } from 'node:module';
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
@@ -48,7 +48,7 @@ const AX_MORE = [
   { name: 'Simple Goal · Build a Plan as a Goal', action: 'b15-start', flow: 'plan', moves: ['[data-action="pd-build-goal"]'] },
   { name: 'Simple Goal · A future build is not a Goal yet', action: 'b15-start', flow: 'scheduled', moves: ['#pmOverlayRoot [data-action="sched-create-build"]'], max: 120000 }
 ];
-function check(name, pass, detail) { results.push({ name, phase, pass: !!pass, detail: pass ? '' : String(detail == null ? '' : detail) }); if (!pass || phase === 'browser') console.log((pass ? 'PASS  ' : 'FAIL  ') + name + (!pass && detail ? '  -- ' + detail : '')); }
+function check(name, pass, detail) { results.push({ name, phase, pass: !!pass, detail: pass ? '' : String(detail == null ? '' : detail), ...(phase === 'browser' ? { sizeContext: testGeometry() } : {}) }); if (!pass || phase === 'browser') console.log((pass ? 'PASS  ' : 'FAIL  ') + name + (!pass && detail ? '  -- ' + detail : '')); }
 const { Protocol, STATUS_WORD } = require(path.join(ROOT, 'wonderer-protocol.js'));
 const GE = require(path.join(ROOT, 'grill-protocol.js'));
 
@@ -363,7 +363,7 @@ async function browser() {
   const cdp = opt('--cdp');
   const b = await launchGpuBrowser(chromium);
   const ctx = b.contexts()[0];
-  const page = ctx.pages()[0];
+  const page = gpuPage(b);
   const errs = []; page.on('pageerror', e => errs.push(String(e && e.message || e)));
   await page.setViewportSize({ width: 1440, height: 900 });
   const load = async () => { await target.load(page); await target.resize(page, { width: 1440, height: 900 }); };

@@ -11,7 +11,7 @@
  * for a person. Headless Chromium over file://.
  */
 import { chromium } from 'playwright';
-import { launchChatBrowser } from './tests/chat-target.mjs';
+import { launchChatBrowser, testGeometry } from './tests/chat-target.mjs';
 import path from 'path';
 import fs from 'fs';
 
@@ -24,7 +24,7 @@ const ONLY = opt('only', '');
 const OUT = opt('json', null);
 const results = [];
 let group = null;
-const check = (label, ok, detail) => { results.push({ group, label, pass: !!ok, detail: detail === undefined ? null : detail }); console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${detail !== undefined ? '  ' + JSON.stringify(detail).slice(0, 220) : ''}`); return ok; };
+const check = (label, ok, detail) => { results.push({ group, label, pass: !!ok, sizeContext: testGeometry(), detail: detail === undefined ? null : detail }); console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${detail !== undefined ? '  ' + JSON.stringify(detail).slice(0, 220) : ''}`); return ok; };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 const browser = await launchChatBrowser(chromium);

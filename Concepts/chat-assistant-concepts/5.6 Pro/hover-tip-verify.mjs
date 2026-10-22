@@ -15,7 +15,7 @@
  * Exit 0 all pass, 1 any FAIL, 2 bad invocation. Reads the built page, never edits it.
  */
 import { chromium } from 'playwright';
-import { launchChatBrowser } from './tests/chat-target.mjs';
+import { launchChatBrowser, testGeometry } from './tests/chat-target.mjs';
 import path from 'path';
 
 const argv = process.argv.slice(2);
@@ -25,7 +25,7 @@ const FILE = path.resolve(opt('file', path.join(ROOT, 'index.html')));
 const results = [];
 let failures = 0;
 const check = (label, ok, detail) => {
-  results.push({ label, pass: !!ok, detail: detail === undefined ? null : detail });
+  results.push({ label, pass: !!ok, sizeContext: testGeometry(), detail: detail === undefined ? null : detail });
   console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${detail !== undefined ? '  ' + JSON.stringify(detail).slice(0, 240) : ''}`);
   if (!ok) failures++;
 };

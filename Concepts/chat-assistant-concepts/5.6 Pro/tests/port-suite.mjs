@@ -20,10 +20,10 @@ const runInfo = { startedAt: new Date().toISOString(), sourceHead: execFileSync(
 const stages = ['wonderer', 'layout', 'hover', 'questions', 'turn', 'history', 'orbit', 'neon'];
 const only = opt('--only', stages.join(',')).split(',');
 if (only.some(s => !stages.includes(s))) throw new Error('Unknown --only stage');
-function run(command, args, log, env = {}) {
+function run(command, args, log, env = {}, timeoutMs = 45 * 60 * 1000) {
   return new Promise(resolve => {
     const fd = openSync(log, 'w'), child = spawn(command, args, { cwd: CHAT_ROOT, env: { ...process.env, ...env }, stdio: ['ignore', fd, fd] });
-    const timer = setTimeout(() => child.kill('SIGTERM'), 45 * 60 * 1000);
+    const timer = setTimeout(() => child.kill('SIGTERM'), timeoutMs);
     child.on('error', e => { clearTimeout(timer); closeSync(fd); resolve({ code: 2, error: e.message }); });
     child.on('exit', (code, signal) => { clearTimeout(timer); closeSync(fd); resolve({ code: code ?? 2, signal }); });
   });
@@ -55,7 +55,7 @@ for (const page of pages) {
     if (opt('--looks') && suite === 'layout') args.push('--looks', opt('--looks'));
     if (opt('--looks') && suite === 'neon') args.push('--themes', opt('--looks'));
     console.log(`RUN ${page} ${suite}`);
-    const exit = await run(process.execPath, args, log, { WGV_ONLY: opt('--wg-only', ''), PM56_ROOT: CHAT_ROOT });
+    const exit = await run(process.execPath, args, log, { WGV_ONLY: opt('--wg-only', ''), PM56_ROOT: CHAT_ROOT }, suite === 'layout' && argv.includes('--sweep') ? 3 * 60 * 60 * 1000 : 45 * 60 * 1000);
     let rows = [], report;
     try { report = JSON.parse(readFileSync(json, 'utf8')); rows = report.results || []; } catch {}
     if (suite === 'hover') rows = readFileSync(log, 'utf8').split('\n').filter(l => /^(PASS|FAIL)\s/.test(l)).map(l => ({ name: l.replace(/^(PASS|FAIL)\s+/, ''), pass: l.startsWith('PASS') }));

@@ -5,6 +5,22 @@ import { launchGpuBrowser } from './gpu-browser.mjs';
 
 export const CHAT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const LOOKS = ['basic-dark', 'basic-light', 'glass-dark', 'glass-light', 'friendly-dark', 'friendly-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light'];
+const sizeContexts = new Map();
+// Synchronous assertion writers attach the latest measured sizing context.
+// It is refreshed after load, theme, viewport/column changes and pointer release.
+export function testGeometry() { return [...sizeContexts.values()].at(-1) || null; }
+async function captureSize(page, requested) {
+  const measured = await page.evaluate(() => {
+    const box = el => { const r = el?.getBoundingClientRect(); return r ? { width: r.width, height: r.height } : null; };
+    const root = document.querySelector('#pmRoot') || document.body;
+    return { measuredAt: performance.now(), viewport: { width: innerWidth, height: innerHeight },
+      column: box(document.querySelector('#chatPanel > #pmw-chat56')), stage: box(root?.querySelector('.chat-stage')), transcript: box(root?.querySelector('.transcript')) };
+  });
+  measured.requested = requested || sizeContexts.get(page)?.requested || null;
+  if (!sizeContexts.has(page)) page.once('close', () => sizeContexts.delete(page));
+  sizeContexts.delete(page); sizeContexts.set(page, measured);
+  return measured;
+}
 export function chatTarget(argv = process.argv.slice(2)) {
   const opt = (key, fallback) => { const i = argv.indexOf(key); return i < 0 ? fallback : argv[i + 1]; };
   const kind = opt('--page', 'standalone');
@@ -34,6 +50,7 @@ export function chatTarget(argv = process.argv.slice(2)) {
         return frame && Math.abs(frame.getBoundingClientRect().width - expected) <= 1;
       }, expected, { timeout: 5000 });
     }
+    await captureSize(page, { ...size, surface });
   }
   async function theme(page, look) {
     await page.evaluate(({ look, kind }) => {
@@ -47,6 +64,7 @@ export function chatTarget(argv = process.argv.slice(2)) {
     if (kind === 'pm7') await page.waitForFunction(({ painted, nier }) => document.documentElement.dataset.theme === painted && (document.documentElement.dataset.o55Nier === 'on') === nier && [...document.querySelectorAll('.pm56-host')].every(h => h.dataset.theme === painted), { painted, nier: look.startsWith('nier-') });
     await page.evaluate(() => document.fonts.ready.then(() => true));
     await page.waitForTimeout(400);
+    await captureSize(page);
   }
   async function panelSize(page, size) {
     if (kind === 'standalone') return resize(page, size, 'window');
@@ -61,13 +79,13 @@ export function chatTarget(argv = process.argv.slice(2)) {
         return body ? { width: body.getBoundingClientRect().width, height: body.getBoundingClientRect().height, tabId: a.tabId } : null;
       });
       if (!measured) throw new Error('The active Home tab has no chat-owned panel body');
-      if (Math.abs(measured.width - size.width) < 1) return measured;
+      if (Math.abs(measured.width - size.width) < 1) { await captureSize(page, { ...size, surface: 'panel' }); return measured; }
       width = Math.max(400, Math.min(4000, Math.round(width + size.width - measured.width)));
     }
     throw new Error(`Cannot size Home panel to ${size.width}px: ${JSON.stringify(measured)}`);
   }
   return { kind, file, url: url.href, ready, resize, theme, panelSize,
-    async load(page) { await page.goto(url.href); await ready(page); await page.waitForTimeout(1500); },
+    async load(page) { await page.goto(url.href); await ready(page); await page.waitForTimeout(1500); await captureSize(page); },
     async demoTrigger(page, action, flow) {
       if (kind === 'pm7') {
         await page.evaluate(() => { if (!window.O55?.demo?.open) throw new Error('PM7 Demo Studio is unavailable'); O55.demo.open('chat'); });
@@ -98,7 +116,10 @@ export async function launchChatBrowser(chromium, argv = process.argv.slice(2)) 
       if (target.kind === 'pm7') await page.evaluate(width => {
         if (window.PMW?.chatCol) { PMW.chatCol.setWidth(Math.min(760, Math.max(400, width))); PMW.chatCol.show(); }
       }, size.width);
+      await captureSize(page, { ...size, surface: 'column' });
     };
+    const release = page.mouse.up.bind(page.mouse);
+    page.mouse.up = async options => { const result = await release(options); await captureSize(page); return result; };
     const init = kind => {
         const T = window.PM56_TEST = { kind };
         Object.defineProperty(T, 'host', { get: () => kind === 'pm7' ? document.querySelector('#pmRoot') : document.body });
@@ -125,6 +146,7 @@ export async function launchChatBrowser(chromium, argv = process.argv.slice(2)) 
       await target.ready(page);
       await page.evaluate(init, target.kind);
       if (target.kind === 'pm7') await page.setViewportSize(page.viewportSize() || { width: 1440, height: 900 });
+      await captureSize(page);
       return response;
     };
     return page;

@@ -37,7 +37,7 @@
  *   - the trail reader measures the painted tube (.nx-c) when there is one.
  */
 import { chromium } from 'playwright';
-import { launchChatBrowser } from './tests/chat-target.mjs';
+import { launchChatBrowser, testGeometry } from './tests/chat-target.mjs';
 import path from 'path';
 import fs from 'fs';
 
@@ -50,8 +50,8 @@ const OUT = arg('--json', null);
 
 const results = [];
 let cur = null;
-function ok(label, detail) { results.push({ label, pass: true, detail: detail ?? null, group: cur }); }
-function bad(label, detail) { results.push({ label, pass: false, detail: detail ?? null, group: cur }); }
+function ok(label, detail) { results.push({ label, pass: true, sizeContext: testGeometry(), detail: detail ?? null, group: cur }); }
+function bad(label, detail) { results.push({ label, pass: false, sizeContext: testGeometry(), detail: detail ?? null, group: cur }); }
 function check(label, cond, detail) { (cond ? ok : bad)(label, detail); return cond; }
 async function safe(label, fn) {
   cur = label;

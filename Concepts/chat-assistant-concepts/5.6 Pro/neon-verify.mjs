@@ -71,7 +71,7 @@
  * WHAT IT WRITES. Nothing but stdout, and the --json file when given. It never writes a tracked file.
  */
 import { chromium } from 'playwright';
-import { launchChatBrowser } from './tests/chat-target.mjs';
+import { launchChatBrowser, testGeometry } from './tests/chat-target.mjs';
 import { pathToFileURL } from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -127,12 +127,12 @@ if (!fs.existsSync(FILE)) { console.error('neon-verify: no such file ' + FILE); 
 const results = [];
 let pass = 0, fail = 0, skipped = 0;
 function check(ok, label, detail) {
-  results.push({ ok: !!ok, label, detail: detail === undefined ? null : detail });
+  results.push({ ok: !!ok, label, sizeContext: testGeometry(), detail: detail === undefined ? null : detail });
   ok ? pass++ : fail++;
   console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${ok ? '' : '\n        ' + JSON.stringify(detail).slice(0, 2000)}`);
 }
 function skip(label, detail) {
-  results.push({ ok: null, label, detail: detail === undefined ? null : detail });
+  results.push({ ok: null, label, sizeContext: testGeometry(), detail: detail === undefined ? null : detail });
   skipped++;
   console.log(`SKIP  ${label}`);
 }
