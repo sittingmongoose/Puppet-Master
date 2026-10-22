@@ -22,6 +22,8 @@ node tests/carry-over-layout-verify.mjs --page pm7 --file /tmp/c56port-tests/PMC
 
 `--wg-only b5` stops after the initial Crew and BrainStorm gate checks. `--wg-only rx --rx-scale 1` measures the recorded examples at their normal user pace; the default is the original accelerated scale 3. Both use the same timing thresholds and record the command in run.json. A normal-pace receipt is reported separately from an accelerated run.
 
+`--wg-only contrast` runs the identical R2-4 setup, painted-pixel measurement and 4.5:1 predicate in all ten looks, plus page-error checking. It supports the short rerun after theme inks change; the full R2 path still runs every original guard.
+
 Record the integrated Crew, Room and BrainStorm examples at their readable real-time pace:
 
 ```sh

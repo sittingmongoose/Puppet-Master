@@ -438,7 +438,7 @@ async function browser() {
   try {
     await load();
     /* WGV_ONLY=r2: the round 2 checks alone (a quick local loop; the full pass runs everything) */
-    if (process.env.WGV_ONLY === 'r2') { await reviewRound2({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
+    if (['r2', 'contrast'].includes(process.env.WGV_ONLY)) { await reviewRound2({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=r1: the round 1 checks alone (a quick local loop) */
     if (process.env.WGV_ONLY === 'r1') { await reviewRound1({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=rx: the recorded-examples checks alone (2026-10-21) */
@@ -1347,6 +1347,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   const confirmThread = async (tid, ms = 40000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { const st = await ev(t => { const s = window.PM56_WG.threadSession(t); return s ? s.status : ''; }, tid); if (st === 'confirmed') return true; if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]')) { await sleep(700); continue; } if (await click('.qs-grill [data-action="qs-accept-round"]')) { await sleep(900); continue; } await sleep(400); } return false; };
   const acceptLabel = () => ev(() => { const b = document.querySelector('.qs-grill [data-action="qs-accept-round"]'); return b ? b.textContent.replace(/\s+/g, ' ').trim() : ''; });
 
+  if (process.env.WGV_ONLY !== 'contrast') {
   /* 1 (Astra F1 = Opus N1): Keep going followed by an untouched Wrap up keeps every answer you submitted */
   await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(600);
   let t = await thread();
@@ -1432,6 +1433,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   const f3 = await ev(tid => { const c = window.PM56_EXT.ctx(), s = window.PM56_WG.threadSession(tid), a = window.PM56_WG.grill.agreed(s); return { st: s.status, ended: a.endedBy, dec: a.decisions.map(d => d.id + '=' + d.answer), card: !!document.querySelector('.qs-grill'), bound: !!c.state.wgGrill, agreed: document.querySelectorAll('.wg-agreed[data-state="open"]').length }; }, p3.tid);
   check('R2-3 turning a Plan’s Grill Me off keeps “Narrow it to the first step”, clears the Ask Card and its binding, and shows one What we agreed for Confirm',
     f3.st === 'agreeing' && f3.ended === 'switched_off' && f3.dec.includes('d-scope=Narrow it to the first step') && !f3.card && !f3.bound && f3.agreed === 1, JSON.stringify(f3));
+  }
 
   /* 4 (Astra F4 + Opus N4 + n-a): contrast on the painted pixels in ten looks: the round bar over its tint, the map's
      frontier, the source line, who asked for a pass, and the rest of the required words */
@@ -1466,6 +1468,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   check('R2-4 required words read 4.5:1 or better on the painted pixels in ten looks (the round bar over its tint, the map frontier, the source line, who asked for a pass)',
     !Object.keys(low4).length && Object.values(n4).every(n => n >= 8), JSON.stringify({ low4, n4 }));
   results[results.length - 1].measured = { ratios: pixels4, counts: n4 };
+  if (process.env.WGV_ONLY === 'contrast') return;
 
   /* D1 (ruling 18): the map draws its dependencies, has no tally of its own, keeps the question in view at 1440 x 900,
      and marks the question on screen; in What we agreed it gives the structure without repeating the answers */
