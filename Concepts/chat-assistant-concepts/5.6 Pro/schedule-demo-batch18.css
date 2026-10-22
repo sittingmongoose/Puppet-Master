@@ -24,3 +24,4 @@
 @media(max-width:800px){.b18-guide-title{display:block}.b18-guide-title small{display:block;margin-top:4px}}
 /* playback (2026-10-22): the line inside Build At says what you are asked, so it wraps rather than cutting it off */
 .pmx-guide.b18-sheet-guide .pmx-guide-step{white-space:normal;overflow:visible;text-overflow:clip;}
+.pmx-guide.b18-sheet-guide[data-placement="sheet"]{padding-top:9px;padding-bottom:9px;}

@@ -5,3 +5,5 @@
 .pmx-guide.revert-demo-injection{min-height:40px;}
 /* playback (2026-10-22): the line says what you are asked, so it wraps rather than cutting the question off */
 .pmx-guide.revert-demo-injection .pmx-guide-step{white-space:normal;overflow:visible;text-overflow:clip;}
+/* wrapped, its ink keeps 8 px from the line's hairlines (J-2 crowding) */
+.pmx-guide.revert-demo-injection[data-placement="sheet"]{padding-top:9px;padding-bottom:9px;}
