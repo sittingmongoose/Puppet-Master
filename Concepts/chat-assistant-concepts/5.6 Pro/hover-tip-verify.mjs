@@ -9,7 +9,7 @@
  *   4  press: pointerdown dismisses the tag and suppresses it until the pointer leaves.
  *   5  handoff: moving directly anchor-to-anchor starts a full ~1600ms dwell (no warm
  *      handoff, no stuck-closed); the old tag closes on its normal path.
- *   6  preview: activity previews still dwell 650ms.
+ *   6  preview: activity previews still dwell 650ms, from the pointer's arrival on the domain to its preview mounting.
  *   7  focus-held: a focus-opened tag survives work ticks while focus holds.
  *
  * Exit 0 all pass, 1 any FAIL, 2 bad invocation. Reads the built page, never edits it.
@@ -180,12 +180,47 @@ try {
     check('tag re-opens after leave and return', !c4re.timeout && inBand(c4age, 1300, 2200), `open=${Math.round(c4age)}ms`);
   }
 
-  // 6. activity preview dwells 650ms.
+  // 6. activity preview dwells 650ms, timed in page: the pointer's first arrival on a domain anchor to that domain's
+  //    preview mounting. Work ticks add and reorder domains, so the anchor is resolved now rather than at setup, and
+  //    the preview that opens must belong to the domain under the pointer when it opens.
   await park();
-  const pT = Date.now();
-  await page.mouse.move(spots.dom.x, spots.dom.y, { steps: 4 });
-  const c6 = await waitSig(spots.dom.key, 2000);
-  check('activity preview dwells 650ms', !c6.timeout && inBand(Date.now() - pT, 350, 1100), `open=${Date.now() - pT}ms sig=${c6.s}`);
+  const dom6 = await page.evaluate(() => {
+    const el = [...document.querySelectorAll('[data-hover-domain]')].find(el => { const r = el.getBoundingClientRect(); return r.width > 4 && r.height > 4 && r.x >= 0 && r.y >= 0 && r.right <= innerWidth && r.bottom <= innerHeight; });
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    return { x: r.x + r.width / 2, y: r.y + r.height / 2, key: el.dataset.hoverDomain };
+  });
+  if (!dom6) check('activity preview dwells 650ms', false, 'no visible activity domain');
+  else {
+    await page.evaluate(({ x, y }) => {
+      const P = window.__preview = { entry: {}, open: null };
+      P.over = e => {
+        const a = e.target && e.target.closest ? e.target.closest('[data-hover-domain]') : null;
+        if (a && !(a.dataset.hoverDomain in P.entry)) P.entry[a.dataset.hoverDomain] = performance.now();
+      };
+      document.addEventListener('pointerover', P.over, true);
+      const root = document.getElementById('pmOverlayRoot');
+      P.mo = new MutationObserver(() => {
+        const el = root.querySelector(':scope > [data-overlay="hover"]');
+        const s = el ? el.dataset.hoverSig || '' : '';
+        if (P.open || !s.startsWith('activity|')) return;
+        const at = document.elementFromPoint(x, y), a = at && at.closest('[data-hover-domain]');
+        P.open = { t: performance.now(), domain: s.slice('activity|'.length), under: a ? a.dataset.hoverDomain : null };
+      });
+      P.mo.observe(root, { childList: true });
+    }, dom6);
+    await page.mouse.move(dom6.x, dom6.y, { steps: 4 });
+    await page.waitForFunction(() => window.__preview.open, null, { timeout: 3000 }).catch(() => {});
+    const p6 = await page.evaluate(() => {
+      const P = window.__preview;
+      P.mo.disconnect();
+      document.removeEventListener('pointerover', P.over, true);
+      return { open: P.open, entry: P.open && P.open.domain in P.entry ? P.entry[P.open.domain] : null };
+    });
+    const dwell = p6.open && p6.entry !== null ? Math.round(p6.open.t - p6.entry) : null;
+    check('activity preview dwells 650ms', dwell !== null && p6.open.domain === p6.open.under && inBand(dwell, 350, 1100),
+      p6.open ? `open=${dwell}ms sig=activity|${p6.open.domain} under=${p6.open.under} aimed=${dom6.key}` : `no preview within 3s aimed=${dom6.key}`);
+  }
 
   await park();
   code = failures ? 1 : 0;
