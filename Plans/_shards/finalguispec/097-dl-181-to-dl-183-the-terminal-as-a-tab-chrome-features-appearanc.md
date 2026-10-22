@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46893-L49266
+Source lines: L46893-L49331
 
-Source SHA256: `97da549bf19f41c235cbda5e1395c90c6a434765040065d1e3fddfb707e4bf3e`
+Source SHA256: `eca4d2212d4bf3f6bda4c938c8a94073862c3da15f61f59bf55e67f40d414bf8`
 
 ---
 
@@ -2382,3 +2382,68 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-654
+
+
+### F3-659 - The 5.6 Pro Chat In The Home Column
+
+```yaml
+plan_unit_id: F3-659
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Home chat column presents the 5.6 Pro conversation surface in place of the scripted stand-in
+  (DL-232). F3-637 still owns width, History, Keep open, pop-out and the narrow ladder; F3-634/F3-635
+  still own every opened tab. ACD-504 binds the hosted conversation, and ACD-500/501/502 keep the
+  routing, command card and presentation requirements. The host's look settings reach the chat, its
+  app modals and its hosted tab bodies in Basic, Friendly, Glass and Retro light/dark, under NieR Mode
+  and Reduced Motion. The chat uses PMConcept7's NieR type and existing parts, with no scene, ground,
+  editor or reboot layer of its own. The shared questionnaire controls style Ask Card and Grill Me
+  alike; no pill, emoji or coloured side stripe is admitted (F3-648). Narrow Crew/Room shelf headers,
+  run plates, sticky run-view headers and helper sheets remain readable without overlaps or clipping
+  at 400-519 px and at the recorded 480 px plate case. Fixes alter styling and layout, preserving the
+  accepted DL-218 behavior and its tests. The host hover controller owns tags, the tab strip owns
+  close and active state, and overlays sit in the host stacking order below the Guided Tour and hover
+  tags. The existing Guided Tour's teaching surface remains while the hosted chat is hidden during
+  that tour; PWIZ-036 records the already accepted later redo. All chat demo recipes, scenarios and
+  family takes are in F3-649's one Demo Studio, and the standalone chat remains a separate reference.
+  SSYS-055 owns preference placement and binding. This is a concept port and a product presentation
+  contract; no browser result is native runtime or governance certification.
+gui_related: true
+gui_classification_reason: Defines the hosted chat surface, all-look presentation and narrow layout acceptance.
+split_recommended: false
+depends_on: [DL-232, F3-634, F3-635, F3-637, F3-648, F3-649, ACD-504, SSYS-055, PWIZ-036]
+unblocks: []
+acceptance_criteria:
+  - "The hosted column shows one 5.6 Pro chat, with host-owned appearance, hover and panel routing."
+  - "The carry-over narrow layout cases pass without dropping DL-218 behavior or its regression checks."
+  - "The Guided Tour and one Demo Studio keep their existing ownership boundaries."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: hosted_chat_owner_drift
+reasoning_tier: high
+context_scope: chat56_pmconcept7_port
+implementation_surfaces:
+  - "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-185"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-20-wonderer-grill-me-concept/PORT-CARRY-OVER.md, SHA-256 67195793eeda6a463b5e2da60e7ae294ae62ef435a4a89e56fcd3e25587884fa (accepted layout and styling repairs)"
+preserved_exact_tokens:
+  - "Demo Studio"
+  - "Keep open"
+negative_constraints:
+  - "Do not restore the scripted stand-in as an alternative Settings mode."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/FinalGUISpec.md"
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-504, ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/Planning_Wizard.md#PWIZ-036

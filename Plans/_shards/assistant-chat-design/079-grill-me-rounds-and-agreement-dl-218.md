@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27915-L28009
+Source lines: L27934-L28110
 
-Source SHA256: `bb59714a795da49437137863dcf3065fb5f3da6f13274f751ed7116e85abb358`
+Source SHA256: `cb3eb9929d527858270c5a4b35b25decad092912e5018dd54ed9659a998cf61b`
 
 ---
 
@@ -103,3 +103,85 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-218, ContractName:Plans/Collaborative_Workflows.md#CWR-041, ContractName:Plans/Collaborative_Workflows.md#CWR-042, ContractName:Plans/Collaborative_Workflows.md#CWR-043
+
+
+### ACD-504 - The Hosted Chat Replaces The Stand-In
+
+```yaml
+plan_unit_id: ACD-504
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The 5.6 Pro chat is the Home column's conversation surface (DL-232), replacing the scripted stand-in
+  under F3-637 and meeting ACD-500, ACD-501 and ACD-502. One History list serves it; History pin is
+  the column's ui.chat_column.pin_history and its header menu carries the column's Keep open choice.
+  Activity Detail and its bounded hover previews remain inside the chat. The lab header, lab editor
+  pane, lab status bar and chat-local Demo Studio launcher are absent from hosted mode. Booting the
+  chat opens no plan or other panel tab. Every opened body uses the correct host kind and domain
+  identity from ACD-500: exact plan revision and Deep Plan discovery as plan, versioned artifact as
+  artifact, file or diff as editor, child transcript as transcript, collaboration and evidence as run
+  or its owner document, thread detail as context, rules/memory/revert/debug/Lens/Wonderer as
+  document, tool calls as record, addresses as browser, command sessions as terminal. The host owns
+  each body, its strip, deduplication and focus, and reports close and activation so the chat's run
+  card relinquishes or restores its controls. A user open takes focus, an unsolicited agent open stays
+  in the background, and modifier file opens keep F3-634's rules. Wand setup and thread dialogs remain
+  app modals; attachments open their artifact/file owner while More Info remains a popover; Plan
+  Export/PDF remains a print/download and Send to Planning Wizard remains page navigation. The stale
+  Goal document never returns: Goal remains in Activity Detail. The compact command card hands off to
+  the existing terminal and retained-output routes, never draws an interactive shell or adds Explain.
+  Presentation follows the app's Basic, Friendly, Glass and Retro light/dark looks, its fonts, NieR
+  Mode parts and Reduced Motion; container width drives the chat and hosted tab bodies, while app
+  modals use the window. The app's hover controller owns tags and the sheet's keyboard trap exists
+  only while that sheet is open; unmodified chat shortcuts require focus in chat and Escape stops at
+  the innermost surface. Settings preferences follow SSYS-055; a concept adapter exposes renderer
+  projections without making those global names product APIs. DL-218's Wonderer and Grill Me behavior
+  and DL-231's automatic Chat Room rounds remain intact. All demonstration launches and family mixers
+  are sections of F3-649's one Demo Studio. The port's screenshots, fixtures and browser checks remain
+  concept evidence; unmet native requirements stay owed. In the concept, Demo Studio may show the
+  off-by-default stand-in instead for panel-opening examples; launching a chat example switches it off
+  and restores the hosted assistant. Only one conversation surface is visible at a time. Demo fixture
+  workspaces may use ordinary Home tabs under the concept-only disposition of ACD-500, never native
+  kinds or product routes.
+gui_related: true
+gui_classification_reason: Defines hosted conversation presentation, opened surface kinds, shared preferences and focus behavior.
+split_recommended: false
+depends_on: [DL-232, ACD-500, ACD-501, ACD-502, ACD-503, DR-075, SSYS-055]
+unblocks: []
+acceptance_criteria:
+  - "One hosted chat replaces the stand-in without seeding a plan tab, duplicate History or lab chrome."
+  - "Each surface opens through the existing owner and kind; closing or activating a run tab updates its card."
+  - "All admitted preferences use SSYS-055, and concept-only choices remain in the Demo Studio."
+  - "Wonderer leads, Grill Me agreement confirmation and Chat Room automatic rounds preserve DL-218 and DL-231."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: hosted_chat_owner_drift
+reasoning_tier: high
+context_scope: chat56_pmconcept7_port
+implementation_surfaces:
+  - "Plans/assistant-chat-design.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-185"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-20-wonderer-grill-me-concept/PORT-CARRY-OVER.md, SHA-256 67195793eeda6a463b5e2da60e7ae294ae62ef435a4a89e56fcd3e25587884fa (accepted layout and styling repairs)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/lead-checkpoint-20261022-2155.md, SHA-256 9063fdc033b2aac0d2558eba612d2f0ab33b032f0a0df72c848c21112ee72e98 (lead checkpoint; concept integration and rulings, not native proof)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/demo-inventory-20261022.md, SHA-256 3f1f8f372c1ec03a047cd6936853f14f3b745b056791bd2f7a30d929a00e60cd (concept-only Studio inventory, not product counts or native APIs)"
+preserved_exact_tokens:
+  - "Demo Studio"
+  - "Keep open"
+negative_constraints:
+  - "Do not draw a second editor pane, context drawer, browser modal or inline terminal in hosted mode."
+  - "Do not weaken ACD-500 when an implementation is incomplete."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/assistant-chat-design.md"
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-659, ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/Decision_Log.md#DL-218, ContractName:Plans/Decision_Log.md#DL-231

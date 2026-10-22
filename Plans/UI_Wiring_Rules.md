@@ -2527,3 +2527,64 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Wiring_Matrix.md#WM-093, ContractName:Plans/UI_Command_Catalog.md#UCC-204, ContractName:Plans/Commands_System.md#CS-102
+
+
+### UIW-044 - Hosted Chat Forward And Reverse Coverage
+
+```yaml
+plan_unit_id: UIW-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: >-
+  The port's control census follows UCC-208 and WM-096 (DL-232). Existing production-intent entries
+  carry the actual hosted producer locations; they are not duplicated per renderer. Forward coverage
+  checks the domain identity and revision, placement fields, one dispatch, availability and disabled
+  reason, exact-session terminal handoff, file click/double-click/modifiers and user-versus-agent
+  focus. Reverse coverage checks host tab close and activation updating the corresponding chat card, a
+  stored preference updating both Settings and chat, a chat-sheet change updating its existing
+  Settings row, application/project/current-chat ELI5 separation, and switching chats without carrying
+  another chat's override. History default is checked on an unsaved workspace and a saved unpinned
+  workspace, preserving the saved false; changing that default never changes the current pin. History
+  pin and Keep open remain local no-event actions, resizing commits once, and
+  menus/hover/disclosure/redraw dispatch nothing. The guided-tour teaching surface remains isolated
+  from the hosted chat during the accepted tour. Demo Studio launches and concept fixture controls are
+  not product producers. Source-hashed native dispatcher, handler, scope/storage and accessibility
+  proof remain required before certification; HTML controls and browser checks satisfy only concept
+  review.
+gui_related: true
+gui_classification_reason: Defines forward and reverse verification for visible hosted chat controls.
+split_recommended: false
+depends_on: [DL-232, UCC-208, UIW-040, UIW-041, UIW-042, UIW-043]
+unblocks: []
+acceptance_criteria:
+  - "The producer census has one command or local disposition per control and a reverse consumer for each changed projection."
+  - "Unknown/stale targets, unavailable candidates, refused Settings saves and agent-opened tabs preserve state and focus."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: hosted_chat_owner_drift
+reasoning_tier: high
+context_scope: chat56_pmconcept7_port
+implementation_surfaces:
+  - "Plans/UI_Wiring_Rules.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-185"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+preserved_exact_tokens:
+  - "Demo Studio"
+  - "Keep open"
+negative_constraints:
+  - "Do not turn concept checks into native handler or storage evidence."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/UI_Wiring_Rules.md"
+```
+
+ContractRef: ContractName:Plans/Wiring_Matrix.md#WM-096, ContractName:Plans/UI_Command_Catalog.md#UCC-208, ContractName:Plans/Settings_System.md#SSYS-055

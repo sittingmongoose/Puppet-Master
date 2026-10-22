@@ -3993,3 +3993,100 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/storage-plan.md#SP-333
+
+
+### SSYS-055 - Chat Preferences In The Hosted Surface
+
+```yaml
+plan_unit_id: SSYS-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  The hosted 5.6 Pro chat uses the existing Settings inventory and transaction (DL-232, SSYS-028,
+  SSYS-040, SSYS-042, SSYS-050). general.interaction.working-activity-style offers only Orbit and Step
+  Rail Simple as the product preference, default Orbit. Other concept family takes and the
+  motion-voice override are Demo Studio controls, never Settings rows.
+  general.interaction.sound-effects is the one master switch, on by default (DL-107); the chat speaker
+  and Notifications & Sounds write that same value, and setup, Guided Tour and NieR sounds keep
+  following it. This port adds no chat-only mute or volume row. general.interaction.eli5-default
+  resolves the application default and optional project override; general.interaction.chat-eli5
+  remains a run-scoped chat override, and inherit deletes it. ELI5 changes affect only future replies;
+  the current stream and earlier replies are unchanged. The All chats and Project default controls in
+  the chat sheet use Settings transactions; the chat's own Standard, Simple and Follow controls use
+  cmd.chat.eli5.set (UCC-175). New chat defaults uses the same application ELI5 value, not another
+  row. ai.models.thread-title-model is the naming policy, with Default, None or an available model id
+  from its live catalog; the sheet and Settings use the same value, preserving manual-name locks and
+  first-message-only naming. general.interaction.assistant-mode changes only how future chats start,
+  never the mode of an existing chat. The sending rows general.interaction.submit-key, queue-behavior,
+  queue-size and composer-persist-unsent remain their existing owners; a bridge binds only behavior
+  its renderer supports and never claims an unimplemented preference works.
+  general.interaction.chat-history-list remains an admitted row and is shown as History in new
+  workspaces, with Flyout or Pinned and default Flyout. It seeds History only when a workspace has no
+  saved choice; editing it never pins or unpins the current History, resizes the column or writes the
+  Home layout record. The current History pin uses ui.chat_column.pin_history; Keep the chat open in
+  narrow windows uses ui.chat_column.keep_open, and chat width uses
+  cmd.workspace_layout.resize_surface. None is a Settings row. Activity Detail starts pinned when
+  entered and explicit Unpin is temporary (ACD-453); no Activity pin default is added. The host's
+  look, fonts, Reduced Motion and NieR settings reach the chat directly. A last-used chat model,
+  effort or capability selection never becomes a global Settings default merely because the standalone
+  concept saved it. The scripted stand-in remains built but off by default for Home harnesses, never a
+  hosted conversation choice or an inventory row. Native Settings scope, validation, preview/apply,
+  read-only refusal and storage requirements remain in force; the HTML bridge is a concept projection
+  only. Added by the lead's ruling of 2026-10-22 under Jared's port brief (DL-232):
+  general.interaction.thought-stream is global and display-only, Auto (While it thinks) or Expanded
+  (Always open), default Auto; Settings, New chat defaults and the composer capability menu's Thought
+  Stream choice edit the same row through the Settings transaction. It controls disclosure of
+  reasoning supplied by the model and never changes a reply or invents reasoning. The current-chat
+  ELI5 control is shown only in the chat sheet, not on the Settings page or its search; its
+  general.interaction.chat-eli5 inventory identity, run scope and override contract remain. The
+  concept's existing project-only Settings adapter cannot prove separate application and project
+  persistence: the renderer keeps these layers separate and discloses any session-only layer instead
+  of creating a shadow store or claiming native scope support.
+gui_related: true
+gui_classification_reason: Places and binds visible hosted chat preferences while keeping layout and chat-scoped controls separate.
+split_recommended: false
+depends_on: [DL-232, SSYS-028, SSYS-040, SSYS-042, SSYS-050]
+unblocks: []
+acceptance_criteria:
+  - "Working style, sound, naming and Thought Stream share their value between Settings and chat; ELI5 keeps its application/project/current-chat resolver, with the concept persistence limitation disclosed."
+  - "History in new workspaces is visible and seeds only an unsaved workspace, preserving a stored false as well as a stored true."
+  - "Width, current History pin, Keep open and Activity pin have no Settings rows."
+  - "Every claimed bridge has a verified forward and reverse path or is disclosed as pending implementation."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: hosted_chat_owner_drift
+reasoning_tier: high
+context_scope: chat56_pmconcept7_port
+implementation_surfaces:
+  - "Plans/Settings_System.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-185"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/lead-checkpoint-20261022-2155.md, SHA-256 9063fdc033b2aac0d2558eba612d2f0ab33b032f0a0df72c848c21112ee72e98 (lead checkpoint; concept integration and rulings, not native proof)"
+preserved_exact_tokens:
+  - "general.interaction.thought-stream"
+  - "general.interaction.working-activity-style"
+  - "general.interaction.sound-effects"
+  - "general.interaction.eli5-default"
+  - "general.interaction.chat-eli5"
+  - "general.interaction.chat-history-list"
+  - "ai.models.thread-title-model"
+negative_constraints:
+  - "Do not copy the current chat mode, model, effort or capability values into global defaults."
+  - "Do not make a Settings edit pin History in a workspace already open."
+compatibility_only_notes:
+  - "Hosted concept limitation, 2026-10-22 (lead ruling): its existing Settings adapter persists project values only. All chats ELI5 remains a separate session-only value; the application/project/current-chat product resolution and persistence requirements are unchanged."
+  - "Hosted concept limitation, 2026-10-22 (lead ruling): the Thought Stream row and New chat defaults share the stored preference and preview. Replies here do not show live thinking yet; live reasoning display remains an implementation obligation, not a passed bridge check."
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/Settings_System.md"
+```
+
+ContractRef: ContractName:Plans/settings_inventory.json, ContractName:Plans/assistant-chat-design.md#ACD-504, ContractName:Plans/UI_Command_Catalog.md#UCC-208
