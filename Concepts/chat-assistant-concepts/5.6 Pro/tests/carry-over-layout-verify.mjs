@@ -163,9 +163,9 @@ async function finishCrew() {
   }
   throw new Error('Crew did not finish for the plate measurement');
 }
-async function plate() {
-  return ev(() => {
-    const M = __c56layout, ps = [...document.querySelectorAll('.pmx-view .pmx-plate')].filter(M.visible);
+async function plate(run) {
+  return ev(run => {
+    const M = __c56layout, ps = [...document.querySelectorAll('.pmx-view[data-collab-view="' + CSS.escape(run) + '"] .pmx-plate')].filter(M.visible);
     const out = [];
     for (const p of ps) {
       const pr = p.getBoundingClientRect(), texts = [...p.querySelectorAll('text')].filter(M.visible);
@@ -204,7 +204,7 @@ async function plate() {
       out.push({ edge, after, labels, geometryCount: geoms.length, plate: M.box(pr), result: r && M.box(r), hit: !!hit && p.contains(hit) });
     }
     return out;
-  });
+  }, run);
 }
 
 try {
@@ -228,14 +228,21 @@ try {
   if (section !== 'sheets') {
   await target.resize(page, { width: 1440, height: 900 }); await target.theme(page, 'basic-dark');
   const run = await finishCrew(); await act('wg-open-leads', { run }); await page.waitForTimeout(600);
+  const expectedView = await ev(run => {
+    const v = document.querySelector('.pmx-view[data-collab-view="' + CSS.escape(run) + '"]'), r = v?.getBoundingClientRect();
+    const expected = window.PM56_SURFACES?.route('crew-work:' + run).id, active = window.PM_HOME?.active();
+    return { run, expected, active, width: r?.width || 0, height: r?.height || 0 };
+  }, run);
+  if (!expectedView.width || !expectedView.height || target.kind === 'pm7' && expectedView.active?.tabId !== expectedView.expected) throw new Error('The intended Crew view is not visible: ' + JSON.stringify(expectedView));
   for (const look of plannedLooks) {
     await target.theme(page, look); await target.panelSize(page, { width: 480, height });
-    const view = page.locator('.pmx-view').filter({ visible: true }).first();
+    const viewSelector = `.pmx-view[data-collab-view="${run}"]`;
+    const view = page.locator(viewSelector).filter({ visible: true }).first();
     if (await view.count()) await view.evaluate(el => { let s = el; while (s && !(s.scrollHeight > s.clientHeight && /auto|scroll/.test(getComputedStyle(s).overflowY))) s = s.parentElement; if (s) s.scrollTop = 0; });
     await page.waitForTimeout(400);
-    await fontCheck(look, 480, 'crew-view', '.pmx-view');
+    await fontCheck(look, 480, 'crew-view', viewSelector);
     if (section === 'fonts') continue;
-    const p = await plate();
+    const p = await plate(run);
     check('CO-PLATE-EDGE', look, 480, 'crew', p.some(p => p.result && p.hit) && p.every(p => p.labels.length > 0 && p.labels.every(l => l.edge >= 11.95)), p);
     check('CO-PLATE-LINE', look, 480, 'crew', p.length > 0 && p.every(p => p.geometryCount > 0 && p.labels.length > 0 && p.labels.every(l => l.lineGap !== null && l.lineGap >= 7.95)), p);
     check('CO-PLATE-AFTER', look, 480, 'crew', p.length > 0 && p.some(p => p.after.length) && p.every(p => p.after.every(a => a.gap !== null && a.gap >= 7.95)), p);
