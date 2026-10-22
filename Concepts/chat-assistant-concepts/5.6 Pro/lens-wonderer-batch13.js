@@ -11,6 +11,10 @@
  * (PACE) so each decision stays on screen long enough to read, and stops only where the product waits for you: the Ask
  * Card, What we agreed's Confirm, Write the plan (your move) and the end. The guide narrates and names the control on
  * screen; its only buttons are Replay and Close. Check it and turning Grill Me on mid-run stay yours, never steps.
+ * The two Context Lens examples (2026-10-22, the same decision for every other example) play from Start through
+ * PM56_RECPLAY: Lens, a mode, the messages, Seal or Preview, Cancel, Apply, Rehydrate, Collapse, Release and Turn Off are
+ * pressed on Lens's own controls (lit first); in the stale example "Change message 2" is played as your own edit, and
+ * the full source opens and closes. Nothing waits for you; the guide narrates each step and what comes next.
  */
 (function () {
   'use strict';
@@ -55,7 +59,7 @@
       t.messages=texts.map(([role,body],i)=>({id:tid+'-m'+(i+1),role,type:'text',body,revision:1}));
       t.messages.push({id:tid+'-controls',role:'assistant',type:'b13-lens-controls',threadId:tid});
       s.sourceId=tid+'-m2';s.originalBodies=t.messages.filter(m=>m.type==='text').map(m=>({id:m.id,body:m.body}));
-      c.switchThread(tid);return;
+      lensPlay(s);c.switchThread(tid);return;
     }
     const input=BD.fixture(flow==='dissent'?'constraint':'synthesis'),grill=flow==='leads';
     t.messages=[{id:tid+'-request',role:'user',type:'text',body:input.objective+(grill?' Ask me what you need to know first.':' Collection contents must stay on the device.')}];
@@ -346,9 +350,54 @@
     return {text:'Every lead is decided and back from research. Ready to write the plan: that is your move, here as in the product. Press Write the plan on the card: one plan, listing every lead.'};
   }
 
+  /* the Lens recordings: a script of presses on Lens's own controls, each with what the guide says before it */
+  const LP=window.PM56_RECPLAY,lensPlayers=new Map();
+  const LS={open:'[data-action="lens-open"]',mode:v=>'.overlay-menu [data-action="lens-mode"][data-value="'+v+'"]',pick:n=>'[data-action="lens-toggle"][data-id$="-m'+n+'"]',
+    seal:'.lens13-controls [data-action="lens-seal"]',preview:'.lens13-controls [data-action="lens-preview"]',cancel:'.lens13-preview [data-action="lens-cancel"]',apply:'.lens13-preview [data-action="lens-apply"]',
+    change:'.b13-lens-tools [data-action="b13-change-message"]',source:'.lens13-preview [data-action="lens-source"][data-id$="-m2"]',
+    rehydrate:'.pm-lens-card [data-action="lens-rehydrate"]',collapse:'.pm-lens-card [data-action="lens-collapse"]',release:'.pm-lens-card [data-action="lens-release"]',off:'.lens13-controls [data-action="lens-mode"][data-value="off"]'};
+  function lensScript(flow){
+    const st=(sel,wait,say,o)=>Object.assign({sel,wait,say},o||{});
+    const mode=(m,word,why)=>[st(LS.open,2600,why),st(LS.mode(m),1400,'Lens is open: Mute, Focus, Subcompact or Turn Off. Next: '+word+'.',{menu:true})];
+    const tail=[st(LS.apply,4200,'Review the summary: local excerpts of the two messages, nothing generated. Next: Apply it.'),
+      st(LS.rehydrate,4800,'Applied: the assistant now reads one short summary where messages 2 and 4 were. The messages themselves stay in history. Next: rehydrate them.'),
+      st(LS.collapse,3600,'Rehydrated: the full messages are back in what the assistant reads. Next: collapse them again.'),
+      st(LS.release,3400,'Collapsed to the summary again. Next: release this operation.'),
+      st(LS.off,3400,'Released. Next: turn Lens off; every remaining shaping goes with it.')];
+    if(flow==='shape')return [...mode('mute','Mute','A short conversation about local search, with one unrelated message about icon colors. Next: you open Lens beside search and mute that message.'),
+      st(LS.pick(5),2200,'Mute: pick the messages the assistant should skip. Next: message 5, the color discussion.'),
+      st(LS.seal,2400,'Message 5 is picked. Next: seal the operation.'),
+      ...mode('focus','Focus','Sealed: message 5 is muted, and it stays in the chat. Next: focus the first request.'),
+      st(LS.pick(1),2200,'Focus: the picked message is protected and read first. Next: message 1.'),
+      st(LS.seal,2400,'Message 1 is picked. Next: seal it.'),
+      ...mode('subcompact','Subcompact','Sealed: message 1 is protected. Next: summarize two long messages with Subcompact.'),
+      st(LS.pick(2),2200,'Subcompact: pick messages to fold into one summary. Next: messages 2 and 4.'),
+      st(LS.pick(4),1500,'Message 2 is picked. Next: message 4.'),
+      st(LS.preview,2200,'Two messages picked. Next: preview the summary before anything changes.'),
+      st(LS.cancel,4600,'A preview changes nothing yet. Next: cancel it, to show nothing was applied.'),
+      st(LS.preview,3400,'Cancelled: what the assistant reads is exactly as before. Next: preview again.'),...tail];
+    return [...mode('subcompact','Subcompact','A short conversation about local search. Next: you open Lens and summarize two messages with Subcompact.'),
+      st(LS.pick(2),2200,'Subcompact: pick messages to fold into one summary. Next: messages 2 and 4.'),
+      st(LS.pick(4),1500,'Message 2 is picked. Next: message 4.'),
+      st(LS.preview,2200,'Two messages picked. Next: preview the summary.'),
+      st(LS.change,4400,'The preview is ready. Next: you change message 2 before applying it.'),
+      st(LS.preview,4800,'Message 2 changed, so the preview is out of date and Apply is off: a preview is not a promise. Next: refresh it.'),
+      st(LS.source,4200,'Refreshed against the new message 2 (Revision 2). Next: open its full source to check.'),
+      st('[data-action="close-editor"], [data-action="return-to-chat"]',4400,'The full source is the current message, Revision 2. Next: back to the chat.'),...tail];
+  }
+  function lensPlay(s){const old=lensPlayers.get(s.threadId);if(old)old.stop();s.lensStep=0;const script=lensScript(s.flow);s.script=script;
+    const pl=LP.play({key:'b13-lens',live:()=>sessions.get(s.threadId)===s&&s.guide!==false,threads:()=>[s.threadId],render:refresh,superseded:()=>{},
+      next:()=>{const b=script[s.lensStep];if(!b)return null;return {id:'lens:'+s.lensStep,wait:b.wait,menu:b.menu,run:()=>LP.press(b.sel).then(ok=>{if(ok)s.lensStep++;return ok;})};}});
+    lensPlayers.set(s.threadId,pl);}
+  function lensSay(s){const pl=lensPlayers.get(s.threadId),sc=s.script||[];
+    if(pl&&pl.errors.length)return {text:'This step couldn’t run, so the recording stopped here. Replay starts it again.',done:true};
+    if(s.lensStep>=sc.length&&sc.length)return {text:s.flow==='shape'?'Done · Lens shaped what the assistant reads, three ways, and gave it all back. The conversation itself never changed.':'Done · The stale preview could not be applied; the refreshed one was, and released again. Only your own edit changed the chat.',done:true};
+    return {text:(sc[s.lensStep]||{}).say||''};}
   function guide(c){
     const s=session(c.thread.id);if(!s?.guide)return '';
-    const lens=flows[s.flow].kind==='lens',step=lens?{text:'Open Lens beside search. Pick a mode, select messages, then preview or seal.'}:wondererStep(c,s);
+    if(flows[s.flow].kind==='lens'){if(c.state.dialog)return '';const st=lensSay(s),text=LP.steady(s,st.text,!!st.done,refresh),pl=lensPlayers.get(s.threadId);
+      return S.pmxGuide({key:'b13-guide',cls:'b13-guide',placement:'dock',caption:'Local example · no AI cost',step:c.esc(text),actions:st.done&&text===st.text?[{action:'b13-lens-replay',label:'Replay'}]:[],next:pl?pl.progress():null,close:{action:'b13-hide-guide',label:'Close the guide'}});}
+    const lens=false,step=wondererStep(c,s);
     /* the Wonderer flows are recorded examples: the caption is the card's (PM56_COLLAB.provenance), Lens stays local */
     const r=lens?null:current(c),recorded=!lens&&(r?C.provenance(r.id)==='recorded':!!(C.isRecordedDraft&&C.isRecordedDraft(C.draft())));
     return S.pmxGuide({key:'b13-guide',cls:'b13-guide',placement:'dock',caption:recorded?undefined:'Local example · no AI cost',step:c.esc(step.text),actions:step.actions||[],close:{action:'b13-hide-guide',label:'Close the guide'}});
@@ -375,7 +424,8 @@
     return '';
   });
   E.action('b13-start',(c,b)=>{start(b.dataset.flow);return true;});
-  E.action('b13-hide-guide',c=>{const s=session();if(s)s.guide=false;refresh();return true;});
+  E.action('b13-hide-guide',c=>{const s=session();if(s){s.guide=false;const pl=lensPlayers.get(s.threadId);if(pl)pl.stop();}refresh();return true;});
+  E.action('b13-lens-replay',c=>{const s=session();if(s){const pl=lensPlayers.get(s.threadId);if(pl)pl.stop();start(s.flow);}return true;});
   E.action('b13-open',(c,b)=>{const s=session();if(s)s.opened=true;c.openEditor('wonderer:'+b.dataset.run);return true;});
   E.action('b13-configure',c=>{const s=session();if(s)start(s.flow);return true;});
   E.action('b13-core',(c,b)=>{playCore(run(b.dataset.run));return true;});
