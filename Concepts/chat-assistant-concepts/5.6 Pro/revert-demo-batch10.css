@@ -3,3 +3,5 @@
 /* the in-sheet line keeps the height it has with its action (40 px) after the action goes, so the sheet body never
    jumps and the step stays well clear of both hairlines (J-2) */
 .pmx-guide.revert-demo-injection{min-height:40px;}
+/* playback (2026-10-22): the line says what you are asked, so it wraps rather than cutting the question off */
+.pmx-guide.revert-demo-injection .pmx-guide-step{white-space:normal;overflow:visible;text-overflow:clip;}

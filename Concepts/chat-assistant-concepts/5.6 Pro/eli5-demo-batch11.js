@@ -4,9 +4,14 @@
  * the dock); the example answer reads like any reply, with the "Simple explanation" tick and the recorded
  * tick in its meta row; the evidence page is a pmxView, "Your code, unchanged". Two demo chats are named
  * Chat A and Chat B everywhere (thread titles, the guide, the evidence tabs). Every action here is demo
- * (8.15 rule 2): none of them is a command. */
+ * (8.15 rule 2): none of them is a command.
+ * Playback (2026-10-22, Jared: recorded examples play on their own after Start): both examples play from Start through
+ * PM56_RECPLAY, paced to read. Your part is played on the product's own controls, lit first: the wand, ELI5 · Explain
+ * simply, the choice on the ELI5 sheet and Done, the question typed and sent, Threads and Chat B's row, the question
+ * again, and See your code (unchanged) on Chat B's answer. They end on the comparison. The guide narrates what is
+ * happening and what comes next; its only buttons are Replay and Close. */
 (function(){
- 'use strict';const E=window.PM56_EXT,P=window.PM56_ELI5,copy=x=>JSON.parse(JSON.stringify(x));let active=null,seq=0;
+ 'use strict';const E=window.PM56_EXT,P=window.PM56_ELI5,R=window.PM56_RECPLAY,copy=x=>JSON.parse(JSON.stringify(x));let active=null,seq=0;
  const flows={override:{title:'Simple answers in one chat',detail:'Turn ELI5 on for one chat and compare it with a chat that stays standard.'},inherit:{title:'Back to your usual setting',detail:'Undo one chat’s own choice so it follows its project again.'}};
  const code='const limit = options.maxRetries ?? 3;';
  const questions=['Explain the retry limit.','What does the zero limit do?'];
@@ -16,24 +21,57 @@
  function S(){return window.PM56_SHELL;}
  function chatName(c,tid){if(active&&active.threads.includes(tid))return tid===active.threads[0]?'Chat A':'Chat B';const t=c.state.threads.find(x=>x.id===tid);return t?t.title:'this chat';}
  const Q='<q>'+questions[0]+'</q>';
- /* one plain step per state: which chat this is, what it does now, and what to try next */
+ /* the recording: next() names the next beat from the example's own state (PM56_RECPLAY); a beat is your part on the
+    product's own control */
+ const PACE={first:1000,row:1300,choose:3400,done:3000,type:2200,send:600,history:5600,pick:1500,see:4600,back:900};
+ const Q0=questions[0],SEND='.composer [data-action="send"]';
+ const asked=tid=>{const t=E.ctx().state.threads.find(x=>x.id===tid);return !!t&&t.messages.some(m=>m.type==='eli5-example-answer');};
+ const sheet=()=>E.ctx().state.dialog?.type==='eli5-style';
+ const covered=()=>innerWidth<=1100&&E.ctx().state.editorRevealed;
+ function choiceMade(){const a=active,r=P.resolve(a.threads[0]);return a.kind==='override'?r.override===true:r.override===null;}
+ function next(){const a=active;if(!a)return null;const c=E.ctx(),tid=c.thread.id,A=a.threads[0],B=a.threads[1];
+  /* at a narrow width the evidence page covers the chat: back to the chat first (its own Return to chat) */
+  const back=id=>({id:'back:'+id,wait:PACE.back,run:()=>R.press('[data-action="return-to-chat"]')});
+  if(tid===A){
+   if(!choiceMade()){
+    if(sheet())return {id:'choose',dialog:'eli5-style',wait:PACE.choose,run:()=>R.press(a.kind==='override'?'#pmOverlayRoot .pmx-eli5-switch [data-action="eli5-set"][data-value="on"]':'#pmOverlayRoot .pmx-eli5-follow [data-action="eli5-set"][data-value="inherit"]')};
+    if(covered())return back('a0');
+    return R.viaWand('eli5','assist','.af-wand-row[data-action="eli5-open"]',{wait:PACE.first,step:PACE.row});}
+   if(sheet())return {id:'done',dialog:'eli5-style',wait:PACE.done,run:()=>R.press('#pmOverlayRoot .pmx-eli5-foot [data-action="close-dialog"]')};
+   if(!asked(A)){if(covered())return back('a1');const f=R.find(R.COMPOSER);if(f&&f.value===Q0)return {id:'send:a',wait:PACE.send,run:()=>R.press(SEND)};return {id:'type:a',wait:PACE.type,run:()=>R.type(Q0)};}
+   if(!asked(B)){if(covered())return back('a2');
+    if(R.find('.thread-row[data-id="'+CSS.escape(B)+'"]'))return {id:'pick-b',wait:PACE.pick,run:()=>R.press('.thread-row[data-id="'+CSS.escape(B)+'"]')};
+    return {id:'history',wait:PACE.history,run:()=>R.press('[data-action="toggle-history"]')};}
+   return null;}
+  if(tid===B){
+   /* Threads did its job: close it again (its own control), so the chat has its width back */
+   if(!asked(B)&&c.state.historyMode&&c.state.historyMode!=='closed')return {id:'close-history',wait:PACE.pick,run:()=>R.press('.history-panel [data-action="close-history"], [data-action="toggle-history"]')};
+   if(!asked(B)){if(covered())return back('b1');const f=R.find(R.COMPOSER);if(f&&f.value===Q0)return {id:'send:b',wait:PACE.send,run:()=>R.press(SEND)};return {id:'type:b',wait:PACE.type,run:()=>R.type(Q0)};}
+   /* the last word: Chat B's own code page, the same code (wide windows only; at a narrow width it would cover the chat) */
+   if(innerWidth>1100&&!a.seenB)return {id:'see-b',wait:PACE.see,run:()=>R.press('.transcript .eli5-answer-see[data-thread="'+CSS.escape(B)+'"]').then(ok=>{if(ok)a.seenB=true;return ok;})};
+   return null;}
+  return null;}
+ let player=null;
+ function playback(){if(player)player.stop();const s=active;player=R.play({key:'eli5-demo',live:()=>active===s,threads:()=>s.threads,next,render:()=>E.ctx().renderApp(),superseded:()=>{if(active===s)active=null;}});}
+ function stop(){if(player){player.stop();player=null;}}
+ /* one plain step per state: which chat this is, what is happening, and what comes next */
  function step(c){
-  const r=P.resolve(c.thread.id),a=c.thread.id===active.threads[0],name='<b>'+(a?'Chat A':'Chat B')+'</b> · ',now=r.effective?'Simple':'Standard';
-  if(active.kind==='override'){
-   if(!a)return name+(r.effective?'Explains things simply too. ':'Follows your usual setting, so it stays Standard. ')+'Ask '+Q+' to compare.';
-   if(r.source!=='conversation')return name+'Open ELI5 and choose Simple for this chat, then ask '+Q;
-   return name+(r.override?'Now explains things simply. Ask '+Q+' and compare with Chat B.':'Set to Standard here. Choose Simple in ELI5 to see the difference.');
-  }
-  if(!a)return name+'Follows this project, so it is '+now+'. Ask '+Q;
-  if(r.override===false)return name+'Set to Standard in this chat. Open ELI5 and pick Follow my usual setting.';
-  if(r.override===null)return name+'Follows this project again, so it is '+now+'. Ask '+Q;
-  return name+'Set to Simple here. Follow my usual setting would use this project’s choice.';
+  const a=active,r=P.resolve(c.thread.id),isA=c.thread.id===a.threads[0],name='<b>'+(isA?'Chat A':'Chat B')+'</b> · ',B=a.threads[1];
+  if(player&&player.errors.length)return {text:name+'This step couldn’t run, so the recording stopped here. Replay starts it again.',done:true};
+  if(isA){
+   if(!choiceMade())return {text:name+(a.kind==='override'?'Explains things in the standard way. Next: you open ELI5 from the wand and choose Simple for this chat.':'Set to Standard in this chat, though its project explains simply. Next: you open ELI5 from the wand and pick Follow my usual setting.')};
+   if(!asked(a.threads[0]))return {text:name+(a.kind==='override'?'Now explains things simply. Next: you ask '+Q:'Follows its project again, so it explains simply. Next: you ask '+Q)};
+   return {text:name+(r.effective?'The answer came back simple. ':'The answer came back standard. ')+'Next: Chat B, the same question.'};}
+  if(!asked(B))return {text:name+(a.kind==='override'?'Follows your usual setting, so it stays Standard. Next: you ask '+Q+' here too.':'Follows this project, so it explains simply. Next: you ask '+Q+' here too.')};
+  if(innerWidth>1100&&!a.seenB)return {text:name+(r.effective?'Its answer came back simple too. ':'Its answer came back standard. ')+'Next: See your code (unchanged) on its answer.'};
+  if(a.kind==='override')return {text:'Done · Chat A explains simply; Chat B stays Standard. The code and the plan are the same in both.',done:true};
+  return {text:'Done · Chat A follows its project again, so both chats explain simply. The code and the plan didn’t change.',done:true};
  }
  function guide(c){
-  if(!active||!active.threads.includes(c.thread.id))return '';
-  const a=c.thread.id===active.threads[0],other=active.threads.find(id=>id!==c.thread.id);
-  return S().pmxGuide({key:'eli5-demo-guide',cls:'eli5-demo-guide',placement:'dock',step:step(c),
-   actions:[{action:'eli5-open',label:'Open ELI5'},{action:'eli5-demo-switch',attrs:'data-thread="'+c.esc(other)+'"',label:a?'Compare with Chat B':'Back to Chat A'}],
+  if(!active||!active.threads.includes(c.thread.id)||c.state.dialog)return '';
+  const s=step(c),text=R.steady(active,s.text,!!s.done,()=>E.ctx().renderApp());
+  return S().pmxGuide({key:'eli5-demo-guide',cls:'eli5-demo-guide',placement:'dock',step:text,
+   actions:s.done&&text===s.text?[{action:'eli5-demo-replay',label:'Replay'}]:[],next:player&&player.progress(),
    close:{action:'eli5-demo-close',label:'Close the example'}});
  }
  function start(kind){if(!flows[kind])return;const c=E.ctx(),n=++seq,pid='concept:eli5:'+n,ids=['eli5-'+n+'-primary','eli5-'+n+'-sibling'];
@@ -46,7 +84,7 @@
   // The default is set through the real owner, never by replacing its store.
   // A private example project avoids altering preferences in existing projects.
   active={kind,threads:ids,projectId:pid,planId,artifactId,questions:copy(questions),code,initialPlan:copy(plan),initialArtifact:copy(artifact)};
-  Object.assign(c.state,{mode:'Ask',menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,demoOpen:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,started:false,completed:false,elapsed:0};window.PM56_RUNTIME.composer.destination=null;c.switchThread(ids[0]);c.openEditor('eli5-evidence:'+ids[0]);
+  Object.assign(c.state,{mode:'Ask',menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,demoOpen:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,started:false,completed:false,elapsed:0};window.PM56_RUNTIME.composer.destination=null;c.switchThread(ids[0]);c.openEditor('eli5-evidence:'+ids[0]);playback();
  }
  /* Explain this reply simply (owner answer E-11, eli5-preferences.js): the recorded answers carry their own simpler
     wording, one step simpler than the answer shown; any other reply gets the resolver's stand-in */
@@ -80,9 +118,9 @@
  E.action('eli5-demo-switch',(c,b)=>{const target=b.dataset.thread;if(active&&active.threads.includes(target)){c.switchThread(target);c.openEditor('eli5-evidence:'+target);}return true;});
  E.action('eli5-demo-evidence',(c,b)=>{if(c.thread.eli5Example&&b.dataset.thread===c.thread.id)c.openEditor('eli5-evidence:'+c.thread.id);return true;});
  E.action('eli5-demo-plan',(c,b)=>{if(c.thread.eli5Example?.planId===b.dataset.id)c.openEditor('plan:'+b.dataset.id);return true;});
- E.action('eli5-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('eli5-demo-close',c=>{active=null;c.renderApp();return true;});
- E.chainAction('reset-all',()=>{active=null;return false;});
- ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start','room-demo-start','teach-demo-start','memory-demo-start','debug-demo-start','revert-demo-start'].forEach(a=>E.chainAction(a,()=>{active=null;return false;}));
+ E.action('eli5-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('eli5-demo-close',c=>{stop();active=null;c.renderApp();return true;});
+ E.chainAction('reset-all',()=>{stop();active=null;return false;});
+ ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start','room-demo-start','teach-demo-start','memory-demo-start','debug-demo-start','revert-demo-start'].forEach(a=>E.chainAction(a,()=>{stop();active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided ELI5 examples</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="eli5-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
  window.PM56_ELI5_DEMOS={start,snapshot:snap,reply,simpler,questions:()=>copy(questions)};
 })();

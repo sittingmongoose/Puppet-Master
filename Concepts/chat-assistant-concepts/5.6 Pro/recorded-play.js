@@ -131,6 +131,20 @@
     });
   }
 
+  /* viaWand(key, group, rowSel, o): the beat that reaches a row of the composer's wand menu the way a person does: the
+     wand, its group (Assist, Schedule, ...) when the row lives in one, then the row. o.wait (before the wand), o.step
+     (between the presses). Returns null once nothing is left to press here (the row was pressed: its sheet is open). */
+  function viaWand(key, group, rowSel, o) {
+    o = o || {}; var c = ctx(), m = c && c.state.menu;
+    if (find(rowSel)) return { id: key + ':row', menu: true, wait: o.step || 1300, run: function () { return press(rowSel); } };
+    if (m && m.type === 'wand' && group && c.state.polishWandGroup !== group) {
+      var g = '[data-action="polish-wand-group"][data-group="' + group + '"]';
+      return { id: key + ':group', menu: true, wait: o.step || 1300, run: function () { return press(g); } };
+    }
+    if (m && m.type === 'wand') return { id: key + ':row', menu: true, wait: o.step || 1300, run: function () { return press(rowSel); } };
+    return { id: key + ':wand', wait: o.wait == null ? 1000 : o.wait, run: function () { return press('.composer [data-menu-anchor="wand"]'); } };
+  }
+
   /* ------------------------------------------------------------------ the guide's sentences */
   /* steady(store, text, urgent, rerender): the sentence to show now. A new sentence replaces the one on screen only once
      that one has been up HOLD_SAY; your move and the end (urgent) show at once. store is the example's session (it keeps
@@ -177,6 +191,9 @@
       var b = null;
       try { b = o.next(); } catch (e) { fail(e); return; }
       while (b && p.done[b.id]) b = null;
+      /* the beat coming next changed by itself (the example moved on, or you did a step): the guide says so now */
+      var upId = b ? b.id : null;
+      if (upId !== p.upId) { var first = p.upId === undefined; p.upId = upId; if (!first && o.render) o.render(); }
       if (!b) { p.waiting = true; arm(POLL); return; }
       p.waiting = false;
       var why = holdReason(b);
@@ -222,5 +239,5 @@
   /* a Start in Demo Studio (any example's, including the ones that don't use this player) ends the recording playing now;
      capture phase, so it runs before the new example's own Start */
   document.addEventListener('click', function (e) { var t = e.target && e.target.closest && e.target.closest('.demo-dialog .demo-trigger'); if (t) stopAll('another example'); }, true);
-  window.PM56_RECPLAY = { play: play, press: press, reveal: reveal, hover: hover, rest: rest, choose: choose, type: type, steady: steady, find: find, shown: shown, wait: wait, after: after, cancel: cancel, now: now, stopAll: stopAll, snapshot: snapshot, players: players, HOLD_SAY: HOLD_SAY, COMPOSER: COMPOSER };
+  window.PM56_RECPLAY = { play: play, viaWand: viaWand, press: press, reveal: reveal, hover: hover, rest: rest, choose: choose, type: type, steady: steady, find: find, shown: shown, wait: wait, after: after, cancel: cancel, now: now, stopAll: stopAll, snapshot: snapshot, players: players, HOLD_SAY: HOLD_SAY, COMPOSER: COMPOSER };
 })();

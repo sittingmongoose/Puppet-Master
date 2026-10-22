@@ -1,10 +1,15 @@
 /* Two bounded, gallery-only Regular Plan workflows. No provider or native commands.
  * Fixtures are initialized once; every subsequent step uses the existing visible
- * product control and checks owner state. No forced completion or fake clock. */
+ * product control and checks owner state. No forced completion or fake clock.
+ * Playback (2026-10-22, Jared: recorded examples play on their own after Start): both play from Start through
+ * PM56_RECPLAY, paced to read; your part is pressed on the product's own controls, lit first (Open plan, More, Open
+ * To-Dos, Stop and revise, the feedback typed and sent, Markdown). Build is the plan's approval, so it stays yours:
+ * the example waits there and the guide says so, then goes on by itself once you press it. The guide is the one
+ * recorded-example look (pmxGuide); its only buttons are Replay and Close. plan-demo-next stays as a QA hook. */
 (function(){
  'use strict';
- const E=window.PM56_EXT;
- let active=null,serial=0;
+ const E=window.PM56_EXT,R=window.PM56_RECPLAY;
+ let active=null,serial=0,player=null;
  const flows={
   complete:{label:'Build a small Plan',summary:'Approve → To-Dos → completed',steps:[
    ['Open the plan','Open plan','open'],
@@ -58,8 +63,40 @@
   c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};
   c.state.capabilities.goal=false;c.state.composer='';window.PM56_RUNTIME.composer.destination=null;
   active={id,threadId:tid,planId:pid,step:0,initial:clone(template.revisions[1]),events:[],error:null};
-  c.switchThread(tid);c.renderApp();
+  c.switchThread(tid);playback();c.renderApp();
  }
+ /* the recording: next() names the next beat from the example's own state (PM56_RECPLAY) */
+ const PACE={first:1100,build:0,more:4200,item:1400,close:1300,type:3600,send:700,view:4800};
+ const FEEDBACK='Keep the selected account when favorites are reordered too.';
+ const q=(action,id,extra)=>'[data-action="'+action+'"][data-id="'+CSS.escape(id)+'"]'+(extra||'');
+ const moreOpen=id=>!!R.find(q('pd-more-actions',id,'[aria-expanded="true"]'));
+ const record=(a,name)=>{const p=plan();a.events.push({step:name,at:performance.now(),status:p.status,version:p.version});a.error=null;};
+ function next(){const a=active;if(!a)return null;const p=plan();if(!p)return null;const f=flows[a.id],step=f.steps[a.step],name=step&&step[2];
+  if(!name)return null;
+  const done=()=>{record(a,name);a.step++;};
+  if(name==='open')return {id:'open',wait:PACE.first,run:()=>R.press(q('pd-open-version',p.plan_id)).then(ok=>{if(ok)done();return ok;})};
+  /* Build approves this version: yours to press (the guide says so); the recording goes on once the plan is building */
+  if(name==='build'){if(p.status==='building'){done();E.ctx().renderApp();}return null;}
+  if(name==='todos'){
+   if(a.todosOpened&&moreOpen(p.plan_id))return {id:'todos-close',wait:PACE.close,run:()=>R.press(q('pd-more-actions',p.plan_id)).then(ok=>{if(ok)done();return ok;})};
+   if(a.todosOpened){done();return null;}
+   if(R.find(q('pd-open-todos',p.plan_id)))return {id:'todos',wait:PACE.item,run:()=>R.press(q('pd-open-todos',p.plan_id)).then(ok=>{if(ok)a.todosOpened=true;return ok;})};
+   return {id:'todos-more',wait:PACE.more,run:()=>R.press(q('pd-more-actions',p.plan_id))};}
+  if(name==='stop'){
+   /* stopped for revision: the run is paused (attention) and the message box writes to this plan */
+   if(a.stopped||p.revisionStop){if(moreOpen(p.plan_id))return {id:'stop-close',wait:PACE.close,run:()=>R.press(q('pd-more-actions',p.plan_id)).then(ok=>{if(ok)done();return ok;})};done();return null;}
+   if(R.find(q('pd-stop-revise',p.plan_id)))return {id:'stop',wait:PACE.item,run:()=>R.press(q('pd-stop-revise',p.plan_id)).then(ok=>{if(ok)a.stopped=true;return ok;})};
+   return {id:'stop-more',wait:PACE.more,run:()=>R.press(q('pd-more-actions',p.plan_id))};}
+  if(name==='revise'){
+   if(p.version>=2){done();return null;}
+   const box=R.find(R.COMPOSER);
+   if(box&&box.value===FEEDBACK)return {id:'send',wait:PACE.send,run:()=>R.press('.composer [data-action="send"]')};
+   if(innerWidth<=1100&&E.ctx().state.editorRevealed)return {id:'back-to-chat',wait:PACE.close,run:()=>R.press('[data-action="return-to-chat"]')};
+   return {id:'type',wait:PACE.type,run:()=>R.type(FEEDBACK)};}
+  if(name==='markdown')return {id:'markdown',wait:PACE.view,run:()=>R.press(q('pd-view',p.plan_id,'[data-value="markdown"]')).then(ok=>{if(ok)done();return ok;})};
+  return null;}
+ function playback(){if(player)player.stop();const s=active;player=R.play({key:'plan-demo',live:()=>active===s,threads:()=>[s.threadId],next,render:()=>ctx().renderApp(),superseded:()=>{if(active===s)active=null;}});}
+ function stop(){if(player){player.stop();player=null;}}
  async function advance(){
   if(!active||active.busy)return;const a=active,f=flows[a.id],step=f.steps[a.step];if(!step)return;
   const settle=()=>new Promise(resolve=>setTimeout(resolve,170));a.busy=true;
@@ -88,20 +125,30 @@
   }catch(err){a.busy=false;a.error=String(err.message||err);ctx().renderApp();}
  }
  function finished(){return active&&(active.id==='complete'?(active.step>=3&&plan()?.status==='completed'):active.step===flows[active.id].steps.length);}
+ /* the guide: what is happening and what comes next; at Build, plainly what you are asked */
+ function say(){const a=active,p=plan(),f=flows[a.id],s=f.steps[a.step],name=s&&s[2];
+  if(player&&player.errors.length)return {text:'This step couldn’t run, so the recording stopped here. Replay starts it again.',done:true};
+  if(finished())return {text:a.id==='complete'?'Done · Plan completed: 2 of 2 tasks. Version 1 stays exactly as you approved it.':'Done · Version 2 is ready, and version 1 is kept unchanged. Markdown shows the new version.',done:true};
+  if(name==='open')return {text:'The assistant wrote a plan with two steps. Next: you open it to read it.'};
+  if(name==='build')return {text:'Your move: Build approves version 1 and starts its two tasks. Press Build on the plan when you’re ready; the recording goes on from there.',done:true,yours:true};
+  if(name==='todos')return {text:'Building version 1. Next: you open its To-Dos from the plan’s More menu to follow the two tasks.'};
+  if(name==='wait')return {text:'The two tasks run one after the other. The plan completes when both are done.'};
+  if(name==='stop')return {text:'Building version 1. Next: you stop it before changing the plan, from the plan’s More menu.'};
+  if(name==='revise')return {text:'Stopped; the plan is ready for your feedback, and the message box now writes to it. Next: you type what to change and send it.'};
+  if(name==='markdown')return {text:'Version 2 is written, and version 1 is kept unchanged. Next: you look at the new version as Markdown.'};
+  return {text:''};}
  E.slot('composerBelow',c=>{
-  if(!active||c.state.selectedThread!==active.threadId)return '';
-  const a=active,f=flows[a.id],done=finished(),s=f.steps[a.step],wait=s&&s[2]==='wait';
-  const title=done?(a.id==='complete'?'Plan completed · 2 of 2 tasks':'V2 ready · V1 preserved'):(s?s[0]:'Review result');
-  return '<div class="plan-demo-guide" data-k="plan-demo-guide"><div><small>Guided demo · '+c.esc(f.label)+'</small><strong>'+c.esc(title)+'</strong></div><div class="plan-demo-controls">'+
-   (done?'<button data-action="plan-demo-replay">Replay</button>':'<button data-action="plan-demo-next"'+(wait||a.busy?' disabled':'')+'>'+c.esc(s?s[1]:'Continue')+'</button>')+
-   '<button class="plan-demo-close" data-action="plan-demo-close" title="Close guide">'+c.icon('close',14)+'</button></div>'+
-   (a.error?'<p role="status">'+c.esc(a.error)+'</p>':'')+'</div>';
+  if(!active||c.state.selectedThread!==active.threadId||c.state.dialog)return '';
+  const s=say(),text=R.steady(active,s.text,!!s.done,()=>ctx().renderApp());if(!text)return '';
+  return window.PM56_SHELL.pmxGuide({key:'plan-demo-guide',cls:'plan-demo-guide',placement:'dock',caption:'Recorded example · '+c.esc(flows[active.id].label),step:c.esc(text),
+   actions:finished()&&text===s.text?[{action:'plan-demo-replay',label:'Replay'}]:[],next:player&&player.progress(),close:{action:'plan-demo-close',label:'Close the example'},
+   extra:active.error?'<p class="pmx-fine" role="status">'+c.esc(active.error)+'</p>':''});
  });
  E.action('plan-demo-start',(c,b)=>{start(b.dataset.flow);return true;});
  E.action('plan-demo-next',()=>{advance();return true;});
  E.action('plan-demo-replay',()=>{if(active)start(active.id);return true;});
- E.action('plan-demo-close',()=>{active=null;ctx().renderApp();return true;});
- E.chainAction('reset-all',()=>{active=null;return false;});
+ E.action('plan-demo-close',()=>{stop();active=null;ctx().renderApp();return true;});
+ E.chainAction('reset-all',()=>{stop();active=null;return false;});
  const G=window.PM56_REPAIR_DEMOS;
  if(G){const old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided Plan workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="plan-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);}
  window.PM56_PLAN_DEMOS={start,snapshot:()=>active?clone({...active,finished:!!finished()}):null};
