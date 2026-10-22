@@ -1353,8 +1353,13 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   await until(() => !!document.querySelector('.transcript .wg-card .wg-lead-src'), null, 40000);
   await fast(0.01);
   const crewT = await thread();
+  // Arm Deep Plan's interval at its normal cadence before freezing pixels.
+  // Its interval uses ms(450) once; starting at .01 leaves a 45s interval
+  // after restoring scale 1 and can outlast answerAll's genuine fact wait.
+  await fast(1);
   await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(800);
   const dpT = await thread();
+  await fast(0.01);
   const low4 = {}, n4 = {}, pixels4 = {};
   for (const look of ['basic-dark', 'basic-light', 'glass-dark', 'glass-light', 'friendly-dark', 'friendly-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light']) {
     await target.theme(page, look); await sleep(400);
