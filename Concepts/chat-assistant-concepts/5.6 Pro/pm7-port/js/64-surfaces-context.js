@@ -81,6 +81,27 @@
       if (c.closeEditor) c.closeEditor(PRE + tid);
       return true;
     });
+    /* A control in a context tab acts on that tab's thread. context.js's actions read the chat's selected thread (and
+       repaint only the overlay the drawer used to be), so before one runs the chat shows the tab's thread (Preview
+       compaction and its dialog, Redacted JSON and the rest then work on it), and the tab repaints after it. The
+       Curated / Raw view is the drawer's own view state and changes no thread. The listener runs in the capture
+       phase, ahead of the chat's own click handling. */
+    var VIEW_ONLY = { 'ctx-set-view': 1, 'raw-context': 1 };
+    document.addEventListener('click', function (ev) {
+      var t = ev.target && ev.target.closest ? ev.target : null;
+      var sec = t && t.closest('.pm56-ctx-tab[data-pm56-thread]');
+      if (!sec) return;
+      var btn = t.closest('[data-action]');
+      var A = W.PM56_APP, H = W.PM56_HOST;
+      if (btn && !VIEW_ONLY[btn.getAttribute('data-action')] && A && A.state) {
+        var tid = sec.getAttribute('data-pm56-thread');
+        if (tid && A.state.selectedThread !== tid && threadOf(A.state, tid)) {
+          A.switchThread(tid);
+          try { if (W.PMW && PMW.announce) PMW.announce('Showing ' + threadOf(A.state, tid).title + ' in the chat'); } catch (_) {}
+        }
+      }
+      (W.requestAnimationFrame || setTimeout)(function () { try { if (H && H.repaintTabs) H.repaintTabs(); } catch (_) {} });
+    }, true);
     /* the drawer flag set any other way (a recorded example, a keyboard path) opens the tab instead */
     e0.slot('afterRender', function (c) {
       var st = c && c.state;

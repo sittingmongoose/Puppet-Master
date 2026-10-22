@@ -9,7 +9,12 @@
      as its own message (BROWSER-002: neither reads the composer's text), 'list' adds it to the composer as the next
      numbered line, 'insert' puts it at the composer's caret.
    bc-open (the chat's only route into the dialog) opens or reveals the one capture browser tab on the dialog's
-   fixture page; a dialog of type bc-browser opened any other way is turned into the tab after the render. */
+   fixture page; a dialog of type bc-browser opened any other way is turned into the tab after the render.
+   Destination: the dialog was modal, so its captures always went to the thread it was opened over. The tab outlives
+   that, so it remembers the thread it was opened from, and what it captures goes there even after the chat shows
+   another thread, with a notice naming the thread (list and insert write into the composer, so the chat first shows
+   that thread). A thread that is gone refuses the send and says so. A browser tab the chat did not open (the "+"
+   menu, an agent's) sends to the thread on screen. */
 (function () {
   'use strict';
   var W = window;
@@ -23,10 +28,32 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function iso() { return new Date().toISOString(); }
 
+  var origins = {};   // browser tab id -> { thread, destination } it was opened from
   function openBrowser(ev) {
+    var c = chatCtx(), st = c && c.state;
+    if (st) {
+      var buf = bufferFor(st.selectedThread);
+      origins[TAB] = { thread: st.selectedThread, destination: buf && buf.destination ? JSON.parse(JSON.stringify(buf.destination)) : null };
+    }
     return SF().openHome && SF().openHome({ kind: 'browser', id: TAB, url: PAGE.ordinary, label: PAGE.title,
       title: 'Browser · ' + PAGE.title }, ev);
   }
+  function threadById(st, tid) {
+    var list = (st && st.threads) || [];
+    for (var i = 0; i < list.length; i++) if (list[i] && list[i].id === tid) return list[i];
+    return null;
+  }
+  /* where a capture from this tab goes: { ok, thread, onScreen } or { ok: false, why } */
+  function destinationFor(tabId) {
+    var c = chatCtx(), st = c && c.state;
+    if (!st) return { ok: false, why: 'The chat is not ready.' };
+    var o = origins[tabId];
+    var tid = o ? o.thread : st.selectedThread;
+    var t = threadById(st, tid);
+    if (!t) return { ok: false, why: 'The thread this browser was opened from is gone, so nothing was sent.' };
+    return { ok: true, thread: t, onScreen: st.selectedThread === tid, origin: o || null };
+  }
+  function notify(title, detail) { var c = chatCtx(); try { if (c && c.toast) c.toast(title, detail || ''); } catch (_) {} }
 
   var e0 = E();
   if (e0 && typeof e0.chainAction === 'function') {
@@ -73,10 +100,10 @@
     return RT.composer && typeof RT.composer.bufferFor === 'function' ? RT.composer.bufferFor(tid) : null;
   }
   function showChat() { try { if (W.PMW && PMW.chatCol && PMW.chatCol.show) PMW.chatCol.show(); } catch (_) {} }
-  function attach(c) {
+  function attach(c, dest) {
     var ctx = chatCtx();
     if (!ctx || !ctx.state) return false;
-    var tid = ctx.state.selectedThread, buf = bufferFor(tid);
+    var tid = dest && dest.thread ? dest.thread.id : ctx.state.selectedThread, buf = bufferFor(tid);
     if (!buf || !Array.isArray(buf.attachments)) return false;
     seq += 1;
     var label = capLabel(c), sub = (c.w ? c.w + ' × ' + c.h + ' px · ' : '') + pageOf(c);
@@ -93,9 +120,9 @@
     if (ctx.renderApp) ctx.renderApp();
     return rec;
   }
-  function removeCaptureAttachment(c) {
+  function removeCaptureAttachment(c, dest) {
     var ctx = chatCtx(); if (!ctx || !ctx.state) return;
-    var buf = bufferFor(ctx.state.selectedThread); if (!buf || !Array.isArray(buf.attachments)) return;
+    var buf = bufferFor(dest && dest.thread ? dest.thread.id : ctx.state.selectedThread); if (!buf || !Array.isArray(buf.attachments)) return;
     for (var i = buf.attachments.length - 1; i >= 0; i--) {
       var a = buf.attachments[i], pc = a && a.pm56_capture;
       if (pc && pc.kind === c.kind && pc.w === c.w && pc.h === c.h) { buf.attachments.splice(i, 1); return; }
@@ -126,10 +153,10 @@
   }
 
   /* ---- its own message (BROWSER-002: built from the capture alone, never from the composer) ---- */
-  function post(kind, label, sub, img, extra) {
+  function post(kind, label, sub, img, extra, dest) {
     var ctx = chatCtx();
     if (!ctx || !ctx.appendMessage) return false;
-    var thread = ctx.activeThread ? ctx.activeThread() : null;
+    var thread = dest && dest.thread ? dest.thread : (ctx.activeThread ? ctx.activeThread() : null);
     seq += 1;
     var msg = Object.assign({ id: 'bc-msg-pm56-' + seq, role: 'user', type: 'bc-capture', body: '[Browser capture · ' + kind + ' · ' + label + ']',
       sentAt: iso(), kind: kind, image: img.url, imgW: img.w, imgH: img.h, label: label, sub: sub || '', instruction: '', rect: null,
@@ -141,24 +168,39 @@
 
   function onCapture(e) {
     if (!e || !e.capture || e.capture.kind === 'refused') return;
-    attach(e.capture);
+    var dest = destinationFor(e.tabId);
+    if (!dest.ok) { notify('Not added', dest.why); return; }
+    attach(e.capture, dest);
+    if (!dest.onScreen) notify('Added to ' + dest.thread.title, 'The capture waits in that thread’s composer; this browser was opened from it.');
   }
   function onSend(e) {
     if (!e || !e.what) return;
+    var dest = destinationFor(e.tabId);
+    if (!dest.ok) { notify('Not sent', dest.why); return; }
     showChat();
     if (e.how === 'capture') {
       var c = e.what, label = capLabel(c), sub = (c.w ? c.w + ' × ' + c.h + ' px · ' : '') + pageOf(c);
-      removeCaptureAttachment(c);
-      post(c.kind === 'page' ? 'page' : c.kind === 'region' ? 'region' : c.kind === 'component' ? 'component' : 'visible', label, sub, fixtureImage({ w: c.w, h: c.h, label: label, sub: sub }));
+      removeCaptureAttachment(c, dest);
+      post(c.kind === 'page' ? 'page' : c.kind === 'region' ? 'region' : c.kind === 'component' ? 'component' : 'visible', label, sub,
+        fixtureImage({ w: c.w, h: c.h, label: label, sub: sub }), null, dest);
+      if (!dest.onScreen) notify('Sent to ' + dest.thread.title, 'This browser was opened from that thread.');
       return;
     }
     var i = e.what, ref = compLabel(i) + ' on ' + PAGE.title;
     if (e.how === 'send') {
       var lab = 'Select Component · ' + compLabel(i);
       post('component', lab, (i.w ? i.w + ' × ' + i.h + ' px · ' : '') + PAGE.title, fixtureImage({ w: i.w, h: i.h, label: lab, sub: i.locator || '' }),
-        { instruction: '', locator: i.locator || null, source: i.src || null });
-    } else if (e.how === 'list') listLine(ref);
-    else if (e.how === 'insert') insertAtCaret(ref);
+        { instruction: '', locator: i.locator || null, source: i.src || null }, dest);
+      if (!dest.onScreen) notify('Sent to ' + dest.thread.title, 'This browser was opened from that thread.');
+      return;
+    }
+    // list and insert write into the composer on screen: the chat shows the destination thread first, and says so
+    var A = W.PM56_APP;
+    var run = function () { if (e.how === 'list') listLine(ref); else if (e.how === 'insert') insertAtCaret(ref); };
+    if (dest.onScreen) { run(); return; }
+    if (A && A.switchThread) A.switchThread(dest.thread.id);
+    notify('Showing ' + dest.thread.title, 'This browser was opened from that thread.');
+    (W.requestAnimationFrame || setTimeout)(run);
   }
 
   var bound = false, tries = 0;
@@ -175,4 +217,5 @@
 
   var S = W.PM56_SURFACES = W.PM56_SURFACES || {};
   S.openBrowser = function () { return openBrowser(null); };
+  S.browserOrigins = function () { return JSON.parse(JSON.stringify(origins)); };
 })();

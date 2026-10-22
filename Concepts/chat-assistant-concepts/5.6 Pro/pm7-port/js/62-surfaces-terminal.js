@@ -12,7 +12,10 @@
      session's terminal tab (rule 1: one tab per session; a second click shows the same tab).
    - View output, once the run has ended (canon: never fabricate Open in Terminal for a session that is gone): the
      retained output in a kept, read-only editor buffer tab, one per command.
-   - Rerun in Terminal: a terminal tab in the project folder that types the exact command once.
+   - Rerun in Terminal: the exact command again, in the agent's terminal when its tab is open and running (a person's
+     Rerun while an agent drives is a take-over, DL-181), else in a new terminal tab in the project folder. The
+     concept's simulated shell runs cargo and git; a command it lacks (psql's EXPLAIN, the pm CLI) says so, as a
+     shell would.
    A person's click takes focus (D8); Alt+click opens a new panel, Ctrl/Cmd+click opens behind (PM56_SURFACES.openHome).
    Without PMT (a build without the terminal) the slot returns nothing and the chat's own box draws. */
 (function () {
@@ -67,8 +70,9 @@
   }
   function shortCmd(cmd) { return cmd.length > 34 ? cmd.slice(0, 33) + '…' : cmd; }
 
+  function sessionOf(d) { return 'pm56-' + slug(threadId()) + '-' + slug(d.cardId); }
   function openTerminal(d, e) {
-    var sid = 'pm56-' + slug(threadId()) + '-' + slug(d.cardId);
+    var sid = sessionOf(d);
     return SF().openHome && SF().openHome({ kind: 'terminal', id: 'terminal:' + sid, session: sid, cwd: CWD,
       label: AGENT + ' · ' + folder(CWD), title: AGENT + '’s terminal in ' + CWD }, e);
   }
@@ -77,6 +81,16 @@
       mode: 'keep', label: shortCmd(d.command) + ' · output', title: d.command + ' · output (read-only)' }, e);
   }
   function rerun(d, e) {
+    /* the agent's session is still open in its tab: the command goes in there (a person's Rerun while an agent drives
+       is a take-over, DL-181); otherwise a new terminal in the project folder runs it once */
+    var T = PMT(), sid0 = sessionOf(d), s0 = null;
+    try { s0 = T && T.session ? T.session(sid0) : null; } catch (_) { s0 = null; }
+    if (s0 && s0.state === 'running' && s0.shell && typeof s0.input === 'function') {
+      openTerminal(d, e);
+      try { s0.input(d.command + '\r', 'user'); } catch (_) {}
+      try { if (W.PMW && PMW.announce) PMW.announce('Running ' + d.command + ' again in its terminal'); } catch (_) {}
+      return 'terminal:' + sid0;
+    }
     rerunN += 1;
     var sid = 'pm56-rerun-' + rerunN;
     var t = SF().openHome && SF().openHome({ kind: 'terminal', id: 'terminal:' + sid, session: sid, cwd: CWD,
