@@ -183,8 +183,9 @@ own action and dataset as `data-chat-action`, `data-chat-flow` (or `-trigger`, `
 port's tests click, and its words are `studio.chat.*` in `75-demo-studio.json`, keyed by the bridge's ids; an example
 the copy does not know yet keeps the chat's own words under More examples. The section reuses primitives every look
 already styles (tiles, screen rows, choice cards, the joined choice row), so the five looks, light and dark, Reduced
-Motion and the legibility floor carry over; `50-demo-studio.css` adds only the moments' column width and the one-line
-take card. The Start page's recipes gain two chat ones: Watch the assistant work (a live agent turn, the Studio stays
+Motion and the legibility floor carry over; `50-demo-studio.css` adds only the moments' column width, the one-line
+take card and the head actions in the flow (Retro's wide title ran under them), and `51-demo-studio-looks.css` gives
+the take card Glass's and Friendly's control radius, so the 32-36 px card never rounds into a capsule. The Start page's recipes gain two chat ones: Watch the assistant work (a live agent turn, the Studio stays
 open) and Grill Me, then a Crew (the Wonderer and Grill Me recorded example, which plays on its own).
 
 Looks: the sheet carries `data-pmds-look` (basic, friendly, retro, glass, nier) and `data-pmds-mode`. Basic is quiet and
