@@ -113,3 +113,16 @@ html:not([data-o55-nier="on"]) .pm56-host[data-theme^="friendly"] .menu-item:is(
 /* ---- the header's icon buttons and the context ring ---------------------------------------------------------------
    the page's header buttons are clear at rest (the stand-in's .pmw-sc-ib); the ring is a meter, so it stays round */
 html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .chat-header .icon-button:not(.active):not(:hover) { background: transparent; }
+
+/* ---- Glass: PMConcept7's field skin stays off the chat's framed fields ----------------------------------------------
+   Liquid Glass paints every input and textarea with its control fill and hairline, !important at (1,6,2)
+   (html[data-lg=on][data-theme^=glass]:not(#lgz) :is(input...)), and the Glass page sheet adds its own tinted ground.
+   A field the chat frames itself (the composer, a search well, the Ask Card's "Something else" and note wells, a
+   sheet's hero box) already draws that box, so the input inside it stays clear; bare fields keep Glass's skin, which
+   is PMConcept7's own field. The two unmatched ids only lift the weight over Glass's rule, as its :not(#lgz) does. */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme^="glass"]:not(#pm56-w1):not(#pm56-w2) :is(.composer-box, .input-wrap, .qs-other-line, .qs-ask-note-well, .pmx-hero-box) :is(input, textarea) {
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}

@@ -1,0 +1,46 @@
+/* pm7-port/css/22-no-stripes.css (looks lane): no coloured side stripes (Jared; G-36). Each rail the chat draws on one
+   side of a box is taken off, under the same selector with html:not(NieR) .pm56-host[data-theme] in front; where the
+   rail carried meaning it becomes a full 1 px box or a ring (as the stand-in's cards and found ring are), never a side
+   bar. The typing caret (.ribbon-command.typing) and the check marks drawn with two borders are not stripes. */
+
+/* the work activity's "under" block (Orbit take, styles.css): a 2 px rail in the step hue; the indent stays */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .wa-under {
+  border-left: 0;
+  padding-left: 14px;
+}
+
+/* the browser's stale row (browser-capture.css): a 2 px warning rail; the row's stale tag says it, the row gets a box */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .bc-list-row.is-stale {
+  border-left: 0;
+  padding-left: 7px;
+  border-radius: var(--pm56-r-ctl);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warning) 45%, transparent);
+}
+
+/* the decision card (questions.css): every variant restated only its left border, so the left read --border and the
+   other three the accent mix (a coloured left edge by difference); variant 2 drew a 4 px accent rail. One box now. */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .decision-surface,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .decision-host[data-variant] .decision-surface,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .decision-host[data-variant="2"] .decision-surface {
+  border: 1px solid var(--border-strong);
+}
+
+/* transcript variants with a side rule (styles.css 3 and 4, transcripts.css 10 and 12) */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .transcript[data-variant="3"] .message-assistant { border-left: 0; }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .transcript[data-variant="4"] .message-user .message-surface {
+  border: 1px solid var(--border);
+  border-radius: var(--pm56-r-card);
+}
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .transcript[data-variant="10"] .message::before { border-right: 0; }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .transcript[data-variant="12"] .message-surface { border-left: 0; }
+
+/* the activity panel's variant 2 sections (styles.css): a 3 px accent rail */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .activity-panel[data-variant="2"] .activity-section { border-left: 0; }
+
+/* working-animation variants with a step-hue rail (variants-a.css 11, variants-b.css 14): a full hairline box */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .working-variant-11 .dt-row { border-left: 0; }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .working-variant-14 .pm14-card {
+  border-left: 0;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pm-step, var(--accent)) 40%, transparent);
+  border-radius: var(--pm56-r-ctl);
+}
