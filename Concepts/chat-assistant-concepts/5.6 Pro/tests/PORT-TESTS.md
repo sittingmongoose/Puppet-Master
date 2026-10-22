@@ -3,10 +3,10 @@ Run from `Concepts/chat-assistant-concepts/5.6 Pro` with `playwright` installed 
 ```sh
 node tests/port-suite.mjs --page standalone --build --out /tmp/c56port-tests/standalone
 node tests/port-suite.mjs --page pm7 --build --out /tmp/c56port-tests/pm7
-node tests/port-suite.mjs --page both --build --sweep --out /tmp/c56port-tests/integrated
+node tests/port-suite.mjs --page both --parallel-pages --build --sweep --out /tmp/c56port-tests/integrated
 ```
 
-The runner opens GPU browsers sequentially and prints per-suite and per-page totals. Each stage has a log and JSON report; `summary.json` lists failing IDs and owners. `run.json` records the source commit, arguments and page SHA-256; each summary row also carries the page hash. `--standalone-file` and `--pm7-file` select existing builds. No built page is committed. A nonzero child exit or missing/empty report fails the run.
+The runner opens GPU browsers sequentially per page and prints per-suite and per-page totals. `--parallel-pages` runs the two page workers together, owning at most two browsers; use it only when this lane has both GPU slots free. Child reports live under `standalone/` and `pm7/`; the root `summary.json` combines them. Each stage has a log and JSON report; `summary.json` lists failing IDs and owners. `run.json` records the source commit, arguments and page SHA-256; each summary row also carries the page hash. `--standalone-file` and `--pm7-file` select existing builds. No built page is committed. A nonzero child exit or missing/empty report fails the run. `--only node` runs the 94 engine/static checks without opening a browser.
 
 For a focused regression pass:
 
@@ -52,4 +52,4 @@ The adapter reads host state and invokes host APIs. Column measurements allow th
 
 The layout verifier's `--section sheets|plate` supports focused reruns. Default `all` keeps both sections; final narrow-width acceptance requires `--sweep`.
 
-Each browser result includes `sizeContext`, refreshed after load, theme, viewport/column changes and pointer release. It records the actual viewport, column, inner stage and transcript sizes plus the requested size. Hosted column requests use a window at least 2400 px wide and clamp the column to 400–760 px; check names inherited from standalone retain their original wording. Recorder attachments select the session's non-recorder page. A full width sweep has a three-hour stage limit; other stages have a 45-minute limit.
+Each browser result includes `sizeContext`, refreshed after load, theme, viewport/column changes and pointer release. It records the actual viewport, column, inner stage and transcript sizes plus the requested size. Hosted column requests use a window at least 2400 px wide and clamp the column to 400–760 px; check names inherited from standalone retain their original wording. Recorder attachments select the session's non-recorder page. A full width sweep has a three-hour stage limit; the complete Wonderer/RX/AX stage has 90 minutes; focused and older stages have 45 minutes.
