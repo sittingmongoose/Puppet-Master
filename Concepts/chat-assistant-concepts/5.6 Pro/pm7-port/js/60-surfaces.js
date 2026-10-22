@@ -146,6 +146,14 @@
     }
     return null;
   }
+  /* the label a tab should carry (the foundation's tab body asks this before it pushes one): the chat's own label,
+     else the table's word for the id's kind of document; null when neither knows it (the push is skipped) */
+  SF.labelFor = function (id) {
+    var r = route(id);
+    if (r.special === 'link') { var lp = linkParts(r.id); return lp.title || lp.host || null; }
+    if (r.special === 'file') return r.id.slice(5).split('/').pop() || null;
+    return chatLabel(r.input) || (r.id !== r.input ? chatLabel(r.id) : null) || r.label || null;
+  };
   function linkParts(id) {
     var rest = str(id).slice(5), pipe = rest.indexOf('|');
     return { host: dec(pipe < 0 ? rest : rest.slice(0, pipe)), title: pipe < 0 ? '' : dec(rest.slice(pipe + 1)) };
