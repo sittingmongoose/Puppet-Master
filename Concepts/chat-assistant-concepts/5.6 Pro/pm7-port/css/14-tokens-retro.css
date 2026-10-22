@@ -1,0 +1,13 @@
+/* pm7-port/css/14-tokens-retro.css (looks lane): Retro Dark and Retro Light. The chat's Retro was already
+   PMConcept7's (item 16, 2026-10-07; D27), and retro.css draws its box grammar; 10-tokens-host.css routes its accent,
+   faces, grounds, inks and lines through PMConcept7's tokens (same values by default). Square everything, as PMConcept7's
+   Retro is: retro.css already sets the chat's corners to 0; the port's own rules (css/20-24) keep that.
+
+   PMConcept7 Retro (measured on the page, 2026-10-22):      dark                  light
+     ground / cards (--surface / --surface-elevated)          #171a14 / #1e2219     #F5F0E8 / #FAF7F2
+     lines (--border-light / --border)                        #333a28 / #4a533a     #D8D1C7 / #4A463F
+     inks (--text-primary / -secondary / -muted)              #dfe6cf / #a8b394 / #7c866b (Home: at 86 % toward the text)
+                                                              #1A1A1A / #444444 / #524F49
+     accent (--accent-primary)                                #b8d066               #0047AB
+     face and code  IBM Plex Mono (--body-font, --mono-font; D17a) */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="retro"] { --ss-r: 0px; }

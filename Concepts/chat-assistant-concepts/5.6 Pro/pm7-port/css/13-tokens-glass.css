@@ -1,0 +1,46 @@
+/* pm7-port/css/13-tokens-glass.css (looks lane): Glass Dark and Glass Light, on PMConcept7's Liquid Glass. The base
+   aliases are in 10-tokens-host.css; this file holds what is Glass's own.
+
+   PMConcept7 Glass (measured on the page, 2026-10-22):      dark                      light
+     reading ground (--pmw-surface = --rg-reading)            rgba(4,6,14,.70)          rgba(246,248,251,.43)
+     cards (--pmw-surface-2 = --rg-card), menus (--pmw-pop = --rg-menu, near opaque), hover (--rg-menu-hover)
+     lines (--pmw-line / --pmw-line-2)                        white 9 % / 16 %          ink 8 % / 14 %
+     inks (--pmw-text / -2 / -3)                              #F6F8FC / #D9DEE8 / #BAC2D0 at 72 %
+                                                              #0C0F15 / #262C38 at 70 % / #424A59 at 50 %
+     accent (--pmw-accent)                                    #74B9FF                   #005FCC at 74 % toward black
+     face  Inter; code JetBrains Mono; corners 7 / 11 / 15 px (--radius-sm/md/lg)
+   The chat column sits on #chatPanel, which Liquid Glass bakes as a panel sheet: the chat paints Glass's reading
+   ground once (the host, as the stand-in did), and nothing of its own blurs or tints over it (one blur, F3-427). */
+
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-dark"] { --on-accent: #101114; }
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-light"] { --on-accent: #fff; }
+
+/* one reading ground: the host paints it (--canvas); the shell and the panes inside it are clear, so the ground is
+   not stacked three or four times over the wallpaper */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="glass"] {
+  --surface: transparent;
+  --assistant: transparent;
+}
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="glass"] .pm-shell { background: transparent; }
+/* a chat tab body sits on its Home panel, which already paints the reading ground */
+html:not([data-o55-nier="on"]) .pm56-frame > div.pm56-tab-host.pm56-host[data-theme^="glass"] { background: transparent; }
+/* the chat's own Glass mesh (violet radial gradients behind the app) is replaced by PMConcept7's wallpaper */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="glass"]::before { content: none; background: none; }
+
+/* grounds Home's gutter cannot give in Glass (it is clear there): code and the sheets' floors are a recess in the
+   reading ground; sheets and dialogs are Glass's menu tint made opaque (they sit over the chat's own text) */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-dark"] {
+  --code: rgb(0 0 0 / .32);
+  --pmx-floor: rgb(0 0 0 / .24);
+  --pmx-scrim: rgb(2 4 10 / .5);
+  --pmx-sheet-bg: #0d111f;
+}
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-light"] {
+  --code: rgb(255 255 255 / .55);
+  --pmx-floor: rgb(255 255 255 / .42);
+  --pmx-scrim: rgb(238 241 246 / .55);
+  --pmx-sheet-bg: #eef1f5;
+}
+@supports (color: rgb(from red r g b)) {
+  html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="glass"] { --pmx-sheet-bg: rgb(from var(--pmw-pop, var(--surface-elevated)) r g b); }
+}

@@ -1,0 +1,195 @@
+/* pm7-port/css/10-tokens-host.css (looks lane): the chat's tokens are PMConcept7's (D27: the chat's Basic, Friendly
+   and Glass colours are fixed to match PMConcept7; Retro already matched). Written already scoped, not passed through
+   the scoper. The scoped chat declares its tokens on div.pm56-host[data-theme=x] (0,2,1); every alias here is
+   html:not(NieR) div.pm56-host... (0,3,2), so it wins without !important, and NieR Mode keeps the chat's own NieR
+   tokens (nier.css, html[data-o55-nier=on] div.pm56-host[...], and the nier lane's css/40-49) untouched.
+
+   Where the values come from:
+   - Home's --pmw-* layer (Concepts/home-redesign/src/panels/css/00-tokens.css, 50-looks.css and Glass's slots): the
+     inks, grounds, lines, menus and state colours the Home panels and the stand-in chat use, with their per-look pulls
+     to 4.5:1. They are computed on the .pmw-scope ancestor every host has (js/09-pmw-scope.js), from PMConcept7's own
+     values there, so the Accent setting, Glass's panel transparency and the high-contrast mode arrive already applied.
+   - PMConcept7's page tokens for faces and corners (--body-font, --mono-font, --radius-*), re-inherited on the host
+     below so the App font and Corner roundness settings reach the chat.
+   - The glyph inks (--pmg-ink-*, Concepts/glyph-system/opus-5.5/src/bridge/pm7-glyph-inks.css) for the one tone Home has
+     no ink for: the chat's --accent-2 ("changed").
+   The fallbacks after each var() are PMConcept7's raw tokens, for a host that somehow has no .pmw-scope ancestor. */
+
+/* ---- 1. PMConcept7's Settings tokens reach the chat -----------------------------------------------------------------
+   Every .pm56-host carries data-theme, so PMConcept7's bare [data-theme=x] blocks (0,1,0) match the host too and put
+   the theme's defaults back over what Settings writes inline on <html> (Accent color, App font, Corner roundness,
+   Border width; Concepts/onboarding/opus-5.5/src/settings/kit.d/17-look.js). Inheriting them again restores the
+   user's values on every chat element, for this lane's aliases and for any lane that reads PMConcept7's tokens. */
+.pm56-host[data-theme] {
+  --accent-primary: inherit; --accent-primary-rgb: inherit; --accent-blue: inherit; --accent-blue-rgb: inherit;
+  --accent-soft: inherit; --accent-glow: inherit; --elev-hover: inherit; --glass-glow-color: inherit;
+  --body-font: inherit; --display-font: inherit;
+  --border-radius: inherit; --radius-md: inherit; --radius-lg: inherit; --radius-xl: inherit;
+  --border-width: inherit;
+}
+
+/* ---- 2. Basic, Friendly and Glass: the base tokens ------------------------------------------------------------------
+   chat token        PMConcept7 token                 what it is in the chat
+   --canvas          --pmw-surface                    the host's ground (the chat column's own ground)
+   --surface         --pmw-surface                    the panes and the composer (Glass: clear, css/13)
+   --surface-2       --pmw-surface-2                  cards, fields, raised controls
+   --surface-3       --pmw-hover                      hover fills, chips, tracks (a tint, as PMConcept7's hovers are)
+   --surface-4       --pmw-press                      pressed and chosen fills
+   --text            --pmw-text                       body ink
+   --muted           --pmw-text-2                     secondary ink
+   --subtle          --pmw-text-3                     tertiary ink (pulled to 4.5:1 per look by Home)
+   --border          --pmw-line                       hairlines (PMConcept7's --border-light)
+   --border-strong   --pmw-line-2                     structural lines (PMConcept7's --border)
+   --accent          --pmw-accent                     accent ink and fill (Accent setting; darkened where light needs it)
+   --accent-2        --pmg-ink-changed                the "changed" tone (darkened for text in css/12 where needed)
+   --positive        --pmw-ok                         done
+   --warning         --pmw-warn                       attention
+   --danger          --pmw-bad                        blocked / error
+   --glass           --pmw-pop                        menus, popovers, hover cards, drawers, dialogs
+   --code            --pmw-gutter                     code grounds (PMConcept7's --background)
+   --font-ui         --body-font                      the look's face (Inter, Poppins; App font setting)
+   --font-mono       --mono-font                      the code face (JetBrains Mono; D17a)
+   --radius          --radius-md                      cards (6 / 14 / 11 px; Corner roundness setting)
+   --radius-sm       --radius-md x .6                 controls (the stand-in's control corner)
+   --shadow-float    --pmw-pop-shadow                 floating menus and sheets
+   --shadow-soft     --elev-2                         raised cards */
+html:not([data-o55-nier="on"]) div.pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) {
+  --canvas: var(--pmw-surface, var(--background));
+  --surface: var(--pmw-surface, var(--background));
+  --surface-2: var(--pmw-surface-2, var(--surface-elevated));
+  --surface-3: var(--pmw-hover, color-mix(in srgb, var(--text-primary) 7%, transparent));
+  --surface-4: var(--pmw-press, color-mix(in srgb, var(--text-primary) 11%, transparent));
+  --text: var(--pmw-text, var(--text-primary));
+  --muted: var(--pmw-text-2, var(--text-secondary));
+  --subtle: var(--pmw-text-3, var(--text-muted));
+  --border: var(--pmw-line, var(--border-light));
+  --border-strong: var(--pmw-line-2, color-mix(in srgb, var(--text-primary) 18%, transparent));
+  --accent: var(--pmw-accent, var(--accent-primary));
+  --accent-2: var(--pmg-ink-changed, var(--accent-magenta));
+  --positive: var(--pmw-ok, var(--accent-lime));
+  --warning: var(--pmw-warn, var(--accent-warning));
+  --danger: var(--pmw-bad, var(--accent-error));
+  --glass: var(--pmw-pop, var(--surface-elevated));
+  --code: var(--pmw-gutter, var(--background));
+  --user: var(--surface-2);
+  --assistant: var(--surface);
+  --font-ui: var(--body-font);
+  --font-friendly: var(--body-font);
+  --font-mono: var(--mono-font);
+  --radius: var(--radius-md);
+  --radius-sm: calc(var(--radius-md) * .6);
+  --shadow-float: var(--pmw-pop-shadow, var(--elev-3));
+  --shadow-soft: var(--elev-2);
+  /* the context meter's segments, and through them the crew's seat colours (module-shell: seat 1 = segment 2, seat 2 =
+     5, seat 3 = 3, seat 4 = 6, seat 5 = 4, seat 6 = 1): the look's own hues, marks at 3:1 or more on every field */
+  --ctxseg-1: var(--accent);
+  --ctxseg-2: var(--pmg-ink-changed, var(--accent-magenta));
+  --ctxseg-3: var(--pmg-ink-done, var(--accent-lime));
+  --ctxseg-4: var(--pmg-ink-attention, var(--accent-warning));
+  --ctxseg-5: var(--accent-magenta);
+  --ctxseg-6: var(--accent-orange);
+  /* the transcript's families (turn-stage.css): deliverables, people and time in the look's done, orange and
+     attention inks */
+  --fam-deliverable: var(--positive);
+  --fam-people: color-mix(in srgb, var(--accent-orange) 82%, var(--text));
+  --fam-time: var(--warning);
+  /* the Send / Stop chip's corner (send-stop.css): the control corner */
+  --ss-r: var(--radius-sm);
+}
+/* ink on an accent fill: black or white by the fill's own luminance (the stand-in's rule, 80-standin-chat.css), so a
+   chosen accent of any lightness keeps 4.5:1; the per-look files give the fallback (this rule is one class heavier,
+   so it wins over them wherever it is supported) */
+@supports (color: color(from red srgb-linear r g b)) {
+  html:not([data-o55-nier="on"]) div.pm56-host.pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) {
+    --on-accent: color(from var(--accent) srgb-linear clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1));
+  }
+}
+
+/* ---- 3. Basic, Friendly and Glass: the dialog grammar's precomputed literals (module-shell.css 3.3), re-derived ---
+   module-shell keeps one literal per theme, derived from the chat's violet palette; here each is the same derivation
+   over PMConcept7's tokens, so they follow the look and the Accent setting. */
+html:not([data-o55-nier="on"]) div.pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) {
+  --pmx-card: var(--surface-2);
+  --pmx-card-warm: color-mix(in srgb, var(--warning) 11%, var(--pmx-card));
+  --pmx-edge-warm: color-mix(in srgb, var(--warning) 50%, transparent);
+  --pmx-edge-warm-low: color-mix(in srgb, var(--warning) 22%, transparent);
+  --pmx-wash: color-mix(in srgb, var(--accent) 18%, transparent);
+  --pmx-floor: var(--pmw-gutter, var(--background));
+  --pmx-line: var(--border-strong);
+  --pmx-hatch: color-mix(in srgb, var(--border-strong) 80%, transparent);
+  --pmx-sheet-bg: var(--pmw-surface, var(--background));
+  --pmx-sheet-ring: 1px solid var(--pmw-pop-line, var(--border-strong));
+  --pmx-sheet-shadow: var(--pmw-pop-shadow, var(--elev-3));
+  --pmx-seat-fill-1: color-mix(in srgb, var(--pmx-seat-1) 16%, transparent);
+  --pmx-seat-fill-2: color-mix(in srgb, var(--pmx-seat-2) 16%, transparent);
+  --pmx-seat-fill-3: color-mix(in srgb, var(--pmx-seat-3) 16%, transparent);
+  --pmx-seat-fill-4: color-mix(in srgb, var(--pmx-seat-4) 16%, transparent);
+  --pmx-seat-fill-5: color-mix(in srgb, var(--pmx-seat-5) 16%, transparent);
+  --pmx-seat-fill-6: color-mix(in srgb, var(--pmx-seat-6) 16%, transparent);
+  --pmx-seat-fill-7: color-mix(in srgb, var(--pmx-seat-7) 16%, transparent);
+  --pmx-seat-fill-8: color-mix(in srgb, var(--pmx-seat-8) 16%, transparent);
+  --pmx-seat-fill-lead: color-mix(in srgb, var(--text) 14%, transparent);
+  --pmx-seat-fill-you: color-mix(in srgb, var(--muted) 16%, transparent);
+  --pmx-seat-fill-accent: color-mix(in srgb, var(--accent) 16%, transparent);
+  --pmx-seat-fill-warning: color-mix(in srgb, var(--warning) 16%, transparent);
+  --pmx-focus-edge: color-mix(in srgb, var(--accent) 60%, var(--border-strong));
+  --pmx-focus-ring: color-mix(in srgb, var(--accent) 14%, transparent);
+  --pmx-focus-outline: var(--pmw-focus, var(--accent));
+  --pmx-grid: color-mix(in srgb, var(--border-strong) 30%, transparent);
+  --pmx-table-fill: color-mix(in srgb, var(--text) 4%, transparent);
+  --pmx-accent-halo: color-mix(in srgb, var(--accent) 22%, transparent);
+  --pmx-accent-pulse: color-mix(in srgb, var(--accent) 55%, transparent);
+  --pmx-soft-fill: color-mix(in srgb, var(--text) 4%, transparent);
+  --pmx-sheen-card: color-mix(in srgb, var(--pmx-card) 68%, transparent);
+  --pmx-sheen-warm: color-mix(in srgb, var(--pmx-card-warm) 72%, transparent);
+  --pmx-primary-hover: color-mix(in srgb, var(--accent) 86%, var(--text));
+  --pmx-mdl-icon-bg: color-mix(in srgb, var(--accent) 14%, var(--surface-2));
+  --pmx-mdl-icon-edge: color-mix(in srgb, var(--accent) 34%, var(--surface-2));
+  --pmx-q-n-on: var(--on-accent);
+  /* the dialog grammar's own corners (module-shell :root) follow the look's: a control, a card, a sheet */
+  --pmx-r-xs: var(--radius-xs, 2px);
+  --pmx-r-sm: var(--radius-sm);
+  --pmx-r-md: var(--radius-md);
+  --pmx-r-card: var(--radius-md);
+  --pmx-r-sheet: var(--radius-lg);
+}
+html:not([data-o55-nier="on"]) div.pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"])[data-theme$="-dark"] {
+  --pmx-scrim: rgb(0 0 0 / .5);
+}
+html:not([data-o55-nier="on"]) div.pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"])[data-theme$="-light"] {
+  --pmx-scrim: color-mix(in srgb, var(--pmw-gutter, var(--background)) 55%, transparent);
+}
+/* the question numerals in light sheets read the accent ink (module-shell kept a darker literal per theme) */
+html:not([data-o55-nier="on"]) div.pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"])[data-theme$="-light"] .pmx-sheet {
+  --pmx-q-n-ink: var(--accent);
+}
+/* the orbit's core is a dark disc in every look: its done and attention marks take the dark inks (orbit.css kept the
+   chat's dark literals for the light themes) */
+html:not([data-o55-nier="on"]) div.pm56-host:is([data-theme="basic-light"], [data-theme="friendly-light"], [data-theme="glass-light"]) .orbit-core {
+  --positive: color-mix(in srgb, var(--accent-lime) 70%, #fff);
+  --warning: color-mix(in srgb, var(--accent-warning) 60%, #fff);
+}
+
+/* ---- 4. Retro: already PMConcept7's palette (D27); only what PMConcept7's Settings and Home's legibility pulls change.
+   chat token  PMConcept7 token    note
+   --accent    --accent-primary    the same #b8d066 / #0047AB by default; follows the Accent setting
+   --font-ui   --body-font         IBM Plex Mono; follows the App font setting
+   --font-mono --mono-font         IBM Plex Mono (D17a: Retro's code is its interface face)
+   --canvas    --background, and the grounds, inks, lines and state colours as Home's --pmw-* (identical values,
+               except --subtle and the light state inks, which Home pulled to 4.5:1) */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="retro"] {
+  --accent: var(--accent-primary);
+  --font-ui: var(--body-font);
+  --font-mono: var(--mono-font);
+  --canvas: var(--background);
+  --surface: var(--pmw-surface, var(--background));
+  --surface-2: var(--pmw-surface-2, var(--surface-elevated));
+  --text: var(--pmw-text, var(--text-primary));
+  --muted: var(--pmw-text-2, var(--text-secondary));
+  --subtle: var(--pmw-text-3, var(--text-muted));
+  --border: var(--pmw-line, var(--border-light));
+  --border-strong: var(--pmw-line-2, var(--text-muted));
+  --positive: var(--pmw-ok, var(--accent-lime));
+  --warning: var(--pmw-warn, var(--accent-warning));
+  --danger: var(--pmw-bad, var(--accent-error));
+}

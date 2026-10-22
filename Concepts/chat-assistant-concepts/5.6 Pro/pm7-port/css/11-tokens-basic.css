@@ -1,0 +1,17 @@
+/* pm7-port/css/11-tokens-basic.css (looks lane): Basic Dark and Basic Light. The base aliases are in
+   10-tokens-host.css; this file holds what is Basic's own.
+
+   PMConcept7 Basic (measured on the page, 2026-10-22):   dark       light
+     ground (--pmw-surface = --surface)                     #1E1E1E    #EAECEF
+     cards (--pmw-surface-2 = --surface-elevated)           #2D2D2D    #FFFFFF
+     lines (--pmw-line / --pmw-line-2)                      #333 / #424242   #E0E0E0 / #C4C4C4
+     inks (--pmw-text / -2 / -3)                            #E8E8E8 / #A0A0A0 / #6B7280 mixed 68 % toward the text
+                                                            #1A1A1A / #3B3B3B / #5C6470
+     accent (--pmw-accent = --accent-primary)               #64B5F6    #0056B3
+     done / attention / blocked                             #3DD68C / #FFB74D / #EF5350 mixed 74 % toward the text
+                                                            #0B8043 at 84 % / #E65100 at 72 % / #C62828
+     face  Inter (--body-font); code JetBrains Mono (--mono-font); corners 4 / 6 / 8 px (--radius-sm/md/lg) */
+
+/* ink on the accent when relative colours are not supported (10-tokens-host.css computes it otherwise) */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="basic-dark"] { --on-accent: #101114; }
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="basic-light"] { --on-accent: #fff; }
