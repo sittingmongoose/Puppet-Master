@@ -187,7 +187,9 @@
      state (un-starring every model no longer leaves a permanently empty
      picker); this snapshot covers what is left. */
   const FIXTURE0 = {models:clone(D.models), artifacts:clone(D.artifacts)};
-  if(HOSTED){ DEFAULT.editorTabs=[]; DEFAULT.activeEditor=null; DEFAULT.theme=HOST.theme(); DEFAULT.historyMode='closed'; }
+  /* hosted: History opens pinned when the chat column's history_pinned says so (history.js draws it as the pinned
+     drawer from 'floating' plus its pin), else closed */
+  if(HOSTED){ DEFAULT.editorTabs=[]; DEFAULT.activeEditor=null; DEFAULT.theme=HOST.theme(); DEFAULT.historyMode=HOST.historyPinned()?'floating':'closed'; }
 
   let state = clone(DEFAULT);
   let workTimer = null;

@@ -202,6 +202,22 @@ var persist = PMW.persist = {
 
   /* A project switch: flush the layout to the project it belongs to, then show the new project's own layout (or the
      default). The swap is one restore command that is not written again (the new layout came from its own key). */
+  /* A layout for a project that has none saved: the named layout Settings picks, with the chat column's History pin
+     seeded from Settings' History list default (general.interaction.chat-history-list, Pinned or Flyout, through the
+     5.6 Pro chat port's PM_CHAT_SETTINGS when the page has it). Only here: a saved layout, an explicit false included,
+     is never reseeded, and the model's own default (false) stays the record's default. */
+  fresh: function () {
+    var name = PMW.settings.get('panels.layout.named') || 'home';
+    var l = PMW.buildNamed(PMW.NAMED[name] ? name : 'home', null);
+    try {
+      var CS = window.PM_CHAT_SETTINGS, v = CS && typeof CS.values === 'function' ? CS.values() : null;
+      var hist = v ? v['general.interaction.chat-history-list'] : null;
+      if (l && typeof hist === 'string' && /^pinned$/i.test(hist)) {
+        l.chat_column = Object.assign(model.chatColumn(l.chat_column), { history_pinned: true });
+      }
+    } catch (err) { try { console.error('[pm-home] the History default could not be read', err); } catch (_) {} }
+    return l;
+  },
   checkProject: function () {
     var now = projectId(), was = persist.boundId;
     if (!was || now === was || !PMW.state.layout) return false;
@@ -209,10 +225,7 @@ var persist = PMW.persist = {
     pendingQuarantine = null;              // a pending set-aside belongs to the old project's key
     persist.boundId = now;
     var next = persist.load();
-    if (!next) {
-      var name = PMW.settings.get('panels.layout.named') || 'home';
-      next = PMW.buildNamed(PMW.NAMED[name] ? name : 'home', null);
-    }
+    if (!next) next = persist.fresh();
     var res = next ? commit(CMD.restore, { source: 'project_switch' }, function (d) {
       for (var k in d) delete d[k];
       Object.assign(d, model.clone(next));

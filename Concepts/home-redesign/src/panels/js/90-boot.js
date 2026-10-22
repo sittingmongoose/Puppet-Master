@@ -22,8 +22,8 @@ PMW.resetLayout = PMW.resetLayout || function () { return PMW.applyNamed('home',
 function firstLayout() {
   persist.bind();   // the layout belongs to the project it was loaded for, whatever the title bar says later
   var saved = persist.load();
-  var name = PMW.settings.get('panels.layout.named') || 'home';
-  var l = saved || PMW.buildNamed(PMW.NAMED[name] ? name : 'home', null);
+  // nothing saved for this project: the named layout with the History default seeded (persist.fresh)
+  var l = saved || persist.fresh();
   // ids written before a kind folded them (debug-console:<session>, D33) load as the one tab they name now
   if (l && PMW.foldLayout(l)) model.normalize(l);
   return l;
