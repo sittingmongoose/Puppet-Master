@@ -377,23 +377,37 @@ async function browser() {
     try { b.click(); window.PM56_EXT.ctx().renderApp(); } finally { b.remove(); }
   }, [name, data || {}]);
   const sleep = ms => page.waitForTimeout(ms);
-  const startSheet = async () => { await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click(); await sleep(1400); };
+  const startSheet = async (holdFacts = false) => {
+    await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click();
+    if (holdFacts) await ev(() => PM56_CLOCK.setScale(.01));
+    await sleep(1400);
+  };
   /* answer every round with Accept all until What we agreed is open; notes whether it waited on a lookup on the way */
-  const answerAll = async (maxMs = 30000) => {
-    let waited = false; const t0 = Date.now();
+  const answerAll = async (maxMs = 30000, resumeOnLookup = false) => {
+    let resumed = false; const t0 = Date.now();
     await ev(() => {
       const root = window.PM56_HOST?.root?.() || document.body, tid = PM56_EXT.ctx().state.selectedThread;
-      const p = window.__c56AnswerLookup = { seen: false, witness: null };
-      const read = () => { const el = root.querySelector('.wg-lookup'); if (el && PM56_EXT.ctx().state.selectedThread === tid) { p.seen = true; p.witness = { thread: tid, at: performance.now(), text: el.textContent }; } };
-      p.observer = new MutationObserver(read); p.observer.observe(root, { childList: true, subtree: true, characterData: true }); read();
+      const p = window.__c56AnswerLookup = { seen: false, witness: null, since: null, samples: 0 };
+      const read = () => {
+        const el = [...root.querySelectorAll('.wg-lookup')].find(el => /next round waits for it/.test(el.textContent));
+        const r = el?.getBoundingClientRect(), h = r && document.elementFromPoint(r.left + Math.min(20, r.width / 2), r.top + r.height / 2);
+        if (el && r.width && r.height && h && (h === el || el.contains(h)) && PM56_EXT.ctx().state.selectedThread === tid) {
+          const now = performance.now(); if (p.since == null) p.since = now; p.samples++;
+          if (p.samples >= 2 && now - p.since >= 200) { p.seen = true; p.witness = { thread: tid, first: p.since, last: now, samples: p.samples, text: el.textContent }; }
+        } else { p.since = null; p.samples = 0; }
+      };
+      p.observer = new MutationObserver(read); p.observer.observe(root, { childList: true, subtree: true, characterData: true }); p.timer = setInterval(read, 100); read();
     });
     const done = async agreed => {
-      const observed = await ev(() => ({ seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness }));
-      return { agreed, waited: waited || observed.seen, lookupWitness: observed.witness };
+      const observed = await ev(() => {
+        const r = PM56_COLLAB.run(PM56_WG_DEMOS.snapshot()?.runId);
+        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [] };
+      });
+      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.facts.length > 0 && observed.facts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsAfter: observed.facts };
     };
     try {
     while (Date.now() - t0 < maxMs) {
-      if (await ev(() => !!document.querySelector('.wg-lookup'))) waited = true;
+      if (resumeOnLookup && !resumed && await ev(() => __c56AnswerLookup.seen)) { await ev(() => PM56_CLOCK.setScale(1)); resumed = true; }
       if (await ev(() => !!document.querySelector('.wg-agreed[data-state="open"]'))) return await done(true);
       if (await ev(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'))) {
         await page.locator('.qs-grill [data-action="qs-accept-round"]').first().click({ timeout: 1500 }).catch(e => { if (!/Timeout|detached|not attached/.test(e.message)) throw e; });
@@ -402,15 +416,16 @@ async function browser() {
       await sleep(500);
     }
     return await done(false);
-    } finally { await ev(() => { window.__c56AnswerLookup?.observer.disconnect(); delete window.__c56AnswerLookup; }); }
+    } finally { await ev(resume => { window.__c56AnswerLookup?.observer.disconnect(); clearInterval(window.__c56AnswerLookup?.timer); delete window.__c56AnswerLookup; if (resume) PM56_CLOCK.setScale(1); }, resumeOnLookup); }
   };
   const wonLanes = () => ev(() => [...document.querySelectorAll('.pmx-lane[data-k*=":"]')].filter(l => /Wonderer/.test(l.querySelector('.pmx-lane-name')?.textContent || '')).map(l => l.textContent));
   const disabledSynthesis = async run => {
     const selector = '[data-action="collab-brainstorm-synthesize"][data-run="' + run + '"]';
-    const state = await ev(selector => {
+    const state = await ev(({ selector, run }) => {
       const b = [...document.querySelectorAll(selector)].find(b => b.getBoundingClientRect().width && b.getBoundingClientRect().height);
-      return { present: !!b, native: !!b?.disabled, aria: b?.getAttribute('aria-disabled') };
-    }, selector);
+      const g = PM56_WG.gate(PM56_COLLAB.run(run));
+      return { present: !!b, native: !!b?.disabled, aria: b?.getAttribute('aria-disabled'), gateBefore: { ok: g.ok, code: g.code } };
+    }, { selector, run });
     if (!state.present || state.native || target.kind !== 'pm7' || state.aria !== 'true') return { ...state, disabled: state.present ? state.native : null };
     await ev(() => {
       const original = PM56_EXT._actions['collab-brainstorm-synthesize'];
@@ -421,16 +436,18 @@ async function browser() {
     try {
       const button = page.locator(selector).filter({ visible: true }).first(); await button.scrollIntoViewIfNeeded();
       const point = await button.evaluate(b => { const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, h = document.elementFromPoint(x, y); return { x, y, painted: !!h && (h === b || b.contains(h)) }; });
-      if (!point.painted) return { ...state, disabled: false, error: 'Disabled Write the plan is not painted at its click point' };
+      if (!point.painted) return { ...state, disabled: null, error: 'Disabled Write the plan is not painted at its click point' };
+      const beforeClick = await ev(run => { const g = PM56_WG.gate(PM56_COLLAB.run(run)); return { ok: g.ok, code: g.code }; }, run);
+      if (beforeClick.ok) return { ...state, gateAfter: beforeClick, disabled: null, transitioned: true };
       await page.mouse.click(point.x, point.y);
-      const calls = await ev(() => __c56SynthesisProbe.calls);
-      return { ...state, calls, disabled: calls === 0 };
+      const after = await ev(run => { const g = PM56_WG.gate(PM56_COLLAB.run(run)); return { calls: __c56SynthesisProbe.calls, gateAfter: { ok: g.ok, code: g.code } }; }, run);
+      return { ...state, ...after, disabled: after.gateAfter.ok ? null : after.calls === 0, transitioned: !!after.gateAfter.ok };
     } finally { await ev(() => { PM56_EXT._actions['collab-brainstorm-synthesize'] = __c56SynthesisProbe.original; delete window.__c56SynthesisProbe; }); }
   };
   try {
     await load();
     /* WGV_ONLY=r2: the round 2 checks alone (a quick local loop; the full pass runs everything) */
-    if (process.env.WGV_ONLY === 'r2') { await reviewRound2({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
+    if (['r2', 'contrast'].includes(process.env.WGV_ONLY)) { await reviewRound2({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=r1: the round 1 checks alone (a quick local loop) */
     if (process.env.WGV_ONLY === 'r1') { await reviewRound1({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=rx: the recorded-examples checks alone (2026-10-21) */
@@ -452,16 +469,20 @@ async function browser() {
       await act('collab-modal-cancel').catch(() => {}); await ev(() => { const c = window.PM56_EXT.ctx(); c.closeDialog(); c.renderApp(); });
     }
     /* the Crew */
-    await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(900); await startSheet();
-    const crew = await ev(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = window.PM56_COLLAB.run(s.runId); return { id: r.id, grill: r.config.grill_me_enabled, parts: r.participants.map(p => p.additiveRoleKind), q: document.querySelector('.qs-grill-bar') ? document.querySelector('.qs-grill-bar').textContent : '', pre: [...document.querySelectorAll('.qs-ask-opt.is-on .qs-rec')].length }; });
+    // Keep the recorded fact pending while the precondition reads run, then let
+    // its real timer finish once the lookup line has appeared in the chat.
+    await ev(() => { PM56_CLOCK.setScale(1); window.PM56_WG_DEMOS.start('crew'); }); await sleep(900); await startSheet(true);
+    const crew = await ev(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = window.PM56_COLLAB.run(s.runId); return { id: r.id, grill: r.config.grill_me_enabled, facts: r.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })), parts: r.participants.map(p => p.additiveRoleKind), q: document.querySelector('.qs-grill-bar') ? document.querySelector('.qs-grill-bar').textContent : '', pre: [...document.querySelectorAll('.qs-ask-opt.is-on .qs-rec')].length }; });
     check('B2 a Crew with Grill Me on adds nobody', crew.grill === true && !crew.parts.some(k => /grill/.test(k)) && crew.parts.filter(k => k === 'wonderer').length === 1, JSON.stringify(crew.parts));
     check('B2b the round is the questionnaire, the Coordinator grilling, the recommended answer preselected', /The Coordinator is grilling you/.test(crew.q) && crew.pre === 1, crew.q);
     const split = await ev(id => window.PM56_CREW.claim(id, 'normalize', { epoch: window.PM56_COLLAB.run(id).stopEpoch, sourceHash: window.PM56_COLLAB.run(id).crew.input.sourceHash }), crew.id);
     check('B2c the split waits for Confirm', split.error === 'grill_me_waits_for_confirm', JSON.stringify(split));
-    const crewAns = await answerAll(40000);
+    const crewAns = await answerAll(40000, true);
     check('B2e grilling waited on a lookup instead of jumping to What we agreed', crewAns.waited, JSON.stringify(crewAns));
+    results.at(-1).measured = { before: crew.facts, ...crewAns };
     const agreed = await ev(() => { const a = document.querySelector('.wg-agreed[data-state="open"]'); return a ? { rows: a.querySelectorAll('.wg-agreed-row').length, confirm: !!a.querySelector('[data-action="wg-confirm"]'), keep: !!a.querySelector('[data-action="wg-keep-going"]') } : null; });
     check('B2d What we agreed lists every decision, with Confirm and Keep going', agreed && agreed.rows === 5 && agreed.confirm && agreed.keep, JSON.stringify(agreed));
+    if (process.env.WGV_ONLY === 'b2') { check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); await b.close(); return; }
     await page.locator('.wg-agreed [data-action="wg-confirm"]').first().click();
     /* the recordings are paced for a person (2026-10-21); this pass reads their order, so it plays them 3x faster */
     const pace = k => ev(k => window.PM56_CLOCK.setScale(k), k);
@@ -508,7 +529,7 @@ async function browser() {
       if (st.proposals > 0 && firstPassAt === null) firstPassAt = st.held;
       if (!normalized && st.held === 'delivered') normalized = st;
       if (st.phase === 'vote' && !checked) { checked = true; await act('wg-check-it', { run: bsId, lead: 'instant' }); }
-      if (st.phase === 'synthesis' && !st.gate.ok) { const dom = await disabledSynthesis(bsId); disabledEvidence.push({ gate: st.gate.code, ...dom }); waits.push(st.gate.code + ':' + dom.disabled); }
+      if (st.phase === 'synthesis' && !st.gate.ok) { const dom = await disabledSynthesis(bsId); disabledEvidence.push({ gate: st.gate.code, ...dom }); if (!dom.gateBefore.ok && !dom.transitioned) waits.push(dom.gateBefore.code + ':' + dom.disabled); }
       if (st.phase === 'synthesis' && st.gate.ok) break;
       if (st.wVote) { check('B5 the Wonderer never votes', false, 'a Wonderer vote was recorded'); break; }
     }
@@ -523,6 +544,7 @@ async function browser() {
     /* M4: every lead keeps the team's decision, its reason and recorder, and a research result is added under it */
     const decided = plan.text.match(/ — (Explore|Use|Set aside) \(the Coordinator: [^)]+\)/g) || [], researched = plan.text.match(/ — Explore \(the Coordinator: [^)]+\) → (Supported|Not supported): /g) || [];
     check('B5b the Plan lists every lead with the team’s decision and reason, and research under it (M4)', refused && plan.synth && /Wonderer leads/.test(plan.text) && decided.length === plan.total && researched.length >= 3, JSON.stringify({ total: plan.total, decided: decided.length, researched: researched.length }));
+    if (process.env.WGV_ONLY === 'b5') { check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); await b.close(); return; }
     /* Grill Me turned on mid-run (the 'dissent' recording) */
     await ev(() => { const b = document.createElement('button'); b.dataset.flow = 'dissent'; window.PM56_EXT.run('b13-start', b, new Event('click')); }); await sleep(900); await startSheet();
     const dsId = await ev(() => window.PM56_BATCH13.currentRun().id);
@@ -652,9 +674,10 @@ const AX_EXAMPLES = [
 async function otherExamples({ page, ev, sleep }) {
   const SCALE = +(process.env.AX_SCALE || 3), only = process.env.AX_ONLY ? new RegExp(process.env.AX_ONLY, 'i') : null;
   const width = +(process.env.AX_WIDTH || 1440);
+  const selected = AX_EXAMPLES.filter(x => !only || only.test(x.name + ' ' + x.action + ' ' + x.flow));
+  if (!selected.length) throw new Error('AX_ONLY matched no examples');
   if (width !== 1440) await target.resize(page, { width, height: 900 });
-  for (const x of AX_EXAMPLES) {
-    if (only && !only.test(x.name + ' ' + x.action + ' ' + x.flow)) continue;
+  for (const x of selected) {
     const label = 'AX ' + x.name + (width !== 1440 ? ' @' + width : '');
     /* a fresh page for each example: what one leaves behind (a schedule, an open document) never starts the next */
     await target.load(page); await sleep(600);
@@ -758,7 +781,8 @@ async function otherExamples({ page, ev, sleep }) {
    SA-*: Show all lists every lane in place and Show fewer folds back; the card never folds. CV-*: the chevron always
    matches the card, and its first click changes it. */
 async function recordedExamples({ page, ev, act, sleep }) {
-  const SCALE = 3, fast = k => ev(k => window.PM56_CLOCK.setScale(k), k);
+  const SCALE = Number(opt('--rx-scale') || 3), fast = k => ev(k => window.PM56_CLOCK.setScale(k), k);
+  if (![1, 3].includes(SCALE)) throw new Error('--rx-scale must be 1 (normal pace) or 3 (original accelerated verifier)');
   const until = (fn, arg, ms = 60000) => page.waitForFunction(fn, arg, { timeout: ms, polling: 120 }).then(() => true, () => false);
   const click = async sel => { try { const l = page.locator(sel).first(); if (await l.count() && await l.isVisible()) { await l.click({ timeout: 3000 }); return true; } } catch (e) { } return false; };
   const sheetStart = async () => { await until(() => !!document.querySelector('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button'), null, 8000); await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click(); await ev(() => { if (window.__rx && window.__rx.started == null) window.__rx.started = window.PM56_CLOCK.now(); }); };
@@ -1333,6 +1357,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   const confirmThread = async (tid, ms = 40000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { const st = await ev(t => { const s = window.PM56_WG.threadSession(t); return s ? s.status : ''; }, tid); if (st === 'confirmed') return true; if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]')) { await sleep(700); continue; } if (await click('.qs-grill [data-action="qs-accept-round"]')) { await sleep(900); continue; } await sleep(400); } return false; };
   const acceptLabel = () => ev(() => { const b = document.querySelector('.qs-grill [data-action="qs-accept-round"]'); return b ? b.textContent.replace(/\s+/g, ' ').trim() : ''; });
 
+  if (process.env.WGV_ONLY !== 'contrast') {
   /* 1 (Astra F1 = Opus N1): Keep going followed by an untouched Wrap up keeps every answer you submitted */
   await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(600);
   let t = await thread();
@@ -1418,6 +1443,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   const f3 = await ev(tid => { const c = window.PM56_EXT.ctx(), s = window.PM56_WG.threadSession(tid), a = window.PM56_WG.grill.agreed(s); return { st: s.status, ended: a.endedBy, dec: a.decisions.map(d => d.id + '=' + d.answer), card: !!document.querySelector('.qs-grill'), bound: !!c.state.wgGrill, agreed: document.querySelectorAll('.wg-agreed[data-state="open"]').length }; }, p3.tid);
   check('R2-3 turning a Plan’s Grill Me off keeps “Narrow it to the first step”, clears the Ask Card and its binding, and shows one What we agreed for Confirm',
     f3.st === 'agreeing' && f3.ended === 'switched_off' && f3.dec.includes('d-scope=Narrow it to the first step') && !f3.card && !f3.bound && f3.agreed === 1, JSON.stringify(f3));
+  }
 
   /* 4 (Astra F4 + Opus N4 + n-a): contrast on the painted pixels in ten looks: the round bar over its tint, the map's
      frontier, the source line, who asked for a pass, and the rest of the required words */
@@ -1452,6 +1478,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   check('R2-4 required words read 4.5:1 or better on the painted pixels in ten looks (the round bar over its tint, the map frontier, the source line, who asked for a pass)',
     !Object.keys(low4).length && Object.values(n4).every(n => n >= 8), JSON.stringify({ low4, n4 }));
   results[results.length - 1].measured = { ratios: pixels4, counts: n4 };
+  if (process.env.WGV_ONLY === 'contrast') return;
 
   /* D1 (ruling 18): the map draws its dependencies, has no tally of its own, keeps the question in view at 1440 x 900,
      and marks the question on screen; in What we agreed it gives the structure without repeating the answers */
