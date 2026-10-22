@@ -453,7 +453,11 @@
       if (usage.hourAvail() && !usage.hourRunning()) usage.hour();
       return true;
     } },
-    { id: 'nierTour', icon: 'pod', kind: 'launch', avail: () => looks.nierAvail() && tour.avail(), run: () => { if (!looks.nierOn()) looks.setNier(true); O55.motion.real.setTimeout(() => tour.start(), 420); return true; } }
+    { id: 'nierTour', icon: 'pod', kind: 'launch', avail: () => looks.nierAvail() && tour.avail(), run: () => { if (!looks.nierOn()) looks.setNier(true); O55.motion.real.setTimeout(() => tour.start(), 420); return true; } },
+    /* the assistant chat: a live agent turn (a moment: the Studio stays open beside the chat) and the Wonderer and Grill
+       Me showcase (a recorded example: it plays on its own) */
+    { id: 'chatWork', icon: 'chat', kind: 'stay', avail: () => chat.avail(), run: () => chat.run('live', 'live-agent-turn').ok },
+    { id: 'chatGrill', icon: 'wonder', kind: 'launch', avail: () => chat.avail(), run: () => chat.runGuided('wonderer-crew').ok }
   ];
 
   O55.studio = {
