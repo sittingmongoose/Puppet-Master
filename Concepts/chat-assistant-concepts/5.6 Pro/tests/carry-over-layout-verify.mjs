@@ -135,23 +135,38 @@ async function plate() {
     for (const p of ps) {
       const pr = p.getBoundingClientRect(), texts = [...p.querySelectorAll('text')].filter(M.visible);
       const result = texts.find(t => /got one checked result/.test(t.textContent));
-      if (!result) continue;
-      const r = M.ink(result, result.getBoundingClientRect(), result.textContent), edge = Math.min(r.left - pr.left, pr.right - r.right);
-      const geoms = [...p.querySelectorAll('path.pmx-p-line, path.pmx-p-paper, rect.pmx-p-hatchbox, line, polyline')].filter(M.visible).flatMap(el => {
+      const r = result ? M.ink(result, result.getBoundingClientRect(), result.textContent) : null, edge = r ? Math.min(r.left - pr.left, pr.right - r.right) : null;
+      const geoms = [...p.querySelectorAll('path.pmx-p-line, path.pmx-p-paper, rect.pmx-p-hatchbox, rect.pmx-m-floor, rect.pmx-p-floorbar, rect.pmx-p-hatch, line, polyline')].filter(M.visible).flatMap(el => {
         const cs = getComputedStyle(el), m = el.getScreenCTM();
         if (!m || !el.getTotalLength || cs.opacity === '0') return [];
         const length = el.getTotalLength(), n = Math.max(2, Math.min(600, Math.ceil(length * Math.abs(m.a || 1) / 2))), points = [];
         for (let i = 0; i <= n; i++) { const q = el.getPointAtLength(length * i / n); const v = new DOMPoint(q.x, q.y).matrixTransform(m); points.push([v.x, v.y]); }
         return [{ id: el.getAttribute('data-k') || el.tagName, points, half: cs.stroke === 'none' ? 0 : parseFloat(cs.strokeWidth) * Math.abs(m.a || 1) / 2 }];
       });
+      const distances = a => geoms.map(g => ({ line: g.id, gap: Math.min(...g.points.map(([x, y]) => Math.hypot(Math.max(a.left - x, 0, x - a.right), Math.max(a.top - y, 0, y - a.bottom)))) - g.half })).sort((a, b) => a.gap - b.gap);
+      const labels = texts.filter(t => t.textContent.trim() && getComputedStyle(t).opacity !== '0').map(t => ({ text: t.textContent.trim(), kind: 'svg', rect: M.ink(t, t.getBoundingClientRect(), t.textContent) }));
+      for (const fo of p.querySelectorAll('foreignObject')) {
+        const walk = document.createTreeWalker(fo, NodeFilter.SHOW_TEXT);
+        for (let t = walk.nextNode(); t; t = walk.nextNode()) {
+          const text = t.textContent.trim(), el = t.parentElement;
+          if (!text || !M.visible(el) || getComputedStyle(el).opacity === '0') continue;
+          const range = document.createRange(); range.selectNodeContents(t);
+          for (const rr of range.getClientRects()) {
+            if (rr.width < 1 || rr.height < 1) continue;
+            const a = M.ink(el, rr, text), eb = el.getBoundingClientRect();
+            if (/hidden|clip/.test(getComputedStyle(el).overflowX)) { a.left = Math.max(a.left, eb.left); a.right = Math.min(a.right, eb.right); }
+            if (a.right - a.left >= 1) labels.push({ text, kind: 'html', rect: a });
+          }
+        }
+      }
+      for (const label of labels) { label.edge = Math.min(label.rect.left - pr.left, pr.right - label.rect.right); label.nearest = distances(label.rect).slice(0, 3); label.lineGap = label.nearest[0]?.gap ?? null; }
       const after = texts.filter(t => /after both/.test(t.textContent)).map(t => {
         const a = M.ink(t, t.getBoundingClientRect(), t.textContent);
-        const distances = geoms.map(g => ({ line: g.id, gap: Math.min(...g.points.map(([x, y]) => Math.hypot(Math.max(a.left - x, 0, x - a.right), Math.max(a.top - y, 0, y - a.bottom)))) - g.half }));
-        distances.sort((a, b) => a.gap - b.gap);
-        return { text: t.textContent, gap: distances[0]?.gap ?? null, nearest: distances.slice(0, 3), rect: a };
+        const ds = distances(a);
+        return { text: t.textContent, gap: ds[0]?.gap ?? null, nearest: ds.slice(0, 3), rect: a };
       });
-      const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
-      out.push({ edge, after, plate: M.box(pr), result: M.box(r), hit: !!hit && p.contains(hit) });
+      const hit = r && document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      out.push({ edge, after, labels, geometryCount: geoms.length, plate: M.box(pr), result: r && M.box(r), hit: !!hit && p.contains(hit) });
     }
     return out;
   });
@@ -182,7 +197,8 @@ try {
     if (await view.count()) await view.evaluate(el => { let s = el; while (s && !(s.scrollHeight > s.clientHeight && /auto|scroll/.test(getComputedStyle(s).overflowY))) s = s.parentElement; if (s) s.scrollTop = 0; });
     await page.waitForTimeout(400);
     const p = await plate();
-    check('CO-PLATE-EDGE', look, 480, 'crew', p.length > 0 && p.every(p => p.edge >= 11.95 && p.hit), p);
+    check('CO-PLATE-EDGE', look, 480, 'crew', p.some(p => p.result && p.hit) && p.every(p => p.labels.length > 0 && p.labels.every(l => l.edge >= 11.95)), p);
+    check('CO-PLATE-LINE', look, 480, 'crew', p.length > 0 && p.every(p => p.geometryCount > 0 && p.labels.length > 0 && p.labels.every(l => l.lineGap !== null && l.lineGap >= 7.95)), p);
     check('CO-PLATE-AFTER', look, 480, 'crew', p.length > 0 && p.some(p => p.after.length) && p.every(p => p.after.every(a => a.gap !== null && a.gap >= 7.95)), p);
   }
   }

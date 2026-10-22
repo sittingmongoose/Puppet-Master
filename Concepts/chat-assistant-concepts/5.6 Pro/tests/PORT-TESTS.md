@@ -32,7 +32,8 @@ The layout pass measures Crew and Room sheets in all ten looks at 400, 420, 440,
 |---|---|
 | CO-HEADER | Shelf title, step numeral and meta text have no overlapping line rectangles; their text clears clipping ancestors and owns its hit-test samples. |
 | CO-CHROME | Persona and the Start button's actual configured helper count (Crew 3, Room 4 by default) remain present, unclipped and reachable at narrow sheet widths. |
-| CO-PLATE-EDGE | At 480 px, the completed Crew plate's “got one checked result” is at least 12 px from its plate edge. |
+| CO-PLATE-EDGE | At 480 px, every completed Crew plate label (SVG text and foreignObject HTML fragments) is at least 12 px from both plate sides; the “got one checked result” specimen must be painted. |
+| CO-PLATE-LINE | Every label clears every plate stroke by 8 px, including paper outlines, hatch boxes and floor marks, following pmx-verify's geometry set. |
 | CO-PLATE-AFTER | At 480 px, “after both” clears its dependency line by at least 8 px. Missing specimens fail. |
 
 R2-4 still hides the measured text, captures the browser-painted background, composites the actual ink and opacity, and requires 4.5:1 in all ten looks. It runs again on PM7 after token changes.
@@ -48,3 +49,5 @@ The host adapter keeps one set of assertions:
 | Full chat root | `#chatPanel > #pmw-chat56.pm56-frame > #pmRoot.pm56-host`; overlays at `body > #pmOverlayRoot.pm56-host` |
 
 The adapter reads host state and invokes host APIs. Column measurements allow the host's 1 px internal hairline. Overflow checks compare the chat host's scroll width with its own client width and independently check document overflow. The adapter does not create fake editor tabs. `--cdp` attaches to a caller-owned GPU session; callers stop it. Without it, the helper starts and stops its own `agent-browser`, including on error and SIGTERM, and prints its session ID and CDP endpoint. At most one browser is started per suite process; run at most two suite processes per lane.
+
+The layout verifier's `--section sheets|plate` supports focused reruns. Default `all` keeps both sections; final narrow-width acceptance requires `--sweep`.
