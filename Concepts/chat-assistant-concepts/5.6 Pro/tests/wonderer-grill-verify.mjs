@@ -384,21 +384,30 @@ async function browser() {
   };
   /* answer every round with Accept all until What we agreed is open; notes whether it waited on a lookup on the way */
   const answerAll = async (maxMs = 30000, resumeOnLookup = false) => {
-    let waited = false, resumed = false; const t0 = Date.now();
+    let resumed = false; const t0 = Date.now();
     await ev(() => {
       const root = window.PM56_HOST?.root?.() || document.body, tid = PM56_EXT.ctx().state.selectedThread;
-      const p = window.__c56AnswerLookup = { seen: false, witness: null };
-      const read = () => { const el = root.querySelector('.wg-lookup'); if (el && PM56_EXT.ctx().state.selectedThread === tid) { p.seen = true; p.witness = { thread: tid, at: performance.now(), text: el.textContent }; } };
-      p.observer = new MutationObserver(read); p.observer.observe(root, { childList: true, subtree: true, characterData: true }); read();
+      const p = window.__c56AnswerLookup = { seen: false, witness: null, since: null, samples: 0 };
+      const read = () => {
+        const el = [...root.querySelectorAll('.wg-lookup')].find(el => /next round waits for it/.test(el.textContent));
+        const r = el?.getBoundingClientRect(), h = r && document.elementFromPoint(r.left + Math.min(20, r.width / 2), r.top + r.height / 2);
+        if (el && r.width && r.height && h && (h === el || el.contains(h)) && PM56_EXT.ctx().state.selectedThread === tid) {
+          const now = performance.now(); if (p.since == null) p.since = now; p.samples++;
+          if (p.samples >= 2 && now - p.since >= 200) { p.seen = true; p.witness = { thread: tid, first: p.since, last: now, samples: p.samples, text: el.textContent }; }
+        } else { p.since = null; p.samples = 0; }
+      };
+      p.observer = new MutationObserver(read); p.observer.observe(root, { childList: true, subtree: true, characterData: true }); p.timer = setInterval(read, 100); read();
     });
     const done = async agreed => {
-      const observed = await ev(() => ({ seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness }));
-      return { agreed, waited: waited || observed.seen, lookupWitness: observed.witness };
+      const observed = await ev(() => {
+        const r = PM56_COLLAB.run(PM56_WG_DEMOS.snapshot()?.runId);
+        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [] };
+      });
+      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.facts.length > 0 && observed.facts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsAfter: observed.facts };
     };
     try {
     while (Date.now() - t0 < maxMs) {
-      if (await ev(() => !!document.querySelector('.wg-lookup'))) waited = true;
-      if (resumeOnLookup && !resumed && (waited || await ev(() => __c56AnswerLookup.seen))) { await ev(() => PM56_CLOCK.setScale(1)); resumed = true; }
+      if (resumeOnLookup && !resumed && await ev(() => __c56AnswerLookup.seen)) { await ev(() => PM56_CLOCK.setScale(1)); resumed = true; }
       if (await ev(() => !!document.querySelector('.wg-agreed[data-state="open"]'))) return await done(true);
       if (await ev(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'))) {
         await page.locator('.qs-grill [data-action="qs-accept-round"]').first().click({ timeout: 1500 }).catch(e => { if (!/Timeout|detached|not attached/.test(e.message)) throw e; });
@@ -407,7 +416,7 @@ async function browser() {
       await sleep(500);
     }
     return await done(false);
-    } finally { await ev(resume => { window.__c56AnswerLookup?.observer.disconnect(); delete window.__c56AnswerLookup; if (resume) PM56_CLOCK.setScale(1); }, resumeOnLookup); }
+    } finally { await ev(resume => { window.__c56AnswerLookup?.observer.disconnect(); clearInterval(window.__c56AnswerLookup?.timer); delete window.__c56AnswerLookup; if (resume) PM56_CLOCK.setScale(1); }, resumeOnLookup); }
   };
   const wonLanes = () => ev(() => [...document.querySelectorAll('.pmx-lane[data-k*=":"]')].filter(l => /Wonderer/.test(l.querySelector('.pmx-lane-name')?.textContent || '')).map(l => l.textContent));
   const disabledSynthesis = async run => {

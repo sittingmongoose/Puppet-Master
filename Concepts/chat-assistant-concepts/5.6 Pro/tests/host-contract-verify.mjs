@@ -12,10 +12,10 @@ if (target.kind !== 'pm7') throw new Error('Host contracts require --page pm7');
 const browser = await launchGpuBrowser(chromium), page = gpuPage(browser);
 page.on('pageerror', e => errors.push(e.message));
 const ev = (fn, data) => page.evaluate(fn, data), sleep = ms => page.waitForTimeout(ms);
-async function check(id, pass, measured) {
+async function check(id, pass, measured, skip = false) {
   await measureTestGeometry(page);
-  results.push({ id, pass: !!pass, owner: 'c56port-fix', measured, sizeContext: testGeometry() });
-  console.log(`${pass ? 'PASS' : 'FAIL'} ${id}${pass ? '' : ' ' + JSON.stringify(measured)}`);
+  results.push({ id, pass: !!pass, ...(skip ? { skip: true } : {}), owner: 'c56port-fix', measured, sizeContext: testGeometry() });
+  console.log(`${skip ? 'SKIP' : pass ? 'PASS' : 'FAIL'} ${id}${pass ? '' : ' ' + JSON.stringify(measured)}`);
 }
 async function snapshot() {
   return ev(() => {
@@ -116,14 +116,17 @@ try {
   await check('HC-S2-INSERT', retained(before, after) && (routeIs(after.destination, origin.wanted) || refused(before, after)), { origin, before, after });
 
   origin = await browserOrigin(); before = await bufferSnapshot(origin.tid);
+  const listCountsBefore = await counts();
   await browserEvent('browser:send', { how: 'list', what: { comp: 'QueryCard', el: 'section', w: 200, h: 80 } });
   const listed = await bufferSnapshot(origin.tid), listRefused = refused(before, listed);
-  await check('HC-S2-LIST', retained(before, listed) && (routeIs(listed.destination, origin.wanted) || listRefused), { origin, before, after: listed });
+  const listCountsAfter = await counts();
+  await check('HC-S2-LIST', sameCounts(listCountsBefore, listCountsAfter) && retained(before, listed) && (routeIs(listed.destination, origin.wanted) || listRefused), { origin, before, after: listed, countsBefore: listCountsBefore, countsAfter: listCountsAfter });
   await browserEvent('browser:capture', { capture: { kind: 'full', w: 803, h: 603, title: 'New tray capture' } });
   const tray = await bufferSnapshot(origin.tid), trayRefused = refused(listed, tray);
-  await check('HC-S2-TRAY', retained(listed, tray) && (routeIs(tray.destination, origin.wanted) || trayRefused), { origin, before: listed, after: tray });
+  const trayCountsAfter = await counts();
+  await check('HC-S2-TRAY', sameCounts(listCountsAfter, trayCountsAfter) && retained(listed, tray) && (routeIs(tray.destination, origin.wanted) || trayRefused), { origin, before: listed, after: tray, countsBefore: listCountsAfter, countsAfter: trayCountsAfter });
   if (listRefused && trayRefused) {
-    await check('HC-S2-SEND', true, { refusedBeforeSend: true, origin, tray });
+    await check('HC-S2-SEND', true, { reason: 'Both browser intakes were refused; no new browser content is available for Send', origin, tray }, true);
   } else {
     const sendBefore = await counts(), runN = await ev(id => PM56_COLLAB.run(id).messages.length, origin.runId);
     await ev(tid => { PM56_APP.switchThread(tid); PMW.chatCol.show(); }, origin.tid); await sleep(500);
@@ -143,7 +146,7 @@ try {
 } catch (e) { await check('HC-RUN', false, e.stack); }
 finally { await browser.close(); }
 if (errors.length) results.push({ id: 'HC-PAGEERROR', pass: false, owner: 'c56port-fix', measured: errors });
-const failed = results.filter(r => !r.pass), report = { page: target.kind, file: target.file, checks: results.length, failed: failed.length, results };
+const failed = results.filter(r => !r.pass), skipped = results.filter(r => r.skip), report = { page: target.kind, file: target.file, checks: results.length, failed: failed.length, skipped: skipped.length, results };
 if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify(report, null, 2));
-console.log(`host-contract-verify: ${results.length - failed.length} PASS, ${failed.length} FAIL`);
+console.log(`host-contract-verify: ${results.length - failed.length - skipped.length} PASS, ${failed.length} FAIL, ${skipped.length} SKIP`);
 process.exitCode = failed.length ? 1 : 0;
