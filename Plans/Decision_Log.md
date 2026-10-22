@@ -16973,3 +16973,75 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-044, ContractName:Plans/Collaborative_Workflows.md#CWR-024, ContractName:Plans/Collaborative_Workflows.md#CWR-031, ContractName:Plans/Collaborative_Workflows.md#CWR-032, ContractName:Plans/assistant-chat-design.md#ACD-476, ContractName:Plans/Decision_Log.md#DL-112, ContractName:Plans/Decision_Log.md#DL-138, ContractName:Plans/Decision_Log.md#DL-218
+
+
+### DL-232 - Port The 5.6 Pro Chat Into The Home Column
+
+```yaml
+plan_unit_id: DL-232
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared requested the 5.6 Pro chat port into PMConcept7 on 2026-10-22, replacing its scripted
+  stand-in, restyling the chat in every look including NieR, moving its demonstrations into the one
+  Demo Studio, opening its surfaces through the Home panels and updating Plans, commands, wiring and
+  Settings. This executes the earlier accepted decisions DL-180, DL-181, DL-185 and DL-187 rather than
+  inventing another workspace. Jared's original words remain: "we would need to fix its theme colors
+  as you said" (D27), and "that should all just be folded into one demo studio(like 5.6 chat's
+  system)" (D26). The fixed chat column, one History list, Activity Detail inside chat, universal tab
+  kinds, file preview rules and user-versus-agent focus rules stay with their existing owners. The
+  host owns look, code faces, NieR parts, hover, panel placement and tab chrome; the chat owns its
+  conversation and the content it supplies to those tabs. The port carries the accepted Wonderer and
+  Grill Me behavior of DL-218 and automatic Chat Room rounds of DL-231. The carry-over layout repairs
+  are applied in the port, including narrow shelf headers, run plates, NieR type and sticky headers,
+  questionnaire controls and narrow sheets. Settings binds existing admitted preferences instead of
+  making parallel chat defaults. The stand-in switch remains concept-only, off by default as a Home
+  harness fallback rather than the hosted conversation; it never becomes a product setting. The Guided Tour stays on its accepted teaching flow for
+  this port and is redone after both this port and the Planning Wizard redesign, as Jared already
+  decided in DL-230. Concept integration and browser checks prove no native handler, EventRecord,
+  storage writer, runtime admission or governance seal. Any remaining mismatch between the integrated
+  concept and an accepted owner is an implementation gap, never an implicit repeal of that owner.
+  The lead's 2026-10-22 ruling under Jared's port brief admits general.interaction.thought-stream as a global,
+  display-only preference, Auto (While it thinks) or Expanded (Always open), default Auto, shared by Settings and
+  New chat defaults. The same ruling moves the existing run-scoped current-chat ELI5 control to the chat sheet
+  only, retaining its inventory identity and override contract. These are the lead's rulings, not Jared's quoted
+  words, and are flagged for Jared at handoff. The stand-in remains built but off by default for Home harnesses;
+  it is absent as the hosted conversation and has no Settings row.
+gui_related: true
+gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+split_recommended: false
+depends_on: [DL-180, DL-181, DL-185, DL-187, DL-218, DL-230, DL-231]
+unblocks: []
+acceptance_criteria:
+  - "The port owner map identifies the existing column, surface, command, Settings and tour owners without changing their domain identities."
+  - "The standalone chat remains a separate concept reference; the hosted build has one chat surface and one Demo Studio."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: hosted_chat_owner_drift
+reasoning_tier: high
+context_scope: chat56_pmconcept7_port
+implementation_surfaces:
+  - "Plans/Decision_Log.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-185"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-20-wonderer-grill-me-concept/PORT-CARRY-OVER.md, SHA-256 67195793eeda6a463b5e2da60e7ae294ae62ef435a4a89e56fcd3e25587884fa (accepted layout and styling repairs)"
+  - "Lead ruling via pm-mail 1022211545-c3b8, 2026-10-22: Thought Stream admission, current-chat ELI5 placement and stand-in harness fallback; not Jared verbatim."
+preserved_exact_tokens:
+  - "Demo Studio"
+negative_constraints:
+  - "Do not treat a concept bridge as native implementation evidence."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/Decision_Log.md"
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-504, ContractName:Plans/FinalGUISpec.md#F3-659, ContractName:Plans/Settings_System.md#SSYS-055

@@ -16320,3 +16320,79 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-231, ContractName:Plans/Collaborative_Workflows.md#CWR-044, ContractName:Plans/Collaborative_Workflows.md#CWR-031
+
+
+### UCC-208 - Hosted Chat Producers Keep Their Existing Commands
+
+```yaml
+plan_unit_id: UCC-208
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  The chat port adds producers to existing commands and local actions, not new command identities
+  (DL-232). Plans open their exact version through cmd.chat.plan.open_version (UCC-176); files and
+  diffs through cmd.file.open; artifacts and documents through the subject routes of UCC-200; a child
+  transcript through cmd.agents.open_thread (UCC-188); browser addresses through
+  cmd.browser.open_workspace_preview; and existing terminal sessions through cmd.terminal.open. Every
+  domain route carries CV-360 placement and reaches the one opening module of F3-634, preserving
+  revision/identity and user-versus-agent focus. A direct cmd.panel_tab.open is used only where
+  UCC-200 already permits it, including read-only editor buffers for command output.
+  cmd.editor.close_tab remains alias metadata for cmd.panel_tab.close and owns no second handler. Host
+  close and activation notifications update the chat's card state without another command. Chat
+  show/hide is cmd.panel.switch with panel_id chat; a resize commits once through
+  cmd.workspace_layout.resize_surface with surface chat and width, including null for reset. History
+  pin is ui.chat_column.pin_history with history_pinned; Keep open is ui.chat_column.keep_open with
+  keep_open. These two are typed local layout view-state actions with no receipt or event and never
+  Settings writes. Menus, sheets, hover previews, disclosure, tab body repaint and focus return
+  dispatch no command. Wand setup opens its existing app modal and its committed action keeps its own
+  command. ELI5's per-chat override remains cmd.chat.eli5.set; All chats and Project default are
+  Settings transactions over general.interaction.eli5-default. Working style, master sound and naming
+  use the same Settings preview/apply transaction as their Settings rows, including when changed from
+  chat; no chat-only mute, title-policy or take command is minted. Open in Terminal, Show Terminal,
+  Focus and Rerun in Terminal retain UCC-201's identities and exact-session behavior; Insert command
+  and retained-output candidates remain unavailable until their existing admission. Thought Stream uses
+  the existing Settings transaction over general.interaction.thought-stream (SSYS-055), with no new
+  command identity; arbitrary Demo Studio family takes receive no product command or production row. Candidate exclusions for DL-218's Check It and Grill Me controls remain unchanged by
+  this port; the concept proving a click is not command admission.
+gui_related: true
+gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+split_recommended: false
+depends_on: [DL-232, UCC-175, UCC-176, UCC-188, UCC-200, UCC-201, UCC-203, UCC-205, UCC-206]
+unblocks: []
+acceptance_criteria:
+  - "Every port producer resolves to one existing command, its recorded alias, a Settings transaction or an explicit local disposition."
+  - "History pin and Keep open never issue a Settings transaction or workspace.layout_changed; resizing commits once."
+  - "No candidate is registered or enabled merely because its concept demonstration works."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: hosted_chat_owner_drift
+reasoning_tier: high
+context_scope: chat56_pmconcept7_port
+implementation_surfaces:
+  - "Plans/UI_Command_Catalog.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-185"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+preserved_exact_tokens:
+  - "cmd.agents.open_thread"
+  - "cmd.editor.close_tab"
+  - "ui.chat_column.pin_history"
+  - "ui.chat_column.keep_open"
+  - "cmd.workspace_layout.resize_surface"
+  - "cmd.panel.switch"
+negative_constraints:
+  - "Do not add a chat-private route, close handler, terminal command or Settings writer."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/UI_Command_Catalog.md"
+```
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-104, ContractName:Plans/Wiring_Matrix.md#WM-096, ContractName:Plans/UI_Wiring_Rules.md#UIW-044, ContractName:Plans/Settings_System.md#SSYS-055

@@ -2934,3 +2934,58 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Planning_Wizard.md, ContractName:Plans/guided_tour_contracts.schema.json
+
+
+### PWIZ-036 - The Chat Port Keeps The Accepted Tour Until Its Redo
+
+```yaml
+plan_unit_id: PWIZ-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: >-
+  The chat port preserves the accepted Guided Tour and the later redo Jared decided in DL-230
+  (DL-232). The tour is redone after both the chat port and the Planning Wizard redesign; this port
+  alone does not replace its chapters, phase vocabulary, saved checkpoints, actions or completion
+  predicates. PWIZ-023 and PWIZ-035 remain the tour owners. During that existing tour the hosted chat
+  surface is hidden and the tour's accepted teaching surface remains available; two chat surfaces
+  never appear together. The tour's old teaching selectors and demo-chat facade are compatibility
+  lineage, not anchors or native APIs of the hosted chat. A later redo binds stable chat actions and
+  saved thread/persona/ELI5 basis through the then-current chat owner, preserving quiet restoration
+  and exact-message same-answer explanation without rewriting an earlier reply. Demo Studio remains
+  the one concept entry point for tour demonstrations; it never becomes a product command or setting.
+gui_related: true
+gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+split_recommended: false
+depends_on: [DL-232, DL-230, PWIZ-023, PWIZ-035]
+unblocks: []
+acceptance_criteria:
+  - "The existing accepted tour completes while the hosted chat is hidden; ending it restores the hosted surface."
+  - "No checkpoint schema or phase is changed just to imitate legacy chat selectors."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: hosted_chat_owner_drift
+reasoning_tier: high
+context_scope: chat56_pmconcept7_port
+implementation_surfaces:
+  - "Plans/Planning_Wizard.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-185"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+preserved_exact_tokens:
+  - "Demo Studio"
+negative_constraints:
+  - "Do not mark the tour redo complete before the Planning Wizard redesign."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/Planning_Wizard.md"
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/assistant-chat-design.md#ACD-504, ContractName:Plans/Decision_Log.md#DL-230

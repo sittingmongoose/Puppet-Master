@@ -1062,7 +1062,7 @@
   {
    "id": "general.interaction.chat-eli5",
    "label": "Explain terms in the chat I have open",
-   "desc": "Only that chat; its menu has the same switch.",
+   "desc": "Only that chat; change it in the chat's Explain simply sheet. The inventory keeps the run-scoped override identity, but Settings draws no current-chat control (SSYS-042, SSYS-055).",
    "type": "toggle",
    "default": false,
    "scope": [
@@ -2155,8 +2155,8 @@
   },
   {
    "id": "general.interaction.chat-history-list",
-   "label": "Chat History List",
-   "desc": "How the chat's thread history starts in a workspace with no choice saved yet: a Flyout that opens over the chat, or Pinned beside the messages, which widens the chat by the list's own width instead of squeezing them. Pinning or unpinning it in the chat is kept with that workspace's layout.",
+   "label": "History in new workspaces",
+   "desc": "Start History as a flyout or pinned beside the messages in a workspace with no saved choice. Changing this never changes History in a workspace already open; its pin stays with its layout.",
    "type": "select",
    "options": [
     "Flyout",
@@ -22613,7 +22613,7 @@
  {
   "id": "general.interaction.working-activity-style",
   "label": "How work in progress looks",
-  "desc": "Choose Orbit or the compact Step Rail Simple presentation.",
+  "desc": "Choose Orbit or the compact Step Rail Simple presentation. The chat and Settings use the same preference.",
   "type": "select",
   "options": [
    "Orbit",
@@ -25160,6 +25160,36 @@
    "related_features": [
     "terminal"
    ]
-  }
+  },
+ {
+  "id": "general.interaction.thought-stream",
+  "label": "Show thinking",
+  "desc": "While it thinks opens the reasoning supplied by the model while it works, then folds it away. Always open keeps that reasoning visible. This changes only what is shown, never a reply.",
+  "type": "select",
+  "options": [
+   "Auto",
+   "Expanded"
+  ],
+  "option_labels": {
+   "Auto": "While it thinks",
+   "Expanded": "Always open"
+  },
+  "default": "Auto",
+  "scope": [
+   "global"
+  ],
+  "tier": "simple",
+  "related_features": [
+   "assistant-redesign",
+   "assistant-chat"
+  ],
+  "search": [
+   "Thought Stream",
+   "reasoning",
+   "thinking",
+   "New chat defaults",
+   "show thinking"
+  ]
+ }
 ]
 }

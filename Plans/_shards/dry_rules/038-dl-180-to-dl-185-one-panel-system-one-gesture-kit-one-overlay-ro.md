@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3453-L4205
+Source lines: L3453-L4264
 
-Source SHA256: `df1a6f6a406b6a06e73e3b57d3a5ac2d02120bf050e82cb0361c72461df14e7c`
+Source SHA256: `113c2709f6c4c03d931c8963c3f8e8a37dfaadb61013234c3905dbb70e76ea1c`
 
 ---
 
@@ -761,3 +761,62 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Widget_System.md#WS-019, ContractName:Plans/Settings_System.md#SSYS-044
+
+
+### DR-075 - The Hosted Chat Reuses The Host And The Settings Writer
+
+```yaml
+plan_unit_id: DR-075
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  The hosted chat uses one owner for each shared behavior (DL-232). Opening, placement, deduplication,
+  preview, focus and tab chrome are the universal panels' F3-634 and F3-635, never a second chat
+  opener. Look, fonts, NieR parts, first-paint appearance, hover tags and overlay stacking are the
+  app's existing owners (DR-050, DR-054, DR-056, DR-067, DR-072); the hosted chat neither loads its
+  standalone first-paint theme reader nor owns a theme, scene, ground layer or reboot moment. A chat
+  settings sheet and the Settings page edit the same admitted setting through the same Settings
+  transaction; copying a value to a concept renderer is a projection, not another source of truth. The
+  application/project ELI5 default and the active chat's override remain separate. The History default
+  is a starting value only; History pin, chat width and Keep open remain layout view state, and an
+  Activity unpin remains temporary. Recipe selectors, arbitrary family takes, motion-voice overrides
+  and guided examples belong only to the concept's one Demo Studio (DR-070). The port's class names,
+  DOM roots, JavaScript globals, localStorage keys and build-layer APIs are concept lineage and grant
+  no native API or persistence authority.
+gui_related: true
+gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+split_recommended: false
+depends_on: [DL-232, DR-050, DR-054, DR-067, DR-070, DR-072, SSYS-050]
+unblocks: []
+acceptance_criteria:
+  - "Changing an admitted preference through either visible surface updates one Settings value and both consumers without a feedback loop."
+  - "No hosted theme store, second tab-placement rule, second hover tag system or second Demo Studio is introduced."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: hosted_chat_owner_drift
+reasoning_tier: high
+context_scope: chat56_pmconcept7_port
+implementation_surfaces:
+  - "Plans/DRY_Rules.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-185"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+preserved_exact_tokens:
+  - "Demo Studio"
+  - "Keep open"
+negative_constraints:
+  - "Do not promote localStorage keys or bridge globals into product contracts."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/DRY_Rules.md"
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/assistant-chat-design.md#ACD-501

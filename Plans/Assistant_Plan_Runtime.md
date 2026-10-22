@@ -1439,6 +1439,8 @@ APR-066.
 
 ### 16. Plan Tab Navigation, Deduplication, and Control Parity (APR-036, APR-037)
 
+Amended 2026-10-22 (DL-232): for Home, the left editor tab bar below means the plan-kind tab chosen by F3-634 and ACD-500. It reveals the exact revision wherever already open and expands a collapsed host panel. The old 480 px editor split and 360 px chat minimum below are superseded for Home by F3-635/F3-636/F3-637 and their panel fit and narrow rules; no plan action resizes the fixed chat column or creates a private editor pane.
+
 - **Left Editor Plan Tab Navigation:** Activating a plan via title click, "Details" link, "Expand",
   or "Open plan" in the transcript opens or activates the plan in the left editor tab bar. Every "Open plan"
   button is `cmd.chat.plan.open_version` with the version its surface names: while that version is the Plan's
@@ -1484,7 +1486,10 @@ canonical_text: >-
   parity with the transcript Plan card (Rich/Markdown toggle, Build, Build With Crew, Build At, Revise,
   Send To Planning Wizard, Export, Cancel, Open To-Dos). Opening a plan expands collapsed splits to readable
   width, and split resizing preserves a minimum 360 px chat canvas width (DL-138), superseding the older
-  320 px chat minimum.
+  320 px chat minimum. Amended 2026-10-22 (DL-232): for Home the plan tab is the universal panel
+  chosen by F3-634 and ACD-500, keyed by exact revision, revealing its existing tab and expanding its host
+  panel if collapsed. The old 480 px editor split and 360 px chat minimum are superseded for Home by
+  F3-635, F3-636 and F3-637; no plan action resizes the chat or creates a private editor pane.
 gui_related: true
 gui_classification_reason: Governs left editor plan tab navigation, control parity, and responsive editor/chat split geometry.
 depends_on: [APR-013]
@@ -1492,7 +1497,7 @@ unblocks: [APR-015]
 acceptance_criteria:
   - Plan navigation actions focus the existing tab if already open, preventing tab duplication.
   - Left plan tab provides all plan card controls backed by the canonical plan runtime.
-  - Opening a plan reveals readable editor pane; divider resizing enforces minimum 360 px chat width.
+  - Opening a plan reveals its readable host; for Home, F3-634/F3-635/F3-636/F3-637 govern fit and narrow behavior, superseding the old 360 px chat split minimum.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: tab_duplication_or_control_disparity

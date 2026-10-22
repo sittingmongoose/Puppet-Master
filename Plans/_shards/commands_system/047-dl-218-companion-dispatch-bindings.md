@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7999-L8081
+Source lines: L7999-L8141
 
-Source SHA256: `4bc5f953d8d5769d4762c7cdeac244c13948e2535e5cbe48acbc35fb94dfc6c0`
+Source SHA256: `11b2a39cf1937998bc0c3fcfea991fdd51c65b76bf701bbbd767f1c7f81e66e1`
 
 ---
 
@@ -91,3 +91,63 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-218, ContractName:Plans/Collaborative_Workflows.md#CWR-041, ContractName:Plans/Collaborative_Workflows.md#CWR-042, ContractName:Plans/Collaborative_Workflows.md#CWR-043
+
+
+### CS-104 - Hosted Chat Dispatch And Local Actions
+
+```yaml
+plan_unit_id: CS-104
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Hosted chat producers use UCC-208's closed mapping (DL-232). Dispatch normalizes
+  cmd.editor.close_tab to cmd.panel_tab.close before gates and receipts; the alias has no handler.
+  Domain openers use CV-360 placement and F3-634's one opening module; a child transcript remains
+  cmd.agents.open_thread, not a chat-private open. Existing command identity, authorization,
+  idempotency, typed results and effect rules do not change with the renderer. Pin History and Keep
+  open are the existing ui.chat_column.pin_history and ui.chat_column.keep_open local actions, with no
+  receipt or event; resize is the existing cmd.workspace_layout.resize_surface, committed once on
+  release. An app-modal open, hover preview, disclosure or body redraw is local presentation. An
+  admitted preference changed in chat uses the same cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply over its inventory id as Settings; application/project defaults never
+  masquerade as the per-chat ELI5 command. A mirrored renderer value does not write a second store or
+  echo the Settings save into a loop. No new event, command, alias or future handler is added by the
+  port, and existing DL-218 command candidates retain their exact exclusions until separately
+  admitted.
+gui_related: true
+gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+split_recommended: false
+depends_on: [DL-232, UCC-208, CS-100, CS-101, CS-103]
+unblocks: []
+acceptance_criteria:
+  - "Hosted producers preserve the existing handler, alias normalization and effect contract."
+  - "Reverse preference projection emits no second command or Settings write."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: hosted_chat_owner_drift
+reasoning_tier: high
+context_scope: chat56_pmconcept7_port
+implementation_surfaces:
+  - "Plans/Commands_System.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-185"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+preserved_exact_tokens:
+  - "cmd.editor.close_tab"
+  - "cmd.panel_tab.close"
+negative_constraints:
+  - "Do not admit native handlers or events through concept JavaScript bridges."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/Commands_System.md"
+```
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-208, ContractName:Plans/Wiring_Matrix.md#WM-096

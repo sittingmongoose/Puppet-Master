@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L27506-L27913
 
-Source SHA256: `bb59714a795da49437137863dcf3065fb5f3da6f13274f751ed7116e85abb358`
+Source SHA256: `0a276a66b5d3afec64d9eb54d7d33af6b98c2065f33e88f8e6bab7fdbfff2cc3`
 
 ---
 
@@ -230,7 +230,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   The 5.6 Pro chat follows these shared presentation and behavior requirements (DL-185, D27).
   Colours: its Basic, Friendly and Glass colours are fixed to PMConcept7's
-  (Retro and NieR already match); it follows PMConcept7's one look setting and NieR Mode setting and keeps no theme
+  (all four families, their light/dark modes and NieR type follow the host, DL-232); it follows PMConcept7's one look setting and NieR Mode setting and keeps no theme
   store of its own, and its own names for colours, radii, surfaces and the code face map onto PMConcept7's, so the
   look settings reach every chat surface. General code text follows Plans/Decision_Log.md#DL-161,
   Plans/FinalGUISpec.md#F3-426, #F3-430 and Plans/DRY_Rules.md#DR-050. Under NieR Mode it follows the rule for new

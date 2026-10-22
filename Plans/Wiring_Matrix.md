@@ -6509,3 +6509,67 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-231, ContractName:Plans/Collaborative_Workflows.md#CWR-044, ContractName:Plans/UI_Command_Catalog.md#UCC-207
+
+
+### WM-096 - Existing Wiring For The Hosted Chat
+
+```yaml
+plan_unit_id: WM-096
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  The hosted 5.6 Pro chat reuses the production-intent rows of its existing commands under UCC-208 and
+  UIW-044 (DL-232). catalog.agents_open_thread includes the chat's Activity Detail transcript action,
+  live child card and working-activity child openers; the preview row itself still opens Activity
+  Detail. catalog.terminal_open, catalog.terminal_show, catalog.terminal_focus and
+  catalog.terminal_rerun include the compact command card and preserve exact-session behavior,
+  retained output and candidate limits from UCC-201. assistant.redesign.cmd.chat_plan_open_version
+  retains exact-version Plan opening; assistant.redesign.w_051.chat_eli5_set retains only the per-chat
+  override producers, with application/project defaults written by Settings. home.tab.close uses
+  cmd.panel_tab.close, with cmd.editor.close_tab as its alias; host close/activate updates the chat
+  without another dispatch. home.chat.activity_toggle and home.more_options.chat_visibility keep
+  cmd.panel.switch, and home.resizer.chat keeps cmd.workspace_layout.resize_surface. History pin and
+  Keep open stay their existing typed-local exclusions, never duplicate production rows. The port
+  changes producer locations and acceptance checks in Plans/Wiring_Matrix.production.json only; it
+  adds no command, handler, physical storage family, EventRecord or claim of native readiness. Every
+  row's planned-handler and unavailable-candidate boundary remains in force. Settings preferences use
+  the existing Settings transaction rows, not one synthetic row per preference. The hosted surface's
+  boot, body mounting, appearance projection and one Demo Studio are local/concept dispositions and do
+  not become production wiring.
+gui_related: true
+gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+split_recommended: false
+depends_on: [DL-232, UCC-208, UIW-044, WM-090, WM-091, WM-092, WM-094, WM-095]
+unblocks: []
+acceptance_criteria:
+  - "The changed production-intent entries identify the hosted producers and retain their existing commands and handlers."
+  - "No duplicate rows are added for local History pin, Keep open, modal opening or concept demos."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: hosted_chat_owner_drift
+reasoning_tier: high
+context_scope: chat56_pmconcept7_port
+implementation_surfaces:
+  - "Plans/Wiring_Matrix.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-185"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+preserved_exact_tokens:
+  - "Demo Studio"
+  - "Keep open"
+negative_constraints:
+  - "Do not remove DL-218 exclusions or assert native proof from the port."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/Wiring_Matrix.md"
+```
+
+ContractRef: ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/UI_Command_Catalog.md#UCC-208, ContractName:Plans/UI_Wiring_Rules.md#UIW-044
