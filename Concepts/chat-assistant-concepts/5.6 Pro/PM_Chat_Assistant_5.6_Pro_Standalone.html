@@ -17971,6 +17971,11 @@ textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
 }
 
 .composer-field { position: relative; }
+/* Layered Studio clips the box (overflow:hidden), so Send/Stop's backlight (send-stop.css, a 260% circle) was cut at
+   the box's side anyway, but its 14 px overhang made the box a sideways scroller: anything that scrolled it into view
+   slid the whole composer 14 px left. Clipping the field across only paints the same pixels and keeps the overhang out
+   of the box's scroll range; up and down the glow still reaches the tools row. */
+.chat-stage[data-shell="7"] .composer-field { overflow-x: clip; }
 .composer-input { padding: 11px 12px 38px; min-height: 72px; }
 .composer-infield {
   position: absolute;
@@ -26754,10 +26759,15 @@ window.PM56_NIER_FACES = [
       .catch(function () { /* decoration only */ })
       .then(function () { running = false; once(); });
   }
+  /* the last pick wins (2026-10-22): a pick made while the moment plays (the theme list keeps the keyboard; only presses
+     are held under the cover) is the one painted when the moment repaints, never overwritten by the earlier pick */
+  var latest = null;
   function switchTo(id) {
     var want = isNier(id);
+    if (running && latest !== null) { latest = id; return Promise.resolve(true); }
     if (want === painted || !transition || running) return Promise.resolve(pick(id));
-    return runTransition(want, want ? 'on' : 'off', function () { pick(id); });
+    latest = id;
+    return runTransition(want, want ? 'on' : 'off', function () { var x = latest; latest = null; pick(x); });
   }
   /* Demo Studio's theme list (app.js handleInput, k === 'theme'): a pick that crosses NieR Mode's edge is taken here in
      the capture phase and run through the transition; every other pick goes on to app.js unchanged. */
