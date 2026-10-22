@@ -396,7 +396,7 @@
   return next||wandTrigger();};}
  function seal(locked){
   const X=P();if(!X||X.reduced())return;
-  const g=document.querySelector('body > .pmx-ghost .pmx-teach-card');if(!g)return;
+  const g=document.querySelector(window.PM56_HOST?'#pm56Fx > .pmx-ghost .pmx-teach-card':'body > .pmx-ghost .pmx-teach-card');if(!g)return;
   X.animate(g,[{transform:'none'},{transform:'scale(1.02)'}],{duration:X.t('lift'),easing:X.ease('out'),fill:'forwards'});
   const sh=locked&&g.querySelector('.pmx-teach-lock .nx-p, .pmx-teach-shackle');
   if(sh)X.animate(sh,[{transform:'translateY(-3px)'},{transform:'none'}],{duration:X.t('lock'),easing:X.ease('pop'),fill:'forwards'});

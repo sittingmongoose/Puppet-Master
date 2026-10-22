@@ -42,22 +42,51 @@
     return e;
   }
 
-  var frame = null, root = null, overlay = null;
+  /* The frame and the body-level layer wrapper carry .pmw-scope (without data-theme), so the Home panels' --pmw-*
+     tokens reach every chat host (the looks lane aliases the chat's tokens to them). The wrapper is display:contents
+     and holds the overlay root and the effects layer: #pm56Fx takes what the chat appends to <body> (menu ghosts,
+     sheet ghosts and flights, the send flight, demo taps), so those keep the chat's scoped styles. */
+  var frame = null, root = null, overlay = null, layers = null, fx = null;
   function mount() {
     var cp = doc.getElementById('chatPanel');
     if (!frame) {
-      frame = el('div', { id: 'pmw-chat56', class: 'pm56-frame pm56-column', role: 'region', 'aria-label': 'Chat' });
+      frame = el('div', { id: 'pmw-chat56', class: 'pm56-frame pm56-column pmw-scope', role: 'region', 'aria-label': 'Chat' });
       root = el('div', { id: 'pmRoot', class: 'pm56-host', 'aria-busy': 'true' });
       frame.appendChild(root);
     }
     if (cp && frame.parentNode !== cp) cp.appendChild(frame);
     if (cp) cp.setAttribute('data-pm56', 'on');
-    if (!overlay) overlay = el('div', { id: 'pmOverlayRoot', class: 'pm56-host pm56-overlay' });
-    if (doc.body && overlay.parentNode !== doc.body) doc.body.appendChild(overlay);
-    paintHost(root); paintHost(overlay);
+    if (!layers) {
+      layers = el('div', { id: 'pm56-layers', class: 'pmw-scope pm56-layers' });
+      overlay = el('div', { id: 'pmOverlayRoot', class: 'pm56-host pm56-overlay' });
+      fx = el('div', { id: 'pm56Fx', class: 'pm56-host pm56-fx', 'aria-hidden': 'true' });
+      layers.appendChild(overlay); layers.appendChild(fx);
+    }
+    if (doc.body && layers.parentNode !== doc.body) doc.body.appendChild(layers);
+    paintHost(root); paintHost(overlay); paintHost(fx);
     return !!cp;
   }
   mount();
+  /* the chat column widens for a pinned History only while the chat draws it (46-chat.js historyShown): the drawer's
+     mode is body[data-ph-drawer] (history.js), so each change asks the narrow ladder to measure again */
+  if (typeof MutationObserver === 'function' && doc.body) new MutationObserver(function () {
+    try { if (window.PMW && PMW.narrow && PMW.narrow.schedule) PMW.narrow.schedule(); } catch (_) {}
+  }).observe(doc.body, { attributes: true, attributeFilter: ['data-ph-drawer'] });
+  /* what the chat appends to <body> goes to the effects layer (class prefixes only the chat uses) */
+  var FX_CLASS = /(?:^|\s)(?:pm56-|pmx-|tx-fly|rec-tap)/;
+  function isChatFx(n) { return !!(n && n.nodeType === 1 && fx && FX_CLASS.test(n.className && n.className.baseVal != null ? n.className.baseVal : (n.className || ''))); }
+  (function redirectBody() {
+    var b = doc.body;
+    if (!b) return;
+    var ap = b.appendChild, ib = b.insertBefore, app = b.append;
+    b.appendChild = function (n) { return isChatFx(n) ? fx.appendChild(n) : ap.call(this, n); };
+    b.insertBefore = function (n, ref) { return isChatFx(n) ? fx.appendChild(n) : ib.call(this, n, ref); };
+    if (app) b.append = function () {
+      var rest = [];
+      for (var i = 0; i < arguments.length; i++) { if (isChatFx(arguments[i])) fx.appendChild(arguments[i]); else rest.push(arguments[i]); }
+      if (rest.length) app.apply(this, rest);
+    };
+  })();
   /* the page's chat may re-render its own content: the layer goes back in (same node, state kept) */
   (function watchPanel() {
     var cp = doc.getElementById('chatPanel');
@@ -144,11 +173,21 @@
       e.stopPropagation();
     });
   }
-  /* a press outside the chat dismisses the chat's open menu, as a click outside it does in the standalone */
-  doc.addEventListener('pointerdown', function (e) {
+  /* a press outside the chat dismisses the chat's open menu, as a click outside it does in the standalone (added
+     with the unwrapped method: it is the one listener here that must hear the page) */
+  EventTarget.prototype.addEventListener.call(doc, 'pointerdown', function (e) {
     if (inChatTarget(e.target)) return;
     try { if (app && app.dismissOutside) app.dismissOutside(e); } catch (err) { try { console.error('[pm56] dismiss failed', err); } catch (_) {} }
   }, true);
+
+  /* ---- observers: a chat MutationObserver on the whole page watches the chat's hosts instead (every PMConcept7
+     mutation would otherwise run its callback); hosts mounted later (tab bodies) are added as they mount ---- */
+  var watchers = [];
+  function observeHosts(obs, opts) {
+    watchers.push({ obs: obs, opts: opts });
+    hosts().forEach(function (h) { try { obs.observe(h, opts); } catch (_) {} });
+  }
+  function watchHost(h) { watchers.forEach(function (w) { try { w.obs.observe(h, w.opts); } catch (_) {} }); }
 
   /* ---- tab kinds per id (the surfaces lane refines these through PM56_SURFACES) ---- */
   var RUN = /^(collab-run|crew-work|review|room|brainstorm|review-evidence|brainstorm-evidence):/;
@@ -163,6 +202,7 @@
     if (RUN.test(id)) return 'run';
     if (RECORD.test(id)) return 'record';
     if (/^context:/.test(id)) return 'context';
+    if (/^attachment:/.test(id)) return 'artifact';
     if (DOCS.test(id)) return 'document';
     if (/^artifact(-revision)?:/.test(id) || (app && app.isArtifact && app.isArtifact(id))) return 'artifact';
     return 'document';
@@ -177,6 +217,7 @@
     h.appendChild(body); fr.appendChild(h); host.appendChild(fr);
     paintHost(h);
     hostKeys(h);
+    watchHost(h);
     var rec = { el: body, host: h, api: api, frame: fr };
     bodies[id] = rec;
     function paint() {
@@ -225,6 +266,23 @@
     onTheme: function (fn) { if (typeof fn === 'function') themeFns.push(fn); },
     root: function () { return root; },
     overlay: function () { return overlay; },
+    fx: function () { return fx; },
+    /* the class names the chat56 layer renamed in the chat's CSS and JS (old -> new) */
+    classMap: (window.PM56_CLASS_MAP && typeof window.PM56_CLASS_MAP === 'object') ? window.PM56_CLASS_MAP : {},
+    observe: observeHosts,
+    /* History pinned beside the messages (the chat column's history_pinned, CONTRACT 6.1): history.js reads and writes
+       it here; the chat column widens for it while the drawer is drawn pinned (drawsHistory) */
+    historyPinned: function () { try { return !!(window.PMW && PMW.chatCol && PMW.chatCol.historyPinned()); } catch (_) { return false; } },
+    setHistoryPinned: function (on) {
+      on = !!on;
+      if (H.historyPinned() === on) return;
+      try { if (window.PM_HOME && PM_HOME.command) PM_HOME.command('ui.chat_column.pin_history', { history_pinned: on }); else if (PMW.chatCol) PMW.chatCol.setHistoryPinned(on); } catch (err) { try { console.error('[pm56] pin History failed', err); } catch (_) {} }
+    },
+    onHistoryPinned: function (fn) {
+      try { if (window.PMW && PMW.bus && PMW.bus.on) PMW.bus.on('chat:column', function (e) { if (e && typeof e.history_pinned === 'boolean') fn(e.history_pinned); }); } catch (_) {}
+      try { if (window.PM_HOME && PM_HOME.on) PM_HOME.on('layout', function () { fn(H.historyPinned()); }); } catch (_) {}
+    },
+    drawsHistory: function () { return !!(doc.body && doc.body.getAttribute('data-ph-drawer') === 'pinned') && H.shown(); },
     frame: function () { return frame; },
     hosts: hosts,
     paintHost: paintHost,
@@ -244,7 +302,7 @@
     wrapKinds: wrapKinds,
     bodies: function () { return Object.keys(bodies); },
     /* app.js hands over its handles once, at boot; endLoad stops wrapping new listeners */
-    bind: function (a) { app = a; wrapKinds(); hostKeys(root); hostKeys(overlay); return H; },
+    bind: function (a) { app = a; wrapKinds(); hostKeys(root); hostKeys(overlay); hostKeys(fx); return H; },
     endLoad: function () { loading = false; },
     hears: hears,
     app: function () { return app; },

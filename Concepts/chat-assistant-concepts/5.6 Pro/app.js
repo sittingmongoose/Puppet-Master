@@ -472,7 +472,8 @@
   function activeThread() { return state.threads.find(t => t.id === state.selectedThread) || state.threads[0]; }
   function selectedModel() { return D.models.find(m => m.id === state.model) || D.models[0]; }
   function workStep() { return D.workSteps[clamp(state.work.step,0,D.workSteps.length-1)]; }
-  function isNarrow() { return (HOSTED?HOST.width():window.innerWidth) < 821; }
+  /* hosted: History pins beside the messages from a 560 px column (a 360 px message area and the 200 px drawer) */
+  function isNarrow() { return HOSTED ? HOST.width() < 560 : window.innerWidth < 821; }
   function isPhone() { return window.innerWidth < 591; }
   function assistantLayoutWidth() {
     const pane=document.querySelector('.assistant-pane');
@@ -1008,6 +1009,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       <button class="icon-button" data-action="thread-search" data-menu-anchor="thread-search"${hoverAttrs('thread-search','Search this thread or every thread')}>${icon('search',14)}</button>
       ${extRender('headerExtras',{thread:t})}
       <button class="context-ring" style="--context-pct:${cp}" data-action="context-menu" data-menu-anchor="context-ring" data-value="${cp}"${hoverAttrs('context-ring','Context '+cp+'% used')}></button>
+      ${HOSTED?`<button class="icon-button pm56-column-btn" data-action="pm56-column-menu" data-menu-anchor="pm56-column"${hoverAttrs('pm56-column','Chat options')}>${icon('more',14)}</button>`:''}
     </div>`;
   }
 
@@ -3385,6 +3387,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else if(m.type==='thread') content=renderThreadMenu(m.threadId);
     else if(m.type==='thread-search') content=renderThreadSearchMenu();
     else if(m.type==='lens') content=extReplace('contextLensMenu',{}, '');
+    else if(HOSTED&&m.type==='pm56-column') content=renderColumnMenu();
     const cls=`overlay-menu ${m.type==='model'?'model-menu':''} ${['context','thread-search'].includes(m.type)?'compact':''} ${m.type==='lens'?'lens-strip':''}`;
     const root=`<div class="${cls}" data-overlay="root-menu" data-side="${m.side||'left'}" style="${m.type==='model'?`height:${modelMenuHeight()}px`:''}">${m.compactSub?renderCompactSubmenu(m.compactSub):content}</div>`;
     const side=m.sub&&!m.compactSub?`<div class="overlay-menu sidecar" data-k="sidecar" data-overlay="sidecar" data-side="${m.side||'left'}">${renderSubmenu(m.sub)}</div>`:'';
@@ -4250,6 +4253,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(a==='stop-run'){if(e.detail>1)return;window.PM56_SENDSTOP?.halt();}
     if(a==='send'&&e.detail>1&&!state.composer.trim())return;   /* the rest of a double-click on Stop: no sputter */
     if(a==='return-to-chat'){state.editorRevealed=false;renderApp();return;}
+    if(HOSTED&&hostedColumnAction(a,btn,e)) return;
     if(handleScopedPickerAction(a,btn,e)) return;
     const preview=btn.closest('.ab-card');
     if(preview && ['open-activity','todo-show-item','open-agent','open-crew','open-change','open-artifact','collab-open-panel','collab-open-participant'].includes(a)){
@@ -4798,6 +4802,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(state.menu&&!(e.target&&e.target.closest&&e.target.closest('.overlay-menu,.lens-dock'))) closeMenu();
   }
   if(HOSTED){
+    /* PMConcept7's hover controller owns text tags; the activity previews stay the chat's own popovers */
+    EXT.slot('afterRender',()=>{ document.querySelectorAll('#pmRoot [data-hover-domain]:not([data-pm-hover-visual-suppressed])').forEach(el=>el.setAttribute('data-pm-hover-visual-suppressed','true')); });
     HOST.bind({
       paintBody:hostedPaintBody, label:editorTabLabel, isArtifact:id=>D.artifacts.some(a=>a.id===id),
       modalOpen:hostedModalOpen, dismissOutside:hostedDismissOutside, state:()=>state, render:()=>renderApp()
@@ -4827,12 +4833,40 @@ suggested path                    migration 0043, reversible</div></div></sectio
     const standIn=()=>!!(window.PMW&&PMW.standIn&&PMW.standIn.isOn&&PMW.standIn.isOn());
     const prev=SC.surface;
     hostedSurface={
-      drawsHistory:()=>standIn()?!!(prev&&prev.drawsHistory&&prev.drawsHistory()):false,
+      drawsHistory:()=>standIn()?!!(prev&&prev.drawsHistory&&prev.drawsHistory()):HOST.drawsHistory(),
       shown:()=>standIn()?!!(prev&&prev.shown&&prev.shown()):HOST.shown(),
       compose:text=>standIn()&&prev&&prev.compose?prev.compose(text):hostedCompose(text),
       reveal:o=>standIn()&&prev&&prev.reveal?prev.reveal(o):hostedReveal(o)
     };
     SC.surface=hostedSurface;
+  }
+  /* the chat's own header menu (CONTRACT 6.1): History beside the messages, D4's keep-open row, Pop out / Dock back */
+  function renderColumnMenu(){
+    const SC=window.PMW&&PMW.chatCol;
+    const row=(action,label,sub,on,glyph,attrs)=>`<button class="menu-item ${on?'active':''}" data-action="${action}"${attrs||''} role="menuitemcheckbox" aria-checked="${on?'true':'false'}"><span class="menu-icon">${icon(glyph,13)}</span><span class="menu-copy"><strong>${esc(label)}</strong>${sub?`<span>${esc(sub)}</span>`:''}</span>${on?icon('check',11):''}</button>`;
+    let out=`<div class="menu-head"><strong>Chat</strong></div>`;
+    out+=row('pm56-history-pin','Keep History open','Beside the messages instead of a flyout',HOST.historyPinned(),'history',' data-ui-action-id="ui.chat_column.pin_history"');
+    if(SC&&SC.keepOpenRow){ const k=SC.keepOpenRow(); out+=row('pm56-keep-open',k.label,k.sub,!!k.checked,'pin',' data-ui-action-id="'+esc(k.action||'ui.chat_column.keep_open')+'"'); }
+    if(SC&&SC.isFloating){ const fl=SC.isFloating(); out+=`<button class="menu-item" data-action="pm56-pop"><span class="menu-icon">${icon(fl?'collapse':'expand',13)}</span><span class="menu-copy"><strong>${fl?'Dock back':'Pop out window'}</strong><span>${fl?'Back to the right side':'The only way to move the chat'}</span></span></button>`; }
+    return out;
+  }
+  function hostedColumnAction(a,btn,e){
+    const SC=window.PMW&&PMW.chatCol;
+    if(a==='pm56-column-menu'){ e.stopPropagation(); toggleMenu('pm56-column','pm56-column'); return true; }
+    if(a==='pm56-history-pin'){ closeMenu(); HOST.setHistoryPinned(!HOST.historyPinned()); return true; }
+    if(a==='pm56-keep-open'){ closeMenu(); try{ SC&&SC.keepOpenRow&&SC.keepOpenRow().run(); }catch(err){ console.error(err); } return true; }
+    if(a==='pm56-pop'){ closeMenu(); try{ if(SC.isFloating()) SC.dockBack(); else SC.popOut(); }catch(err){ console.error(err); } return true; }
+    return false;
+  }
+  /* the column resizes without a window resize (its divider, the narrow ladder, a pop out): the same re-render rules */
+  if(HOSTED&&typeof ResizeObserver==='function'&&HOST.frame()){
+    let lastNarrow=isNarrow(), lastPin=activityPinnedInLayout(), queued=false;
+    new ResizeObserver(()=>{ if(queued) return; queued=true; requestAnimationFrame(()=>{ queued=false;
+      const n=isNarrow(), p=activityPinnedInLayout();
+      if(n!==lastNarrow||p!==lastPin){ lastNarrow=n; lastPin=p; activityPinLayout=p; renderApp(); }
+      else { syncJumpBottom(); fitActivityTabs(); }
+      if(state.menu||state.hover) renderOverlays();
+    }); }).observe(HOST.frame());
   }
   function hostedCompose(text){
     text=String(text==null?'':text);

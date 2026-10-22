@@ -28,6 +28,7 @@ itself. Specificity rises by one class everywhere, so the chat's own cascade kee
 from __future__ import annotations
 
 import ast
+import json
 import re
 import subprocess
 import sys
@@ -338,7 +339,7 @@ def host_from(parts: list[str], tag: str = HOST_TAG) -> str:
     return tag + ''.join(parts[:cut]) + ''.join(parts[cut:])
 
 
-def scope_complex(sel: str, notes: dict) -> list[str]:
+def scope_complex(sel: str, notes: dict, SCOPE: str = SCOPE, HOST_TAG: str = HOST_TAG, overlay: bool = False) -> list[str]:
     sel = ' '.join(sel.split())
     if not sel:
         return []
@@ -369,12 +370,12 @@ def scope_complex(sel: str, notes: dict) -> list[str]:
         # body[data-theme] #pmOverlayRoot ...: the overlay root is the host itself
         if nxt and comb in (' ', '>') and nxt.startswith(ROOT_IDS):
             rid_parts = simple_parts(nxt)
-            merged = rid_parts[0] + SCOPE + ''.join(theme) + ''.join(rid_parts[1:])
+            merged = rid_parts[0] + '.pm56-host' + ''.join(theme) + ''.join(rid_parts[1:])
             pre = (['body' + ''.join(state), ' '] if state else [])
             return pre + [merged] + toks[2 * i_comp + 3:]
         if pe and not state and len(toks) == 2 * i_comp + 1:
-            return [host_from(theme + pe)]
-        host = host_from(theme + pe)
+            return [host_from(theme + pe, HOST_TAG)]
+        host = host_from(theme + pe, HOST_TAG)
         if state:
             return ['body' + ''.join(state), ' ', host] + toks[2 * i_comp + 1:]
         return [host] + toks[2 * i_comp + 1:]
@@ -387,20 +388,22 @@ def scope_complex(sel: str, notes: dict) -> list[str]:
                 return [HOST_TAG if base == 'html' else SCOPE + SCOPE]
             pe = [p for p in parts if p.startswith('::')]
             st = [p for p in parts if not p.startswith('::')]
-            return [('html' + ''.join(st) + ' ' if st else '') + host_from(pe)]
+            return [('html' + ''.join(st) + ' ' if st else '') + host_from(pe, HOST_TAG)]
         nxt = comps[1]
         nparts = simple_parts(nxt)
         if nparts and nparts[0] == 'body':
             return [join(['html' + ''.join(parts), ' '] + body_like(1, nparts[1:]))] if parts else [join(body_like(1, nparts[1:]))]
         if nxt.startswith(ROOT_IDS):
             rid = simple_parts(nxt)
-            return [join(['html' + ''.join(parts), ' ', rid[0] + SCOPE + ''.join(rid[1:])] + toks[3:])]
+            return [join(['html' + ''.join(parts), ' ', rid[0] + '.pm56-host' + ''.join(rid[1:])] + toks[3:])]
         return [join(['html' + ''.join(parts), ' ', SCOPE, toks[1]] + toks[2:])] if toks[1] != ' ' else \
             [join(['html' + ''.join(parts), ' ', SCOPE, ' '] + toks[2:])]
     if base == 'body':
         return [join(body_like(0, rest0))]
     if c0.startswith(ROOT_IDS):
-        return [join([head[0] + SCOPE + ''.join(head[1:])] + toks[1:])]
+        if overlay and head[0] == '#pmRoot':
+            return []
+        return [join([head[0] + '.pm56-host' + ''.join(head[1:])] + toks[1:])]
     if base == '*' and len(comps) == 1:
         # `*` resets (and *::before, *::-webkit-scrollbar ...): the host and everything in it
         return [host_from(rest0, SCOPE), SCOPE + ' ' + c0]
@@ -409,25 +412,117 @@ def scope_complex(sel: str, notes: dict) -> list[str]:
     if m and not base:
         args = [a.strip() for a in split_top(m.group(2))]
         if args and all(a == 'body' or a.startswith(ROOT_IDS) for a in args):
-            new_args = [HOST_TAG if a == 'body' else simple_parts(a)[0] + SCOPE + ''.join(simple_parts(a)[1:]) for a in args]
+            new_args = [HOST_TAG if a == 'body' else simple_parts(a)[0] + '.pm56-host' + ''.join(simple_parts(a)[1:]) for a in args]
             return [join([f':{m.group(1)}({", ".join(new_args)})'] + toks[1:])]
     if re.search(r'(?<![\w-])(?:html|body)(?![\w-])|:root', sel):
         notes.setdefault('scope_unhandled', []).append(sel[:160])
     return [SCOPE + ' ' + sel]
 
 
-def scope_selector_list(prelude: str, notes: dict) -> str:
+# The overlay variant of a window-size @media block: only the body-level hosts (the overlay root, the effects layer)
+# take it; :where() keeps the specificity of the ordinary scope.
+OVERLAY_SCOPE = '.pm56-host:where(#pmOverlayRoot, #pm56Fx)'
+OVERLAY_HOST_TAG = 'div.pm56-host:where(#pmOverlayRoot, #pm56Fx)'
+
+
+def scope_selector_list(prelude: str, notes: dict, overlay: bool = False) -> str:
     out = []
     for sel in split_top(prelude):
         if sel.strip():
-            out.extend(scope_complex(sel, notes))
+            if overlay:
+                out.extend(scope_complex(sel, notes, OVERLAY_SCOPE, OVERLAY_HOST_TAG, True))
+            else:
+                out.extend(scope_complex(sel, notes))
     return ', '.join(out)
+
+
+# ---- window-size @media -> @container (the chat column and the chat's tab bodies) ----
+# The standalone's width breakpoints are WINDOW widths of its lab layout, where the chat stage beside the 54% editor
+# (History pinned, 200) was about 0.46 W - 205 px wide (measured: 678 at 1920, 457 at 1440, 384 at 1280, 301 at 1100)
+# and an editor document about 0.54 W. In PMConcept7 the chat is always beside the panels, so a rule written for window
+# W applies to the column when the column is at most as wide as the standalone's chat stage was at W, and to a chat tab
+# body when it is at most as wide as the standalone's editor was at W. Heights: the stage was the window less the lab's
+# header and status bar (66 px). Sheets, menus, hover cards and toasts live in the body-level overlay root and keep
+# the window query as written.
+def col_width(w: float) -> float:
+    return round(0.46 * w - 205, 2)
+
+
+def tab_width(w: float) -> float:
+    return round(0.54 * w, 2)
+
+
+def stage_height(h: float) -> float:
+    return round(h - 66, 2)
+
+
+SIZE_FEATURE = re.compile(r'^\(\s*(min-|max-)?(width|height)\s*:\s*([\d.]+)(px|em|rem)\s*\)$', re.I)
+RANGE_FEATURE = re.compile(r'^\(\s*(width|height)\s*(<=|>=|<|>)\s*([\d.]+)(px|em|rem)\s*\)$', re.I)
+OTHER_SIZE = re.compile(r'^\(\s*(?:min-|max-)?(?:aspect-ratio|orientation)\b', re.I)
+
+
+def media_to_container(prelude: str, kind: str):
+    """'@media <q>' -> (container_condition, media_wrapper) for kind 'col' or 'tab', or None when the query has no
+    size feature or cannot be read (it then stays a plain @media for every host). media_wrapper is the non-size part
+    of a one-query media list ('' when none)."""
+    m = re.match(r'@media\s*(.*)$', prelude.strip(), re.S | re.I)
+    if not m:
+        return None
+    queries = [q.strip() for q in split_top(m.group(1)) if q.strip()]
+    conds, wrapper, any_size = [], '', False
+    for q in queries:
+        words = re.split(r'\s+and\s+', q, flags=re.I)
+        size, other = [], []
+        for wd in words:
+            wd = wd.strip()
+            low = wd.lower()
+            if low in ('screen', 'all', 'only screen', 'only all'):
+                continue
+            if low.startswith('not ') or low in ('print', 'speech'):
+                return None
+            sm, rm = SIZE_FEATURE.match(wd), RANGE_FEATURE.match(wd)
+            if sm or rm:
+                prefix, dim, val, unit = (sm.group(1) or '', sm.group(2), sm.group(3), sm.group(4)) if sm else ('', rm.group(1), rm.group(3), rm.group(4))
+                v = float(val) * (16 if unit.lower() in ('em', 'rem') else 1)
+                dim = dim.lower()
+                nv = (col_width(v) if kind == 'col' else tab_width(v)) if dim == 'width' else stage_height(v)
+                if sm:
+                    size.append(f'({prefix.lower()}{dim}: {nv:g}px)')
+                else:
+                    size.append(f'({dim} {rm.group(2)} {nv:g}px)')
+                any_size = True
+            elif OTHER_SIZE.match(wd):
+                size.append(wd); any_size = True
+            elif wd.startswith('('):
+                other.append(wd)
+            else:
+                return None
+        if other:
+            if len(queries) > 1:
+                return None
+            wrapper = ' and '.join(other)
+        if not size:
+            return None
+        conds.append(size)
+    if not any_size:
+        return None
+    if len(conds) == 1:
+        cond = ' and '.join(conds[0])
+    else:
+        cond = ' or '.join(('(' + ' and '.join(c) + ')') if len(c) > 1 else c[0] for c in conds)
+    return cond, wrapper
+
+
+def has_size_feature(prelude: str) -> bool:
+    return bool(re.match(r'@media\b', prelude, re.I)) and bool(re.search(r'\b(?:min-|max-)?(?:width|height)\s*[:<>=]', prelude, re.I))
 
 
 KEYFRAMES = re.compile(r'@(-webkit-)?keyframes\s+([\w-]+)', re.I)
 
 
-def emit(items: list, notes: dict, page_keyframes: dict, renames: dict, depth: int = 0) -> str:
+def emit(items: list, notes: dict, page_keyframes: dict, renames: dict, depth: int = 0, variant: str = 'all') -> str:
+    """variant: 'all' (top level and plain groups), 'overlay' (the window @media copy for the body-level hosts),
+    'col' / 'tab' (inside a container copy)."""
     out = []
     for it in items:
         kind = it[0]
@@ -440,11 +535,31 @@ def emit(items: list, notes: dict, page_keyframes: dict, renames: dict, depth: i
             body = it[2]
             if '{' in body:
                 notes['nested_rules'] = notes.get('nested_rules', 0) + 1
-            out.append(scope_selector_list(it[1], notes) + '{' + rename_animations(body, renames) + '}')
+            sl = scope_selector_list(it[1], notes, overlay=(variant == 'overlay'))
+            if sl:
+                out.append(sl + '{' + rename_animations(body, renames) + '}')
         elif kind == 'group':
-            inner = emit(it[2], notes, page_keyframes, renames, depth + 1)
+            pre = it[1]
+            if has_size_feature(pre) and variant in ('all', 'col', 'tab'):
+                kinds = ['col', 'tab'] if variant == 'all' else [variant]
+                converted = [(k, media_to_container(pre, k)) for k in kinds]
+                if all(c is not None for _, c in converted):
+                    notes['media_converted'] = notes.get('media_converted', 0) + 1
+                    if variant == 'all':
+                        inner = emit(it[2], notes, page_keyframes, renames, depth + 1, 'overlay')
+                        if inner.strip():
+                            out.append(pre + '{' + inner + '}')
+                    for k, (cond, wrapper) in converted:
+                        inner = emit(it[2], notes, page_keyframes, renames, depth + 1, k)
+                        if not inner.strip():
+                            continue
+                        block = f'@container pm56{k} {cond}' + '{' + inner + '}'
+                        out.append(f'@media {wrapper}' + '{' + block + '}' if wrapper else block)
+                    continue
+                notes.setdefault('media_kept', []).append(pre[:100])
+            inner = emit(it[2], notes, page_keyframes, renames, depth + 1, variant)
             if inner.strip():
-                out.append(it[1] + '{' + inner + '}')
+                out.append(pre + '{' + inner + '}')
         else:
             pre = it[1]
             if re.match(r'@font-face\b', pre, re.I):
@@ -560,7 +675,8 @@ def build_scripts() -> tuple[str, str, str]:
     data = ('\n'.join(read_chat(n) for n in spec['HEAD_JS']) + '\n' + spec['EXT_SHIM'] + '\n'
             + '\n'.join(read_chat(n) for n in spec['PRE_MODULES_JS']) + '\n'
             + '\n'.join(read_chat(m + '.js') for m in spec['MODULES'] if m not in HOSTED_SKIP_JS))
-    main = early + rename_js_classes(data)
+    class_map = 'window.PM56_CLASS_MAP=' + json.dumps(RENAME_CLASSES, sort_keys=True) + ';\n'
+    main = class_map + early + rename_js_classes(data)
     app = read_chat('app.js')
     if app.count('  renderApp(false);\n  scrollTranscriptToEnd(true);') != 1:
         raise ValueError('chat56 layer: the boot render in app.js changed')

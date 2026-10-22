@@ -116,7 +116,12 @@
      user hits Reset all.  The render helpers on the context are plain function
      declarations and never move, but state must be re-read every time. */
   function S(){ return EXT.ctx ? EXT.ctx().state : null; }
-  function store(v){ try{ if(v==null) return window.localStorage.getItem(PIN_KEY); window.localStorage.setItem(PIN_KEY, v); }catch(e){} return null; }
+  /* Hosted (PMConcept7): the pin is the chat column's history_pinned (the typed action ui.chat_column.pin_history,
+     PMW.chatCol), not this module's own store; PM56_HOST reads and writes it. */
+  function store(v){
+    var H = window.PM56_HOST;
+    if(H && H.historyPinned){ if(v==null) return H.historyPinned() ? '1' : '0'; H.setHistoryPinned(v === '1'); return null; }
+    try{ if(v==null) return window.localStorage.getItem(PIN_KEY); window.localStorage.setItem(PIN_KEY, v); }catch(e){} return null; }
   function reduced(){ return !!(window.PM56_MOTION && window.PM56_MOTION.reduced && window.PM56_MOTION.reduced()); }
   function mode(){ return document.body.dataset.phDrawer || ''; }
   function setMode(v){ document.body.dataset.phDrawer = v; }
@@ -481,6 +486,14 @@
     }, reduced() ? 0 : 260);
   }
 
+  /* Hosted: the column's pin changed from outside the chat (the title bar's Home options, a restored layout) */
+  if(window.PM56_HOST && window.PM56_HOST.onHistoryPinned) window.PM56_HOST.onHistoryPinned(function(v){
+    v = !!v;
+    if(v === pinned) return;
+    if(!api){ pinned = v; return; }
+    if(v){ pinned = true; if(!isOpen()) openDrawer(); else setPinned(true); }
+    else { pinned = false; if(mode() === 'pinned') closeDrawer(false); }
+  });
   EXT.action('toggle-history', function(){
     if(closing) return;
     if(isOpen()) closeDrawer(false);   // EXPLICIT: closes even when pinned

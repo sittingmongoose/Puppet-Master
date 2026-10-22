@@ -772,7 +772,7 @@
       const top=md.getBoundingClientRect().top;
       for(const block of pre.querySelectorAll('.pd-md-block')){const mark=md.querySelector('.pd-md-rail [data-block-id="'+CSS.escape(block.dataset.blockId)+'"]');if(!mark)continue;const y=Math.round((block.getBoundingClientRect().top-top)*100)/100+'px';if(mark.style.top!==y)mark.style.top=y;}
     }});}
-    new MutationObserver(scheduleRail).observe(document,{childList:true,subtree:true});
+    {const mo=new MutationObserver(scheduleRail);if(window.PM56_HOST)window.PM56_HOST.observe(mo,{childList:true,subtree:true});else mo.observe(document,{childList:true,subtree:true});}
     window.addEventListener('resize',scheduleRail);
   }
 

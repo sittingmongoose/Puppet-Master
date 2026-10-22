@@ -300,7 +300,8 @@
     if (el.style.getPropertyValue(name) !== value) el.style.setProperty(name, value);
   }
   function syncIndicators(ctx) {
-    var root = document.documentElement, body = document.body;
+    /* hosted (PMConcept7): the theme tokens live on the .pm56-host, so the inks are declared there */
+    var root = document.documentElement, body = window.PM56_HOST ? window.PM56_HOST.root() : document.body;
     if (!root || !body) return;
     var live = coll(ctx).live || {};
     for (var i = 0; i < DOMAINS.length; i++) {

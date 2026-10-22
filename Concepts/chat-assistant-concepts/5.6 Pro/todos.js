@@ -753,12 +753,12 @@
     }
     document.addEventListener('scroll',e=>{const vp=e.target,tid=vp.dataset?.todoViewport;if(!tid)return;treeView(tid).top=vp.scrollTop;paintViewport(vp);},true);
     let restorePending=false;const viewportWatch=new WeakSet();
-    new MutationObserver(()=>{if(restorePending)return;restorePending=true;requestAnimationFrame(()=>{restorePending=false;for(const vp of document.querySelectorAll('[data-todo-viewport]')){
+    const todoViewportObs=new MutationObserver(()=>{if(restorePending)return;restorePending=true;requestAnimationFrame(()=>{restorePending=false;for(const vp of document.querySelectorAll('[data-todo-viewport]')){
       const v=treeView(vp.dataset.todoViewport);if(Math.abs(vp.scrollTop-v.top)>1)vp.scrollTop=v.top;
       if(viewportWatch.has(vp))continue;viewportWatch.add(vp);
       if(typeof ResizeObserver!=='undefined')new ResizeObserver(()=>{const h=vp.clientHeight;if(h&&Math.abs(h-treeView(vp.dataset.todoViewport).vh)>ROW_HEIGHT)paintViewport(vp);}).observe(vp);
       if(vp.clientHeight)paintViewport(vp);
-    }});}).observe(document,{childList:true,subtree:true});
+    }});});(o=>{if(window.PM56_HOST)window.PM56_HOST.observe(o,{childList:true,subtree:true});else o.observe(document,{childList:true,subtree:true});})(todoViewportObs);
   }
 
   /* =====================================================================

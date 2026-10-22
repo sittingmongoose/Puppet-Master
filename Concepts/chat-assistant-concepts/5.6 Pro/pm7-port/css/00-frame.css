@@ -20,6 +20,10 @@
   container: pm56host / size;
   box-sizing: border-box;
 }
+/* the column and the tab bodies are told apart, so the chat's window-size rules map to each one's own width
+   (chat56_layer.py media_to_container: pm56col for the column, pm56tab for a chat tab body) */
+#pmw-chat56.pm56-frame { container-name: pm56host pm56col; }
+.pm56-frame.pm56-tab { container-name: pm56host pm56tab; }
 #pmw-chat56[hidden] { display: none !important; }
 /* the page's own chat content under the layer is hidden while the 5.6 chat shows (visibility only: nothing moves, and
    keyboard focus cannot wander into it); the Guided Tour teaches the page's own chat, so the tour lifts this, and the

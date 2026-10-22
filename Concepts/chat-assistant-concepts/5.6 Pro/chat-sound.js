@@ -28,7 +28,8 @@
   if (!EXT || !EXT.slot) return;
   var KEY = 'pm56.chatSound';
   var S = { muted: false, ctx: null, master: null, last: 0, lastTick: 0, ticks: [], log: [] };
-  try { S.muted = localStorage.getItem(KEY) === 'off'; } catch (e) { }
+  /* hosted (PMConcept7): Settings owns the sound switch and projects it through setMuted; no local store */
+  if (!window.PM56_HOST) { try { S.muted = localStorage.getItem(KEY) === 'off'; } catch (e) { } }
 
   /* ---- primitives ------------------------------------------------------- */
   var note = function (n) { return 440 * Math.pow(2, (n - 69) / 12); };
@@ -278,7 +279,7 @@
   });
   EXT.action('chat-sound-toggle', function (ctx) {
     S.muted = !S.muted;
-    try { localStorage.setItem(KEY, S.muted ? 'off' : 'on'); } catch (e) { }
+    if (!window.PM56_HOST) { try { localStorage.setItem(KEY, S.muted ? 'off' : 'on'); } catch (e) { } }
     if (!S.muted) { armed = true; ensure(); play('complete'); }
     ctx.renderApp();
     return true;
@@ -298,7 +299,7 @@
       return true;
     },
     get muted() { return S.muted; },
-    setMuted: function (m) { S.muted = !!m; try { localStorage.setItem(KEY, S.muted ? 'off' : 'on'); } catch (e) { } },
+    setMuted: function (m) { S.muted = !!m; if (!window.PM56_HOST) { try { localStorage.setItem(KEY, S.muted ? 'off' : 'on'); } catch (e) { } } },
     log: S.log
   };
 })();

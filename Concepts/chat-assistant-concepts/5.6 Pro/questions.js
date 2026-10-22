@@ -1990,9 +1990,10 @@
   function bindMorph() {
     if (document.documentElement.__qsMorphBound) { syncMorph(); return; }
     document.documentElement.__qsMorphBound = true;
-    new MutationObserver(function () { requestAnimationFrame(syncMorph); }).observe(document.documentElement, {
-      childList: true, subtree: true, attributes: true, attributeFilter: ['data-phase']
-    });
+    var qsMorphObs = new MutationObserver(function () { requestAnimationFrame(syncMorph); });
+    var qsMorphOpts = { childList: true, subtree: true, attributes: true, attributeFilter: ['data-phase'] };
+    if (window.PM56_HOST) window.PM56_HOST.observe(qsMorphObs, qsMorphOpts);   /* hosted: the chat's hosts only */
+    else qsMorphObs.observe(document.documentElement, qsMorphOpts);
     window.addEventListener('resize', function () {
       if (!document.querySelector('.decision-host .qs-ask')) return;
       fitAskRoom();
