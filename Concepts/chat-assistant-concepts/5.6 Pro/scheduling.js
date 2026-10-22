@@ -800,7 +800,8 @@
     if(destination.kind!=='assistant'){
       const owner=messageDestinations.get(destination.kind);
       if(!destination.scheduled_binding&&owner.freeze){const prepared=owner.freeze(destination,scope);if(!prepared?.ok)return msgError(prepared?.error||'destination_unavailable');destination=prepared.destination;}
-      const check=owner.validate(destination,scope);if(!check?.ok)return msgError(check?.error||'destination_unavailable');
+      /* creating: the destination's owner decides what must hold at once and what waits for dispatch (a running room) */
+      const check=owner.validate(destination,scope,null,true);if(!check?.ok)return msgError(check?.error||'destination_unavailable');
     }
     const m=modelById(d.modelId);if(!m||m.status!=='ready')return msgError('route_unavailable','The selected model or account is unavailable. No fallback was chosen.');
     const attachments=resolveScheduledAttachments(d.attachments,scope);if(!attachments.ok)return attachments;
@@ -3337,7 +3338,8 @@
     openBuildAt: openBuildAt,
     captureBuild,windowTick,workEligibility,setPlanQuotaConsent,buildWindow,
     buildDraft:defaultBuildDraft,editBuildDraft:id=>{const b=findBuild(id);if(!b)return null;ACT['sched-edit-build'](EXT.ctx(),{dataset:{id}});return copy(ui.buildDraft);},
-    saveBuild:(draft,id)=>{const before=ui.buildDraft,edit=ui.editingBuildId;ui.buildDraft=draft;ui.editingBuildId=id||null;try{const r=commitBuild(EXT.ctx());return r?{ok:true,record:r}:msgError(draft.error||'build_schedule_refused');}finally{ui.buildDraft=before;ui.editingBuildId=edit;}},
+    /* a refusal keeps its code in errorCode and its words in error (refuse(), 2026-09-28); the code is what callers match */
+    saveBuild:(draft,id)=>{const before=ui.buildDraft,edit=ui.editingBuildId;ui.buildDraft=draft;ui.editingBuildId=id||null;try{const r=commitBuild(EXT.ctx());return r?{ok:true,record:r}:msgError(draft.errorCode||draft.error||'build_schedule_refused',draft.errorCode?draft.error:'');}finally{ui.buildDraft=before;ui.editingBuildId=edit;}},
     cancelBuildExact:(id,expected)=>cancelBuild(id,expected),
     captureMessage,saveMessageWithSnapshots,saveMessage:(draft,editingId)=>saveMessage(EXT.ctx(),draft,editingId),prepareMessage:(draft)=>prepareMessage(EXT.ctx(),draft),
     messageDraft:()=>defaultMsgDraft(EXT.ctx()),editMessageDraft:id=>findMessage(id)?loadMessageForEdit(findMessage(id)):null,
@@ -3378,7 +3380,7 @@
     fixture: function () { return JSON.parse(SEED_JSON); }
   };
 
-  ['workflow','participant'].forEach(kind=>PM56_SCHED.registerMessageDestination(kind,{freeze:(d,s)=>PM56_COLLAB.freezeScheduledDestination(d,s),validate:(d,s,m)=>PM56_COLLAB.validateScheduledDestination(d,s,m),deliver:(m,d)=>PM56_COLLAB.deliverScheduledMessage(m,d)}));
+  ['workflow','participant'].forEach(kind=>PM56_SCHED.registerMessageDestination(kind,{freeze:(d,s)=>PM56_COLLAB.freezeScheduledDestination(d,s),validate:(d,s,m,creating)=>PM56_COLLAB.validateScheduledDestination(d,s,m,creating),deliver:(m,d)=>PM56_COLLAB.deliverScheduledMessage(m,d)}));
 
   /* If the user just pressed "Reload page now", reopen the management dialog
      once EXT.ctx is live, so restart survival is visible without extra

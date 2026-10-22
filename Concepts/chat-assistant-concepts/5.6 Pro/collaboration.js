@@ -4544,9 +4544,15 @@
   function freezeScheduledDestination(d,scope){
     const r=findRun(d?.refId);if(!r||r.threadId!==scope.threadId||d.destinationKind!==r.kind)return scheduledBad('destination_scope_mismatch');
     const destination={kind:d.kind,refId:r.id,destinationKind:r.kind,participantId:d.participantId||null,label:d.label||r.title,detail:d.detail||'',glyph:d.glyph||KIND_ICON[r.kind],scheduled_binding:scheduledDestinationBasis(r,d)};
-    const v=validateScheduledDestination(destination,scope);return v.ok?{ok:true,destination:PM56_ARTIFACTS.freeze(destination)}:v;
+    const v=validateScheduledDestination(destination,scope,null,true);return v.ok?{ok:true,destination:PM56_ARTIFACTS.freeze(destination)}:v;
   }
-  function validateScheduledDestination(d,scope,publishedMessage){
+  /* creating (2026-10-22): a Chat Room runs its rounds by itself (DL-231), so a live room is mid-round most of the time.
+     Scheduling a message for later freezes this exact room; whether the room can take it right now (a round still
+     going, an earlier input not yet discussed) is decided at its time, where it holds instead (SMSG: revalidated
+     before dispatch, a failure is a held dispatch). A room that ended, used all its rounds or lost the participant
+     still refuses at once. */
+  const ROOM_WAITS_AT_DISPATCH=['finish_current_round','finish_pending_delivery'];
+  function validateScheduledDestination(d,scope,publishedMessage,creating){
     const r=findRun(d?.refId);if(!r||r.threadId!==scope.threadId||!EXT.ctx().state.threads.some(t=>t.id===scope.threadId&&(t.projectId||'pm')===scope.projectId))return scheduledBad('destination_not_found');
     if(!['workflow','participant'].includes(d.kind)||d.destinationKind!==r.kind||!d.scheduled_binding||JSON.stringify(d.scheduled_binding)!==JSON.stringify(scheduledDestinationBasis(r,d)))return scheduledBad('destination_generation_changed');
     if(r.crew?.planBinding){const pr=PM56_PLANS.runs()[r.crew.planBinding.plan_run_id];if(!pr||['completed','cancelled','canceled','failed'].includes(pr.state))return scheduledBad('destination_ended');if(pr.state!=='running')return scheduledBad('destination_not_accepting');}
@@ -4555,7 +4561,7 @@
     if(d.kind==='participant'&&!participant(r,d.participantId)||d.kind==='workflow'&&d.participantId)return scheduledBad('participant_not_found');
     if(window.PM56_ROOM?.owns(r.id)){
       const v=PM56_ROOM.canSend(r.id,d);
-      if(!v.ok){
+      if(!v.ok&&!(creating&&ROOM_WAITS_AT_DISPATCH.includes(v.error))){
         // Post-delivery revalidation may observe THIS operation's pending inbox.
         // Another pending input must still hold; identity alone is not sufficient.
         const msg=publishedMessage,shared=msg&&r.messages.find(x=>x.id===msg.id),thread=EXT.ctx().state.threads.find(t=>t.id===r.threadId);
