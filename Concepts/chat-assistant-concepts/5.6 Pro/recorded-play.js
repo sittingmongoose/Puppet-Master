@@ -209,8 +209,10 @@
       Promise.resolve(out).then(function (ok) {
         p.busy = false; p.current = null; if (p.stopped) return;
         if (ok === false) {
-          p.tries[b.id] = (p.tries[b.id] || 0) + 1;
-          if (p.tries[b.id] >= TRIES) { fail(new Error('recorded step ' + b.id + ' found no control to press')); return; }
+          /* given up only after TRIES tries and 15 s of real time: a control that waits on something real-timed (an
+             animation, a renderer) is never missed because the clock runs fast (a film, a test at 3x) */
+          p.tries[b.id] = (p.tries[b.id] || 0) + 1; p.firstTry = p.firstTry || {}; if (!p.firstTry[b.id]) p.firstTry[b.id] = performance.now();
+          if (p.tries[b.id] >= TRIES && performance.now() - p.firstTry[b.id] >= 15000) { fail(new Error('recorded step ' + b.id + ' found no control to press')); return; }
           arm(POLL * 2); return;
         }
         p.done[b.id] = 1; p.last = now(); p.log.push({ id: b.id, at: Math.round(now() - p.started) });

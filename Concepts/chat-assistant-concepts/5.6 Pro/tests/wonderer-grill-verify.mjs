@@ -26,7 +26,8 @@ const results = [];
 /* the Batch 14-17 and 19 examples (2026-10-22), added once their recordings land */
 const AX_MORE = [
   { name: 'To-Do graphs · Parallel outputs, honest progress', action: 'b16-start', flow: 'parallel', moves: ['[data-action="pd-build"]'] },
-  { name: 'To-Do graphs · Refine a list without losing work', action: 'b16-start', flow: 'restructure', moves: ['[data-action="pd-build-goal"]'] },
+  /* its refinement preview races the paused Goal's own timers when the recording runs 3x faster: checked at 1x */
+  { name: 'To-Do graphs · Refine a list without losing work', action: 'b16-start', flow: 'restructure', moves: ['[data-action="pd-build-goal"]'], scale: 1, max: 150000 },
   { name: 'To-Do graphs · Every item, even number 5,000', action: 'b16-start', flow: 'large' },
   { name: 'Plan recovery · Recover without starting over', action: 'b17-start', flow: 'recovery', moves: ['[data-action="pd-build"]'] },
   { name: 'Plan recovery · Read the exact evidence', action: 'b17-start', flow: 'documents' },
@@ -604,7 +605,7 @@ async function otherExamples({ page, ev, sleep }) {
     const label = 'AX ' + x.name + (width !== 1440 ? ' @' + width : '');
     /* a fresh page for each example: what one leaves behind (a schedule, an open document) never starts the next */
     await page.goto(page.url()); await page.waitForFunction(() => window.__PM56_BOOT_OK === true, null, { timeout: 30000 }); await sleep(600);
-    await ev(k => window.PM56_CLOCK.setScale(k), SCALE);
+    await ev(k => window.PM56_CLOCK.setScale(k), x.scale || SCALE);
     /* the recorder: guide sentences (motion time), guide buttons, trusted clicks, and when anything on screen last changed */
     await ev(() => {
       if (window.__axStop) window.__axStop();
