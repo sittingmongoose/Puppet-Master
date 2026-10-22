@@ -998,8 +998,8 @@ await sec('regression: every theme', async()=>{
     await page.evaluate(t=>PM56_TEST.setTheme(t),id);
     await page.waitForTimeout(160);
     const r=await page.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth,
-      bw:PM56_TEST.host.scrollWidth,drawer:!!document.querySelector('.history-flyout')}));
-    if(r.sw>r.cw+1||r.bw>r.cw+1||!r.drawer) bad.push({id,...r});
+      bw:PM56_TEST.host.scrollWidth,bcw:PM56_TEST.host.clientWidth,drawer:!!document.querySelector('.history-flyout')}));
+    if(r.sw>r.cw+1||r.bw>r.bcw+1||!r.drawer) bad.push({id,...r});
     if(SHOTS) await shot(`theme-${id}${REDUCED?'-reduced':''}.png`);
   }
   check(bad.length===0 && BASE_THEMES.every(t=>ids.includes(t)), `No overflow and the drawer paints in all ${ids.length} themes`, {bad,ids});

@@ -21,6 +21,7 @@ export async function launchGpuBrowser(chromium, argv = process.argv.slice(2)) {
   if (!endpoint) {
     session = JSON.parse(execFileSync('agent-browser', ['start', '--url', 'about:blank'], { encoding: 'utf8', timeout: 60000 }));
     owned.add(session.id); endpoint = session.cdp_endpoint;
+    console.log(`GPU session: ${session.id} CDP: ${endpoint}`);
   }
   try {
     const browser = await chromium.connectOverCDP(endpoint);

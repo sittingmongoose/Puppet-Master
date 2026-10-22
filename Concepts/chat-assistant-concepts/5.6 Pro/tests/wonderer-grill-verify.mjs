@@ -1354,7 +1354,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   const crewT = await thread();
   await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(800);
   const dpT = await thread();
-  const low4 = {}, n4 = {};
+  const low4 = {}, n4 = {}, pixels4 = {};
   for (const look of ['basic-dark', 'basic-light', 'glass-dark', 'glass-light', 'friendly-dark', 'friendly-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light']) {
     await target.theme(page, look); await sleep(400);
     await ev(x => window.PM56_DEMO.selectThread(x), dpT); await sleep(500);
@@ -1367,11 +1367,12 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
     await ev(() => { const e = document.querySelector('.transcript .wg-card'); if (e) e.scrollIntoView({ block: 'start' }); }); await sleep(400);
     Object.assign(a, await pixelRatios(page, ['.transcript .wg-card .wg-lead-src', '.transcript .wg-card .wg-pass-title .wg-fine', '.transcript .wg-card .wg-who', '.transcript .wg-card-foot .wg-fine']));
     Object.entries(a).forEach(([k, v]) => { if (v < 4.5) low4[look + ' ' + k] = v; });
-    n4[look] = Object.keys(a).length;
+    n4[look] = Object.keys(a).length; pixels4[look] = a;
   }
   await target.theme(page, 'basic-dark'); await fast(1);
   check('R2-4 required words read 4.5:1 or better on the painted pixels in ten looks (the round bar over its tint, the map frontier, the source line, who asked for a pass)',
     !Object.keys(low4).length && Object.values(n4).every(n => n >= 8), JSON.stringify({ low4, n4 }));
+  results[results.length - 1].measured = { ratios: pixels4, counts: n4 };
 
   /* D1 (ruling 18): the map draws its dependencies, has no tally of its own, keeps the question in view at 1440 x 900,
      and marks the question on screen; in What we agreed it gives the structure without repeating the answers */

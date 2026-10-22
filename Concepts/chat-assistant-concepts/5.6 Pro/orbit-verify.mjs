@@ -778,11 +778,14 @@ await safe('Orbit: renders in all 8 themes with no overflow and no console noise
         hit: n === el || n.contains(el),
         inViewport: b.top >= 0 && b.bottom <= window.innerHeight,
         escapesCard: sr.right > card.right + 1 || sr.left < card.left - 1,
-        pageOverflow: PM56_TEST.host.scrollWidth > window.innerWidth + 1
+        hostWidth: PM56_TEST.host.clientWidth,
+        hostScrollWidth: PM56_TEST.host.scrollWidth,
+        hostOverflow: PM56_TEST.host.scrollWidth > PM56_TEST.host.clientWidth + 1,
+        pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
       };
     });
     const px = await readPixels(page, clipOf(await page.locator('.orbit-node.live').boundingBox()));
-    if (m.missing || !m.hit || m.escapesCard || m.pageOverflow || px.inkShare < 0.05) bad_.push({ theme: t, ...m, px });
+    if (m.missing || !m.hit || m.escapesCard || m.hostOverflow || m.pageOverflow || px.inkShare < 0.05) bad_.push({ theme: t, ...m, px });
   }
   check('8 themes: node painted + hit-testable, nothing escapes the card, no page overflow', bad_.length === 0, bad_.length ? bad_ : themes.length + ' themes clean');
   check(themes.length + ' themes: (i) the live node\'s rim reads its phase hue (NieR: its declared rim)', claims.rim.length === 0, claims.rim.length ? claims.rim : themes.join(','));
