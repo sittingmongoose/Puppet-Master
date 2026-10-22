@@ -703,11 +703,17 @@ await t('Q6. Ask Card paints Back + Next on q1 and a choice click does not auto-
   must(nextPaint && nextPaint.owns, `Next not painted: ${JSON.stringify(nextPaint)}`);
   const i0 = (await stateOf()).questionIndex;
   must(i0 === 0, `started at ${i0}`);
+  let backIndex = i0;
+  if (!nav.nativeDisabled) {
+    await clickPainted('.qs-ask [data-action="prev-question"]');
+    backIndex = (await stateOf()).questionIndex;
+    must(backIndex === 0, `aria-disabled Back changed q1 to ${backIndex}`);
+  }
   await clickPainted('.qs-ask [data-action="answer-choice"]', 1);
   await page.waitForTimeout(400);
   const i1 = (await stateOf()).questionIndex;
   must(i1 === 0, `choice auto-advanced to ${i1}`);
-  return { nav, i0, i1 };
+  return { nav, i0, backIndex, i1 };
 });
 await t('Q7. Ask Card multi uses checkboxes, Select all that apply, and two is-on rows', async () => {
   await openQuestion();
