@@ -1,0 +1,84 @@
+{
+  "authority": "Jared assigned the 2026-10-22 governance reseal after DL-231. Astra max review and a later explicit GO are required before landing.",
+  "certification_harness_run": false,
+  "changed_since_previous_seal": 8,
+  "files": [
+    {
+      "commits": [
+        "b1ee03d8d9cf729e6c129d23da3f7a4c7992a4a9 plans: preserve Chat Room user gates and regenerate DL-231 review companions",
+        "ca0061172f7ee0d61d52f1ebc1e6745331387ea5 plans: Chat Room rounds run by themselves, with Pause between rounds (DL-231)"
+      ],
+      "hash_at_previous_seal": "9093358acb8282a09d7e0848214b0ad9cb62a0fdb4653f92aeedf07a7bb4f76e",
+      "hash_at_reseal": "781ca35d71d87a33bf6ba45d4d4ab99d1770950f6fd54c79af33482a0a4ff531",
+      "path": "Plans/00-plans-index.md"
+    },
+    {
+      "commits": [
+        "b1ee03d8d9cf729e6c129d23da3f7a4c7992a4a9 plans: preserve Chat Room user gates and regenerate DL-231 review companions",
+        "fd812aad57bb1feb4198124bfc467050233c69f2 plans: distinguish Chat Room between-round waits in admission fixtures",
+        "2a0826c030ef6fa626ee59ecc33411e37d9fe4db plans: align Chat Room round companions with DL-231"
+      ],
+      "hash_at_previous_seal": "7375d53c62194fe2dd3391d1857a3e003e50468d87872591db23508b9e549343",
+      "hash_at_reseal": "43ced988255e047f6410149fa3f48c7398c3c6c1697b7b6f16a7ba1815f5dd9f",
+      "path": "Plans/Automated_Testing_System.md"
+    },
+    {
+      "commits": [
+        "2a0826c030ef6fa626ee59ecc33411e37d9fe4db plans: align Chat Room round companions with DL-231"
+      ],
+      "hash_at_previous_seal": "7a63689307b14a7c68ab2e251dff6df3c6fdbcf43a3869ba122b27cc2f23bda1",
+      "hash_at_reseal": "2cbcda1c4776a368c3a581f4e04e2fa2fa02f76140733ab77a2e10fcbfa592d0",
+      "path": "Plans/Contracts_V0.md"
+    },
+    {
+      "commits": [
+        "fd812aad57bb1feb4198124bfc467050233c69f2 plans: distinguish Chat Room between-round waits in admission fixtures",
+        "2a0826c030ef6fa626ee59ecc33411e37d9fe4db plans: align Chat Room round companions with DL-231"
+      ],
+      "hash_at_previous_seal": "b61f2bc13545284ddcb63793a3b69f73fb1043a057a6e3f6dcce50ebde745a5f",
+      "hash_at_reseal": "de41fe051c2b1708bb857fef83ff1ee916f653d629840e69e9db37052351393d",
+      "path": "Plans/UI_Command_Catalog.md"
+    },
+    {
+      "commits": [
+        "b1ee03d8d9cf729e6c129d23da3f7a4c7992a4a9 plans: preserve Chat Room user gates and regenerate DL-231 review companions",
+        "ca0061172f7ee0d61d52f1ebc1e6745331387ea5 plans: Chat Room rounds run by themselves, with Pause between rounds (DL-231)"
+      ],
+      "hash_at_previous_seal": "369a81ddb3a047c4ea3c13b21bf5ea4fc54cc98d1fc34504b4c19542f045fec1",
+      "hash_at_reseal": "bb59714a795da49437137863dcf3065fb5f3da6f13274f751ed7116e85abb358",
+      "path": "Plans/assistant-chat-design.md"
+    },
+    {
+      "commits": [
+        "2a0826c030ef6fa626ee59ecc33411e37d9fe4db plans: align Chat Room round companions with DL-231"
+      ],
+      "hash_at_previous_seal": "c5e0dbd366ade9209c2146b51880500d182a83feb058739b7b14b14265810c08",
+      "hash_at_reseal": "7304c55288721d09f1c08a64e30ee5cd202487c687a30507474da61c58fa3f1a",
+      "path": "Plans/Wiring_Matrix.md"
+    },
+    {
+      "commits": [],
+      "hash_at_previous_seal": "5bde87c859e7e75420b834fa0da679117ab2204d31f7813cb7a10f60e4a91827",
+      "hash_at_reseal": "52f59f29a3796410b53078d317f3e831c1fcfeeac46765cdf90569cce25073e0",
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json"
+    },
+    {
+      "commits": [
+        "2a0826c030ef6fa626ee59ecc33411e37d9fe4db plans: align Chat Room round companions with DL-231"
+      ],
+      "hash_at_previous_seal": "65241c5eadb888e593ca008aff5d5c07c10a06c08d74905daef442bbbaf42f82",
+      "hash_at_reseal": "4bc5f953d8d5769d4762c7cdeac244c13948e2535e5cbe48acbc35fb94dfc6c0",
+      "path": "Plans/Commands_System.md"
+    }
+  ],
+  "locked_file_count": 101,
+  "locked_file_count_before": 101,
+  "mode": "real",
+  "newly_registered_paths": [],
+  "non_hash_lock_fields_unchanged": true,
+  "previous_seal_commit": "63aebecebdf511d827b7dc21ece8311acd4d2769",
+  "reseal_base_commit": "2cf22e20b357d1cc6f5d0840441bf22716a16319",
+  "review_state": "awaiting_astra_review_and_explicit_landing_GO",
+  "runtime_enabled": false,
+  "schema_id": "pm.governance.reseal_attestation.v1"
+}
