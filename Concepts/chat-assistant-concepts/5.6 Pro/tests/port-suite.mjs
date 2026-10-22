@@ -23,7 +23,8 @@ const only = opt('--only', stages.join(',')).split(',');
 if (only.some(s => ![...stages, 'node'].includes(s))) throw new Error('Unknown --only stage');
 const activeChildren = new Set();
 let stopping = false;
-for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, () => {
+for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => {
+  if (stopping) return;
   stopping = true; runInfo.cancelledAt = new Date().toISOString();
   // Children own their GPU sessions and stop them on these same signals.
   for (const child of activeChildren) child.kill(signal);
