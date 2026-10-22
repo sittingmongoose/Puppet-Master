@@ -23,7 +23,8 @@
    'demo-trigger' (BSD, ELI5, Context Lens, the quota strip) and about fifty chain 'reset-all'; b14-start and b15-start
    play their recording only when the button sits in '.demo-dialog .demo-trigger'; recorded-play.js stops the example
    that is playing when such a button is clicked. Before a run the chat is brought on screen (PMW.chatCol.show(), on the
-   Home page), so a module that measures the chat's width at seed time measures the real column.
+   Home page, with the stand-in chat turned off if it was on), so a module that measures the chat's width at seed time
+   measures the real column.
 
    Dropped from the lab's Demo Studio (D26 clean-up; DEMO-INVENTORY.md in the port's share folder lists every decision):
    the theme list and the NieR Mode section (PMConcept7's Looks section owns looks and NieR), the Edit and branch and
@@ -51,7 +52,15 @@
   /* ---- the chat on screen: the Home page, the column shown (its folded strip opens over the centre) ---- */
   function chatOpen() { var C = W.PMW && W.PMW.chatCol; return !!(C && fn(C, 'isOpen') && C.isOpen()); }
   function bringChat() {
-    try { var P = W.PM_PAGES; if (P && fn(P, 'go') && fn(P, 'current') ? P.current() !== 'dashboard' : P && fn(P, 'go')) P.go('dashboard'); } catch (_) {}
+    /* PM_PAGES.current is the page last asked for (null at load, when Home is already in front) */
+    try {
+      var P = W.PM_PAGES, home = document.querySelector('.primary-content > .page-dashboard');
+      var onHome = P && P.current ? P.current === 'dashboard' : !home || home.classList.contains('active');
+      if (P && fn(P, 'go') && !onHome) P.go('dashboard');
+    } catch (_) {}
+    /* the stand-in chat (Home's panel open paths check) takes this chat's place while it is on: a chat demo turns it off */
+    var SI = W.PMW && W.PMW.standIn;
+    try { if (SI && fn(SI, 'isOn') && fn(SI, 'toggle') && SI.isOn()) SI.toggle(); } catch (_) {}
     var C = W.PMW && W.PMW.chatCol;
     if (C && fn(C, 'show')) { try { C.show(); } catch (_) {} }
     return chatOpen();
