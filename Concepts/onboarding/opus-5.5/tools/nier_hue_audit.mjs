@@ -72,7 +72,8 @@ function analyse() {
   for (const c of cells.values()) {
     if (c.n < window.__minCell) continue;
     const el = document.elementFromPoint(c.x, c.y); if (!el) continue;
-    const own = el.closest('[data-theme]');
+    /* the 5.6 Pro chat's hosts (.pm56-host) mirror the page's own theme, not a choice: their pixels are audited */
+    const own = el.closest('[data-theme]:not(.pm56-host)');
     if ((own && own !== document.documentElement) || el.closest(LEFT)) { left += c.n; continue; }
     let who = null, prop = null, val = null, best = 999;
     for (let e = el, n = 0; e && e.nodeType === 1 && n < 6; e = e.parentElement, n++) {
