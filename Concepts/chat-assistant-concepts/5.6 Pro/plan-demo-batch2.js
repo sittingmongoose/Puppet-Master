@@ -3,9 +3,11 @@
  * product controls, and a due-time preview calls the scheduler's owner seam.
  * Playback (2026-10-22, Jared: recorded examples play on their own after Start): every example plays from Start through
  * PM56_RECPLAY, paced to read, pressing the product's own controls (lit first): Open plan, More, Build At…, One time,
- * the date and the start time, Schedule build, Done, Revise, the feedback typed and sent, Review, Cancel schedule, To-Dos.
- * The due time is the demo clock reaching the slot (the scheduler's own seam, narrated). The revise example waits where
- * the schedule waits on your decision: a newer version stopped the V1 schedule, and Use V2 is yours. The guide narrates
+ * the date and the start time, Done, Revise, the feedback typed and sent, Review, Cancel schedule, To-Dos. Schedule build
+ * approves the exact version to build later, so it is yours, as a plan's Build is: each example waits there, and goes on
+ * by itself after you press it. The due time is the demo clock reaching the slot (the scheduler's own seam, narrated). The
+ * revise example also waits where the schedule waits on your decision: a newer version stopped the V1 schedule, and Use
+ * V2 is yours. The guide narrates
  * what is happening and what comes next (dock, sheet or document line); its only buttons are Replay and Close.
  * schedule-demo-next stays as a QA hook. */
 (function(){
@@ -47,7 +49,8 @@
   if(kind==='time')return [press('#pmOverlayRoot '+query('sched-set-build-kind',{value:'one_time'}),PACE.kind,{dialog:true}),
    {wait:PACE.field,dialog:true,run:()=>R.choose('[data-sched-input="build-date"]',tomorrow())},
    {wait:PACE.field,dialog:true,run:()=>R.choose('[data-sched-input="build-time"]','10:00').then(ok=>{if(ok){const z=document.querySelector('[data-sched-input="build-tz"]');if(z){z.value='America/New_York';z.dispatchEvent(new Event('change',{bubbles:true}));}}return ok;})}];
-  if(kind==='save')return [{wait:PACE.save,dialog:true,run:()=>R.press('#pmOverlayRoot '+query('sched-create-build')).then(ok=>{if(!ok)return ok;const b=S.list().builds.find(b=>b.target_id===p.plan_id&&!a.known.includes(b.schedule_id));if(!b)throw Error('Nothing was scheduled.');a.scheduleId=b.schedule_id;if(b.exact_target_hash!==P.hash(p.plan_id)||b.exact_target_version!==p.version)throw Error('The schedule doesn’t match this version of the plan.');return true;})}];
+  /* Schedule build approves this exact version for a later build: yours to press (follow() sees it and moves on) */
+  if(kind==='save')return [];
   if(kind==='close')return [Object.assign(press('#pmOverlayRoot '+query('sched-close-dialog'),PACE.done,{dialog:true}),{skip:()=>!visible('sched-close-dialog')}),
    Object.assign(press(more+'[aria-expanded="true"]',PACE.item),{skip:()=>!document.querySelector(more+'[aria-expanded="true"]')})];
   if(kind==='revise')return [press(query('pd-revise',{id:pid}),PACE.revise),Object.assign(press('[data-action="return-to-chat"]',PACE.item),{skip:()=>!(innerWidth<=1100&&E.ctx().state.editorRevealed)})];
@@ -66,6 +69,7 @@
  function next(){const a=active;if(!a)return null;follow(a);const f=flows[a.flow],step=f.steps[a.step],kind=step&&step[2];if(!kind||kind==='wait')return null;
   /* Use V2 is yours: the schedule stopped for the newer version and waits on your decision */
   if(kind==='rebind'){if(schedule()?.exact_target_version===2){finishStep(a,kind);}return null;}
+  if(kind==='save')return null;
   const list=subs(a,kind);
   while(a.sub<list.length&&list[a.sub].skip&&list[a.sub].skip())a.sub++;
   if(a.sub>=list.length){finishStep(a,kind);return null;}
@@ -142,7 +146,7 @@
  const SAY={open:'The assistant wrote a plan. Next: you open it, then schedule its build for later instead of building now.',
   at:'Next: Build At…, from the plan’s More menu, sets a time to build this exact version.',
   time:'Build At opens. Next: you choose One time, tomorrow at 10:00.',
-  save:'Tomorrow at 10:00. Next: Schedule build binds this exact version, V1, to that slot.',
+  save:'Your move: Schedule build approves this exact version, V1, to build tomorrow at 10:00. Press it when you’re ready; the recording goes on from there.',
   close:'Scheduled: V1 builds tomorrow at 10:00, exactly as it is now. Next: back to the plan.',
   revise:'Scheduled for V1. Next: you revise the plan before the slot comes.',
   feedback:'Revising: the message box writes to this plan now. Next: you type what to change and send it.',
@@ -153,6 +157,7 @@
  function say(){const a=active,f=flows[a.flow],step=f.steps[a.step],kind=step&&step[2];
   if(player&&player.errors.length)return {text:'This step couldn’t run, so the recording stopped here. Replay starts it again.',done:true};
   if(finished()){const nightly=schedule()?.schedule_kind==='recurring_window';return {text:a.flow==='due'?(nightly?'Done · Built V1 in its first nightly slot.':'Done · Built V1 once, on schedule, and both tasks completed.'):a.flow==='revise'?'Done · V2 is building in its slot. The V1 schedule was never used.':'Done · Canceled. When its time came, nothing was built and no To-Dos were made.',done:true};}
+  if(kind==='save')return {text:SAY.save,done:true,yours:true};
   if(kind==='rebind')return {text:'Your move: the schedule stopped for version 2 and waits for you. Press Use V2 to build the new version in the same slot, or Cancel schedule.',done:true,yours:true};
   if(kind==='close'&&a.flow==='revise'&&a.step>6)return {text:'Bound to V2. Next: back to the plan, then the slot comes.'};
   if(kind==='due')return {text:a.flow==='cancel'?'Canceled. Next: the clock reaches the original time, and nothing should build.':a.flow==='revise'?'Next: the clock reaches the slot, and V2 builds.':'Next: the clock reaches tomorrow at 10:00, and the schedule builds V1.'};
