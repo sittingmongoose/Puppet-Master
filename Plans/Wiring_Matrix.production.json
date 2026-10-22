@@ -59746,7 +59746,7 @@
     },
     "catalog.terminal_show": {
       "ui_element_id": "catalog.terminal_show",
-      "ui_location": "Chat command cards and derived runtime surfaces > Show Terminal (focuses the session's terminal tab wherever it is)",
+      "ui_location": "Derived runtime surfaces > Show Terminal (focuses the existing session tab; the compact chat card uses Open in Terminal instead)",
       "ui_command_id": "cmd.terminal.show",
       "handler_location": "handlers::terminal::show",
       "expected_event_types": [
@@ -74443,7 +74443,7 @@
     },
     "terminal.mark_menu.open_output": {
       "ui_element_id": "terminal.mark_menu.open_output",
-      "ui_location": "Home > a terminal tab > the command-mark menu > Open output in an editor tab",
+      "ui_location": "Terminal tab > command-mark menu > Open output in an editor tab; compact chat command card > View output or View output log when no terminal session remains",
       "ui_command_id": "cmd.panel_tab.open",
       "handler_location": "handlers::panel_tab::open",
       "expected_event_types": [
@@ -74456,7 +74456,8 @@
         "Raised through the typed local action ui.terminal.mark.open_output with { kind: editor } and the command's output as text, its command line as title, read-only, mode: keep; never a preview.",
         "While the DL-035 candidate cmd.terminal.open_retained_output stays unregistered it is never dispatched here.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
-        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing.",
+        "Hosted chat port (WM-096, ACD-500, ACD-502): View output and View output log use this same read-only, kept editor-buffer open through cmd.panel_tab.open, with the command record output identity. No second output viewer or handler is added; a live session instead exposes Open in Terminal."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-641. Registration: Plans/UI_Command_Catalog.md#UCC-200 and #UCC-201. Wiring: Plans/Wiring_Matrix.md#WM-091; census: Plans/UI_Wiring_Rules.md#UIW-042. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. Acceptance owner: Plans/Automated_Testing_System.md#ATS-076. Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076).",
       "state_selector": "state.terminal_tab.terminal_mark_menu_open_output.availability",
