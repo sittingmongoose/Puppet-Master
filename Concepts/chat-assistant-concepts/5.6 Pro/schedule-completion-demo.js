@@ -104,7 +104,7 @@ function say(ctx,r){const m=message(r),target=room(r),pl=players.get(r.threadId)
  if(m.state==='sent')return {text:'Done · One scheduled message, in two places: this chat and the room’s discussion, ready for its next round. It went to this exact room and nowhere else.',done:true};
  if(m.state==='held')return {text:'Held: the room can’t take it right now, so the message waits instead of going anywhere else.',done:true};
  return {text:'Scheduled for this room, tomorrow at 9:00. Next: the clock reaches 9:00.'};}
-function guide(ctx){const r=get();if(!r||r.closed||ctx.state.dialog)return '';const m=message(r),target=room(r),ref=m?.attachment_refs[0]?.snapshot_ref;
+function guide(ctx){const r=get();if(!r||r.closed||ctx.state.dialog&&!window.PM56_RECPLAY_HOLD)return '';const m=message(r),target=room(r),ref=m?.attachment_refs[0]?.snapshot_ref;
  let controls='';
  if(r.flow==='folder'){
   if(!m)controls=button('att-upload-folder','Choose a folder')+button('b18c-sample-folder','Load sample folder (fixture)');
@@ -114,7 +114,7 @@ function guide(ctx){const r=get();if(!r||r.closed||ctx.state.dialog)return '';co
  const s=say(ctx,r),text=RP.steady(r,s.text,!!s.done,()=>E.ctx().renderApp()),pl=players.get(r.threadId),end=s.done&&text===s.text;
  /* the one pmx guide look (G-25); the demo controls only once the recording has ended, folded */
  return PM56_SHELL.pmxGuide({key:'b18c-guide',cls:'b18c-guide',attrs:'data-b18c-flow="'+ctx.esc(r.flow)+'"',placement:'dock',caption:'Recorded example · no AI cost',step:ctx.esc(text),
-  extra:(r.note?'<p class="b18-decision" role="status">'+ctx.esc(r.note)+'</p>':'')+(end||window.PM56_RECPLAY_HOLD?'<details class="b18-clock b18c-try"><summary>'+PM56_SHELL.pmxGlyph('chevron-down',13)+'<span>Try it yourself: demo clock and controls</span></summary><div class="b18c-controls">'+controls+'</div></details>':''),
+  extra:(r.note?'<p class="b18-decision" role="status">'+ctx.esc(r.note)+'</p>':'')+(end||window.PM56_RECPLAY_HOLD?'<details class="b18-clock b18c-try"'+(window.PM56_RECPLAY_HOLD?' open':'')+'><summary>'+PM56_SHELL.pmxGlyph('chevron-down',13)+'<span>Try it yourself: demo clock and controls</span></summary><div class="b18c-controls">'+controls+'</div></details>':''),
   actions:end?[{action:'b18c-replay',label:'Replay'}]:[],next:pl?pl.progress():null,close:{action:'b18c-close',label:'Close the example'}});
 }
 E.action('b18c-replay',ctx=>{const r=get();if(r){r.closed=true;const pl=players.get(r.threadId);if(pl)pl.stop();begin(r.flow);}return true;});

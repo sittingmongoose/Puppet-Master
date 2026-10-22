@@ -149,7 +149,8 @@ function say(ctx,r){const m=record(r),b=build(r),pl=players.get(r.threadId);
  return {text:'The next window opened and the same run resumed. The rest of the work is running.'};}
 function controlsTry(ctx,r){return '<details class="b18-clock" '+(r.clockOpen?'open':'')+'><summary>'+PM56_SHELL.pmxGlyph('chevron-down',13)+'<span>Try it yourself: demo clock and controls</span></summary><div class="b18-controls">'+controls(ctx,r)+'</div></details>';}
 E.slot('composerBelow',ctx=>{
- const r=sessions.get(ctx.thread.id);if(!r||r.closed||ctx.state.dialog)return '';
+ /* hidden behind a sheet, but for a harness driving the lab by hand (PM56_RECPLAY_HOLD), as the lab always was */
+ const r=sessions.get(ctx.thread.id);if(!r||r.closed||ctx.state.dialog&&!window.PM56_RECPLAY_HOLD)return '';
  /* a session another example built on (Batch 18's crew example) keeps its own guide text and its controls */
  if(r.instruction){const title=r.guideTitle||'Recurring execution windows';
   return PM56_SHELL.pmxGuide({key:'b18-guide',cls:'b18-guide',attrs:'data-b18-flow="'+ctx.esc(r.flow)+'"',placement:'dock',caption:'Guided example · '+ctx.esc(title)+' · no AI cost',step:ctx.esc(r.instruction),
