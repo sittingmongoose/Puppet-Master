@@ -4,12 +4,18 @@
   const D = window.PM56_DATA;
   const M = window.PM56_MOTION;
   if (!D) throw new Error('PM56_DATA was not loaded.');
+  /* PMConcept7 hosts the chat when pm7-port/js/00-host.js defined window.PM56_HOST (the standalone never does): the
+     assistant pane only, the page's look, Home panel tabs for the editor, PMConcept7's hover tags. Every hosted branch
+     below reads HOSTED, so the standalone behaves exactly as before. */
+  const HOST = window.PM56_HOST || null;
+  const HOSTED = !!HOST;
 
   const clone = (v) => JSON.parse(JSON.stringify(v));
   const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
   const esc = (v='') => String(v).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   /* Stylized hover label (not a native title tooltip). Unique key anchors the card. */
   function hoverAttrs(key, text){
+    if(HOSTED) return ` data-hover-key="${esc(key)}" data-pm-hover-label="${esc(text)}" aria-label="${esc(text)}"`;
     return ` data-hover-key="${esc(key)}" data-hover-tip="${esc(text)}" aria-label="${esc(text)}"`;
   }
   const CAP_HOVER = {goal:'Goal', crew:'Crew', bsd:'Back Seat Driver', context:'Context Lens', eli5:'ELI5'};
@@ -181,6 +187,7 @@
      state (un-starring every model no longer leaves a permanently empty
      picker); this snapshot covers what is left. */
   const FIXTURE0 = {models:clone(D.models), artifacts:clone(D.artifacts)};
+  if(HOSTED){ DEFAULT.editorTabs=[]; DEFAULT.activeEditor=null; DEFAULT.theme=HOST.theme(); DEFAULT.historyMode='closed'; }
 
   let state = clone(DEFAULT);
   let workTimer = null;
@@ -465,7 +472,7 @@
   function activeThread() { return state.threads.find(t => t.id === state.selectedThread) || state.threads[0]; }
   function selectedModel() { return D.models.find(m => m.id === state.model) || D.models[0]; }
   function workStep() { return D.workSteps[clamp(state.work.step,0,D.workSteps.length-1)]; }
-  function isNarrow() { return window.innerWidth < 821; }
+  function isNarrow() { return (HOSTED?HOST.width():window.innerWidth) < 821; }
   function isPhone() { return window.innerWidth < 591; }
   function assistantLayoutWidth() {
     const pane=document.querySelector('.assistant-pane');
@@ -476,6 +483,7 @@
   }
   function activityPinnedInLayout() {
     const gutter=document.body.dataset.phDrawer==='pinned'?Math.min(360,parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-user-w'))||200):0;
+    if(HOSTED) return !!(state.activity.open && state.activity.pinned && !isPhone() && HOST.width()-gutter>=540+(state.activityWidth||280));
     return !!(state.activity.open && state.activity.pinned && !isPhone() && (innerWidth>=821 || innerWidth-gutter>=540));
   }
   function focusActivityControl(selector) {
@@ -491,11 +499,11 @@
   let phoneLayout=isPhone();
   let activityPinLayout=activityPinnedInLayout();
   function savePrefs() {
-    safeStorage.set('pm56-prefs', JSON.stringify({theme:state.theme,historyMode:state.historyMode,historyWidth:state.historyWidth,editorWidth:state.editorWidth,activityWidth:state.activityWidth,model:state.model,effort:state.effort||'',effortChosen:!!state.effort,fast:state.fast,capabilities:state.capabilities}));
+    safeStorage.set(HOSTED?'pm56-hosted-prefs':'pm56-prefs', JSON.stringify({theme:state.theme,historyMode:state.historyMode,historyWidth:state.historyWidth,editorWidth:state.editorWidth,activityWidth:state.activityWidth,model:state.model,effort:state.effort||'',effortChosen:!!state.effort,fast:state.fast,capabilities:state.capabilities}));
     if(window.PM56_NIER_SAVED) window.PM56_NIER_SAVED();   /* NieR Mode's Save signal part (nier-world.js) */
   }
   function loadPrefs() {
-    const raw = safeStorage.get('pm56-prefs'); if (!raw) return;
+    const raw = HOSTED ? safeStorage.get('pm56-hosted-prefs') : safeStorage.get('pm56-prefs'); if (!raw) return;
     try {
       const p = JSON.parse(raw);
       const chosen = !!p.effortChosen;
@@ -505,6 +513,7 @@
     } catch {}
   }
   loadPrefs();
+  if(HOSTED) state.theme=HOST.theme();
 
   function statusLabel(s){ return ({working:'Working',reviewing:'Reviewing',waiting:'Waiting',idle:'Ready',complete:'Complete',blocked:'Blocked',failed:'Failed',paused:'Paused',recovering:'Recovering'}[s] || s); }
   function renderStatus(thread, variant=0) {
@@ -591,6 +600,12 @@
     return `<article class="editor-doc"><h1>${esc(id)}</h1><p>This editor tab demonstrates a durable Puppet Master file-editor destination.</p></article>`;
   }
 
+  /* one editor body for one id (PMConcept7 draws each chat tab in a Home panel; the lab drew only the active one) */
+  function renderEditorBodyFor(id){
+    const prev=state.activeEditor;
+    state.activeEditor=id;
+    try { return renderEditorBody(); } finally { state.activeEditor=prev; }
+  }
   function renderWorkDoc(id){
     const d=parseWorkDoc(id);
     if(d.kind==='search'){
@@ -1455,6 +1470,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return m?`${m}m ${String(sec).padStart(2,'0')}s`:`${s}s`;
   }
   function renderWorkTerminal(cardId, step, row){
+    const slotted=HOSTED?extReplace('workTerminal',{cardId,step,row,cmd:inferShellCmd(step,row)},''):'';
+    if(slotted) return slotted;
     const cmd=inferShellCmd(step, row);
     const raw=row.output!=null?row.output:(row.tag||row.text||'');
     const lines=Array.isArray(raw)?raw:[raw];
@@ -2278,15 +2295,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(a.nodeType!==b.nodeType) return false;
     return a.nodeType!==1 || a.tagName===b.tagName;
   }
+  /* hosted: PMConcept7's hover controller adds data-pm-hover-* and aria-describedby, and moves title into its label */
+  const HOSTED_KEEP_ATTR=/^(data-pm-hover|data-pmh|aria-describedby)/;
   function pmSyncAttrs(el,src){
     const skipValue = el===document.activeElement && ('value' in el);
     const seen=new Set();
     for(const at of src.attributes){
       seen.add(at.name);
       if(skipValue && (at.name==='value'||at.name==='checked')) continue;
+      if(HOSTED && at.name==='title' && el.hasAttribute('data-pm-hover-label') && !el.hasAttribute('title')) continue;
       if(el.getAttribute(at.name)!==at.value) el.setAttribute(at.name,at.value);
     }
-    for(const at of [...el.attributes]) if(!seen.has(at.name)) el.removeAttribute(at.name);
+    for(const at of [...el.attributes]) if(!seen.has(at.name) && !(HOSTED && HOSTED_KEEP_ATTR.test(at.name))) el.removeAttribute(at.name);
     // Form controls keep their live property in step with the attribute,
     // except while the user is actually typing into them.
     if(!skipValue){
@@ -2359,6 +2379,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      own colour work -- arm one for the length of the swap and disarm it. */
   let themeFadeTimer=null;
   function applyTheme(id){
+    if(HOSTED){ state.theme=HOST.theme(); renderApp(); return; }   /* the look is PMConcept7's (Settings, Demo Studio) */
     if(!D.themes.some(t=>t.id===id)) return;
     state.theme=id;
     document.body.classList.add('pm-theming');
@@ -2382,7 +2403,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const moveBefore=new Map(moveTargets.map(el=>{const r=el.getBoundingClientRect();return [el,{x:r.left,y:r.top}];}));
     /* NieR Mode paints Basic: nier.js answers basic-light/dark for a NieR theme and writes PMConcept7's contract
        attributes on <html> in the same call (every other theme id comes back unchanged). */
-    document.body.dataset.theme=window.PM56_NIER_PAINT?window.PM56_NIER_PAINT(state.theme):state.theme;
+    if(HOSTED){ state.theme=HOST.syncTheme(); }
+    else document.body.dataset.theme=window.PM56_NIER_PAINT?window.PM56_NIER_PAINT(state.theme):state.theme;
     const historyPinned=state.historyMode==='pinned'&&!isNarrow();
     const activityPinned=activityPinnedInLayout();
     activityPinLayout=activityPinned;
@@ -2390,11 +2412,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const panelWidth=(historyPinned?Math.min(state.historyWidth,200):0)+(activityPinned?state.activityWidth:0);
     const editorMax=Math.max(220,window.innerWidth-5-panelWidth-360);
     const effectiveEditor=Math.min(state.editorWidth,editorMax/window.innerWidth*100);
-    document.documentElement.style.setProperty('--editor-w',`${effectiveEditor}%`);
-    document.documentElement.style.setProperty('--history-w',`${Math.min(state.historyWidth,200)}px`);
-    document.documentElement.style.setProperty('--activity-w',`${state.activityWidth}px`);
+    const varRoot=HOSTED?HOST.root():document.documentElement;
+    varRoot.style.setProperty('--editor-w',`${effectiveEditor}%`);
+    varRoot.style.setProperty('--history-w',`${Math.min(state.historyWidth,200)}px`);
+    varRoot.style.setProperty('--activity-w',`${state.activityWidth}px`);
     const preTop=keepTopBefore();
-    pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
+    if(HOSTED) pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell" data-pm56-hosted><div class="workspace"><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div></main>`);
+    else pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
     document.getElementById('pmRoot').setAttribute('aria-busy','false');
     const post=snapScroll();
     const flips=flipHeights(flipTargets, flipBefore);
@@ -2409,6 +2433,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     armJumpBottomListener();
     armFollowObserver();
     syncJumpBottom();
+    if(HOSTED) hostedSyncTabs();
     runAfterRender('app',{flips});
   }
 
@@ -3714,13 +3739,14 @@ suggested path                    migration 0043, reversible</div></div></sectio
   function toast(title,detail=''){
     const t={id:uid('toast'),title,detail};state.toast.push(t);renderOverlays();setTimeout(()=>{state.toast=state.toast.filter(x=>x.id!==t.id);renderOverlays();},2800);
   }
-  function openEditor(id){
+  function openEditor(id,o){
     // Artifact aliases and plan tabs address one plan, never two copies.
     const planId=window.PM56_PLANS?.editorPlanId(id);
     if(planId){const existing=state.editorTabs.find(t=>window.PM56_PLANS?.editorPlanId(t)===planId);id=existing||'plan:'+planId;}
+    if(HOSTED){ hostedOpen(id,o); return; }
     state.editorRevealed=true;if(!state.editorTabs.includes(id))state.editorTabs.push(id);state.activeEditor=id;renderApp();
   }
-  function closeEditor(id){ const i=state.editorTabs.indexOf(id);if(state.editorTabs.length===1)state.editorRevealed=false;state.editorTabs=state.editorTabs.filter(x=>x!==id);if(state.activeEditor===id)state.activeEditor=state.editorTabs[Math.max(0,i-1)]||state.editorTabs[0]||null;renderApp(); }
+  function closeEditor(id){ if(HOSTED){ hostedClose(id); return; } const i=state.editorTabs.indexOf(id);if(state.editorTabs.length===1)state.editorRevealed=false;state.editorTabs=state.editorTabs.filter(x=>x!==id);if(state.activeEditor===id)state.activeEditor=state.editorTabs[Math.max(0,i-1)]||state.editorTabs[0]||null;renderApp(); }
   function switchThread(id){
     const t=state.threads.find(x=>x.id===id);if(!t)return;
     const prev=activeThread(); if(prev) state.drafts[prev.id]=state.composer;
@@ -4210,6 +4236,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     o.style.setProperty('--pmx-from-h',`${Math.round(r.height)}px`);
   }
   document.addEventListener('click',e=>{
+    if(HOSTED&&!HOST.inChat(e.target)) return;
     const btn=e.target.closest('[data-action]');
     const sub=e.target.closest('[data-submenu]');
     captureMenuOrigin(btn);
@@ -4468,7 +4495,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     /* Plain-text hover tips first so they still work inside open menus and
        drawers (those surfaces live under state.menu / overlay root). Tips wait
        for deliberate intent (F3-523): 1600ms of residence plus a still pointer. */
-    const tip=e.target.closest('[data-hover-tip]');
+    const tip=HOSTED?null:e.target.closest('[data-hover-tip]');   /* hosted: PMConcept7's hover controller owns text tags */
     if(tip){
       const key=tip.dataset.hoverKey||'';
       /* A press on this anchor dismissed its tip; keep it shut until pointerout. */
@@ -4527,6 +4554,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
      activity-bar.js, so focus there is left entirely alone. */
   document.addEventListener('focusin',e=>{
     if(!e.target||!e.target.closest||e.target.closest('[data-hover-domain]')) return;
+    if(HOSTED) return;   /* PMConcept7's hover controller owns text tags */
     const tip=e.target.closest('[data-hover-tip]');
     clearTimeout(hoverTimer);
     tipPending=null;
@@ -4700,11 +4728,183 @@ suggested path                    migration 0043, reversible</div></div></sectio
     snapshot:()=>({theme:state.theme,recipe:state.recipe,variants:[...state.variants],thread:state.selectedThread,work:{...state.work},works:clone(state.works),decision:state.decision?.type||null,activity:clone(state.activity)})
   };
 
+
+  /* ---- Hosted in PMConcept7 (window.PM56_HOST, pm7-port/js/00-host.js). The lab's editor pane is the page's Home
+     panels: openEditor(id) opens or reveals one Home tab whose body the chat draws (renderEditorBodyFor), closeEditor
+     closes it, and the panels' 'activate' and 'close' events keep state.editorTabs / activeEditor / editorRevealed
+     true to what is on screen, so the run cards ("Deciding in the panel beside the chat") and every module that reads
+     them see the panels. A demo seed that writes state.editorTabs directly is followed after its render. ---- */
+  let hostedTabs=new Set();       /* chat ids open as Home tabs */
+  let hostedSyncing=false;
+  /* the ids the chat opened, so a reload gives back the chat's body to its own restored tabs and never to the
+     panels' (a file the panels opened stays the panels' editor) */
+  const HOSTED_TABS_KEY='pm56-hosted-tabs';
+  function hostedSaveTabs(){ safeStorage.set(HOSTED_TABS_KEY, JSON.stringify([...hostedTabs])); }
+  function hostedSavedTabs(){ try { const v=JSON.parse(safeStorage.get(HOSTED_TABS_KEY)||'[]'); return Array.isArray(v)?v.map(String):[]; } catch(e){ return []; } }
+  function hostedOpen(id,o){
+    o=o||{};
+    const ev=o.event||(typeof window.event!=='undefined'?window.event:null);
+    if(!state.editorTabs.includes(id)) state.editorTabs.push(id);
+    hostedTabs.add(id); hostedSaveTabs();
+    state.editorRevealed=true;
+    if(!o.background) state.activeEditor=id;
+    hostedSyncing=true;
+    try { HOST.openTab(id,{label:editorTabLabel(id),by:o.by||'user',background:o.background,event:ev&&ev.type&&/click|key|pointer|mouse/.test(ev.type)?ev:null,mode:o.mode,line:o.line,where:o.where}); }
+    finally { hostedSyncing=false; }
+    renderApp();
+  }
+  function hostedForget(id){
+    hostedTabs.delete(id); hostedSaveTabs();
+    const i=state.editorTabs.indexOf(id);
+    if(i>=0) state.editorTabs.splice(i,1);
+    if(state.activeEditor===id){ const a=window.PM_HOME&&PM_HOME.active&&PM_HOME.active(); state.activeEditor=a&&state.editorTabs.includes(a.tabId)?a.tabId:(state.editorTabs[Math.max(0,i-1)]||state.editorTabs[0]||null); }
+    state.editorRevealed=state.editorTabs.length>0;
+  }
+  function hostedClose(id){
+    hostedSyncing=true;
+    let closed=false;
+    try { closed=HOST.closeTab(id); } finally { hostedSyncing=false; }
+    if(!closed||!HOST.isOpen(id)){ hostedForget(id); renderApp(); }
+  }
+  /* after each render: tabs a seed dropped from state.editorTabs close, ids a seed added open in the background,
+     and the open chat tab bodies repaint */
+  function hostedSyncTabs(){
+    if(hostedSyncing) return;
+    hostedSyncing=true;
+    try {
+      let changed=false;
+      for(const id of [...hostedTabs]){ if(!state.editorTabs.includes(id)){ hostedTabs.delete(id); changed=true; if(HOST.isOpen(id)) HOST.closeTab(id); } }
+      for(const id of state.editorTabs){ if(!hostedTabs.has(id)){ hostedTabs.add(id); changed=true; if(!HOST.isOpen(id)) HOST.openTab(id,{label:editorTabLabel(id),background:id!==state.activeEditor,by:'user'}); } }
+      if(changed) hostedSaveTabs();
+    } catch(err){ console.error('[pm56] tab sync failed',err); }
+    finally { hostedSyncing=false; }
+    HOST.repaintTabs();
+  }
+  function hostedPaintBody(el,id){
+    if(!el) return;
+    pmPatch(el,renderEditorBodyFor(id));
+    runAfterRender('editor',{editorId:id,el});
+  }
+  function chatOwnsId(id){
+    if(!id) return false;
+    if(hostedTabs.has(id)||state.editorTabs.includes(id)) return true;
+    if(window.PM56_PLANS?.editorPlanId(id)) return true;
+    if(D.artifacts.some(a=>a.id===id)||D.subagents.some(a=>`thread-${a.id}`===id)) return true;
+    if(/^(file|search|link|mcp|app|work-record|teach|memory|revert|debug|lens-source|lens-effective|wonderer|wonder-source|deep-discovery|collab-run|crew-work|review|room|brainstorm|review-evidence|brainstorm-evidence|artifact-revision):/.test(id)) return extReplace('editorTabLabel',{editorId:id},'')!==''||editorTabLabel(id)!=='Untitled'||/^(file|search|link|mcp|app):/.test(id);
+    return false;
+  }
+  function hostedModalOpen(){ return !!(state.menu||state.dialog||state.context.details||document.querySelector('#pmOverlayRoot .pmx-sheet')); }
+  function hostedDismissOutside(e){
+    if(state.menu&&!(e.target&&e.target.closest&&e.target.closest('.overlay-menu,.lens-dock'))) closeMenu();
+  }
+  if(HOSTED){
+    HOST.bind({
+      paintBody:hostedPaintBody, label:editorTabLabel, isArtifact:id=>D.artifacts.some(a=>a.id===id),
+      modalOpen:hostedModalOpen, dismissOutside:hostedDismissOutside, state:()=>state, render:()=>renderApp()
+    });
+    HOST.onTheme(()=>{ state.theme=HOST.theme(); renderApp(); });
+    const wire=()=>{
+      const H=window.PM_HOME;
+      if(!H||!H.on) return;
+      /* tabs restored from the saved layout: the chat draws the ones it knows */
+      const mine=new Set(hostedSavedTabs());
+      try { (H.tabs?H.tabs():[]).forEach(t=>{ if(mine.has(t.tabId)&&chatOwnsId(t.tabId)){ hostedTabs.add(t.tabId); if(!state.editorTabs.includes(t.tabId)) state.editorTabs.push(t.tabId); HOST.adopt(t.tabId); } }); } catch(err){ console.error('[pm56] restoring chat tabs failed',err); }
+      state.editorRevealed=state.editorTabs.length>0;
+      H.on('close',e=>{ if(hostedSyncing||!e||!hostedTabs.has(e.tabId)) return; hostedForget(e.tabId); renderApp(); });
+      H.on('activate',e=>{ if(hostedSyncing||!e||!hostedTabs.has(e.tabId)) return; if(state.activeEditor!==e.tabId){ state.activeEditor=e.tabId; state.editorRevealed=true; renderApp(); } });
+      /* the chat column's surface (CONTRACT 6.1): History, compose, reveal; the stand-in answers while it is on */
+      /* the stand-in registers its surface when the panels finish booting (their 'ready'), which can come after this */
+      claimSurface();
+      try { if(window.PMW&&PMW.bus&&PMW.bus.on) PMW.bus.on('ready',claimSurface); } catch(err){}
+      renderApp();
+    };
+    if(window.PM_HOME&&PM_HOME.ready) PM_HOME.ready(()=>setTimeout(wire,0)); else setTimeout(wire,0);
+  }
+  let hostedSurface=null;
+  function claimSurface(){
+    const SC=window.PMW&&PMW.chatCol;
+    if(!SC||(hostedSurface&&SC.surface===hostedSurface)) return;
+    const standIn=()=>!!(window.PMW&&PMW.standIn&&PMW.standIn.isOn&&PMW.standIn.isOn());
+    const prev=SC.surface;
+    hostedSurface={
+      drawsHistory:()=>standIn()?!!(prev&&prev.drawsHistory&&prev.drawsHistory()):false,
+      shown:()=>standIn()?!!(prev&&prev.shown&&prev.shown()):HOST.shown(),
+      compose:text=>standIn()&&prev&&prev.compose?prev.compose(text):hostedCompose(text),
+      reveal:o=>standIn()&&prev&&prev.reveal?prev.reveal(o):hostedReveal(o)
+    };
+    SC.surface=hostedSurface;
+  }
+  function hostedCompose(text){
+    text=String(text==null?'':text);
+    const tt=text.trim();
+    const cur=state.composer||'';
+    if(tt) state.composer=!cur.trim()?text:(cur.replace(/\s+$/,'').slice(-tt.length)===tt?cur:cur.replace(/\s+$/,'')+'\n'+text);
+    state.drafts[state.selectedThread]=state.composer;
+    renderApp();
+    requestAnimationFrame(()=>{ const el=document.querySelector('#pmRoot [data-input="composer"]'); if(el){ try{ el.focus({preventScroll:true}); el.setSelectionRange(el.value.length,el.value.length); }catch(e){} } });
+    syncSendStop();
+    return {ok:true,surface:'chat56'};
+  }
+  function hostedReveal(o){
+    o=o||{};
+    let thread=null;
+    if(o.thread!=null){ const k=String(o.thread).toLowerCase(); const t=state.threads.find(x=>x.id===o.thread||String(x.title||'').toLowerCase()===k); if(t){ thread=t.id; if(state.selectedThread!==t.id) switchThread(t.id); } }
+    let found=false;
+    if(o.messageId){
+      const el=document.querySelector(`#pmRoot [data-message-id="${CSS.escape(String(o.messageId))}"]`);
+      if(el){ found=true; el.scrollIntoView({block:'center',behavior:'smooth'}); el.classList.add('pm56-revealed'); setTimeout(()=>el.classList.remove('pm56-revealed'),1600); }
+      else toast('That message is not in this demo');
+    }
+    return {ok:true,found,thread:thread||state.selectedThread};
+  }
+
   // Initial full render and a real, one-shot working sequence so the first open is not static.
   renderApp(false);
   scrollTranscriptToEnd(true);
   finishEntrances();
   setTimeout(()=>{if(state.demoAutoStart&&!state.work.started&&state.selectedThread==='query')startWorking(true);},250);
+  if(HOSTED){
+    /* the chat's handle for the port's own scripts (pm7-port/js/50-99) and PMConcept7's Demo Studio and tests */
+    const families=()=>{
+      const names=['Assistant body & composer','Thread history','Working Animation','Chat Activity Bar','Activity Detail','Transcript','Question & decision'];
+      const opts=[
+        ['PM7 Refined','Floating Focus','Split Command','Console Dense','Reading First','Operations Dock','Ribbon Composer','Layered Studio'],
+        ['PM7 Pinned','Status Rail','Worktree Branches','Dense Operations','Grouped Recency','Preview Rows','Minimal Reading','Command History'],
+        D.workingTakes.slice(),
+        ['Extended PM7','Segmented Pill','Icon Dock','Domain Grid','Capsule Stack','Technical Strip','Pulse Rail','Minimal Command'],
+        ['Accordion Inspector','Status Board','Goal Tree','Split Master/Detail','Agent Board','File Ledger','Live Work Feed','Overview Dashboard'],
+        D.transcriptTakes.slice(),
+        ['Stable Card','Morphing Composer','Anchored Sheet','Side Inspector','Step Sequence','Technical Decision','Queue Stack','Evidence Split','Ask Card']
+      ];
+      return names.map((name,i)=>({name,family:i,options:opts[i].slice(),current:state.variants[i],set:'PM56_DEMO.setVariant('+i+', optionIndex)'}));
+    };
+    const APP={
+      ctx:(extra)=>EXT.ctx(extra),
+      act:(name,data,opts)=>{
+        const btn=document.createElement('button'); btn.dataset.action=name;
+        Object.entries(data||{}).forEach(([k,v])=>{ btn.dataset[k]=String(v); });
+        (HOST.overlay()||document.body).appendChild(btn); btn.hidden=true;
+        try { btn.click(); } finally { btn.remove(); }
+        return true;
+      },
+      render:()=>renderApp(), renderOverlays:()=>renderOverlays(), savePrefs:()=>savePrefs(),
+      openEditor:(id,o)=>openEditor(id,o), closeEditor:(id)=>closeEditor(id),
+      editorTabLabel:(id)=>editorTabLabel(id), renderEditorBodyFor:(id)=>renderEditorBodyFor(id),
+      demoTriggerGroups:()=>demoTriggerGroups(), demoFamilies:families,
+      activeThread:()=>activeThread(), switchThread:(id)=>switchThread(id), compose:hostedCompose, reveal:hostedReveal,
+      closeMenu:()=>closeMenu(), openMenu:(t,a,x)=>openMenu(t,a,x), toast:(t,d)=>toast(t,d),
+      tabs:()=>[...hostedTabs], ownsId:chatOwnsId
+    };
+    Object.defineProperty(APP,'state',{get:()=>state,enumerable:true});
+    window.PM56_APP=APP;
+    window.PM56_PORT=Object.assign(window.PM56_PORT||{},{
+      ready:true,
+      open:(id,o)=>{ o=o||{}; const agent=/^agent:/.test(o.by||''); openEditor(id,{by:o.by||'user',background:o.background!=null?!!o.background:agent}); return id; },
+      close:(id)=>closeEditor(id)
+    });
+    HOST.endLoad();
+    try { window.dispatchEvent(new CustomEvent('pm56:ready',{detail:{app:APP}})); } catch(e) {}
+  }
 })();
 
 

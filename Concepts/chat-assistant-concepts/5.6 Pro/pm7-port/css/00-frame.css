@@ -1,0 +1,86 @@
+/* pm7-port/css/00-frame.css: the frame the chat sits in when PMConcept7 hosts it (foundation lane). Written already
+   scoped: every rule names .pm56-frame, .pm56-host, #pmw-chat56 or #chatPanel. The scoped chat CSS comes before this
+   file, so ties go to these rules.
+
+   The column: div.pm56-frame#pmw-chat56 is a layer inside the page's own #chatPanel (as the stand-in was: absolutely
+   filling it, never moving it), the size container pm56host; div.pm56-host#pmRoot fills it. The overlay root
+   div.pm56-host#pmOverlayRoot is body-level and fixed, transparent and click-through except for what the chat puts in
+   it. Tab bodies: div.pm56-frame.pm56-tab fills the Home tab body. */
+
+#chatPanel > #pmw-chat56.pm56-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 39;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+.pm56-frame {
+  container: pm56host / size;
+  box-sizing: border-box;
+}
+#pmw-chat56[hidden] { display: none !important; }
+/* the page's own chat content under the layer is hidden while the 5.6 chat shows (visibility only: nothing moves, and
+   keyboard focus cannot wander into it); the Guided Tour teaches the page's own chat, so the tour lifts this, and the
+   stand-in (chat.standIn on) takes the column instead */
+html:not([data-o55-tour]) #chatPanel[data-pm56="on"]:not([data-pmw-sc="on"]) > :not(#pmw-chat56):not(#pmw-chat) { visibility: hidden !important; }
+html[data-o55-tour] #pmw-chat56,
+#chatPanel[data-pmw-sc="on"] > #pmw-chat56 { display: none !important; }
+html[data-o55-tour] #pmOverlayRoot.pm56-host > * { display: none !important; }
+
+/* the host: the chat's html/body rules land here (scoped CSS), so it is the chat's canvas */
+#pmRoot.pm56-host,
+.pm56-frame > .pm56-tab-host.pm56-host {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* the chat's body::before / ::after (Glass's mesh, Retro's scanlines) are fixed to the window in the standalone; in a
+   host they stay inside it */
+#pmRoot.pm56-host::before, #pmRoot.pm56-host::after,
+.pm56-frame > .pm56-tab-host.pm56-host::before, .pm56-frame > .pm56-tab-host.pm56-host::after {
+  position: absolute !important;
+  inset: 0 !important;
+}
+/* the overlay root is the window-level layer for menus, sheets, hover cards and toasts: transparent and
+   click-through itself (its children take pointers as in the standalone). z ladder: above the Home panels' portals
+   (about 10080), below the Guided Tour (2147481500), the Home overlay (2147481800) and the hover tags (2147483000) */
+#pmOverlayRoot.pm56-host {
+  position: fixed !important;
+  inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  background: transparent !important;
+  pointer-events: none;
+  z-index: 2147481400 !important;
+}
+#pmOverlayRoot.pm56-host::before, #pmOverlayRoot.pm56-host::after { content: none !important; display: none !important; }
+
+/* hosted: the assistant pane only (no lab header, editor pane or status bar) */
+#pmRoot.pm56-host > .pm-shell[data-pm56-hosted] {
+  grid-template-rows: minmax(0, 1fr);
+}
+#pmRoot.pm56-host > .pm-shell[data-pm56-hosted] > .workspace {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+}
+#pmRoot.pm56-host > .pm-shell[data-pm56-hosted] > .workspace > .assistant-pane {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+/* tab bodies: the chat's editor body fills the Home tab body and scrolls inside it */
+.pm56-frame.pm56-tab {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.pm56-frame.pm56-tab > .pm56-tab-host.pm56-host > .editor-body.pm56-tab-body {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+}

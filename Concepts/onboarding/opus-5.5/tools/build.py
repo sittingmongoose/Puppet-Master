@@ -324,6 +324,8 @@ def lint_sources() -> list[str]:
     # The Home layer's sources (Concepts/home-redesign/src): emoji, :has(), coloured side borders, pills, capsule radii,
     # viewport-width @media, window-size reads, banned copy, a top-level name declared twice in one scope.
     problems.extend(_home().lint())
+    # The 5.6 Pro chat port's own sources (pm7-port/css, pm7-port/js): emoji, pills, side stripes, unscoped selectors.
+    problems.extend(_chat56().lint())
     return problems
 
 
@@ -386,6 +388,16 @@ def _home():
     return home_layer
 
 
+def _chat56():
+    """The 5.6 Pro chat layer (Concepts/chat-assistant-concepts/5.6 Pro/pm7-port/tools/chat56_layer.py: the chat mounted
+    in #chatPanel, its CSS scoped under .pm56-host), imported when first needed."""
+    tools = str(CONCEPTS / 'chat-assistant-concepts' / '5.6 Pro' / 'pm7-port' / 'tools')
+    if tools not in sys.path:
+        sys.path.insert(0, tools)
+    import chat56_layer  # noqa: E402
+    return chat56_layer
+
+
 def _layer(folder: str, module: str):
     """A page layer's build tool (Concepts/<folder>/opus-5.5/tools/<module>.py), imported when first needed."""
     tools = str(CONCEPTS / folder / 'opus-5.5' / 'tools')
@@ -441,6 +453,11 @@ def build_text() -> str:
     #    and the terminal between HOME:BODY markers before </body>, plus guarded app JS patches. Its three NieR lists
     #    are registry contributions, emitted below; it anchors after the O55 and rail blocks, so it runs after them.
     text, SETTINGS_NOTES['home'] = _home().apply(text, need)
+    # 6b. The 5.6 Pro chat (D27, the port of 2026-10-22): chat56_layer.apply() mounts the chat in the page's #chatPanel in
+    #    place of the Home layer's stand-in, its stylesheet (read in 5.6 Pro/build.py's order, every rule scoped under
+    #    .pm56-host) between C56:CSS markers before </head> and its scripts between C56:BODY markers before </body>,
+    #    after the Home block. It runs after Home (the chat opens Home panel tabs) and before Liquid Glass.
+    text, SETTINGS_NOTES['chat56'] = _chat56().apply(text, need)
     # 6. Liquid Glass and the wallpapers (Glass's publish: the coordinator's plan of 2026-10-14, go 2026-10-15, after the
     #    final review approved Glass round 3). Glass's layer (Concepts/liquid-glass/opus-5.5: glass.css with its prints,
     #    glass.js) and then the wallpapers package's (Concepts/wallpapers/opus-5.5: every look's prints, the catalog, the
@@ -588,7 +605,8 @@ def lint_liquid_glass_slots() -> list[str]:
 def check(built: str) -> list[str]:
     warn_inert_sources()
     problems = (lint_liquid_glass_slots() + lint_sources() + syntax_check(built) + _rail().published_problems(built)
-                + _glyphs().published_problems(built) + _home().published_problems(built))
+                + _glyphs().published_problems(built) + _home().published_problems(built)
+                + _chat56().published_problems(built))
     for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                                   'pm7-onboarding-css', 'pm7-guided-tour-css', 'id="pm7-settings-data"',
                                   "'.pm7gt-callout", ".closest('.pm7gt')",
@@ -662,7 +680,7 @@ def main() -> int:
         print('check', 'ok' if not problems else f'failed ({len(problems)})')
         return 0 if not problems else 1
     problems = (lint_sources() + syntax_check(built) + _rail().published_problems(built) + _glyphs().published_problems(built)
-                + _home().published_problems(built))
+                + _home().published_problems(built) + _chat56().published_problems(built))
     if problems:
         for p in problems:
             print('LINT:', p)

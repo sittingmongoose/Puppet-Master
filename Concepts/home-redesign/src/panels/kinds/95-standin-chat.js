@@ -31,7 +31,9 @@ var SC_KEY = 'chat.standIn';
 var THREAD = 'Query performance';
 var CWD = '~/tastebook/api';
 
-PM_HOME.settings.register('chat', { standIn: { type: 'boolean', label: 'Stand-in chat' } }, { standIn: true });
+/* Off by default since the 5.6 Pro chat port (2026-10-22, D27): the 5.6 chat takes the column; the stand-in stays built
+   for the Home harnesses and the Demo Studio's Workspace toggle, and replaces the 5.6 chat while it is on. */
+PM_HOME.settings.register('chat', { standIn: { type: 'boolean', label: 'Stand-in chat' } }, { standIn: false });
 
 /* ---- small DOM helper (this file runs in its own scope) ---- */
 function h(tag, attrs, kids) {
