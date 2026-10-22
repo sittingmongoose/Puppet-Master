@@ -153,10 +153,15 @@
       .catch(function () { /* decoration only */ })
       .then(function () { running = false; once(); });
   }
+  /* the last pick wins (2026-10-22): a pick made while the moment plays (the theme list keeps the keyboard; only presses
+     are held under the cover) is the one painted when the moment repaints, never overwritten by the earlier pick */
+  var latest = null;
   function switchTo(id) {
     var want = isNier(id);
+    if (running && latest !== null) { latest = id; return Promise.resolve(true); }
     if (want === painted || !transition || running) return Promise.resolve(pick(id));
-    return runTransition(want, want ? 'on' : 'off', function () { pick(id); });
+    latest = id;
+    return runTransition(want, want ? 'on' : 'off', function () { var x = latest; latest = null; pick(x); });
   }
   /* Demo Studio's theme list (app.js handleInput, k === 'theme'): a pick that crosses NieR Mode's edge is taken here in
      the capture phase and run through the transition; every other pick goes on to app.js unchanged. */
