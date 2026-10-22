@@ -7336,7 +7336,7 @@
     },
     "catalog.agents_open_thread": {
       "ui_element_id": "catalog.agents_open_thread",
-      "ui_location": "Left rail > Agents panel > Agent row expander > Open Agent Thread",
+      "ui_location": "Left rail > Agents > Open Agent Thread; Assistant chat > Activity Detail > Open live transcript, live child card, and working-activity child openers",
       "ui_command_id": "cmd.agents.open_thread",
       "handler_location": "handlers::agents::open_thread",
       "expected_event_types": [
@@ -59758,8 +59758,7 @@
         "cmd.terminal.show dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.terminal.show must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.terminal.show must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "Focuses the same live session's tab wherever it is and never collapses into open; it adds no tab and emits no event (UCC-201).",
-        "Hosted chat port (WM-096): Show Terminal keeps cmd.terminal.show and focuses the exact live session tab wherever it is, without inventing another open command."
+        "Focuses the same live session's tab wherever it is and never collapses into open; it adds no tab and emits no event (UCC-201)."
       ],
       "evidence_required": "Production wiring contract for cmd.terminal.show; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.terminal_show.availability",

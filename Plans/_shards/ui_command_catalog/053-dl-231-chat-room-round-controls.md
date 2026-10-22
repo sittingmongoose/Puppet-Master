@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16245-L16398
+Source lines: L16245-L16401
 
-Source SHA256: `0a172fd8f9f45a7ff4234b424975eaede77e03214a64ebf60f1e3489e30bb7c3`
+Source SHA256: `c2c4374604c000ca1f5245d2bb6dfb179000bf689f2d611eab75afd3e1276949`
 
 ---
 
@@ -115,12 +115,15 @@ canonical_text: >-
   command. ELI5's per-chat override remains cmd.chat.eli5.set; All chats and Project default are
   Settings transactions over general.interaction.eli5-default. Working style, master sound and naming
   use the same Settings preview/apply transaction as their Settings rows, including when changed from
-  chat; no chat-only mute, title-policy or take command is minted. Open in Terminal, Show Terminal,
-  Focus and Rerun in Terminal retain UCC-201's identities and exact-session behavior; Insert command
-  and retained-output candidates remain unavailable until their existing admission. Thought Stream uses
-  the existing Settings transaction over general.interaction.thought-stream (SSYS-055), with no new
-  command identity; arbitrary Demo Studio family takes receive no product command or production row. Candidate exclusions for DL-218's Check It and Grill Me controls remain unchanged by
-  this port; the concept proving a click is not command admission.
+  chat; no chat-only mute, title-policy or take command is minted. The compact command card offers
+  only Open in Terminal for a live session, View output when no session remains, and Rerun in Terminal
+  under ACD-502. These retain UCC-201's identities and exact-session behavior. Show Terminal and Focus
+  remain their existing other-surface commands; the port adds no compact-card producers for them;
+  Insert command and retained-output candidates remain unavailable until their existing admission.
+  Thought Stream uses the existing Settings transaction over general.interaction.thought-stream
+  (SSYS-055), with no new command identity; arbitrary Demo Studio family takes receive no product
+  command or production row. Candidate exclusions for DL-218's Check It and Grill Me controls remain
+  unchanged by this port; the concept proving a click is not command admission.
 gui_related: true
 gui_classification_reason: Maps hosted chat controls to existing commands, Settings transactions and local actions.
 split_recommended: false

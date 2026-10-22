@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27915-L28085
+Source lines: L27934-L28110
 
-Source SHA256: `836e33d6b37f11dcffb74b4ec9157744ae5b05b4a646b23d21f4f2a61d69cf94`
+Source SHA256: `e0b046b393e91a8f54710617301fe908beaa94ecbb1c5cb3f742b21f427f5d17`
 
 ---
 
@@ -138,7 +138,11 @@ canonical_text: >-
   projections without making those global names product APIs. DL-218's Wonderer and Grill Me behavior
   and DL-231's automatic Chat Room rounds remain intact. All demonstration launches and family mixers
   are sections of F3-649's one Demo Studio. The port's screenshots, fixtures and browser checks remain
-  concept evidence; unmet native requirements stay owed.
+  concept evidence; unmet native requirements stay owed. In the concept, Demo Studio may show the
+  off-by-default stand-in instead for panel-opening examples; launching a chat example switches it off
+  and restores the hosted assistant. Only one conversation surface is visible at a time. Demo fixture
+  workspaces may use ordinary Home tabs under the concept-only disposition of ACD-500, never native
+  kinds or product routes.
 gui_related: true
 gui_classification_reason: Defines hosted conversation presentation, opened surface kinds, shared preferences and focus behavior.
 split_recommended: false
@@ -166,6 +170,8 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
   - "/mnt/Cursor/share/puppet-master/2026-10-20-wonderer-grill-me-concept/PORT-CARRY-OVER.md, SHA-256 67195793eeda6a463b5e2da60e7ae294ae62ef435a4a89e56fcd3e25587884fa (accepted layout and styling repairs)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/lead-checkpoint-20261022-2155.md, SHA-256 9063fdc033b2aac0d2558eba612d2f0ab33b032f0a0df72c848c21112ee72e98 (lead checkpoint; concept integration and rulings, not native proof)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/demo-inventory-20261022.md, SHA-256 3f1f8f372c1ec03a047cd6936853f14f3b745b056791bd2f7a30d929a00e60cd (concept-only Studio inventory, not product counts or native APIs)"
 preserved_exact_tokens:
   - "Demo Studio"
   - "Keep open"

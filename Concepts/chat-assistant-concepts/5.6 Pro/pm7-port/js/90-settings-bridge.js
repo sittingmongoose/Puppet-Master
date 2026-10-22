@@ -19,6 +19,49 @@
   const ctx = () => A.ctx();
   const features = () => F?.state?.();
   function projectId(c) { return E5?.project?.(c.thread) || c.thread?.projectId || c.thread?.project_id || 'concept:default-project'; }
+  function bindUnscopedThreads(c) {
+    const pid = B.project();
+    if (!pid) return;
+    // The ordinary fixture/new-thread path has no project field. Bind it once
+    // to the host project; preserve every explicit project and demo identity.
+    (c.state.threads || []).forEach(t => {
+      if (!t.projectId && !t.project_id) t.projectId = pid;
+    });
+  }
+  function projection(c) { return B.eli5Project(projectId(c)); }
+  function paintPreferenceCopy(c) {
+    const type = c.state.dialog?.type;
+    if (type !== 'eli5-style' && type !== 'af-settings') return;
+    const sheet = document.querySelector('#pmOverlayRoot .pmx-sheet');
+    if (!sheet) return;
+    const example = !!c.thread?.eli5Example;
+    const kept = !example && projection(c).ok;
+    const replacements = new Map([
+      ['Explain Terms Everywhere', 'Session-only in this concept'],
+      ['All chats is the Explain Terms Everywhere setting.', kept
+        ? "All chats lasts until reload. This project's default is kept in Settings."
+        : 'All chats and this example project last until reload.'],
+      ['Demo: resets when you reload.', kept
+        ? 'Project default is kept. All chats and this chat reset on reload.'
+        : 'These example choices reset on reload.']
+    ]);
+    // This is hosted copy projection only. Preserve controls, focus, keys and
+    // the standalone renderer; change only its now-inaccurate text nodes.
+    const walker = document.createTreeWalker(sheet, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const replacement = replacements.get(n.nodeValue);
+      if (replacement) n.nodeValue = replacement;
+    }
+    sheet.querySelectorAll('[data-hover-tip], [data-pm-hover-detail]').forEach(el => {
+      for (const attr of ['data-hover-tip', 'data-pm-hover-detail']) {
+        const text = el.getAttribute(attr);
+        if (text?.includes('This is the Explain Terms Everywhere setting.')) {
+          el.setAttribute(attr, text.replace('This is the Explain Terms Everywhere setting.',
+            'This All chats choice resets when you reload the concept.'));
+        }
+      }
+    });
+  }
   function snapshot() {
     const c = ctx(), f = features();
     return {
@@ -36,8 +79,9 @@
   }
   function applySettings(force) {
     if (projecting) return;
-    const c = ctx(), f = features(), values = B.values(), changed = B.changed();
+    const c = ctx(), f = features(), values = B.values();
     if (!c?.state) return;
+    bindUnscopedThreads(c);
     force = force || appState !== c.state;
     appState = c.state;
     const diff = key => force || values[key] !== applied[key];
@@ -61,10 +105,10 @@
       }
       // The existing Settings adapter is project-only. Preserve the separate
       // session-only All chats layer; an unchanged project row means inherit.
-      const pid = projectId(c), want = changed[I.eli5] ? !!values[I.eli5] : null;
+      const pid = projectId(c), own = projection(c);
       const resolved = E5?.resolve?.(c.thread?.id);
-      if (setProject && resolved?.ok && resolved.projectDefault !== want) {
-        setProject(pid, want); dirty = true;
+      if (!c.thread?.eli5Example && own.ok && setProject && resolved?.ok && resolved.projectDefault !== own.override) {
+        setProject(pid, own.override); dirty = true;
       }
       applied = { ...values };
       last = snapshot();
@@ -77,6 +121,7 @@
     if (appState !== ctx().state) { applySettings(true); return; }
     const c = ctx(), now = snapshot(), before = last;
     if (!before) { last = now; return; }
+    if (now.thread !== before.thread) { applySettings(false); return; }
     const sheet = c.state.dialog?.type;
     // These are the actual preference sheets. Recipe/family demo changes never
     // write a product preference, including a working take chosen for a demo.
@@ -90,7 +135,12 @@
       }
     }
     if (sheet === 'eli5-style' && now.thread === before.thread && now.project !== before.project) {
-      if (!saveOne(I.eli5, now.project)) { setProject?.(projectId(c), before.project); repaint(); }
+      if (c.thread?.eli5Example) { last = now; return; }
+      if (projectId(c) !== B.project() || !saveOne(I.eli5, now.project)) {
+        setProject?.(projectId(c), before.project);
+        if (projectId(c) !== B.project()) c.toast('Open this chat’s project', 'Change its default from that project’s Settings.');
+        repaint();
+      }
     }
     last = snapshot();
   }
@@ -106,6 +156,7 @@
   let newThreadPending = false;
   E.chainAction('new-thread', () => { newThreadPending = true; return false; });
   E.slot('afterRender', (c, info) => {
+    paintPreferenceCopy(c);
     if (info?.phase !== 'app') return '';
     if (newThreadPending) {
       newThreadPending = false;

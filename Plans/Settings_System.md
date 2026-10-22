@@ -4027,20 +4027,21 @@ canonical_text: >-
   Home layout record. The current History pin uses ui.chat_column.pin_history; Keep the chat open in
   narrow windows uses ui.chat_column.keep_open, and chat width uses
   cmd.workspace_layout.resize_surface. None is a Settings row. Activity Detail starts pinned when
-  entered and explicit Unpin is temporary (APR-001); no Activity pin default is added. The host's
+  entered and explicit Unpin is temporary (ACD-453); no Activity pin default is added. The host's
   look, fonts, Reduce animations and NieR settings reach the chat directly. A last-used chat model,
   effort or capability selection never becomes a global Settings default merely because the standalone
-  concept saved it. The scripted stand-in remains built but off by default for Home harnesses,
-  never a hosted conversation choice or an inventory row. Native Settings scope, validation, preview/apply, read-only refusal and storage requirements
-  remain in force; the HTML bridge is a concept projection only.
-  Added by the lead's ruling of 2026-10-22 under Jared's port brief (DL-232):
-  general.interaction.thought-stream is global and display-only, Auto (While it thinks) or Expanded (Always open),
-  default Auto; Settings and New chat defaults edit the same row. It controls disclosure of reasoning supplied
-  by the model and never changes a reply or invents reasoning. The current-chat ELI5 control is shown only in
-  the chat sheet, not on the Settings page or its search; its general.interaction.chat-eli5 inventory identity,
-  run scope and override contract remain. The concept's existing project-only Settings adapter cannot prove
-  separate application and project persistence: the renderer keeps these layers separate and discloses any
-  session-only layer instead of creating a shadow store or claiming native scope support.
+  concept saved it. The scripted stand-in remains built but off by default for Home harnesses, never a
+  hosted conversation choice or an inventory row. Native Settings scope, validation, preview/apply,
+  read-only refusal and storage requirements remain in force; the HTML bridge is a concept projection
+  only. Added by the lead's ruling of 2026-10-22 under Jared's port brief (DL-232):
+  general.interaction.thought-stream is global and display-only, Auto (While it thinks) or Expanded
+  (Always open), default Auto; Settings and New chat defaults edit the same row. It controls
+  disclosure of reasoning supplied by the model and never changes a reply or invents reasoning. The
+  current-chat ELI5 control is shown only in the chat sheet, not on the Settings page or its search;
+  its general.interaction.chat-eli5 inventory identity, run scope and override contract remain. The
+  concept's existing project-only Settings adapter cannot prove separate application and project
+  persistence: the renderer keeps these layers separate and discloses any session-only layer instead
+  of creating a shadow store or claiming native scope support.
 gui_related: true
 gui_classification_reason: Places and binds visible hosted chat preferences while keeping layout and chat-scoped controls separate.
 split_recommended: false
@@ -4067,6 +4068,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-185"
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/lead-checkpoint-20261022-2155.md, SHA-256 9063fdc033b2aac0d2558eba612d2f0ab33b032f0a0df72c848c21112ee72e98 (lead checkpoint; concept integration and rulings, not native proof)"
 preserved_exact_tokens:
   - "general.interaction.thought-stream"
   - "general.interaction.working-activity-style"
@@ -4078,7 +4080,9 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not copy the current chat mode, model, effort or capability values into global defaults."
   - "Do not make a Settings edit pin History in a workspace already open."
-compatibility_only_notes: []
+compatibility_only_notes:
+  - "Hosted concept limitation, 2026-10-22 (lead ruling): its existing Settings adapter persists project values only. All chats ELI5 remains a separate session-only value; the application/project/current-chat product resolution and persistence requirements are unchanged."
+  - "Hosted concept limitation, 2026-10-22 (lead ruling): the Thought Stream row and New chat defaults share the stored preference and preview. Replies here do not show live thinking yet; live reasoning display remains an implementation obligation, not a passed bridge check."
 stale_retired_dispositions: []
 owner_hints:
   - "Plans/Settings_System.md"

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L6435-L6575
+Source lines: L6435-L6577
 
-Source SHA256: `5f2ba7b91739973bd8ec42a2bfa2ded913c39cf734b696909f591fdda9fc491f`
+Source SHA256: `29673b92a967c8f55791f3dee20eced46b6f6e5b41a8bfffbda553c0c07dbb5b`
 
 ---
 
@@ -98,21 +98,23 @@ canonical_text: >-
   The hosted 5.6 Pro chat reuses the production-intent rows of its existing commands under UCC-208 and
   UIW-044 (DL-232). catalog.agents_open_thread includes the chat's Activity Detail transcript action,
   live child card and working-activity child openers; the preview row itself still opens Activity
-  Detail. catalog.terminal_open, catalog.terminal_show, catalog.terminal_focus and
-  catalog.terminal_rerun include the compact command card and preserve exact-session behavior,
-  retained output and candidate limits from UCC-201. assistant.redesign.cmd.chat_plan_open_version
-  retains exact-version Plan opening; assistant.redesign.w_051.chat_eli5_set retains only the per-chat
-  override producers, with application/project defaults written by Settings. home.tab.close uses
-  cmd.panel_tab.close, with cmd.editor.close_tab as its alias; host close/activate updates the chat
-  without another dispatch. home.chat.activity_toggle and home.more_options.chat_visibility keep
-  cmd.panel.switch, and home.resizer.chat keeps cmd.workspace_layout.resize_surface. History pin and
-  Keep open stay their existing typed-local exclusions, never duplicate production rows. The port
-  changes producer locations and acceptance checks in Plans/Wiring_Matrix.production.json only; it
-  adds no command, handler, physical storage family, EventRecord or claim of native readiness. Every
-  row's planned-handler and unavailable-candidate boundary remains in force. Settings preferences use
-  the existing Settings transaction rows, not one synthetic row per preference. The hosted surface's
-  boot, body mounting, appearance projection and one Demo Studio are local/concept dispositions and do
-  not become production wiring.
+  Detail. catalog.terminal_open and catalog.terminal_rerun cover the compact card's Open in Terminal
+  and Rerun in Terminal under ACD-502, preserving exact-session behavior and candidate limits from
+  UCC-201. View output uses the existing kept editor-buffer open. catalog.terminal_show and
+  catalog.terminal_focus keep their existing other-surface producers; neither gains a compact-card
+  control. assistant.redesign.cmd.chat_plan_open_version retains exact-version Plan opening;
+  assistant.redesign.w_051.chat_eli5_set retains only the per-chat override producers, with
+  application/project defaults written by Settings. home.tab.close uses cmd.panel_tab.close, with
+  cmd.editor.close_tab as its alias; host close/activate updates the chat without another dispatch.
+  home.chat.activity_toggle and home.more_options.chat_visibility keep cmd.panel.switch, and
+  home.resizer.chat keeps cmd.workspace_layout.resize_surface. History pin and Keep open stay their
+  existing typed-local exclusions, never duplicate production rows. The port changes producer
+  locations and acceptance checks in Plans/Wiring_Matrix.production.json only; it adds no command,
+  handler, physical storage family, EventRecord or claim of native readiness. Every row's
+  planned-handler and unavailable-candidate boundary remains in force. Settings preferences use the
+  existing Settings transaction rows, not one synthetic row per preference. The hosted surface's boot,
+  body mounting, appearance projection and one Demo Studio are local/concept dispositions and do not
+  become production wiring.
 gui_related: true
 gui_classification_reason: Binds hosted chat producers to existing wiring rows and their reverse GUI consumers.
 split_recommended: false

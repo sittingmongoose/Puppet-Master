@@ -16987,27 +16987,29 @@ canonical_text: >-
   stand-in, restyling the chat in every look including NieR, moving its demonstrations into the one
   Demo Studio, opening its surfaces through the Home panels and updating Plans, commands, wiring and
   Settings. This executes the earlier accepted decisions DL-180, DL-181, DL-185 and DL-187 rather than
-  inventing another workspace. Jared's original words remain: "we would need to fix its theme colors
-  as you said" (D27), and "that should all just be folded into one demo studio(like 5.6 chat's
-  system)" (D26). The fixed chat column, one History list, Activity Detail inside chat, universal tab
-  kinds, file preview rules and user-versus-agent focus rules stay with their existing owners. The
-  host owns look, code faces, NieR parts, hover, panel placement and tab chrome; the chat owns its
-  conversation and the content it supplies to those tabs. The port carries the accepted Wonderer and
-  Grill Me behavior of DL-218 and automatic Chat Room rounds of DL-231. The carry-over layout repairs
-  are applied in the port, including narrow shelf headers, run plates, NieR type and sticky headers,
-  questionnaire controls and narrow sheets. Settings binds existing admitted preferences instead of
-  making parallel chat defaults. The stand-in switch remains concept-only, off by default as a Home
-  harness fallback rather than the hosted conversation; it never becomes a product setting. The Guided Tour stays on its accepted teaching flow for
-  this port and is redone after both this port and the Planning Wizard redesign, as Jared already
-  decided in DL-230. Concept integration and browser checks prove no native handler, EventRecord,
-  storage writer, runtime admission or governance seal. Any remaining mismatch between the integrated
-  concept and an accepted owner is an implementation gap, never an implicit repeal of that owner.
-  The lead's 2026-10-22 ruling under Jared's port brief admits general.interaction.thought-stream as a global,
-  display-only preference, Auto (While it thinks) or Expanded (Always open), default Auto, shared by Settings and
-  New chat defaults. The same ruling moves the existing run-scoped current-chat ELI5 control to the chat sheet
-  only, retaining its inventory identity and override contract. These are the lead's rulings, not Jared's quoted
-  words, and are flagged for Jared at handoff. The stand-in remains built but off by default for Home harnesses;
-  it is absent as the hosted conversation and has no Settings row.
+  inventing another workspace. The original presentation and Demo Studio decisions are recorded with
+  Jared's words in DL-185 and DR-070; this entry records their port into the hosted column. The fixed
+  chat column, one History list, Activity Detail inside chat, universal tab kinds, file preview rules
+  and user-versus-agent focus rules stay with their existing owners. The host owns look, code faces,
+  NieR parts, hover, panel placement and tab chrome; the chat owns its conversation and the content it
+  supplies to those tabs. The port carries the accepted Wonderer and Grill Me behavior of DL-218 and
+  automatic Chat Room rounds of DL-231. The port must apply the carry-over layout repairs, including
+  narrow shelf headers, run plates, NieR type and sticky headers, questionnaire controls and narrow
+  sheets. Settings binds existing admitted preferences instead of making parallel chat defaults. The
+  Guided Tour stays on its accepted teaching flow for this port and is redone after both this port and
+  the Planning Wizard redesign, as Jared already decided in DL-230. Concept integration and browser
+  checks prove no native handler, EventRecord, storage writer, runtime admission or governance seal.
+  Any remaining mismatch between the integrated concept and an accepted owner is an implementation
+  gap, never an implicit repeal of that owner. The lead's 2026-10-22 ruling under Jared's port brief
+  admits general.interaction.thought-stream as a global, display-only preference, Auto (While it
+  thinks) or Expanded (Always open), default Auto, shared by Settings and New chat defaults. The same
+  ruling moves the existing run-scoped current-chat ELI5 control to the chat sheet only, retaining its
+  inventory identity and override contract. These are the lead's rulings, not Jared's quoted words,
+  and are flagged for Jared at handoff. The stand-in remains built but off by default for Home
+  harnesses; it is absent as the hosted conversation and has no Settings row. The Studio-only stand-in
+  swap and the fixture workspace bodies in ordinary Home tabs are concept scaffolding, not product
+  settings or native tab kinds. The latter clarifies ACD-500's product exclusion while allowing the
+  demonstrations Jared asked to carry into the Studio.
 gui_related: true
 gui_classification_reason: Records the hosted chat replacement, shared Settings controls and preservation of the accepted tour.
 split_recommended: false
@@ -17034,6 +17036,8 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
   - "/mnt/Cursor/share/puppet-master/2026-10-20-wonderer-grill-me-concept/PORT-CARRY-OVER.md, SHA-256 67195793eeda6a463b5e2da60e7ae294ae62ef435a4a89e56fcd3e25587884fa (accepted layout and styling repairs)"
   - "Lead ruling via pm-mail 1022211545-c3b8, 2026-10-22: Thought Stream admission, current-chat ELI5 placement and stand-in harness fallback; not Jared verbatim."
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/lead-checkpoint-20261022-2155.md, SHA-256 9063fdc033b2aac0d2558eba612d2f0ab33b032f0a0df72c848c21112ee72e98 (lead checkpoint; concept integration and rulings, not native proof)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/demo-inventory-20261022.md, SHA-256 3f1f8f372c1ec03a047cd6936853f14f3b745b056791bd2f7a30d929a00e60cd (concept-only Studio inventory, not product counts or native APIs)"
 preserved_exact_tokens:
   - "Demo Studio"
 negative_constraints:

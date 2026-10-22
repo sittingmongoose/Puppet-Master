@@ -25,6 +25,19 @@
     IDS.forEach(id => { out[id] = !!state?.changed?.[id]; });
     return out;
   }
+  // Read one project's own override, never substitute the current project's
+  // value for a chat belonging to another project.
+  function eli5Project(id) {
+    const key = 'general.interaction.eli5-default';
+    if (!id) return { ok: false, reason: 'project_unknown' };
+    if (id === project()) return state.settingsProjectionReadOnly === true
+      ? { ok: false, reason: 'project_projection_unavailable' }
+      : { ok: true, id, override: changed()[key] ? !!values()[key] : null };
+    let snap;
+    try { snap = window.PM7_SETTINGS_TOME?.projectSnapshot(id); } catch (e) { return { ok: false, reason: 'project_projection_unavailable' }; }
+    if (!snap?.settings) return { ok: false, reason: 'project_projection_unavailable' };
+    return { ok: true, id, override: snap.changed?.[key] ? !!snap.settings[key] : null };
+  }
   function notify() {
     const now = JSON.stringify([project(), ready(), values(), changed()]);
     if (now === seen) return;
@@ -79,7 +92,7 @@
   const saved = saveState;
   saveState = function () { const result = saved.apply(this, arguments); notify(); return result; };
   window.PM_CHAT_SETTINGS = Object.freeze({
-    ready, project, values, changed, set, version: () => version,
+    ready, project, values, changed, eli5Project, set, version: () => version,
     onChange(fn) { if (typeof fn !== 'function') return () => {}; listeners.add(fn); return () => listeners.delete(fn); }
   });
   seen = JSON.stringify([project(), ready(), values(), changed()]);
