@@ -253,6 +253,44 @@
       }
     }
   },
+  "first_shared_landing": {
+    "blocking": 0,
+    "both_remotes": [
+      {
+        "remote": "https://github.com/sittingmongoose/Puppet-Master.git",
+        "sha": "94811a84a540ede8ff33f08432569929e4d1a46c"
+      },
+      {
+        "remote": "ssh://sittingmongoose@192.168.50.200/mnt/Storage/PuppetMasterGit/PuppetMaster.git",
+        "sha": "94811a84a540ede8ff33f08432569929e4d1a46c"
+      }
+    ],
+    "frozen_baseline_sha256": "25941168df82b5b4c674e0eacd4103d3443130428b341784ad2cc9f83261dd9e",
+    "infrastructure": [],
+    "landing_exit_code": 1,
+    "main_sha": "94811a84a540ede8ff33f08432569929e4d1a46c",
+    "old_currentness_preserved_through_verified_push": true,
+    "prior_full_rerun_and_row_reconciliation": {
+      "bytes": 4186,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/review/export-reconciliation.json",
+      "sha256": "4581c069e62cbe416902a19e464c3740e2ecf153ab77281988e0cca4bfb12233"
+    },
+    "shared_complete_rerun_export_proof": {
+      "bytes": 2117,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/export-coverage-reconciliation.json",
+      "sha256": "ce7ee12626610f07a1c0408cd15e50bbc113f9f900bff236f7b9207fa7690a54"
+    },
+    "shared_vs_review_inputs": {
+      "bytes": 2988,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shared-vs-review.json",
+      "sha256": "231b58259b8d9fc10e2d62247b8c2d26649e831c1a5b1d06b0d793720e4a4825"
+    },
+    "verdict": {
+      "bytes": 18486,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/landing-check.out",
+      "sha256": "a9b8b8c89cce86031d010554f48570dcef0cebf214124d7211804e2ff8e19bf8"
+    }
+  },
   "inherited_findings_classification": {
     "audit_status_index": {
       "classification": "pre_existing_out_of_scope",
@@ -578,7 +616,7 @@
     }
   },
   "landing_check_exit_code": 1,
-  "landing_lock_taken": false,
+  "landing_lock_taken": true,
   "landing_verdict": {
     "base": "origin/main",
     "baseline_commit": "78e29008cb73fbb51e8d4ec17643dea4281a34b7",
@@ -1102,8 +1140,8 @@
     "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json": "Refresh generated currentness against frozen canon and prepared governance. Local ignored edition only; shared installation is deferred until GO."
   },
   "main_base": "2cf22e20b357d1cc6f5d0840441bf22716a16319",
-  "main_pushed": false,
-  "mode": "approved_for_checked_landing",
+  "main_pushed": true,
+  "mode": "first_main_landed_and_post_push_followup_prepared",
   "new_lock_registrations": [],
   "outputs": [
     {
@@ -2657,7 +2695,1585 @@
       "sha256": "bd2c5ddd98be94b14096fa26e408224b367cf66cf5a57f224229a6f1dcf52eb2"
     }
   ],
-  "post_push_followup": null,
+  "post_push_followup": {
+    "absolute_lock_cap_seconds": 5400,
+    "baseline_capture": {
+      "bytes": 44088,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-final.json",
+      "sha256": "7b6d8e98a16f28c4b1811bb943eb38a1abf294cef8c9ea51c271bcf6f3287866"
+    },
+    "baseline_commit": "94811a84a540ede8ff33f08432569929e4d1a46c",
+    "baseline_recorded_twice_complete": true,
+    "baseline_sha256": "7b6d8e98a16f28c4b1811bb943eb38a1abf294cef8c9ea51c271bcf6f3287866",
+    "baseline_totals": {
+      "audit-governance": 1469,
+      "plan-migration-validate": 0,
+      "run-gates": 1486
+    },
+    "currentness_install_after_both_first_push_verifications": true,
+    "expected_doc_count": 96,
+    "export_reconciliation": {
+      "bytes": 4016,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/export-reconciliation.json",
+      "sha256": "94f3e5ce24bff4165c7111803f9afa7d09179ad65145bd4de8bbd3798b213701"
+    },
+    "final_check_and_publication_completion_path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/COMPLETION.json",
+    "first_main_sha": "94811a84a540ede8ff33f08432569929e4d1a46c",
+    "full_local_worktree": "/home/sittingmongoose/pm-worktrees/governance-reseal-followup-20261022",
+    "installed_currentness_manifest": {
+      "CURRENT_EVENT_SOURCE_INVENTORY.json": "8cdb0afbcd938e557fa6a869a7da839d1d0a1c1b48fb72024630ccf040fe045e",
+      "EVENT_FAMILY_DENOMINATOR_STATUS.json": "8d7124e546f0951f7398708b3741c413fc67739fd035bb6b14d3fca69570925c",
+      "EVENT_OCCURRENCES.jsonl": "ee5fd6901f6e732fdd11a2d90428b2f66351c18dc49aac37728a535faadc2228",
+      "README.md": "cb21ad9f4db699bb262ea920f155131827cd677679ab54bb651ad3f4e3722318",
+      "VALIDATOR_RECEIPT.json": "6cfe8ca27b8d095d68a5397daa38f81020b5b3690612a770e43e2083f5e012c1",
+      "adjudication/EXPECTED_252_EVENT_TYPES.tsv": "d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541",
+      "adjudication/GROUP_ARTIFACT_MANIFEST.json": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e",
+      "adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294",
+      "adjudication/source_groups/group_a.jsonl": "d4305411923dee2edfc2c8b822a9fb42eda33b320c64c7f84aaf16ce4cd134a3",
+      "adjudication/source_groups/group_b.jsonl": "f1279ec339fc3b20676e19787ab423ffaeaba3b7a58181828af5e94242cf7160",
+      "adjudication/source_groups/group_c.jsonl": "9528f134447acb50c2c8053855db64bbcfeb9bdbbc56cb1d9e52ce11eb10cc79",
+      "adjudication/source_groups/group_d.jsonl": "5b3af4d546e0aecca799ac38e0ae65ed81e356db18531baa7e7027dfb9cd66b2",
+      "adjudication/source_groups/group_e.jsonl": "52ad46cafed54f333ab144b7297ca2e188353adf38a3ee4488099e76f8acba2a",
+      "adjudication/source_groups/group_f.jsonl": "24585545a7234db0972ca58da2b8557416bab7ef74b75afbf318f6bfdb1c93d1",
+      "adjudication/source_groups/group_g.jsonl": "5e1f709cbf5a4f1bd19cec24d12b033cac79d4e0ce0e194d8babb13bdc0499db"
+    },
+    "installed_manifest_capture": {
+      "bytes": 1649,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/installed-manifest.json",
+      "sha256": "b8387a2168d33ab19ef2eba5cf6f12b184ae2555871dab3e4e6c4e5218f2315b"
+    },
+    "lock_acquired_at_utc": "2026-10-22T04:12:37.251995+00:00",
+    "lock_acquired_epoch": 1792642357.251995,
+    "outputs": [
+      {
+        "bytes": 12826,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/RESEAL-astra-r1.md",
+        "sha256": "9c8cc12a6160e398d1f5a1de06826892bf3a2f6b93a907fd3d776cd999db3ed5"
+      },
+      {
+        "bytes": 626,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/authorization.json",
+        "sha256": "8e5a299144346b9c15e8659725110a084593cfe4a0127d114279f48ab50c2def"
+      },
+      {
+        "bytes": 154,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/budgets/complete-baseline-rerun.json",
+        "sha256": "d8294d69dba932c1fca20ef1f58c224a990f176c557aa0a0b0d6455a7a8f1d27"
+      },
+      {
+        "bytes": 154,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/budgets/first-check.json",
+        "sha256": "37c3bd68e1be36e4b04805a7fa9c34fb936e4c9da8d0c9fd77c0611eb54a2f4e"
+      },
+      {
+        "bytes": 153,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/budgets/first-push-currentness.json",
+        "sha256": "1fdf6d5a1626cdc178d899d566bd190b8d5b2ee70028ee051ef91b3e4e33e7fa"
+      },
+      {
+        "bytes": 154,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/budgets/install-currentness.json",
+        "sha256": "c34e36248d497ca94a950973be194acfe701ebbbc3561a8ae7d8cc6763b1aff3"
+      },
+      {
+        "bytes": 154,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/budgets/record-baseline.json",
+        "sha256": "3244a3ef1ecb4fbb3e40cb96929a09cf14ec55818fece27f242bc12156b27381"
+      },
+      {
+        "bytes": 154,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/budgets/snapshot-current.json",
+        "sha256": "e3ae0f9c6aead313c3ad0a14d367fb65fccdaefedf2f4d90feef52013aab8ca3"
+      },
+      {
+        "bytes": 1329,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/check-baseline-delta.py",
+        "sha256": "852ada04bd1bb5a22ca4ca8d461416e0f28e4c81a7f5a36f809dc4fc22f09dfb"
+      },
+      {
+        "bytes": 1354,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/export-coverage.py",
+        "sha256": "49b96c00efa79fc31fe6c40d569e2ffe92507d4df40a5cba284994f33aa39c8f"
+      },
+      {
+        "bytes": 8762,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/finish-landing.py",
+        "sha256": "8d7a12541da788cd6c4c14e9537d1866646db1092e73709d5bac1da1b2c9674e"
+      },
+      {
+        "bytes": 60256,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/baseline-before.json",
+        "sha256": "25941168df82b5b4c674e0eacd4103d3443130428b341784ad2cc9f83261dd9e"
+      },
+      {
+        "bytes": 104541,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/check-reports/audit-governance.json",
+        "sha256": "df37a48af6827ccd5945ec547cc132b8b251936a4776a34c696a2db081b1137f"
+      },
+      {
+        "bytes": 382073,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/check-reports/exports/validate-prd-planning-runtime-contracts.json",
+        "sha256": "929cd05d5655ba046144f5c7fe34546e4043952cf4001cd256d471cecb7f695f"
+      },
+      {
+        "bytes": 558,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/check-reports/plan-migration-validate.json",
+        "sha256": "55d154a669df82a5abd0b1e5f460aab1a958b8ddaf1c4bbde845bc92dda098ad"
+      },
+      {
+        "bytes": 79954,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/check-reports/run-gates.json",
+        "sha256": "e565c9f98a10b048713e5ef127d1f199c385dc96a5fcd98efc00a01dd0edf3b6"
+      },
+      {
+        "bytes": 1185,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/completeness.command.json",
+        "sha256": "470251fad2a490b07ed4f7d438fb856f12d74ba8d9c1038bb4642e45ab8f812f"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/completeness.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/completeness.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 735,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/completeness.out",
+        "sha256": "68474fb14824fd56857171b1f4b5d1665cb8beb2b398cce41583e35177b70ac4"
+      },
+      {
+        "bytes": 833,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/df.command.json",
+        "sha256": "0c795b7fb2740e0e5734e1aaf4105b82c8f1379b9b0c9bd75feec261eff9f13f"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/df.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/df.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 127,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/df.out",
+        "sha256": "e172d8221e3dbdaac6d51f2e6daa912e3abb49dbc6841b89e14238f819d52bda"
+      },
+      {
+        "bytes": 2117,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/export-coverage-reconciliation.json",
+        "sha256": "ce7ee12626610f07a1c0408cd15e50bbc113f9f900bff236f7b9207fa7690a54"
+      },
+      {
+        "bytes": 911,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/fast-forward.command.json",
+        "sha256": "a495f3bf7a531e23ccdf3bdde70648f21915d5e6ac1a20ee54449e5f653ecf5d"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/fast-forward.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/fast-forward.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 1505,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/fast-forward.out",
+        "sha256": "c5cd8910c36651b8acc60a60cbfc377bebbda0f05efb3cd0f8ee9aafdb487b31"
+      },
+      {
+        "bytes": 848,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/fetch.command.json",
+        "sha256": "752bf740a829c6844f26bb1bcfaf5f991317126ffec68090ff91cfc0f742d6be"
+      },
+      {
+        "bytes": 280,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/fetch.err",
+        "sha256": "cb0181d2d831a96cfe33b838f7b2664d436c74c20cdc91abff0341b104fdbfa9"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/fetch.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/fetch.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 200,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/free-space-at-lock.json",
+        "sha256": "2975a4b6ffa36b21d6feb7ce0cd99b00d96e1a78cd8916f0e8e6b13cb1beb910"
+      },
+      {
+        "bytes": 200,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/free-space-before-check.json",
+        "sha256": "b0232749acad8039f4a811aeeede0a0de529fd3b4a2a9056090e36b0af420db6"
+      },
+      {
+        "bytes": 951,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/frozen-remote-main-0.command.json",
+        "sha256": "d053b210c95c329f30d89207b2d81d569bd202f0f859cca9dcf44aa348626926"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/frozen-remote-main-0.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/frozen-remote-main-0.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 57,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/frozen-remote-main-0.out",
+        "sha256": "325944d54167ed7d41bc9247eed330697756c35ee4ed642025ffec1bef5ab7f5"
+      },
+      {
+        "bytes": 980,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/frozen-remote-main-1.command.json",
+        "sha256": "44e928276ffc47518f8ff3176bb29e2a02c666239250fb8226683fd3bb093af7"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/frozen-remote-main-1.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/frozen-remote-main-1.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 57,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/frozen-remote-main-1.out",
+        "sha256": "325944d54167ed7d41bc9247eed330697756c35ee4ed642025ffec1bef5ab7f5"
+      },
+      {
+        "bytes": 298,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/frozen-remote-main.json",
+        "sha256": "ed828ffb231bf091ebe96b6e64016a6c22021817b3726afccb4bd088b7f93493"
+      },
+      {
+        "bytes": 1219,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/landing-check.command.json",
+        "sha256": "d4b3097a17a706adac30d38a65c2494962e136f0974088617506a1dcd3c5663b"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/landing-check.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/landing-check.exit",
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      {
+        "bytes": 18486,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/landing-check.out",
+        "sha256": "a9b8b8c89cce86031d010554f48570dcef0cebf214124d7211804e2ff8e19bf8"
+      },
+      {
+        "bytes": 1649,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/old-edition-manifest.json",
+        "sha256": "630d666d4a00f71dacc2c21f7da46802b6599391d4ab460ead724820bafa35af"
+      },
+      {
+        "bytes": 867,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/push-main.command.json",
+        "sha256": "ae92726793a7d1d3b2199ef67bc5c910e059eceda948f618f9846e1dbe167e43"
+      },
+      {
+        "bytes": 205,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/push-main.err",
+        "sha256": "a4416ddffb18aaf5e4fa2e9ccaa4342fbf521f5c330d33d00fca538b2001001e"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/push-main.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/push-main.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 939,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/push-observe-0.command.json",
+        "sha256": "94a9aab72b29cabbd3bb1b62df9fe9bf45d335ca5c8c35cda5897862493e904a"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/push-observe-0.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/push-observe-0.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 57,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/push-observe-0.out",
+        "sha256": "1ff2a051977560640dae50604b0a18226d35df0d42deced9c488a250c5e81e28"
+      },
+      {
+        "bytes": 968,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/push-observe-1.command.json",
+        "sha256": "f3a1e8e7bf8a301f89f5d7ca8287311386aedabb0bd22a1755440022290e60a3"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/push-observe-1.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/push-observe-1.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 57,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/push-observe-1.out",
+        "sha256": "1ff2a051977560640dae50604b0a18226d35df0d42deced9c488a250c5e81e28"
+      },
+      {
+        "bytes": 866,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/refresh-origin.command.json",
+        "sha256": "94f071b4a49aaa68c98436aaa889e36d42761fbbfbc6e5c7585d58a591d12298"
+      },
+      {
+        "bytes": 177,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/refresh-origin.err",
+        "sha256": "3e7db8eaae66329ca16d40733537a48c84543b7921a89176ab5f0409dc15ebb3"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/refresh-origin.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/refresh-origin.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1045,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shards.command.json",
+        "sha256": "ec925c313fd250e99e0c043ceba286d50a3d4bf67e8e81f78e4c9954be146cfa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shards.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shards.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 24802,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shards.json",
+        "sha256": "2e0ce443d4816af2ceda4667be8a69027d9279755dc25dffed31079e60129799"
+      },
+      {
+        "bytes": 111,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shards.out",
+        "sha256": "8f15c310b9abbf0e3b909a0925e986b81f14f82be582dcc620a1abe578c68d7b"
+      },
+      {
+        "bytes": 1901,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shared-overlap.command.json",
+        "sha256": "d582b23e48cf9f4d5c80699b99fef34a8fe893c6c27744630a0d22befccc9e59"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shared-overlap.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shared-overlap.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shared-overlap.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 902,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shared-status.command.json",
+        "sha256": "4bc572bf533798f14a280d9913256fbe9cf03390f998b9e26dcfed35580aac2c"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shared-status.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shared-status.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shared-status.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2988,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/shared-vs-review.json",
+        "sha256": "231b58259b8d9fc10e2d62247b8c2d26649e831c1a5b1d06b0d793720e4a4825"
+      },
+      {
+        "bytes": 906,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/temp-selection.command.json",
+        "sha256": "eb2374f41b245778220e54fa06afa7f70676b950021014555614452902e535a6"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/temp-selection.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/temp-selection.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 72,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/temp-selection.out",
+        "sha256": "a7d51a3f8523273655875dad773986a7c098f5c0c956808b7031e821ff73faae"
+      },
+      {
+        "bytes": 941,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/verified-main-0.command.json",
+        "sha256": "d50931c0a395d58a72609a9d2924787f6dfa8ccffce3a27cea24b29aa1a39e98"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/verified-main-0.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/verified-main-0.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 57,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/verified-main-0.out",
+        "sha256": "1ff2a051977560640dae50604b0a18226d35df0d42deced9c488a250c5e81e28"
+      },
+      {
+        "bytes": 970,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/verified-main-1.command.json",
+        "sha256": "50f1e5b9a21449888b93d2d759ca713ead98071c2f9231eac1fc8b4a9d87f983"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/verified-main-1.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/verified-main-1.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 57,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/verified-main-1.out",
+        "sha256": "1ff2a051977560640dae50604b0a18226d35df0d42deced9c488a250c5e81e28"
+      },
+      {
+        "bytes": 298,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first/verified-main.json",
+        "sha256": "2641c25acfc4f0b2ba7f97829484b2322edb968193697d0d7663728ce77cc7d7"
+      },
+      {
+        "bytes": 4420,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/first-landing.py",
+        "sha256": "7bf8a61b51ca147cec202af96847ec025f807e913bc79b5d60467f64561c84c8"
+      },
+      {
+        "bytes": 102520,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-check-reports/audit-governance.json",
+        "sha256": "2c9df3663fc316d2ac9db7fe17f1fb3b468ad6fce58c6185b8655324f33351ad"
+      },
+      {
+        "bytes": 382073,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-check-reports/exports/validate-prd-planning-runtime-contracts.json",
+        "sha256": "92442bc9e7ccf8c7243e15f214f91cb975c1a229e6b425fea2733d06a1c29edd"
+      },
+      {
+        "bytes": 558,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-check-reports/plan-migration-validate.json",
+        "sha256": "bea160c9061ff935b93d859345716fb9fbea50cbad4c099412998548ae205db6"
+      },
+      {
+        "bytes": 77933,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-check-reports/run-gates.json",
+        "sha256": "57db975088d90be64e945c93c41bc39d7c330cadf12613786cfc243706c08c2b"
+      },
+      {
+        "bytes": 1227,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-completeness.command.json",
+        "sha256": "0d83084b807a0a524b4e097296a0c337c1001ff854a9134e462766651e6fb837"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-completeness.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-completeness.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 789,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-completeness.out",
+        "sha256": "2ca4e15ae9dfa7ae1df403601d00908ab8c8d488ad990ddcab933a271c360118"
+      },
+      {
+        "bytes": 544,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-delta-proof.json",
+        "sha256": "652909ad3ba38c722ef7ba91cd764007b7c48fd26f7e2d6f6d00a154a84b4ec5"
+      },
+      {
+        "bytes": 44088,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-final.json",
+        "sha256": "7b6d8e98a16f28c4b1811bb943eb38a1abf294cef8c9ea51c271bcf6f3287866"
+      },
+      {
+        "bytes": 44088,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-first.json",
+        "sha256": "d17e423fd7bb3d2d2fac3f0afd3f1251a2d52574c6d47449a538b6c150f7df13"
+      },
+      {
+        "bytes": 102520,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-rerun-check-reports/audit-governance.json",
+        "sha256": "e1077b5932a81d440cd0b784bfcf907d36ae76593178d29a699cf5a207400165"
+      },
+      {
+        "bytes": 382073,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-rerun-check-reports/exports/validate-prd-planning-runtime-contracts.json",
+        "sha256": "9e208d32a127fed5dd67f036647001055148898a94f935ae9a93a30ef3f2e818"
+      },
+      {
+        "bytes": 558,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-rerun-check-reports/plan-migration-validate.json",
+        "sha256": "bea160c9061ff935b93d859345716fb9fbea50cbad4c099412998548ae205db6"
+      },
+      {
+        "bytes": 77933,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-rerun-check-reports/run-gates.json",
+        "sha256": "cdaa355434a3831741570b637428cdcb5f9ea1364ebb1d0a4bf3a8fa73c1acbc"
+      },
+      {
+        "bytes": 1245,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-rerun-completeness.command.json",
+        "sha256": "a108887d5772581c246af0419a9f2f300b4129375b43bcb79da10a11551d613c"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-rerun-completeness.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-rerun-completeness.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 813,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/baseline-rerun-completeness.out",
+        "sha256": "888bf4f3d61e7adca3aefbcb05dcd38cc1853475d183a273df719fa408f0fbd4"
+      },
+      {
+        "bytes": 1031,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/create-worktree.command.json",
+        "sha256": "c44254d3511ecf87faf830f6d7f7578c80337f951a8414c13a7b273922b8e665"
+      },
+      {
+        "bytes": 3641,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/create-worktree.err",
+        "sha256": "49eccde81f76421f7562c65a6e3cb3ab0676222b1cbc3862163268133ba2b170"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/create-worktree.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 86,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/create-worktree.out",
+        "sha256": "7604d803701f5eb685ade4fbfcaa9d463ee06f30971ed04d99ecee39215e22e4"
+      },
+      {
+        "bytes": 4016,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/export-reconciliation.json",
+        "sha256": "94f3e5ce24bff4165c7111803f9afa7d09179ad65145bd4de8bbd3798b213701"
+      },
+      {
+        "bytes": 880,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/fetch-local.command.json",
+        "sha256": "5bde99f4e62774f8a42e70abf35e9f3c5b859ace8385567b06c888caece7a4cf"
+      },
+      {
+        "bytes": 107,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/fetch-local.err",
+        "sha256": "dde70765cafa7f8ecd4aff0bbd5fcf35ee733166a9be7021c7f94069ed7e9309"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/fetch-local.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/fetch-local.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 200,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/free-space-baseline-rerun.json",
+        "sha256": "52ad88a9c41ca7c38c1d86586d679e639b9a71c87e504d8f764f4ee85677c1b5"
+      },
+      {
+        "bytes": 200,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/free-space-baseline.json",
+        "sha256": "68c9c1e341c79a9b8df733b7b5d93c46d2760f3de22c48aff65e4a77f097a397"
+      },
+      {
+        "bytes": 200,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/free-space-snapshot.json",
+        "sha256": "40974096b79a4d12f4ec28f1e5a32a513154b2dedf6c3342c1774451c0586f18"
+      },
+      {
+        "bytes": 1649,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/installed-manifest-after-recording.json",
+        "sha256": "b8387a2168d33ab19ef2eba5cf6f12b184ae2555871dab3e4e6c4e5218f2315b"
+      },
+      {
+        "bytes": 1183,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-0.command.json",
+        "sha256": "ea059c2ceaa29c9cd067568125ea47a0838bde17df4f23ab25e413b41b144d23"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-0.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-0.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-0.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1165,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-1.command.json",
+        "sha256": "12a74b28aeb5823fe4445db33bb0132100d6411696254f9dbab839ea44bc5d8b"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-1.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-1.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-1.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1211,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-2.command.json",
+        "sha256": "e858ec875e86af7fa90b69fd7dce844a552281e54ac2009e4b9800dd4ca2de30"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-2.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-2.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-2.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1213,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-3.command.json",
+        "sha256": "3a030a5673e964cb355f86c670bf920d5189a4a0c6b200e99fa237cd483c9dbd"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-3.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-3.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-3.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1213,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-4.command.json",
+        "sha256": "84b339ec22a74126c7a7f4cdd3518404a4f7d48fce288505c111d8ae24f9d47c"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-4.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-4.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-4.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1217,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-5.command.json",
+        "sha256": "607f38ef8137fdc9e4d4eb98e615f04989c8bf1494fcb4032791718f7396245d"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-5.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-5.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-5.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1189,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-6.command.json",
+        "sha256": "812cf2fad1cf7eeeac7e048c3cd04c6d64fa8159bbc3909a13128b36a7eb2967"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-6.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-6.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-6.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1229,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-7.command.json",
+        "sha256": "e0dfb8ab4da0be4c9cc1b50098ebe213f0ba9517d94455ebd8d96474bb355f41"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-7.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-7.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-7.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1221,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-8.command.json",
+        "sha256": "99d4b3973231ecf4160128374daa6bb47b2d890e6a6d9331bfe3ecb9dd5f92e7"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-8.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-8.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provision-8.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 12657,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/provisioned-inputs.json",
+        "sha256": "c582a30a61681aa7ca56a1dd7dcc760b4d3f6499f58b6001cca5a3b651f630fa"
+      },
+      {
+        "bytes": 1282,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/record-baseline-rerun.command.json",
+        "sha256": "b389d9978dc0c4970d7389b11ce456fb9b57d98666deafa1e825da37b6cc06b5"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/record-baseline-rerun.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/record-baseline-rerun.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 3235,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/record-baseline-rerun.out",
+        "sha256": "1ad27ad4dd0aacf97ffb00c872f7d2d184c0dd6370e3cf69d116a744c59687cd"
+      },
+      {
+        "bytes": 1264,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/record-baseline.command.json",
+        "sha256": "06bc0b8d67a7d1a0ee5d5b6a6bde30aaa124760a8c5b88afc4cfa3fcbfbd1592"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/record-baseline.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/record-baseline.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 3235,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/record-baseline.out",
+        "sha256": "1ad27ad4dd0aacf97ffb00c872f7d2d184c0dd6370e3cf69d116a744c59687cd"
+      },
+      {
+        "bytes": 1002,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/safe-directory.command.json",
+        "sha256": "2dc1e75564db4b3f08f2f5f1010bbf94456f7fb53200fc43e7fa7335fab9d9d5"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/safe-directory.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/safe-directory.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/safe-directory.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1174,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/snapshot-current-dry-run.command.json",
+        "sha256": "1338cb3cf67ab0940b41d8b8528cc2380c52d3cf5e4f2352a64d36d6fa6af366"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/snapshot-current-dry-run.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/snapshot-current-dry-run.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 345,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/snapshot-current-dry-run.out",
+        "sha256": "2dae2f2156cff1f40a7cc9fda9b18cda0dfde67991d68012669c71f827ca17b9"
+      },
+      {
+        "bytes": 1142,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/snapshot-current.command.json",
+        "sha256": "ff651112ae6ffc6ee7ce4b8b6101a1058f8c0d9f34d31cb99672d9aa384d47f1"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/snapshot-current.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/snapshot-current.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 780,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/snapshot-current.out",
+        "sha256": "7ae40a055b4fb36d7e9ce81aa2114fe9660d94140b07278306e09a42ac3d2810"
+      },
+      {
+        "bytes": 11130,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup-records.py",
+        "sha256": "c1a60f39a1f9acc4c82d32db2cb4a36319ebf096ba6f168bd241f32f2e9bfd93"
+      },
+      {
+        "bytes": 102674,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/CURRENT_EVENT_SOURCE_INVENTORY.json",
+        "sha256": "7f1472349026943361f1b85b54df2da6ea2d17f826e01313fe730bd2aaa1ee49"
+      },
+      {
+        "bytes": 17421,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/EVENT_FAMILY_DENOMINATOR_STATUS.json",
+        "sha256": "8d7124e546f0951f7398708b3741c413fc67739fd035bb6b14d3fca69570925c"
+      },
+      {
+        "bytes": 8621199,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/EVENT_OCCURRENCES.jsonl",
+        "sha256": "368d5e70524ac0dbc21fdd406f04943e2d1d2c2d91c6ebb7d6cd106ea75e94a0"
+      },
+      {
+        "bytes": 1717,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/README.md",
+        "sha256": "cb21ad9f4db699bb262ea920f155131827cd677679ab54bb651ad3f4e3722318"
+      },
+      {
+        "bytes": 3303,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/VALIDATOR_RECEIPT.json",
+        "sha256": "75f0a3f2a245e61e102efb27fd1da7bbd732b01952ea47b162c9e81fd35d6b78"
+      },
+      {
+        "bytes": 47008,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/adjudication/EXPECTED_252_EVENT_TYPES.tsv",
+        "sha256": "d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541"
+      },
+      {
+        "bytes": 2781,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/adjudication/GROUP_ARTIFACT_MANIFEST.json",
+        "sha256": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e"
+      },
+      {
+        "bytes": 812298,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl",
+        "sha256": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294"
+      },
+      {
+        "bytes": 62320,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/adjudication/source_groups/group_a.jsonl",
+        "sha256": "d4305411923dee2edfc2c8b822a9fb42eda33b320c64c7f84aaf16ce4cd134a3"
+      },
+      {
+        "bytes": 187869,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/adjudication/source_groups/group_b.jsonl",
+        "sha256": "f1279ec339fc3b20676e19787ab423ffaeaba3b7a58181828af5e94242cf7160"
+      },
+      {
+        "bytes": 298969,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/adjudication/source_groups/group_c.jsonl",
+        "sha256": "9528f134447acb50c2c8053855db64bbcfeb9bdbbc56cb1d9e52ce11eb10cc79"
+      },
+      {
+        "bytes": 71947,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/adjudication/source_groups/group_d.jsonl",
+        "sha256": "5b3af4d546e0aecca799ac38e0ae65ed81e356db18531baa7e7027dfb9cd66b2"
+      },
+      {
+        "bytes": 50915,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/adjudication/source_groups/group_e.jsonl",
+        "sha256": "52ad46cafed54f333ab144b7297ca2e188353adf38a3ee4488099e76f8acba2a"
+      },
+      {
+        "bytes": 54708,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/adjudication/source_groups/group_f.jsonl",
+        "sha256": "24585545a7234db0972ca58da2b8557416bab7ef74b75afbf318f6bfdb1c93d1"
+      },
+      {
+        "bytes": 30811,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/immediate-currentness-backup/adjudication/source_groups/group_g.jsonl",
+        "sha256": "5e1f709cbf5a4f1bd19cec24d12b033cac79d4e0ce0e194d8babb13bdc0499db"
+      },
+      {
+        "bytes": 5011,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/in-place-write.py",
+        "sha256": "b5fa074d23217cf7a06ac87ebb83f7dc9c481aa98579e651a92c67b3c0d6fa89"
+      },
+      {
+        "bytes": 1187,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/check-final.command.json",
+        "sha256": "f0a08eaad76b6ba0e9c1713c474f4b67e7433ac8b7b1e5662e4acacf8f9397b4"
+      },
+      {
+        "bytes": 15,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/check-final.err",
+        "sha256": "1718f95d8ec287ff67a1e841a822f0ccb5e9e766ede85f857d8bfb2515f2d346"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/check-final.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 1987,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/check-final.out",
+        "sha256": "3681e95f07ada309cd8f829493855792488462df6e6077a6adebb535726dbf57"
+      },
+      {
+        "bytes": 1184,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/check-old.command.json",
+        "sha256": "6ee0e14bbc7e4b3e62be3eb8f4149dd4efe8a61e98f32e6df6e03b1ffad30e6e"
+      },
+      {
+        "bytes": 15,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/check-old.err",
+        "sha256": "1718f95d8ec287ff67a1e841a822f0ccb5e9e766ede85f857d8bfb2515f2d346"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/check-old.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 1990,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/check-old.out",
+        "sha256": "63d54b26eca77f0801dd800165595d561c3ee699c8677329effe610e82979e5f"
+      },
+      {
+        "bytes": 1209,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/completeness.command.json",
+        "sha256": "193d63a98f4a26d816f8204076b25f936942ff38dd8405f8570c9fa9a30d84b1"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/completeness.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/completeness.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 321,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/completeness.out",
+        "sha256": "8802b3e12a656044756bc9dfc86407b6c8886a00859eb0c8182d5f0a2cc3c958"
+      },
+      {
+        "bytes": 1649,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/installed-manifest.json",
+        "sha256": "b8387a2168d33ab19ef2eba5cf6f12b184ae2555871dab3e4e6c4e5218f2315b"
+      },
+      {
+        "bytes": 923,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/validate-currentness.command.json",
+        "sha256": "6be113e999b0ba41769f52948375a8407ffb5c3bb4afb8e2d7fc4c7e8de95c59"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/validate-currentness.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/validate-currentness.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 694,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/validate-currentness.out",
+        "sha256": "c1a812cd48c307af8ff0870839204f748202c0c5f035eb6751650741bc0a384b"
+      },
+      {
+        "bytes": 918,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/validate-readiness.command.json",
+        "sha256": "ad2c44d6a7ac5087a2ea01d079e93a919f20771463503aee07eb90c5182fbcd7"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/validate-readiness.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/validate-readiness.exit",
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      {
+        "bytes": 18008,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/validate-readiness.out",
+        "sha256": "985fdda24f6cb6e2bddcc56c4f94f4e53c1df1ab2c61662a74d928ced517587e"
+      },
+      {
+        "bytes": 1175,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/write.command.json",
+        "sha256": "870c9b3dff73f499618ff5d9e372d4740c1a031a3dd932e8e3d4fa1dd0196785"
+      },
+      {
+        "bytes": 15,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/write.err",
+        "sha256": "1718f95d8ec287ff67a1e841a822f0ccb5e9e766ede85f857d8bfb2515f2d346"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/write.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 1987,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/install/write.out",
+        "sha256": "0b663462f6e236b7b6c23a451b59a569ea7d8f8b084c6fdf5fbff78867887f9c"
+      },
+      {
+        "bytes": 5274,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/landing_runtime.py",
+        "sha256": "18de8226afee3fa1ea46974e0265f3f59abc0324df9af608bf80021bc9e03dcd"
+      },
+      {
+        "bytes": 319,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/milestones/1792642357264246090.json",
+        "sha256": "c9f3a98c49b8ce0fe4b7864af20b670836d62264ce9f762078d9ace8aeece422"
+      },
+      {
+        "bytes": 269,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/milestones/1792642401441619850.json",
+        "sha256": "197c405edf21f4714b6712b0d142b29b5ac60a7194de7d32f08650aff01a8cb8"
+      },
+      {
+        "bytes": 321,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/milestones/1792642407276854697.json",
+        "sha256": "0192356e28071e6e764d019452a5bd3c4ee024bbbd0c42c93721b28d7b28440e"
+      },
+      {
+        "bytes": 303,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/milestones/1792642408360106485.json",
+        "sha256": "0a59044e65f2ad83fd9e13dc0a7adf19b9067b80ded90ec4530c538b06ea1a7c"
+      },
+      {
+        "bytes": 299,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/milestones/1792643503311401239.json",
+        "sha256": "4df5f8b8341ca2de0b564cd1628d7491be172c957a2c0f91f14fcd37c5658302"
+      },
+      {
+        "bytes": 329,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/milestones/1792643508850714060.json",
+        "sha256": "f1ae6c5ab3b2094e3cb9c1cc8fb2cf31352326db286bdf76b6909ece18c5b476"
+      },
+      {
+        "bytes": 317,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/milestones/1792643522658166657.json",
+        "sha256": "dbc4943b2f94820f259adfe010cc98ac63eac99e2f04d855acb3f7e4508e9504"
+      },
+      {
+        "bytes": 309,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/milestones/1792643525048791886.json",
+        "sha256": "bf7337c52cd105ef104af05f7f4b033f74bb049bd4e849641de77a4c74a3eb7e"
+      },
+      {
+        "bytes": 301,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/milestones/1792643841041667063.json",
+        "sha256": "d0c4a712dd4b9ae162ccbb9d023fb306492168d764ee0065d9679f4c1665ffaf"
+      },
+      {
+        "bytes": 341,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/milestones/1792645351896194400.json",
+        "sha256": "af9470b306def360d1c1ed3a708698f5b87a2e97ccc27ddb6e96a313a6732163"
+      },
+      {
+        "bytes": 9273,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/postpush-prepare.py",
+        "sha256": "0b8d88be250983c13ca7af1df94b702c00b0859d7b50c0ab311fdbe71110bbbb"
+      },
+      {
+        "bytes": 903,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/approval-diff-check.command.json",
+        "sha256": "0e409ef2d8085d764be102a7616c42e433d49c3a4edd2c7989fb3d9693f86191"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/approval-diff-check.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/approval-diff-check.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/approval-diff-check.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 959,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/commit-approval.command.json",
+        "sha256": "a9b9ca134728529e6fb696e882c219a13123fa1792114de1def70e85ebe5b81b"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/commit-approval.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/commit-approval.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 156,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/commit-approval.out",
+        "sha256": "5fb9e0c8069a6708a26428f6c192dc8965882f42c57f9adc1cab0b551c6e629f"
+      },
+      {
+        "bytes": 922,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/fetch-local-under-lock.command.json",
+        "sha256": "9d78b523376c514b271e0048310f77241e5641c5d54f171d0440e051876096a7"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/fetch-local-under-lock.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/fetch-local-under-lock.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/fetch-local-under-lock.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 945,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/push-approved-branch.command.json",
+        "sha256": "34ad67b1f49fb64f21cd2d27fd98bf48bb976d6346d4eb2aafd271b65ab05d24"
+      },
+      {
+        "bytes": 317,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/push-approved-branch.err",
+        "sha256": "9ec9eec677406986793d111cce0fed7faaff2b78edbb519d7e713e8b4672c51d"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/push-approved-branch.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/push-approved-branch.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 908,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/rebase-local.command.json",
+        "sha256": "c68484cdd7d9df84fa03d62069fba9811ebd6d4fddce42057587be41f23278ad"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/rebase-local.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/rebase-local.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 63,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/rebase-local.out",
+        "sha256": "27cedb8d2239e5c446b4b95315c450b2d20126cc0e7e6ef8ca3dc6acfef91333"
+      },
+      {
+        "bytes": 1012,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/stage-approval.command.json",
+        "sha256": "9310593a5254b6837e3a936f03c549c4475618ecdbde0f2d22f450fbb9a1d5eb"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/stage-approval.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/stage-approval.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/stage-approval.out",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1014,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/verify-approved-branch-0.command.json",
+        "sha256": "85f648485885338888a0a94c2f66aba173092cd441050cd25ebf09041a78a3aa"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/verify-approved-branch-0.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/verify-approved-branch-0.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 85,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/verify-approved-branch-0.out",
+        "sha256": "47c404022c3cda397598977577f3afd3dd44c6189a8e59d3bcfe1052ac006d44"
+      },
+      {
+        "bytes": 1043,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/verify-approved-branch-1.command.json",
+        "sha256": "ad435bb9bf78abc2b5123c70725679a56c6a99bf8f3c79a1ee501c87778fdf9f"
+      },
+      {
+        "bytes": 0,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/verify-approved-branch-1.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/verify-approved-branch-1.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 85,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/prepare/verify-approved-branch-1.out",
+        "sha256": "47c404022c3cda397598977577f3afd3dd44c6189a8e59d3bcfe1052ac006d44"
+      },
+      {
+        "bytes": 102674,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json",
+        "sha256": "7f1472349026943361f1b85b54df2da6ea2d17f826e01313fe730bd2aaa1ee49"
+      },
+      {
+        "bytes": 17421,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json",
+        "sha256": "8d7124e546f0951f7398708b3741c413fc67739fd035bb6b14d3fca69570925c"
+      },
+      {
+        "bytes": 8621199,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/EVENT_OCCURRENCES.jsonl",
+        "sha256": "368d5e70524ac0dbc21fdd406f04943e2d1d2c2d91c6ebb7d6cd106ea75e94a0"
+      },
+      {
+        "bytes": 1717,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/README.md",
+        "sha256": "cb21ad9f4db699bb262ea920f155131827cd677679ab54bb651ad3f4e3722318"
+      },
+      {
+        "bytes": 3303,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/VALIDATOR_RECEIPT.json",
+        "sha256": "75f0a3f2a245e61e102efb27fd1da7bbd732b01952ea47b162c9e81fd35d6b78"
+      },
+      {
+        "bytes": 47008,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/adjudication/EXPECTED_252_EVENT_TYPES.tsv",
+        "sha256": "d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541"
+      },
+      {
+        "bytes": 2781,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json",
+        "sha256": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e"
+      },
+      {
+        "bytes": 812298,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl",
+        "sha256": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294"
+      },
+      {
+        "bytes": 62320,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/adjudication/source_groups/group_a.jsonl",
+        "sha256": "d4305411923dee2edfc2c8b822a9fb42eda33b320c64c7f84aaf16ce4cd134a3"
+      },
+      {
+        "bytes": 187869,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/adjudication/source_groups/group_b.jsonl",
+        "sha256": "f1279ec339fc3b20676e19787ab423ffaeaba3b7a58181828af5e94242cf7160"
+      },
+      {
+        "bytes": 298969,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/adjudication/source_groups/group_c.jsonl",
+        "sha256": "9528f134447acb50c2c8053855db64bbcfeb9bdbbc56cb1d9e52ce11eb10cc79"
+      },
+      {
+        "bytes": 71947,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/adjudication/source_groups/group_d.jsonl",
+        "sha256": "5b3af4d546e0aecca799ac38e0ae65ed81e356db18531baa7e7027dfb9cd66b2"
+      },
+      {
+        "bytes": 50915,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/adjudication/source_groups/group_e.jsonl",
+        "sha256": "52ad46cafed54f333ab144b7297ca2e188353adf38a3ee4488099e76f8acba2a"
+      },
+      {
+        "bytes": 54708,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/adjudication/source_groups/group_f.jsonl",
+        "sha256": "24585545a7234db0972ca58da2b8557416bab7ef74b75afbf318f6bfdb1c93d1"
+      },
+      {
+        "bytes": 30811,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-old-currentness/adjudication/source_groups/group_g.jsonl",
+        "sha256": "5e1f709cbf5a4f1bd19cec24d12b033cac79d4e0ce0e194d8babb13bdc0499db"
+      },
+      {
+        "bytes": 3148,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/shared-writer-config.json",
+        "sha256": "eafe96337e081de62498f0491bf7f5b1a5ed40e6fc9949d3c81da936cf0e0985"
+      },
+      {
+        "bytes": 161,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/complete.json",
+        "sha256": "38560ce81194fe7c370dd43a83e37bde45e4c2528294465869d661d964c71656"
+      },
+      {
+        "bytes": 1247,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/final.command.json",
+        "sha256": "8278a2654123d0bac565e85d77edb38f5d58926045c1adeab3918cb736e40d1b"
+      },
+      {
+        "bytes": 15,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/final.err",
+        "sha256": "1718f95d8ec287ff67a1e841a822f0ccb5e9e766ede85f857d8bfb2515f2d346"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/final.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 2006,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/final.out",
+        "sha256": "56a39d33b464ceb3d2d0aff04d41818ff6cb5f7c30cd0ef84547f60d33b652ac"
+      },
+      {
+        "bytes": 1243,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/old.command.json",
+        "sha256": "bdb11ce5451fe1034279ea4aca43d164d1ce36e534ddeaee0bf1257c88f2ea10"
+      },
+      {
+        "bytes": 15,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/old.err",
+        "sha256": "1718f95d8ec287ff67a1e841a822f0ccb5e9e766ede85f857d8bfb2515f2d346"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/old.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 2009,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/old.out",
+        "sha256": "80b300a191b4c2dd68c9fcee0063ebc7b0a3c7124f72857c8d08542f216c8cbf"
+      },
+      {
+        "bytes": 1253,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/restore.command.json",
+        "sha256": "b2328f2361c0732a4bc1b638ba61573f8c2630088d1b7129f5b8b4312f8db725"
+      },
+      {
+        "bytes": 15,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/restore.err",
+        "sha256": "1718f95d8ec287ff67a1e841a822f0ccb5e9e766ede85f857d8bfb2515f2d346"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/restore.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 2011,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/restore.out",
+        "sha256": "174d1fc7f4dff373960a3e89f58d165c146700f7a4ddfe0873b419d37e972f26"
+      },
+      {
+        "bytes": 1246,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/write.command.json",
+        "sha256": "3642bacb0f3b38923c31fcf483153743ae3f4c9e3c3dfcaeafefb8013cf2f8c4"
+      },
+      {
+        "bytes": 15,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/write.err",
+        "sha256": "1718f95d8ec287ff67a1e841a822f0ccb5e9e766ede85f857d8bfb2515f2d346"
+      },
+      {
+        "bytes": 2,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/write.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "bytes": 2006,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal/write.out",
+        "sha256": "e330dd434caccdb4a84b887eef52e3bdc1d2ac428110b7a1c5e9efa157af9e9a"
+      },
+      {
+        "bytes": 3154,
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/writer-rehearsal-config.json",
+        "sha256": "af113d956a4d6a5f1fba3ef52fe858cd6dc3d3c1c38179999ff6d49d173a08ec"
+      }
+    ],
+    "prepared_at_utc": "2026-10-22T05:02:50.550783+00:00",
+    "raw_evidence_manifest": {
+      "bytes": 53780,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261022/landing-20261022/followup/record-evidence.SHA256SUMS",
+      "sha256": "1c82f0f3a91e767a97dde5df6e3ec232c50691bcff960182bc4003e665a61cbf"
+    },
+    "readiness_residual_kinds": {
+      "buildability_gate_report_stale_or_not_canonical": 1,
+      "event_denominator_unresolved": 2,
+      "event_family_contract_depth_unresolved": 2,
+      "event_legacy_fixture_root_mismatch": 1,
+      "implementation_readiness_self_tests_failed": 1,
+      "pnc019_source_hash_stale": 16
+    },
+    "retain_original_T3_worktree": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-03cec141",
+    "snapshot_run_id": "pds-20261022-001-current-planunit-snapshot",
+    "supersedes_run_id": "pds-20261021-003-current-planunit-snapshot"
+  },
   "preparation_status": {
     "landing_lock_taken": false,
     "main_pushed": false,
@@ -2804,7 +4420,7 @@
     ],
     "shards_modified_by_reseal": []
   },
-  "shared_checkout_accessed": false,
-  "shared_currentness_write": false,
-  "verification_scope": "The landing comparison checks the nine-file governance commit. The final packet commit adds only six review records. JSON syntax is checked separately; every governance byte remains identical after the comparison. The external COMPLETION.json binds the final branch head and publication, avoiding recursive record-only commits. Any rebase requires the requested checks again."
+  "shared_checkout_accessed": true,
+  "shared_currentness_write": true,
+  "verification_scope": "The preparation verdict remains preserved above. The checked first main push and completed snapshot/baseline recording are bound below. The final shared follow-up check and publication are bound externally after this commit to avoid a commit/check recursion."
 }
