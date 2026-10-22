@@ -21,13 +21,13 @@
    model menu redrawing its detail as the pointer moves) dropped that class while the row stayed the ink bar under :hover,
    leaving the account, effort and preview words in dim ink on it (model menu, NieR dark: 117,115,101 on 209,205,183,
    about 2.9:1). Here the same paper words follow :hover as well, for the chat's own cursor rows only (each restyle stays
-   inside one row). */
+   inside one row); five classes outweigh every colour rule the chat gives those rows' words, so no !important. */
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host :is(.menu-item, .thread-row, .model-row, .effort-row, .pm-tops-item, .att-source-row, .qs-mention-item):hover :where(*) {
-  color: inherit !important; -webkit-text-fill-color: currentColor; --nx-ink: var(--o55-nier-on-ink);
+  color: inherit; -webkit-text-fill-color: currentColor; --nx-ink: var(--o55-nier-on-ink);
 }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .menu-item:hover .menu-icon { background: transparent !important; box-shadow: none !important; }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .menu-item:hover .menu-icon { background: transparent; box-shadow: none; }
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .menu-item:hover :is(kbd, .meta-pill) {
-  background: var(--o55-nier-on-ink) !important; color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink) !important;
+  background: var(--o55-nier-on-ink); color: var(--o55-nier-ink); border-color: var(--o55-nier-on-ink);
 }
 
 /* ---------------------------------------------------------------- cursor: run-view tabs */
