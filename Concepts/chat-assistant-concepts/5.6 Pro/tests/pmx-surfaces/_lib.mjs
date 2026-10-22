@@ -15,6 +15,9 @@ export async function openApp(browser, file, size = { width: 1440, height: 900 }
   await page.waitForFunction(() => window.PM56_DEMO && window.PM56_EXT && window.PM56_SHELL && window.__PM56_BOOT_OK !== false, null, { timeout: 20000 });
   await page.waitForTimeout(900);
   await page.evaluate(() => { try { window.PM56_DEMO.completeWorking(); } catch (e) { } });
+  /* (2026-10-22) recorded examples play on their own after Start (recorded-play.js); the surfaces reach each state
+     through the examples' QA hooks, so the recordings hold here instead of racing them */
+  await page.evaluate(() => { window.PM56_RECPLAY_HOLD = true; });
   return { page, errors, h: makeHelpers(page) };
 }
 
@@ -53,6 +56,10 @@ export function makeHelpers(page) {
   async function drive(n = 5, gap = 2200) {
     const log = [];
     for (let i = 0; i < n; i++) {
+      /* (2026-10-22) a recorded example whose guide only narrates: its held recording's next beat */
+      const stepped = await ev(() => { const g = document.querySelector('[class*="demo-guide"]'), b = g && [...g.querySelectorAll('button')].some(b => !b.disabled && !/replay|close/i.test((b.dataset.action || '') + ' ' + b.textContent));
+        return !document.querySelector('#pmOverlayRoot .dialog') && !b && window.PM56_RECPLAY && Object.keys(window.PM56_RECPLAY.players).length ? window.PM56_RECPLAY.step().then(ok => ok ? 'recording:step' : null) : null; });
+      if (stepped) { log.push(stepped); await wait(gap); continue; }
       log.push(await ev(() => { const d = document.querySelector('#pmOverlayRoot .dialog'); if (d) { const bs = [...d.querySelectorAll('.primary-button')].filter(b => !b.disabled && b.offsetParent); const b = bs.at(-1); if (b) { const t = b.textContent.trim(); b.click(); return 'dialog:' + t; } return 'dialog:none'; } const g = document.querySelector('[class*="demo-guide"]'); const bs = g ? [...g.querySelectorAll('button')].filter(b => !b.disabled && !/replay|close/i.test((b.dataset.action || '') + b.title) && b.offsetParent) : []; if (bs[0]) { const t = bs[0].textContent.trim(); bs[0].click(); return 'guide:' + t; } return 'idle'; }));
       await wait(gap);
     }

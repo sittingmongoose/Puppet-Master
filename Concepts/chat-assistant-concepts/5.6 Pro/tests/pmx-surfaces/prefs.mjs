@@ -30,7 +30,8 @@ async function send(h, text) {
   await h.wait(150);
 }
 async function chooseInSheet(h, sel) {
-  await tap(h, '.eli5-demo-guide [data-action="eli5-open"]');
+  /* (2026-10-22) the guide narrates and has no Open ELI5: the sheet opens the way the example itself opens it */
+  await h.action('eli5-open');
   await h.wait(500);
   await tap(h, '#pmOverlayRoot ' + sel);
   await h.wait(300);

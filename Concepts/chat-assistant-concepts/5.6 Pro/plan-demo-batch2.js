@@ -199,5 +199,5 @@
  E.chainAction('plan-demo-start',()=>{stop();active=null;return false;});
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;
  G.gallery=c=>'<section class="demo-section"><h3>Guided Plan scheduling</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="schedule-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_SCHEDULE_DEMOS={start,snapshot:()=>active?clone({...active,finished:!!finished()}):null,dialogGuide:c=>guide(c,true),editorGuide:id=>active&&active.planId===id?guide(ctx(),false,true):'',afterClose};
+ window.PM56_SCHEDULE_DEMOS={start,snapshot:()=>active?clone({...active,finished:!!finished()}):null,dialogGuide:c=>guide(c,true),editorGuide:id=>(active&&active.planId===id?guide(ctx(),false,true):'')||(window.PM56_PLAN_DEMOS&&window.PM56_PLAN_DEMOS.editorGuide?window.PM56_PLAN_DEMOS.editorGuide(id):''),afterClose};
 })();

@@ -223,6 +223,20 @@
     /* upcoming(): the beat that comes next (for the guide's "Next: ..."), or null while the example waits for you */
     p.upcoming = function () { if (p.stopped) return null; var b = null; try { b = o.next(); } catch (e) { } return b && !p.done[b.id] ? b : null; };
     p.ran = function (id) { return !!p.done[id]; };
+    /* stepNow(): run the next beat at once, without its wait (a harness walking a held recording a step at a time) */
+    p.stepNow = function () {
+      if (p.stopped || p.busy) return Promise.resolve(false);
+      var b = null; try { b = o.next(); } catch (e) { return Promise.resolve(false); }
+      if (!b || p.done[b.id]) return Promise.resolve(false);
+      p.busy = true;
+      return Promise.resolve().then(b.run).then(function (ok) {
+        p.busy = false; if (ok === false) return false;
+        p.done[b.id] = 1; p.last = now(); p.log.push({ id: b.id, at: Math.round(now() - p.started), step: true }); if (o.render) o.render(); return true;
+      }, function (e) { p.busy = false; p.errors.push(String(e && e.message || e)); return false; });
+    };
+    /* a lint harness that drives an example through its own QA hooks (tests/pmx-surfaces) sets PM56_RECPLAY_HOLD: the
+       recording then holds from the start (the guide still narrates the state the harness reaches), never racing it */
+    if (window.PM56_RECPLAY_HOLD) { p.held = 'harness'; return p; }
     /* progress(): the dwell before the next beat, in real ms ({ms, at}: its length and how far in), for the guide's
        next-step line; null while it waits for you, holds, or a beat is running */
     p.progress = function () {
@@ -237,11 +251,13 @@
   /* seen(store, key): the motion time store first saw key (a moment the product reached by itself), for notBefore */
   function seen(store, key) { store.__seen = store.__seen || {}; if (store.__seen[key] == null) store.__seen[key] = now(); return store.__seen[key]; }
   function stopAll(why) { Object.keys(players).forEach(function (k) { var q = players[k]; q.stop(); if (why && q.o.superseded) q.o.superseded(); }); reveal(''); }
+  /* step(): the held recording's next beat, now (tests/pmx-surfaces drive()); resolves true when one ran */
+  function step() { var k = Object.keys(players)[0]; return k ? players[k].stepNow() : Promise.resolve(false); }
   function snapshot() { var out = {}; Object.keys(players).forEach(function (k) { var p = players[k]; out[k] = { log: p.log.slice(), errors: p.errors.slice(), waiting: !!p.waiting, held: p.held || '', current: p.current || null }; }); return out; }
 
   if (E && E.chainAction) E.chainAction('reset-all', function () { stopAll('reset'); return false; });
   /* a Start in Demo Studio (any example's, including the ones that don't use this player) ends the recording playing now;
      capture phase, so it runs before the new example's own Start */
   document.addEventListener('click', function (e) { var t = e.target && e.target.closest && e.target.closest('.demo-dialog .demo-trigger'); if (t) stopAll('another example'); }, true);
-  window.PM56_RECPLAY = { play: play, seen: seen, viaWand: viaWand, press: press, reveal: reveal, hover: hover, rest: rest, choose: choose, type: type, steady: steady, find: find, shown: shown, wait: wait, after: after, cancel: cancel, now: now, stopAll: stopAll, snapshot: snapshot, players: players, HOLD_SAY: HOLD_SAY, COMPOSER: COMPOSER };
+  window.PM56_RECPLAY = { play: play, step: step, seen: seen, viaWand: viaWand, press: press, reveal: reveal, hover: hover, rest: rest, choose: choose, type: type, steady: steady, find: find, shown: shown, wait: wait, after: after, cancel: cancel, now: now, stopAll: stopAll, snapshot: snapshot, players: players, HOLD_SAY: HOLD_SAY, COMPOSER: COMPOSER };
 })();

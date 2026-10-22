@@ -559,8 +559,8 @@ const AX_EXAMPLES = [
   { name: 'Revert · Your later edit is protected', action: 'revert-demo-start', flow: 'conflict', moves: ['#pmOverlayRoot [data-action="af-revert-confirm"]'] },
   { name: 'ELI5 · Simple answers in one chat', action: 'eli5-demo-start', flow: 'override' },
   { name: 'ELI5 · Back to your usual setting', action: 'eli5-demo-start', flow: 'inherit' },
-  { name: 'Plan · Build a small Plan', action: 'plan-demo-start', flow: 'complete', moves: ['.transcript [data-action="pd-build"]'] },
-  { name: 'Plan · Stop and revise', action: 'plan-demo-start', flow: 'revise', moves: ['.transcript [data-action="pd-build"]'] },
+  { name: 'Plan · Build a small Plan', action: 'plan-demo-start', flow: 'complete', moves: ['[data-action="pd-build"]'] },
+  { name: 'Plan · Stop and revise', action: 'plan-demo-start', flow: 'revise', moves: ['[data-action="pd-build"]'] },
   { name: 'Debug · Reproduce, repair, and close', action: 'debug-demo-start', flow: 'repair', moves: ['[data-action="debug-apply"]'] },
   { name: 'Debug · Protect a changed target', action: 'debug-demo-start', flow: 'drift', moves: ['[data-action="debug-apply"]', '[data-action="debug-rebind"]', '[data-action="debug-apply"]'] },
   { name: 'Back Seat Driver · Catch a missing measurement', action: 'bsd12-start', flow: 'survives' },
@@ -625,8 +625,11 @@ async function otherExamples({ page, ev, sleep }) {
         if (moves.length) {
           /* a person reads the question before answering it (excluded from the playback time) */
           const w0 = await ev(() => window.PM56_CLOCK.now()); await sleep(700);
-          const sel = moves[0], l = page.locator(sel).filter({ visible: true }).first();
-          if (await l.count()) { await l.click(); moves.shift(); pressed++; await ev(() => { window.__ax.yours++; }); }
+          /* the control a person can reach: of the visible matches, the one on top at its own centre (at a narrow width an
+             open document covers the chat's copy of the same control) */
+          const sel = moves[0], nth = await ev(sel => [...document.querySelectorAll(sel)].findIndex(b => { if (!(b.checkVisibility ? b.checkVisibility() : b.getClientRects().length)) return false;
+            b.scrollIntoView({ block: 'nearest' }); const q = b.getBoundingClientRect(), top = document.elementFromPoint(q.left + q.width / 2, q.top + q.height / 2); return !!top && (top === b || b.contains(top)); }), sel);
+          if (nth >= 0) { await page.locator(sel).nth(nth).click(); moves.shift(); pressed++; await ev(() => { window.__ax.yours++; }); }
           waitMs += (await ev(() => window.PM56_CLOCK.now())) - w0; await sleep(400); continue;
         }
       }

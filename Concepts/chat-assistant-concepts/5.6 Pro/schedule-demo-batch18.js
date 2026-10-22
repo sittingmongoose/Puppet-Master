@@ -89,7 +89,8 @@ function nextWindows(r){const w=PM56_B17_WORK.snapshot(),pid=w&&w.planId,b=build
   if(r.crew&&E.ctx().state.dialog&&!sheet('sched-build-at')){
    const nm=document.querySelector('#pmOverlayRoot input[data-collab-input="name"]');
    if(nm&&nm.value!==CREW_NAME)return {id:'crew-name',dialog:true,wait:PACE.wand,run:()=>RP.type(CREW_NAME,{into:'#pmOverlayRoot input[data-collab-input="name"]',cps:30})};
-   if(nm)return {id:'crew-use',dialog:true,wait:PACE.create,run:()=>RP.press('#pmOverlayRoot [data-action="collab-modal-commit"]').then(ok=>{if(ok)r.crewConfigured=true;return ok;})};
+   /* marked before the press: the Build At sheet re-renders inside the click, and its guide line must already know */
+   if(nm)return {id:'crew-use',dialog:true,wait:PACE.create,run:()=>{r.crewConfigured=true;return RP.press('#pmOverlayRoot [data-action="collab-modal-commit"]').then(ok=>{if(!ok)r.crewConfigured=false;return ok;});}};
    return null;}
   if(r.crew&&sheet('sched-build-at')&&!crewSet(r)){
    const conf=RP.find('#pmOverlayRoot [data-action="sched-configure-crew"]');

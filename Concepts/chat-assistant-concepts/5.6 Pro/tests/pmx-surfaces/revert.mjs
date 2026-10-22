@@ -19,7 +19,8 @@ async function start(h, flow, apply = true) {
 }
 async function openSheet(h) { const id = await turnId(h); await h.action('af-revert-preview', { value: id }); await h.wait(300); await h.settle(); }
 async function clickIn(h, sel) { const ok = await h.ev(s => { const b = document.querySelector(s); if (!b) return false; b.click(); return true; }, sel); if (!ok) throw new Error('not found: ' + sel); await h.wait(250); }
-const change = h => clickIn(h, '#pmOverlayRoot [data-action="revert-demo-change"]');
+/* (2026-10-22) the recording plays your edit of checkout.js; the sheet's guide line has no button for it, so the QA hook */
+const change = async h => { await h.action('revert-demo-change'); await h.wait(250); };
 const confirm = h => clickIn(h, '#pmOverlayRoot .pmx-primary[data-action="af-revert-confirm"]:not([disabled])');
 /* the effects-ledger edit step: show or hide the last row's mini diff ("Show the change"; on three files or fewer the
    first row's starts open, and a row remembers its choice between openings, so the step toggles) */

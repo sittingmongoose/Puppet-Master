@@ -8,6 +8,9 @@
    "Followed 1 of your rules", or "Missed 1 of your rules" with [Ask for a fix], which fills the message box).
    Every Teach state runs inside a recorded example's own chat, whose project holds only that example's rules. */
 const MEM_CANON = ['Memory', 'Verified', 'Unverified'];
+/* (2026-10-22) the recorded examples play on their own; here they hold, and drive() walks them a beat at a time
+   (recorded-play.js): a guide step that used to be one press is now the beats a person makes (Teach's Save as a rule…
+   is More, the entry and Save rule; asking is typing and Send), so the drive counts are beats */
 async function memoryDemo(h, flow, steps) {
   await h.closeAll();
   await h.demo('memory-demo-start', flow);
@@ -45,19 +48,19 @@ function memorySheet(id, title, prepare, canon) {
 }
 export default ({ demo }) => [
   memorySheet('memteach:memory-verified', 'Memory sheet: a note a passing test verified (8.10)', async h => {
-    await memoryDemo(h, 'verified', 2); await openMemory(h, await gistId(h));
+    await memoryDemo(h, 'verified', 3); await openMemory(h, await gistId(h));
   }),
   memorySheet('memteach:memory-stale', 'Memory sheet: the note went out of date, a display group only (8.10, IMPACT A1-31)', async h => {
-    await memoryDemo(h, 'verified', 2); await h.action('memory-demo-change'); await openMemory(h, await gistId(h));
+    await memoryDemo(h, 'verified', 3); await h.action('memory-demo-change'); await openMemory(h, await gistId(h));
   }),
   memorySheet('memteach:memory-decide', 'Memory sheet: a note suggests changing a locked rule (8.10 G-33)', async h => {
-    await memoryDemo(h, 'locked', 3); await openMemory(h, await gistId(h));
+    await memoryDemo(h, 'locked', 4); await openMemory(h, await gistId(h));
   }),
   memorySheet('memteach:memory-next', 'Memory sheet: what your next message will include', async h => {
-    await memoryDemo(h, 'verified', 2); await openMemory(h, await gistId(h)); await h.action('memory-preview'); await h.settle();
+    await memoryDemo(h, 'verified', 3); await openMemory(h, await gistId(h)); await h.action('memory-preview'); await h.settle();
   }),
   memorySheet('memteach:memory-rules', 'Memory sheet: Your rules with Turn off confirmed in place (8.10, 8.11 G-33)', async h => {
-    await memoryDemo(h, 'locked', 2);
+    await memoryDemo(h, 'locked', 3);
     await openMemory(h); await h.action('af-memory-section', { value: 'taught' });
     const ds = await h.ev(() => { const b = document.querySelector('#pmOverlayRoot .pmx-mem-rule [data-action="af-teach-revoke"]'); return b ? { value: b.dataset.value, thread: b.dataset.thread } : null; });
     if (ds) await h.action('af-teach-revoke', ds);
@@ -65,7 +68,7 @@ export default ({ demo }) => [
   }, ['Memory', 'In use']),
   {
     id: 'memteach:gist-review', title: 'Gist Review document: notes, groups, proof, raw data behind a disclosure (8.10 G-26)', kind: 'view', tags: ['app', 'memteach', 'memory'], canon: MEM_CANON,
-    async open(h) { await memoryDemo(h, 'verified', 2); await h.action('memory-demo-change'); await h.action('memory-open', { id: await gistId(h) }); await h.settle(); },
+    async open(h) { await memoryDemo(h, 'verified', 3); await h.action('memory-demo-change'); await h.action('memory-open', { id: await gistId(h) }); await h.settle(); },
     async after(h) { await h.closeAll(); }
   },
   teachSheet('memteach:teach-similar', 'Teach sheet: a similar rule, Replace or Keep both (8.11)', async h => {
@@ -87,19 +90,19 @@ export default ({ demo }) => [
   {
     id: 'memteach:teach-doc', title: 'Your rules document: two versions, the next-message list, Turn off confirmed in place (8.11 G-26, G-33)', kind: 'view', tags: ['app', 'memteach', 'teach'], canon: ['Teach'],
     async open(h) {
-      await h.closeAll(); await h.demo('teach-demo-start', 'correct'); await h.drive(5, 1100);
+      await h.closeAll(); await h.demo('teach-demo-start', 'correct'); await h.drive(8, 1100);
       const tid = await h.ev(() => window.PM56_EXT.ctx().thread.id);
       await h.action('teach-preview', { thread: tid }); await h.settle();
     },
     async after(h) { await h.closeAll(); }
   },
-  demo('memteach:teach-chat-capture', { action: 'teach-demo-start', flow: 'capture', drive: 3, gap: 1100, tags: ['memteach', 'teach'], title: 'Chat: "Rule saved" receipt and a reply that followed the rule (8.11, owner answer E-36)', canon: ['Teach'] }),
-  demo('memteach:teach-chat-missed', { action: 'teach-demo-start', flow: 'missed', drive: 3, gap: 1100, tags: ['memteach', 'teach'], title: 'Chat: a reply that missed a rule, "Missed 1 of your rules" and [Ask for a fix] (owner answer E-36)', canon: ['Teach'] }),
-  demo('memteach:teach-chat-fix', { action: 'teach-demo-start', flow: 'missed', drive: 4, gap: 1100, tags: ['memteach', 'teach'], title: 'Chat: Ask for a fix filled the message box; nothing sent (owner answer E-36)', canon: ['Teach'] }),
-  demo('memteach:teach-chat-versions', { action: 'teach-demo-start', flow: 'correct', drive: 5, gap: 1100, tags: ['memteach', 'teach'], title: 'Chat: /teach, "Rule saved", "Rule updated to v2" (8.11)', canon: ['Teach'],
+  demo('memteach:teach-chat-capture', { action: 'teach-demo-start', flow: 'capture', drive: 5, gap: 1100, tags: ['memteach', 'teach'], title: 'Chat: "Rule saved" receipt and a reply that followed the rule (8.11, owner answer E-36)', canon: ['Teach'] }),
+  demo('memteach:teach-chat-missed', { action: 'teach-demo-start', flow: 'missed', drive: 5, gap: 1100, tags: ['memteach', 'teach'], title: 'Chat: a reply that missed a rule, "Missed 1 of your rules" and [Ask for a fix] (owner answer E-36)', canon: ['Teach'] }),
+  demo('memteach:teach-chat-fix', { action: 'teach-demo-start', flow: 'missed', drive: 6, gap: 1100, tags: ['memteach', 'teach'], title: 'Chat: Ask for a fix filled the message box; nothing sent (owner answer E-36)', canon: ['Teach'] }),
+  demo('memteach:teach-chat-versions', { action: 'teach-demo-start', flow: 'correct', drive: 8, gap: 1100, tags: ['memteach', 'teach'], title: 'Chat: /teach, "Rule saved", "Rule updated to v2" (8.11)', canon: ['Teach'],
     then: async h => { const tid = await h.ev(() => window.PM56_EXT.ctx().thread.id); await h.action('teach-revoke-confirm', { thread: tid }); await h.ev(() => { const c = window.PM56_EXT.ctx(); c.state.editorRevealed = false; c.renderApp(); }); } }),
   demo('memteach:teach-chat-coalesced', { action: 'teach-demo-start', flow: 'capture', tags: ['memteach', 'teach'], title: 'Chat: three saves in a row read as one line, "3 rules saved" (8.11)', canon: ['Teach'],
     then: async h => { for (const t of ['Always use pnpm, not npm.', 'Keep answers under 200 words.', 'Write tests before changing a public function.']) await teachRule(h, t, 'project'); } }),
-  demo('memteach:memory-chat-verified', { action: 'memory-demo-start', flow: 'verified', drive: 2, gap: 1100, tags: ['memteach', 'memory'], title: 'Chat: the reply tick "Verified: label checks pass (3/3)" and the guide', canon: [] }),
-  demo('memteach:memory-chat-locked', { action: 'memory-demo-start', flow: 'locked', drive: 3, gap: 1100, tags: ['memteach', 'memory'], title: 'Chat: the one memory line, a suggested change to a locked rule (family ledger)', canon: ['Memory'] })
+  demo('memteach:memory-chat-verified', { action: 'memory-demo-start', flow: 'verified', drive: 3, gap: 1100, tags: ['memteach', 'memory'], title: 'Chat: the reply tick "Verified: label checks pass (3/3)" and the guide', canon: [] }),
+  demo('memteach:memory-chat-locked', { action: 'memory-demo-start', flow: 'locked', drive: 4, gap: 1100, tags: ['memteach', 'memory'], title: 'Chat: the one memory line, a suggested change to a locked rule (family ledger)', canon: ['Memory'] })
 ];

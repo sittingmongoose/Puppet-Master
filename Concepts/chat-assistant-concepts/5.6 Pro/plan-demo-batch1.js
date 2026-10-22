@@ -93,7 +93,9 @@
    if(box&&box.value===FEEDBACK)return {id:'send',wait:PACE.send,run:()=>R.press('.composer [data-action="send"]')};
    if(innerWidth<=1100&&E.ctx().state.editorRevealed)return {id:'back-to-chat',wait:PACE.close,run:()=>R.press('[data-action="return-to-chat"]')};
    return {id:'type',wait:PACE.type,run:()=>R.type(FEEDBACK)};}
-  if(name==='markdown')return {id:'markdown',wait:PACE.view,run:()=>R.press(q('pd-view',p.plan_id,'[data-value="markdown"]')).then(ok=>{if(ok)done();return ok;})};
+  /* at a narrow width the chat had the screen for the feedback: the plan opens again to show its Markdown */
+  if(name==='markdown'&&!R.find(q('pd-view',p.plan_id,'[data-value="markdown"]'))&&!a.reopened)return {id:'reopen',wait:PACE.view,run:()=>R.press(q('pd-open-version',p.plan_id)).then(ok=>{if(ok)a.reopened=true;return ok;})};
+  if(name==='markdown')return {id:'markdown',wait:a.reopened?PACE.close:PACE.view,run:()=>R.press(q('pd-view',p.plan_id,'[data-value="markdown"]')).then(ok=>{if(ok)done();return ok;})};
   return null;}
  function playback(){if(player)player.stop();const s=active;player=R.play({key:'plan-demo',live:()=>active===s,threads:()=>[s.threadId],next,render:()=>ctx().renderApp(),superseded:()=>{if(active===s)active=null;}});}
  function stop(){if(player){player.stop();player=null;}}
@@ -137,13 +139,16 @@
   if(name==='revise')return {text:'Stopped; the plan is ready for your feedback, and the message box now writes to it. Next: you type what to change and send it.'};
   if(name==='markdown')return {text:'Version 2 is written, and version 1 is kept unchanged. Next: you look at the new version as Markdown.'};
   return {text:''};}
- E.slot('composerBelow',c=>{
+ /* the dock line, or the plan document's first row when the document covers the chat (a narrow window) */
+ function guideHtml(c,inEditor){
   if(!active||c.state.selectedThread!==active.threadId||c.state.dialog)return '';
+  if((innerWidth<=1100&&c.state.editorRevealed)!==inEditor)return '';
   const s=say(),text=R.steady(active,s.text,!!s.done,()=>ctx().renderApp());if(!text)return '';
-  return window.PM56_SHELL.pmxGuide({key:'plan-demo-guide',cls:'plan-demo-guide',placement:'dock',caption:'Recorded example · '+c.esc(flows[active.id].label),step:c.esc(text),
+  return window.PM56_SHELL.pmxGuide({key:inEditor?'plan-demo-guide:doc':'plan-demo-guide',cls:'plan-demo-guide',placement:inEditor?'doc':'dock',caption:'Recorded example · '+c.esc(flows[active.id].label),step:c.esc(text),
    actions:finished()&&text===s.text?[{action:'plan-demo-replay',label:'Replay'}]:[],next:player&&player.progress(),close:{action:'plan-demo-close',label:'Close the example'},
    extra:active.error?'<p class="pmx-fine" role="status">'+c.esc(active.error)+'</p>':''});
- });
+ }
+ E.slot('composerBelow',c=>guideHtml(c,false));
  E.action('plan-demo-start',(c,b)=>{start(b.dataset.flow);return true;});
  E.action('plan-demo-next',()=>{advance();return true;});
  E.action('plan-demo-replay',()=>{if(active)start(active.id);return true;});
@@ -151,5 +156,5 @@
  E.chainAction('reset-all',()=>{stop();active=null;return false;});
  const G=window.PM56_REPAIR_DEMOS;
  if(G){const old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided Plan workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="plan-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);}
- window.PM56_PLAN_DEMOS={start,snapshot:()=>active?clone({...active,finished:!!finished()}):null};
+ window.PM56_PLAN_DEMOS={start,editorGuide:id=>active&&active.planId===id?guideHtml(ctx(),true):'',snapshot:()=>active?clone({...active,finished:!!finished()}):null};
 })();
