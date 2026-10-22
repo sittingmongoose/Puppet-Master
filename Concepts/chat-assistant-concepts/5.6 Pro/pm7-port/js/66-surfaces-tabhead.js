@@ -69,8 +69,43 @@
     return true;
   }
 
+  /* Tabs restored from the saved layout mount at boot, before the chat has booted and adopted them (00-host.js adopt
+     registers their renderer later): those drew their Home kind's own copy (a context tab its own numbers, a
+     deep-discovery tab the Home plan kind's). Once the chat's renderer is there, such a tab remounts and draws the
+     chat's body and this row; a project switch that restores another layout does the same. */
+  /* the port's own ids (context:<thread>, attachment:<...>) are the chat's alone: a restored one is adopted here */
+  var OWN = /^(context:|attachment:)/;
+  function adoptOwn() {
+    var P = W.PMW, H = W.PM56_HOST, A = H && H.app ? H.app() : null;
+    if (!P || !P.renderers || !P.state || !P.state.layout || !A || typeof A.paintBody !== 'function') return;
+    Object.keys(P.state.layout.tabs || {}).forEach(function (id) {
+      if (!OWN.test(id) || P.renderers[id]) return;
+      P.renderers[id] = { render: function (body) { var a = H.app(); if (a && a.paintBody) a.paintBody(body, id); }, label: null };
+    });
+  }
+  function remountAdopted() {
+    var P = W.PMW;
+    if (!P || !P.instances || !P.renderers || !P.render || !P.render.unmountTab) return 0;
+    adoptOwn();
+    var n = 0;
+    Object.keys(P.instances).forEach(function (id) {
+      var e = P.instances[id];
+      if (!P.renderers[id] || !e || !e.host || e.host.querySelector('.pm56-tab')) return;
+      try { P.render.unmountTab(id); n += 1; } catch (_) {}
+    });
+    if (n) { try { P.render.schedule({ animate: false }); } catch (_) {} }
+    return n;
+  }
   var tries = 0;
   (function attempt() { if (wrapKinds() || ++tries > 200) return; setTimeout(attempt, 50); })();
+  // the chat adopts restored tabs a moment after its boot: look for them for the first seconds, then on layout changes
+  var sweeps = 0;
+  (function sweep() { remountAdopted(); if (++sweeps < 24) setTimeout(sweep, 500); })();
+  (function bindLayout() {
+    if (W.PM_HOME && PM_HOME.on) { PM_HOME.on('layout', function () { setTimeout(remountAdopted, 0); }); return; }
+    setTimeout(bindLayout, 200);
+  })();
   var SF = W.PM56_SURFACES = W.PM56_SURFACES || {};
   SF.wrapTabHeads = wrapKinds;
+  SF.remountAdopted = remountAdopted;
 })();
