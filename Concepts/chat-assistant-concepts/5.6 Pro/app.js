@@ -4048,9 +4048,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
             if(admittedMsg) RTc.commitAccepted?.(extCtx(),t,admittedMsg);
           }
           renderApp();
-          /* B20-R3-F3: a claiming hook owns the text (MODAL-012), so deferred
-             dispatch must not duplicate it back into the queue. */
-          return {admitted:!!admittedMsg,restoreQueue:false,reason:'hook_claim'};
+          /* A refusing hook can preserve an empty composer after a queued send.
+             Keep that entry unless its text is already back in the composer;
+             hooks that take ownership (MODAL-012) still consume the entry. */
+          return {admitted:!!admittedMsg,restoreQueue:decision?.preserveComposer===true&&state.composer.trim()!==raw,reason:'hook_claim'};
         }
       }
     }
