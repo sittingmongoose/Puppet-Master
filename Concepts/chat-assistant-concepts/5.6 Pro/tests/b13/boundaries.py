@@ -16,7 +16,8 @@ def main():
  with sync_playwright() as w:
   b=w.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
   def fresh():
-   p=b.new_page(viewport={'width':1440,'height':1000});p.set_default_timeout(7000);p.add_init_script('window.PM56_RECPLAY_HOLD=true');p.on('pageerror',lambda e:r['errors'].append(str(e)));p.set_content(raw.decode('utf-8'),wait_until='domcontentloaded');p.wait_for_function('window.__PM56_BOOT_OK');return p
+   # a context init script: one added to an existing page never runs for set_content (no navigation)
+   cx=b.new_context(viewport={'width':1440,'height':1000});cx.add_init_script('window.PM56_RECPLAY_HOLD=true');p=cx.new_page();p.set_default_timeout(7000);p.on('pageerror',lambda e:r['errors'].append(str(e)));p.set_content(raw.decode('utf-8'),wait_until='domcontentloaded');p.wait_for_function('window.__PM56_BOOT_OK');return p
   def click(p,s):p.locator(s).filter(visible=True).first.click();p.wait_for_timeout(100)
   def start(p,flow):click(p,'[data-action="open-demo"]');click(p,f'[data-action="b13-start"][data-flow="{flow}"]')
   def commit(p):click(p,'[data-action="collab-modal-commit"]')
