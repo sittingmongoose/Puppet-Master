@@ -1092,8 +1092,34 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   await fast(1);
   await ev(() => { const b = document.createElement('button'); b.dataset.flow = 'leads'; window.PM56_EXT.run('b13-start', b, new Event('click')); }); await sleep(1000);
   await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="wonderer"]'); if (i && i.checked) i.click(); }); await sleep(500);
-  const need = await ev(() => { const b = [...document.querySelectorAll('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button')].pop(); return { disabled: !!(b && b.disabled), text: (document.querySelector('#pmOverlayRoot .pmx-sheet') || {}).textContent || '' }; });
+  const need = await ev(() => { const b = [...document.querySelectorAll('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button')].pop(); return { disabled: !!(b && b.disabled), ariaDisabled: b?.getAttribute('aria-disabled'), text: (document.querySelector('#pmOverlayRoot .pmx-sheet') || {}).textContent || '' }; });
+  // PM7 keeps disabled controls focusable for their hover descriptions. An ARIA
+  // appearance alone is insufficient: a painted click must invoke no action and
+  // leave both the run count and configure sheet unchanged.
+  if (target.kind === 'pm7' && !need.disabled && need.ariaDisabled === 'true') {
+    await ev(() => {
+      const original = PM56_EXT._actions['collab-modal-commit'];
+      if (typeof original !== 'function') throw new Error('Missing configure commit action');
+      const p = window.__c56NeedProbe = { original, calls: 0, runs: PM56_COLLAB.runs().length };
+      PM56_EXT._actions['collab-modal-commit'] = function (...args) { p.calls++; return original.apply(this, args); };
+    });
+    try {
+      const button = page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last();
+      await button.scrollIntoViewIfNeeded();
+      const point = await button.evaluate(el => {
+        const r = el.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+        const hit = document.elementFromPoint(x, y);
+        return { x, y, painted: r.width > 0 && r.height > 0 && !!hit && (hit === el || el.contains(hit)) };
+      });
+      if (!point.painted) throw new Error('Disabled Start is not painted at its click point');
+      await page.mouse.click(point.x, point.y); await sleep(100);
+      need.probe = await ev(() => ({ calls: __c56NeedProbe.calls, beforeRuns: __c56NeedProbe.runs, afterRuns: PM56_COLLAB.runs().length, sheet: !!document.querySelector('#pmOverlayRoot .pmx-sheet') }));
+      need.disabled = need.probe.calls === 0 && need.probe.beforeRuns === need.probe.afterRuns && need.probe.sheet;
+    } catch (e) { need.error = e.message; }
+    finally { await ev(() => { PM56_EXT._actions['collab-modal-commit'] = __c56NeedProbe.original; delete window.__c56NeedProbe; }); }
+  }
   check('R1-R6c a recording that needs the Wonderer says so before Start and does not start', need.disabled && /follows the Wonderer’s leads/.test(need.text), JSON.stringify({ disabled: need.disabled }));
+  results.at(-1).measured = need;
   await ev(() => { const c = window.PM56_EXT.ctx(); c.closeDialog ? c.closeDialog() : (c.state.dialog = null); c.renderOverlays(); });
 
   /* R11: the Grill Me switch is named, described and keeps the keyboard focus */
