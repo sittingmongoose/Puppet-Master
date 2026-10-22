@@ -1,0 +1,32 @@
+/* pm7-port/css/40-nier-base.css: PMConcept7's NieR type, palette and world art inside the hosted chat (the port's nier
+   lane, 2026-10-22). Written already scoped; nothing here applies while NieR Mode is off.
+
+   PMConcept7 owns NieR: its engine paints Basic, writes the html contract, draws the scene, the ground, the Pod, the
+   cursor, the reticle and the one reboot plate, and declares the two faces; the chat's own NieR scripts and its faces and
+   scenes sheets are not in the hosted bundle (chat56_layer.py HOSTED_SKIP_JS / HOSTED_SKIP_CSS). The chat's NieR sheets
+   stay: their palette block (generated from the same nier-automata.json as PMConcept7's tables) and their component
+   parts key on PMConcept7's own html[data-o55-nier...] attributes. What this file settles on top of them:
+
+   type     the chat's two font tokens are PMConcept7's: --body-font and --mono-font, which PMConcept7's NieR tables set
+            to "PM NieR Sans" and "PM NieR Mono" (styles.d/13-nier.css, the faces its @font-face rules embed), so every
+            chat text resolves to PMConcept7's NieR faces and follows them;
+   art      the World parts' line art (empty states, machine glyphs) is PMConcept7's, which kit.d/20-nier-world.js writes on
+            html per mode: the chat's generated copy is set aside, so one drawing serves both;
+   umber    the one hue in the chat's table outside NieR's ink and parchment (umber, hue 26 degrees: the Orbit's agents,
+            skills and artifacts, the second context source and seat 1), which nier_hue_audit.mjs flags, becomes inks
+            PMConcept7's tables carry.
+
+   The selectors match the chat's own palette block (html[data-o55-nier="on"] div.pm56-host[data-theme="basic-..."])
+   at the same weight and come after it. */
+
+html[data-o55-nier="on"] div.pm56-host[data-theme] {
+  --font-ui: var(--body-font);
+  --font-mono: var(--mono-font);
+  --o55nw-art-pod: inherit;
+  --o55nw-art-machine: inherit;
+  --o55nw-art-flower: inherit;
+  --o55nw-art-glyphs: inherit;
+  --o55-nier-umber: var(--o55-nier-warn-text);
+  --ctxseg-2: var(--o55-nier-warn-text);
+  --pmx-seat-fill-1: rgba(var(--o55-nier-ink-rgb), .1);
+}
