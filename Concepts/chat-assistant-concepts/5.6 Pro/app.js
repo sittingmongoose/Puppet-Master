@@ -4830,9 +4830,13 @@ suggested path                    migration 0043, reversible</div></div></sectio
     pmPatch(el,renderEditorBodyFor(id));
     runAfterRender('editor',{editorId:id,el});
   }
+  /* the port's own ids (context:<thread>, attachment:<thread>|<message>|<attachment>, pm7-port/js/64 and 65) only
+     the chat opens */
+  const HOSTED_OWN=/^(context|attachment):/;
   function chatOwnsId(id){
     if(!id) return false;
     if(hostedTabs.has(id)||state.editorTabs.includes(id)) return true;
+    if(HOSTED_OWN.test(id)) return true;
     if(window.PM56_PLANS?.editorPlanId(id)) return true;
     if(D.artifacts.some(a=>a.id===id)||D.subagents.some(a=>`thread-${a.id}`===id)) return true;
     if(/^(file|search|link|mcp|app|work-record|teach|memory|revert|debug|lens-source|lens-effective|wonderer|wonder-source|deep-discovery|collab-run|crew-work|review|room|brainstorm|review-evidence|brainstorm-evidence|artifact-revision):/.test(id)) return extReplace('editorTabLabel',{editorId:id},'')!==''||editorTabLabel(id)!=='Untitled'||/^(file|search|link|mcp|app):/.test(id);
@@ -4858,7 +4862,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
       /* the surfaces lane routes some ids to the panels' own kinds (file: to the editor, link: to the browser): those
          tabs are the chat's to track but not to draw */
       const chatBody=id=>{ const S=window.PM56_SURFACES; try { const r=S&&S.route&&S.route(id); return !(r&&r.body&&r.body!=='chat'); } catch(e){ return true; } };
-      try { (H.tabs?H.tabs():[]).forEach(t=>{ if(mine.has(t.tabId)&&chatOwnsId(t.tabId)){ hostedTabs.add(t.tabId); if(!state.editorTabs.includes(t.tabId)) state.editorTabs.push(t.tabId); if(chatBody(t.tabId)) HOST.adopt(t.tabId); } }); } catch(err){ console.error('[pm56] restoring chat tabs failed',err); }
+      try { (H.tabs?H.tabs():[]).forEach(t=>{ if((mine.has(t.tabId)||HOSTED_OWN.test(t.tabId))&&chatOwnsId(t.tabId)){ hostedTabs.add(t.tabId); if(!state.editorTabs.includes(t.tabId)) state.editorTabs.push(t.tabId); if(chatBody(t.tabId)) HOST.adopt(t.tabId); } }); } catch(err){ console.error('[pm56] restoring chat tabs failed',err); }
       hostedReconcile();
       H.on('close',e=>{ if(hostedSyncing||!e) return; if(hostedTabs.has(e.tabId)){ hostedForget(e.tabId); renderApp(); } else if(hostedReconcile()) renderApp(); });
       /* any activation counts: a file or terminal taking a panel's front hides the chat tab behind it; so do the
