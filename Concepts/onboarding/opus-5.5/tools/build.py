@@ -415,6 +415,14 @@ def emit_nier_lists(text: str, need) -> str:
                                  ('rail', _rail().REVIEW_JS_START, _rail())):
         if marker in text:
             layers[name] = module.NIER_ENTRIES
+    # the 5.6 Pro chat port (its nier lane): rows, menu items and tabs of the hosted chat, registered only when the chat
+    # layer is in this page (Concepts/chat-assistant-concepts/5.6 Pro/pm7-port/tools/chat56_nier.py)
+    chat56_tools = str(CONCEPTS / 'chat-assistant-concepts' / '5.6 Pro' / 'pm7-port' / 'tools')
+    if chat56_tools not in sys.path:
+        sys.path.insert(0, chat56_tools)
+    import chat56_nier  # noqa: E402
+    if chat56_nier.marker() in text:
+        layers['chat56'] = chat56_nier.NIER_ENTRIES
     return nier_registry.emit(text, need, layers)
 
 
