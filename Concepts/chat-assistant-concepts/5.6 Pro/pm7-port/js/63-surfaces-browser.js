@@ -31,11 +31,21 @@
   function iso() { return new Date().toISOString(); }
 
   var origins = {};   // browser tab id -> { thread, destination } it was opened from
+  /* the origin outlives a reload with its tab: the Home layout restores the tab, this restores where it sends */
+  var ORIGINS_KEY = 'pm56-browser-origins';
+  function saveOrigins() { try { localStorage.setItem(ORIGINS_KEY, JSON.stringify(origins)); } catch (_) {} }
+  (function loadOrigins() {
+    try {
+      var v = JSON.parse(localStorage.getItem(ORIGINS_KEY) || '{}') || {};
+      Object.keys(v).forEach(function (k) { var o = v[k]; if (o && typeof o.thread === 'string') origins[k] = { thread: o.thread, destination: o.destination || null }; });
+    } catch (_) {}
+  })();
   function openBrowser(ev) {
     var c = chatCtx(), st = c && c.state;
     if (st) {
       var buf = bufferFor(st.selectedThread);
       origins[TAB] = { thread: st.selectedThread, destination: buf && buf.destination ? JSON.parse(JSON.stringify(buf.destination)) : null };
+      saveOrigins();
     }
     return SF().openHome && SF().openHome({ kind: 'browser', id: TAB, url: PAGE.ordinary, label: PAGE.title,
       title: 'Browser · ' + PAGE.title }, ev);
@@ -73,6 +83,8 @@
     var c = chatCtx(), st = c && c.state;
     if (!st) return { ok: false, why: 'The chat is not ready.' };
     var o = origins[tabId];
+    // only the chat opens its capture tab: one whose origin was lost refuses rather than send to the thread on screen
+    if (!o && tabId === TAB) return { ok: false, why: 'This browser no longer knows the thread it was opened from, so nothing was sent. Open the browser again from that thread’s composer.' };
     var tid = o ? o.thread : st.selectedThread;
     var t = threadById(st, tid);
     if (!t) return { ok: false, why: 'The thread this browser was opened from is gone, so nothing was sent.' };
@@ -289,6 +301,7 @@
       bound = true;
       PMW.bus.on('browser:capture', onCapture);
       PMW.bus.on('browser:send', onSend);
+      PMW.bus.on('close', function (e) { if (e && origins[e.tabId]) { delete origins[e.tabId]; saveOrigins(); } });
       return;
     }
     if (++tries < 200) setTimeout(bind, 50);
