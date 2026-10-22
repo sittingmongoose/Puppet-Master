@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L17062
+Source lines: L14505-L17070
 
-Source SHA256: `ae0c3301c2e2a19913b71ee04a542a40a78bf0e96e515da3307d447d83409ed0`
+Source SHA256: `8c22c65f4d05a368a196c07ef8d53d292c867f1366440e07f3eee3ae6d86f613`
 
 ---
 
@@ -2518,7 +2518,7 @@ canonical_text: >-
   demonstrations Jared asked to carry into the Studio. The lead also kept the existing project-only
   Settings adapter for this port: All chats ELI5 is session-only in the concept, the gap is disclosed,
   and no shadow global store is created. Final reconciliation against integrated concept 59ca2d4382
-  records the hosted column, Home surface routing, origin-bound browser captures, thread-bound context
+  records the hosted column, Home surface routing, thread-bound browser captures, thread-bound context
   actions, attachment viewer tabs and bounded More Info popover as built. Demo Studio has its Chat
   section and the standalone remains the module source. This snapshot precedes the looks lane's final
   CSS and the hover press fix: Persona clipping, shelf headers and plate spacing still need their
@@ -2526,6 +2526,12 @@ canonical_text: >-
   thinking renderer. The window-based isPhone helper and the separate scoped overlay wrapper are
   concept integration limits under ACD-501/504, not fulfilled native acceptance. The Thought Stream
   admission still needs Jared's ratification; no new product ruling is inferred from this snapshot.
+  Astra's round-2 check corrects the integration brief's broader capture claim: isolated delivery
+  preserves its saved destination, but composer attachment, list and insertion paths still need
+  destination restoration or mismatch refusal before draft mutation. That remains an implementation
+  gap under the existing originating-thread/destination requirement. The same review finds the shared
+  editor-revealed state can still count hidden Home panels; the separate run-card visibility wrapper
+  passes, while reconciliation of the shared state remains pending.
 gui_related: true
 gui_classification_reason: Records the hosted chat replacement, shared Settings controls and preservation of the accepted tour.
 split_recommended: false
@@ -2555,6 +2561,8 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/lead-checkpoint-20261022-2155.md, SHA-256 9063fdc033b2aac0d2558eba612d2f0ab33b032f0a0df72c848c21112ee72e98 (lead checkpoint; concept integration and rulings, not native proof)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/demo-inventory-20261022.md, SHA-256 3f1f8f372c1ec03a047cd6936853f14f3b745b056791bd2f7a30d929a00e60cd (concept-only Studio inventory, not product counts or native APIs)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md, SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer destination gap; corrects the broad integrated capture claim)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/astra-r2-verified-capture-visibility.md, SHA-256 00e29db6dca53bbaeb5f3414acd13be6b36ab5c7af2f61a4ccfdf45e9158bcd7 (frozen partial independent review: shared editor visibility and composer destination gaps; separate run-card visibility passes)"
 preserved_exact_tokens:
   - "Demo Studio"
 negative_constraints:

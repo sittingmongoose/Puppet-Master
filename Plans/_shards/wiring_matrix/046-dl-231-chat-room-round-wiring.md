@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L6435-L6587
+Source lines: L6435-L6592
 
-Source SHA256: `f08f8a2bb64d4d0d74cb9e721e443f748dfbfd491d1aba018eca2a143d136481`
+Source SHA256: `c02ebd69937ed9a53ae6c47e151123f6da410c3d572c2e2c60518019ced1b6af`
 
 ---
 
@@ -119,11 +119,15 @@ canonical_text: >-
   product wiring requirements. Integrated concept 59ca2d4382 supplies Home open/close/activate bridges,
   not native handler evidence. Run-card controls move to the run view only while its tab is active
   in a panel that is visible, including narrow-switcher and collapsed-panel state. Browser capture
-  retains the original thread and composer destination; context-tab actions use that tab's thread;
+  must retain the original thread and composer destination; context-tab actions use that tab's thread;
   attachment viewers retain thread/message/attachment identity. More Info now has the bounded-popover
   producer required by ACD-500, so the earlier modal gap is closed in the concept. Project ELI5 is
   persisted through the existing adapter; All chats ELI5 is session-only. The production-intent ELI5
   acceptance row records that limitation without claiming its application-scope route is built.
+  Astra's round-2 concept check confirms isolated browser delivery retains its destination, but
+  composer attachment, list and insertion can lose that destination after the origin composer changes.
+  Those paths still require restoring the saved destination or refusing a mismatch before draft
+  mutation; the original thread alone is not sufficient reverse coverage.
 gui_related: true
 gui_classification_reason: Binds hosted chat producers to existing wiring rows and their reverse GUI consumers.
 split_recommended: false
@@ -149,6 +153,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md, SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer destination gap; corrects the broad integrated capture claim)"
 preserved_exact_tokens:
   - "Demo Studio"
   - "Keep open"

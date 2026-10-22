@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27935-L28138
+Source lines: L27935-L28147
 
-Source SHA256: `55a138abc01cfae37a3e81e75976f1c95eeed59a229a93a20d7fa14b051bca03`
+Source SHA256: `7e213a615c0b7548e5ab3570e7367f25f09860cea7fe297ae58827bbc420f34a`
 
 ---
 
@@ -152,8 +152,12 @@ canonical_text: >-
   to document, not a newly admitted product kind. D7 file gestures and D8 background agent opens use
   Home's opener and narrow rule. A run card says Deciding in the panel beside the chat while its run
   tab is active in any visible panel; closing, collapsing or hiding that panel restores the card's
-  controls. Browser capture keeps its originating thread and composer destination even after a thread
-  switch; context:<thread> actions target that tab's own thread. Attachment Open uses D7 for a known
+  controls. Browser capture must keep its originating thread and composer destination even after a
+  thread switch; the concept retains the thread and isolated direct delivery preserves the saved
+  destination, but Astra's round-2 check finds that composer attachment/list/insertion paths still
+  lose it when the origin composer's destination changes. Those paths need destination restoration
+  or mismatch refusal before draft mutation. context:<thread> actions target that tab's own thread.
+  Attachment Open uses D7 for a known
   project file, its existing exact artifact route, or an artifact-kind
   attachment:<tid>|<mid>|<aid> viewer. More Info is now a bounded popover. Images have a preview; other
   attachment kinds disclose that the concept has no preview, and browser captures are labelled
@@ -169,6 +173,9 @@ canonical_text: >-
   plate-spacing sweep, and films. The window-based isPhone helper and scoped body-level overlay
   wrapper do not prove ACD-501's full container and single-root requirements. SSYS-055 separately
   records preview-only Thought Stream and session-only All chats ELI5; neither is native completion.
+  Astra also finds that the shared activeEditor/editorRevealed projection still counts a hidden Home
+  panel after collapse or leaving Home. The separate run-card visibility wrapper passes; fixing that
+  shared editor state remains pending and is not implied by the run-card result.
 gui_related: true
 gui_classification_reason: Defines hosted conversation presentation, opened surface kinds, shared preferences and focus behavior.
 split_recommended: false
@@ -199,6 +206,8 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/lead-checkpoint-20261022-2155.md, SHA-256 9063fdc033b2aac0d2558eba612d2f0ab33b032f0a0df72c848c21112ee72e98 (lead checkpoint; concept integration and rulings, not native proof)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/demo-inventory-20261022.md, SHA-256 3f1f8f372c1ec03a047cd6936853f14f3b745b056791bd2f7a30d929a00e60cd (concept-only Studio inventory, not product counts or native APIs)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md, SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer destination gap; corrects the broad integrated capture claim)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/astra-r2-verified-capture-visibility.md, SHA-256 00e29db6dca53bbaeb5f3414acd13be6b36ab5c7af2f61a4ccfdf45e9158bcd7 (frozen partial independent review: shared editor visibility and composer destination gaps; separate run-card visibility passes)"
 preserved_exact_tokens:
   - "Demo Studio"
   - "Keep open"

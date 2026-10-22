@@ -2557,7 +2557,13 @@ canonical_text: >-
   More Info. The surfaces lane reports these concept checks; this unit is not a fresh browser or
   native verification receipt. The project-only adapter leaves application ELI5 persistence pending,
   and Thought Stream preference/preview checks do not establish a live reasoning renderer. The final
-  hover press regression, carry-over layout sweep and films remain pending the owning lanes.
+  hover press regression, carry-over layout sweep and films remain pending the owning lanes. Astra's
+  round-2 negative check leaves capture composer attachment/list/insertion destination handling open:
+  after the origin composer changes, these paths must restore the saved destination or refuse before
+  draft mutation. Isolated direct delivery is fixed; retaining the originating thread alone does not
+  pass the composer-destination case. Shared editor-revealed state must also clear for collapsed or
+  hidden Home bodies and when another page is in front. Astra finds that shared state still stale in
+  this snapshot, even though the separate run-card visibility wrapper passes those cases.
 gui_related: true
 gui_classification_reason: Defines forward and reverse verification for visible hosted chat controls.
 split_recommended: false
@@ -2583,6 +2589,8 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md, SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer destination gap; corrects the broad integrated capture claim)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/astra-r2-verified-capture-visibility.md, SHA-256 00e29db6dca53bbaeb5f3414acd13be6b36ab5c7af2f61a4ccfdf45e9158bcd7 (frozen partial independent review: shared editor visibility and composer destination gaps; separate run-card visibility passes)"
 preserved_exact_tokens:
   - "Demo Studio"
   - "Keep open"
