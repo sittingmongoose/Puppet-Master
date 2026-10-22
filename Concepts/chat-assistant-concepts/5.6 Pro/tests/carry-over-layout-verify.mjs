@@ -166,7 +166,7 @@ try {
   await target.resize(page, { width: 1440, height: 900 }); await target.theme(page, 'basic-dark');
   const run = await finishCrew(); await act('wg-open-leads', { run }); await page.waitForTimeout(600);
   for (const look of looks) {
-    await target.theme(page, look); await target.resize(page, { width: 480, height }, 'window');
+    await target.theme(page, look); await target.panelSize(page, { width: 480, height });
     const view = page.locator('.pmx-view').filter({ visible: true }).first();
     if (await view.count()) await view.evaluate(el => { let s = el; while (s && !(s.scrollHeight > s.clientHeight && /auto|scroll/.test(getComputedStyle(s).overflowY))) s = s.parentElement; if (s) s.scrollTop = 0; });
     await page.waitForTimeout(400);

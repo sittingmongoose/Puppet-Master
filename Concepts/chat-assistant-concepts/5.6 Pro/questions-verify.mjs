@@ -353,7 +353,7 @@ for (let v = 0; v < TAKE_COUNT; v++) {
   await t(`C${v}e. take ${v}: the decision pushes the transcript, it never covers the activity bar`, async () => {
     const ok = await page.evaluate(() => {
       const d = document.querySelector('.decision-host'), a = document.querySelector('.activity-wrap');
-      const bar = document.querySelector('.activity-bar');
+      const bar = PM56_TEST.host.querySelector('.activity-bar, .pm56-activity-bar');
       if (!d || !a || !bar) return null;
       const dr = d.getBoundingClientRect(), ar = a.getBoundingClientRect(), br = bar.getBoundingClientRect();
       const hit = document.elementFromPoint(br.left + br.width / 2, br.top + br.height / 2);

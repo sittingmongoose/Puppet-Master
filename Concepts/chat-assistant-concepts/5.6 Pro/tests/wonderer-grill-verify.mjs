@@ -1255,7 +1255,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   const roundOpen = () => until(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'), null, 20000);
   const thread = () => ev(() => window.PM56_WG_DEMOS.snapshot().threadId);
   const agreedOf = t => ev(t => { const s = window.PM56_WG.threadSession(t), a = window.PM56_WG.grill.agreed(s); return { st: s.status, ended: a.endedBy, dec: a.decisions.map(d => d.id + '=' + d.answer + '/' + d.took), open: a.open.map(o => o.id + ':' + o.why), asked: a.counter.asked }; }, t);
-  const reset = async () => { await ev(() => { const b = document.createElement('button'); b.dataset.action = 'reset-all'; document.body.appendChild(b); b.click(); b.remove(); }); await sleep(900); };
+  const reset = async () => { await ev(() => { const b = document.createElement('button'); b.dataset.action = 'reset-all'; (window.PM56_HOST?.root() || document.body).appendChild(b); b.click(); b.remove(); }); await sleep(900); };
   const confirmThread = async (tid, ms = 40000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { const st = await ev(t => { const s = window.PM56_WG.threadSession(t); return s ? s.status : ''; }, tid); if (st === 'confirmed') return true; if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]')) { await sleep(700); continue; } if (await click('.qs-grill [data-action="qs-accept-round"]')) { await sleep(900); continue; } await sleep(400); } return false; };
   const acceptLabel = () => ev(() => { const b = document.querySelector('.qs-grill [data-action="qs-accept-round"]'); return b ? b.textContent.replace(/\s+/g, ' ').trim() : ''; });
 

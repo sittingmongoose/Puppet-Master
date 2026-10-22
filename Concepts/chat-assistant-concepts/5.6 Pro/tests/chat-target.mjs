@@ -41,7 +41,25 @@ export function chatTarget(argv = process.argv.slice(2)) {
     await page.evaluate(() => document.fonts.ready.then(() => true));
     await page.waitForTimeout(400);
   }
-  return { kind, file, url: url.href, ready, resize, theme,
+  async function panelSize(page, size) {
+    if (kind === 'standalone') return resize(page, size, 'window');
+    // A run view is a Home tab, not the chat column. Expose its real panel and
+    // size the window until that panel's container has the requested width.
+    await page.evaluate(() => { PMW.chatCol.setVisible(false); const a = PM_HOME.active(); if (a) PM_HOME.reveal(a.tabId); });
+    let width = 1000, measured = null;
+    for (let i = 0; i < 8; i++) {
+      await page.setViewportSize({ width, height: size.height }); await page.waitForTimeout(350);
+      measured = await page.evaluate(() => {
+        const a = PM_HOME.active(), body = a && document.querySelector('.pmw-tabbody[data-pmw-tab="' + CSS.escape(a.tabId) + '"] .pm56-frame');
+        return body ? { width: body.getBoundingClientRect().width, height: body.getBoundingClientRect().height, tabId: a.tabId } : null;
+      });
+      if (!measured) throw new Error('The active Home tab has no chat-owned panel body');
+      if (Math.abs(measured.width - size.width) < 1) return measured;
+      width = Math.max(400, Math.min(4000, Math.round(width + size.width - measured.width)));
+    }
+    throw new Error(`Cannot size Home panel to ${size.width}px: ${JSON.stringify(measured)}`);
+  }
+  return { kind, file, url: url.href, ready, resize, theme, panelSize,
     async load(page) { await page.goto(url.href); await ready(page); await page.waitForTimeout(1500); },
     async demoTrigger(page, action, flow) {
       if (kind === 'pm7') {

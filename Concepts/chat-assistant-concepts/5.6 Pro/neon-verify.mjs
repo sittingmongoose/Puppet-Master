@@ -1637,7 +1637,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
             if (pos === 'bottom') out.push(...under);
             else if (under.length && !(shy && op <= .2)) out.push('not faded back over ' + under.join(', ') + ' (shy ' + shy + ', opacity ' + op + ')');
             if (!under.length && pos === 'bottom' && shy) out.push('faded back with no control under it');
-            const bar = document.querySelector('.chat-float .activity-bar');
+            const bar = PM56_TEST.host.querySelector('.chat-float .activity-bar, .chat-float .pm56-activity-bar');
             if (bar && bar.scrollWidth - bar.clientWidth > 1) out.push('bar overflows ' + (bar.scrollWidth - bar.clientWidth) + ' px');
             return { out };
           }, pos);
