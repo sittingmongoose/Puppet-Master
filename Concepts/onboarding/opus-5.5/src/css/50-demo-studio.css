@@ -343,6 +343,8 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 /* the assistant chat (the Chat section): recorded examples are recipe tiles, moments are onboarding's screen rows in
    wider columns (their names run longer), and a take is a one-line choice card; every look styles them as it styles
    those already */
+/* two head actions: in the flow under the lead, so a wide title (Retro's arcade face) never runs under them */
+#o55-demo .pmds-page[data-pmds-section="chat"] .pmds-headacts { position: static; margin-top: 12px; }
 #o55-demo .pmds-chat-lead { margin: 16px 0 0 !important; max-width: 72ch; }
 #o55-demo .pmds-chat-none { margin-top: 4px; font-size: 13px; }
 #o55-demo .pmds-runbar .pmds-seg { flex-wrap: wrap; }
