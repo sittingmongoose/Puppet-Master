@@ -58,7 +58,8 @@ Source: `Concepts/usage-redesign/src/js/15-film.js` (`PMU.live`), `36-charts-gal
 ### E. The Home workspace
 Source: `Concepts/home-redesign/src/panels/**`.
 - The stand-in chat (a scripted conversation that opens every tab kind, plus an Agent activity card that opens things
-  in the background): on by default, setting `chat.standIn` (`PM_HOME.settings`), no visible switch.
+  in the background): on by default, setting `chat.standIn` (`PM_HOME.settings`), no visible switch. Since the 5.6 Pro
+  chat port (2026-10-22) it is off by default and, on, takes the assistant chat's place in the column (section I).
 - Named layouts and Restore home layout (`PMW.applyNamed`, `PMW.resetLayout`): in the panels' own menus.
 - The terminal's agent API (`PMT.agent`: open a terminal as an agent, type a command, ask permission, take over): used
   by the chat and the harness only; nothing on the page shows it off.
@@ -77,6 +78,21 @@ Source: `Concepts/home-redesign/src/panels/**`.
 - Glass always uses Liquid Glass with a wallpaper. The Studio keeps its graphics-card/processor and wallpaper controls.
 - The old material switch, `?lg=off` and Alt+Shift+L are retired. `PM_LG.set` off/null requests keep Liquid Glass on.
 - Without a Studio host, the Liquid Glass status popover keeps Look, Path and Motion controls.
+
+### I. The assistant chat (the 5.6 Pro chat, ported in on 2026-10-22, D26 and D27)
+The chat brought its own lab Demo Studio (a header chip opening a dialog, `Concepts/chat-assistant-concepts/5.6 Pro/app.js`
+`renderDemoDialog`): curated recipes and a theme list, the NieR Mode section, a working-activity and motion-voice pair, seven
+take families, 22 recorded-example sections that the feature modules chain onto `PM56_REPAIR_DEMOS.gallery`, Assistant
+refinements (27) and Feature demonstrations (7), eight trigger groups (95 triggers) and Reset all. The full inventory, with
+what each control does and whether it is product demo content or lab-only, is
+`/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/DEMO-INVENTORY.md`. In PMConcept7 the lab chip is gone (hosted
+mode) and everything that shows a product behaviour moved into this Studio's Chat section: 55 recorded examples in 18
+feature groups, 93 triggers and 34 single-surface demos as 127 moments in 12 groups, the seven take families, recipes and
+the motion voice as lab pickers (never persisted), and Reset the chat demo. Dropped: the theme list and the NieR section
+(Looks owns them), Edit and branch and Restore from point (each only toasted what it would do), the dialog's drag and
+resize. The lab-only workspaces the examples open (`order-export:`, `b16-work:`, `b17-work:`, `bsd12:`,
+`eli5-evidence:`) stay and open through the Home panels like any other chat tab: each explains its feature and the
+recordings press controls inside them.
 
 ### URL switches (reload the page with them)
 | Switch | What it does |
@@ -115,13 +131,14 @@ beside it). It rises out of the item as one sheet anchored to the bottom-left co
 3. Guided Tour: start, resume where it stopped, start over; the three chapters and their steps.
 4. Story: the demo director (clock, speed, the five story points, recent beats), no longer a hidden shortcut.
 5. Workspace: stand-in chat on or off, named layouts, reset the layout, an agent driving a terminal.
-6. Usage: demo readings on or paused, Play the next hour / Back to now, the chart gallery.
-7. Notices: the notification moments.
-8. Looks: the five looks in light and dark, NieR Mode, Reduced Motion, sound.
-9. Reset: three sizes. Progress (onboarding, tour, situation); Workspace (the panel layout back to default); Everything
+6. Chat (added 2026-10-22): the assistant chat's recorded examples, moments and takes (section I).
+7. Usage: demo readings on or paused, Play the next hour / Back to now, the chart gallery.
+8. Notices: the notification moments.
+9. Looks: the five looks in light and dark, NieR Mode, Reduced Motion, sound.
+10. Reset: three sizes. Progress (onboarding, tour, situation); Workspace (the panel layout back to default); Everything
    (all of the above, the saved layouts, dashboards, chat column, terminal and Usage settings), shown item by item
    before it runs, then a reload into a fresh first run.
-10. Switches: onboarding start mode, the current situation, hover engine off, Usage readings paused, no-GPU Usage and
+11. Switches: onboarding start mode, the current situation, hover engine off, Usage readings paused, no-GPU Usage and
     the chart gallery, with "Reload with these".
 
 Ownership: the Studio is new files in the onboarding package (`src/js/9x-demo-studio*.js`,
@@ -135,7 +152,8 @@ them. Glass always uses the Liquid Glass package with a wallpaper.
 |---|---|
 | `src/js/90-demo.js` | The Concept demo item: `#o55-demo` (a child of `<body>`, the one the onboarding window leaves usable) and its toggle button, which the Home layer docks into the status bar (`Concepts/home-redesign/src/panels/js/50-pageshell.js`). |
 | `src/js/91-demo-studio.js` | `O55.studio`: the model and every action. Each control calls its owner's public API and nothing else; an owner missing from the page makes its control say "Not on this page" instead of failing. |
-| `src/js/92-demo-studio-ui.js` | The sheet: ten sections, search, keyboard, look sync, the motion voices, the Start page's three scenes. |
+| `src/js/92-demo-studio-ui.js` | The sheet: eleven sections, search, keyboard, look sync, the motion voices, the Start page's three scenes. |
+| `Concepts/chat-assistant-concepts/5.6 Pro/pm7-port/js/50-demo-bridge.js` | `PM56_PORT.demo`, the chat's side of the Chat section (the port's demo lane): the lists come from the chat itself, and every run goes through the chat's own click path. |
 | `src/css/50-demo-studio.css` | Structure and the Basic look. |
 | `src/css/51-demo-studio-looks.css` | Friendly, Retro, Glass and NieR, and Reduced Motion. |
 | `src/copy.d/75-demo-studio.json` | Every word (the `studio` key). |
@@ -147,12 +165,26 @@ Which owner each section calls:
 | Onboarding | `PM_O55_ONBOARDING.replay` and `.resume`, `O55.ui.open({ fresh, screen })`, `O55.fixtures.make` and `O55.store` `scenario` (a situation is a start plus twists joined by `+`; twists that describe the same thing two ways replace each other) |
 | Guided Tour | `PM7_GUIDED_TOUR.restart`, `.resume`, `.resumable`; a chapter start restarts the tour and then calls `O55.tour.go` on the chapter's first step (internal to the tour, guarded) |
 | Story | `PM_DEMO.clock` (play, pause, speed), `PM_DEMO.director.ensure`, `PM_DEMO.state.story`, `PM_DEMO.log`. No shortcut opens the Studio: Ctrl+Shift+D is left to Readiness & Doctor (Jared, 2026-10-14), and the engine's old unstyled director box it used to toggle is hidden, since this section replaces it |
-| Workspace | `PMW.NAMED`, `PMW.savedLayouts`, `PMW.applyNamed`, `PMW.resetLayout`; `PM_HOME.settings` `chat.standIn`; the stand-in chat's Agent activity rows; `PMT.agent.open` and `.run` |
+| Workspace | `PMW.NAMED`, `PMW.savedLayouts`, `PMW.applyNamed`, `PMW.resetLayout`; the stand-in chat's own `PMW.standIn.isOn` and `.toggle` (else `PM_HOME.settings` `chat.standIn`); Agents open things on `PM_HOME.open` for the terminal, browser and file and `PM56_PORT.open(id, { by, background })` for the plan, Crew run and agent chat the assistant chat draws (D8, each in the background); `PMT.agent.open` and `.run` |
+| Chat | `PM56_PORT.demo`: `guided()` and `runGuided(id)` (the recorded examples by feature), `groups()` and `run(group, item)` (the moments), `families()`, `take`, `setTake`, `recipes`, `recipe`, `setRecipe`, `voices`, `voice`, `setVoice` (the takes), `reset()`, `showChat()`, `now()`, `avail()`. Each run brings the chat on screen on the Home page first (`PM_PAGES.go('dashboard')`, `PMW.chatCol.show()`), then clicks a hidden `<section class="demo-dialog"><button class="demo-trigger" data-action data-flow>` in `#pmOverlayRoot`, exactly as the lab gallery's buttons were clicked: modules chain `demo-trigger` and `reset-all`, two examples play their recording only from `.demo-dialog .demo-trigger`, and `recorded-play.js` stops the example already playing on that click. Without the chat on the page the section says so and its controls are unavailable |
 | Usage | `PMU.live.pause`, `.resume`, `.hour.play`, `.hour.back`; `PMU.charts.gallery`; `PM_PAGES.go('usage')` |
 | Notices | `PM_TITLEBAR_NOTIFY.demo(name)` when pm7-notifications' engine is on the page, else `window.toast` and `toast.important` with the same words; `PM_TITLEBAR_NOTIFY.clearAll` |
 | Looks | `PM7_SETTINGS_TOME.setChromeThemeFamily` and `.setChromeThemeMode` (the title-bar menu's path, saved to the Project), `PM_NIER.set`, `PM_NIER_CHIPS.popup`, `PM12_KIMI.setSettingFromHost('general.visual.reduce-animations')`, `O55.sound.setMuted`; with Liquid Glass on the page, `PM_LG.set` and `PM_LG.wall` (and `data-lg-demo-host` on `<html>` so Glass's own status button steps aside) |
 | Reset | Progress: `O55.tour.reset`, then onboarding as a new install in a Fresh computer. Workspace layout: `PMW.resetLayout`. Everything: every key this concept keeps in the browser (`pm…`, `o55…`, `widget_layout:`, `widget_presets:`, `home_workspace_layout:`, the 5.6 Pro chat demo's `pm56…` included, since that chat is ported in next, and the Studio's own place) and the terminal's saved-scrollback database, then a reload without the onboarding switches. Each size asks a second press within five seconds. |
 | Switches | Builds the address from the page's own switches and reloads with it. |
+
+The Chat section (2026-10-22): one rail entry after Workspace, so the rail stays one list and search reaches every item.
+Its head carries Show the chat and Reset the chat demo; a run bar says which chat is on screen and holds a joined choice
+row for the three views, in the order the brief set: Guided examples (recipe tiles, one block per feature; a click runs
+the example and the Studio steps aside, as Run onboarding does), Moments (onboarding's screen rows in wider columns; a
+click puts the chat in that moment and the Studio stays open beside it), and Takes (recipes and the seven families as
+choice cards, the motion voice as a joined choice row; concept review only, never kept). Every item carries the chat's
+own action and dataset as `data-chat-action`, `data-chat-flow` (or `-trigger`, `-scenario`, `-target`), which the
+port's tests click, and its words are `studio.chat.*` in `75-demo-studio.json`, keyed by the bridge's ids; an example
+the copy does not know yet keeps the chat's own words under More examples. The section reuses primitives every look
+already styles (tiles, screen rows, choice cards, the joined choice row), so the five looks, light and dark, Reduced
+Motion and the legibility floor carry over; `50-demo-studio.css` adds only the moments' column width and the one-line
+take card.
 
 Looks: the sheet carries `data-pmds-look` (basic, friendly, retro, glass, nier) and `data-pmds-mode`. Basic is quiet and
 exact; Friendly draws on the DS, 3DS, Wii and Wii U menus and iisu (a pinstriped ground, channel tiles with a white bezel
