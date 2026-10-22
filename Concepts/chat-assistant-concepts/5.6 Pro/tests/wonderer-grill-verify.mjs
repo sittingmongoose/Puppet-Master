@@ -16,6 +16,7 @@
  * pass runs during intake and a later pass queues behind core work. */
 import { chatTarget, testGeometry } from './chat-target.mjs';
 import { launchGpuBrowser, gpuPage } from './gpu-browser.mjs';
+import { grillFooterGeometry } from './grill-footer-geometry.mjs';
 import { createRequire } from 'node:module';
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
@@ -1456,14 +1457,12 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   /* 9 (Opus N2): at phone width the safety note stays, the tally goes, and the foot is one row with "Accept all" */
   await target.resize(page, { width: 400, height: 860 }); await sleep(500);
   await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(900);
-  const f9 = await ev(() => {
-    const card = document.querySelector('.qs-grill'), note = card.querySelector('.qs-grill-note'), tally = card.querySelector('.qs-grill-tally'), acc = card.querySelector('[data-action="qs-accept-round"]');
-    const vis = el => !!el && getComputedStyle(el).display !== 'none' && el.getClientRects().length > 0;
-    const tops = [...card.querySelectorAll('.qs-grill-foot > button')].filter(vis).map(b => Math.round(b.getBoundingClientRect().top));
-    return { note: vis(note), tally: vis(tally), accept: acc ? acc.innerText.replace(/\s+/g, ' ').trim() : '', rows: new Set(tops.map(x => Math.round(x / 8))).size, tops };
-  });
+  const f9 = await ev(grillFooterGeometry);
+  f9.sizeContext = testGeometry();
   await target.resize(page, { width: 1440, height: 900 }); await sleep(400);
   check('R2-9 at 400 px the “nothing acts until you confirm” note stays, the tally hides, and the foot is one row with “Accept all”', f9.note && !f9.tally && f9.accept === 'Accept all' && f9.rows === 1, JSON.stringify(f9));
+  results[results.length - 1].measured = f9;
+  results[results.length - 1].sizeContext = f9.sizeContext;
 
   /* 10 (Opus N3): the shelf never cuts off "Never votes." or any helper: Retro at 1440 and 400, and 460-519 px */
   const shelf = () => ev(() => [...document.querySelectorAll('#pmOverlayRoot .pmx-spec')].map(sp => { const h = sp.querySelector('.pmx-help'), b = sp.querySelector('.pmx-spec-copy > b'), lh = parseFloat(getComputedStyle(b).lineHeight) || 18;

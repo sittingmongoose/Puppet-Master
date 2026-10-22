@@ -13,8 +13,9 @@ async function captureSize(page, requested) {
   const measured = await page.evaluate(() => {
     const box = el => { const r = el?.getBoundingClientRect(); return r ? { width: r.width, height: r.height } : null; };
     const root = document.querySelector('#pmRoot') || document.body;
+    const active = window.PM_HOME?.active?.(), panel = active?.tabId ? document.querySelector('.pmw-tabbody[data-pmw-tab="' + CSS.escape(active.tabId) + '"] .pm56-frame') : null;
     return { measuredAt: performance.now(), viewport: { width: innerWidth, height: innerHeight },
-      column: box(document.querySelector('#chatPanel > #pmw-chat56')), stage: box(root?.querySelector('.chat-stage')), transcript: box(root?.querySelector('.transcript')) };
+      column: box(document.querySelector('#chatPanel > #pmw-chat56')), panel: box(panel), stage: box(root?.querySelector('.chat-stage')), transcript: box(root?.querySelector('.transcript')) };
   });
   measured.requested = requested || sizeContexts.get(page)?.requested || null;
   if (!sizeContexts.has(page)) page.once('close', () => sizeContexts.delete(page));
