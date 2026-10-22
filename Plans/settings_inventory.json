@@ -22681,7 +22681,7 @@
  {
   "id": "general.interaction.eli5-default",
   "label": "Explain technical terms in chats",
-  "desc": "Default at the application or project scope; a chat's own switch wins. In the hosted concept Settings persists the host project's default; All chats is session-only (SSYS-055).",
+  "desc": "Default at the application or project scope; a chat's own switch wins.",
   "type": "toggle",
   "default": false,
   "scope": [
@@ -25166,7 +25166,7 @@
  {
   "id": "general.interaction.thought-stream",
   "label": "Show thinking",
-  "desc": "While it thinks opens the reasoning supplied by the model while it works, then folds it away. Always open keeps that reasoning visible. This changes only what is shown, never a reply. The hosted concept shares the preference and preview; it has no live thinking renderer yet (SSYS-055).",
+  "desc": "While it thinks opens the reasoning supplied by the model while it works, then folds it away. Always open keeps that reasoning visible. This changes only what is shown, never a reply.",
   "type": "select",
   "options": [
    "Auto",
