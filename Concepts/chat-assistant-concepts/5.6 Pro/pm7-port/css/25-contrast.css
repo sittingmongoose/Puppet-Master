@@ -34,3 +34,8 @@ html:not([data-o55-nier="on"]) .pm56-host[data-theme] .model-row:is(.active, :ho
 /* the Ask Card's separators (round line, recommended line) take the secondary ink; a required mark the danger ink */
 html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-rec-sep { color: var(--muted); }
 html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-req { color: color-mix(in srgb, var(--danger) 70%, var(--text)); }
+/* Friendly Light: Home's tertiary ink (55 % toward the text) reads 4.50:1 on the page ground the plates sit on; at
+   48 % it holds 4.8 */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="friendly-light"] {
+  --subtle: color-mix(in srgb, var(--text-muted) 48%, var(--text-primary));
+}
