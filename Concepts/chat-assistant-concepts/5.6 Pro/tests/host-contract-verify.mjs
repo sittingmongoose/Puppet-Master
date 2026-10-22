@@ -21,7 +21,7 @@ async function snapshot() {
   return ev(() => {
     const id = 'crew-work:crew-query-perf', body = document.querySelector('.pmw-tabbody[data-pmw-tab="' + id + '"]');
     const r = body?.getBoundingClientRect();
-    return { active: PM_HOME.active(), chat: { active: PM56_APP.state.activeEditor, revealed: PM56_APP.state.editorRevealed },
+    return { page: PM_PAGES.current, active: PM_HOME.active(), chat: { active: PM56_APP.state.activeEditor, revealed: PM56_APP.state.editorRevealed },
       runVisible: PM56_PMX.viewOpen('crew-query-perf'), body: r ? { width: r.width, height: r.height } : null };
   });
 }
@@ -78,8 +78,14 @@ try {
   await ev(id => PMW.setCollapsed(id, true), panel); await sleep(1800);
   s = await snapshot(); await check('HC-F2-COLLAPSED', (!s.body || !s.body.width || !s.body.height) && !s.chat.active && !s.chat.revealed && !s.runVisible, s);
   await ev(id => PMW.setCollapsed(id, false), panel); await sleep(400);
-  await ev(() => PM_PAGES.go('usage')); await sleep(1800);
-  s = await snapshot(); await check('HC-F2-USAGE', !s.chat.active && !s.chat.revealed && !s.runVisible, s);
+  await ev(() => PM_PAGES.go('usage'));
+  // Page entrance can keep Home laid out while Usage's first paint settles.
+  // Begin the hidden-editor assertion only after the visibility precondition.
+  await page.waitForFunction(() => {
+    const r = document.querySelector('.pmw-tabbody[data-pmw-tab="crew-work:crew-query-perf"]')?.getBoundingClientRect();
+    return PM_PAGES.current === 'usage' && (!r || !r.width || !r.height);
+  }, null, { timeout: 7000 }).catch(() => {});
+  s = await snapshot(); await check('HC-F2-USAGE', s.page === 'usage' && (!s.body || !s.body.width || !s.body.height) && !s.chat.active && !s.chat.revealed && !s.runVisible, s);
   await ev(() => { PM_PAGES.go('dashboard'); PM56_APP.closeEditor('crew-work:crew-query-perf'); }); await sleep(500);
   s = await snapshot(); await check('HC-F2-CLOSED', !s.chat.active && !s.chat.revealed && !s.runVisible, s);
 
