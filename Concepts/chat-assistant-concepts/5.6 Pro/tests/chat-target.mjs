@@ -22,6 +22,7 @@ async function captureSize(page, requested) {
   sizeContexts.delete(page); sizeContexts.set(page, measured);
   return measured;
 }
+export { captureSize as measureTestGeometry };
 export function chatTarget(argv = process.argv.slice(2)) {
   const opt = (key, fallback) => { const i = argv.indexOf(key); return i < 0 ? fallback : argv[i + 1]; };
   const kind = opt('--page', 'standalone');
@@ -121,6 +122,8 @@ export async function launchChatBrowser(chromium, argv = process.argv.slice(2)) 
     };
     const release = page.mouse.up.bind(page.mouse);
     page.mouse.up = async options => { const result = await release(options); await captureSize(page); return result; };
+    const clickMouse = page.mouse.click.bind(page.mouse);
+    page.mouse.click = async (...args) => { const result = await clickMouse(...args); await captureSize(page); return result; };
     const init = kind => {
         const T = window.PM56_TEST = { kind };
         Object.defineProperty(T, 'host', { get: () => kind === 'pm7' ? document.querySelector('#pmRoot') : document.body });

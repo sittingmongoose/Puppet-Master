@@ -19,7 +19,7 @@
  *   node questions-verify.mjs --file /tmp/noq.html
  */
 import { chromium } from 'playwright';
-import { launchChatBrowser, testGeometry } from './tests/chat-target.mjs';
+import { launchChatBrowser, testGeometry, measureTestGeometry } from './tests/chat-target.mjs';
 import path from 'path';
 import fs from 'fs';
 import { pathToFileURL } from 'url';
@@ -160,8 +160,12 @@ async function setHostWidth(px) {
   /* The container the tiers key on is the DECISION HOST, sized by the editor
      split. Driving --editor-w is how a real user changes it. */
   const vw = 1440;
-  await page.evaluate(pct => document.documentElement.style.setProperty('--editor-w', pct + '%'), Math.round((1 - px / vw) * 100));
+  await page.evaluate(({px,pct}) => {
+    if(PM56_TEST.kind==='pm7'){ PMW.chatCol.setWidth(Math.min(760,Math.max(400,px))); PMW.chatCol.show(); }
+    else document.documentElement.style.setProperty('--editor-w',pct+'%');
+  }, {px,pct:Math.round((1-px/vw)*100)});
   await page.waitForTimeout(220);
+  await measureTestGeometry(page,{width:px,height:page.viewportSize().height,surface:'decision-host'});
   return page.evaluate(() => Math.round(document.querySelector('.decision-host').getBoundingClientRect().width));
 }
 
@@ -686,12 +690,13 @@ await t('Q6. Ask Card paints Back + Next on q1 and a choice click does not auto-
     const next = document.querySelector('.qs-ask [data-action="next-question"]');
     const skip = document.querySelector('.qs-ask [data-action="skip-question"]');
     return {
-      backDisabled: !!(back && back.disabled),
+      backDisabled: !!(back && (back.disabled || back.getAttribute('aria-disabled')==='true')),
+      nativeDisabled: back?.disabled, ariaDisabled: back?.getAttribute('aria-disabled'),
       next: !!next,
       skip: !!skip
     };
   });
-  must(nav.backDisabled, 'Back missing or not disabled on q1');
+  must(nav.backDisabled, 'Back missing or not disabled on q1: '+JSON.stringify(nav));
   must(nav.next, 'Next missing on q1');
   must(nav.skip, 'Skip missing on q1');
   const nextPaint = await paintedRect('.qs-ask [data-action="next-question"]');

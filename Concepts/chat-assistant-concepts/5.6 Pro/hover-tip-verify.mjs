@@ -149,6 +149,7 @@ try {
 
   // 3. keyboard focus opens ~1000ms.
   await park();
+  await page.keyboard.press('Tab'); // establish real keyboard modality before targeting the focus control
   const fT = Date.now();
   await page.evaluate(key => {
     PM56_TEST.host.querySelector(`[data-hover-key="${CSS.escape(key)}"],[data-pm-hover-key="${CSS.escape(key)}"]`).focus();

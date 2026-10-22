@@ -33,7 +33,7 @@
  * item 4 was written for.
  */
 import {chromium} from 'playwright';
-import { launchChatBrowser, testGeometry } from './tests/chat-target.mjs';
+import { launchChatBrowser, testGeometry, measureTestGeometry } from './tests/chat-target.mjs';
 import {pathToFileURL} from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -124,8 +124,18 @@ async function sec(label, fn){
    controls exist, and a thrown precondition would hide every assertion after
    it. */
 async function click(sel, i=0){
-  try{ await page.locator(sel).nth(i).click({timeout:4000}); return true; }
+  try{ await page.locator(sel).nth(i).click({timeout:4000}); await measureTestGeometry(page); return true; }
   catch(e){ check(false, `precondition: click ${sel}`, String((e&&e.message)||e)); return false; }
+}
+async function preparePinnedHistory(){
+  if(!await page.evaluate(()=>PM56_TEST.kind==='pm7')) return;
+  if(await page.evaluate(()=>PM56_DEMO.getState().historyMode==='closed')){
+    await click('.chat-header [data-action="toggle-history"]'); await page.waitForTimeout(500);
+  }
+  if(await page.evaluate(()=>document.body.getAttribute('data-ph-drawer')!=='pinned')){
+    await click('.history-flyout [data-action="ph-toggle-pin"]'); await page.waitForTimeout(500);
+  }
+  await measureTestGeometry(page);
 }
 
 /* =====================================================================
@@ -136,10 +146,7 @@ await page.waitForTimeout(400);
 /* The shared hosted setup closes history so other verifiers start on the chat.
    This verifier's boot precondition is the real pinned drawer. Open it through
    the user's header control before inspecting its paint and geometry. */
-if(await page.evaluate(()=>PM56_TEST.kind==='pm7'&&PM56_DEMO.getState().historyMode==='closed')){
-  await click('.chat-header [data-action="toggle-history"]');
-  await page.waitForTimeout(500);
-}
+await preparePinnedHistory();
 
 const NINE=['working','reviewing','waiting','idle','complete','blocked','failed','paused','recovering'];
 /* idle (Ready) and paused stand still in the status set (plan §3); every other
@@ -322,6 +329,7 @@ await sec('item3: row padding before/after', async()=>{
   await page.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO);
   await page.evaluate(()=>PM56_DEMO.setVariant(1,5));
   await page.waitForTimeout(400);
+  await preparePinnedHistory();
 });
 
 /* The floating flyout must actually WEAR the take, not collapse to take 0
@@ -437,6 +445,7 @@ await sec('item3: narrow hides status and time at rest', async()=>{
   await page.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO);
   await page.evaluate(()=>PM56_DEMO.setVariant(1,5));
   await page.waitForTimeout(500);
+  await preparePinnedHistory();
   const g=await page.evaluate(()=>{const f=document.querySelector('.history-flyout');
     return {w:f?Math.round(f.getBoundingClientRect().width):0, narrow:!!(f&&f.classList.contains('is-history-narrow')),
             ph:document.querySelectorAll('.history-flyout .ph-status').length};});
@@ -984,7 +993,7 @@ await sec('wave6: the pinned drawer resizes without breaking pin-in-place', asyn
   await page.waitForTimeout(350);
   const back = await page.evaluate(()=>({w:document.querySelector('.history-flyout').getBoundingClientRect().width,
     g:parseFloat(getComputedStyle(document.querySelector('.assistant-grid')).paddingLeft),
-    dflt:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-pin-w'))}));
+    dflt:parseFloat(getComputedStyle(PM56_TEST.kind==='pm7'?PM56_TEST.host:document.documentElement).getPropertyValue('--ph-pin-w'))}));
   check(back.dflt>0 && Math.abs(back.w-back.dflt)<1 && Math.abs(back.w-back.g)<1,
         'With no stored width the drawer returns to the --ph-pin-w default, gutter still coupled', back);
   await page.evaluate(()=>{const m=document.querySelector('.working-card [data-action="work-demo-menu"]'); if(m&&m.getAttribute('aria-expanded')!=='true') m.click(); const b=document.querySelector('[data-action="start-working"]'); if(b) b.click();});
