@@ -535,6 +535,7 @@ async function browser() {
     /* M4: every lead keeps the team's decision, its reason and recorder, and a research result is added under it */
     const decided = plan.text.match(/ — (Explore|Use|Set aside) \(the Coordinator: [^)]+\)/g) || [], researched = plan.text.match(/ — Explore \(the Coordinator: [^)]+\) → (Supported|Not supported): /g) || [];
     check('B5b the Plan lists every lead with the team’s decision and reason, and research under it (M4)', refused && plan.synth && /Wonderer leads/.test(plan.text) && decided.length === plan.total && researched.length >= 3, JSON.stringify({ total: plan.total, decided: decided.length, researched: researched.length }));
+    if (process.env.WGV_ONLY === 'b5') { check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); await b.close(); return; }
     /* Grill Me turned on mid-run (the 'dissent' recording) */
     await ev(() => { const b = document.createElement('button'); b.dataset.flow = 'dissent'; window.PM56_EXT.run('b13-start', b, new Event('click')); }); await sleep(900); await startSheet();
     const dsId = await ev(() => window.PM56_BATCH13.currentRun().id);
@@ -770,7 +771,8 @@ async function otherExamples({ page, ev, sleep }) {
    SA-*: Show all lists every lane in place and Show fewer folds back; the card never folds. CV-*: the chevron always
    matches the card, and its first click changes it. */
 async function recordedExamples({ page, ev, act, sleep }) {
-  const SCALE = 3, fast = k => ev(k => window.PM56_CLOCK.setScale(k), k);
+  const SCALE = Number(opt('--rx-scale') || 3), fast = k => ev(k => window.PM56_CLOCK.setScale(k), k);
+  if (![1, 3].includes(SCALE)) throw new Error('--rx-scale must be 1 (normal pace) or 3 (original accelerated verifier)');
   const until = (fn, arg, ms = 60000) => page.waitForFunction(fn, arg, { timeout: ms, polling: 120 }).then(() => true, () => false);
   const click = async sel => { try { const l = page.locator(sel).first(); if (await l.count() && await l.isVisible()) { await l.click({ timeout: 3000 }); return true; } } catch (e) { } return false; };
   const sheetStart = async () => { await until(() => !!document.querySelector('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button'), null, 8000); await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click(); await ev(() => { if (window.__rx && window.__rx.started == null) window.__rx.started = window.PM56_CLOCK.now(); }); };

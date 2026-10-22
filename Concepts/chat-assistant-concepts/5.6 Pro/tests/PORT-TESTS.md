@@ -20,6 +20,8 @@ node tests/carry-over-layout-verify.mjs --page pm7 --file /tmp/c56port-tests/PMC
 
 `--wg-only b2` isolates the initial Crew intake guards. Its pending-lookup fixture slows the recorded clock after Start, then restores normal speed once the lookup line appears so the recording's own fact timer resolves it. It never injects a fact or bypasses a gate. Hosted disabled controls must remain inert under a real click, including when PM7 makes them keyboard-focusable with ARIA.
 
+`--wg-only b5` stops after the initial Crew and BrainStorm gate checks. `--wg-only rx --rx-scale 1` measures the recorded examples at their normal user pace; the default is the original accelerated scale 3. Both use the same timing thresholds and record the command in run.json. A normal-pace receipt is reported separately from an accelerated run.
+
 Record the integrated Crew, Room and BrainStorm examples at their readable real-time pace:
 
 ```sh

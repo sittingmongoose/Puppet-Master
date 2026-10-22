@@ -86,6 +86,7 @@ if (pages.length === 2 && argv.includes('--parallel-pages')) {
     const script = ['wonderer', 'node'].includes(suite) ? 'tests/wonderer-grill-verify.mjs' : suite === 'layout' ? 'tests/carry-over-layout-verify.mjs' : suite === 'host' ? 'tests/host-contract-verify.mjs' : `${suite === 'hover' ? 'hover-tip' : suite}-verify.mjs`;
     const args = [script, '--page', page, '--file', file];
     if (suite === 'wonderer') args.push('--browser');
+    if (suite === 'wonderer' && opt('--rx-scale')) args.push('--rx-scale', opt('--rx-scale'));
     if (suite !== 'hover') args.push(suite === 'history' ? '--out' : '--json', json);
     if (suite === 'layout' && argv.includes('--sweep')) args.push('--sweep');
     if (suite === 'layout' && opt('--width-step')) args.push('--width-step', opt('--width-step'));
