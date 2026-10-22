@@ -5,6 +5,7 @@
 (function(){
  'use strict';
  const E=window.PM56_EXT,D=window.PM56_DATA,P=window.PM56_PLANS,Q=window.PM56_QUESTION_BUDGET;
+ const R=window.PM56_RECPLAY;let player=null,playing=null;
  const clone=x=>JSON.parse(JSON.stringify(x)),sessions=new Map(),drafts=new Map(),previews=new Map(),timers=new Map(),opened=new Set();let serial=0;
  const flows={thorough:{title:'A few decisions, a complete plan',detail:'Reuse an answer, inspect the inventory, and stop well before the limit.',strategy:'Thorough'},exhaustive:{title:'Research can become stale',detail:'Inspect a changed source before accepting a deeper plan.',strategy:'Exhaustive'},budget:{title:'One allowance, every participant',detail:'Reach the ceiling; add Grill Me without resetting the shared count.',strategy:'Thorough'},blocker:{title:'An open decision can block Build',detail:'Keep an unresolved safety decision visible instead of inventing an answer.',strategy:'Thorough'}};
  const artifact=id=>D.artifacts.find(a=>a.id===id);
@@ -21,7 +22,7 @@
   if(flow==='exhaustive')sourceIds.push(addSource(t,'reference','Supplied reference extract.json',{kind:'recorded_reference',topic:'Portable CSV interchange',origin:'RFC 4180, supplied illustrative extract; not fetched by this run',excerpt:'A CSV export should quote fields containing commas, quotes or line breaks and double embedded quotes. Verify the actual consumer before choosing a dialect.'}));
   sessions.set(id,{threadId:id,flow,sourceIds,guide:true,runId:null,objective:flow==='blocker'?'Plan a safe offline collection export with an explicit destination permission decision.':'Plan a reversible offline collection export without leaking sensitive fields.'});
   Object.assign(c.state,{demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};
-  c.switchThread(id);c.state.mode='Deep Plan';c.state.deepPlanStrategy=flows[flow].strategy;c.state.grillMe=false;c.state.composer=sessions.get(id).objective;refresh();
+  window.PM56_RUNTIME.composer.destination=null;c.switchThread(id);c.state.mode='Deep Plan';c.state.deepPlanStrategy=flows[flow].strategy;c.state.grillMe=false;c.state.composer=sessions.get(id).objective;refresh();
  }
  const decision=(key,prompt,dependsOn=[],blocker=false,options=['Use the recommendation','Choose a narrower scope'])=>({key,prompt,kind:'decision',dependsOn,build_blocker:blocker,participant:'Planner',options});
  function specs(s){
@@ -86,9 +87,75 @@
  E.slot('transcriptMessage',c=>{if(c.m?.type!=='b14-discovery')return '';const r=engine.get(c.m.runId);if(!r)return '<p>Historical discovery reference; local source unavailable.</p>';const b=engine.view(r.id).budget;return '<section class="deep14-entry" data-k="deep14-entry:'+r.id+'"><h3>Deep Plan · discovery</h3><p>'+c.esc(r.objective)+'</p><small>'+c.esc(r.status)+' · '+b.questions_asked+' asked · '+b.questions_remaining+' remaining · session-only</small><div class="deep14-actions">'+button(c,'b14-open','Open discovery',r)+'</div></section>';});
  E.slot('editorTabLabel',c=>c.editorId?.startsWith('deep-discovery:')?'Deep Plan · discovery':'');
  E.slot('editorDocument',c=>c.editorId?.startsWith('deep-discovery:')?workspace(c,engine.get(c.editorId.slice(15))):'');
- E.slot('composerBelow',c=>{const s=sessions.get(c.thread.id);return s?.guide?'<div class="deep14-guide"><span><strong>'+c.esc(flows[s.flow]?.title||'Deep Plan')+'</strong> '+(s.runId?'Open discovery. The controls remain available after dismissing this guidance.':'Send the prefilled request through the ordinary composer to begin.')+'</span>'+button(c,'b14-hide-guide','Dismiss')+'</div>':'';});
- E.action('b14-start',(c,b)=>{seed(c,b.dataset.flow);return true;});
- E.action('b14-hide-guide',c=>{const s=sessions.get(c.thread.id);if(s)s.guide=false;refresh();return true;});
+ // A gallery recording owns its player; ordinary/programmatic seeding never starts one.
+ const sel=(a,extra='')=>'[data-action="'+a+'"]'+extra;
+ function stop(){if(player&&!player.stopped)player.stop();player=null;playing=null;}
+ function press(s,target){return R.press(target,{via:el=>{if(playing===s&&s.guide)el.click();}});}
+ function raw(a,data){return E.run(a,{dataset:data||{}},new Event('click'));}
+ function script(s){
+  const run=()=>engine.get(s.runId),view=()=>s.runId&&engine.view(s.runId),c=()=>E.ctx();
+  const factReady=key=>run()?.questions.find(q=>q.key===key)?.state==='researched'&&!engine.currentSources(run()).some(q=>q.key===key);
+  const beats=[],add=(id,text,control,skip,wait=4200)=>beats.push({id,text,control,skip,wait});
+  const world=(id,text,fn,wait=4200)=>beats.push({id,text,run:fn,wait});
+  let frontier=0;const ask=(id)=>{const target=['thorough','exhaustive'].includes(s.flow)?2:[3,6,9,10,11][frontier++];add('questions-'+id,'The next decisions share one allowance. Next: open their Ask Card.',sel('b14-questions'),()=>!!run()?.activeRound||view()?.budget.questions_asked>=target,3600);
+   beats.push({id:'answers-'+id,text:'Your move: answer the Ask Card, use Next for each question, then press Submit answers. These decisions need your answer.',until:()=>!run()?.activeRound,yours:true});};
+  add('send','The request is prepared. Next: Send starts discovery.', '.composer '+sel('send'),()=>!!s.runId,400);
+  add('open','Discovery is ready. Next: inspect its sources and decisions.',sel('b14-open'),()=>c().state.activeEditor==='deep-discovery:'+s.runId,4200);
+  if(['thorough','exhaustive'].includes(s.flow)){
+   add('reuse','A recorded answer already covers offline use. Next: reuse it without spending a question.',sel('b14-reuse'),()=>run()?.questions.find(q=>q.key==='offline').state==='reused');
+   if(s.flow==='exhaustive'){
+    world('stale-check','The inventory changes during its source check. Next: reject the old result and check the new bytes.',()=>press(s,sel('b14-research','[data-key="fields"]')).then(ok=>ok?R.wait(120).then(()=>{if(playing===s&&s.guide)raw('b14-revise-source',{run:s.runId});return true;}):false));
+    beats.push({id:'stale-result',text:'The earlier source check is stale. Next: research the revised inventory.',until:()=>run()?.pending.every(p=>p.finished)});
+   }
+   add('fields','The inventory lists public and sensitive fields. Next: research which fields can be exported.',sel('b14-research','[data-key="fields"]'),()=>factReady('fields'));
+   beats.push({id:'fields-result',text:'Checking the current inventory. Next: inspect the source itself.',until:()=>factReady('fields')});
+   add('source','The source check resolved a fact without spending a question. Next: open the inventory.',sel('b14-source','[data-source$="-inventory"]'),()=>c().state.activeEditor===s.sourceIds[1]);
+   add('close-source','The actual inventory is visible, including excluded sensitive fields. Next: return to discovery.',sel('close-editor','[data-id="'+s.sourceIds[1]+'"]'),()=>c().state.activeEditor!==s.sourceIds[1]);
+   if(s.flow==='exhaustive'){
+    add('reference','The supplied reference is a recorded extract. Next: check it without claiming a live fetch.',sel('b14-research','[data-key="reference"]'),()=>factReady('reference'));
+    beats.push({id:'reference-result',text:'Checking the supplied reference. Next: ask only the remaining decisions.',until:()=>factReady('reference')});
+   }
+   ask('scope');
+  }else{
+   for(let i=0;i<4;i++)ask(String(i));
+   world('ceiling','Ten questions used the shared allowance. Next: confirm that another question cannot exceed it.',()=>press(s,sel('b14-questions')));
+   add('grill-on','The ceiling stopped new questions without failing discovery. Next: Grill Me adds 25 to the same count.',sel('b14-grill'),()=>view()?.budget.grill_me_enabled);
+   ask('extension');
+   add('grill-off','Eleven answers remain recorded. Next: turn Grill Me off without erasing them.',sel('b14-grill'),()=>!view()?.budget.grill_me_enabled);
+   world('lowered-ceiling','The lower allowance preserves all eleven answers. Next: the last unasked decision stays open.',()=>press(s,sel('b14-questions')));
+  }
+  add('preview','Discovery is ready to summarize. Next: review a source-bound Plan.',sel('b14-preview'),()=>previews.has(s.runId));
+  add('cancel-preview','The preview creates no Plan. Next: cancel it and review again with the answers retained.',sel('b14-preview-cancel'),()=>!previews.has(s.runId));
+  add('preview-again','Answers and sources remain intact. Next: review the Plan again.',sel('b14-preview'),()=>previews.has(s.runId));
+  if(s.flow==='exhaustive'){
+   world('revise-after-preview','The source changes after review. Next: the old confirmation must refuse it.',()=>{raw('b14-revise-source',{run:s.runId});return true;});
+   beats.push({id:'stale-confirm',text:'Your move: press Create this Plan to check the reviewed version. The changed source makes this preview stale.',yours:true,until:()=>s.staleRejected});
+   add('refresh-fields','The stale preview was refused and no Plan was created. Next: recheck the current inventory.',sel('b14-research','[data-key="fields"]'),()=>factReady('fields'));
+   beats.push({id:'fresh-result',text:'Rechecking current source bytes. Next: refresh the preview without counting the fact twice.',until:()=>factReady('fields')});
+   world('fresh-preview','Current evidence is ready. Next: replace the stale preview with a fresh review.',()=>press(s,sel('b14-preview')));
+  }
+  beats.push({id:'create',text:'Your move: review the preview, then press Create this Plan. Creating it still requires a separate Build approval.',yours:true,until:()=>run()?.status==='synthesized'});
+  if(s.flow!=='blocker')beats.push({id:'build',text:'Your move: the Plan is ready. Press Build to approve execution of this exact version.',yours:true,until:()=>!!P.get(run()?.planId)?.approved});
+  world('end',s.flow==='blocker'?'The permission decision is still open. Next: retain it as an explicit Build blocker.':'The approved Plan owns execution. Next: retain discovery and its shared question history.',()=>{s.done=true;return true;},3200);
+  for(const b of beats)if(!['create','build','end'].includes(b.id)){const skip=b.skip;b.skip=()=>run()?.status==='synthesized'||skip?.();}
+  return beats;
+ }
+ function next(s){if(!s||s.done)return null;const list=s.beats;
+  while(s.step<list.length){const b=list[s.step];const skip=b.skip?.(),ready=!skip&&b.until?.();if(skip||ready){if(ready&&player&&!player.stopped)player.last=R.now();s.step++;continue;}if(b.until)return null;
+   const step=s.step;return {id:b.id,wait:b.wait,run:()=>Promise.resolve(b.run?b.run():press(s,b.control)).then(ok=>{if(ok!==false&&s.step===step)s.step++;return ok;})};}return null;
+ }
+ function playback(s){stop();playing=s;s.step=0;s.done=false;s.beats=script(s);player=R.play({key:'deep14',live:()=>playing===s&&s.guide,threads:()=>[s.threadId],first:400,next:()=>next(s),render:refresh,superseded:()=>{s.guide=false;if(playing===s)stop();}});refresh();}
+ function guide(c,inDoc=false){const s=sessions.get(c.thread.id);if(!s?.guide||s!==playing||c.state.dialog||!!(innerWidth<=1100&&c.state.editorRevealed)!==inDoc)return '';
+  next(s);const b=s.beats[s.step],text=player?.errors.length?'Playback stopped. Close or replay this example.':s.done?(s.flow==='blocker'?'Done · Eleven answers retained. The unresolved permission decision blocks Build.':'Done · The Plan was explicitly approved. Its discovery, sources and answers remain available.'):b?.text||'';
+  const say=R.steady(s,text,!!b?.yours||s.done,refresh);
+  return window.PM56_SHELL.pmxGuide({key:'deep14-guide',cls:'deep14-guide',placement:inDoc?'doc':'dock',step:c.esc(say),actions:s.done?[{action:'b14-replay',label:'Replay'}]:[],next:player&&player.progress(),close:{action:'b14-hide-guide',label:'Close example'}});
+ }
+ E.slot('composerBelow',c=>guide(c));
+ // The observer supplies the first document row for discovery, sources and the Plan alike.
+ E.slot('afterRender',(c,info)=>{if((info?.phase||c.phase)!=='app')return;const html=guide(c,true),host=document.querySelector('.editor-body'),old=host?.querySelector(':scope > .deep14-guide');if(!html){old?.remove();return;}if(old)old.outerHTML=html;else host?.insertAdjacentHTML('afterbegin',html);});
+ E.action('b14-start',(c,b)=>{const gallery=!!b.closest?.('.demo-dialog .demo-trigger');stop();seed(c,b.dataset.flow);if(gallery)playback(sessions.get(c.state.selectedThread));return true;});
+ E.action('b14-replay',c=>{const flow=sessions.get(c.thread.id)?.flow;stop();seed(c,flow);playback(sessions.get(c.state.selectedThread));return true;});
+ E.action('b14-hide-guide',c=>{const s=sessions.get(c.thread.id);if(s)s.guide=false;stop();refresh();return true;});
  const withRun=(a,fn)=>E.action(a,(c,b)=>{const r=engine.get(b.dataset.run);if(r)fn(c,r,b);return true;});
  withRun('b14-open',(c,r)=>c.openEditor('deep-discovery:'+r.id));
  withRun('b14-source',(c,r,b)=>{if(r.sourceIds.includes(b.dataset.source))c.openEditor(b.dataset.source);});
@@ -98,13 +165,13 @@
  withRun('b14-research',(c,r,b)=>research(c,r,b.dataset.key));
  withRun('b14-preview',(c,r)=>{const p=engine.payload(r.id);if(!p.ok)return result(c,p);previews.set(r.id,{value:clone(p.value),fingerprint:engine.fingerprint(p.value)});refresh();});
  withRun('b14-preview-cancel',(c,r)=>{previews.delete(r.id);refresh();});
- withRun('b14-synthesize',(c,r)=>{const p=previews.get(r.id);if(!p)return result(c,{ok:false,error:'preview_required'});const o=engine.finish(r.id,p.fingerprint,x=>P.createFromDiscovery(x));if(o.ok){previews.delete(r.id);P.openDetails(c,o.planId);}result(c,o);});
+ withRun('b14-synthesize',(c,r)=>{const p=previews.get(r.id);if(!p)return result(c,{ok:false,error:'preview_required'});const o=engine.finish(r.id,p.fingerprint,x=>P.createFromDiscovery(x));if(o.ok){previews.delete(r.id);P.openDetails(c,o.planId);}else{const s=sessions.get(r.threadId);if(s===playing)s.staleRejected=true;}result(c,o);});
  withRun('b14-open-plan',(c,r)=>{if(r.result)P.openDetails(c,r.result.planId);});
  withRun('b14-cancel',(c,r)=>{const o=engine.cancel(r.id);if(o.ok){if(ownBinding(c)?.runId===r.id)hideQuestionnaire(c);previews.delete(r.id);}result(c,o);});
  withRun('b14-revise-source',(c,r)=>{const s=sessions.get(r.threadId),v=engine.view(r.id);if(!v.current||r.status!=='collecting'||!s||s.flow==='custom')return;const a=artifact(s.sourceIds[1]);let x;try{x=JSON.parse(a?.content);}catch(_){return result(c,{ok:false,error:'source_not_valid_json'});}if(!Array.isArray(x.fields))return result(c,{ok:false,error:'unsupported_source'});x.fields.push({name:'extra_field_'+a.version,sensitive:false});a.version++;a.content=JSON.stringify(x,null,2);refresh();});
  withRun('b14-export',(c,r)=>{const text=JSON.stringify(engine.view(r.id),null,2),blob=new Blob([text],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=r.id+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),30000);});
  document.addEventListener('toggle',e=>{const id=e.target?.dataset?.deepDisclosure;if(id){if(e.target.open)opened.add(id);else opened.delete(id);}},true);
- E.chainAction('reset-all',()=>{for(const t of timers.values())clearTimeout(t);timers.clear();sessions.clear();drafts.clear();previews.clear();opened.clear();engine.reset();return false;});
+ E.chainAction('reset-all',()=>{stop();for(const t of timers.values())clearTimeout(t);timers.clear();sessions.clear();drafts.clear();previews.clear();opened.clear();engine.reset();return false;});
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Deep Plan & question budgets · Batch 14</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="b14-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_DEEP_PLAN={engine,scope,flows,snapshot:tid=>{const s=sessions.get(tid||E.ctx().thread.id);return s?.runId?engine.view(s.runId):null;},session:tid=>clone(sessions.get(tid||E.ctx().thread.id)||null)};
+ window.PM56_DEEP_PLAN={stopPlayback:stop,engine,scope,flows,snapshot:tid=>{const s=sessions.get(tid||E.ctx().thread.id);return s?.runId?engine.view(s.runId):null;},session:tid=>clone(sessions.get(tid||E.ctx().thread.id)||null)};
 })();

@@ -20,8 +20,11 @@
 .deep14-section pre,.deep14-source pre{white-space:pre-wrap;word-break:break-word;max-width:100%;font-size:11px}
 .deep14-entry{padding:18px;border:1px solid var(--border);border-radius:16px;margin:10px 0;min-width:0}
 .deep14-entry h3{margin:0 0 8px;font-size:16px}
-.deep14-guide{display:flex;align-items:center;gap:12px;margin:8px 12px;padding:10px 12px;border:1px solid var(--border);border-radius:12px;font-size:12px;min-width:0}
-.deep14-guide span{flex:1;min-width:0;overflow-wrap:anywhere}
+
+
 @media(max-width:900px){.deep14-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.deep14-workspace header h1{font-size:21px}.deep14-section,.deep14-preview{padding:12px}}
 
-.deep14-workspace,.deep14-source{box-sizing:border-box;width:100%;max-width:900px!important;margin:0 auto;padding:clamp(16px,3vw,30px)!important}.deep14-section,.deep14-entry{background:var(--surface-2)}.deep14-question p{font-size:12px;line-height:1.6}.deep14-section>summary{cursor:pointer;font-size:12px;font-weight:600}.deep14-guide{background:var(--surface-2)}
+.deep14-workspace,.deep14-source{box-sizing:border-box;width:100%;max-width:900px!important;margin:0 auto;padding:clamp(16px,3vw,30px)!important}.deep14-section,.deep14-entry{background:var(--surface-2)}.deep14-question p{font-size:12px;line-height:1.6}.deep14-section>summary{cursor:pointer;font-size:12px;font-weight:600}
+
+/* Keep the recorded guide visible while the narrow document scrolls. */
+.editor-body > .deep14-guide.pmx-guide{position:sticky;top:0;z-index:5;background:var(--surface-2);flex-shrink:0}

@@ -19,9 +19,9 @@
 .orders15-entry .working-head {flex-wrap:wrap;}
 .orders15-entry .working-controls {flex:0 0 auto;max-width:100%;margin-left:auto;flex-wrap:wrap;gap:6px;}
 .orders15-entry .working-controls button {font-size:11px;}
-.orders15-guide {display:flex;align-items:center;gap:12px;margin:9px 4px;font-size:11px;color:var(--muted);line-height:1.5;}
-.orders15-guide strong {display:block;color:var(--text);}
-.orders15-guide button {margin-left:auto;flex:none;}
+
+
+
 @media(max-width:750px){.orders15-entry .working-head {flex-wrap:wrap;}.orders15-entry .working-controls{margin-left:auto;}.orders15-workspace{padding:16px;}}
 
 /* Keep full Goal detail usable at the actual Activity column width. */
@@ -35,3 +35,6 @@
 
 .orders15-entry {padding-bottom:56px;}
 .goal-section-v2 .soft-button:disabled {opacity:.45;cursor:not-allowed;}
+
+/* Keep the recorded guide visible while the narrow document scrolls. */
+.editor-body > .orders15-guide.pmx-guide{position:sticky;top:0;z-index:5;background:var(--surface-2);flex-shrink:0}

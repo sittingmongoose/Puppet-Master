@@ -5,6 +5,7 @@
 (function(){
  'use strict';
  const E=window.PM56_EXT,D=window.PM56_DATA,G=window.PM56_GOAL,P=window.PM56_PLANS,T=window.PM56_TODOS,TX=window.PM56_TX,RT=window.PM56_RUNTIME;
+ const R=window.PM56_RECPLAY;let player=null,playing=null,typing=null;
  const work=RT.orderExport={records:{},sessions:{},seq:0},clone=x=>JSON.parse(JSON.stringify(x));
  const art=id=>D.artifacts.find(a=>a.id===id),now=()=>new Date().toISOString(),eq=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
  const digest=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return 'fnv1a:'+((h>>>0).toString(16).padStart(8,'0'));};
@@ -58,9 +59,9 @@
   condition:(ref,item,reason,state)=>({ok:state==='blocked'?sourceError(work.records[ref])===reason:!sourceError(work.records[ref])})
  });G.registerOwner('order_export',owner);P.registerWorkOwner('order_export',owner);
  function createWork(t,objective){const id='order-export-'+(++work.seq),a=art(work.sessions[t.id]?.sourceId);if(!a)return {ok:false,error:'source_not_selected'};const r={id,threadId:t.id,scope:G.scope(t.id),route:clone(E.ctx().selectedModel()),permissions:E.ctx().state.permissions,objective,source:{id:a.id,version:a.version,hash:digest(a.content)},outputs:{},evidence:{},attempts:[],todoIds:[],createdAt:now()};TX.set(work.records,id,r);try{normalized(r);}catch(e){return {ok:false,error:e.message};}return {ok:true,record:r};}
- function seed(c,flow){if(!flows[flow])return;const t=clone(c.state.threads.find(t=>t.id==='query')||c.thread),id='batch15-'+flow+'-'+(++work.seq);Object.assign(t,{id,title:flows[flow].title+' · local example',projectId:'concept:batch15:'+work.seq,worktreeId:'concept:orders:'+work.seq,status:'ready',pinned:false,archived:false,goalId:null,messages:[]});c.state.threads.push(t);
+ function seed(c,flow){if(!flows[flow])return;stop();const t=clone(c.state.threads.find(t=>t.id==='query')||c.thread),id='batch15-'+flow+'-'+(++work.seq);Object.assign(t,{id,title:flows[flow].title+' · local example',projectId:'concept:batch15:'+work.seq,worktreeId:'concept:orders:'+work.seq,status:'ready',pinned:false,archived:false,goalId:null,messages:[]});c.state.threads.push(t);
   const value={orders:[{id:' ORD-001 ',customer:'River, Inc.',quantity:3,unit_price:'19.99'},{id:'ORD-002',customer:'Ada "A" Chen',quantity:2,unit_price:'0.10'},{id:'ORD-003',customer:'North\nSouth',quantity:7,unit_price:'4.25'},{id:'ORD-004',customer:'München Studio',quantity:1,unit_price:'120.00'},{id:'ORD-005',customer:'Trailing space ',quantity:4,unit_price:'3.33'}]},a=artifact('Supplied orders.json',JSON.stringify(value,null,2),t.id,t.projectId,id+'-source');a.summary='Supplied exercise input; not computed or fetched.';a.provenance='Supplied Batch 15 order fixture.';D.artifacts.push(a);
-  work.sessions[t.id]={threadId:t.id,flow,guide:true,sourceId:a.id,workId:null};Object.assign(c.state,{menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false});c.state.activity.open=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};c.switchThread(t.id);c.state.mode=['plan','scheduled'].includes(flow)?'Plan':'Chat';c.state.composer=(c.state.mode==='Plan'?'':'/goal ')+'Export the supplied orders to a verified CSV with exact cents, preserving quoted customer names and the unchanged source.';refresh();
+  work.sessions[t.id]={threadId:t.id,flow,guide:true,sourceId:a.id,workId:null};Object.assign(c.state,{menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false});c.state.activity.open=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};RT.composer.destination=null;c.switchThread(t.id);c.state.mode=['plan','scheduled'].includes(flow)?'Plan':'Chat';c.state.composer=(c.state.mode==='Plan'?'':'/goal ')+'Export the supplied orders to a verified CSV with exact cents, preserving quoted customer names and the unchanged source.';refresh();
  }
  function accept(c,t,raw){const dest=RT.composer.destination;
   if(dest?.kind==='goal-objective-proposal'){const out=G.propose(dest.goalToken,raw,{explicit:true,text:raw});if(!out.ok){fail(c,out);return {claimed:true,preserveComposer:true};}t.messages.push({id:'goal-proposal-request-'+(++work.seq),role:'user',type:'text',body:raw});RT.composer.destination=null;c.state.activity.open=true;c.state.activity.domain='goal';return {claimed:true,preserveComposer:false};}
@@ -86,13 +87,98 @@
  E.slot('transcriptMessage',c=>{if(c.m?.type!=='order-export-work')return '';const r=work.records[c.m.workId];if(!r)return '<p>Local order workflow is unavailable.</p>';return '<section class="orders15-entry" data-k="orders15-entry:'+r.id+'"><div class="orders15-entry-head"><div><strong>Order export</strong><p>Supplied source → computed files → accepted evidence.</p><small>Local workflow. Goal controls live in Activity.</small></div>'+btn('b15-open','Open files',r)+'</div>'+((activeOwner(r)?.approved||r.goalId)?c.renderOwnedWorking({id:'order-animation-'+r.id,workId:r.id},projection(r)):'<p>The Plan is ready for your explicit Build action.</p>')+'</section>';});
  E.slot('workingOwnerControls',c=>{const r=work.records[c.rec.workId];const g=r&&(r.planId?G.bound(r.planId):G.byId(r.goalId));return r?(g&&!G.cancelled(g)?btn('b15-goal','Goal controls',r):r.planId?btn('b15-plan','Plan',r):'')+btn('b15-open','Files',r):'';});
  E.slot('editorTabLabel',c=>c.editorId?.startsWith('order-export:')?'Order export':'');E.slot('editorDocument',c=>c.editorId?.startsWith('order-export:')?workspace(c,work.records[c.editorId.slice(13)]):'');
- E.slot('composerBelow',c=>{const s=work.sessions[c.thread.id];return s?.guide?'<div class="orders15-guide"><span><strong>'+c.esc(flows[s.flow].title)+'</strong> '+(s.workId?'Continue through the Plan, Goal Activity, and file controls.':s.flow==='scheduled'?'Send to create a Plan. Choose Build At, then Build as Goal.':'Send the prefilled request to begin. The guide starts no work.')+'</span>'+btn('b15-hide-guide','Dismiss')+'</div>':'';});
- E.action('b15-start',(c,b)=>{seed(c,b.dataset.flow);return true;});E.action('b15-hide-guide',c=>{if(work.sessions[c.thread.id])work.sessions[c.thread.id].guide=false;refresh();return true;});
+ // Playback belongs to a gallery Start, never to programmatic seed()/handler tests.
+ const sel=(a,x='')=>'[data-action="'+a+'"]'+x;
+ const REPLACEMENT='Export all five supplied orders with exact cents and verify the CSV independently.';
+ function stop(){if(player&&!player.stopped)player.stop();player=null;playing=null;
+  // Detach only the field the recording is currently typing into. Its pending type
+  // promise then sees the cancelled session and cannot write into a new example.
+  if(typing?.el?.isConnected){const old=typing.el,fresh=old.cloneNode(true),focused=document.activeElement===old;fresh.value=old.value;old.replaceWith(fresh);if(focused)fresh.focus({preventScroll:true});}typing=null;
+ }
+ function press(s,target){return R.press(target,{via:el=>{if(playing===s&&s.guide)el.click();}});}
+ function typeRecorded(s,text,options={}){const into=options.into||R.COMPOSER,task={s,el:R.find(into)};typing=task;return R.type(text,{...options,into:()=>{task.el=playing===s&&s.guide?R.find(into):null;return task.el;}}).finally(()=>{if(typing===task)typing=null;});}
+ function script(s){
+  const c=()=>E.ctx(),r=()=>work.records[s.workId],g=()=>G.get(s.threadId),plan=()=>r()?.planId&&P.get(r().planId),schedule=()=>window.PM56_SCHED.list().builds.find(b=>b.target_id===r()?.planId&&b.thread_id===s.threadId&&!s.knownSchedules.includes(b.schedule_id));
+  const beats=[],add=(id,text,control,skip,wait=4200,extra={})=>beats.push({id,text,control,skip,wait,...extra});
+  const world=(id,text,run,wait=4200,extra={})=>beats.push({id,text,run,wait,...extra});
+  const type=(id,text,value,into=R.COMPOSER,wait=2000)=>world(id,text,()=>typeRecorded(s,value,{into,cps:65}),wait,{skip:()=>R.find(into)?.value===value});
+  const back=(id)=>add('back-'+id,'The next control is in chat. Next: return to the conversation.',sel('return-to-chat'),()=>!(innerWidth<=1100&&c().state.editorRevealed),900);
+  add('send','The request is prepared. Next: press Send to start this example.', '.composer '+sel('send'),()=>!!s.workId,400);
+  if(['plan','scheduled'].includes(s.flow)){
+   add('plan','The assistant wrote a Plan without starting work. Next: open its exact version.',sel('pd-info'),()=>c().state.activeEditor==='plan:'+r()?.planId);
+   add('more','The Plan is ready for review. Next: open its secondary actions.',sel('pd-more-actions'),()=>!!R.find(sel(s.flow==='plan'?'pd-build-goal':'pd-build-at')),3600);
+   if(s.flow==='plan')beats.push({id:'build-approval',text:'Your move: review the Plan, then press Build as Goal to approve execution of this exact version.',until:()=>!!plan()?.approved,yours:true});
+   else{
+    add('build-at','Build At sets a future start for this exact Plan. Next: choose its time and execution type.',sel('pd-build-at'),()=>!!c().state.dialog,1300);
+    add('one-time','Build At is open. Next: choose a one-time build.',sel('sched-set-build-kind','[data-value="one_time"]'),()=>!!R.find('[data-sched-input="build-date"]'),2600,{dialog:true});
+    world('date','The future slot is being prepared. Next: set tomorrow’s date.',()=>R.choose('[data-sched-input="build-date"]',new Date(Date.now()+86400000).toISOString().slice(0,10)),1300,{dialog:true});
+    world('time','Tomorrow is selected. Next: set the start time to 10:00.',()=>R.choose('[data-sched-input="build-time"]','10:00'),1300,{dialog:true});
+    add('topology','The time is ready. Next: choose Build as Goal for the scheduled execution.',sel('sched-pick-build-topology'),()=>!!R.find('.overlay-menu '+sel('shared-choice-pick','[data-value="goal_driven"]')),2500,{dialog:true});
+    add('goal-topology','Execution choices are open. Next: select Build as Goal.', '.overlay-menu '+sel('shared-choice-pick','[data-value="goal_driven"]'),()=>c().state.dialog&&!c().state.menu&&!!R.find(sel('sched-pick-build-topology'))&&R.find(sel('sched-pick-build-topology')).textContent.includes('Goal'),1300,{dialog:true,menu:true});
+    beats.push({id:'schedule-approval',text:'Your move: review the time and Build as Goal, then press Schedule build to approve this future build. No Goal exists before the slot.',until:()=>!!schedule(),yours:true,dialog:true});
+    add('close-schedule','The exact Plan is scheduled; no Goal exists yet. Next: return to the conversation before its approved slot.',sel('sched-close-dialog'),()=>!c().state.dialog,4200,{dialog:true});
+    back('scheduled');
+    world('due','The future build is approved, but no Goal exists yet. Next: the demonstration clock reaches that exact slot.',()=>{const b=schedule();window.PM56_SCHED.dispatchBuildAt(b.schedule_id,Date.parse(b.scheduled_at_utc),b.revision);return true;},5000);
+   }
+   // The product’s bound run is fast; bring its Goal into view before demonstrating Pause.
+   back('build');
+  }
+  add('goal','The Goal owns this run. Next: open its controls in Activity.',sel('b15-goal'),()=>c().state.activity.open&&c().state.activity.domain==='goal',1100);
+  add('pause','Work is running under the accepted objective. Next: Pause stops its actual work.',sel('goal-pause'),()=>g()?.status==='paused'||g()?.status==='completed',900);
+  if(s.flow==='authority'){
+   add('edit','The Goal is paused. Next: edit the accepted objective directly.',sel('goal-open-editor')+', '+sel('goal-edit'),()=>!!R.find('[data-goal-input="objective"]'));
+   world('type-objective','The objective editor is open. Next: add the requirement to keep all five orders.',()=>{s.directText=g().revisions[0].objective+' Keep all five orders.';return typeRecorded(s,s.directText,{into:'[data-goal-input="objective"]',from:g().revisions[0].objective.length,cps:45});},2000,{skip:()=>g()?.revision>=2||R.find('[data-goal-input="objective"]')?.value===s.directText});
+   beats.push({id:'save-objective',text:'Your move: review the edited objective and press Save to accept the new revision. Cancel edit keeps the existing objective.',until:()=>g()?.revision>=2||s.editCancelled,yours:true});
+   add('details','The accepted objective stays paused. Next: inspect its details and request a proposed replacement.',sel('goal-details'),()=>!!R.find(sel('goal-toggle-history','[aria-expanded="true"]')));
+   for(let i=0;i<2;i++){
+    add('request-'+i,'A proposed replacement needs separate approval. Next: target the composer at the objective.',sel('goal-request-change'),()=>RT.composer.destination?.kind==='goal-objective-proposal');
+    back('proposal-'+i);
+    type('proposal-text-'+i,'The composer targets an objective proposal. Next: type the complete requested replacement.',REPLACEMENT);
+    add('proposal-send-'+i,'The replacement request is ready. Next: Send prepares it for review without changing the objective.', '.composer '+sel('send'),()=>!!s.proposals?.[i],1600);
+    beats.push({id:'proposal-choice-'+i,text:i===0?'Your move: review the proposed objective. Press Cancel to keep the accepted text, or Approve Change to accept it.':'Your move: review the replacement again. Approve Change accepts it; Cancel keeps the accepted objective. Work stays paused.',yours:true,until:()=>s.proposals?.[i]&&G.proposal(s.proposals[i]).state!=='pending'});
+   }
+  }
+  add('resume','Pause preserved the accepted objective and stopped actual work. Next: Resume continues this same run.',sel('goal-resume'),()=>g()?.status==='active'||g()?.status==='completed',4200);
+  beats.push({id:'complete',text:'The same run is computing and independently checking the CSV. Next: completion requires all three accepted evidence records.',until:()=>g()?.status==='completed'});
+  add('close-activity','The Goal is complete. Next: close Activity so the verified files have room.',sel('close-activity'),()=>innerWidth>1100||!c().state.activity.open,2600);
+  add('files','All required outcomes have accepted evidence. Next: open the computed files.',sel('b15-open'),()=>c().state.activeEditor==='order-export:'+s.workId,4200);
+  world('end','The files preserve all five orders and exact cents. The Download control is available for you to use.',()=>{s.done=true;return true;},5000);
+  for(const b of beats)if(['plan','more','build-at','one-time','date','time','topology','goal-topology'].includes(b.id)){const skip=b.skip;b.skip=()=>!!schedule()||!!plan()?.approved||skip?.();}
+  return beats;
+ }
+ function next(s){if(!s||s.done)return null;
+  while(s.step<s.beats.length){const b=s.beats[s.step];const skip=b.skip?.(),ready=!skip&&b.until?.();if(skip||ready){if(ready&&player&&!player.stopped)player.last=R.now();s.step++;continue;}if(b.until)return null;
+   // If a reader has already opened the document on a small screen, use the product’s Return to chat first.
+   const chat=b.control&&/b15-goal|b15-open|goal-/.test(b.control)&&!b.control.includes('pd-build-goal');
+   if(chat&&innerWidth<=1100&&E.ctx().state.editorRevealed)return {id:'chat:'+b.id,wait:900,run:()=>press(s,sel('return-to-chat'))};
+   const step=s.step;return {id:b.id,wait:b.wait,dialog:b.dialog,menu:b.menu,run:()=>Promise.resolve(b.run?b.run():press(s,b.control)).then(ok=>{if(ok!==false&&s.step===step)s.step++;return ok;})};}return null;
+ }
+ function playback(s){stop();playing=s;s.step=0;s.done=false;s.proposals=[];s.knownSchedules=window.PM56_SCHED.list().builds.map(b=>b.schedule_id);s.beats=script(s);player=R.play({key:'orders15',live:()=>playing===s&&s.guide,threads:()=>[s.threadId],first:400,next:()=>next(s),render:refresh,superseded:()=>{s.guide=false;if(playing===s)stop();}});refresh();}
+ function guide(c,placement='dock'){const s=work.sessions[c.thread.id];if(!s?.guide||s!==playing)return '';const sheet=placement==='sheet',doc=placement==='doc';if(!!c.state.dialog!==sheet||!sheet&&!!(innerWidth<=1100&&c.state.editorRevealed)!==doc)return '';
+  next(s);const b=s.beats[s.step],text=player?.errors.length?'Playback stopped. Close or replay this example.':s.done?'Done · Verified CSV, five orders, 22324 cents. The source is unchanged. Download is available on each file.':b?.text||'';
+  const say=R.steady(s,text,!!b?.yours||s.done,refresh);
+  return window.PM56_SHELL.pmxGuide({key:'orders15-guide',cls:'orders15-guide',placement,step:c.esc(say),actions:s.done?[{action:'b15-replay',label:'Replay'}]:[],next:player&&player.progress(),close:{action:'b15-hide-guide',label:'Close example'}});
+ }
+ // The current compact Goal panel hides the older detail/proposal shortcuts used by this journey.
+ // Keep those genuine owner actions reachable in this exercise, after the original panel.
+ const originalGoalPanel=G.render.panel;
+ G.render.panel=c=>{const body=originalGoalPanel(c),s=work.sessions[c.thread.id];return body+(s?.flow==='authority'&&G.get(c.thread.id)?.status!=='completed'?'<div class="orders15-actions">'+btn('goal-details','Objective details')+btn('goal-request-change','Request objective change')+'</div>':'');};
+ E.slot('composerBelow',c=>guide(c));
+ E.slot('afterRender',(c,info)=>{if((info?.phase||c.phase)!=='app')return;const html=guide(c,'doc'),host=document.querySelector('.editor-body'),old=host?.querySelector(':scope > .orders15-guide');if(!html){old?.remove();return;}if(old)old.outerHTML=html;else host?.insertAdjacentHTML('afterbegin',html);});
+ const scheduleGuides=window.PM56_SCHEDULE_DEMOS,originalDialogGuide=scheduleGuides.dialogGuide;
+ scheduleGuides.dialogGuide=c=>originalDialogGuide(c)+guide(c,'sheet');
+ // Capture the actual proposal owner’s identity after Send; decisions remain on its ordinary controls.
+ document.addEventListener('click',e=>{if(!playing||!e.target.closest?.(sel('send')))return;const s=playing;queueMicrotask(()=>{if(s!==playing)return;const proposals=Object.values(RT.goals.proposals).filter(p=>p.token.goalId===G.get(s.threadId)?.id);s.proposals=proposals.map(p=>p.id);});});
+ E.chainAction('goal-cancel-edit',()=>{if(playing)playing.editCancelled=true;return false;});
+ E.action('b15-start',(c,b)=>{const gallery=!!b.closest?.('.demo-dialog .demo-trigger');stop();seed(c,b.dataset.flow);if(gallery)playback(work.sessions[c.state.selectedThread]);return true;});
+ E.action('b15-replay',c=>{const flow=work.sessions[c.thread.id]?.flow;stop();seed(c,flow);playback(work.sessions[c.state.selectedThread]);return true;});
+ E.action('b15-hide-guide',c=>{if(work.sessions[c.thread.id])work.sessions[c.thread.id].guide=false;stop();refresh();return true;});
+ E.chainAction('reset-all',()=>{stop();return false;});
  const withWork=(name,fn)=>E.action(name,(c,b)=>{const r=work.records[b.dataset.work];if(r&&r.threadId===c.thread.id)fn(c,r,b);return true;});
  withWork('b15-open',(c,r)=>c.openEditor('order-export:'+r.id));withWork('b15-source',(c,r)=>c.openEditor(r.source.id));withWork('b15-artifact',(c,r,b)=>{if(Object.values(r.outputs).includes(b.dataset.artifact))c.openEditor(b.dataset.artifact);});
  withWork('b15-plan',(c,r)=>r.planId&&P.openDetails(c,r.planId));withWork('b15-goal',(c,r)=>{const g=r.planId?G.bound(r.planId):G.byId(r.goalId);if(!g||G.cancelled(g)){c.toast('No active Goal','A scheduled or ordinary Build does not create a Goal before goal-driven admission.');return;}c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';if(innerWidth<=1100)c.state.editorRevealed=false;refresh();});
  withWork('b15-todos',(c,r)=>{c.state.activity.open=true;c.state.activity.domain='todo';refresh();});
  withWork('b15-download',(c,r,b)=>{if(!Object.values(r.outputs).includes(b.dataset.artifact))return;const a=art(b.dataset.artifact);if(!a)return;const url=URL.createObjectURL(new Blob([a.content],{type:a.extension==='csv'?'text/csv;charset=utf-8':'application/json'})),link=document.createElement('a');link.href=url;link.download=a.name;link.click();setTimeout(()=>URL.revokeObjectURL(url),30000);});
  const gallery=window.PM56_REPAIR_DEMOS,old=gallery.gallery;gallery.gallery=c=>'<section class="demo-section"><h3>Simple Goal & explicit execution · Batch 15</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="b15-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_ORDER_EXPORT={formats:{csv,quote},seed,flows,get:id=>work.records[id],snapshot:tid=>clone(work.records[work.sessions[tid||E.ctx().thread.id]?.workId]||null),session:tid=>clone(work.sessions[tid||E.ctx().thread.id]||null),inspect:inspection,advance,validate,digest,parseCSV};
+ window.PM56_ORDER_EXPORT={stopPlayback:stop,formats:{csv,quote},seed,flows,get:id=>work.records[id],snapshot:tid=>clone(work.records[work.sessions[tid||E.ctx().thread.id]?.workId]||null),session:tid=>clone(work.sessions[tid||E.ctx().thread.id]||null),inspect:inspection,advance,validate,digest,parseCSV};
 })();
