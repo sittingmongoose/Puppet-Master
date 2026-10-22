@@ -156,7 +156,7 @@ E.slot('composerBelow',ctx=>{
    extra:(r.extraHtml?r.extraHtml(ctx,r):'')+(r.last?'<p class="b18-decision" role="status">'+ctx.esc(r.last)+'</p>':''),next:r.player?r.player.progress():null,actions:r.actions||[],close:r.closeAction||null});}
  const s=say(ctx,r),text=RP.steady(r,s.text,!!s.done,()=>E.ctx().renderApp()),pl=players.get(r.threadId),end=s.done&&!s.yours&&text===s.text;
  return PM56_SHELL.pmxGuide({key:'b18-guide',cls:'b18-guide',attrs:'data-b18-flow="'+ctx.esc(r.flow)+'"',placement:'dock',caption:'Recorded example · no AI cost',step:ctx.esc(text),
-  extra:(r.last?'<p class="b18-decision" role="status">'+ctx.esc(r.last)+'</p>':'')+(end?controlsTry(ctx,r):''),actions:s.done&&text===s.text?[{action:'b18-replay',label:'Replay'}]:[],next:pl?pl.progress():null,close:{action:'b18-close',label:'Close the example'}});
+  extra:(r.last?'<p class="b18-decision" role="status">'+ctx.esc(r.last)+'</p>':'')+(end||window.PM56_RECPLAY_HOLD?controlsTry(ctx,r):''),actions:s.done&&text===s.text?[{action:'b18-replay',label:'Replay'}]:[],next:pl?pl.progress():null,close:{action:'b18-close',label:'Close the example'}});
 });
 /* inside Build At (its own sheets ask PM56_SCHEDULE_DEMOS.dialogGuide for a guide line): this example's line, after any
    other example's, so the window's Schedule is named plainly as your move */

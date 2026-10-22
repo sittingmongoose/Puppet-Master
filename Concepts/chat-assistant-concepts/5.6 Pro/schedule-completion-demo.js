@@ -114,7 +114,7 @@ function guide(ctx){const r=get();if(!r||r.closed||ctx.state.dialog)return '';co
  const s=say(ctx,r),text=RP.steady(r,s.text,!!s.done,()=>E.ctx().renderApp()),pl=players.get(r.threadId),end=s.done&&text===s.text;
  /* the one pmx guide look (G-25); the demo controls only once the recording has ended, folded */
  return PM56_SHELL.pmxGuide({key:'b18c-guide',cls:'b18c-guide',attrs:'data-b18c-flow="'+ctx.esc(r.flow)+'"',placement:'dock',caption:'Recorded example · no AI cost',step:ctx.esc(text),
-  extra:(r.note?'<p class="b18-decision" role="status">'+ctx.esc(r.note)+'</p>':'')+(end?'<details class="b18-clock b18c-try"><summary>'+PM56_SHELL.pmxGlyph('chevron-down',13)+'<span>Try it yourself: demo clock and controls</span></summary><div class="b18c-controls">'+controls+'</div></details>':''),
+  extra:(r.note?'<p class="b18-decision" role="status">'+ctx.esc(r.note)+'</p>':'')+(end||window.PM56_RECPLAY_HOLD?'<details class="b18-clock b18c-try"><summary>'+PM56_SHELL.pmxGlyph('chevron-down',13)+'<span>Try it yourself: demo clock and controls</span></summary><div class="b18c-controls">'+controls+'</div></details>':''),
   actions:end?[{action:'b18c-replay',label:'Replay'}]:[],next:pl?pl.progress():null,close:{action:'b18c-close',label:'Close the example'}});
 }
 E.action('b18c-replay',ctx=>{const r=get();if(r){r.closed=true;const pl=players.get(r.threadId);if(pl)pl.stop();begin(r.flow);}return true;});
