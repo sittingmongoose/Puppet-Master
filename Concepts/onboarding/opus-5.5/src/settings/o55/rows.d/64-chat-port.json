@@ -1,0 +1,25 @@
+{
+ "_about": "DL-232 / SSYS-055: the hosted chat and Settings share admitted preferences. Current-chat ELI5 stays in its chat sheet. Column width and pin choices remain layout state.",
+ "rows": {
+  "general.interaction.chat-history-list": {
+   "label": "History in new workspaces",
+   "help": "Starts as a flyout or pinned beside the messages. A workspace's saved choice always wins.",
+   "choices": [
+    "Flyout",
+    "Pinned"
+   ]
+  },
+  "general.interaction.thought-stream": {
+   "label": "Show thinking",
+   "help": "Shows reasoning the model shares. It never changes an answer.",
+   "choices": [
+    "Auto",
+    "Expanded"
+   ],
+   "options": {
+    "Auto": "While it thinks",
+    "Expanded": "Always open"
+   }
+  }
+ }
+}

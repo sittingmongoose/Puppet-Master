@@ -394,12 +394,16 @@
    "help": "Answers \"explain this to me\". A cheaper model is fine."
   },
   "ai.models.thread-title-model": {
-   "label": "Naming chats",
-   "help": "Renaming a chat yourself keeps your name.",
+   "label": "Name new chats",
+   "help": "A short name after the first message. Your own name always wins.",
    "choices": [
     "Default",
     "None"
-   ]
+   ],
+   "options": {
+    "Default": "Automatic (recommended)",
+    "None": "Don’t name chats"
+   }
   },
   "ai.models.custom-variants": {
    "label": "Your own presets",
