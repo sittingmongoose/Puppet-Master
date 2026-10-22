@@ -69,3 +69,36 @@
   .pm56-host .pmx-sheet .pmx-foot > .pmx-cancel { grid-area: cancel; }
   .pm56-host .pmx-sheet .pmx-foot > .pmx-primary { grid-area: primary; min-width: 0; }
 }
+
+/* ---- 4. the Crew plate's labels (CO-PLATE-EDGE, -LINE, -AFTER; "plate spacing at 480 px") ---------------------------
+   The run view draws the full 640-unit plate into the panel, so at a 480 px panel it is drawn at 0.65 and every gap in
+   the drawing shrinks with it: "got one checked result" ran to 10.8 px from the plate's edge (Friendly 7.3), "after
+   both" sat 6.2 px over its own line (Retro 5.3 from the arrowhead), and the job's two lines 6.2-6.8 px inside the
+   paper's outline. Each is moved where the drawing has room, at every size (each is also better at full size):
+   - the You group (icon and both labels) sits 10 units further left, and the dotted line to it ends 10 units sooner, so
+     the line still meets the icon as drawn;
+   - "after both" is centred in the band between the hand-out line above it and its own line (33 units for 8 of ink)
+     and 4 units left of centre, clear of the arrowhead, at 9 px (a line's annotation, under the 10.5 px sub-labels):
+     at 10.5 its ink left 16.2 px of a 21.4 px band, so both 8 px gaps could not fit at 0.65 with the half pixel the
+     text's baseline snaps by; geometricPrecision places it on the sub-pixel, so one lift centres it in Inter,
+     Poppins and IBM Plex Mono alike (measured gaps 8.3 / 8.4 px);
+   - the job paper's two lines are one tighter block, centred in the paper, a unit and a half in from its left edge
+     and clear of its folded corner. */
+.pm56-host .pmx-plate .pmx-p-you { translate: -10px 0; }
+.pm56-host .pmx-plate .pmx-p-line[data-style="toyou"] {
+  transform-box: fill-box;
+  transform-origin: 0 50%;
+  scale: .88 1;
+}
+.pm56-host .pmx-plate[data-pmx-kind="crew"] text.pmx-p-sub[data-pmx-part="assign"] { font-size: 9px; translate: -4px -4.47px; text-rendering: geometricPrecision; }
+.pm56-host .pmx-plate .pmx-p-paper-text {
+  box-sizing: border-box;
+  height: 100%;
+  justify-content: center;
+  padding: 0 6px 0 1.5px;
+}
+.pm56-host .pmx-plate .pmx-p-paper-text > span { width: 100%; }
+.pm56-host .pmx-plate .pmx-p-paper-text > .pmx-p-note { line-height: 11.5px; }
+.pm56-host .pmx-plate .pmx-p-paper-text > .pmx-p-lab { line-height: 13px; margin-top: 1px; }
+/* Poppins' taller descender: Friendly lifts the job's second line 0.8 units (its first line stays put) */
+.pm56-host[data-theme^="friendly"] .pmx-plate .pmx-p-paper-text > .pmx-p-lab { position: relative; top: -.8px; }

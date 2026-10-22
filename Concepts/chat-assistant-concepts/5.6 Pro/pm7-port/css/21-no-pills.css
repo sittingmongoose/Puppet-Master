@@ -11,6 +11,7 @@ html:not([data-o55-nier="on"]) .pm56-host[data-theme] .meta-pill,
 html:not([data-o55-nier="on"]) .pm56-host[data-theme] .wa-tag,
 /* transcript.css, goals.css, todos.css */
 html:not([data-o55-nier="on"]) .pm56-host[data-theme] .message-meta .meta-chip,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.message-chrome, .tx-feed, .transcript) .meta-chip,
 html:not([data-o55-nier="on"]) .pm56-host[data-theme] .goal-chip,
 html:not([data-o55-nier="on"]) .pm56-host[data-theme] .todo-chip,
 /* lens.css */

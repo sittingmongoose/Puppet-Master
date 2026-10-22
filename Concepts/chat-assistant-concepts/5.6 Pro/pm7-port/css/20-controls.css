@@ -122,7 +122,5 @@ html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^
    is PMConcept7's own field. The two unmatched ids only lift the weight over Glass's rule, as its :not(#lgz) does. */
 html:not([data-o55-nier="on"]) .pm56-host[data-theme^="glass"]:not(#pm56-w1):not(#pm56-w2) :is(.composer-box, .input-wrap, .qs-other-line, .qs-ask-note-well, .pmx-hero-box) :is(input, textarea) {
   background-color: transparent !important;
-  background-image: none !important;
   border-color: transparent !important;
-  box-shadow: none !important;
 }
