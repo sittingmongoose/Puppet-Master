@@ -38,6 +38,7 @@ export function chatTarget(argv = process.argv.slice(2)) {
     }, { look, kind });
     const painted = look.replace(/^nier-/, 'basic-');
     if (kind === 'pm7') await page.waitForFunction(({ painted, nier }) => document.documentElement.dataset.theme === painted && (document.documentElement.dataset.o55Nier === 'on') === nier && [...document.querySelectorAll('.pm56-host')].every(h => h.dataset.theme === painted), { painted, nier: look.startsWith('nier-') });
+    await page.evaluate(() => document.fonts.ready.then(() => true));
     await page.waitForTimeout(400);
   }
   return { kind, file, url: url.href, ready, resize, theme,

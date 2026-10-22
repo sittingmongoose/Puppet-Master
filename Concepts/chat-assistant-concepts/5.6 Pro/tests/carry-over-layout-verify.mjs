@@ -10,11 +10,13 @@ import { launchGpuBrowser } from './gpu-browser.mjs';
 
 const argv = process.argv.slice(2), opt = key => { const i = argv.indexOf(key); return i < 0 ? null : argv[i + 1]; };
 const target = chatTarget(argv), results = [], errors = [];
+const height = Number(opt('--height') || 860);
+if (!Number.isFinite(height) || height < 400) throw new Error('--height must be at least 400');
 const looks = opt('--looks')?.split(',') || LOOKS;
 if (looks.some(l => !LOOKS.includes(l))) throw new Error('Unknown --looks value');
 const widths = argv.includes('--sweep') ? Array.from({ length: 120 }, (_, i) => i + 400) : [400, 420, 440, 459, 460, 480, 500, 519];
 const check = (id, look, size, kind, pass, measured) => {
-  results.push({ id, look, size, kind, pass: !!pass, owner: look.startsWith('nier-') ? 'c56port-nier' : 'c56port-looks', measured });
+  results.push({ id, look, size, height, kind, pass: !!pass, owner: look.startsWith('nier-') ? 'c56port-nier' : 'c56port-looks', measured });
   if (!pass) console.log(`FAIL ${id} ${look} ${kind}@${size} ${JSON.stringify(measured)}`);
 };
 const browser = await launchGpuBrowser(chromium), page = browser.contexts()[0].pages()[0];
@@ -73,6 +75,7 @@ async function sheet(kind) {
     c.openDialog({ type: 'collab-configure' }); c.renderOverlays();
   }, kind);
   await page.waitForTimeout(900);
+  return ev(() => PM56_COLLAB.draft().rows.length);
 }
 async function shelf() {
   await page.locator('#pmOverlayRoot .pmx-shelf .pmx-q-head').scrollIntoViewIfNeeded();
@@ -149,13 +152,13 @@ try {
   for (const look of looks) {
     await target.theme(page, look);
     for (const kind of ['crew', 'chat_room']) {
-      await sheet(kind);
+      const helperCount = await sheet(kind);
       for (const width of widths) {
-        await target.resize(page, { width, height: 900 }, 'window');
+        await target.resize(page, { width, height }, 'window');
         const h = await shelf();
         check('CO-HEADER', look, width, kind, h.parts.length === 3 && !h.overlaps.length && h.parts.every(p => !p.clipped && p.hit), h);
         const c = await chrome();
-        check('CO-CHROME', look, width, kind, c.length >= 2 && c.some(p => /Persona/.test(p.text)) && c.some(p => /3 helpers/.test(p.text)) && c.every(p => !p.clipped && p.hit), c);
+        check('CO-CHROME', look, width, kind, c.length >= 2 && c.some(p => /Persona/.test(p.text)) && c.some(p => new RegExp('\\b' + helperCount + ' helpers\\b').test(p.text)) && c.every(p => !p.clipped && p.hit), { expectedHelpers: helperCount, parts: c });
       }
       await ev(() => { const c = PM56_EXT.ctx(); c.closeDialog(); c.renderApp(); });
     }
@@ -163,7 +166,7 @@ try {
   await target.resize(page, { width: 1440, height: 900 }); await target.theme(page, 'basic-dark');
   const run = await finishCrew(); await act('wg-open-leads', { run }); await page.waitForTimeout(600);
   for (const look of looks) {
-    await target.theme(page, look); await target.resize(page, { width: 480, height: 900 }, 'window');
+    await target.theme(page, look); await target.resize(page, { width: 480, height }, 'window');
     const view = page.locator('.pmx-view').filter({ visible: true }).first();
     if (await view.count()) await view.evaluate(el => { let s = el; while (s && !(s.scrollHeight > s.clientHeight && /auto|scroll/.test(getComputedStyle(s).overflowY))) s = s.parentElement; if (s) s.scrollTop = 0; });
     await page.waitForTimeout(400);

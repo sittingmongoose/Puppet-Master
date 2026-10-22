@@ -337,7 +337,10 @@ async function pixelRatios(page, sels) {
     out[sel] = await page.evaluate(async ([b64, color, op]) => {
       const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
       const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d'); g.drawImage(img, 0, 0);
-      const m = /rgba?\(([^)]+)\)/.exec(color), p = m[1].split(/[ ,/]+/).filter(Boolean).map(Number), fg = { r: p[0], g: p[1], b: p[2] }, a = (p.length > 3 ? p[3] : 1) * op;
+      // Resolve computed CSS Color 4 inks through the browser too (PM7 tokens can compute to color(srgb ...)).
+      const inkCanvas = document.createElement('canvas'); inkCanvas.width = inkCanvas.height = 1;
+      const inkContext = inkCanvas.getContext('2d'); inkContext.fillStyle = color; inkContext.fillRect(0, 0, 1, 1);
+      const rgba = inkContext.getImageData(0, 0, 1, 1).data, fg = { r: rgba[0], g: rgba[1], b: rgba[2] }, a = rgba[3] / 255 * op;
       const lum = c => { const f = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }; return .2126 * f(c.r) + .7152 * f(c.g) + .0722 * f(c.b); };
       let min = 99;
       for (const fy of [0.35, 0.5, 0.65]) for (let i = 1; i <= 7; i++) {
