@@ -19,6 +19,43 @@
    The selectors match the chat's own palette block (html[data-o55-nier="on"] div.pm56-host[data-theme="basic-..."])
    at the same weight and come after it. */
 
+/* PMConcept7's own tokens inside the hosts. The page's base sheet declares each family's tokens on a bare
+   [data-theme="..."] (base/style/style-002.css), and every .pm56-host mirrors the page's data-theme, so on the hosts those
+   blocks set Basic's values again (Inter, #121212 ...) over the NieR values each host inherits from <html>, where
+   PMConcept7's NieR tables live (html[data-o55-nier][data-theme="basic-..."], styles.d/13-nier.css). While NieR Mode is
+   on, every token those tables write is taken from <html> again: the 109 names of the root table, in its order (the
+   chat's own NieR block, one step heavier, keeps the names it defines with its own meaning: --surface, --border,
+   --font-mono and the o55-nier helpers, which carry the same values). */
+html[data-o55-nier="on"] .pm56-host[data-theme] {
+  --background: inherit; --bg: inherit; --surface: inherit; --surface-elevated: inherit; --surface-alt: inherit;
+  --text-primary: inherit; --text-secondary: inherit; --text-muted: inherit; --border: inherit;
+  --border-light: inherit; --accent-primary: inherit; --accent-primary-rgb: inherit; --accent-blue: inherit;
+  --accent-blue-rgb: inherit; --accent-magenta: inherit; --accent-lime: inherit; --accent-orange: inherit;
+  --accent-warning: inherit; --accent-error: inherit; --accent-red: inherit; --accent-soft: inherit;
+  --accent-glow: inherit; --glass-glow-color: inherit; --graph-pending: inherit; --graph-running: inherit;
+  --graph-passed: inherit; --graph-failed: inherit; --graph-planning: inherit; --graph-gating: inherit;
+  --cat-blue: inherit; --cat-green: inherit; --cat-amber: inherit; --cat-warn: inherit; --cat-purple: inherit;
+  --cat-fail: inherit; --cat-neutral: inherit; --shadow: inherit; --elev-1: inherit; --elev-2: inherit;
+  --elev-3: inherit; --elev-hover: inherit; --pm6-sb-thumb: inherit; --pm6-sb-thumb-hover: inherit;
+  --diff-added-bg: inherit; --diff-modified-bg: inherit; --diff-deleted-bg: inherit; --diff-conflict-bg: inherit;
+  --diff-added-flash-bg: inherit; --diff-modified-flash-bg: inherit; --diff-conflict-flash-bg: inherit;
+  --terminal-bg: inherit; --terminal-fg: inherit; --terminal-fg-2: inherit; --terminal-fg-3: inherit;
+  --terminal-fg-4: inherit; --terminal-chrome: inherit; --body-font: inherit; --display-font: inherit;
+  --mono-font: inherit; --font-mono: inherit; --base-font-size: inherit; --line-height: inherit;
+  --letter-spacing: inherit; --border-radius: inherit; --border-width: inherit; --radius-xs: inherit;
+  --radius-sm: inherit; --radius-md: inherit; --radius-lg: inherit; --radius-xl: inherit; --grid-gap: inherit;
+  --ease-default: inherit; --motion-med: inherit; --pm8-ring: inherit; --pm8-bleed: inherit; --pm8-edge: inherit;
+  --pm8-ramp: inherit; --pm8-spot-glow: inherit; --pm8-glow: inherit; --pm8-wash: inherit; --pm8-mag: inherit;
+  --pm8-stiff: inherit; --pm8-damp: inherit; --o55-nier-ink: inherit; --o55-nier-ink-rgb: inherit;
+  --o55-nier-on-ink: inherit; --o55-nier-paper: inherit; --o55-nier-paper-rgb: inherit; --o55-nier-raised: inherit;
+  --o55-nier-overlay: inherit; --o55-nier-secondary: inherit; --o55-nier-hover: inherit; --o55-nier-active: inherit;
+  --o55-nier-selected: inherit; --o55-nier-line-strong: inherit; --o55-nier-ok: inherit; --o55-nier-ok-text: inherit;
+  --o55-nier-ok-surface: inherit; --o55-nier-warn: inherit; --o55-nier-warn-text: inherit;
+  --o55-nier-warn-surface: inherit; --o55-nier-error: inherit; --o55-nier-error-text: inherit;
+  --o55-nier-error-surface: inherit; --o55-nier-code-bg: inherit; --o55-nier-code-fg: inherit;
+  --o55-nier-term-selection: inherit; --o55-nier-term-cursor: inherit; --o55-nier-shadow-rgb: inherit;
+}
+
 html[data-o55-nier="on"] div.pm56-host[data-theme] {
   --font-ui: var(--body-font);
   --font-mono: var(--mono-font);
