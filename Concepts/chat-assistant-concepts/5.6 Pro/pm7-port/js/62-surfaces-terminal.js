@@ -8,9 +8,10 @@
    (data-pm-keep, so the chat's patcher never touches the card and its disclosure and scroll survive the work tick).
 
    Its actions hand off to the Home panels (the terminal owns interactive state; the chat keeps preview and audit):
-   - Open in Terminal, only while the working card's run is live (its agent's session exists): opens or reveals that
-     session's terminal tab (rule 1: one tab per session; a second click shows the same tab).
-   - View output, once the run has ended (canon: never fabricate Open in Terminal for a session that is gone): the
+   - Open in Terminal, while the command's session lives (the working card's run has not finished, or its terminal tab's
+     session still runs, even after the command is Done or Failed): opens or reveals that session's terminal tab (rule 1:
+     one tab per session; a second click shows the same tab, so it is also Show Terminal).
+   - View output, only when no session remains (canon: never fabricate Open in Terminal for a session that is gone): the
      retained output in a kept, read-only editor buffer tab, one per command.
    - Rerun in Terminal: the exact command again, in the agent's terminal when its tab is open and running (a person's
      Rerun while an agent drives is a take-over, DL-181), else in a new terminal tab in the project folder. The
@@ -57,10 +58,17 @@
     return m ? m + 'm ' + (r < 10 ? '0' : '') + r + 's' : s + 's';
   }
   function threadId() { var A = W.PM56_APP; return (A && A.state && A.state.selectedThread) || 'chat'; }
-  /* a working card whose run has not finished: its agent's session is live */
-  function isLive(cardId) {
-    var el = document.querySelector('.working-card[data-card-ui="' + (W.CSS && CSS.escape ? CSS.escape(cardId) : cardId) + '"]');
-    return !!el && !el.classList.contains('is-done');
+  /* the command's session is live while its working card's run has not finished (the agent's session), and after that
+     for as long as its terminal tab's session runs (canon: Open in Terminal while the session lives, even once the
+     command is Done or Failed; View output only when no session remains) */
+  function sessionLive(d) {
+    var T = PMT(), s = null;
+    try { s = T && T.session ? T.session(sessionOf(d)) : null; } catch (_) { s = null; }
+    return !!(s && s.state === 'running');
+  }
+  function isLive(d) {
+    var el = document.querySelector('.working-card[data-card-ui="' + (W.CSS && CSS.escape ? CSS.escape(d.cardId) : d.cardId) + '"]');
+    return (!!el && !el.classList.contains('is-done')) || sessionLive(d);
   }
 
   function outputText(d) {
@@ -129,7 +137,7 @@
     for (var i = 0; i < hosts.length; i++) {
       var host = hosts[i], key = host.getAttribute('data-pm56-cmd'), d = specs.get(key);
       if (!d) continue;
-      var live = isLive(d.cardId);
+      var live = isLive(d);
       var have = cards.get(key);
       if (!have || have.live !== live) {
         var el = buildCard(d, live);

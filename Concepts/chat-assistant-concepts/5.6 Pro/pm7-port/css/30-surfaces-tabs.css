@@ -11,6 +11,13 @@
   background: transparent;
   color: var(--pmw-text, var(--text));
 }
+/* the chat's window grounds (Glass's mesh, Retro's scanlines: its body::before / ::after) belong to the chat column; a
+   tab sits on its panel's own plate and effects, as every Home tab does */
+.pm56-frame.pm56-tab > .pm56-tab-host.pm56-host::before,
+.pm56-frame.pm56-tab > .pm56-tab-host.pm56-host::after {
+  content: none !important;
+  display: none !important;
+}
 .pm56-frame.pm56-tab > .pm56-tab-host.pm56-host > .editor-body.pm56-tab-body {
   box-sizing: border-box;
   padding: 24px 28px 48px;
@@ -138,6 +145,9 @@
   padding: 8px 28px 10px;
   background: var(--pmw-surface, var(--surface));
   border-top: 1px solid var(--pmw-line, var(--border));
+  /* a look whose surface is see-through (Glass) still keeps the scrolled text out from under the controls */
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 @container pm56host (max-width: 719.98px) {
   .pm56-tab-host.pm56-host .plan-doc.plan-doc-editor .pd-foot { bottom: -40px; margin: 0 -16px -40px; padding: 8px 16px 10px; }
