@@ -581,8 +581,20 @@
     if(overlay===this.overlayScope)return;this.overlayScope=overlay;var self=this;
     this.keyOwners.forEach(function(el,key){var desc=document.getElementById(descriptionId(key));if(!desc)return;if(overlayAllows(el)){setAttrIfChanged(desc,'role','tooltip');desc.removeAttribute('aria-hidden');}else{setAttrIfChanged(desc,'role','presentation');setAttrIfChanged(desc,'aria-hidden','true');}});
   };
+  /* O55 (DL-145): a press on an anchor holds that anchor's tag shut until the pointer leaves it. The hold names the
+     element and its hover key, so an anchor re-rendered under a resting pointer stays held. */
+  HoverTagController.prototype.pressHeld=function(el){
+    var hold=this.pressHold;if(!hold||!el)return false;if(hold.el===el)return true;
+    return !hold.el.isConnected&&!!hold.key&&attr(el,'data-pm-hover-key')===hold.key;
+  };
+  HoverTagController.prototype.releasePressHold=function(over){
+    var hold=this.pressHold;if(!hold)return;
+    var still=over&&over.nodeType===1&&(hold.el.isConnected?hold.el.contains(over):!!(hold.key&&over.closest&&over.closest('[data-pm-hover-key="'+hold.key+'"]')));
+    if(!still)this.pressHold=null;
+  };
   HoverTagController.prototype.open=function(el,source,event){
     this.dropStaleTargets();
+    if(this.pressHeld(el)){if(this.pendingOpenTarget===el)this.cancelPendingOpen();return false;}
     if(!isCandidate(el)||attr(el,'data-pm-hover-exempt')||attr(el,'data-pm-hover-visual-suppressed')==='true'||!this.overlayAllows(el)){this.cancelPendingOpen();if(this.active&&this.active!==el)this.close(true);return false;}
     clearTimeout(this.departureTimer);clearTimeout(this.closeTimer);this.syncVisualSetting();
     var model=this.refresh(el)||this.bind(el);if(!model)return false;
@@ -781,16 +793,27 @@
     if(this.started)return this;this.started=true;this.ensureRoot();var self=this;
     if(this.motionQuery){var motionChanged=function(event){self.reduced=!!event.matches;if(self.reduced&&self.tag)self.tag.style.transition='none';else if(self.tag)self.tag.style.transition='';};if(this.motionQuery.addEventListener)this.motionQuery.addEventListener('change',motionChanged);else if(this.motionQuery.addListener)this.motionQuery.addListener(motionChanged);}
     var pointerAsk=null;   /* O55: opened after layout (B5) */
-    document.addEventListener('pointerover',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(!el||inOwner(el))return;
+    /* O55 (DL-145, DL-228): a press closes its anchor's tag and holds it shut until the pointer leaves that anchor;
+       only focus the person moves with Tab or the arrows opens a focus tag, so the focus a press gives a control, and
+       focus the application moves (an open, a reveal, a panel focus change, F6), open none. */
+    var navKeyAt=-1e9,NAV_KEY_MS=1000;
+    document.addEventListener('pointerover',function(event){self.releasePressHold(event.target);var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(!el||inOwner(el))return;
       if(typeof window.PM_AFTER_LAYOUT!=='function'){self.open(el,'pointer',event);return;}
       var first=!pointerAsk;pointerAsk={el:el,event:event};
       if(first)window.PM_AFTER_LAYOUT(function(){var a=pointerAsk;pointerAsk=null;if(a&&a.el.isConnected&&a.el.matches(':hover'))self.open(a.el,'pointer',a.event);});},true);
     document.addEventListener('pointermove',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(el&&!inOwner(el))self.notePointerMove(event,el);},true);
-    document.addEventListener('pointerout',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"]');if(el&&(!event.relatedTarget||!el.contains(event.relatedTarget)))self.depart(el);},true);
-    document.addEventListener('pointerdown',function(){if(self.pendingOpenSource==='pointer')self.cancelPendingOpen();if(self.active&&self.tag&&self.tag.getAttribute('data-source')==='pointer')self.close(true);},true);
-    document.addEventListener('focusin',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(el&&!inOwner(el))self.open(el,'focus');},true);
+    document.addEventListener('pointerout',function(event){if(!event.relatedTarget)self.releasePressHold(null);var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"]');if(el&&(!event.relatedTarget||!el.contains(event.relatedTarget)))self.depart(el);},true);
+    document.addEventListener('pointerdown',function(event){
+      navKeyAt=-1e9;var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);
+      self.pressHold=el&&!inOwner(el)?{el:el,key:attr(el,'data-pm-hover-key')}:null;
+      if(self.pendingOpenTarget)self.cancelPendingOpen();
+      if(self.active&&self.tag&&(self.tag.getAttribute('data-source')==='pointer'||self.pressHeld(self.active)))self.close(true);
+    },true);
+    document.addEventListener('focusin',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(!el||inOwner(el))return;
+      if(performance.now()-navKeyAt<NAV_KEY_MS)self.open(el,'focus');else if(self.pendingOpenSource==='focus')self.cancelPendingOpen();},true);
     document.addEventListener('focusout',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"]');if(el&&(!event.relatedTarget||!el.contains(event.relatedTarget)))self.depart(el);},true);
     document.addEventListener('keydown',function(event){
+      navKeyAt=(event.key==='Tab'||/^Arrow(Up|Down|Left|Right)$/.test(event.key))&&!event.ctrlKey&&!event.metaKey&&!event.altKey?performance.now():-1e9;
       if(event.key==='Escape'&&(self.active||self.pendingOpenTarget)){self.close(true);return;}
       var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-was-disabled="true"]');
       if(el&&(event.key==='Enter'||event.key===' ')){event.preventDefault();event.stopImmediatePropagation();}
@@ -798,7 +821,10 @@
     BLOCKED_EVENTS.forEach(function(type){document.addEventListener(type,function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-was-disabled="true"]');if(el){event.preventDefault();event.stopImmediatePropagation();}},true);});
     var viewportChanged=function(){if(self.pendingOpenSource==='pointer')self.resetPointerStationary(null,anchorGeometry(self.pendingOpenTarget));self.position();};
     window.addEventListener('resize',viewportChanged);if(window.visualViewport){window.visualViewport.addEventListener('resize',viewportChanged);window.visualViewport.addEventListener('scroll',viewportChanged);}
-    window.addEventListener('scroll',function(){if(self.pendingOpenSource==='pointer')self.cancelPendingOpen();if(self.active&&self.tag&&self.tag.getAttribute('data-source')==='pointer')self.close(true);else self.position();},true);
+    /* O55: only a scroll that moves the anchor (the page, or a scroller holding it) cancels or closes a pointer tag; a
+       live transcript that follows its own stream elsewhere left every pending tag in the window unopened */
+    var scrollMoves=function(scroller,el){return !!el&&(!scroller||scroller.nodeType!==1||scroller===document.documentElement||scroller===document.body||scroller.contains(el));};
+    window.addEventListener('scroll',function(event){var scroller=event.target;if(self.pendingOpenSource==='pointer'&&scrollMoves(scroller,self.pendingOpenTarget))self.cancelPendingOpen();if(self.active&&self.tag&&self.tag.getAttribute('data-source')==='pointer'&&scrollMoves(scroller,self.active))self.close(true);else self.position();},true);
     document.addEventListener('input',function(event){self.syncVisualSetting();if(event.target&&event.target.nodeType===1)self.enqueueLive(event.target,false);},true);document.addEventListener('change',function(event){self.syncVisualSetting();if(event.target&&event.target.nodeType===1)self.enqueueLive(event.target,false);},true);
     var pageChanged=function(payload){
       if(self.overlaySettling)return;
