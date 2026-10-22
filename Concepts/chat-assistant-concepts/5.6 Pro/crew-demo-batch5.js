@@ -119,7 +119,9 @@
  /* crew-demo-play and crew-demo-evaluate stay as QA hooks (pmx-surfaces); the guide never shows them */
  E.slot('composerBelow',c=>guide(c));E.action('crew-demo-start',(c,b)=>{stopAsking(active);start(b.dataset.flow);return true;});E.action('crew-demo-configure',()=>{configure(active?.kind==='auto');return true;});E.action('crew-demo-evaluate',(c,b)=>{evaluate(b.dataset.case);return true;});E.action('crew-demo-play',()=>{play();return true;});E.action('crew-demo-replay',()=>{if(active){stopAsking(active);start(active.kind);}return true;});E.action('crew-demo-close',()=>{current();stopAsking(active);restoreAuto();active=null;E.ctx().renderApp();return true;});
  E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);stopAsking(active);sessions.clear();active=null;autoStash=null;return false;});
- ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','room-demo-start','wg-demo-start','b13-start'].forEach(n=>E.chainAction(n,()=>{stopAsking(active);restoreAuto();active=null;return false;}));
+ /* chained once every module has registered its own Start (a chain set before its owner's registration counts as an
+    undeclared duplicate in PM56_EXT.collisions: crew, BrainStorm, Chat Room, Wonderer and Batch 13 Starts load later) */
+ setTimeout(()=>{['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','room-demo-start','wg-demo-start','b13-start'].forEach(n=>E.chainAction(n,()=>{stopAsking(active);restoreAuto();active=null;return false;}));},0);
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided Crew workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="crew-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
 
  /* "Play the recording" (8.1 G-26) is retired (2026-10-21): every recorded Crew plays from Start, so the card and the

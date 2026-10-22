@@ -138,7 +138,9 @@
  /* brainstorm-demo-play stays as a QA hook (pmx-surfaces); the guide never shows it */
  E.action('brainstorm-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('brainstorm-demo-play',()=>{play();return true;});E.action('brainstorm-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('brainstorm-demo-close',()=>{current();active=null;E.ctx().renderApp();return true;});
  E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);sessions.clear();active=null;return false;});
- ['plan-demo-start','schedule-demo-start','review-demo-start','crew-demo-start','room-demo-start','wg-demo-start','b13-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
+ /* chained once every module has registered its own Start (a chain set before its owner's registration counts as an
+    undeclared duplicate in PM56_EXT.collisions: crew, BrainStorm, Chat Room, Wonderer and Batch 13 Starts load later) */
+ setTimeout(()=>{['plan-demo-start','schedule-demo-start','review-demo-start','crew-demo-start','room-demo-start','wg-demo-start','b13-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));},0);
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>BrainStorm recordings</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="brainstorm-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
 
  /* "Play the recording" is retired (2026-10-21): every recorded BrainStorm plays from Start, so the card and the run

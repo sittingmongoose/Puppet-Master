@@ -151,7 +151,9 @@
  E.action('review-demo-replay',()=>{if(active)start(active.kind);return true;});
  E.action('review-demo-close',()=>{current();active=null;E.ctx().renderApp();return true;});
  E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);sessions.clear();active=null;return false;});
- ['plan-demo-start','schedule-demo-start','crew-demo-start','brainstorm-demo-start','room-demo-start','wg-demo-start','b13-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
+ /* chained once every module has registered its own Start (a chain set before its owner's registration counts as an
+    undeclared duplicate in PM56_EXT.collisions: crew, BrainStorm, Chat Room, Wonderer and Batch 13 Starts load later) */
+ setTimeout(()=>{['plan-demo-start','schedule-demo-start','crew-demo-start','brainstorm-demo-start','room-demo-start','wg-demo-start','b13-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));},0);
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;
  G.gallery=c=>'<section class="demo-section"><h3>Guided Review workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="review-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
 

@@ -81,7 +81,9 @@
   if(why==='between'||why==='message')return 'collab-room-next-round';return s.summary&&s.summary.round===s.roundsSoFar?'room-finish':'collab-room-summarize';}
  E.action('room-demo-step',(c)=>{if(!active)return true;const r=current(),a=waitsOn(r);if(!a)return true;const b=document.createElement('button');b.dataset.action=a;b.dataset.run=r.id;E.run(a,b,new Event('click'));c.renderApp();return true;});
  E.chainAction('reset-all',()=>{for(const id of [...clocks.keys()])stop(id);turns.clear();active=null;return false;});
- ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start','wg-demo-start','b13-start'].forEach(n=>E.chainAction(n,()=>{active=null;return false;}));
+ /* chained once every module has registered its own Start (a chain set before its owner's registration counts as an
+    undeclared duplicate in PM56_EXT.collisions: crew, BrainStorm, Chat Room, Wonderer and Batch 13 Starts load later) */
+ setTimeout(()=>{['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start','wg-demo-start','b13-start'].forEach(n=>E.chainAction(n,()=>{active=null;return false;}));},0);
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Chat Room recorded examples</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="room-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
  window.PM56_ROOM_DEMOS={start,configure,fixture,play,pace:{msPerWord:MS_WORD,hold:HOLD},speaking:id=>turns.get(id)||null,freeze:id=>{const t=clocks.get(id);if(t)unlater(t);clocks.set(id,0);},snapshot:()=>active?clone({...active,runId:current()?.id||null}):null,editorGuide:id=>current()?.id===id?guide(E.ctx(),true):''};
 })();
