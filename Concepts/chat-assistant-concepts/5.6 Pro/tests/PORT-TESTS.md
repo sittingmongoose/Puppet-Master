@@ -18,6 +18,14 @@ node tests/carry-over-layout-verify.mjs --page pm7 --file /tmp/c56port-tests/PMC
 
 `WGV_ONLY=r2` limits the Wonderer verifier to R2-1–R2-10 and the round's design checks. `--wg-only core` runs the original Wonderer, Grill Me, R1, and R2 checks. The default also runs the newer recorded examples (`rx`) and other Demo Studio examples (`ax`); none are removed. Node-only checks remain `node tests/wonderer-grill-verify.mjs`.
 
+Record the integrated Crew, Room and BrainStorm examples at their readable real-time pace:
+
+```sh
+node tests/wonderer-grill-film.mjs --page pm7 --file /tmp/c56port-tests/integrated/PMConcept7.html --out /tmp/c56port-tests/films
+```
+
+`--flow crew|room|brainstorm` selects one film; `--look` selects any of the ten looks. Films use `agent-browser --record` sequentially at the recorder's fixed viewport, click the real Demo Studio tiles and only answer the product's documented user waits. Each session is stopped in `finally` and on termination. `films.json` records page hashes, moves, final run state and page errors; the result PNG supports visual review. Record after the looks, NieR and Demo Studio lanes are integrated, then review frames before accepting the films.
+
 The layout pass measures Crew and Room sheets in all ten looks at 400, 420, 440, 459, 460, 480, 500 and 519 px. `--sweep` measures every integer width in 400–519. `--looks retro-light,retro-dark` narrows layout and neon reruns.
 
 | ID | Assertion |
