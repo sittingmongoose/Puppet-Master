@@ -73,7 +73,8 @@
      registers their renderer later): those drew their Home kind's own copy (a context tab its own numbers, a
      deep-discovery tab the Home plan kind's). Once the chat's renderer is there, such a tab remounts and draws the
      chat's body and this row; a project switch that restores another layout does the same. */
-  /* the port's own ids (context:<thread>, attachment:<...>) are the chat's alone: a restored one is adopted here */
+  /* the port's own ids (context:<thread>, attachment:<...>) are the chat's alone: the chat adopts the ones restored at
+     its boot (app.js chatOwnsId); a layout restored later (a project switch) is adopted here */
   var OWN = /^(context:|attachment:)/;
   function adoptOwn() {
     var P = W.PMW, H = W.PM56_HOST, A = H && H.app ? H.app() : null;

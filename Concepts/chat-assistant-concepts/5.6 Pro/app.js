@@ -4769,8 +4769,17 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(!state.editorTabs.includes(id)) state.editorTabs.push(id);
     hostedTabs.add(id); hostedSaveTabs();
     hostedSyncing=true;
-    try { HOST.openTab(id,{label:editorTabLabel(id),by,background,event:ev,mode:o.mode,line:o.line,where:o.where}); }
+    let res=null;
+    try { res=HOST.openTab(id,{label:editorTabLabel(id),by,background,event:ev,mode:o.mode,line:o.line,where:o.where}); }
     finally { hostedSyncing=false; }
+    /* Home folds some ids into one tab (collab-run:X opens crew-work:X): the chat tracks the id Home gave, before it
+       reconciles, so that tab counts as the chat's */
+    const tabId=typeof res==='string'?res:(res&&typeof res.tabId==='string'?res.tabId:null);
+    if(tabId&&tabId!==id){
+      hostedTabs.delete(id); hostedTabs.add(tabId); hostedSaveTabs();
+      state.editorTabs=state.editorTabs.map(x=>x===id?tabId:x).filter((x,i,all)=>all.indexOf(x)===i);
+      if(state.activeEditor===id) state.activeEditor=tabId;
+    }
     hostedReconcile();
     renderApp();
   }
@@ -4783,13 +4792,14 @@ suggested path                    migration 0043, reversible</div></div></sectio
   /* state.activeEditor and state.editorRevealed follow what the panels show: the focused panel's active tab when it is
      a chat tab, else the chat tab that was active and is still the active tab of some panel, else the first such; a
      chat tab that is open but behind another tab is not revealed (pmx run cards key "Deciding in the panel beside the
-     chat" on it). Returns whether anything changed. */
+     chat" on it), nor one whose panel is collapsed, behind a maximized panel or the narrow switcher, nor any while
+     another page is in front of Home (PM56_HOST.tabShown). Returns whether anything changed. */
   function hostedReconcile(){
     const H=window.PM_HOME; if(!H||!H.active) return false;
     let a=null, visible=[];
     try { a=H.active(); } catch(e){}
-    try { visible=(H.panels?H.panels():[]).map(p=>p.active).filter(t=>t&&hostedTabs.has(t)); } catch(e){}
-    const act=a&&hostedTabs.has(a.tabId)?a.tabId:(visible.includes(state.activeEditor)?state.activeEditor:(visible[0]||null));
+    try { visible=(H.panels?H.panels():[]).map(p=>p.active).filter(t=>t&&hostedTabs.has(t)&&HOST.tabShown(t)); } catch(e){}
+    const act=a&&visible.includes(a.tabId)?a.tabId:(visible.includes(state.activeEditor)?state.activeEditor:(visible[0]||null));
     const rev=visible.length>0;
     const changed=state.activeEditor!==act||state.editorRevealed!==rev;
     state.activeEditor=act; state.editorRevealed=rev;
@@ -4820,9 +4830,13 @@ suggested path                    migration 0043, reversible</div></div></sectio
     pmPatch(el,renderEditorBodyFor(id));
     runAfterRender('editor',{editorId:id,el});
   }
+  /* the port's own ids (context:<thread>, attachment:<thread>|<message>|<attachment>, pm7-port/js/64 and 65) only
+     the chat opens */
+  const HOSTED_OWN=/^(context|attachment):/;
   function chatOwnsId(id){
     if(!id) return false;
     if(hostedTabs.has(id)||state.editorTabs.includes(id)) return true;
+    if(HOSTED_OWN.test(id)) return true;
     if(window.PM56_PLANS?.editorPlanId(id)) return true;
     if(D.artifacts.some(a=>a.id===id)||D.subagents.some(a=>`thread-${a.id}`===id)) return true;
     if(/^(file|search|link|mcp|app|work-record|teach|memory|revert|debug|lens-source|lens-effective|wonderer|wonder-source|deep-discovery|collab-run|crew-work|review|room|brainstorm|review-evidence|brainstorm-evidence|artifact-revision):/.test(id)) return extReplace('editorTabLabel',{editorId:id},'')!==''||editorTabLabel(id)!=='Untitled'||/^(file|search|link|mcp|app):/.test(id);
@@ -4848,11 +4862,14 @@ suggested path                    migration 0043, reversible</div></div></sectio
       /* the surfaces lane routes some ids to the panels' own kinds (file: to the editor, link: to the browser): those
          tabs are the chat's to track but not to draw */
       const chatBody=id=>{ const S=window.PM56_SURFACES; try { const r=S&&S.route&&S.route(id); return !(r&&r.body&&r.body!=='chat'); } catch(e){ return true; } };
-      try { (H.tabs?H.tabs():[]).forEach(t=>{ if(mine.has(t.tabId)&&chatOwnsId(t.tabId)){ hostedTabs.add(t.tabId); if(!state.editorTabs.includes(t.tabId)) state.editorTabs.push(t.tabId); if(chatBody(t.tabId)) HOST.adopt(t.tabId); } }); } catch(err){ console.error('[pm56] restoring chat tabs failed',err); }
+      try { (H.tabs?H.tabs():[]).forEach(t=>{ if((mine.has(t.tabId)||HOSTED_OWN.test(t.tabId))&&chatOwnsId(t.tabId)){ hostedTabs.add(t.tabId); if(!state.editorTabs.includes(t.tabId)) state.editorTabs.push(t.tabId); if(chatBody(t.tabId)) HOST.adopt(t.tabId); } }); } catch(err){ console.error('[pm56] restoring chat tabs failed',err); }
       hostedReconcile();
       H.on('close',e=>{ if(hostedSyncing||!e) return; if(hostedTabs.has(e.tabId)){ hostedForget(e.tabId); renderApp(); } else if(hostedReconcile()) renderApp(); });
-      /* any activation counts: a file or terminal taking a panel's front hides the chat tab behind it */
-      ['activate','open','focus','layout'].forEach(ev=>H.on(ev,()=>{ if(hostedSyncing) return; if(hostedReconcile()) renderApp(); }));
+      /* any activation counts: a file or terminal taking a panel's front hides the chat tab behind it; so do the
+         panels' repaints (a collapse, a maximize or the narrow switcher lands there) and the page in front */
+      const follow=()=>{ if(hostedSyncing) return; if(hostedReconcile()) renderApp(); };
+      ['activate','open','focus','layout','paint','narrow','maximize'].forEach(ev=>H.on(ev,follow));
+      HOST.onPage(follow);
       /* the chat column's surface (CONTRACT 6.1): History, compose, reveal; the stand-in answers while it is on */
       /* the stand-in registers its surface when the panels finish booting (their 'ready'), which can come after this */
       claimSurface();

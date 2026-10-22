@@ -185,14 +185,42 @@
   }
   ['click', 'dblclick', 'auxclick', 'keydown'].forEach(function (t) { document.addEventListener(t, remember, true); });
 
+  /* A recorded example (PM56_RECPLAY) plays the person's part: what one of its beats opens is the person's open, shown
+     and in front, as every open is in the standalone the examples were recorded on (a start beat runs its action with
+     an undispatched Event, which leaves no gesture: the Debug examples' document opened behind, and their next press
+     found nothing). An open that names an agent stays the agent's. */
+  var beats = 0;
+  function wrapRecorded() {
+    var R = W.PM56_RECPLAY;
+    if (!R || typeof R.play !== 'function') return false;
+    if (R.play._pm56) return true;
+    var play = R.play;
+    R.play = function (o) {
+      if (o && typeof o.next === 'function') {
+        var next = o.next;
+        o = Object.assign({}, o, { next: function () {
+          var b = next.apply(this, arguments);
+          if (!b || typeof b.run !== 'function' || b._pm56Beat) return b;
+          var run = b.run;
+          return Object.assign({}, b, { _pm56Beat: true, run: function () { beats += 1; try { return run.apply(this, arguments); } finally { beats -= 1; } } });
+        } });
+      }
+      return play.call(this, o);
+    };
+    R.play._pm56 = true;
+    return true;
+  }
+  wrapRecorded();
+
   /* the gesture behind an open now: the event being dispatched, else one from just before (an open the chat deferred
-     a frame); null when nothing a person did asked for it */
+     a frame), else a recorded example's beat; null when nothing a person did asked for it */
   function gesture(o) {
     if (forced) return forced.agent ? null : forced.g;
     var e = (o && o.event) || W.event;
     var g = null;
     if (e && (CLICKISH[e.type] || isKeyOpen(e))) g = fromEvent(e);
     else if (!e && lastGesture && now() - lastGesture.t < GESTURE_MS) g = lastGesture;
+    if (!g && beats > 0) g = { type: 'click', t: now(), target: null, alt: false, ctrl: false, meta: false, detail: 1, key: null, trusted: false, recorded: true };
     if (!g || isSendPath(g.target)) return null;
     return g;
   }
