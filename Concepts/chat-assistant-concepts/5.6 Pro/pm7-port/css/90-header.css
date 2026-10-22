@@ -1,0 +1,19 @@
+/* pm7-port/css/90-header.css: the chat column's header in PMConcept7 (foundation late band; fix lane, 2026-10-22).
+   PMConcept7's crowding minimums (owner amendment J-2 item 7, as tests/pmx-verify.mjs measures them): adjacent
+   controls at least 10 px apart, a control at least 16 px from unrelated words on its line. The standalone keeps its
+   own 7 px gap; the hosted header carries History, New thread and the column's Chat options as well, and its 1100 px
+   window rule (menus.css: gap 3 px) maps to a 301 px column, narrower than any column, so the 7 px gap held at every
+   width. Space running short drops, never compresses: in a column under 460 px the header's New thread yields (the
+   History panel's own head keeps it), so the thread's name keeps some room beside its status word, which is never
+   cut. Measured on the integrated build: 0 crowding hits in the 10 looks at 400-760 px (was 6 controls-row 7 px and
+   1-3 control-gap hits in every look). */
+
+.pm56-host .chat-stage > .chat-header { column-gap: 10px; }
+/* the name's words 16 px from the control before them (History, or New thread) */
+.pm56-host .chat-stage > .chat-header > .chat-title { margin-inline-start: 6px; }
+/* the name's lock or warning mark keeps the full gap from the status word (its -2 px pull-in left its glyph 14 px
+   from the word) */
+.pm56-host .chat-stage > .chat-header > .pmx-chat-title-mark { margin-left: 0; }
+@container pm56col (max-width: 459px) {
+  .pm56-host .chat-stage > .chat-header > [data-action="new-thread"] { display: none; }
+}
