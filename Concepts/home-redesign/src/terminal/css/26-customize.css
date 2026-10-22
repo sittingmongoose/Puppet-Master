@@ -374,6 +374,11 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
    named, so the class's change restyles them alone; their contents follow by inheritance. pmt-cz-unveil shows them a
    frame before the screen is revealed, still clipped away (77-customize.js reveal) */
 .pmt-cz.pmt-cz-parked { clip-path: inset(100%); pointer-events: none; }
+/* out of reach while it leaves or waits: the parts that take pointers when the screen shows (the scrim's pieces, the
+   frame round the terminal, the dialog) set pointer-events: auto themselves, which a none on the screen never reaches,
+   so a warm step's unseen frame below (clip-path none, opacity .004) and the exit caught clicks meant for whatever lay
+   under them: the chat's sheets at 420-460 px windows (c56port fix lane, 2026-10-22) */
+.pmt-cz:is(.pmt-out, .pmt-cz-parked) :is(.pmt-cz-scrim > i, .pmt-cz-frame, .pmt-cz-dialog) { pointer-events: none; }
 .pmt-cz.pmt-cz-parked:not(.pmt-cz-unveil) > .pmt-cz-scrim, .pmt-cz.pmt-cz-parked:not(.pmt-cz-unveil) > .pmt-cz-frame,
 .pmt-cz.pmt-cz-parked:not(.pmt-cz-unveil) .pmt-cz-dialog > .pmt-cz-head, .pmt-cz.pmt-cz-parked:not(.pmt-cz-unveil) .pmt-cz-dialog > .pmt-cz-body,
 .pmt-cz.pmt-cz-parked:not(.pmt-cz-unveil) .pmt-cz-dialog > .pmt-cz-foot, .pmt-cz.pmt-cz-parked:not(.pmt-cz-unveil) .pmt-cz-dialog > .lg-lenses-local { visibility: hidden; }
