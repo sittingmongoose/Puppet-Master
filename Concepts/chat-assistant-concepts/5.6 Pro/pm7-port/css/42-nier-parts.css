@@ -15,6 +15,21 @@
             publishes that seat and PMConcept7's #o55np-pod rule follows it (styles.d/14-nier-parts.css), so the Pod
             never covers Send. */
 
+/* ---------------------------------------------------------------- cursor: the bar's paper words survive a render */
+/* The chat's NieR rules put the bar's paper words on .o55np-cur-over, the class PMConcept7's cursor script gives the
+   hovered item; the chat's DOM patch writes each row's class list from its template, so a render (a live work tick, the
+   model menu redrawing its detail as the pointer moves) dropped that class while the row stayed the ink bar under :hover,
+   leaving the account, effort and preview words in dim ink on it (model menu, NieR dark: 117,115,101 on 209,205,183,
+   about 2.9:1). Here the same paper words follow :hover as well, for the chat's own cursor rows only (each restyle stays
+   inside one row). */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host :is(.menu-item, .thread-row, .model-row, .effort-row, .pm-tops-item, .att-source-row, .qs-mention-item):hover :where(*) {
+  color: inherit !important; -webkit-text-fill-color: currentColor; --nx-ink: var(--o55-nier-on-ink);
+}
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .menu-item:hover .menu-icon { background: transparent !important; box-shadow: none !important; }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .menu-item:hover :is(kbd, .meta-pill) {
+  background: var(--o55-nier-on-ink) !important; color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink) !important;
+}
+
 /* ---------------------------------------------------------------- cursor: run-view tabs */
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs { gap: 4px; }
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab { padding: 0 9px; }

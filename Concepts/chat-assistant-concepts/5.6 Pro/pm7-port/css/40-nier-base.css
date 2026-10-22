@@ -67,3 +67,12 @@ html[data-o55-nier="on"] div.pm56-host[data-theme] {
   --ctxseg-2: var(--o55-nier-warn-text);
   --pmx-seat-fill-1: rgba(var(--o55-nier-ink-rgb), .1);
 }
+
+/* code the chat leaves to the browser's own monospace (a bare <code> in a plan document) takes the NieR code face; any
+   rule of the chat's that names a family for its code still wins (this one weighs a single class) */
+:where(html[data-o55-nier="on"]) .pm56-host :where(code, pre, kbd, samp) { font-family: var(--font-mono); }
+
+/* one ground: PMConcept7's (#o55np-ground, behind the panels, showing in the gutters between them, as on the Home
+   panels and the stand-in column); the chat's own grid on its shell (nier-parts.css [ground]) would draw a second one
+   inside the column, under its transparent transcript */
+html[data-o55-nier-parts~="ground"] .pm56-host .pm-shell { background-image: none; }
