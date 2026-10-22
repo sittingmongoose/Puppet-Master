@@ -1,7 +1,7 @@
 /* The Demo Studio's sheet (model: 91-demo-studio.js; styles: css/50-demo-studio.css and 51-demo-studio-looks.css).
 
    One sheet rises out of the status bar's "Concept demo" item (90-demo.js mounts the item and calls mount()) and stays
-   anchored to the bottom-left corner above the status bar. A header (title, search, close), a rail of ten sections and
+   anchored to the bottom-left corner above the status bar. A header (title, search, close), a rail of eleven sections and
    the section's page, with "Right now" along the foot. It is a non-modal dialog: the app stays live beside it, so a
    look or layout change shows at once. Escape (or the item, or the close button) closes it and gives focus back to the
    item. It lives inside #o55-demo, the one body child the onboarding window leaves usable, so it works over onboarding.
@@ -23,8 +23,8 @@
   'use strict';
   const O55 = window.O55, U = O55.util, esc = U.esc, T = (k, v) => O55.t(k, v), M = O55.studio;
   const real = O55.motion.real;
-  const SECTIONS = ['start', 'onboarding', 'tour', 'story', 'workspace', 'usage', 'notices', 'looks', 'reset', 'switches'];
-  const ST = { el: null, entry: null, sheet: null, open: false, section: 'start', q: '', pick: null, sw: null, confirm: null, timer: 0, tick: 0, anims: [], busy: false, focusKey: null, pos: null, home: null, drag: null };
+  const SECTIONS = ['start', 'onboarding', 'tour', 'story', 'workspace', 'chat', 'usage', 'notices', 'looks', 'reset', 'switches'];
+  const ST = { el: null, entry: null, sheet: null, open: false, section: 'start', q: '', pick: null, sw: null, confirm: null, timer: 0, tick: 0, anims: [], busy: false, focusKey: null, pos: null, home: null, drag: null, chatView: 'guided' };
   const POS_KEY = 'pm.o55.demo-studio.v1';
   const SNAP = 28;   /* px from its corner within which a dropped sheet goes home */
 
@@ -76,7 +76,28 @@
     list: '<path d="M8.5 7h11M8.5 12h11M8.5 17h11"/><path d="M4.5 7h.01M4.5 12h.01M4.5 17h.01"/>',
     link: '<path d="M10 14a4 4 0 0 1 0-5.7l3-3a4 4 0 0 1 5.7 5.7l-1.4 1.4"/><path d="M14 10a4 4 0 0 1 0 5.7l-3 3a4 4 0 0 1-5.7-5.7l1.4-1.4"/>',
     move: '<path d="M12 3.5v17M3.5 12h17"/><path d="M9.5 6L12 3.5 14.5 6M9.5 18l2.5 2.5 2.5-2.5M6 9.5L3.5 12 6 14.5M18 9.5l2.5 2.5-2.5 2.5"/>',
-    dock: '<rect x="3.5" y="3.5" width="17" height="17" rx="1.5"/><rect x="5.5" y="11" width="8" height="7.5" rx="1" fill="currentColor" stroke="none"/><path d="M19 5l-6.5 6.5M12.5 7v4.5H17"/>'
+    dock: '<rect x="3.5" y="3.5" width="17" height="17" rx="1.5"/><rect x="5.5" y="11" width="8" height="7.5" rx="1" fill="currentColor" stroke="none"/><path d="M19 5l-6.5 6.5M12.5 7v4.5H17"/>',
+    /* the assistant chat's features (the Chat section's groups) */
+    plan: '<path d="M7 3.5h7.5L18.5 7.5v13h-11.5z"/><path d="M14.5 3.5v4h4"/><path d="M10 12l1.5 1.5L14.5 10.5M10 17h5"/>',
+    goal: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>',
+    todo: '<rect x="4" y="4.5" width="5" height="5" rx="1"/><path d="M5.3 7l1.2 1.2L8.6 6"/><rect x="4" y="14.5" width="5" height="5" rx="1"/><path d="M12 7h8M12 17h8"/>',
+    deep: '<path d="M4.5 6h15M7 11h10M9.5 16h5"/><path d="M12 19.5v.01"/>',
+    calendar: '<rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/><path d="M12 13v3l2 1.2"/>',
+    crew: '<circle cx="8" cy="9" r="2.8"/><circle cx="16" cy="9" r="2.8"/><path d="M3 19c.6-3 2.6-4.5 5-4.5s4.4 1.5 5 4.5M11 19c.6-3 2.6-4.5 5-4.5s4.4 1.5 5 4.5"/>',
+    room: '<path d="M3.5 5.5a1.5 1.5 0 0 1 1.5-1.5h9a1.5 1.5 0 0 1 1.5 1.5v5.5a1.5 1.5 0 0 1-1.5 1.5H9l-3 2.5v-2.5H5a1.5 1.5 0 0 1-1.5-1.5z"/><path d="M18 9h1a1.5 1.5 0 0 1 1.5 1.5V16a1.5 1.5 0 0 1-1.5 1.5h-1v2.5l-3-2.5h-3.5"/>',
+    brain: '<path d="M12 4.5a7.5 7.5 0 0 1 4.5 13.5v2h-9v-2A7.5 7.5 0 0 1 12 4.5z"/><path d="M9.5 20h5M12 9v4M10 11h4"/>',
+    review: '<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/><path d="M8 10.5l1.8 1.8 3.2-3.3"/>',
+    wonder: '<path d="M12 3.5l1.6 4.9 4.9 1.6-4.9 1.6L12 16.5l-1.6-4.9L5.5 10l4.9-1.6z"/><path d="M18 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/>',
+    lens: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3.5v5M12 15.5v5M3.5 12h5M15.5 12h5"/>',
+    teach: '<path d="M3.5 9l8.5-4.5L20.5 9 12 13.5z"/><path d="M7 11v4.5c1.5 1.4 3.2 2 5 2s3.5-.6 5-2V11"/><path d="M20.5 9v5"/>',
+    memory: '<rect x="5" y="3.5" width="14" height="17" rx="1.5"/><path d="M8.5 8h7M8.5 11.5h7M8.5 15h4"/>',
+    eli5: '<circle cx="12" cy="12" r="8.5"/><path d="M8.5 10h.01M15.5 10h.01"/><path d="M8.5 14.5c1 1.2 2.1 1.8 3.5 1.8s2.5-.6 3.5-1.8"/>',
+    bsd: '<path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
+    debug: '<rect x="7.5" y="7.5" width="9" height="12" rx="4.5"/><path d="M12 11.5v8M7.5 13H4M20 13h-3.5M8 9.5L5.5 7M16 9.5L18.5 7M9.5 7.5a2.5 2.5 0 0 1 5 0"/>',
+    revert: '<path d="M9 14.5L4.5 10 9 5.5"/><path d="M4.5 10H15a4.5 4.5 0 0 1 0 9h-3"/>',
+    attach: '<path d="M19.5 11.5l-7.6 7.6a4.5 4.5 0 0 1-6.4-6.4l7.9-7.9a3 3 0 0 1 4.2 4.2l-7.9 7.9a1.5 1.5 0 0 1-2.1-2.1l7.3-7.3"/>',
+    moment: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12h4"/><path d="M12 3.5v1.5"/>',
+    takes: '<rect x="3.5" y="4.5" width="7.5" height="7" rx="1"/><rect x="13" y="4.5" width="7.5" height="7" rx="1"/><rect x="3.5" y="13.5" width="7.5" height="7" rx="1"/><path d="M13.5 17h6.5M16.75 13.75v6.5"/>'
   };
   const ico = (n, s) => `<svg class="pmds-ico pmds-ico-${n}" viewBox="0 0 24 24" width="${s || 16}" height="${s || 16}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${PATHS[n] || PATHS.spark}</svg>`;
   M.icon = ico;
@@ -97,9 +118,10 @@
     tour: '<span class="pmds-art pmds-art-tour" aria-hidden="true"><span class="pmds-a-app"><i></i><i></i><i></i><i></i></span><span class="pmds-a-spot"></span><span class="pmds-a-call"><i></i><i></i></span></span>',
     reset: '<span class="pmds-art pmds-art-reset" aria-hidden="true"><span class="pmds-a-layer"></span><span class="pmds-a-layer"></span><span class="pmds-a-layer"></span><span class="pmds-a-turn">' + '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v4h4"/></svg></span></span>'
   };
-  /* a big tile (the Start page, recipes, notices) */
+  /* a big tile (the Start page, recipes, notices, the chat's recorded examples); o.attrs adds attributes (the chat's
+     data-chat-* locators) */
   function tile(o) {
-    return `<button type="button"${at({ class: `pmds-tile${o.cls ? ' ' + o.cls : ''}${o.art ? ' pmds-arty' : ''}${o.on ? ' pmds-on' : ''}`, 'data-pmds-do': o.do, 'data-arg': o.arg, 'data-key': `${o.do}:${o.arg || ''}`, 'data-pmh': o.off ? null : 'tile', 'aria-disabled': o.off ? 'true' : null, 'aria-pressed': o.pressed == null ? null : String(!!o.pressed), title: o.off ? T('studio.toast.unavailable') : null, 'data-pmds-tone': o.tone })}>`
+    return `<button type="button"${at(Object.assign({ class: `pmds-tile${o.cls ? ' ' + o.cls : ''}${o.art ? ' pmds-arty' : ''}${o.on ? ' pmds-on' : ''}`, 'data-pmds-do': o.do, 'data-arg': o.arg, 'data-key': `${o.do}:${o.arg || ''}`, 'data-pmh': o.off ? null : 'tile', 'aria-disabled': o.off ? 'true' : null, 'aria-pressed': o.pressed == null ? null : String(!!o.pressed), title: o.off ? T('studio.toast.unavailable') : null, 'data-pmds-tone': o.tone }, o.attrs || {}))}>`
       + (o.art ? ART[o.art] : `<span class="pmds-tile-art" aria-hidden="true">${ico(o.icon, o.big ? 30 : 22)}</span>`) + `<span class="pmds-tile-text"><span class="pmds-tile-title">${esc(o.title)}</span>${o.sub ? `<span class="pmds-tile-sub">${esc(o.sub)}</span>` : ''}</span>`
       + (o.go ? `<span class="pmds-tile-go" aria-hidden="true">${ico('arrow', 16)}</span>` : '') + '</button>';
   }
@@ -206,6 +228,41 @@
   };
   const actRow = (icon, title, sub, act) => `<div class="pmds-actrow"><span class="pmds-swart" aria-hidden="true">${ico(icon, 18)}</span><span class="pmds-swtext"><span class="pmds-swtitle">${esc(title)}</span><span class="pmds-swsub">${esc(sub)}</span></span>${act}</div>`;
 
+  /* ---- the assistant chat (91: M.chat over PM56_PORT.demo): recorded examples first, then the moments, then the take
+     families as pickers; Show the chat and Reset the chat demo sit in the head. One page, three views (a joined choice
+     row), so the rail keeps one Chat entry and search still finds every item. Every item carries the chat's own action
+     and dataset as data-chat-* (the port's tests click the same control a person does). ---- */
+  const CHAT_ICON = { plan: 'plan', goal: 'goal', todo: 'todo', deepplan: 'deep', schedule: 'calendar', crew: 'crew', room: 'room', brainstorm: 'brain', review: 'review',
+    wonderer: 'wonder', lens: 'lens', teach: 'teach', memory: 'memory', eli5: 'eli5', bsd: 'bsd', debug: 'debug', revert: 'revert', attach: 'attach', more: 'spark' };
+  const CHAT_VIEWS = ['guided', 'moments', 'takes'];
+  const chatAttrs = (it) => { const o = { 'data-chat-action': it.action }; Object.keys(it.data || {}).forEach((k) => { o[`data-chat-${k}`] = it.data[k]; }); return o; };
+  R.chat = () => {
+    const C = M.chat, ok = C.avail(), n = C.counts(), now = ok ? C.now() : null;
+    const acts = `<div class="pmds-headacts">${btn(T('studio.chat.show'), { do: 'chat-show', icon: 'chat', off: !ok })}${btn(T('studio.chat.reset'), { do: 'chat-reset', icon: 'reset', off: !ok })}</div>`;
+    if (!ok) return head('chat', acts) + `<p class="pmds-fine pmds-chat-none">${esc(T('studio.chat.unavailableLead'))}</p>`;
+    const view = CHAT_VIEWS.includes(ST.chatView) ? ST.chatView : 'guided';
+    const bar = `<div class="pmds-runbar"><div class="pmds-runtext"><span class="pmds-runkicker">${esc(T('studio.chat.nowKicker'))}</span><span class="pmds-runsit">${esc(now && now.thread ? now.thread : T('studio.chat.nowNone'))}</span>`
+      + `<span class="pmds-runstate">${esc(now && now.open ? T('studio.chat.nowShown') : T('studio.chat.nowHidden'))}</span></div>`
+      + `<div class="pmds-runacts">${seg({ do: 'chat-view', value: view, label: T('studio.chat.viewsLabel'), items: CHAT_VIEWS.map((v) => ({ v, label: T(`studio.chat.views.${v}`, { n: n[v] }), icon: v === 'guided' ? 'play' : v === 'moments' ? 'moment' : 'takes' })) })}</div></div>`;
+    return head('chat', acts) + bar + R[`chat_${view}`]();
+  };
+  R.chat_guided = () => `<p class="pmds-blead pmds-chat-lead">${esc(T('studio.chat.guided.lead'))}</p>` + M.chat.guided().map((g) => block(g.label,
+    `<div class="pmds-grid pmds-grid-recipes">${g.items.map((it) => tile({ do: 'chat-guided', arg: it.id, icon: CHAT_ICON[g.id] || 'spark', title: it.label, sub: it.sub, attrs: chatAttrs(it) })).join('')}</div>`, { lead: g.lead })).join('');
+  R.chat_moments = () => `<p class="pmds-blead pmds-chat-lead">${esc(T('studio.chat.moments.lead'))}</p><div class="pmds-screens pmds-moments">` + M.chat.moments().map((g) => `<div class="pmds-scgroup"><h5 class="pmds-gtitle"><span>${esc(g.label)}</span><span class="pmds-count">${g.items.length}</span></h5><div class="pmds-sclist">`
+    + g.items.map((it) => `<button type="button"${at(Object.assign({ class: 'pmds-scrow', 'data-pmds-do': 'chat-moment', 'data-arg': `${g.id}:${it.id}`, 'data-key': `chat-moment:${g.id}:${it.id}`, 'data-pmh': 'row' }, chatAttrs(it)))}><span>${esc(it.label)}</span>${ico('chevron', 13)}</button>`).join('') + '</div></div>').join('') + '</div>';
+  R.chat_takes = () => {
+    const C = M.chat, cur = C.recipe();
+    const radio = (on, action, arg, title, sub, cls) => `<button type="button" role="radio"${at({ class: `pmds-choice${cls ? ' ' + cls : ''}${on ? ' pmds-on' : ''}`, 'aria-checked': String(!!on), 'data-pmds-do': action, 'data-arg': arg, 'data-key': `${action}:${arg}`, 'data-pmh': 'tile' })}>`
+      + `<span class="pmds-mark" aria-hidden="true">${ico('check', 12)}</span><span class="pmds-choice-text"><span class="pmds-choice-title">${esc(title)}</span>${sub ? `<span class="pmds-choice-sub">${esc(sub)}</span>` : ''}</span></button>`;
+    const recipes = `<div class="pmds-choices" role="radiogroup" aria-label="${esc(T('studio.chat.takes.recipesTitle'))}">` + radio(cur < 0, 'chat-recipe', '-1', T('studio.chat.takes.custom'), T('studio.chat.takes.customSub'))
+      + C.recipes().map((r) => radio(cur === r.index, 'chat-recipe', String(r.index), r.label, r.sub)).join('') + '</div>';
+    const fams = C.families().map((f) => block(f.label, `<div class="pmds-choices pmds-choices-takes" role="radiogroup" aria-label="${esc(f.label)}">`
+      + f.options.map((o) => radio(f.value === o.index, 'chat-take', `${f.id}:${o.index}`, `${o.index + 1}. ${o.label}`, o.note, 'pmds-choice-take')).join('') + '</div>', { lead: f.sub })).join('');
+    const voice = `<div class="pmds-rowacts">${seg({ do: 'chat-voice', value: C.voice(), label: T('studio.chat.takes.voiceTitle'), items: C.voices().map((v) => ({ v, label: T(`studio.chat.takes.voices.${v}`) })) })}</div>`;
+    return `<p class="pmds-blead pmds-chat-lead">${esc(T('studio.chat.takes.lead'))}</p>` + block(T('studio.chat.takes.recipesTitle'), recipes, { lead: T('studio.chat.takes.recipesLead') }) + fams
+      + block(T('studio.chat.takes.voiceTitle'), voice, { lead: T('studio.chat.takes.voiceLead') });
+  };
+
   R.usage = () => {
     const Us = M.usage, ok = Us.avail(), hourOk = Us.hourAvail(), running = hourOk && Us.hourRunning();
     return head('usage', `<div class="pmds-headacts">${btn(T('studio.usage.open'), { do: 'usage-open', icon: 'arrow' })}</div>`)
@@ -291,6 +348,11 @@
     add('workspace', T('studio.workspace.agents'), T('studio.workspace.agentsSub'), ['agents'], 'agent');
     add('workspace', T('studio.workspace.terminal'), T('studio.workspace.terminalSub'), ['agent-terminal'], 'terminal');
     add('workspace', T('studio.workspace.ask'), T('studio.workspace.askSub'), ['agent-ask'], 'hand');
+    M.chat.guided().forEach((g) => g.items.forEach((it) => add('chat', it.label, T('studio.chat.searchGuided', { group: g.label }), ['chat-guided', it.id], CHAT_ICON[g.id] || 'chat')));
+    M.chat.moments().forEach((g) => g.items.forEach((it) => add('chat', it.label, T('studio.chat.searchMoment', { group: g.label }), ['chat-moment', `${g.id}:${it.id}`], 'moment')));
+    M.chat.families().forEach((f) => f.options.forEach((o) => add('chat', o.label, T('studio.chat.searchTake', { family: f.label }), ['chat-take', `${f.id}:${o.index}`], 'takes')));
+    add('chat', T('studio.chat.show'), T('studio.chat.showSub'), ['chat-show'], 'chat');
+    add('chat', T('studio.chat.reset'), T('studio.chat.resetSub'), ['chat-reset'], 'reset');
     add('usage', T('studio.usage.live'), T('studio.usage.liveSub'), ['usage-live'], 'gauge');
     add('usage', T('studio.usage.hour'), T('studio.usage.hourSub'), ['usage-hour'], 'clock');
     add('usage', T('studio.usage.gallery'), T('studio.usage.gallerySub'), ['usage-gallery'], 'gallery');
@@ -707,6 +769,16 @@
     'layout-reset': () => { M.workspace.reset(); real.setTimeout(refresh, 60); },
     standin: () => { M.workspace.setStandIn(!M.workspace.standIn()); real.setTimeout(refresh, 60); },
     agents: () => { M.workspace.agents(); },
+    'chat-view': (arg) => { if (!CHAT_VIEWS.includes(arg)) return; ST.chatView = arg; renderMain('stay'); ST.sheet.querySelector('.pmds-main').scrollTop = 0; focusKey(`chat-view:${arg}`); },
+    /* a recorded example plays on its own and uses the whole workspace, so the Studio steps aside (like onboarding) */
+    'chat-guided': (arg) => { if (!M.chat.avail()) return say(T('studio.toast.unavailable')); launch(() => M.chat.runGuided(arg)); },
+    /* a moment stays: the Studio is open beside the chat, so moments can be stepped through */
+    'chat-moment': (arg) => { const i = String(arg).indexOf(':'); const r = M.chat.avail() ? M.chat.run(arg.slice(0, i), arg.slice(i + 1)) : { ok: false }; if (!r.ok) say(T('studio.toast.unavailable')); real.setTimeout(refresh, 400); },
+    'chat-take': (arg) => { const [f, i] = String(arg).split(':'); if (!M.chat.avail()) return say(T('studio.toast.unavailable')); M.chat.setTake(f, Number(i)); real.setTimeout(refresh, 60); },
+    'chat-recipe': (arg) => { if (!M.chat.avail()) return say(T('studio.toast.unavailable')); M.chat.setRecipe(Number(arg)); real.setTimeout(refresh, 60); },
+    'chat-voice': (arg) => { if (!M.chat.avail()) return say(T('studio.toast.unavailable')); M.chat.setVoice(arg); real.setTimeout(refresh, 60); },
+    'chat-show': () => { if (!M.chat.avail()) return say(T('studio.toast.unavailable')); M.chat.show(); real.setTimeout(refresh, 160); },
+    'chat-reset': () => { if (!M.chat.avail()) return say(T('studio.toast.unavailable')); M.chat.reset(); say(T('studio.chat.resetDone')); real.setTimeout(refresh, 240); },
     'agent-terminal': () => { M.workspace.terminal(); },
     'agent-ask': () => { M.workspace.ask(); },
     'usage-open': () => { M.usage.open(); },
