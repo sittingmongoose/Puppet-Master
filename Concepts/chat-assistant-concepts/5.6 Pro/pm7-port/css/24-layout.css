@@ -41,6 +41,8 @@
   .pm56-host .pmx-sheet .pmx-roster .pmx-row > .pmx-row-model { grid-column: 2 / -1; grid-row: 2; min-width: 0; }
   .pm56-host .pmx-sheet .pmx-roster .pmx-row > .pmx-row-persona { grid-column: 2 / -1; grid-row: 3; min-width: 0; }
   .pm56-host .pmx-sheet .pmx-roster .pmx-row :is(.pmx-row-model, .pmx-row-persona) > .shared-picker-button { width: 100%; }
+  /* a row's route sentence and note (module-shell pmxRow) follow on their own line, never in the marks' column */
+  .pm56-host .pmx-sheet .pmx-roster .pmx-row > :not(.pmx-row-mark, .pmx-row-job, .pmx-row-acts, .pmx-row-model, .pmx-row-persona) { grid-column: 2 / -1; }
   /* the head: Job, AI model, Persona as one legend that wraps, past the marks' column */
   .pm56-host .pmx-sheet .pmx-roster .pmx-roster-head {
     display: flex;
@@ -100,5 +102,5 @@
 .pm56-host .pmx-plate .pmx-p-paper-text > span { width: 100%; }
 .pm56-host .pmx-plate .pmx-p-paper-text > .pmx-p-note { line-height: 11.5px; }
 .pm56-host .pmx-plate .pmx-p-paper-text > .pmx-p-lab { line-height: 13px; margin-top: 1px; }
-/* Poppins' taller descender: Friendly lifts the job's second line 0.8 units (its first line stays put) */
-.pm56-host[data-theme^="friendly"] .pmx-plate .pmx-p-paper-text > .pmx-p-lab { position: relative; top: -.8px; }
+/* Poppins' taller descender: Friendly lifts the job's second line 1.2 units (its first line stays put) */
+.pm56-host[data-theme^="friendly"] .pmx-plate .pmx-p-paper-text > .pmx-p-lab { position: relative; top: -1.2px; }
