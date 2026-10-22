@@ -1,0 +1,16 @@
+/* pm7-port/css/31-surfaces-moreinfo.css: an attachment's More Info as a bounded popover beside its attachment
+   (js/67-surfaces-moreinfo.js writes the place on #pmOverlayRoot: --pm56-pop-x / -y / -w / -h and data-pm56-attpop).
+   The dialog keeps its own markup and controls; only where it sits and how big it gets change. max-width and
+   max-height bound it (they win over the dialog's own inline width), its body scrolls. */
+#pmOverlayRoot.pm56-host[data-pm56-attpop] > .dialog.att-details-dialog {
+  left: var(--pm56-pop-x);
+  top: var(--pm56-pop-y);
+  transform: none;
+  max-width: var(--pm56-pop-w);
+  max-height: var(--pm56-pop-h);
+  animation: none;
+}
+#pmOverlayRoot.pm56-host[data-pm56-attpop] > .dialog.att-details-dialog .dialog-body {
+  min-height: 0;
+  overflow: auto;
+}
