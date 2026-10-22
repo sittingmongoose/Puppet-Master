@@ -17,6 +17,7 @@
       "tour": "Guided Tour",
       "story": "Story",
       "workspace": "Workspace",
+      "chat": "Chat",
       "usage": "Usage",
       "notices": "Notices",
       "looks": "Looks",
@@ -29,6 +30,7 @@
       "tour": "{n} steps",
       "story": "Clock and five points",
       "workspace": "Layouts and agents",
+      "chat": "Examples, moments and takes",
       "usage": "Demo readings",
       "notices": "Sample notifications",
       "looks": "Five looks, light and dark",
@@ -96,6 +98,14 @@
       "nierTour": {
         "title": "The tour in NieR Mode",
         "sub": "NieR Mode on, then the Guided Tour with Pod 042."
+      },
+      "chatWork": {
+        "title": "Watch the assistant work",
+        "sub": "An agent turn in the chat: the message flies, a working card appears, the answer streams."
+      },
+      "chatGrill": {
+        "title": "Grill Me, then a Crew",
+        "sub": "A recorded example: Grill Me asks first, then a Crew works with the Wonderer alongside."
       }
     },
     "onboarding": {
@@ -298,10 +308,10 @@
       "use": "Use",
       "resetLayout": "Restore the Home layout",
       "resetLayoutSub": "Panels go back to their default places. Open files, terminals and chats stay.",
-      "standIn": "Stand-in chat",
-      "standInSub": "The scripted chat beside the panels that can open every kind of tab.",
+      "standIn": "Stand-in chat (panel open paths)",
+      "standInSub": "The old scripted chat that opens every kind of tab, for checking the panels. While it is on, it takes the assistant chat’s place; any chat example turns it off.",
       "agents": "Agents open things",
-      "agentsSub": "Six agents open a terminal, a browser, a plan, a file, a crew run and a transcript, each behind your work.",
+      "agentsSub": "Six agents open a terminal, a browser, a plan, a file, a Crew run and another agent’s chat, each behind your work.",
       "agentsGo": "Play every agent",
       "terminal": "An agent drives a terminal",
       "terminalSub": "Query Analyzer opens its own terminal in the background and reruns the bench.",
@@ -310,6 +320,707 @@
       "askSub": "An agent asks to type into your terminal. You allow it once, for the terminal, or say no.",
       "askGo": "Make the request",
       "unavailable": "Not on this page"
+    },
+    "chat": {
+      "kicker": "Chat",
+      "title": "The assistant chat",
+      "lead": "Play a recorded example, put the chat in a moment, or try another design. It all runs in the chat on the right; nothing real is touched.",
+      "show": "Show the chat",
+      "showSub": "Bring the chat on screen on the Home page.",
+      "reset": "Reset the chat demo",
+      "resetSub": "Every chat, answer, artifact and working state goes back to the start.",
+      "resetDone": "The chat demo is back to its start.",
+      "unavailableLead": "The assistant chat is not on this page, so its examples cannot run here.",
+      "nowKicker": "The chat now",
+      "nowNone": "No chat chosen",
+      "nowShown": "On screen, on the right.",
+      "nowHidden": "Hidden. Show the chat brings it back; every example shows it too.",
+      "viewsLabel": "Show",
+      "views": {
+        "guided": "Guided examples",
+        "moments": "Moments",
+        "takes": "Takes"
+      },
+      "searchGuided": "Guided example · {group}",
+      "searchMoment": "Moment · {group}",
+      "searchTake": "Take · {family}",
+      "guided": {
+        "lead": "Each example plays on its own once it starts: the chat presses its own buttons, lit first, and says what comes next. The Studio steps aside while it plays.",
+        "groups": {
+          "plan": {
+            "title": "Plan",
+            "lead": "A plan is written, approved and built; stopped and revised; recovered after a failed step."
+          },
+          "goal": {
+            "title": "Goal",
+            "lead": "A goal runs to a real, checked result, and you stay the owner of what it is for."
+          },
+          "todo": {
+            "title": "To-Dos",
+            "lead": "Work splits into items that run side by side, and the progress shown is honest."
+          },
+          "deepplan": {
+            "title": "Deep Plan",
+            "lead": "A deeper plan asks only what it must, inside one question allowance everyone shares."
+          },
+          "schedule": {
+            "title": "Scheduling",
+            "lead": "Messages and builds that run later, exactly as you scheduled them."
+          },
+          "crew": {
+            "title": "Crew",
+            "lead": "A team of assistants splits a job, and each part is checked."
+          },
+          "room": {
+            "title": "Chat Room",
+            "lead": "Several assistants talk a question through, with a moderator."
+          },
+          "brainstorm": {
+            "title": "BrainStorm",
+            "lead": "Ideas drafted alone, debated, then written up as one plan."
+          },
+          "review": {
+            "title": "Review",
+            "lead": "Fresh reviewers read a locked copy of the work and report."
+          },
+          "wonderer": {
+            "title": "Wonderer and Grill Me",
+            "lead": "Grill Me asks you first; the Wonderer brings leads the team weighs."
+          },
+          "lens": {
+            "title": "Context Lens",
+            "lead": "Choose what the assistant reads, preview it, and restore it unchanged."
+          },
+          "teach": {
+            "title": "Teach",
+            "lead": "Save a rule from a message, then see replies follow it."
+          },
+          "memory": {
+            "title": "Memory",
+            "lead": "Notes the assistant keeps, checked against your files."
+          },
+          "eli5": {
+            "title": "ELI5",
+            "lead": "Simple explanations, one chat at a time."
+          },
+          "bsd": {
+            "title": "Back Seat Driver",
+            "lead": "A second model watches the work and speaks up only when it matters."
+          },
+          "debug": {
+            "title": "Debug",
+            "lead": "Reproduce a bug, fix it, and prove the fix."
+          },
+          "revert": {
+            "title": "Revert",
+            "lead": "Undo the assistant’s last change, never yours."
+          },
+          "attach": {
+            "title": "Attachments",
+            "lead": "Files and folders the assistant reads, kept exactly as you attached them."
+          },
+          "more": {
+            "title": "More examples",
+            "lead": "Examples the chat has that this Studio has no words for yet, in the chat’s own words."
+          }
+        },
+        "items": {
+          "plan-complete": {
+            "title": "Build a small plan",
+            "sub": "Approve the plan, watch its To-Dos run, see it finish."
+          },
+          "plan-revise": {
+            "title": "Stop and revise",
+            "sub": "Stop a plan, give feedback and get version 2. Version 1 stays as it was."
+          },
+          "plan-recovery": {
+            "title": "Recover without starting over",
+            "sub": "A lookup fails, you repair its input, and the same plan run tries again."
+          },
+          "plan-documents": {
+            "title": "Read the exact evidence",
+            "sub": "Open the plan’s evidence, publish a newer source, and the approved version stays unchanged."
+          },
+          "goal-simple": {
+            "title": "A goal that makes a real file",
+            "sub": "Send a goal, pause it, then finish a CSV that is checked on its own."
+          },
+          "goal-authority": {
+            "title": "You own the goal",
+            "sub": "Edit the goal yourself, then approve or refuse a change the assistant asks for."
+          },
+          "goal-plan": {
+            "title": "Build a plan as a goal",
+            "sub": "Write a regular plan, then choose how it runs."
+          },
+          "goal-scheduled": {
+            "title": "A scheduled build is not a goal yet",
+            "sub": "Schedule a plan. It becomes a goal only when its time comes."
+          },
+          "todo-parallel": {
+            "title": "Parallel work, honest progress",
+            "sub": "Two files are made side by side, then checked separately."
+          },
+          "todo-restructure": {
+            "title": "Change the list without losing work",
+            "sub": "Pause, move one item that is running, then carry on from where it was."
+          },
+          "todo-large": {
+            "title": "A list of 5,000 items",
+            "sub": "Search, fold and open one item in a list of 5,050."
+          },
+          "deepplan-thorough": {
+            "title": "A few questions, a complete plan",
+            "sub": "Reuse an answer, look through what was found, and stop well before the limit."
+          },
+          "deepplan-exhaustive": {
+            "title": "Research can go out of date",
+            "sub": "A source changes. Check it before you accept the deeper plan."
+          },
+          "deepplan-budget": {
+            "title": "One question allowance for everyone",
+            "sub": "Reach the limit, then add Grill Me without resetting the count."
+          },
+          "deepplan-blocker": {
+            "title": "An open question can hold the build",
+            "sub": "A safety question stays open and visible instead of being guessed."
+          },
+          "schedule-due": {
+            "title": "Schedule and build",
+            "sub": "Schedule version 1, see when it is due, and watch it finish."
+          },
+          "schedule-revise": {
+            "title": "Revise a scheduled plan",
+            "sub": "Schedule version 1, revise it, then choose version 2 on purpose."
+          },
+          "schedule-cancel": {
+            "title": "Cancel a scheduled build",
+            "sub": "Schedule it, cancel it, and see that nothing runs."
+          },
+          "schedule-messages": {
+            "title": "Send the version you scheduled",
+            "sub": "The message and its attachment are kept as scheduled. A missing one holds the send."
+          },
+          "schedule-windows": {
+            "title": "One build across two windows",
+            "sub": "The build pauses at a safe point when its window ends and resumes the same run."
+          },
+          "schedule-crew": {
+            "title": "Schedule a Crew",
+            "sub": "Set the Crew up once. It starts as one and resumes the same work."
+          },
+          "schedule-room": {
+            "title": "Send to the same discussion",
+            "sub": "One scheduled message reaches the discussion you chose, and only that one."
+          },
+          "schedule-folder": {
+            "title": "Keep a folder unchanged",
+            "sub": "Every selected file is kept. A missing one holds the whole message."
+          },
+          "crew-delegation": {
+            "title": "Delegate and check",
+            "sub": "A Crew splits a job into parts and checks each one."
+          },
+          "crew-auto": {
+            "title": "Crew Auto knows when to help",
+            "sub": "Small requests stay with one assistant; a big job gets a Crew."
+          },
+          "room-discussion": {
+            "title": "Talk it through, keep one idea",
+            "sub": "Two rounds with the moderator. You join in, then turn one message into a To-Do."
+          },
+          "room-plan": {
+            "title": "Turn the conclusion into a plan",
+            "sub": "Everyone answers once, the moderator sums up, and the summary becomes a plan."
+          },
+          "brainstorm-synthesis": {
+            "title": "Decide and write one plan",
+            "sub": "Ideas drafted alone, a debate, then one plan."
+          },
+          "brainstorm-constraint": {
+            "title": "A rule beats the vote",
+            "sub": "The popular option breaks a rule. Its backers’ view is kept, and the plan follows the rule."
+          },
+          "review-single": {
+            "title": "One reviewer",
+            "sub": "A fresh reviewer reads a locked copy and writes a report."
+          },
+          "review-multi": {
+            "title": "Several reviewers",
+            "sub": "Three reviewers check alone, compare notes, and you pick the To-Dos."
+          },
+          "wonderer-crew": {
+            "title": "A Crew that grills you first",
+            "sub": "Grill Me before the work splits. The Wonderer’s leads are decided as they arrive."
+          },
+          "wonderer-room": {
+            "title": "A Chat Room with both",
+            "sub": "The moderator grills you, the leads join between turns, and every lead reaches the summary."
+          },
+          "wonderer-brainstorm": {
+            "title": "A BrainStorm weighs the leads",
+            "sub": "Grill Me at the start. Write the plan waits for every pass, decision and lookup."
+          },
+          "wonderer-deepplan": {
+            "title": "Deep Plan with Grill Me",
+            "sub": "Questions round by round, a pause to look a fact up, then one agreed plan."
+          },
+          "wonderer-leads": {
+            "title": "The team weighs the leads",
+            "sub": "Leads wait until every proposal is in, then the debate decides them."
+          },
+          "wonderer-dissent": {
+            "title": "A rule beats the vote, without the Wonderer",
+            "sub": "One lead is explored and not supported. The rule wins, and every lead is in the plan."
+          },
+          "lens-shape": {
+            "title": "Shape, summarise and restore",
+            "sub": "Mute, focus, preview a source, then restore the history unchanged."
+          },
+          "lens-stale": {
+            "title": "A preview is not a promise",
+            "sub": "A source changes, the old Apply is refused, and you review the new version."
+          },
+          "teach-capture": {
+            "title": "Save a rule from a message",
+            "sub": "Save the assistant’s advice as a rule, then see a reply follow it."
+          },
+          "teach-correct": {
+            "title": "Edit a rule, then turn it off",
+            "sub": "Teach a rule, save version 2, turn it off. The old version never comes back."
+          },
+          "teach-missed": {
+            "title": "When a reply misses your rule",
+            "sub": "A reply leaves part of a rule out and you ask for a fix. Nothing is sent until you press Send."
+          },
+          "memory-verified": {
+            "title": "A note a test proves",
+            "sub": "Three checks pass. Then the file changes and the note goes out of date."
+          },
+          "memory-locked": {
+            "title": "Your rule stays yours",
+            "sub": "A note suggests changing a locked rule. Nothing changes until you decide."
+          },
+          "eli5-override": {
+            "title": "Simple answers in one chat",
+            "sub": "Turn ELI5 on for one chat and compare it with one that stays standard."
+          },
+          "eli5-inherit": {
+            "title": "Back to your usual setting",
+            "sub": "Undo one chat’s own choice so it follows its project again."
+          },
+          "bsd-survives": {
+            "title": "Catch a missing measurement",
+            "sub": "The advisor spots a missing measurement, checks it on newer work, then tells you."
+          },
+          "bsd-resolves": {
+            "title": "Settled before it reaches you",
+            "sub": "The advisor spots a problem, a measurement settles it, and nothing appears in your chat."
+          },
+          "debug-repair": {
+            "title": "Reproduce, fix and close",
+            "sub": "Find a zero-quantity bug, check six cases, and remove the helper the fix used."
+          },
+          "debug-drift": {
+            "title": "The file changed under you",
+            "sub": "Another edit is caught before the fix. You choose to carry on without losing either history."
+          },
+          "revert-whole": {
+            "title": "Revert one whole change",
+            "sub": "The assistant edits, adds and deletes a file. Revert puts all three back."
+          },
+          "revert-conflict": {
+            "title": "Your later edit is protected",
+            "sub": "You change a file after the assistant did. Revert refuses and leaves every file as it is."
+          },
+          "attach-intake": {
+            "title": "Attach, retry and remove",
+            "sub": "Attach files, retry one that failed, remove one. The others and your text stay."
+          },
+          "attach-live": {
+            "title": "Files that changed since",
+            "sub": "Each turn keeps what it read. A later change is shown without rewriting history."
+          },
+          "attach-folder": {
+            "title": "Folders stay bounded",
+            "sub": "A folder is read as a fixed list of files, with its own receipt."
+          }
+        }
+      },
+      "moments": {
+        "lead": "One click puts the chat in that moment. The Studio stays open beside the chat, so you can step through them.",
+        "groups": {
+          "live": {
+            "title": "Live turns",
+            "lead": "Real sends: the message flies, the reply streams, work appears."
+          },
+          "lifecycle": {
+            "title": "Work as it runs",
+            "lead": "Start, pause, step and finish the working card, with helpers and a Crew."
+          },
+          "working": {
+            "title": "Every working state",
+            "lead": "The working card at each of its steps."
+          },
+          "decisions": {
+            "title": "Questions and decisions",
+            "lead": "Questions, plan approval, permissions and conflicts."
+          },
+          "artifacts": {
+            "title": "Artifacts",
+            "lead": "Diagrams, dashboards, charts and documents, opened in the panels."
+          },
+          "capabilities": {
+            "title": "Assistant abilities",
+            "lead": "Back Seat Driver, Context Lens, ELI5 and goals."
+          },
+          "threads": {
+            "title": "Chats and messages",
+            "lead": "Plain chats, queued messages, archives, search and drafts."
+          },
+          "system": {
+            "title": "Tools and connections",
+            "lead": "Web, browser and test tools, going offline, attachments and accounts."
+          },
+          "scheduling": {
+            "title": "Scheduling screens",
+            "lead": "Where scheduled messages and build windows are set up."
+          },
+          "safety": {
+            "title": "Safety checks",
+            "lead": "What the chat refuses to do twice, or on its own."
+          },
+          "lineups": {
+            "title": "Lineups and advisors",
+            "lead": "Who takes part, and how the advisor works."
+          },
+          "views": {
+            "title": "Plans, records and previews",
+            "lead": "Plan tabs, the record behind a change, previews and small surfaces."
+          },
+          "moments": {
+            "title": "Moments",
+            "lead": "Every moment the chat has."
+          },
+          "more-surfaces": {
+            "title": "More moments",
+            "lead": "Moments the chat has that this Studio has no words for yet, in the chat’s own words."
+          }
+        },
+        "items": {
+          "live-reply": "A reply",
+          "live-agent-turn": "An agent turn",
+          "trouble-mid-turn": "Trouble mid-turn",
+          "long-agent-turn": "A long agent turn",
+          "start-complete-work": "Start work",
+          "multi-orbit-turn": "Two pieces of work at once",
+          "pause-work": "Pause the work",
+          "step-work": "Step the work",
+          "complete-work": "Finish the work",
+          "reset-work": "Reset the work",
+          "show-work-history": "Show what was done",
+          "live-subagents": "Helpers at work",
+          "blocked-subagent": "A blocked helper",
+          "conflict-mediation": "Two helpers disagree",
+          "crew-coordination": "A Crew coordinating",
+          "work-preparing": "Preparing",
+          "work-thinking": "Thinking",
+          "work-explore": "Exploring",
+          "work-web-search": "Web search",
+          "work-web-fetch": "Reading a web page",
+          "work-browser": "Browser",
+          "work-bash": "Running a command",
+          "work-subagents": "Helpers",
+          "work-editing": "Editing",
+          "work-app-control": "Controlling an app",
+          "work-browser-test": "Browser test",
+          "work-validate": "Checking",
+          "work-artifact": "Making an artifact",
+          "work-complete": "Complete",
+          "prepare-questions": "Questions being prepared",
+          "open-questionnaire": "Questions",
+          "long-answers-questionnaire": "Questions with long answers",
+          "queue-questionnaire": "Questions kept for later",
+          "plan-approval": "Approve a plan",
+          "plan-revision": "Revise a plan",
+          "plan-cancellation": "Cancel a plan",
+          "permission-request": "Ask permission",
+          "permission-denial": "Permission refused",
+          "conflict-resolution": "A conflict settled",
+          "cancel-and-return": "Cancel the questions",
+          "mermaid-artifact": "Diagram",
+          "interactive-dashboard": "Dashboard",
+          "data-explorer": "Data explorer",
+          "architecture-map": "Architecture map",
+          "interactive-quiz": "Quiz",
+          "periodic-table": "Periodic table",
+          "flowchart": "Flowchart",
+          "interactive-chart": "Chart",
+          "generated-image": "Generated image",
+          "test-evidence": "Test evidence",
+          "document-artifact": "Document",
+          "deep-plan-artifact": "Deep Plan document",
+          "artifact-stale": "An out-of-date artifact",
+          "artifact-failure": "An artifact that failed",
+          "bsd-intervention": "Back Seat Driver speaks up",
+          "bsd-silent-check": "Back Seat Driver checks quietly",
+          "bsd-timeout": "Back Seat Driver runs out of time",
+          "bsd-unavailable": "Back Seat Driver unavailable",
+          "bsd-quota-limited": "Back Seat Driver at its usage limit",
+          "context-focus": "Context Lens: focus",
+          "context-mute": "Context Lens: mute",
+          "subcompact-preview": "Subcompact preview",
+          "subcompact-applied": "Subcompact applied",
+          "subcompact-cancelled": "Subcompact cancelled",
+          "eli5-receipt": "An ELI5 answer",
+          "goal-replanning": "A goal replans",
+          "goal-paused": "A goal paused",
+          "goal-blocked": "A goal blocked",
+          "plain-text-conversation": "A plain chat",
+          "queued-message-demo": "Queued messages",
+          "archived-threads": "Archived chats",
+          "cross-thread-search": "Search every chat",
+          "long-response": "A long answer",
+          "message-details": "Message details",
+          "draft-history": "Draft history",
+          "new-message-anchor": "New messages marker",
+          "browser-debug": "Browser debugging",
+          "web-search": "Web search",
+          "web-fetch": "Reading a web page",
+          "bash": "Running a command",
+          "app-control": "Controlling an app",
+          "browser-testing": "Browser testing",
+          "program-testing": "Running the tests",
+          "lsp-analysis": "Code analysis",
+          "mcp-tool": "An MCP tool",
+          "offline-queue": "Offline, messages queued",
+          "reconnect-replay": "Back online, queue sent",
+          "attachment-upload": "An attachment",
+          "unsupported-attachment": "An attachment the model cannot read",
+          "provider-route-change": "Another account takes over",
+          "provider-auth-failure": "An account signed out",
+          "provider-quota": "An account at its limit",
+          "no-models": "No model available",
+          "schedules-overview": "Scheduled messages overview",
+          "schedules-windows": "Build windows",
+          "schedule-new": "A new scheduled message",
+          "schedule-edit": "Edit a scheduled message",
+          "schedule-once": "A one-time build",
+          "schedule-recurring": "A recurring build",
+          "schedule-stop": "A stop holds automatic resume",
+          "schedule-race": "A stop racing a start",
+          "schedule-duplicate": "A repeated window event",
+          "af-title-race-demo": "Your rename wins",
+          "todo-attempt-bulk-complete": "Refused: tick every To-Do at once",
+          "todo-attempt-provider-proposal": "A To-Do change the model proposes",
+          "crew-config": "Crew lineup",
+          "crew-auto-config": "Crew Auto lineup",
+          "chat-room-config": "Chat Room lineup",
+          "brainstorm-config": "BrainStorm lineup",
+          "review-config": "Review lineup",
+          "bsd-config": "Set up Back Seat Driver",
+          "bsd-held": "Back Seat Driver’s held notes",
+          "plan-index": "A plan tab",
+          "plan-auth": "A second plan tab",
+          "record-provider": "The record behind a change",
+          "record-provider-second": "The same file, a later change",
+          "record-note": "A work note",
+          "activity-todo": "To-Do preview",
+          "activity-changes": "Changed-file preview",
+          "lens-focus": "Context Lens: focus messages",
+          "lens-subcompact": "Context Lens: subcompact preview",
+          "work-orbit": "Working card: Orbit",
+          "work-simple": "Working card: Step Rail Simple",
+          "cs-quota-demo": "Waiting for a usage limit",
+          "cs-quota-source": "Where the reset time comes from",
+          "af-eli5-demo": "Two ELI5 explanations",
+          "bc-open": "Browser capture"
+        }
+      },
+      "takes": {
+        "lead": "Swap one part of the chat for another design, to compare. Each family changes on its own; a recipe sets all seven. Takes are concept review only and are not kept.",
+        "recipesTitle": "Recipes",
+        "recipesLead": "Seven takes chosen to work together.",
+        "custom": "Custom mix",
+        "customSub": "Your own choice in each family.",
+        "recipes": {
+          "0": {
+            "title": "PM7 Refined",
+            "sub": "A quiet step on from PMConcept7: the Reference Morph working card and wide prose."
+          },
+          "1": {
+            "title": "Orbit Studio",
+            "sub": "Playful: Orbit at work, activity in an icon orbit, preview rows and questions that morph."
+          },
+          "2": {
+            "title": "Technical Workbench",
+            "sub": "Dense controls for engineers: the step stack, a file ledger and a technical transcript."
+          },
+          "3": {
+            "title": "Calm Reading",
+            "sub": "Reading first: a prose-led frame, minimal history, a calm working stage and quiet question cards."
+          },
+          "4": {
+            "title": "Agent Operations",
+            "sub": "Agents in view: their lanes, an agent board, worktree history and evidence beside each decision."
+          },
+          "5": {
+            "title": "Progressive Receipt",
+            "sub": "Work figures build up in place, a dashboard of details, an editorial transcript and queued questions."
+          },
+          "6": {
+            "title": "Ribbon Command",
+            "sub": "A tool ribbon at work, a command strip of activity, a status rail and a compact question stepper."
+          },
+          "7": {
+            "title": "Creative Stage",
+            "sub": "A layered composer, the workbench at work, grouped history, split detail and anchored questions."
+          }
+        },
+        "families": {
+          "body": {
+            "title": "Chat and composer",
+            "lead": "The chat’s frame and where you type."
+          },
+          "history": {
+            "title": "Chat history",
+            "lead": "The list of chats."
+          },
+          "working": {
+            "title": "Working card",
+            "lead": "How the assistant shows work in progress. Orbit is the default; Step Rail Simple is the simpler choice in Settings."
+          },
+          "activityBar": {
+            "title": "Activity bar",
+            "lead": "The strip that sums up what is happening."
+          },
+          "activityDetail": {
+            "title": "Activity detail",
+            "lead": "What opens from the activity bar."
+          },
+          "transcript": {
+            "title": "Transcript",
+            "lead": "How messages are laid out."
+          },
+          "decision": {
+            "title": "Questions and decisions",
+            "lead": "How questions, plans and permissions ask you."
+          }
+        },
+        "options": {
+          "body": [
+            "PM7 Refined",
+            "Floating Focus",
+            "Split Command",
+            "Console Dense",
+            "Reading First",
+            "Operations Dock",
+            "Ribbon Composer",
+            "Layered Studio"
+          ],
+          "history": [
+            "PM7 Pinned",
+            "Status Rail",
+            "Worktree Branches",
+            "Dense Operations",
+            "Grouped Recency",
+            "Preview Rows",
+            "Minimal Reading",
+            "Command History"
+          ],
+          "working": [
+            "Reference Morph",
+            "Orbit",
+            "Step Stack",
+            "Tool Ribbon",
+            "Progressive Receipt",
+            "Workbench",
+            "Agent Stage",
+            "Calm Stage",
+            "Step Rail",
+            "Word Stream",
+            "Tool Collapse",
+            "Diff Tape",
+            "Signal Meter",
+            "Blueprint",
+            "Timeline Scrub",
+            "Terminal Cast",
+            "Loom",
+            "Pulse Grid",
+            "Ledger",
+            "Constellation",
+            "Metronome",
+            "Filmstrip",
+            "Sonar",
+            "Circuit"
+          ],
+          "activityBar": [
+            "Extended PM7",
+            "Segmented Pill",
+            "Icon Dock",
+            "Domain Grid",
+            "Capsule Stack",
+            "Technical Strip",
+            "Pulse Rail",
+            "Minimal Command"
+          ],
+          "activityDetail": [
+            "Accordion Inspector",
+            "Status Board",
+            "Goal Tree",
+            "Split Master/Detail",
+            "Agent Board",
+            "File Ledger",
+            "Live Work Feed",
+            "Overview Dashboard"
+          ],
+          "transcript": [
+            "Wide Prose",
+            "Assistant Cards",
+            "Speaker Grid",
+            "Journal Stream",
+            "Editorial Reading",
+            "Layered Technical",
+            "Terminal Dense",
+            "Stage Layout",
+            "Aligned Bubbles",
+            "Zebra Rows",
+            "Sticky Rail",
+            "Timeline Gutter",
+            "Notebook Cells",
+            "Focus Reader",
+            "Print Sheet",
+            "Threaded Turns",
+            "Turn Stage"
+          ],
+          "decision": [
+            "Stable Card",
+            "Morphing Composer",
+            "Anchored Sheet",
+            "Side Inspector",
+            "Step Sequence",
+            "Technical Decision",
+            "Queue Stack",
+            "Evidence Split",
+            "Ask Card"
+          ]
+        },
+        "notes": {
+          "working": {
+            "1": "The default",
+            "8": "The simpler choice"
+          }
+        },
+        "voiceTitle": "Motion voice",
+        "voiceLead": "How the chat moves. It follows the look; pick another to judge it on this look.",
+        "voices": {
+          "auto": "Follow the look",
+          "basic": "Basic",
+          "friendly": "Friendly",
+          "glass": "Glass",
+          "retro": "Retro"
+        }
+      }
     },
     "usage": {
       "kicker": "Usage",

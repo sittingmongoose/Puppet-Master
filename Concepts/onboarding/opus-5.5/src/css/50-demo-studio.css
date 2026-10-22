@@ -340,6 +340,21 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 #o55-demo .pmds-scrow:hover, #o55-demo .pmds-scrow:focus-visible { background: var(--pmds-wash); color: var(--pmds-ink); }
 #o55-demo .pmds-scrow:hover .pmds-ico, #o55-demo .pmds-scrow:focus-visible .pmds-ico { opacity: 1; }
 
+/* the assistant chat (the Chat section): recorded examples are recipe tiles, moments are onboarding's screen rows in
+   wider columns (their names run longer), and a take is a one-line choice card; every look styles them as it styles
+   those already */
+/* two head actions: in the flow under the lead, so a wide title (Retro's arcade face) never runs under them */
+#o55-demo .pmds-page[data-pmds-section="chat"] .pmds-headacts { position: static; margin-top: 12px; }
+#o55-demo .pmds-chat-lead { margin: 16px 0 0 !important; max-width: 72ch; }
+#o55-demo .pmds-chat-none { margin-top: 4px; font-size: 13px; }
+#o55-demo .pmds-runbar .pmds-seg { flex-wrap: wrap; }
+#o55-demo .pmds-moments { grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 18px 14px; margin-top: 18px; }
+#o55-demo .pmds-choices-takes { grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 6px; }
+#o55-demo .pmds-choice-take { align-items: center; gap: 9px; padding: 7px 10px; }
+#o55-demo .pmds-choice-take .pmds-mark { margin-top: 0; }
+#o55-demo .pmds-choice-take .pmds-choice-title { font-size: 12.5px; }
+#o55-demo .pmds-choice-take .pmds-choice-sub { font-size: 11.5px; }
+
 /* tour chapters */
 #o55-demo .pmds-chapters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
 #o55-demo .pmds-chapter { display: grid; grid-template-rows: auto 1fr auto; gap: 12px; padding: 16px; border: 1px solid var(--pmds-line2); border-radius: var(--pmds-r2); background: var(--pmds-bg); }

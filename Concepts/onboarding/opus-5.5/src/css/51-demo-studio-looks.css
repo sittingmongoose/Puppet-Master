@@ -93,6 +93,8 @@
 #o55-demo.pmds[data-pmds-look="friendly"] :is(.pmds-choice, .pmds-laytile, .pmds-looktile, .pmds-chapter, .pmds-reset, .pmds-swrow, .pmds-actrow, .pmds-clock) {
   border: 2px solid var(--pmds-bezel); border-radius: 16px; background: var(--pmds-bg); box-shadow: 0 3px 0 color-mix(in srgb, var(--pmds-line) 65%, transparent);
 }
+/* the Chat section's one-line take card (about 36 px with the bezel): a smaller radius, so it stays a tile, never a capsule */
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-choice-take { border-radius: 11px; }
 #o55-demo.pmds[data-pmds-look="friendly"] :is(.pmds-choice, .pmds-laytile).pmds-on { border-color: var(--pmds-acc); background: color-mix(in srgb, var(--pmds-acc) 10%, var(--pmds-bg)); box-shadow: 0 3px 0 color-mix(in srgb, var(--pmds-acc) 50%, transparent); }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-looktile.pmds-on { border-color: var(--pmds-acc); box-shadow: 0 0 0 2px var(--pmds-acc), 0 3px 0 color-mix(in srgb, var(--pmds-acc) 50%, transparent); }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-mark { width: 20px; height: 20px; border-radius: 7px; border-width: 2px; }
@@ -241,6 +243,9 @@
 #o55-demo.pmds[data-pmds-look="glass"] :is(.pmds-choice, .pmds-laytile).pmds-on { border-color: color-mix(in srgb, var(--pmds-acc) 55%, transparent); background: color-mix(in srgb, var(--pmds-acc) 16%, var(--pmds-plate)); }
 /* the chosen card's lit plate is lighter still under the pointer: its second line steps up to the full ink */
 #o55-demo.pmds[data-pmds-look="glass"] .pmds-choice.pmds-on .pmds-choice-sub { color: var(--pmds-ink); }
+/* the Chat section's one-line take card is about 32 px tall: the plate's 16 px radius would round it into a capsule, so
+   it takes Glass's control radius (its hover layer follows the card's own radius) */
+#o55-demo.pmds[data-pmds-look="glass"] .pmds-choice-take { border-radius: 10px; }
 #o55-demo.pmds[data-pmds-look="glass"] .pmds-runbar { background: linear-gradient(90deg, color-mix(in srgb, var(--pmds-acc) 18%, transparent), var(--pmds-plate)); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
 #o55-demo.pmds[data-pmds-look="glass"] .pmds-btn { border-radius: 10px; border-color: var(--pmds-line); background: var(--pmds-plate); box-shadow: inset 0 1px 0 var(--pmds-plate-edge); }
 #o55-demo.pmds[data-pmds-look="glass"] .pmds-btn-primary { border-color: transparent; color: var(--pmds-acc-ink); background: linear-gradient(180deg, color-mix(in srgb, var(--accent-blue) 80%, #fff 20%), color-mix(in srgb, var(--accent-blue) 85%, #000 15%)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 8px 20px -10px color-mix(in srgb, var(--accent-blue) 85%, transparent); }

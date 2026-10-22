@@ -6,7 +6,9 @@
      tour        PM7_GUIDED_TOUR (restart, resume, resumable); O55.tour.go for a chapter start (internal, guarded)
      story       PM_DEMO (clock, director.ensure, state.story, log): the base page's demo engine
      workspace   PMW (NAMED, savedLayouts, applyNamed, resetLayout), PM_HOME.settings 'chat.standIn', PMT.agent,
-                 the stand-in chat's Agent activity rows
+                 PM_HOME.open and PM56_PORT.open for the agents' background opens
+     chat        PM56_PORT.demo (the 5.6 Pro chat's port: Concepts/chat-assistant-concepts/5.6 Pro/pm7-port/js/
+                 50-demo-bridge.js): its recorded examples, moments, takes and Reset all
      usage       PMU.live (pause, resume, hour), PMU.charts.gallery, PM_PAGES.go
      notices     PM_TITLEBAR_NOTIFY.demo (pm7-notifications), else window.toast / toast.important
      looks       PM7_SETTINGS_TOME.setChromeThemeFamily / Mode (the title-bar menu's path), PM_NIER.set,
@@ -152,6 +154,15 @@
 
   /* ---- workspace ---- */
   const PMW = () => W('PMW'), HOME = () => W('PM_HOME');
+  const AGENT_CWD = '~/tastebook/api';
+  const AGENT_OPENS = [
+    { spec: { kind: 'terminal', id: 'terminal:agent-bench', session: 'agent-bench', cwd: AGENT_CWD, invocation: 'cargo bench --bench analytics', label: 'cargo bench · api', by: 'agent:Query Analyzer' } },
+    { spec: { kind: 'browser', id: 'browser:2', url: 'https://app.internal/dashboards/query-performance?tenant=214', label: 'Dashboard · tenant 214', by: 'agent:Query Analyzer' } },
+    { chat: true, spec: { kind: 'plan', id: 'plan:ap-embeds', label: 'Evidence pack for the read-path work', by: 'agent:Builder' } },
+    { spec: { kind: 'editor', path: 'src/analytics/index_hints.rs', line: 1, mode: 'keep', by: 'agent:Builder' } },
+    { chat: true, spec: { kind: 'run', id: 'crew-work:crew-query-perf', label: 'Crew · Query Performance Rollout', by: 'agent:Builder' } },
+    { chat: true, spec: { kind: 'transcript', id: 'thread-agent-schema', label: 'Schema Reviewer', by: 'agent:Query Performance' } }
+  ];
   function goHome() { try { const P = W('PM_PAGES'); if (P && typeof P.go === 'function') P.go('dashboard'); } catch (_) {} }
   const workspace = {
     avail: () => !!(PMW() && PMW().NAMED && fn(PMW(), 'applyNamed')),
@@ -164,17 +175,30 @@
     current() { try { const S = HOME() && HOME().settings; return S ? S.get('panels.layout.named') : null; } catch (_) { return null; } },
     use(id) { goHome(); return PMW().applyNamed(id); },
     reset() { goHome(); return PMW().resetLayout(); },
-    standInAvail: () => !!(HOME() && HOME().settings && fn(HOME().settings, 'get')),
-    standIn() { try { return HOME().settings.get('chat.standIn') !== false; } catch (_) { return false; } },
-    setStandIn(on) { HOME().settings.set('chat.standIn', !!on); },
-    agentRows: () => Array.prototype.slice.call(document.querySelectorAll('#pmw-chat [data-pmw-sc-agent]')),
-    agentsAvail() { return workspace.standIn() && workspace.agentRows().length > 0; },
-    /* the stand-in chat's Agent activity: each row opens its thing behind the person's work (D8) */
+    /* the stand-in chat (Home's scripted chat that opens every kind of tab) is off by default since the assistant chat
+       was ported in; on, it takes the assistant chat's place in the column (one surface at a time) */
+    standInAvail: () => !!((PMW() && PMW().standIn && fn(PMW().standIn, 'isOn')) || (HOME() && HOME().settings && fn(HOME().settings, 'get'))),
+    standIn() {
+      try { const S = PMW() && PMW().standIn; return S && fn(S, 'isOn') ? !!S.isOn() : HOME().settings.get('chat.standIn') === true; } catch (_) { return false; }
+    },
+    setStandIn(on) {
+      const S = PMW() && PMW().standIn;
+      if (S && fn(S, 'toggle') && fn(S, 'isOn')) { if (!!S.isOn() !== !!on) S.toggle(); return; }
+      HOME().settings.set('chat.standIn', !!on);
+    },
+    /* agents open things behind the person's work (D8): the six opens the stand-in's Agent activity card played, now
+       on the panels' own open API; the tabs the assistant chat draws go through PM56_PORT.open so the chat fills them */
+    agentsAvail: () => !!(HOME() && fn(HOME(), 'open')),
     agents() {
       goHome();
-      const rows = workspace.agentRows(), gap = O55.motion.reduced() ? 0 : 260;
-      rows.forEach((r, i) => O55.motion.real.setTimeout(() => r.click(), i * gap));
-      return rows.length > 0;
+      const gap = O55.motion.reduced() ? 0 : 260, P = W('PM56_PORT');
+      AGENT_OPENS.forEach((a, i) => O55.motion.real.setTimeout(() => {
+        try {
+          if (a.chat && P && fn(P, 'open')) P.open(a.spec.id, { by: a.spec.by, background: true, label: a.spec.label });
+          else HOME().open(Object.assign({}, a.spec));
+        } catch (e) { console.error('[demo studio] agent open', a.spec.id, e); }
+      }, i * gap));
+      return true;
     },
     termAvail: () => !!(W('PMT') && W('PMT').agent && fn(W('PMT').agent, 'open')),
     async terminal() {
@@ -194,6 +218,49 @@
       O55.motion.real.setTimeout(() => { P.agent.run(human.id, 'Builder', 'cargo test --workspace').catch(() => {}); }, 300);
       return true;
     }
+  };
+
+  /* ---- the assistant chat: the 5.6 Pro chat's demo content (DECISIONS.md D26), through PM56_PORT.demo. The lists
+     (recorded examples by feature, moments by group, take families) come from the chat itself; the Studio's copy names
+     each by its id (studio.chat.*), and anything the copy does not know yet keeps the chat's own words. Every run brings
+     the chat on screen first. ---- */
+  const chatApi = () => { const P = W('PM56_PORT'); return P && P.demo && fn(P.demo, 'avail') ? P.demo : null; };
+  const words = (key, fallback) => { const v = O55.tx(key); return typeof v === 'string' ? v : fallback; };
+  const chat = {
+    avail: () => { try { return !!(chatApi() && chatApi().avail()); } catch (_) { return false; } },
+    /* recorded examples: [{ id, label, lead, items: [{ id, label, sub, action, data }] }] in the Studio's words */
+    guided() {
+      if (!chat.avail()) return [];
+      return chatApi().guided().map((g) => ({ id: g.id, label: words(`studio.chat.guided.groups.${g.id}.title`, g.id), lead: words(`studio.chat.guided.groups.${g.id}.lead`, ''),
+        items: g.items.map((it) => Object.assign({}, it, { label: words(`studio.chat.guided.items.${it.id}.title`, it.label), sub: words(`studio.chat.guided.items.${it.id}.sub`, it.sub) })) }));
+    },
+    moments() {
+      if (!chat.avail()) return [];
+      return chatApi().groups().map((g) => ({ id: g.id, label: words(`studio.chat.moments.groups.${g.id}.title`, g.id), lead: words(`studio.chat.moments.groups.${g.id}.lead`, ''),
+        items: g.items.map((it) => Object.assign({}, it, { label: words(`studio.chat.moments.items.${it.id}`, it.label) })) }));
+    },
+    /* take families: [{ id, index, label, sub, options: [{ index, label, note }], value }] */
+    families() {
+      if (!chat.avail()) return [];
+      return chatApi().families().map((f) => ({ id: f.id, index: f.index, label: words(`studio.chat.takes.families.${f.id}.title`, f.label), sub: words(`studio.chat.takes.families.${f.id}.sub`, ''), value: f.value,
+        options: f.options.map((o, i) => ({ index: i, label: words(`studio.chat.takes.options.${f.id}.${i}`, o), note: words(`studio.chat.takes.notes.${f.id}.${i}`, '') })) }));
+    },
+    recipes() { return chat.avail() ? chatApi().recipes().map((r) => ({ index: r.index, label: words(`studio.chat.takes.recipes.${r.index}.title`, r.name), sub: words(`studio.chat.takes.recipes.${r.index}.sub`, r.desc) })) : []; },
+    recipe: () => (chat.avail() ? chatApi().recipe() : -1),
+    voices: () => (chatApi() ? chatApi().voices() : []),
+    voice: () => (chat.avail() ? chatApi().voice() : 'auto'),
+    counts() {
+      const n = (list) => list.reduce((s, g) => s + g.items.length, 0);
+      return chat.avail() ? { guided: n(chatApi().guided()), moments: n(chatApi().groups()), takes: chatApi().families().length } : { guided: 0, moments: 0, takes: 0 };
+    },
+    now: () => (chat.avail() && fn(chatApi(), 'now') ? chatApi().now() : null),
+    runGuided: (id) => chatApi().runGuided(id),
+    run: (group, id) => chatApi().run(group, id),
+    setTake: (family, i) => chatApi().setTake(family, i),
+    setRecipe: (i) => chatApi().setRecipe(i),
+    setVoice: (v) => chatApi().setVoice(v),
+    show: () => chatApi().showChat(),
+    reset: () => chatApi().reset()
   };
 
   /* ---- Usage ---- */
@@ -386,14 +453,18 @@
       if (usage.hourAvail() && !usage.hourRunning()) usage.hour();
       return true;
     } },
-    { id: 'nierTour', icon: 'pod', kind: 'launch', avail: () => looks.nierAvail() && tour.avail(), run: () => { if (!looks.nierOn()) looks.setNier(true); O55.motion.real.setTimeout(() => tour.start(), 420); return true; } }
+    { id: 'nierTour', icon: 'pod', kind: 'launch', avail: () => looks.nierAvail() && tour.avail(), run: () => { if (!looks.nierOn()) looks.setNier(true); O55.motion.real.setTimeout(() => tour.start(), 420); return true; } },
+    /* the assistant chat: a live agent turn (a moment: the Studio stays open beside the chat) and the Wonderer and Grill
+       Me showcase (a recorded example: it plays on its own) */
+    { id: 'chatWork', icon: 'chat', kind: 'stay', avail: () => chat.avail(), run: () => chat.run('live', 'live-agent-turn').ok },
+    { id: 'chatGrill', icon: 'wonder', kind: 'launch', avail: () => chat.avail(), run: () => chat.runGuided('wonderer-crew').ok }
   ];
 
   O55.studio = {
     BASES, GROUPS, TWISTS, CLASH, SCREEN_CHAPTERS, POINTS, RECIPES, LOOKS,
     parseSituation, joinSituation, situationLabel, situationLong, currentSituation, toggleTwist, applySituation, sitTitle,
     hasScreen, onboardingState, tourChapters, tourState, fmtClock,
-    onboarding, tour, story, workspace, usage, notices, looks, reset, switches,
+    onboarding, tour, story, workspace, chat, usage, notices, looks, reset, switches,
     /* open/close/toggle are filled in by the UI (92-demo-studio-ui.js) */
     open: () => false, close: () => false, toggle: () => false
   };
