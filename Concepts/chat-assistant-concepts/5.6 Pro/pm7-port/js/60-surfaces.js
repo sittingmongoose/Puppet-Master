@@ -190,22 +190,32 @@
      an undispatched Event, which leaves no gesture: the Debug examples' document opened behind, and their next press
      found nothing). An open that names an agent stays the agent's. */
   var beats = 0;
-  /* The lab's own way back to the chat (its editor tab's close, Return to chat) has no control here: a chat tab is a
-     Home tab. A recording's press of one, with none on screen, presses the Home tab's own close on the chat tab in
-     front, lit first as every recorded press is (the Context Lens example's last move). */
-  var LAB_BACK = /data-action="(?:close-editor|return-to-chat)"/;
-  function homeBack() {
-    var st = chatState(), id = st && st.activeEditor;
-    if (!id) return null;
-    return document.querySelector('.pmw-tab[data-tab-id="' + (W.CSS && CSS.escape ? CSS.escape(id) : id) + '"] .pmw-tclose');
+  /* The lab's own way back to the chat has no control here: a chat tab is a Home tab. A recording's press of one, with
+     none on screen, presses what PMConcept7 has instead, lit first as every recorded press is: the editor tab's close
+     (close-editor, of the tab it names, else of the chat tab in front) is that Home tab's own close; Return to chat is
+     the tab header's Return to chat while the chat is folded away, and needs no press while the chat is on screen
+     (the Context Lens and Deep Plan examples' moves back to the chat). */
+  var LAB_CLOSE = /data-action="close-editor"/, LAB_CHAT = /data-action="return-to-chat"/;
+  function cssq(s) { return W.CSS && CSS.escape ? CSS.escape(s) : String(s).replace(/["\\]/g, '\\$&'); }
+  function homeClose(t) {
+    var m = /\[data-id="([^"]+)"\]/.exec(t), st = chatState(), id = m ? m[1] : st && st.activeEditor;
+    return id ? document.querySelector('.pmw-tab[data-tab-id="' + cssq(id) + '"] .pmw-tclose') : null;
   }
+  function chatShown() { try { return !!(W.PM_HOME && PM_HOME.chat && PM_HOME.chat.isOpen()); } catch (_) { return false; } }
   function wrapRecorded() {
     var R = W.PM56_RECPLAY;
     if (!R || typeof R.play !== 'function') return false;
     if (R.play._pm56) return true;
     var press = R.press;
     if (typeof press === 'function') R.press = function (t, o) {
-      if (typeof t === 'string' && LAB_BACK.test(t) && !(R.find && R.find(t))) { var x = homeBack(); if (x) return press.call(this, x, o); }
+      if (typeof t === 'string' && (LAB_CLOSE.test(t) || LAB_CHAT.test(t)) && !(R.find && R.find(t))) {
+        if (LAB_CLOSE.test(t)) { var x = homeClose(t); if (x) return press.call(this, x, o); }
+        else {
+          var back = document.querySelector('.pmw-tabbody .pmw-hbtn[data-id="chat"]');
+          if (back && R.find && R.find(back)) return press.call(this, back, o);
+          if (chatShown()) return Promise.resolve(true);
+        }
+      }
       return press.apply(this, arguments);
     };
     var play = R.play;
