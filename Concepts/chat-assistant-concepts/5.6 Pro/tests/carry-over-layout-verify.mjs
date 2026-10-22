@@ -33,7 +33,7 @@ const ev = (fn, data) => page.evaluate(fn, data);
 const act = (name, data = {}) => ev(([name, data]) => {
   const b = document.createElement('button'); Object.assign(b.dataset, data);
   b.type = 'button'; b.dataset.action = name;
-  (window.PM56_HOST?.root || document.body).appendChild(b);
+  (window.PM56_HOST?.root?.() || document.body).appendChild(b);
   try { b.click(); PM56_EXT.ctx().renderApp(); } finally { b.remove(); }
 }, [name, data]);
 

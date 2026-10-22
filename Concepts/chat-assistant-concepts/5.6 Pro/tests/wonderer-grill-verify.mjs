@@ -371,7 +371,7 @@ async function browser() {
   const ev = (fn, a) => page.evaluate(fn, a);
   const act = (name, data) => ev(([n, d]) => {
     const b = document.createElement('button'); Object.assign(b.dataset, d || {}); b.type = 'button'; b.dataset.action = n;
-    (window.PM56_HOST?.root || document.body).appendChild(b);
+    (window.PM56_HOST?.root?.() || document.body).appendChild(b);
     try { b.click(); window.PM56_EXT.ctx().renderApp(); } finally { b.remove(); }
   }, [name, data || {}]);
   const sleep = ms => page.waitForTimeout(ms);
