@@ -6,6 +6,8 @@ from __future__ import annotations
 import argparse,hashlib,json,os,statistics,subprocess,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+# (2026-10-22) recorded examples play on their own after Start; this journey drives its example by hand, so the
+# recording holds (PM56_RECPLAY_HOLD, recorded-play.js); tests/wonderer-grill-verify.mjs AX checks the playback itself
 ROOT=Path(__file__).resolve().parents[2]
 def main():
  ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--outdir',type=Path,required=True);ap.add_argument('--scenario',choices=['thorough','exhaustive','budget','blocker'],required=True);ap.add_argument('--width',type=int,default=1440);ap.add_argument('--height',type=int,default=1000);ap.add_argument('--record',action='store_true');ap.add_argument('--dwell',type=int,default=120);a=ap.parse_args()
@@ -19,7 +21,7 @@ def main():
   if a.record:
    log=open(o/'xvfb.log','w');logs.append(log);xv=subprocess.Popen(['Xvfb','-displayfd','1','-screen','0',f'{a.width}x{a.height}x24','-nolisten','tcp'],stdout=subprocess.PIPE,stderr=log,text=True);env['DISPLAY']=':'+xv.stdout.readline().strip()
   with sync_playwright() as pw:
-   browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=not a.record,env=env,args=['--no-sandbox','--disable-dev-shm-usage','--start-fullscreen',f'--window-size={a.width},{a.height}','--window-position=0,0']);ctx=browser.new_context(viewport=r['viewport'],accept_downloads=True);p=ctx.new_page();p.set_default_timeout(9000);p.on('pageerror',lambda e:r['errors'].append(str(e)));p.set_content(raw.decode(),wait_until='domcontentloaded');p.wait_for_function('window.__PM56_BOOT_OK');r['browser']=browser.version
+   browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=not a.record,env=env,args=['--no-sandbox','--disable-dev-shm-usage','--start-fullscreen',f'--window-size={a.width},{a.height}','--window-position=0,0']);ctx=browser.new_context(viewport=r['viewport'],accept_downloads=True);ctx.add_init_script('window.PM56_RECPLAY_HOLD=true');p=ctx.new_page();p.set_default_timeout(9000);p.on('pageerror',lambda e:r['errors'].append(str(e)));p.set_content(raw.decode(),wait_until='domcontentloaded');p.wait_for_function('window.__PM56_BOOT_OK');r['browser']=browser.version
    if a.record:
     cd=ctx.new_cdp_session(p);win=cd.send('Browser.getWindowForTarget')['windowId'];cd.send('Browser.setWindowBounds',{'windowId':win,'bounds':{'windowState':'fullscreen'}})
    def click(sel,label=None,dwell=None):
