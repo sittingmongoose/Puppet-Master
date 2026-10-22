@@ -412,10 +412,11 @@ async function browser() {
   const wonLanes = () => ev(() => [...document.querySelectorAll('.pmx-lane[data-k*=":"]')].filter(l => /Wonderer/.test(l.querySelector('.pmx-lane-name')?.textContent || '')).map(l => l.textContent));
   const disabledSynthesis = async run => {
     const selector = '[data-action="collab-brainstorm-synthesize"][data-run="' + run + '"]';
-    const state = await ev(selector => {
+    const state = await ev(({ selector, run }) => {
       const b = [...document.querySelectorAll(selector)].find(b => b.getBoundingClientRect().width && b.getBoundingClientRect().height);
-      return { present: !!b, native: !!b?.disabled, aria: b?.getAttribute('aria-disabled') };
-    }, selector);
+      const g = PM56_WG.gate(PM56_COLLAB.run(run));
+      return { present: !!b, native: !!b?.disabled, aria: b?.getAttribute('aria-disabled'), gateBefore: { ok: g.ok, code: g.code } };
+    }, { selector, run });
     if (!state.present || state.native || target.kind !== 'pm7' || state.aria !== 'true') return { ...state, disabled: state.present ? state.native : null };
     await ev(() => {
       const original = PM56_EXT._actions['collab-brainstorm-synthesize'];
@@ -426,10 +427,12 @@ async function browser() {
     try {
       const button = page.locator(selector).filter({ visible: true }).first(); await button.scrollIntoViewIfNeeded();
       const point = await button.evaluate(b => { const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, h = document.elementFromPoint(x, y); return { x, y, painted: !!h && (h === b || b.contains(h)) }; });
-      if (!point.painted) return { ...state, disabled: false, error: 'Disabled Write the plan is not painted at its click point' };
+      if (!point.painted) return { ...state, disabled: null, error: 'Disabled Write the plan is not painted at its click point' };
+      const beforeClick = await ev(run => { const g = PM56_WG.gate(PM56_COLLAB.run(run)); return { ok: g.ok, code: g.code }; }, run);
+      if (beforeClick.ok) return { ...state, gateAfter: beforeClick, disabled: null, transitioned: true };
       await page.mouse.click(point.x, point.y);
-      const calls = await ev(() => __c56SynthesisProbe.calls);
-      return { ...state, calls, disabled: calls === 0 };
+      const after = await ev(run => { const g = PM56_WG.gate(PM56_COLLAB.run(run)); return { calls: __c56SynthesisProbe.calls, gateAfter: { ok: g.ok, code: g.code } }; }, run);
+      return { ...state, ...after, disabled: after.gateAfter.ok ? null : after.calls === 0, transitioned: !!after.gateAfter.ok };
     } finally { await ev(() => { PM56_EXT._actions['collab-brainstorm-synthesize'] = __c56SynthesisProbe.original; delete window.__c56SynthesisProbe; }); }
   };
   try {
@@ -517,7 +520,7 @@ async function browser() {
       if (st.proposals > 0 && firstPassAt === null) firstPassAt = st.held;
       if (!normalized && st.held === 'delivered') normalized = st;
       if (st.phase === 'vote' && !checked) { checked = true; await act('wg-check-it', { run: bsId, lead: 'instant' }); }
-      if (st.phase === 'synthesis' && !st.gate.ok) { const dom = await disabledSynthesis(bsId); disabledEvidence.push({ gate: st.gate.code, ...dom }); waits.push(st.gate.code + ':' + dom.disabled); }
+      if (st.phase === 'synthesis' && !st.gate.ok) { const dom = await disabledSynthesis(bsId); disabledEvidence.push({ gate: st.gate.code, ...dom }); if (!dom.gateBefore.ok && !dom.transitioned) waits.push(dom.gateBefore.code + ':' + dom.disabled); }
       if (st.phase === 'synthesis' && st.gate.ok) break;
       if (st.wVote) { check('B5 the Wonderer never votes', false, 'a Wonderer vote was recorded'); break; }
     }
