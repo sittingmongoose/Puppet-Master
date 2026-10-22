@@ -1,11 +1,12 @@
 /* B09 gallery-only fixtures. Product actions perform every investigation step.
    Playback (2026-10-22, Jared: recorded examples play on their own after Start): both examples play from Start through
    PM56_RECPLAY, paced to read. Debug mode starts the investigation on the bound file, and each phase is pressed on the
-   investigation's own control in its document (Capture baseline, Reproduce, Inspect diagnosis, Apply repair, Verify
-   repair, Finish cleanup), lit first. In the drift example another edit lands on line-total.js before the repair (played
-   as someone else's), so Apply repair finds the change and touches nothing; the investigation then waits on your decision,
-   Rebind changed target, and plays on by itself once you press it. The guide is the one recorded-example look (pmxGuide);
-   its only buttons are Replay and Close. */
+   investigation's own control in its document (Capture baseline, Reproduce, Inspect diagnosis, Verify repair, Finish
+   cleanup), lit first. Apply repair approves the change the investigation proposes, so it stays yours: the example waits
+   there, and goes on by itself once you press it. In the drift example another edit lands on line-total.js before the
+   repair (played as someone else's), so your Apply repair finds the change and touches nothing; the investigation then
+   waits on your decision, Rebind changed target, and plays on from a fresh baseline (its repair again yours to apply).
+   The guide is the one recorded-example look (pmxGuide); its only buttons are Replay and Close. */
 (function(){
  'use strict';const E=window.PM56_EXT,D=window.PM56_DEBUG,R=window.PM56_RECPLAY,clone=x=>JSON.parse(JSON.stringify(x));let active=null,seq=0;
  const flows={repair:{title:'Reproduce, repair, and close',detail:'Find a zero-quantity bug, verify six cases, and remove the owned collector.'},drift:{title:'Protect a changed target',detail:'Catch another edit before patching; explicitly rebind without losing either history.'}};
@@ -23,15 +24,17 @@
   const op=OPS[inv.phase];if(!op)return null;
   /* the drift example: another edit lands before the repair is applied */
   if(a.kind==='drift'&&!a.changed&&op==='apply')return {id:'edit:'+inv.id,wait:PACE.edit,run:edit};
+  /* Apply repair approves the change the investigation proposes: yours to press; the recording goes on after it */
+  if(op==='apply')return null;
   const sel='.debug-document[data-investigation="'+CSS.escape(inv.id)+'"] [data-action="debug-'+op+'"]';
-  return {id:op+':'+inv.id,wait:a.changed&&op==='apply'?PACE.after:PACE[op],run:()=>R.press(sel)};}
+  return {id:op+':'+inv.id,wait:PACE[op],run:()=>R.press(sel)};}
  let player=null;
  function playback(){if(player)player.stop();const s=active;player=R.play({key:'debug-demo',live:()=>active===s,threads:()=>[s.threadId],next,render:()=>E.ctx().renderApp(),superseded:()=>{if(active===s)active=null;}});}
  function stop(){if(player){player.stop();player=null;}}
  const SAY={target_binding:'Debug bound line-total.js. Next: capture a baseline, the frozen source and its six-case contract.',
   baseline_capture:'Baseline captured. Next: reproduce the bug with a temporary trace collector.',
   reproduction:'Reproduced: a zero quantity gives a nonzero total. Next: inspect the diagnosis.',
-  analysis:'Diagnosis: the || fallback treats an explicit zero as missing. Next: apply the one-expression repair.',
+  analysis:'Your move: the diagnosis is in. The || fallback treats an explicit zero as missing, and Debug proposes one change, || to ??. Press Apply repair in the investigation to approve it; the recording goes on from there.',
   repair:'Repair applied: || became ??. Next: verify all six cases on the repaired file.',
   verification:'All six cases pass. Next: finish cleanup, removing the temporary collector.'};
  function say(){const a=active,inv=D.active();
@@ -41,9 +44,9 @@
   if(inv.status==='attention_required')return {text:'Your move: line-total.js changed after Debug bound it, so no patch was applied. Press Rebind changed target in the investigation to start again on the new source; both histories are kept.',done:true,yours:true};
   if(['cancelled','blocked','failed_cleanup'].includes(inv.status))return {text:'This investigation ended. Replay starts the example again.',done:true};
   if(a.kind==='drift'&&!inv.priorInvestigationId&&inv.phase==='analysis'&&!a.changed)return {text:'Diagnosis: the || fallback treats an explicit zero as missing. Next: someone else edits line-total.js before the repair lands.'};
-  if(a.kind==='drift'&&!inv.priorInvestigationId&&inv.phase==='analysis')return {text:'Someone else changed line-total.js (USD became EUR). Next: Apply repair checks the file first.'};
+  if(a.kind==='drift'&&!inv.priorInvestigationId&&inv.phase==='analysis')return {text:'Your move: someone else changed line-total.js (USD became EUR) after Debug bound it. Press Apply repair in the investigation: it checks the file first.',done:true,yours:true};
   if(inv.priorInvestigationId&&inv.phase==='target_binding')return {text:'Rebound: a new investigation on the changed file; the first one keeps its history. Next: capture a fresh baseline.'};
-  return {text:SAY[inv.phase]||''};}
+  return {text:SAY[inv.phase]||'',done:inv.phase==='analysis',yours:inv.phase==='analysis'};}
  function guide(c,inEditor=false){if(!active||c.thread.id!==active.threadId||c.state.dialog)return '';if((innerWidth<=1100&&c.state.editorRevealed)!==inEditor)return '';
   const s=say(),text=R.steady(active,s.text,!!s.done,()=>E.ctx().renderApp());if(!text)return '';
   return window.PM56_SHELL.pmxGuide({key:inEditor?'debug-demo-guide:doc':'debug-demo-guide',cls:'debug-demo-guide',placement:inEditor?'doc':'dock',caption:'Recorded example · no provider calls',step:c.esc(text),

@@ -1,9 +1,14 @@
 /* B12 local laboratory. The primary fixture owns versioned work and measurements;
  * the BSD protocol only inspects redacted snapshots. No model calls, native
  * command success, real workspace writes, or Wizard/WorkNode execution claimed.
+ * Playback (2026-10-22, Jared: recorded examples play on their own after Start): both examples play from Start through
+ * PM56_RECPLAY, paced to read, pressing the workspace's own controls (lit first): Start the work, then Continue without
+ * measuring or Record a measurement, then Ask the advisor to check. They end on the advisor's outcome: its note in the
+ * chat, or nothing in the chat because the measurement settled it. The guide narrates (in the dock, or as the workspace's
+ * first row when the workspace covers the chat); its only buttons are Replay and Close.
  */
 (function(){
- 'use strict';const E=window.PM56_EXT,B=window.PM56_BSD,K=window.PM56_BSD_ENGINE;if(!B||!K)return;const {clone,digest}=K;
+ 'use strict';const E=window.PM56_EXT,B=window.PM56_BSD,K=window.PM56_BSD_ENGINE,P=window.PM56_RECPLAY;if(!B||!K)return;const {clone,digest}=K;
  const projects=new Map(),timers=new Map(),disclosures=new Map();const opened=k=>disclosures.get(k)?' open':'';document.addEventListener('toggle',e=>{const d=e.target;if(d.isConnected&&d.matches?.('.bsd12-work details[data-k]'))disclosures.set(d.dataset.k,d.open);},true);document.addEventListener('click',e=>{const sm=e.target.closest?.('.bsd12-work details[data-k]>summary'),d=sm?.parentElement;if(d)disclosures.set(d.dataset.k,!d.open);},true);let serial=0;
  const flows={survives:{title:'Catch a missing measurement',detail:'The advisor spots a missing measurement, double-checks it on newer work, then tells you.'},resolves:{title:'Resolve it before it reaches you',detail:'The advisor spots a problem, a measurement settles it first, and nothing appears in your chat.'}};
  function get(id){return projects.get(id||E.ctx().thread.id);}
@@ -13,8 +18,29 @@
  function start(flow){if(!flows[flow])return;const c=E.ctx(),n=++serial,tid='bsd12-'+n,pid='concept:bsd12:'+n,artifactId='bsd12-source-'+n,base=clone(c.state.threads.find(t=>t.id==='plain')||c.state.threads[0]);
   const g={flow,threadId:tid,projectId:pid,artifactId,guide:true,sampleBefore:'[200,300,500]',sampleAfter:'[212,318,530]',delay:260,fault:'none',lastResult:null,primary:{projectId:pid,threadId:tid,runId:'local-index-'+n,workflow:'assistant',stage:'worknode_execution',status:'ready',generation:0,primaryEpoch:1,worktree:'demo/index-'+n,primaryRoute:{provider:'local',model:'deterministic-primary-fixture',account:'none'},permission:'read-only-local-demonstration',frozen:false,note:'initial proposal',measurements:null,constraints:['Measured write amplification must not exceed 8%.'],refs:{artifact:{id:artifactId,version:0},goal:null,plan:null,planUnits:[],todos:[]},redaction:{checked:true,scope:'local-fixture',receipt:'fixture-public-data-'+n},watch:[{path:'demo:/project/BSD_WATCH.md',scope:'project',text:'Check the measured write-amplification bound before accepting the covering index.'}],deltas:[]}};
   projects.set(tid,g);Object.assign(base,{id:tid,projectId:pid,title:flows[flow].title,summary:flows[flow].detail,updated:'now',unread:0,status:'idle',pinned:false,archived:false,goalId:null,worktree:g.primary.worktree,messages:[{id:tid+'-ask',role:'user',type:'text',body:'Review this covering-index proposal. Keep measured write amplification at or below 8%.'},{id:tid+'-source',role:'system',type:'bsd12-source',artifactId,threadId:tid}],bsdExample:flow});c.state.threads.push(base);c.D.artifacts.push({id:artifactId,threadId:tid,projectId:pid,title:'Covering index · evidence',name:'covering-index.sql',kind:'code',type:'code',language:'sql',version:0,status:'ready',summary:'Versioned local index and measurements.',content:content(g.primary),body:content(g.primary),readOnly:true,history:[]});
-  B.engine.register(tid,()=>primary(g));Object.assign(c.state,{mode:'Ask',menu:null,dialog:null,hover:null,historyMode:'closed',decision:null});c.state.context.details=false;c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,started:false,completed:false,elapsed:0};c.switchThread(tid);openWork(c,tid);
+  B.engine.register(tid,()=>primary(g));Object.assign(c.state,{mode:'Ask',menu:null,dialog:null,hover:null,historyMode:'closed',decision:null});c.state.context.details=false;c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,started:false,completed:false,elapsed:0};c.switchThread(tid);openWork(c,tid);playback(g);
  }
+ /* the recording: next() names the next beat from the example's own state (PM56_RECPLAY); each beat presses the
+    workspace's own control */
+ const PACE={first:1400,next:6400,ask:5000,open:900};
+ const opSel=(g,op)=>'.bsd12-work [data-action="bsd12-work"][data-op="'+op+'"][data-thread="'+CSS.escape(g.threadId)+'"]';
+ const workOpen=g=>[...document.querySelectorAll('.bsd12-work [data-action="bsd12-work"][data-thread="'+CSS.escape(g.threadId)+'"]')].some(b=>b.getClientRects().length);
+ function next(g){const p=g.primary,a=B.engine.snapshot(g.threadId),fs=a?a.findings:[];
+  /* the note is the outcome: where the workspace covers the chat (a narrow window), go back to the chat to show it */
+  if(fs.some(f=>f.status==='emitted')){if(innerWidth<=1100&&E.ctx().state.editorRevealed&&!g.backToChat)return {id:'to-chat',wait:2600,run:()=>P.press('[data-action="return-to-chat"]').then(ok=>{if(ok)g.backToChat=true;return ok;})};return null;}
+  if(fs.some(f=>f.status==='cleared'))return null;
+  if(!workOpen(g))return {id:'open-work:'+(g.opens=(g.opens||0)),wait:PACE.open,run:()=>P.press('.transcript [data-action="bsd12-open-work"][data-thread="'+CSS.escape(g.threadId)+'"]').then(ok=>{if(ok)g.opens++;return ok;})};
+  if(p.status==='ready')return {id:'start',wait:PACE.first,run:()=>P.press(opSel(g,'start'))};
+  if(p.status!=='running'||a?.pending||!fs.length)return null;
+  if(g.flow==='survives'){
+   if(!g.continued)return {id:'advance',wait:PACE.next,run:()=>P.press(opSel(g,'advance'))};
+   if(!g.asked)return {id:'review',wait:PACE.ask,run:()=>P.press(opSel(g,'review'))};
+   return null;}
+  if(!p.measurements)return {id:'measure',wait:PACE.next,run:()=>P.press(opSel(g,'measure'))};
+  if(!g.asked)return {id:'review',wait:PACE.ask,run:()=>P.press(opSel(g,'review'))};
+  return null;}
+ const players=new Map();
+ function playback(g){const old=players.get(g.threadId);if(old)old.stop();const pl=P.play({key:'bsd-demo',live:()=>projects.get(g.threadId)===g&&g.guide!==false,threads:()=>[g.threadId],next:()=>next(g),render:()=>E.ctx().renderApp(),superseded:()=>{}});players.set(g.threadId,pl);}
  function change(g,kind,summary,patch={}){Object.assign(g.primary,patch);g.primary.generation++;g.primary.refs.artifact.version=g.primary.generation;g.primary.deltas.push({generation:g.primary.generation,kind,summary,ref:'artifact:'+g.artifactId+'@'+g.primary.generation});updateArtifact(g);B.refresh();}
  function inspect(p){
   const m=p.measurements;let value=null;if(m){if(!Array.isArray(m.before)||!Array.isArray(m.after)||!m.before.length||m.before.length!==m.after.length||[...m.before,...m.after].some(x=>!Number.isFinite(x)||x<0)||m.before.reduce((a,b)=>a+b,0)<=0)return {failure:'failed',reason:'invalid_measurement_fixture'};const before=m.before.reduce((a,b)=>a+b,0),after=m.after.reduce((a,b)=>a+b,0);value=(after-before)/before*100;}
@@ -29,6 +55,7 @@
   const h=setTimeout(()=>{timers.delete(ticket.id);g.lastResult=B.engine.finish(ticket,output);B.refresh();},g.delay);timers.set(ticket.id,h);return r;
  }
  function act(c,b){const g=get(b.dataset.thread);if(!g||c.thread.id!==g.threadId||projectOf(c.thread)!==g.projectId)return true;const op=b.dataset.op;
+  if(op==='advance'&&g.primary.status==='running'&&!g.primary.frozen)g.continued=true;if(op==='review'&&g.primary.status!=='ready'&&g.primary.status!=='cancelled'&&B.engine.snapshot(g.threadId))g.asked=true;
   if(op==='start'&&g.primary.status==='ready'){change(g,'proposal','Covering index proposed without a write-cost measurement.',{status:'running'});review(g,{trigger:'pre_first_material_mutation'});}
   else if(op==='review'&&g.primary.status!=='ready'&&g.primary.status!=='cancelled')review(g);
   else if(op==='cancel-launch'&&g.primary.status==='ready')g.primary.status='cancelled';
@@ -57,7 +84,7 @@
  const STATUS_WORD={ready:'Ready to start',running:'Running',paused:'Paused',completed:'Finished',cancelled:'Launch cancelled'};
  const FAULTS=[['none','Check normally'],['failed','The check fails'],['timed_out','The check takes too long'],['quota_paused','The usage limit is reached'],['unavailable','Its model can’t be reached'],['unsafe','It asks for a tool it may not use']];
  const OWNERS=[['assistant','Ordinary chat work'],['prd_builder','PRD Builder (start only)'],['planning_wizard','Planning Wizard (start only)']];
- function view(c,key,title,main,status,acts){const S=window.PM56_SHELL;return S.pmxView({key,cls:'bsd12-work',kind:'bsd',kindWord:'Back Seat Driver · recorded example · no AI cost',title:c.esc(title),statusHtml:status||'',actionsHtml:acts||'',mainHtml:main});}
+ function view(c,key,title,main,status,acts,guideHtml){const S=window.PM56_SHELL;return S.pmxView({key,cls:'bsd12-work',kind:'bsd',kindWord:'Back Seat Driver · recorded example · no AI cost',title:c.esc(title),statusHtml:status||'',actionsHtml:acts||'',mainHtml:main,guideHtml:guideHtml||''});}
  function workspace(c,id){const S=window.PM56_SHELL,g=get(id);
   if(!g)return view(c,'bsd12-work:none','Example unavailable','<p class="bsd12-say">This recorded example has ended. Start it again from Demo Studio.</p>');
   if(c.thread.id!==id||projectOf(c.thread)!==g.projectId)return view(c,'bsd12-work:'+id,'Source conversation','<p class="bsd12-say">This document belongs to another conversation.</p>','','<button type="button" class="soft-button" data-action="bsd12-return" data-thread="'+c.esc(id)+'">Return to its source</button>');
@@ -82,7 +109,7 @@
    '<div class="bsd12-acts">'+btn(c,g,'sample','Use these numbers',!active||p.frozen)+'</div>'+
    '<div class="bsd12-grid"><label class="bsd12-field"><span>How long a check takes (ms)</span><input type="number" min="0" max="10000" data-bsd12-field="delay" data-thread="'+c.esc(id)+'" value="'+g.delay+'"></label><label class="bsd12-field"><span>What the next check does</span><select data-bsd12-field="fault" data-thread="'+c.esc(id)+'">'+FAULTS.map(([v,l])=>'<option value="'+v+'"'+(g.fault===v?' selected':'')+'>'+c.esc(l)+'</option>').join('')+'</select></label></div>'+
    '<div class="bsd12-acts">'+btn(c,g,'compact','Tidy the advisor’s notes',!a)+btn(c,g,'worktree','Switch the work folder',p.status==='ready')+btn(c,g,'exceed','Measure a version over the limit',!active||p.frozen)+btn(c,g,'pause-primary','Pause the main work',!active)+btn(c,g,'resume-primary','Resume the main work',p.status!=='paused')+btn(c,g,'frozen','Check at a pause point',!active||checking)+btn(c,g,'unfreeze','Leave the pause point',!p.frozen)+btn(c,g,'catchup','Finish and wait for the advisor',p.status!=='completed'&&!p.frozen)+btn(c,g,'abort-catchup','Don’t wait',a?.catchUp?.state!=='waiting')+'</div></details>'});
-  return view(c,'bsd12-work:'+id,flows[g.flow].title,work+adv+lab,c.esc(flows[g.flow].detail));
+  return view(c,'bsd12-work:'+id,flows[g.flow].title,work+adv+lab,c.esc(flows[g.flow].detail),'',innerWidth<=1100&&c.state.editorRevealed?guide(c,true):'');
  }
  /* the demo's own refusals in plain words (the engine codes stay in its record) */
  const DEMO_ERR={invalid_request:'That can’t be done at this point of the example.',already_in_state:'That already happened.',catch_up_not_expired:'The wait hasn’t run out yet.',stale_epoch:'The advisor restarted; try again.',bsd_assignment_not_found:'The advisor hasn’t started yet.',advisor_model_unavailable:'The advisor’s model isn’t available.',mode_off_no_assignment:'Back Seat Driver is off for this work.',policy_denied:'That input isn’t allowed in this example.'};
@@ -92,33 +119,42 @@
  /* closing review: the "resolves" guide follows the example step by step and ends on its result, because the result
     is that nothing shows in the chat, which alone reads as nothing happened */
  function guideStep(g){
-  if(g.flow==='survives')return 'Start the work, carry on without measuring, then ask the advisor for another look.';
-  const first='Start the work, record a measurement, then ask the advisor for another look.';
-  const a=B.engine.snapshot(g.threadId),fs=a?a.findings:[],p=g.primary;
-  if(p.status==='ready'||p.status==='cancelled')return first;
-  if(fs.some(f=>f.status==='cleared'))return 'Resolved before it reached you: the measurement settled it, so nothing was shown in the chat. Open its Details to see why.';
+  const a=B.engine.snapshot(g.threadId),fs=a?a.findings:[],p=g.primary,pl=players.get(g.threadId);
+  const sum=xs=>xs.reduce((x,y)=>x+y,0),pct=p.measurements?((sum(p.measurements.after)-sum(p.measurements.before))/sum(p.measurements.before)*100).toFixed(1):null;
+  if(pl&&pl.errors.length)return {text:'This step couldn’t run, so the recording stopped here. Replay starts it again.',done:true};
+  if(p.status==='cancelled')return {text:'Launch cancelled. No advisor, check or usage was created. Replay starts the example again.',done:true};
+  if(p.status==='ready')return {text:'The assistant is about to propose a covering index. Your rule: its measured write cost stays at or below 8%. Next: the work starts, and Back Seat Driver watches it.'};
+  if(a?.pending)return {text:'The advisor is checking the latest version of the work…'};
+  if(fs.some(f=>f.status==='emitted'))return {text:'Done · The finding held on the newer work, so the advisor told you: its note is in the chat, checked against the latest version.',done:true};
+  if(fs.some(f=>f.status==='cleared'))return {text:'Done · Resolved before it reached you: the measurement settled it, so nothing was shown in the chat. The advisor’s Details say why.',done:true};
   const held=fs.some(f=>f.status==='held');
-  if(held&&!p.measurements)return 'The advisor found something and is double-checking it before telling you. Now record a measurement.';
-  if(held)return 'Measurement recorded. Now ask the advisor for another look.';
-  return first;
+  if(!held)return {text:'The work started. The advisor reads it and checks it against your rule.'};
+  if(g.flow==='survives'){
+   if(!g.continued)return {text:'The advisor spotted that the 8% limit isn’t measured yet. It double-checks on newer work before telling you. Next: the work carries on without measuring.'};
+   return {text:'The work carried on, still unmeasured. Next: you ask the advisor for another look.'};}
+  if(!p.measurements)return {text:'The advisor spotted that the 8% limit isn’t measured yet, and double-checks before telling you. Next: the work records a measurement.'};
+  return {text:'Measured: '+pct+'% more writes, within your 8%. Next: you ask the advisor for another look.'};
  }
- function guide(c){const g=get(c.thread.id);if(!g||!g.guide)return '';const t=c.esc(g.threadId);return window.PM56_SHELL.pmxGuide({key:'bsd12-guide:'+g.threadId,cls:'bsd12-guide',placement:'dock',
-  step:guideStep(g),
-  actions:[{action:'bsd12-open-work',attrs:'data-thread="'+t+'"',label:'Work and evidence'}],close:{action:'bsd12-close-guide',attrs:'data-thread="'+t+'"',label:'Close guide'}});}
+ function guide(c,inEditor){const g=get(c.thread.id);if(!g||!g.guide||c.state.dialog)return '';if(!!inEditor!==(innerWidth<=1100&&c.state.editorRevealed))return '';const t=c.esc(g.threadId),s=guideStep(g),pl=players.get(g.threadId);
+  /* the advisor's check is quick (260 ms): its "checking" sentence still stays up its full time before the outcome */
+  const text=P.steady(g,s.text,!!s.done&&!(g.say&&/checking the latest/.test(g.say.text)),()=>E.ctx().renderApp());
+  return window.PM56_SHELL.pmxGuide({key:'bsd12-guide:'+g.threadId+(inEditor?':doc':''),cls:'bsd12-guide',placement:inEditor?'doc':'dock',
+  step:c.esc(text),actions:s.done&&text===s.text?[{action:'bsd12-replay',attrs:'data-thread="'+t+'"',label:'Replay'}]:[],next:pl&&!pl.stopped?pl.progress():null,close:{action:'bsd12-close-guide',attrs:'data-thread="'+t+'"',label:'Close the example'}});}
+ E.action('bsd12-replay',(c,b)=>{const g=get(b.dataset.thread);if(g)start(g.flow);return true;});
  E.action('bsd12-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('bsd12-work',act);
   /* one editor tab for the recorded example: opening a run's work reuses the tab an earlier run opened (in its place),
     so running the example again never piles up identical tabs (review cycle 1) */
  function openWork(c,id){const tabs=c.state.editorTabs,key='bsd12:'+id,i=tabs.findIndex(t=>String(t).startsWith('bsd12:')&&t!==key);if(i>=0&&!tabs.includes(key)){tabs[i]=key;c.state.editorTabs=tabs.filter((t,j)=>j<=i||!String(t).startsWith('bsd12:'));}c.openEditor(key);}
  E.action('bsd12-open-work',(c,b)=>{if(c.thread.id===b.dataset.thread)openWork(c,b.dataset.thread);return true;});
  E.action('bsd12-return',(c,b)=>{if(get(b.dataset.thread)){c.switchThread(b.dataset.thread);openWork(c,b.dataset.thread);}return true;});
- E.action('bsd12-close-guide',(c,b)=>{const g=get(b.dataset.thread);if(g&&g.threadId===c.thread.id)g.guide=false;c.renderApp();return true;});
+ E.action('bsd12-close-guide',(c,b)=>{const g=get(b.dataset.thread);if(g&&g.threadId===c.thread.id){g.guide=false;const pl=players.get(g.threadId);if(pl)pl.stop();}c.renderApp();return true;});
  document.addEventListener('input',e=>{const el=e.target,g=get(el.dataset?.thread);if(!g||E.ctx().thread.id!==g.threadId)return;if(el.dataset.bsd12Field==='delay'){const n=Number(el.value);if(Number.isFinite(n)&&n>=0&&n<=10000)g.delay=n;}if(el.dataset.bsd12Field==='fault')g.fault=el.value;if(['sampleBefore','sampleAfter'].includes(el.dataset.bsd12Field))g[el.dataset.bsd12Field]=el.value;if(el.dataset.bsd12Field==='workflow'&&g.primary.status==='ready'&&['assistant','prd_builder','planning_wizard'].includes(el.value)){g.primary.workflow=el.value;g.primary.stage=el.value==='assistant'?'worknode_execution':el.value;B.refresh();}});
- E.slot('composerBelow',guide);E.slot('editorTabLabel',c=>{if(!c.editorId?.startsWith('bsd12:'))return '';const g=get(c.editorId.slice(6));return g&&flows[g.flow]?flows[g.flow].title:'Recorded example';});E.slot('editorDocument',c=>c.editorId?.startsWith('bsd12:')?workspace(c,c.editorId.slice(6)):'');
+ E.slot('composerBelow',c=>guide(c,false));E.slot('editorTabLabel',c=>{if(!c.editorId?.startsWith('bsd12:'))return '';const g=get(c.editorId.slice(6));return g&&flows[g.flow]?flows[g.flow].title:'Recorded example';});E.slot('editorDocument',c=>c.editorId?.startsWith('bsd12:')?workspace(c,c.editorId.slice(6)):'');
  /* the example's source in the chat: one ledger line (pmxLedgerLine, IMPACT A2-14), the file and a way to the work */
  E.slot('transcriptMessage',c=>{if(c.m?.type!=='bsd12-source')return '';const S=window.PM56_SHELL,t=c.esc(c.m.threadId);
   return S.pmxLedgerLine({key:c.m.id,cls:'bsd12-source',attrs:'data-message-id="'+c.esc(c.m.id)+'"',markHtml:S.pmxGlyph('file',16),kindWord:'Recorded example',title:'Covering index',
    headline:'Covering index<span class="bsd12-src-more"> · the work the advisor reads</span>',actions:[{action:'bsd12-open-work',attrs:'data-thread="'+t+'"',label:'Work and evidence'}]});});
- E.chainAction('reset-all',()=>{for(const h of timers.values())clearTimeout(h);timers.clear();projects.clear();disclosures.clear();return false;});
+ E.chainAction('reset-all',()=>{for(const h of timers.values())clearTimeout(h);timers.clear();for(const pl of players.values())pl.stop();players.clear();projects.clear();disclosures.clear();return false;});
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Back Seat Driver · complete local workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="bsd12-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
  E.chainAction('repair-demo',(c,b)=>{if(b.dataset.scenario==='bsd-held'){start('resolves');return true;}return false;});
  E.chainAction('demo-trigger',(c,b)=>{if((b.dataset.trigger||'').startsWith('BSD ')){start(b.dataset.trigger==='BSD intervention'?'survives':'resolves');return true;}return false;});
