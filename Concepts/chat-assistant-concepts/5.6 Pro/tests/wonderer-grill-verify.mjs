@@ -405,6 +405,28 @@ async function browser() {
     } finally { await ev(() => { window.__c56AnswerLookup?.observer.disconnect(); delete window.__c56AnswerLookup; }); }
   };
   const wonLanes = () => ev(() => [...document.querySelectorAll('.pmx-lane[data-k*=":"]')].filter(l => /Wonderer/.test(l.querySelector('.pmx-lane-name')?.textContent || '')).map(l => l.textContent));
+  const disabledSynthesis = async run => {
+    const selector = '[data-action="collab-brainstorm-synthesize"][data-run="' + run + '"]';
+    const state = await ev(selector => {
+      const b = [...document.querySelectorAll(selector)].find(b => b.getBoundingClientRect().width && b.getBoundingClientRect().height);
+      return { present: !!b, native: !!b?.disabled, aria: b?.getAttribute('aria-disabled') };
+    }, selector);
+    if (!state.present || state.native || target.kind !== 'pm7' || state.aria !== 'true') return { ...state, disabled: state.present ? state.native : null };
+    await ev(() => {
+      const original = PM56_EXT._actions['collab-brainstorm-synthesize'];
+      if (typeof original !== 'function') throw new Error('Missing synthesis action for inertness probe');
+      const p = window.__c56SynthesisProbe = { original, calls: 0 };
+      PM56_EXT._actions['collab-brainstorm-synthesize'] = function (...args) { p.calls++; return original.apply(this, args); };
+    });
+    try {
+      const button = page.locator(selector).filter({ visible: true }).first(); await button.scrollIntoViewIfNeeded();
+      const point = await button.evaluate(b => { const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, h = document.elementFromPoint(x, y); return { x, y, painted: !!h && (h === b || b.contains(h)) }; });
+      if (!point.painted) return { ...state, disabled: false, error: 'Disabled Write the plan is not painted at its click point' };
+      await page.mouse.click(point.x, point.y);
+      const calls = await ev(() => __c56SynthesisProbe.calls);
+      return { ...state, calls, disabled: calls === 0 };
+    } finally { await ev(() => { PM56_EXT._actions['collab-brainstorm-synthesize'] = __c56SynthesisProbe.original; delete window.__c56SynthesisProbe; }); }
+  };
   try {
     await load();
     /* WGV_ONLY=r2: the round 2 checks alone (a quick local loop; the full pass runs everything) */
@@ -479,14 +501,14 @@ async function browser() {
     check('B4b the blind proposals wait for Confirm', early.error === 'grill_me_waits_for_confirm', JSON.stringify(early));
     await page.locator('.wg-agreed [data-action="wg-confirm"]').first().click();
     await act('b13-open', { run: bsId }); await sleep(600); await pace(3);
-    let normalized = null, waits = [], checked = false, firstPassAt = null;
+    let normalized = null, waits = [], disabledEvidence = [], checked = false, firstPassAt = null;
     for (let i = 0; i < 120; i++) {
       await sleep(600);
       const st = await ev(id => { const r = window.PM56_COLLAB.run(id), W = window.PM56_WG, b = r.brainstorm; return { phase: b.phase, proposals: b.attempts.filter(a => a.status === 'completed').length, n: b.attempts.length, held: r.wonderer.passes[0].status, gate: W.gate(r), synth: !!b.synthesis, votes: (b.votes || []).length, wVote: (b.votes || []).some(v => r.participants.find(p => p.id === v.participantId)?.additiveRoleKind === 'wonderer'), undecidedLong: r.wonderer.leads.filter(l => !l.disposition && W.engine.visible(r, l.passId)).length }; }, bsId);
       if (st.proposals > 0 && firstPassAt === null) firstPassAt = st.held;
       if (!normalized && st.held === 'delivered') normalized = st;
       if (st.phase === 'vote' && !checked) { checked = true; await act('wg-check-it', { run: bsId, lead: 'instant' }); }
-      if (st.phase === 'synthesis' && !st.gate.ok) { const dom = await ev(() => { const b = document.querySelector('[data-action="collab-brainstorm-synthesize"]'); return b ? b.disabled : null; }); waits.push(st.gate.code + ':' + dom); }
+      if (st.phase === 'synthesis' && !st.gate.ok) { const dom = await disabledSynthesis(bsId); disabledEvidence.push({ gate: st.gate.code, ...dom }); waits.push(st.gate.code + ':' + dom.disabled); }
       if (st.phase === 'synthesis' && st.gate.ok) break;
       if (st.wVote) { check('B5 the Wonderer never votes', false, 'a Wonderer vote was recorded'); break; }
     }
@@ -494,6 +516,7 @@ async function browser() {
     check('B4d the first pass ran during intake, before any blind proposal took a slot', firstPassAt === 'held', String(firstPassAt));
     check('B4c the leads are released only once every blind proposal is in', normalized && normalized.proposals === normalized.n && normalized.phase !== 'blind_proposals', JSON.stringify(normalized));
     check('B5 Write the plan waits for a pass in flight and for research (never for you), with the button disabled', waits.some(w => /^exploring:true/.test(w)) && waits.some(w => /^research:true/.test(w)) && !waits.some(w => /:false$/.test(w)), waits.join(','));
+    results.at(-1).measured = disabledEvidence;
     const refused = await ev(id => { const r = window.PM56_COLLAB.run(id); return window.PM56_WG.gate(r).ok; }, bsId);
     await act('collab-brainstorm-synthesize', { run: bsId }); await sleep(1500);
     const plan = await ev(id => { const r = window.PM56_COLLAB.run(id), p = window.PM56_BRAINSTORM.planPayload(r); return { synth: !!r.brainstorm.synthesis, text: JSON.stringify(p.blocks), total: window.PM56_WG.engine.counts(r).total }; }, bsId);
