@@ -8085,7 +8085,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-218, ContractName:Plans/Colla
 
 ```yaml
 plan_unit_id: CS-104
-unit_type: requirement
+unit_type: constraint
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
@@ -8104,7 +8104,7 @@ canonical_text: >-
   port, and existing DL-218 command candidates retain their exact exclusions until separately
   admitted.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Defines shared dispatch, alias normalization and local actions for the hosted chat controls.
 split_recommended: false
 depends_on: [DL-232, UCC-208, CS-100, CS-101, CS-103]
 unblocks: []

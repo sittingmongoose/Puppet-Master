@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L2102-L2590
 
-Source SHA256: `86a7a7412e5ee9c87ec4b96c85e91782499d1fc3b60e99bf4adb69062a1309d7`
+Source SHA256: `92c15644071b737502090f558afabe36c06ee14cd1527bd9b7a51a2dc10ade60`
 
 ---
 
@@ -462,7 +462,7 @@ canonical_text: >-
   proof remain required before certification; HTML controls and browser checks satisfy only concept
   review.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Defines forward and reverse verification for visible hosted chat controls.
 split_recommended: false
 depends_on: [DL-232, UCC-208, UIW-040, UIW-041, UIW-042, UIW-043]
 unblocks: []

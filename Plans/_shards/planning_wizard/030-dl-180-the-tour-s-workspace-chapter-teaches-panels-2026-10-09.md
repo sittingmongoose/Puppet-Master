@@ -4,7 +4,7 @@ Source: `Plans/Planning_Wizard.md`
 
 Source lines: L2765-L2991
 
-Source SHA256: `45f1efe1473f2b1226d318a22b094e1d73f74636ec241978a9093b3ab8cde537`
+Source SHA256: `b95108b7b627fe6e8bc97dc5427d372ed34809822c23d1ebc4d06abd802acb1b`
 
 ---
 
@@ -201,7 +201,7 @@ canonical_text: >-
   and exact-message same-answer explanation without rewriting an earlier reply. Demo Studio remains
   the one concept entry point for tour demonstrations; it never becomes a product command or setting.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Keeps the visible Guided Tour teaching surface and the hosted chat mutually exclusive until the accepted redo.
 split_recommended: false
 depends_on: [DL-232, DL-230, PWIZ-023, PWIZ-035]
 unblocks: []

@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3229,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-10-22T21:23:42Z",
+  "generated_at_utc": "2026-10-22T21:34:03Z",
   "gui_related_units": {
     "count": 3619,
     "units": [
@@ -43939,14 +43939,14 @@
       "capability_matrix": 1,
       "command_binding": 20,
       "command_catalog": 3,
-      "command_contract": 58,
+      "command_contract": 59,
       "command_disposition": 4,
       "command_registration": 1,
       "command_registry": 4,
       "compatibility_contract": 1,
       "compatibility_disposition": 137,
       "compatibility_note": 2,
-      "constraint": 632,
+      "constraint": 633,
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
@@ -43967,7 +43967,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 99,
+      "integration_contract": 100,
       "interaction_contract": 6,
       "interface_contract": 2,
       "invariant": 24,
@@ -43989,7 +43989,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5507,
+      "requirement": 5504,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -44084,7 +44084,7 @@
       {
         "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
         "error": "pnc019_source_hash_stale",
-        "expected": "45f1efe1473f2b1226d318a22b094e1d73f74636ec241978a9093b3ab8cde537",
+        "expected": "b95108b7b627fe6e8bc97dc5427d372ed34809822c23d1ebc4d06abd802acb1b",
         "source_path": "Plans/Planning_Wizard.md"
       },
       {
@@ -44114,7 +44114,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "dd4dcccb426335c42f32d2413d853b1b71b7caa16dc73c59f5a545b48d401c79",
+        "expected": "0a172fd8f9f45a7ff4234b424975eaede77e03214a64ebf60f1e3489e30bb7c3",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
@@ -44126,7 +44126,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "86a7a7412e5ee9c87ec4b96c85e91782499d1fc3b60e99bf4adb69062a1309d7",
+        "expected": "92c15644071b737502090f558afabe36c06ee14cd1527bd9b7a51a2dc10ade60",
         "source_path": "Plans/UI_Wiring_Rules.md"
       },
       {

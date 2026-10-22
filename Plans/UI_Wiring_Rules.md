@@ -2553,7 +2553,7 @@ canonical_text: >-
   proof remain required before certification; HTML controls and browser checks satisfy only concept
   review.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Defines forward and reverse verification for visible hosted chat controls.
 split_recommended: false
 depends_on: [DL-232, UCC-208, UIW-040, UIW-041, UIW-042, UIW-043]
 unblocks: []

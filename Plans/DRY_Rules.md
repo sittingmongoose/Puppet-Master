@@ -4227,7 +4227,7 @@ canonical_text: >-
   DOM roots, JavaScript globals, localStorage keys and build-layer APIs are concept lineage and grant
   no native API or persistence authority.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Keeps shared host presentation and Settings control ownership single.
 split_recommended: false
 depends_on: [DL-232, DR-050, DR-054, DR-067, DR-070, DR-072, SSYS-050]
 unblocks: []

@@ -16326,7 +16326,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-231, ContractName:Plans/Colla
 
 ```yaml
 plan_unit_id: UCC-208
-unit_type: requirement
+unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
@@ -16356,7 +16356,7 @@ canonical_text: >-
   command identity; arbitrary Demo Studio family takes receive no product command or production row. Candidate exclusions for DL-218's Check It and Grill Me controls remain unchanged by
   this port; the concept proving a click is not command admission.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Maps hosted chat controls to existing commands, Settings transactions and local actions.
 split_recommended: false
 depends_on: [DL-232, UCC-175, UCC-176, UCC-188, UCC-200, UCC-201, UCC-203, UCC-205, UCC-206]
 unblocks: []

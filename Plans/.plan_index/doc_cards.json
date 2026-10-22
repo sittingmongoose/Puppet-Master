@@ -1470,7 +1470,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "0a276a66b5d3afec64d9eb54d7d33af6b98c2065f33e88f8e6bab7fdbfff2cc3",
+      "sha256": "836e33d6b37f11dcffb74b4ec9157744ae5b05b4a646b23d21f4f2a61d69cf94",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 486,
@@ -3979,7 +3979,7 @@
         "view_state_command_inflation",
         "web_slash_family_drift"
       ],
-      "sha256": "11b2a39cf1937998bc0c3fcfea991fdd51c65b76bf701bbbd767f1c7f81e66e1",
+      "sha256": "da63e3b35dd59bbc0dc88e01492935d2b06b2db06565236a6b9b0d8ee462fead",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 96
@@ -3993,10 +3993,10 @@
         "command_registration": 1,
         "command_registry": 4,
         "compatibility_disposition": 1,
-        "constraint": 21,
+        "constraint": 22,
         "integration_contract": 3,
         "reference": 1,
-        "requirement": 52
+        "requirement": 51
       },
       "validation_surfaces": [
         "CAS",
@@ -6159,7 +6159,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "34bb10a0bc17dfccce6f29eaefd3e28a56756304baccce5b6168b44baeee668f",
+      "sha256": "3e43a8d4758f2beee31abe1f0398cb1c99e75370b13f6fc800e10e1b95c7409c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 211
@@ -6597,7 +6597,7 @@
         "shared_runtime_parallel_owner_drift",
         "usage_role_parallel_owner_drift"
       ],
-      "sha256": "113c2709f6c4c03d931c8963c3f8e8a37dfaadb61013234c3905dbb70e76ea1c",
+      "sha256": "cfa866d16d20cf7125c9c11d575986eb38ee39139f3c288e356a52b281376413",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 64
@@ -8492,7 +8492,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "38b5a5837d67aacf53f7cc0677b84df0ca93aeb1d117d9f137eac572048db716",
+      "sha256": "468dd3f4cc17c06b4cf3a8cfa126db07b9108d790f18813199b5b218d80b4a94",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 640,
@@ -14384,7 +14384,7 @@
         "tour_fake_shell_or_layout_loss",
         "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "45f1efe1473f2b1226d318a22b094e1d73f74636ec241978a9093b3ab8cde537",
+      "sha256": "b95108b7b627fe6e8bc97dc5427d372ed34809822c23d1ebc4d06abd802acb1b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 30,
@@ -17261,7 +17261,7 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 4086,
+      "line_count": 4087,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 50,
       "plan_unit_ids": [
@@ -17370,7 +17370,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "4e1ddb5981066336861329595e3cb70d0cda328a087f5777736ae6fef0b94a8f",
+      "sha256": "b43e8d11779abfb96a3e43d49e9dee88367086ecaac3eb7941d8b32fd3fadce9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 50
@@ -19804,7 +19804,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "dd4dcccb426335c42f32d2413d853b1b71b7caa16dc73c59f5a545b48d401c79",
+      "sha256": "0a172fd8f9f45a7ff4234b424975eaede77e03214a64ebf60f1e3489e30bb7c3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 184,
@@ -19815,13 +19815,13 @@
       "unit_type_counts": {
         "command_binding": 1,
         "command_catalog": 2,
-        "command_contract": 46,
+        "command_contract": 47,
         "command_disposition": 2,
         "compatibility_disposition": 1,
         "constraint": 1,
         "gui_command_catalog": 9,
         "integration_contract": 2,
-        "requirement": 122
+        "requirement": 121
       },
       "validation_surfaces": [
         "DRY Method settings command fixture",
@@ -20001,7 +20001,7 @@
         "version_exact_opener_drift",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "86a7a7412e5ee9c87ec4b96c85e91782499d1fc3b60e99bf4adb69062a1309d7",
+      "sha256": "92c15644071b737502090f558afabe36c06ee14cd1527bd9b7a51a2dc10ade60",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 33
@@ -20606,7 +20606,7 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "1a8c8698b084d09ce5da432168bb7ef7fe3548788f2ad99b8c8aefef49c6357c",
+      "sha256": "5f2ba7b91739973bd8ec42a2bfa2ded913c39cf734b696909f591fdda9fc491f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 74
@@ -20616,9 +20616,9 @@
         "compatibility_disposition": 1,
         "constraint": 11,
         "generated_artifact_residual": 1,
-        "integration_contract": 14,
+        "integration_contract": 15,
         "production_wiring": 3,
-        "requirement": 36,
+        "requirement": 35,
         "validation_rule": 1,
         "wiring_contract": 6,
         "wiring_disposition": 1
@@ -20934,7 +20934,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-22T21:23:42Z",
+  "generated_at_utc": "2026-10-22T21:34:02Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20967,14 +20967,14 @@
       "capability_matrix": 1,
       "command_binding": 20,
       "command_catalog": 3,
-      "command_contract": 58,
+      "command_contract": 59,
       "command_disposition": 4,
       "command_registration": 1,
       "command_registry": 4,
       "compatibility_contract": 1,
       "compatibility_disposition": 137,
       "compatibility_note": 2,
-      "constraint": 632,
+      "constraint": 633,
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
@@ -20995,7 +20995,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 99,
+      "integration_contract": 100,
       "interaction_contract": 6,
       "interface_contract": 2,
       "invariant": 24,
@@ -21017,7 +21017,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5507,
+      "requirement": 5504,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

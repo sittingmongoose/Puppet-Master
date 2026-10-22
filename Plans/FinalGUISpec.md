@@ -49292,7 +49292,7 @@ canonical_text: >-
   reference. SSYS-055 owns preference placement and binding. This is a concept port and a product
   presentation contract; no browser result is native runtime or governance certification.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Defines the hosted chat surface, all-look presentation and narrow layout acceptance.
 split_recommended: false
 depends_on: [DL-232, F3-634, F3-635, F3-637, F3-648, F3-649, ACD-504, SSYS-055, PWIZ-036]
 unblocks: []

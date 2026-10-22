@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L46893-L49331
 
-Source SHA256: `38b5a5837d67aacf53f7cc0677b84df0ca93aeb1d117d9f137eac572048db716`
+Source SHA256: `468dd3f4cc17c06b4cf3a8cfa126db07b9108d790f18813199b5b218d80b4a94`
 
 ---
 
@@ -2410,7 +2410,7 @@ canonical_text: >-
   reference. SSYS-055 owns preference placement and binding. This is a concept port and a product
   presentation contract; no browser result is native runtime or governance certification.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Defines the hosted chat surface, all-look presentation and narrow layout acceptance.
 split_recommended: false
 depends_on: [DL-232, F3-634, F3-635, F3-637, F3-648, F3-649, ACD-504, SSYS-055, PWIZ-036]
 unblocks: []

@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L3453-L4264
 
-Source SHA256: `113c2709f6c4c03d931c8963c3f8e8a37dfaadb61013234c3905dbb70e76ea1c`
+Source SHA256: `cfa866d16d20cf7125c9c11d575986eb38ee39139f3c288e356a52b281376413`
 
 ---
 
@@ -785,7 +785,7 @@ canonical_text: >-
   DOM roots, JavaScript globals, localStorage keys and build-layer APIs are concept lineage and grant
   no native API or persistence authority.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Keeps shared host presentation and Settings control ownership single.
 split_recommended: false
 depends_on: [DL-232, DR-050, DR-054, DR-067, DR-070, DR-072, SSYS-050]
 unblocks: []

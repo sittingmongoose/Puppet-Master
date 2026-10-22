@@ -112216,7 +112216,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-10-22T21:23:42Z",
+  "generated_at_utc": "2026-10-22T21:34:02Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -132667,7 +132667,7 @@
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
-      "unit_type": "requirement"
+      "unit_type": "constraint"
     },
     {
       "context_scope": "contracts_v0_residual_source",
@@ -228666,7 +228666,7 @@
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
-      "unit_type": "requirement"
+      "unit_type": "command_contract"
     },
     {
       "context_scope": "usage_feature_generated_tail_batch_197",
@@ -233732,7 +233732,7 @@
         "path": "Plans/Wiring_Matrix.md"
       },
       "status": "accepted",
-      "unit_type": "requirement"
+      "unit_type": "integration_contract"
     },
     {
       "context_scope": "working_notebook",

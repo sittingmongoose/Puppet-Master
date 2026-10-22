@@ -17009,7 +17009,7 @@ canonical_text: >-
   words, and are flagged for Jared at handoff. The stand-in remains built but off by default for Home harnesses;
   it is absent as the hosted conversation and has no Settings row.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Records the hosted chat replacement, shared Settings controls and preservation of the accepted tour.
 split_recommended: false
 depends_on: [DL-180, DL-181, DL-185, DL-187, DL-218, DL-230, DL-231]
 unblocks: []

@@ -28044,7 +28044,7 @@ canonical_text: >-
   are sections of F3-649's one Demo Studio. The port's screenshots, fixtures and browser checks remain
   concept evidence; unmet native requirements stay owed.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Defines hosted conversation presentation, opened surface kinds, shared preferences and focus behavior.
 split_recommended: false
 depends_on: [DL-232, ACD-500, ACD-501, ACD-502, ACD-503, DR-075, SSYS-055]
 unblocks: []

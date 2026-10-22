@@ -6515,7 +6515,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-231, ContractName:Plans/Colla
 
 ```yaml
 plan_unit_id: WM-096
-unit_type: requirement
+unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
@@ -6538,7 +6538,7 @@ canonical_text: >-
   boot, body mounting, appearance projection and one Demo Studio are local/concept dispositions and do
   not become production wiring.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Binds hosted chat producers to existing wiring rows and their reverse GUI consumers.
 split_recommended: false
 depends_on: [DL-232, UCC-208, UIW-044, WM-090, WM-091, WM-092, WM-094, WM-095]
 unblocks: []

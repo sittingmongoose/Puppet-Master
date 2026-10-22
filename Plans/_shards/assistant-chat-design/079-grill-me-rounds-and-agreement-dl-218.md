@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L27915-L28085
 
-Source SHA256: `0a276a66b5d3afec64d9eb54d7d33af6b98c2065f33e88f8e6bab7fdbfff2cc3`
+Source SHA256: `836e33d6b37f11dcffb74b4ec9157744ae5b05b4a646b23d21f4f2a61d69cf94`
 
 ---
 
@@ -140,7 +140,7 @@ canonical_text: >-
   are sections of F3-649's one Demo Studio. The port's screenshots, fixtures and browser checks remain
   concept evidence; unmet native requirements stay owed.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Defines hosted conversation presentation, opened surface kinds, shared preferences and focus behavior.
 split_recommended: false
 depends_on: [DL-232, ACD-500, ACD-501, ACD-502, ACD-503, DR-075, SSYS-055]
 unblocks: []

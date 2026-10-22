@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L14505-L17047
 
-Source SHA256: `34bb10a0bc17dfccce6f29eaefd3e28a56756304baccce5b6168b44baeee668f`
+Source SHA256: `3e43a8d4758f2beee31abe1f0398cb1c99e75370b13f6fc800e10e1b95c7409c`
 
 ---
 
@@ -2515,7 +2515,7 @@ canonical_text: >-
   words, and are flagged for Jared at handoff. The stand-in remains built but off by default for Home harnesses;
   it is absent as the hosted conversation and has no Settings row.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Records the hosted chat replacement, shared Settings controls and preservation of the accepted tour.
 split_recommended: false
 depends_on: [DL-180, DL-181, DL-185, DL-187, DL-218, DL-230, DL-231]
 unblocks: []

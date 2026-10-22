@@ -2955,7 +2955,7 @@ canonical_text: >-
   and exact-message same-answer explanation without rewriting an earlier reply. Demo Studio remains
   the one concept entry point for tour demonstrations; it never becomes a product command or setting.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Keeps the visible Guided Tour teaching surface and the hosted chat mutually exclusive until the accepted redo.
 split_recommended: false
 depends_on: [DL-232, DL-230, PWIZ-023, PWIZ-035]
 unblocks: []

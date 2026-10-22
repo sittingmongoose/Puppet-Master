@@ -4042,7 +4042,7 @@ canonical_text: >-
   separate application and project persistence: the renderer keeps these layers separate and discloses any
   session-only layer instead of creating a shadow store or claiming native scope support.
 gui_related: true
-gui_classification_reason: Defines the hosted chat port and its visible controls or their shared ownership.
+gui_classification_reason: Places and binds visible hosted chat preferences while keeping layout and chat-scoped controls separate.
 split_recommended: false
 depends_on: [DL-232, SSYS-028, SSYS-040, SSYS-042, SSYS-050]
 unblocks: []
@@ -4068,6 +4068,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
 preserved_exact_tokens:
+  - "general.interaction.thought-stream"
   - "general.interaction.working-activity-style"
   - "general.interaction.sound-effects"
   - "general.interaction.eli5-default"
