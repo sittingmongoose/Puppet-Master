@@ -71,6 +71,7 @@
  * WHAT IT WRITES. Nothing but stdout, and the --json file when given. It never writes a tracked file.
  */
 import { chromium } from 'playwright';
+import { launchChatBrowser, testGeometry } from './tests/chat-target.mjs';
 import { pathToFileURL } from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -126,12 +127,12 @@ if (!fs.existsSync(FILE)) { console.error('neon-verify: no such file ' + FILE); 
 const results = [];
 let pass = 0, fail = 0, skipped = 0;
 function check(ok, label, detail) {
-  results.push({ ok: !!ok, label, detail: detail === undefined ? null : detail });
+  results.push({ ok: !!ok, label, sizeContext: testGeometry(), detail: detail === undefined ? null : detail });
   ok ? pass++ : fail++;
   console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${ok ? '' : '\n        ' + JSON.stringify(detail).slice(0, 2000)}`);
 }
 function skip(label, detail) {
-  results.push({ ok: null, label, detail: detail === undefined ? null : detail });
+  results.push({ ok: null, label, sizeContext: testGeometry(), detail: detail === undefined ? null : detail });
   skipped++;
   console.log(`SKIP  ${label}`);
 }
@@ -141,7 +142,7 @@ async function sec(label, fn) {
 }
 
 /* ----------------------------------------------------------------- setup */
-const browser = await chromium.launch({ headless: true, args: ['--allow-file-access-from-files', '--no-sandbox'] });
+const browser = await launchChatBrowser(chromium);
 const consoleErrors = [], pageErrors = [];
 function watch(p) {
   p.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') consoleErrors.push(m.type() + ': ' + m.text().slice(0, 300)); });
@@ -178,7 +179,7 @@ async function newWidePage(dpr = 1) {
 }
 async function shut(p) { try { const c = p.__ctx; await p.close(); if (c) await c.close(); } catch (e) {} }
 async function setTheme(p, id, pixel) {
-  await p.evaluate(t => window.PM56_DEMO.setTheme(t), id);
+  await p.evaluate(t => window.PM56_TEST.setTheme(t), id);
   await p.waitForTimeout(pixel ? 1000 : 550); /* the bar crossfades; pixel reads wait longer */
 }
 
@@ -269,7 +270,7 @@ check(ALL_THEMES.length === 10, `precondition: 10 themes on the page (running ${
 async function censusOf(p) {
   return p.evaluate(exc => {
     const bad = [];
-    for (const s of document.querySelectorAll('svg')) {
+    for (const s of document.querySelectorAll(PM56_TEST.kind === 'pm7' ? '.pm56-host svg, #pmds-page-chat svg' : 'svg')) {
       if (s.closest(exc)) continue;
       if (s.classList.contains('nx') || s.classList.contains('nx-brand')) continue;
       const chain = [];
@@ -280,7 +281,7 @@ async function censusOf(p) {
     }
     return {
       bad, nBad: bad.length,
-      total: document.querySelectorAll('svg').length,
+      total: document.querySelectorAll(PM56_TEST.kind === 'pm7' ? '.pm56-host svg, #pmds-page-chat svg' : 'svg').length,
       misses: (window.PM56_NEON && window.PM56_NEON.misses || []).slice(),
       glyphMissing: document.querySelectorAll('.pmx-glyph-missing').length
     };
@@ -291,10 +292,12 @@ async function openMenu(p, menu) {
   await p.locator('.overlay-menu[data-overlay="root-menu"]').first().waitFor({ timeout: 5000 });
 }
 async function openDemo(p) {
+  if (await p.evaluate(() => PM56_TEST.kind === 'pm7')) { await p.evaluate(() => O55.demo.open('chat')); await p.locator('#pmds-tab-chat').waitFor({ state: 'visible' }); return; }
   await p.locator('[data-action="open-demo"]').first().click({ timeout: 5000 });
   await p.locator('.demo-dialog').first().waitFor({ timeout: 5000 });
 }
 async function closeDemo(p) {
+  if (await p.evaluate(() => PM56_TEST.kind === 'pm7')) { await p.evaluate(() => O55.demo.close()); await p.waitForTimeout(300); return; }
   const b = p.locator('.demo-dialog [data-action="close-dialog"]').first();
   if (await b.count()) { await b.click({ timeout: 5000 }); await p.waitForTimeout(300); }
 }
@@ -429,7 +432,7 @@ async function matrixSnapshot(p, list) {
       host = document.createElement('div');
       host.id = 'nx-test-matrix';
       host.style.cssText = 'position:fixed;left:0;top:0;z-index:99999;background:transparent;';
-      document.body.appendChild(host);
+      PM56_TEST.host.appendChild(host);
     }
     const out = {};
     for (const s of list) {
@@ -575,7 +578,7 @@ else await sec('satellite', async () => {
       host.id = 'nx-test-sat';
       host.style.cssText = 'position:fixed;left:40px;top:40px;z-index:99999;';
       host.innerHTML = window.PM56_NEON.status('working', 24);
-      document.body.appendChild(host);
+      PM56_TEST.host.appendChild(host);
       /* final review (2026-10-03): the ring is still (a full circle in the static layer); the bead alone moves */
       const ring = host.querySelector('.nx-st-base circle.nx-c.nx-dim'), moving = host.querySelectorAll('.nx-st-move .nx-c');
       return { bead: !!host.querySelector('.nx-st-move .nx-f'), stillRing: !!ring && +ring.getAttribute('r') === 7.5, movingTubes: moving.length };
@@ -611,7 +614,7 @@ await sec('clip reveals', async () => {
       const N = window.PM56_NEON;
       host.innerHTML = ['page', 'todo', 'check', 'chart', 'kind-scheduled', 'plus', 'edit', 'eye-off']
         .map(n => N.icon(n, 16)).join('');
-      document.body.appendChild(host);
+      PM56_TEST.host.appendChild(host);
       for (const s of host.querySelectorAll('svg.nx')) s.style.setProperty('--nx-1', '520ms linear backwards');
       return new Promise(res => setTimeout(() => {
         /* the reveal must have run: count the one-shots caught on clip parts before finishing them (without this a
@@ -637,7 +640,7 @@ await sec('clip reveals', async () => {
       host.style.cssText = 'position:fixed;left:0;top:0;z-index:99999;background:#fff;color:#000;padding:20px;';
       const N = window.PM56_NEON;
       host.innerHTML = N.icon('page', 20) + N.icon('document', 20);
-      document.body.appendChild(host);
+      PM56_TEST.host.appendChild(host);
       for (const a of document.getAnimations()) {
         try { if (a.effect.getTiming().iterations !== Infinity) a.finish(); } catch (e) {}
       }
@@ -852,7 +855,7 @@ async function reducedState(p) {
       host = document.createElement('div');
       host.id = 'nx-test-matrix';
       host.style.cssText = 'position:fixed;left:0;top:0;z-index:99999;pointer-events:none;';
-      document.body.appendChild(host);
+      PM56_TEST.host.appendChild(host);
     }
     const N = window.PM56_NEON;
     host.innerHTML = ['working', 'reviewing', 'waiting', 'waiting-dep', 'idle', 'complete',
@@ -1210,7 +1213,7 @@ await sec('glow present', async () => {
       const row = document.querySelector('.thread-row');
       host.style.background = row ? getComputedStyle(row).backgroundColor : '#000';
       host.innerHTML = window.PM56_NEON.status('waiting', 15);
-      document.body.appendChild(host);
+      PM56_TEST.host.appendChild(host);
       const wrap = host.querySelector('.nx-st');
       return { bl: getComputedStyle(wrap, '::before').opacity };
     });
@@ -1250,7 +1253,7 @@ for (const theme of ['nier-dark', 'nier-light']) {
         host.id = 'nx-test-matrix';
         host.style.cssText = 'position:fixed;left:0;top:0;z-index:99999;';
         host.innerHTML = list.map(s => window.PM56_NEON.status(s, 15)).join('');
-        document.body.appendChild(host);
+        PM56_TEST.host.appendChild(host);
         const halos = [...host.querySelectorAll('.nx-h'), ...[...document.querySelectorAll('.nx-h')].slice(0, 40)];
         const seen = new Set();
         for (const h of halos) {
@@ -1297,7 +1300,7 @@ else await sec('salience', async () => {
     await boot(p);
     const B = 16, N = 120, DT = 140;
     for (const theme of THEMES) {
-      await p.evaluate(t => { window.PM56_DEMO.setTheme(t); window.PM56_DEMO.setVariant(1, 5); }, theme);
+      await p.evaluate(t => { window.PM56_TEST.setTheme(t); window.PM56_DEMO.setVariant(1, 5); }, theme);
       await p.waitForTimeout(1200);
       const pos = await p.evaluate(() => {
         const out = {};
@@ -1387,11 +1390,11 @@ for (const [theme, thread] of [['basic-dark', 'query'], ['friendly-dark', 'query
         };
         const pr = document.createElement('span');
         pr.style.cssText = 'position:absolute;left:-9999px;top:0;';
-        document.body.appendChild(pr);
-        const resolve = (el, v) => { (el || document.body).appendChild(pr); pr.style.color = ''; pr.style.color = v; const c = getComputedStyle(pr).color; return pr.style.color ? parse(c) : null; };
+        PM56_TEST.host.appendChild(pr);
+        const resolve = (el, v) => { (el || PM56_TEST.host).appendChild(pr); pr.style.color = ''; pr.style.color = v; const c = getComputedStyle(pr).color; return pr.style.color ? parse(c) : null; };
         const rgb = parse;
         const tones = {}, unparsed = [];
-        for (const t of ['danger', 'warning', 'positive', 'accent', 'accent-2']) { tones[t] = resolve(document.body, 'var(--' + t + ')'); if (!tones[t]) unparsed.push('token --' + t); }
+        for (const t of ['danger', 'warning', 'positive', 'accent', 'accent-2']) { tones[t] = resolve(PM56_TEST.host, 'var(--' + t + ')'); if (!tones[t]) unparsed.push('token --' + t); }
         /* Turn Stage family hues (the deliverable kicker's --fam-deliverable) are canon item-family inks, not status;
            in retro-light --fam-deliverable is the same colour as --accent-2, so a glyph in its family ink is skipped */
         const fams = [];
@@ -1518,7 +1521,7 @@ for (const theme of THEMES) {
       await setTheme(p, theme);
       await p.evaluate(() => { window.PM56_DEMO.setVariant(1, 5); window.PM56_DEMO.selectThread('plain'); });
       await p.waitForTimeout(700);
-      const text = await p.evaluate(() => { const s = document.createElement('span'); s.style.color = 'var(--text)'; document.body.appendChild(s); const c = getComputedStyle(s).color; s.remove(); return c; });
+      const text = await p.evaluate(() => { const s = document.createElement('span'); s.style.color = 'var(--text)'; PM56_TEST.host.appendChild(s); const c = getComputedStyle(s).color; s.remove(); return c; });
       const rows = [];
       for (const [name, sel] of [['attach', '[data-action="attach"]'], ['search', '.chat-header .icon-button[aria-label*="earch"]'], ['history close', '.history-head .icon-button:last-child']]) {
         const b = await p.$(sel), bb = b && await b.boundingBox();
@@ -1547,7 +1550,7 @@ for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].fi
       });
       if (!bare) { check(false, `17b hover ink tones [${theme}]: the hover ink rule is missing from the sheets`, null); return; }
       const scan = where => p.evaluate(([bare, where]) => {
-        const pr = document.createElement('span'); document.body.appendChild(pr); const tok = {};
+        const pr = document.createElement('span'); PM56_TEST.host.appendChild(pr); const tok = {};
         for (const t of ['--muted', '--text', '--subtle', '--nx-idle']) { pr.style.color = 'var(' + t + ', transparent)'; tok[getComputedStyle(pr).color] = 1; }
         pr.remove();
         let n = 0; const bad = [];
@@ -1634,7 +1637,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
             if (pos === 'bottom') out.push(...under);
             else if (under.length && !(shy && op <= .2)) out.push('not faded back over ' + under.join(', ') + ' (shy ' + shy + ', opacity ' + op + ')');
             if (!under.length && pos === 'bottom' && shy) out.push('faded back with no control under it');
-            const bar = document.querySelector('.chat-float .activity-bar');
+            const bar = PM56_TEST.host.querySelector('.chat-float .activity-bar, .chat-float .pm56-activity-bar');
             if (bar && bar.scrollWidth - bar.clientWidth > 1) out.push('bar overflows ' + (bar.scrollWidth - bar.clientWidth) + ' px');
             return { out };
           }, pos);
@@ -1669,7 +1672,7 @@ for (const theme of ['basic-dark', 'basic-light', 'nier-dark'].filter(t => THEME
           const c = document.querySelector('.chat-header .chat-state'); if (!c) return null;
           const tone = (c.querySelector('.nx-st') || {}).className || '';
           const t = (/nx-tn-(\w+)/.exec(tone) || [])[1];
-          const pr = document.createElement('span'); pr.style.color = 'var(' + want[t] + ')'; document.body.appendChild(pr);
+          const pr = document.createElement('span'); pr.style.color = 'var(' + want[t] + ')'; PM56_TEST.host.appendChild(pr);
           const w = getComputedStyle(pr).color; pr.remove();
           return { tone: t, data: c.dataset.tone || '', color: getComputedStyle(c).color, want: w };
         }, want);

@@ -19,6 +19,7 @@
  *   node questions-verify.mjs --file /tmp/noq.html
  */
 import { chromium } from 'playwright';
+import { launchChatBrowser, testGeometry, measureTestGeometry } from './tests/chat-target.mjs';
 import path from 'path';
 import fs from 'fs';
 import { pathToFileURL } from 'url';
@@ -35,12 +36,12 @@ const url = pathToFileURL(FILE).href;
 const results = [];
 let consoleErrors = [], pageErrors = [];
 async function t(name, fn) {
-  try { const info = await fn(); results.push({ name, ok: true, info: info === undefined ? null : info }); }
-  catch (e) { results.push({ name, ok: false, error: String(e && e.message || e).slice(0, 400) }); }
+  try { const info = await fn(); results.push({ name, ok: true, sizeContext: testGeometry(), info: info === undefined ? null : info }); }
+  catch (e) { results.push({ name, ok: false, sizeContext: testGeometry(), error: String(e && e.message || e).slice(0, 400) }); }
 }
 const must = (cond, msg) => { if (!cond) throw new Error(msg); };
 
-const browser = await chromium.launch({ headless: true, args: ['--disable-gpu', '--allow-file-access-from-files', '--no-sandbox'] });
+const browser = await launchChatBrowser(chromium);
 const context = await browser.newContext({
   viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1,
   reducedMotion: REDUCED ? 'reduce' : 'no-preference'
@@ -148,7 +149,10 @@ async function fingerprint(clip) {
 async function hostClip() {
   const b = await page.locator('.decision-host').boundingBox();
   must(b && b.height > 10, 'decision host has no height');
-  return { x: Math.max(0, Math.round(b.x)), y: Math.max(0, Math.round(b.y)), width: Math.round(Math.min(b.width, 1440 - b.x)), height: Math.round(Math.min(b.height, 900 - b.y)) };
+  const viewport = page.viewportSize(), x = Math.max(0, Math.round(b.x)), y = Math.max(0, Math.round(b.y));
+  const width = Math.round(Math.min(b.x + b.width, viewport.width) - x), height = Math.round(Math.min(b.y + b.height, viewport.height) - y);
+  must(width > 0 && height > 0, `decision host is outside the viewport: ${JSON.stringify({ b, viewport })}`);
+  return { x, y, width, height };
 }
 const hostText = () => page.evaluate(() => (document.querySelector('.decision-host')?.textContent || '').replace(/\s+/g, ' ').trim());
 const stateOf = () => page.evaluate(() => PM56_DEMO.getState());
@@ -156,8 +160,12 @@ async function setHostWidth(px) {
   /* The container the tiers key on is the DECISION HOST, sized by the editor
      split. Driving --editor-w is how a real user changes it. */
   const vw = 1440;
-  await page.evaluate(pct => document.documentElement.style.setProperty('--editor-w', pct + '%'), Math.round((1 - px / vw) * 100));
+  await page.evaluate(({px,pct}) => {
+    if(PM56_TEST.kind==='pm7'){ PMW.chatCol.setWidth(Math.min(760,Math.max(400,px))); PMW.chatCol.show(); }
+    else document.documentElement.style.setProperty('--editor-w',pct+'%');
+  }, {px,pct:Math.round((1-px/vw)*100)});
   await page.waitForTimeout(220);
+  await measureTestGeometry(page,{width:px,height:page.viewportSize().height,surface:'decision-host'});
   return page.evaluate(() => Math.round(document.querySelector('.decision-host').getBoundingClientRect().width));
 }
 
@@ -352,7 +360,7 @@ for (let v = 0; v < TAKE_COUNT; v++) {
   await t(`C${v}e. take ${v}: the decision pushes the transcript, it never covers the activity bar`, async () => {
     const ok = await page.evaluate(() => {
       const d = document.querySelector('.decision-host'), a = document.querySelector('.activity-wrap');
-      const bar = document.querySelector('.activity-bar');
+      const bar = PM56_TEST.host.querySelector('.activity-bar, .pm56-activity-bar');
       if (!d || !a || !bar) return null;
       const dr = d.getBoundingClientRect(), ar = a.getBoundingClientRect(), br = bar.getBoundingClientRect();
       const hit = document.elementFromPoint(br.left + br.width / 2, br.top + br.height / 2);
@@ -682,12 +690,13 @@ await t('Q6. Ask Card paints Back + Next on q1 and a choice click does not auto-
     const next = document.querySelector('.qs-ask [data-action="next-question"]');
     const skip = document.querySelector('.qs-ask [data-action="skip-question"]');
     return {
-      backDisabled: !!(back && back.disabled),
+      backDisabled: !!(back && (back.disabled || back.getAttribute('aria-disabled')==='true')),
+      nativeDisabled: back?.disabled, ariaDisabled: back?.getAttribute('aria-disabled'),
       next: !!next,
       skip: !!skip
     };
   });
-  must(nav.backDisabled, 'Back missing or not disabled on q1');
+  must(nav.backDisabled, 'Back missing or not disabled on q1: '+JSON.stringify(nav));
   must(nav.next, 'Next missing on q1');
   must(nav.skip, 'Skip missing on q1');
   const nextPaint = await paintedRect('.qs-ask [data-action="next-question"]');
@@ -986,7 +995,7 @@ await t('L4. nothing escapes the card or scrolls sideways, in all ten themes, at
     for (const w of [0, 300]) {
       for (const idx of [0, 1, 2, 3]) {
         await openLong(idx);
-        await page.evaluate(t => PM56_DEMO.setTheme(t), th);
+        await page.evaluate(t => PM56_TEST.setTheme(t), th);
         if (w) await setHostWidth(w);
         await page.waitForTimeout(260);
         const out = await askSideways();
@@ -997,7 +1006,7 @@ await t('L4. nothing escapes the card or scrolls sideways, in all ten themes, at
       }
     }
   }
-  await page.evaluate(() => PM56_DEMO.setTheme('basic-dark'));
+  await page.evaluate(() => PM56_TEST.setTheme('basic-dark'));
   must(!bad.length, bad.slice(0, 6).join(' | '));
   return themes.length * 8 + ' renders';
 });
@@ -1147,14 +1156,14 @@ await t('L11. the @-file sprout opens where the body can show it', async () => {
 });
 await t('L12. NieR: an option description on the menu cursor reads in paper, like its label', async () => {
   await openLong(0);
-  await page.evaluate(() => PM56_DEMO.setTheme('nier-dark'));
+  await page.evaluate(() => PM56_TEST.setTheme('nier-dark'));
   await page.waitForTimeout(400);
   const c = await page.evaluate(() => {
     const on = document.querySelector('.qs-ask-opt.is-on');
     const L = getComputedStyle(on.querySelector('.qs-ask-opt-label')).color, D = getComputedStyle(on.querySelector('.qs-ask-opt-desc')).color;
     return { L, D, bg: getComputedStyle(on).backgroundColor };
   });
-  await page.evaluate(() => PM56_DEMO.setTheme('basic-dark'));
+  await page.evaluate(() => PM56_TEST.setTheme('basic-dark'));
   must(c.L === c.D, `description ${c.D} vs label ${c.L} on ${c.bg}`);
   return c;
 });
@@ -1219,13 +1228,13 @@ await t('E3. no take is worse than the stock surface for horizontal overflow, in
   const themes = await page.evaluate(() => PM56_DATA.themes.map(t => t.id));
   const worse = [];
   for (const th of themes) {
-    await page.evaluate(t => PM56_DEMO.setTheme(t), th);
+    await page.evaluate(t => PM56_TEST.setTheme(t), th);
     /* stock baseline: empty the slot so app.js's own decision surface renders */
     const base = await page.evaluate(() => {
       const keep = window.PM56_EXT._slots.questionSurface;
       window.PM56_EXT._slots.questionSurface = [];
       PM56_DEMO.openQuestionnaire();
-      const w = document.body.scrollWidth;
+      const w = PM56_TEST.host.scrollWidth;
       window.PM56_EXT._slots.questionSurface = keep;
       PM56_DEMO.openQuestionnaire();
       return w;
@@ -1233,11 +1242,11 @@ await t('E3. no take is worse than the stock surface for horizontal overflow, in
     await page.waitForTimeout(SETTLE);
     for (let v = 0; v < TAKE_COUNT; v++) {
       await setTake(v);
-      const mine = await page.evaluate(() => document.body.scrollWidth);
+      const mine = await page.evaluate(() => PM56_TEST.host.scrollWidth);
       if (mine > base + 4) worse.push(`${th}/t${v}: ${mine} vs stock ${base}`);
     }
   }
-  await page.evaluate(() => PM56_DEMO.setTheme('basic-dark'));
+  await page.evaluate(() => PM56_TEST.setTheme('basic-dark'));
   must(!worse.length, worse.join(' | '));
   return themes.length * TAKE_COUNT;
 });

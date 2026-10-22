@@ -1,0 +1,56 @@
+Run from `Concepts/chat-assistant-concepts/5.6 Pro` with `playwright` installed in Node's module path and `agent-browser` on PATH.
+
+```sh
+node tests/port-suite.mjs --page standalone --build --out /tmp/c56port-tests/standalone
+node tests/port-suite.mjs --page pm7 --build --out /tmp/c56port-tests/pm7
+node tests/port-suite.mjs --page both --parallel-pages --build --sweep --out /tmp/c56port-tests/integrated
+```
+
+The runner opens GPU browsers sequentially per page and prints per-suite and per-page totals. `--parallel-pages` runs the two page workers together, owning at most two browsers; use it only when this lane has both GPU slots free. Child reports live under `standalone/` and `pm7/`; the root `summary.json` combines them. Each stage has a log and JSON report; `summary.json` lists failing IDs and owners. `run.json` records the source commit, arguments and page SHA-256; each summary row also carries the page hash. `--standalone-file` and `--pm7-file` select existing builds. No built page is committed. A nonzero child exit or missing/empty report fails the run. `--only node` runs the 94 engine/static checks without opening a browser.
+
+For a focused regression pass:
+
+```sh
+node tests/port-suite.mjs --page both --only wonderer,layout --wg-only core --pm7-file /tmp/c56port-tests/PMConcept7.html --out /tmp/c56port-tests/regression
+node tests/wonderer-grill-verify.mjs --browser --page pm7 --file /tmp/c56port-tests/PMConcept7.html --json /tmp/c56port-tests/r2.json
+node tests/carry-over-layout-verify.mjs --page pm7 --file /tmp/c56port-tests/PMConcept7.html --sweep --json /tmp/c56port-tests/layout.json
+```
+
+`WGV_ONLY=r2` limits the Wonderer verifier to R2-1–R2-10 and the round's design checks. `--wg-only core` runs the original Wonderer, Grill Me, R1, and R2 checks. The default also runs the newer recorded examples (`rx`) and other Demo Studio examples (`ax`); none are removed. Node-only checks remain `node tests/wonderer-grill-verify.mjs`.
+
+Record the integrated Crew, Room and BrainStorm examples at their readable real-time pace:
+
+```sh
+node tests/wonderer-grill-film.mjs --page pm7 --file /tmp/c56port-tests/integrated/PMConcept7.html --out /tmp/c56port-tests/films
+```
+
+`--flow crew|room|brainstorm` selects one film; `--look` selects any of the ten looks. Films use `agent-browser --record` sequentially at the recorder's fixed viewport, click the real Demo Studio tiles and only answer the product's documented user waits. Each session is stopped in `finally` and on termination. `films.json` records page hashes, moves, final run state and page errors; the result PNG supports visual review. Record after the looks, NieR and Demo Studio lanes are integrated, then review frames before accepting the films.
+
+The layout pass measures Crew and Room sheets in all ten looks at 400, 420, 440, 459, 460, 480, 500 and 519 px. `--sweep` measures every integer width in 400–519. `--looks retro-light,retro-dark` narrows layout and neon reruns.
+
+| ID | Assertion |
+|---|---|
+| CO-HEADER | Shelf title, step numeral and meta text have no overlapping line rectangles; their text clears clipping ancestors and owns its hit-test samples. |
+| CO-CHROME | Persona and the Start button's actual configured helper count (Crew 3, Room 4 by default) remain present, unclipped and reachable at narrow sheet widths. |
+| CO-PLATE-EDGE | At 480 px, every completed Crew plate label (SVG text and foreignObject HTML fragments) is at least 12 px from both plate sides; the “got one checked result” specimen must be painted. |
+| CO-PLATE-LINE | Every label clears every plate stroke by 8 px, including paper outlines, hatch boxes and floor marks, following pmx-verify's geometry set. |
+| CO-PLATE-AFTER | At 480 px, “after both” clears its dependency line by at least 8 px. Missing specimens fail. |
+| CO-FONT | Hosted NieR sheet/run-view text uses PM NieR Sans, code uses PM NieR Mono, and each used Latin face is loaded. The standalone keeps its own font contract. |
+
+R2-4 still hides the measured text, captures the browser-painted background, composites the actual ink and opacity, and requires 4.5:1 in all ten looks. It runs again on PM7 after token changes.
+
+The host adapter keeps one set of assertions:
+
+| Standalone | PMConcept7 |
+|---|---|
+| `index.html` | Private `PMConcept7.html?o55=off&pm56test=1` |
+| `body[data-theme]`, `PM56_DEMO.setTheme` | `html[data-theme]`, `PM_THEME`, `PM_NIER.preview`; `.pm56-host` must mirror the painted theme |
+| Visible `.editor-tab.active` matching `state.activeEditor` | Visible selected `.pmw-tab` matching `PM_HOME.active()` and the real `.pmw-tabbody[data-pmw-tab]` |
+| Viewport chat breakpoints | Chat-column width through `PMW.chatCol.setWidth`; window-based sheets are measured separately |
+| Full chat root | `#chatPanel > #pmw-chat56.pm56-frame > #pmRoot.pm56-host`; overlays at `body > #pmOverlayRoot.pm56-host` |
+
+The adapter reads host state and invokes host APIs. Column measurements allow the host's 1 px internal hairline. Overflow checks compare the chat host's scroll width with its own client width and independently check document overflow. The adapter does not create fake editor tabs. `--cdp` attaches to a caller-owned GPU session; callers stop it. Without it, the helper starts and stops its own `agent-browser`, including on error and SIGTERM, and prints its session ID and CDP endpoint. At most one browser is started per suite process; run at most two suite processes per lane.
+
+The layout verifier's `--section sheets|plate|fonts` supports focused reruns. Hosted `fonts` measures the two NieR looks. Default `all` keeps every section; final narrow-width acceptance requires `--sweep`.
+
+Each browser result includes `sizeContext`, refreshed after load, theme, viewport/column changes and pointer release. It records the actual viewport, column, inner stage and transcript sizes plus the requested size. Hosted column requests use a window at least 2400 px wide and clamp the column to 400–760 px; check names inherited from standalone retain their original wording. Recorder attachments select the session's non-recorder page. A full width sweep has a three-hour stage limit; the complete Wonderer/RX/AX stage has 90 minutes; focused and older stages have 45 minutes.

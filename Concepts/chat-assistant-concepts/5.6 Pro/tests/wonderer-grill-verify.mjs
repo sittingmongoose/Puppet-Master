@@ -6,7 +6,7 @@
  *                                                     static scans of the sources; no browser, a few seconds
  *   node tests/wonderer-grill-verify.mjs --browser    also plays every Demo Studio flow in Chromium against
  *                                                     index.html and checks what the screen shows
- *   options: --file <html> (default ./index.html), --cdp <endpoint> (attach to a running GPU browser, such as an
+ *   options: --page standalone|pm7, --file <html> (default ./index.html), --cdp <endpoint> (attach to a running GPU browser, such as an
  *            agent-browser session, instead of launching one), --json <path> (write the report)
  *
  * The browser pass imports playwright, then playwright-core. It never passes --disable-gpu.
@@ -14,6 +14,9 @@
  * leads is a target (0 to 5 allowed); leads are decided as they arrive, and nothing new reaches the team once it writes
  * the result; grilling waits on lookups; Grill Me turned on mid-run gates only the step that uses its answers; the first
  * pass runs during intake and a later pass queues behind core work. */
+import { chatTarget, testGeometry } from './chat-target.mjs';
+import { launchGpuBrowser, gpuPage } from './gpu-browser.mjs';
+import { grillFooterGeometry } from './grill-footer-geometry.mjs';
 import { createRequire } from 'node:module';
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
@@ -23,6 +26,8 @@ const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2), opt = n => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
 const results = [];
+let phase = 'node';
+const target = chatTarget(argv);
 /* the Batch 14-17 and 19 examples (2026-10-22), added once their recordings land */
 const AX_MORE = [
   { name: 'To-Do graphs · Parallel outputs, honest progress', action: 'b16-start', flow: 'parallel', moves: ['[data-action="pd-build"]'] },
@@ -44,7 +49,7 @@ const AX_MORE = [
   { name: 'Simple Goal · Build a Plan as a Goal', action: 'b15-start', flow: 'plan', moves: ['[data-action="pd-build-goal"]'] },
   { name: 'Simple Goal · A future build is not a Goal yet', action: 'b15-start', flow: 'scheduled', moves: ['#pmOverlayRoot [data-action="sched-create-build"]'], max: 120000 }
 ];
-function check(name, pass, detail) { results.push({ name, pass: !!pass, detail: pass ? '' : String(detail == null ? '' : detail) }); if (!pass) console.log('FAIL  ' + name + (detail ? '  -- ' + detail : '')); }
+function check(name, pass, detail) { results.push({ name, phase, pass: !!pass, detail: pass ? '' : String(detail == null ? '' : detail), ...(phase === 'browser' ? { sizeContext: testGeometry() } : {}) }); if (!pass || phase === 'browser') console.log((pass ? 'PASS  ' : 'FAIL  ') + name + (!pass && detail ? '  -- ' + detail : '')); }
 const { Protocol, STATUS_WORD } = require(path.join(ROOT, 'wonderer-protocol.js'));
 const GE = require(path.join(ROOT, 'grill-protocol.js'));
 
@@ -333,7 +338,10 @@ async function pixelRatios(page, sels) {
     out[sel] = await page.evaluate(async ([b64, color, op]) => {
       const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
       const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d'); g.drawImage(img, 0, 0);
-      const m = /rgba?\(([^)]+)\)/.exec(color), p = m[1].split(/[ ,/]+/).filter(Boolean).map(Number), fg = { r: p[0], g: p[1], b: p[2] }, a = (p.length > 3 ? p[3] : 1) * op;
+      // Resolve computed CSS Color 4 inks through the browser too (PM7 tokens can compute to color(srgb ...)).
+      const inkCanvas = document.createElement('canvas'); inkCanvas.width = inkCanvas.height = 1;
+      const inkContext = inkCanvas.getContext('2d'); inkContext.fillStyle = color; inkContext.fillRect(0, 0, 1, 1);
+      const rgba = inkContext.getImageData(0, 0, 1, 1).data, fg = { r: rgba[0], g: rgba[1], b: rgba[2] }, a = rgba[3] / 255 * op;
       const lum = c => { const f = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }; return .2126 * f(c.r) + .7152 * f(c.g) + .0722 * f(c.b); };
       let min = 99;
       for (const fy of [0.35, 0.5, 0.65]) for (let i = 1; i <= 7; i++) {
@@ -353,13 +361,13 @@ async function browser() {
   for (const m of ['playwright', 'playwright-core']) { try { pw = await import(m); break; } catch (e) { } }
   if (!pw) { check('B0 a browser is available (playwright or playwright-core)', false, 'neither module resolves from ' + ROOT); return; }
   const chromium = pw.chromium || (pw.default && pw.default.chromium);
-  const cdp = opt('--cdp'), FILE = path.resolve(opt('--file') || path.join(ROOT, 'index.html'));
-  const b = cdp ? await chromium.connectOverCDP(cdp) : await chromium.launch({ headless: true, args: ['--allow-file-access-from-files', '--no-sandbox'] });
-  const ctx = cdp ? b.contexts()[0] : await b.newContext();
-  const page = cdp ? ctx.pages()[0] : await ctx.newPage();
+  const cdp = opt('--cdp');
+  const b = await launchGpuBrowser(chromium);
+  const ctx = b.contexts()[0];
+  const page = gpuPage(b);
   const errs = []; page.on('pageerror', e => errs.push(String(e && e.message || e)));
   await page.setViewportSize({ width: 1440, height: 900 });
-  const load = async () => { await page.goto(pathToFileURL(FILE).href); await page.waitForFunction(() => window.__PM56_BOOT_OK === true, null, { timeout: 30000 }); await page.waitForTimeout(1500); };
+  const load = async () => { await target.load(page); await target.resize(page, { width: 1440, height: 900 }); };
   const ev = (fn, a) => page.evaluate(fn, a);
   const act = (name, data) => ev(([n, d]) => { const b = document.createElement('button'); Object.assign(b.dataset, d || {}); window.PM56_EXT.run(n, b, new Event('click')); window.PM56_EXT.ctx().renderApp(); }, [name, data || {}]);
   const sleep = ms => page.waitForTimeout(ms);
@@ -383,9 +391,9 @@ async function browser() {
     /* WGV_ONLY=r1: the round 1 checks alone (a quick local loop) */
     if (process.env.WGV_ONLY === 'r1') { await reviewRound1({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=rx: the recorded-examples checks alone (2026-10-21) */
-    if (process.env.WGV_ONLY === 'rx') { await page.setViewportSize({ width: 1440, height: 900 }); await recordedExamples({ page, ev, act, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
+    if (process.env.WGV_ONLY === 'rx') { await target.resize(page, { width: 1440, height: 900 }); await recordedExamples({ page, ev, act, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=ax: every other Demo Studio example plays on its own (2026-10-22) */
-    if (process.env.WGV_ONLY === 'ax') { await page.setViewportSize({ width: 1440, height: 900 }); await otherExamples({ page, ev, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
+    if (process.env.WGV_ONLY === 'ax') { await target.resize(page, { width: 1440, height: 900 }); await otherExamples({ page, ev, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* sheets: the shelf, the plate */
     for (const [kind, who] of [['crew', 'The Coordinator'], ['chat_room', 'The Moderator'], ['brainstorm', 'The Coordinator']]) {
       await ev(k => { const C = window.PM56_COLLAB, c = window.PM56_EXT.ctx(); c.switchThread('query'); C.openConfigure(k); const d = C.draft(); d.purpose = 'Make search easier to reach.'; d.wonderer = true; d.grillMe = true; c.openDialog({ type: 'collab-configure' }); c.renderOverlays(); }, kind);
@@ -551,8 +559,10 @@ async function browser() {
     check('APR-072b the Plan is written after Confirm', written);
     await reviewRound1({ page, ev, act, sleep, startSheet, answerAll });
     await reviewRound2({ page, ev, act, sleep, startSheet, answerAll });
-    await recordedExamples({ page, ev, act, sleep });
-    await otherExamples({ page, ev, sleep });
+    if (process.env.WGV_ONLY !== 'core') {
+      await recordedExamples({ page, ev, act, sleep });
+      await otherExamples({ page, ev, sleep });
+    }
     check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | '));
   } catch (e) { check('B0 the browser pass ran to the end', false, e && e.stack || e); }
   if (cdp) await b.close().catch(() => {}); else await b.close();
@@ -598,12 +608,12 @@ const AX_EXAMPLES = [
 async function otherExamples({ page, ev, sleep }) {
   const SCALE = +(process.env.AX_SCALE || 3), only = process.env.AX_ONLY ? new RegExp(process.env.AX_ONLY, 'i') : null;
   const width = +(process.env.AX_WIDTH || 1440);
-  if (width !== 1440) await page.setViewportSize({ width, height: 900 });
+  if (width !== 1440) await target.resize(page, { width, height: 900 });
   for (const x of AX_EXAMPLES) {
     if (only && !only.test(x.name + ' ' + x.action + ' ' + x.flow)) continue;
     const label = 'AX ' + x.name + (width !== 1440 ? ' @' + width : '');
     /* a fresh page for each example: what one leaves behind (a schedule, an open document) never starts the next */
-    await page.goto(page.url()); await page.waitForFunction(() => window.__PM56_BOOT_OK === true, null, { timeout: 30000 }); await sleep(600);
+    await target.load(page); await sleep(600);
     await ev(k => window.PM56_CLOCK.setScale(k), x.scale || SCALE);
     /* the recorder: guide sentences (motion time), guide buttons, trusted clicks, and when anything on screen last changed */
     await ev(() => {
@@ -626,8 +636,7 @@ async function otherExamples({ page, ev, sleep }) {
       window.__axStop = () => { mo.disconnect(); clearInterval(iv); document.removeEventListener('click', onClick, true); read(); };
     });
     /* Start, the way a person does: Demo Studio, the example's trigger (and its setup sheet's Start) */
-    await ev(() => { const b = document.createElement('button'); b.dataset.action = 'open-demo'; document.body.appendChild(b); b.click(); b.remove(); }); await sleep(300);
-    const trig = page.locator('.demo-dialog .demo-trigger[data-action="' + x.action + '"][data-flow="' + x.flow + '"]').first();
+    const trig = await target.demoTrigger(page, x.action, x.flow);
     if (!(await trig.count())) { check(label + ': is in Demo Studio', false, x.action + ' ' + x.flow); continue; }
     await trig.scrollIntoViewIfNeeded(); await trig.click();
     if (x.sheet) { await page.waitForFunction(() => !!document.querySelector('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button'), null, { timeout: 8000 }).catch(() => {}); await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click(); }
@@ -965,9 +974,9 @@ async function recordedExamples({ page, ev, act, sleep }) {
   await until(() => true, null, 300); id = await runOf('chat_room');
   await until(id => { const r = window.PM56_COLLAB.run(id), s = r.chatRoom; return s.roundsSoFar === 2 && window.PM56_ROOM.waitsFor(r) === 'last'; }, id, 60000); await fast(1); await sleep(600);
   await showAll('Chat Room at the end of its rounds (attention card, Jared’s report)', id);
-  await page.setViewportSize({ width: 480, height: 900 }); await sleep(600);
+  await target.resize(page, { width: 480, height: 900 }); await sleep(600);
   await showAll('Chat Room at the end of its rounds, 480 px', id);
-  await page.setViewportSize({ width: 1440, height: 900 }); await sleep(600);
+  await target.resize(page, { width: 1440, height: 900 }); await sleep(600);
   await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1000);
   await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'); if (i && i.checked) i.click(); }); await sleep(300);
   await sheetStart(); await fast(SCALE);
@@ -1224,7 +1233,7 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   const crewThread = await ev(id => window.PM56_COLLAB.run(id).threadId, (await ev(() => (window.PM56_COLLAB.runs().filter(r => r.kind === 'crew' && r.wonderer && r.status === 'completed').pop() || {}).id)));
   const low = {};
   for (const theme of ['basic-dark', 'basic-light', 'glass-light', 'friendly-light', 'retro-dark', 'nier-dark', 'nier-light']) {
-    await ev(t => window.PM56_DEMO.setTheme(t), theme); await sleep(400);
+    await target.theme(page, theme); await sleep(400);
     await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(700);
     const a = await measure(['.qs-ask-opt.is-on .qs-rec', '.qs-grill-note', '.qs-grill-meta']);
     await ev(t => { const c = window.PM56_EXT.ctx(); c.switchThread(t); c.renderApp(); }, crewThread); await sleep(700);
@@ -1233,7 +1242,7 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
     Object.entries({ ...a, ...b }).forEach(([k, v]) => { if (v < 4.5) low[theme + ' ' + k] = v; });
     low['n:' + theme] = Object.keys({ ...a, ...b }).length;
   }
-  await ev(() => window.PM56_DEMO.setTheme('basic-dark'));
+  await target.theme(page, 'basic-dark');
   const misses = Object.entries(low).filter(([k]) => !/^n:/.test(k)), counted = Object.entries(low).filter(([k]) => /^n:/.test(k)).map(([k, v]) => v);
   check('R1-R10 required words and the Recommended mark meet 4.5:1 on their real background in seven themes (' + counted.join('/') + ' measured)', !misses.length && counted.every(n => n >= 6), JSON.stringify(Object.fromEntries(misses)));
 }
@@ -1247,7 +1256,7 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   const roundOpen = () => until(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'), null, 20000);
   const thread = () => ev(() => window.PM56_WG_DEMOS.snapshot().threadId);
   const agreedOf = t => ev(t => { const s = window.PM56_WG.threadSession(t), a = window.PM56_WG.grill.agreed(s); return { st: s.status, ended: a.endedBy, dec: a.decisions.map(d => d.id + '=' + d.answer + '/' + d.took), open: a.open.map(o => o.id + ':' + o.why), asked: a.counter.asked }; }, t);
-  const reset = async () => { await ev(() => { const b = document.createElement('button'); b.dataset.action = 'reset-all'; document.body.appendChild(b); b.click(); b.remove(); }); await sleep(900); };
+  const reset = async () => { await ev(() => { const b = document.createElement('button'); b.dataset.action = 'reset-all'; (window.PM56_HOST?.root() || document.body).appendChild(b); b.click(); b.remove(); }); await sleep(900); };
   const confirmThread = async (tid, ms = 40000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { const st = await ev(t => { const s = window.PM56_WG.threadSession(t); return s ? s.status : ''; }, tid); if (st === 'confirmed') return true; if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]')) { await sleep(700); continue; } if (await click('.qs-grill [data-action="qs-accept-round"]')) { await sleep(900); continue; } await sleep(400); } return false; };
   const acceptLabel = () => ev(() => { const b = document.querySelector('.qs-grill [data-action="qs-accept-round"]'); return b ? b.textContent.replace(/\s+/g, ' ').trim() : ''; });
 
@@ -1344,11 +1353,16 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   await until(() => !!document.querySelector('.transcript .wg-card .wg-lead-src'), null, 40000);
   await fast(0.01);
   const crewT = await thread();
+  // Arm Deep Plan's interval at its normal cadence before freezing pixels.
+  // Its interval uses ms(450) once; starting at .01 leaves a 45s interval
+  // after restoring scale 1 and can outlast answerAll's genuine fact wait.
+  await fast(1);
   await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(800);
   const dpT = await thread();
-  const low4 = {}, n4 = {};
+  await fast(0.01);
+  const low4 = {}, n4 = {}, pixels4 = {};
   for (const look of ['basic-dark', 'basic-light', 'glass-dark', 'glass-light', 'friendly-dark', 'friendly-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light']) {
-    await ev(x => window.PM56_DEMO.setTheme(x), look); await sleep(400);
+    await target.theme(page, look); await sleep(400);
     await ev(x => window.PM56_DEMO.selectThread(x), dpT); await sleep(500);
     if (!(await ev(() => !!document.querySelector('.qs-grill')))) await act('wg-open-round', { key: 'thread:' + dpT });
     await sleep(600);
@@ -1359,11 +1373,12 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
     await ev(() => { const e = document.querySelector('.transcript .wg-card'); if (e) e.scrollIntoView({ block: 'start' }); }); await sleep(400);
     Object.assign(a, await pixelRatios(page, ['.transcript .wg-card .wg-lead-src', '.transcript .wg-card .wg-pass-title .wg-fine', '.transcript .wg-card .wg-who', '.transcript .wg-card-foot .wg-fine']));
     Object.entries(a).forEach(([k, v]) => { if (v < 4.5) low4[look + ' ' + k] = v; });
-    n4[look] = Object.keys(a).length;
+    n4[look] = Object.keys(a).length; pixels4[look] = a;
   }
-  await ev(() => window.PM56_DEMO.setTheme('basic-dark')); await fast(1);
+  await target.theme(page, 'basic-dark'); await fast(1);
   check('R2-4 required words read 4.5:1 or better on the painted pixels in ten looks (the round bar over its tint, the map frontier, the source line, who asked for a pass)',
     !Object.keys(low4).length && Object.values(n4).every(n => n >= 8), JSON.stringify({ low4, n4 }));
+  results[results.length - 1].measured = { ratios: pixels4, counts: n4 };
 
   /* D1 (ruling 18): the map draws its dependencies, has no tally of its own, keeps the question in view at 1440 x 900,
      and marks the question on screen; in What we agreed it gives the structure without repeating the answers */
@@ -1377,12 +1392,12 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   await click('.qs-grill [data-action="qs-grill-map"]'); await sleep(300);
   await answerAll(40000);
   await click('.wg-agreed[data-state="open"] .wg-agreed-map > summary'); await sleep(500);
-  const dd1b = await ev(() => { const a = document.querySelector('.wg-agreed[data-state="open"]'), rows = [...a.querySelectorAll('.wg-tree-li[data-state="settled"]')]; return { settled: rows.length, repeat: rows.filter(li => li.querySelector('.wg-tree-d')).length, guides: a.querySelectorAll('.wg-tg').length, tally: !!a.querySelector('.wg-tree-tally') }; });
+  const dd1b = await ev(() => { const a = document.querySelector('.wg-agreed[data-state="open"]'); if (!a) return { missing: true }; const rows = [...a.querySelectorAll('.wg-tree-li[data-state="settled"]')]; return { settled: rows.length, repeat: rows.filter(li => li.querySelector('.wg-tree-d')).length, guides: a.querySelectorAll('.wg-tg').length, tally: !!a.querySelector('.wg-tree-tally') }; });
   check('R2-D1 the design tree draws its dependencies, has no tally of its own, keeps the question in view at 1440 x 900 and marks it; What we agreed shows the structure without repeating answers',
     !dd1.tally && dd1.guides >= 2 && dd1.current === 1 && dd1.title && dd1.option && dd1b.settled >= 4 && dd1b.repeat === 0 && dd1b.guides >= 2 && !dd1b.tally, JSON.stringify({ dd1, dd1b }));
   /* D2 (ruling 19): eight rim dots, a caption, every lit angle named without hover, the status marks in the gutter */
   await ev(x => window.PM56_DEMO.selectThread(x), crewT); await sleep(500); await click('.qs-grill .qs-ask-x'); await sleep(300);
-  const dd2 = await ev(() => { const c = document.querySelector('.transcript .wg-card'), leads = c.querySelectorAll('.wg-lead');
+  const dd2 = await ev(() => { const c = document.querySelector('.transcript .wg-card'); if (!c) return { missing: true }; const leads = c.querySelectorAll('.wg-lead');
     return { dots: c.querySelectorAll('.wg-compass .wg-cmp-ray circle').length, lit: c.querySelectorAll('.wg-compass .wg-cmp-ray[data-on="1"]').length, cap: (c.querySelector('.wg-cmp-cap') || {}).textContent || '', named: c.querySelectorAll('.wg-cmp-legend .wg-cmp-key').length, leads: leads.length, gutter: c.querySelectorAll('.wg-lead-n > .wg-st-mark').length, inline: c.querySelectorAll('.wg-lead-status .wg-st-mark').length }; });
   check('R2-D2 the compass draws all eight rim positions, captions "N of 8 angles", names every lit angle without hover, and each lead’s status mark sits in its number gutter',
     dd2.dots === 8 && dd2.lit >= 1 && new RegExp('^' + dd2.lit + ' of 8 angles$').test(dd2.cap) && dd2.named === dd2.lit && dd2.gutter === dd2.leads && dd2.leads >= 3 && dd2.inline === 0, JSON.stringify(dd2));
@@ -1445,33 +1460,32 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   await fast(1);
 
   /* 9 (Opus N2): at phone width the safety note stays, the tally goes, and the foot is one row with "Accept all" */
-  await page.setViewportSize({ width: 400, height: 860 }); await sleep(500);
+  await target.resize(page, { width: 400, height: 860 }); await sleep(500);
   await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(900);
-  const f9 = await ev(() => {
-    const card = document.querySelector('.qs-grill'), note = card.querySelector('.qs-grill-note'), tally = card.querySelector('.qs-grill-tally'), acc = card.querySelector('[data-action="qs-accept-round"]');
-    const vis = el => !!el && getComputedStyle(el).display !== 'none' && el.getClientRects().length > 0;
-    const tops = [...card.querySelectorAll('.qs-grill-foot > button')].filter(vis).map(b => Math.round(b.getBoundingClientRect().top));
-    return { note: vis(note), tally: vis(tally), accept: acc ? acc.innerText.replace(/\s+/g, ' ').trim() : '', rows: new Set(tops.map(x => Math.round(x / 8))).size, tops };
-  });
-  await page.setViewportSize({ width: 1440, height: 900 }); await sleep(400);
+  const f9 = await ev(grillFooterGeometry);
+  f9.sizeContext = testGeometry();
+  await target.resize(page, { width: 1440, height: 900 }); await sleep(400);
   check('R2-9 at 400 px the “nothing acts until you confirm” note stays, the tally hides, and the foot is one row with “Accept all”', f9.note && !f9.tally && f9.accept === 'Accept all' && f9.rows === 1, JSON.stringify(f9));
+  results[results.length - 1].measured = f9;
+  results[results.length - 1].sizeContext = f9.sizeContext;
 
   /* 10 (Opus N3): the shelf never cuts off "Never votes." or any helper: Retro at 1440 and 400, and 460-519 px */
   const shelf = () => ev(() => [...document.querySelectorAll('#pmOverlayRoot .pmx-spec')].map(sp => { const h = sp.querySelector('.pmx-help'), b = sp.querySelector('.pmx-spec-copy > b'), lh = parseFloat(getComputedStyle(b).lineHeight) || 18;
     return { name: b.textContent, cut: !!h && (h.scrollWidth > h.clientWidth + 1 || getComputedStyle(h).textOverflow === 'ellipsis' && getComputedStyle(h).whiteSpace === 'nowrap'), help: h ? h.textContent : '', nameClip: b.scrollWidth > b.clientWidth + 1, nameLines: Math.round(b.getBoundingClientRect().height / lh) }; }));
   const f10 = {};
   for (const [look, w] of [['retro-light', 1440], ['retro-dark', 1440], ['retro-light', 400], ['retro-dark', 400], ['basic-dark', 460], ['basic-dark', 480], ['basic-dark', 500], ['basic-dark', 519]]) {
-    await page.setViewportSize({ width: w, height: 900 }); await ev(x => window.PM56_DEMO.setTheme(x), look); await sleep(300);
+    await target.resize(page, { width: w, height: 900 }, 'window'); await target.theme(page, look); await sleep(300);
     await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1300);
     f10[look + '@' + w] = await shelf();
     await ev(() => { const c = window.PM56_EXT.ctx(); c.state.dialog = null; c.renderOverlays(); });
   }
-  await page.setViewportSize({ width: 1440, height: 900 }); await ev(() => window.PM56_DEMO.setTheme('basic-dark')); await sleep(300);
+  await target.resize(page, { width: 1440, height: 900 }); await target.theme(page, 'basic-dark'); await sleep(300);
   const bad10 = Object.entries(f10).filter(([k, v]) => !v.length || v.some(x => x.cut || x.nameClip || x.nameLines > 1) || !v.some(x => /Never votes\./.test(x.help))).map(([k, v]) => k + ' ' + JSON.stringify(v));
   check('R2-10 the shelf never cuts off a helper (“Never votes.” whole in Retro at 1440 and 400) and no name is clipped or wrapped at 460-519 px', !bad10.length, bad10.join(' | ').slice(0, 900));
 }
-if (argv.includes('--browser')) await browser();
+if (argv.includes('--browser')) { phase = 'browser'; await browser(); }
 const failed = results.filter(r => !r.pass);
-console.log('wonderer-grill-verify: ' + results.length + ' checks, ' + failed.length + ' failed');
-if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify({ checks: results.length, failed: failed.length, results }, null, 2));
+const counts = Object.fromEntries(['node', 'browser'].map(phase => [phase, { checks: results.filter(r => r.phase === phase).length, failed: failed.filter(r => r.phase === phase).length }]));
+console.log('wonderer-grill-verify: ' + results.length + ' checks, ' + failed.length + ' failed (' + counts.node.checks + ' node, ' + counts.browser.checks + ' browser)');
+if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify({ page: target.kind, file: target.file, checks: results.length, failed: failed.length, counts, results }, null, 2));
 process.exitCode = failed.length ? 1 : 0;

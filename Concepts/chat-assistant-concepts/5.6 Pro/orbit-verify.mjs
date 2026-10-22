@@ -37,6 +37,7 @@
  *   - the trail reader measures the painted tube (.nx-c) when there is one.
  */
 import { chromium } from 'playwright';
+import { launchChatBrowser, testGeometry } from './tests/chat-target.mjs';
 import path from 'path';
 import fs from 'fs';
 
@@ -49,8 +50,8 @@ const OUT = arg('--json', null);
 
 const results = [];
 let cur = null;
-function ok(label, detail) { results.push({ label, pass: true, detail: detail ?? null, group: cur }); }
-function bad(label, detail) { results.push({ label, pass: false, detail: detail ?? null, group: cur }); }
+function ok(label, detail) { results.push({ label, pass: true, sizeContext: testGeometry(), detail: detail ?? null, group: cur }); }
+function bad(label, detail) { results.push({ label, pass: false, sizeContext: testGeometry(), detail: detail ?? null, group: cur }); }
 function check(label, cond, detail) { (cond ? ok : bad)(label, detail); return cond; }
 async function safe(label, fn) {
   cur = label;
@@ -212,7 +213,7 @@ async function liveNodeClaims(page, nier) {
 
 /* ---- setup ---------------------------------------------------------- */
 if (!fs.existsSync(FILE)) { console.error('orbit-verify: no such file ' + FILE); process.exit(2); }
-const browser = await chromium.launch();
+const browser = await launchChatBrowser(chromium);
 const consoleNoise = [];
 
 /* Chat WOW: the lab controls (play/pause, step, complete, reset, history) sit
@@ -240,10 +241,11 @@ async function newPage(opts = {}) {
    whole reason this take uses a container query. Drag the real divider rather
    than resizing the viewport, so the measurement exercises the real constraint. */
 async function setEditorPct(page, pct) {
-  const h = page.locator('[data-resize="editor"]').first();
+  const hosted = await page.evaluate(() => PM56_TEST.kind === 'pm7');
+  const h = page.locator(hosted ? '#chatResizer' : '[data-resize="editor"]').first();
   const b = await h.boundingBox();
   if (!b) return false;
-  const target = 1440 * (pct / 100);
+  const target = hosted ? await page.evaluate(pct => document.querySelector('#chatPanel').getBoundingClientRect().right - Math.min(760, Math.max(400, 1440 * (1 - pct / 100))), pct) : 1440 * (pct / 100);
   await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
   await page.mouse.down();
   await page.mouse.move(target, b.y + b.height / 2, { steps: 12 });
@@ -746,7 +748,7 @@ await safe('Orbit: renders in all 8 themes with no overflow and no console noise
   const themes = await page.evaluate(() => window.PM56_DATA.themes.map(t => t.id));
   const bad_ = [], claims = { rim: [], core: [], band: [], card: [] };
   for (const t of themes) {
-    await page.evaluate(id => window.PM56_DEMO.setTheme(id), t);
+    await page.evaluate(id => window.PM56_TEST.setTheme(id), t);
     await orbit(page, 7);
     /* the live node's four pixel claims (header), read unpinned: a pinned
        node takes the open look on main (an earlier section left node 7 pinned;
@@ -776,18 +778,21 @@ await safe('Orbit: renders in all 8 themes with no overflow and no console noise
         hit: n === el || n.contains(el),
         inViewport: b.top >= 0 && b.bottom <= window.innerHeight,
         escapesCard: sr.right > card.right + 1 || sr.left < card.left - 1,
-        pageOverflow: document.body.scrollWidth > window.innerWidth + 1
+        hostWidth: PM56_TEST.host.clientWidth,
+        hostScrollWidth: PM56_TEST.host.scrollWidth,
+        hostOverflow: PM56_TEST.host.scrollWidth > PM56_TEST.host.clientWidth + 1,
+        pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
       };
     });
     const px = await readPixels(page, clipOf(await page.locator('.orbit-node.live').boundingBox()));
-    if (m.missing || !m.hit || m.escapesCard || m.pageOverflow || px.inkShare < 0.05) bad_.push({ theme: t, ...m, px });
+    if (m.missing || !m.hit || m.escapesCard || m.hostOverflow || m.pageOverflow || px.inkShare < 0.05) bad_.push({ theme: t, ...m, px });
   }
   check('8 themes: node painted + hit-testable, nothing escapes the card, no page overflow', bad_.length === 0, bad_.length ? bad_ : themes.length + ' themes clean');
   check(themes.length + ' themes: (i) the live node\'s rim reads its phase hue (NieR: its declared rim)', claims.rim.length === 0, claims.rim.length ? claims.rim : themes.join(','));
   check(themes.length + ' themes: (ii) the live glyph has a fully-covered core in its phase hue (NieR: its ink)', claims.core.length === 0, claims.core.length ? claims.core : themes.join(','));
   check(themes.length + ' themes: (iii) the fill band is not the glyph hue, unless the node is filled with it', claims.band.length === 0, claims.band.length ? claims.band : themes.join(','));
   check(themes.length + ' themes: (iv) the live node\'s rim stands off the card (delta >= 40)', claims.card.length === 0, claims.card.length ? claims.card : themes.join(','));
-  await page.evaluate(() => window.PM56_DEMO.setTheme('basic-dark'));
+  await page.evaluate(() => window.PM56_TEST.setTheme('basic-dark'));
 });
 
 /* =====================================================================
@@ -1089,12 +1094,12 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
   const fileClick = await p12.evaluate(() => {
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-change"]');
     if (row) row.click();
-    const tab = document.querySelector('.editor-tab.active');
+    const editor = PM56_TEST.editor(), tab = editor.tab;
     return {
       row: !!row,
       path: row && row.dataset.path,
       isButton: row && row.tagName === 'BUTTON',
-      editor: tab && tab.dataset.id
+      editor: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }
     };
   });
   check('Read/edit row opens a file: editor tab',
@@ -1136,9 +1141,9 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
   });
   await p12.waitForTimeout(200);
   const mcpEd = await p12.evaluate(() => {
-    const tab = document.querySelector('.editor-tab.active');
-    const body = document.querySelector('.editor-body');
-    return { id: tab && tab.dataset.id, text: (body && body.textContent || '').slice(0, 240) };
+    const editor = PM56_TEST.editor(), tab = editor.tab;
+    const body = PM56_TEST.editor().body;
+    return { id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, text: (body && body.textContent || '').slice(0, 240) };
   });
   check('MCP row opens an MCP editor doc',
     String(mcpEd.id || '').startsWith('mcp:') && /postgres\.explain|MCP/i.test(mcpEd.text || ''), mcpEd);
@@ -1148,9 +1153,9 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
   const search = await p12.evaluate(() => {
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-work-doc"]');
     if (row) row.click();
-    const tab = document.querySelector('.editor-tab.active');
-    const body = document.querySelector('.editor-body');
-    return { row: !!row, id: tab && tab.dataset.id, hasQuery: !!(body && /Search/i.test(body.textContent)) };
+    const editor = PM56_TEST.editor(), tab = editor.tab;
+    const body = PM56_TEST.editor().body;
+    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, hasQuery: !!(body && /Search/i.test(body.textContent)) };
   });
   check('Search row opens a search editor doc',
     search.row && String(search.id || '').startsWith('search:') && search.hasQuery, search);
@@ -1160,9 +1165,9 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
   const fetch = await p12.evaluate(() => {
     const row = [...document.querySelectorAll('.transcript-inner .orbit-rows .wa-row')].find(r => r.dataset.action === 'open-work-doc' && String(r.dataset.id || '').startsWith('link:'));
     if (row) row.click();
-    const tab = document.querySelector('.editor-tab.active');
-    const body = document.querySelector('.editor-body');
-    return { row: !!row, id: tab && tab.dataset.id, host: !!(body && /postgresql\.org|Fetched/i.test(body.textContent)) };
+    const editor = PM56_TEST.editor(), tab = editor.tab;
+    const body = PM56_TEST.editor().body;
+    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, host: !!(body && /postgresql\.org|Fetched/i.test(body.textContent)) };
   });
   check('Fetch row opens a fetched-page editor doc',
     fetch.row && String(fetch.id || '').startsWith('link:') && fetch.host, fetch);
@@ -1177,8 +1182,8 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
   const art = await p12.evaluate(() => {
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-artifact"]');
     if (row) row.click();
-    const tab = document.querySelector('.editor-tab.active');
-    return { row: !!row, id: tab && tab.dataset.id };
+    const editor = PM56_TEST.editor(), tab = editor.tab;
+    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible } };
   });
   check('Artifact row opens dashboard-query or mermaid-runtime',
     art.row && (art.id === 'dashboard-query' || art.id === 'mermaid-runtime'), art);
@@ -1193,8 +1198,8 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
   const agent = await p12.evaluate(() => {
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-agent"]');
     if (row) row.click();
-    const tab = document.querySelector('.editor-tab.active');
-    return { row: !!row, id: tab && tab.dataset.id, agent: row && row.dataset.id };
+    const editor = PM56_TEST.editor(), tab = editor.tab;
+    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, agent: row && row.dataset.id };
   });
   check('Agent row opens a child-agent editor tab',
     agent.row && String(agent.id || '') === 'thread-' + agent.agent, agent);
@@ -1213,8 +1218,8 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     if (files) files.click();
     const row = document.querySelector('.transcript-inner .working-variant-8 .rail8-row[data-action="open-change"]');
     if (row) row.click();
-    const tab = document.querySelector('.editor-tab.active');
-    return { row: !!row, editor: tab && tab.dataset.id };
+    const editor = PM56_TEST.editor(), tab = editor.tab;
+    return { row: !!row, editor: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible } };
   });
   check('Step Rail file row opens a file: editor tab',
     railFile.row && String(railFile.editor || '').startsWith('file:'), railFile);
@@ -1256,8 +1261,8 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
   const orbitFile = await p12.evaluate(() => {
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-change"]');
     if (row) row.click();
-    const tab = document.querySelector('.editor-tab.active');
-    return { row: !!row, path: row && row.dataset.path, editor: tab && tab.dataset.id };
+    const editor = PM56_TEST.editor(), tab = editor.tab;
+    return { row: !!row, path: row && row.dataset.path, editor: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible } };
   });
   check('Multi Orbit B file row opens file: editor',
     orbitB.n >= 14 && orbitFile.row && String(orbitFile.editor || '').startsWith('file:'), { orbitB, orbitFile });
@@ -1276,8 +1281,8 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
   const orbitFetch = await p12.evaluate(() => {
     const row = [...document.querySelectorAll('.transcript-inner .orbit-rows .wa-row')].find(r => r.dataset.action === 'open-work-doc' && String(r.dataset.id || '').startsWith('link:'));
     if (row) row.click();
-    const tab = document.querySelector('.editor-tab.active');
-    return { row: !!row, id: tab && tab.dataset.id };
+    const editor = PM56_TEST.editor(), tab = editor.tab;
+    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible } };
   });
   check('Multi Orbit B fetch row opens a link doc',
     orbitFetch.row && String(orbitFetch.id || '').startsWith('link:'), orbitFetch);

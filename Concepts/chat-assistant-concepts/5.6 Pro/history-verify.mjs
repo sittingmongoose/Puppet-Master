@@ -33,6 +33,7 @@
  * item 4 was written for.
  */
 import {chromium} from 'playwright';
+import { launchChatBrowser, testGeometry, measureTestGeometry } from './tests/chat-target.mjs';
 import {pathToFileURL} from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -47,10 +48,10 @@ const SHOTS = (argv.includes('--shots') ? argv[argv.indexOf('--shots')+1] : null
 if(SHOTS) fs.mkdirSync(SHOTS,{recursive:true});
 
 const results=[]; let pass=0, fail=0;
-const check=(ok,label,detail)=>{ results.push({ok:!!ok,label,detail}); ok?pass++:fail++;
+const check=(ok,label,detail)=>{ results.push({ok:!!ok,label,detail,sizeContext:testGeometry()}); ok?pass++:fail++;
   console.log(`${ok?'PASS':'FAIL'}  ${label}${ok?'':'\n        '+JSON.stringify(detail)}`); };
 
-const browser=await chromium.launch({headless:true,args:['--disable-gpu','--allow-file-access-from-files','--no-sandbox']});
+const browser=await launchChatBrowser(chromium);
 const bctx=await browser.newContext({viewport:{width:1440,height:1080},deviceScaleFactor:1,
   reducedMotion: REDUCED ? 'reduce' : 'no-preference'});
 /* Item 3 needs the drawer wide (see the header).  The stored width is what
@@ -123,8 +124,18 @@ async function sec(label, fn){
    controls exist, and a thrown precondition would hide every assertion after
    it. */
 async function click(sel, i=0){
-  try{ await page.locator(sel).nth(i).click({timeout:4000}); return true; }
+  try{ await page.locator(sel).nth(i).click({timeout:4000}); await measureTestGeometry(page); return true; }
   catch(e){ check(false, `precondition: click ${sel}`, String((e&&e.message)||e)); return false; }
+}
+async function preparePinnedHistory(){
+  if(!await page.evaluate(()=>PM56_TEST.kind==='pm7')) return;
+  if(await page.evaluate(()=>PM56_DEMO.getState().historyMode==='closed')){
+    await click('.chat-header [data-action="toggle-history"]'); await page.waitForTimeout(500);
+  }
+  if(await page.evaluate(()=>document.body.getAttribute('data-ph-drawer')!=='pinned')){
+    await click('.history-flyout [data-action="ph-toggle-pin"]'); await page.waitForTimeout(500);
+  }
+  await measureTestGeometry(page);
 }
 
 /* =====================================================================
@@ -132,6 +143,10 @@ async function click(sel, i=0){
    ===================================================================== */
 await page.evaluate(()=>PM56_DEMO.setVariant(1,5));
 await page.waitForTimeout(400);
+/* The shared hosted setup closes history so other verifiers start on the chat.
+   This verifier's boot precondition is the real pinned drawer. Open it through
+   the user's header control before inspecting its paint and geometry. */
+await preparePinnedHistory();
 
 const NINE=['working','reviewing','waiting','idle','complete','blocked','failed','paused','recovering'];
 /* idle (Ready) and paused stand still in the status set (plan §3); every other
@@ -200,12 +215,12 @@ const {sigs, twins:twins0} = await signatures('');
 if(REDUCED){
   check(twins0.length===0,'Reduced motion: the nine silhouettes are pairwise distinct (basic-dark)',{twins:twins0});
   for(const th of ['retro-light','friendly-dark','friendly-light']){
-    await page.evaluate(t=>PM56_DEMO.setTheme(t),th);
+    await page.evaluate(t=>PM56_TEST.setTheme(t),th);
     await page.waitForTimeout(500);
     const r = await signatures(' ['+th+']');
     check(r.twins.length===0,`Reduced motion: the nine silhouettes are pairwise distinct in ${th}`,{twins:r.twins});
   }
-  await page.evaluate(()=>PM56_DEMO.setTheme('basic-dark'));
+  await page.evaluate(()=>PM56_TEST.setTheme('basic-dark'));
   await page.waitForTimeout(400);
 }
 
@@ -314,6 +329,7 @@ await sec('item3: row padding before/after', async()=>{
   await page.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO);
   await page.evaluate(()=>PM56_DEMO.setVariant(1,5));
   await page.waitForTimeout(400);
+  await preparePinnedHistory();
 });
 
 /* The floating flyout must actually WEAR the take, not collapse to take 0
@@ -429,6 +445,7 @@ await sec('item3: narrow hides status and time at rest', async()=>{
   await page.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO);
   await page.evaluate(()=>PM56_DEMO.setVariant(1,5));
   await page.waitForTimeout(500);
+  await preparePinnedHistory();
   const g=await page.evaluate(()=>{const f=document.querySelector('.history-flyout');
     return {w:f?Math.round(f.getBoundingClientRect().width):0, narrow:!!(f&&f.classList.contains('is-history-narrow')),
             ph:document.querySelectorAll('.history-flyout .ph-status').length};});
@@ -800,7 +817,7 @@ await sec('item4: pinned thread animates into Pinned', async()=>{
   await page.waitForTimeout(60);
   /* `state.menu` is the honest assertion for app.js:1506 — the DOM check has to
      tolerate the Wave 3 Menus module, which clones the closing menu into
-     document.body as a `.pm56-menu-ghost` for its exit animation. */
+     PM56_TEST.host as a `.pm56-menu-ghost` for its exit animation. */
   const flip = await page.evaluate(()=>({anims:window.__phAnims,
     menuState:PM56_DEMO.getState().menu,
     liveMenu:!!document.querySelector('#pmOverlayRoot .overlay-menu')}));
@@ -976,7 +993,7 @@ await sec('wave6: the pinned drawer resizes without breaking pin-in-place', asyn
   await page.waitForTimeout(350);
   const back = await page.evaluate(()=>({w:document.querySelector('.history-flyout').getBoundingClientRect().width,
     g:parseFloat(getComputedStyle(document.querySelector('.assistant-grid')).paddingLeft),
-    dflt:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-pin-w'))}));
+    dflt:parseFloat(getComputedStyle(PM56_TEST.kind==='pm7'?PM56_TEST.host:document.documentElement).getPropertyValue('--ph-pin-w'))}));
   check(back.dflt>0 && Math.abs(back.w-back.dflt)<1 && Math.abs(back.w-back.g)<1,
         'With no stored width the drawer returns to the --ph-pin-w default, gutter still coupled', back);
   await page.evaluate(()=>{const m=document.querySelector('.working-card [data-action="work-demo-menu"]'); if(m&&m.getAttribute('aria-expanded')!=='true') m.click(); const b=document.querySelector('[data-action="start-working"]'); if(b) b.click();});
@@ -994,15 +1011,15 @@ await sec('regression: every theme', async()=>{
   const ids=await page.evaluate(()=>(window.PM56_DATA&&window.PM56_DATA.themes||[]).map(t=>t.id));
   const bad=[];
   for(const id of (ids.length?ids:['basic-dark'])){
-    await page.evaluate(t=>PM56_DEMO.setTheme(t),id);
+    await page.evaluate(t=>PM56_TEST.setTheme(t),id);
     await page.waitForTimeout(160);
     const r=await page.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth,
-      bw:document.body.scrollWidth,drawer:!!document.querySelector('.history-flyout')}));
-    if(r.sw>r.cw+1||r.bw>r.cw+1||!r.drawer) bad.push({id,...r});
+      bw:PM56_TEST.host.scrollWidth,bcw:PM56_TEST.host.clientWidth,drawer:!!document.querySelector('.history-flyout')}));
+    if(r.sw>r.cw+1||r.bw>r.bcw+1||!r.drawer) bad.push({id,...r});
     if(SHOTS) await shot(`theme-${id}${REDUCED?'-reduced':''}.png`);
   }
   check(bad.length===0 && BASE_THEMES.every(t=>ids.includes(t)), `No overflow and the drawer paints in all ${ids.length} themes`, {bad,ids});
-  await page.evaluate(()=>PM56_DEMO.setTheme('basic-dark'));
+  await page.evaluate(()=>PM56_TEST.setTheme('basic-dark'));
 });
 await sec('regression: other seven takes', async()=>{
   // the other seven takes must still use renderStatus(), untouched
