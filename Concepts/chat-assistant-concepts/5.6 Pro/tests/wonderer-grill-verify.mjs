@@ -26,6 +26,7 @@ const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2), opt = n => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
 const results = [];
+const paintFailures = [];
 let phase = 'node';
 const target = chatTarget(argv);
 /* the Batch 14-17 and 19 examples (2026-10-22), added once their recordings land */
@@ -324,16 +325,17 @@ async function pixelRatios(page, sels) {
     /* a live chat may still scroll (a run posting, the transcript keeping to its end): clip where the text is when the
        shot is taken, and take it again if the text moved while it was being taken */
     const at = () => page.evaluate(() => { const el = document.querySelector('[data-pxc="1"]'); if (!el) return null; const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); for (let t = tw.nextNode(); t; t = tw.nextNode()) { if (!t.textContent.trim() || (t.parentElement && t.parentElement.closest('svg'))) continue; const rg = document.createRange(); rg.selectNodeContents(t); const r = [...rg.getClientRects()].find(r => r.width > 4 && r.height > 4); if (r) return { x: Math.max(0, r.left), y: Math.max(0, r.top) }; } return null; });
-    let png = null;
+    let png = null, attempts = [];
     for (let k = 0; k < 4; k++) {
       const p0 = await at(); if (!p0 || p0.y < 0 || p0.y + info.rect.h > vp.height) break;
       info.rect.x = p0.x; info.rect.y = p0.y;
       const shot = await page.screenshot({ clip: { x: info.rect.x, y: info.rect.y, width: Math.max(4, Math.min(info.rect.w, vp.width - info.rect.x)), height: Math.max(4, info.rect.h) }, animations: 'disabled' });
       const p1 = await at();
+      attempts.push({ before: p0, after: p1 });
       if (p1 && Math.abs(p1.x - p0.x) < 1 && Math.abs(p1.y - p0.y) < 1) { png = shot; break; }
       await page.waitForTimeout(250);
     }
-    if (!png) { await page.evaluate(() => { const st = document.getElementById('pxc-hide'); if (st) st.remove(); document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc')); }); out[sel] = 0; continue; }
+    if (!png) { await page.evaluate(() => { const st = document.getElementById('pxc-hide'); if (st) st.remove(); document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc')); }); paintFailures.push({ selector: sel, attempts, sizeContext: testGeometry() }); out[sel] = 0; continue; }
     await page.evaluate(() => { const st = document.getElementById('pxc-hide'); if (st) st.remove(); document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc')); });
     out[sel] = await page.evaluate(async ([b64, color, op]) => {
       const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
@@ -1263,8 +1265,10 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   const crewThread = await ev(id => window.PM56_COLLAB.run(id).threadId, (await ev(() => (window.PM56_COLLAB.runs().filter(r => r.kind === 'crew' && r.wonderer && r.status === 'completed').pop() || {}).id)));
   const low = {};
   for (const theme of ['basic-dark', 'basic-light', 'glass-light', 'friendly-light', 'retro-dark', 'nier-dark', 'nier-light']) {
+    await ev(() => window.PM56_CLOCK.setScale(1));
     await target.theme(page, theme); await sleep(400);
     await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(700);
+    await ev(() => window.PM56_CLOCK.setScale(.01));
     const a = await measure(['.qs-ask-opt.is-on .qs-rec', '.qs-grill-note', '.qs-grill-meta']);
     await ev(t => { const c = window.PM56_EXT.ctx(); c.switchThread(t); c.renderApp(); }, crewThread); await sleep(700);
     await ev(() => { const el = document.querySelector('.transcript .wg-card'); if (el) el.scrollIntoView({ block: 'start' }); }); await sleep(400);
@@ -1272,6 +1276,7 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
     Object.entries({ ...a, ...b }).forEach(([k, v]) => { if (v < 4.5) low[theme + ' ' + k] = v; });
     low['n:' + theme] = Object.keys({ ...a, ...b }).length;
   }
+  await ev(() => window.PM56_CLOCK.setScale(1));
   await target.theme(page, 'basic-dark');
   const misses = Object.entries(low).filter(([k]) => !/^n:/.test(k)), counted = Object.entries(low).filter(([k]) => /^n:/.test(k)).map(([k, v]) => v);
   check('R1-R10 required words and the Recommended mark meet 4.5:1 on their real background in seven themes (' + counted.join('/') + ' measured)', !misses.length && counted.every(n => n >= 6), JSON.stringify(Object.fromEntries(misses)));
@@ -1517,5 +1522,5 @@ if (argv.includes('--browser')) { phase = 'browser'; await browser(); }
 const failed = results.filter(r => !r.pass);
 const counts = Object.fromEntries(['node', 'browser'].map(phase => [phase, { checks: results.filter(r => r.phase === phase).length, failed: failed.filter(r => r.phase === phase).length }]));
 console.log('wonderer-grill-verify: ' + results.length + ' checks, ' + failed.length + ' failed (' + counts.node.checks + ' node, ' + counts.browser.checks + ' browser)');
-if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify({ page: target.kind, file: target.file, checks: results.length, failed: failed.length, counts, results }, null, 2));
+if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify({ page: target.kind, file: target.file, checks: results.length, failed: failed.length, counts, paintFailures, results }, null, 2));
 process.exitCode = failed.length ? 1 : 0;
