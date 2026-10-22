@@ -18,7 +18,7 @@ const pages = pageArg === 'both' ? ['standalone', 'pm7'] : [pageArg];
 const out = path.resolve(opt('--out', '/tmp/c56port-tests/suite')); mkdirSync(out, { recursive: true });
 const repo = path.resolve(CHAT_ROOT, '../../..'), summary = [];
 const runInfo = { startedAt: new Date().toISOString(), sourceHead: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim(), argv, targets: [] };
-const stages = ['wonderer', 'layout', 'hover', 'questions', 'turn', 'history', 'orbit', 'neon'];
+const stages = ['wonderer', 'layout', 'host', 'hover', 'questions', 'turn', 'history', 'orbit', 'neon'];
 const only = opt('--only', stages.join(',')).split(',');
 if (only.some(s => ![...stages, 'node'].includes(s))) throw new Error('Unknown --only stage');
 const activeChildren = new Set();
@@ -80,9 +80,10 @@ if (pages.length === 2 && argv.includes('--parallel-pages')) {
   writeFileSync(path.join(out, 'run.json'), JSON.stringify(runInfo, null, 2));
   for (const suite of only) {
     if (stopping) break;
+    if (suite === 'host' && page !== 'pm7') continue;
     const json = path.join(out, `${page}-${suite}.json`), log = path.join(out, `${page}-${suite}.log`);
     rmSync(json, { force: true });
-    const script = ['wonderer', 'node'].includes(suite) ? 'tests/wonderer-grill-verify.mjs' : suite === 'layout' ? 'tests/carry-over-layout-verify.mjs' : `${suite === 'hover' ? 'hover-tip' : suite}-verify.mjs`;
+    const script = ['wonderer', 'node'].includes(suite) ? 'tests/wonderer-grill-verify.mjs' : suite === 'layout' ? 'tests/carry-over-layout-verify.mjs' : suite === 'host' ? 'tests/host-contract-verify.mjs' : `${suite === 'hover' ? 'hover-tip' : suite}-verify.mjs`;
     const args = [script, '--page', page, '--file', file];
     if (suite === 'wonderer') args.push('--browser');
     if (suite !== 'hover') args.push(suite === 'history' ? '--out' : '--json', json);

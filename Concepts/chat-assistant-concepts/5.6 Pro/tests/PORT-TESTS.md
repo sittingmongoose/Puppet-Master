@@ -41,6 +41,8 @@ For an explicitly limited time budget, `--sweep --width-step 4` measures every f
 
 R2-4 still hides the measured text, captures the browser-painted background, composites the actual ink and opacity, and requires 4.5:1 in all ten looks. It runs again on PM7 after token changes.
 
+The PM7-only `host` stage guards editor visibility after collapse, Usage, background opens and close. It also checks the Home browser's remembered participant route for isolated send, insert, list, tray capture and the painted composer Send button after a destination change. Composer intake must restore the remembered route or refuse with feedback while preserving the existing draft and attachment; it cannot silently send to Assistant. Run it alone with `--only host`.
+
 The host adapter keeps one set of assertions:
 
 | Standalone | PMConcept7 |
