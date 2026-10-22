@@ -66,22 +66,98 @@ def main():
     final=p.evaluate('PM56_EXT.ctx().thread.messages.filter(m=>m.type==="text").map(m=>({id:m.id,body:m.body}))');ck('Canonical message identities preserved',[m['id'] for m in initial]==[m['id'] for m in final]);ck('Canonical bodies preserved except explicit revision exercise',all(x==y for i,(x,y) in enumerate(zip(initial,final)) if not(a.scenario=='stale' and i==1)))
     click('[data-action="b13-effective"]','Inspect effective-context assembly');ck('All six canonical messages restored',p.evaluate('PM56_LENS.effectiveHistory(PM56_EXT.ctx().thread.id).filter(m=>m.kind==="message").length')==6);shot('effective-restored');r['final_lens']=lens()
    else:
+    # (2026-10-22, DL-218 and 2026-10-21's recorded playback) the Wonderer examples are BrainStorm recordings that play
+    # on their own from Start BrainStorm: the Wonderer's leads are held until every blind proposal is in, the team
+    # decides each one in the Debate (the Coordinator records it with a reason), explored leads are researched in the
+    # Evidence round by a core helper, and Write the plan waits only for the team. The journey waits for the
+    # recording's own moments and makes only the user's moves: the Grill Me interview (leads), Check it (the one
+    # override), turning Grill Me on mid-run (dissent) and Write the plan. PM56_RECPLAY_HOLD does not hold this
+    # recording (it is the run's own clock, not PM56_RECPLAY), so nothing here is driven by hand.
+    js_lead='(id)=>{const r=PM56_BATCH13.currentRun(),l=PM56_WG.engine.lead(r,id);return l?JSON.parse(JSON.stringify(l)):null}'
+    def lead(i):return p.evaluate(js_lead,i)
+    def until(fn,arg=None,timeout=150000):p.wait_for_function(fn,arg=arg,timeout=timeout,polling=150)
+    def bs():return p.evaluate('(()=>{const r=PM56_BATCH13.currentRun();return {phase:r.brainstorm.phase,status:r.status,proposals:r.brainstorm.proposals.length,votes:r.brainstorm.votes.length,passes:r.wonderer.passes.map(x=>({n:x.n,status:x.status,by:x.by.kind})),gate:PM56_WONDERER.gateState(r)}})()')
+    def tap(sel,label):
+     # the Ask Card and What we agreed re-render as the interview moves; a press that meets a re-render is pressed again
+     for _ in range(6):
+      try:click(sel,label);return True
+      except Exception as e:
+       if 'not attached' not in str(e) and 'Timeout' not in str(e):raise
+       p.wait_for_timeout(250)
+     return False
+    def back():
+     if a.width<=1100 and p.locator('[data-action="return-to-chat"]').filter(visible=True).count():click('[data-action="return-to-chat"]','Return to chat')
+    def card_or_view(sel):
+     loc=p.locator(sel).filter(visible=True)
+     if not loc.count():back()
+     return sel
     before_effect=p.evaluate('PM56_COLLAB.effects()');before_runs=p.evaluate('PM56_COLLAB.runs().length');ck('Configuration is detached; opening does not start a run',not p.evaluate('PM56_BATCH13.currentRun()'))
-    ck('Wonderer checked additively',p.evaluate('PM56_COLLAB.draft().wonderer') is True);shot('configuration')
-    click('[data-action="collab-modal-commit"]','Start configured BrainStorm');snap=runsnap();ck('Run keeps four core roles and one dedicated specialist',len(snap['participants'])==5 and len(snap['brainstorm']['attempts'])==4 and sum(x.get('additiveRoleKind')=='wonderer' for x in snap['participants'])==1)
-    ck('Exactly one collaborative run admitted',p.evaluate('PM56_COLLAB.runs().length')==before_runs+1);ck('Local run creates no provider calls or usage charges',p.evaluate('PM56_COLLAB.effects().providerCalls')==before_effect['providerCalls'] and p.evaluate('PM56_COLLAB.effects().usageRecords')==before_effect['usageRecords']);click('[data-action="b13-open"]','Open leads and evidence');ck('Three connected hypotheses, none silently admitted',all(l['state']=='hypothesis' and not l['included'] and l['tether'] for l in runsnap()['wonderer']['leads']));ck('Unresearched include is disabled',p.locator('[data-action="b13-decide"][data-lead="fence"][data-kind="include"]').is_disabled());shot('initial-leads')
-    click('[data-action="b13-core"]','Play recorded core proposals and votes');click('[data-action="b13-research"][data-lead="fence"]','Research ordering sample')
+    ck('The Wonderer is on the team'+(' and Grill Me is on' if a.scenario=='leads' else ', Grill Me off'),p.evaluate('PM56_COLLAB.draft().wonderer') is True and p.evaluate('PM56_COLLAB.draft().grillMe')==(a.scenario=='leads'));shot('configuration')
+    click('[data-action="collab-modal-commit"]','Start BrainStorm');snap=runsnap();rid=snap['id'];wid=snap['wonderer']['participantId']
+    ck('Run keeps four core helpers and one Wonderer',len(snap['participants'])==5 and len(snap['brainstorm']['attempts'])==4 and sum(x.get('additiveRoleKind')=='wonderer' for x in snap['participants'])==1)
+    ck('Exactly one collaborative run admitted',p.evaluate('PM56_COLLAB.runs().length')==before_runs+1);ck('Local run creates no provider calls or usage charges',p.evaluate('PM56_COLLAB.effects().providerCalls')==before_effect['providerCalls'] and p.evaluate('PM56_COLLAB.effects().usageRecords')==before_effect['usageRecords'])
+    if a.scenario=='leads':
+     until('()=>!!document.querySelector(".qs-grill [data-action=\\"qs-accept-round\\"]")',timeout=20000);s=bs()
+     ck('Grill Me questions you at intake, before anyone drafts',s['phase']=='intake' and not p.evaluate('PM56_BATCH13.currentRun().brainstorm.attempts.some(x=>x.status==="completed")'));ck('Meanwhile the Wonderer explores its first pass',s['passes'][0]['status'] in ('exploring','held'));shot('grill-at-intake')
+     for _ in range(150):
+      if p.locator('.wg-agreed[data-state="open"] [data-action="wg-confirm"]').filter(visible=True).count():break
+      if p.locator('.qs-grill [data-action="qs-accept-round"]').filter(visible=True).count():tap('.qs-grill [data-action="qs-accept-round"]','Answer the Ask Card round (the recommended answers)')
+      else:p.wait_for_timeout(400)
+     ck('Confirm pressed',tap('.wg-agreed[data-state="open"] [data-action="wg-confirm"]','Confirm What we agreed: the blind proposals wait for it'))
+    until('()=>{const r=PM56_BATCH13.currentRun();return r.brainstorm.phase==="blind_proposals"&&r.brainstorm.attempts.some(x=>x.status==="completed")}')
+    s=bs();ck('While the helpers draft alone, the Wonderer\'s leads are held',s['passes'][0]['status']=='held' and p.evaluate('(()=>{const r=PM56_BATCH13.currentRun();return !r.wonderer.leads.some(l=>PM56_WG.engine.visible(r,l.passId))})()'));shot('leads-held')
+    until('()=>{const r=PM56_BATCH13.currentRun();return ["normalize","debate","evidence","vote","synthesis"].includes(r.brainstorm.phase)&&r.wonderer.passes[0].status!=="held"}')
+    ck('Every proposal is in, so the leads are released to the team',p.evaluate('(()=>{const r=PM56_BATCH13.currentRun();return r.brainstorm.attempts.every(x=>x.status==="completed")&&r.messages.some(m=>/released to the team/.test(m.body||""))})()'))
     if a.scenario=='dissent':
-     click('[data-action="b13-source-change"]','Change evidence while the check is pending',dwell=80);waitcheck('fence');ck('Pending outdated response rejected',any(x['reason']=='stale_evidence' for x in runsnap()['wonderer']['rejected']));ck('Outdated conclusion cannot become included',runsnap()['wonderer']['leads'][0]['state']=='stale' and not runsnap()['wonderer']['leads'][0]['included']);shot('outdated-source');click('[data-action="b13-research"][data-lead="fence"]','Research current artifact version')
-    waitcheck('fence');ck('Executed ordering sample records support without promotion',runsnap()['wonderer']['leads'][0]['state']=='researched' and not runsnap()['wonderer']['leads'][0]['included'])
-    click('[data-action="b13-source"][data-lead="fence"]','Inspect shared source artifact');ck('Exact source is visible','latestRequest' in p.locator('.b13-source').inner_text());shot('source-artifact');click('[data-action="close-editor"][data-id^="wonder-source:"]','Return to lead dispositions')
-    decide('fence','include','The current local sample supports the request fence. This is not a latency or live-worker result.')
-    click('[data-action="b13-research"][data-lead="speed"]','Check measurement availability');waitcheck('speed');ck('Missing measurements remain inconclusive',runsnap()['wonderer']['leads'][1]['evidence']['outcome']=='inconclusive');ck('Inconclusive result cannot be included as fact',p.locator('[data-action="b13-decide"][data-lead="speed"][data-kind="include"]').is_disabled());decide('speed','exclude','No target-device measurements exist. Exclude the claimed speed improvement.')
-    decide('fallback','user_decided','I choose a reversible rollout and accept the maintenance cost of the fallback.');p.wait_for_function('PM56_BATCH13.currentRun().wonderer.corePlayback.status==="completed"');snap=runsnap();r['pre_synthesis_core']=snap['brainstorm'];ck('Core round completed through existing protocol',snap['brainstorm']['phase']=='synthesis' and not snap['wonderer']['corePlayback']['errors']);ck('Core ballot contains no specialist vote',len(snap['brainstorm']['votes'])==4 and not any(v['participantId']==snap['wonderer']['participantId'] for v in snap['brainstorm']['votes']));ck('Core dissent preserved',len(snap['brainstorm']['dissent'])==(3 if a.scenario=='dissent' else 1));ck('Explicit user choice remains distinct from researched fact',snap['wonderer']['leads'][2]['state']=='user_decided' and snap['wonderer']['leads'][2]['evidence'] is None);ck('All leads deliberately disposed',p.evaluate('PM56_WONDERER.convergence(PM56_BATCH13.currentRun()).ok'))
+     # your optional move: turn Grill Me on mid-run from Open Panel; the Coordinator asks at the next chapter, only the vote waits
+     click('.transcript [data-run-id="'+rid+'"] [data-action="brainstorm-open-results"]','Open Panel');click('[data-action="collab-brainstorm-toggle-grill"][data-run="'+rid+'"]','Turn Grill Me on mid-run');back()
+     ck('Turning Grill Me on mid-run starts nothing now; it asks at the next chapter',p.evaluate('(()=>{const r=PM56_BATCH13.currentRun();return PM56_WG.grillOn(r)&&r.status==="running"})()'))
+     until('()=>!!document.querySelector(".qs-grill [data-action=\\"qs-accept-round\\"]")',timeout=60000);asked_at=bs()['phase']
+     ck('The Coordinator asks before the vote, and only the vote waits',asked_at in ('normalize','debate','evidence'));shot('midrun-grill')
+     p.wait_for_timeout(4000);s=bs();ck('The debate goes on while you are asked; the vote has not started',s['votes']==0 and s['phase'] in ('normalize','debate','evidence','vote'))
+     for _ in range(150):
+      if p.locator('.wg-agreed[data-state="open"] [data-action="wg-confirm"]').filter(visible=True).count():break
+      if p.locator('.qs-grill [data-action="qs-accept-round"]').filter(visible=True).count():tap('.qs-grill [data-action="qs-accept-round"]','Answer the mid-run Ask Card')
+      else:p.wait_for_timeout(400)
+     ck('The vote still has not started before your Confirm',bs()['votes']==0);ck('Confirm pressed',tap('.wg-agreed[data-state="open"] [data-action="wg-confirm"]','Confirm: the vote may go on'))
+    first=['fence','speed','instant','debounce'];until('(ids)=>{const r=PM56_BATCH13.currentRun();return ids.every(i=>{const l=PM56_WG.engine.lead(r,i);return l&&l.disposition})}',first)
+    d={i:lead(i)['disposition'] for i in first};r['first_pass_decisions']=d
+    ck('The team decides each first-pass lead in the Debate, with a reason',[d[i]['kind'] for i in first]==['explore','explore','use','set_aside'] and all(len(d[i].get('reason') or '')>10 for i in first))
+    ck('The Coordinator records each decision in the discussion',p.evaluate('(()=>{const r=PM56_BATCH13.currentRun();return ["explore","explore","use","set aside"].every((w,i)=>r.messages.some(m=>m.senderKind==="coordinator"&&new RegExp("^Lead "+(i+1)+": "+w+"\\\\.").test(m.body||"")))})()'))
+    if a.scenario=='leads':
+     until('()=>{const r=PM56_BATCH13.currentRun();return ["reorder","index","fulltext"].every(i=>{const l=PM56_WG.engine.lead(r,i);return l&&l.disposition})}')
+     ck('A helper asks for a second pass in the Debate; it queues behind the debate and its leads are decided on delivery',p.evaluate('(()=>{const r=PM56_BATCH13.currentRun(),q=r.wonderer.passes[1];return !!q&&q.by.kind==="participant"&&["reorder","index","fulltext"].map(i=>PM56_WG.engine.lead(r,i).disposition.kind).join()==="explore,use,set_aside"})()'))
+    click(card_or_view('[data-action="wg-open-leads"][data-run="'+rid+'"]'),'Open the Wonderer\'s leads');p.wait_for_selector('.b13-workspace')
+    ck('Wonderer workspace has no Technical details (card 8)',p.locator('.b13-workspace').evaluate('(e)=>!/Technical details/.test(e.textContent)'));ck('Nothing in the workspace asks you to decide a lead',p.locator('.b13-workspace [data-action="b13-decide"],.b13-workspace textarea').count()==0);shot('initial-leads')
+    # your one override: Check it sends a lead the team only used to research anyway
+    until('()=>{const r=PM56_BATCH13.currentRun();return ["evidence","vote","synthesis"].includes(r.brainstorm.phase)}');click('.b13-workspace [data-action="wg-check-it"][data-lead="instant"]','Check it: send the used lead to research anyway')
+    ck('Check it is your request in the discussion',p.evaluate('(()=>{const r=PM56_BATCH13.currentRun();return r.messages.some(m=>m.senderKind==="user"&&/^Check it: lead 3/.test(m.body||""))})()'))
+    until('()=>{const l=PM56_WG.engine.lead(PM56_BATCH13.currentRun(),"instant");return !!l.research&&["supported","not_supported"].includes(l.research.status)}',timeout=60000);x=lead('instant')['research']
+    ck('A core helper checks it, because you asked; the Wonderer never researches its own leads',x['via']=='check_it' and x['by'] and x['by'].get('id')!=wid and x['status']=='supported')
+    until('()=>{const r=PM56_BATCH13.currentRun();return r.brainstorm.phase==="synthesis"}',timeout=150000)
+    if a.scenario=='leads':
+     until('()=>{const r=PM56_BATCH13.currentRun(),q=r.wonderer.passes[2];return !!q&&q.status==="exploring"}',timeout=60000)
+     ck('While the last pass explores, Write the plan waits, for the team, not for you',not p.evaluate('PM56_WONDERER.gateState(PM56_BATCH13.currentRun()).ok') and p.locator('.b13-convergence [data-action="collab-brainstorm-synthesize"]').is_disabled());shot('write-the-plan-waits')
+    until('()=>PM56_WONDERER.gateState(PM56_BATCH13.currentRun()).ok',timeout=150000);snap=runsnap();r['pre_synthesis_core']=snap['brainstorm']
+    ck('Every lead has the team\'s decision and nothing is in research',all(l.get('disposition') and not (l.get('research') and l['research']['status'] in ('queued','running')) for l in snap['wonderer']['leads']))
+    fence,speed=lead('fence')['research'],lead('speed')['research']
+    ck('The ordering sample supports the fence, with its exact evidence version',fence['status']=='supported' and fence['evidence']['artifactId']==snap['wonderer']['artifactIds'][0] and 'version 1' in fence['evidence']['label'])
+    ck('Missing measurements leave the speed lead not supported',speed['status']=='not_supported' and 'No device measurements' in speed['note'])
+    ck('Explored leads are researched by core helpers, never by the Wonderer',all(l['research']['by']['id']!=wid for l in snap['wonderer']['leads'] if l.get('research')))
+    ck('Core ballot contains no Wonderer vote',len(snap['brainstorm']['votes'])==4 and not any(v['participantId']==wid for v in snap['brainstorm']['votes']))
+    ck('Core dissent preserved',len(snap['brainstorm']['dissent'])>=1);r['dissent']=snap['brainstorm']['dissent']
     if a.scenario=='dissent':
-     click('[data-action="b13-source-change"]','Change a source after inclusion');ck('Previously included result becomes stale',not runsnap()['wonderer']['leads'][0]['included']);ck('Stale evidence blocks synthesis',p.locator('.b13-convergence [data-action="collab-brainstorm-synthesize"]').is_disabled());click('[data-action="b13-research"][data-lead="fence"]','Recheck included source after its revision');waitcheck('fence');decide('fence','include','Version 3 confirms the ordering sample. The earlier result was correctly invalidated.')
-    p.locator('.b13-convergence').scroll_into_view_if_needed();shot('convergence');click('.b13-convergence [data-action="collab-brainstorm-synthesize"]','Create one Deep Plan through the Plan owner');snap=runsnap();ck('One Plan identity returned by existing owner',snap['brainstorm']['synthesis']['planId']=='brainstorm-plan-'+snap['id']);ck('Synthesis did not mutate core votes or dissent',snap['brainstorm']['votes']==r['pre_synthesis_core']['votes'] and snap['brainstorm']['dissent']==r['pre_synthesis_core']['dissent']);ck('Source process card remains in transcript',p.locator('[data-action="b13-open"]').count()>=1)
-    payload=p.evaluate('PM56_BRAINSTORM.planPayload(PM56_BATCH13.currentRun())');text=json.dumps(payload['blocks']);ck('Plan carries user-choice label and excluded uncertainty','Explicit user decision, not an established fact' in text and 'Excluded:' in text);ck('Included research has exact artifact-version reference',any(x['ref'].startswith('wonderer-evidence:') for x in payload['sourceRefs']));ck('No specialist claim replaces the core decision',payload['ledgerEntries'][1]['k']=='decision');ck('Duplicate synthesis returns same Plan identity',p.evaluate('PM56_BRAINSTORM.synthesize(PM56_BATCH13.currentRun().id).reused') is True);shot('deep-plan');r['final_run']=snap;r['plan_payload']=payload
+     ck('The rule beats the vote: the local option is chosen although the hosted one has more support',snap['brainstorm']['decision']['selectedProposalId']=='worker' and sum(v.get('proposalId')=='hosted' for v in snap['brainstorm']['votes'])>sum(v.get('proposalId')=='worker' for v in snap['brainstorm']['votes']))
+    ck('The guide says Write the plan is your move',p.evaluate('(()=>{const g=[...document.querySelectorAll(".b13-guide")].find(n=>n.getClientRects().length);return !!g&&/your move/.test(g.textContent)})()'))
+    p.locator('.b13-convergence').scroll_into_view_if_needed();shot('convergence');click('.b13-convergence [data-action="collab-brainstorm-synthesize"]','Write the plan: one Deep Plan through the Plan owner');snap=runsnap()
+    ck('One Plan identity returned by existing owner',snap['brainstorm']['synthesis']['planId']=='brainstorm-plan-'+snap['id']);ck('Writing the plan did not change core votes or dissent',snap['brainstorm']['votes']==r['pre_synthesis_core']['votes'] and snap['brainstorm']['dissent']==r['pre_synthesis_core']['dissent'])
+    payload=p.evaluate('PM56_BRAINSTORM.planPayload(PM56_BATCH13.currentRun())');text=json.dumps(payload['blocks'],ensure_ascii=False);leads_all=snap['wonderer']['leads']
+    ck('The plan lists every Wonderer lead with the team\'s decision',all(l['title'] in text for l in leads_all) and sum(e['k']=='wonderer_lead' for e in payload['ledgerEntries'])==len(leads_all) and all('the team:' in e['v'] for e in payload['ledgerEntries'] if e['k']=='wonderer_lead'))
+    lines=p.evaluate('PM56_WG.listingText(PM56_BATCH13.currentRun())');used=[l for l in leads_all if l['disposition']['kind']=='use'];r['plan_listing']=lines;r['final_run']=snap
+    ck('In the plan a lead the team used stays a hypothesis; one you had checked shows its result',len(used)>=1 and all(any(x.startswith(str(l['n'])+'. ') and x in text and (x.endswith('(a hypothesis, not a fact)') if not l.get('research') else (('→ Supported: ' in x or '→ Not supported: ' in x) and not x.endswith('(a hypothesis, not a fact)'))) for x in lines) for l in used))
+    ck('Supported research carries an exact evidence reference',any(x['ref'].startswith('wonderer-evidence:'+snap['id']+':fence') for x in payload['sourceRefs']))
+    ck('Duplicate Write the plan returns the same Plan identity',p.evaluate('PM56_BRAINSTORM.synthesize(PM56_BATCH13.currentRun().id).reused') is True);shot('deep-plan');r['final_run']=snap;r['plan_payload']=payload
+
    p.wait_for_timeout(350)
    geometry=p.evaluate('''()=>[...document.querySelectorAll('.transcript,.editor-content,.b13-workspace,.b13-source,.lens-inline')].filter(e=>e.getBoundingClientRect().width>0).map(e=>({selector:e.className,client:e.clientWidth,scroll:e.scrollWidth}))''');r['final_geometry']=geometry;ck('No horizontal overflow on tested visible surfaces',all(x['scroll']<=x['client']+1 for x in geometry));ck('No browser page errors',not r['errors']);ck('No undeclared extension action collisions',not p.evaluate('PM56_EXT.collisions||[]'))
    timing=p.evaluate('()=>{cancelAnimationFrame(__b13RAF);__b13Obs.disconnect();return {...__b13Timing,end:performance.now()}}');gaps=[y-x for x,y in zip(timing['raf'],timing['raf'][1:])];r['timing']={**timing,'median_raf_ms':statistics.median(gaps) if gaps else None,'p95_raf_ms':sorted(gaps)[int(len(gaps)*.95)] if gaps else None,'max_raf_ms':max(gaps) if gaps else None,'intervals_over_25ms':sum(v>25 for v in gaps)}
