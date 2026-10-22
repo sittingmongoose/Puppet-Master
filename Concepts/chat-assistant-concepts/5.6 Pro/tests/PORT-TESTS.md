@@ -18,6 +18,8 @@ node tests/carry-over-layout-verify.mjs --page pm7 --file /tmp/c56port-tests/PMC
 
 `WGV_ONLY=r2` limits the Wonderer verifier to R2-1–R2-10 and the round's design checks. `--wg-only core` runs the original Wonderer, Grill Me, R1, and R2 checks. The default also runs the newer recorded examples (`rx`) and other Demo Studio examples (`ax`); none are removed. Node-only checks remain `node tests/wonderer-grill-verify.mjs`.
 
+`--wg-only b2` isolates the initial Crew intake guards. Its pending-lookup fixture slows the recorded clock after Start, then restores normal speed once the lookup line appears so the recording's own fact timer resolves it. It never injects a fact or bypasses a gate. Hosted disabled controls must remain inert under a real click, including when PM7 makes them keyboard-focusable with ARIA.
+
 Record the integrated Crew, Room and BrainStorm examples at their readable real-time pace:
 
 ```sh

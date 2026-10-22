@@ -458,15 +458,16 @@ async function browser() {
     }
     /* the Crew */
     // Keep the recorded fact pending while the precondition reads run, then let
-    // its real timer finish once the lookup line has actually been painted.
+    // its real timer finish once the lookup line has appeared in the chat.
     await ev(() => { PM56_CLOCK.setScale(1); window.PM56_WG_DEMOS.start('crew'); }); await sleep(900); await startSheet(true);
-    const crew = await ev(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = window.PM56_COLLAB.run(s.runId); return { id: r.id, grill: r.config.grill_me_enabled, parts: r.participants.map(p => p.additiveRoleKind), q: document.querySelector('.qs-grill-bar') ? document.querySelector('.qs-grill-bar').textContent : '', pre: [...document.querySelectorAll('.qs-ask-opt.is-on .qs-rec')].length }; });
+    const crew = await ev(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = window.PM56_COLLAB.run(s.runId); return { id: r.id, grill: r.config.grill_me_enabled, facts: r.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })), parts: r.participants.map(p => p.additiveRoleKind), q: document.querySelector('.qs-grill-bar') ? document.querySelector('.qs-grill-bar').textContent : '', pre: [...document.querySelectorAll('.qs-ask-opt.is-on .qs-rec')].length }; });
     check('B2 a Crew with Grill Me on adds nobody', crew.grill === true && !crew.parts.some(k => /grill/.test(k)) && crew.parts.filter(k => k === 'wonderer').length === 1, JSON.stringify(crew.parts));
     check('B2b the round is the questionnaire, the Coordinator grilling, the recommended answer preselected', /The Coordinator is grilling you/.test(crew.q) && crew.pre === 1, crew.q);
     const split = await ev(id => window.PM56_CREW.claim(id, 'normalize', { epoch: window.PM56_COLLAB.run(id).stopEpoch, sourceHash: window.PM56_COLLAB.run(id).crew.input.sourceHash }), crew.id);
     check('B2c the split waits for Confirm', split.error === 'grill_me_waits_for_confirm', JSON.stringify(split));
     const crewAns = await answerAll(40000, true);
     check('B2e grilling waited on a lookup instead of jumping to What we agreed', crewAns.waited, JSON.stringify(crewAns));
+    results.at(-1).measured = { before: crew.facts, ...crewAns };
     const agreed = await ev(() => { const a = document.querySelector('.wg-agreed[data-state="open"]'); return a ? { rows: a.querySelectorAll('.wg-agreed-row').length, confirm: !!a.querySelector('[data-action="wg-confirm"]'), keep: !!a.querySelector('[data-action="wg-keep-going"]') } : null; });
     check('B2d What we agreed lists every decision, with Confirm and Keep going', agreed && agreed.rows === 5 && agreed.confirm && agreed.keep, JSON.stringify(agreed));
     if (process.env.WGV_ONLY === 'b2') { check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); await b.close(); return; }
