@@ -35,6 +35,7 @@ The layout pass measures Crew and Room sheets in all ten looks at 400, 420, 440,
 | CO-PLATE-EDGE | At 480 px, every completed Crew plate label (SVG text and foreignObject HTML fragments) is at least 12 px from both plate sides; the “got one checked result” specimen must be painted. |
 | CO-PLATE-LINE | Every label clears every plate stroke by 8 px, including paper outlines, hatch boxes and floor marks, following pmx-verify's geometry set. |
 | CO-PLATE-AFTER | At 480 px, “after both” clears its dependency line by at least 8 px. Missing specimens fail. |
+| CO-FONT | Hosted NieR sheet/run-view text uses PM NieR Sans, code uses PM NieR Mono, and each used Latin face is loaded. The standalone keeps its own font contract. |
 
 R2-4 still hides the measured text, captures the browser-painted background, composites the actual ink and opacity, and requires 4.5:1 in all ten looks. It runs again on PM7 after token changes.
 
@@ -50,6 +51,6 @@ The host adapter keeps one set of assertions:
 
 The adapter reads host state and invokes host APIs. Column measurements allow the host's 1 px internal hairline. Overflow checks compare the chat host's scroll width with its own client width and independently check document overflow. The adapter does not create fake editor tabs. `--cdp` attaches to a caller-owned GPU session; callers stop it. Without it, the helper starts and stops its own `agent-browser`, including on error and SIGTERM, and prints its session ID and CDP endpoint. At most one browser is started per suite process; run at most two suite processes per lane.
 
-The layout verifier's `--section sheets|plate` supports focused reruns. Default `all` keeps both sections; final narrow-width acceptance requires `--sweep`.
+The layout verifier's `--section sheets|plate|fonts` supports focused reruns. Hosted `fonts` measures the two NieR looks. Default `all` keeps every section; final narrow-width acceptance requires `--sweep`.
 
 Each browser result includes `sizeContext`, refreshed after load, theme, viewport/column changes and pointer release. It records the actual viewport, column, inner stage and transcript sizes plus the requested size. Hosted column requests use a window at least 2400 px wide and clamp the column to 400–760 px; check names inherited from standalone retain their original wording. Recorder attachments select the session's non-recorder page. A full width sweep has a three-hour stage limit; the complete Wonderer/RX/AX stage has 90 minutes; focused and older stages have 45 minutes.

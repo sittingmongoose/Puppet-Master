@@ -15,7 +15,10 @@ if (!Number.isFinite(height) || height < 400) throw new Error('--height must be 
 const looks = opt('--looks')?.split(',') || LOOKS;
 if (looks.some(l => !LOOKS.includes(l))) throw new Error('Unknown --looks value');
 const section = opt('--section') || 'all';
-if (!['all', 'sheets', 'plate'].includes(section)) throw new Error('--section all|sheets|plate');
+if (!['all', 'sheets', 'plate', 'fonts'].includes(section)) throw new Error('--section all|sheets|plate|fonts');
+if (section === 'fonts' && target.kind !== 'pm7') throw new Error('Hosted fonts require --page pm7');
+const plannedLooks = section === 'fonts' ? looks.filter(l => l.startsWith('nier-')) : looks;
+if (!plannedLooks.length) throw new Error('The fonts section requires a NieR look');
 const widths = argv.includes('--sweep') ? Array.from({ length: 120 }, (_, i) => i + 400) : [400, 420, 440, 459, 460, 480, 500, 519];
 const check = (id, look, size, kind, pass, measured) => {
   results.push({ id, look, size, height, kind, pass: !!pass, owner: look.startsWith('nier-') ? 'c56port-nier' : 'c56port-looks', measured, sizeContext: testGeometry() });
@@ -109,6 +112,30 @@ async function chrome() {
   }
   return out;
 }
+async function fonts(selector) {
+  await ev(() => document.fonts.ready.then(() => true));
+  return ev(selector => {
+    const M = __c56layout, bad = [], used = new Set(); let checked = 0;
+    const norm = s => s.trim().replace(/^["']|["']$/g, '').toLowerCase();
+    for (const root of [...document.querySelectorAll(selector)].filter(M.visible)) {
+      const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      for (let text = walk.nextNode(); text; text = walk.nextNode()) {
+        const el = text.parentElement;
+        if (!text.textContent.trim() || !M.visible(el) || el.closest('script,style')) continue;
+        const want = el.closest('code,pre,kbd,samp,.pmx-code,.pmx-output-pre') ? 'pm nier mono' : 'pm nier sans';
+        const family = norm(getComputedStyle(el).fontFamily.split(',')[0]); checked++; used.add(want);
+        if (family !== want) bad.push({ text: text.textContent.trim().slice(0, 55), family, want });
+      }
+    }
+    const loaded = [...document.fonts].filter(f => f.status === 'loaded' && f.unicodeRange.toLowerCase() === 'u+0-10ffff').map(f => norm(f.family));
+    return { checked, bad, used: [...used], loaded: [...new Set(loaded)], missingFaces: [...used].filter(f => !loaded.includes(f)), viewport: { width: innerWidth, height: innerHeight } };
+  }, selector);
+}
+async function fontCheck(look, size, kind, selector) {
+  if (target.kind !== 'pm7' || !look.startsWith('nier-')) return;
+  const f = await fonts(selector);
+  check('CO-FONT', look, size, kind, f.checked > 0 && !f.bad.length && !f.missingFaces.length, f);
+}
 
 async function finishCrew() {
   await ev(() => PM56_WG_DEMOS.start('crew')); await page.waitForTimeout(900);
@@ -174,11 +201,12 @@ async function plate() {
 
 try {
   await page.setViewportSize({ width: 1440, height: 900 }); await target.load(page); await installMeasurements();
-  if (section !== 'plate') for (const look of looks) {
+  if (section !== 'plate') for (const look of plannedLooks) {
     await target.theme(page, look);
     for (const kind of ['crew', 'chat_room']) {
       const helperCount = await sheet(kind);
-      for (const width of widths) {
+      await fontCheck(look, page.viewportSize().width, kind, '#pmOverlayRoot .pmx-sheet');
+      for (const width of (section === 'fonts' ? [] : widths)) {
         await target.resize(page, { width, height }, 'window');
         const h = await shelf();
         check('CO-HEADER', look, width, kind, h.parts.length === 3 && !h.overlaps.length && h.parts.every(p => !p.clipped && p.hit), h);
@@ -191,11 +219,13 @@ try {
   if (section !== 'sheets') {
   await target.resize(page, { width: 1440, height: 900 }); await target.theme(page, 'basic-dark');
   const run = await finishCrew(); await act('wg-open-leads', { run }); await page.waitForTimeout(600);
-  for (const look of looks) {
+  for (const look of plannedLooks) {
     await target.theme(page, look); await target.panelSize(page, { width: 480, height });
     const view = page.locator('.pmx-view').filter({ visible: true }).first();
     if (await view.count()) await view.evaluate(el => { let s = el; while (s && !(s.scrollHeight > s.clientHeight && /auto|scroll/.test(getComputedStyle(s).overflowY))) s = s.parentElement; if (s) s.scrollTop = 0; });
     await page.waitForTimeout(400);
+    await fontCheck(look, 480, 'crew-view', '.pmx-view');
+    if (section === 'fonts') continue;
     const p = await plate();
     check('CO-PLATE-EDGE', look, 480, 'crew', p.some(p => p.result && p.hit) && p.every(p => p.labels.length > 0 && p.labels.every(l => l.edge >= 11.95)), p);
     check('CO-PLATE-LINE', look, 480, 'crew', p.length > 0 && p.every(p => p.geometryCount > 0 && p.labels.length > 0 && p.labels.every(l => l.lineGap !== null && l.lineGap >= 7.95)), p);
