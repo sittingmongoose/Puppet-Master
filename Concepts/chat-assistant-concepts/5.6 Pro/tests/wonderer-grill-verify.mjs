@@ -455,7 +455,7 @@ async function browser() {
     /* WGV_ONLY=r1: the round 1 checks alone (a quick local loop) */
     if (process.env.WGV_ONLY === 'r1') { await reviewRound1({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=rx: the recorded-examples checks alone (2026-10-21) */
-    if (['rx', 'rx-starting'].includes(process.env.WGV_ONLY)) { await target.resize(page, { width: 1440, height: 900 }); await recordedExamples({ page, ev, act, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
+    if (['rx', 'rx-starting', 'rx-tail'].includes(process.env.WGV_ONLY)) { await target.resize(page, { width: 1440, height: 900 }); await recordedExamples({ page, ev, act, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=ax: every other Demo Studio example plays on its own (2026-10-22) */
     if (process.env.WGV_ONLY === 'ax') { await target.resize(page, { width: 1440, height: 900 }); await otherExamples({ page, ev, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* sheets: the shelf, the plate */
@@ -787,6 +787,7 @@ async function otherExamples({ page, ev, sleep }) {
 async function recordedExamples({ page, ev, act, sleep }) {
   const SCALE = Number(opt('--rx-scale') || 3), fast = k => ev(k => window.PM56_CLOCK.setScale(k), k);
   const onlyStarting = process.env.WGV_ONLY === 'rx-starting';
+  const onlyTail = process.env.WGV_ONLY === 'rx-tail';
   if (![1, 3].includes(SCALE)) throw new Error('--rx-scale must be 1 (normal pace) or 3 (original accelerated verifier)');
   const until = (fn, arg, ms = 60000) => page.waitForFunction(fn, arg, { timeout: ms, polling: 120 }).then(() => true, () => false);
   const click = async sel => { try { const l = page.locator(sel).first(); if (await l.count() && await l.isVisible()) { await l.click({ timeout: 3000 }); return true; } } catch (e) { } return false; };
@@ -842,11 +843,13 @@ async function recordedExamples({ page, ev, act, sleep }) {
   const cardMove = async (id, action) => click('.transcript [data-run-id="' + id + '"] [data-action="' + action + '"]');
 
   await fast(SCALE);
+  let id = null, ok;
+  if (!onlyTail) {
   /* Crew: Delegate and verify */
   await act('crew-demo-start', { flow: 'delegation' }); await sleep(900);
   await record(); await sheetStart();
-  let id = null; await until(() => true, null, 300); id = await runOf('crew');
-  let ok = await until(id => window.PM56_COLLAB.run(id) && window.PM56_COLLAB.run(id).status === 'completed', id, 60000);
+  await until(() => true, null, 300); id = await runOf('crew');
+  ok = await until(id => window.PM56_COLLAB.run(id) && window.PM56_COLLAB.run(id).status === 'completed', id, 60000);
   verdict('Crew · Delegate and verify', await report(), ok);
   if (!onlyStarting) {
   /* Crew Auto: its rules saved, it sends its three requests itself and brings in a Crew for the big job */
@@ -894,6 +897,7 @@ async function recordedExamples({ page, ev, act, sleep }) {
     verdict('Chat Room · ' + flow, rep, waited && ok2, flow === 'plan' ? 'then a promotion from the card' : 'then Summarize Now and End discussion on the card');
   }
   if (onlyStarting) return;
+  }
 
   {
   /* AR: automatic rounds, production behaviour (Jared, 2026-10-21) */

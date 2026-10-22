@@ -28,6 +28,8 @@ node tests/carry-over-layout-verify.mjs --page pm7 --file /tmp/c56port-tests/PMC
 
 `--wg-only rx-starting` selects Crew Delegate, BrainStorm synthesis/constraint and Room discussion/plan. It runs their original flow, Starting, narration and pacing verdicts, plus page-error checking. The full RX default remains unchanged.
 
+`--wg-only rx-tail` starts at the automatic-round, pause, move and lane-layout guards. It reuses the same assertions and supports completing coverage when an earlier recorded-example run stopped. The full RX path still includes both parts.
+
 AX's existing `AX_ONLY` regex filters examples for a focused rerun, and `AX_SCALE=1` selects normal user pace (default 3). A filter matching no examples fails. For example, `AX_ONLY='Debug|A preview is not a promise|Schedule a frozen Crew' AX_SCALE=1 node tests/port-suite.mjs --page pm7 --only wonderer --wg-only ax --pm7-file /tmp/PMConcept7.html --out /tmp/chat-ax-focused`.
 
 The runner records the three AX filter/pace/width environment variables in run.json alongside command arguments and page hashes.
