@@ -38,9 +38,13 @@ async function bufferSnapshot(tid) {
 async function browserOrigin() {
   return ev(() => {
     const A = PM56_APP, CS = PM56_RUNTIME.composer, r = PM56_COLLAB.run('crew-query-perf');
-    const wanted = { kind: 'participant', refId: r.id, participantId: r.participants[0].id, label: r.participants[0].name };
-    A.switchThread(r.threadId); const b = CS.bufferFor(r.threadId);
-    b.destination = wanted; CS.destination = wanted; b.text = 'Preserve this draft.'; A.state.composer = b.text;
+    A.switchThread(r.threadId);
+    const button = document.createElement('button');
+    Object.assign(button.dataset, { action: 'collab-message', run: r.id, participant: r.participants[0].id });
+    PM56_HOST.root().appendChild(button); try { button.click(); } finally { button.remove(); }
+    const b = CS.bufferFor(r.threadId), wanted = JSON.parse(JSON.stringify(b.destination));
+    if (wanted?.destinationKind !== r.kind) throw new Error('Participant action did not create a valid composer destination');
+    b.text = 'Preserve this draft.'; A.state.composer = b.text;
     if (A.state.drafts) A.state.drafts[r.threadId] = b.text;
     A.render(); PM56_SURFACES.openBrowser();
     // A real earlier browser attachment must survive either restore or refusal.
@@ -121,11 +125,13 @@ try {
     await send.click({ timeout: 6000 }); await sleep(500);
     const sendAfter = await counts(), sent = await ev(tid => {
       const t = PM56_APP.state.threads.find(t => t.id === tid), r = PM56_COLLAB.run('crew-query-perf');
-      return { messages: t.messages.slice(-3).map(m => ({ id: m.id, role: m.role, destinationRef: m.destinationRef, attachments: m.attachments?.map(a => a.id) })), runCount: r.messages.length, recipients: r.messages.at(-1)?.recipientIds };
+      return { messages: t.messages.slice(-3).map(m => ({ id: m.id, role: m.role, body: m.body, destinationRef: m.destinationRef, attachments: m.attachments?.map(a => a.id) })), runCount: r.messages.length, runLast: r.messages.at(-1), recipients: r.messages.at(-1)?.recipientIds };
     }, origin.tid);
     const newMessages = sent.messages.slice(-(sendAfter[origin.tid] - sendBefore[origin.tid]));
+    const newCaptureIds = tray.attachments.filter(id => !listed.attachments.includes(id));
     await check('HC-S2-SEND', sendAfter[origin.tid] > sendBefore[origin.tid] && sent.runCount === runN + 1 &&
-      sent.recipients?.includes(origin.wanted.participantId) && newMessages.some(m => routeIs(m.destinationRef, origin.wanted)) &&
+      routeIs(tray.destination, origin.wanted) && sent.recipients?.includes(origin.wanted.participantId) &&
+      newMessages.some(m => m.role === 'user' && m.body === sent.runLast?.body && (m.body?.includes('QueryCard') || newCaptureIds.length > 0 && newCaptureIds.every(id => m.attachments?.includes(id)))) &&
       Object.keys(sendBefore).filter(k => k !== origin.tid).every(k => sendBefore[k] === sendAfter[k]), { origin, before: sendBefore, after: sendAfter, runBefore: runN, sent });
   }
 } catch (e) { await check('HC-RUN', false, e.stack); }
