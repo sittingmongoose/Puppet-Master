@@ -133,6 +133,13 @@ async function click(sel, i=0){
    ===================================================================== */
 await page.evaluate(()=>PM56_DEMO.setVariant(1,5));
 await page.waitForTimeout(400);
+/* The shared hosted setup closes history so other verifiers start on the chat.
+   This verifier's boot precondition is the real pinned drawer. Open it through
+   the user's header control before inspecting its paint and geometry. */
+if(await page.evaluate(()=>PM56_TEST.kind==='pm7'&&PM56_DEMO.getState().historyMode==='closed')){
+  await click('.chat-header [data-action="toggle-history"]');
+  await page.waitForTimeout(500);
+}
 
 const NINE=['working','reviewing','waiting','idle','complete','blocked','failed','paused','recovering'];
 /* idle (Ready) and paused stand still in the status set (plan §3); every other
