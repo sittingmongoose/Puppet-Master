@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L17053
+Source lines: L14505-L17062
 
-Source SHA256: `06b2e7c3c8973b0cf374d45f6e7751f41f2d0d5f3f374fe6dc789bc287b640ba`
+Source SHA256: `ae0c3301c2e2a19913b71ee04a542a40a78bf0e96e515da3307d447d83409ed0`
 
 ---
 
@@ -2517,7 +2517,15 @@ canonical_text: >-
   settings or native tab kinds. The latter clarifies ACD-500's product exclusion while allowing the
   demonstrations Jared asked to carry into the Studio. The lead also kept the existing project-only
   Settings adapter for this port: All chats ELI5 is session-only in the concept, the gap is disclosed,
-  and no shadow global store is created.
+  and no shadow global store is created. Final reconciliation against integrated concept 59ca2d4382
+  records the hosted column, Home surface routing, origin-bound browser captures, thread-bound context
+  actions, attachment viewer tabs and bounded More Info popover as built. Demo Studio has its Chat
+  section and the standalone remains the module source. This snapshot precedes the looks lane's final
+  CSS and the hover press fix: Persona clipping, shelf headers and plate spacing still need their
+  final sweep; films are pending. Thought Stream shares a preference and preview but has no live
+  thinking renderer. The window-based isPhone helper and the separate scoped overlay wrapper are
+  concept integration limits under ACD-501/504, not fulfilled native acceptance. The Thought Stream
+  admission still needs Jared's ratification; no new product ruling is inferred from this snapshot.
 gui_related: true
 gui_classification_reason: Records the hosted chat replacement, shared Settings controls and preservation of the accepted tour.
 split_recommended: false
@@ -2546,6 +2554,7 @@ source_lineage:
   - "Lead ruling via pm-mail 1022211545-c3b8, 2026-10-22: Thought Stream admission, current-chat ELI5 placement and stand-in harness fallback; not Jared verbatim."
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/lead-checkpoint-20261022-2155.md, SHA-256 9063fdc033b2aac0d2558eba612d2f0ab33b032f0a0df72c848c21112ee72e98 (lead checkpoint; concept integration and rulings, not native proof)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/demo-inventory-20261022.md, SHA-256 3f1f8f372c1ec03a047cd6936853f14f3b745b056791bd2f7a30d929a00e60cd (concept-only Studio inventory, not product counts or native APIs)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
   - "Demo Studio"
 negative_constraints:

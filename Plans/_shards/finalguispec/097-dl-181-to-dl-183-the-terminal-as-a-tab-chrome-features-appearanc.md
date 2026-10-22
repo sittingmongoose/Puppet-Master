@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46893-L49331
+Source lines: L46893-L49340
 
-Source SHA256: `eca4d2212d4bf3f6bda4c938c8a94073862c3da15f61f59bf55e67f40d414bf8`
+Source SHA256: `d68896987d2a5a6766fb3645ae693791c11ebac6675060550adef852e94d9f92`
 
 ---
 
@@ -2400,7 +2400,7 @@ canonical_text: >-
   and Reduced Motion. The chat uses PMConcept7's NieR type and existing parts, with no scene, ground,
   editor or reboot layer of its own. The shared questionnaire controls style Ask Card and Grill Me
   alike; no pill, emoji or coloured side stripe is admitted (F3-648). Narrow Crew/Room shelf headers,
-  run plates, sticky run-view headers and helper sheets remain readable without overlaps or clipping
+  run plates, sticky run-view headers and helper sheets must remain readable without overlaps or clipping
   at 400-519 px and at the recorded 480 px plate case. Fixes alter styling and layout, preserving the
   accepted DL-218 behavior and its tests. The host hover controller owns tags, the tab strip owns
   close and active state, and overlays sit in the host stacking order below the Guided Tour and hover
@@ -2408,7 +2408,15 @@ canonical_text: >-
   that tour; PWIZ-036 records the already accepted later redo. All chat demo recipes, scenarios and
   family takes are in F3-649's one Demo Studio, and the standalone chat remains a separate reference.
   SSYS-055 owns preference placement and binding. This is a concept port and a product presentation
-  contract; no browser result is native runtime or governance certification.
+  contract; no browser result is native runtime or governance certification. In integrated concept
+  59ca2d4382 the chat is a scoped layer inside the existing column. Its header options expose Keep
+  History open, the Keep open row and Pop out / Dock back; History pin uses the existing local action,
+  and only a never-saved project layout reads the Settings History default. The foundation lane's
+  1920 px example widens from 599 to 680 px when History is pinned; this is an example measurement,
+  not another width default. Host appearance, NieR parts, container-query CSS and tour hiding are
+  integrated. Persona clipping, narrow shelf headers, plate spacing and the host hover press defect
+  remain pending their owning lanes at this snapshot; the final all-look sweep and films are not
+  completion evidence supplied by this unit.
 gui_related: true
 gui_classification_reason: Defines the hosted chat surface, all-look presentation and narrow layout acceptance.
 split_recommended: false
@@ -2435,6 +2443,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
   - "/mnt/Cursor/share/puppet-master/2026-10-20-wonderer-grill-me-concept/PORT-CARRY-OVER.md, SHA-256 67195793eeda6a463b5e2da60e7ae294ae62ef435a4a89e56fcd3e25587884fa (accepted layout and styling repairs)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
   - "Demo Studio"
   - "Keep open"

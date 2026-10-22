@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L6435-L6578
+Source lines: L6435-L6587
 
-Source SHA256: `da8c0fb1bad078aea89f8b497d577845b29827a8e57c02aed03bd535c3678d87`
+Source SHA256: `f08f8a2bb64d4d0d74cb9e721e443f748dfbfd491d1aba018eca2a143d136481`
 
 ---
 
@@ -115,7 +115,15 @@ canonical_text: >-
   row's planned-handler and unavailable-candidate boundary remains in force. Settings preferences use
   the existing Settings transaction rows, not one synthetic row per preference. The hosted surface's
   boot, body mounting and appearance projection are local presentation with no command or event. Demo
-  Studio is wholly outside production wiring (DR-070), not a wiring disposition.
+  Studio is wholly outside production wiring (DR-070), not a wiring disposition. These rows remain
+  product wiring requirements. Integrated concept 59ca2d4382 supplies Home open/close/activate bridges,
+  not native handler evidence. Run-card controls move to the run view only while its tab is active
+  in a panel that is visible, including narrow-switcher and collapsed-panel state. Browser capture
+  retains the original thread and composer destination; context-tab actions use that tab's thread;
+  attachment viewers retain thread/message/attachment identity. More Info now has the bounded-popover
+  producer required by ACD-500, so the earlier modal gap is closed in the concept. Project ELI5 is
+  persisted through the existing adapter; All chats ELI5 is session-only. The production-intent ELI5
+  acceptance row records that limitation without claiming its application-scope route is built.
 gui_related: true
 gui_classification_reason: Binds hosted chat producers to existing wiring rows and their reverse GUI consumers.
 split_recommended: false
@@ -140,6 +148,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-185"
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
   - "Demo Studio"
   - "Keep open"

@@ -4012,8 +4012,8 @@ canonical_text: >-
   following it. This port adds no chat-only mute or volume row. general.interaction.eli5-default
   resolves the application default and optional project override; general.interaction.chat-eli5
   remains a run-scoped chat override, and inherit deletes it. ELI5 changes affect only future replies;
-  the current stream and earlier replies are unchanged. The All chats and Project default controls in
-  the chat sheet use Settings transactions; the chat's own Standard, Simple and Follow controls use
+  the current stream and earlier replies are unchanged. In the product, All chats and Project default
+  in the chat sheet use Settings transactions; the chat's own Standard, Simple and Follow controls use
   cmd.chat.eli5.set (UCC-175). New chat defaults uses the same application ELI5 value, not another
   row. ai.models.thread-title-model is the naming policy, with Default, None or an available model id
   from its live catalog; the sheet and Settings use the same value, preserving manual-name locks and
@@ -4042,7 +4042,16 @@ canonical_text: >-
   general.interaction.chat-eli5 inventory identity, run scope and override contract remain. The
   concept's existing project-only Settings adapter cannot prove separate application and project
   persistence: the renderer keeps these layers separate and discloses any session-only layer instead
-  of creating a shadow store or claiming native scope support.
+  of creating a shadow store or claiming native scope support. At integrated concept 59ca2d4382,
+  Settings persists the host project's ELI5 default, unscoped chats bind to that project, and switching
+  threads re-projects the appropriate project without copying an unrelated override. All chats ELI5
+  is a separate session-only value; application-scope persistence remains unimplemented in this
+  concept. The Thought Stream row, New chat defaults and composer choice share the stored preference
+  and preview, but replies have no live thinking renderer. Its global inventory scope is the product
+  contract admitted by the lead, not proof that this project-only adapter supplies global storage.
+  History's initial-layout seed is built and preserves a saved false or true. The Settings master
+  sound, working style, naming policy and future-chat mode bindings remain as reviewed; no additional
+  layout, Activity pin, stand-in or family-take setting is admitted by final reconciliation.
 gui_related: true
 gui_classification_reason: Places and binds visible hosted chat preferences while keeping layout and chat-scoped controls separate.
 split_recommended: false
@@ -4070,6 +4079,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/lead-checkpoint-20261022-2155.md, SHA-256 9063fdc033b2aac0d2558eba612d2f0ab33b032f0a0df72c848c21112ee72e98 (lead checkpoint; concept integration and rulings, not native proof)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
   - "general.interaction.thought-stream"
   - "general.interaction.working-activity-style"

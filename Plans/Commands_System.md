@@ -8102,7 +8102,12 @@ canonical_text: >-
   masquerade as the per-chat ELI5 command. A mirrored renderer value does not write a second store or
   echo the Settings save into a loop. No new event, command, alias or future handler is added by the
   port, and existing DL-218 command candidates retain their exact exclusions until separately
-  admitted.
+  admitted. The integrated concept at 59ca2d4382 realizes the Home opening and local-column controls
+  through JavaScript bridges; it does not implement the native dispatcher or typed receipts specified
+  here. Its existing Settings adapter persists Project default ELI5, while All chats remains
+  session-only (SSYS-055); that session choice is not evidence of an application-scope transaction.
+  Thought Stream has the shared preference and preview, with its live display still pending. Demo
+  Studio launches, lab-only document ids and unknown-id document fallback add no product command.
 gui_related: true
 gui_classification_reason: Defines shared dispatch, alias normalization and local actions for the hosted chat controls.
 split_recommended: false
@@ -8127,6 +8132,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-185"
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
   - "cmd.editor.close_tab"
   - "cmd.panel_tab.close"

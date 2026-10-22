@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2765-L2991
+Source lines: L2765-L2996
 
-Source SHA256: `b95108b7b627fe6e8bc97dc5427d372ed34809822c23d1ebc4d06abd802acb1b`
+Source SHA256: `24aaf1baf742822ec779fc6f9669a12b57f48269676e0c1a293e51b3ec9dbb2f`
 
 ---
 
@@ -200,6 +200,10 @@ canonical_text: >-
   saved thread/persona/ELI5 basis through the then-current chat owner, preserving quiet restoration
   and exact-message same-answer explanation without rewriting an earlier reply. Demo Studio remains
   the one concept entry point for tour demonstrations; it never becomes a product command or setting.
+  In integrated concept 59ca2d4382 the hosted chat is hidden while the existing Guided Tour runs.
+  Demo Studio's new Chat examples are independent of that accepted teaching flow. This implements
+  tour isolation for the port; the tour redo, its future selectors and native completion evidence
+  remain pending, and no tour chapter or saved-checkpoint contract is revised by this reconciliation.
 gui_related: true
 gui_classification_reason: Keeps the visible Guided Tour teaching surface and the hosted chat mutually exclusive until the accepted redo.
 split_recommended: false
@@ -224,6 +228,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-185"
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
   - "Demo Studio"
 negative_constraints:

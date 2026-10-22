@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27506-L27932
+Source lines: L27506-L27933
 
-Source SHA256: `cb3eb9929d527858270c5a4b35b25decad092912e5018dd54ed9659a998cf61b`
+Source SHA256: `55a138abc01cfae37a3e81e75976f1c95eeed59a229a93a20d7fa14b051bca03`
 
 ---
 
@@ -320,6 +320,7 @@ negative_constraints:
   - "Do not carry a pill, a coloured side stripe or a chat-only demo panel into PMConcept7."
 compatibility_only_notes:
   - "The 5.6 Pro chat's class names, element ids, theme attribute and storage keys are concept lineage and never canon names."
+  - "Integrated concept 59ca2d4382 uses container-query CSS for column/tab widths but keeps window queries for app sheets/menus and a window-based isPhone helper. Its scoped overlay/effects wrapper is mounted in body under the host stacking order. These are implementation limits relative to the container and single-root requirements above; ACD-504 records the built surface without claiming those acceptance checks passed."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L6): The web client offers no Pop out (F3-637)."
 owner_hints:

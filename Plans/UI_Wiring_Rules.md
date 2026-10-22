@@ -2538,10 +2538,10 @@ status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
   The port's control census follows UCC-208 and WM-096 (DL-232). Existing production-intent entries
-  carry the actual hosted producer locations; they are not duplicated per renderer. Forward coverage
+  carry the actual hosted producer locations; they are not duplicated per renderer. Required forward coverage
   checks the domain identity and revision, placement fields, one dispatch, availability and disabled
   reason, exact-session terminal handoff, file click/double-click/modifiers and user-versus-agent
-  focus. Reverse coverage checks host tab close and activation updating the corresponding chat card, a
+  focus. Required reverse coverage checks host tab close and activation updating the corresponding chat card, a
   stored preference updating both Settings and chat, a chat-sheet change updating its existing
   Settings row, application/project/current-chat ELI5 separation, and switching chats without carrying
   another chat's override. History default is checked on an unsaved workspace and a saved unpinned
@@ -2551,7 +2551,13 @@ canonical_text: >-
   from the hosted chat during the accepted tour. Demo Studio launches and concept fixture controls are
   not product producers. Source-hashed native dispatcher, handler, scope/storage and accessibility
   proof remain required before certification; HTML controls and browser checks satisfy only concept
-  review.
+  review. For integrated concept 59ca2d4382 the reconciliation specifically includes run tabs active
+  in any visible panel, captures delivered to the original thread and composer destination after a
+  thread switch, context actions on their own tab's thread, and attachment identity plus bounded
+  More Info. The surfaces lane reports these concept checks; this unit is not a fresh browser or
+  native verification receipt. The project-only adapter leaves application ELI5 persistence pending,
+  and Thought Stream preference/preview checks do not establish a live reasoning renderer. The final
+  hover press regression, carry-over layout sweep and films remain pending the owning lanes.
 gui_related: true
 gui_classification_reason: Defines forward and reverse verification for visible hosted chat controls.
 split_recommended: false
@@ -2576,6 +2582,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-185"
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
   - "Demo Studio"
   - "Keep open"

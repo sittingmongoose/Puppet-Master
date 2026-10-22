@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3453-L4264
+Source lines: L3453-L4276
 
-Source SHA256: `60e87f5cd0c6bb869b22a4c41bdc847f78271454ffeb9d43d6673cf67cdc8a03`
+Source SHA256: `bccd54e33ea58b285a0e6ea9aafae3a46a5bf8dc437d5e2828ed313de3dd286c`
 
 ---
 
@@ -783,7 +783,18 @@ canonical_text: >-
   Activity unpin remains temporary. Recipe selectors, arbitrary family takes, motion-voice overrides
   and guided examples belong only to the concept's one Demo Studio (DR-070). The port's class names,
   DOM roots, JavaScript globals, localStorage keys and build-layer APIs are concept lineage and grant
-  no native API or persistence authority.
+  no native API or persistence authority. Integrated concept 59ca2d4382 is assembled from the
+  standalone chat's own module list by pm7-port/tools/chat56_layer.py at opus build step 6b; the port
+  does not maintain a second conversation implementation. Its column layer is
+  div.pm56-frame.pmw-scope#pmw-chat56 containing div.pm56-host#pmRoot inside #chatPanel. Its scoped
+  overlays and effects mount in body > div#pm56-layers.pmw-scope under the host stacking order.
+  This actual wrapper is a concept mounting boundary, not evidence of the product's single overlay
+  root acceptance. Chat CSS is scoped under .pm56-host; column and tab width queries use pm56col and
+  pm56tab containers while app sheets and menus keep window queries. The remaining window-based
+  isPhone helper means full container-based behavior is not yet demonstrated. The hosted build drops
+  the chat's first-paint reader, theme picker and NieR scripts and follows the host's existing look
+  and NieR controllers. SSYS-055 records the project-only adapter and session-only ELI5 limit rather
+  than treating every concept control as a persistent application setting.
 gui_related: true
 gui_classification_reason: Keeps shared host presentation and Settings control ownership single.
 split_recommended: false
@@ -808,6 +819,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-185"
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
   - "Demo Studio"
   - "Keep open"

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16245-L16402
+Source lines: L16245-L16410
 
-Source SHA256: `0b260053fa55075120357aa2437b77c7a5bf1c88f14413816a1ea415e35c1c8b`
+Source SHA256: `e89b0c29c30cdf3c511ca0a13e81324a333aaa5fa8cf57fb66ec6b92617fb39f`
 
 ---
 
@@ -112,8 +112,8 @@ canonical_text: >-
   keep_open. These two are typed local layout view-state actions with no receipt or event and never
   Settings writes. Menus, sheets, hover previews, disclosure, tab body repaint and focus return
   dispatch no command. Wand setup opens its existing app modal and its committed action keeps its own
-  command. ELI5's per-chat override remains cmd.chat.eli5.set; All chats and Project default are
-  Settings transactions over general.interaction.eli5-default. Working style, master sound and naming
+  command. ELI5's per-chat override remains cmd.chat.eli5.set; the product's All chats and Project
+  default use Settings transactions over general.interaction.eli5-default. Working style, master sound and naming
   use the same Settings preview/apply transaction as their Settings rows, including when changed from
   chat; no chat-only mute, title-policy or take command is minted. The compact command card offers
   only Open in Terminal for a live session, View output when no session remains, and Rerun in Terminal
@@ -124,7 +124,14 @@ canonical_text: >-
   Settings transaction over general.interaction.thought-stream (SSYS-055), with no new command
   identity; arbitrary Demo Studio family takes receive no product command or production row. Candidate
   exclusions for DL-218's Check It and Grill Me controls remain unchanged by this port; the concept
-  proving a click is not command admission.
+  proving a click is not command admission. In integrated concept 59ca2d4382 the chat header's Keep
+  History open uses ui.chat_column.pin_history, its Keep open row uses ui.chat_column.keep_open and
+  Pop out / Dock back consumes UCC-203's existing route. Hosted opens use the Home bridge with D7 file
+  gestures, D8 background agent tabs and the centre's narrow rule. These JavaScript paths demonstrate
+  concept routing only, not native typed dispatch. The existing project-only Settings adapter
+  persists Project default ELI5; All chats ELI5 remains session-only and therefore does not prove the
+  application-scope Settings transaction above. Thought Stream changes its shared preference and
+  preview only; no live reasoning display is implemented in this snapshot (SSYS-055).
 gui_related: true
 gui_classification_reason: Maps hosted chat controls to existing commands, Settings transactions and local actions.
 split_recommended: false
@@ -150,6 +157,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-185"
   - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
   - "cmd.agents.open_thread"
   - "cmd.editor.close_tab"

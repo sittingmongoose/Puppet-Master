@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27934-L28110
+Source lines: L27935-L28138
 
-Source SHA256: `cb3eb9929d527858270c5a4b35b25decad092912e5018dd54ed9659a998cf61b`
+Source SHA256: `55a138abc01cfae37a3e81e75976f1c95eeed59a229a93a20d7fa14b051bca03`
 
 ---
 
@@ -114,7 +114,7 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   The 5.6 Pro chat is the Home column's conversation surface (DL-232), replacing the scripted stand-in
-  under F3-637 and meeting ACD-500, ACD-501 and ACD-502. One History list serves it; History pin is
+  under F3-637 and bound by ACD-500, ACD-501 and ACD-502. One History list serves it; History pin is
   the column's ui.chat_column.pin_history and its header menu carries the column's Keep open choice.
   Activity Detail and its bounded hover previews remain inside the chat. The lab header, lab editor
   pane, lab status bar and chat-local Demo Studio launcher are absent from hosted mode. Booting the
@@ -142,7 +142,33 @@ canonical_text: >-
   off-by-default stand-in instead for panel-opening examples; launching a chat example switches it off
   and restores the hosted assistant. Only one conversation surface is visible at a time. Demo fixture
   workspaces may use ordinary Home tabs under the concept-only disposition of ACD-500, never native
-  kinds or product routes.
+  kinds or product routes. Integrated concept 59ca2d4382 implements the id-to-kind table in
+  pm7-port/js/60-surfaces.js: plan aliases converge on one plan tab; deep-discovery is plan; bare and
+  revision artifacts are artifact; thread-<agent> is read-only transcript; collab-run, crew-work,
+  review, room, brainstorm and their evidence are run; teach, memory, revert, debug, lens and wonderer
+  sources are document; search, mcp, app and work-record are record; link is Home Browser; file is
+  the Home editor, with a change opening diff view. goal-artifact opens Activity Detail without a tab.
+  Lab workspace ids are marked lab and open concept-only document bodies; an unknown id falls back
+  to document, not a newly admitted product kind. D7 file gestures and D8 background agent opens use
+  Home's opener and narrow rule. A run card says Deciding in the panel beside the chat while its run
+  tab is active in any visible panel; closing, collapsing or hiding that panel restores the card's
+  controls. Browser capture keeps its originating thread and composer destination even after a thread
+  switch; context:<thread> actions target that tab's own thread. Attachment Open uses D7 for a known
+  project file, its existing exact artifact route, or an artifact-kind
+  attachment:<tid>|<mid>|<aid> viewer. More Info is now a bounded popover. Images have a preview; other
+  attachment kinds disclose that the concept has no preview, and browser captures are labelled
+  fixture drawings rather than real screenshots. The Shell slot is the terminal's PMT.card with Open
+  in Terminal, View output for a gone session and Rerun in Terminal, without a separate Show Terminal
+  button; the simulated shell does not implement every real command. Wand sheets remain window-centred
+  app modals. Demo Studio's Chat section follows Workspace and contains Guided examples (55 in 18
+  groups), Moments (127 in 12 groups), and Takes (7 families, 8 recipes and motion voice), plus Show
+  the chat and Reset the chat demo. Start has two chat recipes; Workspace's stand-in row is for panel
+  open paths and stays off by default. These counts describe this concept snapshot, not a product
+  quota; the demo lane reports 182/182 items matching the standalone, not a fresh PLANS browser run.
+  Final acceptance remains pending for the hover press defect, Persona clipping, shelf-header and
+  plate-spacing sweep, and films. The window-based isPhone helper and scoped body-level overlay
+  wrapper do not prove ACD-501's full container and single-root requirements. SSYS-055 separately
+  records preview-only Thought Stream and session-only All chats ELI5; neither is native completion.
 gui_related: true
 gui_classification_reason: Defines hosted conversation presentation, opened surface kinds, shared preferences and focus behavior.
 split_recommended: false
@@ -172,6 +198,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-20-wonderer-grill-me-concept/PORT-CARRY-OVER.md, SHA-256 67195793eeda6a463b5e2da60e7ae294ae62ef435a4a89e56fcd3e25587884fa (accepted layout and styling repairs)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/lead-checkpoint-20261022-2155.md, SHA-256 9063fdc033b2aac0d2558eba612d2f0ab33b032f0a0df72c848c21112ee72e98 (lead checkpoint; concept integration and rulings, not native proof)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/demo-inventory-20261022.md, SHA-256 3f1f8f372c1ec03a047cd6936853f14f3b745b056791bd2f7a30d929a00e60cd (concept-only Studio inventory, not product counts or native APIs)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
   - "Demo Studio"
   - "Keep open"
