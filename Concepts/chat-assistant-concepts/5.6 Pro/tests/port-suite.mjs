@@ -21,12 +21,21 @@ const runInfo = { startedAt: new Date().toISOString(), sourceHead: execFileSync(
 const stages = ['wonderer', 'layout', 'hover', 'questions', 'turn', 'history', 'orbit', 'neon'];
 const only = opt('--only', stages.join(',')).split(',');
 if (only.some(s => ![...stages, 'node'].includes(s))) throw new Error('Unknown --only stage');
+const activeChildren = new Set();
+let stopping = false;
+for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, () => {
+  stopping = true; runInfo.cancelledAt = new Date().toISOString();
+  // Children own their GPU sessions and stop them on these same signals.
+  for (const child of activeChildren) child.kill(signal);
+});
 function run(command, args, log, env = {}, timeoutMs = 45 * 60 * 1000) {
+  if (stopping) return Promise.resolve({ code: 143, error: 'Suite cancelled' });
   return new Promise(resolve => {
     const fd = openSync(log, 'w'), child = spawn(command, args, { cwd: CHAT_ROOT, env: { ...process.env, ...env }, stdio: ['ignore', fd, fd] });
+    activeChildren.add(child);
     const timer = timeoutMs ? setTimeout(() => child.kill('SIGTERM'), timeoutMs) : null;
-    child.on('error', e => { clearTimeout(timer); closeSync(fd); resolve({ code: 2, error: e.message }); });
-    child.on('exit', (code, signal) => { clearTimeout(timer); closeSync(fd); resolve({ code: code ?? 2, signal }); });
+    child.on('error', e => { activeChildren.delete(child); clearTimeout(timer); closeSync(fd); resolve({ code: 2, error: e.message }); });
+    child.on('exit', (code, signal) => { activeChildren.delete(child); clearTimeout(timer); closeSync(fd); resolve({ code: code ?? 2, signal }); });
   });
 }
 if (argv.includes('--build')) {
@@ -62,6 +71,7 @@ if (pages.length === 2 && argv.includes('--parallel-pages')) {
     console.log(`DONE ${page}; ${log}`);
   }));
 } else for (const page of pages) {
+  if (stopping) break;
   const file = pageFile(page);
   // Validate argument resolution once before opening a browser.
   chatTarget(['--page', page, '--file', file]);
@@ -69,6 +79,7 @@ if (pages.length === 2 && argv.includes('--parallel-pages')) {
   runInfo.targets.push({ page, file, sha256: fileSha256 });
   writeFileSync(path.join(out, 'run.json'), JSON.stringify(runInfo, null, 2));
   for (const suite of only) {
+    if (stopping) break;
     const json = path.join(out, `${page}-${suite}.json`), log = path.join(out, `${page}-${suite}.log`);
     rmSync(json, { force: true });
     const script = ['wonderer', 'node'].includes(suite) ? 'tests/wonderer-grill-verify.mjs' : suite === 'layout' ? 'tests/carry-over-layout-verify.mjs' : `${suite === 'hover' ? 'hover-tip' : suite}-verify.mjs`;
@@ -99,4 +110,4 @@ for (const page of pages) {
   for (const r of rows) for (const f of r.failures) console.log(`  ${r.suite} ${f.id} — ${f.owner}`);
 }
 console.log(`Summary: ${out}/summary.json`);
-process.exitCode = summary.some(r => r.fail || r.exit) ? 1 : 0;
+process.exitCode = stopping ? 143 : summary.some(r => r.fail || r.exit) ? 1 : 0;
