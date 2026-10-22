@@ -32,9 +32,11 @@ function playback(ctx){const tid=ctx.thread.id,s=store.sessions[tid];if(!s)retur
   if(s.flow==='restructure')list.push({say:'This example retains a running attempt through a list change. Next: find Build as Goal in More.',wait:4500,skip:()=>!!RP.find('.editor-body [data-action="pd-build-goal"]'),run:()=>RP.press(more())});
   list.push({say:s.flow==='restructure'?'Your move: Build as Goal approves this Plan and starts its work. Press Build as Goal in More; playback resumes after approval.':'Your move: Build approves this Plan and starts its work. Press Build on the Plan; playback resumes after approval.',until:()=>!!p()?.approved});
   if(s.flow==='restructure'){
-   // The Activity bar reaches the Goal in one small gesture. Pause follows
-   // its first admission tick, before either independent output can finish.
+   // The Activity bar reaches the Goal in one small gesture. Admission runs
+   // on the Plan's real-time clock; the recording's gestures use motion time.
+   // Observe both admitted outputs before Pause, even at faster playback rates.
    list.push({say:'Both outputs can run together. Next: open the Goal and pause at admission.',wait:0,skip:()=>!!RP.find('[data-action="goal-pause"]'),run:()=>RP.press('.activity-bar [data-action="open-activity"][data-domain="goal"]',{aim:400})},
+    {say:'Both outputs can run together. Next: open the Goal and pause at admission.',until:()=>leaves(r()).filter(t=>t.status==='in_progress').length===2},
     {say:'Both outputs can run together. Next: open the Goal and pause at admission.',wait:350,skip:()=>G.bound(p()?.plan_id)?.status==='paused',run:press('[data-action="goal-pause"]')},
     closeActivity('Paused with both exact attempts retained. Next: close Activity and read the files workspace.'),
     {say:'Paused with both exact attempts retained. Next: open the files workspace.',wait:4500,skip:inWork,run:press('[data-action="b16-open"]')},

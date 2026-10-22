@@ -26,8 +26,7 @@ const results = [];
 /* the Batch 14-17 and 19 examples (2026-10-22), added once their recordings land */
 const AX_MORE = [
   { name: 'To-Do graphs · Parallel outputs, honest progress', action: 'b16-start', flow: 'parallel', moves: ['[data-action="pd-build"]'] },
-  /* its refinement preview races the paused Goal's own timers when the recording runs 3x faster: checked at 1x */
-  { name: 'To-Do graphs · Refine a list without losing work', action: 'b16-start', flow: 'restructure', moves: ['[data-action="pd-build-goal"]'], scale: 1, max: 150000 },
+  { name: 'To-Do graphs · Refine a list without losing work', action: 'b16-start', flow: 'restructure', moves: ['[data-action="pd-build-goal"]'] },
   { name: 'To-Do graphs · Every item, even number 5,000', action: 'b16-start', flow: 'large' },
   { name: 'Plan recovery · Recover without starting over', action: 'b17-start', flow: 'recovery', moves: ['[data-action="pd-build"]'] },
   { name: 'Plan recovery · Read the exact evidence', action: 'b17-start', flow: 'documents' },
@@ -676,6 +675,13 @@ async function otherExamples({ page, ev, sleep }) {
         buttons: Object.keys(x.buttons), clicks: x.clicks - (x.startClicks || 0), yours: x.yours, sentences: s.length, last: s.length ? s[s.length - 1].text.slice(0, 120) : '', errors: [].concat(...Object.values(P).map(p => p.errors)) }; });
     const play = r.total - waitMs, doc = (x.moves || []).length ? ' (your moves: ' + x.moves.length + ')' : x.endAt === 'yours' ? ' (it ends on your move)' : '';
     check(label + ': plays on its own from Start to its end' + doc, ended && pressed === (x.moves || []).length && !r.errors.length, JSON.stringify({ ended, pressed, last: r.last, errors: r.errors }));
+    if (x.action === 'b16-start' && x.flow === 'restructure') {
+      const work = await ev(() => { const w = PM56_B16_WORK.snapshot(), p = w && PM56_PLANS.get(w.planId), old = w?.restructure?.original_binding;
+        const b = old && PM56_TODOS.bindings(w.threadId).find(b => b.binding_id === old.binding_id);
+        return { refined: !!old, sameAttempt: !!b && ['todo_id', 'work_id', 'attempt_id', 'expected_outcome'].every(k => b[k] === old[k]),
+          samePlan: !!p && w.restructure?.plan_hash === PM56_PLANS.hash(p.plan_id), complete: !!p && p.status === 'completed' && PM56_B16_WORK.inspect(w.id, p).complete }; });
+      check(label + ': refinement retains the admitted attempt and approved Plan through accepted completion', work.refined && work.sameAttempt && work.samePlan && work.complete, JSON.stringify(work));
+    }
     /* an Ask Card round takes several clicks (a choice per question, Next, Submit): counted as the one move it is */
     const qRounds = (x.moves || []).filter(m => m === '@q').length;
     check(label + ': no click after Start but the documented moves', qRounds ? r.clicks >= pressed && r.clicks <= pressed + qRounds * 16 : r.clicks === pressed, JSON.stringify({ clicks: r.clicks, pressed }));

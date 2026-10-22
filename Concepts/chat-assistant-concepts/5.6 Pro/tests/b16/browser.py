@@ -51,9 +51,15 @@ def main():
    else:
     ck('Plan does not imply Goal or work',p.evaluate('PM56_GOAL.get()') is None and not td());md=p.evaluate('PM56_PLANS.markdown(PM56_B16_WORK.snapshot().planId)');ph=p.evaluate('PM56_PLANS.hash(PM56_B16_WORK.snapshot().planId)');r['approved_markdown_sha256']=hashlib.sha256(md.encode()).hexdigest();openplan();shot('plan-before-build')
     if a.scenario=='parallel':click('[data-action="pd-build"]','Ordinary Build, without a Goal')
-    else:more();click('[data-action="pd-build-goal"]','Explicit Build as Goal');goal()
+    # Reach Pause before the real-time output-completion tick. The Plan-record
+    # navigation can consume the entire concurrent-output window at 900 px.
+    else:more();click('[data-action="pd-build-goal"]','Explicit Build as Goal');back();click('.activity-bar [data-action="open-activity"][data-domain="goal"]','Open the bound Goal at admission')
     p.wait_for_function('PM56_TODOS.get()?.filter(t=>t.status==="in_progress"&&!PM56_TODOS.get().some(c=>c.parent_todo_id===t.todo_id)).length===2',timeout=9000)
-    if a.scenario=='restructure':click('[data-action="goal-pause"]','Pause at the admitted-work boundary',dwell=10);ck('Pause retains two admitted work bindings',p.evaluate('PM56_GOAL.get().status')=='paused' and len(p.evaluate('PM56_TODOS.bindings(PM56_EXT.ctx().thread.id)'))==2);shot('paused-goal')
+    if a.scenario=='restructure':
+     click('[data-action="goal-pause"]','Pause at the admitted-work boundary',dwell=10);paused=td();paused_bindings=p.evaluate('PM56_TODOS.bindings(PM56_EXT.ctx().thread.id)');ck('Pause retains two running admitted work bindings',p.evaluate('PM56_GOAL.get().status')=='paused' and len(paused_bindings)==2 and all(b['state']=='running' for b in paused_bindings));shot('paused-goal')
+     # Cross a full 1,400 ms Plan tick. Pause preserves these admitted local
+     # attempts; neither completion nor a new admission may occur until Resume.
+     p.wait_for_timeout(1600);ck('Paused work and bindings stay unchanged across a Plan tick',td()==paused and p.evaluate('PM56_TODOS.bindings(PM56_EXT.ctx().thread.id)')==paused_bindings)
     else:ck('Ordinary Build created no Goal',p.evaluate('PM56_GOAL.get()') is None)
     back();click('[data-action="b16-todos"]','Inspect shared concurrent To-Dos');ck('Concurrent leaves appear separately',sum(t['status']=='in_progress' and bool(t['parent_todo_id']) for t in td())==2);shot('concurrent-todos');geometry('concurrent To-Dos')
     if a.scenario=='parallel':
