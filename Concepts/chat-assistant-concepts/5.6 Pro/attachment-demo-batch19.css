@@ -1,3 +1,3 @@
-/* attachment-demo-batch19.css — Batch 19 gallery guide. Reuses the b18 guide
- * chrome classes; no new visual identity. */
-.b19-guide .b18-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+/* Recorded attachments use the shared guide in chat and narrow documents. */
+.b19-guide.pmx-guide{margin-top:8px}
+.b19-guide[data-placement="doc"]{position:sticky;top:0;z-index:4;background:var(--surface-1);margin:0 0 14px}

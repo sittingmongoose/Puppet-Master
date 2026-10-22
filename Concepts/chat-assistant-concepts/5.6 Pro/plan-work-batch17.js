@@ -9,6 +9,56 @@ const E=PM56_EXT,P=PM56_PLANS,T=PM56_TODOS,A=PM56_ARTIFACTS,D=PM56_DATA,R=PM56_R
 const clone=x=>JSON.parse(JSON.stringify(x)),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),stamp=()=>new Date().toISOString();
 const store=R.planDocumentWork={records:{},sessions:{},seq:0};
 const flows={recovery:{title:'Recover without starting over',description:'A real failed lookup, an explicit input repair, and a new attempt in the same Plan run.'},documents:{title:'Read the exact evidence',description:'Explore shared artifact renderers, publish a newer source, and keep the approved version unchanged.'}};
+const RP=window.PM56_RECPLAY,players=new Map();
+function stopPlayback(tid){players.get(tid)?.stop();players.delete(tid);}
+function playback(ctx){const tid=ctx.thread.id,s=store.sessions[tid],r=get(s?.workId);if(!r)return;stopPlayback(tid);s.guide=true;s.say=null;s.play={step:0,done:false};
+ const c=()=>E.ctx(),p=()=>plan(r),press=sel=>()=>RP.press(sel),inPlan=()=>c().state.activeEditor==='plan:'+r.planId&&!(innerWidth<=1100&&!c().state.editorRevealed);
+ const back=say=>({say,wait:1200,skip:()=>innerWidth>1100||!c().state.editorRevealed,run:press('[data-action="return-to-chat"]')});
+ const openPlan={say:'The Plan names its inputs and separate validation. Next: open its exact version.',wait:4500,skip:inPlan,run:press('.transcript [data-action="pd-info"], .transcript [data-action="pd-expand"]')};
+ const more=say=>({say,wait:4500,skip:()=>!!RP.find('.editor-body [data-action="pd-inspect"]'),run:press('.editor-body [data-action="pd-more-actions"]')});
+ const list=[{say:'The request is prepared. Next: send it through the message box.',wait:900,skip:()=>!!r.planId,run:press('.composer [data-action="send"]')},openPlan];
+ if(r.flow==='recovery'){
+  list.push({say:'Your move: Build approves this exact Plan and starts the calculation. Press Build on the Plan; playback resumes after approval.',until:()=>!!p()?.approved},
+   {say:'Normalization runs first. Next: the retained rate-table lookup reveals the missing connection.',until:()=>!!r.failure||p()?.status==='completed'},
+   {say:'The rate lookup failed, and normalization is retained. Next: try Retry before repairing the connection.',wait:4500,skip:()=>r.rateConnected||!r.failure,run:press('.editor-body [data-action="pd-attn"][data-value="retry"]')},
+   back('Retry cannot proceed while the original input is disconnected. Next: open the calculation workspace.'),
+   {say:'The completed normalization stays intact. Next: inspect the original input connection.',wait:1200,skip:()=>c().state.activeEditor==='b17-work:'+r.id&&!(innerWidth<=1100&&!c().state.editorRevealed),run:press('[data-action="b17-open"]')},
+   {say:'Only the connection needs repair. Next: reconnect the retained V1 rate table.',wait:4500,skip:()=>r.rateConnected,run:press('[data-action="b17-reconnect"]')},
+   {say:'The original V1 input is connected again. Next: return to the same approved Plan.',wait:4500,skip:inPlan,run:press('[data-action="b17-open-plan"]')},
+   {say:'Retry keeps the completed output and the same Plan run. Next: admit a new attempt for the failed lookup.',wait:4500,skip:()=>!r.failure,run:press('.editor-body [data-action="pd-attn"][data-value="retry"]')},
+   {say:'The failed attempt remains in history. Next: the new attempt computes and independently checks the total.',until:()=>p()?.status==='completed'},
+   more('All three outcomes now have accepted evidence. Next: inspect the completed To-Dos.'),
+   {say:'The Plan finished in its original run. Next: open its ordinary To-Dos.',wait:1200,skip:()=>c().state.activity.open&&c().state.activity.domain==='todo',run:press('.editor-body [data-action="pd-open-todos"]')},
+   {say:'Completed work remains inline in the list. Next: close Activity and read the exact result.',wait:1200,skip:()=>innerWidth>1100||!c().state.activity.open,run:press('.activity-panel [data-action="close-activity"]')},
+   back('Completed work remains inline in the list. Next: open the exact computed total.'),
+   {say:'The retained results include the independent check. Next: open the calculation workspace.',wait:4500,skip:()=>c().state.activeEditor==='b17-work:'+r.id&&!(innerWidth<=1100&&!c().state.editorRevealed),run:press('[data-action="b17-open"]')},
+   {say:'The same normalized input was reused. Next: read the accepted total artifact.',wait:4500,run:press('.b17-outputs section:nth-child(2) [data-action="open-artifact"]')},
+   {say:'The total is 9,532 cents for three rows. Download saves this exact revision; the recording leaves it for you. Next: finish.',wait:5000,run:()=>RP.hover('[data-action="ar-download"]')});
+ }else{
+  list.push({say:'Rich Text includes the retained tables, chart and dependency graph. Next: inspect the graph’s actual edges.',wait:5000,run:()=>RP.hover('.editor-body .ar-graph-svg')},
+   {say:'The interactive table filters its retained rows in an isolated frame. Next: inspect that table.',wait:5000,run:()=>RP.hover('.editor-body iframe.ar-interactive')},
+   {say:'The image and video are retained reference media. Next: preview the short clip.',wait:5000,run:()=>RP.press('.editor-body video',{via:el=>{const out=el.play();if(out)out.catch(()=>{});}})},
+   {say:'The clip is a reference, without execution progress. Next: read the same Plan as Markdown.',wait:5000,skip:()=>p()?.view==='markdown',run:()=>{document.querySelector('.editor-body video')?.pause();return RP.press('.editor-body [data-action="pd-view"][data-value="markdown"]');}},
+   {say:'Markdown serializes the same immutable revision. Next: return to Rich Text.',wait:5000,skip:()=>p()?.view==='rich',run:press('.editor-body [data-action="pd-view"][data-value="rich"]')},
+   back('Both views preserve the same source identities. Next: publish a newer source outside the Plan.'),
+   {say:'The workspace owns the input connection and source publication. Next: open it.',wait:1200,skip:()=>c().state.activeEditor==='b17-work:'+r.id&&!(innerWidth<=1100&&!c().state.editorRevealed),run:press('[data-action="b17-open"]')},
+   {say:'A source can change while this Plan keeps its exact references. Next: publish example table V2.',wait:4500,skip:()=>!!r.sourceV2,run:press('[data-action="b17-source-v2"]')},
+   {say:'Source V2 exists, and the Plan still names V1. Next: return to the Plan.',wait:4500,skip:inPlan,run:press('[data-action="b17-open-plan"]')},
+   {say:'The embedded table still binds V1. Next: open that exact retained revision.',wait:5000,run:press('.editor-body .pd-embed-real[data-block-id$=":rows"] [data-action="open-artifact"]')},
+   {say:'The original A-001, A-002 and A-003 rows are retained. Next: finish without starting a build.',wait:5000,run:()=>true});
+ }
+ function follow(){while(s.play.step<list.length){const b=list[s.play.step];if(b.until?b.until():b.skip&&b.skip())s.play.step++;else break;}if(s.play.step===list.length){s.play.done=true;r.demoPlaybackDone=true;}}
+ s.play.say=()=>{follow();return s.play.done?(r.flow==='recovery'?'Done · The original Plan run completed. Normalization was reused, and the independently checked total is 9,532 cents.':'Done · The Plan still opens the exact V1 evidence after source V2 appears. Exploring its documents admitted no work.'):list[s.play.step].say;};
+ const pl=RP.play({key:'b17',live:()=>store.sessions[tid]===s&&s.guide!==false,threads:()=>[tid],next:()=>{follow();const i=s.play.step,b=list[i];if(!b||b.until)return null;return {id:'b17:'+i,wait:b.wait,run:()=>Promise.resolve(b.run()).then(ok=>{if(ok!==false&&s.play.step===i)s.play.step++;return ok;})};},render:()=>c().renderApp(),superseded:()=>{s.guide=false;}});players.set(tid,pl);
+}
+function guide(ctx,doc=false){const s=store.sessions[ctx.thread.id],r=get(s?.workId);if(!r||s.guide===false||ctx.state.dialog||doc!==(innerWidth<=1100&&ctx.state.editorRevealed))return '';const pl=players.get(ctx.thread.id),failed=!!pl?.errors.length,text=failed?'The recording stopped because a control was unavailable. Replay starts it again.':s.play?s.play.say():!r.planId?'Send the prepared request. Build remains a separate explicit action.':r.failure?'Open the workspace, reconnect the original input, then Retry on the Plan.':'Use the Plan and workspace controls.';
+ return PM56_SHELL.pmxGuide({key:'b17-guide',cls:'b17-guide',placement:doc?'doc':'dock',step:ctx.esc(RP.steady(s,text,/^(Your move|Done)/.test(text),()=>E.ctx().renderApp())),actions:s.play?.done||failed?[{action:'b17-replay',label:'Replay'}]:[],next:pl&&pl.progress(),close:{action:'b17-close',label:'Close guide'}});}
+E._slots.editorDocument.unshift(ctx=>{const g=guide(ctx,true);if(!g)return '';
+ // Plans use app.js's fallback instead of an editorDocument registrant.
+ // Include that renderer so a guide alone cannot claim the whole document.
+ if(ctx.editorId?.startsWith('plan:'))return g+PM56_PLANS.editorBody(ctx.editorId);
+ return ctx.editorId?.startsWith('b17-work:')||window.PM56_ARTIFACTS?.fromRoute(ctx.editorId)?g:'';
+});
 const steps=[{id:'normalize',title:'Normalize the supplied order rows',outcome:'Every order has a unique identifier and an exact nonnegative integer-cent subtotal.',deps:[]},{id:'total',title:'Apply the retained rate table',outcome:'The grand total applies the exact V1 rate basis points to the normalized rows with integer arithmetic.',deps:['normalize']},{id:'validate',title:'Independently check the result',outcome:'Independent per-row arithmetic agrees with the output total and both input revisions remain unchanged.',deps:['total']}];
 const scope=r=>({project_id:r.projectId,thread_id:r.threadId});
 const ref=(r,id,v=1,kind)=>({...scope(r),artifact_id:r.id+':'+id,artifact_version:v,...(kind?{renderer_kind:kind}:{})});
@@ -122,7 +172,7 @@ function start(ctx,flow){if(!flows[flow])return;
  Object.assign(t,{id,title:flows[flow].title,projectId:'concept:b17:'+n,worktreeId:'concept:b17:'+n,pinned:false,archived:false,status:'ready',goalId:null,messages:[]});ctx.state.threads.push(t);
  const r={id,threadId:id,projectId:t.projectId,flow,planId:null,scope:G.scope(id),objective:flow==='documents'?'Compute and check the supplied totals while preserving the exact evidence used by this Plan.':'Normalize the supplied rows, apply the retained rate table, and verify the grand total. Preserve completed output if the input lookup fails.',outputs:{},evidence:{},attempts:[],failure:null,rateConnected:flow!=='recovery',createdAt:stamp()};
  r.orders=publish(r,'orders','json',{rows:[{id:'A-001',quantity:3,unit_cents:'1999'},{id:'A-002',quantity:2,unit_cents:'10'},{id:'A-003',quantity:7,unit_cents:'425'}]},{title:'Supplied order input'});r.rate=publish(r,'rate','json',{basis_points:600},{title:'Retained V1 rate table'});
- store.records[id]=r;store.sessions[t.id]={workId:id};if(flow==='documents')documentInputs(r);
+ store.records[id]=r;store.sessions[t.id]={workId:id,guide:false};if(flow==='documents')documentInputs(r);
  Object.assign(ctx.state,{historyMode:'closed',menu:null,dialog:null,hover:null,editorTabs:[],activeEditor:null,editorRevealed:false,demoOpen:false});ctx.state.activity.open=false;ctx.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};ctx.state.capabilities.goal=false;
  ctx.switchThread(t.id);ctx.state.mode='Plan';ctx.state.composer=r.objective;ctx.renderApp();
 }
@@ -137,8 +187,11 @@ function visual(r){const p=plan(r),ts=mine(r),done=ts.filter(t=>t.status==='comp
 E.slot('transcriptMessage',ctx=>{const m=ctx.message||ctx.m,r=m?.type==='b17-work'&&get(m.workId);return r?'<div class="b17-work-link">'+ctx.icon('document',16)+'<div><strong>Calculation workspace</strong><span>Inputs, completed output, and recovery evidence.</span></div>'+button('b17-open','Open workspace',r)+'</div>'+(plan(r)?.approved?ctx.renderOwnedWorking({id:'b17-animation:'+r.id,workId:r.id},visual(r)):''):'';});
 E.slot('editorTabLabel',ctx=>ctx.editorId?.startsWith('b17-work:')?'Recovery workspace':'');
 E.slot('editorDocument',ctx=>ctx.editorId?.startsWith('b17-work:')?workspace(ctx,get(ctx.editorId.slice(9))):'');
-E.slot('composerBelow',ctx=>{const r=get(store.sessions[ctx.thread.id]?.workId);return r?'<div class="b17-guide"><strong>Batch 17 · '+ctx.esc(flows[r.flow].title)+'</strong><span>'+(!r.planId?'Send the prepared request. Build remains a separate explicit action.':r.failure?'Open the workspace, reconnect the exact input, then use Retry on the Plan.':'Use the Plan title, More actions, document views, and workspace controls.')+'</span></div>':'';});
-E.action('b17-start',(ctx,b)=>{start(ctx,b.dataset.flow);return true;});
+E.slot('composerBelow',ctx=>guide(ctx));
+E.action('b17-start',(ctx,b)=>{start(ctx,b.dataset.flow);playback(E.ctx());E.ctx().renderApp();return true;});
+E.action('b17-replay',ctx=>{const s=store.sessions[ctx.thread.id],r=get(s?.workId);if(r){stopPlayback(ctx.thread.id);s.guide=false;start(ctx,r.flow);playback(E.ctx());E.ctx().renderApp();}return true;});
+E.action('b17-close',ctx=>{const s=store.sessions[ctx.thread.id];stopPlayback(ctx.thread.id);if(s)s.guide=false;ctx.renderApp();return true;});
+E.chainAction('reset-all',()=>{for(const tid of players.keys())stopPlayback(tid);for(const s of Object.values(store.sessions))s.guide=false;return false;});
 E.action('b17-open',(ctx,b)=>{if(get(b.dataset.work))ctx.openEditor('b17-work:'+b.dataset.work);return true;});
 E.action('b17-open-plan',(ctx,b)=>{const r=get(b.dataset.work);if(r?.planId)P.openDetails(ctx,r.planId);return true;});
 E.action('b17-reconnect',(ctx,b)=>{const r=get(b.dataset.work);if(r&&A.resolve(r.rate).ok){TX.set(r,'rateConnected',true);ctx.renderApp();}return true;});

@@ -234,9 +234,6 @@
         p.done[b.id] = 1; p.last = now(); p.log.push({ id: b.id, at: Math.round(now() - p.started), step: true }); if (o.render) o.render(); return true;
       }, function (e) { p.busy = false; p.errors.push(String(e && e.message || e)); return false; });
     };
-    /* a lint harness that drives an example through its own QA hooks (tests/pmx-surfaces) sets PM56_RECPLAY_HOLD: the
-       recording then holds from the start (the guide still narrates the state the harness reaches), never racing it */
-    if (window.PM56_RECPLAY_HOLD) { p.held = 'harness'; return p; }
     /* progress(): the dwell before the next beat, in real ms ({ms, at}: its length and how far in), for the guide's
        next-step line; null while it waits for you, holds, or a beat is running */
     p.progress = function () {
@@ -245,6 +242,9 @@
       var k = K(), real = function (v) { return k && k.ms ? k.ms(v) : v; };
       return { ms: Math.round(real(to - from)), at: Math.round(real(t - from)) };
     };
+    /* a lint harness that drives an example through its own QA hooks (tests/pmx-surfaces) sets PM56_RECPLAY_HOLD: the
+       recording then holds from the start (the guide still narrates the state the harness reaches), never racing it */
+    if (window.PM56_RECPLAY_HOLD) { p.held = 'harness'; return p; }
     arm(o.first == null ? 900 : o.first);
     return p;
   }

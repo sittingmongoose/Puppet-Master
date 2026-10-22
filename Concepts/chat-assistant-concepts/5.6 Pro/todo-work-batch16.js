@@ -8,6 +8,65 @@ const store=R.todoGraphWork={records:{},sessions:{},seq:0},clone=x=>JSON.parse(J
 const art=id=>D.artifacts.find(a=>a.id===id),digest=W.digest;
 const STEPS=[{id:'outputs',title:'Prepare both deliverables',outcome:'',deps:[]},{id:'csv',parent:'outputs',parallel_group_id:'outputs',title:'Write the customer CSV with exact integer-cent totals',outcome:'Every source order appears once in a correctly quoted CSV with exact line totals.',deps:[]},{id:'summary',parent:'outputs',parallel_group_id:'outputs',title:'Compute the independent customer summary',outcome:'The summary groups the unchanged source by customer with exact order counts and integer-cent totals.',deps:[]},{id:'validate',title:'Check both files against the unchanged source',outcome:'An independent CSV parse and customer-total comparison match all source orders and preserve the input bytes.',deps:['csv','summary']}];
 const FLOWS={parallel:{title:'Parallel outputs, honest progress',description:'Independent CSV and summary work; separate validation; immutable Plan exports.'},restructure:{title:'Refine a list without losing work',description:'Pause the Plan-as-Goal, rebind one live item, then resume its exact attempt.'},large:{title:'Every item, even number 5,000',description:'A 5,050-row hierarchy fixture. Search, collapse and open one actual bounded lookup.'}};
+const RP=window.PM56_RECPLAY,players=new Map();
+function stopPlayback(tid){const p=players.get(tid);if(p)p.stop();players.delete(tid);}
+function playback(ctx){const tid=ctx.thread.id,s=store.sessions[tid];if(!s)return;stopPlayback(tid);s.say=null;s.play={step:0,done:false};
+ const c=()=>E.ctx(),r=()=>get(s.workId),p=()=>owner(r()),view=()=>c().state.activeEditor;
+ const inPlan=()=>view()==='plan:'+p()?.plan_id&&!(innerWidth<=1100&&!c().state.editorRevealed);
+ const inWork=()=>view()==='b16-work:'+r()?.id&&!(innerWidth<=1100&&!c().state.editorRevealed);
+ const press=(sel,o)=>()=>RP.press(sel,o),back=()=>innerWidth<=1100&&c().state.editorRevealed;
+ const chat=(id,say)=>({id,say,wait:1200,skip:()=>!back(),run:press('[data-action="return-to-chat"]')});
+ const more=()=>'.editor-body [data-action="pd-more-actions"][data-id="'+p()?.plan_id+'"]';
+ const closeActivity=say=>({say,wait:1200,skip:()=>innerWidth>1100||!c().state.activity.open,run:press('.activity-panel [data-action="close-activity"]')});
+ const planOpen={say:'The Plan keeps the source and its dependencies. Next: open the exact version.',wait:4500,skip:inPlan,run:press('.transcript [data-action="pd-info"], .transcript [data-action="pd-expand"]')};
+ const list=[{say:'The request is prepared. Next: send it through the message box.',wait:900,skip:()=>!!r(),run:press('.composer [data-action="send"]')}];
+ if(s.flow==='large'){
+  list.push({say:'All 5,050 items are retained. Next: open the shared To-Dos.',wait:4500,skip:()=>c().state.activity.open&&c().state.activity.domain==='todo',run:press('[data-action="b16-todos"]')},
+   {say:'This hierarchy is virtualized, so every item stays reachable. Next: search for item 5,000.',wait:4500,skip:()=>document.querySelector('[data-todo-search]')?.value==='catalog-05000',run:()=>RP.type('catalog-05000',{into:'[data-todo-search]'})},
+   {say:'The last item and its parent match the search. Next: collapse the parent.',wait:4500,run:press('.todo-virtual-row [data-action="todo-toggle-parent"]')},
+   {say:'Collapsing changes the view, without changing work. Next: expand the same parent.',wait:4500,run:press('.todo-virtual-row [data-action="todo-toggle-parent"]')},
+   {say:'The same exact item is back. Next: open its detail.',wait:4500,skip:()=>!!document.querySelector('.todo-selected-detail[data-k$="catalog-05000"]'),run:press('.todo-virtual-row [data-action="todo-toggle-detail"][data-id$="catalog-05000"]')},
+   {say:'Only this lookup has an executable outcome. The other rows remain fixtures. Next: finish the example.',wait:5000,run:()=>true});
+ }else{
+  list.push(planOpen);
+  if(s.flow==='restructure')list.push({say:'This example retains a running attempt through a list change. Next: find Build as Goal in More.',wait:4500,skip:()=>!!RP.find('.editor-body [data-action="pd-build-goal"]'),run:()=>RP.press(more())});
+  list.push({say:s.flow==='restructure'?'Your move: Build as Goal approves this Plan and starts its work. Press Build as Goal in More; playback resumes after approval.':'Your move: Build approves this Plan and starts its work. Press Build on the Plan; playback resumes after approval.',until:()=>!!p()?.approved});
+  if(s.flow==='restructure'){
+   // The Activity bar reaches the Goal in one small gesture. Pause follows
+   // its first admission tick, before either independent output can finish.
+   list.push({say:'Both outputs can run together. Next: open the Goal and pause at admission.',wait:0,skip:()=>!!RP.find('[data-action="goal-pause"]'),run:()=>RP.press('.activity-bar [data-action="open-activity"][data-domain="goal"]',{aim:400})},
+    {say:'Both outputs can run together. Next: open the Goal and pause at admission.',wait:350,skip:()=>G.bound(p()?.plan_id)?.status==='paused',run:press('[data-action="goal-pause"]')},
+    closeActivity('Paused with both exact attempts retained. Next: close Activity and read the files workspace.'),
+    {say:'Paused with both exact attempts retained. Next: open the files workspace.',wait:4500,skip:inWork,run:press('[data-action="b16-open"]')},
+    {say:'The CSV is still admitted. Next: preview a clearer list entry for the same work.',wait:4500,skip:()=>!!r()?.preview||!!r()?.restructure,run:press('[data-action="b16-preview-restructure"]')},
+    {say:'The preview retains the binding, dependencies and approved Plan bytes. Next: apply the list refinement.',wait:5000,skip:()=>!!r()?.restructure,run:press('[data-action="b16-apply-restructure"]')},
+    {say:'The list changed, and the admitted attempt stayed the same. Next: reopen the Plan.',wait:4500,skip:inPlan,run:press('[data-action="b16-plan"]')},
+    {say:'The Plan has not been rewritten. Next: read the same Markdown beside its progress rail.',wait:4500,skip:()=>p()?.view==='markdown',run:press('.editor-body [data-action="pd-view"][data-value="markdown"]')},
+    {say:'Markdown still contains the approved bytes. Next: resume the retained attempts.',wait:5000,skip:()=>!!RP.find('.editor-body [data-action="pd-attn"][data-value="resume"]'),run:()=>RP.press(more())},
+    {say:'The same Goal and attempts are paused. Next: resume through the Plan’s recovery control.',wait:1200,skip:()=>G.bound(p()?.plan_id)?.status==='active'||p()?.status==='completed',run:press('.editor-body [data-action="pd-attn"][data-value="resume"]')});
+  }
+  list.push(chat('back','Work is running against the unchanged source. Next: follow its shared To-Dos.'),
+   {say:'Independent outputs may finish in a different order. Next: inspect their To-Dos.',wait:1200,skip:()=>c().state.activity.open&&c().state.activity.domain==='todo',run:press('[data-action="b16-todos"]')},
+   {say:'The summary and CSV finish separately, then the independent check runs. Next: wait for accepted evidence.',until:()=>p()?.status==='completed'},
+   closeActivity('The completed To-Dos stay intact. Next: close Activity and read the computed files.'),
+   {say:'Every required outcome has evidence. Next: open the computed files.',wait:4500,skip:inWork,run:press('[data-action="b16-open"]')},
+   {say:'The CSV, summary and check are retained. Download saves the exact output; this recording leaves it for you. Next: finish.',wait:5000,run:()=>RP.hover('[data-action="b16-download"][data-artifact$=":csv"]')});
+ }
+ function follow(){while(s.play.step<list.length){const b=list[s.play.step];if(b.until?b.until():b.skip&&b.skip())s.play.step++;else break;}if(s.play.step===list.length)s.play.done=true;}
+ s.play.say=()=>{follow();return s.play.done?(s.flow==='large'?'Done · Item 5,000 is selected by exact identity. All 5,050 rows remain intact; no fixture job was executed.':'Done · Both outputs passed an independent check. The source and approved Plan stayed unchanged.') : list[s.play.step].say;};
+ const player=RP.play({key:'b16',live:()=>store.sessions[tid]===s&&s.guide,threads:()=>[tid],next:()=>{follow();const i=s.play.step,b=list[i];if(!b||b.until)return null;return {id:'b16:'+i,wait:b.wait,dialog:b.dialog,run:()=>Promise.resolve(b.run()).then(ok=>{if(ok!==false&&s.play.step===i)s.play.step++;return ok;})};},render:()=>c().renderApp(),superseded:()=>{s.guide=false;}});players.set(tid,player);
+}
+function guide(ctx,doc=false){const s=store.sessions[ctx.thread.id];if(!s?.guide||ctx.state.dialog||doc!==(innerWidth<=1100&&ctx.state.editorRevealed))return '';const pl=players.get(ctx.thread.id),text=s.play?s.play.say():s.workId?'Use the Plan, workspace and Activity controls.':'Send to create the requested Plan or hierarchy. Nothing is executing yet.';
+ const stopped=!!pl?.errors.length,say=stopped?'The recording stopped because a control was unavailable. Replay starts it again.':text;
+ return PM56_SHELL.pmxGuide({key:'b16-guide',cls:'b16-guide',placement:doc?'doc':'dock',step:ctx.esc(RP.steady(s,say,/^(Your move|Done)/.test(say),()=>E.ctx().renderApp())),actions:s.play?.done||stopped?[{action:'b16-replay',label:'Replay'}]:[],next:pl&&pl.progress(),close:{action:'b16-dismiss',label:'Close guide'}});}
+// editorDocument is an append slot: prepend the same guide to every owned
+// document when the narrow layout covers chat, without replacing its renderer.
+E._slots.editorDocument.unshift(ctx=>{const g=guide(ctx,true);if(!g)return '';
+ // Plans use app.js's fallback instead of an editorDocument registrant.
+ // Include that renderer so a guide alone cannot claim the whole document.
+ if(ctx.editorId?.startsWith('plan:'))return g+PM56_PLANS.editorBody(ctx.editorId);
+ return ctx.editorId?.startsWith('b16-work:')||window.PM56_ARTIFACTS?.fromRoute(ctx.editorId)?g:'';
+});
 function artifact(id,name,content,t){return {id,name,title:name,kind:'code',type:'text',extension:name.split('.').pop(),projectId:t.projectId||'pm',threadId:t.id,version:1,status:'ready',updated:now(),content,summary:'Computed local artifact; session memory.',provenance:'Batch 16 bounded local computation; no model or provider execution.'};}
 function get(ref){return store.records[ref];}
 function owner(r){return r?.planId?P.get(r.planId):null;}
@@ -192,8 +251,11 @@ function workspace(ctx,r){if(!r)return '<p>Work unavailable.</p>';const p=owner(
 E.slot('transcriptMessage',ctx=>{if(ctx.m?.type!=='b16-work')return '';const r=get(ctx.m.workId);if(!r)return '<p>Local work is unavailable.</p>';return '<section class="b16-entry"><div><strong>'+(r.kind==='large'?'Hierarchy and exact identity':'Parallel customer deliverables')+'</strong><p>'+(r.kind==='large'?'5,050 preserved rows · one bounded lookup · no job-count claim.':'Real local files · shared To-Dos · immutable Plan.')+'</p></div><div class="b16-actions">'+btn('b16-open','Open workspace',r)+btn('b16-todos','To-Dos',r)+'</div>'+(owner(r)?.approved?ctx.renderOwnedWorking({id:'b16-animation:'+r.id,workId:r.id},visual(r)):'')+'</section>';});
 E.slot('workingOwnerControls',ctx=>get(ctx.rec.workId)?btn('b16-open','Files',get(ctx.rec.workId)):'');
 E.slot('editorTabLabel',ctx=>ctx.editorId?.startsWith('b16-work:')?'Customer deliverables':'');E.slot('editorDocument',ctx=>ctx.editorId?.startsWith('b16-work:')?workspace(ctx,get(ctx.editorId.slice(9))):'');
-E.slot('composerBelow',ctx=>{const s=store.sessions[ctx.thread.id];return s?.guide?'<div class="b16-guide"><span>'+ctx.esc(FLOWS[s.flow].title)+' · '+(s.workId?'Use the ordinary Plan, workspace and Activity controls.':'Send to create the requested Plan or hierarchy. Nothing is executing yet.')+'</span>'+btn('b16-dismiss','Dismiss')+'</div>':'';});
-E.action('b16-start',(ctx,b)=>{seed(ctx,b.dataset.flow);return true;});E.action('b16-dismiss',ctx=>{const s=store.sessions[ctx.thread.id];if(s)s.guide=false;ctx.renderApp();return true;});
+E.slot('composerBelow',ctx=>guide(ctx));
+E.action('b16-start',(ctx,b)=>{seed(ctx,b.dataset.flow);playback(E.ctx());E.ctx().renderApp();return true;});
+E.action('b16-replay',ctx=>{const s=store.sessions[ctx.thread.id];if(s){stopPlayback(ctx.thread.id);s.guide=false;seed(ctx,s.flow);playback(E.ctx());E.ctx().renderApp();}return true;});
+E.action('b16-dismiss',ctx=>{const s=store.sessions[ctx.thread.id];stopPlayback(ctx.thread.id);if(s)s.guide=false;ctx.renderApp();return true;});
+E.chainAction('reset-all',()=>{for(const tid of players.keys())stopPlayback(tid);for(const s of Object.values(store.sessions))s.guide=false;return false;});
 const action=(name,fn)=>E.action(name,(ctx,b)=>{const r=get(b.dataset.work);if(r&&r.threadId===ctx.thread.id)fn(ctx,r,b);return true;});
 action('b16-open',(ctx,r)=>ctx.openEditor('b16-work:'+r.id));action('b16-source',(ctx,r)=>ctx.openEditor(r.source.id));action('b16-plan',(ctx,r)=>r.planId&&P.openDetails(ctx,r.planId));action('b16-todos',(ctx,r)=>{Object.assign(ctx.state.activity,{open:true,domain:'todo',scope:'focus'});if(innerWidth<=1100)ctx.state.editorRevealed=false;ctx.renderApp();});action('b16-artifact',(ctx,r,b)=>{if(Object.values(r.outputs).includes(b.dataset.artifact))ctx.openEditor(b.dataset.artifact);});
 action('b16-download',(ctx,r,b)=>{if(!Object.values(r.outputs).includes(b.dataset.artifact))return;const a=art(b.dataset.artifact),url=URL.createObjectURL(new Blob([a.content],{type:'text/plain;charset=utf-8'})),link=document.createElement('a');link.href=url;link.download=a.name;link.click();setTimeout(()=>URL.revokeObjectURL(url),30000);});
