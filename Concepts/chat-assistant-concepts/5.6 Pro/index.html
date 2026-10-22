@@ -71717,9 +71717,10 @@ E.slot('composerBelow',ctx=>{
   extra:(r.last?'<p class="b18-decision" role="status">'+ctx.esc(r.last)+'</p>':'')+(end||window.PM56_RECPLAY_HOLD?controlsTry(ctx,r):''),actions:s.done&&text===s.text?[{action:'b18-replay',label:'Replay'}]:[],next:pl?pl.progress():null,close:{action:'b18-close',label:'Close the example'}});
 });
 /* inside Build At (its own sheets ask PM56_SCHEDULE_DEMOS.dialogGuide for a guide line): this example's line, after any
-   other example's, so the window's Schedule is named plainly as your move */
+   other example's, only where the window's Schedule is your move: the sheet is tall (with a Crew, taller), so the
+   recording's own steps inside it go without a line rather than make it scroll */
 {const SD=window.PM56_SCHEDULE_DEMOS;if(SD){const prior=SD.dialogGuide;SD.dialogGuide=ctx=>{const own=prior?prior(ctx)||'':'',r=sessions.get(ctx.thread.id);if(!r||r.closed||r.instruction||r.flow!=='windows')return own;
- const s=say(ctx,r),text=RP.steady(r,s.text,!!s.done,()=>E.ctx().renderOverlays()),pl=players.get(r.threadId);
+ const s=say(ctx,r);if(!s.yours)return own;const text=s.text,pl=players.get(r.threadId);
  return own+PM56_SHELL.pmxGuide({key:'b18-sheet-guide',cls:'b18-guide b18-sheet-guide',placement:'sheet',step:ctx.esc(text),next:pl?pl.progress():null});};}}
 E.action('b18-replay',ctx=>{const r=current();if(r){r.closed=true;const pl=players.get(r.threadId);if(pl)pl.stop();if(r.crew){window.PM56_B18.startCrew();return true;}start(E.ctx(),r.flow);const n=current();if(n)playback(n);}return true;});
 E.action('b18-close',ctx=>{const r=current();if(r){r.closed=true;const pl=players.get(r.threadId);if(pl)pl.stop();}ctx.renderApp();return true;});
