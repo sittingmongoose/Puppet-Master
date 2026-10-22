@@ -665,9 +665,10 @@ const AX_EXAMPLES = [
 async function otherExamples({ page, ev, sleep }) {
   const SCALE = +(process.env.AX_SCALE || 3), only = process.env.AX_ONLY ? new RegExp(process.env.AX_ONLY, 'i') : null;
   const width = +(process.env.AX_WIDTH || 1440);
+  const selected = AX_EXAMPLES.filter(x => !only || only.test(x.name + ' ' + x.action + ' ' + x.flow));
+  if (!selected.length) throw new Error('AX_ONLY matched no examples');
   if (width !== 1440) await target.resize(page, { width, height: 900 });
-  for (const x of AX_EXAMPLES) {
-    if (only && !only.test(x.name + ' ' + x.action + ' ' + x.flow)) continue;
+  for (const x of selected) {
     const label = 'AX ' + x.name + (width !== 1440 ? ' @' + width : '');
     /* a fresh page for each example: what one leaves behind (a schedule, an open document) never starts the next */
     await target.load(page); await sleep(600);
