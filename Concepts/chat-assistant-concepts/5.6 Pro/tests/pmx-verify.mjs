@@ -1632,15 +1632,59 @@ export function inPageUnprepCrop() {
   const r = window.__pmxvRestore; if (r) { r.sc.scrollTo({ top: r.top, behavior: 'instant' }); window.__pmxvRestore = null; }
 }
 
-/* measure cards for the tick check */
-function inPageCards(o) {
+/* Measure in the same animation frame that establishes settled layout. The room's own timer can start a FLIP
+   at any point in the 540 ms tick wait: its children already have the new structure while its height is still
+   interpolating. FLIP also pauses for its first frame (app.js guardFlip), so paused/pending effects count too.
+   Wait only for finite layout effects, never for the working rings or the words streaming in fixed-height lanes.
+   A timeout fails the check; it must not silently discard an unmeasurable card. */
+export async function inPageCards(o = {}) {
   const skipped = el => !!(el.closest('[data-pmx-preview]') || el.closest('.pmx-ghost'));
-  return [...document.querySelectorAll(o.sel || '.pmx-run')].filter(c => !skipped(c)).map(c => {
-    const body = c.querySelector(':scope > .pmx-run-body');
-    const sig = [c.getAttribute('data-density'), c.getAttribute('data-tone'), c.querySelectorAll('.pmx-lane').length, c.querySelectorAll('.pmx-decision').length, body ? body.children.length : 0,
-      c.querySelectorAll('.pmx-actions .pmx-act').length].join('/');
-    return { k: c.getAttribute('data-k') || c.getAttribute('data-run-id'), h: c.offsetHeight, rh: Math.round(c.getBoundingClientRect().height * 10) / 10, sig };
-  });
+  const cards = () => [...document.querySelectorAll(o.sel || '.pmx-run')].filter(c => !skipped(c));
+  const layout = /^(height|minHeight|maxHeight|width|minWidth|maxWidth|flexBasis|gridTemplateRows|gridTemplateColumns|gap|rowGap|columnGap|padding.*|margin.*|fontSize|lineHeight|letterSpacing|border.*Width)$/;
+  const busy = c => {
+    if (c.hasAttribute('data-pmx-settling')) return true;
+    const effects = c.getAnimations({ subtree: true });
+    for (let p = c.parentElement; p; p = p.parentElement) effects.push(...p.getAnimations());
+    return effects.some(a => a.playState !== 'finished' && a.playState !== 'idle' && a.effect &&
+      a.effect.getTiming().iterations !== Infinity && a.effect.getKeyframes().some(f => Object.keys(f).some(k => layout.test(k))));
+  };
+  const start = performance.now(), max = o.timeout ?? 3000;
+  let quiet = 0;
+  while (true) {
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    const list = cards(), moving = list.filter(busy);
+    quiet = moving.length ? 0 : quiet + 1;
+    if (quiet >= 2) return list.map(c => {
+      const body = c.querySelector(':scope > .pmx-run-body');
+      /* Comparing notes and Writing the report are both live with zero lanes and three body children, but the
+         progress track names different stages. Their settled heights need not match. Note/ finding counts also
+         distinguish a board gaining rows; elapsed clocks and streamed word counts deliberately do not. */
+      const stage = [...c.querySelectorAll('.pmx-track .pmx-stop')].map(x => x.getAttribute('data-state')).join(',');
+      const sig = [c.getAttribute('data-density'), c.getAttribute('data-tone'), c.querySelectorAll('.pmx-lane').length, c.querySelectorAll('.pmx-decision').length, body ? body.children.length : 0,
+        c.querySelectorAll('.pmx-actions .pmx-act').length, stage, c.querySelectorAll('.pmx-review-grid-row, .pmx-finding').length].join('/');
+      return { k: c.getAttribute('data-k') || c.getAttribute('data-run-id'), h: c.offsetHeight, rh: Math.round(c.getBoundingClientRect().height * 10) / 10, sig };
+    });
+    if (performance.now() - start >= max) throw new Error('tick-height: layout did not settle: ' + moving.map(c => c.getAttribute('data-k') || c.getAttribute('data-run-id')).join(', '));
+  }
+}
+
+/* Shared with the focused regression probe; retain exact equality, ten ticks and every same-structure sample. */
+export async function tickHeight(s, h) {
+  const samples = [];
+  try {
+    for (let i = 0; i < 10; i++) {
+      samples.push(await h.ev(inPageCards, {}));
+      if (s.tick) await s.tick(h, i); else await h.tickOnce();
+      await h.wait(s.tickWait || 540);
+    }
+    samples.push(await h.ev(inPageCards, {}));
+  } catch (e) { return { pass: false, detail: String(e && e.message || e) }; }
+  if (!samples[0].length) return { pass: null, detail: 'no run cards on this surface' };
+  const bad = [], per = {};
+  for (const snap of samples) for (const c of snap) { const key = c.k + ' ' + c.sig; (per[key] = per[key] || []).push(c.h); }
+  for (const [key, hs] of Object.entries(per)) { const mn = Math.min(...hs), mx = Math.max(...hs); if (mx - mn > 0) bad.push({ card: key, heights: [...new Set(hs)] }); }
+  const boundaries = Object.keys(per).length - samples[0].length;
+  return { pass: bad.length === 0, detail: bad.length ? bad.slice(0, 10) : { cards: samples[0].length, ticks: 10, stateBoundaries: boundaries } };
 }
 
 /* running animations inside pmx surfaces and their transcript hosts (reduced-motion census). Review cycle 1:
@@ -2136,21 +2180,8 @@ async function onceChecks(s, h, page, where, md, o = {}) {
   /* tick-height: chat and view surfaces with run cards */
   if (on('tick-height') && s.kind !== 'sheet') {
     await reopen();
-    const samples = [];
-    for (let i = 0; i < 10; i++) {
-      samples.push(await h.ev(inPageCards, {}));
-      if (s.tick) await s.tick(h, i); else await h.tickOnce();
-      await h.wait(s.tickWait || 540);
-    }
-    samples.push(await h.ev(inPageCards, {}));
-    if (!samples[0].length) record(s, 'tick-height', null, W, 'no run cards on this surface');
-    else {
-      const bad = [], per = {};
-      for (const snap of samples) for (const c of snap) { const key = c.k + ' ' + c.sig; (per[key] = per[key] || []).push(c.h); }
-      for (const [key, hs] of Object.entries(per)) { const mn = Math.min(...hs), mx = Math.max(...hs); if (mx - mn > 0) bad.push({ card: key, heights: [...new Set(hs)] }); }
-      const boundaries = Object.keys(per).length - samples[0].length;
-      record(s, 'tick-height', bad.length === 0, W, bad.length ? bad.slice(0, 10) : { cards: samples[0].length, ticks: 10, stateBoundaries: boundaries });
-    }
+    const r = await tickHeight(s, h);
+    record(s, 'tick-height', r.pass, W, r.detail);
     if (s.after) await s.after(h);
   }
   /* reduced-census (media) and reduced-census-class (body.pm56-reduced). IMPACT A1-03: reduced motion is
