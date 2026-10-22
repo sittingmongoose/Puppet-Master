@@ -103,7 +103,9 @@ def main():
       gs=p.evaluate('''()=>[...document.querySelectorAll('.transcript,.editor-body,.deep14-workspace,.decision-host')].filter(e=>e.getBoundingClientRect().width&&e.getBoundingClientRect().height).map(e=>({class:e.className,client:e.clientWidth,scroll:e.scrollWidth}))''');row['layouts'].append({'width':width,'theme':theme,'surface':surface,'geometry':gs});ck(f'{width} {theme} {surface} no horizontal overflow',all(g['scroll']<=g['client']+1 for g in gs))
       if surface=='questionnaire':act('close-decision');act('b14-open',run=snap()['id'])
      if theme in ['basic-dark','friendly-light','glass-dark']:p.screenshot(path=str(o/f'layout-{width}-{theme}.png'))
-   ck('Layout rendering never recharges a round',snap()['budget']['questions_asked']==3);ck('Eight themes exercised',len(themes)==8)
+   # (2026-10-22) the concept has ten themes: the eight product themes plus NieR Dark and NieR Light, Demo Studio themes
+   # (lab only) per the 2026-10-02 decision (Plans/Decision_Log.md, F3-589: "not a ninth theme" in the product)
+   ck('Layout rendering never recharges a round',snap()['budget']['questions_asked']==3);ck('All ten concept themes exercised (eight product themes, NieR Dark and NieR Light)',sorted(themes)==sorted(['basic-dark','basic-light','friendly-dark','friendly-light','glass-dark','glass-light','retro-dark','retro-light','nier-dark','nier-light']) and len(row['layouts'])==3*len(themes)*2)
   run('responsive_layouts',layouts)
   b.close()
  r['status']='pass' if r['cases'] and all(x['status']=='pass' for x in r['cases']) else 'fail';r['assertions']=sum(len(c['checks']) for c in r['cases']);save();print(json.dumps({'status':r['status'],'cases':len(r['cases']),'assertions':r['assertions'],'report':str(target)}));return 0 if r['status']=='pass' else 1

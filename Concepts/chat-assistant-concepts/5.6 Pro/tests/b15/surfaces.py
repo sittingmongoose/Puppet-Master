@@ -3,6 +3,9 @@
 import argparse,hashlib,json,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+# (2026-10-22) recorded examples play on their own after Start; these cases drive their examples by hand, so the
+# recording holds (PM56_RECPLAY_HOLD, recorded-play.js). The Goal panel lost its Details button on 2026-10-07 (one
+# control row; Objective history is its footer disclosure) and Open exact Plan became goal-open-plan-version (DL-157).
 ROOT=Path(__file__).resolve().parents[2]
 def main():
  ap=argparse.ArgumentParser();ap.add_argument('--outdir',type=Path,required=True);a=ap.parse_args();o=a.outdir.resolve();o.mkdir(parents=True,exist_ok=True);target=o/'RESULT.json'
@@ -12,7 +15,7 @@ def main():
  with sync_playwright() as pw:
   b=pw.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox','--disable-dev-shm-usage'])
   def run(name,fn):
-   row={'name':name,'status':'running','checks':[],'errors':[]};r['cases'].append(row);save();cx=b.new_context(viewport={'width':1440,'height':1000});p=cx.new_page();p.set_default_timeout(7000);p.on('pageerror',lambda e:row['errors'].append(str(e)))
+   row={'name':name,'status':'running','checks':[],'errors':[]};r['cases'].append(row);save();cx=b.new_context(viewport={'width':1440,'height':1000});cx.add_init_script('window.PM56_RECPLAY_HOLD=true');p=cx.new_page();p.set_default_timeout(7000);p.on('pageerror',lambda e:row['errors'].append(str(e)))
    def ck(n,v):row['checks'].append({'name':n,'pass':bool(v)});save();assert v,n
    def click(sel):p.locator(sel).filter(visible=True).first.click();p.wait_for_timeout(100)
    def shot(name):p.screenshot(path=str(o/(name+'.png')))
@@ -29,7 +32,7 @@ def main():
    click('.editor-body [data-action="pd-more-actions"]');click('[data-action="pd-build-goal"]');ck('Deep Plan atomically binds exactly one Goal and run',p.evaluate('!!PM56_GOAL.get()&&Object.keys(PM56_PLANS.runs()).length===1&&__plan.goalBinding.goal_id===PM56_GOAL.get().id'));ck('Bound bundle is the same actual scoped array',p.evaluate('PM56_PLANS.scopedBundle(__plan.goalBinding.planunit_bundle_ref)===__units&&__plan.planunits===__units'));ck('Ledger and approved document are unchanged',p.evaluate('__plan.ledger===__ledger&&PM56_PLANS.markdown(__plan.plan_id)===__doc'));ck('Binding addresses the existing thread To-Do list',p.evaluate('__plan.goalBinding.todo_list_ref==="todos:"+PM56_EXT.ctx().thread.id&&PM56_TODOS.get().length===3&&PM56_TODOS.get().every(t=>t.plan_id===__plan.plan_id)'))
    
    if p.locator('.editor-body [data-action="pd-more-actions"]').get_attribute('aria-expanded')!='true':click('.editor-body [data-action="pd-more-actions"]')
-   click('[data-action="pd-inspect"]');click('[data-action="pd-open-goal"]');click('[data-action="goal-details"]');p.wait_for_function('PM56_GOAL.get()?.status==="blocked"');ck('Unimplemented Deep Plan execution blocks without completing work',p.evaluate('__plan.status==="building"&&PM56_TODOS.get().every(t=>t.status==="pending")&&PM56_GOAL.get().blockedReason.includes("adapter")'));ck('Blocked owner exposes a disabled Resume and exact reason',p.locator('[data-action="goal-resume"]').filter(visible=True).first.is_disabled());click('[data-action="goal-bound-open-plan"]');ck('Reciprocal navigation deduplicates exact Plan tab',p.evaluate('PM56_EXT.ctx().state.editorTabs.filter(x=>x==="plan:"+__plan.plan_id).length===1'));shot('deep-bound-paused');
+   click('[data-action="pd-inspect"]');click('[data-action="pd-open-goal"]');p.wait_for_function('PM56_GOAL.get()?.status==="blocked"');ck('Open Goal shows the bound Goal in Activity',p.locator('.activity-panel .goal-compact[data-goal-id],.activity-panel .goal-section-v2[data-goal-id]').filter(visible=True).count()==1);click('.activity-panel [data-action="goal-toggle-history"]');ck('Objective history (the panel\'s details since 2026-10-07) lists revision 1',p.locator('.activity-panel .goal-history-row').filter(visible=True).count()==1);ck('Unimplemented Deep Plan execution blocks without completing work',p.evaluate('__plan.status==="building"&&PM56_TODOS.get().every(t=>t.status==="pending")&&PM56_GOAL.get().blockedReason.includes("adapter")'));ck('Blocked owner exposes a disabled Resume and exact reason',p.locator('[data-action="goal-resume"]').filter(visible=True).first.is_disabled());click('.activity-panel [data-action="goal-open-plan-version"]');ck('Reciprocal navigation deduplicates exact Plan tab',p.evaluate('PM56_EXT.ctx().state.editorTabs.filter(x=>x==="plan:"+__plan.plan_id).length===1'));shot('deep-bound-paused');
    if p.locator('.editor-body [data-action="pd-more-actions"]').get_attribute('aria-expanded')!='true':click('.editor-body [data-action="pd-more-actions"]')
    click('[data-action="pd-inspect"]');click('[data-action="pd-open-goal"]');click('[data-action="goal-cancel"]');ck('Cancel removes Goal projection and fences Plan',p.evaluate('PM56_GOAL.get()===null&&__plan.status==="canceled"'));row['scope']='Real B14 discovery and B15 goal-driven admission; no deep-plan provider execution/completion claim.'
   run('deep_identity_and_routes',deep)
