@@ -24,6 +24,22 @@
   .pm56-tab-host.pm56-host > .editor-body.pm56-tab-body { padding: 16px 16px 40px; }
 }
 
+/* the shared header row above a chat tab body (js/66): the row, then the body's slot, which the frame fills */
+.pm56-frame-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+.pm56-frame-wrap > .pm56-frame-slot {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
 /* ---- the document: Home's measure and type ---- */
 .pm56-tab-host.pm56-host .editor-doc {
   max-width: 960px;
