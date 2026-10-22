@@ -237,13 +237,13 @@
   const CHAT_VIEWS = ['guided', 'moments', 'takes'];
   const chatAttrs = (it) => { const o = { 'data-chat-action': it.action }; Object.keys(it.data || {}).forEach((k) => { o[`data-chat-${k}`] = it.data[k]; }); return o; };
   R.chat = () => {
-    const C = M.chat, ok = C.avail(), n = C.counts(), now = ok ? C.now() : null;
+    const C = M.chat, ok = C.avail(), now = ok ? C.now() : null;
     const acts = `<div class="pmds-headacts">${btn(T('studio.chat.show'), { do: 'chat-show', icon: 'chat', off: !ok })}${btn(T('studio.chat.reset'), { do: 'chat-reset', icon: 'reset', off: !ok })}</div>`;
     if (!ok) return head('chat', acts) + `<p class="pmds-fine pmds-chat-none">${esc(T('studio.chat.unavailableLead'))}</p>`;
     const view = CHAT_VIEWS.includes(ST.chatView) ? ST.chatView : 'guided';
     const bar = `<div class="pmds-runbar"><div class="pmds-runtext"><span class="pmds-runkicker">${esc(T('studio.chat.nowKicker'))}</span><span class="pmds-runsit">${esc(now && now.thread ? now.thread : T('studio.chat.nowNone'))}</span>`
       + `<span class="pmds-runstate">${esc(now && now.open ? T('studio.chat.nowShown') : T('studio.chat.nowHidden'))}</span></div>`
-      + `<div class="pmds-runacts">${seg({ do: 'chat-view', value: view, label: T('studio.chat.viewsLabel'), items: CHAT_VIEWS.map((v) => ({ v, label: T(`studio.chat.views.${v}`, { n: n[v] }), icon: v === 'guided' ? 'play' : v === 'moments' ? 'moment' : 'takes' })) })}</div></div>`;
+      + `<div class="pmds-runacts">${seg({ do: 'chat-view', value: view, label: T('studio.chat.viewsLabel'), items: CHAT_VIEWS.map((v) => ({ v, label: T(`studio.chat.views.${v}`), icon: v === 'guided' ? 'play' : v === 'moments' ? 'moment' : 'takes' })) })}</div></div>`;
     return head('chat', acts) + bar + R[`chat_${view}`]();
   };
   R.chat_guided = () => `<p class="pmds-blead pmds-chat-lead">${esc(T('studio.chat.guided.lead'))}</p>` + M.chat.guided().map((g) => block(g.label,
