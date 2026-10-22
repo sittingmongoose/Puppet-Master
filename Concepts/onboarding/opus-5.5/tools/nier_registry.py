@@ -14,24 +14,26 @@ LISTS = {
     'usage': ('cursor', 'chosen', 'strip', 'titles', 'confirm', 'cancel'),
     'home': ('cursor', 'chosen', 'strip'),
     'rail': ('chosen', 'strip'),
+    'chat56': ('cursor', 'chosen', 'strip'),
 }
-USAGE_SLOT, HOME_SLOT, RAIL_SLOT = object(), object(), object()
-SLOT_LAYERS = {USAGE_SLOT: 'usage', HOME_SLOT: 'home', RAIL_SLOT: 'rail'}
+USAGE_SLOT, HOME_SLOT, RAIL_SLOT, CHAT56_SLOT = object(), object(), object(), object()
+SLOT_LAYERS = {USAGE_SLOT: 'usage', HOME_SLOT: 'home', RAIL_SLOT: 'rail', CHAT56_SLOT: 'chat56'}
 CURSOR_ROWS = (
     ('.page-tab:not(.active)', '.pm6-tb-menu-item', '.pm6-tt-mode', '.pm6-tb-pages-more-item', '.activity-bar .icon', '.domain-link'),
     ('.side-link', '.index-link', '.page-index-title', '.workspace-tab', '.manager-tab', '.resource-row', '.pm51-popout-item:not([aria-disabled="true"])'),
     ('.pm51-menu-item', USAGE_SLOT, '.orch-tab', '.pm-segtab-item:not(.active)', '.fm-row', '.fm-ctx-item', '.ctx-item', '.menu-item'),
     ('.chat-dropdown-item', '.pm6-chat-more-item', '.cl-mode-item', '.pm-home-menu-row', '.palette-item', '.search-result-item', '.slash-cmd-item', HOME_SLOT),
-    ('.pm6-chat-slash-item', '.pm6-fab-item', '.chat-thread-item', '.pm6-dash-catalog-item', '[role="menuitem"]', '[role="option"]:not([aria-disabled="true"])'),
+    ('.pm6-chat-slash-item', '.pm6-fab-item', '.chat-thread-item', '.pm6-dash-catalog-item', '[role="menuitem"]', '[role="option"]:not([aria-disabled="true"])',
+     CHAT56_SLOT),
 )
 RAIL_CURSOR_COMMENT = (
     '    /* the left rail (concept D, Polish, Concepts/leftrail-redesign): its rows and every PMR.menu item carry .pmr-cur;\n'
     '       their ink bar is the rail package\'s CSS (src/css/40-nier.css), the square cursor and its tick come from here */\n'
 )
 CHOSEN = ('.page-tab', '.workspace-tab', '.manager-tab', '.orch-tab', USAGE_SLOT, '.domain-link', '.side-link', '.index-link',
-          '.page-index-title', '.pm-segtab-item', RAIL_SLOT, '.activity-bar .icon', '.resource-row', HOME_SLOT)
+          '.page-index-title', '.pm-segtab-item', RAIL_SLOT, '.activity-bar .icon', '.resource-row', HOME_SLOT, CHAT56_SLOT)
 STRIP = ('.page-tab', RAIL_SLOT, '.workspace-tab', '.manager-tab', '.orch-tab', '.pm-segtab-item', HOME_SLOT,
-         '.pm6-tt-mode', USAGE_SLOT)
+         '.pm6-tt-mode', USAGE_SLOT, CHAT56_SLOT)
 TITLES = {
     'dashboard': '.page-dashboard .pm6-dash-card-title',
     'projects': '.page-projects .projects-title',

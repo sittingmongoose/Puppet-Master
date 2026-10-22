@@ -1,0 +1,52 @@
+/* pm7-port/css/42-nier-parts.css: PMConcept7's NieR parts on the hosted chat's rows, tabs, menus and composer (the
+   port's nier lane, 2026-10-22). Written already scoped; each touch waits for its part, colours are NieR tokens only.
+
+   cursor   The chat's own NieR sheet already makes its menu items, thread rows, model and effort rows, mention rows,
+            Topics rows and attachment rows the ink bar; PMConcept7's cursor script now reaches them too (the chat56
+            entries in tools/nier_registry.py, pm7-port/tools/chat56_nier.py): the square cursor beside the bar and the
+            paper text class (o55np-cur-over) the chat's rules key on. Here the run views' tabs join them: the chosen tab
+            is the ink block (PMConcept7's workspace and Usage tabs), a hovered one the ink bar; the padding the block
+            needs comes out of the gap between tabs, so the words keep their places.
+   headers  The chat's menu and dialog heads are already PMConcept7's ink title band: its padding and caps follow
+            PMConcept7's menu head (home-redesign 60-nier.css .pmw-mhead: 8 px by 12 px, 11 px capitals at .16em), which
+            keeps the paper words 12 px clear of the band's sides.
+   pod      PMConcept7's Pod sits on the seat the chat keeps clear for it above the composer's top-right corner (the
+            chat's own NieR pod rules pad the activity bar and the queue and dock the jump chip left of it): the chat
+            publishes that seat and PMConcept7's #o55np-pod rule follows it (styles.d/14-nier-parts.css), so the Pod
+            never covers Send. */
+
+/* ---------------------------------------------------------------- cursor: the bar's paper words survive a render */
+/* The chat's NieR rules put the bar's paper words on .o55np-cur-over, the class PMConcept7's cursor script gives the
+   hovered item; the chat's DOM patch writes each row's class list from its template, so a render (a live work tick, the
+   model menu redrawing its detail as the pointer moves) dropped that class while the row stayed the ink bar under :hover,
+   leaving the account, effort and preview words in dim ink on it (model menu, NieR dark: 117,115,101 on 209,205,183,
+   about 2.9:1). Here the same paper words follow :hover as well, for the chat's own cursor rows only (each restyle stays
+   inside one row); five classes outweigh every colour rule the chat gives those rows' words, so no !important. */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host :is(.menu-item, .thread-row, .model-row, .effort-row, .pm-tops-item, .att-source-row, .qs-mention-item):hover :where(*) {
+  color: inherit; -webkit-text-fill-color: currentColor; --nx-ink: var(--o55-nier-on-ink);
+}
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .menu-item:hover .menu-icon { background: transparent; box-shadow: none; }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .menu-item:hover :is(kbd, .meta-pill) {
+  background: var(--o55-nier-on-ink); color: var(--o55-nier-ink); border-color: var(--o55-nier-on-ink);
+}
+
+/* ---------------------------------------------------------------- cursor: run-view tabs */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs { gap: 4px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab { padding: 0 9px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab:hover,
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab.active,
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab[aria-selected="true"] {
+  background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+}
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab:hover > small,
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab.active > small,
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab[aria-selected="true"] > small { color: inherit; opacity: .78; }
+/* the block is the chosen mark: the underline would double it */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab.active::after { display: none; }
+
+/* ---------------------------------------------------------------- headers: menu heads (PMConcept7's menu head) */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .menu-head { padding: 8px 12px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .menu-head > strong { font-size: 11px; letter-spacing: .16em; }
+
+/* ---------------------------------------------------------------- pod: the seat PMConcept7's Pod sits on */
+html[data-o55-nier="on"][data-o55-nier-parts~="pod"] #pmRoot.pm56-host .chat-stage .chat-float { anchor-name: --o55np-pod-seat; }

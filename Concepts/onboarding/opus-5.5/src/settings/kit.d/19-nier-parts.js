@@ -348,10 +348,15 @@
     }
   };
 
-  /* scrolling or resizing moves what the cursor and the reticle point at: they step aside and come back after */
-  function onScroll() {
-    if (cur) curOff();
-    if (ret && retT) {
+  /* scrolling or resizing moves what the cursor and the reticle point at: they step aside and come back after. Only a
+     scroll that moves their target counts: the window resizing, the document scrolling, or a scroller that holds the
+     target. A transcript that follows a live reply scrolls about twice a second, and a menu row the pointer rests on
+     beside it does not move, so its square stays. */
+  function onScroll(e) {
+    const box = e && e.target && e.target.nodeType === 1 ? e.target : null;
+    const moves = t => !box || !t || box.contains(t);
+    if (cur && moves(curT)) curOff();
+    if (ret && retT && moves(retT)) {
       const t = retT; if (ret.hasAttribute('data-on')) ret.removeAttribute('data-on');
       if (retScroll) window.clearTimeout(retScroll);
       retScroll = window.setTimeout(() => { retScroll = 0; if (retT === t && t.isConnected) { retT = t; retPlace(t); } }, 160);
