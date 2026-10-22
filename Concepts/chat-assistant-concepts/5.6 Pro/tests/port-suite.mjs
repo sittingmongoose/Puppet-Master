@@ -4,7 +4,8 @@
  * --only wonderer|layout|hover|questions|turn|history|orbit|neon[,..] narrows a rerun.
  * --wg-only core|r1|r2|rx|ax narrows Wonderer (default: every existing check).
  */
-import { spawn } from 'node:child_process';
+import { spawn, execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync, openSync, closeSync, rmSync } from 'node:fs';
 import path from 'node:path';
 import { CHAT_ROOT, chatTarget } from './chat-target.mjs';
@@ -15,6 +16,7 @@ if (!['standalone', 'pm7', 'both'].includes(pageArg)) throw new Error('--page st
 const pages = pageArg === 'both' ? ['standalone', 'pm7'] : [pageArg];
 const out = path.resolve(opt('--out', '/tmp/c56port-tests/suite')); mkdirSync(out, { recursive: true });
 const repo = path.resolve(CHAT_ROOT, '../../..'), summary = [];
+const runInfo = { startedAt: new Date().toISOString(), sourceHead: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim(), argv, targets: [] };
 const stages = ['wonderer', 'layout', 'hover', 'questions', 'turn', 'history', 'orbit', 'neon'];
 const only = opt('--only', stages.join(',')).split(',');
 if (only.some(s => !stages.includes(s))) throw new Error('Unknown --only stage');
@@ -38,6 +40,9 @@ for (const page of pages) {
   const file = path.resolve(opt(page === 'pm7' ? '--pm7-file' : '--standalone-file', opt('--file', page === 'pm7' ? path.join(out, 'PMConcept7.html') : path.join(CHAT_ROOT, 'index.html'))));
   // Validate argument resolution once before opening a browser.
   chatTarget(['--page', page, '--file', file]);
+  const fileSha256 = createHash('sha256').update(readFileSync(file)).digest('hex');
+  runInfo.targets.push({ page, file, sha256: fileSha256 });
+  writeFileSync(path.join(out, 'run.json'), JSON.stringify(runInfo, null, 2));
   for (const suite of only) {
     const json = path.join(out, `${page}-${suite}.json`), log = path.join(out, `${page}-${suite}.log`);
     rmSync(json, { force: true });
@@ -55,9 +60,9 @@ for (const page of pages) {
     try { report = JSON.parse(readFileSync(json, 'utf8')); rows = report.results || []; } catch {}
     if (suite === 'hover') rows = readFileSync(log, 'utf8').split('\n').filter(l => /^(PASS|FAIL)\s/.test(l)).map(l => ({ name: l.replace(/^(PASS|FAIL)\s+/, ''), pass: l.startsWith('PASS') }));
     const fail = rows.filter(r => r.pass === false || r.ok === false), skipped = rows.filter(r => r.skip || r.skipped || r.ok === null);
-    const row = { page, suite, checks: rows.length, counts: report?.counts, pass: rows.length - fail.length - skipped.length, fail: fail.length, skip: skipped.length, exit: exit.code, file, log,
+    const row = { page, suite, checks: rows.length, counts: report?.counts, pass: rows.length - fail.length - skipped.length, fail: fail.length, skip: skipped.length, exit: exit.code, file, fileSha256, log,
       failures: fail.map(r => ({ id: r.id || r.name || r.label, owner: r.owner || (suite === 'wonderer' ? 'c56port-found / c56port-looks / c56port-nier / c56port-demo (see check)' : 'c56port-tests (triage)'), detail: r.measured || r.detail || r.error })) };
-    if (exit.code && !fail.length) { row.fail++; row.failures.push({ id: 'HARNESS', owner: 'c56port-tests', detail: exit.error || `exit ${exit.code}; see ${log}` }); }
+    if ((exit.code || !rows.length) && !fail.length) { row.fail++; row.failures.push({ id: 'HARNESS', owner: 'c56port-tests', detail: exit.error || (!rows.length ? `Missing or empty report; see ${log}` : `exit ${exit.code}; see ${log}`) }); }
     summary.push(row); writeFileSync(path.join(out, 'summary.json'), JSON.stringify(summary, null, 2));
     console.log(`${page} ${suite}: ${row.pass} PASS ${row.fail} FAIL ${row.skip} SKIP (exit ${row.exit})`);
   }

@@ -6,7 +6,7 @@ node tests/port-suite.mjs --page pm7 --build --out /tmp/c56port-tests/pm7
 node tests/port-suite.mjs --page both --build --out /tmp/c56port-tests/integrated
 ```
 
-The runner opens GPU browsers sequentially and prints per-suite and per-page totals. Each stage has a log and JSON report; `summary.json` lists failing IDs and owners. `--standalone-file` and `--pm7-file` select existing builds. No built page is committed. A nonzero child exit or missing report fails the run.
+The runner opens GPU browsers sequentially and prints per-suite and per-page totals. Each stage has a log and JSON report; `summary.json` lists failing IDs and owners. `run.json` records the source commit, arguments and page SHA-256; each summary row also carries the page hash. `--standalone-file` and `--pm7-file` select existing builds. No built page is committed. A nonzero child exit or missing/empty report fails the run.
 
 For a focused regression pass:
 
@@ -23,7 +23,7 @@ The layout pass measures Crew and Room sheets in all ten looks at 400, 420, 440,
 | ID | Assertion |
 |---|---|
 | CO-HEADER | Shelf title, step numeral and meta text have no overlapping line rectangles; their text clears clipping ancestors and owns its hit-test samples. |
-| CO-CHROME | Persona and the Start button's 3 helpers remain present, unclipped and reachable at narrow sheet widths. |
+| CO-CHROME | Persona and the Start button's actual configured helper count (Crew 3, Room 4 by default) remain present, unclipped and reachable at narrow sheet widths. |
 | CO-PLATE-EDGE | At 480 px, the completed Crew plate's “got one checked result” is at least 12 px from its plate edge. |
 | CO-PLATE-AFTER | At 480 px, “after both” clears its dependency line by at least 8 px. Missing specimens fail. |
 
@@ -35,8 +35,8 @@ The host adapter keeps one set of assertions:
 |---|---|
 | `index.html` | Private `PMConcept7.html?o55=off&pm56test=1` |
 | `body[data-theme]`, `PM56_DEMO.setTheme` | `html[data-theme]`, `PM_THEME`, `PM_NIER.preview`; `.pm56-host` must mirror the painted theme |
-| Lab editor and `state.activeEditor` | `PM_HOME.active()` and the real `.pmw-tabbody[data-pmw-tab]` |
+| Visible `.editor-tab.active` matching `state.activeEditor` | Visible selected `.pmw-tab` matching `PM_HOME.active()` and the real `.pmw-tabbody[data-pmw-tab]` |
 | Viewport chat breakpoints | Chat-column width through `PMW.chatCol.setWidth`; window-based sheets are measured separately |
 | Full chat root | `#chatPanel > #pmw-chat56.pm56-frame > #pmRoot.pm56-host`; overlays at `body > #pmOverlayRoot.pm56-host` |
 
-The adapter reads host state and invokes host APIs. It does not create fake editor tabs or weaken pass conditions. `--cdp` attaches to a caller-owned GPU session; callers stop it. Without it, the helper starts and stops its own `agent-browser`, including on error and SIGTERM. At most one browser is started per suite process; run at most two suite processes per lane.
+The adapter reads host state and invokes host APIs. Column measurements allow the host's 1 px internal hairline. Overflow checks compare the chat host's scroll width with its own client width and independently check document overflow. The adapter does not create fake editor tabs. `--cdp` attaches to a caller-owned GPU session; callers stop it. Without it, the helper starts and stops its own `agent-browser`, including on error and SIGTERM, and prints its session ID and CDP endpoint. At most one browser is started per suite process; run at most two suite processes per lane.

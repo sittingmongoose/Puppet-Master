@@ -48,7 +48,7 @@ const AX_MORE = [
   { name: 'Simple Goal · Build a Plan as a Goal', action: 'b15-start', flow: 'plan', moves: ['[data-action="pd-build-goal"]'] },
   { name: 'Simple Goal · A future build is not a Goal yet', action: 'b15-start', flow: 'scheduled', moves: ['#pmOverlayRoot [data-action="sched-create-build"]'], max: 120000 }
 ];
-function check(name, pass, detail) { results.push({ name, phase, pass: !!pass, detail: pass ? '' : String(detail == null ? '' : detail) }); if (!pass) console.log('FAIL  ' + name + (detail ? '  -- ' + detail : '')); }
+function check(name, pass, detail) { results.push({ name, phase, pass: !!pass, detail: pass ? '' : String(detail == null ? '' : detail) }); if (!pass || phase === 'browser') console.log((pass ? 'PASS  ' : 'FAIL  ') + name + (!pass && detail ? '  -- ' + detail : '')); }
 const { Protocol, STATUS_WORD } = require(path.join(ROOT, 'wonderer-protocol.js'));
 const GE = require(path.join(ROOT, 'grill-protocol.js'));
 
@@ -1386,12 +1386,12 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   await click('.qs-grill [data-action="qs-grill-map"]'); await sleep(300);
   await answerAll(40000);
   await click('.wg-agreed[data-state="open"] .wg-agreed-map > summary'); await sleep(500);
-  const dd1b = await ev(() => { const a = document.querySelector('.wg-agreed[data-state="open"]'), rows = [...a.querySelectorAll('.wg-tree-li[data-state="settled"]')]; return { settled: rows.length, repeat: rows.filter(li => li.querySelector('.wg-tree-d')).length, guides: a.querySelectorAll('.wg-tg').length, tally: !!a.querySelector('.wg-tree-tally') }; });
+  const dd1b = await ev(() => { const a = document.querySelector('.wg-agreed[data-state="open"]'); if (!a) return { missing: true }; const rows = [...a.querySelectorAll('.wg-tree-li[data-state="settled"]')]; return { settled: rows.length, repeat: rows.filter(li => li.querySelector('.wg-tree-d')).length, guides: a.querySelectorAll('.wg-tg').length, tally: !!a.querySelector('.wg-tree-tally') }; });
   check('R2-D1 the design tree draws its dependencies, has no tally of its own, keeps the question in view at 1440 x 900 and marks it; What we agreed shows the structure without repeating answers',
     !dd1.tally && dd1.guides >= 2 && dd1.current === 1 && dd1.title && dd1.option && dd1b.settled >= 4 && dd1b.repeat === 0 && dd1b.guides >= 2 && !dd1b.tally, JSON.stringify({ dd1, dd1b }));
   /* D2 (ruling 19): eight rim dots, a caption, every lit angle named without hover, the status marks in the gutter */
   await ev(x => window.PM56_DEMO.selectThread(x), crewT); await sleep(500); await click('.qs-grill .qs-ask-x'); await sleep(300);
-  const dd2 = await ev(() => { const c = document.querySelector('.transcript .wg-card'), leads = c.querySelectorAll('.wg-lead');
+  const dd2 = await ev(() => { const c = document.querySelector('.transcript .wg-card'); if (!c) return { missing: true }; const leads = c.querySelectorAll('.wg-lead');
     return { dots: c.querySelectorAll('.wg-compass .wg-cmp-ray circle').length, lit: c.querySelectorAll('.wg-compass .wg-cmp-ray[data-on="1"]').length, cap: (c.querySelector('.wg-cmp-cap') || {}).textContent || '', named: c.querySelectorAll('.wg-cmp-legend .wg-cmp-key').length, leads: leads.length, gutter: c.querySelectorAll('.wg-lead-n > .wg-st-mark').length, inline: c.querySelectorAll('.wg-lead-status .wg-st-mark').length }; });
   check('R2-D2 the compass draws all eight rim positions, captions "N of 8 angles", names every lit angle without hover, and each lead’s status mark sits in its number gutter',
     dd2.dots === 8 && dd2.lit >= 1 && new RegExp('^' + dd2.lit + ' of 8 angles$').test(dd2.cap) && dd2.named === dd2.lit && dd2.gutter === dd2.leads && dd2.leads >= 3 && dd2.inline === 0, JSON.stringify(dd2));
