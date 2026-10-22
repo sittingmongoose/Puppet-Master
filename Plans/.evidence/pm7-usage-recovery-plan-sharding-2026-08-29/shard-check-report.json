@@ -1,5 +1,5 @@
 {
-  "body_reconstruction_checked": 2887,
+  "body_reconstruction_checked": 2891,
   "body_reconstruction_mismatches": 0,
   "config_path": "Plans/sharding_config.json",
   "docs": [
@@ -212,11 +212,11 @@
       "source": "Plans/Permissions_System.md"
     },
     {
-      "body_reconstruction_checked": 63,
+      "body_reconstruction_checked": 64,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/contracts_v0",
       "failures": [],
-      "shard_count": 63,
+      "shard_count": 64,
       "source": "Plans/Contracts_V0.md"
     },
     {
@@ -284,11 +284,11 @@
       "source": "Plans/Executor_Protocol.md"
     },
     {
-      "body_reconstruction_checked": 52,
+      "body_reconstruction_checked": 53,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/ui_command_catalog",
       "failures": [],
-      "shard_count": 52,
+      "shard_count": 53,
       "source": "Plans/UI_Command_Catalog.md"
     },
     {
@@ -492,11 +492,11 @@
       "source": "Plans/Plan_To_Node_Compilation.md"
     },
     {
-      "body_reconstruction_checked": 48,
+      "body_reconstruction_checked": 49,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/automated_testing_system",
       "failures": [],
-      "shard_count": 48,
+      "shard_count": 49,
       "source": "Plans/Automated_Testing_System.md"
     },
     {
@@ -516,11 +516,11 @@
       "source": "Plans/Prompt_Pipeline.md"
     },
     {
-      "body_reconstruction_checked": 45,
+      "body_reconstruction_checked": 46,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/wiring_matrix",
       "failures": [],
-      "shard_count": 45,
+      "shard_count": 46,
       "source": "Plans/Wiring_Matrix.md"
     },
     {
@@ -798,13 +798,13 @@
   ],
   "docs_checked": 99,
   "failures": [],
-  "generated_at_utc": "2026-10-21T18:54:12Z",
+  "generated_at_utc": "2026-10-22T03:18:47Z",
   "mode": "check",
   "output_root": "Plans/_shards",
   "root_index_failures": [],
   "root_index_path": "Plans/00-plans-index.md",
   "schema_id": "pm.plan_shards.report.v1",
-  "shards_checked": 2887,
+  "shards_checked": 2891,
   "source_count": 99,
   "status": "pass"
 }
