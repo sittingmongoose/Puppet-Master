@@ -27,6 +27,13 @@ export function chatTarget(argv = process.argv.slice(2)) {
       await page.evaluate(width => { if (window.PMW?.chatCol) { PMW.chatCol.setWidth(Math.min(760, Math.max(400, width))); PMW.chatCol.show(); } }, size.width);
     }
     await page.waitForTimeout(400);
+    if (kind === 'pm7' && surface === 'column') {
+      const expected = Math.min(760, Math.max(400, size.width));
+      await page.waitForFunction(expected => {
+        const frame = document.querySelector('#chatPanel > #pmw-chat56');
+        return frame && Math.abs(frame.getBoundingClientRect().width - expected) <= 1;
+      }, expected, { timeout: 5000 });
+    }
   }
   async function theme(page, look) {
     await page.evaluate(({ look, kind }) => {
@@ -102,9 +109,12 @@ export async function launchChatBrowser(chromium, argv = process.argv.slice(2)) 
           PM_NIER.preview({ on: family === 'nier' }, { within: null, instant: true, sound: false });
         };
         T.editor = () => {
-          if (kind === 'standalone') return { id: PM56_EXT.ctx().state.activeEditor, body: document.querySelector('.editor-body'), tab: document.querySelector('.editor-tab.active') };
-          const a = PM_HOME.active(), id = a?.tabId;
-          return { id, body: id ? document.querySelector('.pmw-tabbody[data-pmw-tab="' + CSS.escape(id) + '"]') : null, tab: id ? document.querySelector('.pmw-tab[data-tab-id="' + CSS.escape(id) + '"]') : null };
+          const stateId = kind === 'standalone' ? PM56_EXT.ctx().state.activeEditor : PM_HOME.active()?.tabId;
+          const tab = kind === 'standalone' ? document.querySelector('.editor-tab.active') : stateId ? document.querySelector('.pmw-tab[aria-selected="true"][data-tab-id="' + CSS.escape(stateId) + '"]') : null;
+          const renderedId = kind === 'standalone' ? tab?.dataset.id : tab?.dataset.tabId;
+          const visible = !!tab && tab.getBoundingClientRect().width > 0 && tab.getBoundingClientRect().height > 0 && getComputedStyle(tab).visibility !== 'hidden';
+          const body = kind === 'standalone' ? document.querySelector('.editor-body') : stateId ? document.querySelector('.pmw-tabbody[data-pmw-tab="' + CSS.escape(stateId) + '"]') : null;
+          return { id: visible && renderedId === stateId ? renderedId : null, stateId, renderedId, visible, body, tab };
         };
     };
 
