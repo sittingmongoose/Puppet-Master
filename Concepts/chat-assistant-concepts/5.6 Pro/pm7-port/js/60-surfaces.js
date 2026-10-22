@@ -190,10 +190,24 @@
      an undispatched Event, which leaves no gesture: the Debug examples' document opened behind, and their next press
      found nothing). An open that names an agent stays the agent's. */
   var beats = 0;
+  /* The lab's own way back to the chat (its editor tab's close, Return to chat) has no control here: a chat tab is a
+     Home tab. A recording's press of one, with none on screen, presses the Home tab's own close on the chat tab in
+     front, lit first as every recorded press is (the Context Lens example's last move). */
+  var LAB_BACK = /data-action="(?:close-editor|return-to-chat)"/;
+  function homeBack() {
+    var st = chatState(), id = st && st.activeEditor;
+    if (!id) return null;
+    return document.querySelector('.pmw-tab[data-tab-id="' + (W.CSS && CSS.escape ? CSS.escape(id) : id) + '"] .pmw-tclose');
+  }
   function wrapRecorded() {
     var R = W.PM56_RECPLAY;
     if (!R || typeof R.play !== 'function') return false;
     if (R.play._pm56) return true;
+    var press = R.press;
+    if (typeof press === 'function') R.press = function (t, o) {
+      if (typeof t === 'string' && LAB_BACK.test(t) && !(R.find && R.find(t))) { var x = homeBack(); if (x) return press.call(this, x, o); }
+      return press.apply(this, arguments);
+    };
     var play = R.play;
     R.play = function (o) {
       if (o && typeof o.next === 'function') {
