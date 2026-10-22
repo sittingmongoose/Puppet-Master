@@ -19,7 +19,10 @@ if (!['all', 'sheets', 'plate', 'fonts'].includes(section)) throw new Error('--s
 if (section === 'fonts' && target.kind !== 'pm7') throw new Error('Hosted fonts require --page pm7');
 const plannedLooks = section === 'fonts' ? looks.filter(l => l.startsWith('nier-')) : looks;
 if (!plannedLooks.length) throw new Error('The fonts section requires a NieR look');
-const widths = argv.includes('--sweep') ? Array.from({ length: 120 }, (_, i) => i + 400) : [400, 420, 440, 459, 460, 480, 500, 519];
+const widthStep = Number(opt('--width-step') || 1);
+if (!Number.isInteger(widthStep) || widthStep < 1 || widthStep > 119) throw new Error('--width-step must be an integer from 1 to 119');
+const boundaries = [400, 420, 440, 459, 460, 480, 519];
+const widths = argv.includes('--sweep') ? [...new Set([...Array.from({ length: Math.ceil(120 / widthStep) }, (_, i) => 400 + i * widthStep), ...boundaries])].sort((a, b) => a - b) : [400, 420, 440, 459, 460, 480, 500, 519];
 const check = (id, look, size, kind, pass, measured) => {
   results.push({ id, look, size, height, kind, pass: !!pass, owner: look.startsWith('nier-') ? 'c56port-nier' : 'c56port-looks', measured, sizeContext: testGeometry() });
   if (!pass) console.log(`FAIL ${id} ${look} ${kind}@${size} ${JSON.stringify(measured)}`);
@@ -29,7 +32,9 @@ page.on('pageerror', e => errors.push(e.message));
 const ev = (fn, data) => page.evaluate(fn, data);
 const act = (name, data = {}) => ev(([name, data]) => {
   const b = document.createElement('button'); Object.assign(b.dataset, data);
-  PM56_EXT.run(name, b, new Event('click')); PM56_EXT.ctx().renderApp();
+  b.type = 'button'; b.dataset.action = name;
+  (window.PM56_HOST?.root?.() || document.body).appendChild(b);
+  try { b.click(); PM56_EXT.ctx().renderApp(); } finally { b.remove(); }
 }, [name, data]);
 
 // Browser-side measurement helpers are installed after each navigation, outside product code.
@@ -122,7 +127,10 @@ async function fonts(selector) {
       for (let text = walk.nextNode(); text; text = walk.nextNode()) {
         const el = text.parentElement;
         if (!text.textContent.trim() || !M.visible(el) || el.closest('script,style')) continue;
-        const want = el.closest('code,pre,kbd,samp,.pmx-code,.pmx-output-pre') ? 'pm nier mono' : 'pm nier sans';
+        // Native NieR header kickers use Mono only with the headers part installed
+        // (pm7-port/css/41-nier-headers.css); body text still requires Sans.
+        const kicker = document.documentElement.matches('[data-o55-nier="on"][data-o55-nier-parts~="headers"]') && el.closest('.pmx-view > .pmx-view-head > .pmx-view-kind');
+        const want = kicker || el.closest('code,pre,kbd,samp,.pmx-code,.pmx-output-pre') ? 'pm nier mono' : 'pm nier sans';
         const family = norm(getComputedStyle(el).fontFamily.split(',')[0]); checked++; used.add(want);
         if (family !== want) bad.push({ text: text.textContent.trim().slice(0, 55), family, want });
       }
@@ -155,9 +163,9 @@ async function finishCrew() {
   }
   throw new Error('Crew did not finish for the plate measurement');
 }
-async function plate() {
-  return ev(() => {
-    const M = __c56layout, ps = [...document.querySelectorAll('.pmx-view .pmx-plate')].filter(M.visible);
+async function plate(run) {
+  return ev(run => {
+    const M = __c56layout, ps = [...document.querySelectorAll('.pmx-view[data-collab-view="' + CSS.escape(run) + '"] .pmx-plate')].filter(M.visible);
     const out = [];
     for (const p of ps) {
       const pr = p.getBoundingClientRect(), texts = [...p.querySelectorAll('text')].filter(M.visible);
@@ -196,7 +204,7 @@ async function plate() {
       out.push({ edge, after, labels, geometryCount: geoms.length, plate: M.box(pr), result: r && M.box(r), hit: !!hit && p.contains(hit) });
     }
     return out;
-  });
+  }, run);
 }
 
 try {
@@ -213,20 +221,28 @@ try {
         const c = await chrome();
         check('CO-CHROME', look, width, kind, c.length >= 2 && c.some(p => /Persona/.test(p.text)) && c.some(p => new RegExp('\\b' + helperCount + ' helpers\\b').test(p.text)) && c.every(p => !p.clipped && p.hit), { expectedHelpers: helperCount, parts: c });
       }
+      console.log(`DONE sheets ${look} ${kind}: ${section === 'fonts' ? 'fonts' : widths.length + ' widths'} (${new Date().toISOString()})`);
       await ev(() => { const c = PM56_EXT.ctx(); c.closeDialog(); c.renderApp(); });
     }
   }
   if (section !== 'sheets') {
   await target.resize(page, { width: 1440, height: 900 }); await target.theme(page, 'basic-dark');
   const run = await finishCrew(); await act('wg-open-leads', { run }); await page.waitForTimeout(600);
+  const expectedView = await ev(run => {
+    const v = document.querySelector('.pmx-view[data-collab-view="' + CSS.escape(run) + '"]'), r = v?.getBoundingClientRect();
+    const expected = window.PM56_SURFACES?.route('crew-work:' + run).id, active = window.PM_HOME?.active();
+    return { run, expected, active, width: r?.width || 0, height: r?.height || 0 };
+  }, run);
+  if (!expectedView.width || !expectedView.height || target.kind === 'pm7' && expectedView.active?.tabId !== expectedView.expected) throw new Error('The intended Crew view is not visible: ' + JSON.stringify(expectedView));
   for (const look of plannedLooks) {
     await target.theme(page, look); await target.panelSize(page, { width: 480, height });
-    const view = page.locator('.pmx-view').filter({ visible: true }).first();
+    const viewSelector = `.pmx-view[data-collab-view="${run}"]`;
+    const view = page.locator(viewSelector).filter({ visible: true }).first();
     if (await view.count()) await view.evaluate(el => { let s = el; while (s && !(s.scrollHeight > s.clientHeight && /auto|scroll/.test(getComputedStyle(s).overflowY))) s = s.parentElement; if (s) s.scrollTop = 0; });
     await page.waitForTimeout(400);
-    await fontCheck(look, 480, 'crew-view', '.pmx-view');
+    await fontCheck(look, 480, 'crew-view', viewSelector);
     if (section === 'fonts') continue;
-    const p = await plate();
+    const p = await plate(run);
     check('CO-PLATE-EDGE', look, 480, 'crew', p.some(p => p.result && p.hit) && p.every(p => p.labels.length > 0 && p.labels.every(l => l.edge >= 11.95)), p);
     check('CO-PLATE-LINE', look, 480, 'crew', p.length > 0 && p.every(p => p.geometryCount > 0 && p.labels.length > 0 && p.labels.every(l => l.lineGap !== null && l.lineGap >= 7.95)), p);
     check('CO-PLATE-AFTER', look, 480, 'crew', p.length > 0 && p.some(p => p.after.length) && p.every(p => p.after.every(a => a.gap !== null && a.gap >= 7.95)), p);
@@ -235,7 +251,7 @@ try {
 } catch (e) { results.push({ id: 'CO-RUN', pass: false, owner: 'c56port-tests', measured: e.stack }); console.error(e); }
 finally { await browser.close(); }
 if (errors.length) results.push({ id: 'CO-PAGEERROR', pass: false, owner: 'c56port-found', measured: errors });
-const failed = results.filter(r => !r.pass), report = { page: target.kind, file: target.file, section, checks: results.length, failed: failed.length, results };
+const failed = results.filter(r => !r.pass), report = { page: target.kind, file: target.file, section, widths, widthStep, checks: results.length, failed: failed.length, results };
 if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify(report, null, 2));
 console.log(`carry-over-layout-verify (${target.kind}): ${results.length - failed.length} PASS, ${failed.length} FAIL`);
 process.exitCode = failed.length ? 1 : 0;

@@ -28,6 +28,8 @@ node tests/wonderer-grill-film.mjs --page pm7 --file /tmp/c56port-tests/integrat
 
 The layout pass measures Crew and Room sheets in all ten looks at 400, 420, 440, 459, 460, 480, 500 and 519 px. `--sweep` measures every integer width in 400–519. `--looks retro-light,retro-dark` narrows layout and neon reruns.
 
+For an explicitly limited time budget, `--sweep --width-step 4` measures every fourth pixel plus 400, 420, 440, 459, 460, 480 and 519 (32 widths per sheet/look). The report records its exact width list; this is sampled coverage. The default sweep remains every integer.
+
 | ID | Assertion |
 |---|---|
 | CO-HEADER | Shelf title, step numeral and meta text have no overlapping line rectangles; their text clears clipping ancestors and owns its hit-test samples. |
@@ -38,6 +40,8 @@ The layout pass measures Crew and Room sheets in all ten looks at 400, 420, 440,
 | CO-FONT | Hosted NieR sheet/run-view text uses PM NieR Sans, code uses PM NieR Mono, and each used Latin face is loaded. The standalone keeps its own font contract. |
 
 R2-4 still hides the measured text, captures the browser-painted background, composites the actual ink and opacity, and requires 4.5:1 in all ten looks. It runs again on PM7 after token changes.
+
+The PM7-only `host` stage guards editor visibility after collapse, Usage, background opens and close. It also checks the Home browser's remembered participant route for isolated send, insert, list, tray capture and the painted composer Send button after a destination change. Composer intake must restore the remembered route or refuse with feedback while preserving the existing draft and attachment; it cannot silently send to Assistant. Run it alone with `--only host`.
 
 The host adapter keeps one set of assertions:
 

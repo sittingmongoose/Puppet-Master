@@ -26,6 +26,7 @@ const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2), opt = n => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
 const results = [];
+const paintFailures = [];
 let phase = 'node';
 const target = chatTarget(argv);
 /* the Batch 14-17 and 19 examples (2026-10-22), added once their recordings land */
@@ -324,16 +325,17 @@ async function pixelRatios(page, sels) {
     /* a live chat may still scroll (a run posting, the transcript keeping to its end): clip where the text is when the
        shot is taken, and take it again if the text moved while it was being taken */
     const at = () => page.evaluate(() => { const el = document.querySelector('[data-pxc="1"]'); if (!el) return null; const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); for (let t = tw.nextNode(); t; t = tw.nextNode()) { if (!t.textContent.trim() || (t.parentElement && t.parentElement.closest('svg'))) continue; const rg = document.createRange(); rg.selectNodeContents(t); const r = [...rg.getClientRects()].find(r => r.width > 4 && r.height > 4); if (r) return { x: Math.max(0, r.left), y: Math.max(0, r.top) }; } return null; });
-    let png = null;
+    let png = null, attempts = [];
     for (let k = 0; k < 4; k++) {
       const p0 = await at(); if (!p0 || p0.y < 0 || p0.y + info.rect.h > vp.height) break;
       info.rect.x = p0.x; info.rect.y = p0.y;
       const shot = await page.screenshot({ clip: { x: info.rect.x, y: info.rect.y, width: Math.max(4, Math.min(info.rect.w, vp.width - info.rect.x)), height: Math.max(4, info.rect.h) }, animations: 'disabled' });
       const p1 = await at();
+      attempts.push({ before: p0, after: p1 });
       if (p1 && Math.abs(p1.x - p0.x) < 1 && Math.abs(p1.y - p0.y) < 1) { png = shot; break; }
       await page.waitForTimeout(250);
     }
-    if (!png) { await page.evaluate(() => { const st = document.getElementById('pxc-hide'); if (st) st.remove(); document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc')); }); out[sel] = 0; continue; }
+    if (!png) { await page.evaluate(() => { const st = document.getElementById('pxc-hide'); if (st) st.remove(); document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc')); }); paintFailures.push({ selector: sel, attempts, sizeContext: testGeometry() }); out[sel] = 0; continue; }
     await page.evaluate(() => { const st = document.getElementById('pxc-hide'); if (st) st.remove(); document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc')); });
     out[sel] = await page.evaluate(async ([b64, color, op]) => {
       const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
@@ -369,21 +371,62 @@ async function browser() {
   await page.setViewportSize({ width: 1440, height: 900 });
   const load = async () => { await target.load(page); await target.resize(page, { width: 1440, height: 900 }); };
   const ev = (fn, a) => page.evaluate(fn, a);
-  const act = (name, data) => ev(([n, d]) => { const b = document.createElement('button'); Object.assign(b.dataset, d || {}); window.PM56_EXT.run(n, b, new Event('click')); window.PM56_EXT.ctx().renderApp(); }, [name, data || {}]);
+  const act = (name, data) => ev(([n, d]) => {
+    const b = document.createElement('button'); Object.assign(b.dataset, d || {}); b.type = 'button'; b.dataset.action = n;
+    (window.PM56_HOST?.root?.() || document.body).appendChild(b);
+    try { b.click(); window.PM56_EXT.ctx().renderApp(); } finally { b.remove(); }
+  }, [name, data || {}]);
   const sleep = ms => page.waitForTimeout(ms);
   const startSheet = async () => { await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click(); await sleep(1400); };
   /* answer every round with Accept all until What we agreed is open; notes whether it waited on a lookup on the way */
   const answerAll = async (maxMs = 30000) => {
     let waited = false; const t0 = Date.now();
+    await ev(() => {
+      const root = window.PM56_HOST?.root?.() || document.body, tid = PM56_EXT.ctx().state.selectedThread;
+      const p = window.__c56AnswerLookup = { seen: false, witness: null };
+      const read = () => { const el = root.querySelector('.wg-lookup'); if (el && PM56_EXT.ctx().state.selectedThread === tid) { p.seen = true; p.witness = { thread: tid, at: performance.now(), text: el.textContent }; } };
+      p.observer = new MutationObserver(read); p.observer.observe(root, { childList: true, subtree: true, characterData: true }); read();
+    });
+    const done = async agreed => {
+      const observed = await ev(() => ({ seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness }));
+      return { agreed, waited: waited || observed.seen, lookupWitness: observed.witness };
+    };
+    try {
     while (Date.now() - t0 < maxMs) {
-      if (await ev(() => !!document.querySelector('.wg-agreed[data-state="open"]'))) return { agreed: true, waited };
-      if (await ev(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'))) { await page.locator('.qs-grill [data-action="qs-accept-round"]').first().click(); await sleep(1300); continue; }
       if (await ev(() => !!document.querySelector('.wg-lookup'))) waited = true;
+      if (await ev(() => !!document.querySelector('.wg-agreed[data-state="open"]'))) return await done(true);
+      if (await ev(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'))) {
+        await page.locator('.qs-grill [data-action="qs-accept-round"]').first().click({ timeout: 1500 }).catch(e => { if (!/Timeout|detached|not attached/.test(e.message)) throw e; });
+        await sleep(500); continue;
+      }
       await sleep(500);
     }
-    return { agreed: false, waited };
+    return await done(false);
+    } finally { await ev(() => { window.__c56AnswerLookup?.observer.disconnect(); delete window.__c56AnswerLookup; }); }
   };
   const wonLanes = () => ev(() => [...document.querySelectorAll('.pmx-lane[data-k*=":"]')].filter(l => /Wonderer/.test(l.querySelector('.pmx-lane-name')?.textContent || '')).map(l => l.textContent));
+  const disabledSynthesis = async run => {
+    const selector = '[data-action="collab-brainstorm-synthesize"][data-run="' + run + '"]';
+    const state = await ev(selector => {
+      const b = [...document.querySelectorAll(selector)].find(b => b.getBoundingClientRect().width && b.getBoundingClientRect().height);
+      return { present: !!b, native: !!b?.disabled, aria: b?.getAttribute('aria-disabled') };
+    }, selector);
+    if (!state.present || state.native || target.kind !== 'pm7' || state.aria !== 'true') return { ...state, disabled: state.present ? state.native : null };
+    await ev(() => {
+      const original = PM56_EXT._actions['collab-brainstorm-synthesize'];
+      if (typeof original !== 'function') throw new Error('Missing synthesis action for inertness probe');
+      const p = window.__c56SynthesisProbe = { original, calls: 0 };
+      PM56_EXT._actions['collab-brainstorm-synthesize'] = function (...args) { p.calls++; return original.apply(this, args); };
+    });
+    try {
+      const button = page.locator(selector).filter({ visible: true }).first(); await button.scrollIntoViewIfNeeded();
+      const point = await button.evaluate(b => { const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, h = document.elementFromPoint(x, y); return { x, y, painted: !!h && (h === b || b.contains(h)) }; });
+      if (!point.painted) return { ...state, disabled: false, error: 'Disabled Write the plan is not painted at its click point' };
+      await page.mouse.click(point.x, point.y);
+      const calls = await ev(() => __c56SynthesisProbe.calls);
+      return { ...state, calls, disabled: calls === 0 };
+    } finally { await ev(() => { PM56_EXT._actions['collab-brainstorm-synthesize'] = __c56SynthesisProbe.original; delete window.__c56SynthesisProbe; }); }
+  };
   try {
     await load();
     /* WGV_ONLY=r2: the round 2 checks alone (a quick local loop; the full pass runs everything) */
@@ -458,14 +501,14 @@ async function browser() {
     check('B4b the blind proposals wait for Confirm', early.error === 'grill_me_waits_for_confirm', JSON.stringify(early));
     await page.locator('.wg-agreed [data-action="wg-confirm"]').first().click();
     await act('b13-open', { run: bsId }); await sleep(600); await pace(3);
-    let normalized = null, waits = [], checked = false, firstPassAt = null;
+    let normalized = null, waits = [], disabledEvidence = [], checked = false, firstPassAt = null;
     for (let i = 0; i < 120; i++) {
       await sleep(600);
       const st = await ev(id => { const r = window.PM56_COLLAB.run(id), W = window.PM56_WG, b = r.brainstorm; return { phase: b.phase, proposals: b.attempts.filter(a => a.status === 'completed').length, n: b.attempts.length, held: r.wonderer.passes[0].status, gate: W.gate(r), synth: !!b.synthesis, votes: (b.votes || []).length, wVote: (b.votes || []).some(v => r.participants.find(p => p.id === v.participantId)?.additiveRoleKind === 'wonderer'), undecidedLong: r.wonderer.leads.filter(l => !l.disposition && W.engine.visible(r, l.passId)).length }; }, bsId);
       if (st.proposals > 0 && firstPassAt === null) firstPassAt = st.held;
       if (!normalized && st.held === 'delivered') normalized = st;
       if (st.phase === 'vote' && !checked) { checked = true; await act('wg-check-it', { run: bsId, lead: 'instant' }); }
-      if (st.phase === 'synthesis' && !st.gate.ok) { const dom = await ev(() => { const b = document.querySelector('[data-action="collab-brainstorm-synthesize"]'); return b ? b.disabled : null; }); waits.push(st.gate.code + ':' + dom); }
+      if (st.phase === 'synthesis' && !st.gate.ok) { const dom = await disabledSynthesis(bsId); disabledEvidence.push({ gate: st.gate.code, ...dom }); waits.push(st.gate.code + ':' + dom.disabled); }
       if (st.phase === 'synthesis' && st.gate.ok) break;
       if (st.wVote) { check('B5 the Wonderer never votes', false, 'a Wonderer vote was recorded'); break; }
     }
@@ -473,6 +516,7 @@ async function browser() {
     check('B4d the first pass ran during intake, before any blind proposal took a slot', firstPassAt === 'held', String(firstPassAt));
     check('B4c the leads are released only once every blind proposal is in', normalized && normalized.proposals === normalized.n && normalized.phase !== 'blind_proposals', JSON.stringify(normalized));
     check('B5 Write the plan waits for a pass in flight and for research (never for you), with the button disabled', waits.some(w => /^exploring:true/.test(w)) && waits.some(w => /^research:true/.test(w)) && !waits.some(w => /:false$/.test(w)), waits.join(','));
+    results.at(-1).measured = disabledEvidence;
     const refused = await ev(id => { const r = window.PM56_COLLAB.run(id); return window.PM56_WG.gate(r).ok; }, bsId);
     await act('collab-brainstorm-synthesize', { run: bsId }); await sleep(1500);
     const plan = await ev(id => { const r = window.PM56_COLLAB.run(id), p = window.PM56_BRAINSTORM.planPayload(r); return { synth: !!r.brainstorm.synthesis, text: JSON.stringify(p.blocks), total: window.PM56_WG.engine.counts(r).total }; }, bsId);
@@ -1092,8 +1136,34 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   await fast(1);
   await ev(() => { const b = document.createElement('button'); b.dataset.flow = 'leads'; window.PM56_EXT.run('b13-start', b, new Event('click')); }); await sleep(1000);
   await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="wonderer"]'); if (i && i.checked) i.click(); }); await sleep(500);
-  const need = await ev(() => { const b = [...document.querySelectorAll('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button')].pop(); return { disabled: !!(b && b.disabled), text: (document.querySelector('#pmOverlayRoot .pmx-sheet') || {}).textContent || '' }; });
+  const need = await ev(() => { const b = [...document.querySelectorAll('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button')].pop(); return { disabled: !!(b && b.disabled), ariaDisabled: b?.getAttribute('aria-disabled'), text: (document.querySelector('#pmOverlayRoot .pmx-sheet') || {}).textContent || '' }; });
+  // PM7 keeps disabled controls focusable for their hover descriptions. An ARIA
+  // appearance alone is insufficient: a painted click must invoke no action and
+  // leave both the run count and configure sheet unchanged.
+  if (target.kind === 'pm7' && !need.disabled && need.ariaDisabled === 'true') {
+    await ev(() => {
+      const original = PM56_EXT._actions['collab-modal-commit'];
+      if (typeof original !== 'function') throw new Error('Missing configure commit action');
+      const p = window.__c56NeedProbe = { original, calls: 0, runs: PM56_COLLAB.runs().length };
+      PM56_EXT._actions['collab-modal-commit'] = function (...args) { p.calls++; return original.apply(this, args); };
+    });
+    try {
+      const button = page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last();
+      await button.scrollIntoViewIfNeeded();
+      const point = await button.evaluate(el => {
+        const r = el.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+        const hit = document.elementFromPoint(x, y);
+        return { x, y, painted: r.width > 0 && r.height > 0 && !!hit && (hit === el || el.contains(hit)) };
+      });
+      if (!point.painted) throw new Error('Disabled Start is not painted at its click point');
+      await page.mouse.click(point.x, point.y); await sleep(100);
+      need.probe = await ev(() => ({ calls: __c56NeedProbe.calls, beforeRuns: __c56NeedProbe.runs, afterRuns: PM56_COLLAB.runs().length, sheet: !!document.querySelector('#pmOverlayRoot .pmx-sheet') }));
+      need.disabled = need.probe.calls === 0 && need.probe.beforeRuns === need.probe.afterRuns && need.probe.sheet;
+    } catch (e) { need.error = e.message; }
+    finally { await ev(() => { PM56_EXT._actions['collab-modal-commit'] = __c56NeedProbe.original; delete window.__c56NeedProbe; }); }
+  }
   check('R1-R6c a recording that needs the Wonderer says so before Start and does not start', need.disabled && /follows the Wonderer’s leads/.test(need.text), JSON.stringify({ disabled: need.disabled }));
+  results.at(-1).measured = need;
   await ev(() => { const c = window.PM56_EXT.ctx(); c.closeDialog ? c.closeDialog() : (c.state.dialog = null); c.renderOverlays(); });
 
   /* R11: the Grill Me switch is named, described and keeps the keyboard focus */
@@ -1233,8 +1303,10 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   const crewThread = await ev(id => window.PM56_COLLAB.run(id).threadId, (await ev(() => (window.PM56_COLLAB.runs().filter(r => r.kind === 'crew' && r.wonderer && r.status === 'completed').pop() || {}).id)));
   const low = {};
   for (const theme of ['basic-dark', 'basic-light', 'glass-light', 'friendly-light', 'retro-dark', 'nier-dark', 'nier-light']) {
+    await ev(() => window.PM56_CLOCK.setScale(1));
     await target.theme(page, theme); await sleep(400);
     await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(700);
+    await ev(() => window.PM56_CLOCK.setScale(.01));
     const a = await measure(['.qs-ask-opt.is-on .qs-rec', '.qs-grill-note', '.qs-grill-meta']);
     await ev(t => { const c = window.PM56_EXT.ctx(); c.switchThread(t); c.renderApp(); }, crewThread); await sleep(700);
     await ev(() => { const el = document.querySelector('.transcript .wg-card'); if (el) el.scrollIntoView({ block: 'start' }); }); await sleep(400);
@@ -1242,6 +1314,7 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
     Object.entries({ ...a, ...b }).forEach(([k, v]) => { if (v < 4.5) low[theme + ' ' + k] = v; });
     low['n:' + theme] = Object.keys({ ...a, ...b }).length;
   }
+  await ev(() => window.PM56_CLOCK.setScale(1));
   await target.theme(page, 'basic-dark');
   const misses = Object.entries(low).filter(([k]) => !/^n:/.test(k)), counted = Object.entries(low).filter(([k]) => /^n:/.test(k)).map(([k, v]) => v);
   check('R1-R10 required words and the Recommended mark meet 4.5:1 on their real background in seven themes (' + counted.join('/') + ' measured)', !misses.length && counted.every(n => n >= 6), JSON.stringify(Object.fromEntries(misses)));
@@ -1487,5 +1560,5 @@ if (argv.includes('--browser')) { phase = 'browser'; await browser(); }
 const failed = results.filter(r => !r.pass);
 const counts = Object.fromEntries(['node', 'browser'].map(phase => [phase, { checks: results.filter(r => r.phase === phase).length, failed: failed.filter(r => r.phase === phase).length }]));
 console.log('wonderer-grill-verify: ' + results.length + ' checks, ' + failed.length + ' failed (' + counts.node.checks + ' node, ' + counts.browser.checks + ' browser)');
-if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify({ page: target.kind, file: target.file, checks: results.length, failed: failed.length, counts, results }, null, 2));
+if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify({ page: target.kind, file: target.file, checks: results.length, failed: failed.length, counts, paintFailures, results }, null, 2));
 process.exitCode = failed.length ? 1 : 0;

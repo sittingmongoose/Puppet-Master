@@ -73,16 +73,27 @@ export function chatTarget(argv = process.argv.slice(2)) {
     // A run view is a Home tab, not the chat column. Expose its real panel and
     // size the window until that panel's container has the requested width.
     await page.evaluate(() => { PMW.chatCol.setVisible(false); const a = PM_HOME.active(); if (a) PM_HOME.reveal(a.tabId); });
-    let width = 1000, measured = null;
-    for (let i = 0; i < 8; i++) {
-      await page.setViewportSize({ width, height: size.height }); await page.waitForTimeout(350);
-      measured = await page.evaluate(() => {
+    let width = 1000, measured = null, previous = null;
+    const measure = () => page.evaluate(() => {
         const a = PM_HOME.active(), body = a && document.querySelector('.pmw-tabbody[data-pmw-tab="' + CSS.escape(a.tabId) + '"] .pm56-frame');
         return body ? { width: body.getBoundingClientRect().width, height: body.getBoundingClientRect().height, tabId: a.tabId } : null;
-      });
+    });
+    for (let i = 0; i < 18; i++) {
+      await page.setViewportSize({ width, height: size.height }); await page.waitForTimeout(600);
+      const first = await measure(); await page.waitForTimeout(180); measured = await measure();
       if (!measured) throw new Error('The active Home tab has no chat-owned panel body');
-      if (Math.abs(measured.width - size.width) < 1) { await captureSize(page, { ...size, surface: 'panel' }); return measured; }
-      width = Math.max(400, Math.min(4000, Math.round(width + size.width - measured.width)));
+      if (Math.abs(measured.width - size.width) < 1 && first && Math.abs(first.width - measured.width) < .25) {
+        const context = await captureSize(page, { ...size, surface: 'panel' });
+        if (context.panel && Math.abs(context.panel.width - size.width) < 1) return measured;
+        measured = await measure();
+      }
+      // A split panel changes by only a fraction of a viewport pixel. Solve its
+      // observed response rather than repeatedly adding an unscaled error.
+      const observed = previous && width !== previous.width ? (measured.width - previous.measured) / (width - previous.width) : 1;
+      const slope = observed > .05 && observed < 2 ? observed : 1;
+      const next = Math.max(400, Math.min(4000, Math.round(width + (size.width - measured.width) / slope)));
+      previous = { width, measured: measured.width };
+      width = next === width ? Math.max(400, Math.min(4000, width + Math.sign(size.width - measured.width))) : next;
     }
     throw new Error(`Cannot size Home panel to ${size.width}px: ${JSON.stringify(measured)}`);
   }

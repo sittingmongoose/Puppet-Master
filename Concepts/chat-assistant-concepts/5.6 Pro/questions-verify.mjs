@@ -703,11 +703,32 @@ await t('Q6. Ask Card paints Back + Next on q1 and a choice click does not auto-
   must(nextPaint && nextPaint.owns, `Next not painted: ${JSON.stringify(nextPaint)}`);
   const i0 = (await stateOf()).questionIndex;
   must(i0 === 0, `started at ${i0}`);
+  let backIndex = i0;
+  let backCalls = 0;
+  if (!nav.nativeDisabled) {
+    await page.evaluate(() => {
+      const actions = PM56_EXT._actions, original = actions['prev-question'];
+      if (typeof original !== 'function') throw new Error('Missing prev-question action for inertness probe');
+      const probe = window.__c56BackProbe = { original, calls: 0 };
+      actions['prev-question'] = function (...args) { probe.calls++; return original.apply(this, args); };
+    });
+    try {
+      await clickPainted('.qs-ask [data-action="prev-question"]');
+      backIndex = (await stateOf()).questionIndex;
+    } finally {
+      backCalls = await page.evaluate(() => {
+        const p = window.__c56BackProbe; PM56_EXT._actions['prev-question'] = p.original;
+        delete window.__c56BackProbe; return p.calls;
+      });
+    }
+    must(backCalls === 0, `aria-disabled Back invoked prev-question ${backCalls} time(s)`);
+    must(backIndex === 0, `aria-disabled Back changed q1 to ${backIndex}`);
+  }
   await clickPainted('.qs-ask [data-action="answer-choice"]', 1);
   await page.waitForTimeout(400);
   const i1 = (await stateOf()).questionIndex;
   must(i1 === 0, `choice auto-advanced to ${i1}`);
-  return { nav, i0, i1 };
+  return { nav, i0, backIndex, backCalls, i1 };
 });
 await t('Q7. Ask Card multi uses checkboxes, Select all that apply, and two is-on rows', async () => {
   await openQuestion();

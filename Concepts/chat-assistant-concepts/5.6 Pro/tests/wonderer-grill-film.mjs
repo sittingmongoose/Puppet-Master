@@ -33,10 +33,18 @@ for (const flow of flows) {
     await target.load(page); await target.theme(page, look);
     if (target.kind === 'pm7') await page.evaluate(() => PMW.chatCol.setWidth(760));
     await page.waitForTimeout(1200);
+    const beforeIds = await page.evaluate(() => PM56_COLLAB.runs().map(r => r.id));
     const tile = await target.demoTrigger(page, 'wg-demo-start', flow);
     await tile.click(); await page.waitForTimeout(1400);
     await page.locator('#pmOverlayRoot [data-action="collab-modal-commit"]').filter({ visible: true }).last().click();
-    const start = Date.now(); let runId;
+    const runId = await page.evaluate(({ flow, beforeIds }) => {
+      const kind = flow === 'room' ? 'chat_room' : flow;
+      return PM56_COLLAB.runs().find(r => r.kind === kind && !beforeIds.includes(r.id))?.id;
+    }, { flow, beforeIds });
+    if (!runId) throw new Error('The Studio tile did not create a new run for this film');
+    row.runId = runId;
+    row.viewport = await page.evaluate(() => ({ width: innerWidth, height: innerHeight, columnWidth: document.querySelector('#pmw-chat56')?.getBoundingClientRect().width }));
+    const start = Date.now();
     const click = async selector => {
       const el = page.locator(selector).filter({ visible: true }).first();
       if (!await el.count() || !await el.isEnabled()) return false;
@@ -45,12 +53,11 @@ for (const flow of flows) {
     };
     while (Date.now() - start < 240000) {
       const state = await page.evaluate(({ flow, runId }) => {
-        const c = PM56_EXT.ctx(), kind = flow === 'room' ? 'chat_room' : flow;
-        const r = runId ? PM56_COLLAB.run(runId) : PM56_COLLAB.runsForThread(c.state.selectedThread).filter(r => r.kind === kind).pop();
+        const r = PM56_COLLAB.run(runId);
         return r ? { id: r.id, status: r.status, phase: r.brainstorm?.phase, synthesis: !!r.brainstorm?.synthesis,
           decision: !!r.brainstorm?.decision, summary: !!r.chatRoom?.summary, wait: r.chatRoom && PM56_ROOM.waitsFor(r) } : null;
       }, { flow, runId });
-      if (state) { runId = state.id; row.final = state; }
+      if (state) row.final = state;
       if (state && (state.status === 'completed' || flow === 'room' && state.summary || flow === 'brainstorm' && state.synthesis)) { row.pass = true; break; }
       if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]') || await click('.qs-grill [data-action="qs-accept-round"]')) { await page.waitForTimeout(1200); continue; }
       if (state && flow === 'room' && state.wait === 'last') await click(`.transcript [data-run-id="${runId}"] [data-action="collab-room-summarize"]`);
@@ -58,7 +65,7 @@ for (const flow of flows) {
       await page.waitForTimeout(500);
     }
     if (!row.pass) throw new Error(`Film did not reach its result within 240s: ${JSON.stringify(row.final)}`);
-    await page.waitForTimeout(2500);
+    await page.waitForTimeout(6000);
     await page.screenshot({ path: movie.replace(/\.mp4$/, '-result.png') });
     row.pass = !errors.length;
   } catch (e) { row.error = e.stack; row.pass = false; console.error(e); }
