@@ -1,0 +1,113 @@
+/* pm7-port/css/23-ask-card.css (looks lane): the Ask Card questionnaire (questions.css, the shared questionnaire the
+   Grill Me rounds and every chat question use) restyled with PMConcept7's controls and tokens, the carry-over item
+   "spine thumb edge, option and radio gaps, description line height, color-mix tokens, pill controls"
+   (PORT-CARRY-OVER.md):
+   - tokens: the card's private colour mixes (--qs-row, --qs-on, ...) become PMConcept7's named tokens: the hover and
+     pressed fills, the hairline, --accent-soft and --accent-glow (PMConcept7's accent at 12 % and 25 %), the accent;
+   - options: Home's picker rows (clear at rest, the hover fill under the pointer, the chosen row the accent wash in a
+     full 1 px accent box), 2 px apart; the radio and check marks ring in the tertiary ink (3:1 and more on the card);
+   - descriptions: 1.5 line height (the 1.4 the chat used is under the 1.45 floor for wrapped text);
+   - the spine: a 2 px rail, beads in the tertiary ink, the thumb a 12 px accent bead in PMConcept7's rail halo (the
+     onboarding rail's current node) with no glow and no numeral in it: a 16 px disc could not hold its digit off its
+     own edge, and the foot already says "1 of 3";
+   - the foot: PMConcept7's primary (no glow), quiet text buttons; capsules are gone (css/21);
+   - the shell: the card fill and the structural line, no accent glow in its corner.
+   Corners come from the look (Retro's are 0; retro.css keeps its round radios and square spine on purpose). NieR is
+   the nier lane's. Prefix: html:not(NieR) .pm56-host[data-theme] (adds (0,2,1) over each scoped original). */
+
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask {
+  --qs-row: transparent;
+  --qs-row-hover: var(--surface-3);
+  --qs-line: var(--border);
+  --qs-on: var(--accent-soft, var(--pmx-wash));
+  --qs-on-hover: var(--accent-glow, var(--pmx-wash));
+  --qs-on-line: var(--accent);
+  --qs-on-ink: var(--on-accent);
+}
+
+/* ---- the shell (variant 8, the docked card) ---------------------------------------------------------------------- */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .decision-host[data-variant="8"] .qs-shell {
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-soft);
+}
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .decision-host[data-variant="8"] .qs-open-face {
+  background: var(--surface-2);
+}
+
+/* ---- the question ------------------------------------------------------------------------------------------------- */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-sub-n { color: var(--accent); }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-desc { line-height: 1.5; }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-opt-desc { line-height: 1.5; }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-review-q { line-height: 1.5; }
+
+/* ---- options: Home's picker rows ---------------------------------------------------------------------------------- */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-opts { gap: 2px; }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.qs-ask-opt, .qs-ask-review-row) {
+  border-radius: var(--pm56-r-row);
+  padding: 9px 10px;
+}
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask .qs-other-ask {
+  margin-top: 2px;
+  padding: 8px 10px;
+  border-radius: var(--pm56-r-row);
+}
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-review-row.is-empty { border-color: var(--border-strong); }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-review-disc { border-radius: var(--pm56-r-chip); }
+
+/* the marks: rings in the tertiary ink (a mark needs 3:1 against the card; the chat's 34 % text mix was ~2:1 in
+   light looks), the accent when chosen */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-mark { border-color: var(--subtle); }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.qs-ask-opt:hover, .qs-ask .qs-other-ask:hover) .qs-ask-mark { border-color: var(--muted); }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.qs-ask-opt.is-on .qs-ask-mark, .qs-ask-mark.is-on, .qs-other-ask.is-on .qs-ask-mark) {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-mark-check { border-radius: min(var(--radius-sm), 3px); }
+
+/* "Something else" and the note: a field that shows focus on its own frame */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask .qs-other-ask .qs-other-line,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-note-well {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--pm56-r-ctl);
+  background: transparent;
+}
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask .qs-other-ask .qs-other-line:focus-within,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-note-well:focus-within {
+  border-color: var(--pmw-focus, var(--accent));
+  box-shadow: 0 0 0 1px var(--pmw-focus, var(--accent));
+  background: transparent;
+}
+
+/* ---- the spine ---------------------------------------------------------------------------------------------------- */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-spine-track {
+  width: 2px;
+  margin-left: -1px;
+  background: var(--border-strong);
+}
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-spine-fill { background: var(--accent); }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] button.qs-spine-slot::after { background: var(--subtle); }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] button.qs-spine-slot.is-todo:hover::after { background: var(--muted); }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] button.qs-spine-slot.is-done::after { background: var(--accent); }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] button.qs-spine-slot.is-skipped::after { background: var(--surface-2); border-color: var(--accent); }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-spine-thumb {
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  font-size: 0;
+  color: transparent;
+  box-shadow: 0 0 0 3px var(--accent-soft, var(--pmx-wash));
+}
+
+/* ---- the foot ----------------------------------------------------------------------------------------------------- */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-foot .primary-button {
+  box-shadow: none;
+  font-weight: 600;
+  padding: 6px 14px;
+}
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-foot .primary-button:hover { background: var(--pmx-primary-hover); }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-foot :is(.text-button, .soft-button):not(:disabled):hover {
+  background: var(--surface-3);
+  color: var(--text);
+}
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-x:hover { transform: none; background: var(--surface-3); }

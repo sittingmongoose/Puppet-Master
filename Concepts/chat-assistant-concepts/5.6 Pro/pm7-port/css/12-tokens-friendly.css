@@ -1,0 +1,18 @@
+/* pm7-port/css/12-tokens-friendly.css (looks lane): Friendly Dark and Friendly Light. The base aliases are in
+   10-tokens-host.css; this file holds what is Friendly's own.
+
+   PMConcept7 Friendly (measured on the page, 2026-10-22):  dark                  light
+     ground (--pmw-surface: the surface with 7 % mint)        #2A2731 + mint        #FFFFFF + mint
+     cards (--pmw-surface-2 = --surface-elevated)             #322E3A               #FFFFFF
+     lines (--pmw-line / --pmw-line-2)                        ink at 6 % / 10 %     #EFEAF3 / #E4DCEA
+     inks (--pmw-text / -2 / -3)                              #F0EDF4 / #B4AEBE / #8A8494 at 72 % toward the text
+                                                              #4A4550 / #6B6473 / #9A93A0 at 55 % toward the text
+     accent (--pmw-accent)                                    #6FC6E8               #3F9CC7 at 62 % toward black
+     face  Poppins (--body-font); code JetBrains Mono; corners 6 / 14 / 20 px (--radius-sm/md/lg) */
+
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="friendly-dark"] { --on-accent: #101114; }
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="friendly-light"] {
+  --on-accent: #fff;
+  /* the glyph "changed" ink (#9678c9) is a mark ink (3.7:1 on white); as text it is taken toward black: 6:1 */
+  --accent-2: color-mix(in srgb, var(--pmg-ink-changed, #9678c9) 72%, #000);
+}

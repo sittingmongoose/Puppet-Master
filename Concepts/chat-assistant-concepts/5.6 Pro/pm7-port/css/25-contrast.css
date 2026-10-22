@@ -1,0 +1,41 @@
+/* pm7-port/css/25-contrast.css (looks lane): every chat word at 4.5:1 (3:1 large) over what is painted under it,
+   measured on painted pixels in the eight looks (the chat's text hidden, the page captured, each run's ink and opacity
+   composited over the median pixel of its own box). Where a tinted ground took a secondary ink under the floor, the
+   ink steps toward the text there; nothing else changes.
+   Measured before: the current menu row's description 3.46 (Basic Dark) to 4.03, the people card's kicker 3.97 and
+   body 4.40 on its warm band, the chosen answer's description 4.18 and separator 3.81 on the accent wash, Retro
+   Dark's tertiary ink 4.32 on its raised surface (question numbers, counts). */
+
+/* the secondary line of a hovered, focused or current menu row (on the hover and pressed fills) */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .menu-item:is(.active, :hover, :focus-visible) .menu-copy > span {
+  color: color-mix(in srgb, var(--text) 40%, var(--muted));
+}
+/* the transcript's people family (turn-stage.css): its warm band under the kicker and the body */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] [data-family="people"] :is(.work-output-kind, .work-output-copy, p) {
+  color: color-mix(in srgb, var(--text) 40%, var(--muted));
+}
+/* the chosen answer's description and its separators, on the accent wash */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.qs-ask-opt.is-on, .qs-ask .qs-other-ask.is-on) :is(.qs-ask-opt-desc, .qs-rec-sep) {
+  color: color-mix(in srgb, var(--text) 40%, var(--muted));
+  opacity: 1;
+}
+/* Retro Dark: Home's tertiary ink (the muted olive at 86 %) reads 4.32:1 on the raised surface #1e2219; at 76 % it
+   holds 5.7 there and more on the ground */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="retro-dark"] {
+  --subtle: color-mix(in srgb, var(--text-muted) 76%, var(--text-primary));
+}
+
+/* the model menu: the effort list's separators were a faint mix (2.6-3.1:1); on the current or hovered row the account
+   and effort words step toward the text like the menu rows above */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .effort-sep { color: var(--subtle); opacity: 1; }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .model-row:is(.active, :hover, :focus-visible) :is(.model-account, .effort-word, .effort-sep) {
+  color: color-mix(in srgb, var(--text) 40%, var(--muted));
+}
+/* the Ask Card's separators (round line, recommended line) take the secondary ink; a required mark the danger ink */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-rec-sep { color: var(--muted); }
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-req { color: color-mix(in srgb, var(--danger) 70%, var(--text)); }
+/* Friendly Light: Home's tertiary ink (55 % toward the text) reads 4.50:1 on the page ground the plates sit on; at
+   48 % it holds 4.8 */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="friendly-light"] {
+  --subtle: color-mix(in srgb, var(--text-muted) 48%, var(--text-primary));
+}

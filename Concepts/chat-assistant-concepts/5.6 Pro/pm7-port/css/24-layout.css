@@ -1,0 +1,106 @@
+/* pm7-port/css/24-layout.css (looks lane): the carry-over layout items (PORT-CARRY-OVER.md), measured by the tests
+   lane's carry-over-layout-verify.mjs (CO-HEADER, CO-CHROME, CO-PLATE-*). Sheets are window overlays, so their rules
+   read the window (CONTRACT: "sheets and menus in #pmOverlayRoot keep the window"). These hold in every look,
+   NieR included: they change where things sit, not how they are painted.
+
+   1. Shelf and question heads (CO-HEADER; "Retro 400 px shelf header"): a head was one row that never wrapped, with
+      its meta line flex:none and nowrap, so at 400-420 px the title was squeezed to ~6 px and its words ran under the
+      meta ("Add specialists" over "Optional . they never replace a helper"). The row wraps now: the meta takes the
+      next line, under the title, and wraps itself if it must; a wide sheet still fits it all on one line.
+   2. The Crew and Room roster (CO-CHROME; "Persona" clipped): its grid needs 546 px (28 + 96 + 176 + 178 + 28 and the
+      gaps) and never restacked, so below a ~660 px window the Persona column ran past the sheet's clip. Below 720 px
+      each helper is three lines (job with its mark and actions, then the model, then the persona, both at the full
+      width), and the head becomes one wrapping legend in the same order.
+   3. The sheet's foot (CO-CHROME; "3 helpers" clipped): Save as my default, the readback, Cancel and Start sat in one
+      grid row 400 px wide. Below 600 px they wrap: Save, then the readback, then Cancel and Start at the right. */
+
+/* ---- 1. heads wrap instead of squeezing their title ---------------------------------------------------------------- */
+.pm56-host .pmx-sheet .pmx-q-head { flex-wrap: wrap; row-gap: 2px; }
+.pm56-host .pmx-sheet .pmx-q-head > .pmx-q-title { flex: 0 1 auto; }
+.pm56-host .pmx-sheet .pmx-q-head > .pmx-q-meta { flex: 0 1 auto; min-width: 0; white-space: normal; }
+@media (max-width: 519.98px) {
+  /* on its own line the meta sits under the title, past the numeral (20 px) and its gap (6 px) */
+  .pm56-host .pmx-sheet .pmx-q-head:has(> .pmx-q-n) > .pmx-q-meta { margin-left: 26px; flex-basis: calc(100% - 26px); }
+  .pm56-host .pmx-sheet .pmx-q-head:not(:has(> .pmx-q-n)) > .pmx-q-meta { margin-left: 0; flex-basis: 100%; }
+}
+
+/* ---- 2. the roster restacks below a 720 px window --------------------------------------------------------------- */
+@media (max-width: 719.98px) {
+  .pm56-host .pmx-sheet .pmx-roster,
+  .pm56-host .pmx-sheet.collab-configure .pmx-roster,
+  html div.pm56-host[data-theme] .pmx-sheet.collab-configure .pmx-roster { --pmx-cols: 28px minmax(0, 1fr) auto; }
+  .pm56-host .pmx-sheet .pmx-roster .pmx-row {
+    grid-template-columns: var(--pmx-cols);
+    grid-template-rows: auto auto auto;
+    row-gap: 6px;
+    padding-bottom: 6px;
+  }
+  .pm56-host .pmx-sheet .pmx-roster .pmx-row > .pmx-row-mark { grid-column: 1; grid-row: 1; }
+  .pm56-host .pmx-sheet .pmx-roster .pmx-row > .pmx-row-job { grid-column: 2; grid-row: 1; min-width: 0; }
+  .pm56-host .pmx-sheet .pmx-roster .pmx-row > .pmx-row-acts { grid-column: 3; grid-row: 1; }
+  .pm56-host .pmx-sheet .pmx-roster .pmx-row > .pmx-row-model { grid-column: 2 / -1; grid-row: 2; min-width: 0; }
+  .pm56-host .pmx-sheet .pmx-roster .pmx-row > .pmx-row-persona { grid-column: 2 / -1; grid-row: 3; min-width: 0; }
+  .pm56-host .pmx-sheet .pmx-roster .pmx-row :is(.pmx-row-model, .pmx-row-persona) > .shared-picker-button { width: 100%; }
+  /* a row's route sentence and note (module-shell pmxRow) follow on their own line, never in the marks' column */
+  .pm56-host .pmx-sheet .pmx-roster .pmx-row > :not(.pmx-row-mark, .pmx-row-job, .pmx-row-acts, .pmx-row-model, .pmx-row-persona) { grid-column: 2 / -1; }
+  /* the head: Job, AI model, Persona as one legend that wraps, past the marks' column */
+  .pm56-host .pmx-sheet .pmx-roster .pmx-roster-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 16px;
+    padding-left: 38px;
+  }
+  .pm56-host .pmx-sheet .pmx-roster .pmx-roster-head > :not(.pmx-roster-col) { display: none; }
+  .pm56-host .pmx-sheet .pmx-roster .pmx-roster-head > .pmx-roster-col { flex: 0 1 auto; min-width: 0; }
+  .pm56-host .pmx-sheet .pmx-roster .pmx-roster-head > .pmx-roster-col > small { display: none; }
+}
+
+/* ---- 3. the foot wraps below a 600 px window --------------------------------------------------------------------- */
+@media (max-width: 599.98px) {
+  .pm56-host .pmx-sheet > .pmx-foot,
+  .pm56-host .pmx-sheet .pmx-foot.collab-configure-foot {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas: "save save save" "say say say" ". cancel primary";
+    align-items: center;
+    row-gap: 8px;
+    column-gap: 8px;
+  }
+  .pm56-host .pmx-sheet .pmx-foot > .pmx-save { grid-area: save; justify-self: start; }
+  .pm56-host .pmx-sheet .pmx-foot > .pmx-foot-say { grid-area: say; min-width: 0; }
+  .pm56-host .pmx-sheet .pmx-foot > .pmx-cancel { grid-area: cancel; }
+  .pm56-host .pmx-sheet .pmx-foot > .pmx-primary { grid-area: primary; min-width: 0; }
+}
+
+/* ---- 4. the Crew plate's labels (CO-PLATE-EDGE, -LINE, -AFTER; "plate spacing at 480 px") ---------------------------
+   The run view draws the full 640-unit plate into the panel, so at a 480 px panel it is drawn at 0.65 and every gap in
+   the drawing shrinks with it: "got one checked result" ran to 10.8 px from the plate's edge (Friendly 7.3), "after
+   both" sat 6.2 px over its own line (Retro 5.3 from the arrowhead), and the job's two lines 6.2-6.8 px inside the
+   paper's outline. Each is moved where the drawing has room, at every size (each is also better at full size):
+   - the You group (icon and both labels) sits 10 units further left, and the dotted line to it ends 10 units sooner, so
+     the line still meets the icon as drawn;
+   - "after both" is centred in the band between the hand-out line above it and its own line (33 units for 8 of ink)
+     and 4 units left of centre, clear of the arrowhead, at 9 px (a line's annotation, under the 10.5 px sub-labels):
+     at 10.5 its ink left 16.2 px of a 21.4 px band, so both 8 px gaps could not fit at 0.65 with the half pixel the
+     text's baseline snaps by; geometricPrecision places it on the sub-pixel, so one lift centres it in Inter,
+     Poppins and IBM Plex Mono alike (measured gaps 8.3 / 8.4 px);
+   - the job paper's two lines are one tighter block, centred in the paper, a unit and a half in from its left edge
+     and clear of its folded corner. */
+.pm56-host .pmx-plate .pmx-p-you { translate: -10px 0; }
+.pm56-host .pmx-plate .pmx-p-line[data-style="toyou"] {
+  transform-box: fill-box;
+  transform-origin: 0 50%;
+  scale: .88 1;
+}
+.pm56-host .pmx-plate[data-pmx-kind="crew"] text.pmx-p-sub[data-pmx-part="assign"] { font-size: 9px; translate: -4px -4.47px; text-rendering: geometricPrecision; }
+.pm56-host .pmx-plate .pmx-p-paper-text {
+  box-sizing: border-box;
+  height: 100%;
+  justify-content: center;
+  padding: 0 6px 0 1.5px;
+}
+.pm56-host .pmx-plate .pmx-p-paper-text > span { width: 100%; }
+.pm56-host .pmx-plate .pmx-p-paper-text > .pmx-p-note { line-height: 11.5px; }
+.pm56-host .pmx-plate .pmx-p-paper-text > .pmx-p-lab { line-height: 13px; margin-top: 1px; }
+/* Poppins' taller descender: Friendly lifts the job's second line 1.2 units (its first line stays put) */
+.pm56-host[data-theme^="friendly"] .pmx-plate .pmx-p-paper-text > .pmx-p-lab { position: relative; top: -1.2px; }

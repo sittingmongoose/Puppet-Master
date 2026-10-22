@@ -1,0 +1,126 @@
+/* pm7-port/css/20-controls.css (looks lane): PMConcept7's controls on the chat, after the stand-in chat and Home's
+   picker (Concepts/home-redesign/src/panels/css/80-standin-chat.css, 30-menu.css), which are the page's own chat
+   controls: a secondary button is a clear box with the structural line, a primary is the accent with the ink its
+   luminance needs and no glow, an icon button is clear until hovered, a field is a hairline box that shows focus on its
+   own frame, a menu is the page's picker plate. Corners come from the look (css/10: --radius-sm is the control corner,
+   --radius the card's; Retro's are 0 through retro.css). NieR Mode is left to the chat's NieR sheets and the nier lane.
+
+   Selector weight: html:not(NieR) .pm56-host[...] <chat selector> adds (0,2,1) to the chat's own scoped rule, which
+   starts with one .pm56-host, so each rule here wins over the one it restates. */
+
+/* ---- the port's own shape tokens (css/21-24 read them) ------------------------------------------------------------ */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme] {
+  --pm56-r-card: var(--radius);
+  --pm56-r-ctl: var(--radius-sm);
+  /* chips and badges: the control corner, held small enough that a 20 px chip never reads as a capsule */
+  --pm56-r-chip: min(var(--radius-sm), 5px);
+  /* meters, tracks and their fills */
+  --pm56-r-bar: min(var(--radius-sm), 2px);
+  /* menus and floating plates: Home's picker plate and rows (8 / 14 / 14 / 0 px; 6 / 10 / 8 / 0 px) */
+  --pm56-r-menu: var(--pmw-menu-radius, var(--radius-lg));
+  --pm56-r-row: var(--pmw-row-radius, var(--radius-sm));
+}
+
+/* ---- buttons (Basic, Friendly, Glass; Retro keeps retro.css's box grammar) --------------------------------------- */
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) :is(.soft-button, .primary-button, .text-button, .icon-button, .header-chip, .selector-button) {
+  border-radius: var(--pm56-r-ctl);
+}
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .soft-button {
+  background: transparent;
+  border-color: var(--border-strong);
+}
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .soft-button:hover {
+  background: var(--surface-3);
+  border-color: var(--border-strong);
+}
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .soft-button:active { background: var(--surface-4); }
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .primary-button {
+  box-shadow: none;
+  font-weight: 600;
+}
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .primary-button:hover {
+  filter: none;
+  background: var(--pmx-primary-hover);
+}
+/* an icon toggle that is on: the page's pressed fill, the accent ink keeps saying it is on */
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .icon-button.active { background: var(--surface-4); color: var(--accent); }
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) :is(.icon-button, .header-chip, .text-button):active { background: var(--surface-4); }
+
+/* the composer's chips (persona, model, mode, permissions): the page's quiet control, a fill only under the pointer */
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .chat-stage .selector-button {
+  border-radius: var(--pm56-r-ctl);
+}
+
+/* ---- fields ------------------------------------------------------------------------------------------------------- */
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .input-wrap {
+  border-color: var(--border-strong);
+  border-radius: var(--pm56-r-ctl);
+  background: transparent;
+}
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .input-wrap:focus-within {
+  border-color: var(--pmw-focus, var(--accent));
+  box-shadow: 0 0 0 1px var(--pmw-focus, var(--accent));
+}
+/* one focus ring per field: PMConcept7's own input focus styles (Friendly's capsule glow, Glass's 3 px halo and tinted
+   ground) are lifted from the inputs inside the chat's framed fields, which show focus on their frame */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.input-wrap, .composer-box, .qs-other-line, .pmx-hero-box) :is(input, textarea):is(:focus, :focus-visible) {
+  outline: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) :is(input, textarea, select):not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+  border-radius: var(--pm56-r-ctl);
+}
+
+/* the sheets' pickers (model, persona, team): a field-like box with the structural line */
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .shared-picker-button {
+  border-color: var(--border-strong);
+  border-radius: var(--pm56-r-ctl);
+}
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .shared-picker-button:hover { background: var(--surface-3); }
+
+/* ---- the composer ------------------------------------------------------------------------------------------------- */
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .composer-box,
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .chat-stage[data-shell] .composer-box {
+  border-radius: var(--pm56-r-card);
+  border-color: var(--border-strong);
+}
+
+/* ---- menus and floating plates ------------------------------------------------------------------------------------ */
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .overlay-menu {
+  border-color: var(--pmw-pop-line, var(--border-strong));
+  border-radius: var(--pm56-r-menu);
+}
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) :is(.hover-card, .toast, .drawer, .dialog, .history-flyout) {
+  border-color: var(--pmw-pop-line, var(--border-strong));
+  border-radius: var(--pm56-r-menu);
+}
+/* PMConcept7's menus do not blur (Glass's menu tint is near opaque, and the page's own pickers carry no filter): the
+   chat's 18-24 px backdrop blurs cost a full repaint under every open menu and show nothing */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.overlay-menu, .hover-card, .drawer, .dialog, .history-flyout) {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) :is(.menu-item, .model-row) { border-radius: var(--pm56-r-row); }
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .menu-item:is(:hover, :focus-visible) { background: var(--surface-3); }
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .menu-item.active { background: var(--surface-4); color: var(--text); }
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .menu-item .menu-icon { border-radius: var(--pm56-r-chip); }
+/* Glass: the row's frost carries Glass's own hairline rim, as Home's picker rows do */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme^="glass"] :is(.menu-item, .model-row):is(:hover, :focus-visible) { box-shadow: inset 0 0 0 1px var(--rg-rim-soft, rgba(255, 255, 255, .18)); }
+/* Friendly: Home's mint-tinted hover */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme^="friendly"] .menu-item:is(:hover, :focus-visible) { background: color-mix(in srgb, var(--accent-lime) 16%, transparent); }
+
+/* ---- the header's icon buttons and the context ring ---------------------------------------------------------------
+   the page's header buttons are clear at rest (the stand-in's .pmw-sc-ib); the ring is a meter, so it stays round */
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .chat-header .icon-button:not(.active):not(:hover) { background: transparent; }
+
+/* ---- Glass: PMConcept7's field skin stays off the chat's framed fields ----------------------------------------------
+   Liquid Glass paints every input and textarea with its control fill and hairline, !important at (1,6,2)
+   (html[data-lg=on][data-theme^=glass]:not(#lgz) :is(input...)), and the Glass page sheet adds its own tinted ground.
+   A field the chat frames itself (the composer, a search well, the Ask Card's "Something else" and note wells, a
+   sheet's hero box) already draws that box, so the input inside it stays clear; bare fields keep Glass's skin, which
+   is PMConcept7's own field. The two unmatched ids only lift the weight over Glass's rule, as its :not(#lgz) does. */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme^="glass"]:not(#pm56-w1):not(#pm56-w2) :is(.composer-box, .input-wrap, .qs-other-line, .qs-ask-note-well, .pmx-hero-box) :is(input, textarea) {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}

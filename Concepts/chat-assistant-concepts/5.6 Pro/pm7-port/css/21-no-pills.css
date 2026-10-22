@@ -1,0 +1,122 @@
+/* pm7-port/css/21-no-pills.css (looks lane): no pills (Jared; G-36), and the look's corners on the chat's cards.
+   The chat carries 50 capsule rules (border-radius 999px) and one at 99px; each is restated here, under the same
+   selector with html:not(NieR) .pm56-host[data-theme] in front (so it outweighs the scoped original by (0,1,1)), with
+   the look's chip, control, card or meter corner from css/20 (--pm56-r-chip / -ctl / -card / -bar; all 0 in Retro,
+   which is square). Genuinely round marks keep their circle: the radio marks and their dots, the spine's question
+   dots, avatars and status dots, the orbit's core and the context ring (meters). NieR Mode is the nier lane's. */
+
+/* ---- chips and badges (text in a small box) ----------------------------------------------------------------------- */
+/* styles.css */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .meta-pill,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .wa-tag,
+/* transcript.css, goals.css, todos.css */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .message-meta .meta-chip,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.message-chrome, .tx-feed, .transcript) .meta-chip,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .goal-chip,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .todo-chip,
+/* lens.css */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .pm-lens-flag,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .pm-lens-badge,
+/* orbit.css */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .orbit-chip,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .orbit-agents-head .count,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .orbit-agent-state,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .orbit-node-count,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .orbit-core-more,
+/* questions.css */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-file-chip,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-chip,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .meta-pill.qs-pill,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-pill-beat,
+/* attachments.css */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .att-drop-copy,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .att-chip,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .att-msg-thumb-body,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .att-pill,
+/* plans.css */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .plan-doc .pd-step-child,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .plan-doc .pd-step-state,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .plan-doc .pd-step-why,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .plan-doc .pd-step-stale,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .plan-doc .pd-attn-attempt,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .plan-doc .pd-embed-sandbox,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .plan-doc .pd-embed-fallback,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .goal-bound-chip,
+/* browser-capture.css (the stale and fresh tags included) */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .bc-url-gen,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .bc-el-chip,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .bc-tag-stable,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .bc-tag-fragile,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .bc-stale-tag,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .bc-fresh-tag,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .bc-policy-state,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .bc-ref-chip,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .bc-list-chip,
+/* assistant-features.css */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .af-chip-choice,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.af-lock-badge, .af-scope-badge, .af-revoked-badge, .af-trigger-badge, .af-verify-badge),
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .af-chip,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .af-phase,
+/* turn-stream.css: the inline terminal line (D27's compact command card is the surfaces lane's) */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .tx-terminal,
+/* the turn's small family marks and the work phase icon */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .work-phase-icon {
+  border-radius: var(--pm56-r-chip);
+}
+
+/* ---- buttons and tabs that were capsules -------------------------------------------------------------------------- */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .bc-tab,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .bc-el-retry,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-x,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-foot .qs-action,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-foot .qs-action.soft-button,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-foot .text-button,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-ask-foot .primary-button {
+  border-radius: var(--pm56-r-ctl);
+}
+
+/* ---- the activity bar's tray (variant 1 was a capsule tray of capsule items) ----------------------------------------- */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .pm56-activity-bar,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .pm56-activity-bar[data-variant] {
+  border-radius: var(--pm56-r-card);
+}
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .pm56-activity-bar[data-variant] .activity-item { border-radius: var(--pm56-r-ctl); }
+
+/* ---- meters and tracks -------------------------------------------------------------------------------------------- */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .lens-meter,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .lens-meter i,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-spine-track {
+  border-radius: var(--pm56-r-bar);
+}
+
+/* ---- the Ask Card's morph: it grew out of a capsule; it grows out of the card's own corner now ---------------------- */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-shell.qs-phase-preparing,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-shell.qs-phase-submitting,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-shell.qs-will-open,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .decision-host[data-variant="8"] .qs-shell.qs-phase-preparing,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .decision-host[data-variant="8"] .qs-shell.qs-phase-submitting,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .decision-host[data-variant="8"] .qs-shell.qs-will-open {
+  border-radius: var(--pm56-r-card);
+}
+
+/* ---- cards: the look's card corner (the chat used 16-22 px; PMConcept7's cards are 6 / 14 / 11 / 0 px) ------------- */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.transcript-inner, .tx-feed-inner) > :is(.working-card, .system-card, .work-output, .plan-doc, article, .event-card),
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.transcript-inner, .tx-feed-inner) > [data-family]:is(.working-card, .system-card, .work-output, .plan-doc, article, .event-card),
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.transcript, .tx-feed)[data-variant] .message-surface,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.transcript, .tx-feed)[data-variant] .message-user .message-surface,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .decision-host .qs-shell,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .decision-host[data-variant] .qs-shell,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .decision-surface,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .decision-host[data-variant] .decision-surface,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-sheet,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .qs-morph-bar {
+  border-radius: var(--pm56-r-card);
+}
+/* a card's inner boxes: the control corner */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.transcript-inner, .tx-feed-inner) > [data-family] .artifact-preview,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .artifact-preview,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .pmx-hero-box,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .pmx-dock-line,
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .pmap-chip {
+  border-radius: var(--pm56-r-ctl);
+}
