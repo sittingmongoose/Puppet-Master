@@ -2026,7 +2026,10 @@
       '<p class="pmx-guide-cap">' + pmxGlyph('play-ring', 13) + (o.caption || 'Recorded example · no AI cost') + '</p>' +
       '<p class="pmx-guide-step">' + str(o.step) + '</p>' + str(o.extra) +
       '<div class="pmx-guide-acts">' + (o.actions || []).slice(0, 2).map(function (a) { return '<button type="button" class="text-button" data-action="' + esc(a.action) + '"' + raw(a.attrs) + '>' + str(a.label) + '</button>'; }).join('') + '</div>' +
-      (c ? '<button type="button" class="icon-button pmx-guide-close" data-action="' + esc(c.action) + '"' + raw(c.attrs) + ' aria-label="' + esc(c.label || 'Close') + '">' + pmxGlyph('close', 13) + '</button>' : '') + '</section>';
+      (c ? '<button type="button" class="icon-button pmx-guide-close" data-action="' + esc(c.action) + '"' + raw(c.attrs) + ' aria-label="' + esc(c.label || 'Close') + '">' + pmxGlyph('close', 13) + '</button>' : '') +
+      /* o.next {ms, at} (recorded-play.js, 2026-10-22): while a recorded example plays, a hairline along the guide's foot
+         fills toward its next step (real ms; the negative delay keeps its place across renders); none while it waits */
+      (o.next && o.next.ms > 0 ? '<i class="pmx-guide-next" aria-hidden="true" style="--next-ms:' + Math.round(o.next.ms) + 'ms;--next-at:' + (-Math.max(0, Math.round(o.next.at || 0))) + 'ms"></i>' : '') + '</section>';
   }
 
   /* pmxDisclosure({key,cls,attrs,summary,body,open,affects}) (closing, PREFS): an unboxed summary row and its body, the

@@ -1,0 +1,31 @@
+/* recorded-play.css -- the recording's finger (recorded-play.js, 2026-10-22). When a recorded example plays your part, the
+   control it is about to press is ringed in the accent where a finger would land, the ring dips as it presses, then
+   fades. One fixed box outside #pmRoot, above every sheet, never in the way of a click (pointer-events: none). */
+.rec-tap {
+  position: fixed; left: 0; top: 0; width: 0; height: 0; z-index: 2147483000; pointer-events: none;
+  border-radius: 10px; box-sizing: border-box;
+  border: 2px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent), 0 6px 22px color-mix(in srgb, var(--accent) 30%, transparent);
+  opacity: 0; transform: scale(1.12);
+  transition: opacity .22s ease, transform .32s cubic-bezier(.2, .9, .3, 1.2), background-color .14s ease;
+}
+.rec-tap[data-state="aim"] { opacity: 1; transform: scale(1); }
+.rec-tap[data-state="press"] { opacity: 1; transform: scale(.94); background: color-mix(in srgb, var(--accent) 26%, transparent); transition-duration: .12s, .12s, .12s; }
+.rec-tap[data-state="off"] { opacity: 0; transform: scale(1.04); transition-duration: .3s, .3s, .3s; }
+/* Retro's box grammar: square, no glow */
+body[data-theme^="retro"] .rec-tap { border-radius: 0; box-shadow: 3px 3px 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+@media (prefers-reduced-motion: reduce) {
+  .rec-tap, .rec-tap[data-state] { transform: none; transition: opacity .12s linear; }
+}
+/* the guide's next-step line (pmxGuide o.next): while a recorded example plays, a hairline along the guide's foot fills
+   toward the next step, so a moment held for reading never looks stuck; it is gone while the example waits for you */
+.pmx-guide-next { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; pointer-events: none; overflow: hidden; }
+.pmx-guide-next::before {
+  content: ""; position: absolute; inset: 0; background: var(--accent); opacity: .6;
+  transform-origin: left center; transform: scaleX(0);
+  animation: pmx-guide-next var(--next-ms, 4000ms) linear var(--next-at, 0ms) forwards;
+}
+@keyframes pmx-guide-next { to { transform: scaleX(1); } }
+body[data-theme^="retro"] .pmx-guide-next::before { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .pmx-guide-next { display: none; } }
