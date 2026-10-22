@@ -14,6 +14,8 @@ const height = Number(opt('--height') || 860);
 if (!Number.isFinite(height) || height < 400) throw new Error('--height must be at least 400');
 const looks = opt('--looks')?.split(',') || LOOKS;
 if (looks.some(l => !LOOKS.includes(l))) throw new Error('Unknown --looks value');
+const section = opt('--section') || 'all';
+if (!['all', 'sheets', 'plate'].includes(section)) throw new Error('--section all|sheets|plate');
 const widths = argv.includes('--sweep') ? Array.from({ length: 120 }, (_, i) => i + 400) : [400, 420, 440, 459, 460, 480, 500, 519];
 const check = (id, look, size, kind, pass, measured) => {
   results.push({ id, look, size, height, kind, pass: !!pass, owner: look.startsWith('nier-') ? 'c56port-nier' : 'c56port-looks', measured });
@@ -117,7 +119,10 @@ async function finishCrew() {
     const done = await ev(() => { const s = PM56_WG_DEMOS.snapshot(), r = s?.runId && PM56_COLLAB.run(s.runId); return r?.status === 'completed'; });
     if (done) { await ev(() => PM56_CLOCK.setScale(1)); return ev(() => PM56_WG_DEMOS.snapshot().runId); }
     for (const sel of ['.wg-agreed[data-state="open"] [data-action="wg-confirm"]', '.qs-grill [data-action="qs-accept-round"]']) {
-      const b = page.locator(sel).first(); if (await b.isVisible().catch(() => false)) await b.click();
+      const b = page.locator(sel).filter({ visible: true }).first();
+      if (await b.isVisible().catch(() => false)) await b.click({ timeout: 1500 }).catch(e => {
+        if (!/Timeout|detached|not attached/.test(e.message)) throw e;
+      });
     }
     await page.waitForTimeout(500);
   }
@@ -154,7 +159,7 @@ async function plate() {
 
 try {
   await page.setViewportSize({ width: 1440, height: 900 }); await target.load(page); await installMeasurements();
-  for (const look of looks) {
+  if (section !== 'plate') for (const look of looks) {
     await target.theme(page, look);
     for (const kind of ['crew', 'chat_room']) {
       const helperCount = await sheet(kind);
@@ -168,6 +173,7 @@ try {
       await ev(() => { const c = PM56_EXT.ctx(); c.closeDialog(); c.renderApp(); });
     }
   }
+  if (section !== 'sheets') {
   await target.resize(page, { width: 1440, height: 900 }); await target.theme(page, 'basic-dark');
   const run = await finishCrew(); await act('wg-open-leads', { run }); await page.waitForTimeout(600);
   for (const look of looks) {
@@ -179,10 +185,11 @@ try {
     check('CO-PLATE-EDGE', look, 480, 'crew', p.length > 0 && p.every(p => p.edge >= 11.95 && p.hit), p);
     check('CO-PLATE-AFTER', look, 480, 'crew', p.length > 0 && p.some(p => p.after.length) && p.every(p => p.after.every(a => a.gap !== null && a.gap >= 7.95)), p);
   }
+  }
 } catch (e) { results.push({ id: 'CO-RUN', pass: false, owner: 'c56port-tests', measured: e.stack }); console.error(e); }
 finally { await browser.close(); }
 if (errors.length) results.push({ id: 'CO-PAGEERROR', pass: false, owner: 'c56port-found', measured: errors });
-const failed = results.filter(r => !r.pass), report = { page: target.kind, file: target.file, checks: results.length, failed: failed.length, results };
+const failed = results.filter(r => !r.pass), report = { page: target.kind, file: target.file, section, checks: results.length, failed: failed.length, results };
 if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify(report, null, 2));
 console.log(`carry-over-layout-verify (${target.kind}): ${results.length - failed.length} PASS, ${failed.length} FAIL`);
 process.exitCode = failed.length ? 1 : 0;
