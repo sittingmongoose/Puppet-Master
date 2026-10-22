@@ -1,5 +1,7 @@
 Run from `Concepts/chat-assistant-concepts/5.6 Pro` with `playwright` installed in Node's module path and `agent-browser` on PATH.
 
+Build commands use the current checkout. Build the final port from the lead's integrated branch, or pass its immutable page with `--pm7-file` from this tests branch.
+
 ```sh
 node tests/port-suite.mjs --page standalone --build --out /tmp/c56port-tests/standalone
 node tests/port-suite.mjs --page pm7 --build --out /tmp/c56port-tests/pm7
@@ -24,7 +26,11 @@ node tests/carry-over-layout-verify.mjs --page pm7 --file /tmp/c56port-tests/PMC
 
 `--wg-only contrast` runs the identical R2-4 setup, painted-pixel measurement and 4.5:1 predicate in all ten looks, plus page-error checking. It supports the short rerun after theme inks change; the full R2 path still runs every original guard.
 
+`--wg-only rx-starting` selects Crew Delegate, BrainStorm synthesis/constraint and Room discussion/plan. It runs their original flow, Starting, narration and pacing verdicts, plus page-error checking. The full RX default remains unchanged.
+
 AX's existing `AX_ONLY` regex filters examples for a focused rerun, and `AX_SCALE=1` selects normal user pace (default 3). A filter matching no examples fails. For example, `AX_ONLY='Debug|A preview is not a promise|Schedule a frozen Crew' AX_SCALE=1 node tests/port-suite.mjs --page pm7 --only wonderer --wg-only ax --pm7-file /tmp/PMConcept7.html --out /tmp/chat-ax-focused`.
+
+The runner records the three AX filter/pace/width environment variables in run.json alongside command arguments and page hashes.
 
 Record the integrated Crew, Room and BrainStorm examples at their readable real-time pace:
 
