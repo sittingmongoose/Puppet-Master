@@ -3,8 +3,9 @@
    "Deciding in the panel beside the chat" (Review: "Choosing in the report beside the chat") instead of its controls;
    they come back when the view stops being active (another tab chosen, the tab closed, its panel collapsed).
    Every run owner asks window.PM56_PMX.viewOpen(runId) (collaboration, review, room, brainstorm protocols). In hosted
-   mode it answers from PM_HOME.tabs(): any panel's active tab, not only the focused panel's, as the stand-in did. The
-   chat repaints once per frame when the set of active run views changes, so the cards follow without a reload. */
+   mode it answers from PM_HOME.tabs(): the run's tab is the active tab of any panel (not only the focused one, as the
+   stand-in did) and that panel is on screen (not collapsed, not behind a maximized panel, not a panel the narrow
+   switcher hides, Home in front). The chat repaints once per frame when that set changes, so the cards follow. */
 (function () {
   'use strict';
   var W = window;
@@ -16,14 +17,26 @@
     for (var i = 0; i < RUN_PREFIXES.length; i++) if (tabId.indexOf(RUN_PREFIXES[i]) === 0) return tabId.slice(RUN_PREFIXES[i].length);
     return null;
   }
-  /* the runs whose view is the active tab of a panel now */
+  /* a tab is on screen when its body is laid out: a collapsed panel, a panel behind a maximized one, a panel the
+     narrow switcher is not showing, and the Home panels while another page is in front all leave it 0 x 0 */
+  function onScreen(tabId) {
+    var P = W.PMW, e = P && P.instances && P.instances[tabId];
+    if (!e || !e.host || !e.host.isConnected || e.host.hidden) return false;
+    var r = e.host.getBoundingClientRect();
+    return r.width > 0 && r.height > 0;
+  }
+  /* the runs whose view is the active tab of a panel that is on screen now */
   function activeRuns() {
     var H = home(), out = {};
     if (!H) return out;
     var tabs = [];
     try { tabs = H.tabs() || []; } catch (_) { tabs = []; }
-    tabs.forEach(function (t) { if (t.active) { var r = runOf(t.tabId); if (r) out[r] = true; } });
+    tabs.forEach(function (t) { if (t.active) { var r = runOf(t.tabId); if (r && onScreen(t.tabId)) out[r] = true; } });
     return out;
+  }
+  function anyRunTab() {
+    var H = home();
+    try { return !!H && (H.tabs() || []).some(function (t) { return !!runOf(t.tabId); }); } catch (_) { return false; }
   }
   function signature(map) { return Object.keys(map).sort().join('\u0001'); }
 
@@ -62,6 +75,9 @@
     if (bound || !H || typeof H.on !== 'function') return false;
     bound = true;
     ['activate', 'close', 'open', 'layout', 'narrow'].forEach(function (ev) { try { H.on(ev, repaintSoon); } catch (_) {} });
+    // collapse, maximize and the narrow switcher repaint the panels ('paint'); a page switch hides them all
+    try { if (W.PMW && PMW.bus && PMW.bus.on) PMW.bus.on('paint', repaintSoon); } catch (_) {}
+    setInterval(function () { if (anyRunTab() || last) repaintSoon(); }, 1500);
     last = signature(activeRuns());
     return true;
   }

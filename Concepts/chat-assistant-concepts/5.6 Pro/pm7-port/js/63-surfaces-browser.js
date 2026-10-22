@@ -43,7 +43,30 @@
     for (var i = 0; i < list.length; i++) if (list[i] && list[i].id === tid) return list[i];
     return null;
   }
-  /* where a capture from this tab goes: { ok, thread, onScreen } or { ok: false, why } */
+  /* where a capture from this tab goes: { ok, thread, onScreen, route } or { ok: false, why }. The thread is the one
+     the browser was opened from; the route is that thread's composer destination at that moment, checked the way
+     browser-capture.js resolveIsolatedDestination checks it (B20): Assistant, or a live collaboration run (and
+     participant) on that thread that accepts a turn; anything else refuses with the reason and is never redirected. */
+  var TERMINAL_RUN = { completed: 1, canceled: 1, failed: 1 };
+  function resolveRoute(dest, thread) {
+    if (!dest || dest.kind === 'assistant') return { ok: true, assistant: true, label: 'Assistant', dest: null };
+    if (dest.kind !== 'workflow' && dest.kind !== 'participant') {
+      return { ok: false, why: 'Delivery to a ' + (dest.kind || 'detached') + ' destination has no route in its owner. Nothing was sent; pick a collaboration run or Assistant.' };
+    }
+    var COL = W.PM56_COLLAB, run = COL && typeof COL.run === 'function' ? COL.run(dest.refId) : null;
+    if (!run) return { ok: false, why: 'The run this browser sends to no longer exists. Nothing was sent, and nothing went to Assistant instead.' };
+    if (TERMINAL_RUN[run.status]) return { ok: false, why: 'The run this browser sends to has ended (' + run.status + '). Nothing was sent; retarget or clear the destination.' };
+    if (dest.participantId && !(run.participants || []).some(function (p) { return p.id === dest.participantId; })) {
+      return { ok: false, why: 'The participant this browser sends to is not on that run. Nothing was sent.' };
+    }
+    if (run.threadId && thread && run.threadId !== thread.id) return { ok: false, why: 'That run lives on another thread. Nothing was sent there from here.' };
+    var ROOM = W.PM56_ROOM;
+    if (ROOM && typeof ROOM.owns === 'function' && ROOM.owns(run.id) && typeof ROOM.canSend === 'function') {
+      var pre = ROOM.canSend(run.id, dest);
+      if (pre && !pre.ok) return { ok: false, why: 'The room refuses a new turn now (' + (pre.error || 'not accepting') + '). Nothing was sent.' };
+    }
+    return { ok: true, assistant: false, label: dest.label || 'Destination', dest: dest, run: run };
+  }
   function destinationFor(tabId) {
     var c = chatCtx(), st = c && c.state;
     if (!st) return { ok: false, why: 'The chat is not ready.' };
@@ -51,7 +74,25 @@
     var tid = o ? o.thread : st.selectedThread;
     var t = threadById(st, tid);
     if (!t) return { ok: false, why: 'The thread this browser was opened from is gone, so nothing was sent.' };
-    return { ok: true, thread: t, onScreen: st.selectedThread === tid, origin: o || null };
+    var d = o ? o.destination : (function () { var b = bufferFor(tid); return b && b.destination ? b.destination : null; })();
+    var route = resolveRoute(d, t);
+    if (!route.ok) return { ok: false, why: route.why };
+    return { ok: true, thread: t, onScreen: st.selectedThread === tid, origin: o || null, route: route };
+  }
+  /* the run's own owner records the reference, as browser-capture.js does after the thread message */
+  function deliverToRun(route, msg, thread, refBody) {
+    if (!route || route.assistant || !route.run) return;
+    var ROOM = W.PM56_ROOM, COL = W.PM56_COLLAB, ctx = chatCtx();
+    try {
+      if (ROOM && typeof ROOM.owns === 'function' && ROOM.owns(route.run.id) && typeof ROOM.receiveUser === 'function') {
+        var got = ROOM.receiveUser(route.run.id, msg, { destination: route.dest }, thread);
+        if (got && !got.ok && ctx && ctx.addReceipt) ctx.addReceipt('bc-destination-refused', 'Run reference not recorded',
+          'The room refused the reference (' + (got.error || 'refused') + ') after the thread message was written.');
+      } else if (COL && typeof COL.appendMessage === 'function') {
+        COL.appendMessage(route.run.id, { senderKind: 'user', senderName: 'You', messageType: 'message', body: refBody + ' (capture ' + msg.id + ')',
+          recipientIds: route.dest && route.dest.participantId ? [route.dest.participantId] : [], createdAt: msg.sentAt });
+      }
+    } catch (err) { try { console.error('[pm56-surfaces] run delivery failed', err); } catch (_) {} }
   }
   function notify(title, detail) { var c = chatCtx(); try { if (c && c.toast) c.toast(title, detail || ''); } catch (_) {} }
 
@@ -161,7 +202,13 @@
     var msg = Object.assign({ id: 'bc-msg-pm56-' + seq, role: 'user', type: 'bc-capture', body: '[Browser capture · ' + kind + ' · ' + label + ']',
       sentAt: iso(), kind: kind, image: img.url, imgW: img.w, imgH: img.h, label: label, sub: sub || '', instruction: '', rect: null,
       contextId: null, destinationLabel: thread ? thread.title : 'This chat', destinationRef: null, isolatedSubmission: true, demo: true }, extra || {});
+    var route = dest && dest.route;
+    if (route && !route.assistant && route.dest) {
+      msg.destinationLabel = route.label;
+      msg.destinationRef = { kind: route.dest.kind, refId: route.dest.refId, participantId: route.dest.participantId || null, runStatus: route.run ? route.run.status : null };
+    } else if (route && route.assistant) msg.destinationLabel = 'Assistant';
     ctx.appendMessage(msg, thread);
+    deliverToRun(route, msg, thread, msg.body);
     if (ctx.renderApp) ctx.renderApp();
     return true;
   }
