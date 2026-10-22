@@ -2321,7 +2321,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(HOSTED && at.name==='title' && el.hasAttribute('data-pm-hover-label') && !el.hasAttribute('title')) continue;
       if(el.getAttribute(at.name)!==at.value) el.setAttribute(at.name,at.value);
     }
-    for(const at of [...el.attributes]) if(!seen.has(at.name) && !(HOSTED && HOSTED_KEEP_ATTR.test(at.name))) el.removeAttribute(at.name);
+    /* hosted: PMConcept7's hover controller bridges a disabled control to aria-disabled and marks it was-disabled;
+       the mark goes once the chat enables the control again (its aria-disabled already goes with the patch) */
+    for(const at of [...el.attributes]) if(!seen.has(at.name) && !(HOSTED && HOSTED_KEEP_ATTR.test(at.name) && !(at.name==='data-pm-hover-was-disabled' && !src.hasAttribute('disabled')))) el.removeAttribute(at.name);
     // Form controls keep their live property in step with the attribute,
     // except while the user is actually typing into them.
     if(!skipValue){
