@@ -298,7 +298,8 @@
   else foot=S.pmxFoot({readback:S.pmxReadback({key:'rv-rb-done',parts:[{html:'<b>'+WORD('reverted')+':</b> '+files+' put back.'}]}),estimate:fine,
    cancel:{action:'revert-cancel',attrs:tok,label:'Close'},primary:P('go',{action:'af-revert-confirm',attrs:tok,label:WORD('reverted'),tone:'warm',disabled:true})});
   /* the conflict example's guide line takes the room the first row's open mini diff would need */
-  const guide=face==='ready'?(window.PM56_REVERT_DEMOS?.dialogGuide(c,r.id,true)||''):'';
+  /* (2026-10-22) and the conflict example's last line, on the refusal face: what happened, in the sheet that shows it */
+  const guide=face==='ready'||face==='refused'?(window.PM56_REVERT_DEMOS?.dialogGuide(c,r.id,true)||''):'';
   /* the blocked face says what would make revert possible, in the reader's terms */
   const help=face==='blocked'?'To revert, put '+esc(whoChanged(changed))+' back the way the assistant left it, or leave your files as they are.':'';
   const body='<div class="pmx-revert-body" data-face="'+face+'">'+

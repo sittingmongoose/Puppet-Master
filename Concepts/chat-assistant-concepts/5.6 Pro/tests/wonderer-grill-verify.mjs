@@ -23,6 +23,8 @@ const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2), opt = n => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
 const results = [];
+/* the Batch 14-17 and 19 examples (2026-10-22), added once their recordings land */
+const AX_MORE = [];
 function check(name, pass, detail) { results.push({ name, pass: !!pass, detail: pass ? '' : String(detail == null ? '' : detail) }); if (!pass) console.log('FAIL  ' + name + (detail ? '  -- ' + detail : '')); }
 const { Protocol, STATUS_WORD } = require(path.join(ROOT, 'wonderer-protocol.js'));
 const GE = require(path.join(ROOT, 'grill-protocol.js'));
@@ -363,6 +365,8 @@ async function browser() {
     if (process.env.WGV_ONLY === 'r1') { await reviewRound1({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=rx: the recorded-examples checks alone (2026-10-21) */
     if (process.env.WGV_ONLY === 'rx') { await page.setViewportSize({ width: 1440, height: 900 }); await recordedExamples({ page, ev, act, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
+    /* WGV_ONLY=ax: every other Demo Studio example plays on its own (2026-10-22) */
+    if (process.env.WGV_ONLY === 'ax') { await page.setViewportSize({ width: 1440, height: 900 }); await otherExamples({ page, ev, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* sheets: the shelf, the plate */
     for (const [kind, who] of [['crew', 'The Coordinator'], ['chat_room', 'The Moderator'], ['brainstorm', 'The Coordinator']]) {
       await ev(k => { const C = window.PM56_COLLAB, c = window.PM56_EXT.ctx(); c.switchThread('query'); C.openConfigure(k); const d = C.draft(); d.purpose = 'Make search easier to reach.'; d.wonderer = true; d.grillMe = true; c.openDialog({ type: 'collab-configure' }); c.renderOverlays(); }, kind);
@@ -529,9 +533,118 @@ async function browser() {
     await reviewRound1({ page, ev, act, sleep, startSheet, answerAll });
     await reviewRound2({ page, ev, act, sleep, startSheet, answerAll });
     await recordedExamples({ page, ev, act, sleep });
+    await otherExamples({ page, ev, sleep });
     check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | '));
   } catch (e) { check('B0 the browser pass ran to the end', false, e && e.stack || e); }
   if (cdp) await b.close().catch(() => {}); else await b.close();
+}
+/* ------------------------------------------------------------------ every other Demo Studio example plays on its own (2026-10-22)
+   Jared said yes to doing for every other Demo Studio example what 2026-10-21 did for the Crew, BrainStorm, Review, Chat Room
+   and Wonderer ones: after Start each plays to its end by itself, and stops only where the real product waits for you (an
+   approval of work, a confirm, a decision a run waits on) or at the end. AX-*: each example is started the way a person
+   starts it (Demo Studio, its trigger, the setup sheet's Start where it has one); after that the pass clicks nothing but
+   the documented waits (`moves`, pressed in order when the guide says "Your move"), and checks that it reaches its end
+   (a guide sentence starting "Done", or `endAt: 'yours'`: its last product wait), that something moves within 2 s of
+   Start and nothing sits still for long (the longest gap between two things changing, waits excluded, under 9 s of
+   motion time), that the guide's only button is Replay, that every narrated sentence stays 2 s or more, and that the
+   playback runs 12-100 s of motion time (waits excluded). A capture-phase listener counts every trusted click after Start:
+   only the documented moves may appear. Times are motion time (PM56_CLOCK); the pass runs the recordings 3x faster. */
+const AX_EXAMPLES = [
+  { name: 'Memory · A note a test proves', action: 'memory-demo-start', flow: 'verified' },
+  { name: 'Memory · Your rule stays yours', action: 'memory-demo-start', flow: 'locked', endAt: 'yours' },
+  { name: 'Teach · Save a rule from a message', action: 'teach-demo-start', flow: 'capture' },
+  { name: 'Teach · When a reply misses your rule', action: 'teach-demo-start', flow: 'missed', endAt: 'yours' },
+  { name: 'Teach · Edit a rule, then turn it off', action: 'teach-demo-start', flow: 'correct', moves: ['[data-action="teach-revoke-confirm"]'] },
+  { name: 'Revert · Revert one whole change', action: 'revert-demo-start', flow: 'whole', moves: ['#pmOverlayRoot [data-action="af-revert-confirm"]'] },
+  { name: 'Revert · Your later edit is protected', action: 'revert-demo-start', flow: 'conflict', moves: ['#pmOverlayRoot [data-action="af-revert-confirm"]'] },
+  { name: 'ELI5 · Simple answers in one chat', action: 'eli5-demo-start', flow: 'override' },
+  { name: 'ELI5 · Back to your usual setting', action: 'eli5-demo-start', flow: 'inherit' },
+  { name: 'Plan · Build a small Plan', action: 'plan-demo-start', flow: 'complete', moves: ['.transcript [data-action="pd-build"]'] },
+  { name: 'Plan · Stop and revise', action: 'plan-demo-start', flow: 'revise', moves: ['.transcript [data-action="pd-build"]'] },
+  { name: 'Debug · Reproduce, repair, and close', action: 'debug-demo-start', flow: 'repair', moves: ['[data-action="debug-apply"]'] },
+  { name: 'Debug · Protect a changed target', action: 'debug-demo-start', flow: 'drift', moves: ['[data-action="debug-apply"]', '[data-action="debug-rebind"]', '[data-action="debug-apply"]'] },
+  { name: 'Back Seat Driver · Catch a missing measurement', action: 'bsd12-start', flow: 'survives' },
+  { name: 'Back Seat Driver · Resolve it before it reaches you', action: 'bsd12-start', flow: 'resolves' },
+  { name: 'Plan scheduling · Schedule and build', action: 'schedule-demo-start', flow: 'due', moves: ['#pmOverlayRoot [data-action="sched-create-build"]'] },
+  { name: 'Plan scheduling · Revise a scheduled Plan', action: 'schedule-demo-start', flow: 'revise', moves: ['#pmOverlayRoot [data-action="sched-create-build"]', '#pmOverlayRoot [data-action="sched-rebind-build"]'] },
+  { name: 'Plan scheduling · Cancel a scheduled build', action: 'schedule-demo-start', flow: 'cancel', moves: ['#pmOverlayRoot [data-action="sched-create-build"]'] },
+  { name: 'Batch 18 · Send the version you scheduled', action: 'b18-start', flow: 'messages' },
+  { name: 'Batch 18 · One build, across two windows', action: 'b18-start', flow: 'windows', moves: ['#pmOverlayRoot [data-action="sched-create-build"]'] },
+  { name: 'Batch 18 · Schedule a frozen Crew', action: 'b18c-start', flow: 'crew', moves: ['#pmOverlayRoot [data-action="sched-create-build"]'] },
+  { name: 'Batch 18 · Send to the same discussion', action: 'b18c-start', flow: 'room', sheet: true, max: 110000 },
+  { name: 'Batch 18 · Keep a folder unchanged', action: 'b18c-start', flow: 'folder' },
+  { name: 'Context Lens · Shape, summarize, and restore', action: 'b13-start', flow: 'shape' },
+  { name: 'Context Lens · A preview is not a promise', action: 'b13-start', flow: 'stale' }
+].concat(AX_MORE);
+async function otherExamples({ page, ev, sleep }) {
+  const SCALE = +(process.env.AX_SCALE || 3), only = process.env.AX_ONLY ? new RegExp(process.env.AX_ONLY, 'i') : null;
+  const width = +(process.env.AX_WIDTH || 1440);
+  if (width !== 1440) await page.setViewportSize({ width, height: 900 });
+  for (const x of AX_EXAMPLES) {
+    if (only && !only.test(x.name + ' ' + x.action + ' ' + x.flow)) continue;
+    const label = 'AX ' + x.name + (width !== 1440 ? ' @' + width : '');
+    /* a fresh page for each example: what one leaves behind (a schedule, an open document) never starts the next */
+    await page.goto(page.url()); await page.waitForFunction(() => window.__PM56_BOOT_OK === true, null, { timeout: 30000 }); await sleep(600);
+    await ev(k => window.PM56_CLOCK.setScale(k), SCALE);
+    /* the recorder: guide sentences (motion time), guide buttons, trusted clicks, and when anything on screen last changed */
+    await ev(() => {
+      if (window.__axStop) window.__axStop();
+      const K = window.PM56_CLOCK, log = window.__ax = { t0: K.now(), sentences: [], buttons: {}, clicks: 0, changes: [], yours: 0 };
+      const vis = n => n && n.isConnected && (n.checkVisibility ? n.checkVisibility() : n.getClientRects().length > 0);
+      const read = () => {
+        const t = K.now(), all = [...document.querySelectorAll('.pmx-guide')].filter(vis);
+        const g = all.find(n => n.closest('#pmOverlayRoot')) || all[0], text = g ? (g.querySelector('.pmx-guide-step') || g).textContent.trim() : '';
+        const last = log.sentences[log.sentences.length - 1];
+        if (!last || last.text !== text) log.sentences.push({ t, text, yours: /^Your move/.test(text) });
+        all.forEach(n => n.querySelectorAll('button').forEach(b => { if (vis(b) && !b.classList.contains('pmx-guide-close')) log.buttons[b.textContent.trim()] = 1; }));
+      };
+      /* the recording's finger (.rec-tap) counts as movement; the guide's next-step hairline is CSS only */
+      const mo = new MutationObserver(ms => { if (ms.some(m => !(m.target.closest && m.target.closest('.pmx-guide-next')))) log.changes.push(K.now()); requestAnimationFrame(read); });
+      mo.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['data-state', 'aria-expanded', 'value', 'class'] });
+      const onClick = e => { if (e.isTrusted) log.clicks++; };
+      document.addEventListener('click', onClick, true);
+      const iv = setInterval(read, 150); read();
+      window.__axStop = () => { mo.disconnect(); clearInterval(iv); document.removeEventListener('click', onClick, true); read(); };
+    });
+    /* Start, the way a person does: Demo Studio, the example's trigger (and its setup sheet's Start) */
+    await ev(() => { const b = document.createElement('button'); b.dataset.action = 'open-demo'; document.body.appendChild(b); b.click(); b.remove(); }); await sleep(300);
+    const trig = page.locator('.demo-dialog .demo-trigger[data-action="' + x.action + '"][data-flow="' + x.flow + '"]').first();
+    if (!(await trig.count())) { check(label + ': is in Demo Studio', false, x.action + ' ' + x.flow); continue; }
+    await trig.scrollIntoViewIfNeeded(); await trig.click();
+    if (x.sheet) { await page.waitForFunction(() => !!document.querySelector('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button'), null, { timeout: 8000 }).catch(() => {}); await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click(); }
+    await ev(() => { const x = window.__ax; x.t0 = window.PM56_CLOCK.now(); x.startClicks = x.clicks; x.changes = x.changes.filter(t => t >= x.t0); });
+    const t0 = Date.now(), max = x.max || 90000, moves = (x.moves || []).slice();
+    let ended = false, pressed = 0, waitMs = 0;
+    while (Date.now() - t0 < max) {
+      const st = await ev(() => { const vis = n => n && (n.checkVisibility ? n.checkVisibility() : n.getClientRects().length > 0), all = [...document.querySelectorAll('.pmx-guide')].filter(vis);
+        const g = all.find(n => n.closest('#pmOverlayRoot')) || all[0], text = g ? (g.querySelector('.pmx-guide-step') || g).textContent.trim() : '';
+        return { text, err: Object.values(window.PM56_RECPLAY.snapshot()).some(p => p.errors.length) }; });
+      if (/^Done\b/.test(st.text) || st.err) { ended = !st.err; break; }
+      if (/^Your move/.test(st.text)) {
+        if (!moves.length && x.endAt === 'yours') { ended = true; break; }
+        if (moves.length) {
+          /* a person reads the question before answering it (excluded from the playback time) */
+          const w0 = await ev(() => window.PM56_CLOCK.now()); await sleep(700);
+          const sel = moves[0], l = page.locator(sel).filter({ visible: true }).first();
+          if (await l.count()) { await l.click(); moves.shift(); pressed++; await ev(() => { window.__ax.yours++; }); }
+          waitMs += (await ev(() => window.PM56_CLOCK.now())) - w0; await sleep(400); continue;
+        }
+      }
+      await sleep(200);
+    }
+    const r = await ev(() => { window.__axStop && window.__axStop(); const x = window.__ax, K = window.PM56_CLOCK, now = K.now(), P = window.PM56_RECPLAY.snapshot();
+      const s = x.sentences.filter(e => e.text && e.t >= x.t0 - 5000), timed = s.slice(0, -1).map((e, i) => ({ text: e.text, d: s[i + 1].t - e.t, yours: e.yours })).filter(e => !e.yours);
+      const ch = x.changes.filter(t => t >= x.t0), first = ch.length ? ch[0] - x.t0 : null;
+      let gap = 0; for (let i = 1; i < ch.length; i++) gap = Math.max(gap, ch[i] - ch[i - 1]);
+      return { total: Math.round(now - x.t0), first: first == null ? null : Math.round(first), gap: Math.round(gap), minDwell: timed.length ? Math.round(Math.min(...timed.map(e => e.d))) : null, short: timed.filter(e => e.d < 2000).map(e => e.text.slice(0, 40) + ' ' + Math.round(e.d)),
+        buttons: Object.keys(x.buttons), clicks: x.clicks - (x.startClicks || 0), yours: x.yours, sentences: s.length, last: s.length ? s[s.length - 1].text.slice(0, 120) : '', errors: [].concat(...Object.values(P).map(p => p.errors)) }; });
+    const play = r.total - waitMs, doc = (x.moves || []).length ? ' (your moves: ' + x.moves.length + ')' : x.endAt === 'yours' ? ' (it ends on your move)' : '';
+    check(label + ': plays on its own from Start to its end' + doc, ended && pressed === (x.moves || []).length && !r.errors.length, JSON.stringify({ ended, pressed, last: r.last, errors: r.errors }));
+    check(label + ': no click after Start but the documented moves', r.clicks === pressed, JSON.stringify({ clicks: r.clicks, pressed }));
+    check(label + ': something moves within 2 s of Start, and nothing sits still for long', r.first != null && r.first <= 2000 && r.gap <= 9000 * 1, JSON.stringify({ first: r.first, gap: r.gap }));
+    check(label + ': the guide narrates (its only button is Replay)', r.buttons.every(b => b === 'Replay') && r.sentences >= 3, JSON.stringify({ buttons: r.buttons, sentences: r.sentences }));
+    check(label + ': paced to follow (every narrated sentence stays 2 s or more; the playback, less your moves, runs 12-100 s)', r.minDwell != null && r.minDwell >= 2000 && play >= 12000 && play <= 100000, JSON.stringify({ minDwell: r.minDwell, short: r.short, play }));
+  }
 }
 /* ------------------------------------------------------------------ recorded examples play on their own (2026-10-21)
    Jared (Edge, 1680x1300): "The recorded example of the chat room keeps asking me to click Next Round and stuff. I

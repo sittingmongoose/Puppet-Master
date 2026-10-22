@@ -358,13 +358,13 @@
     rehydrate:'.pm-lens-card [data-action="lens-rehydrate"]',collapse:'.pm-lens-card [data-action="lens-collapse"]',release:'.pm-lens-card [data-action="lens-release"]',off:'.lens13-controls [data-action="lens-mode"][data-value="off"]'};
   function lensScript(flow){
     const st=(sel,wait,say,o)=>Object.assign({sel,wait,say},o||{});
-    const mode=(m,word,why)=>[st(LS.open,2600,why),st(LS.mode(m),1400,'Lens is open: Mute, Focus, Subcompact or Turn Off. Next: '+word+'.',{menu:true})];
+    const mode=(m,word,why,first)=>[st(LS.open,first?1100:2600,why),st(LS.mode(m),first?2600:1400,'Lens is open: Mute, Focus, Subcompact or Turn Off. Next: '+word+'.',{menu:true})];
     const tail=[st(LS.apply,4200,'Review the summary: local excerpts of the two messages, nothing generated. Next: Apply it.'),
       st(LS.rehydrate,4800,'Applied: the assistant now reads one short summary where messages 2 and 4 were. The messages themselves stay in history. Next: rehydrate them.'),
       st(LS.collapse,3600,'Rehydrated: the full messages are back in what the assistant reads. Next: collapse them again.'),
       st(LS.release,3400,'Collapsed to the summary again. Next: release this operation.'),
       st(LS.off,3400,'Released. Next: turn Lens off; every remaining shaping goes with it.')];
-    if(flow==='shape')return [...mode('mute','Mute','A short conversation about local search, with one unrelated message about icon colors. Next: you open Lens beside search and mute that message.'),
+    if(flow==='shape')return [...mode('mute','Mute','A short conversation about local search, with one unrelated message about icon colors. Next: you open Lens beside search and mute that message.',true),
       st(LS.pick(5),2200,'Mute: pick the messages the assistant should skip. Next: message 5, the color discussion.'),
       st(LS.seal,2400,'Message 5 is picked. Next: seal the operation.'),
       ...mode('focus','Focus','Sealed: message 5 is muted, and it stays in the chat. Next: focus the first request.'),
@@ -376,7 +376,7 @@
       st(LS.preview,2200,'Two messages picked. Next: preview the summary before anything changes.'),
       st(LS.cancel,4600,'A preview changes nothing yet. Next: cancel it, to show nothing was applied.'),
       st(LS.preview,3400,'Cancelled: what the assistant reads is exactly as before. Next: preview again.'),...tail];
-    return [...mode('subcompact','Subcompact','A short conversation about local search. Next: you open Lens and summarize two messages with Subcompact.'),
+    return [...mode('subcompact','Subcompact','A short conversation about local search. Next: you open Lens and summarize two messages with Subcompact.',true),
       st(LS.pick(2),2200,'Subcompact: pick messages to fold into one summary. Next: messages 2 and 4.'),
       st(LS.pick(4),1500,'Message 2 is picked. Next: message 4.'),
       st(LS.preview,2200,'Two messages picked. Next: preview the summary.'),

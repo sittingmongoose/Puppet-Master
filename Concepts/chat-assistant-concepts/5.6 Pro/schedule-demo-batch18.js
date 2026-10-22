@@ -89,16 +89,16 @@ function nextWindows(r){const w=PM56_B17_WORK.snapshot(),pid=w&&w.planId,b=build
   if(r.crew&&E.ctx().state.dialog&&!sheet('sched-build-at')){
    const nm=document.querySelector('#pmOverlayRoot input[data-collab-input="name"]');
    if(nm&&nm.value!==CREW_NAME)return {id:'crew-name',dialog:true,wait:PACE.wand,run:()=>RP.type(CREW_NAME,{into:'#pmOverlayRoot input[data-collab-input="name"]',cps:30})};
-   if(nm)return {id:'crew-use',dialog:true,wait:PACE.create,run:()=>RP.press('#pmOverlayRoot [data-action="collab-modal-commit"]')};
+   if(nm)return {id:'crew-use',dialog:true,wait:PACE.create,run:()=>RP.press('#pmOverlayRoot [data-action="collab-modal-commit"]').then(ok=>{if(ok)r.crewConfigured=true;return ok;})};
    return null;}
-  if(r.crew&&sheet('sched-build-at')&&!crewSet()){
+  if(r.crew&&sheet('sched-build-at')&&!crewSet(r)){
    const conf=RP.find('#pmOverlayRoot [data-action="sched-configure-crew"]');
    if(conf)return {id:'crew-setup',dialog:true,wait:PACE.more,run:()=>RP.press(conf)};
    if(RP.find('.overlay-menu [data-action="shared-choice-pick"][data-value="crew"]'))return {id:'crew-pick',dialog:true,menu:true,wait:PACE.step,run:()=>RP.press('.overlay-menu [data-action="shared-choice-pick"][data-value="crew"]')};
-   return {id:'crew-who',dialog:true,wait:PACE.wand,run:()=>RP.press('#pmOverlayRoot [data-action="sched-pick-build-topology"]')};}
+   return {id:'crew-who',dialog:true,wait:PACE.wand+1000,run:()=>RP.press('#pmOverlayRoot [data-action="sched-pick-build-topology"]')};}
   if(sheet('sched-build-at')){const st=document.querySelector('[data-sched-input="build-start"]'),pa=document.querySelector('[data-sched-input="build-pause"]');
-   if(st&&st.value!=='22:00')return {id:'build-start',dialog:true,wait:PACE.wand,run:()=>RP.choose('[data-sched-input="build-start"]','22:00')};
-   if(pa&&pa.value!=='23:00')return {id:'build-pause',dialog:true,wait:PACE.field,run:()=>RP.choose('[data-sched-input="build-pause"]','23:00')};
+   if(st&&st.value!=='22:00')return {id:'build-start',dialog:true,wait:PACE.wand,run:()=>RP.choose('[data-sched-input="build-start"]','22:00').then(ok=>{if(ok)r.startTyped=true;return ok;})};
+   if(pa&&pa.value!=='23:00')return {id:'build-pause',dialog:true,wait:st&&st.value==='22:00'&&!r.startTyped?PACE.wand:PACE.field,run:()=>RP.choose('[data-sched-input="build-pause"]','23:00')};
    return null; /* committing the window approves the build: yours */}
   const at='[data-action="pd-build-at"][data-id="'+CSS.escape(pid)+'"]';
   if(RP.find(at))return {id:'build-at',wait:PACE.step,run:()=>RP.press(at)};
@@ -109,13 +109,13 @@ function nextWindows(r){const w=PM56_B17_WORK.snapshot(),pid=w&&w.planId,b=build
  const p=P.get(pid);if(!p||p.status==='completed')return null;
  if(!b.plan_run_id)return {id:'open-window',wait:PACE.clock,run:()=>act('b18-window-open')};
  if(!w.outputs?.normalize&&!r.wound)return null; /* the first output is being worked out */
- if(!r.wound)return {id:'wind',wait:PACE.wind,run:()=>{act('b18-window-wind');r.wound=true;return true;}};
+ if(!r.wound){const at=RP.seen(r,'normalized');return {id:'wind',wait:PACE.step,notBefore:at+PACE.wind,since:at,run:()=>{act('b18-window-wind');r.wound=true;return true;}};}
  if(!r.closedAt)return {id:'close',wait:PACE.close,run:()=>{act('b18-window-close');r.closedAt=1;return true;}};
  if(!r.resumed)return {id:'next',wait:PACE.next,run:()=>{act('b18-window-next');r.resumed=true;return true;}};
  return null;}
 const CREW_NAME='Retained three-role Crew';
 /* the Crew is set up once Build At offers "Change the Crew…" in place of "Set up the Crew…" */
-const crewSet=()=>[...document.querySelectorAll('#pmOverlayRoot [data-action="sched-configure-crew"]')].some(b=>/Change/.test(b.textContent));
+const crewSet=r=>!!(r&&r.crewConfigured)||[...document.querySelectorAll('#pmOverlayRoot [data-action="sched-configure-crew"]')].some(b=>/Change/.test(b.textContent));
 const players=new Map();
 function playback(r){const old=players.get(r.threadId);if(old)old.stop();const pl=RP.play({key:'b18-demo',live:()=>sessions.get(r.threadId)===r&&!r.closed,threads:()=>[r.threadId],next:()=>r.flow==='messages'?nextMessages(r):nextWindows(r),render:()=>{const c=E.ctx();c.renderApp();if(c.state.dialog)c.renderOverlays();},superseded:()=>{}});players.set(r.threadId,pl);}
 function say(ctx,r){const m=record(r),b=build(r),pl=players.get(r.threadId);
@@ -132,11 +132,11 @@ function say(ctx,r){const m=record(r),b=build(r),pl=players.get(r.threadId);
   return {text:'The same V1 is back. Next: the held message is delivered again.'};}
  const w=PM56_B17_WORK.snapshot(),p=w&&w.planId&&P.get(w.planId),who=r.crew?'the Crew':'the plan';
  if(!w||!w.planId)return {text:'A plan request is ready in the message box. Next: you send it.'};
- if(r.crew&&!b&&sheet('sched-build-at')&&!crewSet())return {text:document.querySelector('#pmOverlayRoot [data-action="sched-configure-crew"]')?'A Crew builds it. Next: set up the Crew. Nothing starts yet.':'Build At, not Build Now. Next: under Who builds it, choose A Crew.'};
+ if(r.crew&&!b&&sheet('sched-build-at')&&!crewSet(r))return {text:document.querySelector('#pmOverlayRoot [data-action="sched-configure-crew"]')?'A Crew builds it. Next: set up the Crew. Nothing starts yet.':'Build At, not Build Now. Next: under Who builds it, choose A Crew.'};
  if(r.crew&&!b&&E.ctx().state.dialog&&!sheet('sched-build-at'))return {text:'Setting up the Crew: its name, then Use this Crew. Nothing starts until the window opens.'};
  if(!b){if(sheet('sched-build-at')){const st=document.querySelector('[data-sched-input="build-start"]'),pa=document.querySelector('[data-sched-input="build-pause"]');
    if(st&&pa&&st.value==='22:00'&&pa.value==='23:00')return {text:'Your move: the window is set, nightly 22:00 to 23:00. Pressing its Schedule approves '+(r.crew?'the Crew’s build of the plan':'the plan’s build')+' in that window; the recording goes on from there.',done:true,yours:true};
-   return {text:r.crew?'The Crew is set, and nothing has started. Next: a nightly window from 22:00 to 23:00.':'Build At, not Build Now. Next: a nightly window from 22:00 to 23:00.'};}
+   return {text:r.crew&&crewSet(r)?'The Crew is set, and nothing has started. Next: a nightly window from 22:00 to 23:00.':'Build At, not Build Now. Next: a nightly window from 22:00 to 23:00.'};}
   return {text:'The plan is ready. Next: you open it and choose Build At… from its More menu.'};}
  if(sheet('sched-build-at'))return {text:'Scheduled: the plan builds only inside its nightly window. Next: Done.'};
  if(p&&p.status==='completed')return {text:r.crew?'Done · The same Crew finished in the next window. Its first output was kept, and no second Crew or run started.':'Done · The same run finished in the next window. The first window’s completed output was kept, and nothing started over.',done:true};

@@ -199,7 +199,9 @@
       var why = holdReason(b);
       if (why) { if (!p.held) { p.held = why; } arm(POLL); return; }
       if (p.held) { p.held = false; p.last = Math.max(p.last, now() - Math.max(0, (b.wait || 0) - RESUME)); }
-      var due = p.last + (b.wait || 0) - now();
+      /* notBefore: an absolute motion time a beat may not run before (a moment the product reached by itself, held long
+         enough to read, however long ago the last beat ran) */
+      var due = Math.max(p.last + (b.wait || 0), b.notBefore || 0) - now();
       if (due > 12) { arm(due); return; }
       p.busy = true; p.current = b.id;
       var out;
@@ -225,13 +227,15 @@
        next-step line; null while it waits for you, holds, or a beat is running */
     p.progress = function () {
       if (p.stopped || p.busy || p.held) return null; var b = p.upcoming(); if (!b) return null;
-      var t = now(), to = p.last + (b.wait || 0); if (to - t < 200) return null;
+      var t = now(), from = b.notBefore && b.notBefore > p.last + (b.wait || 0) ? b.since || p.last : p.last, to = Math.max(p.last + (b.wait || 0), b.notBefore || 0); if (to - t < 200) return null;
       var k = K(), real = function (v) { return k && k.ms ? k.ms(v) : v; };
-      return { ms: Math.round(real(to - p.last)), at: Math.round(real(t - p.last)) };
+      return { ms: Math.round(real(to - from)), at: Math.round(real(t - from)) };
     };
     arm(o.first == null ? 900 : o.first);
     return p;
   }
+  /* seen(store, key): the motion time store first saw key (a moment the product reached by itself), for notBefore */
+  function seen(store, key) { store.__seen = store.__seen || {}; if (store.__seen[key] == null) store.__seen[key] = now(); return store.__seen[key]; }
   function stopAll(why) { Object.keys(players).forEach(function (k) { var q = players[k]; q.stop(); if (why && q.o.superseded) q.o.superseded(); }); reveal(''); }
   function snapshot() { var out = {}; Object.keys(players).forEach(function (k) { var p = players[k]; out[k] = { log: p.log.slice(), errors: p.errors.slice(), waiting: !!p.waiting, held: p.held || '', current: p.current || null }; }); return out; }
 
@@ -239,5 +243,5 @@
   /* a Start in Demo Studio (any example's, including the ones that don't use this player) ends the recording playing now;
      capture phase, so it runs before the new example's own Start */
   document.addEventListener('click', function (e) { var t = e.target && e.target.closest && e.target.closest('.demo-dialog .demo-trigger'); if (t) stopAll('another example'); }, true);
-  window.PM56_RECPLAY = { play: play, viaWand: viaWand, press: press, reveal: reveal, hover: hover, rest: rest, choose: choose, type: type, steady: steady, find: find, shown: shown, wait: wait, after: after, cancel: cancel, now: now, stopAll: stopAll, snapshot: snapshot, players: players, HOLD_SAY: HOLD_SAY, COMPOSER: COMPOSER };
+  window.PM56_RECPLAY = { play: play, seen: seen, viaWand: viaWand, press: press, reveal: reveal, hover: hover, rest: rest, choose: choose, type: type, steady: steady, find: find, shown: shown, wait: wait, after: after, cancel: cancel, now: now, stopAll: stopAll, snapshot: snapshot, players: players, HOLD_SAY: HOLD_SAY, COMPOSER: COMPOSER };
 })();
