@@ -171,10 +171,18 @@
     return !!(ta && ta.closest('.pm56-host'));
   }
   function fromEvent(e) {
-    return { type: e.type, t: now(), target: e.target || null, alt: !!e.altKey, ctrl: !!e.ctrlKey, meta: !!e.metaKey,
+    var g = { type: e.type, t: now(), target: e.target || null, alt: !!e.altKey, ctrl: !!e.ctrlKey, meta: !!e.metaKey,
       detail: e.detail || 0, key: e.key || null, trusted: !!e.isTrusted };
+    // a button's click that a keyboard Enter made (detail 0, right after the keydown on the same control) is that Enter
+    if (e.type === 'click' && !g.detail && lastEnter && now() - lastEnter.t < 120 && (lastEnter.target === e.target ||
+        (lastEnter.target && lastEnter.target.contains && lastEnter.target.contains(e.target)))) g.enter = true;
+    return g;
   }
-  function remember(e) { if (CLICKISH[e.type] || isKeyOpen(e)) lastGesture = fromEvent(e); }
+  var lastEnter = null;   // a keyboard Enter, whose click (detail 0) follows it: D7 opens a file kept on Enter
+  function remember(e) {
+    if (e.type === 'keydown' && e.key === 'Enter') lastEnter = { t: now(), target: e.target };
+    if (CLICKISH[e.type] || isKeyOpen(e)) lastGesture = fromEvent(e);
+  }
   ['click', 'dblclick', 'auxclick', 'keydown'].forEach(function (t) { document.addEventListener(t, remember, true); });
 
   /* the gesture behind an open now: the event being dispatched, else one from just before (an open the chat deferred
@@ -205,7 +213,7 @@
     }
     if (g.alt) res.where = 'panel';
     if (g.ctrl || g.meta || o.background === true) res.background = true;
-    var keep = g.detail >= 2 || g.type === 'dblclick' || (g.type === 'keydown' && g.key === 'Enter');
+    var keep = g.detail >= 2 || g.type === 'dblclick' || g.enter || (g.type === 'keydown' && g.key === 'Enter');
     if (r.special === 'file') res.mode = keep ? 'keep' : 'preview';
     else if (keep) res.mode = 'keep';
     return res;
