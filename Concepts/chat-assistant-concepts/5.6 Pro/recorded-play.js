@@ -208,13 +208,20 @@
 
   /* ------------------------------------------------------------------ the guide's sentences */
   /* steady(store, text, urgent, rerender): the sentence to show now. A new sentence replaces the one on screen only once
-     that one has been up HOLD_SAY; your move and the end (urgent) show at once. store is the example's session (it keeps
+     that one has been up HOLD_SAY. Your move and the end (urgent) wait out the same hold, so they never cut the sentence
+     before them short; the sentence after them shows at once (2026-10-22: the Plan's first sentence gave way to its Your
+     move after 1.8 s). The hold counts from the end of the render that puts the sentence on screen, not from its start:
+     at 3x the render a completing plan triggers took up to 0.24 s off the hold. store is the example's session (it keeps
      .say and .sayTimer); rerender is called when a held sentence may change. */
   function steady(store, text, urgent, rerender) {
     if (!store) return text;
     var t = now(), say = store.say;
-    if (!say || say.text === text || urgent || say.urgent || t - say.at >= HOLD_SAY) {
-      if (!say || say.text !== text) store.say = { text: text, at: t, urgent: !!urgent };
+    if (!say || say.text === text || say.urgent || t - say.at >= HOLD_SAY) {
+      if (!say || say.text !== text) {
+        var s = store.say = { text: text, at: t, urgent: !!urgent };
+        /* a render runs to its end before any promise callback: from then on the sentence is on screen */
+        Promise.resolve().then(function () { if (store.say === s) s.at = now(); });
+      }
       return text;
     }
     if (!store.sayTimer) store.sayTimer = after(HOLD_SAY - (t - say.at) + 30, function () { store.sayTimer = null; if (rerender) rerender(); });

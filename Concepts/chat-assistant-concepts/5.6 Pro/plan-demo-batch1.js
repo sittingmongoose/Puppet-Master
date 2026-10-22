@@ -66,7 +66,9 @@
   c.switchThread(tid);playback();c.renderApp();
  }
  /* the recording: next() names the next beat from the example's own state (PM56_RECPLAY) */
- const PACE={first:1100,build:0,more:4200,item:1400,close:1300,type:3600,send:700,view:4800};
+ /* first: Open plan is lit at 1.5 s and pressed as the first sentence's 2.2 s hold (R.HOLD_SAY) ends, so the plan opens
+    as the guide says Your move, not 0.4 s before it (the press lands 0.71 s after it is lit) */
+ const PACE={first:1500,build:0,more:4200,item:1400,close:1300,type:3600,send:700,view:4800};
  const FEEDBACK='Keep the selected account when favorites are reordered too.';
  const q=(action,id,extra)=>'[data-action="'+action+'"][data-id="'+CSS.escape(id)+'"]'+(extra||'');
  const moreOpen=id=>!!R.find(q('pd-more-actions',id,'[aria-expanded="true"]'));
