@@ -77,6 +77,7 @@
     { match: 'order-export:', kind: 'document', icon: 'document', body: 'chat', lab: true, label: 'Order export' },
     { match: 'b16-work:', kind: 'document', icon: 'document', body: 'chat', lab: true, label: 'Customer deliverables' },
     { match: 'b17-work:', kind: 'document', icon: 'document', body: 'chat', lab: true, label: 'Recovery workspace' },
+    { match: 'bsd12-work:', kind: 'document', icon: 'document', body: 'chat', lab: true, label: 'Example unavailable' },
     { match: 'bsd12:', kind: 'document', icon: 'document', body: 'chat', lab: true },
     { match: 'eli5-evidence:', kind: 'document', icon: 'document', body: 'chat', lab: true }
   ];
@@ -215,6 +216,13 @@
     var ch = changeOf(path);
     return ch && ch.line ? ch.line : undefined;
   }
+  /* the chat's own body for an id, painted by the chat into the host-owned tab body (PM56_HOST.mountChatBody) */
+  function chatRender(chatId) {
+    return function (body) {
+      var A = W.PM56_HOST && typeof PM56_HOST.app === 'function' ? PM56_HOST.app() : null;
+      if (A && typeof A.paintBody === 'function') A.paintBody(body, chatId);
+    };
+  }
   function specFor(id, o, g) {
     o = o || {};
     var r = route(id);
@@ -235,7 +243,7 @@
         spec.label = lp.title || lp.host || 'Fetched page';
       } else {
         spec.label = chatLabel(r.input, o.label) || (r.id !== r.input ? chatLabel(r.id) : null) || r.label || null;
-        if (r.body === 'chat' && typeof o.render === 'function') spec.render = o.render;
+        if (r.body === 'chat') spec.render = typeof o.render === 'function' ? o.render : chatRender(r.input);
       }
       if (r.icon) spec.icon = r.icon;
       if (hw.mode === 'keep') spec.mode = 'keep';
@@ -278,6 +286,26 @@
     try { return !!H && (H.tabs() || []).some(function (t) { return t.tabId === id; }); } catch (_) { return false; }
   }
 
+  /* Home folds some ids into one tab (its run kind: collab-run:X is room:X, crew-work:X, ...): the chat's list of open
+     tabs takes the id Home gave, so the panels' close and activate events find it (hosted openEditor added the
+     chat's id just before this call; its next sync adopts the swap) */
+  function renameInChat(from, to) {
+    var st = chatState();
+    if (!st || !Array.isArray(st.editorTabs)) return;
+    var seen = {};
+    st.editorTabs = st.editorTabs.map(function (x) { return x === from ? to : x; }).filter(function (x) { if (seen[x]) return false; seen[x] = 1; return true; });
+    if (st.activeEditor === from) st.activeEditor = to;
+  }
+
+  /* a tab that was open before the chat claimed it (the Home layout's own plan:ap-index, a tab restored from another
+     session) is drawn by its Home kind; once the chat hands it a body it remounts to draw the chat's */
+  function ensureChatBody(tabId) {
+    var P = pmw();
+    var e = P && P.instances && P.instances[tabId];
+    if (!e || !e.host || e.host.querySelector('.pm56-tab')) return;
+    try { P.render.unmountTab(tabId); P.render.schedule({ animate: false }); } catch (_) {}
+  }
+
   /* ---- open / close (the foundation's hosted openEditor and closeEditor call these first) ---- */
   SF.open = function (id, o) {
     o = Object.assign({}, o || {});
@@ -295,9 +323,17 @@
     var hw = plan.how;
     var focus = hw.user && !hw.background;
     if (focus) goHome();
+    try { if (W.PM56_HOST && PM56_HOST.wrapKinds) PM56_HOST.wrapKinds(); } catch (_) {}
     var res = null;
     try { res = H.open(plan.spec); } catch (err) { try { console.error('[pm56-surfaces] open failed for ' + id, err); } catch (_) {} }
     var tabId = res && res.ok ? res.tabId : null;
+    if (tabId && tabId !== str(id)) {
+      renameInChat(str(id), tabId);
+      // a folded run takes its own kind's mark (collab-run:X opened as review:X shows the review mark)
+      var folded = route(tabId);
+      if (folded.icon && folded.icon !== plan.spec.icon) { try { H.update(tabId, { icon: folded.icon }); } catch (_) {} }
+    }
+    if (tabId && res && !res.created && plan.spec.render) ensureChatBody(tabId);
     if (tabId && focus && clearPeek()) announce((plan.spec.label || 'The tab') + ' is open. The chat waits at the edge.');
     log({ id: str(id), tabId: tabId, kind: plan.spec.kind, by: plan.spec.by, background: !!plan.spec.background,
       where: plan.spec.where || 'auto', mode: plan.spec.mode || null, view: plan.spec.view || null, line: plan.spec.line || null,

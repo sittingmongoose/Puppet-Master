@@ -1,0 +1,209 @@
+/* pm7-port/css/30-surfaces-tabs.css: the chat's tab bodies read as PMConcept7's tab bodies (surfaces lane).
+   A chat tab body is div.pm56-frame.pm56-tab > div.pm56-host.pm56-tab-host > div.editor-body.pm56-tab-body (00-host.js),
+   inside a Home tab body (container pmw-body). These rules give it the Home document frame's measure
+   (Concepts/home-redesign/src/panels/css/45-frames.css: .pmw-doc 960 px, 24/28/48 padding, 13/20 type, a 22 px title,
+   one quiet meta line with dot separators, never pills), PMConcept7's panel ground (no lab gradient), and one scroller:
+   the tab body (the plan's inner 520 px scroll and the plan card's box go, so its Build / Revise / More footer sticks
+   to the bottom of the tab). Colours are the Home tokens (--pmw-*, defined on #pm-home-centre for every look), so
+   every look and NieR follow the panels. Sizes key on the tab frame (container pm56host), never the window. */
+
+.pm56-frame.pm56-tab > .pm56-tab-host.pm56-host {
+  background: transparent;
+  color: var(--pmw-text, var(--text));
+}
+.pm56-frame.pm56-tab > .pm56-tab-host.pm56-host > .editor-body.pm56-tab-body {
+  box-sizing: border-box;
+  padding: 24px 28px 48px;
+  background: transparent;
+  scrollbar-width: thin;
+  overscroll-behavior: contain;
+  font-size: 13px;
+  line-height: 20px;
+}
+@container pm56host (max-width: 719.98px) {
+  .pm56-tab-host.pm56-host > .editor-body.pm56-tab-body { padding: 16px 16px 40px; }
+}
+
+/* ---- the document: Home's measure and type ---- */
+.pm56-tab-host.pm56-host .editor-doc {
+  max-width: 960px;
+  margin: 0 auto;
+  animation: none;
+}
+.pm56-tab-host.pm56-host .editor-doc > h1,
+.pm56-tab-host.pm56-host .editor-doc > header > h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 650;
+  letter-spacing: -.015em;
+  color: var(--pmw-text, var(--text));
+  overflow-wrap: anywhere;
+}
+@container pm56host (max-width: 419.98px) {
+  .pm56-tab-host.pm56-host .editor-doc > h1,
+  .pm56-tab-host.pm56-host .editor-doc > header > h1 { font-size: 18px; }
+}
+.pm56-tab-host.pm56-host .editor-doc h2 {
+  margin: 24px 0 8px;
+  font-size: 15px;
+  line-height: 21px;
+  font-weight: 620;
+  color: var(--pmw-text, var(--text));
+}
+.pm56-tab-host.pm56-host .editor-doc p {
+  max-width: 78ch;
+  color: var(--pmw-text-2, var(--muted));
+}
+
+/* ---- meta rows: the chat's pill row becomes one quiet line with dot separators (Home .pmw-doc-meta) ---- */
+.pm56-tab-host.pm56-host .editor-meta,
+.pm56-tab-host.pm56-host .pm56-meta {
+  --pm56-sep-w: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px var(--pm56-sep-w);
+  margin: 6px 0 18px;
+  padding: 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--pmw-text-2, var(--muted));
+  clip-path: inset(-8px -8px -8px -3px);
+}
+.pm56-tab-host.pm56-host .editor-meta > .meta-pill,
+.pm56-tab-host.pm56-host .pm56-meta > span {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  white-space: nowrap;
+}
+.pm56-tab-host.pm56-host .editor-meta > .meta-pill + .meta-pill::before,
+.pm56-tab-host.pm56-host .pm56-meta > span + span::before {
+  content: "\00b7";
+  display: inline-block;
+  width: var(--pm56-sep-w);
+  margin-left: calc(-1 * var(--pm56-sep-w));
+  text-align: center;
+  color: var(--pmw-text-3, var(--subtle));
+}
+/* the child transcript's head row keeps its read-only marker as words, not a capsule */
+.pm56-tab-host.pm56-host .agent-feed-head .meta-pill {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--pmw-text-2, var(--muted));
+}
+
+/* ---- the plan viewer: no card box inside the tab, one scroller, the footer sticks to the tab's bottom ---- */
+.pm56-tab-host.pm56-host .plan-doc.plan-doc-editor {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+.pm56-tab-host.pm56-host .plan-doc.plan-doc-editor .pd-head,
+.pm56-tab-host.pm56-host .plan-doc.plan-doc-editor .pd-views { padding-left: 0; padding-right: 0; }
+.pm56-tab-host.pm56-host .plan-doc.plan-doc-editor .pd-title { font-size: 22px; line-height: 1.25; font-weight: 650; letter-spacing: -.015em; }
+.pm56-tab-host.pm56-host .plan-doc.plan-doc-editor .pd-body { max-height: none; overflow: visible; padding-left: 0; padding-right: 0; }
+.pm56-tab-host.pm56-host .plan-doc.plan-doc-editor .pd-foot {
+  position: sticky;
+  bottom: -48px;   /* sticky insets count from the scroller's content edge: this cancels the body's 48 px bottom padding */
+  z-index: 3;
+  margin: 0 -28px -48px;
+  padding: 8px 28px 10px;
+  background: var(--pmw-surface, var(--surface));
+  border-top: 1px solid var(--pmw-line, var(--border));
+}
+@container pm56host (max-width: 719.98px) {
+  .pm56-tab-host.pm56-host .plan-doc.plan-doc-editor .pd-foot { bottom: -40px; margin: 0 -16px -40px; padding: 8px 16px 10px; }
+}
+
+/* ---- the context-detail tab (was the window-right drawer): a section in the document measure ---- */
+.pm56-tab-host.pm56-host .pm56-ctx-tab {
+  position: static;
+  inset: auto;
+  width: auto;
+  height: auto;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transform: none;
+  animation: none;
+  display: block;
+}
+.pm56-tab-host.pm56-host .pm56-ctx-tab > .drawer-head {
+  position: static;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 14px;
+  padding: 0 0 10px;
+  border-bottom: 1px solid var(--pmw-line, var(--border));
+  background: transparent;
+}
+.pm56-tab-host.pm56-host .pm56-ctx-tab > .drawer-head > strong {
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 650;
+  letter-spacing: -.015em;
+  color: var(--pmw-text, var(--text));
+}
+.pm56-tab-host.pm56-host .pm56-ctx-tab > .drawer-head > .event-icon,
+.pm56-tab-host.pm56-host .pm56-ctx-tab > .drawer-head > [data-action="close-context-details"] { display: none; }
+.pm56-tab-host.pm56-host .pm56-ctx-tab > .drawer-scroll {
+  position: static;
+  max-height: none;
+  height: auto;
+  overflow: visible;
+  padding: 0;
+}
+
+/* ---- the attachment viewer (was the att-preview modal) ---- */
+.pm56-tab-host.pm56-host .pm56-att-figure {
+  margin: 8px 0 12px;
+  padding: 0;
+  max-width: 100%;
+}
+.pm56-tab-host.pm56-host .pm56-att-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--pmw-line, var(--border));
+  border-radius: min(var(--pmw-radius, 8px), 8px);
+  background: var(--pmw-surface-2, var(--surface-2));
+}
+.pm56-tab-host.pm56-host .pm56-att-note {
+  margin: 0 0 12px;
+  font-size: 11.5px;
+  color: var(--pmw-text-3, var(--subtle));
+}
+.pm56-tab-host.pm56-host .pm56-att-acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
+/* ---- run views keep their tabs and side column and go one column under 900 px: .pmx-view is its own inline-size
+   container (pmxview, module-shell.css), so in a tab it already answers to the tab's width; only the lab's sticky head
+   offset (it assumed the editor pane's 20 px padding) changes ---- */
+.pm56-tab-host.pm56-host .pmx-view.room-document > .pmx-view-head.drawer-head { top: -24px; margin-left: -28px; margin-right: -28px; padding-left: 28px; padding-right: 28px; }
+@container pm56host (max-width: 719.98px) {
+  .pm56-tab-host.pm56-host .pmx-view.room-document > .pmx-view-head.drawer-head { top: -16px; margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px; }
+}
+
+/* Reduced Motion: tab bodies arrive whole */
+@media (prefers-reduced-motion: reduce) {
+  .pm56-tab-host.pm56-host .editor-doc,
+  .pm56-tab-host.pm56-host .pm56-ctx-tab { animation: none; transition: none; }
+}
