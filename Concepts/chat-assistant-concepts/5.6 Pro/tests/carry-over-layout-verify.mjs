@@ -122,7 +122,10 @@ async function fonts(selector) {
       for (let text = walk.nextNode(); text; text = walk.nextNode()) {
         const el = text.parentElement;
         if (!text.textContent.trim() || !M.visible(el) || el.closest('script,style')) continue;
-        const want = el.closest('code,pre,kbd,samp,.pmx-code,.pmx-output-pre') ? 'pm nier mono' : 'pm nier sans';
+        // Native NieR header kickers use Mono only with the headers part installed
+        // (pm7-port/css/41-nier-headers.css); body text still requires Sans.
+        const kicker = document.documentElement.matches('[data-o55-nier="on"][data-o55-nier-parts~="headers"]') && el.closest('.pmx-view > .pmx-view-head > .pmx-view-kind');
+        const want = kicker || el.closest('code,pre,kbd,samp,.pmx-code,.pmx-output-pre') ? 'pm nier mono' : 'pm nier sans';
         const family = norm(getComputedStyle(el).fontFamily.split(',')[0]); checked++; used.add(want);
         if (family !== want) bad.push({ text: text.textContent.trim().slice(0, 55), family, want });
       }
