@@ -379,6 +379,31 @@
     isOpen: function (id) {
       try { return !!(window.PMW && PMW.state && PMW.state.layout && PMW.state.layout.tabs[id]); } catch (_) { return false; }
     },
+    /* a Home tab is on screen: Home is the page in front, the tab is its panel's active tab, that panel is expanded,
+       not behind a maximized panel and not one the last paint hid (the narrow switcher). Read from a class and the
+       layout model, never a box (a box read in a look switch pays the page's pending restyle); a tab opened this
+       moment counts before its first paint */
+    tabShown: function (id) {
+      try {
+        var P = window.PMW, l = P && P.state && P.state.layout, M = P && P.model;
+        if (!l || !M || typeof M.panelOf !== 'function') return false;
+        var page = doc.getElementById('panel-dashboard');
+        if (page && !page.classList.contains('active')) return false;
+        var p = M.panelOf(l, id);
+        if (!p || p.active !== id || p.collapsed) return false;
+        var narrow = !!(P.narrow && P.narrow.singleColumn && P.narrow.singleColumn());
+        if (!narrow && l.view && l.view.maximized && l.view.maximized !== p.id) return false;
+        var rects = P.render && P.render.rects ? P.render.rects() : null;
+        return !(rects && rects.hidden && rects.hidden[p.id]);
+      } catch (_) { return false; }
+    },
+    /* the page in front changed (Home's #panel-dashboard gains or loses .active): no Home event says so */
+    onPage: function (fn) {
+      var page = doc.getElementById('panel-dashboard');
+      if (!page || typeof MutationObserver !== 'function' || typeof fn !== 'function') return;
+      new MutationObserver(function () { try { fn(); } catch (err) { try { console.error('[pm56] page hook failed', err); } catch (_) {} } })
+        .observe(page, { attributes: true, attributeFilter: ['class'] });
+    },
     /* register the chat's body for a tab that is already open (restored from the saved layout) */
     adopt: function (id) {
       if (!window.PMW || !PMW.renderers) return;
