@@ -19,7 +19,7 @@
   'use strict';
   var E = window.PM56_EXT;
   var HOLD_SAY = 2200, RESUME = 1400, POLL = 300, AIM = 560, PRESS = 150, TRIES = 40;
-  var players = Object.create(null);
+  var players = Object.create(null), executing = null, frameRequest = 0;
 
   function K() { return window.PM56_CLOCK; }
   function now() { var k = K(); return k && k.now ? k.now() : performance.now(); }
@@ -40,7 +40,7 @@
   }
   /* the recording's finger: one fixed box outside #pmRoot (a render never removes it) that rings the control it is about
      to press, follows it if the layout moves, dips as it presses and fades */
-  var ring = null, ringRaf = 0, ringEl = null;
+  var ring = null, ringRaf = 0, ringEl = null, ringRect = null;
   function ringNode() {
     if (ring && ring.isConnected) return ring;
     ring = document.createElement('div'); ring.className = 'rec-tap'; ring.setAttribute('aria-hidden', 'true');
@@ -50,14 +50,18 @@
     ringRaf = 0; if (!ring || !ringEl) return;
     if (!ringEl.isConnected) { ring.setAttribute('data-state', 'off'); return; }
     var r = ringEl.getBoundingClientRect();
+    if (ringRect) {
+      var sx = r.width / ringEl.offsetWidth, sy = r.height / ringEl.offsetHeight;
+      r = { left: r.left + (ringEl.clientLeft + ringRect.left) * sx, top: r.top + (ringEl.clientTop + ringRect.top) * sy, width: ringRect.width * sx, height: ringRect.height * sy };
+    }
     ring.style.left = (r.left - 4) + 'px'; ring.style.top = (r.top - 4) + 'px'; ring.style.width = (r.width + 8) + 'px'; ring.style.height = (r.height + 8) + 'px';
     if (ring.getAttribute('data-state') !== 'off') ringRaf = requestAnimationFrame(place);
   }
-  function light(el, state) {
-    var n = ringNode(); ringEl = el; n.setAttribute('data-state', state || 'aim');
+  function light(el, state, rect) {
+    var n = ringNode(); ringEl = el; ringRect = rect || null; n.setAttribute('data-state', state || 'aim');
     if (!ringRaf) place();
   }
-  function dark() { if (ring) ring.setAttribute('data-state', 'off'); ringEl = null; }
+  function dark() { if (ring) ring.setAttribute('data-state', 'off'); ringEl = null; ringRect = null; }
   function bring(el) { try { el.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } catch (e) { } }
 
   /* reveal(css): show controls that only appear on hover (a message's Copy and More row) while the finger is on them,
@@ -131,6 +135,63 @@
     });
   }
 
+  /* typeInFrame(frame, text, {cps}): only the registered sandbox table's filter bridge.
+     Opaque frames require '*'; replies must come from this exact window with origin 'null'
+     and a matching request. No DOM access, selectors, code or extra capability crosses it.
+     The owning beat holds mid-word for another chat/sheet/hidden window, resumes after
+     RESUME, and aborts on Stop, Replay, removal or navigation of the original frame. */
+  function typeInFrame(t, text, o) {
+    o = o || {}; var frame = find(t), owner = executing;
+    if (!frame || frame.tagName !== 'IFRAME' || frame.getAttribute('sandbox') !== 'allow-scripts' || typeof text !== 'string' || text.length > 256) return Promise.resolve(false);
+    var win = frame.contentWindow, i = 0, rect = null, pending = null, timer = null, deadline = null, finished = false, held = false;
+    bring(frame);
+    return new Promise(function (done) {
+      function finish(ok) {
+        if (finished) return; finished = true; cancel(timer); clearTimeout(deadline);
+        window.removeEventListener('message', reply); frame.removeEventListener('load', abort);
+        if (owner) owner.player.aborts.delete(abort);
+        if (ringEl === frame) dark(); done(ok);
+      }
+      function abort() { finish(false); }
+      function valid() { return shown(frame) && frame.contentWindow === win && !(owner && (owner.player.stopped || owner.player.o.live && !owner.player.o.live())); }
+      function later(ms, fn) { timer = after(ms, fn); }
+      function ready(fn) {
+        if (!valid()) { abort(); return; }
+        if (document.hidden || owner && owner.held()) { held = true; if (ringEl === frame) dark(); later(POLL, function () { ready(fn); }); return; }
+        if (held) { held = false; later(RESUME, function () { ready(fn); }); return; }
+        fn();
+      }
+      function request(op, value, next) {
+        if (finished) return;
+        var id = 'rec-filter-' + (++frameRequest), m = { pm: 'filter_table', op: op, id: id };
+        if (op === 'set') m.value = value;
+        pending = { id: id, op: op, next: next };
+        deadline = setTimeout(abort, 1500); win.postMessage(m, '*');
+      }
+      function reply(e) {
+        var m = e.data, r = m && m.rect;
+        if (finished || e.source !== win || e.origin !== 'null' || !pending || !m || m.pm !== 'filter_table' || m.id !== pending.id || m.op !== pending.op) return;
+        if (!r || !['left', 'top', 'width', 'height'].every(function (k) { return typeof r[k] === 'number' && isFinite(r[k]); }) || r.left < 0 || r.top < 0 || r.width <= 0 || r.height <= 0 || r.left + r.width > frame.clientWidth + 1 || r.top + r.height > frame.clientHeight + 1) { abort(); return; }
+        clearTimeout(deadline); rect = r; var next = pending.next; pending = null; ready(next);
+      }
+      function next() {
+        ready(function () {
+          light(frame, 'aim', rect);
+          i = Math.min(text.length, i + (reduced() ? text.length : 1));
+          request('set', text.slice(0, i), function () {
+            light(frame, 'aim', rect);
+            if (i >= text.length) { later(240, function () { ready(function () { finish(true); }); }); return; }
+            var gap = 1000 / (o.cps || 34) * (/[ ,.]/.test(text.charAt(i - 1)) ? 1.8 : 1);
+            later(gap, next);
+          });
+        });
+      }
+      window.addEventListener('message', reply); frame.addEventListener('load', abort);
+      if (owner) owner.player.aborts.add(abort);
+      ready(function () { request('rect', null, function () { light(frame, 'aim', rect); later(reduced() ? 0 : 220, next); }); });
+    });
+  }
+
   /* viaWand(key, group, rowSel, o): the beat that reaches a row of the composer's wand menu the way a person does: the
      wand, its group (Assist, Schedule, ...) when the row lives in one, then the row. o.wait (before the wand), o.step
      (between the presses). Returns null once nothing is left to press here (the row was pressed: its sheet is open). */
@@ -171,7 +232,7 @@
   function play(o) {
     /* one recording plays at a time: a new one ends the others (each hears superseded(), and lets its example go) */
     Object.keys(players).forEach(function (k) { var q = players[k]; q.stop(); if (k !== o.key && q.o.superseded) q.o.superseded(); });
-    var p = { key: o.key, o: o, done: Object.create(null), log: [], errors: [], tries: Object.create(null), timer: null, busy: false, stopped: false, held: false, last: now(), started: now(), ended: false };
+    var p = { key: o.key, o: o, done: Object.create(null), log: [], errors: [], tries: Object.create(null), aborts: new Set(), timer: null, busy: false, stopped: false, held: false, last: now(), started: now(), ended: false };
     players[o.key] = p;
     function holdReason(b) {
       var c = ctx(); if (!c) return 'no app';
@@ -184,6 +245,10 @@
       return '';
     }
     function arm(ms) { cancel(p.timer); if (!p.stopped) p.timer = after(Math.max(0, ms), tick); }
+    function runBeat(b) {
+      var previous = executing; executing = { player: p, held: function () { return holdReason(b); } };
+      try { return b.run(); } finally { executing = previous; }
+    }
     function tick() {
       p.timer = null; if (p.stopped) return;
       if (o.live && !o.live()) { p.stop(); return; }
@@ -205,7 +270,7 @@
       if (due > 12) { arm(due); return; }
       p.busy = true; p.current = b.id;
       var out;
-      try { out = b.run(); } catch (e) { p.busy = false; fail(e); return; }
+      try { out = runBeat(b); } catch (e) { p.busy = false; fail(e); return; }
       Promise.resolve(out).then(function (ok) {
         p.busy = false; p.current = null; if (p.stopped) return;
         if (ok === false) {
@@ -221,7 +286,7 @@
       }, function (e) { p.busy = false; fail(e); });
     }
     function fail(e) { p.errors.push(String(e && e.message || e)); p.stop(); if (o.render) o.render(); if (o.onError) o.onError(e); }
-    p.stop = function () { p.stopped = true; cancel(p.timer); p.timer = null; if (players[p.key] === p) delete players[p.key]; dark(); reveal(''); };
+    p.stop = function () { p.stopped = true; cancel(p.timer); p.timer = null; p.aborts.forEach(function (abort) { abort(); }); if (players[p.key] === p) delete players[p.key]; dark(); reveal(''); };
     /* upcoming(): the beat that comes next (for the guide's "Next: ..."), or null while the example waits for you */
     p.upcoming = function () { if (p.stopped) return null; var b = null; try { b = o.next(); } catch (e) { } return b && !p.done[b.id] ? b : null; };
     p.ran = function (id) { return !!p.done[id]; };
@@ -231,8 +296,8 @@
       var b = null; try { b = o.next(); } catch (e) { return Promise.resolve(false); }
       if (!b || p.done[b.id]) return Promise.resolve(false);
       p.busy = true;
-      return Promise.resolve().then(b.run).then(function (ok) {
-        p.busy = false; if (ok === false) return false;
+      return Promise.resolve().then(function () { return runBeat(b); }).then(function (ok) {
+        p.busy = false; if (p.stopped || ok === false) return false;
         p.done[b.id] = 1; p.last = now(); p.log.push({ id: b.id, at: Math.round(now() - p.started), step: true }); if (o.render) o.render(); return true;
       }, function (e) { p.busy = false; p.errors.push(String(e && e.message || e)); return false; });
     };
@@ -261,5 +326,5 @@
   /* a Start in Demo Studio (any example's, including the ones that don't use this player) ends the recording playing now;
      capture phase, so it runs before the new example's own Start */
   document.addEventListener('click', function (e) { var t = e.target && e.target.closest && e.target.closest('.demo-dialog .demo-trigger'); if (t) stopAll('another example'); }, true);
-  window.PM56_RECPLAY = { play: play, step: step, seen: seen, viaWand: viaWand, press: press, reveal: reveal, hover: hover, rest: rest, choose: choose, type: type, steady: steady, find: find, shown: shown, wait: wait, after: after, cancel: cancel, now: now, stopAll: stopAll, snapshot: snapshot, players: players, HOLD_SAY: HOLD_SAY, COMPOSER: COMPOSER };
+  window.PM56_RECPLAY = { play: play, step: step, seen: seen, viaWand: viaWand, press: press, reveal: reveal, hover: hover, rest: rest, choose: choose, type: type, typeInFrame: typeInFrame, steady: steady, find: find, shown: shown, wait: wait, after: after, cancel: cancel, now: now, stopAll: stopAll, snapshot: snapshot, players: players, HOLD_SAY: HOLD_SAY, COMPOSER: COMPOSER };
 })();

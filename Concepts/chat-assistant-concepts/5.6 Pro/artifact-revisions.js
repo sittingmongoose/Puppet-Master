@@ -121,8 +121,18 @@ register('image',q=>{const src=q.payload?.data_url;if(!/^data:image\/(png|jpeg|w
 register('video',(q,o)=>{if(o.print||o.static)return `<p class="ar-static-note">Video · static fallback</p>${fallback(q,o)}`;const src=q.payload?.data_url;if(!/^data:video\/(webm|mp4);base64,[A-Za-z0-9+/=]+$/.test(src||''))return unavailable(q,'video_source_unavailable');return `<video class="ar-video" controls preload="metadata" src="${esc(src)}"></video>`;});
 // Only this registered renderer supplies executable code. Source HTML or script
 // is never evaluated. The frame gets no same-origin, navigation, form or popup
-// capability, and its CSP forbids network. This is not a native security audit.
-const TABLE_SCRIPT=`const rows=DATA.rows;const out=document.getElementById('rows');function draw(){out.replaceChildren();let n=0;for(const row of rows){if(!row.join(' ').toLowerCase().includes(document.getElementById('filter').value.toLowerCase()))continue;const tr=document.createElement('tr');for(const cell of row){const td=document.createElement('td');td.textContent=String(cell);tr.append(td);}out.append(tr);n++;}document.getElementById('count').textContent=n+' rows';}document.getElementById('filter').addEventListener('input',draw);draw();`;
+// capability, and its CSP forbids network. The parent-only message bridge can
+// read the filter's rectangle or set its bounded text and dispatch input; it
+// accepts no source code or other operations. This is not a native security audit.
+const TABLE_SCRIPT=`const rows=DATA.rows;const out=document.getElementById('rows'),filter=document.getElementById('filter');
+function draw(){out.replaceChildren();let n=0;for(const row of rows){if(!row.join(' ').toLowerCase().includes(filter.value.toLowerCase()))continue;const tr=document.createElement('tr');for(const cell of row){const td=document.createElement('td');td.textContent=String(cell);tr.append(td);}out.append(tr);n++;}document.getElementById('count').textContent=n+' row'+(n===1?'':'s');}
+filter.addEventListener('input',draw);draw();
+window.addEventListener('message',e=>{
+ const m=e.data;if(e.source!==window.parent||!m||m.pm!=='filter_table'||!['rect','set'].includes(m.op)||typeof m.id!=='string'||m.id.length>80)return;
+ const keys=m.op==='set'?['pm','op','id','value']:['pm','op','id'];if(Object.keys(m).length!==keys.length||Object.keys(m).some(k=>!keys.includes(k)))return;
+ if(m.op==='set'){if(typeof m.value!=='string'||m.value.length>256)return;filter.value=m.value;filter.dispatchEvent(new Event('input',{bubbles:true}));}
+ const r=filter.getBoundingClientRect();e.source.postMessage({pm:'filter_table',op:m.op,id:m.id,rect:{left:r.left,top:r.top,width:r.width,height:r.height}},'*');
+});`;
 register('interactive',(q,o)=>{
  if(o.print||o.static)return `<p class="ar-static-note">Interactive table · static fallback</p>${fallback(q,o)}`;
  if(q.origin!=='pm-local-renderer'||!q.capabilities?.includes('filter_table'))return unavailable(q,'renderer_capability_denied');

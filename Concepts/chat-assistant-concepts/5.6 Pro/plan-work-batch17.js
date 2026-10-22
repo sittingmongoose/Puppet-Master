@@ -36,8 +36,8 @@ function playback(ctx){const tid=ctx.thread.id,s=store.sessions[tid],r=get(s?.wo
    {say:'The total is 9,532 cents for three rows. Download saves this exact revision; the recording leaves it for you. Next: finish.',wait:5000,run:()=>RP.hover('[data-action="ar-download"]')});
  }else{
   list.push({say:'Rich Text includes the retained tables, chart and dependency graph. Next: inspect the graph’s actual edges.',wait:5000,run:()=>RP.hover('.editor-body .ar-graph-svg')},
-   {say:'The interactive table filters its retained rows in an isolated frame. Next: inspect that table.',wait:5000,run:()=>RP.hover('.editor-body iframe.ar-interactive')},
-   {say:'The image and video are retained reference media. Next: preview the short clip.',wait:5000,run:()=>RP.press('.editor-body video',{via:el=>{const out=el.play();if(out)out.catch(()=>{});}})},
+   {say:'The table filters retained V1 rows inside an isolated frame. Next: type A-002 and its quantity and unit price to isolate that order.',wait:5000,run:()=>RP.typeInFrame('.editor-body iframe.ar-interactive','A-002 2 10',{cps:7})},
+   {say:'A-002 remains: quantity 2 at 10 cents each. Filtering changed only the view. Next: preview the retained reference clip.',wait:5000,run:()=>RP.press('.editor-body video',{via:el=>{const out=el.play();if(out)out.catch(()=>{});}})},
    {say:'The clip is a reference, without execution progress. Next: read the same Plan as Markdown.',wait:5000,skip:()=>p()?.view==='markdown',run:()=>{document.querySelector('.editor-body video')?.pause();return RP.press('.editor-body [data-action="pd-view"][data-value="markdown"]');}},
    {say:'Markdown serializes the same immutable revision. Next: return to Rich Text.',wait:5000,skip:()=>p()?.view==='rich',run:press('.editor-body [data-action="pd-view"][data-value="rich"]')},
    back('Both views preserve the same source identities. Next: publish a newer source outside the Plan.'),
