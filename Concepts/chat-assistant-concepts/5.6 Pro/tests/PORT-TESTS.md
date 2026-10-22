@@ -28,6 +28,8 @@ node tests/wonderer-grill-film.mjs --page pm7 --file /tmp/c56port-tests/integrat
 
 The layout pass measures Crew and Room sheets in all ten looks at 400, 420, 440, 459, 460, 480, 500 and 519 px. `--sweep` measures every integer width in 400–519. `--looks retro-light,retro-dark` narrows layout and neon reruns.
 
+For an explicitly limited time budget, `--sweep --width-step 4` measures every fourth pixel plus 400, 420, 440, 459, 460, 480 and 519 (32 widths per sheet/look). The report records its exact width list; this is sampled coverage. The default sweep remains every integer.
+
 | ID | Assertion |
 |---|---|
 | CO-HEADER | Shelf title, step numeral and meta text have no overlapping line rectangles; their text clears clipping ancestors and owns its hit-test samples. |

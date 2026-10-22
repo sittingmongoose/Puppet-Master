@@ -87,6 +87,7 @@ if (pages.length === 2 && argv.includes('--parallel-pages')) {
     if (suite === 'wonderer') args.push('--browser');
     if (suite !== 'hover') args.push(suite === 'history' ? '--out' : '--json', json);
     if (suite === 'layout' && argv.includes('--sweep')) args.push('--sweep');
+    if (suite === 'layout' && opt('--width-step')) args.push('--width-step', opt('--width-step'));
     if (argv.includes('--reduced') && ['questions', 'history', 'neon'].includes(suite)) args.push('--reduced');
     if (opt('--looks') && suite === 'layout') args.push('--looks', opt('--looks'));
     if (opt('--looks') && suite === 'neon') args.push('--themes', opt('--looks'));

@@ -19,7 +19,10 @@ if (!['all', 'sheets', 'plate', 'fonts'].includes(section)) throw new Error('--s
 if (section === 'fonts' && target.kind !== 'pm7') throw new Error('Hosted fonts require --page pm7');
 const plannedLooks = section === 'fonts' ? looks.filter(l => l.startsWith('nier-')) : looks;
 if (!plannedLooks.length) throw new Error('The fonts section requires a NieR look');
-const widths = argv.includes('--sweep') ? Array.from({ length: 120 }, (_, i) => i + 400) : [400, 420, 440, 459, 460, 480, 500, 519];
+const widthStep = Number(opt('--width-step') || 1);
+if (!Number.isInteger(widthStep) || widthStep < 1 || widthStep > 119) throw new Error('--width-step must be an integer from 1 to 119');
+const boundaries = [400, 420, 440, 459, 460, 480, 519];
+const widths = argv.includes('--sweep') ? [...new Set([...Array.from({ length: Math.ceil(120 / widthStep) }, (_, i) => 400 + i * widthStep), ...boundaries])].sort((a, b) => a - b) : [400, 420, 440, 459, 460, 480, 500, 519];
 const check = (id, look, size, kind, pass, measured) => {
   results.push({ id, look, size, height, kind, pass: !!pass, owner: look.startsWith('nier-') ? 'c56port-nier' : 'c56port-looks', measured, sizeContext: testGeometry() });
   if (!pass) console.log(`FAIL ${id} ${look} ${kind}@${size} ${JSON.stringify(measured)}`);
@@ -216,6 +219,7 @@ try {
         const c = await chrome();
         check('CO-CHROME', look, width, kind, c.length >= 2 && c.some(p => /Persona/.test(p.text)) && c.some(p => new RegExp('\\b' + helperCount + ' helpers\\b').test(p.text)) && c.every(p => !p.clipped && p.hit), { expectedHelpers: helperCount, parts: c });
       }
+      console.log(`DONE sheets ${look} ${kind}: ${section === 'fonts' ? 'fonts' : widths.length + ' widths'} (${new Date().toISOString()})`);
       await ev(() => { const c = PM56_EXT.ctx(); c.closeDialog(); c.renderApp(); });
     }
   }
@@ -238,7 +242,7 @@ try {
 } catch (e) { results.push({ id: 'CO-RUN', pass: false, owner: 'c56port-tests', measured: e.stack }); console.error(e); }
 finally { await browser.close(); }
 if (errors.length) results.push({ id: 'CO-PAGEERROR', pass: false, owner: 'c56port-found', measured: errors });
-const failed = results.filter(r => !r.pass), report = { page: target.kind, file: target.file, section, checks: results.length, failed: failed.length, results };
+const failed = results.filter(r => !r.pass), report = { page: target.kind, file: target.file, section, widths, widthStep, checks: results.length, failed: failed.length, results };
 if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify(report, null, 2));
 console.log(`carry-over-layout-verify (${target.kind}): ${results.length - failed.length} PASS, ${failed.length} FAIL`);
 process.exitCode = failed.length ? 1 : 0;
