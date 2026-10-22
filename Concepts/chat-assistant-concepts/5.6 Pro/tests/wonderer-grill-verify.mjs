@@ -24,7 +24,26 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2), opt = n => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
 const results = [];
 /* the Batch 14-17 and 19 examples (2026-10-22), added once their recordings land */
-const AX_MORE = [];
+const AX_MORE = [
+  { name: 'To-Do graphs · Parallel outputs, honest progress', action: 'b16-start', flow: 'parallel', moves: ['[data-action="pd-build"]'] },
+  { name: 'To-Do graphs · Refine a list without losing work', action: 'b16-start', flow: 'restructure', moves: ['[data-action="pd-build-goal"]'] },
+  { name: 'To-Do graphs · Every item, even number 5,000', action: 'b16-start', flow: 'large' },
+  { name: 'Plan recovery · Recover without starting over', action: 'b17-start', flow: 'recovery', moves: ['[data-action="pd-build"]'] },
+  { name: 'Plan recovery · Read the exact evidence', action: 'b17-start', flow: 'documents' },
+  { name: 'Attachments · Attach, retry and remove', action: 'b19-start', flow: 'intake' },
+  { name: 'Attachments · Live references and drift', action: 'b19-start', flow: 'live' },
+  { name: 'Attachments · Folders stay bounded', action: 'b19-start', flow: 'folder' },
+  /* '@q': an Ask Card round with unfilled required decisions, answered as a person would (a choice per question, Next,
+     then Submit); C: the reviewed Plan's confirm; B: Build */
+  { name: 'Deep Plan · A few decisions, a complete plan', action: 'b14-start', flow: 'thorough', moves: ['@q', '[data-action="b14-synthesize"]', '[data-action="pd-build"]'], max: 120000 },
+  { name: 'Deep Plan · Research can become stale', action: 'b14-start', flow: 'exhaustive', moves: ['@q', '[data-action="b14-synthesize"]', '[data-action="b14-synthesize"]', '[data-action="pd-build"]'], max: 150000 },
+  { name: 'Deep Plan · One allowance, every participant', action: 'b14-start', flow: 'budget', moves: ['@q', '@q', '@q', '@q', '@q', '[data-action="b14-synthesize"]', '[data-action="pd-build"]'], max: 180000 },
+  { name: 'Deep Plan · An open decision can block Build', action: 'b14-start', flow: 'blocker', moves: ['@q', '@q', '@q', '@q', '@q', '[data-action="b14-synthesize"]'], max: 180000 },
+  { name: 'Simple Goal · A Goal that produces a real file', action: 'b15-start', flow: 'simple' },
+  { name: 'Simple Goal · You own the objective', action: 'b15-start', flow: 'authority', moves: ['[data-action="goal-save"]', '[data-action="goal-deny-proposal"]', '[data-action="goal-approve-proposal"]'], max: 120000 },
+  { name: 'Simple Goal · Build a Plan as a Goal', action: 'b15-start', flow: 'plan', moves: ['[data-action="pd-build-goal"]'] },
+  { name: 'Simple Goal · A future build is not a Goal yet', action: 'b15-start', flow: 'scheduled', moves: ['#pmOverlayRoot [data-action="sched-create-build"]'], max: 120000 }
+];
 function check(name, pass, detail) { results.push({ name, pass: !!pass, detail: pass ? '' : String(detail == null ? '' : detail) }); if (!pass) console.log('FAIL  ' + name + (detail ? '  -- ' + detail : '')); }
 const { Protocol, STATUS_WORD } = require(path.join(ROOT, 'wonderer-protocol.js'));
 const GE = require(path.join(ROOT, 'grill-protocol.js'));
@@ -627,6 +646,19 @@ async function otherExamples({ page, ev, sleep }) {
           const w0 = await ev(() => window.PM56_CLOCK.now()); await sleep(700);
           /* the control a person can reach: of the visible matches, the one on top at its own centre (at a narrow width an
              open document covers the chat's copy of the same control) */
+          if (moves[0] === '@q') {
+            const pick = sel => ev(sel => { const b = [...document.querySelectorAll(sel)].find(b => !b.disabled && (b.checkVisibility ? b.checkVisibility() : b.getClientRects().length)); if (!b) return false; b.scrollIntoView({ block: 'nearest' }); return true; }, sel);
+            const clickSel = async sel => { if (!(await pick(sel))) return false; await page.locator(sel).filter({ visible: true }).first().click(); await sleep(450); return true; };
+            let answered = false;
+            for (let k = 0; k < 16; k++) {
+              if (!(await pick('.decision-host .qs-reel'))) break;
+              await clickSel('.decision-host .qs-reel [data-action="answer-choice"]');
+              if (await clickSel('.decision-host [data-action="submit-questionnaire"]')) { answered = true; break; }
+              await clickSel('.decision-host [data-action="next-question"]');
+            }
+            if (answered) { moves.shift(); pressed++; await ev(() => { window.__ax.yours++; }); }
+            waitMs += (await ev(() => window.PM56_CLOCK.now())) - w0; await sleep(400); continue;
+          }
           const sel = moves[0], nth = await ev(sel => [...document.querySelectorAll(sel)].findIndex(b => { if (!(b.checkVisibility ? b.checkVisibility() : b.getClientRects().length)) return false;
             b.scrollIntoView({ block: 'nearest' }); const q = b.getBoundingClientRect(), top = document.elementFromPoint(q.left + q.width / 2, q.top + q.height / 2); return !!top && (top === b || b.contains(top)); }), sel);
           if (nth >= 0) { await page.locator(sel).nth(nth).click(); moves.shift(); pressed++; await ev(() => { window.__ax.yours++; }); }
@@ -643,7 +675,9 @@ async function otherExamples({ page, ev, sleep }) {
         buttons: Object.keys(x.buttons), clicks: x.clicks - (x.startClicks || 0), yours: x.yours, sentences: s.length, last: s.length ? s[s.length - 1].text.slice(0, 120) : '', errors: [].concat(...Object.values(P).map(p => p.errors)) }; });
     const play = r.total - waitMs, doc = (x.moves || []).length ? ' (your moves: ' + x.moves.length + ')' : x.endAt === 'yours' ? ' (it ends on your move)' : '';
     check(label + ': plays on its own from Start to its end' + doc, ended && pressed === (x.moves || []).length && !r.errors.length, JSON.stringify({ ended, pressed, last: r.last, errors: r.errors }));
-    check(label + ': no click after Start but the documented moves', r.clicks === pressed, JSON.stringify({ clicks: r.clicks, pressed }));
+    /* an Ask Card round takes several clicks (a choice per question, Next, Submit): counted as the one move it is */
+    const qRounds = (x.moves || []).filter(m => m === '@q').length;
+    check(label + ': no click after Start but the documented moves', qRounds ? r.clicks >= pressed && r.clicks <= pressed + qRounds * 16 : r.clicks === pressed, JSON.stringify({ clicks: r.clicks, pressed }));
     check(label + ': something moves within 2 s of Start, and nothing sits still for long', r.first != null && r.first <= 2000 && r.gap <= 9000 * 1, JSON.stringify({ first: r.first, gap: r.gap }));
     check(label + ': the guide narrates (its only button is Replay)', r.buttons.every(b => b === 'Replay') && r.sentences >= 3, JSON.stringify({ buttons: r.buttons, sentences: r.sentences }));
     check(label + ': paced to follow (every narrated sentence stays 2 s or more; the playback, less your moves, runs 12-100 s)', r.minDwell != null && r.minDwell >= 2000 && play >= 12000 && play <= 100000, JSON.stringify({ minDwell: r.minDwell, short: r.short, play }));
