@@ -369,7 +369,11 @@ async function browser() {
   await page.setViewportSize({ width: 1440, height: 900 });
   const load = async () => { await target.load(page); await target.resize(page, { width: 1440, height: 900 }); };
   const ev = (fn, a) => page.evaluate(fn, a);
-  const act = (name, data) => ev(([n, d]) => { const b = document.createElement('button'); Object.assign(b.dataset, d || {}); window.PM56_EXT.run(n, b, new Event('click')); window.PM56_EXT.ctx().renderApp(); }, [name, data || {}]);
+  const act = (name, data) => ev(([n, d]) => {
+    const b = document.createElement('button'); Object.assign(b.dataset, d || {}); b.type = 'button'; b.dataset.action = n;
+    (window.PM56_HOST?.root || document.body).appendChild(b);
+    try { b.click(); window.PM56_EXT.ctx().renderApp(); } finally { b.remove(); }
+  }, [name, data || {}]);
   const sleep = ms => page.waitForTimeout(ms);
   const startSheet = async () => { await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click(); await sleep(1400); };
   /* answer every round with Accept all until What we agreed is open; notes whether it waited on a lookup on the way */

@@ -32,7 +32,9 @@ page.on('pageerror', e => errors.push(e.message));
 const ev = (fn, data) => page.evaluate(fn, data);
 const act = (name, data = {}) => ev(([name, data]) => {
   const b = document.createElement('button'); Object.assign(b.dataset, data);
-  PM56_EXT.run(name, b, new Event('click')); PM56_EXT.ctx().renderApp();
+  b.type = 'button'; b.dataset.action = name;
+  (window.PM56_HOST?.root || document.body).appendChild(b);
+  try { b.click(); PM56_EXT.ctx().renderApp(); } finally { b.remove(); }
 }, [name, data]);
 
 // Browser-side measurement helpers are installed after each navigation, outside product code.
