@@ -1,0 +1,69 @@
+#!/usr/bin/env node
+/* Real-time GPU films. Fixed recorder viewport; only documented user waits are answered.
+ * node tests/wonderer-grill-film.mjs --page pm7 --file /tmp/PMConcept7.html --out /tmp/chat-films
+ * --flow crew|room|brainstorm|all --look basic-dark (any chat-target LOOKS value)
+ */
+import { execFileSync } from 'node:child_process';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+import { chromium } from 'playwright';
+import { chatTarget, LOOKS } from './chat-target.mjs';
+import { launchGpuBrowser, ownGpuSession } from './gpu-browser.mjs';
+
+const argv = process.argv.slice(2), opt = (key, fallback) => { const i = argv.indexOf(key); return i < 0 ? fallback : argv[i + 1]; };
+const target = chatTarget(argv), out = path.resolve(opt('--out', '/tmp/c56port-tests/films'));
+const look = opt('--look', 'basic-dark'), flowArg = opt('--flow', 'all');
+const flows = flowArg === 'all' ? ['crew', 'room', 'brainstorm'] : [flowArg];
+if (!LOOKS.includes(look) || flows.some(f => !['crew', 'room', 'brainstorm'].includes(f))) throw new Error('Unknown --look or --flow');
+mkdirSync(out, { recursive: true });
+const pageSha256 = createHash('sha256').update(readFileSync(target.file)).digest('hex'), results = [];
+
+for (const flow of flows) {
+  const movie = path.join(out, `${target.kind}-${flow}-${look}.mp4`), errors = [], moves = [];
+  const row = { page: target.kind, flow, look, file: target.file, pageSha256, movie, errors, moves, pass: false };
+  let browser, stop;
+  try {
+    const session = JSON.parse(execFileSync('agent-browser', ['start', '--record', movie, '--url', 'about:blank'], { encoding: 'utf8', timeout: 60000 }));
+    stop = ownGpuSession(session.id); row.sessionId = session.id;
+    console.log(`FILM ${flow}: GPU session ${session.id} CDP ${session.cdp_endpoint}`);
+    browser = await launchGpuBrowser(chromium, ['--cdp', session.cdp_endpoint]);
+    const page = browser.contexts()[0].pages().find(p => !session.recorder_url || !p.url().startsWith(session.recorder_url));
+    page.on('pageerror', e => errors.push(e.message));
+    await target.load(page); await target.theme(page, look);
+    if (target.kind === 'pm7') await page.evaluate(() => PMW.chatCol.setWidth(760));
+    await page.waitForTimeout(1200);
+    const tile = await target.demoTrigger(page, 'wg-demo-start', flow);
+    await tile.click(); await page.waitForTimeout(1400);
+    await page.locator('#pmOverlayRoot [data-action="collab-modal-commit"]').filter({ visible: true }).last().click();
+    const start = Date.now(); let runId;
+    const click = async selector => {
+      const el = page.locator(selector).filter({ visible: true }).first();
+      if (!await el.count() || !await el.isEnabled()) return false;
+      await el.scrollIntoViewIfNeeded(); await page.waitForTimeout(900); await el.click();
+      moves.push({ selector, elapsedMs: Date.now() - start }); return true;
+    };
+    while (Date.now() - start < 240000) {
+      const state = await page.evaluate(({ flow, runId }) => {
+        const c = PM56_EXT.ctx(), kind = flow === 'room' ? 'chat_room' : flow;
+        const r = runId ? PM56_COLLAB.run(runId) : PM56_COLLAB.runsForThread(c.state.selectedThread).filter(r => r.kind === kind).pop();
+        return r ? { id: r.id, status: r.status, phase: r.brainstorm?.phase, synthesis: !!r.brainstorm?.synthesis,
+          decision: !!r.brainstorm?.decision, summary: !!r.chatRoom?.summary, wait: r.chatRoom && PM56_ROOM.waitsFor(r) } : null;
+      }, { flow, runId });
+      if (state) { runId = state.id; row.final = state; }
+      if (state && (state.status === 'completed' || flow === 'room' && state.summary || flow === 'brainstorm' && state.synthesis)) { row.pass = true; break; }
+      if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]') || await click('.qs-grill [data-action="qs-accept-round"]')) { await page.waitForTimeout(1200); continue; }
+      if (state && flow === 'room' && state.wait === 'last') await click(`.transcript [data-run-id="${runId}"] [data-action="collab-room-summarize"]`);
+      if (state && flow === 'brainstorm' && state.phase === 'synthesis' && state.decision) await click(`.transcript [data-run-id="${runId}"] [data-action="collab-brainstorm-synthesize"]`);
+      await page.waitForTimeout(500);
+    }
+    if (!row.pass) throw new Error(`Film did not reach its result within 240s: ${JSON.stringify(row.final)}`);
+    await page.waitForTimeout(2500);
+    await page.screenshot({ path: movie.replace(/\.mp4$/, '-result.png') });
+    row.pass = !errors.length;
+  } catch (e) { row.error = e.stack; row.pass = false; console.error(e); }
+  finally { try { if (browser) await browser.close(); } finally { stop?.(); } }
+  results.push(row); writeFileSync(path.join(out, 'films.json'), JSON.stringify(results, null, 2));
+  console.log(`${flow}: ${row.pass ? 'PASS' : 'FAIL'} ${movie}`);
+}
+process.exitCode = results.every(r => r.pass) ? 0 : 1;

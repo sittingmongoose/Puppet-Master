@@ -3,6 +3,7 @@
 import { execFileSync } from 'node:child_process';
 
 const owned = new Set();
+export function ownGpuSession(id) { owned.add(id); return () => stop(id); }
 function stop(id) {
   if (!owned.delete(id)) return;
   try { execFileSync('agent-browser', ['stop', id], { stdio: 'pipe', timeout: 30000 }); }
