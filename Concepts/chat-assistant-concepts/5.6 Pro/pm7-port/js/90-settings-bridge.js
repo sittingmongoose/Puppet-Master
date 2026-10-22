@@ -33,7 +33,7 @@
   function paintPreferenceCopy(c) {
     const type = c.state.dialog?.type;
     if (type !== 'eli5-style' && type !== 'af-settings') { copySheet = null; copyType = null; return; }
-    const sheet = document.querySelector('#pmOverlayRoot .pmx-sheet');
+    const sheet = document.querySelector('#pmOverlayRoot .pmx-sheet[data-k^="dlg:' + type + ':"]');
     if (!sheet) return;
     const opening = sheet !== copySheet || type !== copyType;
     copySheet = sheet; copyType = type;
