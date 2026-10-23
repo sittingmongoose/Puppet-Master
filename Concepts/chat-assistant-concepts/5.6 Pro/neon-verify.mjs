@@ -968,8 +968,8 @@ for (const [k, route] of [['10b', 'body.pm56-reduced'], ['10c', 'html[data-motio
       await p.evaluate(k => {
         if (k === '10b') {
           document.body.classList.add('pm56-reduced');
-          // The port rewrites body selectors to its logical body (.pm56-host).
-          PM56_TEST.host.classList.add('pm56-reduced');
+          // The real host bridge mirrors this class onto its logical bodies.
+          // Keep that bridge under test rather than assigning the host class.
         }
         else document.documentElement.setAttribute('data-motion', 'reduced');
       }, k);
