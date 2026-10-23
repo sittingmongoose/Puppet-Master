@@ -194,7 +194,9 @@ async function sample(page, ms) {
         pend: !!(T && T.querySelector('.tx-pending b')), ch: clip ? +clip.getBoundingClientRect().height.toFixed(1) : null, fh: flow ? flow.offsetHeight : null,
         lh: p ? parseFloat(getComputedStyle(p).lineHeight) : null, capped: !!(clip && clip.classList.contains('tt-capped')), folded: !!(clip && clip.classList.contains('tt-folded')),
         tw: T ? T.querySelectorAll('.tt-w').length : 0, R: !!R, rw: R ? R.querySelectorAll('.tx-w').length : 0, before: !!(T && R && (T.compareDocumentPosition(R) & 4)),
-        u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null, g: tr ? Math.round(tr.scrollHeight - tr.clientHeight - tr.scrollTop) : null, stick: PM56_EXT.ctx().isSticky() });
+        u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null, g: tr ? Math.round(tr.scrollHeight - tr.clientHeight - tr.scrollTop) : null, stick: PM56_EXT.ctx().isSticky(),
+        /* for a failure's trace: the list's height, the reply's height and the room hold's floor */
+        ih: inner ? inner.offsetHeight : null, rh: R ? Math.round(R.getBoundingClientRect().height) : null, floor: document.documentElement.style.getPropertyValue('--tx-hold-min') || null });
       if (performance.now() - t0 < ms) requestAnimationFrame(tick); else W.done = true;
     };
     requestAnimationFrame(tick);
@@ -326,8 +328,9 @@ await safe('lines', async () => {
     /* the turns before this one are on screen too: the answer is the first reply word after this thought began */
     const from = s.findIndex(x => x.T && x.st === 'thinking'), a = from < 0 ? null : s.slice(from).find(x => x.R && x.rw > 0);
     const landed = a ? s.find(x => x.t > a.t && x.t <= a.t + 600 && x.ch <= 0.5 && x.folded) : null, f = followVerdicts(s);
+    const ftrace = f.drops.length ? s.filter(x => x.t >= f.drops[0].t - 300 && x.t <= f.drops[0].t + 150).map(x => ({ t: x.t, u: x.u, g: x.g, ih: x.ih, rh: x.rh, rw: x.rw, floor: x.floor, ch: x.ch })) : undefined;
     check(`L-${n} ${n} lines: it folds as the answer starts and lands folded; no clamp snap, follow-along holds (<=300ms away)`, !!a && a.st === 'done' && a.open === '0' && !!landed && landed.t - a.t <= 520 && f.drops.length === 0 && f.longest <= 300 && f.unstuck === 0,
-      { fold: a ? { st: a.st, open: a.open, landedMs: landed ? landed.t - a.t : null } : null, follow: f });
+      { fold: a ? { st: a.st, open: a.open, landedMs: landed ? landed.t - a.t : null, at: a.t } : null, follow: f, trace: ftrace });
     await settled(p);
   }
   results.push({ group: 'lines', label: 'L-sizes (diagnostic: per choice, line height, cap, tallest window, frames past the cap)', pass: true, diagnostic: true, sizeContext: testGeometry(), detail: sizes });
@@ -342,7 +345,9 @@ await safe('lines', async () => {
       const clip = T && T.querySelector('.tt-clip'), us = inner ? inner.querySelectorAll(':scope > [data-role="user"]') : [], u = us[us.length - 1];
       W.s.push({ t: Math.round(performance.now() - t0), T: !!T, st: T ? T.dataset.thoughtState : null, open: T ? T.dataset.thoughtOpen : null, card: !!card, ch: clip ? +clip.getBoundingClientRect().height.toFixed(1) : null,
         before: !!(T && card && (T.compareDocumentPosition(card) & 4)), u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null,
-        g: tr ? Math.round(tr.scrollHeight - tr.clientHeight - tr.scrollTop) : null, stick: PM56_EXT.ctx().isSticky() });
+        g: tr ? Math.round(tr.scrollHeight - tr.clientHeight - tr.scrollTop) : null, stick: PM56_EXT.ctx().isSticky(),
+        /* for a failure's trace: the card's height, the list's height and the room hold's floor */
+        cardH: card ? Math.round(card.getBoundingClientRect().height) : null, ih: inner ? inner.offsetHeight : null, floor: document.documentElement.style.getPropertyValue('--tx-hold-min') || null });
       if (performance.now() - t0 < ms) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
@@ -353,7 +358,8 @@ await safe('lines', async () => {
   const gMax = Math.max(...gThinking.map(x => x.ch || 0));
   check('L-agent 16 lines in an agent turn: no card while it thinks; the window reaches 16 lines, then folds before the card enters', gThinking.length > 20 && gThinking.every(x => !x.card) && gMax >= sizes[16].cap - 1.5 && !!born && born.st === 'done' && born.open === '0' && born.before,
     { frames: gThinking.length, tallest: gMax, born });
-  check('L-agent the fold of a 16-line window and the card\'s birth never snap the thread down; the reader stays at the bottom', gf.drops.length === 0 && gf.unstuck === 0, gf);
+  const trace = gf.drops.length ? g.filter(x => x.t >= gf.drops[0].t - 400 && x.t <= gf.drops[0].t + 200).map(x => ({ t: x.t, u: x.u, g: x.g, cardH: x.cardH, ih: x.ih, floor: x.floor, ch: x.ch })) : undefined;
+  check('L-agent the fold of a 16-line window and the card\'s birth never snap the thread down; the reader stays at the bottom', gf.drops.length === 0 && gf.unstuck === 0, trace ? Object.assign({}, gf, { trace }) : gf);
   check('L-errors no page errors', p.__errs.length === 0, p.__errs.slice(0, 2));
   await resetLines(p);
   await p.close();
