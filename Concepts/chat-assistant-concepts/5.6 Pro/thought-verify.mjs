@@ -14,6 +14,8 @@
  *            long it thought with its gist; it reopens and folds by click and by Enter; no clamp snap, follow holds;
  *            exactly two polite statuses (start, end), the transcript is not a live region
  *   expanded the block never caps and stays open beside the answer, without a gist
+ *   agent    an agent turn: no working card while it thinks; in the card's first frame the block is done and folding;
+ *            block, card, answer in that order; no clamp snap and the reader stays at the bottom
  *   prefs    the preference round trip: the composer's Thought Stream menu and New chat defaults (both pages), and
  *            Settings (PMConcept7): a change reaches every block on screen, in both directions
  *   reduced  Reduced Motion: words born still, the fold and the label land at once, the reply still streams
@@ -193,6 +195,38 @@ await safe('expanded', async () => {
   const T = await lastThought(p);
   check('E3 Expanded stays open beside the finished answer: whole reasoning, no gist, expanded', T.open === '1' && T.expanded === 'true' && Math.abs(T.ch - T.fh) <= 1 && !T.gist && /^Thought for \d+s$/.test(T.label), T);
   check('E4 no page errors', p.__errs.length === 0, p.__errs.slice(0, 2));
+  await p.close();
+});
+
+/* ------------------------------------------------------------------ agent */
+await safe('agent', async () => {
+  const p = await fresh({ mode: 'Auto' });
+  await openLive(p);
+  await p.evaluate(([ms, P]) => {
+    const W = window.__tta = { s: [] }, t0 = performance.now();
+    const tick = () => {
+      const inner = document.querySelector(P + '.chat-stage .transcript-inner'), tr = document.querySelector(P + '.chat-stage .transcript');
+      const T = inner ? [...inner.querySelectorAll(':scope > .message-thought')].pop() : null;
+      const card = T ? (() => { for (let n = T.nextElementSibling; n; n = n.nextElementSibling) if (n.matches('.working-card') || n.querySelector(':scope > .working-card')) return n; return null; })() : null;
+      const us = inner ? inner.querySelectorAll(':scope > [data-role="user"]') : [], u = us[us.length - 1];
+      W.s.push({ t: Math.round(performance.now() - t0), T: !!T, st: T ? T.dataset.thoughtState : null, open: T ? T.dataset.thoughtOpen : null, card: !!card,
+        before: !!(T && card && (T.compareDocumentPosition(card) & 4)), u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null,
+        g: tr ? Math.round(tr.scrollHeight - tr.clientHeight - tr.scrollTop) : null, stick: PM56_EXT.ctx().isSticky() });
+      if (performance.now() - t0 < ms) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [9000, P]);
+  await send(p, "Add the composite index and prove it's faster.");
+  await sleep(9500);
+  const s = (await p.evaluate(() => window.__tta)).s;
+  const thinking = s.filter(x => x.T && x.st === 'thinking');
+  check('G1 no working card while the model thinks; the reasoning streams first', thinking.length > 20 && thinking.every(x => !x.card), { frames: thinking.length, withCard: thinking.filter(x => x.card).length });
+  const born = s.find(x => x.card);
+  check('G2 Auto folds when the first tool call starts: in the card\'s first frame the block is done, folding, above the card', born && born.st === 'done' && born.open === '0' && born.before, born);
+  const f = followVerdicts(s);
+  check('G3 the card\'s birth and the fold never snap the thread down; the reader stays at the bottom', f.drops.length === 0 && f.unstuck === 0, f);
+  results.push({ group: 'agent', label: 'G-follow (diagnostic: the catch-up after the card\'s birth, turn-verify\'s predicate applies there)', pass: true, diagnostic: true, sizeContext: testGeometry(), detail: f });
+  check('G4 no page errors', p.__errs.length === 0, p.__errs.slice(0, 2));
   await p.close();
 });
 
