@@ -378,6 +378,29 @@ async function browser() {
   }, [name, data || {}]);
   const sleep = ms => page.waitForTimeout(ms);
   const startSheet = async (holdFacts = false) => {
+    if (holdFacts) await ev(() => {
+      const p = window.__c56RoundScroll = { samples: 0, missing: 0, completed: false, max: {}, violations: [] }, t0 = performance.now();
+      const root = window.PM56_HOST?.root?.() || document.body;
+      const read = () => {
+        if (p.completed) return;
+        if (root.querySelector('.wg-agreed[data-state="open"]')) { p.completed = true; return; }
+        const tr = root.querySelector('[data-scroll-key="transcript"]');
+        if (!tr) p.missing++;
+        const nodes = [['scrollingElement', document.scrollingElement], ['body', document.body]];
+        for (let el = tr?.parentElement; el; el = el.parentElement) nodes.push([el.tagName + (el.id ? '#' + el.id : '') + (el.className ? '.' + String(el.className).trim().replace(/\s+/g, '.') : ''), el]);
+        p.samples++;
+        for (const [name, el] of nodes) {
+          if (!el) continue;
+          const top = el.scrollTop;
+          p.max[name] = Math.max(p.max[name] || 0, Math.abs(top));
+          if (top !== 0 && p.violations.length < 20) p.violations.push({ t: performance.now() - t0, name, top });
+        }
+      };
+      const tick = () => { read(); if (!p.completed) p.raf = requestAnimationFrame(tick); };
+      p.read = read;
+      p.stop = () => { read(); cancelAnimationFrame(p.raf); document.removeEventListener('scroll', read, true); };
+      document.addEventListener('scroll', read, true); read(); p.raf = requestAnimationFrame(tick);
+    });
     await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click();
     if (holdFacts) await ev(() => PM56_CLOCK.setScale(.01));
     await sleep(1400);
@@ -446,9 +469,11 @@ async function browser() {
           const box = el.getBoundingClientRect(), hit = document.elementFromPoint(box.left + Math.min(20, box.width / 2), box.top + box.height / 2);
           return { text: el.textContent, x: box.x, y: box.y, width: box.width, height: box.height, hit: hit?.tagName + '.' + hit?.className };
         });
-        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, agreedFacts: __c56AnswerLookup.agreedFacts, trace: __c56AnswerLookup.trace, scrollCalls: __c56AnswerLookup.scrollCalls, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [], lookup, thread: PM56_EXT.ctx().state.selectedThread };
+        const p = window.__c56RoundScroll; p?.read();
+        const pageScroll = p ? { samples: p.samples, missing: p.missing, completed: p.completed, max: p.max, violations: p.violations } : null;
+        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, agreedFacts: __c56AnswerLookup.agreedFacts, trace: __c56AnswerLookup.trace, scrollCalls: __c56AnswerLookup.scrollCalls, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [], lookup, thread: PM56_EXT.ctx().state.selectedThread, pageScroll };
       });
-      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, lookupTrace: observed.trace, scrollCalls: observed.scrollCalls, factsAfter: observed.facts, lookupGeometry: observed.lookup, thread: observed.thread, resumeReason };
+      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, lookupTrace: observed.trace, scrollCalls: observed.scrollCalls, factsAfter: observed.facts, lookupGeometry: observed.lookup, thread: observed.thread, resumeReason, pageScroll: observed.pageScroll };
     };
     try {
     while (Date.now() - t0 < maxMs) {
@@ -463,13 +488,23 @@ async function browser() {
       }
       if (await ev(() => !!document.querySelector('.wg-agreed[data-state="open"]'))) return await done(true);
       if (await ev(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'))) {
-        await page.locator('.qs-grill [data-action="qs-accept-round"]').first().click({ timeout: 1500 }).catch(e => { if (!/Timeout|detached|not attached/.test(e.message)) throw e; });
+        const deadline = Date.now() + 1500;
+        while (Date.now() < deadline) {
+          const point = await ev(() => {
+            const button = document.querySelector('.qs-grill [data-action="qs-accept-round"]');
+            if (!button) return null;
+            const r = button.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, hit = document.elementFromPoint(x, y);
+            return r.width > 0 && r.height > 0 && hit && (hit === button || button.contains(hit)) ? { x, y } : null;
+          });
+          if (point) { await page.mouse.click(point.x, point.y); break; }
+          await sleep(100);
+        }
         await sleep(500); continue;
       }
       await sleep(500);
     }
     return await done(false);
-    } finally { await ev(resume => { window.__c56AnswerLookup?.observer.disconnect(); clearInterval(window.__c56AnswerLookup?.timer); window.__c56AnswerLookup?.restoreScrollMethods?.(); delete window.__c56AnswerLookup; if (resume) PM56_CLOCK.setScale(1); }, resumeOnLookup); }
+    } finally { await ev(resume => { window.__c56AnswerLookup?.observer.disconnect(); clearInterval(window.__c56AnswerLookup?.timer); window.__c56AnswerLookup?.restoreScrollMethods?.(); delete window.__c56AnswerLookup; window.__c56RoundScroll?.stop(); delete window.__c56RoundScroll; if (resume) PM56_CLOCK.setScale(1); }, resumeOnLookup); }
   };
   const wonLanes = () => ev(() => [...document.querySelectorAll('.pmx-lane[data-k*=":"]')].filter(l => /Wonderer/.test(l.querySelector('.pmx-lane-name')?.textContent || '')).map(l => l.textContent));
   const disabledSynthesis = async run => {
@@ -533,6 +568,8 @@ async function browser() {
     const crewAns = await answerAll(40000, true);
     check('B2e grilling waited on a lookup instead of jumping to What we agreed', crewAns.waited, JSON.stringify(crewAns));
     results.at(-1).measured = { before: crew.facts, ...crewAns };
+    check('B2f the page itself never scrolls during the rounds', crewAns.pageScroll?.samples > 0 && crewAns.pageScroll.completed && crewAns.pageScroll.missing === 0 && crewAns.pageScroll.violations.length === 0, JSON.stringify(crewAns.pageScroll));
+    results.at(-1).measured = crewAns.pageScroll;
     const agreed = await ev(() => { const a = document.querySelector('.wg-agreed[data-state="open"]'); return a ? { rows: a.querySelectorAll('.wg-agreed-row').length, confirm: !!a.querySelector('[data-action="wg-confirm"]'), keep: !!a.querySelector('[data-action="wg-keep-going"]') } : null; });
     check('B2d What we agreed lists every decision, with Confirm and Keep going', agreed && agreed.rows === 5 && agreed.confirm && agreed.keep, JSON.stringify(agreed));
     if (process.env.WGV_ONLY === 'b2') { check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); await b.close(); return; }
