@@ -590,15 +590,15 @@
   var RUN_ROOM_MAX = 240;
   function runHoldsRoom() { var c = C(); return !!(c && c.runHoldsRoom && c.runHoldsRoom()); }
   function shrinkRelAt() { return runHoldsRoom() ? Infinity : now() + SHRINK_HOLD; }
-  function holdShrink(fresh) {
+  function holdShrink(fresh, finite) {
     if (reduced() && !runHoldsRoom()) return;
-    if (room.on) { if (room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
+    if (room.on) { if (finite === true) { room.transient = true; room.relAt = now() + SHRINK_HOLD; } else if (room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
     var c = C(); if (!c || (c.isSticky && !c.isSticky())) return;
     var inner = roomInner(); if (!inner) return;
     /* fresh: a hold that follows no shrink (watchRoom) takes the list as it is now */
     var before = fresh !== true && inner === roomSeen && room.lastH ? room.lastH : 0;
     room.inner = inner; room.h0 = Math.max(before, inner.offsetHeight);
-    room.on = true; room.rel = false; room.transient = true; room.relAt = shrinkRelAt();
+    room.on = true; room.rel = false; room.transient = true; room.relAt = finite === true ? now() + SHRINK_HOLD : shrinkRelAt();
     room.x = null; room.v = 0; room.last = now();
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
@@ -1020,7 +1020,7 @@
     active: function () { var out = []; streams.forEach(function (st) { out.push({ id: st.id, tid: st.tid, phase: st.phase, cursor: st.cursor, ops: st.ops.length, words: st.words }); }); return out; },
     begin: function (m, tid, spec, opts) { wire(); return begin(m, tid, spec, opts); },
     /* the shrink hold, for a block above the reader that gives back its height (a folding thought) */
-    holdShrink: function () { holdShrink(); },
+    holdShrink: function (finite) { holdShrink(false, finite === true); },
     /* Round 3: a rewound transcript keeps no room (A); the reader's close of a card's history lets its room go (D) */
     cut: function () { cutRoom(); },
     letGo: function () { letGo(); },

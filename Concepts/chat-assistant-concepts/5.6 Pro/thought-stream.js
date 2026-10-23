@@ -175,8 +175,8 @@
   }
 
   /* the room a fold gives back is held (turn-stream's floor), so a reader at the bottom stays where they are */
-  function holdForFold() {
-    try { var S = window.PM56_STREAM; if (S && S.holdShrink) S.holdShrink(); } catch (e) { }
+  function holdForFold(finite) {
+    try { var S = window.PM56_STREAM; if (S && S.holdShrink) S.holdShrink(finite === true); } catch (e) { }
   }
 
   /* ------------------------------------------------------------------ screen readers: one status, never words */
@@ -398,7 +398,8 @@
     var T = f.m, open = !isOpen(c, T);
     view[T.id] = { open: open, mode: modeOf(c, T) };
     var L = live.get(T.id); if (L) L.capped = capped(c, T);
-    if (!open) { var sticky = c.isSticky ? c.isSticky() : true; if (sticky) holdForFold(); }
+    /* OBJ-1: a reader's close gives its room back after the ordinary hold. */
+    if (!open) { var sticky = c.isSticky ? c.isSticky() : true; if (sticky) holdForFold(true); }
     c.renderApp();
     return true;
   });
