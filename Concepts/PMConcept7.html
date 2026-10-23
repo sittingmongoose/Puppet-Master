@@ -237989,6 +237989,20 @@ window.PM56_CLASS_MAP={"activity-bar": "pm56-activity-bar"};
     getPropertyValue: function (name) { return hosts()[0].style.getPropertyValue(name); }
   };
 
+  /* 3. The Ask Card's dock height. --decision-h is read only by .chat-float; while a card morphs (questions.js
+     trackAskDock, every frame for up to 1.2 s) the value goes on the float alone, because on .chat-stage an inherited
+     custom property changed each frame restyled the whole stage. The settled value goes on the stage as before and the
+     float's own copy is dropped, so the float reads the stage again. */
+  window.PM56_DOCK_H = function (stage, value, frame) {
+    var floats = stage.querySelectorAll('.chat-float'), i;
+    if (frame) {
+      for (i = 0; i < floats.length; i++) if (floats[i].style.getPropertyValue('--decision-h') !== value) floats[i].style.setProperty('--decision-h', value);
+      return;
+    }
+    if (stage.style.getPropertyValue('--decision-h') !== value) stage.style.setProperty('--decision-h', value);
+    for (i = 0; i < floats.length; i++) if (floats[i].style.getPropertyValue('--decision-h')) floats[i].style.removeProperty('--decision-h');
+  };
+
   function mark(name, on) {
     var b = doc.body; if (!b) return;
     if (on) { if (!b.hasAttribute(name)) b.setAttribute(name, ''); }
@@ -252352,7 +252366,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     face.querySelector('.qs-pill-label').textContent = label;
     return face;
   }
-  function setAskDock(shell) {
+  function setAskDock(shell, frame) {
     var stage = document.querySelector('.chat-stage');
     if (!stage || !shell) return;
     var host = document.querySelector('.decision-host');
@@ -252360,7 +252374,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       ? host.getBoundingClientRect().height
       : shell.getBoundingClientRect().height;
     if (!(h > 0)) h = 44;
-    stage.style.setProperty('--decision-h', Math.round(h) + 'px');
+    window.PM56_DOCK_H(stage, Math.round(h) + 'px', frame);
   }
   /* ---- Item 5 (2026-10-09): the Ask Card fits its content, up to the room above the composer ----
      --qs-ask-room is the chat stage's height less its header, Context Lens and composer rows, published on the root;
@@ -252437,7 +252451,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     var start = performance.now();
     var limit = ms || 800;
     function tick() {
-      setAskDock(shell);
+      setAskDock(shell, true);
       if (shell[flag] && performance.now() - start < limit) requestAnimationFrame(tick);
       else setAskDock(shell);
     }
