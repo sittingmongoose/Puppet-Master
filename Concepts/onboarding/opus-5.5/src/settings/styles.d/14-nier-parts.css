@@ -351,6 +351,13 @@ html[data-o55-nier-parts~="voice"][data-o55-nier-parts~="headers"] #rsStage .rs-
   color: var(--o55-nier-ink); display: none; }
 html[data-o55-nier-parts~="pod"] #o55np-pod { display: block; }
 html[data-o55-open] #o55np-pod { display: none; }
+/* Content scrolls past the seat: while one of that chat's controls lies under the Pod, the chat marks it data-shy
+   (5.6 Pro pm7-port/js/70-nier-pod-shy.js, the chat's own podShy) and it fades back so the control shows through, in
+   two held steps (the 5.6 Pro Pod's rule). Nothing else sets the mark. */
+#o55np-pod { transition: opacity 180ms steps(2, end); }
+#o55np-pod[data-shy] { opacity: .16; }
+html[data-motion="reduced"] #o55np-pod { transition: none; }
+@media (prefers-reduced-motion: reduce) { #o55np-pod { transition: none; } }
 #o55np-pod .o55np-pod-bob, #o55np-pod .o55np-pod-body, #o55np-pod .o55np-pod-shadow { position: absolute; left: 0; top: 0; width: 40px; height: 52px; will-change: transform; }
 #o55np-pod svg { display: block; width: 40px; height: 52px; overflow: visible; }
 #o55np-pod .o55np-pod-fill { fill: var(--o55-nier-paper); }
