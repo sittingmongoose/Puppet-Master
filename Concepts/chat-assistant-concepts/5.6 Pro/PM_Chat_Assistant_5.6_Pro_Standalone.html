@@ -80060,7 +80060,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      Pause keeps it: the turn is still unfinished. Stop and the card's Reset end the turn (g.ended), and anything new
      in the thread lifts it (settleWorkGate). Only a tail that is wholly the fixture's is held: a message added after
      the card earlier would otherwise come back below the turns it was written after. state.workGate = {tid, card,
-     ids, n}, n the thread's length when it was armed. */
+     ids, n, cut}, n the thread's length when it was armed. */
   function armWorkGate(){
     state.workGate=null;
     const tid=state.selectedThread, t=state.threads.find(x=>x.id===tid), fx=(D.threads||[]).find(x=>x.id===tid);
@@ -80068,7 +80068,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const i=t.messages.findIndex(m=>m.type==='working'&&!m.workId);
     if(i<0) return;
     const fixture=new Set(fx.messages.map(m=>m.id).filter(Boolean)), tail=t.messages.slice(i+1);
-    if(tail.length&&tail.every(m=>m.id&&fixture.has(m.id))) state.workGate={tid, card:t.messages[i].id||null, ids:tail.map(m=>m.id), n:t.messages.length};
+    if(!(tail.length&&tail.every(m=>m.id&&fixture.has(m.id)))) return;
+    /* Round 3 (A): a tail already on screen (a restart in a thread read to its end, a card's Play, Reset all) is not
+       a shrink of the card: the render that hides it is a cut (renderApp, rewindTranscript), not a held room */
+    const inner=tEl()?.querySelector('.transcript-inner');
+    const cut=!!inner&&tail.some(m=>inner.querySelector(`:scope > [data-k="msg:${CSS.escape(m.id)}"]`));
+    state.workGate={tid, card:t.messages[i].id||null, ids:tail.map(m=>m.id), n:t.messages.length, cut};
   }
   function heldByWorkGate(m){
     const g=state.workGate;
@@ -81462,7 +81467,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderApp(preserve=true){
     syncActivityDomain();
     const revealing=settleWorkGate();
-    const positions=preserve?captureScroll():{};
+    /* Round 3 (A): the render that hides a tail already on screen (armWorkGate g.cut) is a cut: no scroll capture,
+       no FLIPs (no shrink reaches holdShrink), no keep-top; rewindTranscript puts the reader on the card */
+    const cut=!!(state.workGate&&state.workGate.cut); if(cut) state.workGate.cut=false;
+    const positions=preserve&&!cut?captureScroll():{};
     /* T6: a working-card height change moves every message below it under a
        stationary cursor unless scrollTop absorbs the delta. Browser scroll
        anchoring is unreliable here (card is overflow:hidden; restores fight
@@ -81494,11 +81502,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
     document.getElementById('pmRoot').setAttribute('aria-busy','false');
     const post=snapScroll();
-    const flips=flipHeights(flipTargets, flipBefore);
-    keepTopAfter(preTop,post);
-    flipMoves(moveTargets, moveBefore);
+    const flips=cut?[]:flipHeights(flipTargets, flipBefore);
+    if(!cut){ keepTopAfter(preTop,post); flipMoves(moveTargets, moveBefore); }
     rollDigits(rollBefore);
-    restoreScroll(positions,{workH, post, workGrow:workFlipped(flips), still:revealing});
+    if(cut) rewindTranscript();
+    else restoreScroll(positions,{workH, post, workGrow:workFlipped(flips), still:revealing});
     renderOverlays();
     fitActivityTabs();
     retainHoverAfterRender();
@@ -82847,6 +82855,35 @@ suggested path                    migration 0043, reversible</div></div></sectio
     state.editorRevealed=true;if(!state.editorTabs.includes(id))state.editorTabs.push(id);state.activeEditor=id;renderApp();
   }
   function closeEditor(id){ if(HOSTED){ hostedClose(id); return; } const i=state.editorTabs.indexOf(id);if(state.editorTabs.length===1)state.editorRevealed=false;state.editorTabs=state.editorTabs.filter(x=>x!==id);if(state.activeEditor===id)state.activeEditor=state.editorTabs[Math.max(0,i-1)]||state.editorTabs[0]||null;renderApp(); }
+  /* The thread arrives as one piece: a short crossfade of the whole list rather than each item's own entrance.
+     It starts from 40% opacity, not 0: the old list is gone the instant the new one mounts, and fading up from
+     nothing read as a blink to an empty pane (filmed). Same 180ms in every voice; the voice picks the path.
+     One at a time: a restart from Demo Studio switches to its thread and cuts it in the same task. */
+  let arriveAnim=null;
+  function arriveAsOne(){
+    const inner=document.querySelector('.transcript-inner');
+    if(!inner||!inner.animate||(window.PM56_MOTION&&window.PM56_MOTION.reduced())) return;
+    const v=motionVoice(), glass=v==='glass';
+    const from={opacity:.4,transform:'translateY(4px)'}, to={opacity:1,transform:'none'};
+    if(glass){ from.filter='blur(3px)'; to.filter='blur(0px)'; }
+    const easing=v==='retro'?'steps(3, jump-start)':v==='friendly'?'cubic-bezier(.34,1.3,.64,1)':'cubic-bezier(.2,.8,.2,1)';
+    if(arriveAnim){ try{ arriveAnim.cancel(); }catch(e){} }
+    arriveAnim=inner.animate([from,to],{duration:180,easing});
+    /* the turn spine is its own layer beside the list; it arrives with it */
+    const spine=document.querySelector('.transcript .tx-spine-layer');
+    if(spine&&spine.animate) spine.animate([{opacity:from.opacity},{opacity:1}],{duration:180,easing});
+  }
+  /* Round 3 (A): the primary run restarts in a thread whose later turns were on screen (armWorkGate g.cut). The
+     transcript rewinds to the moment the work starts, as a thread switch would: no room is kept for what left
+     (turn-stream cut), the reader is put on the card, now the last item, in this frame, and the list arrives as one
+     piece. Before this, holdShrink floored the old height (1,222 px): the view sat on the empty floor for 741-920 ms,
+     then followed it down 473-1,200 px. */
+  function rewindTranscript(){
+    finishEntrances();
+    try{ const S=window.PM56_STREAM; if(S&&S.cut) S.cut(); }catch(e){}
+    stickToBottom(true);
+    arriveAsOne();
+  }
   function switchThread(id){
     const t=state.threads.find(x=>x.id===id);if(!t)return;
     const prev=activeThread(); if(prev) state.drafts[prev.id]=state.composer;
@@ -82862,24 +82899,11 @@ suggested path                    migration 0043, reversible</div></div></sectio
     for(const k in state.works) state.works[k].running=false;
     /* the run stops here, so a held demo tail comes back with the rest of the thread */
     state.workGate=null;
+    /* a room held under the thread we leave is not carried into the next one (turn-stream cut) */
+    try{ const S=window.PM56_STREAM; if(S&&S.cut) S.cut(); }catch(e){}
     renderApp(false);
   window.__PM56_BOOT_OK=true;scrollTranscriptToEnd(true);finishEntrances();
-    /* The thread arrives as one piece: a short crossfade of the whole list
-       rather than each item's own entrance. */
-    /* It starts from 40% opacity, not 0: the old list is gone the instant the
-       new one mounts, and fading up from nothing read as a blink to an empty
-       pane (filmed). Same 180ms in every voice; the voice picks the path. */
-    { const inner=document.querySelector('.transcript-inner');
-      if(inner&&inner.animate&&!(window.PM56_MOTION&&window.PM56_MOTION.reduced())){
-        const v=motionVoice(), glass=v==='glass';
-        const from={opacity:.4,transform:'translateY(4px)'}, to={opacity:1,transform:'none'};
-        if(glass){ from.filter='blur(3px)'; to.filter='blur(0px)'; }
-        const easing=v==='retro'?'steps(3, jump-start)':v==='friendly'?'cubic-bezier(.34,1.3,.64,1)':'cubic-bezier(.2,.8,.2,1)';
-        inner.animate([from,to],{duration:180,easing});
-        /* the turn spine is its own layer beside the list; it arrives with it */
-        const spine=document.querySelector('.transcript .tx-spine-layer');
-        if(spine&&spine.animate) spine.animate([{opacity:from.opacity},{opacity:1}],{duration:180,easing});
-      } }
+    arriveAsOne();
     /* The Multi Orbit demo thread plays its turn on entry: the first scripted
        run spawns just after the switch settles, and the chain does the rest. */
     if(id==='orbit-run'&&!state.works.orbitA){ setTimeout(()=>{ if(state.selectedThread==='orbit-run'&&!state.works.orbitA) startWorkingRec('orbitA'); },350); }
@@ -83079,7 +83103,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
 
   function globalReset(){
     notifyTurnOwners('reset');
-    stopWorkTimer(true);if(window.PM56_CTX&&window.PM56_CTX.reset)window.PM56_CTX.reset();safeStorage.del('pm56-prefs');D.models=clone(FIXTURE0.models);D.artifacts=clone(FIXTURE0.artifacts);{ const keepReply=state.replyMode; state=clone(DEFAULT); if(keepReply) state.replyMode=keepReply; /* a harness's reply mode survives Reset all */ }state.threads=clone(D.threads);state.questions=clone(D.questions);if(state.demoAutoStart)armWorkGate();renderApp(false);toast('Concept reset','All recipes, components, panels, threads, answers, artifacts, and working states returned to stock.');setTimeout(()=>{if(state.demoAutoStart)startWorking(true);},900);
+    stopWorkTimer(true);if(window.PM56_CTX&&window.PM56_CTX.reset)window.PM56_CTX.reset();safeStorage.del('pm56-prefs');D.models=clone(FIXTURE0.models);D.artifacts=clone(FIXTURE0.artifacts);{ const keepReply=state.replyMode; state=clone(DEFAULT); if(keepReply) state.replyMode=keepReply; /* a harness's reply mode survives Reset all */ }state.threads=clone(D.threads);state.questions=clone(D.questions);if(state.demoAutoStart){ armWorkGate(); /* Round 3 (A): Reset all is a rewind whatever was on screen */ if(state.workGate) state.workGate.cut=true; }renderApp(false);toast('Concept reset','All recipes, components, panels, threads, answers, artifacts, and working states returned to stock.');setTimeout(()=>{if(state.demoAutoStart)startWorking(true);},900);
   }
 
   function applyRecipe(i){i=Number(i);if(i<0){state.recipe=-1;renderApp();return;}const r=D.recipes[i];if(!r)return;state.recipe=i;state.variants=[...r.choices];renderApp();}
