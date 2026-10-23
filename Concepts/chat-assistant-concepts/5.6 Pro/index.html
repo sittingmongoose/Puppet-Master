@@ -77888,6 +77888,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   var live = new Map();                    /* thought id -> the thought being written */
   var byReply = Object.create(null);       /* reply id -> thought id */
   var view = Object.create(null);          /* thought id -> { open, mode }: a reader's own toggle */
+  var foldCheck = new Set();               /* agent turns: hold the room on fold only if the card born with it is shorter */
   var loop = 0;
 
   /* ------------------------------------------------------------------ preference */
@@ -78031,6 +78032,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
 
   /* ------------------------------------------------------------------ the live loop */
   function kick() { if (!loop) loop = requestAnimationFrame(frame); }
+  /* the placeholder's seconds, after 4 s (ACD-470); rendered with the line too, so a render never blanks them */
+  function elapsed(L, t) { var w = ((t == null ? now() : t) - L.t0) / 1000; return w >= 4 ? ' · ' + Math.floor(w) + 's' : ''; }
   function islandOf(id) { return document.querySelector('.transcript-inner [data-k="tt-island:' + CSS.escape(id) + '"]'); }
   function frame(ts) {
     loop = 0;
@@ -78051,8 +78054,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
           if (op.t === 'w') { released++; var back = 0; for (var i = L.cursor; i < L.ops.length && L.ops[i].n <= n; i++) if (L.ops[i].t === 'w') back++; L.nextAt = t + (reduced() ? 0 : interval(op, back)); }
         }
         if (released && window.PM56_SENDSTOP) window.PM56_SENDSTOP.token(L.tid);
-        var el = island.closest('.message-thought'), sec = el && el.querySelector('[data-tt-elapsed]'), waited = (t - L.t0) / 1000;
-        if (sec) { var txt = waited >= 4 ? ' · ' + Math.floor(waited) + 's' : ''; if (sec.textContent !== txt) sec.textContent = txt; }
+        var el = island.closest('.message-thought'), sec = el && el.querySelector('[data-tt-elapsed]');
+        if (sec) { var txt = elapsed(L, t); if (sec.textContent !== txt) sec.textContent = txt; }
         follow(clip, L, ts);
       }
       if (!L.agent && t - L.t0 >= L.ms) due.push(L.id);
@@ -78071,14 +78074,14 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var s = critStep(st.h - target, st.hv, 26, dt); st.h = target + s[0]; st.hv = s[1];
     if (Math.abs(st.h - target) < 0.4 && Math.abs(st.hv) < 4) { st.h = target; st.hv = 0; }
     if (st.h < target - 40) st.h = target - 40;
-    clip.style.height = Math.max(0, st.h).toFixed(1) + 'px';
+    var hv = Math.max(0, st.h).toFixed(1) + 'px';
+    if (clip.style.height !== hv) clip.style.height = hv;
     var s2 = critStep(st.y - y, st.yv, 22, dt); st.y = y + s2[0]; st.yv = s2[1];
     if (Math.abs(st.y - y) < 0.4 && Math.abs(st.yv) < 4) { st.y = y; st.yv = 0; }
     scrollTo_(clip, y, false);
   }
 
   /* ------------------------------------------------------------------ start and hand over */
-  function findThread(c, tid) { return (c.state.threads || []).filter(function (x) { return x.id === tid; })[0] || null; }
   function findMsg(c, id) {
     var out = null;
     (c.state.threads || []).some(function (t) { return t.messages.some(function (m) { if (m.id === id) { out = { t: t, m: m }; return true; } return false; }); });
@@ -78133,7 +78136,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     delete byReply[L.replyId];
     var willFold = !isOpen(c, T);
     var art = island && island.closest('.message-thought');
-    if (willFold && art && art.getAttribute('data-thought-open') === '1') holdForFold();
+    /* a written reply's first line is far shorter than the fold: hold the room now, before the render. An agent turn's
+       fold rides the render that births its working card, which usually grows the list by more than the fold gives
+       back; holding then would only keep the reader's gap at its widest, so the card is measured first (afterRender) */
+    if (willFold && art && art.getAttribute('data-thought-open') === '1') { if (L.agent) foldCheck.add(T.id); else holdForFold(); }
     announce(complete ? 'Thought for ' + seconds(T.thought.secs) + '.' : 'Thinking ended after ' + seconds(T.thought.secs) + '.');
     return true;
   }
@@ -78154,7 +78160,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     /* Send now: a written reply's thought ends with it; an agent turn keeps thinking, as its work keeps running */
     steer: function (tid) { var any = false; live.forEach(function (L) { if (L.tid === tid && !L.agent && end(L, 'ended')) any = true; }); if (any) C().renderApp(); },
     cancel: function (tid) { live.forEach(function (L) { if (L.tid === tid) end(L, 'done', { complete: true }); }); },
-    reset: function () { live.clear(); byReply = Object.create(null); view = Object.create(null); }
+    reset: function () { live.clear(); byReply = Object.create(null); view = Object.create(null); foldCheck.clear(); }
   };
 
   /* ------------------------------------------------------------------ render */
@@ -78166,8 +78172,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   function label(c, T, open) {
     var th = T.thought, model = (T.runtime && T.runtime.model) || 'Assistant';
     if (th.state === 'thinking') {
+      var L = live.get(T.id);
       return '<span class="tt-label tt-label-live" data-k="tt-label:live:' + esc(T.id) + '"><span class="tx-pending tt-pending"><b>' + esc(model) + '</b>' +
-        '<span class="tx-pending-verb">is thinking</span><em class="tx-pending-t" data-tt-elapsed></em></span></span>';
+        '<span class="tx-pending-verb">is thinking</span><em class="tx-pending-t" data-tt-elapsed>' + esc(L ? elapsed(L) : '') + '</em></span></span>';
     }
     var head = th.state === 'ended' ? 'Thinking ended after ' + th.secs + 's' : 'Thought for ' + th.secs + 's';
     /* the spaces between the parts are text (the flex row draws its own gaps), so the line reads whole to assistive
@@ -78208,6 +78215,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       clip.__id = id;
       if (L) L.capped = capped(c, T);
       if (clip.__tt.open === undefined) { settle(clip, open, L); continue; }
+      if (!open && foldCheck.delete(id)) {
+        var born = art.nextElementSibling, grow = born ? born.getBoundingClientRect().height : 0;
+        if (grow < clip.getBoundingClientRect().height) holdForFold();
+      }
       if (clip.__tt.open !== open) animateTo(clip, open, L);
       else if (!L && open && !clip.__tt.anim && clip.style.height) settle(clip, true, null);
     }
