@@ -2903,17 +2903,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null, tLastCh=null, tInputDir=0;
   let glideRAF=0, glideTs=0, tRO=null, tROTarget=null;
   const GLIDE_TAU=70;
+  const GLIDE_DT_MAX=120;   /* a late frame still advances the glide by the time it took (to 120 ms); at 60 fps nothing changes */
   function tEl(){ return scrollKeyEl('transcript'); }
   function tAtBottom(el){ el=el||tEl(); if(!el) return true; return el.scrollHeight-el.clientHeight-el.scrollTop<=24; }
   function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; tLastCh=el.clientHeight; }
   function cancelGlide(){ if(glideRAF){ cancelAnimationFrame(glideRAF); glideRAF=0; } glideTs=0; }
+  /* The glide's time constant is real time; a late frame catches up the time it lost instead of falling further behind (P1, 2026-10-23: 302-367 ms on a loaded standalone). */
   function glideStep(ts){
     glideRAF=0;
     const el=tEl(); if(!el||!tStick){ glideTs=0; return; }
     if(followHoldFn&&followHoldFn()){ glideTs=0; return; }
     const max=el.scrollHeight-el.clientHeight, cur=el.scrollTop, d=max-cur;
     if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
-    const dt=glideTs?Math.min(50,Math.max(1,ts-glideTs)):16.7; glideTs=ts;
+    const tn=performance.now(), dt=glideTs?Math.min(GLIDE_DT_MAX,Math.max(1,tn-glideTs)):16.7; glideTs=tn;
     let next;
     if(window.PM56_MOTION&&window.PM56_MOTION.reduced()) next=max;
     else if(d>el.clientHeight*1.25) next=max-el.clientHeight*0.6;   /* far off: close most of it in one frame */
