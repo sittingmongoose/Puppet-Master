@@ -154,8 +154,12 @@
       explanationPreference: opts && opts.explanationPreference ? JSON.parse(JSON.stringify(opts.explanationPreference)) : null
     };
     m.runtime = runtimeFor(c, m);
+    /* Thought Stream (thought-stream.js): a reply whose model shares its reasoning gets its thinking block first;
+       the reply waits hidden under it and starts writing as the reasoning hands over */
+    var th = spec.thinking && window.PM56_THOUGHT ? window.PM56_THOUGHT.start(c, t, m, spec.thinking) : null;
     t.messages.push(m);
-    begin(m, t.id, spec, { rich: true });
+    if (th) begin(m, t.id, Object.assign({}, spec, { delayMs: th.ms + 60 }), { rich: true, quiet: true, minPending: 0 });
+    else begin(m, t.id, spec, { rich: true });
     return true;
   }
 
@@ -568,9 +572,11 @@
       streaming: true, streamPhase: 'pending', time: new Date().toISOString(), liveTurnOf: recId
     };
     ph.runtime = runtimeFor(c, ph);
+    /* Thought Stream: the turn's reasoning streams before its first tool call, which waits for it */
+    var th = lt.thinking && window.PM56_THOUGHT ? window.PM56_THOUGHT.start(c, t, ph, lt.thinking, { agent: true }) : null;
     t.messages.push(ph);
     begin(ph, t.id, { chunks: [], terminal: 'complete' }, { rich: true, hold: true });
-    directors.set(recId, { recId: recId, tid: t.id, lt: lt, phId: ph.id, workAt: now() + 1100, phase: 'thinking', waited: {} });
+    directors.set(recId, { recId: recId, tid: t.id, lt: lt, phId: ph.id, workAt: now() + (th ? th.ms + 60 : 1100), phase: 'thinking', waited: {} });
     kick();
     return true;
   }
@@ -580,6 +586,8 @@
       var th = (c.state.threads || []).filter(function (x) { return x.id === d.tid; })[0];
       if (!th) { directors.delete(d.recId); return; }
       if (d.phase === 'thinking' && t >= d.workAt) {
+        /* the first tool call ends the thinking: its block folds (or stays open) in the render that births the card */
+        if (window.PM56_THOUGHT) window.PM56_THOUGHT.handover(d.phId, { render: false });
         var i = th.messages.findIndex(function (m) { return m.id === d.phId; });
         var st = streams.get(d.phId);
         if (st) streams.delete(d.phId);
@@ -929,6 +937,8 @@
     flightPending: flightPending,
     active: function () { var out = []; streams.forEach(function (st) { out.push({ id: st.id, tid: st.tid, phase: st.phase, cursor: st.cursor, ops: st.ops.length, words: st.words }); }); return out; },
     begin: function (m, tid, spec, opts) { wire(); return begin(m, tid, spec, opts); },
+    /* the shrink hold, for a block above the reader that gives back its height (a folding thought) */
+    holdShrink: function () { holdShrink(); },
     owner: owner
   };
 })();
