@@ -92,3 +92,5 @@ PM7 intentionally widens the column on History pin (F3-637/D3). Hosted drawer an
 Neon's 12a paired glow captures use the actual 90 px specimen rectangle and fail if it moves or scales. A hosted fixed child is positioned by its chat containing block; the page-origin crop can measure unrelated PM7 pixels. The original disc mask and greater-than-1.0 mean-difference predicate remain.
 
 Neon 17b compares chat-neutral glyph ink inside every `.pm56-host` in PM7, including chat overlays and Home panel bodies. Native PM7 Usage/Home glyphs use a separate palette and are counted in `outsideChat` diagnostics. Standalone still scans its whole document. The greater-than-100 sampled-glyph precondition and neutral-ink predicate remain unchanged.
+
+Legacy page adapters default viewport requests to chat-column tests. The explicit `page.setViewportSize(size, 'window')` test bridge preserves actual window dimensions; Neon's native Pod guard uses it for 1440, 1512 and 1920 px window cases. Reports retain both requested and measured window/column dimensions.

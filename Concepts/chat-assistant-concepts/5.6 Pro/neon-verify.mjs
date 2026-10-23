@@ -1653,6 +1653,8 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       watch(p);
       await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
       await boot(p);
+      await p.setViewportSize({ width: w, height: h }, 'window');
+      await p.waitForTimeout(400);
       await prepareWideHistory(p);
       await setTheme(p, 'nier-dark');
       await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
