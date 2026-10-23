@@ -18,6 +18,36 @@
   if (!window.PM56_HOST) return;
   var doc = document, IDS = ['pmRoot', 'pmOverlayRoot', 'pm56Fx'];
 
+  /* These properties are non-inherited (91-history-geometry.css). Keep the
+     host copy for existing readers, and publish directly to the drawer and
+     gutter. The render patches include the same declarations in new markup,
+     so patching never removes them and a remounted drawer starts in place. */
+  var geometry = Object.create(null), drawerGeometry = null, gutterGeometry = null;
+  function geometryConsumer(drawer) {
+    var old = drawer ? drawerGeometry : gutterGeometry;
+    if (old && old.isConnected) return old;
+    var root = doc.getElementById(drawer ? 'pmOverlayRoot' : 'pmRoot');
+    var el = root && root.querySelector(drawer ? '.history-flyout' : '.assistant-grid');
+    if (drawer) drawerGeometry = el; else gutterGeometry = el;
+    return el;
+  }
+  window.PM56_HISTORY_GEOMETRY = function (drawer) {
+    return Object.keys(geometry).filter(function (name) {
+      return drawer || name === '--ph-pane' || name === '--ph-user-w';
+    }).map(function (name) { return name + ':' + geometry[name] + ';'; }).join('');
+  };
+  function historyGeometry(name, value) {
+    if (!/^--ph-(?:x|y|h|pane|user-w)$/.test(name)) return;
+    if (value == null) delete geometry[name]; else geometry[name] = value;
+    var list = [geometryConsumer(true)];
+    if (name === '--ph-pane' || name === '--ph-user-w') list.push(geometryConsumer(false));
+    for (var i = 0; i < list.length; i++) {
+      if (!list[i]) continue;
+      if (value == null) list[i].style.removeProperty(name);
+      else if (list[i].style.getPropertyValue(name) !== value) list[i].style.setProperty(name, value);
+    }
+  }
+
   function hosts() {
     var out = [];
     for (var i = 0; i < IDS.length; i++) { var el = doc.getElementById(IDS[i]); if (el) out.push(el); }
@@ -27,10 +57,12 @@
     setProperty: function (name, value) {
       var v = String(value), list = hosts();
       for (var i = 0; i < list.length; i++) if (list[i].style.getPropertyValue(name) !== v) list[i].style.setProperty(name, v);
+      historyGeometry(name, v);
     },
     removeProperty: function (name) {
       var list = hosts();
       for (var i = 0; i < list.length; i++) if (list[i].style.getPropertyValue(name)) list[i].style.removeProperty(name);
+      historyGeometry(name, null);
     },
     getPropertyValue: function (name) { return hosts()[0].style.getPropertyValue(name); }
   };

@@ -1,0 +1,16 @@
+/* History's changing geometry belongs to its drawer and gutter. Registering
+   these values as non-inherited keeps a resize from restyling every message,
+   glyph and overlay. The universal syntax retains var()'s existing fallbacks.
+   05-page-root.js publishes the same inputs directly at both consumers. */
+@property --ph-x { syntax: "*"; inherits: false; }
+@property --ph-y { syntax: "*"; inherits: false; }
+@property --ph-h { syntax: "*"; inherits: false; }
+@property --ph-pane { syntax: "*"; inherits: false; }
+@property --ph-user-w { syntax: "*"; inherits: false; }
+@property --ph-w { syntax: "*"; inherits: false; }
+
+.pm56-host .history-flyout,
+.pm56-host .assistant-grid {
+  --ph-w: min(max(var(--ph-user-w, var(--ph-pin-w)), var(--ph-min-w)),
+              calc(var(--ph-pane, 100vw) * .42));
+}
