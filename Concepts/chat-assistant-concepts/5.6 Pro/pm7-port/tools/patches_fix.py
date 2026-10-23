@@ -20,6 +20,12 @@ times; the standalone (5.6 Pro/build.py) never reads this file. pm7-port/js/05-p
    changed on the stage restyled all of it each frame (about 900 elements, ~60 ms a frame hosted), so the close that
    clears the question ran ~1.2 s instead of ~0.5 s (Questions C*c / Q9 read it at 1.22 s). Hosted, the per-frame value
    goes on .chat-float alone and the settled one on the stage (PM56_DOCK_H, 05-page-root.js).
+4. History's close (history.js closeDrawer) removed the drawer on a fixed timer (its motion time + 30 ms). Hosted, the
+   first frame of the exit commits about 400 ms after the click (the click's own sync() and the next heartbeat force
+   ~95 ms style and layout flushes each against PMConcept7's tree), so the timer fired with the transform transition
+   still pending and the drawer vanished without moving. Hosted, the close finishes on the drawer's own transform
+   transitionend, with the timer as a fallback (motion time + 600 ms; 30 ms when motion is off), and only while that
+   same close is still the drawer's current one.
 
 Entries: (file, old, new, count).
 """
@@ -54,4 +60,17 @@ HOSTED_JS_PATCHES = [
      "    window.PM56_DOCK_H(stage, Math.round(h) + 'px', frame);", 1),
     ('questions.js', '      setAskDock(shell);\n      if (shell[flag] && performance.now() - start < limit) requestAnimationFrame(tick);',
      '      setAskDock(shell, true);\n      if (shell[flag] && performance.now() - start < limit) requestAnimationFrame(tick);', 1),
+    ('history.js', '    closeTimer = setTimeout(finishClose, ms + 30);',
+     "    (function (fl) {\n"
+     "      var my = fl.__pm56Close = (fl.__pm56Close || 0) + 1, done = false;\n"
+     "      var fin = function (e) {\n"
+     "        if (e && (e.target !== fl || e.propertyName !== 'transform')) return;\n"
+     "        if (done) return; done = true;\n"
+     "        fl.removeEventListener('transitionend', fin);\n"
+     "        if (fl.__pm56Close !== my || !closing) return;\n"
+     "        clearTimeout(closeTimer); finishClose();\n"
+     "      };\n"
+     "      fl.addEventListener('transitionend', fin);\n"
+     "      closeTimer = setTimeout(fin, ms ? ms + 600 : 30);\n"
+     "    })(el);", 1),
 ]
