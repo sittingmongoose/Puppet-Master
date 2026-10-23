@@ -523,24 +523,27 @@ g = await drawerGeom();
 check(g.mode==='closed' && !g.present && (g.gutter||0)<1,
       'Toggle closes a PINNED drawer and the gutter collapses with it (the bug not ported)', g);
 
-const sampleTransform = async (ms, step=16)=>{
-  const out=[]; const t0=Date.now();
-  while(Date.now()-t0 < ms){
-    out.push(await page.evaluate(()=>{
-      const f=document.querySelector('.history-flyout');
-      const grid=document.querySelector('.assistant-grid');
-      const pane=document.querySelector('.assistant-pane');
-      if(!f) return null;
-      const r=f.getBoundingClientRect();
-      return {t:performance.now(), x:Math.round(r.left*100)/100, w:Math.round(r.width*100)/100,
-              g:Math.round(parseFloat(getComputedStyle(grid).paddingLeft)*100)/100,
-              s:Math.round(Number(getComputedStyle(pane,'::after').opacity)*1000)/1000,
-              pl:Math.round(pane.getBoundingClientRect().left*100)/100};
-    }));
-    await page.waitForTimeout(step);
-  }
-  return out.filter(Boolean);
-};
+const sampleTransform = (ms, step=16, actions=['toggle-history', 'close-history']) => page.evaluate(({ms,step,actions}) => new Promise(resolve => {
+  const out = []; let started = false, finished = false, t0;
+  const finish = () => { if (finished) return; finished = true; document.removeEventListener('click', activate, true); clearTimeout(deadline); resolve(out); };
+  const tick = () => {
+    if (finished) return;
+    const f=document.querySelector('.history-flyout'),grid=document.querySelector('.assistant-grid'),pane=document.querySelector('.assistant-pane');
+    if(f){ const r=f.getBoundingClientRect(); out.push({t:performance.now(), x:Math.round(r.left*100)/100, w:Math.round(r.width*100)/100,
+      g:Math.round(parseFloat(getComputedStyle(grid).paddingLeft)*100)/100,
+      s:Math.round(Number(getComputedStyle(pane,'::after').opacity)*1000)/1000,
+      pl:Math.round(pane.getBoundingClientRect().left*100)/100}); }
+    if(performance.now()-t0 < ms) setTimeout(tick,step); else finish();
+  };
+  const activate = e => {
+    const a=e.target?.closest?.('[data-action]')?.dataset.action;
+    if(started || !e.isTrusted || !actions.includes(a)) return;
+    started=true; document.removeEventListener('click',activate,true); t0=performance.now(); tick();
+  };
+  // The bounded window begins at actual user activation, after Playwright has
+  // waited for the selected native control to become actionable.
+  const deadline=setTimeout(finish,6000); document.addEventListener('click',activate,true);
+}), {ms,step,actions});
 
 // Observe the real open transition. Mutating data-ph-drawer here bypasses the
 // module's pin state and corrupts the dismissal checks that follow it.
@@ -663,7 +666,7 @@ await sec('item4: scrim click dismisses when unpinned', async()=>{
 await click('[data-action="toggle-history"]');
 await page.waitForTimeout(450);
 const beforePin = await drawerGeom();
-const pinTrace = sampleTransform(420,14);
+const pinTrace = sampleTransform(420,14,['ph-toggle-pin']);
 await click('[data-action="ph-toggle-pin"]');
 const pinSamples = await pinTrace;
 await page.waitForTimeout(400);
