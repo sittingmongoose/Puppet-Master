@@ -62,7 +62,10 @@
    return;
   }
   if(id.startsWith('activity-')){ctx.switchThread('query');ctx.state.activity.pinned=true;ctx.state.hover={type:'activity',domain:id==='activity-todo'?'todo':'changes'};ctx.renderApp();return;}
-  if(id.startsWith('work-')){window.PM56_DEMO.setVariant(2,id==='work-simple'?8:1);window.PM56_DEMO.trigger('Start complete work');requestAnimationFrame(()=>document.querySelector('.working-card')?.scrollIntoView({block:'center'}));}
+  /* the run holds the thread's later turns until it completes (app.js armWorkGate), so its card is the last item and
+     the switch's stick-to-bottom already shows it; centring it would only unstick the follow under a card taller
+     than the view */
+  if(id.startsWith('work-')){window.PM56_DEMO.setVariant(2,id==='work-simple'?8:1);window.PM56_DEMO.trigger('Start complete work');}
  }
  E.action('repair-demo',(ctx,btn)=>{launch(ctx,btn.dataset.scenario);return true;});
  window.PM56_REPAIR_DEMOS={list:()=>scenarios.map(([id,feature,label,expected])=>({id,feature,label,expected})),launch:id=>launch(E.ctx(),id),gallery:ctx=>'<section class="demo-section polish-demo-section"><h3>Assistant refinements</h3><div class="demo-section-body">'+scenarios.map(([id,feature,label,expected])=>'<button class="demo-trigger" data-action="repair-demo" data-scenario="'+id+'" title="'+ctx.esc(expected)+'"><small>'+ctx.esc(feature)+'</small><strong>'+ctx.esc(label)+'</strong></button>').join('')+'</div></section>'};
