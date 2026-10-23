@@ -155,6 +155,8 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-syntax { background:
 /* An opening sheet is not hit until the pointer next moves or its entrance ends (11-editor-customize.js, passThrough):
    the page under the pointer keeps its hover through the opening frame instead of restyling Settings' whole column. */
 .pmed-cz.pmed-pass :is(.pmt-cz-scrim > i, .pmt-cz-frame, .pmt-cz-dialog) { pointer-events: none; }
+/* prepared (kept between visits, clipped away), its parts take no pointers either (26-customize.css, the parked screen) */
+.pmed-cz.pmed-prepared :is(.pmt-cz-scrim > i, .pmt-cz-frame, .pmt-cz-dialog) { pointer-events: none; }
 /* Static scheme pictures keep their measured size while the browser skips
    drawing them below the scrollport. Their original contents appear before
    they enter view; no tile or effect is replaced by a placeholder. */
