@@ -1,7 +1,13 @@
 {
-  "authority": "Jared assigned the 2026-10-23 governance reseal (\"Yes reseal\") after round 2 of the 5.6 Pro chat port. Preparation only at 51e1af633f; rebase after the lead confirms round 2 landed, then Astra review and explicit Jared GO before landing.",
+  "authority": "Jared assigned the 2026-10-23 governance reseal (Yes reseal); continuation after round-2 landing. Branch push only. Astra review, explicit GO and a separate landing agent follow.",
+  "baseline_commit": "22594db93128ace7577ff353734a64034eb1f5f6",
+  "baseline_sha256": "61e99cef5b9164384cba7bb75fa113fa9ed7536bc141a2a55f18f3a952d48737",
+  "baseline_unchanged_since_rebase": true,
   "certification_harness_run": false,
   "changed_since_previous_seal": 10,
+  "checked_governance_commit": "99f742f0169f68863838e129b6175171965fa60d",
+  "current_snapshot_findings": 0,
+  "current_snapshot_run_id": "pds-20261023-002-current-planunit-snapshot",
   "files": [
     {
       "commits": [
@@ -130,25 +136,36 @@
     }
   ],
   "frozen_origin_main": "2d4287bcb77ed5e072ae619012f5c276375df423",
+  "frozen_preparation_base": "51e1af633fd7e977a2f2c8f92a60035f3386ce33",
+  "landing_authorized": false,
+  "landing_check_exit_code": 1,
+  "landing_eligibility_note": "Local comparison has no blockers or infrastructure results; Astra review and explicit Jared GO remain required.",
   "landing_eligible": false,
-  "lead_confirmation": {
-    "bytes": 597,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/resume/review/lead-preparation-dependency.json",
-    "sha256": "a38045fe1a77bc4509e59eec75c5d06fdc857b05297a41380ddd7eb79b7b6216"
-  },
+  "landing_lock_taken": false,
+  "local_landing_comparison_clear": true,
   "locked_file_count": 101,
   "locked_file_count_before": 101,
+  "main_pushed": false,
   "mode": "real",
   "newly_registered_paths": [],
   "non_hash_lock_fields_unchanged": true,
-  "previous_seal_commit": "94811a84a540ede8ff33f08432569929e4d1a46c",
-  "publication_guard_dependency": {
-    "bytes": 1635,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/resume/review/publication-guard-proof.json",
-    "sha256": "7fd963dc63cf7bcb67101bafa6a9683b70df1bea6a85921963c8c9d378a3725e"
+  "plans_delta_proof": {
+    "bytes": 5275,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/resume/continuation-20261023/plans-delta-proof.json",
+    "sha256": "6b00c094dfacb19a5dd3b31040ec62b229d9c455954cb251c74879c4fff03271"
   },
-  "reseal_base_commit": "51e1af633fd7e977a2f2c8f92a60035f3386ce33",
-  "review_state": "preparation_only_awaiting_round2_landing_rebase_Astra_review_and_explicit_Jared_GO",
+  "previous_seal_commit": "94811a84a540ede8ff33f08432569929e4d1a46c",
+  "protected_scope_proof": {
+    "bytes": 2296,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/resume/continuation-20261023/protected-files-proof.json",
+    "sha256": "c34b79f03c8c59b39d9c9ab7b9ceecf813a7af3cd004326b2a118557b390f2ec"
+  },
+  "publication_guard_exit_code": 0,
+  "publication_guard_resolved": true,
+  "rebased_prepared_head": "a4a919df039f80d9c3857f75be2a4fd2ee639bfe",
+  "reseal_base_commit": "a9d2e6c4120f5d29cda7d38793a1b9571f542321",
+  "review_state": "awaiting_Astra_review_of_rebased_reseal_then_explicit_Jared_GO_and_separate_landing_agent",
   "runtime_enabled": false,
-  "schema_id": "pm.governance.reseal_attestation.v1"
+  "schema_id": "pm.governance.reseal_attestation.v1",
+  "shared_checkout_accessed": false
 }
