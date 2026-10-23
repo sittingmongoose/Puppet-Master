@@ -569,17 +569,20 @@
      floor holds the room instead; the next subject's rows usually fill it, and
      what is left eases away more gently than the fold's room. */
   var SHRINK_HOLD = 700;
-  /* ...and as its leftover closes, the floor (what moves under a reader at the bottom) never comes down faster than
+  /* ...and as any held room's leftover closes (a shrink's or a fold's, Round 3 E), the floor (what moves under a reader
+     at the bottom) never comes down faster than
      200 px/s, whatever the content under it does. A tall thinking window (Lines shown while thinking at 12 or 16,
      DL-234) gives back up to 320 px when it folds; at the shrink's omega that eased the thread down at up to 0.8 px/ms,
      twice turn-verify's 0.4 px/ms snap line (300 px/s still read 0.41 on a loaded page, where a frame's step and the
      sampler's interval drift apart). Leftovers under ~70 px never reach the limit, so a short fold or a card's usual
      shrink closes as before. */
   var SHRINK_VMAX = 200;
-  /* A demo run whose later turns are held until it completes (app.js armWorkGate) keeps this room for the whole run:
+  /* A run whose card is the transcript's last item (app.js runHoldsRoom: a gated demo run, a live agent turn, a
+     scripted chain's card) keeps this room while it runs:
      the floor only ratchets up as the card grows past it, so a reader at the bottom sees the text above the card move
      when the card reaches a new height and never slide back down when a subject's rows fold (2026-10-23: six 30-70px
-     slides a run at a 442px column). The room is let go as usual once the run is over. Live turns are unchanged.
+     slides a run at a 442px column). The room is let go as usual once the run is over. It ends when the run stops or
+     something mounts below the card.
      It holds at most RUN_ROOM_MAX: the tallest a subject's rows fold away in any working take is 193px at a 442px
      column (176px in most list takes, 70px in Orbit), so a bigger band under the card is a shrink the reader made --
      the card's history closing gave back 536px, and holding that left most of the view blank until the run ended. A
@@ -617,7 +620,9 @@
       if (room.x == null) room.x = Math.max(0, room.h0 - nat);
       /* critically damped to zero (omega 11/s: ~450ms; a shrink's leftover 8/s) */
       var s2 = critStep(room.x, room.v, room.transient ? 8 : 11, dt);
-      if (room.transient) { var lo = room.floorAt - SHRINK_VMAX * dt - nat; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
+      /* every release, a fold's too: a fold's room now starts from the run-long floor (up to RUN_ROOM_MAX over the
+         content), and at omega 11 that eased down at up to ~0.97 px/ms, past turn-verify's 0.4 px/ms snap line */
+      { var lo = room.floorAt - SHRINK_VMAX * dt - nat; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
       room.x = s2[0]; room.v = s2[1];
       /* under reduced motion (only a held demo run holds room there) the floor goes at once */
       if (room.x < 0.5 || nat >= room.h0 || reduced()) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }

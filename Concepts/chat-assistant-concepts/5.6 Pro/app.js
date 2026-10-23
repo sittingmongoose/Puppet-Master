@@ -1081,12 +1081,22 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const g=state.workGate;
     return !!(g&&m&&m.id&&g.tid===state.selectedThread&&!state.work.completed&&g.ids.includes(m.id));
   }
-  /* turn-stream keeps its shrink room for the whole of a demo run whose later turns are held (armWorkGate) while it
-     runs. The reader's own close of the card's history or a phase gives its room back by itself (letRoomGo), so
-     opening one no longer ends this for the rest of the run (Round 3 D: 365 px of slides, reduced 70 px steps). */
+  /* Round 3 (E): turn-stream keeps its shrink room for the whole of a run while that run's card is the last thing
+     in the transcript with a height and the run is running: a gated demo run (its later turns held), a live agent
+     turn (its answer waits for the card), a scripted chain's current card, Queued Message's run. With nothing below
+     the card every shrink of it moved all the text above it down and the next growth moved it back (Live agent turn
+     175 px down r5, Long agent turn 280 down r9, Multi Orbit 206 down r15 at a 442 px column); the floor only
+     ratchets up, capped at RUN_ROOM_MAX (turn-stream.js). It ends when the run stops running (pause, step, Stop,
+     completion, a thread switch) or when anything with a height mounts below the card (a revealed tail, an answer,
+     an approval ask, a receipt). The reader's own close of the card's history or a phase gives its room back by
+     itself (letRoomGo). */
   function runHoldsRoom(){
-    const g=state.workGate, w=state.work;
-    return !!(g&&g.tid===state.selectedThread&&w.running&&!w.completed&&!g.ended);
+    const inner=tEl()?.querySelector('.transcript-inner'); if(!inner) return false;
+    let last=inner.lastElementChild;
+    while(last&&last.getBoundingClientRect().height<=0) last=last.previousElementSibling;
+    if(!last||!last.classList.contains('working-card')) return false;
+    const wid=last.dataset.card, rec=wid==='primary'?state.work:(wid?state.works[wid]:null);
+    return !!(rec&&rec.running&&!rec.completed);
   }
   /* Round 3 (D): the reader closed the card's history or a phase: turn-stream lets the room that close gives back
      go now, eased, instead of holding it for SHRINK_HOLD; the next shrink starts the run-long hold again */
