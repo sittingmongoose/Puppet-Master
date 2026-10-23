@@ -18,21 +18,28 @@
   if (!window.PM56_HOST) return;
   var doc = document, IDS = ['pmRoot', 'pmOverlayRoot', 'pm56Fx'];
 
-  function hosts() {
+  function hosts(name) {
     var out = [];
+    /* Only the body-level drawer consumes these viewport coordinates. The
+       gutter uses its own pane's container width; publishing drawer geometry
+       on pmRoot would invalidate the entire transcript on a column resize. */
+    if (/^--ph-(?:x|y|h|pane)$/.test(name || '')) {
+      var overlay = doc.getElementById('pmOverlayRoot');
+      if (overlay) return [overlay];
+    }
     for (var i = 0; i < IDS.length; i++) { var el = doc.getElementById(IDS[i]); if (el) out.push(el); }
     return out.length ? out : [doc.documentElement];   /* before the hosts exist, where the standalone wrote */
   }
   window.PM56_ROOT_STYLE = {
     setProperty: function (name, value) {
-      var v = String(value), list = hosts();
+      var v = String(value), list = hosts(name);
       for (var i = 0; i < list.length; i++) if (list[i].style.getPropertyValue(name) !== v) list[i].style.setProperty(name, v);
     },
     removeProperty: function (name) {
-      var list = hosts();
+      var list = hosts(name);
       for (var i = 0; i < list.length; i++) if (list[i].style.getPropertyValue(name)) list[i].style.removeProperty(name);
     },
-    getPropertyValue: function (name) { return hosts()[0].style.getPropertyValue(name); }
+    getPropertyValue: function (name) { return hosts(name)[0].style.getPropertyValue(name); }
   };
 
   /* 3. The Ask Card's dock height. --decision-h is read only by .chat-float; while a card morphs (questions.js
