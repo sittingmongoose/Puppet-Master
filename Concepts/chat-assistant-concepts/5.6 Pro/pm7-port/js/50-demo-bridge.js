@@ -127,6 +127,8 @@
     ['teach', [['capture', 'teach-demo-start'], ['correct', 'teach-demo-start'], ['missed', 'teach-demo-start']]],
     ['memory', [['verified', 'memory-demo-start'], ['locked', 'memory-demo-start']]],
     ['eli5', [['override', 'eli5-demo-start'], ['inherit', 'eli5-demo-start']]],
+    /* Thought Stream (DL-234): the same question shown While it thinks and Always open (thought-demo.js) */
+    ['thinking', [['auto', 'thought-demo-start'], ['expanded', 'thought-demo-start']]],
     ['bsd', [['survives', 'bsd12-start'], ['resolves', 'bsd12-start']]],
     ['debug', [['repair', 'debug-demo-start'], ['drift', 'debug-demo-start']]],
     ['revert', [['whole', 'revert-demo-start'], ['conflict', 'revert-demo-start']]],

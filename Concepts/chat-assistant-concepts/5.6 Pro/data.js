@@ -522,20 +522,29 @@
   })();
 
   /* Live agent turns, keyed by what you send in Agent mode (turn-stream.js).
-     The answer streams in when the run completes; the card folds as it does. */
+     The answer streams in when the run completes; the card folds as it does.
+     `thinking` (Thought Stream, DL-234): the reasoning the model shares before its first tool call. It streams in its
+     own block under the turn mark (thought-stream.js) and the working card waits for it; ms is how long it thinks,
+     gist the line a folded block keeps. A turn without it shows no thinking at all. */
   const liveTurns = [
     { id:'lt-trouble', run:'liveB', title:'Fixing the rollback path', match:['rollback path','fix the rollback','trouble'],
+      thinking:{ ms:3600, gist:'The down step needs the no-transaction marker; staging waits for approval',
+        text:'The rollback path is the down step of 0043. The up step builds the index concurrently, outside the transaction wrapper; if the down step lacks the same marker, DROP INDEX CONCURRENTLY fails inside the test harness transaction.\n\nSo: read the migration, tighten the down step, and run the migration tests before anything touches staging. Applying to staging changes a shared environment, so that step waits for an explicit approval.' },
       answer:['The rollback path is fixed and applied to staging.\n\n',
         '- **What failed:** the down migration ran inside the test harness transaction, which `DROP INDEX CONCURRENTLY` refuses.\n',
         '- **The fix:** the down step now carries the same no-transaction marker as the up step.\n',
         '- **Evidence:** 12 of 12 migration tests pass, and staging reports the index as valid with no lock waits.\n\n',
         'Nothing was skipped or retried blindly: the failing test is the one that now passes.'] },
     { id:'lt-long', run:'liveC', title:'Applying the pattern across the module', match:['whole module','across the module','everywhere','all the files'],
+      thinking:{ ms:3200, gist:'One pattern, ten files; test after each edit so a failure stays local',
+        text:'Ten files share one query shape, so this is one pattern applied ten times, not ten separate designs. The risk is drift: a file where tenant_id stops leading, or a query that needs a sort of its own.\n\nI will read every file before editing, change them in bursts, and run each file\u2019s tests right after its edit, so a failure points at one change rather than the whole sweep.' },
       answer:['All ten files in the module now use the tenant-first query shape.\n\n',
         '- 62 reads, 18 edits, every change covered by its own test run.\n',
         '- No behaviour change outside the analytics module.\n\n',
         'The ring above grouped repeated reads so the run stays legible; open any group to see every file it touched.'] },
     { id:'lt-build', run:'liveA', title:'Adding the composite index', match:['add the','implement','build it','make it faster','prove it','ship'],
+      thinking:{ ms:4200, gist:'One index, tenant first; check the migration wrapper, then measure',
+        text:'Two halves to this: change the schema safely, then prove the change with numbers. Every analytics read filters on tenant_id and orders by created_at, so one composite index can serve both: tenant_id first, because it is the equality, and created_at second, for the range and the sort.\n\nBefore writing a migration I need the exact predicate in queries.rs and how migrations are wrapped here. If they run inside a transaction, CREATE INDEX CONCURRENTLY will refuse, and 0043 has to stand on its own. For the proof: p95 before and after on the 128,400-row fixture, and the insert cost, because an index is never free on the write side.' },
       answer:['## Done: the composite index is in\n\n',
         'The read path filters by tenant and orders by time, so one index on `(tenant_id, created_at DESC)` serves both.\n\n',
         '- **Migration:** `0043` builds it concurrently, outside the transaction wrapper.\n',
@@ -2422,8 +2431,13 @@
      paragraph. See DATA_HANDOFF.md.
      ===================================================================== */
   const reply = (o) => ({ mode:'agent', delayMs:600, chunkMs:280, terminal:'complete', followUp:null, ...o });
+  /* Thought Stream (DL-234): three replies share their reasoning first (`thinking`, as on liveTurns); the rest answer
+     at once, as a quick reply would, and show no thinking. */
   const scriptedReplies = [
-    reply({ id:'sr-index', match:['index','composite','tenant_id'], chunks:[
+    reply({ id:'sr-index', match:['index','composite','tenant_id'],
+      thinking:{ ms:4600, gist:'Equality before range: tenant_id leads, created_at covers the sort',
+        text:'Two orders to compare. With created_at first, one tenant\u2019s read walks the whole date range and throws away every other tenant\u2019s rows, because a B-tree uses one range predicate efficiently and it has to be the last column it uses.\n\nWith tenant_id first, the planner seeks straight to the tenant and then reads created_at in index order, which also covers the ORDER BY. Every read here is tenant-scoped, so tenant_id is the equality and belongs in front. The honest caveat is the write side: one more index on a hot table, measured at +4.8% on inserts.' },
+      chunks:[
       'Leading with tenant_id is right for this shape.',
       ' Every analytics read is tenant-scoped, so it is the highest-selectivity equality predicate, and created_at then serves both the range filter and the ORDER BY without a separate sort node.',
       ' The cost is on the write side: +4.8% on inserts, measured rather than estimated.'] }),
@@ -2433,10 +2447,16 @@
     reply({ id:'sr-rollback', match:['rollback','revert','undo'], chunks:[
       'The rollback is rehearsed, not assumed.',
       ' DROP INDEX CONCURRENTLY works and leaves the table readable throughout, and the test asserts both directions rather than only the forward one.'] }),
-    reply({ id:'sr-benchmark', match:['benchmark','p95','latency'], chunks:[
+    reply({ id:'sr-benchmark', match:['benchmark','p95','latency'],
+      thinking:{ ms:2800, gist:'Quote the production-shape fixture, not the small one',
+        text:'The ticket\u2019s 310 ms came from the 8\u00d7400-row fixture, small enough that a sequential scan wins, so it hid the problem. The numbers worth quoting come from the 128,400-row fixture at production shape: p95 and p50, before and after, run the same way both times.' },
+      chunks:[
       'p95 goes from 482 ms to 71 ms and p50 from 118 ms to 24 ms.',
       ' Those numbers are against the corrected 128,400-row fixture; the old 8x400 fixture was small enough that a sequential scan won, which is why the original ticket under-reported the problem.'] }),
-    reply({ id:'sr-migration', match:['migration','concurrently','transaction'], chunks:[
+    reply({ id:'sr-migration', match:['migration','concurrently','transaction'],
+      thinking:{ ms:3000, gist:'Concurrent builds refuse transactions; 0043 needs its own file',
+        text:'CREATE INDEX CONCURRENTLY cannot run inside a transaction block, and it takes two passes over the table. What matters is how this repository wraps migrations: every file runs inside one transaction, so a concurrent build in 0043 would fail at deploy, not in review. It needs its own file with the no-transaction marker.' },
+      chunks:[
       'CREATE INDEX CONCURRENTLY takes two table passes and cannot run inside a transaction block.',
       ' This repository wraps every migration file in a transaction, so 0043 has to be split out and marked no-transaction.'] }),
     reply({ id:'sr-schema', match:['schema','payload','column'], chunks:[

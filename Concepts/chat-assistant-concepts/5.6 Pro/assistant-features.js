@@ -1481,7 +1481,9 @@
     return true;
   });
 
-  var THOUGHT_PREVIEW='Preview: Thought Stream is shown here but doesn’t change replies yet.';
+  /* the fine print under the thinking specimen: replies show it live (thought-stream.js, DL-234), only when the model
+     shares its reasoning */
+  var THOUGHT_PREVIEW='Shown only when the model shares its reasoning. It never changes a reply.';
   /* The name the naming specimen shows: what the concept would name a chat that asks this */
   var DFLT_EXAMPLE_NAME='Speed up tenant dashboard';
   /* a question's label carries its whole explanation in the app hover card (VIS-06): retro clamps helper lines to
