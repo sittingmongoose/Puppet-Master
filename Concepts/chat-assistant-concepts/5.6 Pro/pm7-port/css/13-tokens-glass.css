@@ -15,6 +15,13 @@
 html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-dark"] { --on-accent: #101114; }
 html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-light"] { --on-accent: #fff; }
 
+/* the idle (Ready) status ring in Glass Dark: PMConcept7's own Glass Dark idle glyph ink (--pmg-ink-idle, the fitted
+   ink its neon marks use elsewhere on the page). Dark themes ink idle with --subtle, and here --subtle is Home's
+   --pmw-text-3, a text ink pulled up for legibility: on Glass Dark's near-black ground it read 12.7:1, above every live
+   tone (lowest, blocked, 8.6:1) and above the working ring's painted peak on every row state (neon-verify 11-11d).
+   Glass Light keeps the neon layer's literal idle ink; --subtle as text is unchanged. */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-dark"] { --nx-idle: var(--pmg-ink-idle, #7c728e); }
+
 /* one reading ground: the host paints it (--canvas); the shell and the panes inside it are clear, so the ground is
    not stacked three or four times over the wallpaper */
 html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="glass"] {
