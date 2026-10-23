@@ -118,7 +118,7 @@ await safe('stop mid-stream', async () => {
    that message. */
 await safe('busy sends', async () => {
   let outcome = null;
-  const attempts = [];
+  const attempts = [], errors = [];
   for (let attempt = 0; attempt < 3 && !outcome; attempt++) {
     const p = await fresh();
     try {
@@ -134,6 +134,10 @@ await safe('busy sends', async () => {
       const queuedWhileBusy = { queued: await queued(), users: (await users()) - u0 };
       await p.click('[data-action="stop-run"]'); await sleep(1500);
       const stopped = { queued: await queued(), users: (await users()) - u0 };
+      if (attempt === 0) {
+        check('a send while the reply is written joins the queue', queuedWhileBusy.queued === 1 && queuedWhileBusy.users === 1, queuedWhileBusy);
+        check('Stop does not advance the queue', stopped.queued === 1 && stopped.users === 1, stopped);
+      }
       /* Bind the selected entry rather than allowing a locator to resolve to
          the next row if normal completion advances the queue during a wait. */
       await p.locator('.send-queue-row [data-action="queue-send-now"]').first().click(); await writing();
@@ -173,18 +177,16 @@ await safe('busy sends', async () => {
         return { users: document.querySelectorAll('.transcript-inner > .message-user').length, q: document.querySelectorAll('.send-queue-row').length,
           steeredMarked: !!(steered && steered.querySelector('.tx-terminal')), steeredText: steered ? steered.textContent.trim().length : 0, writing: !!document.querySelector('[data-streaming]') };
       });
-      outcome = { queuedWhileBusy, stopped, before, after: r, errors: p.__errs.slice(), attempts };
+      outcome = { before, after: r, attempts };
     } catch (error) {
       if (!/Element is not attached|queue-send-now.*Timeout|locator\.(getAttribute|scrollIntoViewIfNeeded|boundingBox)/s.test(String(error))) throw error;
       attempts.push({ attempt, reason: 'selected queue entry completed during actionability', error: String(error).split('\n')[0] });
-    } finally { await p.close(); }
+    } finally { errors.push(...p.__errs); await p.close(); }
   }
   if (!outcome) throw new Error('No physical Send now click retained the busy/two-entry setup: ' + JSON.stringify(attempts));
-  const { queuedWhileBusy, stopped, before, after: r } = outcome;
-  check('a send while the reply is written joins the queue', queuedWhileBusy.queued === 1 && queuedWhileBusy.users === 1, queuedWhileBusy);
-  check('Stop does not advance the queue', stopped.queued === 1 && stopped.users === 1, stopped);
+  const { before, after: r } = outcome;
   check('Send now steers: the reply so far stays unmarked and only that message is sent', r.users === before.users + 1 && r.q === before.q - 1 && !r.steeredMarked && r.steeredText > 5 && r.writing, { before, after: r, attempts });
-  check('no page errors during busy sends', outcome.errors.length === 0, outcome.errors.slice(0, 2));
+  check('no page errors during busy sends', errors.length === 0, errors.slice(0, 2));
 });
 
 /* ------------------------------------------------------------ live turn */
