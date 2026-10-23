@@ -476,6 +476,13 @@ await safe('prefs', async () => {
   check('P8 New chat defaults\' Lines shown while thinking dropdown reads the value in force and sets 6' + (HOSTED ? '; Settings stores "6"' : '') + '; the sheet still fits without scrolling',
     /^12 lines/.test(shown.trim()) && /^6 lines\s*Shown while it thinks$/.test(shown2.replace(/\s+/g, ' ').trim()) && l2.chat === 6 && l2.state === 6 && (!HOSTED || l2.settings === '6') && !!sheet && sheet.scroll <= sheet.client + 1,
     { shown, shown2, l2, sheet });
+  /* the sheet's tallest state with the second dropdown: Always open (still set from P3) and a naming model that isn't
+     available, whose note sits under Name new chats (tests/pmx-surfaces/prefs.mjs: it "must not scroll either") */
+  await p.evaluate(() => window.PM56_FEATURES.setDefault('title', 'model:opus5-personal')); await sleep(900);
+  const tall = await p.evaluate(() => { const sh = document.querySelector('#pmOverlayRoot .pmx-sheet'), b = sh && sh.querySelector('.pmx-body');
+    return b ? { scroll: b.scrollHeight, client: b.clientHeight, warn: !!sh.querySelector('.pmx-dflt-warn-note'), thought: window.PM56_EXT.ctx().state.capabilities.thought } : null; });
+  check('P8b in its tallest state (Always open, a naming model that isn\'t available) New chat defaults still fits without scrolling', !!tall && tall.warn && tall.thought === 'Expanded' && tall.scroll <= tall.client + 1, tall);
+  await p.evaluate(() => window.PM56_FEATURES.setDefault('title', 'default')); await sleep(400);
   await p.evaluate(() => { const b = document.querySelector('#pmOverlayRoot [data-action="close-dialog"]'); if (b) b.click(); });
   await sleep(300);
   if (HOSTED) {
