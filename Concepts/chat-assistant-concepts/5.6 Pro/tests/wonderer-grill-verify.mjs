@@ -405,9 +405,13 @@ async function browser() {
     const done = async agreed => {
       const observed = await ev(() => {
         const r = PM56_COLLAB.run(PM56_WG_DEMOS.snapshot()?.runId);
-        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, agreedFacts: __c56AnswerLookup.agreedFacts, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [] };
+        const lookup = [...document.querySelectorAll('.wg-lookup')].map(el => {
+          const box = el.getBoundingClientRect(), hit = document.elementFromPoint(box.left + Math.min(20, box.width / 2), box.top + box.height / 2);
+          return { text: el.textContent, x: box.x, y: box.y, width: box.width, height: box.height, hit: hit?.tagName + '.' + hit?.className };
+        });
+        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, agreedFacts: __c56AnswerLookup.agreedFacts, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [], lookup, thread: PM56_EXT.ctx().state.selectedThread };
       });
-      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, factsAfter: observed.facts };
+      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, factsAfter: observed.facts, lookupGeometry: observed.lookup, thread: observed.thread };
     };
     try {
     while (Date.now() - t0 < maxMs) {
