@@ -600,7 +600,7 @@ await sec('item4: open interpolates', async()=>{
   } else {
     check(xs.length>=4 && inflight>=2,
           'OPEN interpolates from the left (transform is sampled mid-flight, not snapped)',
-          {distinctX:xs.length,inflight,first:xs[0],last:xs[xs.length-1],paneLeft:g.paneLeft});
+          {distinctX:xs.length,inflight,first:xs[0],last:xs[xs.length-1],paneLeft:g.paneLeft,trace:openTrace});
     check(scr.length>=3, 'Scrim opacity ramps in step with the slide', {distinctScrim:scr.length,scr});
     /* Whole-panel slide (no animated clip-path): title text must stay readable
        mid-flight instead of wiping in as a truncated strip. */
