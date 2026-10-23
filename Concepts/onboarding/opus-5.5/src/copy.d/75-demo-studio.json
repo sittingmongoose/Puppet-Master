@@ -401,6 +401,10 @@
             "title": "ELI5",
             "lead": "Simple explanations, one chat at a time."
           },
+          "thinking": {
+            "title": "Thought Stream",
+            "lead": "The reasoning a model shares streams in while it thinks. Your setting folds it away or keeps it open."
+          },
           "bsd": {
             "title": "Back Seat Driver",
             "lead": "A second model watches the work and speaks up only when it matters."
@@ -606,6 +610,14 @@
           "eli5-inherit": {
             "title": "Back to your usual setting",
             "sub": "Undo one chat’s own choice so it follows its project again."
+          },
+          "thinking-auto": {
+            "title": "While it thinks",
+            "sub": "The reasoning streams in, then folds to one line when the answer starts. Open the line to read it again."
+          },
+          "thinking-expanded": {
+            "title": "Always open",
+            "sub": "The same question, with the reasoning kept open above the answer."
           },
           "bsd-survives": {
             "title": "Catch a missing measurement",

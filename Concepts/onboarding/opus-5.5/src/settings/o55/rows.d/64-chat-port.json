@@ -1,5 +1,5 @@
 {
- "_about": "DL-232 / SSYS-055: the hosted chat and Settings share admitted preferences. Current-chat ELI5 stays in its chat sheet. Column width and pin choices remain layout state.",
+ "_about": "DL-232 / SSYS-055: the hosted chat and Settings share admitted preferences; DL-234: the chat shows live thinking under this row's choice. Current-chat ELI5 stays in its chat sheet. Column width and pin choices remain layout state.",
  "rows": {
   "general.interaction.chat-history-list": {
    "label": "History in new workspaces",
@@ -11,7 +11,7 @@
   },
   "general.interaction.thought-stream": {
    "label": "Show thinking",
-   "help": "This concept previews the choice in New chat defaults. Replies here do not show live thinking yet.",
+   "help": "Shown when the model shares its reasoning. While it thinks folds it to one line once the answer starts; Always open keeps it beside the answer.",
    "choices": [
     "Auto",
     "Expanded"

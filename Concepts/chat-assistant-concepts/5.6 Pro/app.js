@@ -1042,6 +1042,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(isInternalNote(m))return false;
     if(m.revealAfter&&!(state.works[m.revealAfter]&&state.works[m.revealAfter].completed)) return false;
     if(m.type==='working'&&m.workId&&!state.works[m.workId]) return false;
+    /* Thought Stream: a reply waits under its thinking block until the reasoning hands over (thought-stream.js) */
+    if(m.thoughtGate) return false;
     return true;
   }
   /* One stretch of agent work in the read-only feed (PM56_RECORDS.feedStretch
@@ -1131,7 +1133,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       : `<div class="message-body ${isLong&&!expanded?'long-fade':''}">${m.rich&&window.PM56_RICH?window.PM56_RICH.html(m.body):formatText(m.body)}</div>`;
     const terminalHtml=(!m.streaming&&(m.terminal==='stopped'||m.terminal==='error'))
       ? `<div class="tx-terminal tx-terminal-${esc(m.terminal)}" data-k="tx-term:${esc(m.id)}">${icon(m.terminal==='error'?'warning':'stop',11)}<span>${m.terminal==='error'?esc(m.terminalNote||'Stopped by an error'):'Stopped'}</span></div>` : '';
-    const streamAttr=m.streaming?` data-streaming="${esc(m.streamPhase||'pending')}"`:'';
+    /* a reply that follows its thinking block arrives as the reasoning folds: no waiting entrance of its own */
+    const streamAttr=(m.streaming?` data-streaming="${esc(m.streamPhase||'pending')}"`:'')+(m.afterThought?' data-after-thought="1"':'');
     const afford=readOnlyRender?'':extRender('messageAffordance',{message:m});
     return `<article class="message message-${m.role}" data-message-id="${esc(m.id)}" data-speaker="${m.role==='user'?'You':'Assistant'}" data-index="${msgIndex(m.id)}" data-time="${esc(msgClock(m))}" style="--msg-index:${msgIndex(m.id)}"${streamAttr}>${afford}<div class="message-surface"${m.streaming?` data-k="tx-surface:${esc(m.id)}"`:''}>${m.role==='assistant'?`<div class="message-role">${icon('sparkles',12)} Assistant</div>`:''}${bodyHtml}${terminalHtml}${isLong?`<button class="text-button" data-action="toggle-message" data-id="${esc(m.id)}"${hoverAttrs('msg-expand-'+m.id,expandTip)}>${icon(expanded?'collapse':'expand',12)} ${expanded?'Collapse':'Expand response'}</button>`:''}${details?renderMessageDetails(m):''}</div>${chrome}</article>`;
   }

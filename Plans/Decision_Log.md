@@ -17019,10 +17019,10 @@ canonical_text: >-
   render repairs. Its browser checks pass the narrow shelf headers, the 480 px run plates, PMConcept7's
   NieR type and the helper-sheet chrome at 400-519 px in all ten looks, and PMConcept7 films of Crew,
   Room and BrainStorm are recorded. The hover press fix also narrows F3-523's scroll cancellation to a
-  scroll that moves the anchor. Thought Stream shares a preference and preview but has no live
-  thinking renderer. The window-based isPhone helper and the separate scoped overlay wrapper are
-  concept integration limits under ACD-501/504, not fulfilled native acceptance. The Thought Stream
-  admission still needs Jared's ratification; no new product ruling is inferred from this snapshot.
+  scroll that moves the anchor. Thought Stream shares a preference and preview; its live thinking
+  display followed on 2026-10-23 (DL-234). The window-based isPhone helper and the separate scoped overlay wrapper are
+  concept integration limits under ACD-501/504, not fulfilled native acceptance. Jared ratified the
+  Thought Stream admission on 2026-10-23 (DL-234); no other product ruling is inferred from this snapshot.
   Astra's round-2 check corrected the integration brief's broader capture claim: composer attachment,
   list and insertion paths needed destination restoration or mismatch refusal before draft mutation,
   and the shared editor-revealed state counted hidden Home panels. The final integration repairs both
@@ -17137,3 +17137,67 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-659, ContractName:Plans/assistant-chat-design.md#ACD-504, ContractName:Plans/Settings_System.md#SSYS-055
+
+### DL-234 - Show The Live Thinking In The Chat
+
+```yaml
+plan_unit_id: DL-234
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-23. Jared answered the 5.6 Pro port's open items on 2026-10-23: "Your rulings were
+  fine, I would like the live thinking demoed though." The lead's rulings of 2026-10-22 recorded in
+  DL-232 therefore stand, the Thought Stream admission among them: general.interaction.thought-stream
+  stays a global, display-only preference, Auto (While it thinks) or Expanded (Always open), default
+  Auto, shared by Settings, New chat defaults and the composer's Thought Stream choice. Round 2 of the
+  port adds the live thinking display that the preference drives, in the shared chat so the standalone
+  concept and the hosted Home column both have it, and demonstrates it. ACD-221's amendment of the same
+  date owns the presentation: a thinking block of its own before the reply, or before an agent turn's
+  first working card; the thinking placeholder of ACD-470 as its line while the model thinks; Auto
+  folding it to one line with how long it thought when the answer or the first tool call starts, and
+  Expanded keeping it open; a disclosure line with a hover tag; one polite status at the start and one
+  at the end; and a fold that never moves a reader at the bottom of the transcript. Settings' row help,
+  the New chat defaults fine print, SSYS-055, CS-104, ACD-470, ACD-504 and DL-232 no longer describe
+  the display as pending. Demo Studio's Chat section gains a Thought Stream pair of guided examples,
+  While it thinks and Always open, each in an example chat that shows its one mode without writing the
+  preference. The concept streams reasoning recorded with its demo turns, so it proves no native
+  reasoning capture, provider stream parsing, storage writer or governance seal. The mechanics are the
+  thinking lane's reading of ACD-221 and the existing chat owners, not Jared's words.
+gui_related: true
+gui_classification_reason: Records that the chat shows the model's reasoning live and how the admitted Thought Stream preference shapes it.
+split_recommended: false
+depends_on: [DL-232]
+unblocks: []
+acceptance_criteria:
+  - "ACD-221, ACD-470, ACD-504, SSYS-055, CS-104 and DL-232 agree that the concept shows live thinking driven by the admitted preference."
+  - "Jared's words are quoted verbatim, and the lane's mechanics are labelled as its reading, not his words."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: hosted_chat_owner_drift
+reasoning_tier: high
+context_scope: chat56_pmconcept7_port
+implementation_surfaces:
+  - "Plans/Decision_Log.md"
+  - "Plans/assistant-chat-design.md"
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-232"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/ROUND2.md, SHA-256 9f669dde0142444599dbcca0524943ea4523008ef53d89d71518e705bd808e22 (Jared's 2026-10-23 answers as relayed by the lead, verbatim where quoted)"
+preserved_exact_tokens:
+  - "Your rulings were fine, I would like the live thinking demoed though."
+  - "general.interaction.thought-stream"
+negative_constraints:
+  - "Do not treat recorded demo reasoning as native reasoning capture or provider evidence."
+  - "Do not read the lane's mechanics listed in this row as Jared's words."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/Decision_Log.md"
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-221, ContractName:Plans/assistant-chat-design.md#ACD-470, ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/Commands_System.md#CS-104

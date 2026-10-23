@@ -14173,14 +14173,41 @@ plan_unit_id: ACD-221
 unit_type: decision
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Thought stream UX is unified across Interview and Assistant when model reasoning or thinking is available.
+canonical_text: >-
+  Thought stream UX is unified across Interview and Assistant when model reasoning or thinking is
+  available. Amended 2026-10-23 (DL-234), its presentation: reasoning the model supplies for a turn
+  is shown in a thinking block of its own, a transcript item with a stable identity placed just
+  before the reply it belongs to, or before an agent turn's first working card. It is never part of
+  the reply's text and is never invented, so a turn without supplied reasoning shows no block. While
+  the model thinks, the block's line is the thinking placeholder of ACD-470 and the reasoning streams
+  under it in the secondary ink, a step smaller than the reply and indented to the line's words, with
+  no pill, coloured side stripe or glow (F3-648); the reply waits until the reasoning hands over. The
+  general.interaction.thought-stream preference decides the rest. Auto (While it thinks) keeps the
+  block open while the model thinks, showing at most its last six lines with the older ones fading
+  at the top, and folds it to one line, "Thought for Ns" with a short gist, when the answer starts;
+  in an agent turn it folds as the reasoning ends and the first tool call's working card enters once
+  the fold has landed, into the room the fold gave back. Expanded (Always open) keeps the whole
+  reasoning open beside the answer. The line is the thinking toggle: a disclosure button with
+  aria-expanded and a hover tag, keyboard reachable. A reader's toggle opens or folds that one block
+  until the preference changes, and a preference change from Settings, New chat defaults or the
+  composer reaches every block on screen. A fold never pulls a reader at the bottom down: the reply's
+  room hold keeps the list's height whenever the fold would shrink it, and follow-along holds. Stop or Send now while
+  the model thinks ends the block where it was, as "Thinking ended after Ns"; leaving the thread lets
+  it finish. Assistive technology hears one polite status when thinking starts and one when it ends,
+  never the streamed words, and Reduced Motion lands every state at once. Opening or folding a block
+  is local presentation with no command, receipt or event (CS-104). The integrated concept streams
+  reasoning recorded with its demo turns; native capture of provider reasoning remains an
+  implementation obligation of the provider and executor owners.
 gui_related: true
 gui_classification_reason: Thought stream and thinking toggle are visible chat UI.
-depends_on: []
+depends_on: [DL-234]
 unblocks: []
 acceptance_criteria:
   - Interview and Assistant thought stream UX align.
   - Thought stream appears only when model reasoning/thinking is available.
+  - "Under Auto the block folds to its one-line summary no later than the answer's first word, or before an agent turn's first working card enters; under Expanded it stays open."
+  - "A thinking block's fold or toggle never moves a reader who is at the bottom of the transcript."
+  - "The streamed reasoning is never a live region; one polite status announces the start and one the end."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -14195,10 +14222,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0102
+  - "Plans/Decision_Log.md#DL-234"
 preserved_exact_tokens:
   - "thought stream"
   - "thinking toggle"
-negative_constraints: []
+  - "general.interaction.thought-stream"
+negative_constraints:
+  - "Do not show reasoning the model did not supply, or merge supplied reasoning into the reply's text."
+  - "Do not draw the thinking block with a pill, a coloured side stripe or a glow."
 owner_hints:
   - Plans/assistant-chat-design.md
 ```
@@ -26167,7 +26198,9 @@ canonical_text: >-
   An assistant reply streams in place (DL-106) over the single update path of ACD-238 and ACD-240.
   Before its first text the reply shows a thinking placeholder, the model's name and a shimmering
   is-thinking label with elapsed seconds after 4 seconds; it is a waiting indicator, not a reasoning
-  stream (ACD-221 is unchanged). When text arrives the label condenses toward the turn mark while
+  stream. When the model supplies reasoning, the placeholder is the line of ACD-221's thinking block
+  and the reasoning streams in that block, never in the reply (amended 2026-10-23, DL-234); the reply
+  then starts writing without the label as the reasoning hands over. When text arrives the label condenses toward the turn mark while
   the first word appears where the caret starts. Words are released at a steady, rate-smoothed pace
   that speeds up when text is waiting and breathes at sentence ends; the pacing is presentation only
   and never delays, reorders or drops text. Lists, headings, inline and fenced code stream as
@@ -26185,7 +26218,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Defines the visible life cycle of a streaming assistant reply."
 split_recommended: false
-depends_on: [DL-106, ACD-238, ACD-240, ACD-221, ACD-229, EP-128]
+depends_on: [DL-106, ACD-238, ACD-240, ACD-221, ACD-229, EP-128, DL-234]
 unblocks: []
 acceptance_criteria:
   - "A reply shows the thinking placeholder until its first text and ends in exactly one of complete, stopped, steered or error."
@@ -28096,14 +28129,15 @@ canonical_text: >-
   Final acceptance remains pending for the hover press defect, Persona clipping, shelf-header and
   plate-spacing sweep, and films. The window-based isPhone helper and scoped body-level overlay
   wrapper do not prove ACD-501's full container and single-root requirements. SSYS-055 separately
-  records preview-only Thought Stream and session-only All chats ELI5; neither is native completion.
+  records the Thought Stream preference, whose live display streams the concept's recorded reasoning
+  (ACD-221, DL-234), and session-only All chats ELI5; neither is native completion.
   Astra also finds that the shared activeEditor/editorRevealed projection still counts a hidden Home
   panel after collapse or leaving Home. The separate run-card visibility wrapper passes; fixing that
   shared editor state remains pending and is not implied by the run-card result.
 gui_related: true
 gui_classification_reason: Defines hosted conversation presentation, opened surface kinds, shared preferences and focus behavior.
 split_recommended: false
-depends_on: [DL-232, ACD-500, ACD-501, ACD-502, ACD-503, DR-075, SSYS-055]
+depends_on: [DL-232, ACD-500, ACD-501, ACD-502, ACD-503, DR-075, SSYS-055, DL-234]
 unblocks: []
 acceptance_criteria:
   - "One hosted chat replaces the stand-in without seeding a plan tab, duplicate History or lab chrome."

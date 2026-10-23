@@ -46,7 +46,9 @@ MODULES=['neon-icons','nier-fonts','nier','nier-parts','nier-world','nier-scenes
          # Chat WOW (2026-09-26): transcript families + Turn Stage take. Loaded last so
          # its family rules sit over the module cards they restyle.
          'collab-view','crew-view','review-view','brainstorm-view','room-view','wonderer-grill','wonderer-grill-demos',
-         'turn-stage','turn-stream','chat-sound',
+         # Thought Stream (DL-234, 2026-10-23): the live thinking block. After turn-stream, whose reply and agent-turn
+         # paths start it; thought-demo is its Demo Studio example (While it thinks, Always open).
+         'turn-stage','turn-stream','thought-stream','thought-demo','chat-sound',
          # Send/Stop (step SS, 2026-10-02): the composer's Send / Stop control, "solid-living" (one button patched in
          # place, the plane-to-square morph). app.js sendButtonHtml asks it for the markup; its sheet sits in CSS_LAST.
          'send-stop']

@@ -4033,8 +4033,8 @@ canonical_text: >-
   concept saved it. Amended 2026-10-23 (DL-233): the scripted stand-in chat is removed; it was never a
   hosted conversation choice or an inventory row. Native Settings scope, validation, preview/apply,
   read-only refusal and storage requirements remain in force; the HTML bridge is a concept projection
-  only. Added by the lead's ruling of 2026-10-22 under Jared's port brief (DL-232):
-  general.interaction.thought-stream is global and display-only, Auto (While it thinks) or Expanded
+  only. Added by the lead's ruling of 2026-10-22 under Jared's port brief (DL-232), ratified by Jared
+  on 2026-10-23 (DL-234): general.interaction.thought-stream is global and display-only, Auto (While it thinks) or Expanded
   (Always open), default Auto; Settings, New chat defaults and the composer capability menu's Thought
   Stream choice edit the same row through the Settings transaction. It controls disclosure of
   reasoning supplied by the model and never changes a reply or invents reasoning. The current-chat
@@ -4046,8 +4046,8 @@ canonical_text: >-
   Settings persists the host project's ELI5 default, unscoped chats bind to that project, and switching
   threads re-projects the appropriate project without copying an unrelated override. All chats ELI5
   is a separate session-only value; application-scope persistence remains unimplemented in this
-  concept. The Thought Stream row, New chat defaults and composer choice share the stored preference
-  and preview, but replies have no live thinking renderer. Its global inventory scope is the product
+  concept. The Thought Stream row, New chat defaults and composer choice share the stored preference,
+  and replies show the live thinking block it drives (ACD-221, DL-234). Its global inventory scope is the product
   contract admitted by the lead, not proof that this project-only adapter supplies global storage.
   History's initial-layout seed is built and preserves a saved false or true. The Settings master
   sound, working style, naming policy and future-chat mode bindings remain as reviewed; no additional
@@ -4055,7 +4055,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Places and binds visible hosted chat preferences while keeping layout and chat-scoped controls separate.
 split_recommended: false
-depends_on: [DL-232, SSYS-028, SSYS-040, SSYS-042, SSYS-050]
+depends_on: [DL-232, SSYS-028, SSYS-040, SSYS-042, SSYS-050, DL-234]
 unblocks: []
 acceptance_criteria:
   - "Working style, sound, naming and Thought Stream share their value between Settings and chat; ELI5 keeps its application/project/current-chat resolver, with the concept persistence limitation disclosed."
@@ -4093,7 +4093,7 @@ negative_constraints:
   - "Do not make a Settings edit pin History in a workspace already open."
 compatibility_only_notes:
   - "Hosted concept limitation, 2026-10-22 (lead ruling): its existing Settings adapter persists project values only. All chats ELI5 remains a separate session-only value; the application/project/current-chat product resolution and persistence requirements are unchanged."
-  - "Hosted concept limitation, 2026-10-22 (lead ruling): the Thought Stream row and New chat defaults share the stored preference and preview. Replies here do not show live thinking yet; live reasoning display remains an implementation obligation, not a passed bridge check."
+  - "Hosted concept limitation, 2026-10-22 (lead ruling), amended 2026-10-23 (DL-234): the Thought Stream row, New chat defaults and composer choice share the stored preference, and the chat's live thinking block follows it in both directions. The concept streams reasoning recorded with its demo turns; native capture of provider reasoning remains an implementation obligation, not a passed bridge check."
 stale_retired_dispositions: []
 owner_hints:
   - "Plans/Settings_System.md"

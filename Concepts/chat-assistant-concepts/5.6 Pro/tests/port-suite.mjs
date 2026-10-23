@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* One command, sequential GPU sessions, both targets, one summary.
  * node tests/port-suite.mjs --page both --build --out /tmp/c56port-tests/integrated
- * --only wonderer|layout|hover|questions|turn|history|orbit|neon[,..] narrows a rerun.
+ * --only wonderer|layout|hover|questions|turn|history|orbit|neon|thought[,..] narrows a rerun.
  * --wg-only core|r1|r2|rx|ax narrows Wonderer (default: every existing check).
  */
 import { spawn, execFileSync } from 'node:child_process';
@@ -19,7 +19,7 @@ const out = path.resolve(opt('--out', '/tmp/c56port-tests/suite')); mkdirSync(ou
 const repo = path.resolve(CHAT_ROOT, '../../..'), summary = [];
 const runInfo = { startedAt: new Date().toISOString(), sourceHead: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim(), argv, targets: [] };
 runInfo.environment = Object.fromEntries(['AX_ONLY', 'AX_SCALE', 'AX_WIDTH'].filter(k => process.env[k] != null).map(k => [k, process.env[k]]));
-const stages = ['wonderer', 'layout', 'host', 'hover', 'questions', 'turn', 'history', 'orbit', 'neon'];
+const stages = ['wonderer', 'layout', 'host', 'hover', 'questions', 'turn', 'history', 'orbit', 'neon', 'thought'];
 const only = opt('--only', stages.join(',')).split(',');
 if (only.some(s => ![...stages, 'node'].includes(s))) throw new Error('Unknown --only stage');
 const activeChildren = new Set();
