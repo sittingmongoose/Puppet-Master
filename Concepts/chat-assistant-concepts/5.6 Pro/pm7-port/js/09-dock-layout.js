@@ -6,6 +6,10 @@
   var decisionHeight = '0px', stageNode = null;
   window.PM56_DOCK_H = function (stage, value) {
     decisionHeight = value;
+    // Keep the public measured value readable on the stage. Its registered
+    // non-inheritance prevents this diagnostic copy from restyling messages.
+    if (stage.style.getPropertyValue('--decision-h') !== value)
+      stage.style.setProperty('--decision-h', value);
     var float = stage.querySelector('.chat-float');
     if (float && float.style.getPropertyValue('--decision-h') !== value)
       float.style.setProperty('--decision-h', value);
@@ -19,8 +23,8 @@
       var root = document.getElementById('pmRoot');
       stageNode = root && root.querySelector('.chat-stage');
     }
-    if (!stageNode) return '';
-    return ['--chat-dock-h', '--thread-float-h', '--lens-strip-h'].map(function (name) {
+    if (!stageNode) return '--decision-h:' + decisionHeight + ';';
+    return '--decision-h:' + decisionHeight + ';' + ['--chat-dock-h', '--thread-float-h', '--lens-strip-h'].map(function (name) {
       var value = stageNode.style.getPropertyValue(name);
       return value ? name + ':' + value + ';' : '';
     }).join('');

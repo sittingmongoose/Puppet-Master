@@ -1,0 +1,3 @@
+/* The stage retains its measured decision-height API. Only the floating dock
+   consumes this value; 09-dock-layout.js publishes directly to that element. */
+@property --decision-h { syntax: "*"; inherits: false; }
