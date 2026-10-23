@@ -17163,7 +17163,21 @@ canonical_text: >-
   While it thinks and Always open, each in an example chat that shows its one mode without writing the
   preference. The concept streams reasoning recorded with its demo turns, so it proves no native
   reasoning capture, provider stream parsing, storage writer or governance seal. The mechanics are the
-  thinking lane's reading of ACD-221 and the existing chat owners, not Jared's words.
+  thinking lane's reading of ACD-221 and the existing chat owners, not Jared's words. Amended the same
+  day with Jared's answers to the thinking lane's four open questions, quoted verbatim. Asked whether
+  an agent turn's thinking block folds when its reasoning ends, before the work starts, he answered
+  "Folds.": the fold before the first working card stands. Asked how many lines Auto shows while the
+  model thinks, where the lane had chosen six, he answered "Default 8, adjustable in settings.": the
+  live window shows the last eight lines by default, and a new global, display-only preference,
+  general.interaction.thought-stream-lines (Lines shown while thinking), sets that number from
+  Settings, New chat defaults and the composer's Thought Stream menu, with the choices 4, 6, 8, 12 and
+  16 lines; Expanded stays uncapped. Asked whether NieR's thinking ink stays stepped halfway toward
+  the text colour, so that it reads over the scene art, he answered "Keep": it stays. Asked whether the
+  working card's own Thinking step, shown after the folded thought, should be dropped from the recorded
+  run, he answered "Leave it": the run is unchanged. The five choices, the row's words and its place
+  under Show thinking are the thinking2 lane's reading, not Jared's words: fewer than four lines would
+  leave the top fade over a third of the window, and past sixteen (320 px) the window is half a
+  column, which is what Always open is for.
 gui_related: true
 gui_classification_reason: Records that the chat shows the model's reasoning live and how the admitted Thought Stream preference shapes it.
 split_recommended: false
@@ -17172,6 +17186,7 @@ unblocks: []
 acceptance_criteria:
   - "ACD-221, ACD-470, ACD-504, SSYS-055, CS-104 and DL-232 agree that the concept shows live thinking driven by the admitted preference."
   - "Jared's words are quoted verbatim, and the lane's mechanics are labelled as its reading, not his words."
+  - "ACD-221, SSYS-055, UCC-208 and Plans/settings_inventory.json agree that Auto's live window shows eight lines by default and that general.interaction.thought-stream-lines (4, 6, 8, 12 or 16) adjusts it; Expanded is never capped."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -17188,9 +17203,15 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md#DL-232"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/ROUND2.md, SHA-256 9f669dde0142444599dbcca0524943ea4523008ef53d89d71518e705bd808e22 (Jared's 2026-10-23 answers as relayed by the lead, verbatim where quoted)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/ROUND2.md, SHA-256 6eda2be634f439a1398e87e8ddd1d9fa08d60d709f5fcf90687436af38e0e56a, section Thinking display answers (Jared's 2026-10-23 answers to the thinking lane's four questions as relayed by the lead, verbatim where quoted)"
 preserved_exact_tokens:
   - "Your rulings were fine, I would like the live thinking demoed though."
   - "general.interaction.thought-stream"
+  - "Folds."
+  - "Default 8, adjustable in settings."
+  - "Keep"
+  - "Leave it"
+  - "general.interaction.thought-stream-lines"
 negative_constraints:
   - "Do not treat recorded demo reasoning as native reasoning capture or provider evidence."
   - "Do not read the lane's mechanics listed in this row as Jared's words."
@@ -17200,4 +17221,4 @@ owner_hints:
   - "Plans/Decision_Log.md"
 ```
 
-ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-221, ContractName:Plans/assistant-chat-design.md#ACD-470, ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/Commands_System.md#CS-104
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-221, ContractName:Plans/assistant-chat-design.md#ACD-470, ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/Commands_System.md#CS-104, ContractName:Plans/UI_Command_Catalog.md#UCC-208

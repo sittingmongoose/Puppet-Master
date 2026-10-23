@@ -14183,15 +14183,20 @@ canonical_text: >-
   under it in the secondary ink, a step smaller than the reply and indented to the line's words, with
   no pill, coloured side stripe or glow (F3-648); the reply waits until the reasoning hands over. The
   general.interaction.thought-stream preference decides the rest. Auto (While it thinks) keeps the
-  block open while the model thinks, showing at most its last six lines with the older ones fading
+  block open while the model thinks, showing at most its last eight lines with the older ones fading
   at the top, and folds it to one line, "Thought for Ns" with a short gist, when the answer starts;
   in an agent turn it folds as the reasoning ends and the first tool call's working card enters once
-  the fold has landed, into the room the fold gave back. Expanded (Always open) keeps the whole
-  reasoning open beside the answer. The line is the thinking toggle: a disclosure button with
+  the fold has landed, into the room the fold gave back. How many lines is adjustable (DL-234, Jared:
+  "Default 8, adjustable in settings."): general.interaction.thought-stream-lines, Lines shown while
+  thinking, offers 4, 6, 8, 12 and 16 lines with the default 8, and a change reaches a block that is
+  still thinking by gliding it to its new height. Expanded (Always open) keeps the whole reasoning
+  open beside the answer, whatever that number. The line is the thinking toggle: a disclosure button with
   aria-expanded and a hover tag, keyboard reachable. A reader's toggle opens or folds that one block
   until the preference changes, and a preference change from Settings, New chat defaults or the
   composer reaches every block on screen. A fold never pulls a reader at the bottom down: the reply's
-  room hold keeps the list's height whenever the fold would shrink it, and follow-along holds. Stop or Send now while
+  room hold keeps the list's height whenever the fold would shrink it, the room the reply does not
+  use eases away no faster than 300 px a second, so a tall window folds as quietly as a short one, and
+  follow-along holds. Stop or Send now while
   the model thinks ends the block where it was, as "Thinking ended after Ns"; leaving the thread lets
   it finish. Assistive technology hears one polite status when thinking starts and one when it ends,
   never the streamed words, and Reduced Motion lands every state at once. Opening or folding a block
@@ -14206,7 +14211,8 @@ acceptance_criteria:
   - Interview and Assistant thought stream UX align.
   - Thought stream appears only when model reasoning/thinking is available.
   - "Under Auto the block folds to its one-line summary no later than the answer's first word, or before an agent turn's first working card enters; under Expanded it stays open."
-  - "A thinking block's fold or toggle never moves a reader who is at the bottom of the transcript."
+  - "Under Auto the live block shows at most the number of lines general.interaction.thought-stream-lines chooses, eight by default; under Expanded it is never capped."
+  - "A thinking block's fold or toggle never moves a reader who is at the bottom of the transcript, at every window size."
   - "The streamed reasoning is never a live region; one polite status announces the start and one the end."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -14227,6 +14233,7 @@ preserved_exact_tokens:
   - "thought stream"
   - "thinking toggle"
   - "general.interaction.thought-stream"
+  - "general.interaction.thought-stream-lines"
 negative_constraints:
   - "Do not show reasoning the model did not supply, or merge supplied reasoning into the reply's text."
   - "Do not draw the thinking block with a pill, a coloured side stripe or a glow."

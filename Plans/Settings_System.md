@@ -4037,7 +4037,15 @@ canonical_text: >-
   on 2026-10-23 (DL-234): general.interaction.thought-stream is global and display-only, Auto (While it thinks) or Expanded
   (Always open), default Auto; Settings, New chat defaults and the composer capability menu's Thought
   Stream choice edit the same row through the Settings transaction. It controls disclosure of
-  reasoning supplied by the model and never changes a reply or invents reasoning. The current-chat
+  reasoning supplied by the model and never changes a reply or invents reasoning. Added the same day
+  by Jared's answer (DL-234: "Default 8, adjustable in settings."):
+  general.interaction.thought-stream-lines is global and display-only, shown as Lines shown while
+  thinking right under Show thinking, with the choices 4, 6, 8, 12 and 16 lines and the default 8. It
+  sets how many of the latest lines Auto keeps in view while the model thinks and has no effect under
+  Always open. Settings, New chat defaults' second Thought Stream dropdown and the lines list in the
+  composer's Thought Stream menu edit the same row through the Settings transaction, and Settings
+  refuses any other value; as with Thought Stream, its global scope is the product contract, not proof
+  that the project-only adapter supplies global storage. The current-chat
   ELI5 control is shown only in the chat sheet, not on the Settings page or its search; its
   general.interaction.chat-eli5 inventory identity, run scope and override contract remain. The
   concept's existing project-only Settings adapter cannot prove separate application and project
@@ -4058,7 +4066,7 @@ split_recommended: false
 depends_on: [DL-232, SSYS-028, SSYS-040, SSYS-042, SSYS-050, DL-234]
 unblocks: []
 acceptance_criteria:
-  - "Working style, sound, naming and Thought Stream share their value between Settings and chat; ELI5 keeps its application/project/current-chat resolver, with the concept persistence limitation disclosed."
+  - "Working style, sound, naming, Thought Stream and Lines shown while thinking share their value between Settings and chat; ELI5 keeps its application/project/current-chat resolver, with the concept persistence limitation disclosed."
   - "History in new workspaces is visible and seeds only an unsaved workspace, preserving a stored false as well as a stored true."
   - "Width, current History pin, Keep open and Activity pin have no Settings rows."
   - "Every claimed bridge has a verified forward and reverse path or is disclosed as pending implementation."
@@ -4082,6 +4090,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
   - "general.interaction.thought-stream"
+  - "general.interaction.thought-stream-lines"
   - "general.interaction.working-activity-style"
   - "general.interaction.sound-effects"
   - "general.interaction.eli5-default"
@@ -4093,7 +4102,7 @@ negative_constraints:
   - "Do not make a Settings edit pin History in a workspace already open."
 compatibility_only_notes:
   - "Hosted concept limitation, 2026-10-22 (lead ruling): its existing Settings adapter persists project values only. All chats ELI5 remains a separate session-only value; the application/project/current-chat product resolution and persistence requirements are unchanged."
-  - "Hosted concept limitation, 2026-10-22 (lead ruling), amended 2026-10-23 (DL-234): the Thought Stream row, New chat defaults and composer choice share the stored preference, and the chat's live thinking block follows it in both directions. The concept streams reasoning recorded with its demo turns; native capture of provider reasoning remains an implementation obligation, not a passed bridge check."
+  - "Hosted concept limitation, 2026-10-22 (lead ruling), amended 2026-10-23 (DL-234): the Thought Stream row, New chat defaults and composer choice share the stored preference, and the chat's live thinking block follows it in both directions; the Lines shown while thinking row, New chat defaults' lines dropdown and the composer's lines list do the same for the live window's height. The concept streams reasoning recorded with its demo turns; native capture of provider reasoning remains an implementation obligation, not a passed bridge check."
 stale_retired_dispositions: []
 owner_hints:
   - "Plans/Settings_System.md"
