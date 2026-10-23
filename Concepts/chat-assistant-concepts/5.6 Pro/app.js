@@ -1260,8 +1260,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   /* Chat WOW M4: the lab controls (play/pause, step, complete, reset, history)
      live behind ONE button so the head carries only state, caption and time.
      They are concept-lab controls, not product ones -- Stop lives in the
-     composer -- and are removed in the PMConcept7 port. Opening shows them in a
-     drawer inside the head (a popover would be clipped by the card). */
+     composer -- and the PMConcept7 port keeps them as concept-lab chrome
+     (Jared, 2026-10-23: "Yes keep it"). Opening shows them in a drawer inside
+     the head (a popover would be clipped by the card). */
   function renderWorkDemoControls(rec,cardId){
     const open=!!(state.workDemoOpen&&state.workDemoOpen[cardId]);
     const drawer=open?`<span class="work-demo-drawer" data-k="wdd:${esc(cardId)}">${rec.running?`<button class="icon-button" data-action="pause-working"${hoverAttrs('wd-pause-'+cardId,'Pause the demo run')}>${icon('pause',13)}</button>`:`<button class="icon-button" data-action="start-working"${hoverAttrs('wd-play-'+cardId,'Play or resume the demo run')}>${icon('play',13)}</button>`}<button class="icon-button" data-action="step-working"${hoverAttrs('wd-step-'+cardId,'Advance one subject')}>${icon('step',13)}</button><button class="icon-button" data-action="complete-working"${hoverAttrs('wd-done-'+cardId,'Complete the run')}>${icon('check',13)}</button><button class="icon-button" data-action="reset-working"${hoverAttrs('wd-reset-'+cardId,'Reset this run')}>${icon('reset',13)}</button><button class="icon-button ${rec.expanded?'active':''}" data-action="toggle-work-history"${hoverAttrs('wd-hist-'+cardId,(rec.expanded?'Hide':'Show')+' the organized work history')}>${icon(rec.expanded?'collapse':'expand',13)}</button></span>`:'';
