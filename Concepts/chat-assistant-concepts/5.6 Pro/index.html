@@ -81503,6 +81503,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        anchoring is unreliable here (card is overflow:hidden; restores fight
        the anchor), so measure the card before the patch and compensate after. */
     const workBefore=(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
+    const workKey=workBefore?workBefore.getAttribute('data-k'):null;
     const workH=workBefore?workBefore.getBoundingClientRect().height:null;
     const flipTargets=[...document.querySelectorAll('[data-flip]')];
     const flipBefore=new Map(flipTargets.map(el=>[el, el.getBoundingClientRect().height]));
@@ -81533,7 +81534,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!cut){ keepTopAfter(preTop,post); flipMoves(moveTargets, moveBefore); }
     rollDigits(rollBefore);
     if(cut) rewindTranscript();
-    else restoreScroll(positions,{workH, post, workGrow:workFlipped(flips), still:revealing==='still'});
+    else restoreScroll(positions,{workH, workKey, post, workGrow:workFlipped(flips), still:revealing==='still'});
     /* Round 3 (B): a gate lifted by something arriving puts a following reader at the new bottom in this frame */
     if(revealing==='grow'&&tStick) stickToBottom(true);
     renderOverlays();
@@ -81565,6 +81566,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const moveTargets=[...live.querySelectorAll('[data-flip-move]')];
     const moveBefore=new Map(moveTargets.map(el=>{const r=el.getBoundingClientRect();return [el,{x:r.left,y:r.top}];}));
     const workH=live.classList.contains('working-card')?live.getBoundingClientRect().height:null;
+    const workKey=workH!=null?live.getAttribute('data-k'):null;
     const preTop=keepTopBefore();
     pmPatchNode(live,src);
     const post=snapScroll();
@@ -81572,7 +81574,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     keepTopAfter(preTop,post);
     flipMoves(moveTargets, moveBefore);
     rollDigits(rollBefore);
-    restoreScroll(positions,{workH, post, workGrow:workFlipped(flips)});
+    restoreScroll(positions,{workH, workKey, post, workGrow:workFlipped(flips)});
     retainHoverAfterRender();
     runAfterRender('scope',{scope:live, flips});
     return true;
@@ -82150,14 +82152,21 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
          follower never started; the FLIP's own target delta does. A reader
          who is stuck to the bottom is served by the follow glide instead. */
       if(startH!=null&&!tStick&&!following){
-        const card=(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
+        const card=workCardByKey(opts&&opts.workKey);
         const hNow=card?card.getBoundingClientRect().height:startH;
         /* Reader-position anchoring (2026-10-23): the follower keeps what sits BELOW the card still. With nothing
            below it -- a live turn's card, a demo run whose later turns are held -- what a reader who scrolled up is
            reading is ABOVE the card, and folding the card's change into scrollTop moved exactly that text, by every
            subject (70px swings at 0.78px/ms, measured at a 442px column). The reader's text keeps its place and the
            card changes at its own foot instead. */
-        if(Math.abs(hNow-startH)>=1||Math.abs(workGrow)>=1){ if(!(card&&lastInTranscript(card))) followWorkCardHeight(startH); following=true; }
+        if(Math.abs(hNow-startH)>=1||Math.abs(workGrow)>=1){
+          /* OBS-1: keep still only what a reader BELOW the card's top is reading; a reader above it reads text the card's
+             change does not move (the card changes at its own foot) */
+          const trEl=tEl(), vr=trEl?trEl.getBoundingClientRect():null, cr=card?card.getBoundingClientRect():null;
+          const readerInOrBelow=!!(vr&&cr&&cr.top<=vr.top+1);
+          if(card&&!lastInTranscript(card)&&readerInOrBelow) followWorkCardHeight(startH,null,false,opts&&opts.workKey);
+          following=true;
+        }
       }
       /* F0b (b): a pmx surface (PM56_PMX.SURFACES) whose flip changed height. Its FLIP
          is still holding it at h0 in this frame, so the host's height now is its old height.
@@ -82182,7 +82191,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     for(let s=item.nextElementSibling;s;s=s.nextElementSibling) if(s.getBoundingClientRect().height>0) return false;
     return true;
   }
-  function followWorkCardHeight(startH, flipEl, sync){
+  function workCardByKey(key){ return key?document.querySelector(`.working-card[data-k="${CSS.escape(key)}"]`):(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card')); }
+  function followWorkCardHeight(startH, flipEl, sync, cardKey){
     const hosts=flipEl?followHosts():null;
     /* This anchors what sits BELOW a card whose height changes, for a reader
        scrolled away. A reader stuck to the bottom is the glide's: anchoring
@@ -82207,11 +82217,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         tr.style.overflowAnchor=prevAnchor; return;
       }
       /* F0b (b): with an element, follow the card that holds it; without, the working card. */
-      const card=flipEl?(flipEl.isConnected?flipEl.closest(hosts):null):(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
+      const card=flipEl?(flipEl.isConnected?flipEl.closest(hosts):null):workCardByKey(cardKey);
       if(!card){ tr.style.overflowAnchor=prevAnchor; return; }
       const h=card.getBoundingClientRect().height;
       const cr=card.getBoundingClientRect(), vr=tr.getBoundingClientRect();
-      if(cr.top<vr.bottom){
+      if(cardKey?cr.top<=vr.top+1:cr.top<vr.bottom){
         const target=baseScroll+(h-startH);
         if(Math.abs(tr.scrollTop-target)>0.5){
           const prev=tr.style.scrollBehavior;
