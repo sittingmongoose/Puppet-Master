@@ -1644,7 +1644,7 @@ for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].fi
    overflows its row. Scrolled up, transcript content passes under the Pod as under PMConcept7's; whenever a transcript
    control is under it, it has faded back (data-shy, opacity <= .2) so the control shows through. */
 if (THEMES.includes('nier-dark')) await sec('pod', async () => {
-  const bad = []; let views = 0;
+  const bad = [], windows = []; let views = 0;
   for (const [w, h] of [[1440, 900], [1512, 982], [1920, 1100]]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, reducedMotion: REDUCED ? 'reduce' : 'no-preference' });
     await ctx.addInitScript(() => { try { localStorage.setItem('pm56-history-w', '320'); } catch (e) {} });
@@ -1655,6 +1655,10 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       await boot(p);
       await p.setViewportSize({ width: w, height: h }, 'window');
       await p.waitForTimeout(400);
+      const actual = await p.evaluate(() => ({ width: innerWidth, height: innerHeight }));
+      windows.push({ requested: { width: w, height: h }, actual });
+      if (actual.width !== w || actual.height !== h) bad.push(`${w}x${h}: actual window ${actual.width}x${actual.height}`);
+      console.log('MEASURE Pod window ' + JSON.stringify(windows.at(-1)));
       await prepareWideHistory(p);
       await setTheme(p, 'nier-dark');
       await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
@@ -1705,7 +1709,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       }
     } finally { await shut(p); }
   }
-  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom; at the bottom no transcript button either; faded back over any it passes)`, bad.slice(0, 12));
+  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom; at the bottom no transcript button either; faded back over any it passes)`, { bad: bad.slice(0, 12), windows });
 });
 
 /* ------------------------------------------------------------- check 19: the header word wears its mark's tone */
