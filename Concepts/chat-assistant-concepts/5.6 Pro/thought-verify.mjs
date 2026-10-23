@@ -367,36 +367,68 @@ await safe('lines', async () => {
   /* a change while it thinks: the window glides to its new height, and back. Before, a window that grew by more than
      40 px jumped to 40 px short of its target in one frame (the growth clamp), so the check is that the change takes
      time and passes through the heights in between */
-  const q = await fresh({ mode: 'Auto', column: LCOL });
-  await longThought(q);
-  await openLive(q);
-  await setLines(q, 4);
-  await sample(q, 12000);
-  await send(q, Q);
-  /* the reasoning has run well past 16 lines while the window shows 4 */
-  await q.waitForFunction(P => { const a = [...document.querySelectorAll(P + '.transcript-inner > .message-thought')].pop(); const c = a && a.querySelector('.tt-clip'), p = c && c.querySelector('p');
-    const lh = p ? parseFloat(getComputedStyle(p).lineHeight) : 20; return a && a.dataset.thoughtState === 'thinking' && c.classList.contains('tt-capped') && c.firstElementChild.offsetHeight > lh * 16 + 24; }, P, { timeout: 9000, polling: 50 });
-  const upAt = await q.evaluate(() => performance.now() - window.__tt.t0);
-  await setLines(q, 16);
-  await sleep(600);
-  const downAt = await q.evaluate(() => performance.now() - window.__tt.t0);
-  await setLines(q, 4);
-  await sleep(700);
-  const ls = (await samples(q)).s, llh = (ls.find(x => x.lh) || {}).lh || 20, c4 = Math.round(llh * 4), c16 = Math.round(llh * 16);
-  function glide(fromT, a, b) {
-    const run = ls.filter(x => x.T && x.st === 'thinking' && x.t >= fromT - 20);
-    const startI = run.findIndex(x => Math.abs(x.ch - a) > 1), endI = run.findIndex(x => Math.abs(x.ch - b) <= 2);
-    if (startI < 0 || endI < 0 || endI < startI) return { ok: false, startI, endI, tail: run.slice(0, 4) };
-    const span = run.slice(startI, endI + 1), first = Math.abs(span[0].ch - a), whole = Math.abs(b - a);
-    const between = span.filter(x => Math.min(a, b) + 2 < x.ch && x.ch < Math.max(a, b) - 2).length;
-    const monotone = span.every((x, i) => i === 0 || (b > a ? x.ch >= span[i - 1].ch - 0.5 : x.ch <= span[i - 1].ch + 0.5));
-    return { ok: first <= whole * 0.5 && between >= 4 && span[span.length - 1].t - span[0].t >= 80 && monotone, firstStep: +first.toFixed(1), whole, between, ms: span[span.length - 1].t - span[0].t, monotone };
+  const attempts = [], takeovers = [];
+  const liveLabel = 'L-live a change to 16 lines mid-thought glides the window open to 16 lines (no step), and back to 4 glides it closed';
+  let conclusive = false;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const q = await fresh({ mode: 'Auto', column: LCOL });
+    try {
+      await longThought(q);
+      await openLive(q);
+      await setLines(q, 4);
+      await sample(q, 12000);
+      await send(q, Q);
+      /* the reasoning has run well past 16 lines while the window shows 4 */
+      await q.waitForFunction(P => { const a = [...document.querySelectorAll(P + '.transcript-inner > .message-thought')].pop(); const c = a && a.querySelector('.tt-clip'), p = c && c.querySelector('p');
+        const lh = p ? parseFloat(getComputedStyle(p).lineHeight) : 20; return a && a.dataset.thoughtState === 'thinking' && c.classList.contains('tt-capped') && c.firstElementChild.offsetHeight > lh * 16 + 24; }, P, { timeout: 9000, polling: 50 });
+      const upAt = await q.evaluate(() => performance.now() - window.__tt.t0);
+      const left = await q.evaluate(P => { const L = PM56_THOUGHT.active().pop(); const s = window.__tt.s, first = s.find(x => x.T && x.st === 'thinking');
+        return L && first ? Math.round(first.t + L.ms - (performance.now() - window.__tt.t0)) : null; }, P);
+      attempts.push({ attempt, upAt, left });
+      await setLines(q, 16);
+      await sleep(600);
+      const downAt = await q.evaluate(() => performance.now() - window.__tt.t0);
+      await setLines(q, 4);
+      await sleep(700);
+      /* A late setup is inconclusive for the two glides, but still witnesses the fold taking over from its current height. */
+      if (left == null || left < 1500) {
+        await q.waitForFunction(P => { const a = [...document.querySelectorAll(P + '.transcript-inner > .message-thought')].pop(); return a && a.dataset.thoughtState !== 'thinking'; }, P, { timeout: 3000 });
+        await sleep(600);
+      }
+      const ls = (await samples(q)).s, llh = (ls.find(x => x.lh) || {}).lh || 20, c4 = Math.round(llh * 4), c16 = Math.round(llh * 16);
+      function glide(fromT, a, b) {
+        const run = ls.filter(x => x.T && x.st === 'thinking' && x.t >= fromT - 20);
+        const startI = run.findIndex(x => Math.abs(x.ch - a) > 1), endI = run.findIndex(x => Math.abs(x.ch - b) <= 2);
+        if (startI < 0 || endI < 0 || endI < startI) return { ok: false, startI, endI, tail: run.slice(0, 4) };
+        const span = run.slice(startI, endI + 1), first = Math.abs(span[0].ch - a), whole = Math.abs(b - a);
+        const between = span.filter(x => Math.min(a, b) + 2 < x.ch && x.ch < Math.max(a, b) - 2).length;
+        const monotone = span.every((x, i) => i === 0 || (b > a ? x.ch >= span[i - 1].ch - 0.5 : x.ch <= span[i - 1].ch + 0.5));
+        return { ok: first <= whole * 0.5 && between >= 4 && span[span.length - 1].t - span[0].t >= 80 && monotone, firstStep: +first.toFixed(1), whole, between, ms: span[span.length - 1].t - span[0].t, monotone };
+      }
+      const up = glide(upAt, c4, c16), down = glide(downAt, c16, c4);
+      const lastThinking = ls.findLastIndex(x => x.T && x.st === 'thinking'), tail = ls.slice(lastThinking);
+      const handed = lastThinking >= 0 ? tail.find(x => x.T && x.st !== 'thinking') : null;
+      const downLanded = ls.some(x => x.T && x.st === 'thinking' && x.t >= downAt && Math.abs(x.ch - c4) <= 2);
+      if (handed && handed.t >= upAt && !downLanded) {
+        const landed = tail.find(x => x.t >= handed.t && x.t - handed.t <= 520 && x.ch <= 0.5 && x.folded);
+        const monotone = tail.every((x, i) => i === 0 || x.ch <= tail[i - 1].ch + 0.5);
+        const ok = handed.ch <= tail[0].ch + 0.5 && monotone && !!landed;
+        takeovers.push({ attempt, ok, lastThinking: tail[0], handed, landedMs: landed ? landed.t - handed.t : null, monotone,
+          trace: ok ? undefined : tail });
+      }
+      check('L-live no page errors', q.__errs.length === 0, { attempt, errors: q.__errs.slice(0, 2) });
+      if (left != null && left >= 1500) {
+        conclusive = true;
+        check(liveLabel, up.ok && down.ok, { up, down, lh: llh, attempts });
+        break;
+      }
+    } finally {
+      try { await resetLines(q); } finally { await q.close(); }
+    }
   }
-  const up = glide(upAt, c4, c16), down = glide(downAt, c16, c4);
-  check('L-live a change to 16 lines mid-thought glides the window open to 16 lines (no step), and back to 4 glides it closed', up.ok && down.ok, { up, down, lh: llh });
-  check('L-live no page errors', q.__errs.length === 0, q.__errs.slice(0, 2));
-  await resetLines(q);
-  await q.close();
+  if (!conclusive) check(liveLabel, false, { inconclusive: attempts });
+  check('L-live a thought that ends mid-glide folds from the height it reached', takeovers.every(x => x.ok),
+    takeovers.length ? { ran: true, attempts: takeovers } : { ran: false });
 
   /* Expanded is never capped, whatever the lines */
   const e = await fresh({ mode: 'Expanded', column: LCOL });
