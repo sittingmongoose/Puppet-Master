@@ -501,6 +501,12 @@
      the hold starts, so the hold takes the height from before that render */
   var roomRO = null, roomSeen = null;
   function watchRoom() {
+    /* Under reduced motion a held run's card (runHoldsRoom) changes height at once and no FLIP announces a shrink
+       (app.js workFlipped counts animated flips), so a reader at the bottom saw the text above the card step 70px
+       down and back up with every subject. Its room is held from the start of the run instead: the floor rises with
+       the card and is already there when a subject's rows fold away. That hold follows no shrink, so it takes the
+       list as it is now (holdShrink(true)): the last observed height can be a rewound thread's old one (1,210 px). */
+    if (!room.on && reduced() && runHoldsRoom()) holdShrink(true);
     var inner = roomInner(); if (!inner || inner === roomSeen || !window.ResizeObserver) return;
     if (roomRO) roomRO.disconnect();
     roomSeen = inner; room.lastH = inner.offsetHeight;
@@ -518,6 +524,14 @@
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
   function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.floorAt = room.h0; } }
+  /* Round 3 (A): app.js rewound the transcript (rewindTranscript, a thread switch): no room is kept for what left,
+     and the next hold measures the list as it is then (roomSeen cleared: holdShrink takes offsetHeight, watchRoom
+     re-observes the list) */
+  function cutRoom() { dropRoom(); roomSeen = null; }
+  /* Round 3 (D): the reader closed the card's history or a phase. Nothing in the run grows into the room that gives
+     back, so it is let go now, eased as every release is, instead of held for SHRINK_HOLD or by the run-long hold;
+     the next shrink after it has gone starts the run-long hold again */
+  function letGo() { if (room.on && !room.rel) releaseRoom(); }
   /* The answer's placeholder takes no room before it is drawn. It mounts as the card starts to fold and waits out its
      entrance delay fully transparent (turn-stream.css: [data-streaming="pending"], 380ms, from opacity 0). A narrow card
      frees its panel's height at once, so the placeholder's height went into the held room; a wide card (panel beside
@@ -555,21 +569,36 @@
      floor holds the room instead; the next subject's rows usually fill it, and
      what is left eases away more gently than the fold's room. */
   var SHRINK_HOLD = 700;
-  /* ...and as its leftover closes, the floor (what moves under a reader at the bottom) never comes down faster than
+  /* ...and as any held room's leftover closes (a shrink's or a fold's, Round 3 E), the floor (what moves under a reader
+     at the bottom) never comes down faster than
      200 px/s, whatever the content under it does. A tall thinking window (Lines shown while thinking at 12 or 16,
      DL-234) gives back up to 320 px when it folds; at the shrink's omega that eased the thread down at up to 0.8 px/ms,
      twice turn-verify's 0.4 px/ms snap line (300 px/s still read 0.41 on a loaded page, where a frame's step and the
      sampler's interval drift apart). Leftovers under ~70 px never reach the limit, so a short fold or a card's usual
      shrink closes as before. */
   var SHRINK_VMAX = 200;
-  function holdShrink() {
-    if (reduced()) return;
-    if (room.on) { if (room.transient && !room.rel) room.relAt = now() + SHRINK_HOLD; return; }
+  /* A run whose card is the transcript's last item (app.js runHoldsRoom: a gated demo run, a live agent turn, a
+     scripted chain's card) keeps this room while it runs:
+     the floor only ratchets up as the card grows past it, so a reader at the bottom sees the text above the card move
+     when the card reaches a new height and never slide back down when a subject's rows fold (2026-10-23: six 30-70px
+     slides a run at a 442px column). The room is let go as usual once the run is over. It ends when the run stops or
+     something mounts below the card.
+     It holds at most RUN_ROOM_MAX: the tallest a subject's rows fold away in any working take is 193px at a 442px
+     column (176px in most list takes, 70px in Orbit), so a bigger band under the card is a shrink the reader made --
+     the card's history closing gave back 536px, and holding that left most of the view blank until the run ended. A
+     band past it is let go the ordinary way, as a live turn's shrink is. */
+  var RUN_ROOM_MAX = 240;
+  function runHoldsRoom() { var c = C(); return !!(c && c.runHoldsRoom && c.runHoldsRoom()); }
+  function shrinkRelAt() { return runHoldsRoom() ? Infinity : now() + SHRINK_HOLD; }
+  function holdShrink(fresh, finite) {
+    if (reduced() && !runHoldsRoom()) return;
+    if (room.on) { if (finite === true) { room.transient = true; room.relAt = now() + SHRINK_HOLD; } else if (room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
     var c = C(); if (!c || (c.isSticky && !c.isSticky())) return;
     var inner = roomInner(); if (!inner) return;
-    var before = inner === roomSeen && room.lastH ? room.lastH : 0;
+    /* fresh: a hold that follows no shrink (watchRoom) takes the list as it is now */
+    var before = fresh !== true && inner === roomSeen && room.lastH ? room.lastH : 0;
     room.inner = inner; room.h0 = Math.max(before, inner.offsetHeight);
-    room.on = true; room.rel = false; room.transient = true; room.relAt = now() + SHRINK_HOLD;
+    room.on = true; room.rel = false; room.transient = true; room.relAt = finite === true ? now() + SHRINK_HOLD : shrinkRelAt();
     room.x = null; room.v = 0; room.last = now();
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
@@ -578,6 +607,7 @@
     room.raf = 0;
     var inner = roomInner();
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
+    if (room.transient && !room.rel && room.relAt === Infinity && (!runHoldsRoom() || room.h0 - naturalH(inner) > RUN_ROOM_MAX)) room.relAt = now() + SHRINK_HOLD;
     if (room.transient && !room.rel && now() >= room.relAt) releaseRoom();
     if (!room.rel && !roomQuiet()) {
       /* after the fold the floor only ratchets up: a follow into content past
@@ -590,9 +620,12 @@
       if (room.x == null) room.x = Math.max(0, room.h0 - nat);
       /* critically damped to zero (omega 11/s: ~450ms; a shrink's leftover 8/s) */
       var s2 = critStep(room.x, room.v, room.transient ? 8 : 11, dt);
-      if (room.transient) { var lo = room.floorAt - SHRINK_VMAX * dt - nat; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
+      /* every release, a fold's too: a fold's room now starts from the run-long floor (up to RUN_ROOM_MAX over the
+         content), and at omega 11 that eased down at up to ~0.97 px/ms, past turn-verify's 0.4 px/ms snap line */
+      { var lo = room.floorAt - SHRINK_VMAX * dt - nat; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
       room.x = s2[0]; room.v = s2[1];
-      if (room.x < 0.5 || nat >= room.h0) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
+      /* under reduced motion (only a held demo run holds room there) the floor goes at once */
+      if (room.x < 0.5 || nat >= room.h0 || reduced()) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
       room.floorAt = nat + room.x;
       roomFloor(room.floorAt);
     }
@@ -987,7 +1020,10 @@
     active: function () { var out = []; streams.forEach(function (st) { out.push({ id: st.id, tid: st.tid, phase: st.phase, cursor: st.cursor, ops: st.ops.length, words: st.words }); }); return out; },
     begin: function (m, tid, spec, opts) { wire(); return begin(m, tid, spec, opts); },
     /* the shrink hold, for a block above the reader that gives back its height (a folding thought) */
-    holdShrink: function () { holdShrink(); },
+    holdShrink: function (finite) { holdShrink(false, finite === true); },
+    /* Round 3: a rewound transcript keeps no room (A); the reader's close of a card's history lets its room go (D) */
+    cut: function () { cutRoom(); },
+    letGo: function () { letGo(); },
     owner: owner
   };
 })();

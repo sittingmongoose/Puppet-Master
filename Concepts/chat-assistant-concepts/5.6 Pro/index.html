@@ -63869,7 +63869,10 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
    return;
   }
   if(id.startsWith('activity-')){ctx.switchThread('query');ctx.state.activity.pinned=true;ctx.state.hover={type:'activity',domain:id==='activity-todo'?'todo':'changes'};ctx.renderApp();return;}
-  if(id.startsWith('work-')){window.PM56_DEMO.setVariant(2,id==='work-simple'?8:1);window.PM56_DEMO.trigger('Start complete work');requestAnimationFrame(()=>document.querySelector('.working-card')?.scrollIntoView({block:'center'}));}
+  /* the run holds the thread's later turns until it completes (app.js armWorkGate), so its card is the last item and
+     the switch's stick-to-bottom already shows it; centring it would only unstick the follow under a card taller
+     than the view */
+  if(id.startsWith('work-')){window.PM56_DEMO.setVariant(2,id==='work-simple'?8:1);window.PM56_DEMO.trigger('Start complete work');}
  }
  E.action('repair-demo',(ctx,btn)=>{launch(ctx,btn.dataset.scenario);return true;});
  window.PM56_REPAIR_DEMOS={list:()=>scenarios.map(([id,feature,label,expected])=>({id,feature,label,expected})),launch:id=>launch(E.ctx(),id),gallery:ctx=>'<section class="demo-section polish-demo-section"><h3>Assistant refinements</h3><div class="demo-section-body">'+scenarios.map(([id,feature,label,expected])=>'<button class="demo-trigger" data-action="repair-demo" data-scenario="'+id+'" title="'+ctx.esc(expected)+'"><small>'+ctx.esc(feature)+'</small><strong>'+ctx.esc(label)+'</strong></button>').join('')+'</div></section>'};
@@ -77434,6 +77437,12 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      the hold starts, so the hold takes the height from before that render */
   var roomRO = null, roomSeen = null;
   function watchRoom() {
+    /* Under reduced motion a held run's card (runHoldsRoom) changes height at once and no FLIP announces a shrink
+       (app.js workFlipped counts animated flips), so a reader at the bottom saw the text above the card step 70px
+       down and back up with every subject. Its room is held from the start of the run instead: the floor rises with
+       the card and is already there when a subject's rows fold away. That hold follows no shrink, so it takes the
+       list as it is now (holdShrink(true)): the last observed height can be a rewound thread's old one (1,210 px). */
+    if (!room.on && reduced() && runHoldsRoom()) holdShrink(true);
     var inner = roomInner(); if (!inner || inner === roomSeen || !window.ResizeObserver) return;
     if (roomRO) roomRO.disconnect();
     roomSeen = inner; room.lastH = inner.offsetHeight;
@@ -77451,6 +77460,14 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
   function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.floorAt = room.h0; } }
+  /* Round 3 (A): app.js rewound the transcript (rewindTranscript, a thread switch): no room is kept for what left,
+     and the next hold measures the list as it is then (roomSeen cleared: holdShrink takes offsetHeight, watchRoom
+     re-observes the list) */
+  function cutRoom() { dropRoom(); roomSeen = null; }
+  /* Round 3 (D): the reader closed the card's history or a phase. Nothing in the run grows into the room that gives
+     back, so it is let go now, eased as every release is, instead of held for SHRINK_HOLD or by the run-long hold;
+     the next shrink after it has gone starts the run-long hold again */
+  function letGo() { if (room.on && !room.rel) releaseRoom(); }
   /* The answer's placeholder takes no room before it is drawn. It mounts as the card starts to fold and waits out its
      entrance delay fully transparent (turn-stream.css: [data-streaming="pending"], 380ms, from opacity 0). A narrow card
      frees its panel's height at once, so the placeholder's height went into the held room; a wide card (panel beside
@@ -77488,21 +77505,36 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      floor holds the room instead; the next subject's rows usually fill it, and
      what is left eases away more gently than the fold's room. */
   var SHRINK_HOLD = 700;
-  /* ...and as its leftover closes, the floor (what moves under a reader at the bottom) never comes down faster than
+  /* ...and as any held room's leftover closes (a shrink's or a fold's, Round 3 E), the floor (what moves under a reader
+     at the bottom) never comes down faster than
      200 px/s, whatever the content under it does. A tall thinking window (Lines shown while thinking at 12 or 16,
      DL-234) gives back up to 320 px when it folds; at the shrink's omega that eased the thread down at up to 0.8 px/ms,
      twice turn-verify's 0.4 px/ms snap line (300 px/s still read 0.41 on a loaded page, where a frame's step and the
      sampler's interval drift apart). Leftovers under ~70 px never reach the limit, so a short fold or a card's usual
      shrink closes as before. */
   var SHRINK_VMAX = 200;
-  function holdShrink() {
-    if (reduced()) return;
-    if (room.on) { if (room.transient && !room.rel) room.relAt = now() + SHRINK_HOLD; return; }
+  /* A run whose card is the transcript's last item (app.js runHoldsRoom: a gated demo run, a live agent turn, a
+     scripted chain's card) keeps this room while it runs:
+     the floor only ratchets up as the card grows past it, so a reader at the bottom sees the text above the card move
+     when the card reaches a new height and never slide back down when a subject's rows fold (2026-10-23: six 30-70px
+     slides a run at a 442px column). The room is let go as usual once the run is over. It ends when the run stops or
+     something mounts below the card.
+     It holds at most RUN_ROOM_MAX: the tallest a subject's rows fold away in any working take is 193px at a 442px
+     column (176px in most list takes, 70px in Orbit), so a bigger band under the card is a shrink the reader made --
+     the card's history closing gave back 536px, and holding that left most of the view blank until the run ended. A
+     band past it is let go the ordinary way, as a live turn's shrink is. */
+  var RUN_ROOM_MAX = 240;
+  function runHoldsRoom() { var c = C(); return !!(c && c.runHoldsRoom && c.runHoldsRoom()); }
+  function shrinkRelAt() { return runHoldsRoom() ? Infinity : now() + SHRINK_HOLD; }
+  function holdShrink(fresh, finite) {
+    if (reduced() && !runHoldsRoom()) return;
+    if (room.on) { if (finite === true) { room.transient = true; room.relAt = now() + SHRINK_HOLD; } else if (room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
     var c = C(); if (!c || (c.isSticky && !c.isSticky())) return;
     var inner = roomInner(); if (!inner) return;
-    var before = inner === roomSeen && room.lastH ? room.lastH : 0;
+    /* fresh: a hold that follows no shrink (watchRoom) takes the list as it is now */
+    var before = fresh !== true && inner === roomSeen && room.lastH ? room.lastH : 0;
     room.inner = inner; room.h0 = Math.max(before, inner.offsetHeight);
-    room.on = true; room.rel = false; room.transient = true; room.relAt = now() + SHRINK_HOLD;
+    room.on = true; room.rel = false; room.transient = true; room.relAt = finite === true ? now() + SHRINK_HOLD : shrinkRelAt();
     room.x = null; room.v = 0; room.last = now();
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
@@ -77511,6 +77543,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     room.raf = 0;
     var inner = roomInner();
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
+    if (room.transient && !room.rel && room.relAt === Infinity && (!runHoldsRoom() || room.h0 - naturalH(inner) > RUN_ROOM_MAX)) room.relAt = now() + SHRINK_HOLD;
     if (room.transient && !room.rel && now() >= room.relAt) releaseRoom();
     if (!room.rel && !roomQuiet()) {
       /* after the fold the floor only ratchets up: a follow into content past
@@ -77523,9 +77556,12 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       if (room.x == null) room.x = Math.max(0, room.h0 - nat);
       /* critically damped to zero (omega 11/s: ~450ms; a shrink's leftover 8/s) */
       var s2 = critStep(room.x, room.v, room.transient ? 8 : 11, dt);
-      if (room.transient) { var lo = room.floorAt - SHRINK_VMAX * dt - nat; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
+      /* every release, a fold's too: a fold's room now starts from the run-long floor (up to RUN_ROOM_MAX over the
+         content), and at omega 11 that eased down at up to ~0.97 px/ms, past turn-verify's 0.4 px/ms snap line */
+      { var lo = room.floorAt - SHRINK_VMAX * dt - nat; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
       room.x = s2[0]; room.v = s2[1];
-      if (room.x < 0.5 || nat >= room.h0) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
+      /* under reduced motion (only a held demo run holds room there) the floor goes at once */
+      if (room.x < 0.5 || nat >= room.h0 || reduced()) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
       room.floorAt = nat + room.x;
       roomFloor(room.floorAt);
     }
@@ -77920,7 +77956,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     active: function () { var out = []; streams.forEach(function (st) { out.push({ id: st.id, tid: st.tid, phase: st.phase, cursor: st.cursor, ops: st.ops.length, words: st.words }); }); return out; },
     begin: function (m, tid, spec, opts) { wire(); return begin(m, tid, spec, opts); },
     /* the shrink hold, for a block above the reader that gives back its height (a folding thought) */
-    holdShrink: function () { holdShrink(); },
+    holdShrink: function (finite) { holdShrink(false, finite === true); },
+    /* Round 3: a rewound transcript keeps no room (A); the reader's close of a card's history lets its room go (D) */
+    cut: function () { cutRoom(); },
+    letGo: function () { letGo(); },
     owner: owner
   };
 })();
@@ -78102,8 +78141,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   }
 
   /* the room a fold gives back is held (turn-stream's floor), so a reader at the bottom stays where they are */
-  function holdForFold() {
-    try { var S = window.PM56_STREAM; if (S && S.holdShrink) S.holdShrink(); } catch (e) { }
+  function holdForFold(finite) {
+    try { var S = window.PM56_STREAM; if (S && S.holdShrink) S.holdShrink(finite === true); } catch (e) { }
   }
 
   /* ------------------------------------------------------------------ screen readers: one status, never words */
@@ -78325,7 +78364,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var T = f.m, open = !isOpen(c, T);
     view[T.id] = { open: open, mode: modeOf(c, T) };
     var L = live.get(T.id); if (L) L.capped = capped(c, T);
-    if (!open) { var sticky = c.isSticky ? c.isSticky() : true; if (sticky) holdForFold(); }
+    /* OBJ-1: a reader's close gives its room back after the ordinary hold. */
+    if (!open) { var sticky = c.isSticky ? c.isSticky() : true; if (sticky) holdForFold(true); }
     c.renderApp();
     return true;
   });
@@ -79145,7 +79185,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       one source: the durable plan artifact's version. A separate literal here drifted to 3
       while the artifact said 4, so the card and the artifact disagreed about the same plan. */, planStatus:'ready',
     artifactState:{quizAnswer:null,dataFilter:'all',mermaidSource:false,chartMetric:'p95',retrying:false},
-    demoAutoStart:true
+    demoAutoStart:true, workGate:null
   };
 
   /* Two handlers write through to the shared fixture -- toggle-favorite used
@@ -79327,7 +79367,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation,
       /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
       turnBusy, registerTurnOwner, maybeFlushQueue, startWorkingRec, onWorkComplete, releaseNextRun,
-      followIfSticky, holdFollow, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx
+      followIfSticky, holdFollow, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx,
+      /* turn-stream keeps its shrink room for the whole of a run while runHoldsRoom() says so */
+      runHoldsRoom
     }, readOnlyRender?{readOnly:true}:{}, extra);
   }
   function extEach(name, extra, each){
@@ -80009,7 +80051,81 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(m.type==='working'&&m.workId&&!state.works[m.workId]) return false;
     /* Thought Stream: a reply waits under its thinking block until the reasoning hands over (thought-stream.js) */
     if(m.thoughtGate) return false;
+    if(heldByWorkGate(m)) return false;
     return true;
+  }
+  /* Demo timing (Jared, 2026-10-23). A demo thread is preloaded: when the PRIMARY record (state.work, the card with
+     no workId) plays in one, every later turn of the fixture is already rendered under the card, and each height
+     change of the animating card moved all of it -- the whole transcript jumping while the reader watched unrelated
+     text. A live turn never has that: what follows the work arrives after it. So while the primary run plays, the
+     fixture messages after its card are held, and they appear when it completes, below the finished card, without
+     moving the reader (settleWorkGate). Only messages that came with the fixture are held; anything the reader or a
+     handler added (a send, a receipt, an approval) shows as it always has. switchThread drops the gate (it stops the
+     run), so a thread entered later shows its whole history; boot and Reset all arm it for the run they autostart.
+     Stop, the card's Reset, and a pause, a step or an inspect of the run end the turn (g.ended, Round 3 C); a resume
+     does not re-arm it (startWorking arms only a run that starts from its beginning), and anything new
+     in the thread lifts it (settleWorkGate). Only a tail that is wholly the fixture's is held: a message added after
+     the card earlier would otherwise come back below the turns it was written after. state.workGate = {tid, card,
+     ids, n, cut}, n the thread's length when it was armed. */
+  function armWorkGate(){
+    state.workGate=null;
+    const tid=state.selectedThread, t=state.threads.find(x=>x.id===tid), fx=(D.threads||[]).find(x=>x.id===tid);
+    if(!t||!fx) return;
+    const i=t.messages.findIndex(m=>m.type==='working'&&!m.workId);
+    if(i<0) return;
+    const fixture=new Set(fx.messages.map(m=>m.id).filter(Boolean)), tail=t.messages.slice(i+1);
+    if(!(tail.length&&tail.every(m=>m.id&&fixture.has(m.id)))) return;
+    /* Round 3 (A): a tail already on screen (a restart in a thread read to its end, a card's Play, Reset all) is not
+       a shrink of the card: the render that hides it is a cut (renderApp, rewindTranscript), not a held room */
+    const inner=tEl()?.querySelector('.transcript-inner');
+    const cut=!!inner&&tail.some(m=>inner.querySelector(`:scope > [data-k="msg:${CSS.escape(m.id)}"]`));
+    state.workGate={tid, card:t.messages[i].id||null, ids:tail.map(m=>m.id), n:t.messages.length, cut};
+  }
+  function heldByWorkGate(m){
+    const g=state.workGate;
+    return !!(g&&m&&m.id&&g.tid===state.selectedThread&&!state.work.completed&&g.ids.includes(m.id));
+  }
+  /* Round 3 (E): turn-stream keeps its shrink room for the whole of a run while that run's card is the last thing
+     in the transcript with a height and the run is running: a gated demo run (its later turns held), a live agent
+     turn (its answer waits for the card), a scripted chain's current card, Queued Message's run. With nothing below
+     the card every shrink of it moved all the text above it down and the next growth moved it back (Live agent turn
+     175 px down r5, Long agent turn 280 down r9, Multi Orbit 206 down r15 at a 442 px column); the floor only
+     ratchets up, capped at RUN_ROOM_MAX (turn-stream.js). It ends when the run stops running (pause, step, Stop,
+     completion, a thread switch) or when anything with a height mounts below the card (a revealed tail, an answer,
+     an approval ask, a receipt). The reader's own close of the card's history or a phase gives its room back by
+     itself (letRoomGo). */
+  function runHoldsRoom(){
+    const inner=tEl()?.querySelector('.transcript-inner'); if(!inner) return false;
+    let last=inner.lastElementChild;
+    while(last&&last.getBoundingClientRect().height<=0) last=last.previousElementSibling;
+    if(!last||!last.classList.contains('working-card')) return false;
+    const wid=last.dataset.card, rec=wid==='primary'?state.work:(wid?state.works[wid]:null);
+    return !!(rec&&rec.running&&!rec.completed);
+  }
+  /* Round 3 (D): the reader closed the card's history or a phase: turn-stream lets the room that close gives back
+     go now, eased, instead of holding it for SHRINK_HOLD; the next shrink starts the run-long hold again */
+  function letRoomGo(){ try{ const S=window.PM56_STREAM; if(S&&S.letGo) S.letGo(); }catch(e){} }
+  /* Called by renderApp before it captures the scroll. A gate whose thread is no longer shown is dropped; one whose
+     turn is over is lifted, and that render is the reveal: the reader stops following, so the held messages
+     mount below the fold instead of the transcript gliding a whole thread's height to the new bottom, and the card's
+     follower stands down for the frame (restoreScroll), so the text above the finished card stays where it is while
+     the card settles and the first held message rises under it. The jump-to-latest control says more arrived.
+     The turn is over when the run completes, when Stop, the card's Reset or a pause ends it (g.ended): that is the
+     still reveal. Anything that arrives in the thread lifts the gate too, so the fixture's later turns show above
+     it, but the reader's follow is kept ('grow'). */
+  function settleWorkGate(){
+    const g=state.workGate; if(!g) return false;
+    if(g.tid!==state.selectedThread){ state.workGate=null; return false; }
+    const over=state.work.completed||g.ended;
+    if(!over&&activeThread().messages.length===g.n) return false;
+    state.workGate=null;
+    /* Round 3 (B): only the end of the turn (completion, Stop, the card's Reset, a pause -- C) is the still reveal.
+       Something that arrives (a send, Send now, a receipt) lifts the gate with the reader's follow as it was: a
+       reader at the bottom is put at the new bottom in that render (renderApp), on what arrived. The still reveal
+       left them at the card with the receipt 1,761 px below in a 603 px view. */
+    if(!over) return 'grow';
+    tStick=false; cancelGlide();
+    return 'still';
   }
   /* One stretch of agent work in the read-only feed (PM56_RECORDS.feedStretch
      owns the markup and the toggle). The stretch id is its first record's id. A
@@ -81377,12 +81493,17 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function renderApp(preserve=true){
     syncActivityDomain();
-    const positions=preserve?captureScroll():{};
+    const revealing=settleWorkGate();
+    /* Round 3 (A): the render that hides a tail already on screen (armWorkGate g.cut) is a cut: no scroll capture,
+       no FLIPs (no shrink reaches holdShrink), no keep-top; rewindTranscript puts the reader on the card */
+    const cut=!!(state.workGate&&state.workGate.cut); if(cut) state.workGate.cut=false;
+    const positions=preserve&&!cut?captureScroll():{};
     /* T6: a working-card height change moves every message below it under a
        stationary cursor unless scrollTop absorbs the delta. Browser scroll
        anchoring is unreliable here (card is overflow:hidden; restores fight
        the anchor), so measure the card before the patch and compensate after. */
     const workBefore=(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
+    const workKey=workBefore?workBefore.getAttribute('data-k'):null;
     const workH=workBefore?workBefore.getBoundingClientRect().height:null;
     const flipTargets=[...document.querySelectorAll('[data-flip]')];
     const flipBefore=new Map(flipTargets.map(el=>[el, el.getBoundingClientRect().height]));
@@ -81409,11 +81530,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
     document.getElementById('pmRoot').setAttribute('aria-busy','false');
     const post=snapScroll();
-    const flips=flipHeights(flipTargets, flipBefore);
-    keepTopAfter(preTop,post);
-    flipMoves(moveTargets, moveBefore);
+    const flips=cut?[]:flipHeights(flipTargets, flipBefore);
+    if(!cut){ keepTopAfter(preTop,post); flipMoves(moveTargets, moveBefore); }
     rollDigits(rollBefore);
-    restoreScroll(positions,{workH, post, workGrow:workFlipped(flips)});
+    if(cut) rewindTranscript();
+    else restoreScroll(positions,{workH, workKey, post, workGrow:workFlipped(flips), still:revealing==='still'});
+    /* Round 3 (B): a gate lifted by something arriving puts a following reader at the new bottom in this frame */
+    if(revealing==='grow'&&tStick) stickToBottom(true);
     renderOverlays();
     fitActivityTabs();
     retainHoverAfterRender();
@@ -81443,6 +81566,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const moveTargets=[...live.querySelectorAll('[data-flip-move]')];
     const moveBefore=new Map(moveTargets.map(el=>{const r=el.getBoundingClientRect();return [el,{x:r.left,y:r.top}];}));
     const workH=live.classList.contains('working-card')?live.getBoundingClientRect().height:null;
+    const workKey=workH!=null?live.getAttribute('data-k'):null;
     const preTop=keepTopBefore();
     pmPatchNode(live,src);
     const post=snapScroll();
@@ -81450,7 +81574,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     keepTopAfter(preTop,post);
     flipMoves(moveTargets, moveBefore);
     rollDigits(rollBefore);
-    restoreScroll(positions,{workH, post, workGrow:workFlipped(flips)});
+    restoreScroll(positions,{workH, workKey, post, workGrow:workFlipped(flips)});
     retainHoverAfterRender();
     runAfterRender('scope',{scope:live, flips});
     return true;
@@ -81780,12 +81904,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      the next one). Only real input unsticks it: wheel-up, touch, a scrollbar
      drag, or a scrolling key outside a text field. Scroll events we cause are
      not input, so anchoring and clamping never flip the state. */
-  let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null, tInputDir=0;
+  let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null, tLastCh=null, tInputDir=0;
   let glideRAF=0, glideTs=0, tRO=null, tROTarget=null;
   const GLIDE_TAU=70;
   function tEl(){ return scrollKeyEl('transcript'); }
   function tAtBottom(el){ el=el||tEl(); if(!el) return true; return el.scrollHeight-el.clientHeight-el.scrollTop<=24; }
-  function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; }
+  function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; tLastCh=el.clientHeight; }
   function cancelGlide(){ if(glideRAF){ cancelAnimationFrame(glideRAF); glideRAF=0; } glideTs=0; }
   function glideStep(ts){
     glideRAF=0;
@@ -81922,15 +82046,20 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        view up when a card above shrank, which this rule would misread. */
     const el=tEl();
     if(el){
-      const top=el.scrollTop, prev=tLastTop; tLastTop=top;
+      const top=el.scrollTop, prev=tLastTop, ch=el.clientHeight, lastCh=tLastCh; tLastTop=top; tLastCh=ch;
       const ours=tExpectTop!=null&&Math.abs(top-tExpectTop)<=1;
       if(!ours){
         tExpectTop=null;
         const recent=tDragging||performance.now()-tUserInputAt<700;
+        /* The view taller by as much as it moved up is the browser lowering scrollTop to the new maximum, not a
+           reader going somewhere. When a demo run starts the composer's dock gives the transcript 20px and the
+           bottom padding grows 40px in the same frame; the clamp's event is read after both, 40px from the bottom,
+           and dropped the reader out of follow (hosted, reduced motion, boot run). */
+        const clamped=lastCh!=null&&prev!=null&&ch>lastCh&&prev-top<=ch-lastCh+1;
         /* an upward gesture never re-engages follow in its own first frames,
            while the view is still within reach of the bottom */
         if(tAtBottom(el)){ if(!(recent&&tInputDir<0)) tStick=true; }
-        else if(recent||(prev!=null&&top<prev-8)){ tStick=false; cancelGlide(); }
+        else if(recent||(prev!=null&&top<prev-8&&!clamped)){ tStick=false; cancelGlide(); }
       }
     }
     syncJumpBottom();
@@ -82016,15 +82145,28 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const startH=opts&&opts.workH;
       const grow=opts&&opts.workGrow;
       const workGrow=typeof grow==='number'?grow:((grow&&grow.total)||0);
-      let following=false;
+      /* a demo tail's reveal (settleWorkGate) keeps the text above the finished card still: no follower */
+      let following=!!(opts&&opts.still);
       /* P1: the working body's FLIP is holding it at its OLD height when this
          runs, so the live card height alone never showed the change and the
          follower never started; the FLIP's own target delta does. A reader
          who is stuck to the bottom is served by the follow glide instead. */
-      if(startH!=null&&!tStick){
-        const card=(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
+      if(startH!=null&&!tStick&&!following){
+        const card=workCardByKey(opts&&opts.workKey);
         const hNow=card?card.getBoundingClientRect().height:startH;
-        if(Math.abs(hNow-startH)>=1||Math.abs(workGrow)>=1){ followWorkCardHeight(startH); following=true; }
+        /* Reader-position anchoring (2026-10-23): the follower keeps what sits BELOW the card still. With nothing
+           below it -- a live turn's card, a demo run whose later turns are held -- what a reader who scrolled up is
+           reading is ABOVE the card, and folding the card's change into scrollTop moved exactly that text, by every
+           subject (70px swings at 0.78px/ms, measured at a 442px column). The reader's text keeps its place and the
+           card changes at its own foot instead. */
+        if(Math.abs(hNow-startH)>=1||Math.abs(workGrow)>=1){
+          /* OBS-1: keep still only what a reader BELOW the card's top is reading; a reader above it reads text the card's
+             change does not move (the card changes at its own foot) */
+          const trEl=tEl(), vr=trEl?trEl.getBoundingClientRect():null, cr=card?card.getBoundingClientRect():null;
+          const readerInOrBelow=!!(vr&&cr&&cr.top<=vr.top+1);
+          if(card&&!lastInTranscript(card)&&readerInOrBelow) followWorkCardHeight(startH,null,false,opts&&opts.workKey);
+          following=true;
+        }
       }
       /* F0b (b): a pmx surface (PM56_PMX.SURFACES) whose flip changed height. Its FLIP
          is still holding it at h0 in this frame, so the host's height now is its old height.
@@ -82041,7 +82183,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       syncJumpBottom();
     });
   }
-  function followWorkCardHeight(startH, flipEl, sync){
+  /* true when nothing with a height follows this card's transcript item */
+  function lastInTranscript(el){
+    let item=el;
+    while(item&&item.parentElement&&!item.parentElement.classList.contains('transcript-inner')) item=item.parentElement;
+    if(!item||!item.parentElement) return false;
+    for(let s=item.nextElementSibling;s;s=s.nextElementSibling) if(s.getBoundingClientRect().height>0) return false;
+    return true;
+  }
+  function workCardByKey(key){ return key?document.querySelector(`.working-card[data-k="${CSS.escape(key)}"]`):(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card')); }
+  function followWorkCardHeight(startH, flipEl, sync, cardKey){
     const hosts=flipEl?followHosts():null;
     /* This anchors what sits BELOW a card whose height changes, for a reader
        scrolled away. A reader stuck to the bottom is the glide's: anchoring
@@ -82066,11 +82217,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         tr.style.overflowAnchor=prevAnchor; return;
       }
       /* F0b (b): with an element, follow the card that holds it; without, the working card. */
-      const card=flipEl?(flipEl.isConnected?flipEl.closest(hosts):null):(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
+      const card=flipEl?(flipEl.isConnected?flipEl.closest(hosts):null):workCardByKey(cardKey);
       if(!card){ tr.style.overflowAnchor=prevAnchor; return; }
       const h=card.getBoundingClientRect().height;
       const cr=card.getBoundingClientRect(), vr=tr.getBoundingClientRect();
-      if(cr.top<vr.bottom){
+      if(cardKey?cr.top<=vr.top+1:cr.top<vr.bottom){
         const target=baseScroll+(h-startH);
         if(Math.abs(tr.scrollTop-target)>0.5){
           const prev=tr.style.scrollBehavior;
@@ -82743,6 +82894,35 @@ suggested path                    migration 0043, reversible</div></div></sectio
     state.editorRevealed=true;if(!state.editorTabs.includes(id))state.editorTabs.push(id);state.activeEditor=id;renderApp();
   }
   function closeEditor(id){ if(HOSTED){ hostedClose(id); return; } const i=state.editorTabs.indexOf(id);if(state.editorTabs.length===1)state.editorRevealed=false;state.editorTabs=state.editorTabs.filter(x=>x!==id);if(state.activeEditor===id)state.activeEditor=state.editorTabs[Math.max(0,i-1)]||state.editorTabs[0]||null;renderApp(); }
+  /* The thread arrives as one piece: a short crossfade of the whole list rather than each item's own entrance.
+     It starts from 40% opacity, not 0: the old list is gone the instant the new one mounts, and fading up from
+     nothing read as a blink to an empty pane (filmed). Same 180ms in every voice; the voice picks the path.
+     One at a time: a restart from Demo Studio switches to its thread and cuts it in the same task. */
+  let arriveAnim=null;
+  function arriveAsOne(){
+    const inner=document.querySelector('.transcript-inner');
+    if(!inner||!inner.animate||(window.PM56_MOTION&&window.PM56_MOTION.reduced())) return;
+    const v=motionVoice(), glass=v==='glass';
+    const from={opacity:.4,transform:'translateY(4px)'}, to={opacity:1,transform:'none'};
+    if(glass){ from.filter='blur(3px)'; to.filter='blur(0px)'; }
+    const easing=v==='retro'?'steps(3, jump-start)':v==='friendly'?'cubic-bezier(.34,1.3,.64,1)':'cubic-bezier(.2,.8,.2,1)';
+    if(arriveAnim){ try{ arriveAnim.cancel(); }catch(e){} }
+    arriveAnim=inner.animate([from,to],{duration:180,easing});
+    /* the turn spine is its own layer beside the list; it arrives with it */
+    const spine=document.querySelector('.transcript .tx-spine-layer');
+    if(spine&&spine.animate) spine.animate([{opacity:from.opacity},{opacity:1}],{duration:180,easing});
+  }
+  /* Round 3 (A): the primary run restarts in a thread whose later turns were on screen (armWorkGate g.cut). The
+     transcript rewinds to the moment the work starts, as a thread switch would: no room is kept for what left
+     (turn-stream cut), the reader is put on the card, now the last item, in this frame, and the list arrives as one
+     piece. Before this, holdShrink floored the old height (1,222 px): the view sat on the empty floor for 741-920 ms,
+     then followed it down 473-1,200 px. */
+  function rewindTranscript(){
+    finishEntrances();
+    try{ const S=window.PM56_STREAM; if(S&&S.cut) S.cut(); }catch(e){}
+    stickToBottom(true);
+    arriveAsOne();
+  }
   function switchThread(id){
     const t=state.threads.find(x=>x.id===id);if(!t)return;
     const prev=activeThread(); if(prev) state.drafts[prev.id]=state.composer;
@@ -82756,24 +82936,13 @@ suggested path                    migration 0043, reversible</div></div></sectio
        with no timer behind it is the next bug report. */
     stopWorkTimer(true); state.work.running=false;
     for(const k in state.works) state.works[k].running=false;
+    /* the run stops here, so a held demo tail comes back with the rest of the thread */
+    state.workGate=null;
+    /* a room held under the thread we leave is not carried into the next one (turn-stream cut) */
+    try{ const S=window.PM56_STREAM; if(S&&S.cut) S.cut(); }catch(e){}
     renderApp(false);
   window.__PM56_BOOT_OK=true;scrollTranscriptToEnd(true);finishEntrances();
-    /* The thread arrives as one piece: a short crossfade of the whole list
-       rather than each item's own entrance. */
-    /* It starts from 40% opacity, not 0: the old list is gone the instant the
-       new one mounts, and fading up from nothing read as a blink to an empty
-       pane (filmed). Same 180ms in every voice; the voice picks the path. */
-    { const inner=document.querySelector('.transcript-inner');
-      if(inner&&inner.animate&&!(window.PM56_MOTION&&window.PM56_MOTION.reduced())){
-        const v=motionVoice(), glass=v==='glass';
-        const from={opacity:.4,transform:'translateY(4px)'}, to={opacity:1,transform:'none'};
-        if(glass){ from.filter='blur(3px)'; to.filter='blur(0px)'; }
-        const easing=v==='retro'?'steps(3, jump-start)':v==='friendly'?'cubic-bezier(.34,1.3,.64,1)':'cubic-bezier(.2,.8,.2,1)';
-        inner.animate([from,to],{duration:180,easing});
-        /* the turn spine is its own layer beside the list; it arrives with it */
-        const spine=document.querySelector('.transcript .tx-spine-layer');
-        if(spine&&spine.animate) spine.animate([{opacity:from.opacity},{opacity:1}],{duration:180,easing});
-      } }
+    arriveAsOne();
     /* The Multi Orbit demo thread plays its turn on entry: the first scripted
        run spawns just after the switch settles, and the chain does the rest. */
     if(id==='orbit-run'&&!state.works.orbitA){ setTimeout(()=>{ if(state.selectedThread==='orbit-run'&&!state.works.orbitA) startWorkingRec('orbitA'); },350); }
@@ -82825,10 +82994,16 @@ suggested path                    migration 0043, reversible</div></div></sectio
   function releaseNextRun(recId){ const go=heldNextRuns[recId]; if(go){ delete heldNextRuns[recId]; go(); } }
 
   function startWorking(reset=false,rec=state.work){
+    /* a run that starts from its beginning: a restart, Play on a finished or reset card, the boot autostart */
+    const fresh=reset||rec.completed||!rec.started;
     if(reset||rec.completed){
       if(rec===state.work){ state.work={step:0,running:false,expanded:false,started:true,completed:false,elapsed:0,openPhase:null}; rec=state.work; }
       else { rec.step=0; rec.clock=0; rec.elapsed=0; rec.completed=false; rec.openPhase=null; delete rec.supersededBy; }
     }
+    /* the primary run starting in a preloaded thread holds the fixture's later turns until it completes. Only a
+       run that starts from its beginning arms it: a resume after a pause, a step or an inspect (each ends the gate,
+       Round 3 C) keeps the thread as the reader left it instead of cutting its later turns away again */
+    if(rec===state.work&&fresh) armWorkGate();
     rec.started=true;rec.running=true;renderApp();
     armWorkTimer();
   }
@@ -82963,15 +83138,19 @@ suggested path                    migration 0043, reversible</div></div></sectio
     else delete rec.clock;
     if(rec.runId&&rec.completed&&!was) onRecComplete(rec);
   }
-  function pauseWorking(rec=state.work){ rec.running=false; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
-  function stepWorking(rec=state.work){ rec.running=false; rec.started=true; scrubTo(rec,rec.step+1); if(!rec.runId) rec.elapsed+=3; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
+  /* Round 3 (C): pausing the primary run from inside it (Pause, Step, a step's inspect or scrub, an Orbit jump,
+     setWorkStep) ends its demo turn as Stop does: the held turns come back (settleWorkGate, the still reveal), so a
+     paused thread is never left cut off (3 items for good, int 10). A later Play resumes without re-arming. */
+  function endGateOnPause(rec){ if(rec===state.work&&state.workGate) state.workGate.ended=true; }
+  function pauseWorking(rec=state.work){ rec.running=false; endGateOnPause(rec); if(!runningRecs().length) stopWorkTimer(); renderApp(); }
+  function stepWorking(rec=state.work){ rec.running=false; rec.started=true; endGateOnPause(rec); scrubTo(rec,rec.step+1); if(!rec.runId) rec.elapsed+=3; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
   function completeWorking(rec=state.work){ rec.running=false; rec.started=true; scrubTo(rec,1e9); if(!rec.runId) rec.elapsed=Math.max(rec.elapsed,134); rec.expanded=false; rec.openPhase=null; if(!runningRecs().length) stopWorkTimer(); renderApp(); if(!runningRecs().length) maybeFlushQueue(); }
   function restartRec(rec){ rec.step=0; rec.clock=0; rec.elapsed=0; rec.completed=false; rec.running=true; rec.started=true; rec.openPhase=null; delete rec.supersededBy; state.workTerminal={}; armWorkTimer(); renderApp(); }
-  function resetWorking(rec=state.work){ if(rec.runId){ if(rec.id&&rec.id!==rec.runId){ restartRec(rec); return; } resetChain(rec.runId); return; } state.work=clone(DEFAULT.work); state.workTerminal={}; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
+  function resetWorking(rec=state.work){ if(rec.runId){ if(rec.id&&rec.id!==rec.runId){ restartRec(rec); return; } resetChain(rec.runId); return; } state.work=clone(DEFAULT.work); state.workTerminal={}; if(state.workGate) state.workGate.ended=true; /* as Stop: the turn is over */ if(!runningRecs().length) stopWorkTimer(); renderApp(); }
 
   function globalReset(){
     notifyTurnOwners('reset');
-    stopWorkTimer(true);if(window.PM56_CTX&&window.PM56_CTX.reset)window.PM56_CTX.reset();safeStorage.del('pm56-prefs');D.models=clone(FIXTURE0.models);D.artifacts=clone(FIXTURE0.artifacts);{ const keepReply=state.replyMode; state=clone(DEFAULT); if(keepReply) state.replyMode=keepReply; /* a harness's reply mode survives Reset all */ }state.threads=clone(D.threads);state.questions=clone(D.questions);renderApp(false);toast('Concept reset','All recipes, components, panels, threads, answers, artifacts, and working states returned to stock.');setTimeout(()=>{if(state.demoAutoStart)startWorking(true);},900);
+    stopWorkTimer(true);if(window.PM56_CTX&&window.PM56_CTX.reset)window.PM56_CTX.reset();safeStorage.del('pm56-prefs');D.models=clone(FIXTURE0.models);D.artifacts=clone(FIXTURE0.artifacts);{ const keepReply=state.replyMode; state=clone(DEFAULT); if(keepReply) state.replyMode=keepReply; /* a harness's reply mode survives Reset all */ }state.threads=clone(D.threads);state.questions=clone(D.questions);if(state.demoAutoStart){ armWorkGate(); /* Round 3 (A): Reset all is a rewind whatever was on screen */ if(state.workGate) state.workGate.cut=true; }renderApp(false);toast('Concept reset','All recipes, components, panels, threads, answers, artifacts, and working states returned to stock.');setTimeout(()=>{if(state.demoAutoStart)startWorking(true);},900);
   }
 
   function applyRecipe(i){i=Number(i);if(i<0){state.recipe=-1;renderApp();return;}const r=D.recipes[i];if(!r)return;state.recipe=i;state.variants=[...r.choices];renderApp();}
@@ -83019,6 +83198,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
     stopWorkTimer(true);
     if(state.work.running) state.work.running=false;
     for(const k in state.works) if(state.works[k].running) state.works[k].running=false;
+    /* Stop ends the turn: a demo run's held turns come back (settleWorkGate) */
+    if(state.workGate) state.workGate.ended=true;
     renderApp();
   }
   function deliverSend(raw){
@@ -83329,9 +83510,9 @@ suggested path                    migration 0043, reversible</div></div></sectio
       if(a==='step-working'){stepWorking(rec);return;}
       if(a==='complete-working'){completeWorking(rec);return;}
       if(a==='reset-working'){resetWorking(rec);return;}
-      if(a==='toggle-work-history'){rec.expanded=!rec.expanded;renderApp();return;}
-      if(a==='inspect-work-step'){rec.running=false;scrubTo(rec,Number(btn.dataset.value));if(!runningRecs().length)stopWorkTimer();renderApp();return;}
-      if(a==='toggle-work-phase'){const k=btn.dataset.value;rec.openPhase=(rec.openPhase===k?null:k);renderApp();return;}
+      if(a==='toggle-work-history'){const closing=!!rec.expanded;rec.expanded=!rec.expanded;renderApp();if(closing)letRoomGo();return;}
+      if(a==='inspect-work-step'){rec.running=false;endGateOnPause(rec);scrubTo(rec,Number(btn.dataset.value));if(!runningRecs().length)stopWorkTimer();renderApp();return;}
+      if(a==='toggle-work-phase'){const k=btn.dataset.value, was=rec.openPhase;rec.openPhase=(rec.openPhase===k?null:k);renderApp();if(was!=null&&rec.openPhase==null)letRoomGo();return;}
     }
     if(a==='open-activity'){if(!activityDefs()[btn.dataset.domain])return;const fromPreview=!!btn.closest('.ab-card');if(fromPreview||!state.activity.open)state.activity.pinned=true;state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();if(fromPreview)focusActivityControl('.activity-panel [data-action="unpin-activity"], .activity-panel [data-action="pin-activity"]');return;}
     if(a==='focus-activity'){if(!activityDefs()[btn.dataset.domain])return;state.activity.domain=btn.dataset.domain;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);renderApp();return;}
@@ -83697,7 +83878,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     tickOnce:()=>workTick(),
     setVoice:(v)=>{ state.motionVoice=['basic','friendly','glass','retro'].includes(v)?v:'auto'; renderApp(); },
     setReplyMode:(mode)=>{ state.replyMode=mode==='instant'?'instant':'stream'; },
-    setWorkStep:(i)=>{state.work.started=true;state.work.running=false;scrubTo(state.work,Number(i));if(!runningRecs().length)stopWorkTimer();renderApp();},
+    setWorkStep:(i)=>{state.work.started=true;state.work.running=false;endGateOnPause(state.work);scrubTo(state.work,Number(i));if(!runningRecs().length)stopWorkTimer();renderApp();},
     trigger:runDemoTrigger,
     listTriggers:allDemoTriggers,
     /* Lab-only (film tool): replay one existing item of a transcript family as
@@ -83916,6 +84097,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(o.thread!=null){ const k=String(o.thread).toLowerCase(); const t=state.threads.find(x=>x.id===o.thread||String(x.title||'').toLowerCase()===k); if(t){ thread=t.id; if(state.selectedThread!==t.id) switchThread(t.id); } }
     let found=false;
     if(o.messageId){
+      /* a message held behind a playing demo run (armWorkGate) is asked for by name: show the whole thread */
+      if(state.workGate&&state.workGate.ids.includes(String(o.messageId))){ state.workGate=null; renderApp(); }
       const el=document.querySelector(`#pmRoot [data-message-id="${CSS.escape(String(o.messageId))}"]`);
       if(el){ found=true; el.scrollIntoView({block:'center',behavior:'smooth'}); el.classList.add('pm56-revealed'); setTimeout(()=>el.classList.remove('pm56-revealed'),1600); }
       else toast('That message is not in this demo');
@@ -83924,6 +84107,9 @@ suggested path                    migration 0043, reversible</div></div></sectio
   }
 
   // Initial full render and a real, one-shot working sequence so the first open is not static.
+  /* the run below starts 250ms from now; holding its later turns from the first frame keeps them from showing and
+     then vanishing when it starts */
+  if(state.demoAutoStart&&!state.work.started&&state.selectedThread==='query') armWorkGate();
   renderApp(false);
   scrollTranscriptToEnd(true);
   finishEntrances();
