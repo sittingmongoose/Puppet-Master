@@ -1057,30 +1057,35 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      moving the reader (settleWorkGate). Only messages that came with the fixture are held; anything the reader or a
      handler added (a send, a receipt, an approval) shows as it always has. switchThread drops the gate (it stops the
      run), so a thread entered later shows its whole history; boot and Reset all arm it for the run they autostart.
-     Pause and the card's Reset keep it: the turn is still unfinished. state.workGate = {tid, card, ids}. */
+     Pause keeps it: the turn is still unfinished. Stop and the card's Reset end the turn (g.ended), and anything new
+     in the thread lifts it (settleWorkGate). Only a tail that is wholly the fixture's is held: a message added after
+     the card earlier would otherwise come back below the turns it was written after. state.workGate = {tid, card,
+     ids, n}, n the thread's length when it was armed. */
   function armWorkGate(){
     state.workGate=null;
     const tid=state.selectedThread, t=state.threads.find(x=>x.id===tid), fx=(D.threads||[]).find(x=>x.id===tid);
     if(!t||!fx) return;
     const i=t.messages.findIndex(m=>m.type==='working'&&!m.workId);
     if(i<0) return;
-    const fixture=new Set(fx.messages.map(m=>m.id).filter(Boolean));
-    const ids=t.messages.slice(i+1).filter(m=>m.id&&fixture.has(m.id)).map(m=>m.id);
-    if(ids.length) state.workGate={tid, card:t.messages[i].id||null, ids};
+    const fixture=new Set(fx.messages.map(m=>m.id).filter(Boolean)), tail=t.messages.slice(i+1);
+    if(tail.length&&tail.every(m=>m.id&&fixture.has(m.id))) state.workGate={tid, card:t.messages[i].id||null, ids:tail.map(m=>m.id), n:t.messages.length};
   }
   function heldByWorkGate(m){
     const g=state.workGate;
     return !!(g&&m&&m.id&&g.tid===state.selectedThread&&!state.work.completed&&g.ids.includes(m.id));
   }
   /* Called by renderApp before it captures the scroll. A gate whose thread is no longer shown is dropped; one whose
-     run has completed is lifted, and that render is the reveal: the reader stops following, so the held messages
+     turn is over is lifted, and that render is the reveal: the reader stops following, so the held messages
      mount below the fold instead of the transcript gliding a whole thread's height to the new bottom, and the card's
      follower stands down for the frame (restoreScroll), so the text above the finished card stays where it is while
-     the card settles and the first held message rises under it. The jump-to-latest control says more arrived. */
+     the card settles and the first held message rises under it. The jump-to-latest control says more arrived.
+     The turn is over when the run completes, when Stop or the card's Reset ends it (g.ended), and when anything
+     arrives in the thread (a send, Send now, a receipt): that comes after the fixture's later turns, so they are
+     shown first rather than slotted in above it when the run ends. */
   function settleWorkGate(){
     const g=state.workGate; if(!g) return false;
     if(g.tid!==state.selectedThread){ state.workGate=null; return false; }
-    if(!state.work.completed) return false;
+    if(!state.work.completed&&!g.ended&&activeThread().messages.length===g.n) return false;
     state.workGate=null;
     tStick=false; cancelGlide();
     return true;
@@ -4052,7 +4057,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
   function stepWorking(rec=state.work){ rec.running=false; rec.started=true; scrubTo(rec,rec.step+1); if(!rec.runId) rec.elapsed+=3; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
   function completeWorking(rec=state.work){ rec.running=false; rec.started=true; scrubTo(rec,1e9); if(!rec.runId) rec.elapsed=Math.max(rec.elapsed,134); rec.expanded=false; rec.openPhase=null; if(!runningRecs().length) stopWorkTimer(); renderApp(); if(!runningRecs().length) maybeFlushQueue(); }
   function restartRec(rec){ rec.step=0; rec.clock=0; rec.elapsed=0; rec.completed=false; rec.running=true; rec.started=true; rec.openPhase=null; delete rec.supersededBy; state.workTerminal={}; armWorkTimer(); renderApp(); }
-  function resetWorking(rec=state.work){ if(rec.runId){ if(rec.id&&rec.id!==rec.runId){ restartRec(rec); return; } resetChain(rec.runId); return; } state.work=clone(DEFAULT.work); state.workTerminal={}; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
+  function resetWorking(rec=state.work){ if(rec.runId){ if(rec.id&&rec.id!==rec.runId){ restartRec(rec); return; } resetChain(rec.runId); return; } state.work=clone(DEFAULT.work); state.workTerminal={}; if(state.workGate) state.workGate.ended=true; /* as Stop: the turn is over */ if(!runningRecs().length) stopWorkTimer(); renderApp(); }
 
   function globalReset(){
     notifyTurnOwners('reset');
@@ -4104,6 +4109,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
     stopWorkTimer(true);
     if(state.work.running) state.work.running=false;
     for(const k in state.works) if(state.works[k].running) state.works[k].running=false;
+    /* Stop ends the turn: a demo run's held turns come back (settleWorkGate) */
+    if(state.workGate) state.workGate.ended=true;
     renderApp();
   }
   function deliverSend(raw){
