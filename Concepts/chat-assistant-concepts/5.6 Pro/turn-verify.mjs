@@ -289,19 +289,25 @@ await safe('long run stays legible', async () => {
   check('140 subjects render as 30 nodes or fewer, with clusters', n.nodes <= 30 && n.clusters > 0, n);
   /* Spaced like real ticks, so every node has settled between samples (a tight
      synchronous loop freezes the animation timeline and measures entrances that
-     never happen in use). Judged against a full render of the same state, not a
-     fixed budget: on the review VM (software rendering) the ring re-space alone
-     costs ~25ms, because every node's transform transition restarts. */
+     never happen in use). Keep the same five pairs and the full-render timing
+     as a diagnostic, but budget the tick itself: a faster full render must not
+     fail an unchanged tick. The accepted cost was 45-50ms (Chat updates.md);
+     60ms allows 10ms measurement headroom and is stricter than the old 72-98ms
+     full-render reference. CPU-throttled probes scale that budget explicitly. */
   const cost = await p.evaluate(async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    const c = PM56_EXT.ctx(); const tick = [], full = [];
-    for (let i = 0; i < 5; i++) { await wait(520); let t0 = performance.now(); PM56_DEMO.tickOnce(); tick.push(performance.now() - t0); await wait(520); t0 = performance.now(); c.renderApp(); void document.querySelector('.transcript').scrollTop; full.push(performance.now() - t0); }
-    const med = a => +a.sort((x, y) => x - y)[2].toFixed(1);
-    return { tick: med(tick), full: med(full) };
+    const c = PM56_EXT.ctx(); const tick = [], full = [], at = [];
+    for (let i = 0; i < 5; i++) {
+      await wait(520);
+      const r = Object.values(c.state.works).find(x => x.id && x.id.startsWith('turn'));
+      at.push(r ? { clock: r.clock, step: r.step, completed: !!r.completed } : null);
+      let t0 = performance.now(); PM56_DEMO.tickOnce(); tick.push(performance.now() - t0);
+      await wait(520); t0 = performance.now(); c.renderApp(); void document.querySelector('.transcript').scrollTop; full.push(performance.now() - t0);
+    }
+    const med = a => +[...a].sort((x, y) => x - y)[2].toFixed(1);
+    return { tick: med(tick), full: med(full), ticks: tick.map(x => +x.toFixed(1)), fulls: full.map(x => +x.toFixed(1)), at };
   });
-  /* measured 45-50ms against 72-98ms here; about half of the tick is the ring
-     re-space itself (Chat updates.md, cost at scale) */
-  check('a work tick at scale costs less than a full render of the same state', cost.tick < cost.full, cost);
+  check('a work tick at scale stays within a 60ms median budget (scaled by CPU throttle)', cost.tick <= 60 * THROTTLE, { ...cost, budgetMs: 60 * THROTTLE });
   await p.close();
 });
 
