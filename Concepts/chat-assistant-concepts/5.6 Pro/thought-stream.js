@@ -12,9 +12,11 @@
  *               working card is born CARD_AFTER later, into the room the fold gave back):
  *                 Auto      open while it thinks, then folds to one line: "Thought for Ns", chevron, and a short gist;
  *                 Expanded  stays open beside the answer.
- *               Under Auto the open block shows only its last six lines while it thinks, fading at the top, so a long
- *               thought never pushes the conversation; open again, it shows everything. A fold gives its height back
- *               through turn-stream's room hold, so a reader at the bottom is never pulled down.
+ *               Under Auto the open block shows only its last lines while it thinks, fading at the top, so a long
+ *               thought never pushes the conversation; open again, it shows everything. How many is Settings' Lines
+ *               shown while thinking (general.interaction.thought-stream-lines, state.capabilities.thoughtLines):
+ *               4, 6, 8, 12 or 16, default 8. A fold gives its height back through turn-stream's room hold, so a
+ *               reader at the bottom is never pulled down.
  *   3. Toggle   The block's line is a button (aria-expanded): click, Enter or Space opens or folds that one block. A
  *               reader's toggle lasts until the preference changes; then every block follows the new choice.
  *   4. Owner    Registers as a turn owner: Stop ends the thought where it is ("Thinking ended after Ns"), Send now
@@ -39,7 +41,10 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function voice() { var tr = document.querySelector('.chat-stage .transcript'); return (tr && tr.getAttribute('data-voice')) || 'basic'; }
 
-  var CAP_LINES = 6;                       /* Auto, while thinking: the last six lines */
+  /* Auto, while thinking: the last lines the reader chose (Jared, 2026-10-23: "Default 8, adjustable in settings.").
+     Fewer than 4 leaves the top fade over a third of the window; past 16 (320 px) a window is half a column, which is
+     Always open's job */
+  var LINES = [4, 6, 8, 12, 16], DEFAULT_LINES = 8;
   /* an agent turn's first tool call waits this long after the reasoning hands over: the block folds first, with its
      room held, and the working card is born into that room (the fold token is 320 ms, Retro's 192) */
   var CARD_AFTER = 380;
@@ -50,6 +55,7 @@
 
   /* ------------------------------------------------------------------ preference */
   function prefMode(c) { return c && c.state && c.state.capabilities && c.state.capabilities.thought === 'Expanded' ? 'Expanded' : 'Auto'; }
+  function capLines(c) { var n = Number(c && c.state && c.state.capabilities && c.state.capabilities.thoughtLines); return LINES.indexOf(n) >= 0 ? n : DEFAULT_LINES; }
   /* a recorded example may show one mode in its own chat (Demo Studio, lab only); it never writes the preference */
   function modeOf(c, T) {
     if (T.thoughtMode === 'Auto' || T.thoughtMode === 'Expanded') return T.thoughtMode;
@@ -131,7 +137,7 @@
     return clip;
   }
   function lineH(flow) { var p = flow.querySelector('p'); var v = p ? parseFloat(getComputedStyle(p).lineHeight) : NaN; return isFinite(v) ? v : 20; }
-  function capOf(flow) { return Math.round(lineH(flow) * CAP_LINES); }
+  function capOf(flow) { var c; try { c = C(); } catch (e) { c = null; } return Math.round(lineH(flow) * capLines(c)); }
 
   /* ------------------------------------------------------------------ open, fold, follow */
   function critStep(x, v, w, dt) { var e = Math.exp(-w * dt), k = v + w * x; return [(x + k * dt) * e, (v - w * k * dt) * e]; }
@@ -220,17 +226,25 @@
     due.forEach(function (id) { handover(id); });
     if (live.size) loop = requestAnimationFrame(frame);
   }
-  /* height follows the flow through a critically damped spring (the answer island's omega), capped to the last six
-     lines under Auto; the flow scrolls inside the cap the same way, so a new line slides in instead of stepping */
+  /* height follows the flow through a critically damped spring (the answer island's omega), capped to the reader's
+     lines under Auto; the flow scrolls inside the cap the same way, so a new line slides in instead of stepping. The
+     window never trails its words by more than 40 px, except while it eases to a new cap (a change of Lines shown
+     while thinking mid-thought): that change glides the whole way instead of stepping */
   function follow(clip, L, ts) {
     var st = clip.__tt;
     if (st.open === undefined || !st.open || st.anim) return;
     var flow = clip.firstElementChild, full = natural(clip), cap = L.capped ? capOf(flow) : Infinity, target = Math.min(full, cap), y = Math.max(0, full - target);
-    if (reduced()) { st.h = target; clip.style.height = target + 'px'; scrollTo_(clip, y, true); return; }
-    var t = now(), dt = st.last ? Math.min(0.1, Math.max(0.0005, (t - st.last) / 1000)) : 1 / 60; st.last = t;
+    /* a new cap starts its glide from this frame: the render that brought it may have held the frame up for a while,
+       and that wait must not count as glide time (at the 0.1 s clamp the spring covered three quarters of the way in
+       the first frame) */
+    var recapNow = st.cap !== undefined && cap !== st.cap && st.h > 0;
+    if (recapNow) st.recap = true;
+    st.cap = cap;
+    if (reduced()) { st.h = target; st.recap = false; clip.style.height = target + 'px'; scrollTo_(clip, y, true); return; }
+    var t = now(), dt = st.last && !recapNow ? Math.min(0.1, Math.max(0.0005, (t - st.last) / 1000)) : 1 / 60; st.last = t;
     var s = critStep(st.h - target, st.hv, 26, dt); st.h = target + s[0]; st.hv = s[1];
-    if (Math.abs(st.h - target) < 0.4 && Math.abs(st.hv) < 4) { st.h = target; st.hv = 0; }
-    if (st.h < target - 40) st.h = target - 40;
+    if (Math.abs(st.h - target) < 0.4 && Math.abs(st.hv) < 4) { st.h = target; st.hv = 0; st.recap = false; }
+    if (!st.recap && st.h < target - 40) st.h = target - 40;
     var hv = Math.max(0, st.h).toFixed(1) + 'px';
     if (clip.style.height !== hv) clip.style.height = hv;
     var s2 = critStep(st.y - y, st.yv, 22, dt); st.y = y + s2[0]; st.yv = s2[1];
@@ -408,6 +422,9 @@
     /* state for checks and the demo: what each live thought is doing */
     active: function () { var out = []; live.forEach(function (L) { out.push({ id: L.id, tid: L.tid, reply: L.replyId, cursor: L.cursor, ops: L.ops.length, ms: L.ms, agent: L.agent, capped: L.capped }); }); return out; },
     mode: function (T) { return T ? modeOf(C(), T) : prefMode(C()); },
+    /* Lines shown while thinking: the choices every surface offers (Settings, New chat defaults, the composer) and the
+       one in force */
+    lines: { choices: LINES.slice(), fallback: DEFAULT_LINES, current: function () { return capLines(C()); } },
     isOpen: function (id) { var f = findMsg(C(), id); return f && f.m.type === 'thought' ? isOpen(C(), f.m) : null; },
     owner: owner
   };

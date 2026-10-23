@@ -287,6 +287,8 @@ body.pm56-reduced .chat-title[data-pmx-title-state="naming"] .chat-state{ displa
 .pmx-dflt > .pmx-dflt-q:nth-child(3){ grid-row:3; }
 .pmx-sheet .pmx-dflt .pmx-dflt-ctl{ margin-top:0; }
 .pmx-sheet .pmx-dflt .pmx-dflt-ctl .pmx-ctl-control{ max-width:300px; }
+/* Thought Stream's second dropdown, Lines shown while thinking, sits under its first (DL-234) */
+.pmx-sheet .pmx-dflt .pmx-dflt-ctl .pmx-ctl-control > .shared-picker-button + .shared-picker-button{ margin-top:6px; }
 /* retro clamps a question's helper to one line (module-shell.css); here it may wrap to two, since the row's
    specimen leaves room. In the tall state (the naming warning note under Name new chats) retro's wider monospace
    drops the Recent line whole instead, so no helper is cut (the warning note and the specimen already say why

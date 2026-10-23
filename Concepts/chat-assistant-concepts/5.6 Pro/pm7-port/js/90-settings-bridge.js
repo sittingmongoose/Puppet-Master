@@ -8,6 +8,7 @@
   const I = Object.freeze({
     work: 'general.interaction.working-activity-style', sound: 'general.interaction.sound-effects',
     eli5: 'general.interaction.eli5-default', thought: 'general.interaction.thought-stream',
+    lines: 'general.interaction.thought-stream-lines',
     history: 'general.interaction.chat-history-list', mode: 'general.interaction.assistant-mode',
     title: 'ai.models.thread-title-model'
   });
@@ -15,6 +16,10 @@
   const setProject = E5?.setProject?.bind(E5);
   const titleToChat = value => value === 'Default' ? 'default' : value === 'None' ? 'none' : 'model:' + value;
   const titleToSettings = value => value === 'default' ? 'Default' : value === 'none' ? 'None' : value?.startsWith('model:') ? value.slice(6) : null;
+  // Lines shown while thinking: Settings stores the choice as text ("8"), the chat as a number; thought-stream.js owns
+  // the choices and the fallback, and without it there is no thinking to size.
+  const lines = () => window.PM56_THOUGHT?.lines || null;
+  const linesToChat = value => { const L = lines(), n = Number(value); return L.choices.includes(n) ? n : L.fallback; };
   let projecting = false, paintPending = false, applied = {}, appState = null, last = null;
   const ctx = () => A.ctx();
   const features = () => F?.state?.();
@@ -77,6 +82,7 @@
     const c = ctx(), f = features();
     return {
       thought: c.state.capabilities.thought === 'Expanded' ? 'Expanded' : 'Auto',
+      lines: lines() ? lines().current() : null,
       title: f?.title?.policy,
       project: E5?.resolve?.(c.thread?.id)?.projectDefault ?? null,
       thread: c.thread?.id,
@@ -110,6 +116,10 @@
         const value = values[I.thought] === 'Expanded' ? 'Expanded' : 'Auto';
         if (c.state.capabilities.thought !== value) { c.state.capabilities.thought = value; dirty = true; }
       }
+      if (lines() && diff(I.lines)) {
+        const value = linesToChat(values[I.lines]);
+        if (c.state.capabilities.thoughtLines !== value) { c.state.capabilities.thoughtLines = value; dirty = true; }
+      }
       if (f?.title && diff(I.title)) {
         const value = titleToChat(values[I.title] || 'Default');
         if (f.title.policy !== value) { f.title.policy = value; dirty = true; }
@@ -140,6 +150,9 @@
       if (now.thought !== before.thought && !saveOne(I.thought, now.thought)) {
         c.state.capabilities.thought = before.thought; repaint();
       }
+      if (now.lines !== before.lines && now.lines != null && !saveOne(I.lines, String(now.lines))) {
+        c.state.capabilities.thoughtLines = before.lines; repaint();
+      }
       if (now.title !== before.title) {
         const value = titleToSettings(now.title);
         if (value === null || !saveOne(I.title, value)) { features().title.policy = before.title; repaint(); }
@@ -162,6 +175,10 @@
   });
   E.chainAction('set-thought-cap', (c, button) => {
     if (saveOne(I.thought, button.dataset.value)) { c.closeMenu(); c.renderApp(); }
+    return true;
+  });
+  E.chainAction('set-thought-lines', (c, button) => {
+    if (saveOne(I.lines, button.dataset.value)) { c.closeMenu(); c.renderApp(); }
     return true;
   });
   let newThreadPending = false;

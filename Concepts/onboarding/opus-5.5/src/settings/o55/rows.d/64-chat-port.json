@@ -1,5 +1,5 @@
 {
- "_about": "DL-232 / SSYS-055: the hosted chat and Settings share admitted preferences; DL-234: the chat shows live thinking under this row's choice. Current-chat ELI5 stays in its chat sheet. Column width and pin choices remain layout state.",
+ "_about": "DL-232 / SSYS-055: the hosted chat and Settings share admitted preferences; DL-234: the chat shows live thinking under this row's choice, and Lines shown while thinking sets how much of it While it thinks keeps in view (Jared, 2026-10-23: \"Default 8, adjustable in settings.\"). Current-chat ELI5 stays in its chat sheet. Column width and pin choices remain layout state.",
  "rows": {
   "general.interaction.chat-history-list": {
    "label": "History in new workspaces",
@@ -19,6 +19,24 @@
    "options": {
     "Auto": "While it thinks",
     "Expanded": "Always open"
+   }
+  },
+  "general.interaction.thought-stream-lines": {
+   "label": "Lines shown while thinking",
+   "help": "How much of the reasoning While it thinks keeps in view as it streams; older lines fade at the top. Always open shows all of it.",
+   "choices": [
+    "4",
+    "6",
+    "8",
+    "12",
+    "16"
+   ],
+   "options": {
+    "4": "4 lines",
+    "6": "6 lines",
+    "8": "8 lines",
+    "12": "12 lines",
+    "16": "16 lines"
    }
   }
  }

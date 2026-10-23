@@ -7,6 +7,7 @@
   const IDS = Object.freeze([
     'general.interaction.working-activity-style', 'general.interaction.sound-effects',
     'general.interaction.eli5-default', 'general.interaction.thought-stream',
+    'general.interaction.thought-stream-lines',
     'general.interaction.chat-history-list', 'general.interaction.assistant-mode',
     'ai.models.thread-title-model'
   ]);
@@ -50,6 +51,7 @@
     const choices = {
       'general.interaction.working-activity-style': ['Orbit', 'Step Rail Simple'],
       'general.interaction.thought-stream': ['Auto', 'Expanded'],
+      'general.interaction.thought-stream-lines': ['4', '6', '8', '12', '16'],
       'general.interaction.chat-history-list': ['Flyout', 'Pinned'],
       'general.interaction.assistant-mode': ['Ask', 'Agent', 'Debug', 'Plan', 'Deep Plan']
     };

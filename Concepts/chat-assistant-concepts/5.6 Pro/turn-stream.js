@@ -517,7 +517,7 @@
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
-  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); } }
+  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.floorAt = room.h0; } }
   /* The answer's placeholder takes no room before it is drawn. It mounts as the card starts to fold and waits out its
      entrance delay fully transparent (turn-stream.css: [data-streaming="pending"], 380ms, from opacity 0). A narrow card
      frees its panel's height at once, so the placeholder's height went into the held room; a wide card (panel beside
@@ -555,6 +555,12 @@
      floor holds the room instead; the next subject's rows usually fill it, and
      what is left eases away more gently than the fold's room. */
   var SHRINK_HOLD = 700;
+  /* ...and as its leftover closes, the floor (what moves under a reader at the bottom) never comes down faster than
+     300 px/s, whatever the content under it does. A tall thinking window (Lines shown while thinking at 12 or 16,
+     DL-234) gives back up to 320 px when it folds; at the shrink's omega that eased the thread down at up to 0.8 px/ms,
+     twice turn-verify's 0.4 px/ms snap line. Leftovers under ~100 px never reach the limit, so a short fold or a card's
+     shrink closes as before. */
+  var SHRINK_VMAX = 300;
   function holdShrink() {
     if (reduced()) return;
     if (room.on) { if (room.transient && !room.rel) room.relAt = now() + SHRINK_HOLD; return; }
@@ -582,9 +588,12 @@
       var nat = naturalH(inner), t = now(), dt = Math.min(0.1, Math.max(0, (t - room.last) / 1000)); room.last = t;
       if (room.x == null) room.x = Math.max(0, room.h0 - nat);
       /* critically damped to zero (omega 11/s: ~450ms; a shrink's leftover 8/s) */
-      var s2 = critStep(room.x, room.v, room.transient ? 8 : 11, dt); room.x = s2[0]; room.v = s2[1];
+      var s2 = critStep(room.x, room.v, room.transient ? 8 : 11, dt);
+      if (room.transient) { var lo = room.floorAt - SHRINK_VMAX * dt - nat; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
+      room.x = s2[0]; room.v = s2[1];
       if (room.x < 0.5 || nat >= room.h0) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
-      roomFloor(nat + room.x);
+      room.floorAt = nat + room.x;
+      roomFloor(room.floorAt);
     }
     try { C().followIfSticky(); } catch (e) { }
     room.raf = requestAnimationFrame(roomFrame);

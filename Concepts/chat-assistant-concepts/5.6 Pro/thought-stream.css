@@ -41,7 +41,8 @@
 .tt-body { padding-left: 18px; }
 .tt-clip { position: relative; overflow: hidden; }
 .tt-clip.tt-folded { visibility: hidden; }
-/* Auto, while it thinks: the last six lines, the older ones fading out at the top */
+/* Auto, while it thinks: the last lines the reader chose (Lines shown while thinking, 8 by default), the older ones
+   fading out at the top */
 .tt-clip.tt-capped {
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 28px);
   mask-image: linear-gradient(to bottom, transparent 0, #000 28px);
@@ -49,6 +50,9 @@
 .tt-flow { padding: 3px 0 2px; }
 .tt-flow p { margin: 0 0 6px; font-size: 12.5px; line-height: 1.6; color: var(--tt-ink); overflow-wrap: anywhere; }
 .tt-flow p:last-child { margin-bottom: 0; }
+
+/* the composer's Thought Stream menu: Lines shown while thinking, one short line per choice (no description to carry) */
+.tt-lines-item { min-height: 28px; padding-top: 4px; padding-bottom: 4px; }
 
 /* ---------------------------------------------------------------- words: voices, quieter than the answer's */
 .tt-w { animation: tt-ink 200ms cubic-bezier(.2, .8, .2, 1) both; }
