@@ -77084,6 +77084,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
 
   function setPhase(st, ph) {
     st.phase = ph; st.m.streamPhase = ph;
+    if (ph !== 'pending') foldRelease(st.id);
     var art = document.querySelector('.transcript-inner > [data-k="msg:' + CSS.escape(st.id) + '"]');
     if (art) art.setAttribute('data-streaming', ph);
   }
@@ -77304,9 +77305,12 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      frees its panel's height at once, so the placeholder's height went into the held room; a wide card (panel beside
      the dial) keeps the dial's height until the dial lifts (~430ms in), so the list grew past the room by the
      placeholder (47px) while the follow waited, and the bottom stayed out of view for ~570ms (turn-verify: follow-along
-     never more than 24px away for longer than 300ms; stage 761px, standalone and hosted). Until its entrance begins it
-     is laid out at zero height; nothing is painted there before then in any case, and by the time it is, the dial is
-     lifting and the card gives its room back. Only an entrance that starts transparent after a delay is held. */
+     never more than 24px away for longer than 300ms; stage 761px, standalone and hosted). Until it is first drawn it is
+     laid out at zero height: the hold ends when its entrance delay does, or as soon as its first words arrive (setPhase
+     leaves 'pending' and the entrance delay no longer applies), whichever comes first, in the same frame, so no frame
+     paints it differently. Only an entrance that starts transparent after a delay is held. */
+  var foldHolds = new Map();                 // message id -> the zero-height hold
+  function foldRelease(mid) { var h = foldHolds.get(mid); if (h) { foldHolds.delete(mid); try { h.cancel(); } catch (e) { } } }
   function foldWait(ids) {
     if (!ids.length || reduced()) return;
     requestAnimationFrame(function () {
@@ -77317,8 +77321,13 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
         if (!a) return;
         var tm = a.effect.getTiming(), k = a.effect.getKeyframes ? a.effect.getKeyframes()[0] : null;
         if (!(tm.delay > 0) || !(tm.fill === 'both' || tm.fill === 'backwards') || !k || String(k.opacity) !== '0') return;
-        var left = tm.delay - (a.startTime != null && a.currentTime != null ? a.currentTime : 0);
-        if (left > 16) el.animate([{ height: '0px', overflow: 'clip' }, { height: '0px', overflow: 'clip' }], { duration: left });
+        /* a frame short: the entrance runs on the compositor and its start can resolve a frame before this hold's */
+        var left = tm.delay - (a.startTime != null && a.currentTime != null ? a.currentTime : 0) - 20;
+        var st = streams.get(mid);
+        if (!(left > 16) || !st || st.phase !== 'pending') return;
+        var h = el.animate([{ height: '0px', overflow: 'clip' }, { height: '0px', overflow: 'clip' }], { duration: left });
+        foldHolds.set(mid, h);
+        h.onfinish = function () { if (foldHolds.get(mid) === h) foldHolds.delete(mid); };
       });
     });
   }
