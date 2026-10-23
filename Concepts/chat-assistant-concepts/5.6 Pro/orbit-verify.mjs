@@ -275,7 +275,23 @@ await safe('Shared trail: painted stroke is over 1px in every take that uses it'
   for (const t of takes) {
     await page.evaluate(v => { window.PM56_DEMO.setVariant(2, v); window.PM56_DEMO.setWorkStep(6); }, t);
     await page.waitForTimeout(520);
-    out['take' + t] = await page.evaluate(() => {
+    out['take' + t] = await page.evaluate(async () => {
+      /* This is a resting-stroke measurement. A fixed delay can finish before
+         a late first layout starts orbit-disc-in, whose intended start scale
+         is 1.18 * .62. Wait for the actual finite trail entrances, then read
+         in this same task; retain the original 1.2px ink predicate below. */
+      await new Promise((resolve, reject) => {
+        const deadline = performance.now() + 4000;
+        const ready = () => {
+          const moving = [...document.querySelectorAll('.wa-disc, .rail8-item')].some(el =>
+            el.getAnimations().some(a => a.effect.getTiming().iterations !== Infinity &&
+              a.playState !== 'finished' && a.playState !== 'idle'));
+          if (!moving) { resolve(); return; }
+          if (performance.now() > deadline) { reject(new Error('Trail entrance did not settle')); return; }
+          requestAnimationFrame(ready);
+        };
+        ready();
+      });
       const read = el => {
         if (!el) return null;
         const svg = el.querySelector('svg'); if (!svg) return null;
