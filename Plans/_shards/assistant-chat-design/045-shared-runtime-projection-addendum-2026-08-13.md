@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L3614-L22447
 
-Source SHA256: `cbaef253d67af0f598d18c41a030961313211daa26c713f75c23f3dfc5166884`
+Source SHA256: `49dc7bf4347f7009f5aaa868aa9fef346bd2fb7176ed1fdfd41aac43d1a0a730`
 
 ---
 
@@ -10586,8 +10586,8 @@ canonical_text: >-
   reasoning open beside the answer. The line is the thinking toggle: a disclosure button with
   aria-expanded and a hover tag, keyboard reachable. A reader's toggle opens or folds that one block
   until the preference changes, and a preference change from Settings, New chat defaults or the
-  composer reaches every block on screen. A fold gives its height back through the reply's room
-  hold, so a reader at the bottom is not pulled down and follow-along holds. Stop or Send now while
+  composer reaches every block on screen. A fold never pulls a reader at the bottom down: the reply's
+  room hold keeps the list's height whenever the fold would shrink it, and follow-along holds. Stop or Send now while
   the model thinks ends the block where it was, as "Thinking ended after Ns"; leaving the thread lets
   it finish. Assistive technology hears one polite status when thinking starts and one when it ends,
   never the streamed words, and Reduced Motion lands every state at once. Opening or folding a block
