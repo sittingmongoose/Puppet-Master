@@ -20,6 +20,14 @@ const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i
 const ROOT = decodeURIComponent(path.dirname(new URL(import.meta.url).pathname));
 const FILE = path.resolve(opt('file', path.join(ROOT, 'index.html')));
 const THROTTLE = Number(opt('cpu-throttle', 1));
+// Matched main-page phase medians +25% and 10ms, rounded up to 5ms.
+// See the round-2 tests-B receipt for calibration samples and controls.
+const TICK_PHASES = [
+  { clock: 61, band: 'plain', budgetMs: 45 },
+  { clock: 64, band: 'step-crossing', budgetMs: 85 },
+  { clock: 64.5, band: 'step-crossing', budgetMs: 90 },
+  { clock: 65, band: 'step-crossing', budgetMs: 100 }
+];
 const ONLY = opt('only', '');
 const OUT = opt('json', null);
 const results = [];
@@ -217,19 +225,20 @@ await safe('live agent turn', async () => {
   /* the follow is a glide (a critically damped approach), so a step of new
      content is closed over a few frames by design; what must never happen is the
      view staying away -- the longest stretch more than 24px off the bottom */
-  /* The card's birth adds its whole height at once, and the glide closes it over its first work ticks. The window
-     starts at 1.5 s, and the card is born at about 1.47 s here, so this measure has always straddled that catch-up:
-     on main it read 262-349ms over three runs and failed one (2026-10-23, thinking lane). A turn whose model thinks
-     first (Thought Stream, DL-234) births its card about 5 s in, wholly inside the window (322-433ms). The first
-     300ms after the card's birth stay out of this one measure, for every turn; everything else, the thinking
-     included, is measured as before, and the drop check below is unchanged. */
+  /* A thought delays the card's birth into this window. Its visible catch-up
+     belongs in the acceptance result. Also report the birth-filtered measure
+     as a diagnostic, so its effect remains explicit without hiding a failure. */
   const bornAt = (lt.gaps.find(s => s.card) || {}).t;
   const followed = late.filter(s => bornAt == null || s.t < bornAt || s.t >= bornAt + 300);
-  let run = 0, longest = 0, from = null, longestAt = null;
-  followed.forEach((s, i) => { if (s.g > 24) { if (from == null) from = s.t; if (s.t - from >= longest) { longest = s.t - from; longestAt = from; } } else from = null; });
-  const stretch = followed.filter(s => longestAt != null && s.t >= longestAt && s.t <= longestAt + longest).map(s => s.t + ':' + s.g);
+  const measureFollow = samples => {
+    let longest = 0, from = null, longestAt = null;
+    samples.forEach(s => { if (s.g > 24) { if (from == null) from = s.t; if (s.t - from >= longest) { longest = s.t - from; longestAt = from; } } else from = null; });
+    return { longest, longestAt };
+  };
+  const { longest, longestAt } = measureFollow(late), birthFiltered = measureFollow(followed);
+  const stretch = late.filter(s => longestAt != null && s.t >= longestAt && s.t <= longestAt + longest).map(s => s.t + ':' + s.g);
   check('follow-along holds through the whole turn (never more than 24px away for longer than 300ms)',
-    longest <= 300, { samples: followed.length, away: away.length, worst: Math.max(...late.map(s => s.g)), longestAwayMs: longest, longestFrom: longestAt, cardBornAt: bornAt ?? null, stretch: stretch.slice(0, 12) });
+    longest <= 300, { samples: late.length, away: away.length, worst: Math.max(...late.map(s => s.g)), longestAwayMs: longest, longestFrom: longestAt, cardBornAt: bornAt ?? null, birthFilteredLongestAwayMs: birthFiltered.longest, birthFilteredLongestFrom: birthFiltered.longestAt, birthFilteredPass: birthFiltered.longest <= 300, stretch: stretch.slice(0, 12) });
   check('follow-along stays engaged', late.every(s => s.stick), late.filter(s => !s.stick).slice(0, 3));
   /* the view only ever moves up (following) or eases down (a released room):
      a drop faster than 0.4px/ms is a snap. Measured before the room holds: the
@@ -287,21 +296,45 @@ await safe('long run stays legible', async () => {
   await p.waitForFunction(() => { const r = Object.values(PM56_EXT.ctx().state.works).find(x => x.id && x.id.startsWith('turn')); return r && r.clock > 60; }, null, { timeout: 90000, polling: 500 });
   const n = await p.evaluate(() => ({ nodes: document.querySelectorAll('.working-card .orbit-node').length, clusters: document.querySelectorAll('.working-card .orbit-node.cluster').length }));
   check('140 subjects render as 30 nodes or fewer, with clusters', n.nodes <= 30 && n.clusters > 0, n);
-  /* Spaced like real ticks, so every node has settled between samples (a tight
-     synchronous loop freezes the animation timeline and measures entrances that
-     never happen in use). Judged against a full render of the same state, not a
-     fixed budget: on the review VM (software rendering) the ring re-space alone
-     costs ~25ms, because every node's transform transition restarts. */
-  const cost = await p.evaluate(async () => {
+  /* A pooled median mixes plain ticks, step crossings and completed no-ops.
+     Reset each active phase before every sample; keep the 520ms settling gaps,
+     five samples per phase, and full-render diagnostics. A timed tick must
+     advance that phase: replacing it with a cheap no-op is not a valid sample.
+     The absolute phase budgets allow faster full renders without changing the
+     accepted native-tick envelope. */
+  const cost = await p.evaluate(async ({ phases, throttle }) => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    const c = PM56_EXT.ctx(); const tick = [], full = [];
-    for (let i = 0; i < 5; i++) { await wait(520); let t0 = performance.now(); PM56_DEMO.tickOnce(); tick.push(performance.now() - t0); await wait(520); t0 = performance.now(); c.renderApp(); void document.querySelector('.transcript').scrollTop; full.push(performance.now() - t0); }
-    const med = a => +a.sort((x, y) => x - y)[2].toFixed(1);
-    return { tick: med(tick), full: med(full) };
-  });
-  /* measured 45-50ms against 72-98ms here; about half of the tick is the ring
-     re-space itself (Chat updates.md, cost at scale) */
-  check('a work tick at scale costs less than a full render of the same state', cost.tick < cost.full, cost);
+    const c = PM56_EXT.ctx();
+    const sampleTick = () => PM56_DEMO.tickOnce();
+    for (const r of c.runningRecs()) r.running = false;
+    const rows = phases.map(p => ({ ...p, budgetMs: p.budgetMs * throttle, samples: [] }));
+    for (let i = 0; i < 5; i++) {
+      for (const row of rows) {
+        const r = Object.values(c.state.works).find(x => x.id && x.id.startsWith('turn'));
+        if (!r) throw new Error('The timed long run is missing');
+        const stepAt = clock => c.workInstancesFor(r).filter(s => s.startAt <= clock + 1e-6).length - 1;
+        Object.assign(r, { clock: row.clock, elapsed: Math.floor(row.clock), step: stepAt(row.clock), running: false, completed: false });
+        c.renderApp(); void document.querySelector('.transcript').scrollTop;
+        await wait(520);
+        const before = { clock: r.clock, step: r.step, completed: !!r.completed };
+        const expected = { clock: row.clock + .5, step: stepAt(row.clock + .5) };
+        r.running = true;
+        let t0 = performance.now(); sampleTick(); const tickMs = performance.now() - t0;
+        r.running = false;
+        const after = { clock: r.clock, step: r.step, completed: !!r.completed };
+        await wait(520);
+        t0 = performance.now(); c.renderApp(); void document.querySelector('.transcript').scrollTop;
+        const fullMs = performance.now() - t0;
+        const valid = !before.completed && !after.completed && Math.abs(after.clock - expected.clock) < 1e-6 && after.step === expected.step
+          && (row.band === 'plain' ? after.step === before.step : after.step !== before.step);
+        row.samples.push({ tickMs: +tickMs.toFixed(1), fullMs: +fullMs.toFixed(1), before, after, expected, valid });
+      }
+    }
+    const med = a => +[...a].sort((x, y) => x - y)[2].toFixed(1);
+    return { samplesPerPhase: 5, phases: rows.map(row => ({ ...row, tickMedianMs: med(row.samples.map(s => s.tickMs)), fullMedianMs: med(row.samples.map(s => s.fullMs)), valid: row.samples.every(s => s.valid) })) };
+  }, { phases: TICK_PHASES, throttle: THROTTLE });
+  check('a work tick at scale meets its phase budget (plain and step-crossing medians, scaled by CPU throttle)',
+    cost.phases.every(p => p.valid && p.tickMedianMs <= p.budgetMs), cost);
   await p.close();
 });
 
