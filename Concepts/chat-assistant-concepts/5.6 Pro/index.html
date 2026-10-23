@@ -79362,9 +79362,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
       turnBusy, registerTurnOwner, maybeFlushQueue, startWorkingRec, onWorkComplete, releaseNextRun,
       followIfSticky, holdFollow, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx,
-      /* turn-stream's shrink room is kept for the whole of a demo run whose later turns are held (armWorkGate), until
-         the reader opens the card's history or a phase (settleWorkGate marks the gate touched) */
-      runHoldsRoom:()=>!!(state.workGate&&state.workGate.tid===state.selectedThread&&!state.work.completed&&!state.workGate.touched)
+      /* turn-stream keeps its shrink room for the whole of a run while runHoldsRoom() says so */
+      runHoldsRoom
     }, readOnlyRender?{readOnly:true}:{}, extra);
   }
   function extEach(name, extra, each){
@@ -80080,6 +80079,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const g=state.workGate;
     return !!(g&&m&&m.id&&g.tid===state.selectedThread&&!state.work.completed&&g.ids.includes(m.id));
   }
+  /* turn-stream keeps its shrink room for the whole of a demo run whose later turns are held (armWorkGate) while it
+     runs. The reader's own close of the card's history or a phase gives its room back by itself (letRoomGo), so
+     opening one no longer ends this for the rest of the run (Round 3 D: 365 px of slides, reduced 70 px steps). */
+  function runHoldsRoom(){
+    const g=state.workGate, w=state.work;
+    return !!(g&&g.tid===state.selectedThread&&w.running&&!w.completed&&!g.ended);
+  }
+  /* Round 3 (D): the reader closed the card's history or a phase: turn-stream lets the room that close gives back
+     go now, eased, instead of holding it for SHRINK_HOLD; the next shrink starts the run-long hold again */
+  function letRoomGo(){ try{ const S=window.PM56_STREAM; if(S&&S.letGo) S.letGo(); }catch(e){} }
   /* Called by renderApp before it captures the scroll. A gate whose thread is no longer shown is dropped; one whose
      turn is over is lifted, and that render is the reveal: the reader stops following, so the held messages
      mount below the fold instead of the transcript gliding a whole thread's height to the new bottom, and the card's
@@ -80091,11 +80100,6 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function settleWorkGate(){
     const g=state.workGate; if(!g) return false;
     if(g.tid!==state.selectedThread){ state.workGate=null; return false; }
-    /* The run-long room hold is for the run's own changes. A reader who opens the card's history or a phase made the
-       card tall, and closing it is their shrink: from then on this run's room is let go the ordinary way, so the close
-       does not leave the history's height blank under the card. RUN_ROOM_MAX alone does not tell the two apart: at a
-       759px column the history's close gave back 241px, and a list take's own fold 228px at 400px. */
-    if(state.work.expanded||state.work.openPhase) g.touched=true;
     const over=state.work.completed||g.ended;
     if(!over&&activeThread().messages.length===g.n) return false;
     state.workGate=null;
@@ -83480,9 +83484,9 @@ suggested path                    migration 0043, reversible</div></div></sectio
       if(a==='step-working'){stepWorking(rec);return;}
       if(a==='complete-working'){completeWorking(rec);return;}
       if(a==='reset-working'){resetWorking(rec);return;}
-      if(a==='toggle-work-history'){rec.expanded=!rec.expanded;renderApp();return;}
+      if(a==='toggle-work-history'){const closing=!!rec.expanded;rec.expanded=!rec.expanded;renderApp();if(closing)letRoomGo();return;}
       if(a==='inspect-work-step'){rec.running=false;endGateOnPause(rec);scrubTo(rec,Number(btn.dataset.value));if(!runningRecs().length)stopWorkTimer();renderApp();return;}
-      if(a==='toggle-work-phase'){const k=btn.dataset.value;rec.openPhase=(rec.openPhase===k?null:k);renderApp();return;}
+      if(a==='toggle-work-phase'){const k=btn.dataset.value, was=rec.openPhase;rec.openPhase=(rec.openPhase===k?null:k);renderApp();if(was!=null&&rec.openPhase==null)letRoomGo();return;}
     }
     if(a==='open-activity'){if(!activityDefs()[btn.dataset.domain])return;const fromPreview=!!btn.closest('.ab-card');if(fromPreview||!state.activity.open)state.activity.pinned=true;state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();if(fromPreview)focusActivityControl('.activity-panel [data-action="unpin-activity"], .activity-panel [data-action="pin-activity"]');return;}
     if(a==='focus-activity'){if(!activityDefs()[btn.dataset.domain])return;state.activity.domain=btn.dataset.domain;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);renderApp();return;}
