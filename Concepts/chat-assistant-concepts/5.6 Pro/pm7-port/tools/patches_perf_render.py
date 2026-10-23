@@ -244,4 +244,13 @@ HOSTED_JS_PATCHES = [
       var needs = false;""",
         1,
     ),
+    (
+        'turn-stage.js',
+        "  window.PM56_STAGE = { families: FAMILIES.slice(), redraw: function () { draw(); } };",
+        """  /* Hosted feeds can mount in a Home tab outside pmRoot. The word-only
+     observer fast path must not delay discovering those editor roots. */
+  EXT.slot('afterRender', function(c){ if(c.phase === 'editor') arm(); });
+  window.PM56_STAGE = { families: FAMILIES.slice(), redraw: function () { draw(); } };""",
+        1,
+    ),
 ]
