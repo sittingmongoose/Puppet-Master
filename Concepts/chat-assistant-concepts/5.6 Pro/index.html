@@ -81783,12 +81783,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      the next one). Only real input unsticks it: wheel-up, touch, a scrollbar
      drag, or a scrolling key outside a text field. Scroll events we cause are
      not input, so anchoring and clamping never flip the state. */
-  let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null, tInputDir=0;
+  let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null, tLastCh=null, tInputDir=0;
   let glideRAF=0, glideTs=0, tRO=null, tROTarget=null;
   const GLIDE_TAU=70;
   function tEl(){ return scrollKeyEl('transcript'); }
   function tAtBottom(el){ el=el||tEl(); if(!el) return true; return el.scrollHeight-el.clientHeight-el.scrollTop<=24; }
-  function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; }
+  function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; tLastCh=el.clientHeight; }
   function cancelGlide(){ if(glideRAF){ cancelAnimationFrame(glideRAF); glideRAF=0; } glideTs=0; }
   function glideStep(ts){
     glideRAF=0;
@@ -81925,15 +81925,20 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        view up when a card above shrank, which this rule would misread. */
     const el=tEl();
     if(el){
-      const top=el.scrollTop, prev=tLastTop; tLastTop=top;
+      const top=el.scrollTop, prev=tLastTop, ch=el.clientHeight, lastCh=tLastCh; tLastTop=top; tLastCh=ch;
       const ours=tExpectTop!=null&&Math.abs(top-tExpectTop)<=1;
       if(!ours){
         tExpectTop=null;
         const recent=tDragging||performance.now()-tUserInputAt<700;
+        /* The view taller by as much as it moved up is the browser lowering scrollTop to the new maximum, not a
+           reader going somewhere. When a demo run starts the composer's dock gives the transcript 20px and the
+           bottom padding grows 40px in the same frame; the clamp's event is read after both, 40px from the bottom,
+           and dropped the reader out of follow (hosted, reduced motion, boot run). */
+        const clamped=lastCh!=null&&prev!=null&&ch>lastCh&&prev-top<=ch-lastCh+1;
         /* an upward gesture never re-engages follow in its own first frames,
            while the view is still within reach of the bottom */
         if(tAtBottom(el)){ if(!(recent&&tInputDir<0)) tStick=true; }
-        else if(recent||(prev!=null&&top<prev-8)){ tStick=false; cancelGlide(); }
+        else if(recent||(prev!=null&&top<prev-8&&!clamped)){ tStick=false; cancelGlide(); }
       }
     }
     syncJumpBottom();
