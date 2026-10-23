@@ -22,7 +22,10 @@ if (!plannedLooks.length) throw new Error('The fonts section requires a NieR loo
 const widthStep = Number(opt('--width-step') || 1);
 if (!Number.isInteger(widthStep) || widthStep < 1 || widthStep > 119) throw new Error('--width-step must be an integer from 1 to 119');
 const boundaries = [400, 420, 440, 459, 460, 480, 519];
-const widths = argv.includes('--sweep') ? [...new Set([...Array.from({ length: Math.ceil(120 / widthStep) }, (_, i) => 400 + i * widthStep), ...boundaries])].sort((a, b) => a - b) : [400, 420, 440, 459, 460, 480, 500, 519];
+const extraWidths = (opt('--extra-widths') || '').split(',').filter(Boolean).map(Number);
+if (extraWidths.some(w => !Number.isInteger(w) || w < 400 || w > 519)) throw new Error('--extra-widths must be CSS widths from 400 to 519');
+const plannedWidths = argv.includes('--sweep') ? [...Array.from({ length: Math.ceil(120 / widthStep) }, (_, i) => 400 + i * widthStep), ...boundaries] : [400, 420, 440, 459, 460, 480, 500, 519];
+const widths = [...new Set([...plannedWidths, ...extraWidths])].sort((a, b) => a - b);
 const check = (id, look, size, kind, pass, measured) => {
   results.push({ id, look, size, height, kind, pass: !!pass, owner: look.startsWith('nier-') ? 'c56port-nier' : 'c56port-looks', measured, sizeContext: testGeometry() });
   if (!pass) console.log(`FAIL ${id} ${look} ${kind}@${size} ${JSON.stringify(measured)}`);
