@@ -65308,6 +65308,13 @@ html:not([data-o55-nier="on"]) div.pm56-host[data-theme="friendly-light"] {
 html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-dark"] { --on-accent: #101114; }
 html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-light"] { --on-accent: #fff; }
 
+/* the idle (Ready) status ring in Glass Dark: PMConcept7's own Glass Dark idle glyph ink (--pmg-ink-idle, the fitted
+   ink its neon marks use elsewhere on the page). Dark themes ink idle with --subtle, and here --subtle is Home's
+   --pmw-text-3, a text ink pulled up for legibility: on Glass Dark's near-black ground it read 12.7:1, above every live
+   tone (lowest, blocked, 8.6:1) and above the working ring's painted peak on every row state (neon-verify 11-11d).
+   Glass Light keeps the neon layer's literal idle ink; --subtle as text is unchanged. */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-dark"] { --nx-idle: var(--pmg-ink-idle, #7c728e); }
+
 /* one reading ground: the host paints it (--canvas); the shell and the panes inside it are clear, so the ground is
    not stacked three or four times over the wallpaper */
 html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="glass"] {
@@ -65351,6 +65358,10 @@ html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-light"] {
      accent (--accent-primary)                                #b8d066               #0047AB
      face and code  IBM Plex Mono (--body-font, --mono-font; D17a) */
 html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="retro"] { --ss-r: 0px; }
+/* Retro Dark's idle status ring keeps the standalone's ink, PMConcept7's --text-muted (#7c866b, 4.59:1 on a row).
+   It otherwise falls back to --subtle, which Home lifts toward the text (6.20:1), and reads above blocked
+   (5.33:1 at rest, 4.07:1 on a selected row): neon-verify 11, 11b and 11c. The light looks set their own --nx-idle. */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="retro-dark"] { --nx-idle: var(--text-muted, #7c866b); }
 /* ---- pm7-port/css/20-controls.css ---- */
 /* pm7-port/css/20-controls.css (looks lane): PMConcept7's controls on the chat, after the stand-in chat and Home's
    picker (Concepts/home-redesign/src/panels/css/80-standin-chat.css, 30-menu.css), which are the page's own chat
@@ -247040,7 +247051,18 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
        'floating' for the whole exit — renderOverlays keeps emitting the flyout,
        so an intervening work tick patches it in place instead of removing it.
        The state flip is what removes it, and it happens only here. */
-    closeTimer = setTimeout(finishClose, ms + 30);
+    (function (fl) {
+      var my = fl.__pm56Close = (fl.__pm56Close || 0) + 1, done = false;
+      var fin = function (e) {
+        if (e && (e.target !== fl || e.propertyName !== 'transform')) return;
+        if (done) return; done = true;
+        fl.removeEventListener('transitionend', fin);
+        if (fl.__pm56Close !== my || !closing) return;
+        clearTimeout(closeTimer); finishClose();
+      };
+      fl.addEventListener('transitionend', fin);
+      closeTimer = setTimeout(fin, ms ? ms + 600 : 30);
+    })(el);
   }
 
   function finishClose(){
