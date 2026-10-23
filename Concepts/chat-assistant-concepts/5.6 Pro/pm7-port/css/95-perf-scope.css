@@ -1,0 +1,52 @@
+/* pm7-port/css/95-perf-scope.css (round 2 perf lane, perf-opus, 2026-10-23): where the chat's run-time custom
+   properties stop. pm7-port/tools/patches_perf.py is the other half.
+
+   A custom property is inherited, so changing one on an element restyles every element under it, whether or not any
+   of them reads it. Hosted, one restyle of a chat element costs about 45-90 us against PMConcept7's sheet, so these
+   writes restyled the whole chat each time (measured on the int9 page, 2026-10-23):
+   - PMConcept7's narrow ladder writes --pmw-chat-w and --pmw-chat-hist-w on #chatPanel (1,947 elements, ~90 ms);
+     only #chatPanel reads them.
+   - History pins and moves through --ph-w and --polish-history-gutter (history.css, delivery-polish.css, declared on
+     every .pm56-host) and --ph-x, -y, -h, -pane and --ph-user-w (history.js sync(), written on the hosts): one change
+     restyled both hosts (2,688-2,766 elements, 94-200 ms), several times per pin and per close. Only .history-flyout,
+     .assistant-grid and .workspace read them.
+   - A turn's room hold writes --tx-hold-min on the hosts every frame (turn-stream.js); only .transcript-inner reads it.
+   - The Ask Card writes --qs-ask-room on the hosts; only .decision-host reads it.
+   - syncChatDock writes --chat-dock-h, --decision-h and --lens-strip-h on .chat-stage, and the Ask Card's morph writes
+     --decision-h on .chat-float every frame; only .chat-float and .transcript read them.
+   - Every press on a chat control writes --pmx-from-x/y on #pmOverlayRoot (a sheet's origin); only the sheet reads them.
+   Each rule below sets a property back to its initial value on elements under the last element that reads it, so a
+   change stops there. No reader is under one of these rules (every var() of these names in the page was listed from
+   the CSSOM), so every value that is drawn is the one it was; what changes is how many elements the browser
+   recomputes. A rule that missed an element would only cost time again, never change a value. */
+
+/* PMConcept7's column width stays on #chatPanel */
+#chatPanel > #pmw-chat56 { --pmw-chat-w: initial; --pmw-chat-hist-w: initial; }
+
+/* History: the hosts carry it to .workspace > .assistant-pane > .assistant-grid and to the flyout, no further */
+.pm56-host > :not(.pm-shell, .history-flyout),
+.pm56-host .history-flyout > *,
+.pm56-host .assistant-grid > * {
+  --ph-x: initial; --ph-y: initial; --ph-h: initial; --ph-pane: initial; --ph-user-w: initial;
+  --ph-w: initial; --polish-history-gutter: initial;
+}
+
+/* the room hold: down to .transcript-inner; the Ask Card's room: down to .decision-host */
+.pm56-host > :not(.pm-shell),
+.pm56-host .assistant-grid > :not(.chat-stage),
+.pm56-host .chat-stage > :not(.transcript, .decision-host),
+.pm56-host .chat-stage > .transcript > :not(.transcript-inner),
+.pm56-host .transcript-inner > *,
+.pm56-host .decision-host > * { --tx-hold-min: initial; --qs-ask-room: initial; }
+.pm56-host .chat-stage > .decision-host { --tx-hold-min: initial; }
+.pm56-host .chat-stage > .transcript { --qs-ask-room: initial; }
+
+/* the dock: .chat-float reads --chat-dock-h and --decision-h, .transcript reads --lens-strip-h */
+.pm56-host .chat-stage > :not(.chat-float, .transcript),
+.pm56-host .chat-stage > .chat-float > *,
+.pm56-host .chat-stage > .transcript > * { --chat-dock-h: initial; --decision-h: initial; --lens-strip-h: initial; }
+
+/* a sheet's origin: every press on a chat control writes --pmx-from-x/y on #pmOverlayRoot (pmx-system.js), and only
+   the sheet itself reads them (#pmOverlayRoot > .pmx-sheet's transform-origin); an open History is 1,325 elements */
+.pm56-host > :not(.pmx-sheet),
+.pm56-host > .pmx-sheet > * { --pmx-from-x: initial; --pmx-from-y: initial; }
