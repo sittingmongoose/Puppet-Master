@@ -555,14 +555,20 @@
      floor holds the room instead; the next subject's rows usually fill it, and
      what is left eases away more gently than the fold's room. */
   var SHRINK_HOLD = 700;
+  /* A demo run whose later turns are held until it completes (app.js armWorkGate) keeps this room for the whole run:
+     the floor only ratchets up as the card grows past it, so a reader at the bottom sees the text above the card move
+     when the card reaches a new height and never slide back down when a subject's rows fold (2026-10-23: six 30-70px
+     slides a run at a 442px column). The room is let go as usual once the run is over. Live turns are unchanged. */
+  function runHoldsRoom() { var c = C(); return !!(c && c.runHoldsRoom && c.runHoldsRoom()); }
+  function shrinkRelAt() { return runHoldsRoom() ? Infinity : now() + SHRINK_HOLD; }
   function holdShrink() {
     if (reduced()) return;
-    if (room.on) { if (room.transient && !room.rel) room.relAt = now() + SHRINK_HOLD; return; }
+    if (room.on) { if (room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
     var c = C(); if (!c || (c.isSticky && !c.isSticky())) return;
     var inner = roomInner(); if (!inner) return;
     var before = inner === roomSeen && room.lastH ? room.lastH : 0;
     room.inner = inner; room.h0 = Math.max(before, inner.offsetHeight);
-    room.on = true; room.rel = false; room.transient = true; room.relAt = now() + SHRINK_HOLD;
+    room.on = true; room.rel = false; room.transient = true; room.relAt = shrinkRelAt();
     room.x = null; room.v = 0; room.last = now();
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
@@ -571,6 +577,7 @@
     room.raf = 0;
     var inner = roomInner();
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
+    if (room.transient && !room.rel && room.relAt === Infinity && !runHoldsRoom()) room.relAt = now() + SHRINK_HOLD;
     if (room.transient && !room.rel && now() >= room.relAt) releaseRoom();
     if (!room.rel && !roomQuiet()) {
       /* after the fold the floor only ratchets up: a follow into content past
