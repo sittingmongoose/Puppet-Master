@@ -14195,7 +14195,7 @@ canonical_text: >-
   until the preference changes, and a preference change from Settings, New chat defaults or the
   composer reaches every block on screen. A fold never pulls a reader at the bottom down: the reply's
   room hold keeps the list's height whenever the fold would shrink it, the room the reply does not
-  use eases away no faster than 300 px a second, so a tall window folds as quietly as a short one, and
+  use eases away no faster than 200 px a second, so a tall window folds as quietly as a short one, and
   follow-along holds. Stop or Send now while
   the model thinks ends the block where it was, as "Thinking ended after Ns"; leaving the thread lets
   it finish. Assistive technology hears one polite status when thinking starts and one when it ends,
