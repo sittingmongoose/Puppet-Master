@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36482-L37275
+Source lines: L36482-L37276
 
-Source SHA256: `d68896987d2a5a6766fb3645ae693791c11ebac6675060550adef852e94d9f92`
+Source SHA256: `432b79048153ada286aedefc6186993e2ac6aa822fb9d10241667c9d8af432d5`
 
 ---
 
@@ -492,9 +492,10 @@ canonical_text: >-
   center above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the
   visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent
   within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement,
-  pointer press, scrolling, or departure before the thresholds resets or cancels the pending opening; pointer departure
-  after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and
-  that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145).
+  pointer press, a scroll that moves the anchor, or departure before the thresholds resets or cancels the pending
+  opening; pointer departure after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor
+  closes its open tag, and that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145;
+  scroll narrowed 2026-10-23, DL-232).
   Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state,
   shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route
   IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current.

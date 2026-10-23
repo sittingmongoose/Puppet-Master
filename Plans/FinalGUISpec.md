@@ -36963,9 +36963,10 @@ canonical_text: >-
   center above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the
   visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent
   within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement,
-  pointer press, scrolling, or departure before the thresholds resets or cancels the pending opening; pointer departure
-  after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and
-  that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145).
+  pointer press, a scroll that moves the anchor, or departure before the thresholds resets or cancels the pending
+  opening; pointer departure after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor
+  closes its open tag, and that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145;
+  scroll narrowed 2026-10-23, DL-232).
   Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state,
   shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route
   IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current.
@@ -49296,9 +49297,9 @@ canonical_text: >-
   and only a never-saved project layout reads the Settings History default. The foundation lane's
   1920 px example widens from 599 to 680 px when History is pinned; this is an example measurement,
   not another width default. Host appearance, NieR parts, container-query CSS and tour hiding are
-  integrated. Persona clipping, narrow shelf headers, plate spacing and the host hover press defect
-  remain pending their owning lanes at this snapshot; the final all-look sweep and films are not
-  completion evidence supplied by this unit.
+  integrated. The final integration of 2026-10-23 adds the narrow shelf header, plate spacing,
+  helper-sheet chrome and host hover press repairs; its all-look sweep and PMConcept7 films are
+  concept evidence, not completion evidence supplied by this unit.
 gui_related: true
 gui_classification_reason: Defines the hosted chat surface, all-look presentation and narrow layout acceptance.
 split_recommended: false

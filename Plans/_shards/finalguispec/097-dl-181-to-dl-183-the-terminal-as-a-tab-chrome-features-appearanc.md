@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46893-L49340
+Source lines: L46894-L49341
 
-Source SHA256: `d68896987d2a5a6766fb3645ae693791c11ebac6675060550adef852e94d9f92`
+Source SHA256: `432b79048153ada286aedefc6186993e2ac6aa822fb9d10241667c9d8af432d5`
 
 ---
 
@@ -2414,9 +2414,9 @@ canonical_text: >-
   and only a never-saved project layout reads the Settings History default. The foundation lane's
   1920 px example widens from 599 to 680 px when History is pinned; this is an example measurement,
   not another width default. Host appearance, NieR parts, container-query CSS and tour hiding are
-  integrated. Persona clipping, narrow shelf headers, plate spacing and the host hover press defect
-  remain pending their owning lanes at this snapshot; the final all-look sweep and films are not
-  completion evidence supplied by this unit.
+  integrated. The final integration of 2026-10-23 adds the narrow shelf header, plate spacing,
+  helper-sheet chrome and host hover press repairs; its all-look sweep and PMConcept7 films are
+  concept evidence, not completion evidence supplied by this unit.
 gui_related: true
 gui_classification_reason: Defines the hosted chat surface, all-look presentation and narrow layout acceptance.
 split_recommended: false

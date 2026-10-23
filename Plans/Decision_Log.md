@@ -17014,18 +17014,22 @@ canonical_text: >-
   and no shadow global store is created. Final reconciliation against integrated concept 59ca2d4382
   records the hosted column, Home surface routing, thread-bound browser captures, thread-bound context
   actions, attachment viewer tabs and bounded More Info popover as built. Demo Studio has its Chat
-  section and the standalone remains the module source. This snapshot precedes the looks lane's final
-  CSS and the hover press fix: Persona clipping, shelf headers and plate spacing still need their
-  final sweep; films are pending. Thought Stream shares a preference and preview but has no live
+  section and the standalone remains the module source. The final integration of 2026-10-23 adds the
+  looks lane's CSS, the hover press fix, PMConcept7 hover copy for every chat control and the hosted
+  render repairs. Its browser checks pass the narrow shelf headers, the 480 px run plates, PMConcept7's
+  NieR type and the helper-sheet chrome at 400-519 px in all ten looks, and PMConcept7 films of Crew,
+  Room and BrainStorm are recorded. The hover press fix also narrows F3-523's scroll cancellation to a
+  scroll that moves the anchor. Thought Stream shares a preference and preview but has no live
   thinking renderer. The window-based isPhone helper and the separate scoped overlay wrapper are
   concept integration limits under ACD-501/504, not fulfilled native acceptance. The Thought Stream
   admission still needs Jared's ratification; no new product ruling is inferred from this snapshot.
-  Astra's round-2 check corrects the integration brief's broader capture claim: isolated delivery
-  preserves its saved destination, but composer attachment, list and insertion paths still need
-  destination restoration or mismatch refusal before draft mutation. That remains an implementation
-  gap under the existing originating-thread/destination requirement. The same review finds the shared
-  editor-revealed state can still count hidden Home panels; the separate run-card visibility wrapper
-  passes, while reconciliation of the shared state remains pending.
+  Astra's round-2 check corrected the integration brief's broader capture claim: composer attachment,
+  list and insertion paths needed destination restoration or mismatch refusal before draft mutation,
+  and the shared editor-revealed state counted hidden Home panels. The final integration repairs both
+  under the existing originating-thread/destination and visibility requirements. Two concept gaps
+  remain open without changing an owner: under load the hosted Ask Card close can finish after its
+  browser check reads it, and at a wide column the turn follow-along waits for the standalone chat's
+  own wide-layout fold.
 gui_related: true
 gui_classification_reason: Records the hosted chat replacement, shared Settings controls and preservation of the accepted tour.
 split_recommended: false
