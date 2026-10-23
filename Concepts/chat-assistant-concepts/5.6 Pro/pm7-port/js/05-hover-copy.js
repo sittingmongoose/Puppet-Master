@@ -52,7 +52,11 @@
     ['thread-st-', 'Opens this chat.'],
     ['thread-more-', 'Rename, pin, fork or archive this chat.'],
     ['hist-search', 'Type to filter the chats by title or message text.'],
-    ['rcpt:', 'A receipt the chat keeps of what happened.']
+    ['rcpt:', 'A receipt the chat keeps of what happened.'],
+    ['wd-step-', 'Concept lab only: moves the demo run on by one subject.'],
+    ['wd-done-', 'Concept lab only: finishes the demo run now.'],
+    ['wd-reset-', 'Concept lab only: puts the demo run back to its start.'],
+    ['wd-', 'Concept lab only: a control for this demo run.']
   ];
   /* hover key families that are not prefixes (mm-<message>-time ...) */
   var KEY_RE = [
@@ -96,7 +100,11 @@
     'sched-dock-show': 'Shows the messages scheduled in this chat.',
     'activity-scope': 'Switches between this activity and every activity domain.',
     'goal-pause': 'Pauses the goal; its progress is kept.',
-    'goal-cancel': 'Ends the goal; work already done stays.'
+    'goal-cancel': 'Ends the goal; work already done stays.',
+    'model-provider': 'Lists the models under this heading.',
+    'step-working': 'Concept lab only: moves the demo run on by one subject.',
+    'complete-working': 'Concept lab only: finishes the demo run now.',
+    'reset-working': 'Concept lab only: puts the demo run back to its start.'
   };
   /* last resort: the verb of the chat's action name (data-action) */
   var VERB = [
@@ -149,7 +157,7 @@
     if (!d && a) for (var i = 0; i < VERB.length; i++) if (VERB[i][0].test(a)) { d = VERB[i][1]; break; }
     return d;
   }
-  var MENU_ROW = '.menu-item,[role="menuitem"],[role="menuitemcheckbox"],[role="menuitemradio"]';
+  var MENU_ROW = '.menu-item,.att-source-row,[role="menuitem"],[role="menuitemcheckbox"],[role="menuitemradio"]';
   function complete(el) {
     if (!el || el.nodeType !== 1 || el.hasAttribute('data-pm-hover-exempt')) return;
     var tip = attr(el, 'data-hover-tip');
