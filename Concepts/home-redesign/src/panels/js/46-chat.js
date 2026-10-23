@@ -8,9 +8,10 @@
    Settings value, SSYS-050): width_px, history_pinned and keep_open. A project switch shows that project's own; a named
    layout and Restore home layout keep it.
    Pinned History (D3): the 400-760 range and the saved width_px are the message area; while the chat on screen
-   draws its History pinned, the column is that much wider (LADDER.chatHistoryW, 44-narrow.js) and the drag moves the
-   same edge over the same message range. The chat surface that draws the History (the stand-in today, the 5.6 Pro
-   chat after the port) registers itself as chatCol.surface (below). */
+   draws its History pinned, the column is wider by the History's own width (chatCol.historyW below: the width the
+   chat draws it at, a width the person dragged included, else LADDER.chatHistoryW, 44-narrow.js) and the drag moves
+   the same edge over the same message range. The chat surface that draws the History (the hosted 5.6 Pro chat,
+   app.js claimSurface over pm7-port/js/00-host.js) registers itself as chatCol.surface (below). */
 
 var chatCol = PMW.chatCol = {};
 var CHAT_VIS_KEY = 'pm.home.chat:v1';
@@ -67,8 +68,8 @@ chatCol.setWidth = function (w) {
 
 /* History pinned beside the messages, or a flyout (D3): the record's history_pinned, the typed local UI action
    ui.chat_column.pin_history (UCC-203), written like view state with the layout and no receipt, event or revision, as
-   keep_open is; never a Settings row. The chat surface that draws the History (the stand-in's History button, its pin
-   and its More menu's "Keep History open") dispatches it; chat:column on the bus tells it to repaint. */
+   keep_open is; never a Settings row. The chat surface that draws the History (the pin in its list header and its
+   header menu's "Keep History open") dispatches it; chat:column on the bus tells it to repaint. */
 chatCol.historyPinned = function () { return chatColumn().history_pinned; };
 chatCol.setHistoryPinned = function (on) {
   on = !!on;
@@ -85,12 +86,22 @@ COMMAND_HANDLERS[UI.pinHistory] = function (a) {
   return chatCol.setHistoryPinned(a && typeof a.history_pinned === 'boolean' ? a.history_pinned : !chatCol.historyPinned());
 };
 
-/* pinned History widens the column only while a chat surface on screen draws it (the stand-in's layer; never the
+/* pinned History widens the column only while a chat surface on screen draws it (the hosted 5.6 Pro chat; never the
    page's own chat, which has no History list) */
 chatCol.historyShown = function () {
   if (!chatCol.historyPinned()) return false;
   var sf = chatCol.surface;
   try { return !!(sf && sf.drawsHistory && sf.drawsHistory()); } catch (_) { return false; }
+};
+/* how much pinned History adds to the column beside a message area of mw px (D3, F3-637: "pinning it widens the chat
+   by its own width instead of squeezing the messages"): the width the chat draws it at there, which the surface works
+   out (historyWidth(mw): a width the person dragged, its own clamps), else LADDER.chatHistoryW; 0 while it is not
+   shown pinned */
+chatCol.historyW = function (mw) {
+  if (!chatCol.historyShown()) return 0;
+  var sf = chatCol.surface, w = null;
+  try { w = sf && sf.historyWidth ? sf.historyWidth(mw) : null; } catch (_) { w = null; }
+  return typeof w === 'number' && isFinite(w) && w > 0 ? w : LADDER.chatHistoryW;
 };
 
 /* drag 400-760 on the existing resizer (one command on release); with pinned History the column is the message area
@@ -199,7 +210,7 @@ chatCol.isFloating = function () { var ma = qs('.main-area'); return !!(ma && ma
    state, with the layout and no receipt, event or revision, as ui.panel_tab.activate is; never a Settings row. With it on
    the narrow ladder never folds the chat to its strip (44-narrow.js). Two menus carry it as the same checked row,
    keepOpenRow(), which dispatches the action: the title bar's Home options (49-titlebar.js) and the chat's own header
-   menu (the stand-in's More, kinds/95-standin-chat.js). */
+   menu (the hosted 5.6 Pro chat's, app.js renderColumnMenu). */
 chatCol.keepOpen = function () { var l = state.layout; return !!(l && l.chat_column && l.chat_column.keep_open); };
 chatCol.setKeepOpen = function (on) {
   on = !!on;
@@ -327,10 +338,10 @@ chatCol.installRailEntry = function () {
   chatCol.syncRailEntry();
 };
 
-/* The chat hooks for the kinds (CONTRACT 6.1 additions). The chat surface on screen (the stand-in layer today, the
-   5.6 Pro chat after the port) registers chatCol.surface = { drawsHistory(), shown(), compose(text), reveal(o) };
-   without one, or while it is not shown (switched off, or the Guided Tour teaching the page's own chat), compose
-   writes into the page's own composer and reveal only shows the chat.
+/* The chat hooks for the kinds (CONTRACT 6.1 additions). The chat surface on screen (the hosted 5.6 Pro chat, app.js
+   claimSurface) registers chatCol.surface = { drawsHistory(), shown(), compose(text), reveal(o), historyWidth(mw) };
+   without one, or while it is not shown (the Guided Tour teaching the page's own chat), compose writes into the page's
+   own composer and reveal only shows the chat.
    PM_HOME.chat.compose(text): shows the chat, puts text in its composer and focuses it with the caret at the end (a
      draft already there is kept and the text follows it on a new line; empty or whitespace-only text changes nothing).
    PM_HOME.chat.reveal({ thread, messageId }): shows the chat, switches to the thread (an id such as 'query' or its
@@ -344,7 +355,7 @@ function surfaceShown() { var sf = chatCol.surface; try { return !!(sf && (!sf.s
 function pageComposer() {
   var c = chatPanel();
   if (!c) return null;
-  var list = qsa('textarea, [contenteditable="true"]', c).filter(function (el) { return !el.closest('#pmw-chat') && el.getClientRects().length; });
+  var list = qsa('textarea, [contenteditable="true"]', c).filter(function (el) { return !el.closest('#pmw-chat56') && el.getClientRects().length; });
   return list.filter(function (el) { return /input|composer/i.test(el.className || ''); })[0] || list[0] || null;
 }
 function composePage(text) {

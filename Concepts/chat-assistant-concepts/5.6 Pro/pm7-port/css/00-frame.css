@@ -2,8 +2,8 @@
    scoped: every rule names .pm56-frame, .pm56-host, #pmw-chat56 or #chatPanel. The scoped chat CSS comes before this
    file, so ties go to these rules.
 
-   The column: div.pm56-frame#pmw-chat56 is a layer inside the page's own #chatPanel (as the stand-in was: absolutely
-   filling it, never moving it), the size container pm56host; div.pm56-host#pmRoot fills it. The overlay root
+   The column: div.pm56-frame#pmw-chat56 is a layer inside the page's own #chatPanel (absolutely filling it, never
+   moving it), the size container pm56host; div.pm56-host#pmRoot fills it. The overlay root
    div.pm56-host#pmOverlayRoot is body-level and fixed, transparent and click-through except for what the chat puts in
    it. Tab bodies: div.pm56-frame.pm56-tab fills the Home tab body. */
 
@@ -27,11 +27,9 @@
 #pmw-chat56[hidden] { display: none !important; }
 /* the page's own chat content under the layer is hidden while the 5.6 chat shows (visibility only: nothing moves, and
    keyboard focus cannot wander into it); the Guided Tour teaches the page's own chat, so while it runs 00-host.js takes
-   data-pm56 off #chatPanel, which lifts this and hides the layer, and the stand-in (chat.standIn on) takes the column
-   instead */
-#chatPanel[data-pm56="on"]:not([data-pmw-sc="on"]) > :not(#pmw-chat56):not(#pmw-chat) { visibility: hidden !important; }
-#chatPanel:not([data-pm56="on"]) > #pmw-chat56,
-#chatPanel[data-pmw-sc="on"] > #pmw-chat56 { display: none !important; }
+   data-pm56 off #chatPanel, which lifts this and hides the layer */
+#chatPanel[data-pm56="on"] > :not(#pmw-chat56) { visibility: hidden !important; }
+#chatPanel:not([data-pm56="on"]) > #pmw-chat56 { display: none !important; }
 /* the body-level layers: display:contents, hidden while the tour runs (00-host.js syncTour) */
 #pm56-layers.pm56-layers { display: contents; }
 #pm56-layers.pm56-layers[hidden] { display: none !important; }

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44512-L46892
+Source lines: L44512-L46905
 
-Source SHA256: `432b79048153ada286aedefc6186993e2ac6aa822fb9d10241667c9d8af432d5`
+Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
 
 ---
 
@@ -1452,16 +1452,26 @@ canonical_text: >-
   workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize.
   The saved width and the 400-760 px drag range describe the message area. Pinning History adds 240
   px to the column, or 200 px while the whole column is under 540 px; the messages keep their width.
+  Amended 2026-10-23 (DL-233): the column adds the width History is drawn at, 240 px, 200 px only in
+  a capped column under 540 px (the popped-out chat or the narrow peek), or the width the person
+  dragged History's edge to within the chat's own 170-360 px and 42 percent of its pane. While that
+  drag lasts only History moves, so its edge stays under the pointer; on release the column takes the
+  new width and the messages theirs. While the narrow ladder takes pinned History's width back,
+  History shows as its flyout and the person's pin is kept; it is pinned again when the room returns.
   The pinned column's minimum is 640 px; its drag range is 640 to 760 + 240 px, capped by the 960 px
   centre budget. A folded chat always has History dropped to a flyout, so its peek opens at 400 px;
   with History pinned in the peek it is 640 px, capped at the row width minus 48 px. Measured
   History cases: at 1920 px in Friendly dark, the flyout column is 600 px, the pinned column 666 px
   (History 240 px, messages 425 px) and C 960 px; at 1920 px in NieR, flyout is 600 px and pinned
   681 px (History 240 px, messages 440 px), with C 960 px. At 1470 px in Glass light with the rail
-  folded, flyout is 434 px with C 960 px, and pinned is 640 px (History 240 px, messages 399 px),
-  with C 754 px. At 900 px in Retro dark the chat folds to 32 px, with a 400 px flyout peek or 640
-  px pinned peek. These measurements include centre-budget clamping, while the saved width remains
-  the message-area preference. The v2 layout record's chat_column keeps width_px, history_pinned and
+  folded, flyout is 446 px with C 960 px, and pinned is 640 px (History 240 px, messages 400 px),
+  with C 766 px (re-measured 2026-10-23, DL-233; the 2026-10-10 reading was 434 px, 399 px and C 754
+  px). At 900 px in Retro dark the chat folds to 32 px, with a 400 px flyout peek or 640 px pinned
+  peek; as built, a folded chat keeps History dropped, so its peek opens at 400 px with History as
+  its flyout either way. These measurements include centre-budget clamping, while the saved width
+  remains the message-area preference. The hosted 5.6 Pro chat and the panel redesign's scripted
+  stand-in, measured on the same page on 2026-10-23, give the same numbers in each case (DL-233).
+  The v2 layout record's chat_column keeps width_px, history_pinned and
   keep_open (defaults null, false and false), in addition to its shown state; none is a Settings
   value. width_px is the message area's width, rounded to an integer in 400-760 px, with an
   out-of-range finite number stored at the nearer bound and null following the window's default;
@@ -1469,18 +1479,20 @@ canonical_text: >-
   'chat', width }: a changed release commits once with one receipt, one workspace.layout_changed and
   a new revision; Escape or release with no movement commits nothing. Double-clicking the resizer
   commits once with width null. The two pin actions accept their named boolean or toggle when it is
-  absent, and save like view state with no receipt, event or revision; History's button, the pin in
-  its list header and Keep History open in More dispatch ui.chat_column.pin_history. A named layout
+  absent, and save like view state with no receipt, event or revision; the pin in History's list
+  header, History's close while it is pinned and Keep History open in the chat's header menu
+  dispatch ui.chat_column.pin_history. A named layout
   and Restore home layout keep all three fields; a project switch shows that project's own record,
   or the defaults if none exists. Once at boot, the former stored chat.width (finite, rounded and
   clamped to 400-760), chat.history value pinned and chat.pinOpen true copy into this project's
   layout and every other project's saved layout only where the target field still holds its default;
   existing non-default fields stay. The three old keys are dropped only after this project's layout
   is written, never while an unreadable record waits to be set aside; stored defaults (null, flyout
-  and false) are just dropped. The chat's More menu rows, in order, are Show the current chat, Pop
-  out or Dock back where supported, Keep History open (checked, ui.chat_column.pin_history), Keep
-  the chat open in narrow windows (checked, ui.chat_column.keep_open), and Clear what you sent. Keep
-  open's second line says Instead of folding to a strip at the edge. At 1920 px with width_px 500,
+  and false) are just dropped. The chat's header menu rows, in order, are Keep History open (checked,
+  ui.chat_column.pin_history), Keep the chat open in narrow windows (checked,
+  ui.chat_column.keep_open), and Pop out or Dock back where supported (amended 2026-10-23, DL-233: the
+  stand-in chat's Show the current chat and Clear what you sent left with it). Keep open's second
+  line says Instead of folding to a strip at the edge. At 1920 px with width_px 500,
   History pinning grows the column from 500 to 681 px (History 240 px, centre 960 px) and unpinning
   returns it to 500; dragging the 600 px column's inner edge 100 px right stores width_px 500, and
   double-click resets it to 600 with width_px null. At 900 x 700, keep_open on keeps the chat at 400
@@ -1603,6 +1615,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-187, the planning thread's rulings): Keep the chat open in narrow windows is the chat's own preference in its header menu and the Home options menu, not a Settings row; on the Usage page the chat never leaves the board below 400 px; the narrow ladder runs only while Home is the page shown."
   - "Amended 2026-10-10 (lead ruling): Keep the chat open in narrow windows is a check in the chat header's menu, also offered in the Home options menu, both dispatching ui.chat_column.keep_open, saved in the v2 chat column."
   - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The layout chat column keeps the rounded message width and pins, migrates former preferences once, and owns the More rows."
+  - "Amended 2026-10-23 (DL-233): pinned History adds the width it is drawn at, a dragged width included, and drops to its flyout while the ladder takes that width back; the chat's header menu rows follow the hosted 5.6 Pro chat, the stand-in's rows (Show the current chat, Clear what you sent) leaving with the stand-in."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md

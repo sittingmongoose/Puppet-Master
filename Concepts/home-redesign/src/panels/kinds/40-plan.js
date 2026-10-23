@@ -722,7 +722,8 @@ function mountPlan(host, state, api) {
   }
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
   function revise() {
-    /* the chat's own compose (the stand-in's message box, or the page chat's): shows the chat and puts the caret after */
+    /* the chat's own compose (the hosted 5.6 Pro chat's message box, or the page chat's): shows the chat and puts the
+       caret after */
     var res = null;
     try { res = PM_HOME.chat && PM_HOME.chat.compose ? PM_HOME.chat.compose('Revise the plan "' + plan.title + '": ') : null; } catch (_) {}
     if (res && res.ok) { api.announce('Say what to change in the chat'); return; }
@@ -1079,7 +1080,7 @@ function mountDiscovery(host, state, api) {
   };
 }
 
-/* ---- the catalog (one source for the "+" picker, Ctrl+P and the stand-in chat) ---- */
+/* ---- the catalog (one source for the "+" picker and Ctrl+P) ---- */
 var STATUS_SUB = { ready: 'Ready', building: 'Building', completed: 'Completed', canceled: 'Canceled' };
 PM_HOME.catalog.add('plan', Object.keys(PLANS).map(function (id) {
   var p = PLANS[id];

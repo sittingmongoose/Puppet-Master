@@ -1,7 +1,6 @@
 /* pm7-port/css/22-no-stripes.css (looks lane): no coloured side stripes (Jared; G-36). Each rail the chat draws on one
    side of a box is taken off, under the same selector with html:not(NieR) .pm56-host[data-theme] in front; where the
-   rail carried meaning it becomes a full 1 px box or a ring (as the stand-in's cards and found ring are), never a side
-   bar. The typing caret (.ribbon-command.typing) and the check marks drawn with two borders are not stripes. */
+   rail carried meaning it becomes a full 1 px box or a ring, never a side bar. The typing caret (.ribbon-command.typing) and the check marks drawn with two borders are not stripes. */
 
 /* the work activity's "under" block (Orbit take, styles.css): a 2 px rail in the step hue; the indent stays */
 html:not([data-o55-nier="on"]) .pm56-host[data-theme] .wa-under {

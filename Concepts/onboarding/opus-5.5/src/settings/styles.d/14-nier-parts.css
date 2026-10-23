@@ -344,8 +344,8 @@ html[data-o55-nier-parts~="voice"][data-o55-nier-parts~="headers"] #rsStage .rs-
 /* ---- Pod companion [pod]: a small ink-line Pod hovering by the bottom-right corner ----
    A chat column that publishes a seat for it (anchor-name --o55np-pod-seat: the hosted 5.6 Pro chat's float, just above
    its composer, which it keeps clear for the Pod) has the Pod sit there, its right edge 4 px past the seat's and its foot
-   6 px under it, so it never covers that composer's Send. With no seat rendered (no chat, the chat hidden by the tour or
-   the stand-in, the column closed) the anchor() fallbacks put it at right 14 px, bottom 58 px, as before. */
+   6 px under it, so it never covers that composer's Send. With no seat rendered (no chat, the chat hidden by the tour,
+   the column closed) the anchor() fallbacks put it at right 14 px, bottom 58 px, as before. */
 #o55np-pod { position: fixed; position-anchor: --o55np-pod-seat; right: calc(anchor(right, 18px) - 4px); bottom: calc(anchor(bottom, 64px) - 6px);
   width: 40px; height: 52px; z-index: 2147481500; pointer-events: none; contain: layout style;
   color: var(--o55-nier-ink); display: none; }

@@ -10,7 +10,7 @@
      accent (--pmw-accent)                                    #74B9FF                   #005FCC at 74 % toward black
      face  Inter; code JetBrains Mono; corners 7 / 11 / 15 px (--radius-sm/md/lg)
    The chat column sits on #chatPanel, which Liquid Glass bakes as a panel sheet: the chat paints Glass's reading
-   ground once (the host, as the stand-in did), and nothing of its own blurs or tints over it (one blur, F3-427). */
+   ground once (the host), and nothing of its own blurs or tints over it (one blur, F3-427). */
 
 html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-dark"] { --on-accent: #101114; }
 html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-light"] { --on-accent: #fff; }

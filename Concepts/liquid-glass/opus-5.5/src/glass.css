@@ -659,8 +659,8 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(input, t
    showed as a darker box inside its bar. (Onboarding's and Usage's fields keep their own rules above.) The panels' add-a-tab
    pickers' search (.pmw-msearch) joined the list in Q16 (Jared, 2026-10-15: "the area where you type should blend in"). */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea, select) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box, .pmw-msearch) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box, .pmw-msearch) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea) { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-msearch) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-msearch) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea) { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-press {
   display: block; position: fixed; width: 36px; height: 36px; border-radius: 50%; pointer-events: none; z-index: 2147483000;
   background: radial-gradient(closest-side, rgba(255, 255, 255, .6), rgba(255, 255, 255, .16) 55%, transparent); mix-blend-mode: plus-lighter;
@@ -708,9 +708,10 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root aside.domain
    10. Friendly's dot field, spread (Jared, 2026-10-11: "I really like the dots pattern on the wallpapers for friendly,
        but its not used in a lot of places... Like in the settings/usage/left rail sections and the transcript area of
        the new chat system"). Friendly is the DS / 3DS / Wii / Wii U menus, Cocoon and iiSU: the same 18 px dot grid as
-       Friendly's ground, with its soft mint and lavender light, now behind Usage's cards, in the rail's panels, behind
-       Settings' sections and under the new chat's transcript. The dots ride with the content as it scrolls (local
-       attachment), like a handheld's menu, and never sit inside a card under text.
+       Friendly's ground, with its soft mint and lavender light, now behind Usage's cards, in the rail's panels and behind
+       Settings' sections. The dots ride with the content as it scrolls (local attachment), like a handheld's menu, and
+       never sit inside a card under text. The chat transcript's dots were the stand-in chat's (#pmw-chat), which was
+       removed on 2026-10-23 (DL-233); the hosted 5.6 Pro chat never drew them.
    --------------------------------------------------------------------------------------------------------------- */
 html[data-lg="on"][data-theme^="friendly"] {
   --lg-dots: radial-gradient(var(--pm6-cozy-dot) 1.3px, transparent 1.8px) 0 0 / 18px 18px;
@@ -720,14 +721,13 @@ html[data-lg="on"][data-theme="friendly-light"] { --pm6-cozy-dot: rgba(122, 109,
 html[data-lg="on"][data-theme="friendly-dark"] { --pm6-cozy-dot: rgba(200, 190, 225, .13); }
 html[data-lg="on"][data-theme^="friendly"] #pmuStage,
 html[data-lg="on"][data-theme^="friendly"] #pm-settings-root .document-main,
-html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.active > .sh-scroll,
-html[data-lg="on"][data-theme^="friendly"] #pmw-chat .pmw-sc-scroll {
+html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.active > .sh-scroll {
   background: var(--lg-dots), var(--lg-dots-glow) !important;
   background-attachment: local, local, local !important;
 }
 html[data-lg="on"][data-theme^="friendly"] #pmuScroll { background: transparent !important; }
-/* the rail's panel and the chat transcript are lighter fields, so their dots step back a little */
-html[data-lg="on"][data-theme^="friendly"] :is(#sidePanelSlot .side-panel-view.active > .sh-scroll, #pmw-chat .pmw-sc-scroll) { --pm6-cozy-glow-mint: transparent; }
+/* the rail's panel is a lighter field, so its dots step back a little */
+html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.active > .sh-scroll { --pm6-cozy-glow-mint: transparent; }
 
 /* ---------------------------------------------------------------------------------------------------------------
    11. Onboarding and the tour in Liquid Glass (Jared, 2026-10-11: "dont forget about the onboarding wizard and the

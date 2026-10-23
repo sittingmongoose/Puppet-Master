@@ -85,7 +85,6 @@ PM_HOME.boot = function () {
      ['shims', function () { shims.install(); }],
      ['title bar', function () { PMW.installTitlebar(); }],
      ['narrow ladder', function () { narrow.install(); }],
-     ['stand-in chat', function () { if (PMW.standIn) PMW.standIn.install(); }],
      ['tour', function () { if (PMW.tour) PMW.tour.install(); }],
      ['status bar dock', function () { if (PMW.pageShell) PMW.pageShell.install(); }],
      ['grab light', function () { PMW.light.bindShell(); }]

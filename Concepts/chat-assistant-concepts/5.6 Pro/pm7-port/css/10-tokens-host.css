@@ -6,7 +6,7 @@
 
    Where the values come from:
    - Home's --pmw-* layer (Concepts/home-redesign/src/panels/css/00-tokens.css, 50-looks.css and Glass's slots): the
-     inks, grounds, lines, menus and state colours the Home panels and the stand-in chat use, with their per-look pulls
+     inks, grounds, lines, menus and state colours the Home panels use, with their per-look pulls
      to 4.5:1. They are computed on the .pmw-scope ancestor every host has (js/00-host.js), from PMConcept7's own
      values there, so the Accent setting, Glass's panel transparency and the high-contrast mode arrive already applied.
    - PMConcept7's page tokens for faces and corners (--body-font, --mono-font, --radius-*), re-inherited on the host
@@ -50,7 +50,7 @@
    --font-ui         --body-font                      the look's face (Inter, Poppins; App font setting)
    --font-mono       --mono-font                      the code face (JetBrains Mono; D17a)
    --radius          --radius-md                      cards (6 / 14 / 11 px; Corner roundness setting)
-   --radius-sm       --radius-md x .6                 controls (the stand-in's control corner)
+   --radius-sm       --radius-md x .6                 controls (a control's corner, .6 of the card's)
    --shadow-float    --pmw-pop-shadow                 floating menus and sheets
    --shadow-soft     --elev-2                         raised cards */
 html:not([data-o55-nier="on"]) div.pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) {
@@ -96,7 +96,7 @@ html:not([data-o55-nier="on"]) div.pm56-host:is([data-theme^="basic"], [data-the
   /* the Send / Stop chip's corner (send-stop.css): the control corner */
   --ss-r: var(--radius-sm);
 }
-/* ink on an accent fill: black or white by the fill's own luminance (the stand-in's rule, 80-standin-chat.css), so a
+/* ink on an accent fill: black or white by the fill's own luminance (the Home panels' rule, 45-frames.css), so a
    chosen accent of any lightness keeps 4.5:1; the per-look files give the fallback (this rule is one class heavier,
    so it wins over them wherever it is supported) */
 @supports (color: color(from red srgb-linear r g b)) {

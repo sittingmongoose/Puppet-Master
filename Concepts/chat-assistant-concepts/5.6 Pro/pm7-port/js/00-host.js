@@ -3,8 +3,8 @@
    hosted branches (`window.PM56_HOST`) see it from their first line. The standalone never defines it.
 
    Mount (CONTRACT "Mount and scope"): div.pm56-frame#pmw-chat56 (the container pm56host) holding div.pm56-host#pmRoot
-   is a layer inside the page's own #chatPanel, exactly as the stand-in layered itself (never moved, wrapped or replaced;
-   #chatResizer untouched); div.pm56-host#pmOverlayRoot is a child of <body>. Every .pm56-host carries data-theme,
+   is a layer inside the page's own #chatPanel (never moved, wrapped or replaced; #chatResizer untouched);
+   div.pm56-host#pmOverlayRoot is a child of <body>. Every .pm56-host carries data-theme,
    mirrored from html[data-theme] (NieR stays on html and paints Basic, as PMConcept7 does).
 
    Tabs (CONTRACT 6.1): the chat's openEditor/closeEditor/activeEditor map to PM_HOME.openEditor / close / active and
@@ -295,6 +295,13 @@
     });
   }
 
+  /* the ladder's drop puts a pinned drawer away: it slides out at the width it has, as an unpin's exit does */
+  function lockDropWidth(pinned) {
+    if (pinned || !doc.body || doc.body.getAttribute('data-ph-drawer') !== 'pinned') return;
+    var f = doc.querySelector('#pmOverlayRoot .history-flyout');
+    if (f) f.style.width = f.getBoundingClientRect().width + 'px';
+  }
+
   /* ---- what the chat calls ---- */
   var H = window.PM56_HOST = {
     hosted: true,
@@ -310,18 +317,36 @@
     classMap: (window.PM56_CLASS_MAP && typeof window.PM56_CLASS_MAP === 'object') ? window.PM56_CLASS_MAP : {},
     observe: observeHosts,
     /* History pinned beside the messages (the chat column's history_pinned, CONTRACT 6.1): history.js reads and writes
-       it here; the chat column widens for it while the drawer is drawn pinned (drawsHistory) */
-    historyPinned: function () { try { return !!(window.PMW && PMW.chatCol && PMW.chatCol.historyPinned()); } catch (_) { return false; } },
+       it here; the chat column widens for it while the drawer is drawn pinned (drawsHistory) by the History's own width
+       (historyWidth, js/06-history-width.js). While the narrow ladder has taken that width back (narrow.state's
+       histDropped: the centre would fall under the strip step, 44-narrow.js) the chat reads the pin as off, so the
+       drawer leaves the column for its flyout, as the panel redesign designed (D3, F3-636), instead of squeezing the
+       messages; the record keeps the person's pin, and the drawer is pinned again when the room comes back (DL-233) */
+    historyRecord: function () { try { return !!(window.PMW && PMW.chatCol && PMW.chatCol.historyPinned()); } catch (_) { return false; } },
+    historyDropped: function () { try { return !!(window.PMW && PMW.narrow && PMW.narrow.state && PMW.narrow.state.histDropped); } catch (_) { return false; } },
+    historyPinned: function () { return H.historyRecord() && !H.historyDropped(); },
     setHistoryPinned: function (on) {
       on = !!on;
-      if (H.historyPinned() === on) return;
+      if (H.historyRecord() === on) return;
       try { if (window.PM_HOME && PM_HOME.command) PM_HOME.command('ui.chat_column.pin_history', { history_pinned: on }); else if (PMW.chatCol) PMW.chatCol.setHistoryPinned(on); } catch (err) { try { console.error('[pm56] pin History failed', err); } catch (_) {} }
     },
+    /* fn(pinned) when the pin as the chat reads it changes from outside the drawer: the record (the header menu, a
+       project switch, a restored layout) or the ladder's drop; a pin the person makes while the drop lasts stays until
+       the room changes again */
     onHistoryPinned: function (fn) {
-      try { if (window.PMW && PMW.bus && PMW.bus.on) PMW.bus.on('chat:column', function (e) { if (e && typeof e.history_pinned === 'boolean') fn(e.history_pinned); }); } catch (_) {}
-      try { if (window.PM_HOME && PM_HOME.on) PM_HOME.on('layout', function () { fn(H.historyPinned()); }); } catch (_) {}
+      var told = H.historyPinned();
+      function tell(v) { told = v; fn(v); }
+      function follow() { var v = H.historyPinned(); if (v === told) return; lockDropWidth(v); tell(v); }
+      try { if (window.PMW && PMW.bus && PMW.bus.on) PMW.bus.on('chat:column', function (e) { if (e && typeof e.history_pinned === 'boolean') tell(e.history_pinned && !H.historyDropped()); }); } catch (_) {}
+      try { if (window.PM_HOME && PM_HOME.on) { PM_HOME.on('layout', follow); PM_HOME.on('narrow', follow); } } catch (_) {}
     },
-    drawsHistory: function () { return !!(doc.body && doc.body.getAttribute('data-ph-drawer') === 'pinned') && H.shown(); },
+    /* the column reserves the History while the drawer is drawn pinned, opening into its pin, or put away by the
+       ladder's drop (the ladder's own hysteresis then decides when the room is back, never the drawer's state) */
+    drawsHistory: function () {
+      if (!doc.body || !H.shown()) return false;
+      var m = doc.body.getAttribute('data-ph-drawer');
+      return m === 'pinned' || (H.historyRecord() && (m === 'shut' || H.historyDropped()));
+    },
     frame: function () { return frame; },
     hosts: hosts,
     paintHost: paintHost,
@@ -333,7 +358,6 @@
     shown: function () {
       if (!frame || !frame.isConnected) return false;
       if (doc.documentElement.hasAttribute('data-o55-tour')) return false;
-      if (window.PMW && PMW.standIn && PMW.standIn.isOn && PMW.standIn.isOn()) return false;
       return true;
     },
     kindFor: kindFor,

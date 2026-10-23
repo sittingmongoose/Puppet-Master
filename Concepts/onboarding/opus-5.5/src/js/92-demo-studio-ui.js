@@ -223,7 +223,6 @@
       + actRow('terminal', T('studio.workspace.terminal'), T('studio.workspace.terminalSub'), btn(T('studio.workspace.terminalGo'), { do: 'agent-terminal', icon: 'play', off: !W.termAvail() }))
       + actRow('hand', T('studio.workspace.ask'), T('studio.workspace.askSub'), btn(T('studio.workspace.askGo'), { do: 'agent-ask', icon: 'play', off: !W.termAvail() })) + '</div>';
     return head('workspace') + block(T('studio.workspace.layouts'), lays, { lead: T('studio.workspace.layoutsLead') })
-      + block('', sw({ id: 'standin', icon: 'chat', title: T('studio.workspace.standIn'), sub: T('studio.workspace.standInSub'), on: W.standInAvail() && W.standIn(), do: 'standin', off: !W.standInAvail() }))
       + block('', agents);
   };
   const actRow = (icon, title, sub, act) => `<div class="pmds-actrow"><span class="pmds-swart" aria-hidden="true">${ico(icon, 18)}</span><span class="pmds-swtext"><span class="pmds-swtitle">${esc(title)}</span><span class="pmds-swsub">${esc(sub)}</span></span>${act}</div>`;
@@ -344,7 +343,6 @@
     add('story', T('studio.story.play'), T('studio.story.clock'), ['story-play'], 'play');
     M.workspace.layouts().forEach((l) => add('workspace', l.label, T('studio.workspace.layouts'), ['layout', l.id], 'layout'));
     add('workspace', T('studio.workspace.resetLayout'), '', ['layout-reset'], 'reset');
-    add('workspace', T('studio.workspace.standIn'), T('studio.workspace.standInSub'), ['standin'], 'chat');
     add('workspace', T('studio.workspace.agents'), T('studio.workspace.agentsSub'), ['agents'], 'agent');
     add('workspace', T('studio.workspace.terminal'), T('studio.workspace.terminalSub'), ['agent-terminal'], 'terminal');
     add('workspace', T('studio.workspace.ask'), T('studio.workspace.askSub'), ['agent-ask'], 'hand');
@@ -767,7 +765,6 @@
     'story-over': () => M.story.over(),
     layout: (arg) => { M.workspace.use(arg); real.setTimeout(refresh, 60); },
     'layout-reset': () => { M.workspace.reset(); real.setTimeout(refresh, 60); },
-    standin: () => { M.workspace.setStandIn(!M.workspace.standIn()); real.setTimeout(refresh, 60); },
     agents: () => { M.workspace.agents(); },
     'chat-view': (arg) => { if (!CHAT_VIEWS.includes(arg)) return; ST.chatView = arg; renderMain('stay'); ST.sheet.querySelector('.pmds-main').scrollTop = 0; focusKey(`chat-view:${arg}`); },
     /* a recorded example plays on its own and uses the whole workspace, so the Studio steps aside (like onboarding) */

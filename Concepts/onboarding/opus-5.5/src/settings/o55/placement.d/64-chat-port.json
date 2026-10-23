@@ -1,5 +1,5 @@
 {
- "_about": "DL-232 / SSYS-055: restore the admitted History starting-value row and place the newly admitted display-only Thought Stream row. The current-chat ELI5 value remains a run-scoped inventory identity but its live control belongs only to the chat sheet (SSYS-042); omit it from Settings and Settings search. chat.standIn has never been an inventory row.",
+ "_about": "DL-232 / SSYS-055: restore the admitted History starting-value row and place the newly admitted display-only Thought Stream row. The current-chat ELI5 value remains a run-scoped inventory identity but its live control belongs only to the chat sheet (SSYS-042); omit it from Settings and Settings search.",
  "retire_ids": ["general.interaction.chat-eli5"],
  "overrides": [
   {"section": "app-chat-view", "ids": ["general.interaction.thought-stream", "general.interaction.chat-history-list"]}

@@ -4030,7 +4030,7 @@ canonical_text: >-
   entered and explicit Unpin is temporary (ACD-453); no Activity pin default is added. The host's
   look, fonts, Reduced Motion and NieR settings reach the chat directly. A last-used chat model,
   effort or capability selection never becomes a global Settings default merely because the standalone
-  concept saved it. The scripted stand-in remains built but off by default for Home harnesses, never a
+  concept saved it. Amended 2026-10-23 (DL-233): the scripted stand-in chat is removed; it was never a
   hosted conversation choice or an inventory row. Native Settings scope, validation, preview/apply,
   read-only refusal and storage requirements remain in force; the HTML bridge is a concept projection
   only. Added by the lead's ruling of 2026-10-22 under Jared's port brief (DL-232):

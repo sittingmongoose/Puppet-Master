@@ -56,8 +56,9 @@ On the P1000's GPU it was 0.31 and 0.29 against today's 0.79 and 0.69.
 
 ## Published source slots
 
-176 surviving old Glass rules live here as plain CSS in `src/slots/`
-(67,653 exact authored bytes across 31 original sources).
+174 surviving old Glass rules live here as plain CSS in `src/slots/`
+(67,489 exact authored bytes across 30 original sources; the stand-in chat's two, G0859 and G0860,
+went with it on 2026-10-23, DL-233).
 Each fragment is one exact authored rule, named by its B0-r2 rule id beneath its
 original source path. Its former location contains a one-line comment such as
 `/* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0001.css */`.

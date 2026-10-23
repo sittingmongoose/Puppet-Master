@@ -7,10 +7,12 @@
    need no constants. The only file allowed to read the window size (the chat's default width scales with it).
    Pinned History (D3, the layout record's chat column history_pinned, ui.chat_column.pin_history): the column grows by
    the History width instead of squeezing the messages. chatMin, chatMax and the saved width (the chat column's
-   width_px, cmd.workspace_layout.resize_surface { surface: 'chat', width }) are the message area; the History adds
-   chatHistoryW on top (the chat draws it at chatHistoryWNarrow while its whole column is under chatHistoryAt, which
-   only a squeezed or capped column reaches). The widening is part of the chat width the ladder solves, so it counts in
-   the centre budget and eases like the rest of the column; the widening itself is never saved. */
+   width_px, cmd.workspace_layout.resize_surface { surface: 'chat', width }) are the message area; the History adds its
+   own width on top: chatHistoryW, or a width the person dragged its edge to, as the chat draws it beside the message
+   area (46-chat.js chatCol.historyW; the chat draws it at chatHistoryWNarrow while its whole column is under
+   chatHistoryAt, which only a capped column reaches: the narrow peek or a popped-out chat). The widening is part of the
+   chat width the ladder solves, so it counts in the centre budget and eases like the rest of the column; the widening
+   itself is never saved. */
 
 var LADDER = PMW.LADDER = { railEase: 960, railFold: 760, chatEase: 960, oneColumn: 600, chatStrip: 480, hyst: 48, railEased: 240, chatMin: 400, chatMax: 760, chatStripW: 32,
   chatHistoryW: 240, chatHistoryWNarrow: 200, chatHistoryAt: 540, usageBoardMin: 400 };
@@ -26,8 +28,9 @@ function chatUser() {
   return w ? clamp(w, LADDER.chatMin, LADDER.chatMax) : chatDefault();
 }
 narrow.chatUser = chatUser;
-/* the width pinned History adds to the column now (0 unless it is pinned and the chat on screen draws it) */
-function historyW() { return PMW.chatCol && PMW.chatCol.historyShown && PMW.chatCol.historyShown() ? LADDER.chatHistoryW : 0; }
+/* the width pinned History adds to the column now, beside the message area the person wants (0 unless it is pinned
+   and the chat on screen draws it) */
+function historyW() { return PMW.chatCol && PMW.chatCol.historyW ? PMW.chatCol.historyW(chatUser()) : 0; }
 narrow.historyW = historyW;
 
 function railUserWidth() {

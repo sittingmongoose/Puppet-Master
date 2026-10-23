@@ -44,7 +44,6 @@ Concepts/home-redesign/
 | `kinds/48-transcript.js` | Agent transcript (read-only live feed) | `thread-` |
 | `kinds/50-context.js` | Context detail | `context:` |
 | `kinds/52-record.js` | Records: search, MCP calls, the database inspector, work records | `search:`, `mcp:`, `app:`, `work-record:` |
-| `kinds/95-standin-chat.js` | the stand-in chat over `#chatPanel` (a scripted conversation that opens every kind) | |
 
 The Guided Tour's workspace chapter (D25) is native to the tour: `open_from_plus`, `open_file_from_rail`, `split_by_drag`
 and `widget_action` (Upcoming resets on the Home dashboard board) are defined in
@@ -92,7 +91,9 @@ plain words that NieR's readout finds by an attribute. It never edits the page's
 At run time the early script defines `PM_HOME_WORKSPACE` as a compatibility shim for the tour, chat and activity bar.
 The retired Home controller is no longer assembled. The centre mounts in `#panel-dashboard`; the chat column reuses `#chatPanel` and
 `#chatResizer`; the legacy Home nodes are hidden, never removed; old open paths (the file tree, `cmd.file.open`, the demo
-facade, the bottom-panel reveals) go through `PM_HOME.open`.
+facade, the bottom-panel reveals) go through `PM_HOME.open`. The chat in the column is the 5.6 Pro chat
+(`Concepts/chat-assistant-concepts/5.6 Pro/pm7-port/`, build step 6b), registered as `PMW.chatCol.surface`; the scripted
+stand-in chat that held the column before the port was removed on 2026-10-23 (DL-233).
 
 Lint (the build fails on each): emoji, `:has(`, a coloured side border (`border-left`/`border-inline-start` of 2 px or
 more, inset side shadows), class names containing `pill`, capsule radii, viewport width `@media` inside the package,

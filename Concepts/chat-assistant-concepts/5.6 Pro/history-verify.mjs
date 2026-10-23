@@ -31,6 +31,13 @@
  * scrollIntoViewIfNeeded).  The narrow-mode assertions then run on a real
  * narrow drawer (no stored width, the 200px default), which is also the state
  * item 4 was written for.
+ *
+ * HOSTED (PMConcept7, DL-233): the pinned default is the panel redesign's
+ * 240px (200px only in a capped column under 540px), outside the narrow band,
+ * and the column grows by the drawer's width.  The narrow-mode pass therefore
+ * boots on the width a person drags the drawer to, 200px (stored, restored by
+ * the module at boot), and item 4 then boots again with no stored width, on
+ * the 240px default its stage-width guard was written for.
  */
 import {chromium} from 'playwright';
 import { launchChatBrowser, testGeometry, measureTestGeometry } from './tests/chat-target.mjs';
@@ -59,6 +66,7 @@ const bctx=await browser.newContext({viewport:{width:1440,height:1080},deviceSca
    for the narrow-mode pass and everything after it, across reloads. */
 await bctx.addInitScript(()=>{ try{
   if(!sessionStorage.getItem('__hvNarrow')) localStorage.setItem('pm56-history-w','320');
+  else if(sessionStorage.getItem('__hvNarrowW')) localStorage.setItem('pm56-history-w',sessionStorage.getItem('__hvNarrowW'));
   else localStorage.removeItem('pm56-history-w');
 }catch(e){} });
 const page=await bctx.newPage();
@@ -464,7 +472,9 @@ await shot(`item3-take6${REDUCED?'-reduced':''}.png`);
    narrow band; the module (not this harness) flags it narrow.  Item 4 below
    continues from this boot state, which is the state it was written for. */
 await sec('item3: narrow hides status and time at rest', async()=>{
-  await page.evaluate(()=>{ try{ sessionStorage.setItem('__hvNarrow','1'); localStorage.removeItem('pm56-history-w'); }catch(e){} });
+  await page.evaluate(()=>{ try{ sessionStorage.setItem('__hvNarrow','1'); localStorage.removeItem('pm56-history-w');
+    /* hosted: the drawer a person narrowed to 200px (the 240px default is outside the narrow band) */
+    if(window.PM56_TEST&&PM56_TEST.kind==='pm7') sessionStorage.setItem('__hvNarrowW','200'); }catch(e){} });
   /* back to the 900px-tall viewport item 4 was written against: its scrim
      clicks land mid-pane, where a taller viewport puts a transcript card */
   await page.setViewportSize({width:1440,height:900});
@@ -483,6 +493,15 @@ await sec('item3: narrow hides status and time at rest', async()=>{
   check(g.narrow && g.w<=210 && slotDisp==='none' && timeDisp==='none',
         'Narrow mode hides status slot and timestamp at rest',
         {...g,slotDisp,timeDisp});
+  /* hosted: item 4 starts again from the default pinned width (no stored width) */
+  if(await page.evaluate(()=>PM56_TEST.kind==='pm7')){
+    await page.evaluate(()=>{ try{ sessionStorage.removeItem('__hvNarrowW'); localStorage.removeItem('pm56-history-w'); }catch(e){} });
+    await page.reload({waitUntil:'load'});
+    await page.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO);
+    await page.evaluate(()=>PM56_DEMO.setVariant(1,5));
+    await page.waitForTimeout(500);
+    await preparePinnedHistory();
+  }
 });
 
 /* =====================================================================

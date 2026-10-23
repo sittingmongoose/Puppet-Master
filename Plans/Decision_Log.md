@@ -17005,11 +17005,11 @@ canonical_text: >-
   thinks) or Expanded (Always open), default Auto, shared by Settings and New chat defaults. The same
   ruling moves the existing run-scoped current-chat ELI5 control to the chat sheet only, retaining its
   inventory identity and override contract. These are the lead's rulings, not Jared's quoted words,
-  and are flagged for Jared at handoff. The stand-in remains built but off by default for Home
-  harnesses; it is absent as the hosted conversation and has no Settings row. The Studio-only stand-in
-  swap and the fixture workspace bodies in ordinary Home tabs are concept scaffolding, not product
-  settings or native tab kinds. The latter clarifies ACD-500's product exclusion while allowing the
-  demonstrations Jared asked to carry into the Studio. The lead also kept the existing project-only
+  and are flagged for Jared at handoff. Amended 2026-10-23 (DL-233): the scripted stand-in chat is
+  removed, with its Studio-only swap; it is not the hosted conversation and has no Settings row. The
+  fixture workspace bodies in ordinary Home tabs are concept scaffolding, not product settings or
+  native tab kinds. That clarifies ACD-500's product exclusion while allowing the demonstrations Jared
+  asked to carry into the Studio. The lead also kept the existing project-only
   Settings adapter for this port: All chats ELI5 is session-only in the concept, the gap is disclosed,
   and no shadow global store is created. Final reconciliation against integrated concept 59ca2d4382
   records the hosted column, Home surface routing, thread-bound browser captures, thread-bound context
@@ -17072,3 +17072,68 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-504, ContractName:Plans/FinalGUISpec.md#F3-659, ContractName:Plans/Settings_System.md#SSYS-055
+
+
+### DL-233 - Remove The Stand-In Chat And Size Pinned History As The Panel Redesign Designed
+
+```yaml
+plan_unit_id: DL-233
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered the 5.6 Pro port's open items on 2026-10-23. Of the scripted stand-in chat he said:
+  "Stand-in chat should be removed. It's just going to confuse future agents." Of pinned History's
+  width he said: "Do whatever the panel redesign had designed around." The stand-in that held the Home
+  chat column before the port is removed from the concept, with its chat.standIn value, its Home
+  options row and its Demo Studio Workspace row. The hosted 5.6 Pro chat is the column's only chat
+  surface. Its own controls and the Studio's Agents open things carry the panel-open demonstrations
+  the stand-in held. This supersedes DL-232's ruling that the stand-in stays built but off by default
+  for Home harnesses, and ACD-504's Studio-only stand-in swap. Pinned History follows the panel
+  redesign's D3 as F3-637 states it: pinning widens the chat by the list's own width instead of
+  squeezing the messages. Pinned, the list is 240 px, or 200 px while the whole column is under 540
+  px, which only a capped column reaches. The column grows by the width the list is drawn at, also
+  when the person dragged the list's edge to another width within the chat's own 170 to 360 px and
+  42 percent of its pane, so the messages keep their width. The centre budget and the narrow ladder
+  still cap the column. While the ladder takes the History's width back, the list shows as its flyout
+  and the person's pin is kept. The standalone 5.6 Pro chat keeps its own 200 px pinned drawer. This
+  is a concept and canon reconciliation; browser checks of the concept are concept evidence, not
+  native implementation evidence.
+gui_related: true
+gui_classification_reason: Records the stand-in chat's removal and pinned History's width in the Home chat column.
+split_recommended: false
+depends_on: [DL-180, DL-187, DL-232]
+unblocks: []
+acceptance_criteria:
+  - "The Home chat column has one chat surface, the hosted 5.6 Pro chat; no stand-in chat, setting, Home options row or Demo Studio row remains."
+  - "Pinning History grows the column by the list's drawn width, default 240 px or a width the person dragged, and the messages keep their width wherever the centre budget allows it."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: hosted_chat_owner_drift
+reasoning_tier: high
+context_scope: chat56_pmconcept7_port
+implementation_surfaces:
+  - "Plans/Decision_Log.md"
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-232"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/ROUND2.md, SHA-256 9f669dde0142444599dbcca0524943ea4523008ef53d89d71518e705bd808e22 (Jared's answers of 2026-10-23, quoted verbatim, relayed by the port lead)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/FINAL-REPORT.md, SHA-256 2b92cf507b5b7999eed9be9557289a83c06918a5124925e88f24e0187a450a4d (open items 1 and 2 that the answers settle)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, the panel redesign's History width)"
+preserved_exact_tokens:
+  - "Stand-in chat should be removed. It's just going to confuse future agents."
+  - "Do whatever the panel redesign had designed around."
+negative_constraints:
+  - "Do not restore a scripted stand-in chat, a chat.standIn value or a stand-in Studio row."
+  - "Do not narrow the messages to make room for pinned History where the centre budget allows the column to grow."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/Decision_Log.md"
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-659, ContractName:Plans/assistant-chat-design.md#ACD-504, ContractName:Plans/Settings_System.md#SSYS-055

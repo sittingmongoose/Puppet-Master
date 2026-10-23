@@ -3,9 +3,9 @@
    "Deciding in the panel beside the chat" (Review: "Choosing in the report beside the chat") instead of its controls;
    they come back when the view stops being active (another tab chosen, the tab closed, its panel collapsed).
    Every run owner asks window.PM56_PMX.viewOpen(runId) (collaboration, review, room, brainstorm protocols). In hosted
-   mode it answers from PM_HOME.tabs(): the run's tab is the active tab of any panel (not only the focused one, as the
-   stand-in did) and that panel is on screen (not collapsed, not behind a maximized panel, not a panel the narrow
-   switcher hides, Home in front). The chat repaints once per frame when that set changes, so the cards follow. */
+   mode it answers from PM_HOME.tabs(): the run's tab is the active tab of any panel (not only the focused one) and that
+   panel is on screen (not collapsed, not behind a maximized panel, not a panel the narrow switcher hides, Home in
+   front). The chat repaints once per frame when that set changes, so the cards follow. */
 (function () {
   'use strict';
   var W = window;
