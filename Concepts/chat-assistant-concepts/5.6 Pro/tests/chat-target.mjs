@@ -124,12 +124,12 @@ export async function launchChatBrowser(chromium, argv = process.argv.slice(2)) 
     if (installed.has(page)) return page;
     installed.add(page);
     const setViewport = page.setViewportSize.bind(page);
-    page.setViewportSize = async size => {
-      await setViewport(target.kind === 'pm7' ? { ...size, width: Math.max(2400, size.width) } : size);
+    page.setViewportSize = async (size, surface = 'column') => {
+      await setViewport(target.kind === 'pm7' && surface === 'column' ? { ...size, width: Math.max(2400, size.width) } : size);
       if (target.kind === 'pm7') await page.evaluate(width => {
         if (window.PMW?.chatCol) { PMW.chatCol.setWidth(Math.min(760, Math.max(400, width))); PMW.chatCol.show(); }
       }, size.width);
-      await captureSize(page, { ...size, surface: 'column' });
+      await captureSize(page, { ...size, surface });
     };
     const release = page.mouse.up.bind(page.mouse);
     page.mouse.up = async options => { const result = await release(options); await captureSize(page); return result; };

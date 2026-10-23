@@ -120,6 +120,9 @@ const FILE = path.resolve(argVal('--file', path.join(HERE, 'index.html')));
 const THEMES_ARG = argVal('--themes', 'all');
 const OUT = argVal('--json', null);
 const REDUCED = argv.includes('--reduced');
+// Explicit focused receipts retain the original section bodies and predicates.
+const SECTION = argVal('--section', null), sectionFilter = SECTION ? new RegExp(SECTION) : null;
+let selectedSections = 0;
 
 if (!fs.existsSync(FILE)) { console.error('neon-verify: no such file ' + FILE); process.exit(2); }
 
@@ -137,6 +140,8 @@ function skip(label, detail) {
   console.log(`SKIP  ${label}`);
 }
 async function sec(label, fn) {
+  if (sectionFilter && !sectionFilter.test(label)) return;
+  selectedSections++;
   try { await fn(); }
   catch (e) { check(false, `[${label}] threw before it could assert`, String((e && e.message) || e).split('\n')[0]); }
 }
@@ -886,7 +891,7 @@ async function reducedState(p) {
     host.innerHTML = ['working', 'reviewing', 'waiting', 'waiting-dep', 'idle', 'complete',
       'blocked', 'failed', 'paused', 'recovering', 'pending', 'skipped', 'mixed']
       .map(s => N.status(s, 15)).join('');
-    const running = [], infinite = [];
+    const running = [], infinite = [], outsideInfinite = [];
     for (const a of document.getAnimations()) {
       const t = a.effect && a.effect.target;
       if (!t || a.playState !== 'running') continue;
@@ -896,7 +901,10 @@ async function reducedState(p) {
       if (t.closest && t.closest('svg.nx, .nx-st, .nx-bolt')) running.push(key);
       let tm = {};
       try { tm = a.effect.getComputedTiming(); } catch (e) {}
-      if (tm.iterations === Infinity && !allow.includes(name)) infinite.push(key);
+      if (tm.iterations === Infinity && !allow.includes(name)) {
+        infinite.push(key);
+        if (PM56_TEST.kind === 'pm7' && !t.closest?.('.pm56-host')) outsideInfinite.push(key);
+      }
     }
     const done = host.querySelector('.nx-st-complete .nx-pc');
     /* the lit state must survive: halos still paint (idle's is hidden by design) */
@@ -909,6 +917,8 @@ async function reducedState(p) {
     return {
       running: running.length, names: [...new Set(running)].slice(0, 12),
       infinite: infinite.length, infNames: [...new Set(infinite)].slice(0, 12),
+      outsideInfinite: outsideInfinite.length, outsideInfNames: [...new Set(outsideInfinite)].slice(0, 12),
+      reducedFlags: { body: document.body.classList.contains('pm56-reduced'), host: PM56_TEST.host.classList.contains('pm56-reduced'), motion: document.documentElement.dataset.motion || null },
       halos, nier: document.documentElement.getAttribute('data-o55-nier') === 'on', completeClip: done ? getComputedStyle(done).clipPath : '(no .nx-pc)',
       waScroll: wa ? getComputedStyle(wa).scrollBehavior : null
     };
@@ -956,7 +966,11 @@ for (const [k, route] of [['10b', 'body.pm56-reduced'], ['10c', 'html[data-motio
     const p = await newPage({ reducedMotion: 'no-preference' });
     try {
       await p.evaluate(k => {
-        if (k === '10b') document.body.classList.add('pm56-reduced');
+        if (k === '10b') {
+          document.body.classList.add('pm56-reduced');
+          // The real host bridge mirrors this class onto its logical bodies.
+          // Keep that bridge under test rather than assigning the host class.
+        }
         else document.documentElement.setAttribute('data-motion', 'reduced');
       }, k);
       await p.waitForTimeout(300);
@@ -1045,7 +1059,7 @@ for (const theme of THEMES) {
       }
       const liveMin = Math.min(...LIVE.map(s => cr[s]));
       const ok = (!isLight || cr.idle >= 3) && cr.idle < liveMin;
-      check(ok, `11 idle contrast at rest [${theme}]: idle ${cr.idle}:1 (want ${isLight ? '>= 3 and ' : ''}below every live tone, min ${liveMin}:1)`, cr);
+      check(ok, `11 idle contrast at rest [${theme}]: idle ${cr.idle}:1 (want ${isLight ? '>= 3 and ' : ''}below every live tone, min ${liveMin}:1)`, { ratios: cr, samples: rows });
       /* 11b/11c: the same idle row hovered (11b), then selected and selected + hovered (11c): the row tints change the
          field. What they test is the ORDER (integrate, lead decision 2026-10-02): on each row state idle reads no more
          than the lowest live tone drawn on that same row (the live marks are rendered into the probe row, so the row's
@@ -1097,25 +1111,25 @@ for (const theme of THEMES) {
         return row.getAttribute('data-id') || '';
       });
       if (id === null) { check(false, `11b/11c idle order, hovered/selected [${theme}]: no idle row`, null); return; }
-      const states = {};
+      const states = {}, inkStates = {};
       const row = p.locator('.thread-row[data-nx-probe]').first();
       await row.hover(); await p.waitForTimeout(450);
-      states.hover = crAll(await rowInks());
+      inkStates.hover = await rowInks(); states.hover = crAll(inkStates.hover);
       await p.mouse.move(5, 1075); await p.waitForTimeout(300);
       if (id) {
         await p.evaluate(i => window.PM56_DEMO.selectThread(i), id); await p.waitForTimeout(700);
         await p.evaluate(i => { const r = [...document.querySelectorAll('.thread-row')].find(x => x.getAttribute('data-id') === i); if (r) r.setAttribute('data-nx-probe', '1'); }, id);
         await p.mouse.move(5, 1075); await p.waitForTimeout(300);
-        states.selected = crAll(await rowInks());
+        inkStates.selected = await rowInks(); states.selected = crAll(inkStates.selected);
         await p.locator('.thread-row[data-nx-probe]').first().hover(); await p.waitForTimeout(450);
-        states.selectedHover = crAll(await rowInks());
+        inkStates.selectedHover = await rowInks(); states.selectedHover = crAll(inkStates.selectedHover);
       }
       const order = st => { if (!st) return { ok: false, idle: null, liveMin: null }; const lm = Math.min(...LIVE.map(s => st[s] == null ? Infinity : st[s])); return { ok: st.idle != null && isFinite(lm) && st.idle <= lm, idle: st.idle, liveMin: +lm.toFixed(3), lowest: LIVE.find(s => st[s] === lm) }; };
       const oh = order(states.hover), os = order(states.selected), osh = order(states.selectedHover);
       const info = o => `idle ${o.idle}:1 vs lowest live ${o.liveMin}:1 (${o.lowest})${o.idle != null && o.idle < 3 ? ', idle under 3:1 (accepted)' : ''}`;
-      check(oh.ok, `11b idle order, hovered row [${theme}]: ${info(oh)} (want idle <= lowest live)`, states.hover);
+      check(oh.ok, `11b idle order, hovered row [${theme}]: ${info(oh)} (want idle <= lowest live)`, { ratios: states.hover, samples: inkStates.hover });
       check(!!id && os.ok && osh.ok,
-        `11c idle order, selected row [${theme}]: ${info(os)}; selected + hovered ${info(osh)} (want idle <= lowest live on each)`, { selected: states.selected, selectedHover: states.selectedHover });
+        `11c idle order, selected row [${theme}]: ${info(os)}; selected + hovered ${info(osh)} (want idle <= lowest live on each)`, { selected: states.selected, selectedHover: states.selectedHover, samples: inkStates });
     } finally { await shut(p); }
   });
 }
@@ -1243,7 +1257,14 @@ await sec('glow present', async () => {
       return { bl: getComputedStyle(wrap, '::before').opacity };
     });
     await freezeNx(p); /* waiting backlight parks at its .08 peak */
-    const A = await readClip(p, { x: 0, y: 0, width: 90, height: 90 });
+    const box = await p.locator('#nx-test-glow').boundingBox();
+    if (!box || Math.abs(box.width-90)>.5 || Math.abs(box.height-90)>.5) {
+      check(false, '12a glow present: the 90px specimen is missing or scaled', box); return;
+    }
+    // A fixed child is relative to the hosted containing block, not the
+    // window. Sample the actual specimen rather than the page's top left.
+    const clip = { x: box.x, y: box.y, width: 90, height: 90 };
+    const A = await readClip(p, clip);
     /* Same mark with only the backlight suppressed: the glyph cancels out and
        the difference is the backlight alone, over its whole disc. */
     await p.evaluate(() => {
@@ -1254,7 +1275,11 @@ await sec('glow present', async () => {
       document.getElementById('nx-test-glow').classList.add('off');
     });
     await p.waitForTimeout(150);
-    const B = await readClip(p, { x: 0, y: 0, width: 90, height: 90 });
+    const afterBox = await p.locator('#nx-test-glow').boundingBox();
+    if (!afterBox || Math.abs(afterBox.x-box.x)>.5 || Math.abs(afterBox.y-box.y)>.5) {
+      check(false, '12a glow present: specimen moved between paired captures', { before: box, after: afterBox }); return;
+    }
+    const B = await readClip(p, clip);
     let sum = 0, n = 0;
     for (let y = 0; y < 90; y++) for (let x = 0; x < 90; x++) {
       if (Math.hypot(x - 45, y - 45) > 20) continue; /* the backlight's 33px disc */
@@ -1263,7 +1288,7 @@ await sec('glow present', async () => {
       n++;
     }
     const mean = sum / n;
-    check(mean > 1.0, `12a glow present (basic-dark): backlight disc differs ${mean.toFixed(2)} grey levels with it on vs suppressed (want > 1.0), ::before opacity ${info.bl}`, { mean: +mean.toFixed(2), before: info.bl });
+    check(mean > 1.0, `12a glow present (basic-dark): backlight disc differs ${mean.toFixed(2)} grey levels with it on vs suppressed (want > 1.0), ::before opacity ${info.bl}`, { mean: +mean.toFixed(2), before: info.bl, clip });
   } finally { await shut(p); }
 });
 for (const theme of ['nier-dark', 'nier-light']) {
@@ -1579,30 +1604,33 @@ for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].fi
         const pr = document.createElement('span'); PM56_TEST.host.appendChild(pr); const tok = {};
         for (const t of ['--muted', '--text', '--subtle', '--nx-idle']) { pr.style.color = 'var(' + t + ', transparent)'; tok[getComputedStyle(pr).color] = 1; }
         pr.remove();
-        let n = 0; const bad = [];
+        let n = 0, outside = 0; const bad = [];
         for (const s of document.querySelectorAll('svg.nx')) {
           if (!s.matches(bare) || s.getBoundingClientRect().width < 2) continue;
+          // The standalone document contains the chat; PM7 also contains
+          // native Usage/Home glyphs with their own neutral-ink palette.
+          if (PM56_TEST.kind === 'pm7' && !s.closest('.pm56-host')) { outside++; continue; }
           const c = s.querySelector('.nx-c'); if (!c) continue;
           n++;
           if (getComputedStyle(s).getPropertyValue('--nx-ink').trim()) continue;
           const ink = getComputedStyle(c).stroke;
           if (!tok[ink]) { const h = s.closest('button, summary, [role="button"], [data-action]'); bad.push(where + ' ' + s.dataset.nx + ' ' + ink + ' @' + h.tagName.toLowerCase() + '.' + String(h.className).trim().replace(/\s+/g, '.').slice(0, 50)); }
         }
-        return { n, bad };
+        return { n, bad, outside };
       }, [bare, where]);
-      let n = 0; const bad = new Set();
+      let n = 0, outside = 0; const bad = new Set();
       const ids = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => r.dataset.id));
-      for (const id of ids) { await p.evaluate(i => window.PM56_DEMO.selectThread(i), id); await p.waitForTimeout(250); const r = await scan(id); n += r.n; r.bad.forEach(b => bad.add(b)); }
+      for (const id of ids) { await p.evaluate(i => window.PM56_DEMO.selectThread(i), id); await p.waitForTimeout(250); const r = await scan(id); n += r.n; outside += r.outside; r.bad.forEach(b => bad.add(b)); }
       await p.evaluate(() => window.PM56_DEMO.selectThread('plain')); await p.waitForTimeout(300);
       for (const m of ['wand', 'mode', 'model', 'persona', 'permissions']) {
         const b = await p.$(`[data-menu="${m}"]`); if (!b) continue;
-        try { await b.click(); await p.waitForTimeout(400); const r = await scan('menu ' + m); n += r.n; r.bad.forEach(x => bad.add(x)); } catch (e) {}
+        try { await b.click(); await p.waitForTimeout(400); const r = await scan('menu ' + m); n += r.n; outside += r.outside; r.bad.forEach(x => bad.add(x)); } catch (e) {}
         await closeOverlays(p);
       }
       for (const d of ['goal', 'todo', 'subagents', 'changes', 'artifacts', 'crew']) {
-        try { await p.evaluate(x => window.PM56_DEMO.openActivity(x), d); await p.waitForTimeout(350); const r = await scan('panel ' + d); n += r.n; r.bad.forEach(x => bad.add(x)); } catch (e) {}
+        try { await p.evaluate(x => window.PM56_DEMO.openActivity(x), d); await p.waitForTimeout(350); const r = await scan('panel ' + d); n += r.n; outside += r.outside; r.bad.forEach(x => bad.add(x)); } catch (e) {}
       }
-      check(n > 100 && bad.size === 0, `17b hover ink leaves toned glyphs alone [${theme}]: ${n} reachable glyphs, every one without its own --nx-ink rests in a neutral ink`, [...bad].slice(0, 12));
+      check(n > 100 && bad.size === 0, `17b hover ink leaves toned glyphs alone [${theme}]: ${n} reachable glyphs, every one without its own --nx-ink rests in a neutral ink`, { bad: [...bad].slice(0, 12), sampled: n, outsideChat: outside });
     } finally { await shut(p); }
   });
 }
@@ -1616,7 +1644,7 @@ for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].fi
    overflows its row. Scrolled up, transcript content passes under the Pod as under PMConcept7's; whenever a transcript
    control is under it, it has faded back (data-shy, opacity <= .2) so the control shows through. */
 if (THEMES.includes('nier-dark')) await sec('pod', async () => {
-  const bad = []; let views = 0;
+  const bad = [], windows = []; let views = 0;
   for (const [w, h] of [[1440, 900], [1512, 982], [1920, 1100]]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, reducedMotion: REDUCED ? 'reduce' : 'no-preference' });
     await ctx.addInitScript(() => { try { localStorage.setItem('pm56-history-w', '320'); } catch (e) {} });
@@ -1625,6 +1653,12 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       watch(p);
       await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
       await boot(p);
+      await p.setViewportSize({ width: w, height: h }, 'window');
+      await p.waitForTimeout(400);
+      const actual = await p.evaluate(() => ({ width: innerWidth, height: innerHeight }));
+      windows.push({ requested: { width: w, height: h }, actual });
+      if (actual.width !== w || actual.height !== h) bad.push(`${w}x${h}: actual window ${actual.width}x${actual.height}`);
+      console.log('MEASURE Pod window ' + JSON.stringify(windows.at(-1)));
       await prepareWideHistory(p);
       await setTheme(p, 'nier-dark');
       await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
@@ -1675,7 +1709,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       }
     } finally { await shut(p); }
   }
-  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom; at the bottom no transcript button either; faded back over any it passes)`, bad.slice(0, 12));
+  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom; at the bottom no transcript button either; faded back over any it passes)`, { bad: bad.slice(0, 12), windows });
 });
 
 /* ------------------------------------------------------------- check 19: the header word wears its mark's tone */
@@ -1712,10 +1746,11 @@ for (const theme of ['basic-dark', 'basic-light', 'nier-dark'].filter(t => THEME
 }
 
 /* ------------------------------------------------------------- console noise + report */
+if (sectionFilter && !selectedSections) check(false, 'section selection matched no sections', SECTION);
 check(consoleErrors.length === 0, 'console: zero warnings/errors from the page', consoleErrors.slice(0, 10));
 check(pageErrors.length === 0, 'console: zero page errors', pageErrors.slice(0, 10));
 await browser.close();
-if (OUT) fs.writeFileSync(OUT, JSON.stringify({ file: FILE, themes: THEMES, reduced: REDUCED, pass, fail, skipped, results, consoleErrors, pageErrors }, null, 1));
+if (OUT) fs.writeFileSync(OUT, JSON.stringify({ file: FILE, themes: THEMES, reduced: REDUCED, section: SECTION, selectedSections, pass, fail, skipped, results, consoleErrors, pageErrors }, null, 1));
 console.log(`\nneon-verify: ${pass} PASS, ${fail} FAIL, ${skipped} SKIP (${THEMES.length} themes, reduced=${REDUCED})`);
 process.exit(fail ? 1 : 0);
 

@@ -97,7 +97,7 @@ if (pages.length === 2 && argv.includes('--parallel-pages')) {
     if (opt('--looks') && suite === 'layout') args.push('--looks', opt('--looks'));
     if (opt('--looks') && suite === 'neon') args.push('--themes', opt('--looks'));
     console.log(`RUN ${page} ${suite}`);
-    const timeout = suite === 'layout' && argv.includes('--sweep') ? 3 * 60 * 60 * 1000 : suite === 'wonderer' && !opt('--wg-only', '') ? 90 * 60 * 1000 : 45 * 60 * 1000;
+    const timeout = suite === 'layout' && argv.includes('--sweep') ? 3 * 60 * 60 * 1000 : (suite === 'wonderer' && !opt('--wg-only', '') || suite === 'neon') ? 90 * 60 * 1000 : 45 * 60 * 1000;
     const exit = await run(process.execPath, args, log, { WGV_ONLY: opt('--wg-only', ''), PM56_ROOT: CHAT_ROOT }, timeout);
     let rows = [], report;
     try { report = JSON.parse(readFileSync(json, 'utf8')); rows = report.results || []; } catch {}
