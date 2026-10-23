@@ -1257,7 +1257,14 @@ await sec('glow present', async () => {
       return { bl: getComputedStyle(wrap, '::before').opacity };
     });
     await freezeNx(p); /* waiting backlight parks at its .08 peak */
-    const A = await readClip(p, { x: 0, y: 0, width: 90, height: 90 });
+    const box = await p.locator('#nx-test-glow').boundingBox();
+    if (!box || Math.abs(box.width-90)>.5 || Math.abs(box.height-90)>.5) {
+      check(false, '12a glow present: the 90px specimen is missing or scaled', box); return;
+    }
+    // A fixed child is relative to the hosted containing block, not the
+    // window. Sample the actual specimen rather than the page's top left.
+    const clip = { x: box.x, y: box.y, width: 90, height: 90 };
+    const A = await readClip(p, clip);
     /* Same mark with only the backlight suppressed: the glyph cancels out and
        the difference is the backlight alone, over its whole disc. */
     await p.evaluate(() => {
@@ -1268,7 +1275,11 @@ await sec('glow present', async () => {
       document.getElementById('nx-test-glow').classList.add('off');
     });
     await p.waitForTimeout(150);
-    const B = await readClip(p, { x: 0, y: 0, width: 90, height: 90 });
+    const afterBox = await p.locator('#nx-test-glow').boundingBox();
+    if (!afterBox || Math.abs(afterBox.x-box.x)>.5 || Math.abs(afterBox.y-box.y)>.5) {
+      check(false, '12a glow present: specimen moved between paired captures', { before: box, after: afterBox }); return;
+    }
+    const B = await readClip(p, clip);
     let sum = 0, n = 0;
     for (let y = 0; y < 90; y++) for (let x = 0; x < 90; x++) {
       if (Math.hypot(x - 45, y - 45) > 20) continue; /* the backlight's 33px disc */
@@ -1277,7 +1288,7 @@ await sec('glow present', async () => {
       n++;
     }
     const mean = sum / n;
-    check(mean > 1.0, `12a glow present (basic-dark): backlight disc differs ${mean.toFixed(2)} grey levels with it on vs suppressed (want > 1.0), ::before opacity ${info.bl}`, { mean: +mean.toFixed(2), before: info.bl });
+    check(mean > 1.0, `12a glow present (basic-dark): backlight disc differs ${mean.toFixed(2)} grey levels with it on vs suppressed (want > 1.0), ::before opacity ${info.bl}`, { mean: +mean.toFixed(2), before: info.bl, clip });
   } finally { await shut(p); }
 });
 for (const theme of ['nier-dark', 'nier-light']) {

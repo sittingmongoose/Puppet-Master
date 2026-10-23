@@ -88,3 +88,5 @@ History uses the visible standalone lab chip when available; hosted open/pinned 
 History transition traces start in the trusted physical click's capture phase, after Playwright actionability waits. Their original 520/420/400 ms windows, 14 ms sample interval, and distinct-position/interpolation predicates remain; time spent waiting to click is outside the measured transition.
 
 PM7 intentionally widens the column on History pin (F3-637/D3). Hosted drawer and gutter movement therefore use the assistant pane as their coordinate origin; standalone keeps window coordinates. A separate hosted guard requires the message stage to keep its width. It reports the known 200 px drawer versus 240 px host-reservation gap as a failure, with both widths recorded.
+
+Neon's 12a paired glow captures use the actual 90 px specimen rectangle and fail if it moves or scales. A hosted fixed child is positioned by its chat containing block; the page-origin crop can measure unrelated PM7 pixels. The original disc mask and greater-than-1.0 mean-difference predicate remain.
