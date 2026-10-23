@@ -304,7 +304,6 @@
     st.phase = ph; st.m.streamPhase = ph;
     var art = document.querySelector('.transcript-inner > [data-k="msg:' + CSS.escape(st.id) + '"]');
     if (art) art.setAttribute('data-streaming', ph);
-    if (ph === 'live' && st.quiet && room.on && room.answerRec === st.revealRec) room.answerLive = true;
   }
 
   function frame(ts) {
@@ -486,7 +485,6 @@
   }
   function roomQuiet() {
     if (!room.on || room.rel) return false;
-    if (room.answerFollowReady) return false;
     var t = now();
     return t < room.quietUntil || (t < room.quietUntil + FOLD_QUIET_MAX && stillFolding());
   }
@@ -500,7 +498,7 @@
     else document.documentElement.style.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
   }
   function naturalH(inner) { var l = inner.lastElementChild; return l ? l.getBoundingClientRect().bottom - inner.getBoundingClientRect().top : 0; }
-  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.answerRec = null; room.answerLive = false; room.answerFollowReady = false; room.transient = false; roomFloor(null); }
+  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); }
   /* the list's height as last laid out: the completion render (which drops
      the card's narration line and mounts the answer's placeholder) runs before
      the hold starts, so the hold takes the height from before that render */
@@ -519,7 +517,6 @@
     var before = inner === roomSeen && room.lastH ? room.lastH : 0;
     room.inner = inner; room.h0 = before || inner.offsetHeight;
     room.on = true; room.rel = false; room.transient = false; room.x = null; room.v = 0; room.last = now();
-    room.answerRec = null; room.answerLive = false; room.answerFollowReady = false;
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
@@ -547,15 +544,6 @@
     var inner = roomInner();
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
     if (room.transient && !room.rel && now() >= room.relAt) releaseRoom();
-    /* Once the answer becomes live, follow its real content. First retain
-       that height in the room floor, so the remaining horizontal fold cannot
-       clamp the viewport back up. The orbit and answer clocks stay unchanged;
-       only the empty-placeholder hold ends when there is something to read. */
-    if (room.answerLive && !room.answerFollowReady && !room.rel) {
-      room.h0 = Math.max(room.h0, naturalH(inner));
-      roomFloor(room.h0);
-      room.answerFollowReady = true;
-    }
     if (!room.rel && !roomQuiet()) {
       /* after the fold the floor only ratchets up: a follow into content past
          it can then never be clamped back when something above shrinks */
@@ -726,7 +714,7 @@
             if (f) foldIds.push(w.id);
           }
         });
-        if (foldIds.length && room.on) { room.quietUntil = now() + FOLD_QUIET; room.foldIds = foldIds; room.answerRec = id; try { C().holdFollow(roomQuiet); } catch (e) { } }
+        if (foldIds.length && room.on) { room.quietUntil = now() + FOLD_QUIET; room.foldIds = foldIds; try { C().holdFollow(roomQuiet); } catch (e) { } }
         sound('answer');
       }
     }
