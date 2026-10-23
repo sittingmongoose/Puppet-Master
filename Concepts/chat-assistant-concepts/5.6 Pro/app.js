@@ -1086,9 +1086,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      mount below the fold instead of the transcript gliding a whole thread's height to the new bottom, and the card's
      follower stands down for the frame (restoreScroll), so the text above the finished card stays where it is while
      the card settles and the first held message rises under it. The jump-to-latest control says more arrived.
-     The turn is over when the run completes, when Stop or the card's Reset ends it (g.ended), and when anything
-     arrives in the thread (a send, Send now, a receipt): that comes after the fixture's later turns, so they are
-     shown first rather than slotted in above it when the run ends. */
+     The turn is over when the run completes, when Stop, the card's Reset or a pause ends it (g.ended): that is the
+     still reveal. Anything that arrives in the thread lifts the gate too, so the fixture's later turns show above
+     it, but the reader's follow is kept ('grow'). */
   function settleWorkGate(){
     const g=state.workGate; if(!g) return false;
     if(g.tid!==state.selectedThread){ state.workGate=null; return false; }
@@ -1097,10 +1097,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        does not leave the history's height blank under the card. RUN_ROOM_MAX alone does not tell the two apart: at a
        759px column the history's close gave back 241px, and a list take's own fold 228px at 400px. */
     if(state.work.expanded||state.work.openPhase) g.touched=true;
-    if(!state.work.completed&&!g.ended&&activeThread().messages.length===g.n) return false;
+    const over=state.work.completed||g.ended;
+    if(!over&&activeThread().messages.length===g.n) return false;
     state.workGate=null;
+    /* Round 3 (B): only the end of the turn (completion, Stop, the card's Reset, a pause -- C) is the still reveal.
+       Something that arrives (a send, Send now, a receipt) lifts the gate with the reader's follow as it was: a
+       reader at the bottom is put at the new bottom in that render (renderApp), on what arrived. The still reveal
+       left them at the card with the receipt 1,761 px below in a 603 px view. */
+    if(!over) return 'grow';
     tStick=false; cancelGlide();
-    return true;
+    return 'still';
   }
   /* One stretch of agent work in the read-only feed (PM56_RECORDS.feedStretch
      owns the markup and the toggle). The stretch id is its first record's id. A
@@ -2508,7 +2514,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!cut){ keepTopAfter(preTop,post); flipMoves(moveTargets, moveBefore); }
     rollDigits(rollBefore);
     if(cut) rewindTranscript();
-    else restoreScroll(positions,{workH, post, workGrow:workFlipped(flips), still:revealing});
+    else restoreScroll(positions,{workH, post, workGrow:workFlipped(flips), still:revealing==='still'});
+    /* Round 3 (B): a gate lifted by something arriving puts a following reader at the new bottom in this frame */
+    if(revealing==='grow'&&tStick) stickToBottom(true);
     renderOverlays();
     fitActivityTabs();
     retainHoverAfterRender();
