@@ -609,6 +609,14 @@ await safe('studio', async () => {
 
 /* ------------------------------------------------------------------ contrast: the painted pixels, ten looks */
 async function pixelRatio(page, sel) {
+  /* switchThread fades the list from .4 to 1. Read its alpha only after that
+     fade finishes: screenshot({ animations: 'disabled' }) finishes it too, so
+     an earlier alpha would be blended against a later, fully painted frame. */
+  await page.waitForFunction(sel => {
+    const list = document.querySelector(sel)?.closest('.transcript-inner');
+    return !!list && parseFloat(getComputedStyle(list).opacity) === 1
+      && !list.getAnimations().some(a => a.playState !== 'finished' && a.effect?.getKeyframes().some(k => k.opacity != null));
+  }, sel, { timeout: 5000 });
   const geo = await page.evaluate(sel => {
     const el = document.querySelector(sel); if (!el) return null;
     el.scrollIntoView({ block: 'center', behavior: 'instant' });
