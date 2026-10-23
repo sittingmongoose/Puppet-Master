@@ -39,7 +39,7 @@
     ['wand', 'Turn Crew, Goal Mode and the chat’s other capabilities on or off.'],
     ['attach', 'Adds files or images to your next message.'],
     ['jump-bottom', 'Jumps to the newest message.'],
-    ['msg-copy-', 'Copies the message text to the clipboard, unchanged.'],
+    ['msg-copy-', ['Copy message', '$']],
     ['msg-details-', ['Message details', '$']],
     ['msg-edit-', ['Edit message', '$']],
     ['msg-more-', ['More actions', '$']],
@@ -136,14 +136,16 @@
     if ((m = /^(.{2,90}?)\s+\(([^()]{2,90})\)$/.exec(t))) return [m[1], stop(cap(m[2]))];
     return [t, ''];
   }
-  /* hoverCopy(key, text, action) -> [label, detail] */
+  /* hoverCopy(key, text, action) -> [label, detail]: a table sentence keeps the chat's whole line as the label (a
+     "Model · Claude Sonnet 4.6" tip names the control and its value); without one the line splits */
   function hoverCopy(key, text, action) {
     var t = clean(text), k = keyCopy(clean(key), t);
+    if (TEXT[t]) return [t, TEXT[t]];
     if (Array.isArray(k)) return [k[0], k[1] === '$' ? stop(t) : k[1]];
+    if (k) return [t, k];
     var p = split(t);
     if (p[1]) return p;
-    var d = TEXT[t] || k || (action && ACTION[action]) || '';
-    return [t, d];
+    return [t, (action && ACTION[action]) || ''];
   }
   H.hoverCopy = hoverCopy;
 
