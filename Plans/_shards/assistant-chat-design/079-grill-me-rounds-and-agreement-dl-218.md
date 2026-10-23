@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L27935-L28147
 
-Source SHA256: `7e213a615c0b7548e5ab3570e7367f25f09860cea7fe297ae58827bbc420f34a`
+Source SHA256: `bc8b8db37af9d33c6726f2abdf60a9a8104471c190c39a1ebddcc9ebe2bf6340`
 
 ---
 
@@ -164,11 +164,11 @@ canonical_text: >-
   fixture drawings rather than real screenshots. The Shell slot is the terminal's PMT.card with Open
   in Terminal, View output for a gone session and Rerun in Terminal, without a separate Show Terminal
   button; the simulated shell does not implement every real command. Wand sheets remain window-centred
-  app modals. Demo Studio's Chat section follows Workspace and contains Guided examples (55 in 18
-  groups), Moments (127 in 12 groups), and Takes (7 families, 8 recipes and motion voice), plus Show
-  the chat and Reset the chat demo. Start has two chat recipes; Workspace's stand-in row is for panel
-  open paths and stays off by default. These counts describe this concept snapshot, not a product
-  quota; the demo lane reports 182/182 items matching the standalone, not a fresh PLANS browser run.
+  app modals. Demo Studio's Chat section follows Workspace and contains Guided examples, Moments,
+  and Takes (family takes, recipes and motion voice), plus Show the chat and Reset the chat demo.
+  Start offers chat recipes; Workspace's stand-in row is for panel open paths and stays off by
+  default. Snapshot inventory and demo-lane reconciliation remain concept-only lineage in
+  demo-inventory-20261022.md, cited in source_lineage, never product counts or native evidence.
   Final acceptance remains pending for the hover press defect, Persona clipping, shelf-header and
   plate-spacing sweep, and films. The window-based isPhone helper and scoped body-level overlay
   wrapper do not prove ACD-501's full container and single-root requirements. SSYS-055 separately

@@ -846,7 +846,7 @@ def lint() -> list[str]:
 
 
 # The chat's stylesheet is left out of the opus-5.5 page lint ratchet (build.py page_lint_counts) and counted here
-# against its own baseline: page-wide `*` selectors, html-rooted :has() and !important in <style id="pm56-css">. A count
+# against its own baseline: page-wide `*` selectors, html-rooted (or body / :root) :has() and !important in <style id="pm56-css">. A count
 # may shrink; a growth fails. Record a new baseline only for a change that is meant (python3 chat56_layer.py --record).
 OWN_SHEETS = ('pm56-css',)
 PAGE_LINT_BASELINE = TOOLS / 'page_lint_baseline.json'
@@ -862,7 +862,10 @@ def page_lint_counts(built: str) -> dict:
         if names and any(n not in build.PAGE_STATE_OK for n in names):
             star += 1
         comps = build.compounds(sel)
-        if comps and re.match(r'html(?![\w-])', comps[0]) and ':has(' in sel:
+        # html-rooted :has() anywhere in the selector, or a :has() on body / :root itself (fix lane 2026-10-22: the four
+        # body:has(...) rules the scoper kept made <body> a :has() anchor, re-checked on every insertion in the page)
+        if comps and ((re.match(r'html(?![\w-])', comps[0]) and ':has(' in sel) or
+                      (re.match(r'(?:body|:root)(?![\w-])', comps[0]) and ':has(' in comps[0])):
             has += 1
     return {'page_wide_star': star, 'html_rooted_has': has, 'important': strip_comments(css).count('!important')}
 
