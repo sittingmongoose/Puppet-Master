@@ -64,14 +64,14 @@
     var cp = doc.getElementById('chatPanel');
     if (!frame) {
       frame = el('div', { id: 'pmw-chat56', class: 'pm56-frame pm56-column pmw-scope', role: 'region', 'aria-label': 'Chat' });
-      root = el('div', { id: 'pmRoot', class: 'pm56-host', 'aria-busy': 'true' });
+      root = el('div', { id: 'pmRoot', class: 'pm56-host', 'aria-busy': 'true', 'data-pmh-tag': 'literal' });
       frame.appendChild(root);
     }
     if (cp && frame.parentNode !== cp) cp.appendChild(frame);
     if (cp && !doc.documentElement.hasAttribute('data-o55-tour')) cp.setAttribute('data-pm56', 'on');
     if (!layers) {
       layers = el('div', { id: 'pm56-layers', class: 'pmw-scope pm56-layers' });
-      overlay = el('div', { id: 'pmOverlayRoot', class: 'pm56-host pm56-overlay' });
+      overlay = el('div', { id: 'pmOverlayRoot', class: 'pm56-host pm56-overlay', 'data-pmh-tag': 'literal' });
       fx = el('div', { id: 'pm56Fx', class: 'pm56-host pm56-fx', 'aria-hidden': 'true' });
       layers.appendChild(overlay); layers.appendChild(fx);
     }
@@ -242,8 +242,8 @@
   function mountChatBody(host, state, api) {
     var id = api.id;
     var fr = el('div', { class: 'pm56-frame pm56-tab', 'data-pm56-tab': id });
-    var h = el('div', { class: 'pm56-host pm56-tab-host' });
-    var body = el('div', { class: 'editor-body pm56-tab-body', 'data-scroll-key': 'editor', 'data-pm56-tab-body': id, 'data-pmh': 'off' });
+    var h = el('div', { class: 'pm56-host pm56-tab-host', 'data-pmh-tag': 'literal' });
+    var body = el('div', { class: 'editor-body pm56-tab-body', 'data-scroll-key': 'editor', 'data-pm56-tab-body': id, 'data-pmh': 'off', 'data-pm-hover-exempt': 'duplicate-visible-label' });
     h.appendChild(body); fr.appendChild(h); host.appendChild(fr);
     paintHost(h);
     hostKeys(h);
