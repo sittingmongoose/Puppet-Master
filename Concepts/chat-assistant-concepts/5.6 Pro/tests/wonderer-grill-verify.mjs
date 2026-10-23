@@ -392,22 +392,29 @@ async function browser() {
       // They change neither the lookup visibility predicate nor its timing window.
       if (traceScroll) {
         const proto = Element.prototype, originals = {};
+        const record = (el, method, args) => {
+          const tr = root.querySelector('[data-scroll-key="transcript"]');
+          if (!tr || !(el === tr || tr.contains(el))) return;
+          const caller = new Error().stack.split('\n').slice(3, 7).map(s => s.trim().slice(-240)).join('\n');
+          const last = p.scrollCalls.at(-1), at = performance.now();
+          const state = { top: tr.scrollTop, max: tr.scrollHeight - tr.clientHeight, target: el.className, args };
+          if (last && last.method === method && last.caller === caller) Object.assign(last, { lastAt: at, count: last.count + 1, last: state });
+          else p.scrollCalls.push({ method, caller, firstAt: at, lastAt: at, count: 1, first: state, last: state });
+          if (p.scrollCalls.length > 80) p.scrollCalls.splice(1, 1);
+        };
         for (const method of ['scrollTo', 'scrollIntoView']) {
           originals[method] = proto[method];
           proto[method] = function (...args) {
-            const tr = root.querySelector('[data-scroll-key="transcript"]');
-            if (tr && (this === tr || tr.contains(this))) {
-              const caller = new Error().stack.split('\n').slice(2, 6).map(s => s.trim().slice(-240)).join('\n');
-              const last = p.scrollCalls.at(-1), at = performance.now();
-              const state = { top: tr.scrollTop, max: tr.scrollHeight - tr.clientHeight, target: this.className, args };
-              if (last && last.method === method && last.caller === caller) Object.assign(last, { lastAt: at, count: last.count + 1, last: state });
-              else p.scrollCalls.push({ method, caller, firstAt: at, lastAt: at, count: 1, first: state, last: state });
-              if (p.scrollCalls.length > 80) p.scrollCalls.splice(1, 1);
-            }
+            record(this, method, args);
             return originals[method].apply(this, args);
           };
         }
-        p.restoreScrollMethods = () => { for (const method of Object.keys(originals)) proto[method] = originals[method]; };
+        const top = Object.getOwnPropertyDescriptor(proto, 'scrollTop');
+        if (top?.set) Object.defineProperty(proto, 'scrollTop', { ...top, set(value) { record(this, 'scrollTop', [value]); return top.set.call(this, value); } });
+        p.restoreScrollMethods = () => {
+          for (const method of Object.keys(originals)) proto[method] = originals[method];
+          if (top?.set) Object.defineProperty(proto, 'scrollTop', top);
+        };
       }
       const read = () => {
         if (p.agreedFacts == null && PM56_EXT.ctx().state.selectedThread === tid && root.querySelector('.wg-agreed[data-state="open"]')) {
