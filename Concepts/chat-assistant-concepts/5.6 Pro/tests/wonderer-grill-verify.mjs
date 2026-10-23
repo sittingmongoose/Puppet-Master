@@ -387,7 +387,7 @@ async function browser() {
     let resumed = false, resumeReason = null; const t0 = Date.now();
     await ev(() => {
       const root = window.PM56_HOST?.root?.() || document.body, tid = PM56_EXT.ctx().state.selectedThread;
-      const p = window.__c56AnswerLookup = { seen: false, witness: null, since: null, samples: 0, agreedFacts: null };
+      const p = window.__c56AnswerLookup = { seen: false, witness: null, since: null, samples: 0, agreedFacts: null, trace: [] };
       const read = () => {
         if (p.agreedFacts == null && PM56_EXT.ctx().state.selectedThread === tid && root.querySelector('.wg-agreed[data-state="open"]')) {
           const run = PM56_COLLAB.run(PM56_WG_DEMOS.snapshot()?.runId);
@@ -395,6 +395,12 @@ async function browser() {
         }
         const el = [...root.querySelectorAll('.wg-lookup')].find(el => /next round waits for it/.test(el.textContent));
         const r = el?.getBoundingClientRect(), h = r && document.elementFromPoint(r.left + Math.min(20, r.width / 2), r.top + r.height / 2);
+        const key = JSON.stringify([el?.textContent, r && Math.round(r.top), h?.tagName, h?.className]);
+        if (key !== p.traceKey) {
+          p.traceKey = key;
+          p.trace.push({ at: performance.now(), text: el?.textContent || null, top: r?.top, height: r?.height, hit: h ? h.tagName + '.' + h.className : null });
+          if (p.trace.length > 60) p.trace.splice(1, 1);
+        }
         if (el && r.width && r.height && h && (h === el || el.contains(h)) && PM56_EXT.ctx().state.selectedThread === tid) {
           const now = performance.now(); if (p.since == null) p.since = now; p.samples++;
           if (p.samples >= 2 && now - p.since >= 200) { p.seen = true; p.witness = { thread: tid, first: p.since, last: now, samples: p.samples, text: el.textContent }; }
@@ -409,9 +415,9 @@ async function browser() {
           const box = el.getBoundingClientRect(), hit = document.elementFromPoint(box.left + Math.min(20, box.width / 2), box.top + box.height / 2);
           return { text: el.textContent, x: box.x, y: box.y, width: box.width, height: box.height, hit: hit?.tagName + '.' + hit?.className };
         });
-        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, agreedFacts: __c56AnswerLookup.agreedFacts, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [], lookup, thread: PM56_EXT.ctx().state.selectedThread };
+        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, agreedFacts: __c56AnswerLookup.agreedFacts, trace: __c56AnswerLookup.trace, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [], lookup, thread: PM56_EXT.ctx().state.selectedThread };
       });
-      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, factsAfter: observed.facts, lookupGeometry: observed.lookup, thread: observed.thread, resumeReason };
+      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, lookupTrace: observed.trace, factsAfter: observed.facts, lookupGeometry: observed.lookup, thread: observed.thread, resumeReason };
     };
     try {
     while (Date.now() - t0 < maxMs) {
