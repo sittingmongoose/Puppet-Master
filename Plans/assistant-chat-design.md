@@ -14184,8 +14184,9 @@ canonical_text: >-
   no pill, coloured side stripe or glow (F3-648); the reply waits until the reasoning hands over. The
   general.interaction.thought-stream preference decides the rest. Auto (While it thinks) keeps the
   block open while the model thinks, showing at most its last six lines with the older ones fading
-  at the top, and folds it to one line, "Thought for Ns" with a short gist, when the answer starts,
-  or in an agent turn when its first tool call starts. Expanded (Always open) keeps the whole
+  at the top, and folds it to one line, "Thought for Ns" with a short gist, when the answer starts;
+  in an agent turn it folds as the reasoning ends and the first tool call's working card enters once
+  the fold has landed, into the room the fold gave back. Expanded (Always open) keeps the whole
   reasoning open beside the answer. The line is the thinking toggle: a disclosure button with
   aria-expanded and a hover tag, keyboard reachable. A reader's toggle opens or folds that one block
   until the preference changes, and a preference change from Settings, New chat defaults or the
@@ -14204,7 +14205,7 @@ unblocks: []
 acceptance_criteria:
   - Interview and Assistant thought stream UX align.
   - Thought stream appears only when model reasoning/thinking is available.
-  - "Under Auto the block folds to its one-line summary no later than the answer's first word, or an agent turn's first tool call; under Expanded it stays open."
+  - "Under Auto the block folds to its one-line summary no later than the answer's first word, or before an agent turn's first working card enters; under Expanded it stays open."
   - "A thinking block's fold or toggle never moves a reader who is at the bottom of the transcript."
   - "The streamed reasoning is never a live region; one polite status announces the start and one the end."
 validation_surfaces:
