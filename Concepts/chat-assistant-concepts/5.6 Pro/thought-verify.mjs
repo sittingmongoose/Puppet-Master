@@ -14,7 +14,7 @@
  *            long it thought with its gist; it reopens and folds by click and by Enter; no clamp snap, follow holds;
  *            exactly two polite statuses (start, end), the transcript is not a live region
  *   expanded the block never caps and stays open beside the answer, without a gist
- *   agent    an agent turn: no working card while it thinks; in the card's first frame the block is done and folding;
+ *   agent    an agent turn: no working card while it thinks; in the card's first frame the block is done and folded;
  *            block, card, answer in that order; no clamp snap and the reader stays at the bottom
  *   prefs    the preference round trip: the composer's Thought Stream menu and New chat defaults (both pages), and
  *            Settings (PMConcept7): a change reaches every block on screen, in both directions
@@ -222,7 +222,7 @@ await safe('agent', async () => {
   const thinking = s.filter(x => x.T && x.st === 'thinking');
   check('G1 no working card while the model thinks; the reasoning streams first', thinking.length > 20 && thinking.every(x => !x.card), { frames: thinking.length, withCard: thinking.filter(x => x.card).length });
   const born = s.find(x => x.card);
-  check('G2 Auto folds when the first tool call starts: in the card\'s first frame the block is done, folding, above the card', born && born.st === 'done' && born.open === '0' && born.before, born);
+  check('G2 Auto folds as the first tool call starts: the block is done and folded above the card in the card\'s first frame', born && born.st === 'done' && born.open === '0' && born.before, born);
   const f = followVerdicts(s);
   check('G3 the card\'s birth and the fold never snap the thread down; the reader stays at the bottom', f.drops.length === 0 && f.unstuck === 0, f);
   results.push({ group: 'agent', label: 'G-follow (diagnostic: the catch-up after the card\'s birth, turn-verify\'s predicate applies there)', pass: true, diagnostic: true, sizeContext: testGeometry(), detail: f });
