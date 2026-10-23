@@ -76761,19 +76761,18 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   function boot() {
     arm();
     var root = document.getElementById('pmRoot');
-    if (root) new MutationObserver(function () {
+    if (root) new MutationObserver(function (records) {
       var needs = false;
       roots.forEach(function (st) { if (!st.inner.isConnected) needs = true; });
-      if (!needs) {
-        var all = document.querySelectorAll('.chat-stage > .transcript, .tx-feed');
-        if (all.length !== roots.size) needs = true;
-        else {
-          for (var i = 0; i < all.length && !needs; i++) {
-            var inner = all[i].querySelector(':scope > .transcript-inner, :scope > .tx-feed-inner');
-            if (!inner || !roots.has(inner)) needs = true;
-          }
-        }
-      }
+      /* Word/line insertions cannot add a transcript root. Inspect only the
+         added subtrees for a host, inner list or spine layer; removals of an
+         existing list are caught above. Do not census the whole page per word. */
+      var structural = '.transcript, .tx-feed, .transcript-inner, .tx-feed-inner, .tx-spine-layer';
+      if (!needs) needs = records.some(function (record) {
+        return Array.prototype.some.call(record.addedNodes, function (node) {
+          return node.nodeType === 1 && (node.matches(structural) || node.querySelector(structural));
+        });
+      });
       if (needs) arm();
     }).observe(root, { childList: true, subtree: true });
     window.addEventListener('resize', schedule);
@@ -76979,6 +76978,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      If the article was remounted (thread churn), rebuild what was released so far
      without animation. */
   function ensureIsland(st) {
+    /* The keyed island survives each patch. A thread switch disconnects it;
+       only then search for its replacement instead of walking the document
+       for every streamed frame (especially costly in the hosted page). */
+    if (st.island && st.island.isConnected && st.flow && st.flow.isConnected) return st.island;
     var host = document.querySelector('[data-k="tx-island:' + CSS.escape(st.id) + '"]');
     if (!host) return null;
     if (st.island === host && st.flow && st.flow.isConnected) return host;
@@ -77270,7 +77273,11 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var t = now();
     return t < room.quietUntil || (t < room.quietUntil + FOLD_QUIET_MAX && stillFolding());
   }
-  function roomInner() { var tr = document.querySelector('.chat-stage .transcript'); return tr && tr.querySelector('.transcript-inner'); }
+  function roomInner() {
+    if (roomSeen && roomSeen.isConnected) return roomSeen;
+    var tr = document.querySelector('.chat-stage .transcript');
+    return tr && tr.querySelector('.transcript-inner');
+  }
   function roomFloor(px) {
     if (px == null) document.documentElement.style.removeProperty('--tx-hold-min');
     else document.documentElement.style.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
@@ -81003,7 +81010,15 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      cancel the very intent the send it triggered had just registered. */
   for(const ev of ['wheel','touchstart'])
     document.addEventListener(ev,()=>scrollIntents.clear(),{passive:true,capture:true});
-  function scrollKeyEl(key){ return document.querySelector(`[data-scroll-key="${key}"]`); }
+  let transcriptScrollNode=null;
+  function scrollKeyEl(key){
+    if(key==='transcript'){
+      if(!transcriptScrollNode?.isConnected || transcriptScrollNode.dataset.scrollKey!==key)
+        transcriptScrollNode=document.querySelector('[data-scroll-key="transcript"]');
+      return transcriptScrollNode;
+    }
+    return document.querySelector(`[data-scroll-key="${key}"]`);
+  }
 
   /* ---- stick-to-bottom follow (Chat WOW M1) ---------------------------
      The transcript follows its bottom edge while the reader is AT the bottom

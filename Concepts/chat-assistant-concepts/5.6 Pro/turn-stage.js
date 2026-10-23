@@ -236,19 +236,18 @@
   function boot() {
     arm();
     var root = document.getElementById('pmRoot');
-    if (root) new MutationObserver(function () {
+    if (root) new MutationObserver(function (records) {
       var needs = false;
       roots.forEach(function (st) { if (!st.inner.isConnected) needs = true; });
-      if (!needs) {
-        var all = document.querySelectorAll('.chat-stage > .transcript, .tx-feed');
-        if (all.length !== roots.size) needs = true;
-        else {
-          for (var i = 0; i < all.length && !needs; i++) {
-            var inner = all[i].querySelector(':scope > .transcript-inner, :scope > .tx-feed-inner');
-            if (!inner || !roots.has(inner)) needs = true;
-          }
-        }
-      }
+      /* Word/line insertions cannot add a transcript root. Inspect only the
+         added subtrees for a host, inner list or spine layer; removals of an
+         existing list are caught above. Do not census the whole page per word. */
+      var structural = '.transcript, .tx-feed, .transcript-inner, .tx-feed-inner, .tx-spine-layer';
+      if (!needs) needs = records.some(function (record) {
+        return Array.prototype.some.call(record.addedNodes, function (node) {
+          return node.nodeType === 1 && (node.matches(structural) || node.querySelector(structural));
+        });
+      });
       if (needs) arm();
     }).observe(root, { childList: true, subtree: true });
     window.addEventListener('resize', schedule);

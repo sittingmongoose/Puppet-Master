@@ -2800,7 +2800,15 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      cancel the very intent the send it triggered had just registered. */
   for(const ev of ['wheel','touchstart'])
     document.addEventListener(ev,()=>scrollIntents.clear(),{passive:true,capture:true});
-  function scrollKeyEl(key){ return document.querySelector(`[data-scroll-key="${key}"]`); }
+  let transcriptScrollNode=null;
+  function scrollKeyEl(key){
+    if(key==='transcript'){
+      if(!transcriptScrollNode?.isConnected || transcriptScrollNode.dataset.scrollKey!==key)
+        transcriptScrollNode=document.querySelector('[data-scroll-key="transcript"]');
+      return transcriptScrollNode;
+    }
+    return document.querySelector(`[data-scroll-key="${key}"]`);
+  }
 
   /* ---- stick-to-bottom follow (Chat WOW M1) ---------------------------
      The transcript follows its bottom edge while the reader is AT the bottom

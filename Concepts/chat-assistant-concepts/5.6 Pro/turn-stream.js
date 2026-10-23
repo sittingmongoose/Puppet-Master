@@ -193,6 +193,10 @@
      If the article was remounted (thread churn), rebuild what was released so far
      without animation. */
   function ensureIsland(st) {
+    /* The keyed island survives each patch. A thread switch disconnects it;
+       only then search for its replacement instead of walking the document
+       for every streamed frame (especially costly in the hosted page). */
+    if (st.island && st.island.isConnected && st.flow && st.flow.isConnected) return st.island;
     var host = document.querySelector('[data-k="tx-island:' + CSS.escape(st.id) + '"]');
     if (!host) return null;
     if (st.island === host && st.flow && st.flow.isConnected) return host;
@@ -484,7 +488,11 @@
     var t = now();
     return t < room.quietUntil || (t < room.quietUntil + FOLD_QUIET_MAX && stillFolding());
   }
-  function roomInner() { var tr = document.querySelector('.chat-stage .transcript'); return tr && tr.querySelector('.transcript-inner'); }
+  function roomInner() {
+    if (roomSeen && roomSeen.isConnected) return roomSeen;
+    var tr = document.querySelector('.chat-stage .transcript');
+    return tr && tr.querySelector('.transcript-inner');
+  }
   function roomFloor(px) {
     if (px == null) document.documentElement.style.removeProperty('--tx-hold-min');
     else document.documentElement.style.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
