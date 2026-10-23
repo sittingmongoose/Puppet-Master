@@ -80057,7 +80057,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      moving the reader (settleWorkGate). Only messages that came with the fixture are held; anything the reader or a
      handler added (a send, a receipt, an approval) shows as it always has. switchThread drops the gate (it stops the
      run), so a thread entered later shows its whole history; boot and Reset all arm it for the run they autostart.
-     Pause keeps it: the turn is still unfinished. Stop and the card's Reset end the turn (g.ended), and anything new
+     Stop, the card's Reset, and a pause, a step or an inspect of the run end the turn (g.ended, Round 3 C); a resume
+     does not re-arm it (startWorking arms only a run that starts from its beginning), and anything new
      in the thread lifts it (settleWorkGate). Only a tail that is wholly the fixture's is held: a message added after
      the card earlier would otherwise come back below the turns it was written after. state.workGate = {tid, card,
      ids, n, cut}, n the thread's length when it was armed. */
@@ -82963,12 +82964,16 @@ suggested path                    migration 0043, reversible</div></div></sectio
   function releaseNextRun(recId){ const go=heldNextRuns[recId]; if(go){ delete heldNextRuns[recId]; go(); } }
 
   function startWorking(reset=false,rec=state.work){
+    /* a run that starts from its beginning: a restart, Play on a finished or reset card, the boot autostart */
+    const fresh=reset||rec.completed||!rec.started;
     if(reset||rec.completed){
       if(rec===state.work){ state.work={step:0,running:false,expanded:false,started:true,completed:false,elapsed:0,openPhase:null}; rec=state.work; }
       else { rec.step=0; rec.clock=0; rec.elapsed=0; rec.completed=false; rec.openPhase=null; delete rec.supersededBy; }
     }
-    /* the primary run starting in a preloaded thread holds the fixture's later turns until it completes */
-    if(rec===state.work&&!rec.completed) armWorkGate();
+    /* the primary run starting in a preloaded thread holds the fixture's later turns until it completes. Only a
+       run that starts from its beginning arms it: a resume after a pause, a step or an inspect (each ends the gate,
+       Round 3 C) keeps the thread as the reader left it instead of cutting its later turns away again */
+    if(rec===state.work&&fresh) armWorkGate();
     rec.started=true;rec.running=true;renderApp();
     armWorkTimer();
   }
@@ -83103,8 +83108,12 @@ suggested path                    migration 0043, reversible</div></div></sectio
     else delete rec.clock;
     if(rec.runId&&rec.completed&&!was) onRecComplete(rec);
   }
-  function pauseWorking(rec=state.work){ rec.running=false; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
-  function stepWorking(rec=state.work){ rec.running=false; rec.started=true; scrubTo(rec,rec.step+1); if(!rec.runId) rec.elapsed+=3; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
+  /* Round 3 (C): pausing the primary run from inside it (Pause, Step, a step's inspect or scrub, an Orbit jump,
+     setWorkStep) ends its demo turn as Stop does: the held turns come back (settleWorkGate, the still reveal), so a
+     paused thread is never left cut off (3 items for good, int 10). A later Play resumes without re-arming. */
+  function endGateOnPause(rec){ if(rec===state.work&&state.workGate) state.workGate.ended=true; }
+  function pauseWorking(rec=state.work){ rec.running=false; endGateOnPause(rec); if(!runningRecs().length) stopWorkTimer(); renderApp(); }
+  function stepWorking(rec=state.work){ rec.running=false; rec.started=true; endGateOnPause(rec); scrubTo(rec,rec.step+1); if(!rec.runId) rec.elapsed+=3; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
   function completeWorking(rec=state.work){ rec.running=false; rec.started=true; scrubTo(rec,1e9); if(!rec.runId) rec.elapsed=Math.max(rec.elapsed,134); rec.expanded=false; rec.openPhase=null; if(!runningRecs().length) stopWorkTimer(); renderApp(); if(!runningRecs().length) maybeFlushQueue(); }
   function restartRec(rec){ rec.step=0; rec.clock=0; rec.elapsed=0; rec.completed=false; rec.running=true; rec.started=true; rec.openPhase=null; delete rec.supersededBy; state.workTerminal={}; armWorkTimer(); renderApp(); }
   function resetWorking(rec=state.work){ if(rec.runId){ if(rec.id&&rec.id!==rec.runId){ restartRec(rec); return; } resetChain(rec.runId); return; } state.work=clone(DEFAULT.work); state.workTerminal={}; if(state.workGate) state.workGate.ended=true; /* as Stop: the turn is over */ if(!runningRecs().length) stopWorkTimer(); renderApp(); }
@@ -83472,7 +83481,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
       if(a==='complete-working'){completeWorking(rec);return;}
       if(a==='reset-working'){resetWorking(rec);return;}
       if(a==='toggle-work-history'){rec.expanded=!rec.expanded;renderApp();return;}
-      if(a==='inspect-work-step'){rec.running=false;scrubTo(rec,Number(btn.dataset.value));if(!runningRecs().length)stopWorkTimer();renderApp();return;}
+      if(a==='inspect-work-step'){rec.running=false;endGateOnPause(rec);scrubTo(rec,Number(btn.dataset.value));if(!runningRecs().length)stopWorkTimer();renderApp();return;}
       if(a==='toggle-work-phase'){const k=btn.dataset.value;rec.openPhase=(rec.openPhase===k?null:k);renderApp();return;}
     }
     if(a==='open-activity'){if(!activityDefs()[btn.dataset.domain])return;const fromPreview=!!btn.closest('.ab-card');if(fromPreview||!state.activity.open)state.activity.pinned=true;state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();if(fromPreview)focusActivityControl('.activity-panel [data-action="unpin-activity"], .activity-panel [data-action="pin-activity"]');return;}
@@ -83839,7 +83848,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     tickOnce:()=>workTick(),
     setVoice:(v)=>{ state.motionVoice=['basic','friendly','glass','retro'].includes(v)?v:'auto'; renderApp(); },
     setReplyMode:(mode)=>{ state.replyMode=mode==='instant'?'instant':'stream'; },
-    setWorkStep:(i)=>{state.work.started=true;state.work.running=false;scrubTo(state.work,Number(i));if(!runningRecs().length)stopWorkTimer();renderApp();},
+    setWorkStep:(i)=>{state.work.started=true;state.work.running=false;endGateOnPause(state.work);scrubTo(state.work,Number(i));if(!runningRecs().length)stopWorkTimer();renderApp();},
     trigger:runDemoTrigger,
     listTriggers:allDemoTriggers,
     /* Lab-only (film tool): replay one existing item of a transcript family as
