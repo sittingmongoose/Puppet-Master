@@ -379,8 +379,14 @@ await safe('lines', async () => {
       await sample(q, 12000);
       await send(q, Q);
       /* the reasoning has run well past 16 lines while the window shows 4 */
-      await q.waitForFunction(P => { const a = [...document.querySelectorAll(P + '.transcript-inner > .message-thought')].pop(); const c = a && a.querySelector('.tt-clip'), p = c && c.querySelector('p');
-        const lh = p ? parseFloat(getComputedStyle(p).lineHeight) : 20; return a && a.dataset.thoughtState === 'thinking' && c.classList.contains('tt-capped') && c.firstElementChild.offsetHeight > lh * 16 + 24; }, P, { timeout: 9000, polling: 50 });
+      try {
+        await q.waitForFunction(P => { const a = [...document.querySelectorAll(P + '.transcript-inner > .message-thought')].pop(); const c = a && a.querySelector('.tt-clip'), p = c && c.querySelector('p');
+          const lh = p ? parseFloat(getComputedStyle(p).lineHeight) : 20; return a && a.dataset.thoughtState === 'thinking' && c.classList.contains('tt-capped') && c.firstElementChild.offsetHeight > lh * 16 + 24; }, P, { timeout: 9000, polling: 50 });
+      } catch (error) {
+        if (error?.name !== 'TimeoutError') throw error;
+        attempts.push({ attempt, upAt: null, left: null, reason: 'not past 16 lines while thinking' });
+        continue;
+      }
       const upAt = await q.evaluate(() => performance.now() - window.__tt.t0);
       const left = await q.evaluate(P => { const L = PM56_THOUGHT.active().pop(); const s = window.__tt.s, first = s.find(x => x.T && x.st === 'thinking');
         return L && first ? Math.round(first.t + L.ms - (performance.now() - window.__tt.t0)) : null; }, P);
