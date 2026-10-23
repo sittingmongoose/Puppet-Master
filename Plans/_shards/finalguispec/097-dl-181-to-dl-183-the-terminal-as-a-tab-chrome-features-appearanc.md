@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46894-L49341
+Source lines: L46903-L49354
 
-Source SHA256: `432b79048153ada286aedefc6186993e2ac6aa822fb9d10241667c9d8af432d5`
+Source SHA256: `3b969972daa57352a5d0facfa71c9208caf45e34eede905061b3b7146dd7a24b`
 
 ---
 
@@ -2411,9 +2411,13 @@ canonical_text: >-
   contract; no browser result is native runtime or governance certification. In integrated concept
   59ca2d4382 the chat is a scoped layer inside the existing column. Its header options expose Keep
   History open, the Keep open row and Pop out / Dock back; History pin uses the existing local action,
-  and only a never-saved project layout reads the Settings History default. The foundation lane's
-  1920 px example widens from 599 to 680 px when History is pinned; this is an example measurement,
-  not another width default. Host appearance, NieR parts, container-query CSS and tour hiding are
+  and only a never-saved project layout reads the Settings History default. Amended 2026-10-23
+  (DL-233): pinned History is drawn at F3-637's 240 px and the column grows by the drawn width, a
+  dragged width included. Re-measured in Basic dark, a 1920 px window's column grows from 600 to 681 px
+  when History is pinned (its pane from 599 to 680 px) while the centre budget holds C at 960 px, so
+  the messages are 440 px; at 2400 px with width_px 759 the column grows from 759 to 999 px and the
+  messages keep their 758 px. These are example measurements, not other width defaults. The scripted
+  stand-in is removed (DL-233). Host appearance, NieR parts, container-query CSS and tour hiding are
   integrated. The final integration of 2026-10-23 adds the narrow shelf header, plate spacing,
   helper-sheet chrome and host hover press repairs; its all-look sweep and PMConcept7 films are
   concept evidence, not completion evidence supplied by this unit.

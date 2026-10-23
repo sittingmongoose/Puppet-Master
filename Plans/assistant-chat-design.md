@@ -28062,9 +28062,9 @@ canonical_text: >-
   projections without making those global names product APIs. DL-218's Wonderer and Grill Me behavior
   and DL-231's automatic Chat Room rounds remain intact. All demonstration launches and family mixers
   are sections of F3-649's one Demo Studio. The port's screenshots, fixtures and browser checks remain
-  concept evidence; unmet native requirements stay owed. In the concept, Demo Studio may show the
-  off-by-default stand-in instead for panel-opening examples; launching a chat example switches it off
-  and restores the hosted assistant. Only one conversation surface is visible at a time. Demo fixture
+  concept evidence; unmet native requirements stay owed. Amended 2026-10-23 (DL-233): the concept's
+  scripted stand-in chat and its Demo Studio swap are removed; the hosted assistant is the column's
+  only conversation surface, and its own controls open the panels. Demo fixture
   workspaces may use ordinary Home tabs under the concept-only disposition of ACD-500, never native
   kinds or product routes. Integrated concept 59ca2d4382 implements the id-to-kind table in
   pm7-port/js/60-surfaces.js: plan aliases converge on one plan tab; deep-discovery is plan; bare and
@@ -28090,8 +28090,8 @@ canonical_text: >-
   button; the simulated shell does not implement every real command. Wand sheets remain window-centred
   app modals. Demo Studio's Chat section follows Workspace and contains Guided examples, Moments,
   and Takes (family takes, recipes and motion voice), plus Show the chat and Reset the chat demo.
-  Start offers chat recipes; Workspace's stand-in row is for panel open paths and stays off by
-  default. Snapshot inventory and demo-lane reconciliation remain concept-only lineage in
+  Start offers chat recipes; Workspace offers layouts and agents opening things, with no stand-in row
+  (DL-233). Snapshot inventory and demo-lane reconciliation remain concept-only lineage in
   demo-inventory-20261022.md, cited in source_lineage, never product counts or native evidence.
   Final acceptance remains pending for the hover press defect, Persona clipping, shelf-header and
   plate-spacing sweep, and films. The window-based isPhone helper and scoped body-level overlay

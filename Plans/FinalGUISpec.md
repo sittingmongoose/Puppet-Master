@@ -45953,6 +45953,12 @@ canonical_text: >-
   workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize.
   The saved width and the 400-760 px drag range describe the message area. Pinning History adds 240
   px to the column, or 200 px while the whole column is under 540 px; the messages keep their width.
+  Amended 2026-10-23 (DL-233): the column adds the width History is drawn at, 240 px, 200 px only in
+  a capped column under 540 px (the popped-out chat or the narrow peek), or the width the person
+  dragged History's edge to within the chat's own 170-360 px and 42 percent of its pane. While that
+  drag lasts only History moves, so its edge stays under the pointer; on release the column takes the
+  new width and the messages theirs. While the narrow ladder takes pinned History's width back,
+  History shows as its flyout and the person's pin is kept; it is pinned again when the room returns.
   The pinned column's minimum is 640 px; its drag range is 640 to 760 + 240 px, capped by the 960 px
   centre budget. A folded chat always has History dropped to a flyout, so its peek opens at 400 px;
   with History pinned in the peek it is 640 px, capped at the row width minus 48 px. Measured
@@ -45970,18 +45976,20 @@ canonical_text: >-
   'chat', width }: a changed release commits once with one receipt, one workspace.layout_changed and
   a new revision; Escape or release with no movement commits nothing. Double-clicking the resizer
   commits once with width null. The two pin actions accept their named boolean or toggle when it is
-  absent, and save like view state with no receipt, event or revision; History's button, the pin in
-  its list header and Keep History open in More dispatch ui.chat_column.pin_history. A named layout
+  absent, and save like view state with no receipt, event or revision; the pin in History's list
+  header, History's close while it is pinned and Keep History open in the chat's header menu
+  dispatch ui.chat_column.pin_history. A named layout
   and Restore home layout keep all three fields; a project switch shows that project's own record,
   or the defaults if none exists. Once at boot, the former stored chat.width (finite, rounded and
   clamped to 400-760), chat.history value pinned and chat.pinOpen true copy into this project's
   layout and every other project's saved layout only where the target field still holds its default;
   existing non-default fields stay. The three old keys are dropped only after this project's layout
   is written, never while an unreadable record waits to be set aside; stored defaults (null, flyout
-  and false) are just dropped. The chat's More menu rows, in order, are Show the current chat, Pop
-  out or Dock back where supported, Keep History open (checked, ui.chat_column.pin_history), Keep
-  the chat open in narrow windows (checked, ui.chat_column.keep_open), and Clear what you sent. Keep
-  open's second line says Instead of folding to a strip at the edge. At 1920 px with width_px 500,
+  and false) are just dropped. The chat's header menu rows, in order, are Keep History open (checked,
+  ui.chat_column.pin_history), Keep the chat open in narrow windows (checked,
+  ui.chat_column.keep_open), and Pop out or Dock back where supported (amended 2026-10-23, DL-233: the
+  stand-in chat's Show the current chat and Clear what you sent left with it). Keep open's second
+  line says Instead of folding to a strip at the edge. At 1920 px with width_px 500,
   History pinning grows the column from 500 to 681 px (History 240 px, centre 960 px) and unpinning
   returns it to 500; dragging the 600 px column's inner edge 100 px right stores width_px 500, and
   double-click resets it to 600 with width_px null. At 900 x 700, keep_open on keeps the chat at 400
@@ -46104,6 +46112,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-187, the planning thread's rulings): Keep the chat open in narrow windows is the chat's own preference in its header menu and the Home options menu, not a Settings row; on the Usage page the chat never leaves the board below 400 px; the narrow ladder runs only while Home is the page shown."
   - "Amended 2026-10-10 (lead ruling): Keep the chat open in narrow windows is a check in the chat header's menu, also offered in the Home options menu, both dispatching ui.chat_column.keep_open, saved in the v2 chat column."
   - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The layout chat column keeps the rounded message width and pins, migrates former preferences once, and owns the More rows."
+  - "Amended 2026-10-23 (DL-233): pinned History adds the width it is drawn at, a dragged width included, and drops to its flyout while the ladder takes that width back; the chat's header menu rows follow the hosted 5.6 Pro chat, the stand-in's rows (Show the current chat, Clear what you sent) leaving with the stand-in."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
@@ -49294,9 +49303,13 @@ canonical_text: >-
   contract; no browser result is native runtime or governance certification. In integrated concept
   59ca2d4382 the chat is a scoped layer inside the existing column. Its header options expose Keep
   History open, the Keep open row and Pop out / Dock back; History pin uses the existing local action,
-  and only a never-saved project layout reads the Settings History default. The foundation lane's
-  1920 px example widens from 599 to 680 px when History is pinned; this is an example measurement,
-  not another width default. Host appearance, NieR parts, container-query CSS and tour hiding are
+  and only a never-saved project layout reads the Settings History default. Amended 2026-10-23
+  (DL-233): pinned History is drawn at F3-637's 240 px and the column grows by the drawn width, a
+  dragged width included. Re-measured in Basic dark, a 1920 px window's column grows from 600 to 681 px
+  when History is pinned (its pane from 599 to 680 px) while the centre budget holds C at 960 px, so
+  the messages are 440 px; at 2400 px with width_px 759 the column grows from 759 to 999 px and the
+  messages keep their 758 px. These are example measurements, not other width defaults. The scripted
+  stand-in is removed (DL-233). Host appearance, NieR parts, container-query CSS and tour hiding are
   integrated. The final integration of 2026-10-23 adds the narrow shelf header, plate spacing,
   helper-sheet chrome and host hover press repairs; its all-look sweep and PMConcept7 films are
   concept evidence, not completion evidence supplied by this unit.
