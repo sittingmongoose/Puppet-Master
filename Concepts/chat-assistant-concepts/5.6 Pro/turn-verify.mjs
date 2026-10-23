@@ -217,12 +217,9 @@ await safe('live agent turn', async () => {
   /* the follow is a glide (a critically damped approach), so a step of new
      content is closed over a few frames by design; what must never happen is the
      view staying away -- the longest stretch more than 24px off the bottom */
-  /* The card's birth adds its whole height at once, and the glide closes it over its first work ticks. The window
-     starts at 1.5 s, and the card is born at about 1.47 s here, so this measure has always straddled that catch-up:
-     on main it read 262-349ms over three runs and failed one (2026-10-23, thinking lane). A turn whose model thinks
-     first (Thought Stream, DL-234) births its card about 5 s in, wholly inside the window (322-433ms). The first
-     300ms after the card's birth stay out of this one measure, for every turn; everything else, the thinking
-     included, is measured as before, and the drop check below is unchanged. */
+  /* A thought delays the card's birth into this window. Its visible catch-up
+     belongs in the acceptance result. Also report the birth-filtered measure
+     as a diagnostic, so its effect remains explicit without hiding a failure. */
   const bornAt = (lt.gaps.find(s => s.card) || {}).t;
   const followed = late.filter(s => bornAt == null || s.t < bornAt || s.t >= bornAt + 300);
   const measureFollow = samples => {
@@ -230,10 +227,10 @@ await safe('live agent turn', async () => {
     samples.forEach(s => { if (s.g > 24) { if (from == null) from = s.t; if (s.t - from >= longest) { longest = s.t - from; longestAt = from; } } else from = null; });
     return { longest, longestAt };
   };
-  const { longest, longestAt } = measureFollow(followed), wholeTurn = measureFollow(late);
-  const stretch = followed.filter(s => longestAt != null && s.t >= longestAt && s.t <= longestAt + longest).map(s => s.t + ':' + s.g);
-  check('follow-along holds outside the first 300ms after card birth (never more than 24px away for longer than 300ms)',
-    longest <= 300, { samples: followed.length, away: away.length, worst: Math.max(...late.map(s => s.g)), longestAwayMs: longest, longestFrom: longestAt, cardBornAt: bornAt ?? null, birthExcludedMs: bornAt == null ? 0 : 300, wholeTurnLongestAwayMs: wholeTurn.longest, wholeTurnLongestFrom: wholeTurn.longestAt, wholeTurnPass: wholeTurn.longest <= 300, stretch: stretch.slice(0, 12) });
+  const { longest, longestAt } = measureFollow(late), birthFiltered = measureFollow(followed);
+  const stretch = late.filter(s => longestAt != null && s.t >= longestAt && s.t <= longestAt + longest).map(s => s.t + ':' + s.g);
+  check('follow-along holds through the whole turn (never more than 24px away for longer than 300ms)',
+    longest <= 300, { samples: late.length, away: away.length, worst: Math.max(...late.map(s => s.g)), longestAwayMs: longest, longestFrom: longestAt, cardBornAt: bornAt ?? null, birthFilteredLongestAwayMs: birthFiltered.longest, birthFilteredLongestFrom: birthFiltered.longestAt, birthFilteredPass: birthFiltered.longest <= 300, stretch: stretch.slice(0, 12) });
   check('follow-along stays engaged', late.every(s => s.stick), late.filter(s => !s.stick).slice(0, 3));
   /* the view only ever moves up (following) or eases down (a released room):
      a drop faster than 0.4px/ms is a snap. Measured before the room holds: the
