@@ -362,7 +362,9 @@
       openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation,
       /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
       turnBusy, registerTurnOwner, maybeFlushQueue, startWorkingRec, onWorkComplete, releaseNextRun,
-      followIfSticky, holdFollow, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx
+      followIfSticky, holdFollow, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx,
+      /* turn-stream's shrink room is kept for the whole of a demo run whose later turns are held (armWorkGate) */
+      runHoldsRoom:()=>!!(state.workGate&&state.workGate.tid===state.selectedThread&&!state.work.completed)
     }, readOnlyRender?{readOnly:true}:{}, extra);
   }
   function extEach(name, extra, each){
@@ -3094,7 +3096,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(startH!=null&&!tStick&&!following){
         const card=(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
         const hNow=card?card.getBoundingClientRect().height:startH;
-        if(Math.abs(hNow-startH)>=1||Math.abs(workGrow)>=1){ followWorkCardHeight(startH); following=true; }
+        /* Reader-position anchoring (2026-10-23): the follower keeps what sits BELOW the card still. With nothing
+           below it -- a live turn's card, a demo run whose later turns are held -- what a reader who scrolled up is
+           reading is ABOVE the card, and folding the card's change into scrollTop moved exactly that text, by every
+           subject (70px swings at 0.78px/ms, measured at a 442px column). The reader's text keeps its place and the
+           card changes at its own foot instead. */
+        if(Math.abs(hNow-startH)>=1||Math.abs(workGrow)>=1){ if(!(card&&lastInTranscript(card))) followWorkCardHeight(startH); following=true; }
       }
       /* F0b (b): a pmx surface (PM56_PMX.SURFACES) whose flip changed height. Its FLIP
          is still holding it at h0 in this frame, so the host's height now is its old height.
@@ -3110,6 +3117,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       }
       syncJumpBottom();
     });
+  }
+  /* true when nothing with a height follows this card's transcript item */
+  function lastInTranscript(el){
+    let item=el;
+    while(item&&item.parentElement&&!item.parentElement.classList.contains('transcript-inner')) item=item.parentElement;
+    if(!item||!item.parentElement) return false;
+    for(let s=item.nextElementSibling;s;s=s.nextElementSibling) if(s.getBoundingClientRect().height>0) return false;
+    return true;
   }
   function followWorkCardHeight(startH, flipEl, sync){
     const hosts=flipEl?followHosts():null;
