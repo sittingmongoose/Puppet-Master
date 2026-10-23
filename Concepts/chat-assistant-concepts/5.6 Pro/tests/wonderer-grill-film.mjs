@@ -55,6 +55,10 @@ for (const flow of flows) {
       } catch (e) { if (/Timeout|detached|not attached/.test(e.message)) return false; throw e; }
       moves.push({ selector, elapsedMs: Date.now() - start }); return true;
     };
+    const showCard = async () => {
+      const card = page.locator(`#pmRoot .transcript [data-run-id="${runId}"]`).first();
+      if (await card.count()) await card.scrollIntoViewIfNeeded({ timeout: 1800 });
+    };
     while (Date.now() - start < 240000) {
       const state = await page.evaluate(({ flow, runId }) => {
         const r = PM56_COLLAB.run(runId);
@@ -63,12 +67,20 @@ for (const flow of flows) {
       }, { flow, runId });
       if (state) row.final = state;
       if (state && (state.status === 'completed' || flow === 'room' && state.summary || flow === 'brainstorm' && state.synthesis)) { row.pass = true; break; }
-      if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]') || await click('.qs-grill [data-action="qs-accept-round"]')) { await page.waitForTimeout(1200); continue; }
+      if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]')) { await page.waitForTimeout(1200); await showCard(); continue; }
+      if (await click('.qs-grill [data-action="qs-accept-round"]')) { await page.waitForTimeout(1200); continue; }
       if (state && flow === 'room' && state.wait === 'last') await click(`.transcript [data-run-id="${runId}"] [data-action="collab-room-summarize"]`);
       if (state && flow === 'brainstorm' && state.phase === 'synthesis' && state.decision) await click(`.transcript [data-run-id="${runId}"] [data-action="collab-brainstorm-synthesize"]`);
       await page.waitForTimeout(500);
     }
     if (!row.pass) throw new Error(`Film did not reach its result within 240s: ${JSON.stringify(row.final)}`);
+    if (flow !== 'brainstorm') {
+      await showCard(); await page.waitForTimeout(1400);
+      const opened = await click(`#pmRoot .transcript [data-run="${runId}"][data-action="crew-open-work"]`) ||
+        await click(`#pmRoot .transcript [data-run="${runId}"][data-action="collab-open-panel"]`);
+      if (!opened) throw new Error('The completed run has no painted Open Panel action for the final result');
+      row.resultPanel = await page.evaluate(() => window.PM_HOME?.active() || { editor: PM56_EXT.ctx().state.activeEditor });
+    }
     await page.waitForTimeout(6000);
     await page.screenshot({ path: movie.replace(/\.mp4$/, '-result.png') });
     row.pass = !errors.length;

@@ -163,6 +163,29 @@ async function newPage(opts = {}) {
   await boot(p);
   return p;
 }
+/* Hosted runs begin with History closed. Wide-list claims need its real user
+   controls and a visible separator; a boot-time stored width alone is clamped
+   while the mounted column is hidden. Standalone retains its original boot. */
+async function prepareWideHistory(p) {
+  if (!await p.evaluate(() => PM56_TEST.kind === 'pm7')) return;
+  if (await p.evaluate(() => PM56_DEMO.getState().historyMode === 'closed')) {
+    await p.locator('.chat-header [data-action="toggle-history"]').click(); await p.waitForTimeout(500);
+  }
+  if (await p.evaluate(() => document.body.getAttribute('data-ph-drawer') !== 'pinned')) {
+    await p.locator('.history-flyout [data-action="ph-toggle-pin"]').click(); await p.waitForTimeout(500);
+  }
+  const width = await p.locator('.history-flyout').evaluate(el => el.getBoundingClientRect().width);
+  if (width <= 204) {
+    const handle = await p.locator('.history-flyout [data-ph-resize]').boundingBox();
+    if (!handle) throw new Error('Wide hosted History separator is not visible');
+    const x = handle.x + handle.width / 2, y = handle.y + Math.min(60, handle.height / 2);
+    await p.mouse.move(x, y); await p.mouse.down();
+    try { await p.mouse.move(x + 320 - width, y, { steps: 12 }); } finally { await p.mouse.up(); }
+    await p.waitForTimeout(500);
+  }
+  await p.waitForFunction(() => { const f = document.querySelector('.history-flyout');
+    return f && f.getBoundingClientRect().width > 204 && !f.classList.contains('is-history-narrow'); }, null, { timeout: 6000 });
+}
 /* The wide thread list needs a stored width before boot + a tall viewport. */
 async function newWidePage(dpr = 1) {
   const ctx = await browser.newContext({
@@ -170,12 +193,14 @@ async function newWidePage(dpr = 1) {
     reducedMotion: REDUCED ? 'reduce' : 'no-preference'
   });
   await ctx.addInitScript(() => { try { localStorage.setItem('pm56-history-w', '320'); } catch (e) {} });
-  const p = await ctx.newPage();
+  const p = await ctx.newPage(); p.__ctx = ctx;
   watch(p);
-  await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
-  await boot(p);
-  p.__ctx = ctx;
-  return p;
+  try {
+    await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
+    await boot(p);
+    await prepareWideHistory(p);
+    return p;
+  } catch (error) { await ctx.close(); throw error; }
 }
 async function shut(p) { try { const c = p.__ctx; await p.close(); if (c) await c.close(); } catch (e) {} }
 async function setTheme(p, id, pixel) {
@@ -1298,6 +1323,7 @@ else await sec('salience', async () => {
     watch(p);
     await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
     await boot(p);
+    await prepareWideHistory(p);
     const B = 16, N = 120, DT = 140;
     for (const theme of THEMES) {
       await p.evaluate(t => { window.PM56_TEST.setTheme(t); window.PM56_DEMO.setVariant(1, 5); }, theme);
@@ -1599,6 +1625,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       watch(p);
       await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
       await boot(p);
+      await prepareWideHistory(p);
       await setTheme(p, 'nier-dark');
       await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
       const ids = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => r.dataset.id));

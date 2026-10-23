@@ -57,6 +57,9 @@ const SETTLE = 680;   /* past the ~370ms pill→card morph; a surface measured m
                          reports a geometry it never settles at (Menus lost four
                          measurements to exactly this). */
 async function setTake(v) {
+  // A fixture switch can move an activity domain under the old pointer and
+  // start an unrelated hover preview. Keep setup out of that hover domain.
+  await page.mouse.move(4, 4);
   await page.evaluate(v => PM56_DEMO.setVariant(6, v), v);
   await page.waitForTimeout(SETTLE);
 }
@@ -446,9 +449,24 @@ await t('D6. qs-open-flow really opens a queued flow (title, count and active fl
 await t('D7. leaving a flow keeps its draft (the fixture claims this; now it is true)', async () => {
   /* answer migration q1, go back to deployment, come back */
   await setTake(0);
-  await clickPainted('.decision-host [data-action="answer-choice"]', 1);
+  const choice = page.locator('.decision-host [data-action="answer-choice"]').nth(1);
+  await choice.scrollIntoViewIfNeeded();
+  const painted = await paintedRect('.decision-host [data-action="answer-choice"]', 1);
+  must(painted?.owns, 'migration choice is not painted and hittable');
+  await page.evaluate(() => {
+    window.__d7Click = null;
+    document.addEventListener('click', event => {
+      const action = event.target.closest('[data-action]');
+      window.__d7Click = { target: event.target.tagName + '.' + event.target.className,
+        action: action?.dataset.action, value: action?.dataset.value,
+        questionIndex: PM56_DEMO.getState().questionIndex, flow: PM56_QUESTIONS.activeFlowId() };
+    }, { capture: true, once: true });
+  });
+  // Let the browser wait for the same painted choice to settle, then make a
+  // physical click. A centre measured before the spring settles can hit the grid.
+  await choice.click(); await page.waitForTimeout(320);
   const want = (await stateOf()).questions[0].answer;
-  must(want, 'nothing was answered');
+  must(want, 'nothing was answered: ' + JSON.stringify(await page.evaluate(() => window.__d7Click)));
   await setTake(6);
   await clickPainted('.decision-host [data-flow="flow-deploy"]');
   must((await page.evaluate(() => PM56_QUESTIONS.activeFlowId())) === 'flow-deploy', 'did not go back');

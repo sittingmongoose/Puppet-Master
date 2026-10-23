@@ -117,32 +117,76 @@ await safe('stop mid-stream', async () => {
    the queue; Send now steers (the reply so far stays, unmarked) and sends only
    that message. */
 await safe('busy sends', async () => {
-  const p = await fresh();
-  await p.evaluate(() => PM56_DEMO.selectThread('live-turn')); await sleep(300);
-  const users = () => p.evaluate(() => document.querySelectorAll('.transcript-inner > .message-user').length);
-  const queued = () => p.evaluate(() => document.querySelectorAll('.send-queue-row').length);
-  const writing = () => p.waitForFunction(() => { const a = [...document.querySelectorAll('.transcript-inner > .message-assistant')].pop(); return a && a.querySelectorAll('.tx-w').length > 3; }, null, { timeout: 6000 });
-  const u0 = await users();
-  await typeSend(p, 'Walk me through the steps for the rollout.'); await writing();
-  await typeSend(p, 'Also list the risks.'); await sleep(200);
-  check('a send while the reply is written joins the queue', (await queued()) === 1 && (await users()) === u0 + 1, { queued: await queued(), users: (await users()) - u0 });
-  await p.click('[data-action="stop-run"]'); await sleep(1500);
-  check('Stop does not advance the queue', (await queued()) === 1 && (await users()) === u0 + 1, { queued: await queued(), users: (await users()) - u0 });
-  /* Send now on a queued message while a new reply is written: it steers */
-  await p.click('.send-queue-row [data-action="queue-send-now"]'); await writing();
-  await typeSend(p, 'First queued.'); await sleep(150);
-  await typeSend(p, 'Second queued.'); await sleep(150);
-  const before = await p.evaluate(() => ({ users: document.querySelectorAll('.transcript-inner > .message-user').length, q: document.querySelectorAll('.send-queue-row').length }));
-  await p.click('.send-queue-row [data-action="queue-send-now"]'); await sleep(600);
-  const r = await p.evaluate(() => {
-    const as = [...document.querySelectorAll('.transcript-inner > .message-assistant')];
-    const steered = as[as.length - 2];
-    return { users: document.querySelectorAll('.transcript-inner > .message-user').length, q: document.querySelectorAll('.send-queue-row').length,
-      steeredMarked: !!(steered && steered.querySelector('.tx-terminal')), steeredText: steered ? steered.textContent.trim().length : 0, writing: !!document.querySelector('[data-streaming]') };
-  });
-  check('Send now steers: the reply so far stays unmarked and only that message is sent', r.users === before.users + 1 && r.q === before.q - 1 && !r.steeredMarked && r.steeredText > 5 && r.writing, { before, after: r });
-  check('no page errors during busy sends', p.__errs.length === 0, p.__errs.slice(0, 2));
-  await p.close();
+  let outcome = null;
+  const attempts = [], errors = [];
+  for (let attempt = 0; attempt < 3 && !outcome; attempt++) {
+    const p = await fresh();
+    try {
+      await p.evaluate(() => PM56_DEMO.selectThread('live-turn')); await sleep(300);
+      const users = () => p.evaluate(() => document.querySelectorAll('.transcript-inner > .message-user').length);
+      const queued = () => p.evaluate(() => document.querySelectorAll('.send-queue-row').length);
+      const writing = () => p.waitForFunction(() => { const a = [...document.querySelectorAll('.transcript-inner > .message-assistant')].pop(); return a && a.hasAttribute('data-streaming') && a.querySelectorAll('.tx-w').length > 3; }, null, { timeout: 6000 });
+      const u0 = await users();
+      await typeSend(p, 'Walk me through the steps for the rollout.'); await writing();
+      /* Use the existing long, structured reply so two real composer sends
+         fit inside its streaming window even on the hosted shell. */
+      await typeSend(p, 'Walk me through the detailed steps for the rollout.'); await sleep(200);
+      const queuedWhileBusy = { queued: await queued(), users: (await users()) - u0 };
+      await p.click('[data-action="stop-run"]'); await sleep(1500);
+      const stopped = { queued: await queued(), users: (await users()) - u0 };
+      if (attempt === 0) {
+        check('a send while the reply is written joins the queue', queuedWhileBusy.queued === 1 && queuedWhileBusy.users === 1, queuedWhileBusy);
+        check('Stop does not advance the queue', stopped.queued === 1 && stopped.users === 1, stopped);
+      }
+      /* Bind the selected entry rather than allowing a locator to resolve to
+         the next row if normal completion advances the queue during a wait. */
+      await p.locator('.send-queue-row [data-action="queue-send-now"]').first().click(); await writing();
+      await typeSend(p, 'First queued.'); await sleep(150);
+      await typeSend(p, 'Second queued.'); await sleep(150);
+      const selected = await p.locator('.send-queue-row [data-action="queue-send-now"]').first().getAttribute('data-id', { timeout: 700 });
+      if (!selected) { attempts.push({ attempt, reason: 'queue naturally completed before selection' }); continue; }
+      const button = p.locator(`.send-queue-row [data-action="queue-send-now"][data-id=${JSON.stringify(selected)}]`);
+      await button.scrollIntoViewIfNeeded({ timeout: 700 });
+      /* Record the precondition in the capture phase of the physical click.
+         A snapshot taken before Playwright actionability can belong to an
+         earlier reply. A naturally completed reply is a setup retry, never a
+         weakened verdict or a replacement queue entry. */
+      await p.evaluate(id => {
+        window.__busySendClick = null;
+        document.addEventListener('click', event => {
+          const button = event.target.closest('[data-action="queue-send-now"]');
+          if (!button || button.dataset.id !== id) return;
+          const a = [...document.querySelectorAll('.transcript-inner > .message-assistant')].pop();
+          window.__busySendClick = { selected: id,
+            users: document.querySelectorAll('.transcript-inner > .message-user').length,
+            q: document.querySelectorAll('.send-queue-row').length,
+            streaming: !!a?.hasAttribute('data-streaming'), words: a?.querySelectorAll('.tx-w').length || 0 };
+        }, { capture: true, once: true });
+      }, selected);
+      const box = await button.boundingBox();
+      if (!box) { attempts.push({ attempt, reason: 'selected row naturally completed before click' }); continue; }
+      await p.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+      const before = await p.evaluate(() => window.__busySendClick);
+      if (!before || !before.streaming || before.words <= 3 || before.q !== 2) {
+        attempts.push({ attempt, reason: 'reply completed before physical click', before }); continue;
+      }
+      await sleep(600);
+      const r = await p.evaluate(() => {
+        const as = [...document.querySelectorAll('.transcript-inner > .message-assistant')];
+        const steered = as[as.length - 2];
+        return { users: document.querySelectorAll('.transcript-inner > .message-user').length, q: document.querySelectorAll('.send-queue-row').length,
+          steeredMarked: !!(steered && steered.querySelector('.tx-terminal')), steeredText: steered ? steered.textContent.trim().length : 0, writing: !!document.querySelector('[data-streaming]') };
+      });
+      outcome = { before, after: r, attempts };
+    } catch (error) {
+      if (!/Element is not attached|queue-send-now.*Timeout|locator\.(getAttribute|scrollIntoViewIfNeeded|boundingBox)/s.test(String(error))) throw error;
+      attempts.push({ attempt, reason: 'selected queue entry completed during actionability', error: String(error).split('\n')[0] });
+    } finally { errors.push(...p.__errs); await p.close(); }
+  }
+  if (!outcome) throw new Error('No physical Send now click retained the busy/two-entry setup: ' + JSON.stringify(attempts));
+  const { before, after: r } = outcome;
+  check('Send now steers: the reply so far stays unmarked and only that message is sent', r.users === before.users + 1 && r.q === before.q - 1 && !r.steeredMarked && r.steeredText > 5 && r.writing, { before, after: r, attempts });
+  check('no page errors during busy sends', errors.length === 0, errors.slice(0, 2));
 });
 
 /* ------------------------------------------------------------ live turn */

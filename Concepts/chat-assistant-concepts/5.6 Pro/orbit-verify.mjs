@@ -985,27 +985,35 @@ await safe('Shell rows open an inline terminal box; Step Rail chevron stays on t
     window.PM56_DEMO.setWorkStep(6);
   });
   await p11.waitForTimeout(400);
-  const orbitShell = await p11.evaluate(() => {
+  const orbitShell = await p11.evaluate(async () => {
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row.is-shell');
-    if (row) row.click();
+    if (row) { row.click(); await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); }
     const box = document.querySelector('.transcript-inner .working-card .work-terminal');
+    const native = box?.querySelector('.pmt-card');
     return {
-      row: !!row,
-      box: !!box,
+      row: !!row, box: !!box, hosted: PM56_TEST.kind === 'pm7',
       hasPrompt: !!(box && box.textContent.includes('$')),
       hasExit: !!(box && /Exit code/i.test(box.textContent)),
-      hasClose: !!document.querySelector('.work-terminal-close')
+      hasClose: !!document.querySelector('.work-terminal-close'),
+      command: native?.querySelector('.pmt-card-cmd')?.textContent.trim(),
+      status: native?.querySelector('.pmt-card-status')?.textContent.trim(),
+      exit: native?.querySelector('.pmt-card-exit')?.textContent.trim(),
+      action: !!native?.querySelector('button')
     };
   });
-  check('Orbit bash row opens a Shell box with prompt, exit code, and X',
-    orbitShell.row && orbitShell.box && orbitShell.hasPrompt && orbitShell.hasExit && orbitShell.hasClose, orbitShell);
+  check(orbitShell.hosted ? 'Orbit bash row opens a native command card with command, status, exit and actions' : 'Orbit bash row opens a Shell box with prompt, exit code, and X',
+    orbitShell.row && orbitShell.box && (orbitShell.hosted
+      ? !!orbitShell.command && /Done|Failed|Interrupted/.test(orbitShell.status || '') && /exited \d+/.test(orbitShell.exit || '') && orbitShell.action
+      : orbitShell.hasPrompt && orbitShell.hasExit && orbitShell.hasClose), orbitShell);
   await p11.evaluate(() => {
-    const x = document.querySelector('.work-terminal-close');
-    if (x) x.click();
+    const close = PM56_TEST.kind === 'pm7'
+      ? document.querySelector('.transcript-inner .orbit-rows .wa-row.is-shell')
+      : document.querySelector('.work-terminal-close');
+    if (close) close.click();
   });
   await p11.waitForTimeout(200);
   const closed = await p11.evaluate(() => !document.querySelector('.transcript-inner .work-terminal'));
-  check('Shell X closes the box', closed, { closed });
+  check(orbitShell.hosted ? 'Shell row closes the native command card' : 'Shell X closes the box', closed, { closed });
 
   await p11.evaluate(() => {
     window.PM56_DEMO.setVariant(2, 8);
@@ -1026,9 +1034,9 @@ await safe('Shell rows open an inline terminal box; Step Rail chevron stays on t
     if (bash) bash.click();
   });
   await p11.waitForTimeout(250);
-  const railShell = await p11.evaluate(() => {
+  const railShell = await p11.evaluate(async () => {
     const row = document.querySelector('.transcript-inner .working-variant-8 .rail8-row.is-shell');
-    if (row) row.click();
+    if (row) { row.click(); await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); }
     const box = document.querySelector('.transcript-inner .working-card .work-terminal');
     const chev = document.querySelector('.transcript-inner .working-variant-8 .rail8-chev');
     const card = document.querySelector('.transcript-inner .working-card.working-variant-8');
@@ -1091,9 +1099,9 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     window.PM56_DEMO.setWorkStep(2);
   });
   await p12.waitForTimeout(400);
-  const fileClick = await p12.evaluate(() => {
+  const fileClick = await p12.evaluate(async () => {
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-change"]');
-    if (row) row.click();
+    if (row) { row.click(); await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); }
     const editor = PM56_TEST.editor(), tab = editor.tab;
     return {
       row: !!row,
@@ -1150,9 +1158,9 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
 
   await p12.evaluate(() => window.PM56_DEMO.setWorkStep(3));
   await p12.waitForTimeout(250);
-  const search = await p12.evaluate(() => {
+  const search = await p12.evaluate(async () => {
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-work-doc"]');
-    if (row) row.click();
+    if (row) { row.click(); await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); }
     const editor = PM56_TEST.editor(), tab = editor.tab;
     const body = PM56_TEST.editor().body;
     return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, hasQuery: !!(body && /Search/i.test(body.textContent)) };
@@ -1162,12 +1170,17 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
 
   await p12.evaluate(() => window.PM56_DEMO.setWorkStep(4));
   await p12.waitForTimeout(250);
-  const fetch = await p12.evaluate(() => {
+  const fetch = await p12.evaluate(async () => {
     const row = [...document.querySelectorAll('.transcript-inner .orbit-rows .wa-row')].find(r => r.dataset.action === 'open-work-doc' && String(r.dataset.id || '').startsWith('link:'));
-    if (row) row.click();
+    if (row) { row.click(); await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); }
     const editor = PM56_TEST.editor(), tab = editor.tab;
     const body = PM56_TEST.editor().body;
-    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, host: !!(body && /postgresql\.org|Fetched/i.test(body.textContent)) };
+    const hosted = PM56_TEST.kind === 'pm7';
+    const browserKind = hosted ? PM_HOME.active()?.kind : null;
+    const address = hosted ? body?.querySelector('input.pmw-br-addrin')?.value : null;
+    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, browserKind, address,
+      host: hosted ? browserKind === 'browser' && /^https:\/\/postgresql\.org\/docs\/16\/indexes-multicolumn\.html$/.test(address || '') && /Multicolumn Indexes/.test(body?.textContent || '')
+        : !!(body && /postgresql\.org|Fetched/i.test(body.textContent)) };
   });
   check('Fetch row opens a fetched-page editor doc',
     fetch.row && String(fetch.id || '').startsWith('link:') && fetch.host, fetch);
@@ -1179,9 +1192,9 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     if (node) node.click();
   });
   await p12.waitForTimeout(250);
-  const art = await p12.evaluate(() => {
+  const art = await p12.evaluate(async () => {
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-artifact"]');
-    if (row) row.click();
+    if (row) { row.click(); await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); }
     const editor = PM56_TEST.editor(), tab = editor.tab;
     return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible } };
   });
@@ -1195,9 +1208,9 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     if (node) node.click();
   });
   await p12.waitForTimeout(250);
-  const agent = await p12.evaluate(() => {
+  const agent = await p12.evaluate(async () => {
     const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-agent"]');
-    if (row) row.click();
+    if (row) { row.click(); await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); }
     const editor = PM56_TEST.editor(), tab = editor.tab;
     return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, agent: row && row.dataset.id };
   });
@@ -1210,14 +1223,14 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     window.PM56_DEMO.setWorkStep(2);
   });
   await p12.waitForTimeout(400);
-  const railFile = await p12.evaluate(() => {
+  const railFile = await p12.evaluate(async () => {
     const card = document.querySelector('.transcript-inner .working-card.working-variant-8');
     const chev = card && card.querySelector('.rail8-chev');
     if (chev && chev.getAttribute('aria-expanded') !== 'true') chev.click();
     const files = card && card.querySelector('.rail8-item[data-step-kind="files"]');
     if (files) files.click();
     const row = document.querySelector('.transcript-inner .working-variant-8 .rail8-row[data-action="open-change"]');
-    if (row) row.click();
+    if (row) { row.click(); await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); }
     const editor = PM56_TEST.editor(), tab = editor.tab;
     return { row: !!row, editor: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible } };
   });
@@ -1245,6 +1258,11 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     for (const c of cards) { const chev = c.querySelector('.orbit-strip-chev'); if (chev && c.querySelectorAll('.orbit-strip-item').length >= 14) chev.click(); }
   });
   await p12.waitForTimeout(1000);
+  /* Reopen choreography ignores node presses until the stage is open. Wait
+     for that painted control state before testing the file action itself. */
+  await p12.waitForFunction(() => [...document.querySelectorAll('.transcript-inner .working-card')].some(card =>
+    card.querySelectorAll('.orbit-node').length >= 14 && card.querySelector('.orbit-stage.is-open:not([data-orbit-anim])')),
+    null, { timeout: 6000 });
   const orbitB = await p12.evaluate(() => {
     const cards = [...document.querySelectorAll('.transcript-inner .working-card')];
     let best = null, n = 0;
@@ -1255,15 +1273,15 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     if (!best) return { n: 0 };
     const files = best.querySelector('.orbit-node[data-step-kind="files"]');
     if (files) files.click();
-    return { n };
+    return { n, cardUi: best.getAttribute('data-card-ui') };
   });
   await p12.waitForTimeout(250);
-  const orbitFile = await p12.evaluate(() => {
-    const row = document.querySelector('.transcript-inner .orbit-rows .wa-row[data-action="open-change"]');
-    if (row) row.click();
+  const orbitFile = await p12.evaluate(async cardUi => {
+    const row = document.querySelector('.transcript-inner .working-card[data-card-ui="' + CSS.escape(cardUi || '') + '"] .orbit-rows .wa-row[data-action="open-change"]');
+    if (row) { row.click(); await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); }
     const editor = PM56_TEST.editor(), tab = editor.tab;
     return { row: !!row, path: row && row.dataset.path, editor: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible } };
-  });
+  }, orbitB.cardUi);
   check('Multi Orbit B file row opens file: editor',
     orbitB.n >= 14 && orbitFile.row && String(orbitFile.editor || '').startsWith('file:'), { orbitB, orbitFile });
 
@@ -1278,9 +1296,9 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     if (fetchNode) fetchNode.click();
   });
   await p12.waitForTimeout(250);
-  const orbitFetch = await p12.evaluate(() => {
+  const orbitFetch = await p12.evaluate(async () => {
     const row = [...document.querySelectorAll('.transcript-inner .orbit-rows .wa-row')].find(r => r.dataset.action === 'open-work-doc' && String(r.dataset.id || '').startsWith('link:'));
-    if (row) row.click();
+    if (row) { row.click(); await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); }
     const editor = PM56_TEST.editor(), tab = editor.tab;
     return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible } };
   });

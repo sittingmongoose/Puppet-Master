@@ -18,12 +18,14 @@ const pages = pageArg === 'both' ? ['standalone', 'pm7'] : [pageArg];
 const out = path.resolve(opt('--out', '/tmp/c56port-tests/suite')); mkdirSync(out, { recursive: true });
 const repo = path.resolve(CHAT_ROOT, '../../..'), summary = [];
 const runInfo = { startedAt: new Date().toISOString(), sourceHead: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim(), argv, targets: [] };
+runInfo.environment = Object.fromEntries(['AX_ONLY', 'AX_SCALE', 'AX_WIDTH'].filter(k => process.env[k] != null).map(k => [k, process.env[k]]));
 const stages = ['wonderer', 'layout', 'host', 'hover', 'questions', 'turn', 'history', 'orbit', 'neon'];
 const only = opt('--only', stages.join(',')).split(',');
 if (only.some(s => ![...stages, 'node'].includes(s))) throw new Error('Unknown --only stage');
 const activeChildren = new Set();
 let stopping = false;
-for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, () => {
+for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => {
+  if (stopping) return;
   stopping = true; runInfo.cancelledAt = new Date().toISOString();
   // Children own their GPU sessions and stop them on these same signals.
   for (const child of activeChildren) child.kill(signal);

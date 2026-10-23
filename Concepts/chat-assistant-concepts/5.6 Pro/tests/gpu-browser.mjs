@@ -12,7 +12,10 @@ function stop(id) {
   catch (e) { console.error(`agent-browser stop ${id}: ${e.message}`); }
 }
 process.once('exit', () => { for (const id of [...owned]) stop(id); });
-for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, () => {
+let stopping = false;
+for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => {
+  if (stopping) return;
+  stopping = true;
   for (const id of [...owned]) stop(id);
   process.exit(sig === 'SIGINT' ? 130 : 143);
 });

@@ -1,5 +1,7 @@
 Run from `Concepts/chat-assistant-concepts/5.6 Pro` with `playwright` installed in Node's module path and `agent-browser` on PATH.
 
+Build commands use the current checkout. Build the final port from the lead's integrated branch, or pass its immutable page with `--pm7-file` from this tests branch.
+
 ```sh
 node tests/port-suite.mjs --page standalone --build --out /tmp/c56port-tests/standalone
 node tests/port-suite.mjs --page pm7 --build --out /tmp/c56port-tests/pm7
@@ -24,7 +26,13 @@ node tests/carry-over-layout-verify.mjs --page pm7 --file /tmp/c56port-tests/PMC
 
 `--wg-only contrast` runs the identical R2-4 setup, painted-pixel measurement and 4.5:1 predicate in all ten looks, plus page-error checking. It supports the short rerun after theme inks change; the full R2 path still runs every original guard.
 
+`--wg-only rx-starting` selects Crew Delegate, BrainStorm synthesis/constraint and Room discussion/plan. It runs their original flow, Starting, narration and pacing verdicts, plus page-error checking. The full RX default remains unchanged.
+
+`--wg-only rx-tail` starts at the automatic-round, pause, move and lane-layout guards. It reuses the same assertions and supports completing coverage when an earlier recorded-example run stopped. The full RX path still includes both parts.
+
 AX's existing `AX_ONLY` regex filters examples for a focused rerun, and `AX_SCALE=1` selects normal user pace (default 3). A filter matching no examples fails. For example, `AX_ONLY='Debug|A preview is not a promise|Schedule a frozen Crew' AX_SCALE=1 node tests/port-suite.mjs --page pm7 --only wonderer --wg-only ax --pm7-file /tmp/PMConcept7.html --out /tmp/chat-ax-focused`.
+
+The runner records the three AX filter/pace/width environment variables in run.json alongside command arguments and page hashes.
 
 Record the integrated Crew, Room and BrainStorm examples at their readable real-time pace:
 
@@ -66,3 +74,7 @@ The adapter reads host state and invokes host APIs. Column measurements allow th
 The layout verifier's `--section sheets|plate|fonts` supports focused reruns. Hosted `fonts` measures the two NieR looks. Default `all` keeps every section; final narrow-width acceptance requires `--sweep`.
 
 Each browser result includes `sizeContext`, refreshed after load, theme, viewport/column changes and pointer release. It records the actual viewport, column, inner stage and transcript sizes plus the requested size. Hosted column requests use a window at least 2400 px wide and clamp the column to 400–760 px; check names inherited from standalone retain their original wording. Recorder attachments select the session's non-recorder page. A full width sweep has a three-hour stage limit; the complete Wonderer/RX/AX stage has 90 minutes; focused and older stages have 45 minutes.
+
+Hosted Turn and Orbit witnesses: Send now binds a queue entry ID, measures the busy/two-entry setup in the capture phase of the physical click, and retries only natural-completion/setup races (up to three fresh pages). It uses the existing long structured reply; the original exactly-one-delivery predicate is unchanged. Home row checks wait two animation frames before reading the actual selected visible tab. The hosted Shell guard checks native PMT.card command/status/exit/actions and row-toggle close (D27); standalone prompt/Exit/X checks remain.
+
+Carry-over geometry is measured after finite sheet animations finish, in the same browser task, without freezing motion. Ink rectangles keep a height consistent with their ink top/bottom; the original line-box height remains diagnostic. This targets settled clipping/overlap, with transient re-render FLIP observations retained separately. Hosted History/Neon wide-list fixtures open/pin through actual controls and resize the visible separator after mounting. Questionnaire fixture take changes park the pointer outside activity domains; D7 clicks the settled painted choice and retains the original draft predicates.

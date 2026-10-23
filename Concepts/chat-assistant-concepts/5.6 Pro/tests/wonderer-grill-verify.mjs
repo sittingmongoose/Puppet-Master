@@ -384,7 +384,7 @@ async function browser() {
   };
   /* answer every round with Accept all until What we agreed is open; notes whether it waited on a lookup on the way */
   const answerAll = async (maxMs = 30000, resumeOnLookup = false) => {
-    let resumed = false; const t0 = Date.now();
+    let resumed = false, resumeReason = null; const t0 = Date.now();
     await ev(() => {
       const root = window.PM56_HOST?.root?.() || document.body, tid = PM56_EXT.ctx().state.selectedThread;
       const p = window.__c56AnswerLookup = { seen: false, witness: null, since: null, samples: 0, agreedFacts: null };
@@ -405,13 +405,25 @@ async function browser() {
     const done = async agreed => {
       const observed = await ev(() => {
         const r = PM56_COLLAB.run(PM56_WG_DEMOS.snapshot()?.runId);
-        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, agreedFacts: __c56AnswerLookup.agreedFacts, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [] };
+        const lookup = [...document.querySelectorAll('.wg-lookup')].map(el => {
+          const box = el.getBoundingClientRect(), hit = document.elementFromPoint(box.left + Math.min(20, box.width / 2), box.top + box.height / 2);
+          return { text: el.textContent, x: box.x, y: box.y, width: box.width, height: box.height, hit: hit?.tagName + '.' + hit?.className };
+        });
+        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, agreedFacts: __c56AnswerLookup.agreedFacts, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [], lookup, thread: PM56_EXT.ctx().state.selectedThread };
       });
-      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, factsAfter: observed.facts };
+      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, factsAfter: observed.facts, lookupGeometry: observed.lookup, thread: observed.thread, resumeReason };
     };
     try {
     while (Date.now() - t0 < maxMs) {
-      if (resumeOnLookup && !resumed && await ev(() => __c56AnswerLookup.seen)) { await ev(() => PM56_CLOCK.setScale(1)); resumed = true; }
+      if (resumeOnLookup && !resumed) {
+        const seen = await ev(() => __c56AnswerLookup.seen);
+        // A failed visibility precondition must still fail B2e, but must not
+        // leave our slowed clock holding the fact forever and block later checks.
+        if (seen || Date.now() - t0 >= Math.min(30000, maxMs * .75)) {
+          await ev(() => PM56_CLOCK.setScale(1)); resumed = true;
+          resumeReason = seen ? 'painted-lookup' : 'lookup-not-observed-in-setup-window';
+        }
+      }
       if (await ev(() => !!document.querySelector('.wg-agreed[data-state="open"]'))) return await done(true);
       if (await ev(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'))) {
         await page.locator('.qs-grill [data-action="qs-accept-round"]').first().click({ timeout: 1500 }).catch(e => { if (!/Timeout|detached|not attached/.test(e.message)) throw e; });
@@ -455,7 +467,7 @@ async function browser() {
     /* WGV_ONLY=r1: the round 1 checks alone (a quick local loop) */
     if (process.env.WGV_ONLY === 'r1') { await reviewRound1({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=rx: the recorded-examples checks alone (2026-10-21) */
-    if (process.env.WGV_ONLY === 'rx') { await target.resize(page, { width: 1440, height: 900 }); await recordedExamples({ page, ev, act, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
+    if (['rx', 'rx-starting', 'rx-tail'].includes(process.env.WGV_ONLY)) { await target.resize(page, { width: 1440, height: 900 }); await recordedExamples({ page, ev, act, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=ax: every other Demo Studio example plays on its own (2026-10-22) */
     if (process.env.WGV_ONLY === 'ax') { await target.resize(page, { width: 1440, height: 900 }); await otherExamples({ page, ev, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* sheets: the shelf, the plate */
@@ -786,6 +798,8 @@ async function otherExamples({ page, ev, sleep }) {
    matches the card, and its first click changes it. */
 async function recordedExamples({ page, ev, act, sleep }) {
   const SCALE = Number(opt('--rx-scale') || 3), fast = k => ev(k => window.PM56_CLOCK.setScale(k), k);
+  const onlyStarting = process.env.WGV_ONLY === 'rx-starting';
+  const onlyTail = process.env.WGV_ONLY === 'rx-tail';
   if (![1, 3].includes(SCALE)) throw new Error('--rx-scale must be 1 (normal pace) or 3 (original accelerated verifier)');
   const until = (fn, arg, ms = 60000) => page.waitForFunction(fn, arg, { timeout: ms, polling: 120 }).then(() => true, () => false);
   const click = async sel => { try { const l = page.locator(sel).first(); if (await l.count() && await l.isVisible()) { await l.click({ timeout: 3000 }); return true; } } catch (e) { } return false; };
@@ -841,18 +855,22 @@ async function recordedExamples({ page, ev, act, sleep }) {
   const cardMove = async (id, action) => click('.transcript [data-run-id="' + id + '"] [data-action="' + action + '"]');
 
   await fast(SCALE);
+  let id = null, ok;
+  if (!onlyTail) {
   /* Crew: Delegate and verify */
   await act('crew-demo-start', { flow: 'delegation' }); await sleep(900);
   await record(); await sheetStart();
-  let id = null; await until(() => true, null, 300); id = await runOf('crew');
-  let ok = await until(id => window.PM56_COLLAB.run(id) && window.PM56_COLLAB.run(id).status === 'completed', id, 60000);
+  await until(() => true, null, 300); id = await runOf('crew');
+  ok = await until(id => window.PM56_COLLAB.run(id) && window.PM56_COLLAB.run(id).status === 'completed', id, 60000);
   verdict('Crew · Delegate and verify', await report(), ok);
+  if (!onlyStarting) {
   /* Crew Auto: its rules saved, it sends its three requests itself and brings in a Crew for the big job */
   await act('crew-demo-start', { flow: 'auto' }); await sleep(900);
   await record(); await sheetStart();
   ok = await until(() => { const s = window.PM56_CREW_DEMOS.snapshot(); return !!(s && s.evaluations.length === 3 && s.runId && window.PM56_COLLAB.run(s.runId).status === 'completed'); }, null, 60000);
   const autoSnap = await ev(() => { const s = window.PM56_CREW_DEMOS.snapshot(); return s ? s.evaluations.map(e => e.which + ':' + (e.result.admitted ? 'crew' : e.result.reason)) : null; });
   verdict('Crew · Crew Auto', await report(), ok, (autoSnap || []).join(' '));
+  }
   /* BrainStorm, both recordings: to Ready to write the plan (your move), then Write the plan on the card */
   for (const flow of ['synthesis', 'constraint']) {
     await act('brainstorm-demo-start', { flow }); await sleep(900);
@@ -864,7 +882,7 @@ async function recordedExamples({ page, ev, act, sleep }) {
     verdict('BrainStorm · ' + flow, rep, waited && wrote, 'waits at Ready to write the plan; Write the plan on the card writes it');
   }
   /* Review, both recordings: to the finished report */
-  for (const flow of ['single', 'multi']) {
+  if (!onlyStarting) for (const flow of ['single', 'multi']) {
     await act('review-demo-start', { flow }); await sleep(900);
     await record(); await sheetStart();
     await until(() => true, null, 300); id = await runOf('review');
@@ -889,6 +907,8 @@ async function recordedExamples({ page, ev, act, sleep }) {
     if (flow === 'plan') ok2 = await cardMove(id, 'room-promote') && await until(id => window.PM56_COLLAB.run(id).chatRoom.promotions.length === 1, id, 10000);
     else ok2 = await cardMove(id, 'collab-room-summarize') && await until(id => !!window.PM56_COLLAB.run(id).chatRoom.summary, id, 10000) && await cardMove(id, 'room-finish') && await until(id => window.PM56_COLLAB.run(id).status === 'completed', id, 10000);
     verdict('Chat Room · ' + flow, rep, waited && ok2, flow === 'plan' ? 'then a promotion from the card' : 'then Summarize Now and End discussion on the card');
+  }
+  if (onlyStarting) return;
   }
 
   {
