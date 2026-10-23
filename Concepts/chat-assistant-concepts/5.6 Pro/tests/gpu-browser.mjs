@@ -3,9 +3,10 @@
 import { execFileSync } from 'node:child_process';
 
 const owned = new Set();
+let participates = false;
 const pages = new WeakMap();
 export function gpuPage(browser) { return pages.get(browser); }
-export function ownGpuSession(id) { owned.add(id); return () => stop(id); }
+export function ownGpuSession(id) { participates = true; owned.add(id); return () => stop(id); }
 function stop(id) {
   if (!owned.delete(id)) return;
   try { execFileSync('agent-browser', ['stop', id], { stdio: 'pipe', timeout: 30000 }); }
@@ -14,13 +15,15 @@ function stop(id) {
 process.once('exit', () => { for (const id of [...owned]) stop(id); });
 let stopping = false;
 for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => {
-  if (stopping) return;
+  // Import-only parents have their own child-forwarding signal handler.
+  if (!participates || stopping) return;
   stopping = true;
   for (const id of [...owned]) stop(id);
   process.exit(sig === 'SIGINT' ? 130 : 143);
 });
 
 export async function launchGpuBrowser(chromium, argv = process.argv.slice(2)) {
+  participates = true;
   const i = argv.indexOf('--cdp');
   let endpoint = i >= 0 ? argv[i + 1] : null, session;
   if (i >= 0 && !endpoint) throw new Error('--cdp needs an endpoint');
