@@ -558,7 +558,12 @@
   /* A demo run whose later turns are held until it completes (app.js armWorkGate) keeps this room for the whole run:
      the floor only ratchets up as the card grows past it, so a reader at the bottom sees the text above the card move
      when the card reaches a new height and never slide back down when a subject's rows fold (2026-10-23: six 30-70px
-     slides a run at a 442px column). The room is let go as usual once the run is over. Live turns are unchanged. */
+     slides a run at a 442px column). The room is let go as usual once the run is over. Live turns are unchanged.
+     It holds at most RUN_ROOM_MAX: the tallest a subject's rows fold away in any working take is 193px at a 442px
+     column (176px in most list takes, 70px in Orbit), so a bigger band under the card is a shrink the reader made --
+     the card's history closing gave back 536px, and holding that left most of the view blank until the run ended. A
+     band past it is let go the ordinary way, as a live turn's shrink is. */
+  var RUN_ROOM_MAX = 240;
   function runHoldsRoom() { var c = C(); return !!(c && c.runHoldsRoom && c.runHoldsRoom()); }
   function shrinkRelAt() { return runHoldsRoom() ? Infinity : now() + SHRINK_HOLD; }
   function holdShrink() {
@@ -577,7 +582,7 @@
     room.raf = 0;
     var inner = roomInner();
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
-    if (room.transient && !room.rel && room.relAt === Infinity && !runHoldsRoom()) room.relAt = now() + SHRINK_HOLD;
+    if (room.transient && !room.rel && room.relAt === Infinity && (!runHoldsRoom() || room.h0 - naturalH(inner) > RUN_ROOM_MAX)) room.relAt = now() + SHRINK_HOLD;
     if (room.transient && !room.rel && now() >= room.relAt) releaseRoom();
     if (!room.rel && !roomQuiet()) {
       /* after the fold the floor only ratchets up: a follow into content past
