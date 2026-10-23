@@ -65067,7 +65067,7 @@ html[data-o55-nier-parts~="intel"] #pmOverlayRoot.pm56-host > .hover-card{ anima
    Where the values come from:
    - Home's --pmw-* layer (Concepts/home-redesign/src/panels/css/00-tokens.css, 50-looks.css and Glass's slots): the
      inks, grounds, lines, menus and state colours the Home panels and the stand-in chat use, with their per-look pulls
-     to 4.5:1. They are computed on the .pmw-scope ancestor every host has (js/09-pmw-scope.js), from PMConcept7's own
+     to 4.5:1. They are computed on the .pmw-scope ancestor every host has (js/00-host.js), from PMConcept7's own
      values there, so the Accent setting, Glass's panel transparency and the high-contrast mode arrive already applied.
    - PMConcept7's page tokens for faces and corners (--body-font, --mono-font, --radius-*), re-inherited on the host
      below so the App font and Corner roundness settings reach the chat.
@@ -237488,7 +237488,10 @@ window.PM56_CLASS_MAP={"activity-bar": "pm56-activity-bar"};
     if (!SCOPED[type]) return true;
     var t = e.target;
     if (inChatTarget(t)) return true;
-    if (KEYS[type] && (t === doc.body || t === doc.documentElement || t === doc || t === window)) return chatModal();
+    /* a page-level key reaches the chat while one of its menus or sheets is open, and Escape while History floats
+       (a click on a blank strip of History leaves focus on <body>; the standalone closes it there too) */
+    if (KEYS[type] && (t === doc.body || t === doc.documentElement || t === doc || t === window))
+      return chatModal() || (e.key === 'Escape' && doc.body.getAttribute('data-ph-drawer') === 'open');
     return false;
   }
   function capOf(o) { return !!(o === true || (o && typeof o === 'object' && o.capture)); }
@@ -237881,12 +237884,16 @@ window.PM56_CLASS_MAP={"activity-bar": "pm56-activity-bar"};
     if ((m = /^(.{2,90}?)\s+\(([^()]{2,90})\)$/.exec(t))) return [m[1], stop(cap(m[2]))];
     return [t, ''];
   }
+  /* receipt and demo-run tips carry their own label and detail ("Recorded example · no AI cost 12:04 · $0.02",
+     "Demo controls (concept lab only)"): they split first, and the table sentence is their detail only when they don't */
+  var SPLIT_FIRST = /^(rcpt:|wd-)/;
   /* hoverCopy(key, text, action) -> [label, detail]: a table sentence keeps the chat's whole line as the label (a
      "Model · Claude Sonnet 4.6" tip names the control and its value); without one the line splits */
   function hoverCopy(key, text, action) {
-    var t = clean(text), k = keyCopy(clean(key), t);
+    var t = clean(text), ck = clean(key), k = keyCopy(ck, t), s;
     if (TEXT[t]) return [t, TEXT[t]];
     if (Array.isArray(k)) return [k[0], k[1] === '$' ? stop(t) : k[1]];
+    if (k && SPLIT_FIRST.test(ck) && (s = split(t))[1]) return s;
     if (k) return [t, k];
     var p = split(t);
     if (p[1]) return p;

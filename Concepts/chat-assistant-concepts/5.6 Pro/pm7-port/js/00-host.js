@@ -160,7 +160,10 @@
     if (!SCOPED[type]) return true;
     var t = e.target;
     if (inChatTarget(t)) return true;
-    if (KEYS[type] && (t === doc.body || t === doc.documentElement || t === doc || t === window)) return chatModal();
+    /* a page-level key reaches the chat while one of its menus or sheets is open, and Escape while History floats
+       (a click on a blank strip of History leaves focus on <body>; the standalone closes it there too) */
+    if (KEYS[type] && (t === doc.body || t === doc.documentElement || t === doc || t === window))
+      return chatModal() || (e.key === 'Escape' && doc.body.getAttribute('data-ph-drawer') === 'open');
     return false;
   }
   function capOf(o) { return !!(o === true || (o && typeof o === 'object' && o.capture)); }

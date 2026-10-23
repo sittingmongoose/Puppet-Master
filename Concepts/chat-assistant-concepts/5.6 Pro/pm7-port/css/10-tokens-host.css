@@ -7,7 +7,7 @@
    Where the values come from:
    - Home's --pmw-* layer (Concepts/home-redesign/src/panels/css/00-tokens.css, 50-looks.css and Glass's slots): the
      inks, grounds, lines, menus and state colours the Home panels and the stand-in chat use, with their per-look pulls
-     to 4.5:1. They are computed on the .pmw-scope ancestor every host has (js/09-pmw-scope.js), from PMConcept7's own
+     to 4.5:1. They are computed on the .pmw-scope ancestor every host has (js/00-host.js), from PMConcept7's own
      values there, so the Accent setting, Glass's panel transparency and the high-contrast mode arrive already applied.
    - PMConcept7's page tokens for faces and corners (--body-font, --mono-font, --radius-*), re-inherited on the host
      below so the App font and Corner roundness settings reach the chat.

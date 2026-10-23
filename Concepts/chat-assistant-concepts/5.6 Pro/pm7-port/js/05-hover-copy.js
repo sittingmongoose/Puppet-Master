@@ -136,12 +136,16 @@
     if ((m = /^(.{2,90}?)\s+\(([^()]{2,90})\)$/.exec(t))) return [m[1], stop(cap(m[2]))];
     return [t, ''];
   }
+  /* receipt and demo-run tips carry their own label and detail ("Recorded example · no AI cost 12:04 · $0.02",
+     "Demo controls (concept lab only)"): they split first, and the table sentence is their detail only when they don't */
+  var SPLIT_FIRST = /^(rcpt:|wd-)/;
   /* hoverCopy(key, text, action) -> [label, detail]: a table sentence keeps the chat's whole line as the label (a
      "Model · Claude Sonnet 4.6" tip names the control and its value); without one the line splits */
   function hoverCopy(key, text, action) {
-    var t = clean(text), k = keyCopy(clean(key), t);
+    var t = clean(text), ck = clean(key), k = keyCopy(ck, t), s;
     if (TEXT[t]) return [t, TEXT[t]];
     if (Array.isArray(k)) return [k[0], k[1] === '$' ? stop(t) : k[1]];
+    if (k && SPLIT_FIRST.test(ck) && (s = split(t))[1]) return s;
     if (k) return [t, k];
     var p = split(t);
     if (p[1]) return p;
