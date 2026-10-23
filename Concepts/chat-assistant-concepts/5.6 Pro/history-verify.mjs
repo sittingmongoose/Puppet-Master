@@ -124,7 +124,17 @@ async function sec(label, fn){
    controls exist, and a thrown precondition would hide every assertion after
    it. */
 async function click(sel, i=0){
-  try{ await page.locator(sel).nth(i).click({timeout:4000}); await measureTestGeometry(page); return true; }
+  try{
+    let target = page.locator(sel).nth(i);
+    if (sel === '[data-action="toggle-history"]') {
+      // Standalone's lab chip stays exposed; hosted History replaces the
+      // covered chat-header chip with its own physical Close control.
+      const lab = page.locator('.app-header [data-action="toggle-history"]').first();
+      const close = page.locator('.history-flyout [data-action="close-history"]').first();
+      target = await lab.isVisible() ? lab : await close.isVisible() ? close : page.locator('.chat-header [data-action="toggle-history"]').first();
+    }
+    await target.click({timeout:4000}); await measureTestGeometry(page); return true;
+  }
   catch(e){ check(false, `precondition: click ${sel}`, String((e&&e.message)||e)); return false; }
 }
 async function preparePinnedHistory(){
@@ -532,6 +542,25 @@ const sampleTransform = async (ms, step=16)=>{
   return out.filter(Boolean);
 };
 
+// Observe the real open transition. Mutating data-ph-drawer here bypasses the
+// module's pin state and corrupts the dismissal checks that follow it.
+const readablePromise = REDUCED ? null : page.evaluate(() => new Promise(resolve => {
+  let done = false, observer;
+  const finish = value => { if (done) return; done = true; observer?.disconnect(); clearTimeout(timer); resolve(value); };
+  const sample = () => {
+    const fly = document.querySelector('.history-flyout');
+    if (!fly || document.body.dataset.phDrawer !== 'open') return;
+    observer?.disconnect();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const title = fly.querySelector('.thread-name, .thread-title'), r = title?.getBoundingClientRect();
+      finish({ clip: getComputedStyle(fly).clipPath, titleW: r ? Math.round(r.width) : 0,
+        titleText: (title?.textContent || '').trim().slice(0, 20), mode: document.body.dataset.phDrawer,
+        x: fly.getBoundingClientRect().left });
+    }));
+  };
+  const timer = setTimeout(() => finish({ missing: true, reason: 'No real unpinned open transition' }), 6000);
+  observer = new MutationObserver(sample); observer.observe(document.body, { attributes: true, childList: true, subtree: true }); sample();
+}));
 const openPromise = sampleTransform(520,14);
 await click('[data-action="toggle-history"]');
 const openTrace = await openPromise;
@@ -552,24 +581,7 @@ await sec('item4: open interpolates', async()=>{
     check(scr.length>=3, 'Scrim opacity ramps in step with the slide', {distinctScrim:scr.length,scr});
     /* Whole-panel slide (no animated clip-path): title text must stay readable
        mid-flight instead of wiping in as a truncated strip. */
-    const readable = await page.evaluate(()=>{
-      const fly=document.querySelector('.history-flyout');
-      if(!fly) return {missing:true};
-      document.body.dataset.phDrawer='shut';
-      void fly.offsetWidth;
-      document.body.dataset.phDrawer='open';
-      return new Promise(resolve=>{
-        requestAnimationFrame(()=>requestAnimationFrame(()=>{
-          const title=fly.querySelector('.thread-name, .thread-title');
-          const r=title&&title.getBoundingClientRect();
-          resolve({
-            clip:getComputedStyle(fly).clipPath,
-            titleW:r?Math.round(r.width):0,
-            titleText:(title&&title.textContent||'').trim().slice(0,20),
-          });
-        }));
-      });
-    });
+    const readable = await readablePromise;
     check(readable.clip==='none' && readable.titleW>40 && /[A-Za-z]/.test(readable.titleText),
           'Mid-open shows a whole panel (no clip-path wipe of truncated titles)', readable);
   }
@@ -614,6 +626,29 @@ await shot(`item4-open${REDUCED?'-reduced':''}.png`);
 await page.keyboard.press('Escape');
 await page.waitForTimeout(500);
 check((await drawerGeom()).mode==='closed', 'Esc dismisses an UNPINNED drawer', await drawerGeom());
+if (await page.evaluate(() => PM56_TEST.kind === 'pm7')) await sec('host: Escape from body focus', async () => {
+  await click('[data-action="toggle-history"]'); await page.waitForTimeout(450);
+  const point = await page.evaluate(() => {
+    const f = document.querySelector('.history-flyout'), r = f?.getBoundingClientRect();
+    if (!r) return null;
+    for (const x of [r.left + 2, r.right - 2, r.left + r.width / 2]) for (const y of [r.top + 2, r.top + r.height / 2, r.bottom - 2]) {
+      const e = document.elementFromPoint(x, y);
+      if (e && f.contains(e) && !e.closest('button,input,select,textarea,a,[tabindex]')) return { x, y, hit: e.tagName + '.' + e.className };
+    }
+    return null;
+  });
+  if (!point) {
+    check(false, 'Hosted Escape reaches floating History after a blank-strip click focuses BODY', { missingBlankStrip: true });
+    await click('[data-action="toggle-history"]'); await page.waitForTimeout(500); return;
+  }
+  await page.mouse.click(point.x, point.y);
+  const before = await page.evaluate(() => ({ bodyFocused: document.activeElement === document.body, mode: document.body.dataset.phDrawer }));
+  await page.keyboard.press('Escape'); await page.waitForTimeout(500);
+  const after = await drawerGeom();
+  check(before.bodyFocused && before.mode === 'open' && after.mode === 'closed' && !after.present,
+    'Hosted Escape reaches floating History after a blank-strip click focuses BODY', { point, before, after });
+  if (after.present) { await click('[data-action="toggle-history"]'); await page.waitForTimeout(500); }
+});
 await click('[data-action="toggle-history"]');
 await page.waitForTimeout(450);
 await sec('item4: scrim click dismisses when unpinned', async()=>{
