@@ -1253,6 +1253,11 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     for (const c of cards) { const chev = c.querySelector('.orbit-strip-chev'); if (chev && c.querySelectorAll('.orbit-strip-item').length >= 14) chev.click(); }
   });
   await p12.waitForTimeout(1000);
+  /* Reopen choreography ignores node presses until the stage is open. Wait
+     for that painted control state before testing the file action itself. */
+  await p12.waitForFunction(() => [...document.querySelectorAll('.transcript-inner .working-card')].some(card =>
+    card.querySelectorAll('.orbit-node').length >= 14 && card.querySelector('.orbit-stage.is-open:not([data-orbit-anim])')),
+    null, { timeout: 6000 });
   const orbitB = await p12.evaluate(() => {
     const cards = [...document.querySelectorAll('.transcript-inner .working-card')];
     let best = null, n = 0;
