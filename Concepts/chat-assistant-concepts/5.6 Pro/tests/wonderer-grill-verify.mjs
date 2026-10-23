@@ -384,7 +384,7 @@ async function browser() {
   };
   /* answer every round with Accept all until What we agreed is open; notes whether it waited on a lookup on the way */
   const answerAll = async (maxMs = 30000, resumeOnLookup = false) => {
-    let resumed = false; const t0 = Date.now();
+    let resumed = false, resumeReason = null; const t0 = Date.now();
     await ev(() => {
       const root = window.PM56_HOST?.root?.() || document.body, tid = PM56_EXT.ctx().state.selectedThread;
       const p = window.__c56AnswerLookup = { seen: false, witness: null, since: null, samples: 0, agreedFacts: null };
@@ -411,11 +411,19 @@ async function browser() {
         });
         return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, agreedFacts: __c56AnswerLookup.agreedFacts, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [], lookup, thread: PM56_EXT.ctx().state.selectedThread };
       });
-      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, factsAfter: observed.facts, lookupGeometry: observed.lookup, thread: observed.thread };
+      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, factsAfter: observed.facts, lookupGeometry: observed.lookup, thread: observed.thread, resumeReason };
     };
     try {
     while (Date.now() - t0 < maxMs) {
-      if (resumeOnLookup && !resumed && await ev(() => __c56AnswerLookup.seen)) { await ev(() => PM56_CLOCK.setScale(1)); resumed = true; }
+      if (resumeOnLookup && !resumed) {
+        const seen = await ev(() => __c56AnswerLookup.seen);
+        // A failed visibility precondition must still fail B2e, but must not
+        // leave our slowed clock holding the fact forever and block later checks.
+        if (seen || Date.now() - t0 >= Math.min(30000, maxMs * .75)) {
+          await ev(() => PM56_CLOCK.setScale(1)); resumed = true;
+          resumeReason = seen ? 'painted-lookup' : 'lookup-not-observed-in-setup-window';
+        }
+      }
       if (await ev(() => !!document.querySelector('.wg-agreed[data-state="open"]'))) return await done(true);
       if (await ev(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'))) {
         await page.locator('.qs-grill [data-action="qs-accept-round"]').first().click({ timeout: 1500 }).catch(e => { if (!/Timeout|detached|not attached/.test(e.message)) throw e; });
