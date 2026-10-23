@@ -1,0 +1,154 @@
+{
+  "authority": "Jared assigned the 2026-10-23 governance reseal (\"Yes reseal\") after round 2 of the 5.6 Pro chat port. Preparation only at 51e1af633f; rebase after the lead confirms round 2 landed, then Astra review and explicit Jared GO before landing.",
+  "certification_harness_run": false,
+  "changed_since_previous_seal": 10,
+  "files": [
+    {
+      "commits": [
+        "d35f13fd59d7d0446ce19c2940940b2a46de328b plans: DL-234 records Jared's four thinking answers; Lines shown while thinking, default 8",
+        "bb7641098d368d2cc8ae1472e3ba93055e230320 Merge remote-tracking branch 'origin/concept/c56p2-thinking-20261023' into t3/concept/port-chat-5-6-pro-to-pmconcept7",
+        "3149ba1f99de8b3719186ef7ce74974997e38ec5 plans: DL-234 live Thought Stream; ACD-221 presentation contract; pending wording retired",
+        "5634d5dc613229595927663f0d09712a02fda89d plans: DL-233 removes the stand-in chat and sizes pinned History as the panel redesign designed",
+        "82d1b1e1c6bffcc837f971338e866ac8d86e1f75 plans: disclose capture destination and hidden editor gaps from review",
+        "bcd34fee30972d42efa8183c758b718913378ca8 plans: reconcile hosted chat canon with integrated port behavior",
+        "3dfba6c7daf9354448a70b383cb7edd823a83ae1 plans: bind the 5.6 Pro chat port to Home and shared preferences"
+      ],
+      "hash_at_previous_seal": "781ca35d71d87a33bf6ba45d4d4ab99d1770950f6fd54c79af33482a0a4ff531",
+      "hash_at_reseal": "0e67f6c9aa98812f9535e44cfef93ed0c83adf111c31c0dfda063095b4228cea",
+      "path": "Plans/00-plans-index.md"
+    },
+    {
+      "commits": [
+        "bcd34fee30972d42efa8183c758b718913378ca8 plans: reconcile hosted chat canon with integrated port behavior",
+        "d026b8fcc0ebfc559ee3db9a7b90765ba6dce255 plans: close remaining chat port review census and copy nits",
+        "131793b5e9f69ffb4df8fa1bd92b64cb6569c42a plans: classify the hosted chat command and wiring contracts",
+        "3dfba6c7daf9354448a70b383cb7edd823a83ae1 plans: bind the 5.6 Pro chat port to Home and shared preferences"
+      ],
+      "hash_at_previous_seal": "df1a6f6a406b6a06e73e3b57d3a5ac2d02120bf050e82cb0361c72461df14e7c",
+      "hash_at_reseal": "bccd54e33ea58b285a0e6ea9aafae3a46a5bf8dc437d5e2828ed313de3dd286c",
+      "path": "Plans/DRY_Rules.md"
+    },
+    {
+      "commits": [
+        "d35f13fd59d7d0446ce19c2940940b2a46de328b plans: DL-234 records Jared's four thinking answers; Lines shown while thinking, default 8",
+        "bcd34fee30972d42efa8183c758b718913378ca8 plans: reconcile hosted chat canon with integrated port behavior",
+        "d026b8fcc0ebfc559ee3db9a7b90765ba6dce255 plans: close remaining chat port review census and copy nits",
+        "179a10131c61a9a411c07aa0a0f04e9742158abb plans: reconcile hosted scope and fix ELI5 project projections",
+        "131793b5e9f69ffb4df8fa1bd92b64cb6569c42a plans: classify the hosted chat command and wiring contracts",
+        "3dfba6c7daf9354448a70b383cb7edd823a83ae1 plans: bind the 5.6 Pro chat port to Home and shared preferences"
+      ],
+      "hash_at_previous_seal": "de41fe051c2b1708bb857fef83ff1ee916f653d629840e69e9db37052351393d",
+      "hash_at_reseal": "70e75fed74819bcca3a553f1dd94631b4766b8f8d0a06985c568bb285ad46cfc",
+      "path": "Plans/UI_Command_Catalog.md"
+    },
+    {
+      "commits": [
+        "bcd34fee30972d42efa8183c758b718913378ca8 plans: reconcile hosted chat canon with integrated port behavior",
+        "131793b5e9f69ffb4df8fa1bd92b64cb6569c42a plans: classify the hosted chat command and wiring contracts",
+        "3dfba6c7daf9354448a70b383cb7edd823a83ae1 plans: bind the 5.6 Pro chat port to Home and shared preferences"
+      ],
+      "hash_at_previous_seal": "a5c0830e2ec391d50498ba4359a1f8ea9fb88d3d7b14eb929ea75f5962dfa614",
+      "hash_at_reseal": "24aaf1baf742822ec779fc6f9669a12b57f48269676e0c1a293e51b3ec9dbb2f",
+      "path": "Plans/Planning_Wizard.md"
+    },
+    {
+      "commits": [
+        "4d2d6e154e6dff6d384a365d367041a4d8a73ef3 plans: F3-637 measured History cases re-taken on the current page (DL-233)",
+        "5634d5dc613229595927663f0d09712a02fda89d plans: DL-233 removes the stand-in chat and sizes pinned History as the panel redesign designed",
+        "9d04822f4b92d9b917ae744cf9dc9b7be4ca2ee5 plans(chat56 port): DL-232 and F3-659 record the final integration; F3-523 cancels a pending tag only for a scroll that moves the anchor",
+        "bcd34fee30972d42efa8183c758b718913378ca8 plans: reconcile hosted chat canon with integrated port behavior",
+        "d026b8fcc0ebfc559ee3db9a7b90765ba6dce255 plans: close remaining chat port review census and copy nits",
+        "131793b5e9f69ffb4df8fa1bd92b64cb6569c42a plans: classify the hosted chat command and wiring contracts",
+        "3dfba6c7daf9354448a70b383cb7edd823a83ae1 plans: bind the 5.6 Pro chat port to Home and shared preferences"
+      ],
+      "hash_at_previous_seal": "97da549bf19f41c235cbda5e1395c90c6a434765040065d1e3fddfb707e4bf3e",
+      "hash_at_reseal": "6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184",
+      "path": "Plans/FinalGUISpec.md"
+    },
+    {
+      "commits": [
+        "e3388a23ecae0df4a1c49ad9bcd322fe7b2d3387 plans: ACD-221 the fold's leftover room eases away no faster than 200 px a second",
+        "d35f13fd59d7d0446ce19c2940940b2a46de328b plans: DL-234 records Jared's four thinking answers; Lines shown while thinking, default 8",
+        "bb7641098d368d2cc8ae1472e3ba93055e230320 Merge remote-tracking branch 'origin/concept/c56p2-thinking-20261023' into t3/concept/port-chat-5-6-pro-to-pmconcept7",
+        "1f1cb21a67d34595f076df43e7493ea105142c25 plans: ACD-221 agent turns fold first, then the working card enters into the room the fold gave back",
+        "ae14785c0cfa12db04709071d994e60d3718c7f7 plans: ACD-221 states the fold rule as the room hold whenever a fold would shrink the list",
+        "3149ba1f99de8b3719186ef7ce74974997e38ec5 plans: DL-234 live Thought Stream; ACD-221 presentation contract; pending wording retired",
+        "5634d5dc613229595927663f0d09712a02fda89d plans: DL-233 removes the stand-in chat and sizes pinned History as the panel redesign designed",
+        "7b08ab14b41e48fcacfe6755d223f06d168db17f fix(plans): remove demo counts and concept wording from chat settings",
+        "82d1b1e1c6bffcc837f971338e866ac8d86e1f75 plans: disclose capture destination and hidden editor gaps from review",
+        "bcd34fee30972d42efa8183c758b718913378ca8 plans: reconcile hosted chat canon with integrated port behavior",
+        "d026b8fcc0ebfc559ee3db9a7b90765ba6dce255 plans: close remaining chat port review census and copy nits",
+        "179a10131c61a9a411c07aa0a0f04e9742158abb plans: reconcile hosted scope and fix ELI5 project projections",
+        "131793b5e9f69ffb4df8fa1bd92b64cb6569c42a plans: classify the hosted chat command and wiring contracts",
+        "3dfba6c7daf9354448a70b383cb7edd823a83ae1 plans: bind the 5.6 Pro chat port to Home and shared preferences"
+      ],
+      "hash_at_previous_seal": "bb59714a795da49437137863dcf3065fb5f3da6f13274f751ed7116e85abb358",
+      "hash_at_reseal": "c0c6409fa65d05d98a600d5145ecae0efae9602af2b85f17b5f91023a204798c",
+      "path": "Plans/assistant-chat-design.md"
+    },
+    {
+      "commits": [
+        "82d1b1e1c6bffcc837f971338e866ac8d86e1f75 plans: disclose capture destination and hidden editor gaps from review",
+        "bcd34fee30972d42efa8183c758b718913378ca8 plans: reconcile hosted chat canon with integrated port behavior",
+        "d026b8fcc0ebfc559ee3db9a7b90765ba6dce255 plans: close remaining chat port review census and copy nits",
+        "a8c49c1930ffc6853e59f5430950f48445221d01 plans: clarify terminal card producers in existing wiring",
+        "179a10131c61a9a411c07aa0a0f04e9742158abb plans: reconcile hosted scope and fix ELI5 project projections",
+        "131793b5e9f69ffb4df8fa1bd92b64cb6569c42a plans: classify the hosted chat command and wiring contracts",
+        "3dfba6c7daf9354448a70b383cb7edd823a83ae1 plans: bind the 5.6 Pro chat port to Home and shared preferences"
+      ],
+      "hash_at_previous_seal": "7304c55288721d09f1c08a64e30ee5cd202487c687a30507474da61c58fa3f1a",
+      "hash_at_reseal": "c02ebd69937ed9a53ae6c47e151123f6da410c3d572c2e2c60518019ced1b6af",
+      "path": "Plans/Wiring_Matrix.md"
+    },
+    {
+      "commits": [],
+      "hash_at_previous_seal": "52f59f29a3796410b53078d317f3e831c1fcfeeac46765cdf90569cce25073e0",
+      "hash_at_reseal": "1e20d658f93d0abc33498578ffa4bf30637b07cc0f72e33f7f829b46528d50ce",
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json"
+    },
+    {
+      "commits": [
+        "3149ba1f99de8b3719186ef7ce74974997e38ec5 plans: DL-234 live Thought Stream; ACD-221 presentation contract; pending wording retired",
+        "bcd34fee30972d42efa8183c758b718913378ca8 plans: reconcile hosted chat canon with integrated port behavior",
+        "131793b5e9f69ffb4df8fa1bd92b64cb6569c42a plans: classify the hosted chat command and wiring contracts",
+        "3dfba6c7daf9354448a70b383cb7edd823a83ae1 plans: bind the 5.6 Pro chat port to Home and shared preferences"
+      ],
+      "hash_at_previous_seal": "4bc5f953d8d5769d4762c7cdeac244c13948e2535e5cbe48acbc35fb94dfc6c0",
+      "hash_at_reseal": "49e1a349a19e411aca0f69c9f226a8ab132a687ebe6a4a4676193f6169025c34",
+      "path": "Plans/Commands_System.md"
+    },
+    {
+      "commits": [
+        "82d1b1e1c6bffcc837f971338e866ac8d86e1f75 plans: disclose capture destination and hidden editor gaps from review",
+        "bcd34fee30972d42efa8183c758b718913378ca8 plans: reconcile hosted chat canon with integrated port behavior",
+        "131793b5e9f69ffb4df8fa1bd92b64cb6569c42a plans: classify the hosted chat command and wiring contracts",
+        "3dfba6c7daf9354448a70b383cb7edd823a83ae1 plans: bind the 5.6 Pro chat port to Home and shared preferences"
+      ],
+      "hash_at_previous_seal": "73e8f9a1f478dcb4850d61b081b742accbd042cf6bafd8ace4d2b22e985f1026",
+      "hash_at_reseal": "f65180635056fced8a33a2eed8098b926680f2be03a755f3b98c7564720a370c",
+      "path": "Plans/UI_Wiring_Rules.md"
+    }
+  ],
+  "frozen_origin_main": "2d4287bcb77ed5e072ae619012f5c276375df423",
+  "landing_eligible": false,
+  "lead_confirmation": {
+    "bytes": 597,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/resume/review/lead-preparation-dependency.json",
+    "sha256": "a38045fe1a77bc4509e59eec75c5d06fdc857b05297a41380ddd7eb79b7b6216"
+  },
+  "locked_file_count": 101,
+  "locked_file_count_before": 101,
+  "mode": "real",
+  "newly_registered_paths": [],
+  "non_hash_lock_fields_unchanged": true,
+  "previous_seal_commit": "94811a84a540ede8ff33f08432569929e4d1a46c",
+  "publication_guard_dependency": {
+    "bytes": 1635,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/resume/review/publication-guard-proof.json",
+    "sha256": "7fd963dc63cf7bcb67101bafa6a9683b70df1bea6a85921963c8c9d378a3725e"
+  },
+  "reseal_base_commit": "51e1af633fd7e977a2f2c8f92a60035f3386ce33",
+  "review_state": "preparation_only_awaiting_round2_landing_rebase_Astra_review_and_explicit_Jared_GO",
+  "runtime_enabled": false,
+  "schema_id": "pm.governance.reseal_attestation.v1"
+}
