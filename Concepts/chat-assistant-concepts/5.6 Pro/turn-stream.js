@@ -513,6 +513,29 @@
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
   function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); } }
+  /* The answer's placeholder takes no room before it is drawn. It mounts as the card starts to fold and waits out its
+     entrance delay fully transparent (turn-stream.css: [data-streaming="pending"], 380ms, from opacity 0). A narrow card
+     frees its panel's height at once, so the placeholder's height went into the held room; a wide card (panel beside
+     the dial) keeps the dial's height until the dial lifts (~430ms in), so the list grew past the room by the
+     placeholder (47px) while the follow waited, and the bottom stayed out of view for ~570ms (turn-verify: follow-along
+     never more than 24px away for longer than 300ms; stage 761px, standalone and hosted). Until its entrance begins it
+     is laid out at zero height; nothing is painted there before then in any case, and by the time it is, the dial is
+     lifting and the card gives its room back. Only an entrance that starts transparent after a delay is held. */
+  function foldWait(ids) {
+    if (!ids.length || reduced()) return;
+    requestAnimationFrame(function () {
+      ids.forEach(function (mid) {
+        var el = document.querySelector('.transcript-inner > [data-message-id="' + CSS.escape(mid) + '"][data-streaming="pending"]');
+        if (!el || !el.animate || !el.getAnimations) return;
+        var a = el.getAnimations().filter(function (x) { return x.animationName && x.effect && x.effect.getTiming; })[0];
+        if (!a) return;
+        var tm = a.effect.getTiming(), k = a.effect.getKeyframes ? a.effect.getKeyframes()[0] : null;
+        if (!(tm.delay > 0) || !(tm.fill === 'both' || tm.fill === 'backwards') || !k || String(k.opacity) !== '0') return;
+        var left = tm.delay - (a.startTime != null && a.currentTime != null ? a.currentTime : 0);
+        if (left > 16) el.animate([{ height: '0px', overflow: 'clip' }, { height: '0px', overflow: 'clip' }], { duration: left });
+      });
+    });
+  }
   /* A working card shrinking under a reader at the bottom (the narration line
      tucking into the caption, a subject's rows folding) would pull the whole
      thread down with its height FLIP: 36px in four frames, measured. The same
@@ -674,7 +697,7 @@
     var c = C(), t = c.activeThread && c.activeThread();
     if (!t || !rec) return false;
     if (revealedRecs.has(rec)) return false;
-    var id = rec.id || rec.runId, held = false;
+    var id = rec.id || rec.runId, held = false, answers = [];
     if (!id) return false;
     t.messages.forEach(function (m) {
       if (m.revealAfter !== id || m.role !== 'assistant' || m.type !== 'text' || m.streaming) return;
@@ -688,7 +711,7 @@
       }
       /* the answer's first line starts inside the fold, as the dial lifts */
       begin(m, t.id, { chunks: chunks, delayMs: 420, chunkMs: 300, terminal: 'complete' }, { rich: !!m.rich, revealRec: id, minPending: 300, quiet: true });
-      held = true;
+      held = true; answers.push(m.id);
     });
     if (held) {
       revealedRecs.add(rec);
@@ -706,7 +729,7 @@
             if (f) foldIds.push(w.id);
           }
         });
-        if (foldIds.length && room.on) { room.quietUntil = now() + FOLD_QUIET; room.foldIds = foldIds; try { C().holdFollow(roomQuiet); } catch (e) { } }
+        if (foldIds.length && room.on) { room.quietUntil = now() + FOLD_QUIET; room.foldIds = foldIds; try { C().holdFollow(roomQuiet); } catch (e) { } foldWait(answers); }
         sound('answer');
       }
     }
