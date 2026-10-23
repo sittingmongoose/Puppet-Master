@@ -18,6 +18,15 @@ reads; it changes how often the browser has to recompute the elements that do no
    (measured: one renderApp() on the int9 page, 2026-10-23). The same values are written back in the same task, so the
    removal never reached a painted frame; keeping them only drops the round trip. Any other attribute, and the style
    attribute of every other element, is still synced exactly as before.
+2. The composer's and the activity bar's fitted tiers are in their markup (app.js renderComposer, renderActivityBar).
+   syncComposerCompact and syncActivityCompact set .composer-box.is-compact and .activity-wrap.is-ab-compact /
+   .is-ab-icon-only on the live elements, but the markup carries neither, so every patch took them off and
+   syncChatChrome put them back later in the same render. In between, keepTopAfter restored the transcript's scroll
+   against that transient layout: at a 400 px column the uncompacted composer is 11 px shorter, the transcript 11 px
+   taller, and the restore landed 11 px short of the bottom, which the follow then glided back every work tick
+   (questions-verify L3 reads the transcript within 2 px; measured on this branch with item 1 alone, 4/8). Before item
+   1 the same render also wiped the stage's --thread-float-h, whose 44 px fallback padding hid the 11 px. The markup
+   now carries the tier the last fit chose, so the patch leaves it alone and the fit only changes it when it should.
 
 Entries: (script, old, new, count).
 """
@@ -31,4 +40,8 @@ HOSTED_JS_PATCHES = [
      "!(at.name==='data-pm-hover-was-disabled' && !src.hasAttribute('disabled')))\n"
      "      && !(HOSTED && at.name==='style' && (el.classList.contains('chat-stage') || el.classList.contains('chat-float')))) "
      "el.removeAttribute(at.name);", 1),
+    ('app.js', '<div class="composer-box" data-k="composer-box">',
+     '<div class="composer-box${composerCompact?\' is-compact\':\'\'}" data-k="composer-box">', 1),
+    ('app.js', '<div class="activity-wrap" data-k="activity-wrap">',
+     '<div class="activity-wrap${abCompactTier>=1?\' is-ab-compact\':\'\'}${abCompactTier>=2?\' is-ab-icon-only\':\'\'}" data-k="activity-wrap">', 1),
 ]
