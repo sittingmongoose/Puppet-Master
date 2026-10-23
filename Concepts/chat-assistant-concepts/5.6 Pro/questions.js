@@ -1823,36 +1823,23 @@
       face = pillFace('Submitting answers…', 'qs-open-face');
       shell.appendChild(face);
     }
-    playAnim(shell, [
-      { height: h + 'px', borderRadius: radius, transform: 'scaleY(1)' },
-      { height: h + 'px', borderRadius: radius, transform: 'scaleY(1.04)' }
-    ], { duration: 90, easing: ease, fill: 'forwards' }, function () {
-      if (finished) return;
-      playAnim(shell, [
-        { height: h + 'px', borderRadius: radius, transform: 'scaleY(1.04)' },
-        { height: '50px', borderRadius: '999px', transform: 'scaleY(1)' }
-      ], { duration: 180, easing: ease, fill: 'forwards' }, function () {
-        if (finished) return;
-        playAnim(shell, [
-          { height: '50px', borderRadius: '999px', transform: 'scaleY(1)' },
-          { height: '44px', borderRadius: '999px', transform: 'scaleY(1)' }
-        ], { duration: 90, easing: ease, fill: 'forwards' }, function (settle) {
-          if (finished) return;
-          try { if (settle && settle.commitStyles) settle.commitStyles(); } catch (e) {}
-          shell.style.height = '44px';
-          shell.style.borderRadius = '999px';
-          shell.style.transform = 'none';
-          setAskDock(shell);
-          setTimeout(function () {
-            if (finished) return;
-            playAnim(shell, [
-              { transform: 'translateY(0) scaleY(1)', opacity: 1, filter: 'blur(0px)' },
-              { transform: 'translateY(40px) scaleY(0.88)', opacity: 0, filter: 'blur(8px)' }
-            ], { duration: kind === 'submit' ? 220 : 140, easing: morphEaseIn(), fill: 'forwards' }, finishClose);
-          }, kind === 'submit' ? 300 : 0);
-        });
-      });
-    });
+    /* One timeline owns the same four beats: 90ms press, 180ms shrink,
+       90ms settle, then 140ms exit (submit keeps its 300ms dwell and 220ms
+       exit). Chaining animation.finished made every beat wait for another
+       main-thread callback; hosted style work stretched a 500ms close past
+       a second. Per-keyframe easing preserves each original segment. */
+    var dwell = kind === 'submit' ? 300 : 0;
+    var exit = kind === 'submit' ? 220 : 140;
+    var duration = 360 + dwell + exit;
+    var closeFrames = [
+      { offset: 0, height: h + 'px', borderRadius: radius, transform: 'translateY(0) scaleY(1)', opacity: 1, filter: 'blur(0px)', easing: ease },
+      { offset: 90 / duration, height: h + 'px', borderRadius: radius, transform: 'translateY(0) scaleY(1.04)', opacity: 1, filter: 'blur(0px)', easing: ease },
+      { offset: 270 / duration, height: '50px', borderRadius: '999px', transform: 'translateY(0) scaleY(1)', opacity: 1, filter: 'blur(0px)', easing: ease },
+      { offset: 360 / duration, height: '44px', borderRadius: '999px', transform: 'translateY(0) scaleY(1)', opacity: 1, filter: 'blur(0px)', easing: morphEaseIn() }
+    ];
+    if (dwell) closeFrames.push({ offset: (360 + dwell) / duration, height: '44px', borderRadius: '999px', transform: 'translateY(0) scaleY(1)', opacity: 1, filter: 'blur(0px)', easing: morphEaseIn() });
+    closeFrames.push({ offset: 1, height: '44px', borderRadius: '999px', transform: 'translateY(40px) scaleY(0.88)', opacity: 0, filter: 'blur(8px)' });
+    playAnim(shell, closeFrames, { duration: duration, easing: 'linear', fill: 'forwards' }, finishClose);
     if (inner) {
       playAnim(inner, [
         { filter: 'blur(0px)', opacity: 1, transform: 'scaleY(1)' },
