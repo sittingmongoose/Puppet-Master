@@ -1577,7 +1577,10 @@
     /* choices apply at once, so a Cancel would undo nothing: one primary, Done (FOUNDATION REQUEST, as in ELI5:
        pmxFoot({cancel:false})) */
     foot=foot.replace(/<button type="button" class="soft-button pmx-cancel"[^>]*>[\s\S]*?<\/button>/, '');
-    return S.pmxSheet({ type:'af-settings', kind:'defaults', size:'compact', height:600, cls:'pmx-dflt-sheet',
+    /* 656, not 600: Thought Stream's second dropdown (Lines shown while thinking, DL-234) takes 52 px with its gap, and
+       the tallest state (a naming model that isn't available, its note under Name new chats) must still fit without
+       scrolling */
+    return S.pmxSheet({ type:'af-settings', kind:'defaults', size:'compact', height:656, cls:'pmx-dflt-sheet',
       title:'New chat defaults', lead:'How new chats start: explain simply, show thinking, and how chats get named.',
       closeAction:'close-dialog', ariaLabel:'New chat defaults', body:body, foot:foot });
   }

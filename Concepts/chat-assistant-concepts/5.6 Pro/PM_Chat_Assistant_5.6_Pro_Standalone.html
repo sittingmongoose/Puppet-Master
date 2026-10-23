@@ -14492,8 +14492,9 @@ body.pm56-reduced .chat-title[data-pmx-title-state="naming"] .chat-state{ displa
 
 /* =====================================================================
    9. NEW CHAT DEFAULTS (PREFS, DESIGN-SPEC 8.14): a compact pmx sheet
-   (720 x 600). Three questions on the left, each a label, a helper line and
-   a preserved dropdown; on the right ONE plate floor holding a live specimen
+   (720 x 656). Three questions on the left, each a label, a helper line and
+   a preserved dropdown (Thought Stream two: its choice and Lines shown while
+   thinking); on the right ONE plate floor holding a live specimen
    beside each question (the plate's rows are the body's rows, through
    subgrid). Kind-specific parts only (pmx-dflt-*); every primitive keeps its
    own look. ("Name it for me" in the thread menu is a plain preserved menu
@@ -14511,8 +14512,9 @@ body.pm56-reduced .chat-title[data-pmx-title-state="naming"] .chat-state{ displa
 .pmx-dflt > .pmx-dflt-q:nth-child(3){ grid-row:3; }
 .pmx-sheet .pmx-dflt .pmx-dflt-ctl{ margin-top:0; }
 .pmx-sheet .pmx-dflt .pmx-dflt-ctl .pmx-ctl-control{ max-width:300px; }
-/* Thought Stream's second dropdown, Lines shown while thinking, sits under its first (DL-234) */
-.pmx-sheet .pmx-dflt .pmx-dflt-ctl .pmx-ctl-control > .shared-picker-button + .shared-picker-button{ margin-top:6px; }
+/* Thought Stream's second dropdown, Lines shown while thinking, sits under its first (DL-234), 12 px apart (the pmx
+   lint's controls-stacked minimum) */
+.pmx-sheet .pmx-dflt .pmx-dflt-ctl .pmx-ctl-control > .shared-picker-button + .shared-picker-button{ margin-top:12px; }
 /* retro clamps a question's helper to one line (module-shell.css); here it may wrap to two, since the row's
    specimen leaves room. In the tall state (the naming warning note under Name new chats) retro's wider monospace
    drops the Recent line whole instead, so no helper is cut (the warning note and the specimen already say why
@@ -63297,7 +63299,10 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     /* choices apply at once, so a Cancel would undo nothing: one primary, Done (FOUNDATION REQUEST, as in ELI5:
        pmxFoot({cancel:false})) */
     foot=foot.replace(/<button type="button" class="soft-button pmx-cancel"[^>]*>[\s\S]*?<\/button>/, '');
-    return S.pmxSheet({ type:'af-settings', kind:'defaults', size:'compact', height:600, cls:'pmx-dflt-sheet',
+    /* 656, not 600: Thought Stream's second dropdown (Lines shown while thinking, DL-234) takes 52 px with its gap, and
+       the tallest state (a naming model that isn't available, its note under Name new chats) must still fit without
+       scrolling */
+    return S.pmxSheet({ type:'af-settings', kind:'defaults', size:'compact', height:656, cls:'pmx-dflt-sheet',
       title:'New chat defaults', lead:'How new chats start: explain simply, show thinking, and how chats get named.',
       closeAction:'close-dialog', ariaLabel:'New chat defaults', body:body, foot:foot });
   }
