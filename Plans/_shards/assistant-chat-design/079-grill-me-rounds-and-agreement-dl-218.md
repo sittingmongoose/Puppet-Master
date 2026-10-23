@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27935-L28147
+Source lines: L27967-L28180
 
-Source SHA256: `bc8b8db37af9d33c6726f2abdf60a9a8104471c190c39a1ebddcc9ebe2bf6340`
+Source SHA256: `cbaef253d67af0f598d18c41a030961313211daa26c713f75c23f3dfc5166884`
 
 ---
 
@@ -172,14 +172,15 @@ canonical_text: >-
   Final acceptance remains pending for the hover press defect, Persona clipping, shelf-header and
   plate-spacing sweep, and films. The window-based isPhone helper and scoped body-level overlay
   wrapper do not prove ACD-501's full container and single-root requirements. SSYS-055 separately
-  records preview-only Thought Stream and session-only All chats ELI5; neither is native completion.
+  records the Thought Stream preference, whose live display streams the concept's recorded reasoning
+  (ACD-221, DL-234), and session-only All chats ELI5; neither is native completion.
   Astra also finds that the shared activeEditor/editorRevealed projection still counts a hidden Home
   panel after collapse or leaving Home. The separate run-card visibility wrapper passes; fixing that
   shared editor state remains pending and is not implied by the run-card result.
 gui_related: true
 gui_classification_reason: Defines hosted conversation presentation, opened surface kinds, shared preferences and focus behavior.
 split_recommended: false
-depends_on: [DL-232, ACD-500, ACD-501, ACD-502, ACD-503, DR-075, SSYS-055]
+depends_on: [DL-232, ACD-500, ACD-501, ACD-502, ACD-503, DR-075, SSYS-055, DL-234]
 unblocks: []
 acceptance_criteria:
   - "One hosted chat replaces the stand-in without seeding a plan tab, duplicate History or lab chrome."

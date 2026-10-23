@@ -75,7 +75,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6134,
+      "line_count": 6137,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -215,7 +215,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "ef8596fab52a37c0eca86dd343d43d9dbc16e46d5728e1fff51ecceb7a7cad88",
+      "sha256": "1163010b58bc3b14bae743c041486dbfc6b6aa562d328f954029772900f72b8f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -623,7 +623,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 28147,
+      "line_count": 28180,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 488,
       "plan_unit_ids": [
@@ -1470,7 +1470,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "bc8b8db37af9d33c6726f2abdf60a9a8104471c190c39a1ebddcc9ebe2bf6340",
+      "sha256": "cbaef253d67af0f598d18c41a030961313211daa26c713f75c23f3dfc5166884",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 486,
@@ -3781,7 +3781,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 8147,
+      "line_count": 8148,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 96,
       "plan_unit_ids": [
@@ -3979,7 +3979,7 @@
         "view_state_command_inflation",
         "web_slash_family_drift"
       ],
-      "sha256": "08e017891041377775c5f4dd799aea88ce862fba6c190dfddf4f3359713c1aae",
+      "sha256": "49e1a349a19e411aca0f69c9f226a8ab132a687ebe6a4a4676193f6169025c34",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 96
@@ -5671,9 +5671,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 56,
-        "True": 155
+        "True": 156
       },
-      "heading_count": 383,
+      "heading_count": 384,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5782,9 +5782,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 17074,
+      "line_count": 17139,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 211,
+      "plan_unit_count": 212,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5996,7 +5996,8 @@
         "DL-229",
         "DL-230",
         "DL-231",
-        "DL-232"
+        "DL-232",
+        "DL-234"
       ],
       "reasoning_tiers": [
         "high",
@@ -6159,15 +6160,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "c669a8544a74b77151cb5d58f0e2e47b513fdb57fae645c8cc495712c2a2cd84",
+      "sha256": "7e6782a88d791bc13cbd826c08f1c32816223deb9bdf2f35a1261a16c5c7c020",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 211
+        "accepted": 212
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 122,
+        "decision": 123,
         "requirement": 88
       },
       "validation_surfaces": [
@@ -17370,7 +17371,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "56f2d5f0010e38b3ac0363125975428713e77a7760414f4af2c7eb65c47b51cd",
+      "sha256": "5c9a39b8d0d52127321c41df2a658e186aa80a2d5601c13a3d52b0efef12eca9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 50
@@ -20934,7 +20935,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-23T01:35:04Z",
+  "generated_at_utc": "2026-10-23T06:51:16Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20943,12 +20944,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3570,
-      "True": 3619
+      "True": 3620
     },
-    "plan_unit_count": 7189,
+    "plan_unit_count": 7190,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6984,
+      "accepted": 6985,
       "retired": 182,
       "superseded": 23
     },
@@ -20981,7 +20982,7 @@
       "contract": 5,
       "contract_requirement": 2,
       "data_contract": 8,
-      "decision": 145,
+      "decision": 146,
       "deferred_enhancement": 8,
       "delta_contract": 1,
       "derived_control_policy": 1,

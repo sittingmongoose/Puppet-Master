@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3614-L22417
+Source lines: L3614-L22447
 
-Source SHA256: `bc8b8db37af9d33c6726f2abdf60a9a8104471c190c39a1ebddcc9ebe2bf6340`
+Source SHA256: `cbaef253d67af0f598d18c41a030961313211daa26c713f75c23f3dfc5166884`
 
 ---
 
@@ -10570,14 +10570,40 @@ plan_unit_id: ACD-221
 unit_type: decision
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Thought stream UX is unified across Interview and Assistant when model reasoning or thinking is available.
+canonical_text: >-
+  Thought stream UX is unified across Interview and Assistant when model reasoning or thinking is
+  available. Amended 2026-10-23 (DL-234), its presentation: reasoning the model supplies for a turn
+  is shown in a thinking block of its own, a transcript item with a stable identity placed just
+  before the reply it belongs to, or before an agent turn's first working card. It is never part of
+  the reply's text and is never invented, so a turn without supplied reasoning shows no block. While
+  the model thinks, the block's line is the thinking placeholder of ACD-470 and the reasoning streams
+  under it in the secondary ink, a step smaller than the reply and indented to the line's words, with
+  no pill, coloured side stripe or glow (F3-648); the reply waits until the reasoning hands over. The
+  general.interaction.thought-stream preference decides the rest. Auto (While it thinks) keeps the
+  block open while the model thinks, showing at most its last six lines with the older ones fading
+  at the top, and folds it to one line, "Thought for Ns" with a short gist, when the answer starts,
+  or in an agent turn when its first tool call starts. Expanded (Always open) keeps the whole
+  reasoning open beside the answer. The line is the thinking toggle: a disclosure button with
+  aria-expanded and a hover tag, keyboard reachable. A reader's toggle opens or folds that one block
+  until the preference changes, and a preference change from Settings, New chat defaults or the
+  composer reaches every block on screen. A fold gives its height back through the reply's room
+  hold, so a reader at the bottom is not pulled down and follow-along holds. Stop or Send now while
+  the model thinks ends the block where it was, as "Thinking ended after Ns"; leaving the thread lets
+  it finish. Assistive technology hears one polite status when thinking starts and one when it ends,
+  never the streamed words, and Reduced Motion lands every state at once. Opening or folding a block
+  is local presentation with no command, receipt or event (CS-104). The integrated concept streams
+  reasoning recorded with its demo turns; native capture of provider reasoning remains an
+  implementation obligation of the provider and executor owners.
 gui_related: true
 gui_classification_reason: Thought stream and thinking toggle are visible chat UI.
-depends_on: []
+depends_on: [DL-234]
 unblocks: []
 acceptance_criteria:
   - Interview and Assistant thought stream UX align.
   - Thought stream appears only when model reasoning/thinking is available.
+  - "Under Auto the block folds to its one-line summary no later than the answer's first word, or an agent turn's first tool call; under Expanded it stays open."
+  - "A thinking block's fold or toggle never moves a reader who is at the bottom of the transcript."
+  - "The streamed reasoning is never a live region; one polite status announces the start and one the end."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -10592,10 +10618,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0102
+  - "Plans/Decision_Log.md#DL-234"
 preserved_exact_tokens:
   - "thought stream"
   - "thinking toggle"
-negative_constraints: []
+  - "general.interaction.thought-stream"
+negative_constraints:
+  - "Do not show reasoning the model did not supply, or merge supplied reasoning into the reply's text."
+  - "Do not draw the thinking block with a pill, a coloured side stripe or a glow."
 owner_hints:
   - Plans/assistant-chat-design.md
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26060-L26712
+Source lines: L26090-L26744
 
-Source SHA256: `bc8b8db37af9d33c6726f2abdf60a9a8104471c190c39a1ebddcc9ebe2bf6340`
+Source SHA256: `cbaef253d67af0f598d18c41a030961313211daa26c713f75c23f3dfc5166884`
 
 ---
 
@@ -118,7 +118,9 @@ canonical_text: >-
   An assistant reply streams in place (DL-106) over the single update path of ACD-238 and ACD-240.
   Before its first text the reply shows a thinking placeholder, the model's name and a shimmering
   is-thinking label with elapsed seconds after 4 seconds; it is a waiting indicator, not a reasoning
-  stream (ACD-221 is unchanged). When text arrives the label condenses toward the turn mark while
+  stream. When the model supplies reasoning, the placeholder is the line of ACD-221's thinking block
+  and the reasoning streams in that block, never in the reply (amended 2026-10-23, DL-234); the reply
+  then starts writing without the label as the reasoning hands over. When text arrives the label condenses toward the turn mark while
   the first word appears where the caret starts. Words are released at a steady, rate-smoothed pace
   that speeds up when text is waiting and breathes at sentence ends; the pacing is presentation only
   and never delays, reorders or drops text. Lists, headings, inline and fenced code stream as
@@ -136,7 +138,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Defines the visible life cycle of a streaming assistant reply."
 split_recommended: false
-depends_on: [DL-106, ACD-238, ACD-240, ACD-221, ACD-229, EP-128]
+depends_on: [DL-106, ACD-238, ACD-240, ACD-221, ACD-229, EP-128, DL-234]
 unblocks: []
 acceptance_criteria:
   - "A reply shows the thinking placeholder until its first text and ends in exactly one of complete, stopped, steered or error."

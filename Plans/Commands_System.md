@@ -8106,12 +8106,13 @@ canonical_text: >-
   through JavaScript bridges; it does not implement the native dispatcher or typed receipts specified
   here. Its existing Settings adapter persists Project default ELI5, while All chats remains
   session-only (SSYS-055); that session choice is not evidence of an application-scope transaction.
-  Thought Stream has the shared preference and preview, with its live display still pending. Demo
+  Thought Stream's shared preference drives the chat's live thinking display (ACD-221, DL-234);
+  opening or folding a thinking block is local presentation with no command, receipt or event. Demo
   Studio launches, lab-only document ids and unknown-id document fallback add no product command.
 gui_related: true
 gui_classification_reason: Defines shared dispatch, alias normalization and local actions for the hosted chat controls.
 split_recommended: false
-depends_on: [DL-232, UCC-208, CS-100, CS-101, CS-103]
+depends_on: [DL-232, UCC-208, CS-100, CS-101, CS-103, DL-234]
 unblocks: []
 acceptance_criteria:
   - "Hosted producers preserve the existing handler, alias normalization and effect contract."
