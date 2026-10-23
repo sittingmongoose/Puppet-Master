@@ -81905,9 +81905,6 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      drag, or a scrolling key outside a text field. Scroll events we cause are
      not input, so anchoring and clamping never flip the state. */
   let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null, tLastCh=null, tInputDir=0;
-  let tChPeak=0, tChPeakAt=0;   /* the tallest the transcript's view has been lately (a momentary re-layout grows it,
-     the browser lowers scrollTop to fit, and it shrinks back before the scroll event is read) */
-  function noteCh(el){ const h=el.clientHeight, n=performance.now(); if(h>=tChPeak||n-tChPeakAt>250){ tChPeak=h; tChPeakAt=n; } }
   let glideRAF=0, glideTs=0, tRO=null, tROTarget=null;
   const GLIDE_TAU=70;
   function tEl(){ return scrollKeyEl('transcript'); }
@@ -81956,7 +81953,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(inner===tROTarget) return;
     if(tRO){ tRO.disconnect(); tRO=null; }
     tROTarget=inner;
-    if(inner){ tRO=new ResizeObserver(()=>{ const e=tEl(); if(e) noteCh(e); kickFollow(); }); tRO.observe(inner); tRO.observe(el); }
+    if(inner){ tRO=new ResizeObserver(()=>kickFollow()); tRO.observe(inner); tRO.observe(el); }
   }
   function inTranscript(t){ return !!(t&&t.closest&&t.closest('[data-scroll-key="transcript"]')); }
   const T_SCROLL_KEYS=new Set(['PageUp','PageDown','ArrowUp','ArrowDown','Home','End',' ']);
@@ -81984,9 +81981,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      for, which the follow logic would read as the reader leaving. With the FLIP
      installed the old height is back, so the pre-patch position is valid again:
      restore it (as our own write) and let the FLIP's shrink move the bottom. */
-  function keepTopBefore(){ const el=tEl(); if(el) noteCh(el); return el?el.scrollTop:null; }
+  function keepTopBefore(){ const el=tEl(); return el?el.scrollTop:null; }
   function keepTopAfter(pre,post){
-    const el=tEl(); if(el) noteCh(el); if(!el||pre==null) return;
+    const el=tEl(); if(!el||pre==null) return;
     if(el.scrollTop<pre-0.5){ const max=el.scrollHeight-el.clientHeight; writeScrollInstant(el,Math.min(pre,max)); if(post) post.transcript=el.scrollTop; }
   }
   /* F0b (b), cleared by Chat WOW: the follower was hard-wired to .working-card. It now also
@@ -82050,7 +82047,6 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const el=tEl();
     if(el){
       const top=el.scrollTop, prev=tLastTop, ch=el.clientHeight, lastCh=tLastCh; tLastTop=top; tLastCh=ch;
-      noteCh(el); const peak=performance.now()-tChPeakAt<=250?Math.max(tChPeak,ch):ch;
       const ours=tExpectTop!=null&&Math.abs(top-tExpectTop)<=1;
       if(!ours){
         tExpectTop=null;
@@ -82059,8 +82055,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
            reader going somewhere. When a demo run starts the composer's dock gives the transcript 20px and the
            bottom padding grows 40px in the same frame; the clamp's event is read after both, 40px from the bottom,
            and dropped the reader out of follow (hosted, reduced motion, boot run). */
-        /* B2e, 2026-10-23: the Ask Card's round re-render grew the view for a moment; the clamp was read after it shrank back. */
-        const clamped=lastCh!=null&&prev!=null&&((ch>lastCh&&prev-top<=ch-lastCh+1)||(peak>ch&&peak>lastCh&&prev-top<=peak-Math.min(ch,lastCh)+1));
+        const clamped=lastCh!=null&&prev!=null&&ch>lastCh&&prev-top<=ch-lastCh+1;
         /* an upward gesture never re-engages follow in its own first frames,
            while the view is still within reach of the bottom */
         if(tAtBottom(el)){ if(!(recent&&tInputDir<0)) tStick=true; }
