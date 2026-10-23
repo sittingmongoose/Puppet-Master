@@ -48,7 +48,7 @@ const SHOTS = (argv.includes('--shots') ? argv[argv.indexOf('--shots')+1] : null
 if(SHOTS) fs.mkdirSync(SHOTS,{recursive:true});
 
 const results=[]; let pass=0, fail=0;
-const check=(ok,label,detail)=>{ results.push({ok:!!ok,label,detail,sizeContext:testGeometry()}); ok?pass++:fail++;
+const check=(ok,label,detail,owner)=>{ results.push({ok:!!ok,label,detail,owner,sizeContext:testGeometry()}); ok?pass++:fail++;
   console.log(`${ok?'PASS':'FAIL'}  ${label}${ok?'':'\n        '+JSON.stringify(detail)}`); };
 
 const browser=await launchChatBrowser(chromium);
@@ -504,6 +504,7 @@ const drawerGeom = ()=>page.evaluate(()=>{
     paneW:pane?pane.getBoundingClientRect().width:null,
     gutter:grid?parseFloat(getComputedStyle(grid).paddingLeft):null,
     stageLeft:stage?stage.getBoundingClientRect().left:null,
+    stageW:stage?stage.getBoundingClientRect().width:null,
     scrim:pane?{op:Number(getComputedStyle(pane,'::after').opacity),pe:getComputedStyle(pane,'::after').pointerEvents}:null
   };
 });
@@ -666,6 +667,7 @@ await sec('item4: scrim click dismisses when unpinned', async()=>{
 await click('[data-action="toggle-history"]');
 await page.waitForTimeout(450);
 const beforePin = await drawerGeom();
+const hostedPin = await page.evaluate(() => PM56_TEST.kind === 'pm7');
 const pinTrace = sampleTransform(420,14,['ph-toggle-pin']);
 await click('[data-action="ph-toggle-pin"]');
 const pinSamples = await pinTrace;
@@ -674,18 +676,23 @@ const afterPin = await drawerGeom();
 await sec('item4: pin narrows in place', async()=>{
   const widths=[...new Set(pinSamples.map(s=>s.w))];
   const gutters=[...new Set(pinSamples.map(s=>s.g))];
-  const moved = Math.abs(afterPin.x-beforePin.x);
+  const moved = hostedPin ? Math.abs((afterPin.x-afterPin.paneLeft)-(beforePin.x-beforePin.paneLeft)) : Math.abs(afterPin.x-beforePin.x);
   check(afterPin.w < beforePin.w-40, 'PIN narrows the drawer', {before:beforePin.w,after:afterPin.w});
   check(beforePin.present && afterPin.present && afterPin.x!=null && moved < 2,
-        'PIN does not MOVE the drawer (narrows in place)', {moved,before:beforePin.x,after:afterPin.x});
+        'PIN does not MOVE the drawer (narrows in place)', {moved,coordinateSpace:hostedPin?'assistant pane':'window',before:beforePin.x,after:afterPin.x,beforePane:beforePin.paneLeft,afterPane:afterPin.paneLeft});
   check(REDUCED ? (widths.length<=2 && gutters.length<=2) : (widths.length>=4 && gutters.length>=4),
         REDUCED ? 'Reduced motion: width and gutter reach the pinned values in one step'
                 : 'Width and gutter interpolate together, not in one step',
         {widths:widths.length,gutters:gutters.length});
   check(afterPin.w>0 && afterPin.gutter>0 && Math.abs(afterPin.gutter-afterPin.w)<2,
         'Reserved gutter tracks the pinned width exactly', {gutter:afterPin.gutter,width:afterPin.w});
-  check(afterPin.stageLeft > beforePin.stageLeft+40, 'The transcript slid RIGHT into the gutter',
-        {before:beforePin.stageLeft,after:afterPin.stageLeft});
+  const beforeStage = beforePin.stageLeft-(hostedPin?beforePin.paneLeft:0), afterStage = afterPin.stageLeft-(hostedPin?afterPin.paneLeft:0);
+  check(afterStage > beforeStage+40, 'The transcript slid RIGHT into the gutter',
+        {before:beforeStage,after:afterStage,coordinateSpace:hostedPin?'assistant pane':'window',beforeWindow:beforePin.stageLeft,afterWindow:afterPin.stageLeft});
+  if (hostedPin) check(beforePin.stageW>0 && Math.abs(afterPin.stageW-beforePin.stageW)<=1,
+        'Hosted pin preserves the message stage width (F3-637 reserves 240px for History)',
+        {before:beforePin.stageW,after:afterPin.stageW,delta:afterPin.stageW-beforePin.stageW,hostGrowth:afterPin.paneW-beforePin.paneW,drawer:afterPin.w,gutter:afterPin.gutter},
+        'c56port-found / c56port-plans (200px drawer versus 240px host reservation)');
   check(afterPin.scrim.op<0.05 && afterPin.scrim.pe==='none','Scrim goes on pin (chat stays interactive)',afterPin.scrim);
   check(afterPin.shadow==='none','Heavy overlay shadow becomes a quiet border on pin',{shadow:afterPin.shadow});
 });
