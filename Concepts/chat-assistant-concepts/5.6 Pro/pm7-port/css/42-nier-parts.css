@@ -67,3 +67,12 @@ html[data-o55-nier="on"] .pm56-host .pmx-plate .pmx-p-line[data-style="toyou"] {
   transform-box: fill-box; transform-origin: 0 50%;
   translate: 1px 0; scale: .8703 1;
 }
+
+/* ---------------------------------------------------------------- cursor: the chosen answer does not fade */
+/* The Ask Card's chosen answer is drawn as PMConcept7's menu cursor (the chat's nier-parts.css [cursor] rule), and that
+   ink bar never fades (styles.d/14-nier-parts.css). The option's own 180 ms colour and background transition
+   (questions.css) also ran on a look change, and after NieR's repaint, a long task on a slow machine, it only began
+   once that task ended: read 400 ms after an instant switch, the chosen answer still showed Basic's label on Basic's
+   tint (Questions L12, 232,232,232 on a blue 12 % tint), though its tokens were NieR's. Under the cursor part it
+   simply changes, as the bar does. */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host :is(.qs-ask-opt, .qs-ask .qs-other-ask) { transition: none; }
