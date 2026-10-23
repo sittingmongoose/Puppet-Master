@@ -11,3 +11,7 @@
      accent (--accent-primary)                                #b8d066               #0047AB
      face and code  IBM Plex Mono (--body-font, --mono-font; D17a) */
 html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="retro"] { --ss-r: 0px; }
+/* Retro Dark's idle status ring keeps the standalone's ink, PMConcept7's --text-muted (#7c866b, 4.59:1 on a row).
+   It otherwise falls back to --subtle, which Home lifts toward the text (6.20:1), and reads above blocked
+   (5.33:1 at rest, 4.07:1 on a selected row): neon-verify 11, 11b and 11c. The light looks set their own --nx-idle. */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme="retro-dark"] { --nx-idle: var(--text-muted, #7c866b); }
