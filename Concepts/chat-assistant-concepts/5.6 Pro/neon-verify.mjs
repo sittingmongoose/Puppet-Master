@@ -1604,30 +1604,33 @@ for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].fi
         const pr = document.createElement('span'); PM56_TEST.host.appendChild(pr); const tok = {};
         for (const t of ['--muted', '--text', '--subtle', '--nx-idle']) { pr.style.color = 'var(' + t + ', transparent)'; tok[getComputedStyle(pr).color] = 1; }
         pr.remove();
-        let n = 0; const bad = [];
+        let n = 0, outside = 0; const bad = [];
         for (const s of document.querySelectorAll('svg.nx')) {
           if (!s.matches(bare) || s.getBoundingClientRect().width < 2) continue;
+          // The standalone document contains the chat; PM7 also contains
+          // native Usage/Home glyphs with their own neutral-ink palette.
+          if (PM56_TEST.kind === 'pm7' && !s.closest('.pm56-host')) { outside++; continue; }
           const c = s.querySelector('.nx-c'); if (!c) continue;
           n++;
           if (getComputedStyle(s).getPropertyValue('--nx-ink').trim()) continue;
           const ink = getComputedStyle(c).stroke;
           if (!tok[ink]) { const h = s.closest('button, summary, [role="button"], [data-action]'); bad.push(where + ' ' + s.dataset.nx + ' ' + ink + ' @' + h.tagName.toLowerCase() + '.' + String(h.className).trim().replace(/\s+/g, '.').slice(0, 50)); }
         }
-        return { n, bad };
+        return { n, bad, outside };
       }, [bare, where]);
-      let n = 0; const bad = new Set();
+      let n = 0, outside = 0; const bad = new Set();
       const ids = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => r.dataset.id));
-      for (const id of ids) { await p.evaluate(i => window.PM56_DEMO.selectThread(i), id); await p.waitForTimeout(250); const r = await scan(id); n += r.n; r.bad.forEach(b => bad.add(b)); }
+      for (const id of ids) { await p.evaluate(i => window.PM56_DEMO.selectThread(i), id); await p.waitForTimeout(250); const r = await scan(id); n += r.n; outside += r.outside; r.bad.forEach(b => bad.add(b)); }
       await p.evaluate(() => window.PM56_DEMO.selectThread('plain')); await p.waitForTimeout(300);
       for (const m of ['wand', 'mode', 'model', 'persona', 'permissions']) {
         const b = await p.$(`[data-menu="${m}"]`); if (!b) continue;
-        try { await b.click(); await p.waitForTimeout(400); const r = await scan('menu ' + m); n += r.n; r.bad.forEach(x => bad.add(x)); } catch (e) {}
+        try { await b.click(); await p.waitForTimeout(400); const r = await scan('menu ' + m); n += r.n; outside += r.outside; r.bad.forEach(x => bad.add(x)); } catch (e) {}
         await closeOverlays(p);
       }
       for (const d of ['goal', 'todo', 'subagents', 'changes', 'artifacts', 'crew']) {
-        try { await p.evaluate(x => window.PM56_DEMO.openActivity(x), d); await p.waitForTimeout(350); const r = await scan('panel ' + d); n += r.n; r.bad.forEach(x => bad.add(x)); } catch (e) {}
+        try { await p.evaluate(x => window.PM56_DEMO.openActivity(x), d); await p.waitForTimeout(350); const r = await scan('panel ' + d); n += r.n; outside += r.outside; r.bad.forEach(x => bad.add(x)); } catch (e) {}
       }
-      check(n > 100 && bad.size === 0, `17b hover ink leaves toned glyphs alone [${theme}]: ${n} reachable glyphs, every one without its own --nx-ink rests in a neutral ink`, [...bad].slice(0, 12));
+      check(n > 100 && bad.size === 0, `17b hover ink leaves toned glyphs alone [${theme}]: ${n} reachable glyphs, every one without its own --nx-ink rests in a neutral ink`, { bad: [...bad].slice(0, 12), sampled: n, outsideChat: outside });
     } finally { await shut(p); }
   });
 }

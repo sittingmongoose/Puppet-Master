@@ -90,3 +90,5 @@ History transition traces start in the trusted physical click's capture phase, a
 PM7 intentionally widens the column on History pin (F3-637/D3). Hosted drawer and gutter movement therefore use the assistant pane as their coordinate origin; standalone keeps window coordinates. A separate hosted guard requires the message stage to keep its width. It reports the known 200 px drawer versus 240 px host-reservation gap as a failure, with both widths recorded.
 
 Neon's 12a paired glow captures use the actual 90 px specimen rectangle and fail if it moves or scales. A hosted fixed child is positioned by its chat containing block; the page-origin crop can measure unrelated PM7 pixels. The original disc mask and greater-than-1.0 mean-difference predicate remain.
+
+Neon 17b compares chat-neutral glyph ink inside every `.pm56-host` in PM7, including chat overlays and Home panel bodies. Native PM7 Usage/Home glyphs use a separate palette and are counted in `outsideChat` diagnostics. Standalone still scans its whole document. The greater-than-100 sampled-glyph precondition and neutral-ink predicate remain unchanged.
