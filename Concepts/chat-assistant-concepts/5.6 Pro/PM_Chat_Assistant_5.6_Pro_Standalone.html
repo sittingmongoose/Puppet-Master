@@ -77409,6 +77409,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      answer rises into it. (Chasing the answer's placeholder first scrolled the
      thread down 33px, which the fold's clamp then snapped back in one frame.) */
   var FOLD_QUIET = 700, FOLD_QUIET_MAX = 2000;
+  var CARD_FOLD_LATE = 700;   /* the longest a card waits past cardAfter for a late-starting fold */
   /* The wait lasts until the fold has really finished, not a fixed time: under
      load the fold's own steps run late, and a wait that ended first let the
      follow chase the answer before the card had shrunk (measured 61px). */
@@ -77603,6 +77604,20 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
            fold gave it back, the hold ended, and the fold then pulled the thread down under the reader: 315 px at 16
            lines) */
         if (window.PM56_THOUGHT && window.PM56_THOUGHT.handover(d.phId)) { d.workAt = t + (d.cardAfter || 0); return; }
+        /* ...and the other order: the thought loop runs first in a frame, so a late frame can hand the thought over and reach
+           here in the same frame, after the hand-over's render. The card is timed from the real hand-over, and waits for a
+           fold that started late, so the fold always lands first into its held room (P2: born together, the card took that
+           room and the 16-line fold pulled the thread down 140 px) */
+        var TH = window.PM56_THOUGHT, ho = TH && TH.handedAt ? TH.handedAt(d.phId) : null;
+        if (ho != null && d.cardAfter) {
+          var due = ho + d.cardAfter;
+          if (t < due || (TH.folding(d.phId) && t < due + CARD_FOLD_LATE)) {
+            d.workAt = t < due ? due : t;
+            /* keep the fold's room through the wait (it was held for SHRINK_HOLD from the hand-over) */
+            if (room.on && room.transient && !room.rel && room.relAt !== Infinity) room.relAt = Math.max(room.relAt, now() + SHRINK_HOLD);
+            return;
+          }
+        }
         var i = th.messages.findIndex(function (m) { return m.id === d.phId; });
         var st = streams.get(d.phId);
         if (st) streams.delete(d.phId);
@@ -78015,6 +78030,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      room held, and the working card is born into that room (the fold token is 320 ms, Retro's 192) */
   var CARD_AFTER = 380;
   var live = new Map();                    /* thought id -> the thought being written */
+  var endedAt = Object.create(null);     /* reply id -> {at, id}: when its thought handed over; the director times the card from it */
   var byReply = Object.create(null);       /* reply id -> thought id */
   var view = Object.create(null);          /* thought id -> { open, mode }: a reader's own toggle */
   var loop = 0;
@@ -78273,6 +78289,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var found = findMsg(c, L.replyId);
     if (found && !(L.agent && how === 'done' && !(opts && opts.complete))) delete found.m.thoughtGate;
     delete byReply[L.replyId];
+    endedAt[L.replyId] = { at: now(), id: L.id };
     var willFold = !isOpen(c, T);
     var art = island && island.closest('.message-thought');
     /* the fold gives back far more height than what comes next needs at first (a reply's first line, or an agent
@@ -78298,7 +78315,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     /* Send now: a written reply's thought ends with it; an agent turn keeps thinking, as its work keeps running */
     steer: function (tid) { var any = false; live.forEach(function (L) { if (L.tid === tid && !L.agent && end(L, 'ended')) any = true; }); if (any) C().renderApp(); },
     cancel: function (tid) { live.forEach(function (L) { if (L.tid === tid) end(L, 'done', { complete: true }); }); },
-    reset: function () { live.clear(); byReply = Object.create(null); view = Object.create(null); }
+    reset: function () { live.clear(); byReply = Object.create(null); view = Object.create(null); endedAt = Object.create(null); }
   };
 
   /* ------------------------------------------------------------------ render */
@@ -78386,6 +78403,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   window.PM56_THOUGHT = {
     start: function (c, t, R, thinking, opts) { wire(); return start(c, t, R, thinking, opts); },
     handover: handover,
+    /* the agent turn's director: when the reply's thought handed over, and whether its fold is still running */
+    handedAt: function (rid) { var e = endedAt[rid]; return e ? e.at : null; },
+    folding: function (rid) { var e = endedAt[rid]; if (!e) return false; var isl = islandOf(e.id), clip = isl && isl.firstElementChild; return !!(clip && clip.__tt && clip.__tt.anim); },
     /* state for checks and the demo: what each live thought is doing */
     active: function () { var out = []; live.forEach(function (L) { out.push({ id: L.id, tid: L.tid, reply: L.replyId, cursor: L.cursor, ops: L.ops.length, ms: L.ms, agent: L.agent, capped: L.capped }); }); return out; },
     mode: function (T) { return T ? modeOf(C(), T) : prefMode(C()); },

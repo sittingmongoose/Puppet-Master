@@ -49,6 +49,7 @@
      room held, and the working card is born into that room (the fold token is 320 ms, Retro's 192) */
   var CARD_AFTER = 380;
   var live = new Map();                    /* thought id -> the thought being written */
+  var endedAt = Object.create(null);     /* reply id -> {at, id}: when its thought handed over; the director times the card from it */
   var byReply = Object.create(null);       /* reply id -> thought id */
   var view = Object.create(null);          /* thought id -> { open, mode }: a reader's own toggle */
   var loop = 0;
@@ -307,6 +308,7 @@
     var found = findMsg(c, L.replyId);
     if (found && !(L.agent && how === 'done' && !(opts && opts.complete))) delete found.m.thoughtGate;
     delete byReply[L.replyId];
+    endedAt[L.replyId] = { at: now(), id: L.id };
     var willFold = !isOpen(c, T);
     var art = island && island.closest('.message-thought');
     /* the fold gives back far more height than what comes next needs at first (a reply's first line, or an agent
@@ -332,7 +334,7 @@
     /* Send now: a written reply's thought ends with it; an agent turn keeps thinking, as its work keeps running */
     steer: function (tid) { var any = false; live.forEach(function (L) { if (L.tid === tid && !L.agent && end(L, 'ended')) any = true; }); if (any) C().renderApp(); },
     cancel: function (tid) { live.forEach(function (L) { if (L.tid === tid) end(L, 'done', { complete: true }); }); },
-    reset: function () { live.clear(); byReply = Object.create(null); view = Object.create(null); }
+    reset: function () { live.clear(); byReply = Object.create(null); view = Object.create(null); endedAt = Object.create(null); }
   };
 
   /* ------------------------------------------------------------------ render */
@@ -420,6 +422,9 @@
   window.PM56_THOUGHT = {
     start: function (c, t, R, thinking, opts) { wire(); return start(c, t, R, thinking, opts); },
     handover: handover,
+    /* the agent turn's director: when the reply's thought handed over, and whether its fold is still running */
+    handedAt: function (rid) { var e = endedAt[rid]; return e ? e.at : null; },
+    folding: function (rid) { var e = endedAt[rid]; if (!e) return false; var isl = islandOf(e.id), clip = isl && isl.firstElementChild; return !!(clip && clip.__tt && clip.__tt.anim); },
     /* state for checks and the demo: what each live thought is doing */
     active: function () { var out = []; live.forEach(function (L) { out.push({ id: L.id, tid: L.tid, reply: L.replyId, cursor: L.cursor, ops: L.ops.length, ms: L.ms, agent: L.agent, capped: L.capped }); }); return out; },
     mode: function (T) { return T ? modeOf(C(), T) : prefMode(C()); },

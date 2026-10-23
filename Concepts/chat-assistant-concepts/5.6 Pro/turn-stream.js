@@ -473,6 +473,7 @@
      answer rises into it. (Chasing the answer's placeholder first scrolled the
      thread down 33px, which the fold's clamp then snapped back in one frame.) */
   var FOLD_QUIET = 700, FOLD_QUIET_MAX = 2000;
+  var CARD_FOLD_LATE = 700;   /* the longest a card waits past cardAfter for a late-starting fold */
   /* The wait lasts until the fold has really finished, not a fixed time: under
      load the fold's own steps run late, and a wait that ended first let the
      follow chase the answer before the card had shrunk (measured 61px). */
@@ -667,6 +668,20 @@
            fold gave it back, the hold ended, and the fold then pulled the thread down under the reader: 315 px at 16
            lines) */
         if (window.PM56_THOUGHT && window.PM56_THOUGHT.handover(d.phId)) { d.workAt = t + (d.cardAfter || 0); return; }
+        /* ...and the other order: the thought loop runs first in a frame, so a late frame can hand the thought over and reach
+           here in the same frame, after the hand-over's render. The card is timed from the real hand-over, and waits for a
+           fold that started late, so the fold always lands first into its held room (P2: born together, the card took that
+           room and the 16-line fold pulled the thread down 140 px) */
+        var TH = window.PM56_THOUGHT, ho = TH && TH.handedAt ? TH.handedAt(d.phId) : null;
+        if (ho != null && d.cardAfter) {
+          var due = ho + d.cardAfter;
+          if (t < due || (TH.folding(d.phId) && t < due + CARD_FOLD_LATE)) {
+            d.workAt = t < due ? due : t;
+            /* keep the fold's room through the wait (it was held for SHRINK_HOLD from the hand-over) */
+            if (room.on && room.transient && !room.rel && room.relAt !== Infinity) room.relAt = Math.max(room.relAt, now() + SHRINK_HOLD);
+            return;
+          }
+        }
         var i = th.messages.findIndex(function (m) { return m.id === d.phId; });
         var st = streams.get(d.phId);
         if (st) streams.delete(d.phId);
