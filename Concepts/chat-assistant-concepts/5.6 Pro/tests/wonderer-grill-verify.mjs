@@ -385,9 +385,30 @@ async function browser() {
   /* answer every round with Accept all until What we agreed is open; notes whether it waited on a lookup on the way */
   const answerAll = async (maxMs = 30000, resumeOnLookup = false) => {
     let resumed = false, resumeReason = null; const t0 = Date.now();
-    await ev(() => {
+    await ev(traceScroll => {
       const root = window.PM56_HOST?.root?.() || document.body, tid = PM56_EXT.ctx().state.selectedThread;
-      const p = window.__c56AnswerLookup = { seen: false, witness: null, since: null, samples: 0, agreedFacts: null, trace: [] };
+      const p = window.__c56AnswerLookup = { seen: false, witness: null, since: null, samples: 0, agreedFacts: null, trace: [], scrollCalls: [] };
+      // Isolated diagnostics delegate to the original native methods, then restore them.
+      // They change neither the lookup visibility predicate nor its timing window.
+      if (traceScroll) {
+        const proto = Element.prototype, originals = {};
+        for (const method of ['scrollTo', 'scrollIntoView']) {
+          originals[method] = proto[method];
+          proto[method] = function (...args) {
+            const tr = root.querySelector('[data-scroll-key="transcript"]');
+            if (tr && (this === tr || tr.contains(this))) {
+              const caller = new Error().stack.split('\n').slice(2, 6).map(s => s.trim().slice(-240)).join('\n');
+              const last = p.scrollCalls.at(-1), at = performance.now();
+              const state = { top: tr.scrollTop, max: tr.scrollHeight - tr.clientHeight, target: this.className, args };
+              if (last && last.method === method && last.caller === caller) Object.assign(last, { lastAt: at, count: last.count + 1, last: state });
+              else p.scrollCalls.push({ method, caller, firstAt: at, lastAt: at, count: 1, first: state, last: state });
+              if (p.scrollCalls.length > 80) p.scrollCalls.splice(1, 1);
+            }
+            return originals[method].apply(this, args);
+          };
+        }
+        p.restoreScrollMethods = () => { for (const method of Object.keys(originals)) proto[method] = originals[method]; };
+      }
       const read = () => {
         if (p.agreedFacts == null && PM56_EXT.ctx().state.selectedThread === tid && root.querySelector('.wg-agreed[data-state="open"]')) {
           const run = PM56_COLLAB.run(PM56_WG_DEMOS.snapshot()?.runId);
@@ -398,7 +419,10 @@ async function browser() {
         const key = JSON.stringify([el?.textContent, r && Math.round(r.top), h?.tagName, h?.className]);
         if (key !== p.traceKey) {
           p.traceKey = key;
-          p.trace.push({ at: performance.now(), text: el?.textContent || null, top: r?.top, height: r?.height, hit: h ? h.tagName + '.' + h.className : null });
+          const tr = root.querySelector('[data-scroll-key="transcript"]'), guide = root.querySelector('.pmx-guide');
+          p.trace.push({ at: performance.now(), text: el?.textContent || null, top: r?.top, height: r?.height, hit: h ? h.tagName + '.' + h.className : null,
+            scroll: tr ? { top: tr.scrollTop, max: tr.scrollHeight - tr.clientHeight, sticky: PM56_EXT.ctx().isSticky?.() } : null,
+            guideTop: guide?.getBoundingClientRect().top });
           if (p.trace.length > 60) p.trace.splice(1, 1);
         }
         if (el && r.width && r.height && h && (h === el || el.contains(h)) && PM56_EXT.ctx().state.selectedThread === tid) {
@@ -407,7 +431,7 @@ async function browser() {
         } else { p.since = null; p.samples = 0; }
       };
       p.observer = new MutationObserver(read); p.observer.observe(root, { childList: true, subtree: true, characterData: true }); p.timer = setInterval(read, 100); read();
-    });
+    }, process.env.WGV_ONLY === 'b2');
     const done = async agreed => {
       const observed = await ev(() => {
         const r = PM56_COLLAB.run(PM56_WG_DEMOS.snapshot()?.runId);
@@ -415,9 +439,9 @@ async function browser() {
           const box = el.getBoundingClientRect(), hit = document.elementFromPoint(box.left + Math.min(20, box.width / 2), box.top + box.height / 2);
           return { text: el.textContent, x: box.x, y: box.y, width: box.width, height: box.height, hit: hit?.tagName + '.' + hit?.className };
         });
-        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, agreedFacts: __c56AnswerLookup.agreedFacts, trace: __c56AnswerLookup.trace, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [], lookup, thread: PM56_EXT.ctx().state.selectedThread };
+        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, agreedFacts: __c56AnswerLookup.agreedFacts, trace: __c56AnswerLookup.trace, scrollCalls: __c56AnswerLookup.scrollCalls, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [], lookup, thread: PM56_EXT.ctx().state.selectedThread };
       });
-      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, lookupTrace: observed.trace, factsAfter: observed.facts, lookupGeometry: observed.lookup, thread: observed.thread, resumeReason };
+      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, lookupTrace: observed.trace, scrollCalls: observed.scrollCalls, factsAfter: observed.facts, lookupGeometry: observed.lookup, thread: observed.thread, resumeReason };
     };
     try {
     while (Date.now() - t0 < maxMs) {
@@ -438,7 +462,7 @@ async function browser() {
       await sleep(500);
     }
     return await done(false);
-    } finally { await ev(resume => { window.__c56AnswerLookup?.observer.disconnect(); clearInterval(window.__c56AnswerLookup?.timer); delete window.__c56AnswerLookup; if (resume) PM56_CLOCK.setScale(1); }, resumeOnLookup); }
+    } finally { await ev(resume => { window.__c56AnswerLookup?.observer.disconnect(); clearInterval(window.__c56AnswerLookup?.timer); window.__c56AnswerLookup?.restoreScrollMethods?.(); delete window.__c56AnswerLookup; if (resume) PM56_CLOCK.setScale(1); }, resumeOnLookup); }
   };
   const wonLanes = () => ev(() => [...document.querySelectorAll('.pmx-lane[data-k*=":"]')].filter(l => /Wonderer/.test(l.querySelector('.pmx-lane-name')?.textContent || '')).map(l => l.textContent));
   const disabledSynthesis = async run => {
