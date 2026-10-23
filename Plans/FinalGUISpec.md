@@ -45965,10 +45965,14 @@ canonical_text: >-
   History cases: at 1920 px in Friendly dark, the flyout column is 600 px, the pinned column 666 px
   (History 240 px, messages 425 px) and C 960 px; at 1920 px in NieR, flyout is 600 px and pinned
   681 px (History 240 px, messages 440 px), with C 960 px. At 1470 px in Glass light with the rail
-  folded, flyout is 434 px with C 960 px, and pinned is 640 px (History 240 px, messages 399 px),
-  with C 754 px. At 900 px in Retro dark the chat folds to 32 px, with a 400 px flyout peek or 640
-  px pinned peek. These measurements include centre-budget clamping, while the saved width remains
-  the message-area preference. The v2 layout record's chat_column keeps width_px, history_pinned and
+  folded, flyout is 446 px with C 960 px, and pinned is 640 px (History 240 px, messages 400 px),
+  with C 766 px (re-measured 2026-10-23, DL-233; the 2026-10-10 reading was 434 px, 399 px and C 754
+  px). At 900 px in Retro dark the chat folds to 32 px, with a 400 px flyout peek or 640 px pinned
+  peek; as built, a folded chat keeps History dropped, so its peek opens at 400 px with History as
+  its flyout either way. These measurements include centre-budget clamping, while the saved width
+  remains the message-area preference. The hosted 5.6 Pro chat and the panel redesign's scripted
+  stand-in, measured on the same page on 2026-10-23, give the same numbers in each case (DL-233).
+  The v2 layout record's chat_column keeps width_px, history_pinned and
   keep_open (defaults null, false and false), in addition to its shown state; none is a Settings
   value. width_px is the message area's width, rounded to an integer in 400-760 px, with an
   out-of-range finite number stored at the nearer bound and null following the window's default;
