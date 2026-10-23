@@ -109,6 +109,15 @@ body.tx-flying textarea[data-input="composer"]::placeholder { color: transparent
 textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
 /* the reply's waiting line and the turn's mark arrive after the bubble lands */
 .transcript-inner > [data-streaming="pending"] { animation-delay: 380ms; }
+/* A post-work answer is intentionally silent until the dial lifts. Its empty
+   surface and hidden action row must not add scrollable height while the
+   orbit's wide grid is still folding horizontally. Keep the stream island
+   mounted and animated so its existing arrival clock runs without restarting
+   when the live phase restores its natural height. */
+.transcript-inner > [data-stream-quiet][data-streaming="pending"] {
+  height: 0; min-height: 0; padding-block: 0;
+  border-block-width: 0; overflow: hidden;
+}
 .sp-mark[data-state="pending"] { animation: sp-in 260ms cubic-bezier(.17, .84, .29, .99) 380ms both; }
 @keyframes sp-in { from { opacity: 0; } to { opacity: 1; } }
 .transcript-inner > [data-flight="1"] .message-surface { opacity: 0; }

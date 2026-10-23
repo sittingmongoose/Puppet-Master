@@ -17934,6 +17934,15 @@ body.tx-flying textarea[data-input="composer"]::placeholder { color: transparent
 textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
 /* the reply's waiting line and the turn's mark arrive after the bubble lands */
 .transcript-inner > [data-streaming="pending"] { animation-delay: 380ms; }
+/* A post-work answer is intentionally silent until the dial lifts. Its empty
+   surface and hidden action row must not add scrollable height while the
+   orbit's wide grid is still folding horizontally. Keep the stream island
+   mounted and animated so its existing arrival clock runs without restarting
+   when the live phase restores its natural height. */
+.transcript-inner > [data-stream-quiet][data-streaming="pending"] {
+  height: 0; min-height: 0; padding-block: 0;
+  border-block-width: 0; overflow: hidden;
+}
 .sp-mark[data-state="pending"] { animation: sp-in 260ms cubic-bezier(.17, .84, .29, .99) 380ms both; }
 @keyframes sp-in { from { opacity: 0; } to { opacity: 1; } }
 .transcript-inner > [data-flight="1"] .message-surface { opacity: 0; }
@@ -76958,7 +76967,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     };
     if (opts && opts.instantArrival) { st.chunkAt = st.chunkAt.map(function () { return 0; }); }
     if (opts && opts.hold) st.hold = true;                 /* a thinking placeholder a director replaces */
-    if (opts && opts.quiet) st.quiet = true;               /* an answer after visible work: no "is thinking" */
+    if (opts && opts.quiet) { st.quiet = true; m.streamQuiet = true; } /* an answer after visible work: no "is thinking" */
     streams.set(m.id, st);
     m.streaming = true; m.streamPhase = 'pending';
     kick();
@@ -77089,6 +77098,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     st.phase = ph; st.m.streamPhase = ph;
     var art = document.querySelector('.transcript-inner > [data-k="msg:' + CSS.escape(st.id) + '"]');
     if (art) art.setAttribute('data-streaming', ph);
+    if (ph === 'live' && st.quiet && room.on && room.answerRec === st.revealRec) room.answerLive = true;
   }
 
   function frame(ts) {
@@ -77270,6 +77280,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   }
   function roomQuiet() {
     if (!room.on || room.rel) return false;
+    if (room.answerFollowReady) return false;
     var t = now();
     return t < room.quietUntil || (t < room.quietUntil + FOLD_QUIET_MAX && stillFolding());
   }
@@ -77283,7 +77294,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     else document.documentElement.style.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
   }
   function naturalH(inner) { var l = inner.lastElementChild; return l ? l.getBoundingClientRect().bottom - inner.getBoundingClientRect().top : 0; }
-  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); }
+  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.answerRec = null; room.answerLive = false; room.answerFollowReady = false; room.transient = false; roomFloor(null); }
   /* the list's height as last laid out: the completion render (which drops
      the card's narration line and mounts the answer's placeholder) runs before
      the hold starts, so the hold takes the height from before that render */
@@ -77302,6 +77313,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var before = inner === roomSeen && room.lastH ? room.lastH : 0;
     room.inner = inner; room.h0 = before || inner.offsetHeight;
     room.on = true; room.rel = false; room.transient = false; room.x = null; room.v = 0; room.last = now();
+    room.answerRec = null; room.answerLive = false; room.answerFollowReady = false;
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
@@ -77329,6 +77341,15 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var inner = roomInner();
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
     if (room.transient && !room.rel && now() >= room.relAt) releaseRoom();
+    /* Once the answer becomes live, follow its real content. First retain
+       that height in the room floor, so the remaining horizontal fold cannot
+       clamp the viewport back up. The orbit and answer clocks stay unchanged;
+       only the empty-placeholder hold ends when there is something to read. */
+    if (room.answerLive && !room.answerFollowReady && !room.rel) {
+      room.h0 = Math.max(room.h0, naturalH(inner));
+      roomFloor(room.h0);
+      room.answerFollowReady = true;
+    }
     if (!room.rel && !roomQuiet()) {
       /* after the fold the floor only ratchets up: a follow into content past
          it can then never be clamped back when something above shrinks */
@@ -77499,7 +77520,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
             if (f) foldIds.push(w.id);
           }
         });
-        if (foldIds.length && room.on) { room.quietUntil = now() + FOLD_QUIET; room.foldIds = foldIds; try { C().holdFollow(roomQuiet); } catch (e) { } }
+        if (foldIds.length && room.on) { room.quietUntil = now() + FOLD_QUIET; room.foldIds = foldIds; room.answerRec = id; try { C().holdFollow(roomQuiet); } catch (e) { } }
         sound('answer');
       }
     }
@@ -79341,7 +79362,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       : `<div class="message-body ${isLong&&!expanded?'long-fade':''}">${m.rich&&window.PM56_RICH?window.PM56_RICH.html(m.body):formatText(m.body)}</div>`;
     const terminalHtml=(!m.streaming&&(m.terminal==='stopped'||m.terminal==='error'))
       ? `<div class="tx-terminal tx-terminal-${esc(m.terminal)}" data-k="tx-term:${esc(m.id)}">${icon(m.terminal==='error'?'warning':'stop',11)}<span>${m.terminal==='error'?esc(m.terminalNote||'Stopped by an error'):'Stopped'}</span></div>` : '';
-    const streamAttr=m.streaming?` data-streaming="${esc(m.streamPhase||'pending')}"`:'';
+    const streamAttr=m.streaming?` data-streaming="${esc(m.streamPhase||'pending')}"${m.streamQuiet?' data-stream-quiet':''}`:'';
     const afford=readOnlyRender?'':extRender('messageAffordance',{message:m});
     return `<article class="message message-${m.role}" data-message-id="${esc(m.id)}" data-speaker="${m.role==='user'?'You':'Assistant'}" data-index="${msgIndex(m.id)}" data-time="${esc(msgClock(m))}" style="--msg-index:${msgIndex(m.id)}"${streamAttr}>${afford}<div class="message-surface"${m.streaming?` data-k="tx-surface:${esc(m.id)}"`:''}>${m.role==='assistant'?`<div class="message-role">${icon('sparkles',12)} Assistant</div>`:''}${bodyHtml}${terminalHtml}${isLong?`<button class="text-button" data-action="toggle-message" data-id="${esc(m.id)}"${hoverAttrs('msg-expand-'+m.id,expandTip)}>${icon(expanded?'collapse':'expand',12)} ${expanded?'Collapse':'Expand response'}</button>`:''}${details?renderMessageDetails(m):''}</div>${chrome}</article>`;
   }
