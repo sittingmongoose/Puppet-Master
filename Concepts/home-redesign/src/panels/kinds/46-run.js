@@ -309,7 +309,6 @@ function mountRun(host, state, api) {
   function shortName() { return run.type === 'room' ? 'Chat Room' : T.word.split(' · ')[0]; }
   function message(person) {
     var at = '@' + (person ? person.role : shortName()) + ' ';
-    if (PMW.standIn && typeof PMW.standIn.prefill === 'function') { PMW.standIn.prefill(at); return; }
     if (PM_HOME.chat && typeof PM_HOME.chat.compose === 'function') { PM_HOME.chat.compose(at); return; }
     PMW.toast('Write in the chat beside this panel, starting with ' + at.trim());
   }

@@ -26,7 +26,7 @@ const W = (ms) => new Promise((res) => setTimeout(res, ms));
 const RULE0 = RULES.find((r) => r.rule === 0).variants[0].original;
 const FORCE = [
   { cls: 'o55np-cur-over', sel: RULE0.slice(RULE0.indexOf(':is('), RULE0.lastIndexOf('.o55np-cur-over')) },
-  { cls: 'pmh-on', sel: ':is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, .pmw-sc-btn, #projectMenuBtn, #themeSelect)' },
+  { cls: 'pmh-on', sel: ':is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, #projectMenuBtn, #themeSelect)' },
   { cls: 'active', sel: '.pmr-menu .pmr-mi' },
   { cls: 'selected', sel: '#sidePanelSlot .fm-row' },
   { cls: 'o55np-cur-over', sel: '#sidePanelSlot :is(.pmr-cur, .fm-row, .pm-segtab-item)' },

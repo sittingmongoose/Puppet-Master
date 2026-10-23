@@ -987,7 +987,7 @@ PM_HOME.registerKind('debug-console', {
 });
 
 /* ------------------------------------------------------------------------------------------------------------------ */
-/* The catalog (Ctrl+P, the "+" pickers, the stand-in chat): a channel or a session switches its one tab (D31, D33)   */
+/* The catalog (Ctrl+P, the "+" pickers): a channel or a session switches its one tab (D31, D33)                     */
 /* ------------------------------------------------------------------------------------------------------------------ */
 
 PM_HOME.catalog.add('output', CHANNELS.map(function (c) {

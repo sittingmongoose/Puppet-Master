@@ -73,11 +73,12 @@
     var KINDS = {
       icon: '.activity-bar .icon,.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn,' +
         '.pm-minibtn,.fm-tbtn,.pmw-tb-btn,#pm-home-more-btn',
-      /* controls that are not icon buttons (2026-10-13 hover polish): the shell's tabs, the rail's segments and rows, the
-         title bar's text buttons and the home chat's text buttons. Like icons they never move; the looks that draw a
-         control marker (#pmh-frame on icon and ctl kinds) give them its plate. A tab is never a target otherwise
-         (BOUNDARY); one named here is. Inside a card they resolve to the card, as icons do. */
-      ctl: '.page-tab,.pmw-tab,.pm-segtab-item,.pmw-sc-btn,#projectMenuBtn,#themeSelect,' +
+      /* controls that are not icon buttons (2026-10-13 hover polish): the shell's tabs, the rail's segments and rows and
+         the title bar's text buttons (the stand-in chat's text buttons left with that chat on 2026-10-23, DL-233). Like
+         icons they never move; the looks that draw a control marker (#pmh-frame on icon and ctl kinds) give them its
+         plate. A tab is never a target otherwise (BOUNDARY); one named here is. Inside a card they resolve to the card,
+         as icons do. */
+      ctl: '.page-tab,.pmw-tab,.pm-segtab-item,#projectMenuBtn,#themeSelect,' +
         '#sidePanelSlot :is(.fm-row,.sh-row,.tree-item,.pmr-row)',
       tile: '.pm6-dash-catalog-item,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-orch-hist-state',
       row: '.pm6-sp-row,.pm6-art-row,.pm6-search-hit',
@@ -233,7 +234,7 @@
     /* A popup inside the parked chat root (21-shell-perf.css: content-visibility hidden outside the Guided Tour) is never
        drawn, and a rect read there lays out the whole locked root: the chat's more menus did, 2 reads at +100-140 ms
        after a Settings click on the 3090 (T9b). The selector match reads no style. */
-    var PARKED = 'html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > .float-content.pm6-chat-root';
+    var PARKED = 'html:not([data-o55-tour]) #chatPanel[data-pm56="on"] > .float-content.pm6-chat-root';
     function drawn(e) { return !e.closest(PARKED) && e.getClientRects().length > 0; }
     function anyPopup() {
       var open = false;

@@ -83076,10 +83076,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
       const follow=()=>{ if(hostedSyncing) return; if(hostedReconcile()) renderApp(); };
       ['activate','open','focus','layout','paint','narrow','maximize'].forEach(ev=>H.on(ev,follow));
       HOST.onPage(follow);
-      /* the chat column's surface (CONTRACT 6.1): History, compose, reveal; the stand-in answers while it is on */
-      /* the stand-in registers its surface when the panels finish booting (their 'ready'), which can come after this */
+      /* the chat column's surface (CONTRACT 6.1): History, compose, reveal and the pinned History's width */
       claimSurface();
-      try { if(window.PMW&&PMW.bus&&PMW.bus.on) PMW.bus.on('ready',claimSurface); } catch(err){}
       renderApp();
     };
     if(window.PM_HOME&&PM_HOME.ready) PM_HOME.ready(()=>setTimeout(wire,0)); else setTimeout(wire,0);
@@ -83088,15 +83086,16 @@ suggested path                    migration 0043, reversible</div></div></sectio
   function claimSurface(){
     const SC=window.PMW&&PMW.chatCol;
     if(!SC||(hostedSurface&&SC.surface===hostedSurface)) return;
-    const standIn=()=>!!(window.PMW&&PMW.standIn&&PMW.standIn.isOn&&PMW.standIn.isOn());
-    const prev=SC.surface;
     hostedSurface={
-      drawsHistory:()=>standIn()?!!(prev&&prev.drawsHistory&&prev.drawsHistory()):HOST.drawsHistory(),
-      shown:()=>standIn()?!!(prev&&prev.shown&&prev.shown()):HOST.shown(),
-      compose:text=>standIn()&&prev&&prev.compose?prev.compose(text):hostedCompose(text),
-      reveal:o=>standIn()&&prev&&prev.reveal?prev.reveal(o):hostedReveal(o)
+      drawsHistory:()=>HOST.drawsHistory(),
+      shown:()=>HOST.shown(),
+      compose:text=>hostedCompose(text),
+      reveal:o=>hostedReveal(o),
+      historyWidth:mw=>HOST.historyWidth?HOST.historyWidth(mw):null
     };
     SC.surface=hostedSurface;
+    /* the column measures again with this surface: a History pinned at boot widens it now */
+    try { if(PMW.narrow&&PMW.narrow.schedule) PMW.narrow.schedule(); } catch(err){}
   }
   /* the chat's own header menu (CONTRACT 6.1): History beside the messages, D4's keep-open row, Pop out / Dock back */
   function renderColumnMenu(){

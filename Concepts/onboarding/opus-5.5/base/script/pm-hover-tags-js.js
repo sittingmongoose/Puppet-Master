@@ -625,7 +625,7 @@
       if(!focused&&!hovered)self.close(false);
     },DEPARTURE_GRACE_MS);
   };
-  var PRIMARY_CLASSES=['pm6-chat-send','pmw-sc-send','pm6-wiz-send','pm-hover-avoid'];
+  var PRIMARY_CLASSES=['pm6-chat-send','pm6-wiz-send','pm-hover-avoid'];
   function avoidPrimary(active,tagRoot,left,top,rect,anchor,viewport,marginX,marginY){
     var nodes=[],boxes=[];PRIMARY_CLASSES.forEach(function(c){var l=document.getElementsByClassName(c);for(var k=0;k<l.length;k++)nodes.push(l[k]);});   /* live lists: no document-wide selector match */
     for(var i=0;i<nodes.length;i++){var n=nodes[i];if(n===active||n.contains(active)||active.contains(n))continue;var b=n.getBoundingClientRect();if(!(b.width>0&&b.height>0))continue;

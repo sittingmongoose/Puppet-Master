@@ -26,7 +26,6 @@ menus.home = function (anchor) {
     // D4's pin: the typed UI action, the same row as the chat's own header menu (46-chat.js keepOpenRow)
     PMW.chatCol.keepOpenRow()
   ];
-  if (PMW.standIn) chatRows.push({ id: 'stand-in', label: PMW.standIn.isOn() ? 'Show the current chat' : 'Show the stand-in chat', sub: 'The stand-in exercises every way the chat opens tabs', icon: 'transcript', run: function () { PMW.standIn.toggle(); } });
   var other = [
     { id: 'save', label: 'Save this layout...', icon: 'keep', run: function () { nextFrame(function () { menu.prompt(anchor, { title: 'Save layout as', ok: 'Save', value: '', done: function (v) { PMW.saveNamedLayout(v); } }); }); } },
     { id: 'reset', label: 'Restore home layout', icon: 'reopen', sub: 'Open tabs stay open', run: function () { PMW.resetLayout(); } },

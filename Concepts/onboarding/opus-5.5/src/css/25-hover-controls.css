@@ -119,7 +119,7 @@
    filled buttons and the title bar's project and look buttons keep theirs, under the marker. Weighted with ids: the
    rail's skin and the panels' own hover rules are !important with one id. ---- */
 :root:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz)
-  :is([data-pmh-kind="icon"], .page-tab, .pmw-tab, .pm-segtab-item, .pmw-sc-btn, .fm-row, .sh-row, .tree-item, .pmr-row).pmh-on:not([class*="primary"], .danger, .active, .selected, .is-active, .is-selected, .is-open, [aria-selected="true"], [aria-pressed="true"], [aria-current="page"], [aria-expanded="true"]) {
+  :is([data-pmh-kind="icon"], .page-tab, .pmw-tab, .pm-segtab-item, .fm-row, .sh-row, .tree-item, .pmr-row).pmh-on:not([class*="primary"], .danger, .active, .selected, .is-active, .is-selected, .is-open, [aria-selected="true"], [aria-pressed="true"], [aria-current="page"], [aria-expanded="true"]) {
   background-color: transparent !important; background-image: none !important;
 }
 :root:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz)
@@ -184,7 +184,7 @@
 #pmh-frame[data-pmh-family="retro"][data-pmh-kind="ctl"].pmh-frame-press::after { opacity: 1; }
 /* a pressed tab is the chip's from the press on (data-lg-press, glass.js): the phosphor ink would sit on the arriving
    chip, lime on lime, until the app's click lands (Q16 review F3) */
-:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, .pmw-sc-btn:not([class*="primary"]), #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
+:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
   color: var(--accent-primary) !important; transition-duration: 0s !important;
 }
 /* the commander's bar on a rail row */
@@ -216,17 +216,17 @@
    their own hover. */
 html[data-o55-nier] [data-pmh-kind="ctl"] { --pmh-frame: 0; --pmh-glow: 0; }
 html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz)
-  :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, .pmw-sc-btn, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on {
+  :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on {
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
   box-shadow: none !important; text-shadow: none !important; transition-duration: 0s !important;
 }
 /* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
 html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz)
-  :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, .pmw-sc-btn, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(*) {
+  :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
 html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz)
-  :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, .pmw-sc-btn, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on:active {
+  :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on:active {
   background: var(--o55-nier-paper) !important; color: var(--o55-nier-ink) !important;
   box-shadow: inset 0 0 0 1px var(--o55-nier-ink) !important;
 }

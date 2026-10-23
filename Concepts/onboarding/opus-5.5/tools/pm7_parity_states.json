@@ -59,7 +59,7 @@
       "id": "chat",
       "route": "dashboard",
       "prepare": "PM_HOME.chat.reveal({});",
-      "assert": ".pmw-sc-input"
+      "assert": "#pmRoot .composer-input"
     }
   ],
   "states": [
@@ -202,7 +202,7 @@
       "steps": [
         {
           "action": "focus",
-          "selector": ".pmw-sc-input"
+          "selector": "#pmRoot .composer-input"
         }
       ],
       "motions": [
@@ -217,11 +217,11 @@
       "steps": [
         {
           "action": "click",
-          "selector": ".pmw-sc-head button[aria-label=\"More\"]"
+          "selector": "#pmRoot .chat-header .pm56-column-btn"
         }
       ],
-      "assert": "#pmw-overlay .pmw-menu[aria-label=\"Chat\"][data-mstate=\"open\"]",
-      "check": "document.querySelector('.pmw-sc-head button[aria-label=\"More\"]')?.getAttribute(\"aria-expanded\") === \"true\""
+      "assert": "#pmOverlayRoot .overlay-menu[data-overlay=\"root-menu\"] [data-action=\"pm56-history-pin\"]",
+      "check": "!!document.querySelector('#pmOverlayRoot .overlay-menu[data-overlay=\"root-menu\"] [data-action=\"pm56-history-pin\"]')"
     },
     {
       "id": "nier-popover",

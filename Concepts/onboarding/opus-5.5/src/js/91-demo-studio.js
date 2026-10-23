@@ -5,8 +5,8 @@
      onboarding  PM_O55_ONBOARDING (replay, open), O55.fixtures / O55.store 'scenario' (the situation)
      tour        PM7_GUIDED_TOUR (restart, resume, resumable); O55.tour.go for a chapter start (internal, guarded)
      story       PM_DEMO (clock, director.ensure, state.story, log): the base page's demo engine
-     workspace   PMW (NAMED, savedLayouts, applyNamed, resetLayout), PM_HOME.settings 'chat.standIn', PMT.agent,
-                 PM_HOME.open and PM56_PORT.open for the agents' background opens
+     workspace   PMW (NAMED, savedLayouts, applyNamed, resetLayout), PMT.agent, PM_HOME.open and PM56_PORT.open for
+                 the agents' background opens
      chat        PM56_PORT.demo (the 5.6 Pro chat's port: Concepts/chat-assistant-concepts/5.6 Pro/pm7-port/js/
                  50-demo-bridge.js): its recorded examples, moments, takes and Reset all
      usage       PMU.live (pause, resume, hour), PMU.charts.gallery, PM_PAGES.go
@@ -175,19 +175,8 @@
     current() { try { const S = HOME() && HOME().settings; return S ? S.get('panels.layout.named') : null; } catch (_) { return null; } },
     use(id) { goHome(); return PMW().applyNamed(id); },
     reset() { goHome(); return PMW().resetLayout(); },
-    /* the stand-in chat (Home's scripted chat that opens every kind of tab) is off by default since the assistant chat
-       was ported in; on, it takes the assistant chat's place in the column (one surface at a time) */
-    standInAvail: () => !!((PMW() && PMW().standIn && fn(PMW().standIn, 'isOn')) || (HOME() && HOME().settings && fn(HOME().settings, 'get'))),
-    standIn() {
-      try { const S = PMW() && PMW().standIn; return S && fn(S, 'isOn') ? !!S.isOn() : HOME().settings.get('chat.standIn') === true; } catch (_) { return false; }
-    },
-    setStandIn(on) {
-      const S = PMW() && PMW().standIn;
-      if (S && fn(S, 'toggle') && fn(S, 'isOn')) { if (!!S.isOn() !== !!on) S.toggle(); return; }
-      HOME().settings.set('chat.standIn', !!on);
-    },
-    /* agents open things behind the person's work (D8): the six opens the stand-in's Agent activity card played, now
-       on the panels' own open API; the tabs the assistant chat draws go through PM56_PORT.open so the chat fills them */
+    /* agents open things behind the person's work (D8): six background opens on the panels' own open API; the tabs the
+       assistant chat draws go through PM56_PORT.open so the chat fills them */
     agentsAvail: () => !!(HOME() && fn(HOME(), 'open')),
     agents() {
       goHome();

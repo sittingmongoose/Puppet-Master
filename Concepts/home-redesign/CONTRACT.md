@@ -425,7 +425,7 @@ Kinds reach the chat through `PM_HOME.chat`, never the chat surface directly:
 
 | Call | What |
 |---|---|
-| `PM_HOME.chat.compose(text)` | shows the chat, puts the text into its composer (after an existing draft, on a new line) and focuses it with the caret at the end; `PMW.standIn.prefill(text)` is the same; empty text does nothing |
+| `PM_HOME.chat.compose(text)` | shows the chat, puts the text into its composer (after an existing draft, on a new line) and focuses it with the caret at the end; empty text does nothing |
 | `PM_HOME.chat.reveal({ thread, messageId })` | shows the chat, switches to the thread when the chat knows it, scrolls the message into view and marks it briefly; an unknown message shows the thread and announces "That message is not in this demo". Returns `{ ok, found, thread }` |
 | `PM_HOME.chat.isOpen()` | the chat is docked, popped out, or open over the centre from its strip |
 
@@ -457,16 +457,22 @@ lead's rulings of 2026-10-10 and 2026-10-11): `{ width_px, history_pinned, keep_
 - History pinned or a flyout (D3): `history_pinned` is the typed UI action `ui.chat_column.pin_history` with
   `{ history_pinned }` (true or false; without it, a toggle), written like view state with the layout (no receipt,
   event or revision; UCC-203). `chatCol.historyPinned()` reads it and `chatCol.setHistoryPinned(on)` writes it. The chat
-  surface that draws the History dispatches it: the stand-in's History button (while pinned it unpins), the pin in its
-  list's header and its More menu's "Keep History open" row (`data-ui-action-id="ui.chat_column.pin_history"`); the 5.6
-  Pro chat's controls take the same action at the port. The bus event `'chat:column'` `{ history_pinned }` tells the
-  surface to repaint; a layout event (a project switch, a restore) does too.
+  surface that draws the History dispatches it: the hosted 5.6 Pro chat's pin in its History list's header and its
+  header menu's "Keep History open" row (`data-ui-action-id="ui.chat_column.pin_history"`). The bus event
+  `'chat:column'` `{ history_pinned }` tells the surface to repaint; a layout event (a project switch, a restore) does
+  too. While the narrow ladder takes pinned History's width back (`narrow.state.histDropped`, section 7) the chat shows
+  the History as its flyout and keeps `history_pinned`; it is pinned again when the room comes back.
+- History width: pinned History adds its own width to the column, beside the message area (`chatCol.historyW(mw)`):
+  the width the chat draws it at, which the surface works out (`historyWidth(mw)`: 240 px, 200 px while the whole column
+  is under 540 px, or the width the person dragged the History's edge to, within the chat's own 170-360 px and 42 % of
+  its pane), else `LADDER.chatHistoryW`. A drag of the History's edge moves only the History while it lasts; on
+  release the column takes the new width, so the messages keep theirs (DL-233).
 - Keep open: "Keep the chat open in narrow windows" (D4's pin) is the typed UI action `ui.chat_column.keep_open`
   (section 8), saved as `keep_open`. `chatCol.keepOpen()` reads it and `chatCol.setKeepOpen(on)` writes it like view
   state (no receipt, event or revision); `PM_HOME.command('ui.chat_column.keep_open', { keep_open })` is the same
   (without `keep_open` it toggles). Two menus carry it as the same checked row, `chatCol.keepOpenRow()`: the title
-  bar's Home options and the chat's own header menu (the stand-in's More today; the 5.6 Pro chat's header menu takes
-  the row at the port). With it on, the narrow ladder never folds the chat to its strip.
+  bar's Home options and the chat's own header menu (the hosted 5.6 Pro chat's). With it on, the narrow ladder never
+  folds the chat to its strip.
 
 A named layout and Restore home layout keep the whole chat column; a project switch shows that project's own (a project
 with no saved layout starts at the defaults). The settings `chat.width`, `chat.history` and `chat.pinOpen` stored
@@ -481,9 +487,10 @@ pop out and no notice, so nothing replays a pop out at start; `PM_HOME_WORKSPACE
 The chat takes the browser kind's bus events: `'browser:capture'` `{ tabId, capture: { kind, w, h, comp, at, title,
 url } }` becomes an attachment card in its composer (a 1 px box with the look's corner, never a pill), and
 `'browser:send'` `{ tabId, how: 'send' | 'list' | 'insert' | 'capture', what }` posts, lists or inserts it. The chat
-surface on screen registers `PMW.chatCol.surface = { drawsHistory(), shown(), compose(text), reveal(o) }`: the
-stand-in does today, and the 5.6 Pro chat takes the same slot at the port. The column widens for a pinned History
-only while `drawsHistory()` is true.
+surface on screen registers `PMW.chatCol.surface = { drawsHistory(), shown(), compose(text), reveal(o),
+historyWidth(mw) }`: the hosted 5.6 Pro chat does (app.js `claimSurface`, over `pm7-port/js/00-host.js`). The column
+widens for a pinned History only while `drawsHistory()` is true. The scripted stand-in chat that held this slot before
+the port (`kinds/95-standin-chat.js`) was removed on 2026-10-23 (DL-233).
 
 ### 6.2 Compatibility shims (kept until the callers move)
 

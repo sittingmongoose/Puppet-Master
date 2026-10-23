@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""5.6 Pro chat layer: mount the 5.6 Pro chat in PMConcept7, in place of the Home layer's stand-in chat.
+"""5.6 Pro chat layer: mount the 5.6 Pro chat in PMConcept7's Home chat column (#chatPanel).
 
   text, notes = chat56_layer.apply(text, need)      # step 6b of opus-5.5 build.build_text(), after Home, before Glass
   problems = chat56_layer.lint()                    # source rules for ../css and ../js (build.py lint_sources())

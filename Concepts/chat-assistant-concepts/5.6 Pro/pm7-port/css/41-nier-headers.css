@@ -12,8 +12,8 @@
    breakpoints), and the rule with a square cap at each end along the foot, clear of everything above it by 8 px or
    more. A sticky head (the Chat Room's) keeps its opaque paper, so what scrolls under it never shows through.
 
-   The chat column's header: the stand-in's NieR (home-redesign 80-standin-chat.css: the rule under the head, the status
-   word in small caps), with PMConcept7's square end caps on the rule. */
+   The chat column's header: the rule under the head and the status word in small caps, with PMConcept7's square end
+   caps on the rule. */
 
 /* ---------------------------------------------------------------- run-view head: rows and the foot rule */
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pm56-host .pmx-view > .pmx-view-head.drawer-head {

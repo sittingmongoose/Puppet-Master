@@ -57,9 +57,9 @@ Source: `Concepts/usage-redesign/src/js/15-film.js` (`PMU.live`), `36-charts-gal
 
 ### E. The Home workspace
 Source: `Concepts/home-redesign/src/panels/**`.
-- The stand-in chat (a scripted conversation that opens every tab kind, plus an Agent activity card that opens things
-  in the background): on by default, setting `chat.standIn` (`PM_HOME.settings`), no visible switch. Since the 5.6 Pro
-  chat port (2026-10-22) it is off by default and, on, takes the assistant chat's place in the column (section I).
+- The scripted stand-in chat that opened every tab kind before the 5.6 Pro chat port, with its `chat.standIn` setting
+  and its Workspace row here, was removed on 2026-10-23 (DL-233). The assistant chat's own controls open the panels
+  (section I), and Agents open things plays the six background opens its Agent activity card had.
 - Named layouts and Restore home layout (`PMW.applyNamed`, `PMW.resetLayout`): in the panels' own menus.
 - The terminal's agent API (`PMT.agent`: open a terminal as an agent, type a command, ask permission, take over): used
   by the chat and the harness only; nothing on the page shows it off.
@@ -130,7 +130,7 @@ beside it). It rises out of the item as one sheet anchored to the bottom-left co
 2. Onboarding: the situation picker (grouped, and combinable), open at any screen, run from the start.
 3. Guided Tour: start, resume where it stopped, start over; the three chapters and their steps.
 4. Story: the demo director (clock, speed, the five story points, recent beats), no longer a hidden shortcut.
-5. Workspace: stand-in chat on or off, named layouts, reset the layout, an agent driving a terminal.
+5. Workspace: named layouts, reset the layout, agents opening things, an agent driving a terminal.
 6. Chat (added 2026-10-22): the assistant chat's recorded examples, moments and takes (section I).
 7. Usage: demo readings on or paused, Play the next hour / Back to now, the chart gallery.
 8. Notices: the notification moments.
@@ -165,7 +165,7 @@ Which owner each section calls:
 | Onboarding | `PM_O55_ONBOARDING.replay` and `.resume`, `O55.ui.open({ fresh, screen })`, `O55.fixtures.make` and `O55.store` `scenario` (a situation is a start plus twists joined by `+`; twists that describe the same thing two ways replace each other) |
 | Guided Tour | `PM7_GUIDED_TOUR.restart`, `.resume`, `.resumable`; a chapter start restarts the tour and then calls `O55.tour.go` on the chapter's first step (internal to the tour, guarded) |
 | Story | `PM_DEMO.clock` (play, pause, speed), `PM_DEMO.director.ensure`, `PM_DEMO.state.story`, `PM_DEMO.log`. No shortcut opens the Studio: Ctrl+Shift+D is left to Readiness & Doctor (Jared, 2026-10-14), and the engine's old unstyled director box it used to toggle is hidden, since this section replaces it |
-| Workspace | `PMW.NAMED`, `PMW.savedLayouts`, `PMW.applyNamed`, `PMW.resetLayout`; the stand-in chat's own `PMW.standIn.isOn` and `.toggle` (else `PM_HOME.settings` `chat.standIn`); Agents open things on `PM_HOME.open` for the terminal, browser and file and `PM56_PORT.open(id, { by, background })` for the plan, Crew run and agent chat the assistant chat draws (D8, each in the background); `PMT.agent.open` and `.run` |
+| Workspace | `PMW.NAMED`, `PMW.savedLayouts`, `PMW.applyNamed`, `PMW.resetLayout`; Agents open things on `PM_HOME.open` for the terminal, browser and file and `PM56_PORT.open(id, { by, background })` for the plan, Crew run and agent chat the assistant chat draws (D8, each in the background); `PMT.agent.open` and `.run` |
 | Chat | `PM56_PORT.demo`: `guided()` and `runGuided(id)` (the recorded examples by feature), `groups()` and `run(group, item)` (the moments), `families()`, `take`, `setTake`, `recipes`, `recipe`, `setRecipe`, `voices`, `voice`, `setVoice` (the takes), `reset()`, `showChat()`, `now()`, `avail()`. Each run brings the chat on screen on the Home page first (`PM_PAGES.go('dashboard')`, `PMW.chatCol.show()`), then clicks a hidden `<section class="demo-dialog"><button class="demo-trigger" data-action data-flow>` in `#pmOverlayRoot`, exactly as the lab gallery's buttons were clicked: modules chain `demo-trigger` and `reset-all`, two examples play their recording only from `.demo-dialog .demo-trigger`, and `recorded-play.js` stops the example already playing on that click. Without the chat on the page the section says so and its controls are unavailable |
 | Usage | `PMU.live.pause`, `.resume`, `.hour.play`, `.hour.back`; `PMU.charts.gallery`; `PM_PAGES.go('usage')` |
 | Notices | `PM_TITLEBAR_NOTIFY.demo(name)` when pm7-notifications' engine is on the page, else `window.toast` and `toast.important` with the same words; `PM_TITLEBAR_NOTIFY.clearAll` |

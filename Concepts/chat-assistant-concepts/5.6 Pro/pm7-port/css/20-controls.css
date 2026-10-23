@@ -1,6 +1,5 @@
-/* pm7-port/css/20-controls.css (looks lane): PMConcept7's controls on the chat, after the stand-in chat and Home's
-   picker (Concepts/home-redesign/src/panels/css/80-standin-chat.css, 30-menu.css), which are the page's own chat
-   controls: a secondary button is a clear box with the structural line, a primary is the accent with the ink its
+/* pm7-port/css/20-controls.css (looks lane): PMConcept7's controls on the chat, after the Home panels' own controls and
+   picker (Concepts/home-redesign/src/panels/css/30-menu.css): a secondary button is a clear box with the structural line, a primary is the accent with the ink its
    luminance needs and no glow, an icon button is clear until hovered, a field is a hairline box that shows focus on its
    own frame, a menu is the page's picker plate. Corners come from the look (css/10: --radius-sm is the control corner,
    --radius the card's; Retro's are 0 through retro.css). NieR Mode is left to the chat's NieR sheets and the nier lane.
@@ -111,7 +110,8 @@ html:not([data-o55-nier="on"]) .pm56-host[data-theme^="glass"] :is(.menu-item, .
 html:not([data-o55-nier="on"]) .pm56-host[data-theme^="friendly"] .menu-item:is(:hover, :focus-visible) { background: color-mix(in srgb, var(--accent-lime) 16%, transparent); }
 
 /* ---- the header's icon buttons and the context ring ---------------------------------------------------------------
-   the page's header buttons are clear at rest (the stand-in's .pmw-sc-ib); the ring is a meter, so it stays round */
+   the page's header buttons are clear at rest (as the panels' header buttons are); the ring is a meter, so it stays
+   round */
 html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .chat-header .icon-button:not(.active):not(:hover) { background: transparent; }
 
 /* ---- Glass: PMConcept7's field skin stays off the chat's framed fields ----------------------------------------------

@@ -461,8 +461,8 @@ def build_text() -> str:
     #    and the terminal between HOME:BODY markers before </body>, plus guarded app JS patches. Its three NieR lists
     #    are registry contributions, emitted below; it anchors after the O55 and rail blocks, so it runs after them.
     text, SETTINGS_NOTES['home'] = _home().apply(text, need)
-    # 6b. The 5.6 Pro chat (D27, the port of 2026-10-22): chat56_layer.apply() mounts the chat in the page's #chatPanel in
-    #    place of the Home layer's stand-in, its stylesheet (read in 5.6 Pro/build.py's order, every rule scoped under
+    # 6b. The 5.6 Pro chat (D27, the port of 2026-10-22): chat56_layer.apply() mounts the chat in the page's #chatPanel
+    #    (the Home chat column), its stylesheet (read in 5.6 Pro/build.py's order, every rule scoped under
     #    .pm56-host) between C56:CSS markers before </head> and its scripts between C56:BODY markers before </body>,
     #    after the Home block. It runs after Home (the chat opens Home panel tabs) and before Liquid Glass.
     text, SETTINGS_NOTES['chat56'] = _chat56().apply(text, need)

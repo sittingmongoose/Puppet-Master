@@ -137,7 +137,7 @@ PMW.panelHolds = function (layout, panel, kind) {
 };
 
 /* The demo catalog: each kind lists what it can open (plans, documents, artifacts, runs, records, files, dashboards),
-   so the "+" menu's pickers, Ctrl+P, the empty launcher and the stand-in chat all draw from one source (DRY).
+   so the "+" menu's pickers, Ctrl+P and the empty launcher all draw from one source (DRY).
    item = { id, label, sub, icon, spec } where spec is a PM_HOME.open spec (defaults to { id }). */
 var CATALOG = {};
 PM_HOME.catalog = {
