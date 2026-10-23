@@ -20,6 +20,14 @@ const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i
 const ROOT = decodeURIComponent(path.dirname(new URL(import.meta.url).pathname));
 const FILE = path.resolve(opt('file', path.join(ROOT, 'index.html')));
 const THROTTLE = Number(opt('cpu-throttle', 1));
+// Matched main-page phase medians +25% and 10ms, rounded up to 5ms.
+// See the round-2 tests-B receipt for calibration samples and controls.
+const TICK_PHASES = [
+  { clock: 61, band: 'plain', budgetMs: 45 },
+  { clock: 64, band: 'step-crossing', budgetMs: 85 },
+  { clock: 64.5, band: 'step-crossing', budgetMs: 90 },
+  { clock: 65, band: 'step-crossing', budgetMs: 100 }
+];
 const ONLY = opt('only', '');
 const OUT = opt('json', null);
 const results = [];
@@ -288,27 +296,45 @@ await safe('long run stays legible', async () => {
   await p.waitForFunction(() => { const r = Object.values(PM56_EXT.ctx().state.works).find(x => x.id && x.id.startsWith('turn')); return r && r.clock > 60; }, null, { timeout: 90000, polling: 500 });
   const n = await p.evaluate(() => ({ nodes: document.querySelectorAll('.working-card .orbit-node').length, clusters: document.querySelectorAll('.working-card .orbit-node.cluster').length }));
   check('140 subjects render as 30 nodes or fewer, with clusters', n.nodes <= 30 && n.clusters > 0, n);
-  /* Spaced like real ticks, so every node has settled between samples (a tight
-     synchronous loop freezes the animation timeline and measures entrances that
-     never happen in use). Keep the same five pairs and the full-render timing
-     as a diagnostic, but budget the tick itself: a faster full render must not
-     fail an unchanged tick. The accepted cost was 45-50ms (Chat updates.md);
-     60ms allows 10ms measurement headroom and is stricter than the old 72-98ms
-     full-render reference. CPU-throttled probes scale that budget explicitly. */
-  const cost = await p.evaluate(async () => {
+  /* A pooled median mixes plain ticks, step crossings and completed no-ops.
+     Reset each active phase before every sample; keep the 520ms settling gaps,
+     five samples per phase, and full-render diagnostics. A timed tick must
+     advance that phase: replacing it with a cheap no-op is not a valid sample.
+     The absolute phase budgets allow faster full renders without changing the
+     accepted native-tick envelope. */
+  const cost = await p.evaluate(async ({ phases, throttle }) => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    const c = PM56_EXT.ctx(); const tick = [], full = [], at = [];
+    const c = PM56_EXT.ctx();
+    const sampleTick = () => PM56_DEMO.tickOnce();
+    for (const r of c.runningRecs()) r.running = false;
+    const rows = phases.map(p => ({ ...p, budgetMs: p.budgetMs * throttle, samples: [] }));
     for (let i = 0; i < 5; i++) {
-      await wait(520);
-      const r = Object.values(c.state.works).find(x => x.id && x.id.startsWith('turn'));
-      at.push(r ? { clock: r.clock, step: r.step, completed: !!r.completed } : null);
-      let t0 = performance.now(); PM56_DEMO.tickOnce(); tick.push(performance.now() - t0);
-      await wait(520); t0 = performance.now(); c.renderApp(); void document.querySelector('.transcript').scrollTop; full.push(performance.now() - t0);
+      for (const row of rows) {
+        const r = Object.values(c.state.works).find(x => x.id && x.id.startsWith('turn'));
+        if (!r) throw new Error('The timed long run is missing');
+        const stepAt = clock => c.workInstancesFor(r).filter(s => s.startAt <= clock + 1e-6).length - 1;
+        Object.assign(r, { clock: row.clock, elapsed: Math.floor(row.clock), step: stepAt(row.clock), running: false, completed: false });
+        c.renderApp(); void document.querySelector('.transcript').scrollTop;
+        await wait(520);
+        const before = { clock: r.clock, step: r.step, completed: !!r.completed };
+        const expected = { clock: row.clock + .5, step: stepAt(row.clock + .5) };
+        r.running = true;
+        let t0 = performance.now(); sampleTick(); const tickMs = performance.now() - t0;
+        r.running = false;
+        const after = { clock: r.clock, step: r.step, completed: !!r.completed };
+        await wait(520);
+        t0 = performance.now(); c.renderApp(); void document.querySelector('.transcript').scrollTop;
+        const fullMs = performance.now() - t0;
+        const valid = !before.completed && !after.completed && Math.abs(after.clock - expected.clock) < 1e-6 && after.step === expected.step
+          && (row.band === 'plain' ? after.step === before.step : after.step !== before.step);
+        row.samples.push({ tickMs: +tickMs.toFixed(1), fullMs: +fullMs.toFixed(1), before, after, expected, valid });
+      }
     }
     const med = a => +[...a].sort((x, y) => x - y)[2].toFixed(1);
-    return { tick: med(tick), full: med(full), ticks: tick.map(x => +x.toFixed(1)), fulls: full.map(x => +x.toFixed(1)), at };
-  });
-  check('a work tick at scale stays within a 60ms median budget (scaled by CPU throttle)', cost.tick <= 60 * THROTTLE, { ...cost, budgetMs: 60 * THROTTLE });
+    return { samplesPerPhase: 5, phases: rows.map(row => ({ ...row, tickMedianMs: med(row.samples.map(s => s.tickMs)), fullMedianMs: med(row.samples.map(s => s.fullMs)), valid: row.samples.every(s => s.valid) })) };
+  }, { phases: TICK_PHASES, throttle: THROTTLE });
+  check('a work tick at scale meets its phase budget (plain and step-crossing medians, scaled by CPU throttle)',
+    cost.phases.every(p => p.valid && p.tickMedianMs <= p.budgetMs), cost);
   await p.close();
 });
 
