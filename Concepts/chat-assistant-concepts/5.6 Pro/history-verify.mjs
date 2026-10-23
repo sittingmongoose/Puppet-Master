@@ -135,6 +135,21 @@ async function preparePinnedHistory(){
   if(await page.evaluate(()=>document.body.getAttribute('data-ph-drawer')!=='pinned')){
     await click('.history-flyout [data-action="ph-toggle-pin"]'); await page.waitForTimeout(500);
   }
+  /* The mounted column can be hidden while history.js first clamps a saved
+     width. Establish the wide fixture through its real separator after the
+     column is visible; the narrow/default pass keeps its own untouched width. */
+  if(await page.evaluate(()=>!sessionStorage.getItem('__hvNarrow') &&
+      (document.querySelector('.history-flyout')?.getBoundingClientRect().width || 0)<=204)) {
+    try {
+      const handle=await page.locator('.history-flyout [data-ph-resize]').boundingBox();
+      if(!handle) throw new Error('visible pinned separator missing');
+      const width=await page.locator('.history-flyout').evaluate(el=>el.getBoundingClientRect().width);
+      const x=handle.x+handle.width/2, y=handle.y+Math.min(60,handle.height/2);
+      await page.mouse.move(x,y); await page.mouse.down();
+      try { await page.mouse.move(x+320-width,y,{steps:12}); } finally { await page.mouse.up(); }
+      await page.waitForTimeout(500);
+    } catch(error) { check(false,'precondition: resize the visible hosted History drawer',String(error)); }
+  }
   await measureTestGeometry(page);
 }
 
@@ -186,12 +201,14 @@ async function signatures(tag){
   for(const s of NINE){
     const sel = `.history-flyout .ph-status[data-status="${s}"]`;
     if(await page.locator(sel).count()===0){ check(false,`Painted signature${tag}: ${s}`,'no such row'); continue; }
-    await page.locator(sel).first().scrollIntoViewIfNeeded();
-    await page.waitForTimeout(60);
-    const p = await paint(sel);
-    const hit = await hitsSelf(sel);
-    out[s]=p;
-    check(!!p && p.distinct>1 && hit, `Painted indicator + hit-test${tag}: ${s}`, {p:p&&{w:p.w,h:p.h,mean:p.mean,distinct:p.distinct},hit});
+    try {
+      await page.locator(sel).first().scrollIntoViewIfNeeded();
+      await page.waitForTimeout(60);
+      const p = await paint(sel);
+      const hit = await hitsSelf(sel);
+      out[s]=p;
+      check(!!p && p.distinct>1 && hit, `Painted indicator + hit-test${tag}: ${s}`, {p:p&&{w:p.w,h:p.h,mean:p.mean,distinct:p.distinct},hit});
+    } catch(error) { check(false,`Painted indicator + hit-test${tag}: ${s}`,String(error)); }
   }
   const dup=[], twins=[];
   for(let i=0;i<NINE.length;i++)for(let j=i+1;j<NINE.length;j++){
