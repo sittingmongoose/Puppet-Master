@@ -685,7 +685,23 @@ await sec('item4: scrim click dismisses when unpinned', async()=>{
 /* PIN: narrows in place, gutter grows, transcript slides right. */
 await click('[data-action="toggle-history"]');
 await page.waitForTimeout(450);
+/* This is the OPEN baseline for the pin test. Under load the fixed wait can
+   still land in the opening spring's overshoot (observed +20.4px), so pin's
+   unchanged <2px movement predicate would compare two different transitions.
+   Wait for the product's own settle signal and finite drawer transitions;
+   the trusted-click 420ms pin trace below still starts at the pin activation. */
+const prePinWait = await drawerGeom();
+try {
+  await page.waitForFunction(() => {
+    const fly = document.querySelector('.history-flyout');
+    return document.body.dataset.phDrawer === 'open' && document.body.dataset.phSettled === '1' && fly &&
+      !fly.getAnimations().some(a => (a.pending || a.playState === 'running') && Number.isFinite(a.effect?.getComputedTiming().endTime));
+  }, null, { timeout: 6000 });
+} catch (error) {
+  check(false, 'precondition: opening finishes before the pin baseline', { before: prePinWait, error: String(error) });
+}
 const beforePin = await drawerGeom();
+console.log('FIXTURE pre-pin opening settle: ' + JSON.stringify({ before: prePinWait, after: beforePin }));
 const hostedPin = await page.evaluate(() => PM56_TEST.kind === 'pm7');
 const pinTrace = sampleTransform(420,14,['ph-toggle-pin']);
 await click('[data-action="ph-toggle-pin"]');
