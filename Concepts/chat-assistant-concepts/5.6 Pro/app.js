@@ -15,7 +15,9 @@
   const esc = (v='') => String(v).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   /* Stylized hover label (not a native title tooltip). Unique key anchors the card. */
   function hoverAttrs(key, text){
-    if(HOSTED) return ` data-hover-key="${esc(key)}" data-pm-hover-label="${esc(text)}" aria-label="${esc(text)}"`;
+    /* hosted: PMConcept7's tag is a label over a detail line; PM56_HOST.hoverCopy (pm7-port/js/05-hover-copy.js) gives
+       both from this one line, so the controller never fills in its generic words */
+    if(HOSTED){ const c=HOST.hoverCopy?HOST.hoverCopy(key,text):[text,'']; return ` data-hover-key="${esc(key)}" data-pm-hover-label="${esc(c[0])}"${c[1]?` data-pm-hover-detail="${esc(c[1])}"`:''} aria-label="${esc(text)}"`; }
     return ` data-hover-key="${esc(key)}" data-hover-tip="${esc(text)}" aria-label="${esc(text)}"`;
   }
   const CAP_HOVER = {goal:'Goal', crew:'Crew', bsd:'Back Seat Driver', context:'Context Lens', eli5:'ELI5'};
