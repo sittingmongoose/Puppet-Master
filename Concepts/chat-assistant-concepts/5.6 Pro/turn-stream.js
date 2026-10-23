@@ -490,7 +490,11 @@
     else document.documentElement.style.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
   }
   function naturalH(inner) { var l = inner.lastElementChild; return l ? l.getBoundingClientRect().bottom - inner.getBoundingClientRect().top : 0; }
-  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); }
+  function foldRoomCeiling(on) {
+    document.body.toggleAttribute('data-tx-fold-room', !!on);
+    room.ceilingThread = on ? C().state.selectedThread : null;
+  }
+  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; foldRoomCeiling(false); roomFloor(null); }
   /* the list's height as last laid out: the completion render (which drops
      the card's narration line and mounts the answer's placeholder) runs before
      the hold starts, so the hold takes the height from before that render */
@@ -535,6 +539,7 @@
     room.raf = 0;
     var inner = roomInner();
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
+    if (room.ceilingThread && room.ceilingThread !== C().state.selectedThread) foldRoomCeiling(false);
     if (room.transient && !room.rel && now() >= room.relAt) releaseRoom();
     if (!room.rel && !roomQuiet()) {
       /* after the fold the floor only ratchets up: a follow into content past
@@ -542,6 +547,7 @@
       var grown = naturalH(inner);
       if (grown > room.h0 + 0.5) { room.h0 = grown; roomFloor(room.h0); }
     }
+    if (!roomQuiet()) foldRoomCeiling(false);
     if (room.rel) {
       var nat = naturalH(inner), t = now(), dt = Math.min(0.1, Math.max(0, (t - room.last) / 1000)); room.last = t;
       if (room.x == null) room.x = Math.max(0, room.h0 - nat);
@@ -706,7 +712,17 @@
             if (f) foldIds.push(w.id);
           }
         });
-        if (foldIds.length && room.on) { room.quietUntil = now() + FOLD_QUIET; room.foldIds = foldIds; try { C().holdFollow(roomQuiet); } catch (e) { } }
+        if (foldIds.length && room.on) {
+          room.quietUntil = now() + FOLD_QUIET; room.foldIds = foldIds;
+          /* The pending answer starts below the still-tall wide card. Until
+             the fold frees its room, it must not add invisible scroll extent
+             while follow is deliberately held. Clip only beyond the old
+             content boundary of an already scrolling, sticky transcript;
+             the card and its two-beat fold keep their original geometry. */
+          var tr = room.inner && room.inner.parentElement;
+          if (tr && c.isSticky() && tr.scrollHeight > tr.clientHeight + 1) foldRoomCeiling(true);
+          try { C().holdFollow(roomQuiet); } catch (e) { }
+        }
         sound('answer');
       }
     }

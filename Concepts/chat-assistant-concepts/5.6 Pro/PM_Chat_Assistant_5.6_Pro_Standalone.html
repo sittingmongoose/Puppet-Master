@@ -17854,6 +17854,13 @@ body[data-theme$="-light"] .message-body pre { background: var(--code); }
 @keyframes tx-arrive { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 /* the room a folding card gives up, held for its answer (turn-stream.js) */
 .chat-stage .transcript-inner { min-height: var(--tx-hold-min, 0px); }
+/* The answer waits below the fold's pre-existing content boundary. This
+   ceiling changes the offscreen scroll extent while follow holds still;
+   it leaves the card's own size and every fold transition untouched. */
+body[data-tx-fold-room] .chat-stage > .transcript > .transcript-inner {
+  max-height: var(--tx-hold-min, none);
+  overflow-y: clip;
+}
 
 /* the chrome keeps its space while the reply is written, then peeks once */
 .transcript-inner > [data-streaming] .message-chrome { visibility: hidden !important; opacity: 0 !important; }
@@ -77263,7 +77270,11 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     else document.documentElement.style.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
   }
   function naturalH(inner) { var l = inner.lastElementChild; return l ? l.getBoundingClientRect().bottom - inner.getBoundingClientRect().top : 0; }
-  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); }
+  function foldRoomCeiling(on) {
+    document.body.toggleAttribute('data-tx-fold-room', !!on);
+    room.ceilingThread = on ? C().state.selectedThread : null;
+  }
+  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; foldRoomCeiling(false); roomFloor(null); }
   /* the list's height as last laid out: the completion render (which drops
      the card's narration line and mounts the answer's placeholder) runs before
      the hold starts, so the hold takes the height from before that render */
@@ -77308,6 +77319,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     room.raf = 0;
     var inner = roomInner();
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
+    if (room.ceilingThread && room.ceilingThread !== C().state.selectedThread) foldRoomCeiling(false);
     if (room.transient && !room.rel && now() >= room.relAt) releaseRoom();
     if (!room.rel && !roomQuiet()) {
       /* after the fold the floor only ratchets up: a follow into content past
@@ -77315,6 +77327,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       var grown = naturalH(inner);
       if (grown > room.h0 + 0.5) { room.h0 = grown; roomFloor(room.h0); }
     }
+    if (!roomQuiet()) foldRoomCeiling(false);
     if (room.rel) {
       var nat = naturalH(inner), t = now(), dt = Math.min(0.1, Math.max(0, (t - room.last) / 1000)); room.last = t;
       if (room.x == null) room.x = Math.max(0, room.h0 - nat);
@@ -77479,7 +77492,17 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
             if (f) foldIds.push(w.id);
           }
         });
-        if (foldIds.length && room.on) { room.quietUntil = now() + FOLD_QUIET; room.foldIds = foldIds; try { C().holdFollow(roomQuiet); } catch (e) { } }
+        if (foldIds.length && room.on) {
+          room.quietUntil = now() + FOLD_QUIET; room.foldIds = foldIds;
+          /* The pending answer starts below the still-tall wide card. Until
+             the fold frees its room, it must not add invisible scroll extent
+             while follow is deliberately held. Clip only beyond the old
+             content boundary of an already scrolling, sticky transcript;
+             the card and its two-beat fold keep their original geometry. */
+          var tr = room.inner && room.inner.parentElement;
+          if (tr && c.isSticky() && tr.scrollHeight > tr.clientHeight + 1) foldRoomCeiling(true);
+          try { C().holdFollow(roomQuiet); } catch (e) { }
+        }
         sound('answer');
       }
     }

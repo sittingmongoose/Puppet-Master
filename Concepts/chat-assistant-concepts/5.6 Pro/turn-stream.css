@@ -29,6 +29,13 @@ body[data-theme$="-light"] .message-body pre { background: var(--code); }
 @keyframes tx-arrive { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 /* the room a folding card gives up, held for its answer (turn-stream.js) */
 .chat-stage .transcript-inner { min-height: var(--tx-hold-min, 0px); }
+/* The answer waits below the fold's pre-existing content boundary. This
+   ceiling changes the offscreen scroll extent while follow holds still;
+   it leaves the card's own size and every fold transition untouched. */
+body[data-tx-fold-room] .chat-stage > .transcript > .transcript-inner {
+  max-height: var(--tx-hold-min, none);
+  overflow-y: clip;
+}
 
 /* the chrome keeps its space while the reply is written, then peeks once */
 .transcript-inner > [data-streaming] .message-chrome { visibility: hidden !important; opacity: 0 !important; }
