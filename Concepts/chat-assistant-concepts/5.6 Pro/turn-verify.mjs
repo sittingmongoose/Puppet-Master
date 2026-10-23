@@ -225,11 +225,15 @@ await safe('live agent turn', async () => {
      included, is measured as before, and the drop check below is unchanged. */
   const bornAt = (lt.gaps.find(s => s.card) || {}).t;
   const followed = late.filter(s => bornAt == null || s.t < bornAt || s.t >= bornAt + 300);
-  let run = 0, longest = 0, from = null, longestAt = null;
-  followed.forEach((s, i) => { if (s.g > 24) { if (from == null) from = s.t; if (s.t - from >= longest) { longest = s.t - from; longestAt = from; } } else from = null; });
+  const measureFollow = samples => {
+    let longest = 0, from = null, longestAt = null;
+    samples.forEach(s => { if (s.g > 24) { if (from == null) from = s.t; if (s.t - from >= longest) { longest = s.t - from; longestAt = from; } } else from = null; });
+    return { longest, longestAt };
+  };
+  const { longest, longestAt } = measureFollow(followed), wholeTurn = measureFollow(late);
   const stretch = followed.filter(s => longestAt != null && s.t >= longestAt && s.t <= longestAt + longest).map(s => s.t + ':' + s.g);
-  check('follow-along holds through the whole turn (never more than 24px away for longer than 300ms)',
-    longest <= 300, { samples: followed.length, away: away.length, worst: Math.max(...late.map(s => s.g)), longestAwayMs: longest, longestFrom: longestAt, cardBornAt: bornAt ?? null, stretch: stretch.slice(0, 12) });
+  check('follow-along holds outside the first 300ms after card birth (never more than 24px away for longer than 300ms)',
+    longest <= 300, { samples: followed.length, away: away.length, worst: Math.max(...late.map(s => s.g)), longestAwayMs: longest, longestFrom: longestAt, cardBornAt: bornAt ?? null, birthExcludedMs: bornAt == null ? 0 : 300, wholeTurnLongestAwayMs: wholeTurn.longest, wholeTurnLongestFrom: wholeTurn.longestAt, wholeTurnPass: wholeTurn.longest <= 300, stretch: stretch.slice(0, 12) });
   check('follow-along stays engaged', late.every(s => s.stick), late.filter(s => !s.stick).slice(0, 3));
   /* the view only ever moves up (following) or eases down (a released room):
      a drop faster than 0.4px/ms is a snap. Measured before the room holds: the
