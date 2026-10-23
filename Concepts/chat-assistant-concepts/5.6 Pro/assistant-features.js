@@ -1414,6 +1414,14 @@
   }
   function optionOf(list, v){ for(var i=0;i<list.length;i++){ if(list[i].value===v) return list[i]; } return list[0]; }
   function thoughtValue(ctx){ return ctx.state.capabilities.thought==='Expanded' ? 'Expanded' : 'Auto'; }
+  /* Lines shown while thinking (DL-234): thought-stream.js owns the choices and the one in force; without it there is
+     no thinking to size, so the sheet offers nothing */
+  function thoughtLines(){ var T=window.PM56_THOUGHT; return T && T.lines ? T.lines : null; }
+  function thoughtLineOptions(){
+    var T=thoughtLines(); if(!T) return [];
+    return T.choices.map(function(n){ return { value:String(n), label:n+' lines',
+      description:n===T.fallback ? 'The default.' : n<T.fallback ? 'Less of the reasoning in view.' : 'More of the reasoning in view.' }; });
+  }
   function pickFrom(btn, title, current, options, apply){
     var P=window.PM56_PMX, onChange=function(v){
       var c=ctxNow(); if(!c || !c.state.dialog || c.state.dialog.type!=='af-settings') return;
@@ -1438,6 +1446,12 @@
     d.dfltThink=++dfltSeq;
     c.renderApp();
   }
+  /* the specimen shows a finished turn, so a new window height has nothing to replay there */
+  function applyThoughtLines(c, d, v){
+    var T=thoughtLines(), n=Number(v); if(!T || T.choices.indexOf(n)<0 || T.current()===n) return;
+    c.state.capabilities.thoughtLines=n;
+    c.renderApp();
+  }
   /* Single setter path for the thread-title policy: the picker's onChange calls it, guarded on af-settings. */
   function applyTitlePolicy(c, d, value){
     if(value===F.title.policy || !titlePolicyOptions().some(function(o){ return o.value===value; })) return;
@@ -1450,11 +1464,13 @@
     pickFrom(btn, 'Name new chats', F.title.policy, titlePolicyOptions(), applyTitlePolicy);
     return true;
   });
-  /* Explain simply in new chats (Settings transaction) and Thought Stream (no command): one action, registered once */
+  /* Explain simply in new chats (Settings transaction), Thought Stream and its lines (no command): one action, registered
+     once */
   EXT.action('af-defaults-pick', function(ctx, btn){
     var d=ctx.state.dialog; if(!d || d.type!=='af-settings') return true;
     if(btn.dataset.field==='eli5') pickFrom(btn, 'Explain simply in new chats', F.eli5.appDefault?'on':'off', eli5Catalog(), applyEli5Default);
     else if(btn.dataset.field==='thought') pickFrom(btn, 'Thought Stream', thoughtValue(ctx), THOUGHT_OPTIONS, applyThought);
+    else if(btn.dataset.field==='thoughtLines' && thoughtLines()) pickFrom(btn, 'Lines shown while thinking', String(thoughtLines().current()), thoughtLineOptions(), applyThoughtLines);
     return true;
   });
   /* The race (Demo Studio, demo only): it names a chat of its own, never the one you are in. A new example
@@ -1508,12 +1524,14 @@
         extra:'data-field="eli5"'+(d.focus==='title'?'':' data-pmx-autofocus') }) });
     var s1='<div class="pmx-dflt-spec" data-k="dflt-spec:voice" data-pmx-part="voice"><p class="pmx-dflt-cap">'+e(sp.word)+'</p>'+
       '<p class="pmx-dflt-say" data-k="dflt-say:'+(eliOn?'on':'off')+(vn?':'+vn:'')+'"'+(vn?' data-reset="1" style="'+sp.reset+'"':'')+'>'+sp.html+'</p></div>';
-    /* 2 · Thought Stream */
+    /* 2 · Thought Stream, and how many lines While it thinks keeps in view */
     var tv=thoughtValue(ctx), tOpt=optionOf(THOUGHT_OPTIONS, tv), open=tv==='Expanded';
+    var lOpts=thoughtLineOptions(), lOpt=lOpts.length ? optionOf(lOpts, String(thoughtLines().current())) : null;
     var q2=S.pmxCtl({ key:'dflt-q:thought', cls:'pmx-dflt-ctl', layout:'stack', affects:'watch',
-      label:hoverLabel(e, 'thought', 'Thought Stream', 'See the AI’s reasoning while it works, when the model shares it. Some models share nothing, so there is nothing to show.'),
+      label:hoverLabel(e, 'thought', 'Thought Stream', 'See the AI’s reasoning while it works, when the model shares it. Some models share nothing, so there is nothing to show. While it thinks keeps its last lines in view; Always open shows all of it.'),
       helper:'See the AI’s reasoning while it works, when the model shares it.',
-      control:S.pickerButton({ action:'af-defaults-pick', anchor:'af-defaults-thought', strong:e(tOpt.label), small:e(tOpt.description.replace(/\.$/,'')), extra:'data-field="thought"' }) });
+      control:S.pickerButton({ action:'af-defaults-pick', anchor:'af-defaults-thought', strong:e(tOpt.label), small:e(tOpt.description.replace(/\.$/,'')), extra:'data-field="thought"' })+
+        (lOpt ? S.pickerButton({ action:'af-defaults-pick', anchor:'af-defaults-thought-lines', strong:e(lOpt.label), small:'Shown while it thinks', extra:'data-field="thoughtLines" aria-label="Lines shown while thinking: '+e(lOpt.label)+'"' }) : '') });
     var s2='<div class="pmx-dflt-spec pmx-dflt-think" data-k="dflt-spec:think" data-pmx-part="watch" data-open="'+(open?1:0)+'">'+
       '<p class="pmx-dflt-fold">'+S.pmxGlyph('chevron-right',12)+'<span>Thought for 14s</span></p>'+
       '<div class="pmx-dflt-thought" data-k="dflt-thought"><p>It never trims the query.</p></div>'+
@@ -1559,7 +1577,10 @@
     /* choices apply at once, so a Cancel would undo nothing: one primary, Done (FOUNDATION REQUEST, as in ELI5:
        pmxFoot({cancel:false})) */
     foot=foot.replace(/<button type="button" class="soft-button pmx-cancel"[^>]*>[\s\S]*?<\/button>/, '');
-    return S.pmxSheet({ type:'af-settings', kind:'defaults', size:'compact', height:600, cls:'pmx-dflt-sheet',
+    /* 656, not 600: Thought Stream's second dropdown (Lines shown while thinking, DL-234) takes 52 px with its gap, and
+       the tallest state (a naming model that isn't available, its note under Name new chats) must still fit without
+       scrolling */
+    return S.pmxSheet({ type:'af-settings', kind:'defaults', size:'compact', height:656, cls:'pmx-dflt-sheet',
       title:'New chat defaults', lead:'How new chats start: explain simply, show thinking, and how chats get named.',
       closeAction:'close-dialog', ariaLabel:'New chat defaults', body:body, foot:foot });
   }
@@ -1687,11 +1708,13 @@
     fixture: function(){ return buildFixture(); },
     state: function(){ return RT.features; },
     /* New chat defaults: the same guarded path its dropdowns take (the sheet must be open), for callers that
-       choose without the menu: field 'eli5' (on | off), 'thought' (Auto | Expanded) or 'title' (a policy) */
+       choose without the menu: field 'eli5' (on | off), 'thought' (Auto | Expanded), 'thoughtLines' (4 | 6 | 8 | 12 |
+       16) or 'title' (a policy) */
     setDefault: function(field, value){
       var c=ctxNow(), d=c && c.state.dialog; if(!d || d.type!=='af-settings') return false;
       if(field==='eli5') applyEli5Default(c, d, value);
       else if(field==='thought') applyThought(c, d, value);
+      else if(field==='thoughtLines' && thoughtLines()) applyThoughtLines(c, d, value);
       else if(field==='title') applyTitlePolicy(c, d, value);
       else return false;
       return true;

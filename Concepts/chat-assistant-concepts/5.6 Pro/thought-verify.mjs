@@ -8,16 +8,27 @@
  * the polite status), never a dispatch count; the scenarios send through the composer, as a person does.
  *
  *   node     the recorded turns that share reasoning, the replies whose fixed waits turn-verify relies on (none),
- *            the build order, the hosted Studio entry and copy, the retired preview-only wording, no pills or stripes
- *   auto     live: the block heads the turn, the reply waits hidden, words only grow, the last six lines fade at the
- *            top; the fold starts no later than the answer's first word and lands folded; the folded line says how
- *            long it thought with its gist; it reopens and folds by click and by Enter; no clamp snap, follow holds;
- *            exactly two polite statuses (start, end), the transcript is not a live region
+ *            the build order, the hosted Studio entry and copy, the retired preview-only wording, no pills or stripes;
+ *            Lines shown while thinking: one set of choices (4, 6, 8, 12, 16) and one default (8) in the chat, the
+ *            Settings row, its adapter, its placement under Show thinking and Plans/settings_inventory.json
+ *   auto     live: the block heads the turn, the reply waits hidden, words only grow, never more than the default
+ *            eight lines, which fade at the top once the reasoning runs past them; the fold starts no later than the
+ *            answer's first word and lands folded; the folded line says how long it thought with its gist; it
+ *            reopens and folds by click and by Enter; no clamp snap, follow holds; exactly two polite statuses
+ *            (start, end), the transcript is not a live region
  *   expanded the block never caps and stays open beside the answer, without a gist
  *   agent    an agent turn: no working card while it thinks; in the card's first frame the block is done and folded;
  *            block, card, answer in that order; no clamp snap and the reader stays at the bottom
+ *   lines    Lines shown while thinking (Jared, 2026-10-23: "Default 8, adjustable in settings."), with a long thought
+ *            (a test fixture: the recorded reply's reasoning lengthened in the page, so every choice overflows): the
+ *            default is 8; each choice caps the live window at exactly that many lines and fades the rest; the fold
+ *            and follow-along hold at every size; a 16-line agent turn folds before its card with no snap; a change
+ *            mid-thought glides to the new height; Expanded stays uncapped at any choice; Reduced Motion lands each
+ *            height at once
  *   prefs    the preference round trip: the composer's Thought Stream menu and New chat defaults (both pages), and
- *            Settings (PMConcept7): a change reaches every block on screen, in both directions
+ *            Settings (PMConcept7): a change reaches every block on screen, in both directions; the same for Lines
+ *            shown while thinking (the composer's lines list, New chat defaults' second dropdown, and the Settings
+ *            row itself, under Show thinking), with Settings refusing a choice it does not offer
  *   reduced  Reduced Motion: words born still, the fold and the label land at once, the reply still streams
  *   stop     Stop while it thinks keeps the reasoning shown so far and the reply's Stopped marker
  *   hover    the line's hover tag carries a real label and detail (PMConcept7's controller; the standalone card)
@@ -41,7 +52,21 @@ const check = (label, ok, detail) => { results.push({ group, label, pass: !!ok, 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const ID = 'general.interaction.thought-stream';
+const LID = 'general.interaction.thought-stream-lines';
+const CHOICES = [4, 6, 8, 12, 16];
 const Q = 'Should the index lead with tenant_id or created_at?';
+const AGENT_Q = "Add the composite index and prove it's faster.";
+/* a long thought (the lines group's fixture): sr-index's and lt-build's recorded reasoning, lengthened in the page so it
+   runs past the largest window at either page's column; the product's recorded turns are left as they are */
+const LONG = [
+  'Two orders to compare for the composite index. With created_at first, one tenant’s read walks the whole date range and throws away every other tenant’s rows: the planner can use the leading column only for the range, so the tenant filter turns into a scan over everything in that window.',
+  'With tenant_id first, the planner seeks straight to the tenant and then reads created_at in index order, which also covers the ORDER BY created_at DESC the dashboard sends. Equality columns lead and the range column follows; this query fits that rule exactly, and so do the two other slow queries in the benchmark.',
+  'The write side matters too. Every insert touches this index once whichever order I pick, so the write amplification is the same; what changes is page locality. Tenant-first keeps each tenant’s new rows together at the right edge of its own key range, which the read-heavy mix rewards, and the hot pages stay in memory.',
+  'Cardinality backs it up: about four thousand tenants and one hundred eighty million rows, so tenant_id alone narrows a read to roughly forty-five thousand rows, and created_at inside it narrows the seven-day window to a few hundred. A partial index would save space but the dashboard asks for any window, so it does not fit here.',
+  'Before calling it, I will check the plan with EXPLAIN on the three slow queries, confirm the index is used for the sort as well as the filter, and compare p95 against the baseline the benchmark recorded yesterday. If the planner still sorts in memory, the column order is wrong for that query and I will say so.',
+  'One more risk is the migration itself. Building the index concurrently avoids a long lock on the events table, but it cannot run inside a transaction, so the migration needs the no-transaction marker on both its up and down steps, or the rollback test will fail inside the harness.',
+  'Last, the old single-column index on created_at. Once the composite index exists, the planner should stop choosing it for these reads; I will leave it in place for this change, note it as a candidate to drop, and let the next benchmark run show whether anything still depends on it.'
+].join('\n\n');
 
 /* ------------------------------------------------------------------ node: the sources */
 group = 'node';
@@ -65,6 +90,24 @@ group = 'node';
   const stripped = css.replace(/\/\*[\s\S]*?\*\//g, '');
   check('N6 the block draws no pill, no coloured side stripe, no glow and no !important', !/999px|border-left\s*:\s*\d|box-shadow\s*:\s*0 0 \d|text-shadow|!important/.test(stripped), null);
   check('N7 the live words are never a live region; one polite status speaks for the block', /role', 'status'/.test(js) && /aria-live', 'polite'/.test(js) && !/aria-live="/.test(js), null);
+  /* Lines shown while thinking: one set of choices and one default everywhere they are written down */
+  const inv = JSON.parse(fs.readFileSync(path.join(ROOT, '../../../Plans/settings_inventory.json'), 'utf8')).settings;
+  const irow = inv.find(r => r.id === LID), trow = inv.find(r => r.id === ID);
+  const rrow = JSON.parse(rows).rows[LID] || {};
+  const kit = fs.readFileSync(path.join(ROOT, '../../onboarding/opus-5.5/src/settings/kit.d/28-chat-port.js'), 'utf8');
+  const place = JSON.parse(fs.readFileSync(path.join(ROOT, '../../onboarding/opus-5.5/src/settings/o55/placement.d/64-chat-port.json'), 'utf8'));
+  const jsChoices = ((js.match(/var LINES = \[([^\]]*)\], DEFAULT_LINES = (\d+);/) || []).slice(1));
+  const words = CHOICES.map(String);
+  const lineFacts = { js: jsChoices, rows: rrow.choices, kit: (kit.match(/'general\.interaction\.thought-stream-lines': \[([^\]]*)\]/) || [])[1], inventory: irow && { options: irow.options, default: irow.default, type: irow.type, scope: irow.scope } };
+  check('N8 Lines shown while thinking offers 4, 6, 8, 12 and 16, default 8, in the chat, the Settings row, its adapter and the inventory',
+    jsChoices[0] === CHOICES.join(', ') && jsChoices[1] === '8' && JSON.stringify(rrow.choices) === JSON.stringify(words) && words.every(w => rrow.options?.[w] === w + ' lines')
+      && lineFacts.kit === words.map(w => `'${w}'`).join(', ') && !!irow && JSON.stringify(irow.options) === JSON.stringify(words) && irow.default === '8' && irow.type === 'select'
+      && JSON.stringify(irow.scope) === JSON.stringify(trow && trow.scope) && words.every(w => irow.option_labels?.[w] === w + ' lines') && irow.label === rrow.label, lineFacts);
+  const after = place.sections?.['app-chat-view']?.after || {};
+  check('N9 the Settings row sits right under Show thinking, before History in new workspaces; the chat no longer says six lines',
+    after[LID] === ID && after['general.interaction.chat-history-list'] === LID && Object.keys(after).indexOf(LID) > Object.keys(after).indexOf(ID)
+      && (place.overrides || []).some(o => o.section === 'app-chat-view' && o.ids.indexOf(LID) === o.ids.indexOf(ID) + 1)
+      && !/six lines|last six|CAP_LINES/.test(js + css), { after });
 }
 if (NODE_ONLY) finish();
 
@@ -95,6 +138,36 @@ async function setMode(page, mode) {
     await page.waitForFunction(mode => PM56_EXT.ctx().state.capabilities.thought === mode, mode, { timeout: 3000 });
   } else await page.evaluate(mode => { const c = PM56_EXT.ctx(); c.state.capabilities.thought = mode; c.renderApp(); }, mode);
 }
+/* Lines shown while thinking: Settings' stored row on PMConcept7, the chat's own value in the standalone */
+async function setLines(page, n) {
+  if (HOSTED) {
+    const ok = await page.evaluate(([id, v]) => window.PM56_PORT.settings.set(id, v), [LID, String(n)]);
+    if (!ok && await page.evaluate(([id]) => PM_CHAT_SETTINGS.values()[id], [LID]) !== String(n)) throw new Error('Settings refused ' + n);
+  } else await page.evaluate(n => { const c = PM56_EXT.ctx(); c.state.capabilities.thoughtLines = n; c.renderApp(); }, n);
+  await page.waitForFunction(n => PM56_THOUGHT.lines.current() === n, n, { timeout: 3000 });
+}
+/* back to the default before a page closes: PMConcept7's Settings outlive the page (the next one reads them), so the
+   stored row is restored to its default (unchanged), and the standalone's value goes back to 8 */
+async function resetLines(page) {
+  if (HOSTED) await page.evaluate(id => window.PM56_PORT.settings.set(id, null), LID);
+  else await page.evaluate(() => { const c = PM56_EXT.ctx(); c.state.capabilities.thoughtLines = 8; c.renderApp(); });
+}
+const linesNow = page => page.evaluate(([id, hosted]) => ({ chat: PM56_THOUGHT.lines.current(), state: PM56_EXT.ctx().state.capabilities.thoughtLines, settings: hosted ? PM_CHAT_SETTINGS.values()[id] : null }), [LID, HOSTED]);
+/* the long thought's pages: PMConcept7 draws a wider column than the standalone and releases the reasoning's words
+   more slowly, so its pages use a 560 px column, and every long thought thinks for 9 s (the most a thought may) */
+const LCOL = HOSTED ? 560 : null;
+async function longThought(page, ms = 9000) {
+  await page.evaluate(([text, ms]) => {
+    const D = window.PM56_DATA, r = D.scriptedReplies.find(x => x.id === 'sr-index'), t = D.liveTurns.find(x => x.id === 'lt-build');
+    r.thinking = Object.assign({}, r.thinking, { text, ms });
+    t.thinking = Object.assign({}, t.thinking, { text, ms });
+  }, [LONG, ms]);
+}
+/* the turn on screen has finished: no thought live, nothing streaming (a send while busy would queue, not reply) */
+async function settled(page) {
+  await page.waitForFunction(P => { const inner = document.querySelector(P + '.chat-stage .transcript-inner'); return !!inner && !inner.querySelector('[data-streaming]') && !PM56_THOUGHT.active().length; }, P, { timeout: 45000, polling: 200 });
+  await sleep(400);
+}
 async function openLive(page) {
   await page.evaluate(() => { PM56_DEMO.selectThread('live-turn'); const c = PM56_EXT.ctx(); c.state.mode = 'Agent'; c.renderApp(); });
   await sleep(400);
@@ -107,8 +180,8 @@ async function send(page, text) {
 /* one sample per frame for `ms`: the block, its reply, the reader's view and the polite status */
 async function sample(page, ms) {
   await page.evaluate(([ms, P]) => {
-    const W = window.__tt = { s: [], status: [], done: false };
     const t0 = performance.now();
+    const W = window.__tt = { s: [], status: [], done: false, t0 };
     const tick = () => {
       const inner = document.querySelector(P + '.chat-stage .transcript-inner'), tr = document.querySelector(P + '.chat-stage .transcript');
       const T = inner ? [...inner.querySelectorAll(':scope > .message-thought')].pop() : null;
@@ -121,7 +194,9 @@ async function sample(page, ms) {
         pend: !!(T && T.querySelector('.tx-pending b')), ch: clip ? +clip.getBoundingClientRect().height.toFixed(1) : null, fh: flow ? flow.offsetHeight : null,
         lh: p ? parseFloat(getComputedStyle(p).lineHeight) : null, capped: !!(clip && clip.classList.contains('tt-capped')), folded: !!(clip && clip.classList.contains('tt-folded')),
         tw: T ? T.querySelectorAll('.tt-w').length : 0, R: !!R, rw: R ? R.querySelectorAll('.tx-w').length : 0, before: !!(T && R && (T.compareDocumentPosition(R) & 4)),
-        u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null, g: tr ? Math.round(tr.scrollHeight - tr.clientHeight - tr.scrollTop) : null, stick: PM56_EXT.ctx().isSticky() });
+        u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null, g: tr ? Math.round(tr.scrollHeight - tr.clientHeight - tr.scrollTop) : null, stick: PM56_EXT.ctx().isSticky(),
+        /* for a failure's trace: the list's height, the reply's height and the room hold's floor */
+        ih: inner ? inner.offsetHeight : null, rh: R ? Math.round(R.getBoundingClientRect().height) : null, floor: document.documentElement.style.getPropertyValue('--tx-hold-min') || null });
       if (performance.now() - t0 < ms) requestAnimationFrame(tick); else W.done = true;
     };
     requestAnimationFrame(tick);
@@ -155,8 +230,10 @@ await safe('auto', async () => {
   check('A2 the reply waits hidden under the block until the reasoning hands over', thinking.length > 20 && thinking.every(x => !x.R), { frames: thinking.length, withReply: thinking.filter(x => x.R).length });
   const mono = thinking.every((x, i) => i === 0 || x.tw >= thinking[i - 1].tw);
   check('A3 the reasoning streams in: its words only grow while it thinks', mono && thinking[thinking.length - 1].tw > 40, { last: thinking[thinking.length - 1]?.tw, mono });
-  const lh = (thinking.find(x => x.lh) || {}).lh || 20, maxH = Math.max(...thinking.map(x => x.ch || 0)), over = thinking.filter(x => x.fh > lh * 6 + 8);
-  check('A4 Auto shows at most the last six lines while it thinks, the older ones fading at the top', maxH <= lh * 6 + 1 && over.length > 0 && over.every(x => x.capped), { maxH, cap: lh * 6, overflowingFrames: over.length, cappedFrames: over.filter(x => x.capped).length });
+  /* the recorded reasoning runs about eight lines here, so it may or may not pass the default window; the lines group
+     overflows every choice on purpose */
+  const lh = (thinking.find(x => x.lh) || {}).lh || 20, maxH = Math.max(...thinking.map(x => x.ch || 0)), over = thinking.filter(x => x.fh > lh * 8 + 8);
+  check('A4 Auto never shows more than the default eight lines while it thinks; past them the window is capped and fades at the top', maxH <= lh * 8 + 1 && over.every(x => x.capped), { maxH, cap: lh * 8, overflowingFrames: over.length, cappedFrames: over.filter(x => x.capped).length });
   const ai = s.findIndex(x => x.R && x.rw > 0), a = s[ai];
   check('A5 Auto folds when the answer starts: in the frame its first word shows, the block is done and folding', a && a.st === 'done' && a.open === '0' && a.before, a);
   const after = a ? s.filter(x => x.t > a.t && x.t <= a.t + 600) : [];
@@ -230,6 +307,132 @@ await safe('agent', async () => {
   await p.close();
 });
 
+/* ------------------------------------------------------------------ lines */
+await safe('lines', async () => {
+  const p = await fresh({ mode: 'Auto', column: LCOL });
+  const def = await linesNow(p), defChanged = HOSTED ? await p.evaluate(id => PM_CHAT_SETTINGS.changed()[id], LID) : null;
+  check('L1 Lines shown while thinking defaults to 8' + (HOSTED ? ' (Settings holds its stored default, unchanged)' : ''), def.chat === 8 && def.state === 8 && (!HOSTED || (def.settings === '8' && !defChanged)), { def, defChanged });
+  await longThought(p);
+  await openLive(p);
+  const sizes = {};
+  for (const n of [8, 4, 6, 12, 16]) {
+    if (n !== 8) await setLines(p, n);
+    await sample(p, 13500);
+    await send(p, Q);
+    await sleep(14000);
+    const s = (await samples(p)).s, thinking = s.filter(x => x.T && x.st === 'thinking');
+    const lh = (thinking.find(x => x.lh) || {}).lh || 20, cap = Math.round(lh * n), maxH = Math.max(...thinking.map(x => x.ch || 0));
+    const over = thinking.filter(x => x.fh > cap + 8), above = thinking.filter(x => x.ch > cap + 1);
+    sizes[n] = { lh, cap, maxH, overflowingFrames: over.length, cappedFrames: over.filter(x => x.capped).length, frames: thinking.length };
+    check(`L-${n} ${n} lines: the live window rises to exactly ${n} lines and no further; the rest fades at the top`, thinking.length > 20 && Math.abs(maxH - cap) <= 1.5 && above.length === 0 && over.length > 10 && over.every(x => x.capped), sizes[n]);
+    /* the turns before this one are on screen too: the answer is the first reply word after this thought began */
+    const from = s.findIndex(x => x.T && x.st === 'thinking'), a = from < 0 ? null : s.slice(from).find(x => x.R && x.rw > 0);
+    const landed = a ? s.find(x => x.t > a.t && x.t <= a.t + 600 && x.ch <= 0.5 && x.folded) : null, f = followVerdicts(s);
+    const ftrace = f.drops.length ? s.filter(x => x.t >= f.drops[0].t - 300 && x.t <= f.drops[0].t + 150).map(x => ({ t: x.t, u: x.u, g: x.g, ih: x.ih, rh: x.rh, rw: x.rw, floor: x.floor, ch: x.ch })) : undefined;
+    check(`L-${n} ${n} lines: it folds as the answer starts and lands folded; no clamp snap, follow-along holds (<=300ms away)`, !!a && a.st === 'done' && a.open === '0' && !!landed && landed.t - a.t <= 520 && f.drops.length === 0 && f.longest <= 300 && f.unstuck === 0,
+      { fold: a ? { st: a.st, open: a.open, landedMs: landed ? landed.t - a.t : null, at: a.t } : null, follow: f, trace: ftrace });
+    await settled(p);
+  }
+  results.push({ group: 'lines', label: 'L-sizes (diagnostic: per choice, line height, cap, tallest window, frames past the cap)', pass: true, diagnostic: true, sizeContext: testGeometry(), detail: sizes });
+  /* the tallest window in an agent turn: the reasoning folds as it ends and the card enters into the room it gave back */
+  await p.evaluate(() => { const c = PM56_EXT.ctx(); c.state.mode = 'Agent'; c.renderApp(); });
+  await p.evaluate(([ms, P]) => {
+    const W = window.__tta = { s: [] }, t0 = performance.now();
+    const tick = () => {
+      const inner = document.querySelector(P + '.chat-stage .transcript-inner'), tr = document.querySelector(P + '.chat-stage .transcript');
+      const T = inner ? [...inner.querySelectorAll(':scope > .message-thought')].pop() : null;
+      const card = T ? (() => { for (let n = T.nextElementSibling; n; n = n.nextElementSibling) if (n.matches('.working-card') || n.querySelector(':scope > .working-card')) return n; return null; })() : null;
+      const clip = T && T.querySelector('.tt-clip'), us = inner ? inner.querySelectorAll(':scope > [data-role="user"]') : [], u = us[us.length - 1];
+      W.s.push({ t: Math.round(performance.now() - t0), T: !!T, st: T ? T.dataset.thoughtState : null, open: T ? T.dataset.thoughtOpen : null, card: !!card, ch: clip ? +clip.getBoundingClientRect().height.toFixed(1) : null,
+        before: !!(T && card && (T.compareDocumentPosition(card) & 4)), u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null,
+        g: tr ? Math.round(tr.scrollHeight - tr.clientHeight - tr.scrollTop) : null, stick: PM56_EXT.ctx().isSticky(),
+        /* for a failure's trace: the card's height, the list's height and the room hold's floor */
+        cardH: card ? Math.round(card.getBoundingClientRect().height) : null, ih: inner ? inner.offsetHeight : null, floor: document.documentElement.style.getPropertyValue('--tx-hold-min') || null });
+      if (performance.now() - t0 < ms) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [13500, P]);
+  await send(p, AGENT_Q);
+  await sleep(14000);
+  const g = (await p.evaluate(() => window.__tta)).s, gThinking = g.filter(x => x.T && x.st === 'thinking'), born = g.find(x => x.card), gf = followVerdicts(g);
+  const gMax = Math.max(...gThinking.map(x => x.ch || 0));
+  check('L-agent 16 lines in an agent turn: no card while it thinks; the window reaches 16 lines, then folds before the card enters', gThinking.length > 20 && gThinking.every(x => !x.card) && gMax >= sizes[16].cap - 1.5 && !!born && born.st === 'done' && born.open === '0' && born.before,
+    { frames: gThinking.length, tallest: gMax, born });
+  const trace = gf.drops.length ? g.filter(x => x.t >= gf.drops[0].t - 400 && x.t <= gf.drops[0].t + 200).map(x => ({ t: x.t, u: x.u, g: x.g, cardH: x.cardH, ih: x.ih, floor: x.floor, ch: x.ch })) : undefined;
+  check('L-agent the fold of a 16-line window and the card\'s birth never snap the thread down; the reader stays at the bottom', gf.drops.length === 0 && gf.unstuck === 0, trace ? Object.assign({}, gf, { trace }) : gf);
+  check('L-errors no page errors', p.__errs.length === 0, p.__errs.slice(0, 2));
+  await resetLines(p);
+  await p.close();
+
+  /* a change while it thinks: the window glides to its new height, and back. Before, a window that grew by more than
+     40 px jumped to 40 px short of its target in one frame (the growth clamp), so the check is that the change takes
+     time and passes through the heights in between */
+  const q = await fresh({ mode: 'Auto', column: LCOL });
+  await longThought(q);
+  await openLive(q);
+  await setLines(q, 4);
+  await sample(q, 12000);
+  await send(q, Q);
+  /* the reasoning has run well past 16 lines while the window shows 4 */
+  await q.waitForFunction(P => { const a = [...document.querySelectorAll(P + '.transcript-inner > .message-thought')].pop(); const c = a && a.querySelector('.tt-clip'), p = c && c.querySelector('p');
+    const lh = p ? parseFloat(getComputedStyle(p).lineHeight) : 20; return a && a.dataset.thoughtState === 'thinking' && c.classList.contains('tt-capped') && c.firstElementChild.offsetHeight > lh * 16 + 24; }, P, { timeout: 9000, polling: 50 });
+  const upAt = await q.evaluate(() => performance.now() - window.__tt.t0);
+  await setLines(q, 16);
+  await sleep(600);
+  const downAt = await q.evaluate(() => performance.now() - window.__tt.t0);
+  await setLines(q, 4);
+  await sleep(700);
+  const ls = (await samples(q)).s, llh = (ls.find(x => x.lh) || {}).lh || 20, c4 = Math.round(llh * 4), c16 = Math.round(llh * 16);
+  function glide(fromT, a, b) {
+    const run = ls.filter(x => x.T && x.st === 'thinking' && x.t >= fromT - 20);
+    const startI = run.findIndex(x => Math.abs(x.ch - a) > 1), endI = run.findIndex(x => Math.abs(x.ch - b) <= 2);
+    if (startI < 0 || endI < 0 || endI < startI) return { ok: false, startI, endI, tail: run.slice(0, 4) };
+    const span = run.slice(startI, endI + 1), first = Math.abs(span[0].ch - a), whole = Math.abs(b - a);
+    const between = span.filter(x => Math.min(a, b) + 2 < x.ch && x.ch < Math.max(a, b) - 2).length;
+    const monotone = span.every((x, i) => i === 0 || (b > a ? x.ch >= span[i - 1].ch - 0.5 : x.ch <= span[i - 1].ch + 0.5));
+    return { ok: first <= whole * 0.5 && between >= 4 && span[span.length - 1].t - span[0].t >= 80 && monotone, firstStep: +first.toFixed(1), whole, between, ms: span[span.length - 1].t - span[0].t, monotone };
+  }
+  const up = glide(upAt, c4, c16), down = glide(downAt, c16, c4);
+  check('L-live a change to 16 lines mid-thought glides the window open to 16 lines (no step), and back to 4 glides it closed', up.ok && down.ok, { up, down, lh: llh });
+  check('L-live no page errors', q.__errs.length === 0, q.__errs.slice(0, 2));
+  await resetLines(q);
+  await q.close();
+
+  /* Expanded is never capped, whatever the lines */
+  const e = await fresh({ mode: 'Expanded', column: LCOL });
+  await longThought(e);
+  await setLines(e, 4);
+  await openLive(e);
+  await sample(e, 11000);
+  await send(e, Q);
+  await sleep(11500);
+  const es = (await samples(e)).s.filter(x => x.T && x.st === 'thinking'), elh = (es.find(x => x.lh) || {}).lh || 20, eLast = es[es.length - 1];
+  check('L-expanded Always open ignores the lines: at 4 lines the long reasoning is never capped and shows whole', es.length > 20 && es.every(x => !x.capped) && !!eLast && eLast.ch > elh * 16 && eLast.ch >= eLast.fh - 24, { frames: es.length, last: eLast });
+  check('L-expanded no page errors', e.__errs.length === 0, e.__errs.slice(0, 2));
+  await resetLines(e);
+  await e.close();
+
+  /* Reduced Motion: each height lands at once */
+  const r = await fresh({ mode: 'Auto', reduced: true, column: LCOL });
+  await longThought(r);
+  await openLive(r);
+  await setLines(r, 6);
+  await sample(r, 11000);
+  await send(r, Q);
+  await r.waitForFunction(P => { const a = [...document.querySelectorAll(P + '.transcript-inner > .message-thought')].pop(); const c = a && a.querySelector('.tt-clip'); return a && a.dataset.thoughtState === 'thinking' && c && c.classList.contains('tt-capped'); }, P, { timeout: 8000 });
+  await sleep(300);
+  await setLines(r, 12);
+  await sleep(1200);
+  const rs = (await samples(r)).s.filter(x => x.T && x.st === 'thinking'), rlh = (rs.find(x => x.lh) || {}).lh || 20;
+  const sixes = rs.filter(x => x.fh > rlh * 6 + 8 && x.ch <= rlh * 6 + 1.5), between = rs.filter(x => x.ch > rlh * 6 + 1.5 && x.ch < rlh * 12 - 1.5 && x.fh > rlh * 12 + 8);
+  const twelve = rs.filter(x => Math.abs(x.ch - Math.round(rlh * 12)) <= 1.5);
+  check('L-reduced under Reduced Motion the window sits at exactly 6 lines, then at exactly 12 the frame after the change (no frames in between)', sixes.length > 5 && sixes.every(x => Math.abs(x.ch - Math.round(rlh * 6)) <= 1.5) && twelve.length > 5 && between.length === 0,
+    { sixFrames: sixes.length, twelveFrames: twelve.length, between: between.slice(0, 3) });
+  check('L-reduced no page errors', r.__errs.length === 0, r.__errs.slice(0, 2));
+  await resetLines(r);
+  await r.close();
+});
+
 /* ------------------------------------------------------------------ prefs */
 await safe('prefs', async () => {
   const p = await fresh({ mode: 'Auto' });
@@ -260,13 +463,61 @@ await safe('prefs', async () => {
   check('P3 New chat defaults\' Thought Stream sets the same value and the block follows' + (HOSTED ? '; Settings stores it' : ''), ok && s3.chat === 'Expanded' && (!HOSTED || s3.settings === 'Expanded') && t3.open === '1', { ok, s3, t3 });
   await p.evaluate(() => { const b = document.querySelector('#pmOverlayRoot [data-action="close-dialog"]'); if (b) b.click(); });
   await sleep(300);
+  /* Lines shown while thinking: the composer's list under Thought Stream, then New chat defaults' second dropdown, each
+     through its own control */
+  await p.click(P + '[data-action="open-menu"][data-menu="wand"]'); await sleep(350);
+  if (!(await p.$('#pmOverlayRoot [data-submenu="thought-menu"]'))) { await p.click('#pmOverlayRoot [data-action="polish-wand-group"][data-group="preferences"]'); await sleep(350); }
+  await p.click('#pmOverlayRoot [data-submenu="thought-menu"]'); await sleep(350);
+  const listed = await p.evaluate(() => [...document.querySelectorAll('#pmOverlayRoot [data-overlay="sidecar"] [data-action="set-thought-lines"]')].map(b => b.textContent.trim() + (b.classList.contains('active') ? '*' : '')));
+  await p.click('#pmOverlayRoot [data-action="set-thought-lines"][data-value="12"]'); await sleep(600);
+  const l1 = await linesNow(p), menuGone = !(await p.$('#pmOverlayRoot [data-overlay="sidecar"]'));
+  check('P7 the composer\'s Thought Stream menu lists 4 to 16 lines (8 checked) and sets 12' + (HOSTED ? '; Settings stores "12"' : ''), JSON.stringify(listed) === JSON.stringify(['4 lines', '6 lines', '8 lines*', '12 lines', '16 lines']) && l1.chat === 12 && l1.state === 12 && (!HOSTED || l1.settings === '12') && menuGone, { listed, l1, menuGone });
+  await p.evaluate(() => { const b = document.createElement('button'); b.dataset.action = 'af-settings-open'; (document.querySelector('#pmRoot') || document.body).appendChild(b); b.click(); b.remove(); });
+  await sleep(600);
+  const shown = await p.evaluate(() => (document.querySelector('#pmOverlayRoot [data-field="thoughtLines"]') || {}).textContent || '');
+  await p.click('#pmOverlayRoot [data-field="thoughtLines"]'); await sleep(450);
+  await p.click('.overlay-menu [data-action="shared-choice-pick"][data-value="6"]'); await sleep(600);
+  const l2 = await linesNow(p), shown2 = await p.evaluate(() => (document.querySelector('#pmOverlayRoot [data-field="thoughtLines"]') || {}).textContent || '');
+  const sheet = await p.evaluate(() => { const b = document.querySelector('#pmOverlayRoot .pmx-sheet .pmx-body'); return b ? { scroll: b.scrollHeight, client: b.clientHeight } : null; });
+  check('P8 New chat defaults\' Lines shown while thinking dropdown reads the value in force and sets 6' + (HOSTED ? '; Settings stores "6"' : '') + '; the sheet still fits without scrolling',
+    /^12 lines/.test(shown.trim()) && /^6 lines\s*Shown while it thinks$/.test(shown2.replace(/\s+/g, ' ').trim()) && l2.chat === 6 && l2.state === 6 && (!HOSTED || l2.settings === '6') && !!sheet && sheet.scroll <= sheet.client + 1,
+    { shown, shown2, l2, sheet });
+  /* the sheet's tallest state with the second dropdown: Always open (still set from P3) and a naming model that isn't
+     available, whose note sits under Name new chats (tests/pmx-surfaces/prefs.mjs: it "must not scroll either") */
+  await p.evaluate(() => window.PM56_FEATURES.setDefault('title', 'model:opus5-personal')); await sleep(900);
+  const tall = await p.evaluate(() => { const sh = document.querySelector('#pmOverlayRoot .pmx-sheet'), b = sh && sh.querySelector('.pmx-body');
+    return b ? { scroll: b.scrollHeight, client: b.clientHeight, warn: !!sh.querySelector('.pmx-dflt-warn-note'), thought: window.PM56_EXT.ctx().state.capabilities.thought } : null; });
+  check('P8b in its tallest state (Always open, a naming model that isn\'t available) New chat defaults still fits without scrolling', !!tall && tall.warn && tall.thought === 'Expanded' && tall.scroll <= tall.client + 1, tall);
+  await p.evaluate(() => window.PM56_FEATURES.setDefault('title', 'default')); await sleep(400);
+  await p.evaluate(() => { const b = document.querySelector('#pmOverlayRoot [data-action="close-dialog"]'); if (b) b.click(); });
+  await sleep(300);
   if (HOSTED) {
     const okS = await p.evaluate(id => PM56_PORT.settings.set(id, 'Auto'), ID); await sleep(500);
     const s4 = await state(), t4 = await lastThought(p);
     check('P4 a change in Settings reaches the chat: every block follows (Settings -> chat)', okS && s4.chat === 'Auto' && s4.settings === 'Auto' && t4.open === '0', { okS, s4, t4 });
     const help = await p.evaluate(() => document.documentElement.outerHTML.includes('Shown when the model shares its reasoning. While it thinks folds it to one line once the answer starts; Always open keeps it beside the answer.'));
     check('P5 the Settings row help describes the live display, not a preview', help && !(await p.evaluate(() => document.documentElement.outerHTML.includes('previews the choice in New chat defaults'))), { help });
+    /* the Settings row itself: under Show thinking, its own dropdown, and the chat follows */
+    await p.evaluate(() => document.querySelector('#tab-settings').click()); await sleep(900);
+    await p.evaluate(id => PM51.revealSetting(id), LID);
+    await p.waitForFunction(id => { const r = document.querySelector(`[id="setting-${id}"]`); return r && r.getBoundingClientRect().height > 0; }, LID, { timeout: 8000 });
+    await sleep(600);
+    const row = await p.evaluate(([id, tid]) => { const r = document.querySelector(`[id="setting-${id}"]`);
+      return { prev: r.previousElementSibling?.id, next: r.nextElementSibling?.id, label: r.querySelector('.setting-label')?.textContent.trim(), help: r.querySelector('.setting-description')?.textContent.trim(),
+        value: r.querySelector('.pm51-dd-value')?.textContent.trim(), options: [...r.querySelectorAll('select option')].map(o => o.value + '=' + o.textContent.trim()), tid }; }, [LID, ID]);
+    check('P9 the Settings row "Lines shown while thinking" sits right under Show thinking, offers 4 to 16 lines and shows the value in force (6 lines)',
+      row.prev === 'setting-' + ID && row.next === 'setting-general.interaction.chat-history-list' && /^Lines shown while thinking/.test(row.label || '') && /older lines fade at the top/.test(row.help || '')
+        && JSON.stringify(row.options) === JSON.stringify(CHOICES.map(n => `${n}=${n} lines`)) && row.value === '6 lines', row);
+    await p.click(`[id="setting-${LID}"] .pm51-dd-trigger`); await sleep(450);
+    await p.locator('.pm51-dd-list.is-open .pm51-popout-item', { hasText: '16 lines' }).first().click(); await sleep(700);
+    const l3 = await linesNow(p), shown3 = await p.evaluate(id => document.querySelector(`[id="setting-${id}"] .pm51-dd-value`)?.textContent.trim(), LID);
+    check('P10 choosing 16 lines in the Settings row reaches the chat (Settings -> chat)', l3.settings === '16' && l3.chat === 16 && l3.state === 16 && shown3 === '16 lines', { l3, shown3 });
+    const refused = await p.evaluate(id => [PM56_PORT.settings.set(id, '7'), PM56_PORT.settings.set(id, 'Auto'), PM56_PORT.settings.set(id, 8)], LID), l4 = await linesNow(p);
+    check('P11 Settings refuses a choice it does not offer (7, Auto, the number 8); the chat keeps 16', refused.every(x => x === false) && l4.chat === 16 && l4.settings === '16', { refused, l4 });
+    await p.evaluate(() => { const t = document.querySelector('#tab-home') || [...document.querySelectorAll('.page-tab')].find(x => x.dataset.page === 'home'); if (t) t.click(); });
+    await sleep(500);
   }
+  await resetLines(p);
   check('P6 no page errors', p.__errs.length === 0, p.__errs.slice(0, 2));
   await p.close();
 });

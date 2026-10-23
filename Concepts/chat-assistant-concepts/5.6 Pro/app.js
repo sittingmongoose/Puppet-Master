@@ -172,7 +172,8 @@
     planStrategy:'Standard', deepPlanStrategy:'Thorough', grillMe:false, reviewStrategy:'Multi-Pass Review',
     /* E-02 (owner, 2026-09-27): crew is this chat's Crew Auto answer ("may the assistant call a Crew?"), on by default;
        the project-wide Crew Auto setting decides the default (PM56_COLLAB.crewAutoAllowed reads both) */
-    capabilities:{goal:true,crew:true,bsd:'Auto',context:'Auto',eli5:false,thought:'Auto'},
+    /* thoughtLines: Lines shown while thinking, the Auto window's height (thought-stream.js owns its choices, DL-234) */
+    capabilities:{goal:true,crew:true,bsd:'Auto',context:'Auto',eli5:false,thought:'Auto',thoughtLines:8},
     activityCaps:{goal:{},crew:{}},
     messageExpanded:{}, messageDetails:{}, copyFlashId:null, workTerminal:{}, work:{step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null}, works:{},
     decision:null, questionIndex:0, questions:clone(D.questions), questionQueue:2,
@@ -513,18 +514,18 @@
   }
   /* Hosted: only the chat's own choices persist here (model, effort, fast mode, the Activity width, the capability
      switches the chat owns). The look, the History pin and the column widths are PMConcept7's (its look settings and
-     the layout's chat column), and the thought stream and ELI5 defaults are Settings values (PM_CHAT_SETTINGS): no
-     second store for any of them. */
+     the layout's chat column), and the thought stream, its lines and the ELI5 defaults are Settings values
+     (PM_CHAT_SETTINGS): no second store for any of them. */
   const HOSTED_PREF_KEYS=['model','effort','effortChosen','fast','activityWidth','capabilities'];
   function hostedPrefs(){
-    const caps=Object.assign({},state.capabilities); delete caps.thought; delete caps.eli5;
+    const caps=Object.assign({},state.capabilities); delete caps.thought; delete caps.thoughtLines; delete caps.eli5;
     return {model:state.model,effort:state.effort||'',effortChosen:!!state.effort,fast:state.fast,activityWidth:state.activityWidth,capabilities:caps};
   }
   function loadPrefs() {
     const raw = HOSTED ? safeStorage.get('pm56-hosted-prefs') : safeStorage.get('pm56-prefs'); if (!raw) return;
     try {
       let p = JSON.parse(raw);
-      if (HOSTED) { const q={}; HOSTED_PREF_KEYS.forEach(k=>{ if(k in p) q[k]=p[k]; }); if(q.capabilities){ const own=q.capabilities; q.capabilities=Object.assign({},state.capabilities,own,{thought:state.capabilities.thought,eli5:state.capabilities.eli5}); } p=q; }
+      if (HOSTED) { const q={}; HOSTED_PREF_KEYS.forEach(k=>{ if(k in p) q[k]=p[k]; }); if(q.capabilities){ const own=q.capabilities; q.capabilities=Object.assign({},state.capabilities,own,{thought:state.capabilities.thought,thoughtLines:state.capabilities.thoughtLines,eli5:state.capabilities.eli5}); } p=q; }
       const chosen = !!p.effortChosen;
       delete p.effortChosen;
       Object.assign(state, p);
@@ -3652,7 +3653,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(id==='context-lens')return extReplace('contextLensMenu',{}, `<div class="menu-head"><strong>Context Lens</strong></div>${[['Auto','Use source-aware automatic selection'],['Focus','Prioritize selected current sources'],['Mute','Omit selected superseded sources'],['Subcompact','Preview a staged context reduction'],['Off','Disable Context Lens receipts']].map(o=>`<button class="menu-item ${state.capabilities.context===o[0]?'active':''}" data-action="set-context-cap" data-value="${o[0]}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${state.capabilities.context===o[0]?icon('check',11):''}</button>`).join('')}${state.capabilities.context==='Subcompact'?`<div class="menu-divider"></div><div style="padding:7px"><p style="font-size:10px;color:var(--muted);margin:0 0 7px">Preview: remove 18.4K tokens while retaining provenance.</p><div class="plan-actions"><button class="soft-button" data-action="cancel-subcompact">Cancel</button><button class="primary-button" data-action="apply-subcompact">Apply</button></div></div>`:''}`);
     if(id==='eli5-menu')return renderCapabilitySub('ELI5',[['On','Show a simpler explanation after selected responses'],['Off','Keep standard response depth']],state.capabilities.eli5?'On':'Off','set-eli5-cap');
     /* F0b (i): PREFS's Thought Stream copy (DESIGN-SPEC 8.14); the values stay Auto|Expanded. */
-    if(id==='thought-menu')return renderCapabilitySub('Thought Stream',[['Auto','Opens while the AI is thinking, then folds away','While it thinks'],['Expanded','Keeps the thinking visible next to the answer','Always open']],state.capabilities.thought,'set-thought-cap');
+    if(id==='thought-menu')return renderCapabilitySub('Thought Stream',[['Auto','Opens while the AI is thinking, then folds away','While it thinks'],['Expanded','Keeps the thinking visible next to the answer','Always open']],state.capabilities.thought,'set-thought-cap')+renderThoughtLines();
     /* Assistant-redesign wave: a module that contributes a `wandRows` entry with
        its own `data-submenu` had no way to render that sidecar -- bsd.js's
        BSD row opened a real, empty sidecar with zero items. This is the missing
@@ -3662,6 +3663,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   /* items: [value, description, label (defaults to value), fine line]. F0b (d, i). */
   function renderCapabilitySub(title,items,current,action){ return `<div class="menu-head"><strong>${esc(title)}</strong></div>${items.map(o=>`<button class="menu-item ${current===o[0]?'active':''}" data-action="${action}" data-value="${esc(o[0])}"><span class="menu-copy"><strong>${esc(o[2]||o[0])}</strong><span>${esc(o[1])}</span>${o[3]?`<span>${esc(o[3])}</span>`:''}</span>${current===o[0]?icon('check',11):''}</button>`).join('')}`; }
+  /* Lines shown while thinking (DL-234): how much of the reasoning While it thinks keeps in view. The choices are
+     thought-stream.js's, so the list is offered only where that module draws the thinking. */
+  function renderThoughtLines(){
+    const T=window.PM56_THOUGHT&&window.PM56_THOUGHT.lines; if(!T)return '';
+    const cur=T.current();
+    return `<div class="menu-divider"></div><div class="menu-section-label" id="tt-lines-label">Lines shown while thinking</div><div class="tt-lines-menu" role="group" aria-labelledby="tt-lines-label">${T.choices.map(n=>`<button class="menu-item tt-lines-item ${cur===n?'active':''}" data-action="set-thought-lines" data-value="${n}"><span class="menu-copy"><strong>${n} lines</strong></span>${cur===n?icon('check',11):''}</button>`).join('')}</div>`;
+  }
   function renderCompactSubmenu(id){ return `<div class="menu-head"><button class="icon-button" data-action="submenu-back">${icon('left',12)}</button><strong>Back</strong></div>${renderSubmenu(id)}`; }
 
   function renderContextDrawer(){
@@ -4474,6 +4482,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(a==='set-context-cap'){state.capabilities.context=btn.dataset.value;if(btn.dataset.value==='Subcompact'){state.menu.sub='context-lens';renderOverlays();}else{closeMenu();addReceipt(btn.dataset.value==='Focus'?'context-focus':'context-mute',`Context Lens · ${btn.dataset.value}`,btn.dataset.value==='Focus'?'Current files and final references prioritized.':'Selected superseded sources omitted from the active projection.');}return;}
     if(a==='set-eli5-cap'){state.capabilities.eli5=btn.dataset.value==='On';closeMenu();renderApp();return;}
     if(a==='set-thought-cap'){state.capabilities.thought=btn.dataset.value;closeMenu();renderApp();return;}
+    if(a==='set-thought-lines'){state.capabilities.thoughtLines=Number(btn.dataset.value);closeMenu();renderApp();return;}
     if(a==='open-questionnaire'){decisionExit=null;state.decision={type:'question'};renderApp();return;}
     if(a==='prev-question'){state.questionIndex=Math.max(0,state.questionIndex-1);renderApp();return;}
     if(a==='next-question'){const q=state.questions[state.questionIndex];if(q.required&&!questionFilled(q)){toast('Answer required','Complete this question or use Skip to return later.');return;}state.questionIndex=Math.min(state.questions.length-1,state.questionIndex+1);renderApp();return;}

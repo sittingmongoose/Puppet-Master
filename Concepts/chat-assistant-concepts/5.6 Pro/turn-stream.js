@@ -522,7 +522,7 @@
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
-  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); } }
+  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.floorAt = room.h0; } }
   /* The answer's placeholder takes no room before it is drawn. It mounts as the card starts to fold and waits out its
      entrance delay fully transparent (turn-stream.css: [data-streaming="pending"], 380ms, from opacity 0). A narrow card
      frees its panel's height at once, so the placeholder's height went into the held room; a wide card (panel beside
@@ -560,6 +560,13 @@
      floor holds the room instead; the next subject's rows usually fill it, and
      what is left eases away more gently than the fold's room. */
   var SHRINK_HOLD = 700;
+  /* ...and as its leftover closes, the floor (what moves under a reader at the bottom) never comes down faster than
+     200 px/s, whatever the content under it does. A tall thinking window (Lines shown while thinking at 12 or 16,
+     DL-234) gives back up to 320 px when it folds; at the shrink's omega that eased the thread down at up to 0.8 px/ms,
+     twice turn-verify's 0.4 px/ms snap line (300 px/s still read 0.41 on a loaded page, where a frame's step and the
+     sampler's interval drift apart). Leftovers under ~70 px never reach the limit, so a short fold or a card's usual
+     shrink closes as before. */
+  var SHRINK_VMAX = 200;
   /* A demo run whose later turns are held until it completes (app.js armWorkGate) keeps this room for the whole run:
      the floor only ratchets up as the card grows past it, so a reader at the bottom sees the text above the card move
      when the card reaches a new height and never slide back down when a subject's rows fold (2026-10-23: six 30-70px
@@ -599,10 +606,13 @@
       var nat = naturalH(inner), t = now(), dt = Math.min(0.1, Math.max(0, (t - room.last) / 1000)); room.last = t;
       if (room.x == null) room.x = Math.max(0, room.h0 - nat);
       /* critically damped to zero (omega 11/s: ~450ms; a shrink's leftover 8/s) */
-      var s2 = critStep(room.x, room.v, room.transient ? 8 : 11, dt); room.x = s2[0]; room.v = s2[1];
+      var s2 = critStep(room.x, room.v, room.transient ? 8 : 11, dt);
+      if (room.transient) { var lo = room.floorAt - SHRINK_VMAX * dt - nat; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
+      room.x = s2[0]; room.v = s2[1];
       /* under reduced motion (only a held demo run holds room there) the floor goes at once */
       if (room.x < 0.5 || nat >= room.h0 || reduced()) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
-      roomFloor(nat + room.x);
+      room.floorAt = nat + room.x;
+      roomFloor(room.floorAt);
     }
     try { C().followIfSticky(); } catch (e) { }
     room.raf = requestAnimationFrame(roomFrame);
@@ -626,7 +636,7 @@
     var th = lt.thinking && window.PM56_THOUGHT ? window.PM56_THOUGHT.start(c, t, ph, lt.thinking, { agent: true }) : null;
     t.messages.push(ph);
     begin(ph, t.id, { chunks: [], terminal: 'complete' }, { rich: true, hold: true });
-    directors.set(recId, { recId: recId, tid: t.id, lt: lt, phId: ph.id, workAt: now() + (th ? th.ms + th.cardAfter : 1100), phase: 'thinking', waited: {} });
+    directors.set(recId, { recId: recId, tid: t.id, lt: lt, phId: ph.id, workAt: now() + (th ? th.ms + th.cardAfter : 1100), cardAfter: th ? th.cardAfter : 0, phase: 'thinking', waited: {} });
     kick();
     return true;
   }
@@ -636,8 +646,12 @@
       var th = (c.state.threads || []).filter(function (x) { return x.id === d.tid; })[0];
       if (!th) { directors.delete(d.recId); return; }
       if (d.phase === 'thinking' && t >= d.workAt) {
-        /* the first tool call: the reasoning has already handed over and folded (a no-op then); this only makes sure */
-        if (window.PM56_THOUGHT) window.PM56_THOUGHT.handover(d.phId, { render: false });
+        /* the first tool call: the reasoning has already handed over and folded (a no-op then). A page held up past both
+           moments reaches here with the reasoning still live: it hands over now and the card waits its cardAfter again,
+           so the fold still lands first into its held room (born in the same frame, the card filled that room before the
+           fold gave it back, the hold ended, and the fold then pulled the thread down under the reader: 315 px at 16
+           lines) */
+        if (window.PM56_THOUGHT && window.PM56_THOUGHT.handover(d.phId)) { d.workAt = t + (d.cardAfter || 0); return; }
         var i = th.messages.findIndex(function (m) { return m.id === d.phId; });
         var st = streams.get(d.phId);
         if (st) streams.delete(d.phId);

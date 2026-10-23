@@ -16356,7 +16356,9 @@ canonical_text: >-
   Insert command and retained-output candidates remain unavailable until their existing admission.
   Thought Stream in Settings, New chat defaults and the composer capability menu uses the existing
   Settings transaction over general.interaction.thought-stream (SSYS-055), with no new command
-  identity; arbitrary Demo Studio family takes receive no product command or production row. Candidate
+  identity, and so does its Lines shown while thinking choice over
+  general.interaction.thought-stream-lines from the same three places (DL-234); arbitrary Demo Studio
+  family takes receive no product command or production row. Candidate
   exclusions for DL-218's Check It and Grill Me controls remain unchanged by this port; the concept
   proving a click is not command admission. In integrated concept 59ca2d4382 the chat header's Keep
   History open uses ui.chat_column.pin_history, its Keep open row uses ui.chat_column.keep_open and
@@ -16364,12 +16366,13 @@ canonical_text: >-
   gestures, D8 background agent tabs and the centre's narrow rule. These JavaScript paths demonstrate
   concept routing only, not native typed dispatch. The existing project-only Settings adapter
   persists Project default ELI5; All chats ELI5 remains session-only and therefore does not prove the
-  application-scope Settings transaction above. Thought Stream changes its shared preference and
-  preview only; no live reasoning display is implemented in this snapshot (SSYS-055).
+  application-scope Settings transaction above. In that snapshot Thought Stream changed only its
+  shared preference and preview; the live thinking display it drives followed on 2026-10-23
+  (ACD-221, DL-234).
 gui_related: true
 gui_classification_reason: Maps hosted chat controls to existing commands, Settings transactions and local actions.
 split_recommended: false
-depends_on: [DL-232, UCC-175, UCC-176, UCC-188, UCC-200, UCC-201, UCC-203, UCC-205, UCC-206]
+depends_on: [DL-232, UCC-175, UCC-176, UCC-188, UCC-200, UCC-201, UCC-203, UCC-205, UCC-206, DL-234]
 unblocks: []
 acceptance_criteria:
   - "Every port producer resolves to one existing command, its recorded alias, a Settings transaction or an explicit local disposition."

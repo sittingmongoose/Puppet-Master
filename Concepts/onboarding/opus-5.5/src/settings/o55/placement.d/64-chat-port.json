@@ -1,14 +1,15 @@
 {
- "_about": "DL-232 / SSYS-055: restore the admitted History starting-value row and place the newly admitted display-only Thought Stream row. The current-chat ELI5 value remains a run-scoped inventory identity but its live control belongs only to the chat sheet (SSYS-042); omit it from Settings and Settings search.",
+ "_about": "DL-232 / SSYS-055: restore the admitted History starting-value row and place the newly admitted display-only Thought Stream row, with its Lines shown while thinking row under it (DL-234). The current-chat ELI5 value remains a run-scoped inventory identity but its live control belongs only to the chat sheet (SSYS-042); omit it from Settings and Settings search.",
  "retire_ids": ["general.interaction.chat-eli5"],
  "overrides": [
-  {"section": "app-chat-view", "ids": ["general.interaction.thought-stream", "general.interaction.chat-history-list"]}
+  {"section": "app-chat-view", "ids": ["general.interaction.thought-stream", "general.interaction.thought-stream-lines", "general.interaction.chat-history-list"]}
  ],
  "sections": {
   "app-chat-view": {
    "after": {
     "general.interaction.thought-stream": "general.interaction.working-activity-style",
-    "general.interaction.chat-history-list": "general.interaction.thought-stream"
+    "general.interaction.thought-stream-lines": "general.interaction.thought-stream",
+    "general.interaction.chat-history-list": "general.interaction.thought-stream-lines"
    }
   }
  }

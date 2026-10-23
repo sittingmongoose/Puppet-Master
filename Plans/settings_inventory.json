@@ -25192,6 +25192,43 @@
    "New chat defaults",
    "show thinking"
   ]
+ },
+ {
+  "id": "general.interaction.thought-stream-lines",
+  "label": "Lines shown while thinking",
+  "desc": "How much of the reasoning supplied by the model While it thinks keeps in view as it streams: the latest lines, with older ones fading at the top. Always open shows all of it. This changes only what is shown, never a reply.",
+  "type": "select",
+  "options": [
+   "4",
+   "6",
+   "8",
+   "12",
+   "16"
+  ],
+  "option_labels": {
+   "4": "4 lines",
+   "6": "6 lines",
+   "8": "8 lines",
+   "12": "12 lines",
+   "16": "16 lines"
+  },
+  "default": "8",
+  "scope": [
+   "global"
+  ],
+  "tier": "simple",
+  "related_features": [
+   "assistant-redesign",
+   "assistant-chat"
+  ],
+  "search": [
+   "Thought Stream",
+   "thinking lines",
+   "thinking window",
+   "reasoning",
+   "New chat defaults",
+   "lines shown while thinking"
+  ]
  }
 ]
 }

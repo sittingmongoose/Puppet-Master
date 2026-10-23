@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L13-L161
+Source lines: L13-L164
 
-Source SHA256: `e26accb10b528f0088eff83e2f95b458c69a8cfcd0ec18aa3dda9b8030b76674`
+Source SHA256: `0e67f6c9aa98812f9535e44cfef93ed0c83adf111c31c0dfda063095b4228cea`
 
 ---
 
@@ -15,6 +15,9 @@ Source SHA256: `e26accb10b528f0088eff83e2f95b458c69a8cfcd0ec18aa3dda9b8030b76674
 
 - 2026-10-23: DL-234 records Jared's answer to the 5.6 Pro port's open items: the lead's rulings stand, the Thought Stream admission among them, and the chat shows the model's reasoning live. ACD-221 owns the presentation: a thinking block of its own before the reply, Auto folding it to one line when the answer starts, Expanded keeping it open. ACD-470, ACD-504, SSYS-055, CS-104 and DL-232 no longer describe the display as pending, and Demo Studio's Chat section gains the While it thinks and Always open pair. The concept streams recorded reasoning; it supplies no native or governance certification.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-234, ContractName:Plans/assistant-chat-design.md#ACD-221, ContractName:Plans/assistant-chat-design.md#ACD-470, ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/Commands_System.md#CS-104
+
+- 2026-10-23: DL-234 is amended with Jared's answers to the thinking lane's four questions: "Folds.", "Default 8, adjustable in settings.", "Keep" and "Leave it". The agent turn's fold before its work, NieR's thinking ink and the recorded run stay as built. Auto's live thinking window shows eight lines by default, and `general.interaction.thought-stream-lines` (Lines shown while thinking: 4, 6, 8, 12 or 16, under Show thinking; 1,009 inventory rows) adjusts it from Settings, New chat defaults and the composer's Thought Stream menu; Expanded stays uncapped. ACD-221, SSYS-055, UCC-208 and `Plans/settings_inventory.json` are amended in place. Concept checks supply no native or governance certification.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-234, ContractName:Plans/assistant-chat-design.md#ACD-221, ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/UI_Command_Catalog.md#UCC-208
 
 - 2026-10-22: DL-232 binds the 5.6 Pro chat port to the existing Home column and universal panels. F3-659 and ACD-504 own the hosted replacement and its carry-over layout repairs; DR-075 keeps shared host and preference ownership single. SSYS-055 maps existing chat preferences and restores the admitted History default row without turning layout pins into Settings. UCC-208, CS-104, UIW-044 and WM-096 reuse the existing command and wiring identities. PWIZ-036 preserves the accepted tour until its already-decided later redo. Concept integration supplies no native or governance certification.
   Final reconciliation at integrated concept `59ca2d4382` records the built surface table, thread-bound captures, thread-bound context actions, attachment tabs and bounded More Info, and the one Studio's Chat section. Pending at this snapshot: capture composer attachment/list/insertion destination handling (isolated delivery is fixed), shared editor visibility after panels hide (the separate run-card wrapper passes), final looks/carry-over and hover verification, films, preview-only Thought Stream, session-only All chats ELI5, and full container/single-overlay-root acceptance. Thought Stream admission remains the lead's ruling for Jared's ratification.
