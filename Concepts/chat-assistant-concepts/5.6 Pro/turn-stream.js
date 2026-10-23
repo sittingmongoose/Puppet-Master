@@ -572,11 +572,11 @@
       streaming: true, streamPhase: 'pending', time: new Date().toISOString(), liveTurnOf: recId
     };
     ph.runtime = runtimeFor(c, ph);
-    /* Thought Stream: the turn's reasoning streams before its first tool call, which waits for it */
+    /* Thought Stream: the turn's reasoning streams before its first tool call, which waits for it to fold */
     var th = lt.thinking && window.PM56_THOUGHT ? window.PM56_THOUGHT.start(c, t, ph, lt.thinking, { agent: true }) : null;
     t.messages.push(ph);
     begin(ph, t.id, { chunks: [], terminal: 'complete' }, { rich: true, hold: true });
-    directors.set(recId, { recId: recId, tid: t.id, lt: lt, phId: ph.id, workAt: now() + (th ? th.ms + 60 : 1100), phase: 'thinking', waited: {} });
+    directors.set(recId, { recId: recId, tid: t.id, lt: lt, phId: ph.id, workAt: now() + (th ? th.ms + th.cardAfter : 1100), phase: 'thinking', waited: {} });
     kick();
     return true;
   }
@@ -586,7 +586,7 @@
       var th = (c.state.threads || []).filter(function (x) { return x.id === d.tid; })[0];
       if (!th) { directors.delete(d.recId); return; }
       if (d.phase === 'thinking' && t >= d.workAt) {
-        /* the first tool call ends the thinking: its block folds (or stays open) in the render that births the card */
+        /* the first tool call: the reasoning has already handed over and folded (a no-op then); this only makes sure */
         if (window.PM56_THOUGHT) window.PM56_THOUGHT.handover(d.phId, { render: false });
         var i = th.messages.findIndex(function (m) { return m.id === d.phId; });
         var st = streams.get(d.phId);
@@ -602,6 +602,9 @@
         if (i >= 0) th.messages.splice(i, 1, work, answer); else th.messages.push(work, answer);
         d.phase = 'working'; d.workId = work.id;
         c.startWorkingRec(d.lt.run, null, { recId: d.recId });
+        /* a thought's fold held the room (holdShrink); the card born into it ends that hold once it fills the room, so
+           the floor's per-frame upkeep never runs through the card's birth */
+        if (room.on && room.transient && !room.rel) { var rin = roomInner(); if (rin && naturalH(rin) >= room.h0 - 0.5) dropRoom(); }
         return;
       }
       if (d.phase === 'working') {
