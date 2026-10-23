@@ -10,6 +10,8 @@ node tests/port-suite.mjs --page both --parallel-pages --build --sweep --out /tm
 
 The runner opens GPU browsers sequentially per page and prints per-suite and per-page totals. `--parallel-pages` runs the two page workers together, owning at most two browsers; use it only when this lane has both GPU slots free. Child reports live under `standalone/` and `pm7/`; the root `summary.json` combines them. Each stage has a log and JSON report; `summary.json` lists failing IDs and owners. `run.json` records the source commit, arguments and page SHA-256; each summary row also carries the page hash. `--standalone-file` and `--pm7-file` select existing builds. No built page is committed. A nonzero child exit or missing/empty report fails the run. `--only node` runs the 94 engine/static checks without opening a browser.
 
+The `thought` stage (`thought-verify.mjs`, DL-234) checks the live Thought Stream on both pages: 7 source checks, then the block heading the turn while the reply waits hidden, the six-line Auto window, the fold no later than the answer's first word, reopen by click and Enter, Expanded staying open, the preference round trip through the composer's Thought Stream menu, New chat defaults and (PMConcept7) Settings, Reduced Motion, Stop while thinking, the line's hover tag, both Demo Studio examples, the two polite statuses, and painted-pixel contrast of the reasoning, its line and the folded gist in all ten looks (4.5:1, the R2-4 method). `node thought-verify.mjs --node` runs the source checks alone; `--only <group>` narrows a rerun (auto, expanded, prefs, reduced, stop, hover, studio, contrast).
+
 For a focused regression pass:
 
 ```sh
