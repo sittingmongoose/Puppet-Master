@@ -46,7 +46,8 @@ async function installMeasurements() {
       const cs = getComputedStyle(el); cv.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
       const m = cv.measureText(text), fa = m.fontBoundingBoxAscent, fd = m.fontBoundingBoxDescent;
       const k = fa + fd > 0 ? r.height / (fa + fd) : 1, base = r.top + (fa || parseFloat(cs.fontSize)) * k;
-      return { ...box(r), top: base - m.actualBoundingBoxAscent * k, bottom: base + m.actualBoundingBoxDescent * k };
+      const top = base - m.actualBoundingBoxAscent * k, bottom = base + m.actualBoundingBoxDescent * k;
+      return { ...box(r), top, bottom, height: bottom - top, lineBoxHeight: r.height };
     };
     const rects = el => {
       const out = [], walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
@@ -77,7 +78,18 @@ async function installMeasurements() {
       return { text: el.textContent.trim(), rects: rs, clip, clipped, hit, ...(misses.length ? { misses } : {}) };
     };
     const overlap = (a, b) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > .5 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > .5;
-    window.__c56layout = { box, rects, inspect, visible, overlap, ink };
+    const settled = async () => {
+      // Rerenders replay finite row FLIP animations. Measure the static layout
+      // in the same task that observes them finished; never freeze product motion.
+      for (let frame = 0; frame < 360; frame++) {
+        const running = document.getAnimations().some(a => a.playState === 'running' &&
+          a.effect?.target?.closest?.('#pmOverlayRoot .pmx-sheet') && a.effect.getTiming().iterations !== Infinity);
+        if (!running) return;
+        await new Promise(resolve => requestAnimationFrame(resolve));
+      }
+      throw new Error('Sheet layout did not settle after finite animations');
+    };
+    window.__c56layout = { box, rects, inspect, visible, overlap, ink, settled };
   });
 }
 
@@ -93,8 +105,9 @@ async function sheet(kind) {
 async function shelf() {
   await page.locator('#pmOverlayRoot .pmx-shelf .pmx-q-head').scrollIntoViewIfNeeded();
   await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-  return ev(() => {
-    const M = __c56layout, h = document.querySelector('#pmOverlayRoot .pmx-shelf .pmx-q-head');
+  return ev(async () => {
+    const M = __c56layout; await M.settled();
+    const h = document.querySelector('#pmOverlayRoot .pmx-shelf .pmx-q-head');
     const parts = ['.pmx-q-n', '.pmx-q-title', '.pmx-q-meta'].map(s => h?.querySelector(s)).filter(Boolean).map(M.inspect);
     const overlaps = [];
     for (let i = 0; i < parts.length; i++) for (let j = i + 1; j < parts.length; j++) {
@@ -110,8 +123,9 @@ async function chrome() {
     if (!await el.count()) { out.push({ missing: sel, clipped: true }); continue; }
     await el.scrollIntoViewIfNeeded();
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-    out.push(...await ev(sel => {
-      const M = __c56layout, el = document.querySelector(sel);
+    out.push(...await ev(async sel => {
+      const M = __c56layout; await M.settled();
+      const el = document.querySelector(sel);
       return (sel.includes('roster') ? [...el.querySelectorAll('.pmx-roster-col > b')].filter(c => /Persona/.test(c.textContent)) : [el]).map(M.inspect);
     }, sel));
   }

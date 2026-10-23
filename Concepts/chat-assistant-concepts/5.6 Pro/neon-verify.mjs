@@ -193,13 +193,14 @@ async function newWidePage(dpr = 1) {
     reducedMotion: REDUCED ? 'reduce' : 'no-preference'
   });
   await ctx.addInitScript(() => { try { localStorage.setItem('pm56-history-w', '320'); } catch (e) {} });
-  const p = await ctx.newPage();
+  const p = await ctx.newPage(); p.__ctx = ctx;
   watch(p);
-  await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
-  await boot(p);
-  await prepareWideHistory(p);
-  p.__ctx = ctx;
-  return p;
+  try {
+    await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
+    await boot(p);
+    await prepareWideHistory(p);
+    return p;
+  } catch (error) { await ctx.close(); throw error; }
 }
 async function shut(p) { try { const c = p.__ctx; await p.close(); if (c) await c.close(); } catch (e) {} }
 async function setTheme(p, id, pixel) {
