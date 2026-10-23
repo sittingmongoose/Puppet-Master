@@ -67,20 +67,6 @@
     getPropertyValue: function (name) { return hosts()[0].style.getPropertyValue(name); }
   };
 
-  /* 3. The Ask Card's dock height. --decision-h is read only by .chat-float; while a card morphs (questions.js
-     trackAskDock, every frame for up to 1.2 s) the value goes on the float alone, because on .chat-stage an inherited
-     custom property changed each frame restyled the whole stage. The settled value goes on the stage as before and the
-     float's own copy is dropped, so the float reads the stage again. */
-  window.PM56_DOCK_H = function (stage, value, frame) {
-    var floats = stage.querySelectorAll('.chat-float'), i;
-    if (frame) {
-      for (i = 0; i < floats.length; i++) if (floats[i].style.getPropertyValue('--decision-h') !== value) floats[i].style.setProperty('--decision-h', value);
-      return;
-    }
-    if (stage.style.getPropertyValue('--decision-h') !== value) stage.style.setProperty('--decision-h', value);
-    for (i = 0; i < floats.length; i++) if (floats[i].style.getPropertyValue('--decision-h')) floats[i].style.removeProperty('--decision-h');
-  };
-
   function mark(name, on) {
     var b = doc.body; if (!b) return;
     if (on) { if (!b.hasAttribute(name)) b.setAttribute(name, ''); }
