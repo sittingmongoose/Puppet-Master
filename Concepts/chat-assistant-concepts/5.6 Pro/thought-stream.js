@@ -8,7 +8,8 @@
  *               model's name, a shimmering "is thinking", seconds after 4 s) and the reasoning streams under it in a
  *               quiet block at the reasoning's own pace. The reply waits, hidden, until the reasoning hands over.
  *   2. Fold     Settings' Thought Stream (general.interaction.thought-stream, state.capabilities.thought) decides what
- *               happens when the answer starts (or, in an agent turn, when its first tool call does):
+ *               happens when the answer starts (in an agent turn the block folds first and its first tool call's
+ *               working card is born CARD_AFTER later, into the room the fold gave back):
  *                 Auto      open while it thinks, then folds to one line: "Thought for Ns", chevron, and a short gist;
  *                 Expanded  stays open beside the answer.
  *               Under Auto the open block shows only its last six lines while it thinks, fading at the top, so a long
@@ -22,8 +23,9 @@
  *               polite status when thinking starts and one when it ends, never each word. Reduced motion lands every
  *               end state at once.
  *
- * turn-stream.js calls start() from its reply and agent-turn paths and handover() when an agent turn's working card
- * enters; everything else is here. Concept data: the reasoning is the recorded turn's own (data.js `thinking`).
+ * turn-stream.js calls start() from its reply and agent-turn paths (an agent turn's first tool call waits ms +
+ * cardAfter) and handover() when the working card enters, a no-op once the reasoning has handed over; everything
+ * else is here. Concept data: the reasoning is the recorded turn's own (data.js `thinking`).
  */
 (function () {
   'use strict';
@@ -38,10 +40,12 @@
   function voice() { var tr = document.querySelector('.chat-stage .transcript'); return (tr && tr.getAttribute('data-voice')) || 'basic'; }
 
   var CAP_LINES = 6;                       /* Auto, while thinking: the last six lines */
+  /* an agent turn's first tool call waits this long after the reasoning hands over: the block folds first, with its
+     room held, and the working card is born into that room (the fold token is 320 ms, Retro's 192) */
+  var CARD_AFTER = 380;
   var live = new Map();                    /* thought id -> the thought being written */
   var byReply = Object.create(null);       /* reply id -> thought id */
   var view = Object.create(null);          /* thought id -> { open, mode }: a reader's own toggle */
-  var foldCheck = new Set();               /* agent turns: hold the room on fold only if the card born with it is shorter */
   var loop = 0;
 
   /* ------------------------------------------------------------------ preference */
@@ -211,7 +215,7 @@
         if (sec) { var txt = elapsed(L, t); if (sec.textContent !== txt) sec.textContent = txt; }
         follow(clip, L, ts);
       }
-      if (!L.agent && t - L.t0 >= L.ms) due.push(L.id);
+      if (t - L.t0 >= L.ms) due.push(L.id);
     });
     due.forEach(function (id) { handover(id); });
     if (live.size) loop = requestAnimationFrame(frame);
@@ -240,7 +244,7 @@
     (c.state.threads || []).some(function (t) { return t.messages.some(function (m) { if (m.id === id) { out = { t: t, m: m }; return true; } return false; }); });
     return out;
   }
-  /* start(c, thread, reply, thinking, {agent}) -> {id, ms} or null. Pushes the block now; the caller pushes the reply
+  /* start(c, thread, reply, thinking, {agent}) -> {id, ms, cardAfter} or null. Pushes the block now; the caller pushes the reply
      after it. The reply stays hidden (thoughtGate) until the reasoning hands over. */
   function start(c, t, R, thinking, opts) {
     if (!thinking || !thinking.text || !t || !R) return null;
@@ -263,7 +267,7 @@
     live.set(T.id, L); byReply[R.id] = T.id;
     announce(((T.runtime && T.runtime.model) || 'The assistant') + ' is thinking.');
     kick();
-    return { id: T.id, ms: dur };
+    return { id: T.id, ms: dur, cardAfter: CARD_AFTER };
   }
   /* end(L, how): 'done' when the answer (or the first tool call) starts; 'ended' when Stop or Send now cut it short;
      complete: true finishes every word first (leaving the thread lets the turn finish in the background) */
@@ -284,15 +288,16 @@
     }
     T.thought.state = complete ? 'done' : 'ended';
     T.thought.secs = Math.max(1, Math.round((complete && opts && opts.complete ? L.ms : now() - L.t0) / 1000));
+    /* the reply appears now, except an agent turn's placeholder, which its working card replaces (turn-stream's
+       director); it still appears if the turn was stopped while it thought, to carry its Stopped marker */
     var found = findMsg(c, L.replyId);
-    if (found) { delete found.m.thoughtGate; }
+    if (found && !(L.agent && how === 'done' && !(opts && opts.complete))) delete found.m.thoughtGate;
     delete byReply[L.replyId];
     var willFold = !isOpen(c, T);
     var art = island && island.closest('.message-thought');
-    /* a written reply's first line is far shorter than the fold: hold the room now, before the render. An agent turn's
-       fold rides the render that births its working card, which usually grows the list by more than the fold gives
-       back; holding then would only keep the reader's gap at its widest, so the card is measured first (afterRender) */
-    if (willFold && art && art.getAttribute('data-thought-open') === '1') { if (L.agent) foldCheck.add(T.id); else holdForFold(); }
+    /* the fold gives back far more height than what comes next needs at first (a reply's first line, or an agent
+       turn's card, born CARD_AFTER later into the held room): hold the room now, before the render */
+    if (willFold && art && art.getAttribute('data-thought-open') === '1') holdForFold();
     announce(complete ? 'Thought for ' + seconds(T.thought.secs) + '.' : 'Thinking ended after ' + seconds(T.thought.secs) + '.');
     return true;
   }
@@ -313,7 +318,7 @@
     /* Send now: a written reply's thought ends with it; an agent turn keeps thinking, as its work keeps running */
     steer: function (tid) { var any = false; live.forEach(function (L) { if (L.tid === tid && !L.agent && end(L, 'ended')) any = true; }); if (any) C().renderApp(); },
     cancel: function (tid) { live.forEach(function (L) { if (L.tid === tid) end(L, 'done', { complete: true }); }); },
-    reset: function () { live.clear(); byReply = Object.create(null); view = Object.create(null); foldCheck.clear(); }
+    reset: function () { live.clear(); byReply = Object.create(null); view = Object.create(null); }
   };
 
   /* ------------------------------------------------------------------ render */
@@ -368,10 +373,6 @@
       clip.__id = id;
       if (L) L.capped = capped(c, T);
       if (clip.__tt.open === undefined) { settle(clip, open, L); continue; }
-      if (!open && foldCheck.delete(id)) {
-        var born = art.nextElementSibling, grow = born ? born.getBoundingClientRect().height : 0;
-        if (grow < clip.getBoundingClientRect().height) holdForFold();
-      }
       if (clip.__tt.open !== open) animateTo(clip, open, L);
       else if (!L && open && !clip.__tt.anim && clip.style.height) settle(clip, true, null);
     }
