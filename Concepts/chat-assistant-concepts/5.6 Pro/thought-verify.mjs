@@ -608,7 +608,7 @@ await safe('studio', async () => {
 });
 
 /* ------------------------------------------------------------------ contrast: the painted pixels, ten looks */
-async function pixelRatio(page, sel) {
+async function pixelRatio(page, sel, attempt = 0) {
   /* switchThread fades the list from .4 to 1. Read its alpha only after that
      fade finishes: screenshot({ animations: 'disabled' }) finishes it too, so
      an earlier alpha would be blended against a later, fully painted frame. */
@@ -630,13 +630,25 @@ async function pixelRatio(page, sel) {
     if (r.width < 4) return null;
     let op = 1; for (let x = el; x && x.nodeType === 1; x = x.parentElement) op *= parseFloat(getComputedStyle(x).opacity || '1');
     el.setAttribute('data-ttpx', '1');
-    return { color: getComputedStyle(el).color, op, rect: { x: Math.max(0, r.left), y: Math.max(0, r.top), w: Math.min(r.width, 360), h: r.height } };
+    return { color: getComputedStyle(el).color, op, box: { left: box.left, top: box.top, width: box.width, height: box.height }, rect: { x: Math.max(0, r.left), y: Math.max(0, r.top), w: Math.min(r.width, 360), h: r.height } };
   }, sel);
   if (!geo) return null;
   await page.evaluate(() => { const st = document.createElement('style'); st.id = 'ttpx-hide'; st.textContent = '[data-ttpx="1"], [data-ttpx="1"] * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; }'; document.head.appendChild(st); });
   await sleep(80);
   const png = await page.screenshot({ clip: { x: geo.rect.x, y: geo.rect.y, width: Math.max(4, geo.rect.w), height: Math.max(4, geo.rect.h) }, animations: 'disabled' });
-  await page.evaluate(() => { document.getElementById('ttpx-hide')?.remove(); document.querySelectorAll('[data-ttpx]').forEach(x => x.removeAttribute('data-ttpx')); });
+  const after = await page.evaluate(sel => {
+    const box = document.querySelector(sel)?.getBoundingClientRect();
+    document.getElementById('ttpx-hide')?.remove(); document.querySelectorAll('[data-ttpx]').forEach(x => x.removeAttribute('data-ttpx'));
+    return box ? { left: box.left, top: box.top, width: box.width, height: box.height } : null;
+  }, sel);
+  /* scrollIntoView and a screenshot's animation finish can move the text after
+     its crop was measured (observed: 38px). Retry only an invalid crop, never a
+     stable low ratio; keep C1's same pixels and 4.5:1 predicate. */
+  if (!after || Object.keys(geo.box).some(k => Math.abs(after[k] - geo.box[k]) > .25)) {
+    results.push({ group: 'contrast', label: 'C-capture (diagnostic, not a check)', pass: true, diagnostic: true, sizeContext: testGeometry(), detail: { sel, attempt, before: geo.box, after } });
+    if (attempt >= 2) throw new Error('Thought text moved during all three contrast captures: ' + sel);
+    return pixelRatio(page, sel, attempt + 1);
+  }
   return page.evaluate(async ([b64, color, op]) => {
     const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
     const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d'); g.drawImage(img, 0, 0);
