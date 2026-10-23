@@ -949,7 +949,7 @@ await sec('wave6: the pinned drawer resizes without breaking pin-in-place', asyn
         gutter:gr?+parseFloat(getComputedStyle(gr).paddingLeft).toFixed(2):null,
         trL:tr?+tr.getBoundingClientRect().left.toFixed(2):null,
         rz:document.body.dataset.phResizing||null,
-        v:getComputedStyle(document.documentElement).getPropertyValue('--ph-user-w').trim()});
+        v:getComputedStyle(PM56_TEST.kind==='pm7'?PM56_TEST.host:document.documentElement).getPropertyValue('--ph-user-w').trim()});
       if(!T.stop) requestAnimationFrame(tick);};
     requestAnimationFrame(tick);
   });
@@ -1006,7 +1006,7 @@ await sec('wave6: the pinned drawer resizes without breaking pin-in-place', asyn
   /* Leave the drawer at its declared default so the sections after this one
      measure what they were written to measure. */
   await page.evaluate(()=>{try{localStorage.removeItem('pm56-history-w');}catch(e){}
-    document.documentElement.style.removeProperty('--ph-user-w');});
+    (window.PM56_ROOT_STYLE || document.documentElement.style).removeProperty('--ph-user-w');});
   await page.waitForTimeout(350);
   const back = await page.evaluate(()=>({w:document.querySelector('.history-flyout').getBoundingClientRect().width,
     g:parseFloat(getComputedStyle(document.querySelector('.assistant-grid')).paddingLeft),
