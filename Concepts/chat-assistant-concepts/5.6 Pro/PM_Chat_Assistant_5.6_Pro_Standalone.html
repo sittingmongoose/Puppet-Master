@@ -77406,6 +77406,11 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      the hold starts, so the hold takes the height from before that render */
   var roomRO = null, roomSeen = null;
   function watchRoom() {
+    /* Under reduced motion a held demo run's card (runHoldsRoom) changes height at once and no FLIP announces a shrink
+       (app.js workFlipped counts animated flips), so a reader at the bottom saw the text above the card step 70px
+       down and back up with every subject. Its room is held from the start of the run instead: the floor rises with
+       the card and is already there when a subject's rows fold away. */
+    if (!room.on && reduced() && runHoldsRoom()) holdShrink();
     var inner = roomInner(); if (!inner || inner === roomSeen || !window.ResizeObserver) return;
     if (roomRO) roomRO.disconnect();
     roomSeen = inner; room.lastH = inner.offsetHeight;
@@ -77472,7 +77477,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   function runHoldsRoom() { var c = C(); return !!(c && c.runHoldsRoom && c.runHoldsRoom()); }
   function shrinkRelAt() { return runHoldsRoom() ? Infinity : now() + SHRINK_HOLD; }
   function holdShrink() {
-    if (reduced()) return;
+    if (reduced() && !runHoldsRoom()) return;
     if (room.on) { if (room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
     var c = C(); if (!c || (c.isSticky && !c.isSticky())) return;
     var inner = roomInner(); if (!inner) return;
@@ -77500,7 +77505,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       if (room.x == null) room.x = Math.max(0, room.h0 - nat);
       /* critically damped to zero (omega 11/s: ~450ms; a shrink's leftover 8/s) */
       var s2 = critStep(room.x, room.v, room.transient ? 8 : 11, dt); room.x = s2[0]; room.v = s2[1];
-      if (room.x < 0.5 || nat >= room.h0) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
+      /* under reduced motion (only a held demo run holds room there) the floor goes at once */
+      if (room.x < 0.5 || nat >= room.h0 || reduced()) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
       roomFloor(nat + room.x);
     }
     try { C().followIfSticky(); } catch (e) { }
