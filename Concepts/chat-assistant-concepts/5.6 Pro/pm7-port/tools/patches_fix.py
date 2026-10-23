@@ -15,6 +15,11 @@ times; the standalone (5.6 Pro/build.py) never reads this file. pm7-port/js/05-p
    --editor-w, --history-w, --activity-w (app.js). Every element of PMConcept7 inherits them, so each write restyled
    the whole page, and PMConcept7's Usage board re-fits every card whenever <html>'s style changes (its look key reads
    html[style]): 2.9 s of a 24 s live turn. Hosted they go to PM56_ROOT_STYLE, which writes them on the chat's hosts.
+3. The Ask Card's dock height (questions.js setAskDock): --decision-h is read only by .chat-float, but trackAskDock wrote it
+   on .chat-stage on every frame of a card's open or close morph (up to 1.2 s), and an inherited custom property
+   changed on the stage restyled all of it each frame (about 900 elements, ~60 ms a frame hosted), so the close that
+   clears the question ran ~1.2 s instead of ~0.5 s (Questions C*c / Q9 read it at 1.22 s). Hosted, the per-frame value
+   goes on .chat-float alone and the settled one on the stage (PM56_DOCK_H, 05-page-root.js).
 
 Entries: (file, old, new, count).
 """
@@ -44,4 +49,9 @@ HOSTED_JS_PATCHES = [
     ('app.js', "document.documentElement.style.setProperty('--", _ROOT + ".setProperty('--", 3),
     ('app.js', "getComputedStyle(document.documentElement).getPropertyValue('--ph-user-w')",
      _ROOT + ".getPropertyValue('--ph-user-w')", 1),
+    ('questions.js', '  function setAskDock(shell) {', '  function setAskDock(shell, frame) {', 1),
+    ('questions.js', "    stage.style.setProperty('--decision-h', Math.round(h) + 'px');",
+     "    window.PM56_DOCK_H(stage, Math.round(h) + 'px', frame);", 1),
+    ('questions.js', '      setAskDock(shell);\n      if (shell[flag] && performance.now() - start < limit) requestAnimationFrame(tick);',
+     '      setAskDock(shell, true);\n      if (shell[flag] && performance.now() - start < limit) requestAnimationFrame(tick);', 1),
 ]
