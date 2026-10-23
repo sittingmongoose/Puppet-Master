@@ -1175,7 +1175,12 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     if (row) { row.click(); await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); }
     const editor = PM56_TEST.editor(), tab = editor.tab;
     const body = PM56_TEST.editor().body;
-    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, host: !!(body && /postgresql\.org|Fetched/i.test(body.textContent)) };
+    const hosted = PM56_TEST.kind === 'pm7';
+    const browserKind = hosted ? PM_HOME.active()?.kind : null;
+    const address = hosted ? body?.querySelector('input.pmw-br-addrin')?.value : null;
+    return { row: !!row, id: editor.id, witness: { stateId: editor.stateId, renderedId: editor.renderedId, visible: editor.visible }, browserKind, address,
+      host: hosted ? browserKind === 'browser' && /^https:\/\/postgresql\.org\/docs\/16\/indexes-multicolumn\.html$/.test(address || '') && /Multicolumn Indexes/.test(body?.textContent || '')
+        : !!(body && /postgresql\.org|Fetched/i.test(body.textContent)) };
   });
   check('Fetch row opens a fetched-page editor doc',
     fetch.row && String(fetch.id || '').startsWith('link:') && fetch.host, fetch);
