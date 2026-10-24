@@ -1013,6 +1013,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return k ? ` data-tone="${esc(window.PM56_NEON.STATUS[k].tone)}"` : '';
   }
   function renderChatHeader(t){
+    /* Demo fixture status is a snapshot. For its work/idle states the live
+       turn owns the label, including a reply still streaming after its card. */
+    const busy=turnBusy(t.id);
+    const finished=t.messages.some(m=>m.type==='working'&&workRecFor(m)?.completed);
+    const status=(t.status==='idle'||t.status==='working')&&(busy||finished)?(busy?'working':'idle'):t.status;
     /* Context ring percentage. The ring's value is an INLINE style attribute, so no
        module stylesheet can reach it -- it has to be resolved here. PM56_CTX comes from
        context.js; the fallback is the historical literal, so this line is a no-op when
@@ -1021,7 +1026,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="chat-header">
       <button class="icon-button" data-action="toggle-history"${hoverAttrs('open-history','Open thread history')}>${icon('history',14)}</button>
       <button class="icon-button" data-action="new-thread"${hoverAttrs('new-thread','Start a new thread')}>${icon('plus',16,'hh-plus-glyph')}</button>
-      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span>${extRender('headerTitleAfter',{thread:t})}<span class="chat-state"${headerStatusTone(t.status)}>${headerStatusMark(t.status)}${esc(statusLabel(t.status))}</span></div>
+      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span>${extRender('headerTitleAfter',{thread:t})}<span class="chat-state"${headerStatusTone(status)}>${headerStatusMark(status)}${esc(statusLabel(status))}</span></div>
       <span class="chat-head-spacer"></span>
       ${extRender('headerLeading',{thread:t})}
       <button class="icon-button" data-action="thread-search" data-menu-anchor="thread-search"${hoverAttrs('thread-search','Search this thread or every thread')}>${icon('search',14)}</button>

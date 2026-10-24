@@ -923,9 +923,20 @@
     if (revealedRecs.has(rec)) return false;
     var id = rec.id || rec.runId, held = false, answers = [];
     if (!id) return false;
+    /* Retire the work owner before the completion render. Streaming answers own
+       their remaining turn themselves; instant/reduced answers have no later
+       finalize render to clear a director left busy until the next frame. */
+    directors.delete(id);
     t.messages.forEach(function (m) {
       if (m.revealAfter !== id || m.role !== 'assistant' || m.type !== 'text' || m.streaming) return;
-      if (c.state.replyMode === 'instant' || reduced()) return;
+      if (c.state.replyMode === 'instant' || reduced()) {
+        if (m.runtime) {
+          m.runtime.completedAt = new Date().toISOString(); m.runtime.terminal = 'complete';
+          m.runtime.durationMs = Math.round((rec.clock || rec.elapsed || 0) * 1000);
+          m.runtime.workedSeconds = Math.max(1, Math.round(m.runtime.durationMs / 1000));
+        }
+        return;
+      }
       var chunks = m.streamChunks;
       if (!chunks) {
         /* A revealed fixture message streams from its own text in three chunks. */
