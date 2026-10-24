@@ -1090,17 +1090,20 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      completion, a thread switch) or when anything with a height mounts below the card (a revealed tail, an answer,
      an approval ask, a receipt). The reader's own close of the card's history or a phase gives its room back by
      itself (letRoomGo). */
-  function runHoldsRoom(){
-    const inner=tEl()?.querySelector('.transcript-inner'); if(!inner) return false;
+  function lastCardRec(){
+    const inner=tEl()?.querySelector('.transcript-inner'); if(!inner) return null;
     let last=inner.lastElementChild;
     while(last&&last.getBoundingClientRect().height<=0) last=last.previousElementSibling;
-    if(!last||!last.classList.contains('working-card')) return false;
-    const wid=last.dataset.card, rec=wid==='primary'?state.work:(wid?state.works[wid]:null);
-    return !!(rec&&rec.running&&!rec.completed);
+    if(!last||!last.classList.contains('working-card')) return null;
+    const wid=last.dataset.card;
+    return (wid==='primary'?state.work:(wid?state.works[wid]:null))||null;
   }
+  function runHoldsRoom(){ const rec=lastCardRec(); return !!(rec&&rec.running&&!rec.completed); }
   /* Round 3 (D): the reader closed the card's history or a phase: turn-stream lets the room that close gives back
      go now, eased, instead of holding it for SHRINK_HOLD; the next shrink starts the run-long hold again */
-  function letRoomGo(){ try{ const S=window.PM56_STREAM; if(S&&S.letGo) S.letGo(); }catch(e){} }
+  /* Round 3 (review): it says whether the close was on the running last card; a close on an earlier card gives back
+     only the rows it closed */
+  function letRoomGo(rec){ try{ const S=window.PM56_STREAM; if(S&&S.letGo) S.letGo(!!rec&&rec===lastCardRec()&&!!rec.running&&!rec.completed); }catch(e){} }
   /* Called by renderApp before it captures the scroll. A gate whose thread is no longer shown is dropped; one whose
      turn is over is lifted, and that render is the reveal: the reader stops following, so the held messages
      mount below the fold instead of the transcript gliding a whole thread's height to the new bottom, and the card's
@@ -4549,9 +4552,9 @@ suggested path                    migration 0043, reversible</div></div></sectio
       if(a==='step-working'){stepWorking(rec);return;}
       if(a==='complete-working'){completeWorking(rec);return;}
       if(a==='reset-working'){resetWorking(rec);return;}
-      if(a==='toggle-work-history'){const closing=!!rec.expanded;rec.expanded=!rec.expanded;renderApp();if(closing)letRoomGo();return;}
+      if(a==='toggle-work-history'){const closing=!!rec.expanded;rec.expanded=!rec.expanded;renderApp();if(closing)letRoomGo(rec);return;}
       if(a==='inspect-work-step'){rec.running=false;endGateOnPause(rec);scrubTo(rec,Number(btn.dataset.value));if(!runningRecs().length)stopWorkTimer();renderApp();return;}
-      if(a==='toggle-work-phase'){const k=btn.dataset.value, was=rec.openPhase;rec.openPhase=(rec.openPhase===k?null:k);renderApp();if(was!=null&&rec.openPhase==null)letRoomGo();return;}
+      if(a==='toggle-work-phase'){const k=btn.dataset.value, was=rec.openPhase;rec.openPhase=(rec.openPhase===k?null:k);renderApp();if(was!=null&&rec.openPhase==null)letRoomGo(rec);return;}
     }
     if(a==='open-activity'){if(!activityDefs()[btn.dataset.domain])return;const fromPreview=!!btn.closest('.ab-card');if(fromPreview||!state.activity.open)state.activity.pinned=true;state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();if(fromPreview)focusActivityControl('.activity-panel [data-action="unpin-activity"], .activity-panel [data-action="pin-activity"]');return;}
     if(a==='focus-activity'){if(!activityDefs()[btn.dataset.domain])return;state.activity.domain=btn.dataset.domain;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);renderApp();return;}

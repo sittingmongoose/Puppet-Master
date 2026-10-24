@@ -497,7 +497,7 @@
     else document.documentElement.style.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
   }
   function naturalH(inner) { var l = inner.lastElementChild; return l ? l.getBoundingClientRect().bottom - inner.getBoundingClientRect().top : 0; }
-  function dropRoom() { room.tier = false; room.lg = false; room.own = 0; room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); }
+  function dropRoom() { room.tier = false; room.lg = false; room.own = 0; room.keepWas = 0; room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); }
   /* the list's height as last laid out: the completion render (which drops
      the card's narration line and mounts the answer's placeholder) runs before
      the hold starts, so the hold takes the height from before that render */
@@ -531,7 +531,7 @@
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
-  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.floorAt = room.h0; room.lg = false; room.keep = 0; } }
+  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.floorAt = room.h0; room.lg = false; room.keep = 0; room.keepWas = 0; } }
   /* Round 3 (A): app.js rewound the transcript (rewindTranscript, a thread switch): no room is kept for what left,
      and the next hold measures the list as it is then (roomSeen cleared: holdShrink takes offsetHeight, watchRoom
      re-observes the list) */
@@ -547,7 +547,11 @@
      a shrink the run announces while it eases (a FLIP, a tier step down) keeps its room (room.keep), and the release
      ends in the run-long hold at that height, as E would have held it (boot's history close: without this the room of
      the 9.2 s subject fold went with the band, and the next growth moved the text 52 px). */
-  function letGo() {
+  function letGo(mine) {
+    /* round 3 (review): a close on a card that is not the running last card (an earlier card's history or phase while
+       a later run holds room) gives back nothing of the run's own height: room.own measured the list with those rows
+       open, and kept as the release's base it held them as a run-long blank band */
+    if (mine === false) room.own = 0;
     /* round 3 (hist): a second close while the first one's band still eases: its own shrink is not the run's
        (holdShrink's keepRoom took it as one, room.keepWas), and its FLIP is waited out as the first one's was */
     if (room.on && room.rel && room.lg) { room.keep = room.keepWas || 0; room.lgUntil = now() + SHRINK_HOLD; room.lgTop = null; return; }
@@ -729,10 +733,13 @@
       if (room.x == null) {
         /* P5 v2: a reader's close (letGo) eases from its own shrink: until the content is under the floor, nothing */
         if (room.lg && t < room.lgUntil && nat > room.h0 - 0.5) { try { C().followIfSticky(); } catch (e) { } lgMark(inner); room.raf = requestAnimationFrame(roomFrame); return; }
-        room.x = Math.max(0, room.h0 - nat);
+        /* P5 v2: the release eases down to the content, or to the room the run keeps (room.keep) while it still keeps room
+           (runHoldsRoom); the SHRINK_VMAX bound below eases any drop of that base too */
+        if (room.lg && (room.keep > nat || room.own > nat) && !runHoldsRoom()) { room.keep = 0; room.own = 0; }
+        /* round 3 (review): the band is measured over the release's base, not the content: measured over the content, a
+           close inside the run's band (a short history) raised the floor by base - nat in one frame, then eased it back */
+        room.x = Math.max(0, room.h0 - Math.max(nat, room.keep, room.lg ? room.own : 0));
       }
-      /* P5 v2: the release eases down to the content, or to the room the run keeps (room.keep) while it still keeps room
-         (runHoldsRoom); the SHRINK_VMAX bound below eases any drop of that base too */
       if (room.lg && (room.keep > nat || room.own > nat) && !runHoldsRoom()) { room.keep = 0; room.own = 0; }
       /* round 3 (hist): a reader's close also keeps the run's own height from before it (room.own), so the run goes on
          as it would have with the history never opened (boot: the band before the close, 58-76 px, then E's) */
@@ -1175,7 +1182,7 @@
     holdTier: function (down) { holdTier(down === true); },
     /* Round 3: a rewound transcript keeps no room (A); the reader's close of a card's history lets its room go (D) */
     cut: function () { cutRoom(); },
-    letGo: function () { letGo(); },
+    letGo: function (mine) { letGo(mine); },
     owner: owner
   };
 })();
