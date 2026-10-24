@@ -629,7 +629,10 @@
       { var lo = room.floorAt - SHRINK_VMAX * dt - nat; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
       room.x = s2[0]; room.v = s2[1];
       /* under reduced motion (only a held demo run holds room there) the floor goes at once */
-      if (room.x < 0.5 || nat >= room.h0 || reduced()) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
+      /* Growth can pass h0 while the installed floor still carries spring
+         residual. Drop only once content reaches that actual floor; otherwise
+         removing it clamped the view by 4px in one 120Hz frame (thought L-4). */
+      if (room.x < 0.5 || nat >= room.floorAt || reduced()) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
       room.floorAt = nat + room.x;
       roomFloor(room.floorAt);
     }
