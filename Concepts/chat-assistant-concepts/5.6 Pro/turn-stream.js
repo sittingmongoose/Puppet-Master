@@ -467,7 +467,7 @@
      DOM steps and a frame callback. The answer grows into the room; whatever it
      does not use is let go once it has settled, the floor easing down to the
      content like a drawer closing. */
-  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0, quietUntil: 0, transient: false, relAt: 0, floorW: null, tier: false, grownAt: 0, lg: false, lgUntil: 0, keep: 0, own: 0, keepWas: 0, lgTop: null, lgStuck: false, lgAt: 0 };
+  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0, quietUntil: 0, transient: false, relAt: 0, floorW: null, tier: false, grownAt: 0, lg: false, lgUntil: 0, keep: 0, own: 0, keepWas: 0, lgTop: null, lgStuck: false, lgAt: 0, pdt: null };
   /* While the card folds, the follow waits: the fold frees far more room than
      the answer's first line takes, so the reader's view stays put and the
      answer rises into it. (Chasing the answer's placeholder first scrolled the
@@ -531,7 +531,7 @@
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
-  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.floorAt = room.h0; room.lg = false; room.keep = 0; room.keepWas = 0; } }
+  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.pdt = null; room.floorAt = room.h0; room.lg = false; room.keep = 0; room.keepWas = 0; } }
   /* Round 3 (A): app.js rewound the transcript (rewindTranscript, a thread switch): no room is kept for what left,
      and the next hold measures the list as it is then (roomSeen cleared: holdShrink takes offsetHeight, watchRoom
      re-observes the list) */
@@ -667,6 +667,10 @@
      the card's history closing gave back 536px, and holding that left most of the view blank until the run ended. A
      band past it is let go the ordinary way, as a live turn's shrink is. */
   var RUN_ROOM_MAX = 240;
+  /* round 3 (blank): the most a reader's close lowers the floor (moves the text under a following reader) in a 60 Hz
+     frame, timed by the frame so a 120 Hz page filmed at 60 fps reads the same: under the 30 px one-frame step a
+     reader reads as a jump */
+  var CLOSE_STEP = 28;
   function runHoldsRoom() { var c = C(); return !!(c && c.runHoldsRoom && c.runHoldsRoom()); }
   function shrinkRelAt() { return runHoldsRoom() ? Infinity : now() + SHRINK_HOLD; }
   function holdShrink(fresh, finite, atLeast) {
@@ -729,6 +733,10 @@
          a frame, and a late one followed by an early one made one step 4.6 px and the next 2 px on regular 60 Hz frames */
       var nat = naturalH(inner), t = now(), fts = typeof ts === 'number' ? ts : null, k = window.PM56_CLOCK && window.PM56_CLOCK.scale != null ? window.PM56_CLOCK.scale : 1;
       var dt = Math.min(0.1, Math.max(0, (fts != null && room.lastTs != null && fts > room.lastTs ? (fts - room.lastTs) * k : t - room.last) / 1000)); room.last = t; room.lastTs = fts;
+      /* round 3 (blank): a close's step is sized by the shorter of this frame and the one before: the close's render makes
+         a long frame, and a full step after it plus the next frame's put 42 px into one 60 fps film frame (120 Hz page).
+         A release's first frame has no frame before it and takes a 120 Hz frame's */
+      var sdt = Math.min(dt, room.pdt != null ? room.pdt : 1 / 120); room.pdt = dt;
       if (room.lg) lgRestick(inner);
       if (room.x == null) {
         /* P5 v2: a reader's close (letGo) eases from its own shrink: until the content is under the floor, nothing */
@@ -749,6 +757,13 @@
       /* every release, a fold's too: a fold's room now starts from the run-long floor (up to RUN_ROOM_MAX over the
          content), and at omega 11 that eased down at up to ~0.97 px/ms, past turn-verify's 0.4 px/ms snap line */
       { var lo = room.floorAt - SHRINK_VMAX * dt - base; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
+      /* round 3 (blank): a reader's close keeps at most the run's own room (RUN_ROOM_MAX over the content the close
+         leaves: room.own, the list without its history, while the close's FLIP still shows the old height); the band
+         past it comes down with the FLIP from its first frame, CLOSE_STEP a 60 Hz frame at most. Held whole and eased at
+         SHRINK_VMAX, it left a following reader looking at a view 75-100% blank for 1-2.3 s (boot's history close:
+         485 px of a 647 px view; Long agent turn: the whole view, the cut above only keeping the content's end at its
+         top edge). Started only once the band passed RUN_ROOM_MAX, the FLIP outran it: 55% of the view at boot */
+      if (room.lg) { var cap = Math.max(base, (room.own > 0 ? Math.min(nat, room.own) : nat) + RUN_ROOM_MAX); if (room.floorAt > cap) { var to = Math.max(cap, room.floorAt - CLOSE_STEP * Math.min(1, sdt * 60)) - base; if (s2[0] > to) { s2[0] = to; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } } }
       room.x = s2[0]; room.v = s2[1];
       /* under reduced motion (only a held demo run holds room there) the floor goes at once */
       if (room.x < 0.5 && base > nat + 0.5 && !reduced()) {
