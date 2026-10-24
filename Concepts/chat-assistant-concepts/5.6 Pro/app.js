@@ -1015,7 +1015,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderChatHeader(t){
     /* Demo fixture status is a snapshot. For its work/idle states the live
        turn owns the label, including a reply still streaming after its card. */
-    const busy=turnBusy(t.id);
+    const liveGoal=window.PM56_GOAL?.get(t.id),livePlan=window.PM56_PLANS?.current(t.id);
+    const busy=turnBusy(t.id)||!!(liveGoal?.status==='active'&&liveGoal.workRef&&(liveGoal.workRef.kind==='order_export'||livePlan?.workRef))||!!(livePlan?.workRef&&livePlan.status==='building'&&!livePlan.attention);
     const finished=t.messages.some(m=>m.type==='working'&&workRecFor(m)?.completed);
     const status=(t.status==='idle'||t.status==='working')&&(busy||finished)?(busy?'working':'idle'):t.status;
     /* Context ring percentage. The ring's value is an INLINE style attribute, so no
