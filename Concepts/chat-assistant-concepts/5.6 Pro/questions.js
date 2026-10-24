@@ -1189,8 +1189,30 @@
     if (phase === 'preparing' || phase === 'submitting') st.morphPlayed = false;
     var will = (phase === 'active' && !st.morphPlayed && !st.leaving) ? ' qs-will-open' : '';
     var leave = st.leaving ? (st.leaveKind === 'submit' ? ' is-leaving is-leaving-submit' : ' is-leaving') : '';
-    return '<div class="qs-shell qs-phase-' + phase + ' qs-origin-' + origin + will + leave
-      + '" data-k="qs-shell" data-phase="' + phase + '" data-take="' + m.take + '">' + html + '</div>';
+    var live = document.querySelector('.decision-host .qs-shell');
+    var opening = live && live.__qsOpening && !st.leaving && phase === 'active'
+      && live.getAttribute('data-take') === String(m.take);
+    var style = '';
+    if (opening) {
+      /* A work/guide render can land during playOpen. Its height animation survives the patch, but losing the
+         script-owned clip and transform origin lets the blurred card paint outside the growing shell. Keep those
+         attributes and the fading pill face while still rendering fresh answers and controls. */
+      style = ' style="' + ctx.esc(live.getAttribute('style') || '') + '"';
+      var tpl = document.createElement('template');
+      tpl.innerHTML = html;
+      var next = tpl.content.firstElementChild, current = innerSurface(live);
+      if (next && current && next.tagName === current.tagName
+          && next.getAttribute('data-k') === current.getAttribute('data-k')) {
+        ['filter', 'transform', 'transform-origin'].forEach(function (prop) {
+          next.style.setProperty(prop, current.style.getPropertyValue(prop));
+        });
+        html = next.outerHTML;
+      }
+      var face = live.querySelector('.qs-open-face');
+      if (face) html += face.outerHTML;
+    }
+    return '<div class="qs-shell qs-phase-' + phase + ' qs-origin-' + origin + will + leave + (opening ? ' qs-opening' : '')
+      + '" data-k="qs-shell" data-phase="' + phase + '" data-take="' + m.take + '"' + style + '>' + html + '</div>';
   }
 
   var RENDERERS = [take0, take1, take2, take3, take4, take5, take6, take7, take8];
