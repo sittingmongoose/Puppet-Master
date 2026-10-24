@@ -2506,7 +2506,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function renderApp(preserve=true){
     syncActivityDomain();
-    const revealing=settleWorkGate();
+    const wasFollowing=tStick, revealing=settleWorkGate();
     /* Round 3 (A): the render that hides a tail already on screen (armWorkGate g.cut) is a cut: no scroll capture,
        no FLIPs (no shrink reaches holdShrink), no keep-top; rewindTranscript puts the reader on the card */
     const cut=!!(state.workGate&&state.workGate.cut); if(cut) state.workGate.cut=false;
@@ -2547,7 +2547,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!cut){ keepTopAfter(preTop,post); flipMoves(moveTargets, moveBefore); }
     rollDigits(rollBefore);
     if(cut) rewindTranscript();
-    else restoreScroll(positions,{workH, workKey, post, workGrow:workFlipped(flips), still:revealing==='still'});
+    else restoreScroll(positions,{workH, workKey, post, workGrow:workFlipped(flips), still:revealing==='still', wasFollowing});
     /* Round 3 (B): a gate lifted by something arriving puts a following reader at the new bottom in this frame */
     if(revealing==='grow'&&tStick){
       /* The reader is leaving the gated card for the arrival below the revealed tail. Its old room belongs to
@@ -3210,26 +3210,35 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(tr&&!tStick&&!scrollIntents.has('transcript')){
       const vr=tr.getBoundingClientRect();
       const history=[...tr.querySelectorAll('.working-card:not(.is-done) .work-history')].find(el=>{
-        const r=el.getBoundingClientRect(); return r.top<vr.bottom&&r.bottom>vr.top;
+        const r=el.getBoundingClientRect();
+        const visible=Math.min(r.bottom,vr.bottom)-Math.max(r.top,vr.top);
+        /* A sliver below the reader must not move the text above History.
+           Its own entrance slide belongs to History, not to scroll custody. */
+        return r.bottom>vr.top&&(r.top<=vr.top+1||visible>=vr.height/2)
+          &&!el.getAnimations().some(a=>a.animationName==='details-open'&&(a.playState==='running'||a.pending));
       });
       if(history) out.workHistory={el:history,y:history.getBoundingClientRect().top,input:tUserInputAt};
     }
     return out;
   }
   let workHistoryAnchor=null;
-  function anchorWorkHistory(pos){
+  function anchorWorkHistory(pos,opts){
     if(!pos||!pos.el.isConnected||tStick||scrollIntents.has('transcript')||pos.input!==tUserInputAt) return false;
     const el=pos.el, tr=el.closest('[data-scroll-key="transcript"]');
-    if(!tr) return false;
+    const allowDone=!!(opts&&opts.keepHistory);
+    if(!tr||(el.closest('.working-card.is-done')&&!allowDone)
+       ||el.getAnimations().some(a=>a.animationName==='details-open'&&(a.playState==='running'||a.pending))) return false;
     if(workHistoryAnchor&&workHistoryAnchor.el===el&&workHistoryAnchor.input===pos.input
        &&Math.abs(tr.scrollTop-workHistoryAnchor.scroll)<=1){
+      workHistoryAnchor.allowDone=allowDone;
       workHistoryAnchor.at=performance.now(); return true;
     }
-    const anchor=workHistoryAnchor={...pos,scroll:tr.scrollTop,at:performance.now()};
+    const anchor=workHistoryAnchor={...pos,allowDone,scroll:tr.scrollTop,at:performance.now()};
     let still=0, last=el.getBoundingClientRect().top+tr.scrollTop;
     const tick=()=>{
       if(workHistoryAnchor!==anchor) return;
-      if(!el.isConnected||!tr.isConnected||tStick||scrollIntents.has('transcript')||anchor.input!==tUserInputAt
+      if(!el.isConnected||!tr.isConnected||(el.closest('.working-card.is-done')&&!anchor.allowDone)||tStick||scrollIntents.has('transcript')||anchor.input!==tUserInputAt
+         ||el.getAnimations().some(a=>a.animationName==='details-open'&&(a.playState==='running'||a.pending))
          ||Math.abs(tr.scrollTop-anchor.scroll)>1){
         workHistoryAnchor=null; return;
       }
@@ -3247,7 +3256,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return true;
   }
   function restoreScroll(pos,opts){
-    const historyAnchored=anchorWorkHistory(pos&&pos.workHistory);
+    const history=pos&&pos.workHistory, tr=history&&history.el.closest('[data-scroll-key="transcript"]');
+    const keepHistory=!!(tr&&!(opts&&opts.wasFollowing)&&history.y<=tr.getBoundingClientRect().top+1);
+    if(opts&&opts.still&&!keepHistory) workHistoryAnchor=null;
+    const historyAnchored=(!(opts&&opts.still)||keepHistory)&&anchorWorkHistory(history,{keepHistory});
     requestAnimationFrame(()=>{
       document.querySelectorAll('[data-scroll-key]').forEach(el=>{
         const v=pos?pos[el.dataset.scrollKey]:null;
