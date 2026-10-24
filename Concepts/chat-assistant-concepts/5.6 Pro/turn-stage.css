@@ -283,7 +283,11 @@ body[data-theme] { --tx-gutter: 24px; }
 
 /* the lab's demo controls: one button in the working head opens a drawer */
 .working-controls { display: flex; align-items: center; gap: 2px; }
-.work-demo-drawer { display: inline-flex; align-items: center; gap: 2px; padding: 0 4px 0 2px; margin-right: 2px; border-right: 1px solid var(--tx-sunken-edge); animation: wd-in 220ms cubic-bezier(.17, .84, .29, .99) both; }
+/* Keep an open drawer's controls at their own width, as in orders15-entry,
+   and wrap them if needed. The caption already elides in a narrow head;
+   shrinking this overflow-hidden child instead clipped History. */
+.working-head > .working-controls:has(.work-demo-drawer) { flex: 0 0 auto; max-width: 100%; flex-wrap: wrap; }
+.work-demo-drawer { display: inline-flex; align-items: center; flex-wrap: wrap; min-width: 0; gap: 2px; padding: 0 4px 0 2px; margin-right: 2px; border-right: 1px solid var(--tx-sunken-edge); animation: wd-in 220ms cubic-bezier(.17, .84, .29, .99) both; }
 @keyframes wd-in { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
 .work-demo-btn { opacity: .55; }
 .work-demo-btn:hover, .work-demo-btn.active { opacity: 1; }
