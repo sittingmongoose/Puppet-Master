@@ -363,7 +363,7 @@
       openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation,
       /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
       turnBusy, registerTurnOwner, maybeFlushQueue, startWorkingRec, onWorkComplete, releaseNextRun,
-      followIfSticky, holdFollow, followTarget, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx,
+      followIfSticky, holdFollow, followTarget, writeScrollInstant, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx,
       /* turn-stream keeps its shrink room for the whole of a run while runHoldsRoom() says so */
       runHoldsRoom
     }, readOnlyRender?{readOnly:true}:{}, extra);
@@ -2976,7 +2976,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   const GLIDE_TAU=70;
   const GLIDE_DT_MAX=120;   /* a late frame still advances the glide by the time it took (to 120 ms); at 60 fps nothing changes */
   function tEl(){ return scrollKeyEl('transcript'); }
-  function tAtBottom(el){ el=el||tEl(); if(!el) return true; return el.scrollHeight-el.clientHeight-el.scrollTop<=24; }
+  function tAtBottom(el){
+    el=el||tEl(); if(!el) return true;
+    const limit=el.scrollHeight-el.clientHeight;
+    /* A close can temporarily exclude its empty height FLIP from the follow.
+       Query its endpoint without advancing the close's frame budget. */
+    const target=tStick&&followTargetFn?followTargetFn(el,limit,true):null;
+    return (target==null?limit:Math.min(limit,target))-el.scrollTop<=24;
+  }
   function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; tLastCh=el.clientHeight; }
   function cancelGlide(){ if(glideRAF){ cancelAnimationFrame(glideRAF); glideRAF=0; } glideTs=0; }
   /* The glide's time constant is real time; a late frame catches up the time it lost instead of falling further behind (P1, 2026-10-23: 302-367 ms on a loaded standalone). */
@@ -2986,7 +2993,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(followHoldFn&&followHoldFn()){ glideTs=0; return; }
     const limit=el.scrollHeight-el.clientHeight, target=followTargetFn&&followTargetFn(el,limit);
     const max=target==null?limit:Math.min(limit,target), cur=el.scrollTop, d=max-cur;
-    if(d<-.5){ writeScrollInstant(el,max); glideRAF=requestAnimationFrame(glideStep); return; }
+    if(target!=null&&d<-.5){ writeScrollInstant(el,max); glideRAF=requestAnimationFrame(glideStep); return; }
     if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
     const tn=performance.now(), dt=glideTs?Math.min(GLIDE_DT_MAX,Math.max(1,tn-glideTs)):16.7; glideTs=tn;
     let next;
@@ -3116,7 +3123,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!el) return false;
     const max=el.scrollHeight-el.clientHeight;
     if(max<=4) return false;
-    return max-el.scrollTop>24;
+    return !tAtBottom(el);
   }
   function syncJumpBottom(){
     const on=transcriptAwayFromBottom();
