@@ -104,8 +104,8 @@ body[data-theme$="-light"] .tx-caret { box-shadow: none; }
 
 /* ------------------------------------------------------------ send flight */
 .tx-fly { position: fixed; z-index: 9990; margin: 0; pointer-events: none; white-space: pre-wrap; overflow-wrap: anywhere; will-change: transform, opacity; transform-origin: 50% 50%; }
-/* the composer's placeholder waits until the text has left the field */
-body.tx-flying textarea[data-input="composer"]::placeholder { color: transparent; }
+/* Hide immediately under the lifted text; fade back after it leaves the field. */
+body.tx-flying textarea[data-input="composer"]::placeholder { color: transparent; transition: none; }
 textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
 /* the reply's waiting line and the turn's mark arrive after the bubble lands */
 .transcript-inner > [data-streaming="pending"] { animation-delay: 380ms; }

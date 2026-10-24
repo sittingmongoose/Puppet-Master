@@ -1162,7 +1162,9 @@
         requestAnimationFrame(function () { A.remove(); if (B2) B2.remove(); S.remove(); });
       }
     }
-    requestAnimationFrame(frame);
+    /* Initialize every layer before this frame paints: an unpositioned shape
+       and a stationary composer copy must not get a frame of their own. */
+    frame();
   }
   function land(id) {
     flights.delete(id);

@@ -110,7 +110,11 @@
     if (!b) return;
     var ap = b.appendChild, ib = b.insertBefore, app = b.append;
     b.appendChild = function (n) { return isChatFx(n) ? fx.appendChild(n) : ap.call(this, n); };
-    b.insertBefore = function (n, ref) { return isChatFx(n) ? fx.appendChild(n) : ib.call(this, n, ref); };
+    b.insertBefore = function (n, ref) {
+      /* Flights put the opaque bubble behind their text. Keep that order when
+         both nodes were redirected here from <body>. */
+      return isChatFx(n) ? fx.insertBefore(n, ref && ref.parentNode === fx ? ref : null) : ib.call(this, n, ref);
+    };
     if (app) b.append = function () {
       var rest = [];
       for (var i = 0; i < arguments.length; i++) { if (isChatFx(arguments[i])) fx.appendChild(arguments[i]); else rest.push(arguments[i]); }
