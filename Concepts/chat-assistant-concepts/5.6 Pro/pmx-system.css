@@ -305,7 +305,8 @@ body[data-theme^="glass"] #pmOverlayRoot:not(.pmx-swapping) > .pmx-sheet{animati
 .transcript[data-variant] .message:has(.pmx-run)::before{content:none;}
 .transcript[data-variant] .message:has(.pmx-run) .message-surface{border-left:0;padding-left:0;background:none;}
 /* the floating Activity bar never covers the last card's footer */
-.transcript:has(.pmx-run){padding-bottom:64px;}
+/* Keep the run's minimum tail room and the floating stack's measured clearance (ACD-452). */
+.transcript:has(.pmx-run){padding-bottom:max(64px,calc(var(--thread-float-h,44px) + 36px));}
 .transcript-inner > .pmx-run, .transcript-inner > .pmx-note{margin:0;}
 
 /* ================================================================ 7.14 Chat WOW coexistence (amendment G-35)
