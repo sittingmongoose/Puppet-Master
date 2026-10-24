@@ -157,7 +157,8 @@
  function guide(c,placement='dock'){const s=work.sessions[c.thread.id];if(!s?.guide||s!==playing)return '';const sheet=placement==='sheet',doc=placement==='doc';if(!!c.state.dialog!==sheet||!sheet&&!!(innerWidth<=1100&&c.state.editorRevealed)!==doc)return '';
   next(s);const b=s.beats[s.step],text=player?.errors.length?'Playback stopped. Close or replay this example.':s.done?'Done · Verified CSV, five orders, 22324 cents. The source is unchanged. Download is available on each file.':b?.text||'';
   const say=R.steady(s,text,!!b?.yours||s.done,refresh);
-  return window.PM56_SHELL.pmxGuide({key:'orders15-guide',cls:'orders15-guide',placement,step:c.esc(say),actions:s.done?[{action:'b15-replay',label:'Replay'}]:[],next:player&&player.progress(),close:{action:'b15-hide-guide',label:'Close example'}});
+  // The stacked Replay row takes room from the transcript; let the existing height FLIP carry that change.
+  return window.PM56_SHELL.pmxGuide({key:'orders15-guide',cls:'orders15-guide',placement,attrs:placement==='dock'?'data-flip':'',step:c.esc(say),actions:s.done?[{action:'b15-replay',label:'Replay'}]:[],next:player&&player.progress(),close:{action:'b15-hide-guide',label:'Close example'}});
  }
  // The current compact Goal panel hides the older detail/proposal shortcuts used by this journey.
  // Keep those genuine owner actions reachable in this exercise, after the original panel.
