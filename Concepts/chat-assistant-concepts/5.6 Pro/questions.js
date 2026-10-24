@@ -1201,7 +1201,8 @@
       var tpl = document.createElement('template');
       tpl.innerHTML = html;
       var next = tpl.content.firstElementChild, current = innerSurface(live);
-      if (next && current) {
+      if (next && current && next.tagName === current.tagName
+          && next.getAttribute('data-k') === current.getAttribute('data-k')) {
         ['filter', 'transform', 'transform-origin'].forEach(function (prop) {
           next.style.setProperty(prop, current.style.getPropertyValue(prop));
         });
