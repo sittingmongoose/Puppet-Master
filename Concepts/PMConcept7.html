@@ -291067,8 +291067,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     return tr && l ? tr.getBoundingClientRect().top + tr.clientTop - l.getBoundingClientRect().bottom : 0;
   }
   /* History is removed before its body's height FLIP finishes. Its empty animated
-     height is not content for a following reader. Keep the live tail as the
-     follow target while that height and the reader's room are returned. */
+     height is not content. Only an otherwise empty view needs a separate follow
+     target; a close with surviving text keeps the floor's original ease. */
   function closeContentH(inner) {
     var card = inner.lastElementChild, body = card && card.matches('.working-card') && card.querySelector(':scope > .working-body');
     var tail = body && body.lastElementChild;
@@ -291078,12 +291078,16 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var br = body.getBoundingClientRect(), end = tail.getBoundingClientRect().bottom + (parseFloat(getComputedStyle(body).paddingBottom) || 0);
     return nat - Math.max(0, br.bottom - end);
   }
-  function closeFollowTarget(tr, limit) {
-    if (!room.on || !room.rel || !room.lg) return null;
+  function closeFollowTarget(tr, limit, measureOnly) {
+    if (!room.on || !room.rel || !room.lg || !room.viewCut) return null;
+    /* Completion never chases its fold. An unfinished handover keeps only
+       its current view until the empty body reaches the ordinary room floor. */
+    if (!runHoldsRoom()) return room.viewCompleteTop == null ? tr.scrollTop : Math.min(limit, room.viewCompleteTop);
     var inner = roomInner(), card = inner && inner.lastElementChild;
     if (!inner || !card || card.querySelector('.work-history')) return null;
     var nat = closeContentH(inner), base = Math.max(nat, room.keep, room.own);
-    var wanted = Math.max(0, limit - Math.max(0, Math.max(naturalH(inner), room.floorW || 0) - base));
+    var wanted = Math.max(0, limit - Math.max(0, naturalH(inner) - base));
+    if (measureOnly) return wanted;
     var ts = performance.now(), dt = room.viewTs == null ? 1 / 120 : Math.max(0, (ts - room.viewTs) / 1000);
     var sdt = Math.min(dt, room.viewDt == null ? 1 / 120 : room.viewDt);
     var growth = room.viewNat == null ? 0 : Math.max(0, nat - room.viewNat);
@@ -291092,8 +291096,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   }
   function closeViewStart() {
     var inner = roomInner(), tr = inner && inner.closest('.transcript'), c = C();
-    room.viewTs = null; room.viewDt = null; room.viewNat = null;
-    if (!tr || !c || !c.isSticky || !c.isSticky() || reduced()) return;
+    room.viewTs = null; room.viewDt = null; room.viewNat = null; room.viewCut = false; room.viewCompleteTop = null; room.viewBody = null;
+    if (!tr || !c || !c.isSticky || !c.isSticky() || !runHoldsRoom() || reduced()) return;
     var v = tr.getBoundingClientRect(), walk = document.createTreeWalker(inner, NodeFilter.SHOW_TEXT), node;
     while ((node = walk.nextNode())) {
       if (!node.textContent.trim() || node.parentElement.closest('svg,script,style')) continue;
@@ -291103,11 +291107,14 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       if (visible) return;
     }
     /* No surviving text is on screen: changing the view here moves no visible
-       text. Once any text is visible, closeFollowTarget uses CLOSE_STEP. */
-    var limit = tr.scrollHeight - tr.clientHeight, nat = closeContentH(inner), base = Math.max(nat, room.keep, room.own);
-    var top = Math.max(0, limit - Math.max(0, Math.max(naturalH(inner), room.floorW || 0) - base));
-    tr.scrollTo({ top: top, behavior: 'instant' });
-    room.floorAt = base; room.x = 0; room.v = 0; roomFloor(base); lgMark(inner);
+       text. Discard that unseen room, then exclude only the empty body FLIP. */
+    var nat = closeContentH(inner), base = Math.max(nat, room.keep, room.own);
+    room.viewCut = true;
+    room.viewBody = inner.lastElementChild.querySelector(':scope > .working-body');
+    room.floorAt = base; room.x = 0; room.v = 0; roomFloor(base);
+    var limit = tr.scrollHeight - tr.clientHeight;
+    var top = Math.max(0, limit - Math.max(0, naturalH(inner) - base));
+    c.writeScrollInstant(tr, top); lgMark(inner);
   }
   /* round 3 (hist): what the reader opened in the run's card: its history (renderWorkHistory, the last child of its
      body), with the gap above it. The list's height less this is the run's own height (room.own) */
@@ -291257,9 +291264,23 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       var ownH = grown - openedH(inner); if (ownH > room.own) room.own = ownH;
     }
     if (room.rel) {
+      if (room.lg && room.viewCut && !runHoldsRoom()) {
+        /* A handover can precede completion by less than the body FLIP. Hold
+           its view through that empty height, then resume the ordinary room
+           release as soon as the real content fits the existing floor. */
+        var tq = inner.closest('.transcript');
+        if (room.viewCompleteTop == null && tq) room.viewCompleteTop = tq.scrollTop;
+        var body = room.viewBody;
+        var closing = body && body.isConnected && body.getAnimations().some(function (a) { return (a.playState === 'running' || a.playState === 'paused') && a.effect.getKeyframes().some(function (f) { return f.height != null; }); });
+        if (closing && naturalH(inner) > room.floorAt + 0.5) {
+          try { C().followIfSticky(); } catch (e) { }
+          lgMark(inner); room.raf = requestAnimationFrame(roomFrame); return;
+        }
+        room.viewCut = false; room.x = Math.max(0, room.floorAt - naturalH(inner)); room.v = 0;
+      }
       /* P6: each step is timed by the frame (rAF ts, in motion time), not by the callback: callbacks start 2-20 ms into
          a frame, and a late one followed by an early one made one step 4.6 px and the next 2 px on regular 60 Hz frames */
-      var nat = room.lg ? closeContentH(inner) : naturalH(inner), t = now(), fts = typeof ts === 'number' ? ts : null, k = window.PM56_CLOCK && window.PM56_CLOCK.scale != null ? window.PM56_CLOCK.scale : 1;
+      var nat = room.lg && runHoldsRoom() ? closeContentH(inner) : naturalH(inner), t = now(), fts = typeof ts === 'number' ? ts : null, k = window.PM56_CLOCK && window.PM56_CLOCK.scale != null ? window.PM56_CLOCK.scale : 1;
       var dt = Math.min(0.1, Math.max(0, (fts != null && room.lastTs != null && fts > room.lastTs ? (fts - room.lastTs) * k : t - room.last) / 1000)); room.last = t; room.lastTs = fts;
       /* round 3 (blank): a close's step is sized by the shorter of this frame and the one before: the close's render makes
          a long frame, and a full step after it plus the next frame's put 42 px into one 60 fps film frame (120 Hz page).
@@ -291296,7 +291317,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       /* A close with no surviving text on screen handed the view to its live
          tail before paint. The invisible room can go at once; keep that follow
          target until the body's original FLIP has reached the same content. */
-      if (room.lg && room.x < 0.5 && naturalH(inner) > base + 0.5) {
+      if (room.lg && room.viewCut && room.x < 0.5 && naturalH(inner) > base + 0.5) {
         room.floorAt = base; if (room.floorW !== base) roomFloor(base);
         try { C().followIfSticky(); } catch (e) { } lgMark(inner); room.raf = requestAnimationFrame(roomFrame); return;
       }
@@ -293168,7 +293189,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation,
       /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
       turnBusy, registerTurnOwner, maybeFlushQueue, startWorkingRec, onWorkComplete, releaseNextRun,
-      followIfSticky, holdFollow, followTarget, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx,
+      followIfSticky, holdFollow, followTarget, writeScrollInstant, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx,
       /* turn-stream keeps its shrink room for the whole of a run while runHoldsRoom() says so */
       runHoldsRoom
     }, readOnlyRender?{readOnly:true}:{}, extra);
@@ -295312,7 +295333,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function renderApp(preserve=true){
     syncActivityDomain();
-    const revealing=settleWorkGate();
+    const wasFollowing=tStick, revealing=settleWorkGate();
     /* Round 3 (A): the render that hides a tail already on screen (armWorkGate g.cut) is a cut: no scroll capture,
        no FLIPs (no shrink reaches holdShrink), no keep-top; rewindTranscript puts the reader on the card */
     const cut=!!(state.workGate&&state.workGate.cut); if(cut) state.workGate.cut=false;
@@ -295353,7 +295374,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!cut){ keepTopAfter(preTop,post); flipMoves(moveTargets, moveBefore); }
     rollDigits(rollBefore);
     if(cut) rewindTranscript();
-    else restoreScroll(positions,{workH, workKey, post, workGrow:workFlipped(flips), still:revealing==='still'});
+    else restoreScroll(positions,{workH, workKey, post, workGrow:workFlipped(flips), still:revealing==='still', wasFollowing});
     /* Round 3 (B): a gate lifted by something arriving puts a following reader at the new bottom in this frame */
     if(revealing==='grow'&&tStick){
       /* The reader is leaving the gated card for the arrival below the revealed tail. Its old room belongs to
@@ -295782,7 +295803,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   const GLIDE_TAU=70;
   const GLIDE_DT_MAX=120;   /* a late frame still advances the glide by the time it took (to 120 ms); at 60 fps nothing changes */
   function tEl(){ return scrollKeyEl('transcript'); }
-  function tAtBottom(el){ el=el||tEl(); if(!el) return true; return el.scrollHeight-el.clientHeight-el.scrollTop<=24; }
+  function tAtBottom(el){
+    el=el||tEl(); if(!el) return true;
+    const limit=el.scrollHeight-el.clientHeight;
+    /* A close can temporarily exclude its empty height FLIP from the follow.
+       Query its endpoint without advancing the close's frame budget. */
+    const target=tStick&&followTargetFn?followTargetFn(el,limit,true):null;
+    return (target==null?limit:Math.min(limit,target))-el.scrollTop<=24;
+  }
   function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; tLastCh=el.clientHeight; }
   function cancelGlide(){ if(glideRAF){ cancelAnimationFrame(glideRAF); glideRAF=0; } glideTs=0; }
   /* The glide's time constant is real time; a late frame catches up the time it lost instead of falling further behind (P1, 2026-10-23: 302-367 ms on a loaded standalone). */
@@ -295792,7 +295820,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(followHoldFn&&followHoldFn()){ glideTs=0; return; }
     const limit=el.scrollHeight-el.clientHeight, target=followTargetFn&&followTargetFn(el,limit);
     const max=target==null?limit:Math.min(limit,target), cur=el.scrollTop, d=max-cur;
-    if(d<-.5){ writeScrollInstant(el,max); glideRAF=requestAnimationFrame(glideStep); return; }
+    if(target!=null&&d<-.5){ writeScrollInstant(el,max); glideRAF=requestAnimationFrame(glideStep); return; }
     if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
     const tn=performance.now(), dt=glideTs?Math.min(GLIDE_DT_MAX,Math.max(1,tn-glideTs)):16.7; glideTs=tn;
     let next;
@@ -295922,7 +295950,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!el) return false;
     const max=el.scrollHeight-el.clientHeight;
     if(max<=4) return false;
-    return max-el.scrollTop>24;
+    return !tAtBottom(el);
   }
   function syncJumpBottom(){
     const on=transcriptAwayFromBottom();
@@ -296009,26 +296037,35 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(tr&&!tStick&&!scrollIntents.has('transcript')){
       const vr=tr.getBoundingClientRect();
       const history=[...tr.querySelectorAll('.working-card:not(.is-done) .work-history')].find(el=>{
-        const r=el.getBoundingClientRect(); return r.top<vr.bottom&&r.bottom>vr.top;
+        const r=el.getBoundingClientRect();
+        const visible=Math.min(r.bottom,vr.bottom)-Math.max(r.top,vr.top);
+        /* A sliver below the reader must not move the text above History.
+           Its own entrance slide belongs to History, not to scroll custody. */
+        return r.bottom>vr.top&&(r.top<=vr.top+1||visible>=vr.height/2)
+          &&!el.getAnimations().some(a=>a.animationName==='details-open'&&(a.playState==='running'||a.pending));
       });
       if(history) out.workHistory={el:history,y:history.getBoundingClientRect().top,input:tUserInputAt};
     }
     return out;
   }
   let workHistoryAnchor=null;
-  function anchorWorkHistory(pos){
+  function anchorWorkHistory(pos,opts){
     if(!pos||!pos.el.isConnected||tStick||scrollIntents.has('transcript')||pos.input!==tUserInputAt) return false;
     const el=pos.el, tr=el.closest('[data-scroll-key="transcript"]');
-    if(!tr) return false;
+    const allowDone=!!(opts&&opts.keepHistory);
+    if(!tr||(el.closest('.working-card.is-done')&&!allowDone)
+       ||el.getAnimations().some(a=>a.animationName==='details-open'&&(a.playState==='running'||a.pending))) return false;
     if(workHistoryAnchor&&workHistoryAnchor.el===el&&workHistoryAnchor.input===pos.input
        &&Math.abs(tr.scrollTop-workHistoryAnchor.scroll)<=1){
+      workHistoryAnchor.allowDone=allowDone;
       workHistoryAnchor.at=performance.now(); return true;
     }
-    const anchor=workHistoryAnchor={...pos,scroll:tr.scrollTop,at:performance.now()};
+    const anchor=workHistoryAnchor={...pos,allowDone,scroll:tr.scrollTop,at:performance.now()};
     let still=0, last=el.getBoundingClientRect().top+tr.scrollTop;
     const tick=()=>{
       if(workHistoryAnchor!==anchor) return;
-      if(!el.isConnected||!tr.isConnected||tStick||scrollIntents.has('transcript')||anchor.input!==tUserInputAt
+      if(!el.isConnected||!tr.isConnected||(el.closest('.working-card.is-done')&&!anchor.allowDone)||tStick||scrollIntents.has('transcript')||anchor.input!==tUserInputAt
+         ||el.getAnimations().some(a=>a.animationName==='details-open'&&(a.playState==='running'||a.pending))
          ||Math.abs(tr.scrollTop-anchor.scroll)>1){
         workHistoryAnchor=null; return;
       }
@@ -296046,7 +296083,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return true;
   }
   function restoreScroll(pos,opts){
-    const historyAnchored=anchorWorkHistory(pos&&pos.workHistory);
+    const history=pos&&pos.workHistory, tr=history&&history.el.closest('[data-scroll-key="transcript"]');
+    const keepHistory=!!(tr&&!(opts&&opts.wasFollowing)&&history.y<=tr.getBoundingClientRect().top+1);
+    if(opts&&opts.still&&!keepHistory) workHistoryAnchor=null;
+    const historyAnchored=(!(opts&&opts.still)||keepHistory)&&anchorWorkHistory(history,{keepHistory});
     requestAnimationFrame(()=>{
       document.querySelectorAll('[data-scroll-key]').forEach(el=>{
         const v=pos?pos[el.dataset.scrollKey]:null;
