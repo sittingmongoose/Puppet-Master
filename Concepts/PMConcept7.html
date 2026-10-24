@@ -247348,6 +247348,11 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     var animAttr = ui.anim === 'e1' ? 'drop' : ui.anim === 'c2' ? 'lift' : null;
     var rot = rotationFor(ui, panelI, n);
     var tier = n >= 22 ? 'xl' : n >= 13 ? 'lg' : '';
+    /* P5: a tier change resizes the dial and its row by a 420 ms CSS transition that no FLIP announces (the 17th
+       subject's merge steps the dial down 32 px). Tell the room hold before the patch, as the thought's fold does. */
+    var tierRank = tier === 'xl' ? 2 : tier === 'lg' ? 1 : 0;
+    if (ui.tierRank != null && tierRank !== ui.tierRank && w.running && !rec.completed && window.PM56_STREAM && window.PM56_STREAM.holdTier) { try { window.PM56_STREAM.holdTier(tierRank < ui.tierRank); } catch (e) { } }
+    ui.tierRank = rec.completed ? null : tierRank;   /* a finished card's tier is not compared with a rerun's */
     var liveCount = items.filter(function (it) { return it.live; }).length;
     var waiting = items.some(function (it) { return it.live && it.status === 'waiting'; });
 
@@ -290910,7 +290915,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      DOM steps and a frame callback. The answer grows into the room; whatever it
      does not use is let go once it has settled, the floor easing down to the
      content like a drawer closing. */
-  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0, quietUntil: 0, transient: false, relAt: 0 };
+  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0, quietUntil: 0, transient: false, relAt: 0, floorW: null, tier: false, grownAt: 0, lg: false, lgUntil: 0, keep: 0, own: 0, keepWas: 0, lgTop: null, lgStuck: false, lgAt: 0 };
   /* While the card folds, the follow waits: the fold frees far more room than
      the answer's first line takes, so the reader's view stays put and the
      answer rises into it. (Chasing the answer's placeholder first scrolled the
@@ -290935,11 +290940,12 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   }
   function roomInner() { var tr = document.querySelector('.chat-stage .transcript'); return tr && tr.querySelector('.transcript-inner'); }
   function roomFloor(px) {
+    room.floorW = px == null ? null : px;   /* P5: the floor as written */
     if (px == null) window.PM56_ROOT_STYLE.removeProperty('--tx-hold-min');
     else window.PM56_ROOT_STYLE.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
   }
   function naturalH(inner) { var l = inner.lastElementChild; return l ? l.getBoundingClientRect().bottom - inner.getBoundingClientRect().top : 0; }
-  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); }
+  function dropRoom() { room.tier = false; room.lg = false; room.own = 0; room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); }
   /* the list's height as last laid out: the completion render (which drops
      the card's narration line and mounts the answer's placeholder) runs before
      the hold starts, so the hold takes the height from before that render */
@@ -290960,22 +290966,95 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   }
   function holdRoom() {
     if (reduced()) return;
+    /* round 3 (hist): a reader's close is still easing its band (letGo) when the run completes. The fold's room is
+       not held at the floored height (room.lastH): that held the reader's band through the fold and eased it only
+       after (Long agent turn, closed 1.1 s before completion: band 387 px at +5 s, clear after 6.4 s). The release
+       goes on instead; the floor never comes down faster than SHRINK_VMAX, so the fold moves nothing above it and the
+       answer grows into the band */
+    if (room.on && room.rel && room.lg) return;
     var inner = roomInner(); if (!inner) return;
     var before = inner === roomSeen && room.lastH ? room.lastH : 0;
     room.inner = inner; room.h0 = before || inner.offsetHeight;
-    room.on = true; room.rel = false; room.transient = false; room.x = null; room.v = 0; room.last = now();
+    room.on = true; room.rel = false; room.transient = false; room.x = null; room.v = 0; room.last = now(); room.tier = false; room.own = 0;
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
-  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.floorAt = room.h0; } }
+  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.floorAt = room.h0; room.lg = false; room.keep = 0; } }
   /* Round 3 (A): app.js rewound the transcript (rewindTranscript, a thread switch): no room is kept for what left,
      and the next hold measures the list as it is then (roomSeen cleared: holdShrink takes offsetHeight, watchRoom
      re-observes the list) */
   function cutRoom() { dropRoom(); roomSeen = null; }
   /* Round 3 (D): the reader closed the card's history or a phase. Nothing in the run grows into the room that gives
      back, so it is let go now, eased as every release is, instead of held for SHRINK_HOLD or by the run-long hold;
-     the next shrink after it has gone starts the run-long hold again */
-  function letGo() { if (room.on && !room.rel) releaseRoom(); }
+     the next shrink after it has gone starts the run-long hold again.
+     P5 v2: the release starts from the close's own shrink. The close's FLIP shows the card at its old height on its
+     first frame (it starts on the second, and the close's render makes that a long frame), so a release whose first
+     frame read the card before it moved found no room left and dropped the floor: the whole history then went in one
+     frame under a following reader (Long agent turn: 703-719 px at 11.6 s, 1,587 px at 21.0 s). It waits until the
+     content is under the floor, or SHRINK_HOLD if the close freed nothing. It lets go only of what the close gave back:
+     a shrink the run announces while it eases (a FLIP, a tier step down) keeps its room (room.keep), and the release
+     ends in the run-long hold at that height, as E would have held it (boot's history close: without this the room of
+     the 9.2 s subject fold went with the band, and the next growth moved the text 52 px). */
+  function letGo() {
+    /* round 3 (hist): a second close while the first one's band still eases: its own shrink is not the run's
+       (holdShrink's keepRoom took it as one, room.keepWas), and its FLIP is waited out as the first one's was */
+    if (room.on && room.rel && room.lg) { room.keep = room.keepWas || 0; room.lgUntil = now() + SHRINK_HOLD; room.lgTop = null; return; }
+    if (!room.on || room.rel) return;
+    /* round 3 (hist): a card that is not the running last card (finished, or something mounted under it) closes above
+       what the reader reads: the room goes at once and the list keeps its bottom, so the answer under it stays still.
+       That is base's release, whose first frame dropped the room in every measured run; eased, it carried the answer
+       up 422-516 px in one frame (Live agent turn, closed 8 s after completion) */
+    if (!runHoldsRoom()) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
+    /* round 3 (hist, D2): under reduced motion the close has no FLIP and the floor goes in one step, the reader's own.
+       It goes down to the run's own height (room.own: the card without its history), not to the content: dropped to
+       the content and re-held there, the next two subjects' growths (39 and 31 px) stepped the text up, growths the
+       floor held before the history opened */
+    if (reduced()) {
+      var ri = roomInner(); if (!ri) return;
+      var keepH = Math.ceil(Math.max(naturalH(ri), room.own) - 0.001);
+      if (keepH < room.h0) { room.h0 = keepH; roomFloor(room.h0); }
+      try { C().followIfSticky(); } catch (e) { } return;
+    }
+    /* a tier hold may not have written its floor yet (it writes once a growth stops): the release starts from it */
+    if (room.tier) { room.tier = false; if (room.floorW !== room.h0) roomFloor(room.h0); }
+    releaseRoom(); room.lg = true; room.lgUntil = now() + SHRINK_HOLD; room.lgTop = null;
+  }
+  /* P5 v2: how far the content's end sits above the top of the transcript's view (more than 0: the view shows only
+     the band under it) */
+  function bandAbove(inner) {
+    var tr = inner.closest('.transcript'), l = inner.lastElementChild;
+    return tr && l ? tr.getBoundingClientRect().top + tr.clientTop - l.getBoundingClientRect().bottom : 0;
+  }
+  /* round 3 (hist): what the reader opened in the run's card: its history (renderWorkHistory, the last child of its
+     body), with the gap above it. The list's height less this is the run's own height (room.own) */
+  function openedH(inner) {
+    var cs = inner.querySelectorAll('.working-card'), c = cs[cs.length - 1], h = c && c.querySelector('.work-history');
+    if (!h) return 0;
+    var p = h.previousElementSibling, r = h.getBoundingClientRect();
+    return Math.max(0, r.bottom - (p ? p.getBoundingClientRect().bottom : r.top));
+  }
+  /* P5 v2: a shrink announced while a reader's close eases, once the close's own FLIP is over (SHRINK_HOLD): the
+     list's height before it (that shrink's FLIP or tier transition still shows it) is room the run keeps */
+  function keepRoom() { var ki = roomInner(); if (ki && room.rel && room.x != null && now() >= room.lgUntil) room.keep = Math.max(room.keep, naturalH(ki)); }
+  /* round 3 (hist): while a reader's close eases, each frame lowers the floor and the browser clamps scrollTop; app.js
+     reads that clamp's scroll event a frame later. A click in between (the reader reopening the history, 0.8 s after
+     the close) grew the list first, so the event read the reader as 374 px from the bottom within 700 ms of input and
+     dropped them out of follow; the second close then had no hold and the view jumped 261 px. lgMark notes where the
+     clamp left the view and whether the reader was following; lgRestick puts back a follow that only that event took
+     away (scrollTop still where the clamp left it: any scroll of the reader's own has moved it) */
+  function lgMark(inner) { var tq = inner.closest('.transcript'), c = C(); room.lgTop = tq ? tq.scrollTop : null; room.lgStuck = !!(c && c.isSticky && c.isSticky()); room.lgAt = performance.now(); }
+  function lgRestick(inner) {
+    var tq = inner.closest('.transcript'), c = C();
+    if (room.lgStuck && room.lgTop != null && !(scrollInputAt >= room.lgAt) && tq && c && c.isSticky && !c.isSticky() && c.stickToBottom && Math.abs(tq.scrollTop - room.lgTop) <= 1) { try { c.stickToBottom(); } catch (e) { } }
+  }
+  /* the reader's own scrolling input (app.js drops the follow on it before the view moves): lgRestick never undoes it */
+  var scrollInputAt = 0, SCROLL_KEYS = { PageUp: 1, PageDown: 1, ArrowUp: 1, ArrowDown: 1, Home: 1, End: 1, ' ': 1 };
+  function noteScrollInput(e) {
+    if (e.type === 'keydown' && !SCROLL_KEYS[e.key]) return;
+    if (e.type === 'pointerdown' && !(e.target && e.target.classList && e.target.classList.contains('transcript'))) return;
+    scrollInputAt = performance.now();
+  }
+  if (typeof document !== 'undefined' && document.addEventListener) ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (k) { document.addEventListener(k, noteScrollInput, { passive: true, capture: true }); });
   /* The answer's placeholder takes no room before it is drawn. It mounts as the card starts to fold and waits out its
      entrance delay fully transparent (turn-stream.css: [data-streaming="pending"], 380ms, from opacity 0). A narrow card
      frees its panel's height at once, so the placeholder's height went into the held room; a wide card (panel beside
@@ -291034,18 +291113,39 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   var RUN_ROOM_MAX = 240;
   function runHoldsRoom() { var c = C(); return !!(c && c.runHoldsRoom && c.runHoldsRoom()); }
   function shrinkRelAt() { return runHoldsRoom() ? Infinity : now() + SHRINK_HOLD; }
-  function holdShrink(fresh, finite) {
+  function holdShrink(fresh, finite, atLeast) {
     if (reduced() && !runHoldsRoom()) return;
-    if (room.on) { if (finite === true) { room.transient = true; room.relAt = now() + SHRINK_HOLD; } else if (room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
+    if (room.on) { if (room.lg) { room.keepWas = room.keep; keepRoom(); } if (room.tier) { room.tier = false; if (!room.rel && room.floorW !== room.h0) roomFloor(room.h0); } if (finite === true) { room.transient = true; room.relAt = now() + SHRINK_HOLD; } else if (room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
     var c = C(); if (!c || (c.isSticky && !c.isSticky())) return;
     var inner = roomInner(); if (!inner) return;
     /* fresh: a hold that follows no shrink (watchRoom) takes the list as it is now */
     var before = fresh !== true && inner === roomSeen && room.lastH ? room.lastH : 0;
-    room.inner = inner; room.h0 = Math.max(before, inner.offsetHeight);
+    room.inner = inner; room.h0 = Math.max(before, inner.offsetHeight, atLeast || 0); room.own = 0;
     room.on = true; room.rel = false; room.transient = true; room.relAt = finite === true ? now() + SHRINK_HOLD : shrinkRelAt();
     room.x = null; room.v = 0; room.last = now();
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
+  }
+  /* P5: Orbit's dial changes size when its ring crosses a density tier (orbit.js renderStage): a 420 ms CSS transition
+     on the dial and its grid row, which app.js's height FLIP reads at its start (no change yet) and so never announces.
+     A step down (the 17th subject merges same-kind neighbours, 16 nodes to 12, 32 px off the card) pulled a following
+     reader down and the next subject's regrowth pulled them back up (Long agent turn, 12.4 s); a step up ends with the
+     spring's 0.4 px settle, which crossed a pixel on the hosted page (10.4 s). The tier change is held like a shrink: a
+     step down always (as a FLIP shrink is), a step up only for a run that keeps its room (runHoldsRoom). A hold a tier
+     change starts (room.tier) follows the card up without a write per frame, writing once the growth stops: each write
+     restyles the page, and E's hold never ran through this run's growths before its first FLIP shrink. The first
+     shrink a FLIP or a fold announces makes it an ordinary hold (holdShrink). */
+  function holdTier(down) {
+    if (reduced()) return;   /* there the dial changes at once and watchRoom holds the run's room from its start */
+    if (room.on) { if (down && room.lg) keepRoom(); if (down && room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
+    if (!down && !runHoldsRoom()) return;
+    /* the list's laid-out height is whole pixels; the floor starts at or above the content it holds. The content is read
+       before the hold writes the floor, which it then writes once: read after that write, it restyled the whole page in
+       the middle of the tick (P5 v2; the 13th subject's frame measured 60-108 ms against base's 42-73) */
+    var inner = roomInner(), nat = inner ? naturalH(inner) : 0;
+    holdShrink(false, false, Math.ceil(nat - 0.001));
+    if (!room.on) return;
+    room.tier = true; room.grownAt = nat;
   }
   function roomFrame(ts) {
     room.raf = 0;
@@ -291057,26 +291157,62 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       /* after the fold the floor only ratchets up: a follow into content past
          it can then never be clamped back when something above shrinks */
       var grown = naturalH(inner);
-      if (grown > room.h0 + 0.5) { room.h0 = grown; roomFloor(room.h0); }
+      /* P5: the floor ratchets in whole pixels at or above the content (a floor 0.1 px under it let the list lose a
+         pixel when a subject's rows folded, 26.4 s), at most one write per pixel of growth. A tier hold writes only
+         once the growth stops (each write restyles the page; written mid-growth it cost a 69 ms frame and a 30 px step). */
+      if (grown > room.h0 + 0.001) { room.h0 = Math.ceil(grown - 0.001); if (!room.tier) roomFloor(room.h0); }
+      /* round 3 (hist): a growth still adding under half a pixel a frame (a spring's settle) has stopped: deferred
+         past it, the floor stayed at the pre-growth height for a frame too many, and a fold nothing announced then
+         clamped a following reader 67 px down (hosted Long agent turn, 14.4 s, 1 run in 9) */
+      if (room.tier) { if (room.floorW !== room.h0 && !(grown > room.grownAt + 0.5)) roomFloor(room.h0); room.grownAt = grown; }
+      /* round 3 (hist): the run's own height, the most the list held without what the reader opened */
+      var ownH = grown - openedH(inner); if (ownH > room.own) room.own = ownH;
     }
     if (room.rel) {
       /* P6: each step is timed by the frame (rAF ts, in motion time), not by the callback: callbacks start 2-20 ms into
          a frame, and a late one followed by an early one made one step 4.6 px and the next 2 px on regular 60 Hz frames */
       var nat = naturalH(inner), t = now(), fts = typeof ts === 'number' ? ts : null, k = window.PM56_CLOCK && window.PM56_CLOCK.scale != null ? window.PM56_CLOCK.scale : 1;
       var dt = Math.min(0.1, Math.max(0, (fts != null && room.lastTs != null && fts > room.lastTs ? (fts - room.lastTs) * k : t - room.last) / 1000)); room.last = t; room.lastTs = fts;
-      if (room.x == null) room.x = Math.max(0, room.h0 - nat);
+      if (room.lg) lgRestick(inner);
+      if (room.x == null) {
+        /* P5 v2: a reader's close (letGo) eases from its own shrink: until the content is under the floor, nothing */
+        if (room.lg && t < room.lgUntil && nat > room.h0 - 0.5) { try { C().followIfSticky(); } catch (e) { } lgMark(inner); room.raf = requestAnimationFrame(roomFrame); return; }
+        room.x = Math.max(0, room.h0 - nat);
+      }
+      /* P5 v2: the release eases down to the content, or to the room the run keeps (room.keep) while it still keeps room
+         (runHoldsRoom); the SHRINK_VMAX bound below eases any drop of that base too */
+      if (room.lg && (room.keep > nat || room.own > nat) && !runHoldsRoom()) { room.keep = 0; room.own = 0; }
+      /* round 3 (hist): a reader's close also keeps the run's own height from before it (room.own), so the run goes on
+         as it would have with the history never opened (boot: the band before the close, 58-76 px, then E's) */
+      var base = Math.max(nat, room.keep, room.lg ? room.own : 0);
       /* critically damped to zero (omega 11/s: ~450ms; a shrink's leftover 8/s) */
       var s2 = critStep(room.x, room.v, room.transient ? 8 : 11, dt);
       /* every release, a fold's too: a fold's room now starts from the run-long floor (up to RUN_ROOM_MAX over the
          content), and at omega 11 that eased down at up to ~0.97 px/ms, past turn-verify's 0.4 px/ms snap line */
-      { var lo = room.floorAt - SHRINK_VMAX * dt - nat; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
+      { var lo = room.floorAt - SHRINK_VMAX * dt - base; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
       room.x = s2[0]; room.v = s2[1];
       /* under reduced motion (only a held demo run holds room there) the floor goes at once */
-      if (room.x < 0.5 || nat >= room.h0 || reduced()) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
-      room.floorAt = nat + room.x;
+      if (room.x < 0.5 && base > nat + 0.5 && !reduced()) {
+        /* P5 v2: what the close gave back is gone; the run's own room stays held, run-long, as E holds it */
+        room.rel = false; room.lg = false; room.h0 = Math.ceil(base - 0.001); room.keep = 0; room.x = null; room.v = 0;
+        room.transient = true; room.relAt = Infinity; roomFloor(room.h0);
+        try { C().followIfSticky(); } catch (e) { } room.raf = requestAnimationFrame(roomFrame); return;
+      }
+      /* Growth can pass h0 while the installed floor still carries spring
+         residual. Drop only once content reaches that actual floor; otherwise
+         removing it clamped the view by 4px in one 120Hz frame (thought L-4). */
+      if (room.x < 0.5 || nat >= room.floorAt || reduced()) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
+      room.floorAt = base + room.x;
+      /* P5 v2: the band never keeps the view blank. What of it lies above the view's top goes at once: the view showed
+         only the band and still does, so nothing on screen moves; the rest eases as before, from the content's end at
+         the view's top edge (2 px over it). A reader's history close in a Long agent turn freed 765-1,580 px: eased
+         whole at SHRINK_VMAX, the view sat blank for 0.75-5 s and the band took 4.2-8.4 s to close */
+      var above = room.floorW == null || !room.lg ? 0 : bandAbove(inner) - 2;
+      if (above > 0 && room.floorAt > room.floorW - above) { room.floorAt = Math.max(base, room.floorW - above); room.x = room.floorAt - base; }
       roomFloor(room.floorAt);
     }
     try { C().followIfSticky(); } catch (e) { }
+    if (room.rel && room.lg) lgMark(inner);
     room.raf = requestAnimationFrame(roomFrame);
   }
 
@@ -291483,6 +291619,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     begin: function (m, tid, spec, opts) { wire(); return begin(m, tid, spec, opts); },
     /* the shrink hold, for a block above the reader that gives back its height (a folding thought) */
     holdShrink: function (finite) { holdShrink(false, finite === true); },
+    /* P5: Orbit's dial changed density tier on a running card (down: it shrinks) */
+    holdTier: function (down) { holdTier(down === true); },
     /* Round 3: a rewound transcript keeps no room (A); the reader's close of a card's history lets its room go (D) */
     cut: function () { cutRoom(); },
     letGo: function () { letGo(); },
@@ -295081,7 +295219,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(cut) rewindTranscript();
     else restoreScroll(positions,{workH, workKey, post, workGrow:workFlipped(flips), still:revealing==='still'});
     /* Round 3 (B): a gate lifted by something arriving puts a following reader at the new bottom in this frame */
-    if(revealing==='grow'&&tStick) stickToBottom(true);
+    if(revealing==='grow'&&tStick){
+      /* The reader is leaving the gated card for the arrival below the revealed tail. Its old room belongs to
+         the card's former position at the bottom, not to this new bottom. Drop it before the arrival is painted. */
+      try{ window.PM56_STREAM?.cut?.(); }catch(e){}
+      stickToBottom(true);
+    }
     renderOverlays();
     fitActivityTabs();
     retainHoverAfterRender();
@@ -295252,6 +295395,24 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      it keys off the FLIP subject's own children, not off any take's markup --
      and it degrades to the motion Orbit already does well, since the panel
      track grows smoothly on its own. */
+  /* A completing body's min-height is itself transitioning (122 -> 0). Its
+     first layout still has that old floor; using it as the FLIP destination
+     left a 30px drop when the 320ms animation finished. Measure the content's
+     final floor without advancing or restarting either animation's clock. */
+  function flipTargetHeight(el){
+    const h=el.getBoundingClientRect().height;
+    if(!el.classList.contains('working-body')) return h;
+    const floor=el.getAnimations().find(a=>a.constructor.name==='CSSTransition'&&a.transitionProperty==='min-height');
+    if(!floor) return h;
+    const keys=floor.effect.getKeyframes(), end=parseFloat(keys[keys.length-1].minHeight);
+    const css=getComputedStyle(el), min=parseFloat(css.minHeight);
+    if(!Number.isFinite(end)||end>=min||Math.abs(h-min)>1) return h;
+    const last=el.lastElementChild;
+    if(!last||last.offsetParent!==el.offsetParent) return h;
+    const natural=last.offsetTop-el.offsetTop+last.offsetHeight+(parseFloat(getComputedStyle(last).marginBottom)||0)
+      +(parseFloat(css.paddingBottom)||0)+(parseFloat(css.borderBottomWidth)||0);
+    return Math.min(h,Math.max(end,natural));
+  }
   function flipHeights(targets, before){
     const done=[];
     /* F0b (review cycle 1, DESIGN-SPEC 5.7): body.pm56-reduced is the same policy as the media
@@ -295273,7 +295434,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     for(const el of targets){
       if(!el.isConnected) continue;
       const h0=before.get(el); if(h0==null) continue;
-      const h1=el.getBoundingClientRect().height;
+      const card=el.parentElement;
+      const simpleDone=el.classList.contains('working-body')&&card&&card.dataset.workingVariant==='8'&&card.classList.contains('is-done');
+      const h1=simpleDone?flipTargetHeight(el):el.getBoundingClientRect().height;
       /* Clock-only work ticks change elapsed text / ring rotation but not
          card height — skip FLIP so messages below do not jitter. */
       if(Math.abs(h1-h0)<1) continue;
@@ -295355,6 +295518,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      five frames late and none the worse. That grace is 5 rather than 3 because
      the slow runs above only moved on the third frame. */
   function guardFlip(el, a, h0, release, suspect){
+    const shrinking=parseFloat(a.effect.getKeyframes()[1].height)<h0;
     const content=()=>{let s=0; for(const c of el.children) s+=c.offsetHeight; return s;};
     const at0=content();
     const t0=performance.now();
@@ -295396,6 +295560,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(st==='finished'){ letGo(); return; }
       if(st!=='running' && st!=='paused') return; // cancelled by someone else
       if(Math.abs(moved)>1){
+        /* A shrinking FLIP already in flight must finish to its target:
+           the starting-height hold would rewind a History close mid-frame. */
+        if(st==='running' && shrinking){ requestAnimationFrame(tick); return; }
         const trS=scrollKeyEl('transcript'), s0=trS?trS.scrollTop:null;
         dir=moved; a.cancel();
         /* Direction-aware pin. Pinning at h0 when the content GREW painted
@@ -295488,7 +295655,20 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      the working-card total, as it did when the growth was a bare number. Comparing the object
      itself with -4 was always false, so the hold never fired and a shrinking card snapped the
      thread down mid-turn (turn-verify "the thread never jumps down mid-turn"). */
-  function workFlipped(flips){ const g=workFlipGrowth(flips); const tot=typeof g==='number'?g:((g&&g.total)||0); if(tot<-4&&workShrinkFn){ try{ workShrinkFn(-tot); }catch(e){} } return g; }
+  function workFlipped(flips){
+    const g=workFlipGrowth(flips), tot=typeof g==='number'?g:((g&&g.total)||0);
+    if(tot<-4&&workShrinkFn){
+      const tr=tEl(), top=tr?.getBoundingClientRect().top;
+      /* A card wholly above the reader needs no room: the bottom clamp absorbs its shrink and keeps the visible
+         tail still. Holding its old height instead moves that tail up through the FLIP, then down as room expires. */
+      const visibleShrink=!tr||(flips||[]).some(f=>{
+        const card=f.el.closest('.working-card');
+        return card&&f.h1<f.h0&&(lastInTranscript(card)||card.getBoundingClientRect().bottom>top);
+      });
+      if(visibleShrink){ try{ workShrinkFn(-tot); }catch(e){} }
+    }
+    return g;
+  }
   function stickToBottom(instant){
     tStick=true;
     const el=tEl();
