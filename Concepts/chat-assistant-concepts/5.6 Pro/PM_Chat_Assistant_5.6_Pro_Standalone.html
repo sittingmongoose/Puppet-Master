@@ -78036,10 +78036,13 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      room held, and the working card is born into that room (the fold token is 320 ms, Retro's 192) */
   var CARD_AFTER = 380;
   /* the director waits only for a closing fold that had not begun a frame before the card was due (FOLD_LATE after its
-     scheduled hand-over: on time it begins 80-290 ms after, once the hand-over's render is done, the render growing
-     with the thread; a late frame that hands over and reaches the director after its render begins it later), decided
-     once per thought, and only while it still shows more than FOLD_VISIBLE px. On time the card is born over the
-     fold's last few px, as before; a reader's re-open never delays it (P2b) */
+     scheduled hand-over, timed from when animateTo created it: a fold still pending has no start time yet, and reading
+     it as starting at the director's check made an on-time fold late, P2c. On time it is created 80-340 ms after, once
+     the hand-over's render is done, the render growing with the thread; a late frame that hands over and reaches the
+     director after its render creates it later), decided once per thought, and only while it still shows more than
+     FOLD_VISIBLE px. A closing fold still pending holds the card one frame without deciding, so the card is never born
+     over a fold that has not begun to paint (P2c). On time the card is born over the fold's last px (13-59 px late in a
+     long thread, as before); a reader's re-open never delays it (P2b) */
   var FOLD_LATE = CARD_AFTER - 16, FOLD_VISIBLE = 8;
   var live = new Map();                    /* thought id -> the thought being written */
   var endedAt = Object.create(null);     /* reply id -> {at, id}: when its thought handed over; the director times the card from it */
@@ -78163,7 +78166,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var a = P && P.animate && !reduced() ? P.animate(clip, [{ height: from + 'px', opacity: open ? 0 : 1 }, { height: to + 'px', opacity: open ? 1 : 0 }],
       { duration: (P.t && P.t('fold')) || 320, easing: (P.ease && P.ease('emph')) || 'cubic-bezier(.2,0,0,1)' }) : null;
     if (!a) { settle(clip, open, L); return; }
-    st.anim = a;
+    st.anim = a; st.animAt = now();
     clip.style.height = to + 'px';
     a.onfinish = function () { if (st.anim !== a) return; st.anim = null; settle(clip, open, live.get(clip.__id) || null); };
   }
@@ -78419,7 +78422,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     handover: handover,
     /* the agent turn's director: when the reply's thought was due to hand over, and whether a fold that began late still shows */
     handedAt: function (rid) { var e = endedAt[rid]; return e ? e.at : null; },
-    folding: function (rid) { var e = endedAt[rid]; if (!e) return false; var isl = islandOf(e.id), clip = isl && isl.firstElementChild, a = clip && clip.__tt && clip.__tt.anim; return !!(a && clip.__tt.open === false && (e.late || (e.late = now() - (a.currentTime || 0) > e.at + FOLD_LATE)) && clip.getBoundingClientRect().height > FOLD_VISIBLE); },
+    folding: function (rid) { var e = endedAt[rid]; if (!e) return false; var isl = islandOf(e.id), clip = isl && isl.firstElementChild, a = clip && clip.__tt && clip.__tt.anim; return !!(a && clip.__tt.open === false && (a.pending || e.late || (e.late = clip.__tt.animAt > e.at + FOLD_LATE)) && clip.getBoundingClientRect().height > FOLD_VISIBLE); },
     /* state for checks and the demo: what each live thought is doing */
     active: function () { var out = []; live.forEach(function (L) { out.push({ id: L.id, tid: L.tid, reply: L.replyId, cursor: L.cursor, ops: L.ops.length, ms: L.ms, agent: L.agent, capped: L.capped }); }); return out; },
     mode: function (T) { return T ? modeOf(C(), T) : prefMode(C()); },
