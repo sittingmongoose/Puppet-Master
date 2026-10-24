@@ -604,9 +604,9 @@
   }
   function closeFollowTarget(tr, limit, measureOnly) {
     if (!room.on || !room.viewCut) return null;
-    /* Completion owns its fold. Hold the handed-over view until roomFrame
-       rebases the floor and the existing fold quiet period has finished. */
-    if (!runHoldsRoom()) return (room.rel && room.lg) || roomQuiet() ? tr.scrollTop : null;
+    /* Completion returns to the ordinary room release; its fold and answer
+       must not inherit the close's content target or a new hold. */
+    if (!runHoldsRoom()) return null;
     if (!room.rel || !room.lg) return null;
     var inner = roomInner(), card = inner && inner.lastElementChild;
     if (!inner || !card || card.querySelector('.work-history')) return null;
@@ -788,19 +788,6 @@
       var ownH = grown - openedH(inner); if (ownH > room.own) room.own = ownH;
     }
     if (room.rel) {
-      if (room.lg && !runHoldsRoom()) {
-        /* Completion inherits the current view, including a handover inside
-           the body FLIP. The existing fold hold absorbs the remaining shrink
-           before the ordinary release resumes. */
-        var tq = inner.closest('.transcript');
-        var gap = tq ? Math.max(0, tq.scrollHeight - tq.clientHeight - tq.scrollTop) : 0;
-        room.h0 = Math.max(0, Math.max(naturalH(inner), room.floorW || 0) - gap);
-        room.rel = false; room.lg = false; room.x = null; room.v = 0; room.keep = 0; room.own = 0;
-        room.transient = true; room.relAt = now() + SHRINK_HOLD; roomFloor(room.h0);
-        if (tq) C().writeScrollInstant(tq, tq.scrollTop);
-        try { C().followIfSticky(); } catch (e) { }
-        room.raf = requestAnimationFrame(roomFrame); return;
-      }
       /* P6: each step is timed by the frame (rAF ts, in motion time), not by the callback: callbacks start 2-20 ms into
          a frame, and a late one followed by an early one made one step 4.6 px and the next 2 px on regular 60 Hz frames */
       var nat = room.lg && runHoldsRoom() ? closeContentH(inner) : naturalH(inner), t = now(), fts = typeof ts === 'number' ? ts : null, k = window.PM56_CLOCK && window.PM56_CLOCK.scale != null ? window.PM56_CLOCK.scale : 1;
@@ -835,7 +822,7 @@
          SHRINK_VMAX, it left a following reader looking at a view 75-100% blank for 1-2.3 s (boot's history close:
          485 px of a 647 px view; Long agent turn: the whole view, the cut above only keeping the content's end at its
          top edge). Started only once the band passed RUN_ROOM_MAX, the FLIP outran it: 55% of the view at boot */
-      if (room.lg && runHoldsRoom()) { var cap = Math.max(base, (room.own > 0 ? Math.min(nat, room.own) : nat) + RUN_ROOM_MAX); if (room.floorAt > cap) { var to = Math.max(cap, room.floorAt - CLOSE_STEP * Math.min(1, sdt * 60)) - base; if (s2[0] > to) { s2[0] = to; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } } }
+      if (room.lg) { var cap = Math.max(base, (room.own > 0 ? Math.min(nat, room.own) : nat) + RUN_ROOM_MAX); if (room.floorAt > cap) { var to = Math.max(cap, room.floorAt - CLOSE_STEP * Math.min(1, sdt * 60)) - base; if (s2[0] > to) { s2[0] = to; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } } }
       room.x = s2[0]; room.v = s2[1];
       /* A close with no surviving text on screen handed the view to its live
          tail before paint. The invisible room can go at once; keep that follow
