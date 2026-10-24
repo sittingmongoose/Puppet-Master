@@ -2742,7 +2742,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     for(const el of targets){
       if(!el.isConnected) continue;
       const h0=before.get(el); if(h0==null) continue;
-      const h1=flipTargetHeight(el);
+      const card=el.parentElement;
+      const simpleDone=el.classList.contains('working-body')&&card&&card.dataset.workingVariant==='8'&&card.classList.contains('is-done');
+      const h1=simpleDone?flipTargetHeight(el):el.getBoundingClientRect().height;
       /* Clock-only work ticks change elapsed text / ring rotation but not
          card height — skip FLIP so messages below do not jitter. */
       if(Math.abs(h1-h0)<1) continue;
