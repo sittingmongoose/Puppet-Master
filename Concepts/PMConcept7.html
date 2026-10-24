@@ -295585,7 +295585,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      five frames late and none the worse. That grace is 5 rather than 3 because
      the slow runs above only moved on the third frame. */
   function guardFlip(el, a, h0, release, suspect){
-    const h1=parseFloat(a.effect.getKeyframes()[1].height), shrinking=h1<h0;
+    const shrinking=parseFloat(a.effect.getKeyframes()[1].height)<h0;
     const content=()=>{let s=0; for(const c of el.children) s+=c.offsetHeight; return s;};
     const at0=content();
     const t0=performance.now();
@@ -295603,13 +295603,6 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(!el.isConnected){ a.cancel(); letGo(); return; }
       const moved=content()-at0;
       if(hold){
-        /* Growth can also arrive before a suspect close starts its clock.
-           Keep its paused start height while handing the pin back to FLIP. */
-        if(dir===0 && shrinking && moved>1 && a.playState==='paused'){
-          a.effect.setKeyframes([{height:`${h0}px`},{height:`${h1+moved}px`}]);
-          hold.cancel(); hold=null; a.play();
-          requestAnimationFrame(tick); return;
-        }
         if(dir===0 && Math.abs(moved)>1){ dir=moved; a.cancel(); }
         if(dir!==0){
           /* Releasing the hold for one measurement lays the page out shorter for
@@ -295634,12 +295627,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(st==='finished'){ letGo(); return; }
       if(st!=='running' && st!=='paused') return; // cancelled by someone else
       if(Math.abs(moved)>1){
-        /* Retarget a running close as content grows, keeping its clock and
-           easing so the natural-height handover does not expose stale h1. */
-        if(st==='running' && shrinking){
-          if(moved>1) a.effect.setKeyframes([{height:`${h0}px`},{height:`${h1+moved}px`}]);
-          requestAnimationFrame(tick); return;
-        }
+        /* A shrinking FLIP already in flight must finish to its target:
+           the starting-height hold would rewind a History close mid-frame. */
+        if(st==='running' && shrinking){ requestAnimationFrame(tick); return; }
         const trS=scrollKeyEl('transcript'), s0=trS?trS.scrollTop:null;
         dir=moved; a.cancel();
         /* Direction-aware pin. Pinning at h0 when the content GREW painted
