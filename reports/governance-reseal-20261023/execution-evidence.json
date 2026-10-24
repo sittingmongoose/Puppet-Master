@@ -1136,6 +1136,542 @@
     "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/resume/continuation-20261023/after/incomplete-output-guard.command.json",
     "sha256": "0dfca2eeb2818dabfdab630d0b99264e686310a1841a4fd46a1b9ebc5182d25d"
   },
+  "landing_20261024": {
+    "authorization": "Jared: do the reseal",
+    "authorized": true,
+    "checked_head": "13361e4970214cc3ccd3b25a7f185c1f691963a3",
+    "commands": [
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-plans-verify.py",
+          "audit-governance",
+          "--report",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/audit-governance.json",
+          "--subcheck-timeout-seconds",
+          "600",
+          "--quiet-progress"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 238.371,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 1,
+        "started_at_utc": "2026-10-24T12:52:44.785027+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/audit-governance.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/audit-governance.out",
+        "stdout_sha256": "3d3f0814474f87c7cbbc46fe09c4de707e5b5573d08882ec9aff6002e9cd8699"
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-event-authority-currentness.py",
+          "validate"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 0.815,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 0,
+        "started_at_utc": "2026-10-24T12:56:43.162084+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/currentness-validate.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/currentness-validate.out",
+        "stdout_sha256": "c1a812cd48c307af8ff0870839204f748202c0c5f035eb6751650741bc0a384b"
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-plans-verify.py",
+          "validate-evidence",
+          "--report",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/evidence.json"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 14.94,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 0,
+        "started_at_utc": "2026-10-24T12:42:41.369499+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/evidence.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/evidence.out",
+        "stdout_sha256": "19746c01868578596681fe263dec9e2f9b8e1f198c36b1aa9ffe6f1c807cda8c"
+      },
+      {
+        "argv": [
+          "python3",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/resume/reject-incomplete-checks.py",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/spec-lock.json",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/evidence.json",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/plan-graph.json",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/readiness.json",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/migration-002.json",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/migration-current.out",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/run-gates.json",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/audit-governance.json"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 0.154,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 0,
+        "started_at_utc": "2026-10-24T12:58:10.302283+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/incomplete-output-guard.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/incomplete-output-guard.out",
+        "stdout_sha256": "60aefd6905e1393fe00b2a1eab38ab0cfd911f231c25dc4e1a9a57e96b56510e"
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-plan-index.py",
+          "validate"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 32.099,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 0,
+        "started_at_utc": "2026-10-24T12:56:58.758576+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/index-validate.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/index-validate.out",
+        "stdout_sha256": "a7d64076a9dd32b7415815877014d09fcd8d8d8f7302489e6172dafcf786d058"
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-plans-verify.py",
+          "validate-plan-migration",
+          "--report",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/migration-002.json",
+          "--subcheck-timeout-seconds",
+          "600"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 29.321,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 1,
+        "started_at_utc": "2026-10-24T12:43:36.975971+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/migration-002.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/migration-002.out",
+        "stdout_sha256": "02474d8b533991807b071cc201717a3b1583dc31204a250347c10e87029893fe"
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-plan-migration.py",
+          "validate",
+          "--run-dir",
+          "Plans/.plan_migration/pds-20261023-002-current-planunit-snapshot"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 89.079,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 0,
+        "started_at_utc": "2026-10-24T12:44:06.302082+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/migration-current.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/migration-current.out",
+        "stdout_sha256": "3bb78b21e0bfa2c009b35fc377f6a9085542a67cf80373944ad69edcbe2a8c2d"
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-plans-verify.py",
+          "validate-plan-graph",
+          "--report",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/plan-graph.json"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 11.871,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 0,
+        "started_at_utc": "2026-10-24T12:42:56.314380+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/plan-graph.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/plan-graph.out",
+        "stdout_sha256": "64a723ccf135c90a290f355c945b3a170dbbf54ddb9d892a3a367c90e2bfeda8"
+      },
+      {
+        "argv": [
+          "python3",
+          "Concepts/onboarding/opus-5.5/tools/build.py",
+          "--publish-pm7",
+          "--check"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 39.434,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 0,
+        "started_at_utc": "2026-10-24T12:57:30.861913+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/publish-pm7.err",
+        "stderr_sha256": "60fb776a62e0a934a5e54f3a694be459bf3633ca337d8b78335035093f398963",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/publish-pm7.out",
+        "stdout_sha256": "e25c455a0e36b64dea405a8e4f5de72729555886813981e4892075bb49577921"
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-plans-verify.py",
+          "validate-implementation-readiness",
+          "--report",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/readiness.json",
+          "--subcheck-timeout-seconds",
+          "600"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 28.78,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 1,
+        "started_at_utc": "2026-10-24T12:43:08.189954+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/readiness.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/readiness.out",
+        "stdout_sha256": "61c592f3a4cf3fec5404af538f0c03f0456cf1187db460e9ec98e0fc914bd897"
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-plans-verify.py",
+          "run-gates",
+          "--report",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/run-gates.json",
+          "--subcheck-timeout-seconds",
+          "600",
+          "--quiet-progress"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 429.393,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 1,
+        "started_at_utc": "2026-10-24T12:45:35.386765+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/run-gates.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/run-gates.out",
+        "stdout_sha256": "6b7a53c654632dce71647721960a7468cbc1a78cb0fc78f9a802034454378b6f"
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json",
+          "--report",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/shard-check.json"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 14.77,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 0,
+        "started_at_utc": "2026-10-24T12:56:43.982499+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/shard-check.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/shard-check.out",
+        "stdout_sha256": "8f15c310b9abbf0e3b909a0925e986b81f14f82be582dcc620a1abe578c68d7b"
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-plans-verify.py",
+          "verify-spec-lock",
+          "--report",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/spec-lock.json"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 0.663,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 0,
+        "started_at_utc": "2026-10-24T12:42:40.701173+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/spec-lock.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/after/spec-lock.out",
+        "stdout_sha256": "b4478e3526f56f50deedeca25a2c7f7b1d3bc26ee057b92c1e4d6982b2c927bb"
+      },
+      {
+        "argv": [
+          "python3",
+          "/tmp/c56p3-reseal/reconcile.py",
+          "comparison"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 0.098,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 0,
+        "started_at_utc": "2026-10-24T13:10:26.840432+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/comparison/export-coverage.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/comparison/export-coverage.out",
+        "stdout_sha256": "da9d9d787160b33795ad789172b78673595f3ecf395d965af7c010afbc4ab2e6"
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-event-authority-currentness.py",
+          "validate"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 0.57,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 0,
+        "started_at_utc": "2026-10-24T13:10:24.000087+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/comparison/final-currentness-validate.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/comparison/final-currentness-validate.out",
+        "stdout_sha256": "c1a812cd48c307af8ff0870839204f748202c0c5f035eb6751650741bc0a384b"
+      },
+      {
+        "argv": [
+          "python3",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/resume/reject-incomplete-checks.py",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/comparison/landing-check.out",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/comparison/check-reports"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 0.131,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 0,
+        "started_at_utc": "2026-10-24T13:10:24.575625+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/comparison/incomplete-output-guard.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/comparison/incomplete-output-guard.out",
+        "stdout_sha256": "3e48d59e80069dbc47013280ceedee6cf8cffc77d73727ffb5686d326915b9ea"
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-landing-check.py",
+          "--base",
+          "origin/main",
+          "--readiness-audit-root",
+          "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175/Plans/.audits/event-authority-2026-08-13-currentness",
+          "--subcheck-timeout-seconds",
+          "600",
+          "--keep-check-reports",
+          "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/comparison/check-reports",
+          "--json"
+        ],
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-014b6175",
+        "duration_seconds": 729.042,
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TMPDIR": "/tmp/c56p3-reseal/tmp"
+        },
+        "exit_code": 1,
+        "started_at_utc": "2026-10-24T12:58:14.867281+00:00",
+        "stderr": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/comparison/landing-check.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024/comparison/landing-check.out",
+        "stdout_sha256": "3183b6a5d9e7d1f7ef4135ea5a99e44bb2c7bb5d35b3306cb24809cf6b19ae9e"
+      }
+    ],
+    "counts": {
+      "audit-governance": {
+        "exit": 1,
+        "findings": 1469,
+        "subchecks": {
+          "audit_closure": 201,
+          "audit_status_index": 0,
+          "auto_decisions": 0,
+          "browser_event_admission": 0,
+          "case_l_non_event_materialization": 0,
+          "evidence": 0,
+          "filesafe_security_policy": 0,
+          "forge_backup_acceptance": 0,
+          "github_project_integration": 0,
+          "goal_runtime_event_fixtures": 0,
+          "gui_asset_policy": 0,
+          "implementation_readiness": 23,
+          "path_refs": 0,
+          "plan_graph": 0,
+          "plan_migration": 2,
+          "plans_to_code_handoff_schema": 0,
+          "pm7_gui_fixtures": 3,
+          "prd_planning_runtime_contracts": 1240,
+          "project_artifacts": 0,
+          "project_output_fixtures": 0,
+          "runtime_artifact_schemas": 0,
+          "server_command_gap": 0,
+          "shards": 0,
+          "spec_lock": 0,
+          "support_refs": 0,
+          "testing_session_event_admission": 0,
+          "touch_closure": 0,
+          "ui_command_response": 0,
+          "usage_contract_drift": 0,
+          "usage_gui_fixtures": 0,
+          "web_capability_contracts": 0,
+          "wiring_matrix": 0,
+          "working_notebook_contracts": 0
+        }
+      },
+      "currentness-validate": {
+        "exit": 0
+      },
+      "evidence": {
+        "exit": 0,
+        "findings": 0,
+        "subchecks": {
+          "findings": 0
+        }
+      },
+      "incomplete-output-guard": {
+        "exit": 0
+      },
+      "index-validate": {
+        "exit": 0
+      },
+      "migration-002": {
+        "exit": 1,
+        "findings": 2,
+        "subchecks": {
+          "findings": 2
+        }
+      },
+      "migration-current": {
+        "exit": 0,
+        "findings": 0,
+        "subchecks": {
+          "findings": 0
+        }
+      },
+      "plan-graph": {
+        "exit": 0,
+        "findings": 0,
+        "subchecks": {
+          "findings": 0
+        }
+      },
+      "publish-pm7": {
+        "exit": 0
+      },
+      "readiness": {
+        "exit": 1,
+        "findings": 23,
+        "subchecks": {
+          "findings": 23
+        }
+      },
+      "run-gates": {
+        "exit": 1,
+        "findings": 1486,
+        "subchecks": {
+          "check_project_artifact_requirements": 0,
+          "check_shards": 0,
+          "json_syntax": 17,
+          "lint_banned_phrases": 0,
+          "lint_contractrefs": 0,
+          "lint_path_refs": 0,
+          "validate_audit_closure": 201,
+          "validate_audit_status_index": 0,
+          "validate_auto_decisions": 0,
+          "validate_browser_event_admission": 0,
+          "validate_case_l_non_event_materialization": 0,
+          "validate_evidence": 0,
+          "validate_filesafe_security_policy": 0,
+          "validate_forge_backup_acceptance": 0,
+          "validate_github_project_integration": 0,
+          "validate_goal_runtime_event_fixtures": 0,
+          "validate_gui_asset_policy": 0,
+          "validate_implementation_readiness": 23,
+          "validate_new_contracts": 0,
+          "validate_plan_graph": 0,
+          "validate_plan_migration": 2,
+          "validate_plans_to_code_handoff_schema": 0,
+          "validate_pm7_gui_fixtures": 3,
+          "validate_prd_planning_runtime_contracts": 1240,
+          "validate_project_output_fixtures": 0,
+          "validate_runtime_artifact_schemas": 0,
+          "validate_server_command_gap": 0,
+          "validate_testing_session_event_admission": 0,
+          "validate_touch_closure": 0,
+          "validate_ui_command_response": 0,
+          "validate_usage_contract_drift": 0,
+          "validate_usage_gui_fixtures": 0,
+          "validate_web_capability_contracts": 0,
+          "validate_wiring_matrix": 0,
+          "validate_working_notebook_contracts": 0,
+          "verify_spec_lock": 0
+        }
+      },
+      "shard-check": {
+        "exit": 0
+      },
+      "spec-lock": {
+        "exit": 0,
+        "findings": 0,
+        "subchecks": {
+          "findings": 0
+        }
+      }
+    },
+    "evidence_root": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261023/landing-20261024",
+    "local_landing_comparison": {
+      "aggregate_counts": {
+        "audit-governance": 1485,
+        "plan-migration-validate": 0,
+        "run-gates": 1502
+      },
+      "blocking": 0,
+      "exit": 1,
+      "infrastructure": 0,
+      "new_observations": 4
+    },
+    "mailbox": "c56p3-reseal",
+    "main_base": "ca3708bb28afc1557ac65e0dfa50b8d5e0f5f5d4",
+    "previous_reviewed_head": "4d70873fe42972337667bdb55eff533aa5d26d2d",
+    "rebase_exit": 0,
+    "review": "Astra r2 OK, 0 FIX, 0 LOW",
+    "reviewed_currentness_15_hashes_unchanged": true,
+    "reviewed_governance_bytes_unchanged": true
+  },
   "landing_authorized": false,
   "landing_check_exit_code": 1,
   "landing_comparison_receipt": {
