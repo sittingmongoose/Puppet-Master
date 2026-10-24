@@ -1,4 +1,7 @@
-"""Hosted-only patches for the chat's render cost in PMConcept7 (round 2 perf lane, perf-opus, 2026-10-23).
+"""Render-cost patch lineage (round 2 perf lane, perf-opus, 2026-10-23).
+
+These three repairs now live in shared app.js: standalone needs the same layout custody during guide FLIPs.
+The hosted build inherits them directly. The original rationale remains below.
 
 chat56_layer.py applies every pm7-port/tools/patches_*.py HOSTED_JS_PATCHES entry to the chat's script text before
 bundling, in the hosted build only, and fails the build when an `old` string does not occur exactly `count` times; the
@@ -9,7 +12,7 @@ selector attempts per element, measured with Chrome's selector stats), so a chan
 (~1,400 elements in #pmRoot, ~1,300 more in an open History) costs 70-200 ms. Nothing here changes a value any rule
 reads; it changes how often the browser has to recompute the elements that do not read it.
 
-1. The stage's dock variables survive a re-render (app.js pmSyncAttrs). syncChatDock keeps --chat-dock-h,
+1. The stage's dock variables survive a re-render (now shared in app.js pmSyncAttrs). syncChatDock keeps --chat-dock-h,
    --thread-float-h, --decision-h and --lens-strip-h on .chat-stage's inline style, and the Ask Card's dock height
    (PM56_DOCK_H) puts its per-frame --decision-h on .chat-float. Neither element has a style attribute in the markup,
    so every renderApp's patch removed them, and syncChatChrome then wrote them back one at a time with a forced layout
@@ -32,16 +35,4 @@ Entries: (script, old, new, count).
 """
 from __future__ import annotations
 
-HOSTED_JS_PATCHES = [
-    ('app.js',
-     "    for(const at of [...el.attributes]) if(!seen.has(at.name) && !(HOSTED && HOSTED_KEEP_ATTR.test(at.name) && "
-     "!(at.name==='data-pm-hover-was-disabled' && !src.hasAttribute('disabled')))) el.removeAttribute(at.name);",
-     "    for(const at of [...el.attributes]) if(!seen.has(at.name) && !(HOSTED && HOSTED_KEEP_ATTR.test(at.name) && "
-     "!(at.name==='data-pm-hover-was-disabled' && !src.hasAttribute('disabled')))\n"
-     "      && !(HOSTED && at.name==='style' && (el.classList.contains('chat-stage') || el.classList.contains('chat-float')))) "
-     "el.removeAttribute(at.name);", 1),
-    ('app.js', '<div class="composer-box" data-k="composer-box">',
-     '<div class="composer-box${composerCompact?\' is-compact\':\'\'}" data-k="composer-box">', 1),
-    ('app.js', '<div class="activity-wrap" data-k="activity-wrap">',
-     '<div class="activity-wrap${abCompactTier>=1?\' is-ab-compact\':\'\'}${abCompactTier>=2?\' is-ab-icon-only\':\'\'}" data-k="activity-wrap">', 1),
-]
+HOSTED_JS_PATCHES = []
