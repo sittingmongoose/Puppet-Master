@@ -409,6 +409,15 @@
     }
     c.renderApp();
     var art = document.querySelector('.transcript-inner > [data-k="msg:' + CSS.escape(st.id) + '"]');
+    /* Removing data-streaming switches tx-arrive back to the transcript's
+       ordinary CSS entrance. This reply is already painted: finish that
+       fallback before the rich-text handoff (and any queue flush) paints,
+       without touching another item's entrance or a Web Animation. */
+    if (art && art.getAnimations) art.getAnimations().forEach(function (a) {
+      if (typeof CSSAnimation === 'undefined' || !(a instanceof CSSAnimation)) return;
+      var tm = a.effect && a.effect.getTiming();
+      if (tm && tm.iterations !== Infinity) { try { a.finish(); } catch (e) { } }
+    });
     if (art && !reduced()) { art.classList.add('tx-peek'); setTimeout(function () { art.classList.remove('tx-peek'); }, window.PM56_CLOCK ? window.PM56_CLOCK.ms(1500) : 1500); }
     var t = (c.state.threads || []).filter(function (x) { return x.id === st.tid; })[0];
     if (t && terminal === 'complete' && window.PM56_AUTO_MEMORY) window.PM56_AUTO_MEMORY.boundary(t, m);
