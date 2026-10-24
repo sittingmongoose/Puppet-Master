@@ -753,11 +753,13 @@
       /* every release, a fold's too: a fold's room now starts from the run-long floor (up to RUN_ROOM_MAX over the
          content), and at omega 11 that eased down at up to ~0.97 px/ms, past turn-verify's 0.4 px/ms snap line */
       { var lo = room.floorAt - SHRINK_VMAX * dt - base; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
-      /* round 3 (blank): a reader's close keeps at most the run's own room (RUN_ROOM_MAX over the content); the band
-         past it comes down with the close's FLIP, CLOSE_STEP a 60 Hz frame at most. Held whole and eased at SHRINK_VMAX,
-         it left a following reader looking at a view 75-100% blank for 1-2.3 s (boot's history close: 485 px of a
-         647 px view; Long agent turn: the whole view, the cut above only keeping the content's end at its top edge) */
-      if (room.lg) { var cap = Math.max(base, nat + RUN_ROOM_MAX); if (room.floorAt > cap) { var to = Math.max(cap, room.floorAt - CLOSE_STEP * Math.min(1, dt * 60)) - base; if (s2[0] > to) { s2[0] = to; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } } }
+      /* round 3 (blank): a reader's close keeps at most the run's own room (RUN_ROOM_MAX over the content the close
+         leaves: room.own, the list without its history, while the close's FLIP still shows the old height); the band
+         past it comes down with the FLIP from its first frame, CLOSE_STEP a 60 Hz frame at most. Held whole and eased at
+         SHRINK_VMAX, it left a following reader looking at a view 75-100% blank for 1-2.3 s (boot's history close:
+         485 px of a 647 px view; Long agent turn: the whole view, the cut above only keeping the content's end at its
+         top edge). Started only once the band passed RUN_ROOM_MAX, the FLIP outran it: 55% of the view at boot */
+      if (room.lg) { var cap = Math.max(base, (room.own > 0 ? Math.min(nat, room.own) : nat) + RUN_ROOM_MAX); if (room.floorAt > cap) { var to = Math.max(cap, room.floorAt - CLOSE_STEP * Math.min(1, dt * 60)) - base; if (s2[0] > to) { s2[0] = to; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } } }
       room.x = s2[0]; room.v = s2[1];
       /* under reduced motion (only a held demo run holds room there) the floor goes at once */
       if (room.x < 0.5 && base > nat + 0.5 && !reduced()) {
