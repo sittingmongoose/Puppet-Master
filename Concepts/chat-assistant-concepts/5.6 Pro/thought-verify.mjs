@@ -177,7 +177,13 @@ async function send(page, text) {
   await ta.click(); await ta.fill(text); await sleep(60);
   await page.click(P + '[data-action="send"]');
 }
-/* one sample per frame for `ms`: the block, its reply, the reader's view and the polite status */
+/* one sample per frame for `ms`: the block, its reply, the reader's view and the polite status.
+   V6 (polish-p6/trace): plus W.late, the drop predicate's own reading of the reader's view. The sample reads first in each
+   frame (it is armed before the send), so it saw the step the page wrote in the frame before and stamped it with this
+   frame's callback time, which starts 2-25 ms late on a busy hosted page: a room release at 200 px/s (turn-stream
+   SHRINK_VMAX) read 0.42-0.5 px/ms on regular 60 Hz frames. W.late is read after the page's own frame callbacks (re-armed
+   from a task posted after each frame) and stamped with the frame's own time (rAF ts), so each step is divided by the
+   frame it was drawn in. Every other measure keeps the first reading. */
 async function sample(page, ms) {
   await page.evaluate(([ms, P]) => {
     const t0 = performance.now();
@@ -196,10 +202,13 @@ async function sample(page, ms) {
         tw: T ? T.querySelectorAll('.tt-w').length : 0, R: !!R, rw: R ? R.querySelectorAll('.tx-w').length : 0, before: !!(T && R && (T.compareDocumentPosition(R) & 4)),
         u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null, g: tr ? Math.round(tr.scrollHeight - tr.clientHeight - tr.scrollTop) : null, stick: PM56_EXT.ctx().isSticky(),
         /* for a failure's trace: the list's height, the reply's height and the room hold's floor */
-        ih: inner ? inner.offsetHeight : null, rh: R ? Math.round(R.getBoundingClientRect().height) : null, floor: document.documentElement.style.getPropertyValue('--tx-hold-min') || null });
+        ih: inner ? inner.offsetHeight : null, rh: R ? Math.round(R.getBoundingClientRect().height) : null, floor: (window.PM56_ROOT_STYLE || document.documentElement.style).getPropertyValue('--tx-hold-min') || null });
       if (performance.now() - t0 < ms) requestAnimationFrame(tick); else W.done = true;
     };
     requestAnimationFrame(tick);
+    { W.late = []; const mc = new MessageChannel(); const run = ts => { const inner = document.querySelector(P + '.chat-stage .transcript-inner'), us = inner ? inner.querySelectorAll(':scope > [data-role="user"]') : [], u = us[us.length - 1];
+      W.late.push({ t: Math.round(ts - t0), u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null }); if (performance.now() - t0 < ms) mc.port2.postMessage(0); };
+      mc.port1.onmessage = () => requestAnimationFrame(run); requestAnimationFrame(run); }
   }, [ms, P]);
 }
 const samples = page => page.evaluate(() => window.__tt);
@@ -207,12 +216,12 @@ const lastThought = (page) => page.evaluate(P => { const a = [...document.queryS
   return { id: a.dataset.messageId, state: a.dataset.thoughtState, open: a.dataset.thoughtOpen, label: h.textContent.replace(/\s+/g, ' ').trim(), expanded: h.getAttribute('aria-expanded'), controls: h.getAttribute('aria-controls'), bodyId: body.id, bodyHidden: body.getAttribute('aria-hidden'), role: body.getAttribute('role'), ch: +clip.getBoundingClientRect().height.toFixed(1), fh: clip.firstElementChild.offsetHeight, folded: clip.classList.contains('tt-folded'), capped: clip.classList.contains('tt-capped'), gist: !!a.querySelector('.tt-gist') }; }, P);
 /* the turn-verify predicates: the view never stays more than 24px off the bottom for longer than 300ms, and never
    drops faster than 0.4px/ms (a clamp snapping back) */
-function followVerdicts(s) {
-  const late = s.filter(x => x.t > 1500 && x.g != null);
+function followVerdicts(s, frames) {
+  const late = s.filter(x => x.t > 1500 && x.g != null), drawn = frames && frames.length ? frames.filter(x => x.t > 1500) : late;
   let from = null, longest = 0, at = null;
   late.forEach(x => { if (x.g > 24) { if (from == null) from = x.t; if (x.t - from >= longest) { longest = x.t - from; at = from; } } else from = null; });
   const drops = [];
-  late.forEach((x, i) => { const q = late[i - 1]; if (q && x.u != null && q.u != null && x.u - q.u > 2 && (x.u - q.u) / Math.max(1, x.t - q.t) > 0.4) drops.push({ t: x.t, by: +(x.u - q.u).toFixed(1), ms: x.t - q.t }); });
+  drawn.forEach((x, i) => { const q = drawn[i - 1]; if (q && x.u != null && q.u != null && x.u - q.u > 2 && (x.u - q.u) / Math.max(1, x.t - q.t) > 0.4) drops.push({ t: x.t, by: +(x.u - q.u).toFixed(1), ms: x.t - q.t }); });
   return { longest, at, drops, worst: late.length ? Math.max(...late.map(x => x.g)) : null, samples: late.length, unstuck: late.filter(x => !x.stick).length };
 }
 
@@ -248,7 +257,7 @@ await safe('auto', async () => {
   await p.focus(head); await p.keyboard.press('Enter'); await sleep(700);
   const o2 = await lastThought(p);
   check('A9 Enter on the focused line folds it again (keyboard reachable)', o2.open === '0' && o2.expanded === 'false' && o2.ch <= 0.5, o2);
-  const f = followVerdicts(s);
+  const f = followVerdicts(s, W.late);
   check('A10 the fold never pulls the thread down (no clamp snap) and follow-along holds through the turn (<=300ms away)', f.drops.length === 0 && f.longest <= 300 && f.unstuck === 0, f);
   const st = W.status;
   check('A11 screen readers hear two polite statuses, start and end, never the words', st.length === 2 && /is thinking\.$/.test(st[0].text) && /^Thought for \d+ seconds?\.$/.test(st[1].text), st);
@@ -292,15 +301,18 @@ await safe('agent', async () => {
       if (performance.now() - t0 < ms) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
+    { W.late = []; const mc = new MessageChannel(); const run = ts => { const inner = document.querySelector(P + '.chat-stage .transcript-inner'), us = inner ? inner.querySelectorAll(':scope > [data-role="user"]') : [], u = us[us.length - 1];
+      W.late.push({ t: Math.round(ts - t0), u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null }); if (performance.now() - t0 < ms) mc.port2.postMessage(0); };
+      mc.port1.onmessage = () => requestAnimationFrame(run); requestAnimationFrame(run); }
   }, [9000, P]);
   await send(p, "Add the composite index and prove it's faster.");
   await sleep(9500);
-  const s = (await p.evaluate(() => window.__tta)).s;
+  const GA = await p.evaluate(() => window.__tta), s = GA.s;
   const thinking = s.filter(x => x.T && x.st === 'thinking');
   check('G1 no working card while the model thinks; the reasoning streams first', thinking.length > 20 && thinking.every(x => !x.card), { frames: thinking.length, withCard: thinking.filter(x => x.card).length });
   const born = s.find(x => x.card);
   check('G2 Auto folds as the first tool call starts: the block is done and folded above the card in the card\'s first frame', born && born.st === 'done' && born.open === '0' && born.before, born);
-  const f = followVerdicts(s);
+  const f = followVerdicts(s, GA.late);
   check('G3 the card\'s birth and the fold never snap the thread down; the reader stays at the bottom', f.drops.length === 0 && f.unstuck === 0, f);
   results.push({ group: 'agent', label: 'G-follow (diagnostic: the catch-up after the card\'s birth, turn-verify\'s predicate applies there)', pass: true, diagnostic: true, sizeContext: testGeometry(), detail: f });
   check('G4 no page errors', p.__errs.length === 0, p.__errs.slice(0, 2));
@@ -320,17 +332,18 @@ await safe('lines', async () => {
     await sample(p, 13500);
     await send(p, Q);
     await sleep(14000);
-    const s = (await samples(p)).s, thinking = s.filter(x => x.T && x.st === 'thinking');
+    const LW = await samples(p), s = LW.s, thinking = s.filter(x => x.T && x.st === 'thinking');
     const lh = (thinking.find(x => x.lh) || {}).lh || 20, cap = Math.round(lh * n), maxH = Math.max(...thinking.map(x => x.ch || 0));
     const over = thinking.filter(x => x.fh > cap + 8), above = thinking.filter(x => x.ch > cap + 1);
     sizes[n] = { lh, cap, maxH, overflowingFrames: over.length, cappedFrames: over.filter(x => x.capped).length, frames: thinking.length };
     check(`L-${n} ${n} lines: the live window rises to exactly ${n} lines and no further; the rest fades at the top`, thinking.length > 20 && Math.abs(maxH - cap) <= 1.5 && above.length === 0 && over.length > 10 && over.every(x => x.capped), sizes[n]);
     /* the turns before this one are on screen too: the answer is the first reply word after this thought began */
     const from = s.findIndex(x => x.T && x.st === 'thinking'), a = from < 0 ? null : s.slice(from).find(x => x.R && x.rw > 0);
-    const landed = a ? s.find(x => x.t > a.t && x.t <= a.t + 600 && x.ch <= 0.5 && x.folded) : null, f = followVerdicts(s);
+    const landed = a ? s.find(x => x.t > a.t && x.t <= a.t + 600 && x.ch <= 0.5 && x.folded) : null, f = followVerdicts(s, LW.late);
     const ftrace = f.drops.length ? s.filter(x => x.t >= f.drops[0].t - 300 && x.t <= f.drops[0].t + 150).map(x => ({ t: x.t, u: x.u, g: x.g, ih: x.ih, rh: x.rh, rw: x.rw, floor: x.floor, ch: x.ch })) : undefined;
+    const ltrace = f.drops.length ? LW.late.filter(x => x.t >= f.drops[0].t - 120 && x.t <= f.drops[0].t + 60) : undefined;
     check(`L-${n} ${n} lines: it folds as the answer starts and lands folded; no clamp snap, follow-along holds (<=300ms away)`, !!a && a.st === 'done' && a.open === '0' && !!landed && landed.t - a.t <= 520 && f.drops.length === 0 && f.longest <= 300 && f.unstuck === 0,
-      { fold: a ? { st: a.st, open: a.open, landedMs: landed ? landed.t - a.t : null, at: a.t } : null, follow: f, trace: ftrace });
+      { fold: a ? { st: a.st, open: a.open, landedMs: landed ? landed.t - a.t : null, at: a.t } : null, follow: f, trace: ftrace, drawn: ltrace });
     await settled(p);
   }
   results.push({ group: 'lines', label: 'L-sizes (diagnostic: per choice, line height, cap, tallest window, frames past the cap)', pass: true, diagnostic: true, sizeContext: testGeometry(), detail: sizes });
@@ -347,14 +360,17 @@ await safe('lines', async () => {
         before: !!(T && card && (T.compareDocumentPosition(card) & 4)), u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null,
         g: tr ? Math.round(tr.scrollHeight - tr.clientHeight - tr.scrollTop) : null, stick: PM56_EXT.ctx().isSticky(),
         /* for a failure's trace: the card's height, the list's height and the room hold's floor */
-        cardH: card ? Math.round(card.getBoundingClientRect().height) : null, ih: inner ? inner.offsetHeight : null, floor: document.documentElement.style.getPropertyValue('--tx-hold-min') || null });
+        cardH: card ? Math.round(card.getBoundingClientRect().height) : null, ih: inner ? inner.offsetHeight : null, floor: (window.PM56_ROOT_STYLE || document.documentElement.style).getPropertyValue('--tx-hold-min') || null });
       if (performance.now() - t0 < ms) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
+    { W.late = []; const mc = new MessageChannel(); const run = ts => { const inner = document.querySelector(P + '.chat-stage .transcript-inner'), us = inner ? inner.querySelectorAll(':scope > [data-role="user"]') : [], u = us[us.length - 1];
+      W.late.push({ t: Math.round(ts - t0), u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null }); if (performance.now() - t0 < ms) mc.port2.postMessage(0); };
+      mc.port1.onmessage = () => requestAnimationFrame(run); requestAnimationFrame(run); }
   }, [13500, P]);
   await send(p, AGENT_Q);
   await sleep(14000);
-  const g = (await p.evaluate(() => window.__tta)).s, gThinking = g.filter(x => x.T && x.st === 'thinking'), born = g.find(x => x.card), gf = followVerdicts(g);
+  const GW = await p.evaluate(() => window.__tta), g = GW.s, gThinking = g.filter(x => x.T && x.st === 'thinking'), born = g.find(x => x.card), gf = followVerdicts(g, GW.late);
   const gMax = Math.max(...gThinking.map(x => x.ch || 0));
   check('L-agent 16 lines in an agent turn: no card while it thinks; the window reaches 16 lines, then folds before the card enters', gThinking.length > 20 && gThinking.every(x => !x.card) && gMax >= sizes[16].cap - 1.5 && !!born && born.st === 'done' && born.open === '0' && born.before,
     { frames: gThinking.length, tallest: gMax, born });

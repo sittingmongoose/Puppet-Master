@@ -77465,7 +77465,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
-  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.floorAt = room.h0; } }
+  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.floorAt = room.h0; } }
   /* Round 3 (A): app.js rewound the transcript (rewindTranscript, a thread switch): no room is kept for what left,
      and the next hold measures the list as it is then (roomSeen cleared: holdShrink takes offsetHeight, watchRoom
      re-observes the list) */
@@ -77545,7 +77545,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
-  function roomFrame() {
+  function roomFrame(ts) {
     room.raf = 0;
     var inner = roomInner();
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
@@ -77558,7 +77558,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       if (grown > room.h0 + 0.5) { room.h0 = grown; roomFloor(room.h0); }
     }
     if (room.rel) {
-      var nat = naturalH(inner), t = now(), dt = Math.min(0.1, Math.max(0, (t - room.last) / 1000)); room.last = t;
+      /* P6: each step is timed by the frame (rAF ts, in motion time), not by the callback: callbacks start 2-20 ms into
+         a frame, and a late one followed by an early one made one step 4.6 px and the next 2 px on regular 60 Hz frames */
+      var nat = naturalH(inner), t = now(), fts = typeof ts === 'number' ? ts : null, k = window.PM56_CLOCK && window.PM56_CLOCK.scale != null ? window.PM56_CLOCK.scale : 1;
+      var dt = Math.min(0.1, Math.max(0, (fts != null && room.lastTs != null && fts > room.lastTs ? (fts - room.lastTs) * k : t - room.last) / 1000)); room.last = t; room.lastTs = fts;
       if (room.x == null) room.x = Math.max(0, room.h0 - nat);
       /* critically damped to zero (omega 11/s: ~450ms; a shrink's leftover 8/s) */
       var s2 = critStep(room.x, room.v, room.transient ? 8 : 11, dt);
