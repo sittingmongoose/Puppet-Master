@@ -667,6 +667,10 @@
      the card's history closing gave back 536px, and holding that left most of the view blank until the run ended. A
      band past it is let go the ordinary way, as a live turn's shrink is. */
   var RUN_ROOM_MAX = 240;
+  /* round 3 (blank): the most a reader's close lowers the floor (moves the text under a following reader) in a 60 Hz
+     frame, timed by the frame so a 120 Hz page filmed at 60 fps reads the same: under the 30 px one-frame step a
+     reader reads as a jump */
+  var CLOSE_STEP = 28;
   function runHoldsRoom() { var c = C(); return !!(c && c.runHoldsRoom && c.runHoldsRoom()); }
   function shrinkRelAt() { return runHoldsRoom() ? Infinity : now() + SHRINK_HOLD; }
   function holdShrink(fresh, finite, atLeast) {
@@ -749,6 +753,11 @@
       /* every release, a fold's too: a fold's room now starts from the run-long floor (up to RUN_ROOM_MAX over the
          content), and at omega 11 that eased down at up to ~0.97 px/ms, past turn-verify's 0.4 px/ms snap line */
       { var lo = room.floorAt - SHRINK_VMAX * dt - base; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
+      /* round 3 (blank): a reader's close keeps at most the run's own room (RUN_ROOM_MAX over the content); the band
+         past it comes down with the close's FLIP, CLOSE_STEP a 60 Hz frame at most. Held whole and eased at SHRINK_VMAX,
+         it left a following reader looking at a view 75-100% blank for 1-2.3 s (boot's history close: 485 px of a
+         647 px view; Long agent turn: the whole view, the cut above only keeping the content's end at its top edge) */
+      if (room.lg) { var cap = Math.max(base, nat + RUN_ROOM_MAX); if (room.floorAt > cap) { var to = Math.max(cap, room.floorAt - CLOSE_STEP * Math.min(1, dt * 60)) - base; if (s2[0] > to) { s2[0] = to; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } } }
       room.x = s2[0]; room.v = s2[1];
       /* under reduced motion (only a held demo run holds room there) the floor goes at once */
       if (room.x < 0.5 && base > nat + 0.5 && !reduced()) {
