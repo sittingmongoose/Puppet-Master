@@ -2758,6 +2758,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(Math.abs(h1-h0)<1) continue;
       const prevOverflow=el.style.overflow;
       el.style.overflow='hidden';
+      /* A completed card's long History already reveals through this body's
+         height clip. Its second, list-sized details-open clip trails that
+         reveal: follow can scroll below all revealed rows while the reply is
+         still below the view, blanking the whole transcript. Keep the same
+         fade, translation and clock; let the body own the growing edge. */
+      const history=card&&card.classList.contains('is-done')&&h1>h0&&el.classList.contains('working-body')?el.querySelector(':scope > .work-history'):null;
+      const transcript=history&&el.closest('.transcript');
+      if(transcript&&history.getBoundingClientRect().height>transcript.clientHeight){
+        for(const opening of history.getAnimations()){
+          if(opening.animationName!=='details-open') continue;
+          opening.effect.setKeyframes(opening.effect.getKeyframes().map(key=>{const k={...key};delete k.clipPath;return k;}));
+        }
+      }
       const a=el.animate([{height:`${h0}px`},{height:`${h1}px`}],
         {duration:320, easing:'cubic-bezier(.22,.80,.28,1)'});
       /* Start the clock on the NEXT frame, not this one. This frame still has
