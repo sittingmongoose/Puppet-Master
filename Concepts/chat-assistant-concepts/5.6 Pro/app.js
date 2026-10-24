@@ -2532,7 +2532,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(cut) rewindTranscript();
     else restoreScroll(positions,{workH, workKey, post, workGrow:workFlipped(flips), still:revealing==='still'});
     /* Round 3 (B): a gate lifted by something arriving puts a following reader at the new bottom in this frame */
-    if(revealing==='grow'&&tStick) stickToBottom(true);
+    if(revealing==='grow'&&tStick){
+      /* The reader is leaving the gated card for the arrival below the revealed tail. Its old room belongs to
+         the card's former position at the bottom, not to this new bottom. Drop it before the arrival is painted. */
+      try{ window.PM56_STREAM?.cut?.(); }catch(e){}
+      stickToBottom(true);
+    }
     renderOverlays();
     fitActivityTabs();
     retainHoverAfterRender();
@@ -2939,7 +2944,20 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      the working-card total, as it did when the growth was a bare number. Comparing the object
      itself with -4 was always false, so the hold never fired and a shrinking card snapped the
      thread down mid-turn (turn-verify "the thread never jumps down mid-turn"). */
-  function workFlipped(flips){ const g=workFlipGrowth(flips); const tot=typeof g==='number'?g:((g&&g.total)||0); if(tot<-4&&workShrinkFn){ try{ workShrinkFn(-tot); }catch(e){} } return g; }
+  function workFlipped(flips){
+    const g=workFlipGrowth(flips), tot=typeof g==='number'?g:((g&&g.total)||0);
+    if(tot<-4&&workShrinkFn){
+      const tr=tEl(), top=tr?.getBoundingClientRect().top;
+      /* A card wholly above the reader needs no room: the bottom clamp absorbs its shrink and keeps the visible
+         tail still. Holding its old height instead moves that tail up through the FLIP, then down as room expires. */
+      const visibleShrink=!tr||(flips||[]).some(f=>{
+        const card=f.el.closest('.working-card');
+        return card&&f.h1<f.h0&&(lastInTranscript(card)||card.getBoundingClientRect().bottom>top);
+      });
+      if(visibleShrink){ try{ workShrinkFn(-tot); }catch(e){} }
+    }
+    return g;
+  }
   function stickToBottom(instant){
     tStick=true;
     const el=tEl();
