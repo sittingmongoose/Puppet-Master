@@ -78036,8 +78036,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
 
   /* The text you typed leaves the composer and becomes the bubble.
      TEXT: one layer that keeps the typed glyphs and scales from the composer's
-     size to the bubble's -- no doubled text. Only when the line breaks differ
-     between the two widths do two layers cross-fade (the middle 30%).
+     size to the bubble's -- no doubled text. When the line breaks differ,
+     the lifted copy uses the destination's wrapping from its first frame.
      SHAPE: the bubble itself, a separate layer that forms per voice --
        basic   grows out of the text's own bounds (clip-path), zero overshoot
        friendly pops out of the Send button and swings up to meet the text
@@ -78060,7 +78060,11 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var A = s.A || textLayer(s.text, s.font, s.lh, s.color, wA);
     var B2 = textLayer(s.text, bcs.font, bcs.lineHeight, bcs.color, wB);
     var single = A.offsetHeight <= (parseFloat(s.lh) || fA * 1.5) * 1.6 && B2.offsetHeight <= (parseFloat(bcs.lineHeight) || fB * 1.6) * 1.6;
-    if (single && v !== 'retro') { B2.remove(); B2 = null; }
+    /* Different wraps cannot cross-fade legibly on top of each other. Carry
+       the destination layout once, scaled to the composer's glyph size. */
+    var targetText = !single && v !== 'retro';
+    if (targetText) { A.remove(); A = B2; B2 = null; }
+    else if (single && v !== 'retro') { B2.remove(); B2 = null; }
     else B2.style.opacity = '0';
     /* SHAPE */
     var S = document.createElement('div'); S.className = 'tx-fly tx-fly-shape';
@@ -78104,14 +78108,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
         var dx = (tx - sx) * p, dy = (ty - sy) * p + arc;
         var sc = (fA / fB) + (1 - fA / fB) * p;                        // composer size -> bubble size
         A.style.left = sx + 'px'; A.style.top = sy + 'px';
-        A.style.transform = 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) scale(' + (single ? (sc * fB / fA) : 1).toFixed(4) + ')';
-        if (!single) {
-          var x = seg(t, 0.35, 0.65);
-          A.style.opacity = String(1 - x);
-          B2.style.left = sx + 'px'; B2.style.top = sy + 'px';
-          B2.style.transform = 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) scale(' + sc.toFixed(4) + ')';
-          B2.style.opacity = String(x);
-        }
+        A.style.transform = 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) scale(' + (targetText ? sc : (sc * fB / fA)).toFixed(4) + ')';
         /* the shape */
         var bx, by, ss = 1, op = 1, blur = 0, clip = 'none';
         if (v === 'friendly' && sendR) {
