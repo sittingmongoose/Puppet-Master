@@ -750,7 +750,10 @@
         room.transient = true; room.relAt = Infinity; roomFloor(room.h0);
         try { C().followIfSticky(); } catch (e) { } room.raf = requestAnimationFrame(roomFrame); return;
       }
-      if (room.x < 0.5 || nat >= room.h0 || reduced()) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
+      /* Growth can pass h0 while the installed floor still carries spring
+         residual. Drop only once content reaches that actual floor; otherwise
+         removing it clamped the view by 4px in one 120Hz frame (thought L-4). */
+      if (room.x < 0.5 || nat >= room.floorAt || reduced()) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
       room.floorAt = base + room.x;
       /* P5 v2: the band never keeps the view blank. What of it lies above the view's top goes at once: the view showed
          only the band and still does, so nothing on screen moves; the rest eases as before, from the content's end at
