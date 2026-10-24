@@ -859,12 +859,29 @@ await sec('item4: exit contract', async()=>{
    work tick land inside the exit window. */
 await sec('item4: pmPatch cannot drop the node mid-exit', async()=>{
   await page.evaluate(()=>PM56_DEMO.startWorking());
+  /* click() also measures geometry after activation. Across CDP that can
+     return after the 240ms exit already ended. Sample inside the page from
+     the trusted click, as the open/close traces above do. */
+  const midPromise = page.evaluate(()=>new Promise(resolve=>{
+    let done=false;
+    const finish=value=>{if(done)return;done=true;document.removeEventListener('click',activate,true);clearTimeout(deadline);resolve(value);};
+    const activate=e=>{
+      const action=e.target?.closest?.('[data-action]')?.dataset.action;
+      if(!e.isTrusted||!['toggle-history','close-history'].includes(action))return;
+      document.removeEventListener('click',activate,true);
+      const at=performance.now();
+      setTimeout(()=>finish({
+        present:!!document.querySelector('.history-flyout'),
+        mode:document.body.dataset.phDrawer,
+        historyMode:PM56_DEMO.getState().historyMode,
+        observedAfterMs:performance.now()-at
+      }),120);
+    };
+    const deadline=setTimeout(()=>finish({timedOut:true,present:false}),6000);
+    document.addEventListener('click',activate,true);
+  }));
   await click('[data-action="toggle-history"]');
-  await page.waitForTimeout(120);
-  const mid = await page.evaluate(()=>({
-    present:!!document.querySelector('.history-flyout'),
-    mode:document.body.dataset.phDrawer,
-    historyMode:PM56_DEMO.getState().historyMode}));
+  const mid = await midPromise;
   if(REDUCED){
     /* The exit collapses to 1ms, so the node is legitimately already gone at
        the 120ms sample — the point of the contract is that the caller reads the
