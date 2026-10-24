@@ -3188,13 +3188,56 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const k=el.dataset.scrollKey, intent=scrollIntents.get(k);
       out[k]=(k==='transcript'&&tStick)?'follow':intent?intent.to:el.scrollTop;
     });
+    /* A reader inside History needs its rows anchored, not the card's outer
+       height: the live stage can regroup above them without resizing the card.
+       A following reader still belongs to the bottom glide. */
+    const tr=tEl();
+    if(tr&&!tStick&&!scrollIntents.has('transcript')){
+      const vr=tr.getBoundingClientRect();
+      const history=[...tr.querySelectorAll('.working-card:not(.is-done) .work-history')].find(el=>{
+        const r=el.getBoundingClientRect(); return r.top<vr.bottom&&r.bottom>vr.top;
+      });
+      if(history) out.workHistory={el:history,y:history.getBoundingClientRect().top,input:tUserInputAt};
+    }
     return out;
   }
+  let workHistoryAnchor=null;
+  function anchorWorkHistory(pos){
+    if(!pos||!pos.el.isConnected||tStick||scrollIntents.has('transcript')||pos.input!==tUserInputAt) return false;
+    const el=pos.el, tr=el.closest('[data-scroll-key="transcript"]');
+    if(!tr) return false;
+    if(workHistoryAnchor&&workHistoryAnchor.el===el&&workHistoryAnchor.input===pos.input
+       &&Math.abs(tr.scrollTop-workHistoryAnchor.scroll)<=1){
+      workHistoryAnchor.at=performance.now(); return true;
+    }
+    const anchor=workHistoryAnchor={...pos,scroll:tr.scrollTop,at:performance.now()};
+    let still=0, last=el.getBoundingClientRect().top+tr.scrollTop;
+    const tick=()=>{
+      if(workHistoryAnchor!==anchor) return;
+      if(!el.isConnected||!tr.isConnected||tStick||scrollIntents.has('transcript')||anchor.input!==tUserInputAt
+         ||Math.abs(tr.scrollTop-anchor.scroll)>1){
+        workHistoryAnchor=null; return;
+      }
+      const r=el.getBoundingClientRect(), contentY=r.top+tr.scrollTop;
+      if(Math.abs(contentY-last)>.25){ still=0; last=contentY; }else still++;
+      /* Absorb layout AND the existing move FLIP in the same paint. Own writes
+         keep scroll events from mistaking this correction for reader input. */
+      if(Math.abs(r.top-anchor.y)>.25) writeScrollInstant(tr,tr.scrollTop+r.top-anchor.y);
+      anchor.scroll=tr.scrollTop;
+      const elapsed=performance.now()-anchor.at;
+      if(elapsed<1100&&(elapsed<420||still<6)) requestAnimationFrame(tick);
+      else workHistoryAnchor=null;
+    };
+    tick();
+    return true;
+  }
   function restoreScroll(pos,opts){
+    const historyAnchored=anchorWorkHistory(pos&&pos.workHistory);
     requestAnimationFrame(()=>{
       document.querySelectorAll('[data-scroll-key]').forEach(el=>{
         const v=pos?pos[el.dataset.scrollKey]:null;
         if(v==null) return;
+        if(el.dataset.scrollKey==='transcript'&&historyAnchored&&workHistoryAnchor) return;
         if(v==='follow'){ kickFollow(); return; }
         /* The reader moved between the patch and this frame: their position
            wins over the one captured before the patch. */
@@ -3225,7 +3268,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const grow=opts&&opts.workGrow;
       const workGrow=typeof grow==='number'?grow:((grow&&grow.total)||0);
       /* a demo tail's reveal (settleWorkGate) keeps the text above the finished card still: no follower */
-      let following=!!(opts&&opts.still);
+      let following=!!(opts&&opts.still)||!!(historyAnchored&&workHistoryAnchor);
       /* P1: the working body's FLIP is holding it at its OLD height when this
          runs, so the live card height alone never showed the change and the
          follower never started; the FLIP's own target delta does. A reader
