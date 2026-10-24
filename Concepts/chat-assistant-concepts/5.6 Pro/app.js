@@ -2703,6 +2703,24 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      it keys off the FLIP subject's own children, not off any take's markup --
      and it degrades to the motion Orbit already does well, since the panel
      track grows smoothly on its own. */
+  /* A completing body's min-height is itself transitioning (122 -> 0). Its
+     first layout still has that old floor; using it as the FLIP destination
+     left a 30px drop when the 320ms animation finished. Measure the content's
+     final floor without advancing or restarting either animation's clock. */
+  function flipTargetHeight(el){
+    const h=el.getBoundingClientRect().height;
+    if(!el.classList.contains('working-body')) return h;
+    const floor=el.getAnimations().find(a=>a.constructor.name==='CSSTransition'&&a.transitionProperty==='min-height');
+    if(!floor) return h;
+    const keys=floor.effect.getKeyframes(), end=parseFloat(keys[keys.length-1].minHeight);
+    const css=getComputedStyle(el), min=parseFloat(css.minHeight);
+    if(!Number.isFinite(end)||end>=min||Math.abs(h-min)>1) return h;
+    const last=el.lastElementChild;
+    if(!last||last.offsetParent!==el.offsetParent) return h;
+    const natural=last.offsetTop-el.offsetTop+last.offsetHeight+(parseFloat(getComputedStyle(last).marginBottom)||0)
+      +(parseFloat(css.paddingBottom)||0)+(parseFloat(css.borderBottomWidth)||0);
+    return Math.min(h,Math.max(end,natural));
+  }
   function flipHeights(targets, before){
     const done=[];
     /* F0b (review cycle 1, DESIGN-SPEC 5.7): body.pm56-reduced is the same policy as the media
@@ -2724,7 +2742,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     for(const el of targets){
       if(!el.isConnected) continue;
       const h0=before.get(el); if(h0==null) continue;
-      const h1=el.getBoundingClientRect().height;
+      const h1=flipTargetHeight(el);
       /* Clock-only work ticks change elapsed text / ring rotation but not
          card height — skip FLIP so messages below do not jitter. */
       if(Math.abs(h1-h0)<1) continue;
