@@ -614,6 +614,13 @@ check(g.mode==='open' && Math.abs(g.x-g.paneLeft)<2 && g.scrim.op>0.9 && g.scrim
 
 /* Float shadow paints to the right of the left-docked drawer. */
 await sec('item4: float shadow paints', async()=>{
+  /* These are static shadow pixels, read 320ms apart. The live work card behind
+     the scrim can change its subject between reads, changing A/A luminance or
+     cancelling the shadow-removal contrast even on the unchanged main page.
+     Settle that fixture through its public completion boundary; History's own
+     open/pin/close animations and every pixel assertion remain live. */
+  await page.evaluate(()=>PM56_DEMO.completeWorking());
+  await page.waitForTimeout(2600);
   const e = await page.evaluate(()=>{const r=document.querySelector('.history-flyout').getBoundingClientRect();
     return {right:Math.round(r.right), y:Math.round(r.top+r.height/2)};});
   const lum = async ()=>{
