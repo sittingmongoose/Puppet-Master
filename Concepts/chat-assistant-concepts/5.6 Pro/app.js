@@ -2954,6 +2954,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else next=cur+d*(1-Math.exp(-dt/GLIDE_TAU));
     if(max-next<0.75) next=max;
     writeScrollInstant(el,next);
+    /* Integer scroll offsets can round the final subpixel step back to cur forever (2px short at 120Hz). Finish
+       that near-bottom settle so the next card starts a fresh glide instead of inheriting this idle one's clock. */
+    if(el.scrollTop===cur&&tAtBottom(el)){ writeScrollInstant(el,max); glideTs=0; syncJumpBottom(); return; }
     glideRAF=requestAnimationFrame(glideStep);
   }
   function kickFollow(){ if(tStick&&!glideRAF){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }
