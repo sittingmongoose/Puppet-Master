@@ -467,7 +467,7 @@
      DOM steps and a frame callback. The answer grows into the room; whatever it
      does not use is let go once it has settled, the floor easing down to the
      content like a drawer closing. */
-  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0, quietUntil: 0, transient: false, relAt: 0, floorW: null, tier: false, grownAt: 0, lg: false, lgUntil: 0, keep: 0, own: 0, keepWas: 0, lgTop: null, lgStuck: false };
+  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0, quietUntil: 0, transient: false, relAt: 0, floorW: null, tier: false, grownAt: 0, lg: false, lgUntil: 0, keep: 0, own: 0, keepWas: 0, lgTop: null, lgStuck: false, lgAt: 0 };
   /* While the card folds, the follow waits: the fold frees far more room than
      the answer's first line takes, so the reader's view stays put and the
      answer rises into it. (Chasing the answer's placeholder first scrolled the
@@ -594,11 +594,19 @@
      dropped them out of follow; the second close then had no hold and the view jumped 261 px. lgMark notes where the
      clamp left the view and whether the reader was following; lgRestick puts back a follow that only that event took
      away (scrollTop still where the clamp left it: any scroll of the reader's own has moved it) */
-  function lgMark(inner) { var tq = inner.closest('.transcript'), c = C(); room.lgTop = tq ? tq.scrollTop : null; room.lgStuck = !!(c && c.isSticky && c.isSticky()); }
+  function lgMark(inner) { var tq = inner.closest('.transcript'), c = C(); room.lgTop = tq ? tq.scrollTop : null; room.lgStuck = !!(c && c.isSticky && c.isSticky()); room.lgAt = performance.now(); }
   function lgRestick(inner) {
     var tq = inner.closest('.transcript'), c = C();
-    if (room.lgStuck && room.lgTop != null && tq && c && c.isSticky && !c.isSticky() && c.stickToBottom && Math.abs(tq.scrollTop - room.lgTop) <= 1) { try { c.stickToBottom(); } catch (e) { } }
+    if (room.lgStuck && room.lgTop != null && !(scrollInputAt >= room.lgAt) && tq && c && c.isSticky && !c.isSticky() && c.stickToBottom && Math.abs(tq.scrollTop - room.lgTop) <= 1) { try { c.stickToBottom(); } catch (e) { } }
   }
+  /* the reader's own scrolling input (app.js drops the follow on it before the view moves): lgRestick never undoes it */
+  var scrollInputAt = 0, SCROLL_KEYS = { PageUp: 1, PageDown: 1, ArrowUp: 1, ArrowDown: 1, Home: 1, End: 1, ' ': 1 };
+  function noteScrollInput(e) {
+    if (e.type === 'keydown' && !SCROLL_KEYS[e.key]) return;
+    if (e.type === 'pointerdown' && !(e.target && e.target.classList && e.target.classList.contains('transcript'))) return;
+    scrollInputAt = performance.now();
+  }
+  if (typeof document !== 'undefined' && document.addEventListener) ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (k) { document.addEventListener(k, noteScrollInput, { passive: true, capture: true }); });
   /* The answer's placeholder takes no room before it is drawn. It mounts as the card starts to fold and waits out its
      entrance delay fully transparent (turn-stream.css: [data-streaming="pending"], 380ms, from opacity 0). A narrow card
      frees its panel's height at once, so the placeholder's height went into the held room; a wide card (panel beside
