@@ -603,11 +603,10 @@
     return nat - Math.max(0, br.bottom - end);
   }
   function closeFollowTarget(tr, limit, measureOnly) {
-    if (!room.on || !room.viewCut) return null;
-    /* Completion returns to the ordinary room release; its fold and answer
-       must not inherit the close's content target or a new hold. */
-    if (!runHoldsRoom()) return null;
-    if (!room.rel || !room.lg) return null;
+    if (!room.on || !room.rel || !room.lg || !room.viewCut) return null;
+    /* Completion never chases its fold. An unfinished handover keeps only
+       its current view until the empty body reaches the ordinary room floor. */
+    if (!runHoldsRoom()) return room.viewCompleteTop == null ? tr.scrollTop : Math.min(limit, room.viewCompleteTop);
     var inner = roomInner(), card = inner && inner.lastElementChild;
     if (!inner || !card || card.querySelector('.work-history')) return null;
     var nat = closeContentH(inner), base = Math.max(nat, room.keep, room.own);
@@ -621,7 +620,7 @@
   }
   function closeViewStart() {
     var inner = roomInner(), tr = inner && inner.closest('.transcript'), c = C();
-    room.viewTs = null; room.viewDt = null; room.viewNat = null; room.viewCut = false;
+    room.viewTs = null; room.viewDt = null; room.viewNat = null; room.viewCut = false; room.viewCompleteTop = null; room.viewBody = null;
     if (!tr || !c || !c.isSticky || !c.isSticky() || !runHoldsRoom() || reduced()) return;
     var v = tr.getBoundingClientRect(), walk = document.createTreeWalker(inner, NodeFilter.SHOW_TEXT), node;
     while ((node = walk.nextNode())) {
@@ -635,6 +634,7 @@
        text. Discard that unseen room, then exclude only the empty body FLIP. */
     var nat = closeContentH(inner), base = Math.max(nat, room.keep, room.own);
     room.viewCut = true;
+    room.viewBody = inner.lastElementChild.querySelector(':scope > .working-body');
     room.floorAt = base; room.x = 0; room.v = 0; roomFloor(base);
     var limit = tr.scrollHeight - tr.clientHeight;
     var top = Math.max(0, limit - Math.max(0, naturalH(inner) - base));
@@ -788,6 +788,20 @@
       var ownH = grown - openedH(inner); if (ownH > room.own) room.own = ownH;
     }
     if (room.rel) {
+      if (room.lg && room.viewCut && !runHoldsRoom()) {
+        /* A handover can precede completion by less than the body FLIP. Hold
+           its view through that empty height, then resume the ordinary room
+           release as soon as the real content fits the existing floor. */
+        var tq = inner.closest('.transcript');
+        if (room.viewCompleteTop == null && tq) room.viewCompleteTop = tq.scrollTop;
+        var body = room.viewBody;
+        var closing = body && body.isConnected && body.getAnimations().some(function (a) { return (a.playState === 'running' || a.playState === 'paused') && a.effect.getKeyframes().some(function (f) { return f.height != null; }); });
+        if (closing && naturalH(inner) > room.floorAt + 0.5) {
+          try { C().followIfSticky(); } catch (e) { }
+          lgMark(inner); room.raf = requestAnimationFrame(roomFrame); return;
+        }
+        room.viewCut = false; room.x = Math.max(0, room.floorAt - naturalH(inner)); room.v = 0;
+      }
       /* P6: each step is timed by the frame (rAF ts, in motion time), not by the callback: callbacks start 2-20 ms into
          a frame, and a late one followed by an early one made one step 4.6 px and the next 2 px on regular 60 Hz frames */
       var nat = room.lg && runHoldsRoom() ? closeContentH(inner) : naturalH(inner), t = now(), fts = typeof ts === 'number' ? ts : null, k = window.PM56_CLOCK && window.PM56_CLOCK.scale != null ? window.PM56_CLOCK.scale : 1;
