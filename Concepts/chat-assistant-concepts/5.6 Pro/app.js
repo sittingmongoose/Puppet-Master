@@ -2811,6 +2811,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      five frames late and none the worse. That grace is 5 rather than 3 because
      the slow runs above only moved on the third frame. */
   function guardFlip(el, a, h0, release, suspect){
+    const shrinking=parseFloat(a.effect.getKeyframes()[1].height)<h0;
     const content=()=>{let s=0; for(const c of el.children) s+=c.offsetHeight; return s;};
     const at0=content();
     const t0=performance.now();
@@ -2852,6 +2853,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(st==='finished'){ letGo(); return; }
       if(st!=='running' && st!=='paused') return; // cancelled by someone else
       if(Math.abs(moved)>1){
+        /* A shrinking FLIP already in flight must finish to its target:
+           the starting-height hold would rewind a History close mid-frame. */
+        if(st==='running' && shrinking){ requestAnimationFrame(tick); return; }
         const trS=scrollKeyEl('transcript'), s0=trS?trS.scrollTop:null;
         dir=moved; a.cancel();
         /* Direction-aware pin. Pinning at h0 when the content GREW painted
