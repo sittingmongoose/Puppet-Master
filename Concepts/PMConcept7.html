@@ -251344,6 +251344,12 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     function finishOpen() {
       if (shell.__qsOpened) return;
       shell.__qsOpened = true;
+      /* P4r (B2e): the shell gets its own height back before the morph's animations go. playOpen left the pill's 44px
+         inline height under the fill-forwards height animations; with those cancelled first, the style flush in
+         cancelAnims(face) laid the page out once with the pill, the transcript was ~400px taller for that one layout,
+         and Chrome clamped a following reader's scrollTop to its bottom (446 -> 47), which onTranscriptScroll (app.js)
+         read as the reader leaving. No frame is painted inside this function, so nothing on screen changes. */
+      shell.style.height = '';
       cancelAnims(inner);
       cancelAnims(shell);
       if (face) cancelAnims(face);
@@ -251354,7 +251360,6 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       }
       if (face && face.parentNode) face.parentNode.removeChild(face);
       shell.classList.remove('qs-will-open', 'qs-opening');
-      shell.style.height = '';
       shell.style.borderRadius = '';
       shell.style.overflow = '';
       shell.style.position = '';
@@ -290911,6 +290916,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      answer rises into it. (Chasing the answer's placeholder first scrolled the
      thread down 33px, which the fold's clamp then snapped back in one frame.) */
   var FOLD_QUIET = 700, FOLD_QUIET_MAX = 2000;
+  var CARD_FOLD_LATE = 700;   /* the longest a card waits for a late-starting fold, from the frame it first waited for it */
   /* The wait lasts until the fold has really finished, not a fixed time: under
      load the fold's own steps run late, and a wait that ended first let the
      follow chase the answer before the card had shrunk (measured 61px). */
@@ -291105,6 +291111,21 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
            fold gave it back, the hold ended, and the fold then pulled the thread down under the reader: 315 px at 16
            lines) */
         if (window.PM56_THOUGHT && window.PM56_THOUGHT.handover(d.phId)) { d.workAt = t + (d.cardAfter || 0); return; }
+        /* ...and the other order: the thought loop runs first in a frame, so a late frame can hand the thought over and reach
+           here in the same frame, after the hand-over's render. The card is timed from the real hand-over, and waits for a
+           fold that started late, so the fold always lands first into its held room (P2: born together, the card took that
+           room and the 16-line fold pulled the thread down 140 px) */
+        var TH = window.PM56_THOUGHT, ho = TH && TH.handedAt ? TH.handedAt(d.phId) : null;
+        if (ho != null && d.cardAfter) {
+          var due = ho + d.cardAfter;
+          if (t < due || (TH.folding(d.phId) && t < (d.foldSince || (d.foldSince = t)) + CARD_FOLD_LATE)) {
+            d.workAt = t < due ? due : t;
+            /* a late fold keeps its room through the wait; on time the fold's own hold (SHRINK_HOLD from the real
+               hand-over) already outlasts due (P2b) */
+            if (t >= due && room.on && room.transient && !room.rel && room.relAt !== Infinity) room.relAt = Math.max(room.relAt, now() + SHRINK_HOLD);
+            return;
+          }
+        }
         var i = th.messages.findIndex(function (m) { return m.id === d.phId; });
         var st = streams.get(d.phId);
         if (st) streams.delete(d.phId);
@@ -291516,7 +291537,17 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   /* an agent turn's first tool call waits this long after the reasoning hands over: the block folds first, with its
      room held, and the working card is born into that room (the fold token is 320 ms, Retro's 192) */
   var CARD_AFTER = 380;
+  /* the director waits only for a closing fold that had not begun a frame before the card was due (FOLD_LATE after its
+     scheduled hand-over, timed from when animateTo created it: a fold still pending has no start time yet, and reading
+     it as starting at the director's check made an on-time fold late, P2c. On time it is created 80-340 ms after, once
+     the hand-over's render is done, the render growing with the thread; a late frame that hands over and reaches the
+     director after its render creates it later), decided once per thought, and only while it still shows more than
+     FOLD_VISIBLE px. A closing fold still pending holds the card one frame without deciding, so the card is never born
+     over a fold that has not begun to paint (P2c). On time the card is born over the fold's last px (13-59 px late in a
+     long thread, as before); a reader's re-open never delays it (P2b) */
+  var FOLD_LATE = CARD_AFTER - 16, FOLD_VISIBLE = 8;
   var live = new Map();                    /* thought id -> the thought being written */
+  var endedAt = Object.create(null);     /* reply id -> {at, id}: when its thought handed over; the director times the card from it */
   var byReply = Object.create(null);       /* reply id -> thought id */
   var view = Object.create(null);          /* thought id -> { open, mode }: a reader's own toggle */
   var loop = 0;
@@ -291637,7 +291668,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var a = P && P.animate && !reduced() ? P.animate(clip, [{ height: from + 'px', opacity: open ? 0 : 1 }, { height: to + 'px', opacity: open ? 1 : 0 }],
       { duration: (P.t && P.t('fold')) || 320, easing: (P.ease && P.ease('emph')) || 'cubic-bezier(.2,0,0,1)' }) : null;
     if (!a) { settle(clip, open, L); return; }
-    st.anim = a;
+    st.anim = a; st.animAt = now();
     clip.style.height = to + 'px';
     a.onfinish = function () { if (st.anim !== a) return; st.anim = null; settle(clip, open, live.get(clip.__id) || null); };
   }
@@ -291775,6 +291806,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var found = findMsg(c, L.replyId);
     if (found && !(L.agent && how === 'done' && !(opts && opts.complete))) delete found.m.thoughtGate;
     delete byReply[L.replyId];
+    /* the hand-over as scheduled, not the clock of the frame that ran it: a frame runs its own work first, and a late one
+       would push an on-time card past its cardAfter (P2b). Stop and Send now end early, so they keep now() */
+    endedAt[L.replyId] = { at: Math.min(now(), L.t0 + L.ms), id: L.id };
     var willFold = !isOpen(c, T);
     var art = island && island.closest('.message-thought');
     /* the fold gives back far more height than what comes next needs at first (a reply's first line, or an agent
@@ -291800,7 +291834,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     /* Send now: a written reply's thought ends with it; an agent turn keeps thinking, as its work keeps running */
     steer: function (tid) { var any = false; live.forEach(function (L) { if (L.tid === tid && !L.agent && end(L, 'ended')) any = true; }); if (any) C().renderApp(); },
     cancel: function (tid) { live.forEach(function (L) { if (L.tid === tid) end(L, 'done', { complete: true }); }); },
-    reset: function () { live.clear(); byReply = Object.create(null); view = Object.create(null); }
+    reset: function () { live.clear(); byReply = Object.create(null); view = Object.create(null); endedAt = Object.create(null); }
   };
 
   /* ------------------------------------------------------------------ render */
@@ -291888,6 +291922,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   window.PM56_THOUGHT = {
     start: function (c, t, R, thinking, opts) { wire(); return start(c, t, R, thinking, opts); },
     handover: handover,
+    /* the agent turn's director: when the reply's thought was due to hand over, and whether a fold that began late still shows */
+    handedAt: function (rid) { var e = endedAt[rid]; return e ? e.at : null; },
+    folding: function (rid) { var e = endedAt[rid]; if (!e) return false; var isl = islandOf(e.id), clip = isl && isl.firstElementChild, a = clip && clip.__tt && clip.__tt.anim; return !!(a && clip.__tt.open === false && (a.pending || e.late || (e.late = clip.__tt.animAt > e.at + FOLD_LATE)) && clip.getBoundingClientRect().height > FOLD_VISIBLE); },
     /* state for checks and the demo: what each live thought is doing */
     active: function () { var out = []; live.forEach(function (L) { out.push({ id: L.id, tid: L.tid, reply: L.replyId, cursor: L.cursor, ops: L.ops.length, ms: L.ms, agent: L.agent, capped: L.capped }); }); return out; },
     mode: function (T) { return T ? modeOf(C(), T) : prefMode(C()); },
@@ -295412,17 +295449,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null, tLastCh=null, tInputDir=0;
   let glideRAF=0, glideTs=0, tRO=null, tROTarget=null;
   const GLIDE_TAU=70;
+  const GLIDE_DT_MAX=120;   /* a late frame still advances the glide by the time it took (to 120 ms); at 60 fps nothing changes */
   function tEl(){ return scrollKeyEl('transcript'); }
   function tAtBottom(el){ el=el||tEl(); if(!el) return true; return el.scrollHeight-el.clientHeight-el.scrollTop<=24; }
   function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; tLastCh=el.clientHeight; }
   function cancelGlide(){ if(glideRAF){ cancelAnimationFrame(glideRAF); glideRAF=0; } glideTs=0; }
+  /* The glide's time constant is real time; a late frame catches up the time it lost instead of falling further behind (P1, 2026-10-23: 302-367 ms on a loaded standalone). */
   function glideStep(ts){
     glideRAF=0;
     const el=tEl(); if(!el||!tStick){ glideTs=0; return; }
     if(followHoldFn&&followHoldFn()){ glideTs=0; return; }
     const max=el.scrollHeight-el.clientHeight, cur=el.scrollTop, d=max-cur;
     if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
-    const dt=glideTs?Math.min(50,Math.max(1,ts-glideTs)):16.7; glideTs=ts;
+    const tn=performance.now(), dt=glideTs?Math.min(GLIDE_DT_MAX,Math.max(1,tn-glideTs)):16.7; glideTs=tn;
     let next;
     if(window.PM56_MOTION&&window.PM56_MOTION.reduced()) next=max;
     else if(d>el.clientHeight*1.25) next=max-el.clientHeight*0.6;   /* far off: close most of it in one frame */
