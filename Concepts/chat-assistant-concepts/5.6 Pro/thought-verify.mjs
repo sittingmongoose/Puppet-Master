@@ -473,7 +473,14 @@ await safe('lines', async () => {
   await setLines(r, 6);
   await sample(r, 11000);
   await send(r, Q);
-  await r.waitForFunction(P => { const a = [...document.querySelectorAll(P + '.transcript-inner > .message-thought')].pop(); const c = a && a.querySelector('.tt-clip'); return a && a.dataset.thoughtState === 'thinking' && c && c.classList.contains('tt-capped'); }, P, { timeout: 8000 });
+  /* Prepare enough text for both caps before changing the preference. Being capped at six lines alone does not
+     mean twelve lines have arrived: on the M3 the old 1.2 s capture ended at a natural height of 237 px, below the
+     240 px target. Wait on the fixture's content, never on the height under test; the first-frame/no-between and
+     exact-height assertions below still see the entire preference change. */
+  await r.waitForFunction(P => { const a = [...document.querySelectorAll(P + '.transcript-inner > .message-thought')].pop(); const c = a && a.querySelector('.tt-clip'), flow = c && c.firstElementChild, p = flow && flow.querySelector('p');
+    const lh = p ? parseFloat(getComputedStyle(p).lineHeight) : 20;
+    return a && a.dataset.thoughtState === 'thinking' && c && c.classList.contains('tt-capped') && flow.offsetHeight > lh * 12 + 8;
+  }, P, { timeout: 8000 });
   await sleep(300);
   await setLines(r, 12);
   await sleep(1200);
