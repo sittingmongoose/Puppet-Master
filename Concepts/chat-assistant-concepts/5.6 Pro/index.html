@@ -37842,6 +37842,12 @@ window.PM56_NIER_FACES = [
     function finishOpen() {
       if (shell.__qsOpened) return;
       shell.__qsOpened = true;
+      /* P4r (B2e): the shell gets its own height back before the morph's animations go. playOpen left the pill's 44px
+         inline height under the fill-forwards height animations; with those cancelled first, the style flush in
+         cancelAnims(face) laid the page out once with the pill, the transcript was ~400px taller for that one layout,
+         and Chrome clamped a following reader's scrollTop to its bottom (446 -> 47), which onTranscriptScroll (app.js)
+         read as the reader leaving. No frame is painted inside this function, so nothing on screen changes. */
+      shell.style.height = '';
       cancelAnims(inner);
       cancelAnims(shell);
       if (face) cancelAnims(face);
@@ -37852,7 +37858,6 @@ window.PM56_NIER_FACES = [
       }
       if (face && face.parentNode) face.parentNode.removeChild(face);
       shell.classList.remove('qs-will-open', 'qs-opening');
-      shell.style.height = '';
       shell.style.borderRadius = '';
       shell.style.overflow = '';
       shell.style.position = '';
