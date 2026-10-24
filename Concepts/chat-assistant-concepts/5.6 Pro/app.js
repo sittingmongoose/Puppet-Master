@@ -3306,8 +3306,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function syncInlineLens(){
     const dock=document.querySelector('.lens-dock');
     if(!dock)return;
-    pmPatch(dock,renderInlineLens());
+    const html=renderInlineLens();
+    /* Mounting the in-flow controls moves the transcript's viewport before
+       renderApp captures it. Absorb that displacement in this patch; waiting
+       for the follow glide paints a full dock-height drop, then pulls it back. */
+    const tr=html&&!dock.firstElementChild?tEl():null;
+    const top=tr?tr.getBoundingClientRect().top:0, scroll=tr?tr.scrollTop:0;
+    pmPatch(dock,html);
     dock.classList.toggle('is-open',!!dock.firstElementChild);
+    if(tr&&dock.firstElementChild){
+      const dy=tr.getBoundingClientRect().top-top;
+      if(Math.abs(dy)>0.5) writeScrollInstant(tr,scroll+dy);
+    }
   }
   let lastOverlayPayload='';
   function renderOverlays(){
