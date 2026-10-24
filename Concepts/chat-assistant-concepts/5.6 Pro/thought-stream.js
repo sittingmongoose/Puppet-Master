@@ -48,6 +48,12 @@
   /* an agent turn's first tool call waits this long after the reasoning hands over: the block folds first, with its
      room held, and the working card is born into that room (the fold token is 320 ms, Retro's 192) */
   var CARD_AFTER = 380;
+  /* the director waits only for a closing fold that had not begun a frame before the card was due (FOLD_LATE after its
+     scheduled hand-over: on time it begins 80-290 ms after, once the hand-over's render is done, the render growing
+     with the thread; a late frame that hands over and reaches the director after its render begins it later), decided
+     once per thought, and only while it still shows more than FOLD_VISIBLE px. On time the card is born over the
+     fold's last few px, as before; a reader's re-open never delays it (P2b) */
+  var FOLD_LATE = CARD_AFTER - 16, FOLD_VISIBLE = 8;
   var live = new Map();                    /* thought id -> the thought being written */
   var endedAt = Object.create(null);     /* reply id -> {at, id}: when its thought handed over; the director times the card from it */
   var byReply = Object.create(null);       /* reply id -> thought id */
@@ -308,7 +314,9 @@
     var found = findMsg(c, L.replyId);
     if (found && !(L.agent && how === 'done' && !(opts && opts.complete))) delete found.m.thoughtGate;
     delete byReply[L.replyId];
-    endedAt[L.replyId] = { at: now(), id: L.id };
+    /* the hand-over as scheduled, not the clock of the frame that ran it: a frame runs its own work first, and a late one
+       would push an on-time card past its cardAfter (P2b). Stop and Send now end early, so they keep now() */
+    endedAt[L.replyId] = { at: Math.min(now(), L.t0 + L.ms), id: L.id };
     var willFold = !isOpen(c, T);
     var art = island && island.closest('.message-thought');
     /* the fold gives back far more height than what comes next needs at first (a reply's first line, or an agent
@@ -422,9 +430,9 @@
   window.PM56_THOUGHT = {
     start: function (c, t, R, thinking, opts) { wire(); return start(c, t, R, thinking, opts); },
     handover: handover,
-    /* the agent turn's director: when the reply's thought handed over, and whether its fold is still running */
+    /* the agent turn's director: when the reply's thought was due to hand over, and whether a fold that began late still shows */
     handedAt: function (rid) { var e = endedAt[rid]; return e ? e.at : null; },
-    folding: function (rid) { var e = endedAt[rid]; if (!e) return false; var isl = islandOf(e.id), clip = isl && isl.firstElementChild; return !!(clip && clip.__tt && clip.__tt.anim); },
+    folding: function (rid) { var e = endedAt[rid]; if (!e) return false; var isl = islandOf(e.id), clip = isl && isl.firstElementChild, a = clip && clip.__tt && clip.__tt.anim; return !!(a && clip.__tt.open === false && (e.late || (e.late = now() - (a.currentTime || 0) > e.at + FOLD_LATE)) && clip.getBoundingClientRect().height > FOLD_VISIBLE); },
     /* state for checks and the demo: what each live thought is doing */
     active: function () { var out = []; live.forEach(function (L) { out.push({ id: L.id, tid: L.tid, reply: L.replyId, cursor: L.cursor, ops: L.ops.length, ms: L.ms, agent: L.agent, capped: L.capped }); }); return out; },
     mode: function (T) { return T ? modeOf(C(), T) : prefMode(C()); },

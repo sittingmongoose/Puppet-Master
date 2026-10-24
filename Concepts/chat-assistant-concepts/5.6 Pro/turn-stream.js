@@ -473,7 +473,7 @@
      answer rises into it. (Chasing the answer's placeholder first scrolled the
      thread down 33px, which the fold's clamp then snapped back in one frame.) */
   var FOLD_QUIET = 700, FOLD_QUIET_MAX = 2000;
-  var CARD_FOLD_LATE = 700;   /* the longest a card waits past cardAfter for a late-starting fold */
+  var CARD_FOLD_LATE = 700;   /* the longest a card waits for a late-starting fold, from the frame it first waited for it */
   /* The wait lasts until the fold has really finished, not a fixed time: under
      load the fold's own steps run late, and a wait that ended first let the
      follow chase the answer before the card had shrunk (measured 61px). */
@@ -675,10 +675,11 @@
         var TH = window.PM56_THOUGHT, ho = TH && TH.handedAt ? TH.handedAt(d.phId) : null;
         if (ho != null && d.cardAfter) {
           var due = ho + d.cardAfter;
-          if (t < due || (TH.folding(d.phId) && t < due + CARD_FOLD_LATE)) {
+          if (t < due || (TH.folding(d.phId) && t < (d.foldSince || (d.foldSince = t)) + CARD_FOLD_LATE)) {
             d.workAt = t < due ? due : t;
-            /* keep the fold's room through the wait (it was held for SHRINK_HOLD from the hand-over) */
-            if (room.on && room.transient && !room.rel && room.relAt !== Infinity) room.relAt = Math.max(room.relAt, now() + SHRINK_HOLD);
+            /* a late fold keeps its room through the wait; on time the fold's own hold (SHRINK_HOLD from the real
+               hand-over) already outlasts due (P2b) */
+            if (t >= due && room.on && room.transient && !room.rel && room.relAt !== Infinity) room.relAt = Math.max(room.relAt, now() + SHRINK_HOLD);
             return;
           }
         }
