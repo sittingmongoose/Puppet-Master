@@ -265,6 +265,11 @@
     var animAttr = ui.anim === 'e1' ? 'drop' : ui.anim === 'c2' ? 'lift' : null;
     var rot = rotationFor(ui, panelI, n);
     var tier = n >= 22 ? 'xl' : n >= 13 ? 'lg' : '';
+    /* P5: a tier change resizes the dial and its row by a 420 ms CSS transition that no FLIP announces (the 17th
+       subject's merge steps the dial down 32 px). Tell the room hold before the patch, as the thought's fold does. */
+    var tierRank = tier === 'xl' ? 2 : tier === 'lg' ? 1 : 0;
+    if (ui.tierRank != null && tierRank !== ui.tierRank && w.running && !rec.completed && window.PM56_STREAM && window.PM56_STREAM.holdTier) { try { window.PM56_STREAM.holdTier(tierRank < ui.tierRank); } catch (e) { } }
+    ui.tierRank = rec.completed ? null : tierRank;   /* a finished card's tier is not compared with a rerun's */
     var liveCount = items.filter(function (it) { return it.live; }).length;
     var waiting = items.some(function (it) { return it.live && it.status === 'waiting'; });
 
