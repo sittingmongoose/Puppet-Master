@@ -11252,7 +11252,8 @@ body[data-theme^="glass"] #pmOverlayRoot:not(.pmx-swapping) > .pmx-sheet{animati
 .transcript[data-variant] .message:has(.pmx-run)::before{content:none;}
 .transcript[data-variant] .message:has(.pmx-run) .message-surface{border-left:0;padding-left:0;background:none;}
 /* the floating Activity bar never covers the last card's footer */
-.transcript:has(.pmx-run){padding-bottom:64px;}
+/* Keep the run's minimum tail room and the floating stack's measured clearance (ACD-452). */
+.transcript:has(.pmx-run){padding-bottom:max(64px,calc(var(--thread-float-h,44px) + 36px));}
 .transcript-inner > .pmx-run, .transcript-inner > .pmx-note{margin:0;}
 
 /* ================================================================ 7.14 Chat WOW coexistence (amendment G-35)
@@ -17410,7 +17411,8 @@ body[data-theme$="-light"] :is(.transcript-inner, .tx-feed-inner) > [data-family
 :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy { display: flex; align-items: baseline; gap: 7px; min-width: 0; flex: 1 1 auto; }
 :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-kind { display: none; }
 :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy strong { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 12px; font-weight: 620; color: color-mix(in srgb, var(--text) 84%, transparent); white-space: nowrap; }
-:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy p { margin: 0; font-size: 12px; color: var(--subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+/* Detail takes the space after the title instead of shrinking a short title alongside its full line of text. */
+:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy p { flex: 1 1 0; margin: 0; font-size: 12px; color: var(--subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy p:empty { display: none; }
 :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy p:not(:empty) ~ p:not(:empty) { display: none; }
 :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"]:is(:hover, :focus-within) .event-copy { flex-wrap: wrap; row-gap: 2px; }
@@ -17468,7 +17470,11 @@ body[data-theme] { --tx-gutter: 24px; }
 
 /* the lab's demo controls: one button in the working head opens a drawer */
 .working-controls { display: flex; align-items: center; gap: 2px; }
-.work-demo-drawer { display: inline-flex; align-items: center; gap: 2px; padding: 0 4px 0 2px; margin-right: 2px; border-right: 1px solid var(--tx-sunken-edge); animation: wd-in 220ms cubic-bezier(.17, .84, .29, .99) both; }
+/* Keep an open drawer's controls at their own width, as in orders15-entry,
+   and wrap them if needed. The caption already elides in a narrow head;
+   shrinking this overflow-hidden child instead clipped History. */
+.working-head > .working-controls:has(.work-demo-drawer) { flex: 0 0 auto; max-width: 100%; flex-wrap: wrap; }
+.work-demo-drawer { display: inline-flex; align-items: center; flex-wrap: wrap; min-width: 0; gap: 2px; padding: 0 4px 0 2px; margin-right: 2px; border-right: 1px solid var(--tx-sunken-edge); animation: wd-in 220ms cubic-bezier(.17, .84, .29, .99) both; }
 @keyframes wd-in { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
 .work-demo-btn { opacity: .55; }
 .work-demo-btn:hover, .work-demo-btn.active { opacity: 1; }
@@ -17933,8 +17939,8 @@ body[data-theme$="-light"] .tx-caret { box-shadow: none; }
 
 /* ------------------------------------------------------------ send flight */
 .tx-fly { position: fixed; z-index: 9990; margin: 0; pointer-events: none; white-space: pre-wrap; overflow-wrap: anywhere; will-change: transform, opacity; transform-origin: 50% 50%; }
-/* the composer's placeholder waits until the text has left the field */
-body.tx-flying textarea[data-input="composer"]::placeholder { color: transparent; }
+/* Hide immediately under the lifted text; fade back after it leaves the field. */
+body.tx-flying textarea[data-input="composer"]::placeholder { color: transparent; transition: none; }
 textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
 /* the reply's waiting line and the turn's mark arrive after the bubble lands */
 .transcript-inner > [data-streaming="pending"] { animation-delay: 380ms; }
@@ -71339,7 +71345,8 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
  function guide(c,placement='dock'){const s=work.sessions[c.thread.id];if(!s?.guide||s!==playing)return '';const sheet=placement==='sheet',doc=placement==='doc';if(!!c.state.dialog!==sheet||!sheet&&!!(innerWidth<=1100&&c.state.editorRevealed)!==doc)return '';
   next(s);const b=s.beats[s.step],text=player?.errors.length?'Playback stopped. Close or replay this example.':s.done?'Done · Verified CSV, five orders, 22324 cents. The source is unchanged. Download is available on each file.':b?.text||'';
   const say=R.steady(s,text,!!b?.yours||s.done,refresh);
-  return window.PM56_SHELL.pmxGuide({key:'orders15-guide',cls:'orders15-guide',placement,step:c.esc(say),actions:s.done?[{action:'b15-replay',label:'Replay'}]:[],next:player&&player.progress(),close:{action:'b15-hide-guide',label:'Close example'}});
+  // The stacked Replay row takes room from the transcript; let the existing height FLIP carry that change.
+  return window.PM56_SHELL.pmxGuide({key:'orders15-guide',cls:'orders15-guide',placement,attrs:placement==='dock'?'data-flip':'',step:c.esc(say),actions:s.done?[{action:'b15-replay',label:'Replay'}]:[],next:player&&player.progress(),close:{action:'b15-hide-guide',label:'Close example'}});
  }
  // The current compact Goal panel hides the older detail/proposal shortcuts used by this journey.
  // Keep those genuine owner actions reachable in this exercise, after the original panel.
@@ -77413,7 +77420,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      DOM steps and a frame callback. The answer grows into the room; whatever it
      does not use is let go once it has settled, the floor easing down to the
      content like a drawer closing. */
-  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0, quietUntil: 0, transient: false, relAt: 0, floorW: null, tier: false, grownAt: 0, lg: false, lgUntil: 0, keep: 0, own: 0, keepWas: 0, lgTop: null, lgStuck: false, lgAt: 0 };
+  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0, quietUntil: 0, transient: false, relAt: 0, floorW: null, tier: false, grownAt: 0, lg: false, lgUntil: 0, keep: 0, own: 0, keepWas: 0, lgTop: null, lgStuck: false, lgAt: 0, pdt: null };
   /* While the card folds, the follow waits: the fold frees far more room than
      the answer's first line takes, so the reader's view stays put and the
      answer rises into it. (Chasing the answer's placeholder first scrolled the
@@ -77477,7 +77484,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
-  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.floorAt = room.h0; room.lg = false; room.keep = 0; room.keepWas = 0; } }
+  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.pdt = null; room.floorAt = room.h0; room.lg = false; room.keep = 0; room.keepWas = 0; } }
   /* Round 3 (A): app.js rewound the transcript (rewindTranscript, a thread switch): no room is kept for what left,
      and the next hold measures the list as it is then (roomSeen cleared: holdShrink takes offsetHeight, watchRoom
      re-observes the list) */
@@ -77613,6 +77620,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      the card's history closing gave back 536px, and holding that left most of the view blank until the run ended. A
      band past it is let go the ordinary way, as a live turn's shrink is. */
   var RUN_ROOM_MAX = 240;
+  /* round 3 (blank): the most a reader's close lowers the floor (moves the text under a following reader) in a 60 Hz
+     frame, timed by the frame so a 120 Hz page filmed at 60 fps reads the same: under the 30 px one-frame step a
+     reader reads as a jump */
+  var CLOSE_STEP = 28;
   function runHoldsRoom() { var c = C(); return !!(c && c.runHoldsRoom && c.runHoldsRoom()); }
   function shrinkRelAt() { return runHoldsRoom() ? Infinity : now() + SHRINK_HOLD; }
   function holdShrink(fresh, finite, atLeast) {
@@ -77675,6 +77686,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
          a frame, and a late one followed by an early one made one step 4.6 px and the next 2 px on regular 60 Hz frames */
       var nat = naturalH(inner), t = now(), fts = typeof ts === 'number' ? ts : null, k = window.PM56_CLOCK && window.PM56_CLOCK.scale != null ? window.PM56_CLOCK.scale : 1;
       var dt = Math.min(0.1, Math.max(0, (fts != null && room.lastTs != null && fts > room.lastTs ? (fts - room.lastTs) * k : t - room.last) / 1000)); room.last = t; room.lastTs = fts;
+      /* round 3 (blank): a close's step is sized by the shorter of this frame and the one before: the close's render makes
+         a long frame, and a full step after it plus the next frame's put 42 px into one 60 fps film frame (120 Hz page).
+         A release's first frame has no frame before it and takes a 120 Hz frame's */
+      var sdt = Math.min(dt, room.pdt != null ? room.pdt : 1 / 120); room.pdt = dt;
       if (room.lg) lgRestick(inner);
       if (room.x == null) {
         /* P5 v2: a reader's close (letGo) eases from its own shrink: until the content is under the floor, nothing */
@@ -77695,6 +77710,13 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       /* every release, a fold's too: a fold's room now starts from the run-long floor (up to RUN_ROOM_MAX over the
          content), and at omega 11 that eased down at up to ~0.97 px/ms, past turn-verify's 0.4 px/ms snap line */
       { var lo = room.floorAt - SHRINK_VMAX * dt - base; if (s2[0] < lo) { s2[0] = lo; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } }
+      /* round 3 (blank): a reader's close keeps at most the run's own room (RUN_ROOM_MAX over the content the close
+         leaves: room.own, the list without its history, while the close's FLIP still shows the old height); the band
+         past it comes down with the FLIP from its first frame, CLOSE_STEP a 60 Hz frame at most. Held whole and eased at
+         SHRINK_VMAX, it left a following reader looking at a view 75-100% blank for 1-2.3 s (boot's history close:
+         485 px of a 647 px view; Long agent turn: the whole view, the cut above only keeping the content's end at its
+         top edge). Started only once the band passed RUN_ROOM_MAX, the FLIP outran it: 55% of the view at boot */
+      if (room.lg) { var cap = Math.max(base, (room.own > 0 ? Math.min(nat, room.own) : nat) + RUN_ROOM_MAX); if (room.floorAt > cap) { var to = Math.max(cap, room.floorAt - CLOSE_STEP * Math.min(1, sdt * 60)) - base; if (s2[0] > to) { s2[0] = to; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } } }
       room.x = s2[0]; room.v = s2[1];
       /* under reduced motion (only a held demo run holds room there) the floor goes at once */
       if (room.x < 0.5 && base > nat + 0.5 && !reduced()) {
@@ -77869,9 +77891,20 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     if (revealedRecs.has(rec)) return false;
     var id = rec.id || rec.runId, held = false, answers = [];
     if (!id) return false;
+    /* Retire the work owner before the completion render. Streaming answers own
+       their remaining turn themselves; instant/reduced answers have no later
+       finalize render to clear a director left busy until the next frame. */
+    directors.delete(id);
     t.messages.forEach(function (m) {
       if (m.revealAfter !== id || m.role !== 'assistant' || m.type !== 'text' || m.streaming) return;
-      if (c.state.replyMode === 'instant' || reduced()) return;
+      if (c.state.replyMode === 'instant' || reduced()) {
+        if (m.runtime) {
+          m.runtime.completedAt = new Date().toISOString(); m.runtime.terminal = 'complete';
+          m.runtime.durationMs = Math.round((rec.clock || rec.elapsed || 0) * 1000);
+          m.runtime.workedSeconds = Math.max(1, Math.round(m.runtime.durationMs / 1000));
+        }
+        return;
+      }
       var chunks = m.streamChunks;
       if (!chunks) {
         /* A revealed fixture message streams from its own text in three chunks. */
@@ -78082,7 +78115,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
         requestAnimationFrame(function () { A.remove(); if (B2) B2.remove(); S.remove(); });
       }
     }
-    requestAnimationFrame(frame);
+    /* Initialize every layer before this frame paints: an unpositioned shape
+       and a stationary composer copy must not get a frame of their own. */
+    frame();
   }
   function land(id) {
     flights.delete(id);
@@ -80202,6 +80237,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return k ? ` data-tone="${esc(window.PM56_NEON.STATUS[k].tone)}"` : '';
   }
   function renderChatHeader(t){
+    /* Demo fixture status is a snapshot. For its work/idle states the live
+       turn owns the label, including a reply still streaming after its card. */
+    const liveGoal=window.PM56_GOAL?.get(t.id),livePlan=window.PM56_PLANS?.current(t.id);
+    const busy=turnBusy(t.id)||!!(liveGoal?.status==='active'&&liveGoal.workRef&&(liveGoal.workRef.kind==='order_export'||livePlan?.workRef))||!!(livePlan?.workRef&&livePlan.status==='building'&&!livePlan.attention);
+    const finished=t.messages.some(m=>m.type==='working'&&workRecFor(m)?.completed);
+    const status=(t.status==='idle'||t.status==='working')&&(busy||finished)?(busy?'working':'idle'):t.status;
     /* Context ring percentage. The ring's value is an INLINE style attribute, so no
        module stylesheet can reach it -- it has to be resolved here. PM56_CTX comes from
        context.js; the fallback is the historical literal, so this line is a no-op when
@@ -80210,7 +80251,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="chat-header">
       <button class="icon-button" data-action="toggle-history"${hoverAttrs('open-history','Open thread history')}>${icon('history',14)}</button>
       <button class="icon-button" data-action="new-thread"${hoverAttrs('new-thread','Start a new thread')}>${icon('plus',16,'hh-plus-glyph')}</button>
-      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span>${extRender('headerTitleAfter',{thread:t})}<span class="chat-state"${headerStatusTone(t.status)}>${headerStatusMark(t.status)}${esc(statusLabel(t.status))}</span></div>
+      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span>${extRender('headerTitleAfter',{thread:t})}<span class="chat-state"${headerStatusTone(status)}>${headerStatusMark(status)}${esc(statusLabel(status))}</span></div>
       <span class="chat-head-spacer"></span>
       ${extRender('headerLeading',{thread:t})}
       <button class="icon-button" data-action="thread-search" data-menu-anchor="thread-search"${hoverAttrs('thread-search','Search this thread or every thread')}>${icon('search',14)}</button>
@@ -80938,7 +80979,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     rec=rec||state.work;
     const list=workInstancesFor(rec);
     const n=clamp(rec.step,0,list.length-1);
-    return `<div class="work-history"><div class="section-head" style="padding:0 2px 3px"><span>Organized work stream and evidence</span><span class="count">${n+1}</span></div>${list.slice(0,n+1).map((s,i)=>`<button class="history-step ${i===n?'current':'done'}" data-action="inspect-work-step" data-value="${i}"><span class="work-phase-icon" style="width:20px;height:20px;border-radius:6px">${icon(i<n?'check':s.icon,10)}</span><span><strong style="display:block;font-size:10px">${esc(s.label)} · ${esc(s.verb)}</strong><span style="font-size:10px;color:var(--muted)">${esc((s.rows||[]).map(r=>r.text).slice(0,3).join(' · ')||(s.evidence||[]).join(' · '))}</span></span><span class="time">${i===n?'now':`${Math.max(1,(n-i)*8)}s ago`}</span></button>`).join('')}</div>`;
+    /* The live stage can regroup or replace its preview above an open history.
+       Its body's height FLIP holds the outer edge, not the history's position
+       inside it. Retain this block and let the existing move FLIP absorb that
+       internal displacement with the same motion used for reordered lanes. */
+    return `<div class="work-history" data-k="work-history" data-flip-move><div class="section-head" style="padding:0 2px 3px"><span>Organized work stream and evidence</span><span class="count">${n+1}</span></div>${list.slice(0,n+1).map((s,i)=>`<button class="history-step ${i===n?'current':'done'}" data-action="inspect-work-step" data-value="${i}"><span class="work-phase-icon" style="width:20px;height:20px;border-radius:6px">${icon(i<n?'check':s.icon,10)}</span><span><strong style="display:block;font-size:10px">${esc(s.label)} · ${esc(s.verb)}</strong><span style="font-size:10px;color:var(--muted)">${esc((s.rows||[]).map(r=>r.text).slice(0,3).join(' · ')||(s.evidence||[]).join(' · '))}</span></span><span class="time">${i===n?'now':`${Math.max(1,(n-i)*8)}s ago`}</span></button>`).join('')}</div>`;
   }
   function commandForStep(step){
     const map={prepare:'pm resolve --thread query-performance',thought:'reasoning: compare index selectivity and write pressure',files:'read src/analytics/{queries,schema}.rs', 'web-search':'web search "PostgreSQL multicolumn index leading column"','web-fetch':'fetch docs/postgresql/indexes-multicolumn','browser':'browser control dashboard/query-performance','bash':'cargo bench analytics_query -- --profile','agents':'spawn query-analyzer schema-reviewer','edit':'apply migration 0043 + batch query patch','app':'control database-inspector --refresh-schema','test':'browser test query-dashboard --widths all','validate':'cargo test && cargo clippy && pm audit','artifact':'render benchmark-dashboard + mermaid','complete':'complete: evidence package ready'};
@@ -81947,6 +81992,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(Math.abs(h1-h0)<1) continue;
       const prevOverflow=el.style.overflow;
       el.style.overflow='hidden';
+      /* A completed card's long History already reveals through this body's
+         height clip. Its second, list-sized details-open clip trails that
+         reveal: follow can scroll below all revealed rows while the reply is
+         still below the view, blanking the whole transcript. Keep the same
+         fade, translation and clock; let the body own the growing edge. */
+      const history=card&&card.classList.contains('is-done')&&h1>h0&&el.classList.contains('working-body')?el.querySelector(':scope > .work-history'):null;
+      const transcript=history&&el.closest('.transcript');
+      if(transcript&&history.getBoundingClientRect().height>transcript.clientHeight){
+        for(const opening of history.getAnimations()){
+          if(opening.animationName!=='details-open') continue;
+          opening.effect.setKeyframes(opening.effect.getKeyframes().map(key=>{const k={...key};delete k.clipPath;return k;}));
+        }
+      }
       const a=el.animate([{height:`${h0}px`},{height:`${h1}px`}],
         {duration:320, easing:'cubic-bezier(.22,.80,.28,1)'});
       /* Start the clock on the NEXT frame, not this one. This frame still has
@@ -82023,7 +82081,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      five frames late and none the worse. That grace is 5 rather than 3 because
      the slow runs above only moved on the third frame. */
   function guardFlip(el, a, h0, release, suspect){
-    const shrinking=parseFloat(a.effect.getKeyframes()[1].height)<h0;
+    const h1=parseFloat(a.effect.getKeyframes()[1].height), shrinking=h1<h0;
     const content=()=>{let s=0; for(const c of el.children) s+=c.offsetHeight; return s;};
     const at0=content();
     const t0=performance.now();
@@ -82041,6 +82099,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(!el.isConnected){ a.cancel(); letGo(); return; }
       const moved=content()-at0;
       if(hold){
+        /* Growth can also arrive before a suspect close starts its clock.
+           Keep its paused start height while handing the pin back to FLIP. */
+        if(dir===0 && shrinking && moved>1 && a.playState==='paused'){
+          a.effect.setKeyframes([{height:`${h0}px`},{height:`${h1+moved}px`}]);
+          hold.cancel(); hold=null; a.play();
+          requestAnimationFrame(tick); return;
+        }
         if(dir===0 && Math.abs(moved)>1){ dir=moved; a.cancel(); }
         if(dir!==0){
           /* Releasing the hold for one measurement lays the page out shorter for
@@ -82065,9 +82130,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(st==='finished'){ letGo(); return; }
       if(st!=='running' && st!=='paused') return; // cancelled by someone else
       if(Math.abs(moved)>1){
-        /* A shrinking FLIP already in flight must finish to its target:
-           the starting-height hold would rewind a History close mid-frame. */
-        if(st==='running' && shrinking){ requestAnimationFrame(tick); return; }
+        /* Retarget a running close as content grows, keeping its clock and
+           easing so the natural-height handover does not expose stale h1. */
+        if(st==='running' && shrinking){
+          if(moved>1) a.effect.setKeyframes([{height:`${h0}px`},{height:`${h1+moved}px`}]);
+          requestAnimationFrame(tick); return;
+        }
         const trS=scrollKeyEl('transcript'), s0=trS?trS.scrollTop:null;
         dir=moved; a.cancel();
         /* Direction-aware pin. Pinning at h0 when the content GREW painted
@@ -82143,6 +82211,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else next=cur+d*(1-Math.exp(-dt/GLIDE_TAU));
     if(max-next<0.75) next=max;
     writeScrollInstant(el,next);
+    /* Integer scroll offsets can round the final subpixel step back to cur forever (2px short at 120Hz). Finish
+       that near-bottom settle so the next card starts a fresh glide instead of inheriting this idle one's clock. */
+    if(el.scrollTop===cur&&tAtBottom(el)){ writeScrollInstant(el,max); glideTs=0; syncJumpBottom(); return; }
     glideRAF=requestAnimationFrame(glideStep);
   }
   function kickFollow(){ if(tStick&&!glideRAF){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }
@@ -82482,8 +82553,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function syncInlineLens(){
     const dock=document.querySelector('.lens-dock');
     if(!dock)return;
-    pmPatch(dock,renderInlineLens());
+    const html=renderInlineLens();
+    /* Mounting the in-flow controls moves the transcript's viewport before
+       renderApp captures it. Absorb that displacement in this patch; waiting
+       for the follow glide paints a full dock-height drop, then pulls it back. */
+    const tr=html&&!dock.firstElementChild?tEl():null;
+    const top=tr?tr.getBoundingClientRect().top:0, scroll=tr?tr.scrollTop:0;
+    pmPatch(dock,html);
     dock.classList.toggle('is-open',!!dock.firstElementChild);
+    if(tr&&dock.firstElementChild){
+      const dy=tr.getBoundingClientRect().top-top;
+      if(Math.abs(dy)>0.5) writeScrollInstant(tr,scroll+dy);
+    }
   }
   let lastOverlayPayload='';
   function renderOverlays(){
