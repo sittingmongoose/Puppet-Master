@@ -363,7 +363,7 @@
       openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation,
       /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
       turnBusy, registerTurnOwner, maybeFlushQueue, startWorkingRec, onWorkComplete, releaseNextRun,
-      followIfSticky, holdFollow, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx,
+      followIfSticky, holdFollow, followTarget, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx,
       /* turn-stream keeps its shrink room for the whole of a run while runHoldsRoom() says so */
       runHoldsRoom
     }, readOnlyRender?{readOnly:true}:{}, extra);
@@ -2967,6 +2967,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      not input, so anchoring and clamping never flip the state. */
   let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null, tLastCh=null, tInputDir=0;
   let glideRAF=0, glideTs=0, tRO=null, tROTarget=null;
+  let followTargetFn=null;
+  function followTarget(fn){ followTargetFn=typeof fn==='function'?fn:null; }
   const GLIDE_TAU=70;
   const GLIDE_DT_MAX=120;   /* a late frame still advances the glide by the time it took (to 120 ms); at 60 fps nothing changes */
   function tEl(){ return scrollKeyEl('transcript'); }
@@ -2978,7 +2980,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     glideRAF=0;
     const el=tEl(); if(!el||!tStick){ glideTs=0; return; }
     if(followHoldFn&&followHoldFn()){ glideTs=0; return; }
-    const max=el.scrollHeight-el.clientHeight, cur=el.scrollTop, d=max-cur;
+    const limit=el.scrollHeight-el.clientHeight, target=followTargetFn&&followTargetFn(el,limit);
+    const max=target==null?limit:Math.min(limit,target), cur=el.scrollTop, d=max-cur;
+    if(d<-.5){ writeScrollInstant(el,max); glideRAF=requestAnimationFrame(glideStep); return; }
     if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
     const tn=performance.now(), dt=glideTs?Math.min(GLIDE_DT_MAX,Math.max(1,tn-glideTs)):16.7; glideTs=tn;
     let next;

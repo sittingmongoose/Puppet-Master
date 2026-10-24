@@ -563,7 +563,7 @@
     if (mine === false) room.own = 0;
     /* round 3 (hist): a second close while the first one's band still eases: its own shrink is not the run's
        (holdShrink's keepRoom took it as one, room.keepWas), and its FLIP is waited out as the first one's was */
-    if (room.on && room.rel && room.lg) { room.keep = room.keepWas || 0; room.lgUntil = now() + SHRINK_HOLD; room.lgTop = null; return; }
+    if (room.on && room.rel && room.lg) { room.keep = room.keepWas || 0; room.lgUntil = now() + SHRINK_HOLD; room.lgTop = null; closeViewStart(); return; }
     if (!room.on || room.rel) return;
     /* round 3 (hist): a card that is not the running last card (finished, or something mounted under it) closes above
        what the reader reads: the room goes at once and the list keeps its bottom, so the answer under it stays still.
@@ -582,13 +582,56 @@
     }
     /* a tier hold may not have written its floor yet (it writes once a growth stops): the release starts from it */
     if (room.tier) { room.tier = false; if (room.floorW !== room.h0) roomFloor(room.h0); }
-    releaseRoom(); room.lg = true; room.lgUntil = now() + SHRINK_HOLD; room.lgTop = null;
+    releaseRoom(); room.lg = true; room.lgUntil = now() + SHRINK_HOLD; room.lgTop = null; closeViewStart();
   }
   /* P5 v2: how far the content's end sits above the top of the transcript's view (more than 0: the view shows only
      the band under it) */
   function bandAbove(inner) {
     var tr = inner.closest('.transcript'), l = inner.lastElementChild;
     return tr && l ? tr.getBoundingClientRect().top + tr.clientTop - l.getBoundingClientRect().bottom : 0;
+  }
+  /* History is removed before its body's height FLIP finishes. Its empty animated
+     height is not content for a following reader. Keep the live tail as the
+     follow target while that height and the reader's room are returned. */
+  function closeContentH(inner) {
+    var card = inner.lastElementChild, body = card && card.matches('.working-card') && card.querySelector(':scope > .working-body');
+    var tail = body && body.lastElementChild;
+    var nat = naturalH(inner);
+    if (!tail || body !== card.lastElementChild || body.querySelector(':scope > .work-history')) return nat;
+    if (!body.getAnimations().some(function (a) { return (a.playState === 'running' || a.playState === 'paused') && a.effect.getKeyframes().some(function (f) { return f.height != null; }); })) return nat;
+    var br = body.getBoundingClientRect(), end = tail.getBoundingClientRect().bottom + (parseFloat(getComputedStyle(body).paddingBottom) || 0);
+    return nat - Math.max(0, br.bottom - end);
+  }
+  function closeFollowTarget(tr, limit) {
+    if (!room.on || !room.rel || !room.lg) return null;
+    var inner = roomInner(), card = inner && inner.lastElementChild;
+    if (!inner || !card || card.querySelector('.work-history')) return null;
+    var nat = closeContentH(inner), base = Math.max(nat, room.keep, room.own);
+    var wanted = Math.max(0, limit - Math.max(0, Math.max(naturalH(inner), room.floorW || 0) - base));
+    var ts = performance.now(), dt = room.viewTs == null ? 1 / 120 : Math.max(0, (ts - room.viewTs) / 1000);
+    var sdt = Math.min(dt, room.viewDt == null ? 1 / 120 : room.viewDt);
+    var growth = room.viewNat == null ? 0 : Math.max(0, nat - room.viewNat);
+    room.viewTs = ts; room.viewDt = dt; room.viewNat = nat;
+    return Math.max(wanted, tr.scrollTop - Math.max(0, CLOSE_STEP * Math.min(1, sdt * 60) - growth));
+  }
+  function closeViewStart() {
+    var inner = roomInner(), tr = inner && inner.closest('.transcript'), c = C();
+    room.viewTs = null; room.viewDt = null; room.viewNat = null;
+    if (!tr || !c || !c.isSticky || !c.isSticky() || reduced()) return;
+    var v = tr.getBoundingClientRect(), walk = document.createTreeWalker(inner, NodeFilter.SHOW_TEXT), node;
+    while ((node = walk.nextNode())) {
+      if (!node.textContent.trim() || node.parentElement.closest('svg,script,style')) continue;
+      var r = document.createRange(); r.selectNodeContents(node);
+      var visible = Array.prototype.some.call(r.getClientRects(), function (p) { return p.bottom > v.top && p.top < v.bottom && p.right > v.left && p.left < v.right; });
+      r.detach();
+      if (visible) return;
+    }
+    /* No surviving text is on screen: changing the view here moves no visible
+       text. Once any text is visible, closeFollowTarget uses CLOSE_STEP. */
+    var limit = tr.scrollHeight - tr.clientHeight, nat = closeContentH(inner), base = Math.max(nat, room.keep, room.own);
+    var top = Math.max(0, limit - Math.max(0, Math.max(naturalH(inner), room.floorW || 0) - base));
+    tr.scrollTo({ top: top, behavior: 'instant' });
+    room.floorAt = base; room.x = 0; room.v = 0; roomFloor(base); lgMark(inner);
   }
   /* round 3 (hist): what the reader opened in the run's card: its history (renderWorkHistory, the last child of its
      body), with the gap above it. The list's height less this is the run's own height (room.own) */
@@ -740,7 +783,7 @@
     if (room.rel) {
       /* P6: each step is timed by the frame (rAF ts, in motion time), not by the callback: callbacks start 2-20 ms into
          a frame, and a late one followed by an early one made one step 4.6 px and the next 2 px on regular 60 Hz frames */
-      var nat = naturalH(inner), t = now(), fts = typeof ts === 'number' ? ts : null, k = window.PM56_CLOCK && window.PM56_CLOCK.scale != null ? window.PM56_CLOCK.scale : 1;
+      var nat = room.lg ? closeContentH(inner) : naturalH(inner), t = now(), fts = typeof ts === 'number' ? ts : null, k = window.PM56_CLOCK && window.PM56_CLOCK.scale != null ? window.PM56_CLOCK.scale : 1;
       var dt = Math.min(0.1, Math.max(0, (fts != null && room.lastTs != null && fts > room.lastTs ? (fts - room.lastTs) * k : t - room.last) / 1000)); room.last = t; room.lastTs = fts;
       /* round 3 (blank): a close's step is sized by the shorter of this frame and the one before: the close's render makes
          a long frame, and a full step after it plus the next frame's put 42 px into one 60 fps film frame (120 Hz page).
@@ -774,6 +817,13 @@
          top edge). Started only once the band passed RUN_ROOM_MAX, the FLIP outran it: 55% of the view at boot */
       if (room.lg) { var cap = Math.max(base, (room.own > 0 ? Math.min(nat, room.own) : nat) + RUN_ROOM_MAX); if (room.floorAt > cap) { var to = Math.max(cap, room.floorAt - CLOSE_STEP * Math.min(1, sdt * 60)) - base; if (s2[0] > to) { s2[0] = to; s2[1] = Math.max(s2[1], -SHRINK_VMAX); } } }
       room.x = s2[0]; room.v = s2[1];
+      /* A close with no surviving text on screen handed the view to its live
+         tail before paint. The invisible room can go at once; keep that follow
+         target until the body's original FLIP has reached the same content. */
+      if (room.lg && room.x < 0.5 && naturalH(inner) > base + 0.5) {
+        room.floorAt = base; if (room.floorW !== base) roomFloor(base);
+        try { C().followIfSticky(); } catch (e) { } lgMark(inner); room.raf = requestAnimationFrame(roomFrame); return;
+      }
       /* under reduced motion (only a held demo run holds room there) the floor goes at once */
       if (room.x < 0.5 && base > nat + 0.5 && !reduced()) {
         /* P5 v2: what the close gave back is gone; the run's own room stays held, run-long, as E holds it */
@@ -1200,6 +1250,7 @@
     c.registerTurnOwner(owner);
     c.onWorkComplete(onComplete);
     if (c.onWorkShrink) c.onWorkShrink(holdShrink);
+    if (c.followTarget) c.followTarget(closeFollowTarget);
   }
   setTimeout(wire, 0);
   document.addEventListener('DOMContentLoaded', wire);
