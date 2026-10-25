@@ -793,10 +793,13 @@
            its view through that empty height, then resume the ordinary room
            release as soon as the real content fits the existing floor. */
         var tq = inner.closest('.transcript');
-        if (room.viewCompleteTop == null && tq) room.viewCompleteTop = tq.scrollTop;
+        var c = C();
+        if (!c.isSticky()) room.viewCompleteTop = null;
+        else if (room.viewCompleteTop == null && tq) room.viewCompleteTop = tq.scrollTop;
         var body = room.viewBody;
         var closing = body && body.isConnected && body.getAnimations().some(function (a) { return (a.playState === 'running' || a.playState === 'paused') && a.effect.getKeyframes().some(function (f) { return f.height != null; }); });
         if (closing && naturalH(inner) > room.floorAt + 0.5) {
+          room.last = now(); room.lastTs = typeof ts === 'number' ? ts : null;
           try { C().followIfSticky(); } catch (e) { }
           lgMark(inner); room.raf = requestAnimationFrame(roomFrame); return;
         }
@@ -804,7 +807,7 @@
       }
       /* P6: each step is timed by the frame (rAF ts, in motion time), not by the callback: callbacks start 2-20 ms into
          a frame, and a late one followed by an early one made one step 4.6 px and the next 2 px on regular 60 Hz frames */
-      var nat = room.lg && runHoldsRoom() ? closeContentH(inner) : naturalH(inner), t = now(), fts = typeof ts === 'number' ? ts : null, k = window.PM56_CLOCK && window.PM56_CLOCK.scale != null ? window.PM56_CLOCK.scale : 1;
+      var nat = room.lg && room.viewCut && runHoldsRoom() ? closeContentH(inner) : naturalH(inner), t = now(), fts = typeof ts === 'number' ? ts : null, k = window.PM56_CLOCK && window.PM56_CLOCK.scale != null ? window.PM56_CLOCK.scale : 1;
       var dt = Math.min(0.1, Math.max(0, (fts != null && room.lastTs != null && fts > room.lastTs ? (fts - room.lastTs) * k : t - room.last) / 1000)); room.last = t; room.lastTs = fts;
       /* round 3 (blank): a close's step is sized by the shorter of this frame and the one before: the close's render makes
          a long frame, and a full step after it plus the next frame's put 42 px into one 60 fps film frame (120 Hz page).
