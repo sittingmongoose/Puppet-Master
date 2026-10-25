@@ -3215,22 +3215,20 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return out;
   }
   let workHistoryAnchor=null;
-  function anchorWorkHistory(pos,opts){
+  function anchorWorkHistory(pos){
     if(!pos||!pos.el.isConnected||tStick||scrollIntents.has('transcript')||pos.input!==tUserInputAt) return false;
     const el=pos.el, tr=el.closest('[data-scroll-key="transcript"]');
-    const allowDone=!!(opts&&opts.keepHistory);
-    if(!tr||(el.closest('.working-card.is-done')&&!allowDone)
+    if(!tr||el.closest('.working-card.is-done')
        ||el.getAnimations().some(a=>a.animationName==='details-open'&&(a.playState==='running'||a.pending))) return false;
     if(workHistoryAnchor&&workHistoryAnchor.el===el&&workHistoryAnchor.input===pos.input
        &&Math.abs(tr.scrollTop-workHistoryAnchor.scroll)<=1){
-      workHistoryAnchor.allowDone=allowDone;
       workHistoryAnchor.at=performance.now(); return true;
     }
-    const anchor=workHistoryAnchor={...pos,allowDone,scroll:tr.scrollTop,at:performance.now()};
+    const anchor=workHistoryAnchor={...pos,scroll:tr.scrollTop,at:performance.now()};
     let still=0, last=el.getBoundingClientRect().top+tr.scrollTop;
     const tick=()=>{
       if(workHistoryAnchor!==anchor) return;
-      if(!el.isConnected||!tr.isConnected||(el.closest('.working-card.is-done')&&!anchor.allowDone)||tStick||scrollIntents.has('transcript')||anchor.input!==tUserInputAt
+      if(!el.isConnected||!tr.isConnected||el.closest('.working-card.is-done')||tStick||scrollIntents.has('transcript')||anchor.input!==tUserInputAt
          ||el.getAnimations().some(a=>a.animationName==='details-open'&&(a.playState==='running'||a.pending))
          ||Math.abs(tr.scrollTop-anchor.scroll)>1){
         workHistoryAnchor=null; return;
@@ -3250,9 +3248,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function restoreScroll(pos,opts){
     const history=pos&&pos.workHistory, tr=history&&history.el.closest('[data-scroll-key="transcript"]');
-    const keepHistory=!!(tr&&!(opts&&opts.wasFollowing)&&history.y<=tr.getBoundingClientRect().top+1);
+    const keepHistory=!!(tr&&!(opts&&opts.wasFollowing)&&!history.el.closest('.working-card.is-done')
+      &&history.y<=tr.getBoundingClientRect().top+1);
     if(opts&&opts.still&&!keepHistory) workHistoryAnchor=null;
-    const historyAnchored=(!(opts&&opts.still)||keepHistory)&&anchorWorkHistory(history,{keepHistory});
+    const historyAnchored=(!(opts&&opts.still)||keepHistory)&&anchorWorkHistory(history);
     requestAnimationFrame(()=>{
       document.querySelectorAll('[data-scroll-key]').forEach(el=>{
         const v=pos?pos[el.dataset.scrollKey]:null;
