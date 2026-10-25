@@ -296042,9 +296042,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const history=[...tr.querySelectorAll('.working-card:not(.is-done) .work-history')].find(el=>{
         const r=el.getBoundingClientRect();
         const visible=Math.min(r.bottom,vr.bottom)-Math.max(r.top,vr.top);
-        /* A sliver below the reader must not move the text above History.
+        /* A sliver at either edge must not move the text outside History.
            Its own entrance slide belongs to History, not to scroll custody. */
-        return r.bottom>vr.top&&(r.top<=vr.top+1||visible>=vr.height/2)
+        return r.bottom>vr.top&&visible>=vr.height/2
           &&!el.getAnimations().some(a=>a.animationName==='details-open'&&(a.playState==='running'||a.pending));
       });
       if(history) out.workHistory={el:history,y:history.getBoundingClientRect().top,input:tUserInputAt};
