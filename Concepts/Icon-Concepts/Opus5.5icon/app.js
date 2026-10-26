@@ -25,8 +25,9 @@
   const PAGE = {
     'friendly-dark': { card: '#2A2731', page: 'radial-gradient(circle at 1px 1px, rgba(190,180,210,.07) 1px, transparent 1.5px) 0 0/18px 18px, #211E26' },
     'friendly-light': { card: '#FFFFFF', page: 'radial-gradient(circle at 1px 1px, rgba(122,109,140,.11) 1px, transparent 1.5px) 0 0/18px 18px, #FBF7F3' },
-    'glass-dark': { card: 'rgba(58,44,88,.52)', page: 'radial-gradient(900px 520px at 8% -6%, rgba(122,86,190,.55), transparent 62%), radial-gradient(800px 520px at 100% 10%, rgba(176,82,150,.38), transparent 60%), radial-gradient(900px 600px at 50% 110%, rgba(70,90,190,.35), transparent 60%), #241B36' },
-    'glass-light': { card: 'rgba(255,255,255,.55)', page: 'radial-gradient(900px 520px at 8% -6%, rgba(246,196,226,.9), transparent 62%), radial-gradient(800px 520px at 100% 10%, rgba(196,182,244,.85), transparent 60%), radial-gradient(900px 600px at 50% 110%, rgba(186,220,244,.7), transparent 60%), #E4CDE4' },
+    // Glass sits on PMConcept7's own Ribbons wallpaper, under Liquid Glass's neutral sheet tint
+    'glass-dark': { card: 'rgba(7,10,22,.66)', page: 'linear-gradient(rgba(4,6,13,.5), rgba(4,6,13,.5)), url(wall-ribbons-dark.webp) center / cover no-repeat, #04060D' },
+    'glass-light': { card: 'rgba(255,255,255,.62)', page: 'linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url(wall-ribbons-light.webp) center / cover no-repeat, #EEF1F6' },
     'basic-dark': { card: '#1E1E1E', page: '#121212' },
     'basic-light': { card: '#FFFFFF', page: '#EAECEF' },
     'retro-dark': { card: '#171A14', page: '#10120E', shadow: 'rgba(224,224,224,.45)' },
@@ -53,7 +54,7 @@
   function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 1800); }
   function lockStyle(t) {
     const th = TH[t];
-    return `--wm-font:${th.font};--wm-weight:${th.weight};--wm-track:${th.track};--wm-size:${th.family === 'glass' ? 15 : 14}px;color:${th.text}`;
+    return `--wm-font:${th.font};--wm-weight:${th.weight};--wm-track:${th.track};--wm-size:14px;color:${th.text}`;
   }
   function lockup(t, opts) {
     const o = Object.assign({ px: 24, markOnly: false, motion: null }, opts || {});
@@ -221,7 +222,7 @@
     </div>`;
   }
   function renderTitlebar() {
-    $('#titlebarSub').innerHTML = `The top-left logo is <b>static</b>: a 24 px mark in the 40 px bar beside the theme's own wordmark. Below are three widths: full, narrow, and squeezed (mark only). The chat's Working row in the same mock uses the <b>animated</b> loader, so both variants are visible side by side. ${isNier() ? 'NieR shows its wordmark in capitals, as its own type does.' : ''}`;
+    $('#titlebarSub').innerHTML = `The top-left logo is <b>static</b>: a 24 px mark in the 40 px bar beside the theme's own wordmark. Below are three widths: full, narrow, and squeezed (mark only). The chat's Working row in the same mock uses the <b>animated</b> loader, so both variants are visible side by side.`;
     $('#shells').innerHTML = SHELLS.map(([k, n, w, d]) => `<div class="shell-row"><div class="meta"><h3>${n}</h3><span class="w">${w} px</span><span class="note">${d}</span></div><div class="shell-scroll">${shellHtml(k, w)}</div></div>`).join('');
     renderTbZoom();
   }
@@ -388,7 +389,7 @@
   /* ------------------------------------------------------------ loading */
   function renderLoading() {
     const nier = isNier();
-    $('#loadingSub').innerHTML = 'Loaders are separate animated files; nothing that should be still ever moves. Each theme family moves the way that theme already moves: <b>Friendly</b> springs, <b>Glass</b> glides, <b>Basic</b> eases, <b>Retro</b> flips frames. With reduced motion, nothing travels: ' + (S.dir === 'pip' ? 'the control fades in and out and Pip blinks.' : 'the letters fade in and out in turn.');
+    $('#loadingSub').innerHTML = 'Loaders are separate animated files; nothing that should be still ever moves. The motion is a small rig: the control rocks, Pip hangs from it, and both strings are solved again for every frame, so they stay tied to the stick and to the eyelet the whole way through. Each family moves the way its theme already moves: <b>Friendly</b> springs, <b>Glass</b> glides, <b>Basic</b> eases, <b>Retro</b> flips eight pixel frames with the strings redrawn in each. With reduced motion nothing travels: ' + (S.dir === 'pip' ? 'the control fades in and out and Pip blinks.' : 'the letters fade in and out in turn.');
     $('#nierNote').innerHTML = nier ? `<div class="card nier-note" style="margin-bottom:14px">${M({ px: 40 })}<div><b>NieR keeps its own loading sequence.</b><div class="note">Pip appears static in NieR (title bar, icon, tray, states) and is never animated there. The cards below show the static mark where a loader would sit in other themes.</div></div></div>` : '';
     const lo = loaderOpts();
     const skel = (n) => Array.from({ length: n }, (_, i) => `<div class="ln" style="width:${[92, 70, 84, 56][i % 4]}%"></div>`).join('');
@@ -494,24 +495,25 @@
   function constructionSvg() {
     const th = TH[S.theme];
     const ink = th.muted, acc = th.accent;
-    const mark = L.svg({ mark: S.dir, theme: S.theme, px: 64, tier: 'full' }).replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '');
-    const lab = (x, y, t, anchor) => `<text x="${x}" y="${y}" font-family="system-ui, sans-serif" font-size="2.6" fill="${th.text}" text-anchor="${anchor || 'start'}">${t}</text>`;
-    const lead = (x1, y1, x2, y2) => `<path d="M${x1} ${y1}L${x2} ${y2}" stroke="${acc}" stroke-width=".3"/><circle cx="${x1}" cy="${y1}" r=".7" fill="${acc}"/>`;
+    const pixel = th.pixel && S.dir === 'pip';
+    const mark = (pixel ? L.svg({ mark: 'pip', theme: S.theme, px: 64, tier: 'pixel', dpr: 1 }).replace(/viewBox="[^"]*"/, '') : L.svg({ mark: S.dir, theme: S.theme, px: 64, tier: 'full' }))
+      .replace(/^<svg[^>]*>/, (m0) => pixel ? '<svg x="0" y="0" width="64" height="64" viewBox="0 0 32 32" shape-rendering="crispEdges">' : '<g>').replace(/<\/svg>$/, pixel ? '</svg>' : '</g>');
+    const lab = (x, y, t) => `<text x="${x}" y="${y}" font-family="system-ui, sans-serif" font-size="2.5" fill="${th.text}">${t}</text>`;
+    const lead = (x1, y1, x2, y2, a, b) => `<path d="M${x1} ${y1}L${x2} ${y2}H${x2 + 1}" fill="none" stroke="${acc}" stroke-width=".3"/><circle cx="${x1}" cy="${y1}" r=".7" fill="${acc}"/>` + lab(x2 + 1.6, y2 + .9, a) + (b ? lab(x2 + 1.6, y2 + 4, b) : '');
     let guides = '';
-    for (let i = 0; i <= 64; i += 8) guides += `<path d="M${i} 0V64M0 ${i}H64" stroke="${ink}" stroke-opacity=".18" stroke-width=".15"/>`;
+    const step = pixel ? 2 : 8;
+    for (let i = 0; i <= 64; i += step) guides += `<path d="M${i} 0V64M0 ${i}H64" stroke="${ink}" stroke-opacity="${pixel ? .16 : .18}" stroke-width="${pixel ? .08 : .15}"/>`;
     guides += `<path d="M32 0V64" stroke="${acc}" stroke-opacity=".5" stroke-width=".2" stroke-dasharray="1 1"/>`;
-    const notes = S.dir === 'pip'
-      ? lead(52, 9, 70, 6) + lab(71, 6.9, 'Control: two sticks at ±20°') + lab(71, 10, 'back stick at 60% ink', 'start') +
-        lead(42, 24, 70, 20) + lab(71, 20.9, 'Strings: 2.4 units, 20 apart') +
-        lead(55, 45.5, 70, 34) + lab(71, 34.9, 'Brace points: the head') + lab(71, 38, 'is { and } as one shape') +
-        lead(38, 44, 70, 48) + lab(71, 48.9, 'Eyes r 3.6, 12 apart') +
-        lead(35, 51.5, 70, 58) + lab(71, 58.9, 'Smile, then cheeks (Friendly,') + lab(71, 62, 'Glass and Retro only)')
-      : lead(52, 9, 70, 8) + lab(71, 8.9, 'Control: two sticks at ±18°') + lead(34.5, 28, 70, 24) + lab(71, 24.9, 'Strings to P stem and M stems') + lead(20, 45, 70, 44) + lab(71, 44.9, 'Monoline letters, 7 units');
-    return `<svg viewBox="-2 -2 112 68" role="img" aria-label="Construction diagram">${guides}${mark}${notes}</svg>`;
+    let notes;
+    if (S.dir === 'mono') notes = lead(52, 9, 70, 8, 'Control: two sticks at ±18°') + lead(34.5, 28, 70, 24, 'Strings to the P stem and both M stems') + lead(20, 45, 70, 44, 'Monoline letters, 7 units');
+    else if (pixel) notes = lead(14, 17, 70, 6, 'Sticks: 2 px staircases, the back one', 'in shade') + lead(14, 23, 70, 18, 'Strings: pixel lines from stick to head,', 'redrawn for every frame') + lead(40, 40, 70, 32, 'Face stamped out of the head') + lead(48, 49, 70, 44, 'Cheeks: Retro\'s orange or pink') + lead(32, 58, 70, 56, '32 px grid: 16 and 24 px grids', 'exist for small sizes');
+    else if (th.nier) notes = lead(32, 14.5, 70, 5, 'Diamond pin where the sticks cross') + lead(52.7, 22, 70, 13, 'Square nodes where every line ends') + lead(44.5, 31.5, 70, 22, 'Strings: hairlines, node to node') + lead(28, 40.6, 70, 31, 'YoRHa blindfold: idle shows no eyes;', 'other states light up on the band') + lead(55, 39, 70, 41, 'Blindfold tails past the right ear') + lead(14.6, 52, 70, 51, 'Hairline head with an inner frame,', 'chamfered corners, angled brace points');
+    else notes = lead(50, 10.6, 70, 4, 'Control: two sticks at ±20°,', 'the back one in shade') + lead(32, 14.5, 70, 11.5, 'Pin where they cross') + lead(47.97, 20.31, 70, 17.5, 'String tied on with a wrap,', '5 units in from the tip') + lead(44.5, 31.8, 70, 25, 'Eyelet ring: the string ends here,', 'in every frame of every loader') + lead(55, 45.5, 70, 34, 'Brace points: { and } as one head') + lead(39.3, 42.7, 70, 42, 'Eyes with a catchlight') + lead(42.2, 50.2, 70, 50, th.glass ? 'Lit rim, frosted body, pink cheeks' : th.cheek ? 'Cheeks: Friendly and Glass' : 'Basic: one flat accent, no cheeks') + (th.glass ? lab(71.6, 54, 'On the app icon it refracts the wallpaper') : '');
+    return `<svg viewBox="-2 -2 120 68" role="img" aria-label="Construction diagram">${guides}${mark}${notes}</svg>`;
   }
   function renderSpecs() {
     const th = TH[S.theme], mo = L.MOTION[th.family];
-    const sw = (c) => `<span class="sw" style="background:${Array.isArray(c) ? `linear-gradient(${c[0]},${c[1]})` : c}"></span><code>${Array.isArray(c) ? c.join(' → ') : c}</code>`;
+    const sw = (c) => `<span class="sw" style="background:${Array.isArray(c) ? `linear-gradient(${c.join(',')})` : c}"></span><code>${Array.isArray(c) ? c.join(' → ') : c}</code>`;
     $('#specGrid').innerHTML = `
       <div class="card construct">${constructionSvg()}</div>
       <div class="specs-stack">
@@ -522,11 +524,11 @@
           <tr><td class="k">Retro</td><td>Sprites on 16, 24 and 32 grids at every size</td><td>All Retro surfaces</td></tr></table></div>
         <div class="card"><h3 style="margin-bottom:6px">${th.label} palette</h3><table class="spec">
           <tr><td class="k">Control</td><td>${sw(th.ctl)}</td><td class="k">Strings</td><td>${sw(th.str)}</td></tr>
-          <tr><td class="k">${S.dir === 'pip' ? 'Head' : 'Letters'}</td><td>${sw(S.dir === 'pip' ? th.head : th.letter)}</td><td class="k">Cheeks</td><td>${th.cheek ? sw(th.cheek) : '<span class="note">none</span>'}</td></tr>
+          <tr><td class="k">${S.dir === 'pip' ? 'Head' : 'Letters'}</td><td>${sw(S.dir === 'pip' ? (th.glass ? th.glass.tint : th.head) : th.letter)}</td><td class="k">Cheeks</td><td>${th.cheek ? sw(th.cheek) : '<span class="note">none</span>'}</td></tr>
           <tr><td class="k">Tile</td><td>${sw(th.tile.stops)}</td><td class="k">Edge</td><td>${sw(th.tile.edge)}</td></tr></table>
           <p class="note" style="margin:8px 0 0">Every value is a PMConcept7 token for that theme, or a step of one.</p></div>
-        <div class="card"><h3 style="margin-bottom:6px">Motion</h3><table class="spec"><tr><th>Family</th><th>Cycle</th><th>Easing</th></tr>
-          ${['friendly', 'glass', 'basic', 'retro'].map((f) => `<tr${f === th.family ? ' style="color:var(--accent)"' : ''}><td class="k">${f[0].toUpperCase() + f.slice(1)}</td><td>${L.MOTION[f].dur}s</td><td><code>${f === 'retro' ? '4 frames, steps(1)' : L.MOTION[f].ease}</code></td></tr>`).join('')}
+        <div class="card"><h3 style="margin-bottom:6px">Motion</h3><table class="spec"><tr><th>Family</th><th>Cycle</th><th>Feel</th></tr>
+          ${['friendly', 'glass', 'basic', 'retro'].map((f) => `<tr${f === th.family ? ' style="color:var(--accent)"' : ''}><td class="k">${f[0].toUpperCase() + f.slice(1)}</td><td>${L.MOTION[f].dur}s</td><td>${L.MOTION[f].label}</td></tr>`).join('')}
           <tr><td class="k">NieR</td><td colspan="2">Static; NieR keeps its own loader</td></tr></table>
           <p class="note" style="margin:8px 0 0">Loader SVGs carry <code>role="img"</code> and the label "Puppet Master is working". Static marks next to the wordmark are <code>aria-hidden</code>, because the name is already there.${mo ? '' : ''}</p></div>
       </div>`;

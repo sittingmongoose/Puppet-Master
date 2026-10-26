@@ -274,7 +274,7 @@ canvas.px { image-rendering: pixelated; image-rendering: crisp-edges; display: b
 /* ---------------------------------------------------------------- specs */
 .spec-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
 .construct { padding: 16px; display: flex; align-items: center; justify-content: center; }
-.construct svg { width: 100%; max-width: 440px; height: auto; display: block; }
+.construct svg { width: 100%; max-width: 620px; height: auto; display: block; }
 table.spec { width: 100%; border-collapse: collapse; font-size: 12.5px; }
 table.spec th, table.spec td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
 table.spec th { font: 600 11px var(--ui); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }

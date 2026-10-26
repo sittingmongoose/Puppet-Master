@@ -18,6 +18,22 @@ preview loads `../../PMConcept7.html` in a frame and swaps its title-bar text at
   icons change expression instead of carrying a colored badge.
 - **It survives 16 px.** Hand-placed sprites at tray size, a heavier vector cut for 19 to 40
   device pixels (the 40 px title bar at 1x), full detail above that.
+- **The strings are real.** Each string is tied to a stick with a wrap, 5 units in from the tip,
+  and ends in an eyelet ring on Pip's head. Loaders are a small rig: the control rocks, Pip hangs
+  from it, and both strings are solved again for every sampled frame, so they never come loose.
+  Retro redraws them as pixel lines in every frame.
+
+## Themes (v0.2)
+
+Every colour is PMConcept7's computed token for that theme, sampled from the running page.
+
+| Family | Pip |
+|---|---|
+| Friendly | soft vinyl toy: shaded head, a corner highlight, catchlights, peach cheeks |
+| Glass | Liquid Glass, matching PMConcept7's current Glass (neutral glass, blue accent): a clear blue lens with a rim lit from above and a bright base; on the app tile it refracts the Ribbons wallpaper behind it. No highlight band across the brow. |
+| Basic | flat, one accent, no cheeks |
+| Retro | pixel sprites (16, 24, 32 px grids) in PMConcept7's olive/lime and cream/green; 8-frame swing |
+| NieR | a YoRHa unit: hairline line art like PMConcept7's own Pod, a blindfold band whose tails fly past the ear, square nodes where lines end, a diamond pin; idle shows no eyes and other states light up on the band. Tile: graph paper, target brackets, a node-ended rule and a P-01 unit code. Static only. |
 
 ## Static and animated
 
@@ -30,8 +46,8 @@ preview loads `../../PMConcept7.html` in a frame and swaps its title-bar text at
 | Loading (splash, chat Working row, buttons, panels) | animated loader: Swing (default), Think, Hop |
 | NieR | static everywhere; NieR keeps its own loader |
 
-Motion follows each theme's own personality: Friendly springs (1.7 s), Glass glides (2.4 s),
-Basic eases (1.6 s), Retro flips four pixel frames (1.2 s). Reduced motion (OS setting,
+Motion follows each theme's own personality: Friendly springs (1.8 s), Glass glides (2.6 s),
+Basic eases (1.7 s), Retro flips eight pixel frames (1.2 s). Reduced motion (OS setting,
 PMConcept7's `data-motion="reduced"`, or the Hub's flag) removes all travel and keeps an opacity
 signal: the control breathes and Pip blinks.
 
@@ -41,6 +57,7 @@ signal: the control breathes and Pip blinks.
 index.html, styles.css, app.js   the gallery (themes, mocks, live PMConcept7 swap, downloads)
 pm-logo.js                       the generator: every SVG on the page and in every download
 fonts.css                        Latin subsets of the fonts PMConcept7 already embeds
+wall-ribbons-*.webp              PMConcept7's Glass wallpaper (copied unchanged), for the Glass gallery
 concept-hub-bridge.js            Concept Hub theme and reduced-motion bridge (starter copy)
 concept-hub.json                 Hub registration
 ```
