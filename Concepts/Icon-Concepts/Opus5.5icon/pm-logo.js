@@ -32,7 +32,7 @@
       label: 'Glass Dark', family: 'glass', scheme: 'dark',
       bg: '#04060D', bar: 'rgba(7,10,22,.62)', text: '#F6F8FC', muted: '#BAC2D0', line: 'rgba(255,255,255,.16)', accent: '#74B9FF',
       ctl: '#F6F8FC', pin: '#74B9FF', str: 'rgba(246,248,252,.55)', head: '#86C1FF', eye: '#071026', cheek: '#FF86C2', shine: true,
-      glass: { tint: ['#D2E8FF', '#8DC5FF', '#5FA8F5'], alpha: .8, frost: 'rgba(255,255,255,.10)', rimTop: 'rgba(255,255,255,.95)', rimBot: 'rgba(255,255,255,.38)', edge: 'rgba(4,10,30,.55)', drop: 'rgba(0,2,12,.55)', rod: 'rgba(246,248,252,.92)' },
+      glass: { tint: ['#D2E8FF', '#8DC5FF', '#5FA8F5'], alpha: .8, frost: 'rgba(255,255,255,.10)', rimTop: 'rgba(255,255,255,.95)', rimBot: 'rgba(255,255,255,.38)', edge: 'rgba(4,10,30,.55)', drop: 'rgba(0,2,12,.55)', rod: '#EEF2F8' },
       letter: '#F6F8FC',
       tile: { kind: 'liquid', wall: 'dark', veil: 'rgba(4,6,13,.34)', edgeTop: 'rgba(255,255,255,.34)', edgeBot: 'rgba(0,0,0,.28)' },
       font: "'Inter', system-ui, sans-serif", weight: 650, track: '-.01em'
@@ -41,7 +41,7 @@
       label: 'Glass Light', family: 'glass', scheme: 'light',
       bg: '#EEF1F6', bar: 'rgba(255,255,255,.58)', text: '#0C0F15', muted: '#424A59', line: 'rgba(12,15,21,.14)', accent: '#005FCC',
       ctl: '#262E3E', pin: '#005FCC', str: 'rgba(12,15,21,.42)', head: '#4E9BF2', eye: '#0C0F15', cheek: '#FF86C2', shine: true,
-      glass: { tint: ['#B9DAFF', '#5EA6F6', '#2F80E2'], alpha: .88, frost: 'rgba(255,255,255,.18)', rimTop: 'rgba(255,255,255,.98)', rimBot: 'rgba(255,255,255,.6)', edge: 'rgba(30,45,90,.30)', drop: 'rgba(30,45,90,.30)', rod: 'rgba(38,46,62,.92)' },
+      glass: { tint: ['#B9DAFF', '#5EA6F6', '#2F80E2'], alpha: .88, frost: 'rgba(255,255,255,.18)', rimTop: 'rgba(255,255,255,.98)', rimBot: 'rgba(255,255,255,.6)', edge: 'rgba(30,45,90,.30)', drop: 'rgba(30,45,90,.30)', rod: '#2A3242' },
       letter: '#0C0F15',
       tile: { kind: 'liquid', wall: 'light', veil: 'rgba(255,255,255,.22)', edgeTop: 'rgba(255,255,255,.95)', edgeBot: 'rgba(30,45,90,.16)' },
       font: "'Inter', system-ui, sans-serif", weight: 650, track: '-.01em'
@@ -140,6 +140,14 @@
     const { s1, s2 } = sticks(g), c = Math.cos(g.ang * D2R), s = Math.sin(g.ang * D2R);
     return [[s2[0][0] + g.tip * c, s2[0][1] - g.tip * s], [s1[1][0] - g.tip * c, s1[1][1] - g.tip * s]];
   }
+  // Where a string meets the bar. Each stick gets hardware on its underside: the left string hangs
+  // from the front stick, the right one from the back stick, both a little in from the lower tips.
+  // n is the stick's downward normal, so hardware always sits under the bar, never across it.
+  function barAttach(g) {
+    const { s1, s2 } = sticks(g), A = anchors(g), sa = Math.sin(g.ang * D2R), ca = Math.cos(g.ang * D2R);
+    const n = [[sa, ca], [-sa, ca]];
+    return A.map((a, i) => ({ a, n: n[i], stick: i === 0 ? s2 : s1, front: i === 0 }));
+  }
   function headTopY(h, x) {
     const { x0, x1, y0, r } = h;
     if (x < x0 + r) { const d = x0 + r - x; return y0 + r - Math.sqrt(Math.max(0, r * r - d * d)); }
@@ -148,9 +156,25 @@
   }
   // where each string ends on Pip, at rest: the top of its eyelet ring (or just inside the head)
   function eyelets(g) {
+    // a screw eye on Pip's head: the ring's lower half tucks into the head
     return g.eyeletX.map((x) => {
       const top = headTopY(g.head, x);
-      return g.ring ? { x, base: top, ring: [x, top - g.ring + .35], end: [x, top - 2 * g.ring + .35] } : { x, base: top, ring: null, end: [x, top + 1.2] };
+      return g.ring ? { x, base: top, ring: [x, top - g.ring * .45], end: [x, top - g.ring * 1.45] } : { x, base: top, ring: null, end: [x, top + 1.2] };
+    });
+  }
+  // The two points a string runs between, for a pose. With rings at both ends the string leaves
+  // each ring on the side facing the other ring, the way a real string pulls on a screw eye.
+  function stringEnds(g, style, ctlAt, place) {
+    const bars = barAttach(g), eyes = eyelets(g);
+    return bars.map((b, i) => {
+      const e = eyes[i];
+      if (style === 'eye' && g.ring) {
+        const rc = [b.a[0] + b.n[0] * (g.w / 2 + g.ring * .45), b.a[1] + b.n[1] * (g.w / 2 + g.ring * .45)];
+        const C = ctlAt(rc), H = place(e.ring), vx = H[0] - C[0], vy = H[1] - C[1], l = Math.hypot(vx, vy) || 1;
+        return { T: [C[0] + vx / l * g.ring, C[1] + vy / l * g.ring], E: [H[0] - vx / l * g.ring, H[1] - vy / l * g.ring], ringC: rc };
+      }
+      // threaded through the bar: the string starts at the stick's centre line, hidden under it
+      return { T: ctlAt(b.a), E: place(e.end), ringC: null };
     });
   }
   function headPath(h) {
@@ -202,12 +226,22 @@
   }
 
   /* ---------------------------------------------------- Pip, vector themes */
+  const solidStr = (th) => th.str.indexOf('rgba') === 0 ? (th.scheme === 'dark' ? '#B9C2D2' : '#5B6476') : th.str;
   function controlSvg(g, th, cls, opts) {
     const { s1, s2 } = sticks(g), cap = 'round';
     const tray = opts.tray, glass = !tray && th.glass;
     const col = tray ? opts.ink : glass ? th.glass.rod : th.ctl;
-    const shade = tray || th.flatCtl ? 1 : (g.detail ? .58 : 1);
-    let s = line(s1[0], s1[1], g.w, col, cap, shade < 1 ? ` opacity="${shade}"` : '') + line(s2[0], s2[1], g.w, col, cap);
+    // the back stick is shaded with a solid colour, never transparency, so nothing shows through it
+    const back = tray || th.flatCtl || !g.detail ? col : mix(col, th.bg, .42);
+    const style = opts.attach || 'eye', strc = tray ? opts.ink : solidStr(th);
+    let under = '';
+    if (g.detail && !tray) {
+      stringEnds(g, style, (q) => q, (q) => q).forEach((e) => {
+        // a screw eye on the bar's underside, its top tucked under the stick, matching the one on Pip
+        if (e.ringC) under += `<circle cx="${R(e.ringC[0])}" cy="${R(e.ringC[1])}" r="${g.ring}" fill="none" stroke="${strc}" stroke-width="${g.ringW}"/>`;
+      });
+    }
+    let s = under + line(s1[0], s1[1], g.w, back, cap) + line(s2[0], s2[1], g.w, col, cap);
     if (glass && g.detail) {
       // glass rods: a fine specular line along the upper edge of each stick
       const sa = Math.sin(g.ang * D2R), ca = Math.cos(g.ang * D2R), k = g.w * .24;
@@ -216,15 +250,7 @@
       const h1 = shorten(s1.map((q) => [q[0] + up1[0], q[1] + up1[1]]), 2.4), h2 = shorten(s2.map((q) => [q[0] + up2[0], q[1] + up2[1]]), 2.4);
       s += line(h1[0], h1[1], .9, hl, 'round', ' opacity=".55"') + line(h2[0], h2[1], .9, hl, 'round');
     }
-    if (g.detail && !tray) {
-      // string wraps where each string is tied on, and the pin at the crossing
-      const A = anchors(g);
-      A.forEach((a, i) => {
-        const st = i === 0 ? s2 : s1, ux = st[1][0] - st[0][0], uy = st[1][1] - st[0][1], l = Math.hypot(ux, uy), nx = -uy / l, ny = ux / l, k = g.w / 2 + .5;
-        s += line([a[0] - nx * k, a[1] - ny * k], [a[0] + nx * k, a[1] + ny * k], 1.35, th.str.indexOf('rgba') === 0 ? (th.scheme === 'dark' ? '#AEB7C8' : '#5B6476') : th.str, 'round');
-      });
-      s += `<circle cx="${g.P[0]}" cy="${g.P[1]}" r="1.55" fill="${th.pin || th.str}"/>`;
-    }
+    if (g.detail && !tray) s += `<circle cx="${g.P[0]}" cy="${g.P[1]}" r="1.55" fill="${th.pin || th.str}"/>`;
     return `<g class="${cls.ctl || ''}">${s}</g>`;
   }
   function shorten(seg, k) {
@@ -289,7 +315,7 @@
 
   function eyeletRings(g, th, opts) {
     if (!g.ring || opts.tray) return '';
-    const col = th.str.indexOf('rgba') === 0 ? (th.scheme === 'dark' ? '#C9D0DC' : '#5B6476') : th.str;
+    const col = solidStr(th);
     return eyelets(g).map((e) => `<circle cx="${R(e.ring[0])}" cy="${R(e.ring[1])}" r="${g.ring}" fill="none" stroke="${col}" stroke-width="${g.ringW}"/>`).join('');
   }
 
@@ -324,9 +350,11 @@
     if (!small) {
       [s1[0], s1[1], s2[0], s2[1]].forEach((p) => { ctl += sq(p, 3.4); });
       ctl += `<path d="M${g.P[0]} ${g.P[1] - 3.6}L${g.P[0] + 3.6} ${g.P[1]}L${g.P[0]} ${g.P[1] + 3.6}L${g.P[0] - 3.6} ${g.P[1]}Z" fill="${ink}"${opts.tray ? '' : ` stroke="${th.bg}" stroke-width="1.1"`}/>`;
-      A.forEach((a) => { ctl += sq(a, 2.2); });
     }
-    const strings = A.map((a, i) => line(a, small ? E[i].end : [E[i].x, E[i].base - 1.2], small ? 2.6 : 1, ink, 'butt')).join('');
+    // nodes hang from the bar's underside, the way every NieR line ends in a square
+    const nodes = barAttach(g).map((b) => [b.a[0] + b.n[0] * (sw / 2 + .95), b.a[1] + b.n[1] * (sw / 2 + .95)]);
+    if (!small) nodes.forEach((q) => { ctl += sq(q, 2.4); });
+    const strings = nodes.map((q, i) => line(small ? A[i] : q, small ? E[i].end : [E[i].x, E[i].base], small ? 2.6 : 1, ink, 'butt')).join('');
     // the head: hairline line art like PMConcept7's Pod, with an inner frame line
     const d = headPathNier(h);
     let headS = opts.tray ? `<path d="${d}" fill="none" stroke="${ink}" stroke-width="${small ? 4 : 2.2}" stroke-linejoin="miter"/>`
@@ -363,23 +391,62 @@
 
   /* ------------------------------------------------------ vector: monogram */
   const MONO_GEO = {
-    full: { P: [32, 13.5], half: 23, ang: 18, w: 6, strW: 2, lw: 7, yT: 32.5, yB: 59, p: 9.5, m0: 34.5, m1: 55, detail: true },
-    small: { P: [32, 13.5], half: 24, ang: 18, w: 7.5, strW: 3.2, lw: 9, yT: 32, yB: 60, p: 9, m0: 35, m1: 56, detail: false }
+    full: { P: [32, 13.5], half: 23, ang: 18, w: 6, strW: 1.6, ring: 1.4, ringW: 1.1, lw: 7, yT: 32.5, yB: 59, p: 9.5, m0: 34.5, m1: 55, detail: true },
+    small: { P: [32, 13.5], half: 24, ang: 18, w: 7.5, strW: 3.2, ring: 0, ringW: 0, lw: 9, yT: 32, yB: 60, p: 9, m0: 35, m1: 56, detail: false }
   };
-  function monoVector(th, tier, cls, opts) {
+  // The monogram's strings: P hangs from one, M from two. Each hangs from a screw eye under the
+  // lower stick and ends in the top of its letter; like Pip's, they are solved for every frame.
+  function monoStrings(g) {
+    const { s1, s2 } = sticks(g), xs = [g.p, g.m0, g.m1], ca = Math.cos(g.ang * D2R);
+    const yOn = (seg, x) => seg[0][1] + (seg[1][1] - seg[0][1]) * (x - seg[0][0]) / (seg[1][0] - seg[0][0]);
+    return xs.map((x, i) => {
+      const yc = Math.max(yOn(s1, x), yOn(s2, x)), edge = yc + g.w / 2 / ca;
+      return { x, letter: i === 0 ? 0 : 1, ringC: [x, edge + (g.ring ? g.ring * .45 : -1.2)], end: [x, g.yT] };
+    });
+  }
+  function monoEnds(g, cRot, dys) {
+    return monoStrings(g).map((st) => {
+      const C = rot(st.ringC, g.P, cRot), L = [st.end[0], st.end[1] + dys[st.letter]];
+      if (!g.ring) return { T: C, E: L };
+      const vx = L[0] - C[0], vy = L[1] - C[1], l = Math.hypot(vx, vy) || 1;
+      return { T: [C[0] + vx / l * g.ring, C[1] + vy / l * g.ring], E: L };
+    });
+  }
+  function monoVector(th, tier, cls, opts, p, anim) {
     const g = MONO_GEO[tier === 'small' ? 'small' : 'full'];
     const tray = opts.tray, ink = tray ? opts.ink : null;
     const ctlCol = ink || (th.glass ? th.glass.rod : th.ctl), strCol = ink || th.str, letCol = ink || th.letter;
     const { s1, s2 } = sticks(g), cap = th.nier ? 'butt' : 'round';
-    const shade = tray || th.flatCtl ? 1 : (g.detail ? .58 : 1);
-    const ctl = `<g class="${cls.ctl || ''}">${line(s1[0], s1[1], g.w, ctlCol, cap, shade < 1 ? ` opacity="${shade}"` : '')}${line(s2[0], s2[1], g.w, ctlCol, cap)}</g>`;
-    const { yT, yB, p, m0, m1, lw } = g, bw = 17.5, bh = 17;
-    const P = `M${p} ${yB}V${yT}H${p + 7.5}C${p + bw - 2} ${yT} ${p + bw} ${yT + 4} ${p + bw} ${R(yT + bh / 2)}C${p + bw} ${yT + bh - 4} ${p + bw - 2} ${yT + bh} ${p + 7.5} ${yT + bh}H${p}`;
+    const back = tray || th.flatCtl || !g.detail ? ctlCol : mix(ctlCol, th.bg, .42);
+    const rings = g.ring && !tray ? monoStrings(g).map((st) => th.nier
+      ? `<rect x="${R(st.ringC[0] - 1.2)}" y="${R(st.ringC[1] - 1.2)}" width="2.4" height="2.4" fill="${th.ink}"/>`
+      : `<circle cx="${R(st.ringC[0])}" cy="${R(st.ringC[1])}" r="${g.ring}" fill="none" stroke="${solidStr(th)}" stroke-width="${g.ringW}"/>`).join('') : '';
+    const ctl = `<g class="${cls.ctl || ''}">${rings}${line(s1[0], s1[1], g.w, back, cap)}${line(s2[0], s2[1], g.w, ctlCol, cap)}</g>`;
+    const { yT, yB, m0, m1, lw } = g, px0 = g.p, bw = 17.5, bh = 17;
+    const P = `M${px0} ${yB}V${yT}H${px0 + 7.5}C${px0 + bw - 2} ${yT} ${px0 + bw} ${yT + 4} ${px0 + bw} ${R(yT + bh / 2)}C${px0 + bw} ${yT + bh - 4} ${px0 + bw - 2} ${yT + bh} ${px0 + 7.5} ${yT + bh}H${px0}`;
     const M = `M${m0} ${yB}V${yT}L${(m0 + m1) / 2} ${yT + 16}L${m1} ${yT}V${yB}`;
-    const yOn = (seg, x) => seg[0][1] + (seg[1][1] - seg[0][1]) * (x - seg[0][0]) / (seg[1][0] - seg[0][0]);
-    const st = (x) => line([x, Math.max(yOn(s1, x), yOn(s2, x))], [x, yT], g.strW, strCol, 'butt');
     const letter = (d) => `<path d="${d}" fill="none" stroke="${letCol}" stroke-width="${lw}" stroke-linecap="${th.nier ? 'square' : 'round'}" stroke-linejoin="${th.nier ? 'miter' : 'round'}"/>`;
-    return { defs: '', body: `<g class="${cls.l1 || ''}">${st(p)}${letter(P)}</g><g class="${cls.l2 || ''}">${st(m0)}${st(m1)}${letter(M)}</g>${ctl}` };
+    const ends = monoEnds(g, 0, [0, 0]);
+    const strings = anim
+      ? ends.map((e, i) => { const vx = e.E[0] - e.T[0], vy = e.E[1] - e.T[1]; return `<line class="${p}-str ${p}-s${i}" x1="0" y1="0" x2="0" y2="1" stroke="${strCol}" stroke-width="${g.strW}" transform="translate(${R(e.T[0])} ${R(e.T[1])}) rotate(${R(Math.atan2(-vx, vy) / D2R)}) scale(1 ${R(Math.hypot(vx, vy))})"/>`; }).join('')
+      : ends.map((e) => line(e.T, e.E, g.strW, strCol, 'butt')).join('');
+    return { defs: '', body: `${strings}<g class="${cls.l1 || ''}">${letter(P)}</g><g class="${cls.l2 || ''}">${letter(M)}</g>${ctl}` };
+  }
+  function monoRigCss(p, th, tier) {
+    const g = MONO_GEO[tier === 'small' ? 'small' : 'full'], fam = MOTION[th.family] || MOTION.basic, d = fam.dur, a = fam.amp, N = 30;
+    const step = (u) => { u = ((u % 1) + 1) % 1; return u < .5 ? Math.sin(2 * Math.PI * u) : 0; };
+    const k = { c: [], l1: [], l2: [], s: [[], [], []] };
+    for (let i = 0; i <= N; i++) {
+      const u = i / N, pc = R(u * 100) + '%', cRot = 6 * a * Math.sin(2 * Math.PI * u), dys = [-5 * a * step(u), -5 * a * step(u - .5)];
+      k.c.push(`${pc}{transform:rotate(${R(cRot)}deg)}`);
+      k.l1.push(`${pc}{transform:translate(0px,${R(dys[0])}px)}`); k.l2.push(`${pc}{transform:translate(0px,${R(dys[1])}px)}`);
+      monoEnds(g, cRot, dys).forEach((e, j) => { const vx = e.E[0] - e.T[0], vy = e.E[1] - e.T[1]; k.s[j].push(`${pc}{transform:translate(${R(e.T[0])}px,${R(e.T[1])}px) rotate(${R(Math.atan2(-vx, vy) / D2R)}deg) scale(1,${R(Math.hypot(vx, vy))})}`); });
+    }
+    let css = `.${p}-ctl{transform-box:view-box;transform-origin:${g.P[0]}px ${g.P[1]}px;animation:${p}-c ${d}s linear infinite}.${p}-str{transform-box:view-box;transform-origin:0 0}`;
+    css += `.${p}-l1{animation:${p}-a ${d}s linear infinite}.${p}-l2{animation:${p}-b ${d}s linear infinite}`;
+    css += `@keyframes ${p}-c{${k.c.join('')}}@keyframes ${p}-a{${k.l1.join('')}}@keyframes ${p}-b{${k.l2.join('')}}`;
+    k.s.forEach((frames, j) => { css += `.${p}-s${j}{animation:${p}-s${j} ${d}s linear infinite}@keyframes ${p}-s${j}{${frames.join('')}}`; });
+    return css;
   }
 
   /* ------------------------------------------------------------ pixel art */
@@ -574,7 +641,7 @@
     const lag = w === 'glide' ? .13 : .1;
     return { cRot: 7 * a * wave(w, u), cDy: 0, pRot: 10 * a * wave(w, u - lag), pDy: 0, sx: 1, sy: 1, eye: 1.8 * a * wave(w, u - lag - .04) };
   }
-  function transformsAt(g, ps) {
+  function transformsAt(g, ps, attach) {
     const P = g.P, h = g.head, H = [(h.x0 + h.x1) / 2, h.y1];
     const hx = H[0] - P[0], hy = H[1] - P[1];
     const place = (pt) => {
@@ -584,8 +651,8 @@
       return [r[0], r[1] + ps.pDy];
     };
     const ctlAt = (pt) => { const r = rot(pt, P, ps.cRot); return [r[0], r[1] + ps.cDy]; };
-    const strs = anchors(g).map((a, i) => {
-      const A = ctlAt(a), E = place(eyelets(g)[i].end), vx = E[0] - A[0], vy = E[1] - A[1];
+    const strs = stringEnds(g, attach || 'eye', ctlAt, place).map((e) => {
+      const A = e.T, vx = e.E[0] - A[0], vy = e.E[1] - A[1];
       return { A, ang: Math.atan2(-vx, vy) / D2R, len: Math.hypot(vx, vy) };
     });
     return {
@@ -596,12 +663,12 @@
       raw: strs
     };
   }
-  function rigCss(p, kind, th, g) {
+  function rigCss(p, kind, th, g, attach) {
     const fam = MOTION[th.family] || MOTION.basic, N = kind === 'hop' ? 36 : 30;
     const dur = kind === 'hop' ? R(fam.dur * .78) : kind === 'think' ? R(fam.dur * 1.15) : fam.dur;
     const k = { ctl: [], pup: [], eye: [], s0: [], s1: [] };
     for (let i = 0; i <= N; i++) {
-      const u = i / N, t = transformsAt(g, pose(kind, fam, u)), pc = R(u * 100) + '%';
+      const u = i / N, t = transformsAt(g, pose(kind, fam, u), attach), pc = R(u * 100) + '%';
       k.ctl.push(`${pc}{transform:${t.ctl}}`); k.pup.push(`${pc}{transform:${t.pup}}`); k.eye.push(`${pc}{transform:${t.eye}}`);
       k.s0.push(`${pc}{transform:${t.strs[0]}}`); k.s1.push(`${pc}{transform:${t.strs[1]}}`);
     }
@@ -678,20 +745,20 @@
     }
 
     const g = GEO[tier === 'small' ? 'small' : 'full'];
-    if (o.mark === 'mono') { const r = monoVector(th, tier, cls, { tray, ink }); return { vb: 64, defs: r.defs, body: r.body }; }
+    if (o.mark === 'mono') { const r = monoVector(th, tier, cls, { tray, ink }, p, anim); return { vb: 64, defs: r.defs, body: r.body }; }
     if (th.nier) { const r = pipNier(g, th, mood === 'dots' ? 'think' : mood, cls, ids, { tray, ink }); return { vb: 64, defs: r.defs, body: r.body }; }
 
     // strings: solved at rest for still marks; when animated they carry their own transforms
-    const A = anchors(g), E = eyelets(g);
+    const attach = tray ? 'thread' : (o.attach || 'eye');
     const strCol = ink || th.str;
     let strings;
     if (anim) {
-      const t = transformsAt(g, { cRot: 0, cDy: 0, pRot: 0, pDy: 0, sx: 1, sy: 1, eye: 0 });
+      const t = transformsAt(g, { cRot: 0, cDy: 0, pRot: 0, pDy: 0, sx: 1, sy: 1, eye: 0 }, attach);
       strings = t.raw.map((s, i) => `<line class="${p}-str ${p}-s${i}" x1="0" y1="0" x2="0" y2="1" stroke="${strCol}" stroke-width="${g.strW}" transform="translate(${R(s.A[0])} ${R(s.A[1])}) rotate(${R(s.ang)}) scale(1 ${R(s.len)})"/>`).join('');
-    } else strings = A.map((a, i) => line(a, E[i].end, g.strW, strCol, 'butt')).join('');
+    } else strings = stringEnds(g, attach, (q) => q, (q) => q).map((e) => line(e.T, e.E, g.strW, strCol, 'butt')).join('');
     const hd = pipHead(g, th, mood, ids, cls, { tray, ink, backdrop: o._backdrop });
-    const pup = `<g class="${cls.pup || ''}">${hd.body}${eyeletRings(g, th, { tray })}</g>`;
-    const ctl = controlSvg(g, th, cls, { tray, ink });
+    const pup = `<g class="${cls.pup || ''}">${eyeletRings(g, th, { tray })}${hd.body}</g>`;
+    const ctl = controlSvg(g, th, cls, { tray, ink, attach });
     return { vb: 64, defs: hd.defs, body: strings + pup + ctl };
   }
 
@@ -796,12 +863,9 @@
           css += `.${p}-fr{opacity:0}.${p}-fr0{opacity:1}.${p}-fr{animation:${p}-flip ${R(d)}s steps(1,end) infinite}@keyframes ${p}-flip{0%{opacity:1}${R(100 / n)}%,100%{opacity:0}}`;
           for (let i = 0; i < n; i++) css += `.${p}-fr${i}{animation-delay:${R(-d + i * d / n)}s}`;
         } else if (o.mark === 'mono') {
-          const fam = MOTION[th.family] || MOTION.basic, d = fam.dur, g = MONO_GEO[tier === 'small' ? 'small' : 'full'];
-          css += `.${p}-ctl{transform-box:view-box;transform-origin:${g.P[0]}px ${g.P[1]}px;animation:${p}-rock ${d}s ease-in-out infinite}`;
-          css += `.${p}-l1{animation:${p}-step ${d}s ease-in-out infinite}.${p}-l2{animation:${p}-step ${d}s ease-in-out infinite;animation-delay:${R(-d / 2)}s}`;
-          css += `@keyframes ${p}-rock{0%,100%{transform:rotate(${R(-6 * fam.amp)}deg)}50%{transform:rotate(${R(6 * fam.amp)}deg)}}@keyframes ${p}-step{0%,100%{transform:translateY(0)}25%{transform:translateY(${R(-5 * fam.amp)}px)}50%{transform:translateY(0)}}`;
+          css += monoRigCss(p, th, tier);
         } else {
-          css += rigCss(p, o.motion, th, GEO[tier === 'small' ? 'small' : 'full']).css;
+          css += rigCss(p, o.motion, th, GEO[tier === 'small' ? 'small' : 'full'], o.form === 'tray' ? 'thread' : (o.attach || 'eye')).css;
         }
         // standalone files follow the OS setting; inlined in PMConcept7 they follow its switch too
         css += red.keys + `@media (prefers-reduced-motion:reduce){.${p} *{animation:none!important}${red.rules(`.${p} `)}}`;

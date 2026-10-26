@@ -18,10 +18,13 @@ preview loads `../../PMConcept7.html` in a frame and swaps its title-bar text at
   icons change expression instead of carrying a colored badge.
 - **It survives 16 px.** Hand-placed sprites at tray size, a heavier vector cut for 19 to 40
   device pixels (the 40 px title bar at 1x), full detail above that.
-- **The strings are real.** Each string is tied to a stick with a wrap, 5 units in from the tip,
-  and ends in an eyelet ring on Pip's head. Loaders are a small rig: the control rocks, Pip hangs
+- **The strings are real.** Each string hangs from a screw eye on the underside of a stick,
+  5 units in from its lower tip (the eye's top tucks under the stick), and ends in a matching eye
+  on Pip's head. Sticks are fully opaque, the back one shaded with a solid colour, so no string
+  ever shows through a bar. NieR uses square nodes instead of eyes. Loaders are a small rig: the control rocks, Pip hangs
   from it, and both strings are solved again for every sampled frame, so they never come loose.
-  Retro redraws them as pixel lines in every frame.
+  Retro redraws them as pixel lines in every frame. The PM monogram's three strings use the same
+  eyes and the same solver.
 
 ## Themes (v0.2)
 
