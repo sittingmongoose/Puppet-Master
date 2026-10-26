@@ -242,7 +242,20 @@
 
   /* ------------------------------------------------------------ live PM7 */
   let liveFrame = null;
+  // A capture of the real PMConcept7 top bar with the logo swapped in. The shareable single-file
+  // build carries it inline (it cannot carry the 32 MB app), and a browser that blocks the live
+  // frame shows it too.
+  function liveFigure() {
+    const src = (window.PM_STANDALONE && window.PM_STANDALONE.live) || 'in-pmconcept7.webp';
+    return `<figure class="live-shot"><img src="${src}" width="820" height="194" alt="The real PMConcept7 top bar with Pip in place of the text wordmark, in Friendly Dark, Glass Dark, Retro Light and NieR Light">
+      <figcaption class="note">Captured from the real PMConcept7 with the logo swapped in at runtime, at 2x: Friendly Dark, Glass Dark, Retro Light, NieR Light.</figcaption></figure>`;
+  }
   function renderLiveShell() {
+    if (window.PM_STANDALONE) {
+      $('#live .sub').innerHTML = 'The real PMConcept7, with its text wordmark swapped for this logo at runtime (PMConcept7 itself is not edited). The full gallery in the repository can load PMConcept7 live; this shareable copy carries a capture instead.';
+      $('#liveBox').innerHTML = liveFigure();
+      return;
+    }
     $('#liveBox').innerHTML = `<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
         <button type="button" class="btn" id="liveLoad">${ICON.play}Load PMConcept7 with this logo</button>
         <button type="button" class="btn ghost" id="liveMatch" disabled>Match this page's theme</button>
@@ -269,7 +282,7 @@
     $('#liveMsg').textContent = 'Loading PMConcept7…';
     liveFrame.addEventListener('load', () => {
       const d = liveDoc();
-      if (!d || !d.documentElement) { $('#liveMsg').textContent = 'The browser blocks reaching into the frame from a file:// page. Open this concept through the Concept Hub to see the swap.'; return; }
+      if (!d || !d.documentElement) { $('#liveMsg').textContent = 'The browser blocks reaching into the frame from a file:// page. Open this concept through the Concept Hub to see the swap; here is a capture.'; host.innerHTML = liveFigure(); return; }
       $('#liveMatch').disabled = false;
       $('#liveMsg').textContent = 'Swapped. Use PMConcept7\'s own theme menu, or match this page.';
       const closeSetup = () => {

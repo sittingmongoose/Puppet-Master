@@ -61,6 +61,8 @@ index.html, styles.css, app.js   the gallery (themes, mocks, live PMConcept7 swa
 pm-logo.js                       the generator: every SVG on the page and in every download
 fonts.css                        Latin subsets of the fonts PMConcept7 already embeds
 wall-ribbons-*.webp              PMConcept7's Glass wallpaper (copied unchanged), for the Glass gallery
+in-pmconcept7.webp               a 2x capture of the real PMConcept7 top bar with Pip swapped in
+tools/build_standalone.py        builds the single shareable HTML file
 concept-hub-bridge.js            Concept Hub theme and reduced-motion bridge (starter copy)
 concept-hub.json                 Hub registration
 ```
@@ -82,6 +84,13 @@ PMLogo.svg({
 
 Every animated file keeps the static pose as its base markup, so a renderer that ignores CSS
 (a tray image, Slint's SVG loader) still shows the finished mark.
+
+## Share it
+
+`python3 tools/build_standalone.py puppet-master-pip-logo.html` writes one self-contained file
+(about 640 KB) with the fonts, styles, wallpapers, generator and gallery inlined. It opens by
+double-click anywhere, makes no network requests, and keeps every control and download. The live
+PMConcept7 frame cannot travel with it, so it shows `in-pmconcept7.webp` instead.
 
 ## Downloads (generated in the page)
 
