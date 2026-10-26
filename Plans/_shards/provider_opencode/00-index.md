@@ -1,36 +1,38 @@
 # Shard Index: Plans/Provider_OpenCode.md
 
-Generated: 2026-09-10T02:47:39Z
+Generated: 2026-10-26T17:07:22Z
 
-Source SHA256: `da910664ca195b0eb4ff2ca5c5e370531f7bf020d0f191d563619afce1bfe50e`
+Source SHA256: `8629de0b0a491c725a7fe023e1456ca34da1cd408ce530a7fee43fe6afe864ac`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `8bb7e83ea3009e34bf385e66ba2fd381be82e144d244f6398217727390fcf4a8`
-- [002 - Change Summary](002-change-summary.md) L6-L12 `37475b59eb7a44ddc559f6b4cd97ac50eb1b2b3268b8c07cadf3840c7f97f7d8`
-- [003 - 1. Purpose](003-1.-purpose.md) L14-L31 `738a7f0dcaf7e12e1375b94921ed5ce704159667b4e1a2cf837dd5761c79633f`
-- [004 - 2. Non-goals](004-2.-non-goals.md) L33-L45 `43be28fd7922bf89ce38af983262655f46bc7cef2da71ba20fd3de04e5d6ba21`
-- [005 - 3. SSOT References (DRY)](005-3.-ssot-references-dry.md) L46-L62 `6865d1254470038a0b8a7f27256a7a4e824b9db562a349211681f489e4308c38`
-- [006 - Canonical data-shape reconciliation](006-canonical-data-shape-reconciliation.md) L64-L96 `3fe297225232582c9a962b0cb94a5979203999cb6ef1d4fb07eab77525180625`
-- [007 - 4. Architecture Overview](007-4.-architecture-overview.md) L99-L129 `a310d1b7f057de1cc6a78bce157e8be33a099763588cfc38ca4ba4f7fc6fbfe1`
-- [008 - 5. Connection Contract](008-5.-connection-contract.md) L131-L219 `6e038840fc251459a35f74cb7e2fcc886b540727ccea9dc1b824bea0a282715e`
-- [009 - 6. Provider Facade Mapping](009-6.-provider-facade-mapping.md) L221-L341 `d622eed57f432a925eefd0944a52807f16297226d6b411981914babc5cc40969`
-- [010 - 7. Model Discovery](010-7.-model-discovery.md) L342-L434 `48baae2b00124116aabe6a6f870784ffad25bc0efc9115e3ae35fe6e2e40c732`
-- [011 - 8. Capability flags](011-8.-capability-flags.md) L436-L449 `c1aa27f5f90caecb40df5fa2614538f04ac95dd7d02d814ce843d75ddf3d68ca`
-- [012 - 9. Failure States and Recovery](012-9.-failure-states-and-recovery.md) L451-L478 `d11898ea2c38f53016e2d76db4b6e6376da389de096266bafd4002a44e0af9cd`
-- [013 - 10. GUI Configuration](013-10.-gui-configuration.md) L480-L521 `7ed176274911260f28345b7423f10d0527bd363bdaafa05102c8b738217ea25e`
-- [014 - 11. Legacy platform_specs lineage and current metadata ownership](014-11.-legacy-platform_specs-lineage-and-current-metadata-ownership.md) L523-L535 `9e29ae414bcdb3f7495104ed8de87c23b357241123ad0bae7ad57381a3d4f30f`
-- [015 - 12. Process Isolation](015-12.-process-isolation.md) L537-L545 `9d2c540ca94972b5404a9361b221ab3b81f6952a21ec709c559ae4f2ae058d69`
-- [016 - 13. Invocation Shape (Normative)](016-13.-invocation-shape-normative.md) L547-L644 `24ca7453f8c8ba02855946f9c6c640573be515ee9ac0c709a52b6a479f0479f1`
-- [017 - 14. Persistence Mapping (seglog)](017-14.-persistence-mapping-seglog.md) L646-L661 `5df9dae9825e4ca96217bd42506d5102afe936a78c56c1d718fe8609a29c49f2`
-- [018 - 15. Acceptance Criteria (Testable)](018-15.-acceptance-criteria-testable.md) L663-L675 `43c8e2b2812e36181cadd05642c9976fb417a84f45653df8d10c97cd58366f3d`
-- [019 - 16. References](019-16.-references.md) L677-L689 `dcbfb7f475a41a9dc5f2456090f610582fb678b74c73c16054352529740d0866`
-- [020 - OpenCode Runtime Retry / Blocked-State / Packet Canonical Alignment (2026-03-09)](020-opencode-runtime-retry-blocked-state-packet-canonical-alignment-.md) L691-L753 `687c3ed7b657c67aa84fce52c77bbe5cc8cc8414605e820bfb843273c81f7521`
-- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L755-L759 `9f5a6976d3c6e2d969b508c4d7dd8759c9886025f59894eb71a469aad54bc9ff`
-- [022 - PlanUnits](022-planunits.md) L761-L3425 `cfc6950e7bd80776b692f7839cf1b8d9e49d2c9a0e3627b7df81efd7f3ffd561`
-- [023 - Migration Coverage](023-migration-coverage.md) L3427-L3437 `c2812e9bb769267ae7becc710f75828fbb744d85abc5c60158b8a351ce2536f2`
-- [024 - Ledger Compile Addendum - pldg-20260614-002](024-ledger-compile-addendum-pldg-20260614-002.md) L3439-L3478 `77d68e2c55c660f040d3e2b599da19ef498a2daec36a077c633c8d242aa3fa79`
-- [025 - Ledger Compile Addendum - pldg-20260626-001-feature-name](025-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3481-L3583 `56c99955947b625392aa69599f150bffcf5df06a3dc4451d5861d5b5c1945457`
-- [026 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](026-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L3585-L3724 `9eaf014fc106a5db6c98ab3a090c2911e63fefefce0d3044457bb3d9947db449`
+- [001 - Preamble](001-preamble.md) L1-L4 `0e0a3fea44fe5709db1ce73bee0ec3beedee58b59e8421747b4d2b1b05f0672e`
+- [002 - Change Summary](002-change-summary.md) L6-L12 `d7b7cb1152f16bc6b6aaa66ba9ce322f482d068e79a15fd07fae48a17d6ceba8`
+- [003 - 1. Purpose](003-1.-purpose.md) L14-L31 `e663d87bce230961f7bf3205dc33388f24064413e3cbce226db2d26cf82140a9`
+- [004 - 2. Non-goals](004-2.-non-goals.md) L33-L45 `cd177b6171775f5c9253fce5d5c0c6827e96b3ee977237bce2c80dd0499c3d39`
+- [005 - 3. SSOT References (DRY)](005-3.-ssot-references-dry.md) L46-L62 `88476cc9ded1dd1da471ed15b91a2b2551ca8ca1ee4a19e04164521b097e826c`
+- [006 - Canonical data-shape reconciliation](006-canonical-data-shape-reconciliation.md) L64-L96 `58e967075a5b16a5359643003c479188e3475fc4cef4183d380cf439a870c078`
+- [007 - 4. Architecture Overview](007-4.-architecture-overview.md) L99-L129 `165779c0c402c507e9094d0d9cdfacb3ca4503ecf2c695389782d6a28ca05f51`
+- [008 - 5. Connection Contract](008-5.-connection-contract.md) L131-L219 `84394c17f13da18d04c1338cfa4c8a48ae853926dd250e3baa7364a71c6b2dcb`
+- [009 - 6. Provider Facade Mapping](009-6.-provider-facade-mapping.md) L221-L341 `36c8f7c7fdea9cb0127672168700cb262c69e860f162792770e25df5817fe425`
+- [010 - 7. Model Discovery](010-7.-model-discovery.md) L342-L346 `1c0f4a00f2344a48856319ef3c89e66e08b4d386e6f5d790f37c1960d807e9e8`
+- [011 - Known-37 platform-capability projection contract - 2026-07-18](011-known-37-platform-capability-projection-contract-2026-07-18.md) L349-L355 `e7459766f2592db96f859cbfc7a8391dd7a9882bdf7a69de3d48d079f1f035a7`
+- [012 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](012-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L357-L434 `000467443592b43d69ad380b415fab55c9d48a42b2a3355fc87ad49cb4d08d98`
+- [013 - 8. Capability flags](013-8.-capability-flags.md) L436-L449 `4a159ad1dd1f5e704883b4e968658382760963b4f9d38c9422ebe48b26649cb6`
+- [014 - 9. Failure States and Recovery](014-9.-failure-states-and-recovery.md) L451-L478 `441cb2343dbb9114c2df61735f4a7857e6eea75c4e4ce4affa1748ff42f4376f`
+- [015 - 10. GUI Configuration](015-10.-gui-configuration.md) L480-L521 `8208df5e938a63dc85d68304040895ecd534d6b8789d237b455a7a06d08608c1`
+- [016 - 11. Legacy platform_specs lineage and current metadata ownership](016-11.-legacy-platform_specs-lineage-and-current-metadata-ownership.md) L523-L535 `d816e2c6acf03245eb4d2cd8adf4a16bd80b5796735cc2d4547564f1ee690e7e`
+- [017 - 12. Process Isolation](017-12.-process-isolation.md) L537-L545 `2784e3316a8eba6ec7de8eb0454f407f13cf35a028ed1db61fee60ec823c9c85`
+- [018 - 13. Invocation Shape (Normative)](018-13.-invocation-shape-normative.md) L547-L644 `5a439024fd3940ec709ff80592667ab942d7c9d5f458dd11421f4795ddce2b34`
+- [019 - 14. Persistence Mapping (seglog)](019-14.-persistence-mapping-seglog.md) L646-L661 `8c398d4e862694ac64f889d1580506fe8036913e0fd6bf41b94b7e4e23d9e420`
+- [020 - 15. Acceptance Criteria (Testable)](020-15.-acceptance-criteria-testable.md) L663-L675 `75500bda6378db7f40b549ba4ebfd2b8989b1fdae34aada7f4227f51fcfd910e`
+- [021 - 16. References](021-16.-references.md) L677-L689 `005d0b989e3a824a11f40cb9537e548f80aeeb90f79fe63fee5acffb40405b57`
+- [022 - OpenCode Runtime Retry / Blocked-State / Packet Canonical Alignment (2026-03-09)](022-opencode-runtime-retry-blocked-state-packet-canonical-alignment-.md) L691-L753 `ef2e3c5ad5421b5e4ee97938fef1e5cc18718db1ed8c9a817a47f83aacb94bab`
+- [023 - Owner / Consumer Map](023-owner-consumer-map.md) L755-L759 `bb8acc6aadc13ee7322f6ca442d73abface5167ee29a9692411bf0e44c5694f5`
+- [024 - PlanUnits](024-planunits.md) L761-L3425 `9ac95944112f4b2a55faf543739a1b6be99685689d8180b00d5f222bb804e5d5`
+- [025 - Migration Coverage](025-migration-coverage.md) L3427-L3437 `baff7a127ff776f10566efcdfaac54dcda0e0f957fe9a4db3af12cda8045003e`
+- [026 - Ledger Compile Addendum - pldg-20260614-002](026-ledger-compile-addendum-pldg-20260614-002.md) L3439-L3478 `628d932389f3754f3b18855da43beff7d4395f57fd1425a11de5fe8139d05c1e`
+- [027 - Ledger Compile Addendum - pldg-20260626-001-feature-name](027-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3481-L3583 `cbd9e6e252c872122c4f611cdee39672d4954263185282f42366b47b558d26c9`
+- [028 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](028-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L3585-L3724 `8b09e5d6f7753df0513a6cc5f61923ee6f8049762badfe44d0a1606fcbd552c6`

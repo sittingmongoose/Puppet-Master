@@ -345,7 +345,6 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md,
 
 Puppet Master discovers available models via the OpenCode provider API:
 
-```
 
 ## Known-37 platform-capability projection contract - 2026-07-18
 
@@ -397,6 +396,7 @@ negative_constraints:
   - Do not require `opencode-cursor` when PM has native Cursor support.
   - Do not import unofficial plugin backend/auth behavior as canonical PM backend support.
 owner_hints: [Plans/Provider_OpenCode.md, Plans/Models_System.md, Plans/Contracts_V0.md, Plans/Media_Generation_and_Capabilities.md]
+```
 ```
 GET /provider
 → {

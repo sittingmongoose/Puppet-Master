@@ -129,7 +129,6 @@ Route side-effect rules:
 
 
 All UI commands (button clicks, keyboard shortcuts, context menu items) normalize to a standard record:
-```
 
 ## Known-37 recovery-unavailable catalog rows - 2026-07-18
 
@@ -144,6 +143,7 @@ Every dispatch carries the exact current blocked episode, anchor, snapshot set, 
 
 The strict `UICommandResponse` contains a reference to the matching typed domain result. `ack_status`, `result_status`, button dismissal, or accepted dispatch is not success. A successful locate displays owner-verified material, receipt-backed `resolved`, and preserved work. A successful abandonment displays receipt-backed `abandoned_by_user`, preserved work, and `cleanup_performed = false`. Refused, recoverable failure, missing receipt, or `not_committed` preserves the anchor and displays no release, recovery, cleanup, retry, or successor claim. Replay displays the original result and receipt identity without implying a second side effect.
 
+```
 {
   command_id: string,
   command_type: 'action' | 'navigation' | 'state_change' | 'modal',

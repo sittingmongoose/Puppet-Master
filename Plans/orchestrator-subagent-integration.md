@@ -606,6 +606,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 - **Subagent execution failure:** If subagent execution fails, log error and continue with next subagent (or fail tier if critical)
 - **Coordination update failure:** If coordination update fails, log warning and continue (coordination updates are best-effort)
 
+```rust
     // DRY:FN:build_tier_context -- Build tier context for subagent selection
     fn build_tier_context(
         &self,

@@ -10350,7 +10350,7 @@
         "False": 72,
         "True": 29
       },
-      "heading_count": 30,
+      "heading_count": 168,
       "implementation_surfaces": [
         "Plans/Contracts_V0.md",
         "Plans/FinalGUISpec.md",
@@ -10367,7 +10367,7 @@
         "Plans/usage-feature.md",
         "future provider/model capability matrix"
       ],
-      "line_count": 6707,
+      "line_count": 6708,
       "path": "Plans/Media_Generation_and_Capabilities.md",
       "plan_unit_count": 101,
       "plan_unit_ids": [
@@ -10500,7 +10500,7 @@
         "p1_security_release_supply_chain_hardening",
         "retired_gemini_cli_nanobanana_resurrection"
       ],
-      "sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f",
+      "sha256": "418bc32eb7b2528e2e8654f6573ff22898801fe0881483bd4b3c18cc9a4115a4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 101
@@ -12244,7 +12244,7 @@
         "False": 373,
         "True": 65
       },
-      "heading_count": 48,
+      "heading_count": 685,
       "implementation_surfaces": [
         "Plans/Commands_System.md",
         "Plans/Contracts_V0.md",
@@ -12268,7 +12268,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 31817,
+      "line_count": 31818,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 438,
       "plan_unit_ids": [
@@ -13155,7 +13155,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "f4358dd14b976a2a0a492347be7df4c1dcc23ccefabc017a98eaf2d76356a39c",
+      "sha256": "35d1512263810cd671e3c64529e82dd4eaee8b11fcf78a5b0aace7fc6c7328f4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 437,
@@ -15415,7 +15415,7 @@
         "False": 39,
         "True": 12
       },
-      "heading_count": 110,
+      "heading_count": 113,
       "implementation_surfaces": [
         "Plans/CLI_Bridged_Providers.md",
         "Plans/Contracts_V0.md",
@@ -15502,7 +15502,7 @@
         "provider_identity_correlation_drift",
         "residual_bridge_overreach"
       ],
-      "sha256": "da910664ca195b0eb4ff2ca5c5e370531f7bf020d0f191d563619afce1bfe50e",
+      "sha256": "8629de0b0a491c725a7fe023e1456ca34da1cd408ce530a7fee43fe6afe864ac",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 50,
@@ -19483,7 +19483,7 @@
         "False": 20,
         "True": 166
       },
-      "heading_count": 384,
+      "heading_count": 385,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/Assistant_Plan_Runtime.md",
@@ -19806,7 +19806,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "70e75fed74819bcca3a553f1dd94631b4766b8f8d0a06985c568bb285ad46cfc",
+      "sha256": "c14181f8a6fbc45bf628a3dd7404309ebd191fbec9962524c46d8f1d77bf8876",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 184,
@@ -20936,7 +20936,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-23T16:29:53Z",
+  "generated_at_utc": "2026-10-26T17:07:48Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
