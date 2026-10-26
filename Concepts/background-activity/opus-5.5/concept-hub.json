@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "topic": "Background activity",
+  "model": "Opus 5.5",
+  "presentation": "entries",
+  "order": 120,
+  "widthControl": {
+    "enabled": true,
+    "label": "Component width",
+    "role": "page",
+    "min": 1280,
+    "max": 1920,
+    "step": 10,
+    "default": 1920,
+    "presets": [1280, 1600, 1920],
+    "previewWidth": "test"
+  },
+  "entries": [
+    {
+      "id": "background-activity-both",
+      "title": "Background activity: the chat's Running domain and the status bar's Running work, with the lab",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["background-activity", "running-work", "activity-bar", "status-bar", "pm7"],
+      "order": 10
+    },
+    {
+      "id": "background-activity-thread",
+      "title": "Thread scope: the Running domain open in Activity Detail (a migration dry run needs you)",
+      "path": "thread.html",
+      "openPath": "thread.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["background-activity", "activity-bar", "activity-detail", "chat"],
+      "order": 20
+    },
+    {
+      "id": "background-activity-platform",
+      "title": "Platform scope: the status bar's Running work pop-out (every agent, process and scheduled run)",
+      "path": "platform.html",
+      "openPath": "platform.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["background-activity", "status-bar", "pop-out", "agents", "processes"],
+      "order": 30
+    }
+  ]
+}
