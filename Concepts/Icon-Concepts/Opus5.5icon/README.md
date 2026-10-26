@@ -1,0 +1,74 @@
+# Pip: Puppet Master logo concept (Opus 5.5)
+
+A new mark for Puppet Master: **Pip**, a small agent hanging from a marionette control. It covers
+the top-left logo in PMConcept7, the app icon, the tray icon, the loading animation and status
+states, in all eight PMConcept7 themes plus NieR light and dark. A second, more conservative
+direction (**PM monogram**, the reference mark redrawn) is behind the Direction switch.
+
+Open `index.html` (double-click works; the "Inside PMConcept7" preview needs it served over http,
+which the Concept Hub does). Nothing outside this folder is read or changed except that the live
+preview loads `../../PMConcept7.html` in a frame and swaps its title-bar text at runtime.
+
+## The idea
+
+- **The control is the user.** The crossed marionette bar is whoever runs the show; the strings
+  say Puppet Master directs the work.
+- **The head is a pair of braces.** `{` and `}` drawn as one shape; the brace points read as ears.
+- **The face is the status.** Idle, working, done, needs you, error, paused. Tray and notification
+  icons change expression instead of carrying a colored badge.
+- **It survives 16 px.** Hand-placed sprites at tray size, a heavier vector cut for 19 to 40
+  device pixels (the 40 px title bar at 1x), full detail above that.
+
+## Static and animated
+
+| Use | Variant |
+|---|---|
+| PMConcept7 top-left (title bar) | static mark, 24 px, beside the theme's wordmark; mark only when squeezed |
+| App icon (dock, Start, launcher) | static tile per theme; plain mark at 24 px and below |
+| Tray / menu bar | static template (macOS) or color (Windows) mark; Working is a four-frame flip |
+| Notifications, chat avatar | static moods |
+| Loading (splash, chat Working row, buttons, panels) | animated loader: Swing (default), Think, Hop |
+| NieR | static everywhere; NieR keeps its own loader |
+
+Motion follows each theme's own personality: Friendly springs (1.7 s), Glass glides (2.4 s),
+Basic eases (1.6 s), Retro flips four pixel frames (1.2 s). Reduced motion (OS setting,
+PMConcept7's `data-motion="reduced"`, or the Hub's flag) removes all travel and keeps an opacity
+signal: the control breathes and Pip blinks.
+
+## Files
+
+```
+index.html, styles.css, app.js   the gallery (themes, mocks, live PMConcept7 swap, downloads)
+pm-logo.js                       the generator: every SVG on the page and in every download
+fonts.css                        Latin subsets of the fonts PMConcept7 already embeds
+concept-hub-bridge.js            Concept Hub theme and reduced-motion bridge (starter copy)
+concept-hub.json                 Hub registration
+```
+
+`pm-logo.js` has no DOM dependency, so a build script (Node) or a later Slint pipeline can call
+the same code:
+
+```js
+PMLogo.svg({
+  mark: 'pip' | 'mono',
+  theme: 'friendly-dark' | ... | 'nier-dark',
+  form: 'glyph' | 'tile' | 'tray',     // tray = one ink (`ink`), for macOS templates
+  px: 24, dpr: 1,                      // picks the tier: micro (<= 18 device px), small (<= 40), full
+  mood: 'idle' | 'happy' | 'alert' | 'error' | 'sleep' | 'think',
+  motion: null | 'swing' | 'think' | 'hop',
+  reduced: false
+})
+```
+
+Every animated file keeps the static pose as its base markup, so a renderer that ignores CSS
+(a tray image, Slint's SVG loader) still shows the finished mark.
+
+## Downloads (generated in the page)
+
+Per theme: mark, tile, loader and tray-template SVGs, a 1024 PNG. App icon files: `.ico`
+(16 to 256), `.icns` (Apple icon grid with shadow), a PNG set. A full SVG pack with a manifest.
+
+## Not done yet
+
+- No Slint component; the motion table above is the spec for one.
+- Colors are taken from PMConcept7's theme tokens; a final pick would lock them in `Plans/`.
