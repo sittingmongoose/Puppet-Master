@@ -14,8 +14,16 @@
   ];
   function setLook(fam, mode) {
     var cap = function (s) { return s.charAt(0).toUpperCase() + s.slice(1); };
+    /* NieR goes off before the theme changes, or PM7 says the theme waits for NieR Mode to be turned off. */
+    try { if (window.PM_NIER && fam !== 'nier') window.PM_NIER.set(false); } catch (e) {}
     try { window.PM12_KIMI.setSettingFromHost('general.visual.theme', (fam === 'nier' ? 'Basic' : cap(fam)) + ' ' + cap(mode)); } catch (e) {}
-    try { if (window.PM_NIER) window.PM_NIER.set(fam === 'nier'); } catch (e) {}
+    try { if (window.PM_NIER && fam === 'nier') window.PM_NIER.set(true); } catch (e) {}
+    /* Light or dark inside NieR still changes the saved theme under it; that note is for a person, not this lab. */
+    var tries = 0, t = setInterval(function () {
+      var ok = document.querySelector('.o55-nier-note [data-o55-nier-note="close"]');
+      if (ok) ok.click();
+      if (++tries > 30) clearInterval(t);
+    }, 100);
     setTimeout(sync, 900);
   }
   function current() {
