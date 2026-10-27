@@ -146,6 +146,10 @@ body[data-fam="nier"] .ob-screen::before { content: ''; position: absolute; top:
 .ob-screen[data-dir="0"], .ob-screen[data-dir="0"]::before { animation: none !important; }
 @keyframes obIn { from { opacity: 0; transform: translateX(22px); } }
 @keyframes obInBack { from { opacity: 0; transform: translateX(-18px); } }
+/* Pip's tip, in the form, when the stage is only a strip above it */
+.ob-tipline { display: none; gap: 8px; align-items: flex-start; margin: -2px 0 16px; padding: 9px 12px; border-radius: var(--r-sm); background: color-mix(in srgb, var(--accent) 9%, transparent); color: var(--muted); font-size: 13px; line-height: 1.45; }
+.ob-tipline .ob-ic { flex: none; margin-top: 1px; color: var(--accent); }
+body[data-stage="banner"] .ob-tipline, body[data-stage="compact"] .ob-tipline { display: flex; }
 .ob-eyebrow { margin: 0 0 8px; font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
 .ob-title { margin: 0 0 10px; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.15; font-weight: 700; letter-spacing: -.01em; }
 .ob-lead { margin: 0 0 22px; color: var(--muted); font-size: 15px; max-width: 46ch; }
@@ -160,14 +164,17 @@ body[data-fam="nier"] .ob-screen::before { content: ''; position: absolute; top:
 .ob-choices { display: grid; gap: 10px; }
 .ob-choice { position: relative; display: grid; grid-template-columns: 44px 1fr auto 22px; align-items: center; gap: 12px; padding: 14px 16px; text-align: left; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--surface2); transition: transform .2s, border-color .2s, background .2s, box-shadow .2s; }
 .ob-choice:hover { border-color: var(--line2); transform: translateY(-1px); }
+/* the choice Pip is previewing on the stage */
+:is(.ob-choice, .ob-look, .ob-srow, .ob-prov).is-preview:not([aria-checked="true"]) { border-color: color-mix(in srgb, var(--accent) 55%, var(--line2)); background-color: color-mix(in srgb, var(--accent) 6%, var(--surface2)); }
 .ob-choice:active, .ob-look:active { transform: translateY(1px) scale(.99); }
 .ob-choice[aria-checked="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 13%, var(--surface2)); }
 .ob-choice-ic { width: 44px; height: 44px; display: grid; place-items: center; border-radius: var(--r-sm); background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
 .ob-choice-t { display: grid; gap: 2px; min-width: 0; }
 .ob-choice-t b { font-size: 15px; }
 .ob-choice-t small { color: var(--faint); font-size: 13px; }
-.ob-rec { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
-.ob-radio { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--line2); transition: .2s; }
+.ob-rec { grid-column: 3; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+/* the radio keeps the last column whether or not the row has a Recommended badge, so the circles line up */
+.ob-radio { grid-column: 4; justify-self: center; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--line2); transition: .2s; }
 .ob-choice[aria-checked="true"] .ob-radio { border-color: var(--accent); background: radial-gradient(circle, var(--accent) 0 5px, transparent 5.5px); }
 .ob-checks { display: flex; flex-wrap: wrap; gap: 8px 18px; list-style: none; margin: 14px 0 0; padding: 0; color: var(--muted); font-size: 13px; }
 .ob-checks li { display: inline-flex; gap: 6px; align-items: center; }
@@ -258,6 +265,7 @@ body[data-theme="friendly-light"] .ob-eyebrow, body[data-theme="friendly-light"]
 /* ------------------------------------------------------------- Glass: Liquid Glass */
 body[data-fam="glass"] .ob { background: var(--wall-img) center / cover no-repeat, var(--bg); border-color: var(--edge); }
 body[data-fam="glass"] .ob-head, body[data-fam="glass"] .ob-foot { background: var(--surface); backdrop-filter: blur(22px) saturate(1.3); -webkit-backdrop-filter: blur(22px) saturate(1.3); }
+body[data-theme="glass-light"] { --surface: rgba(255, 255, 255, .74); --line2: rgba(12, 15, 21, .34); }
 body[data-fam="glass"] .ob-main { background: var(--surface); backdrop-filter: blur(26px) saturate(1.3); -webkit-backdrop-filter: blur(26px) saturate(1.3); box-shadow: inset 1px 0 0 var(--edge); }
 body[data-fam="glass"] .ob-stage { border-right: 0; }
 body[data-fam="glass"] .ob-choice, body[data-fam="glass"] .ob-look, body[data-fam="glass"] .ob-srow, body[data-fam="glass"] .ob-prov, body[data-fam="glass"] .ob-review, body[data-fam="glass"] .ob-summary div, body[data-fam="glass"] .ob-meet { border-width: 1px; box-shadow: inset 0 1px 0 var(--edge); }

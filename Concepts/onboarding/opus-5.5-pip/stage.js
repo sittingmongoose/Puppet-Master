@@ -32,7 +32,7 @@
         m1: [250, 132], m2: [312, 162], m3: [374, 132], m4: [300, 318], m5: [52, 352],
         c1: [254, 378], c2: [316, 400], c3: [378, 378]
       },
-      stack: [300, 466, 44], crewScale: 1, charmScale: .5
+      stack: [300, 490, 52], crewScale: 1, charmScale: .5
     },
     banner: {
       w: 720, h: 240, ground: 234, s: 1.42, ctl: [150, 30], rope: 76, propScale: .74, anchorY: -40,
@@ -42,7 +42,7 @@
         m1: [330, 64], m2: [380, 80], m3: [430, 64], m4: [410, 78], m5: [480, 108],
         c1: [470, 150], c2: [526, 164], c3: [582, 150]
       },
-      stack: [430, 222, 32.5], crewScale: .55, charmScale: .32
+      stack: [430, 232, 32.6], crewScale: .55, charmScale: .32
     },
     // squeezed windows: a short strip, Pip on the left and one prop beside it
     compact: {
@@ -53,7 +53,7 @@
         m1: [230, 56], m2: [290, 72], m3: [350, 56], m4: [300, 90], m5: [380, 90],
         c1: [262, 124], c2: [318, 138], c3: [374, 124]
       },
-      stack: [300, 186, 28], crewScale: .5, charmScale: .3
+      stack: [300, 194, 28.2], crewScale: .5, charmScale: .3
     }
   };
 
@@ -183,6 +183,10 @@
       if (this.tube === 'phosphor') div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
       if (this.tube === 'teletype') { div('pst-grain', this.screen); this.head = div('pst-printer', this.screen, '<i class="pst-bail"></i><i class="pst-platen"></i><i class="pst-head"><b></b></i>').querySelector('.pst-head'); }
       this.hudHtml();
+      // Pip's tip: a note hanging under Pip, in the look's own material (NieR files it in a TIPS box in its HUD)
+      this.tipBox = null; this.tipXY = null;
+      if (w.fam !== 'nier') this.tipBox = div('pst-tip', this.overlay, `<b class="pst-tip-k">${this.tube === 'phosphor' ? 'TIP:' : this.tube ? 'NOTE' : { friendly: "Pip's tip", glass: 'Tip', basic: 'Note' }[w.fam]}</b><span class="pst-tip-t"></span>`);
+      if (this.tipText) this.showTip(true);
       this.buildPip();
       // re-create the props that were on stage, in the new material
       const keep = [...this.props.values()];
@@ -203,6 +207,7 @@
       if (f === 'nier') h = `<div class="pst-nhud"><div class="pst-ntop"><span>PIP // UNIT P-01</span><span class="pst-decode" aria-hidden="true"></span></div>
         <div class="pst-nscan" aria-hidden="true"><i></i><span class="pst-nscan-l">SCAN</span></div>
         <div class="pst-nquest" aria-hidden="true"><b>QUEST UPDATED</b><span class="pst-nquest-t"></span></div>
+        <div class="pst-ntip"><b class="pst-tip-k">TIPS</b><span class="pst-tip-t"></span></div>
         <div class="pst-nlab"><span class="pst-nlab-k">■ <b class="pst-target">STANDBY</b></span><span class="pst-ncoord">MAP 1:1</span></div><i class="pst-nb tl"></i><i class="pst-nb tr"></i><i class="pst-nb bl"></i><i class="pst-nb br"></i></div>`;
       const wrap = div('pst-hudhtml', this.overlay, h);
       this.hudEl = wrap;
@@ -408,11 +413,17 @@
     cheer(propId, opts) {
       opts = opts || {};
       const pr = propId && this.props.get(propId);
-      const at = pr ? this.propCentre(pr) : this.headCentre();
       this.feel(opts.mood || (this.famName === 'friendly' && Math.random() < .35 ? 'wink' : 'happy'), 1400);
+      // a block still being lowered: Pip is pleased now, the sound and the flourish wait for its touchdown
+      if (pr && pr.spec.ground && !pr.landed && !this.reduced) { pr.onLand = () => { this.cheerAt(pr, opts); if (opts.then) opts.then(); }; return; }
+      this.cheerAt(pr, opts);
+      if (opts.then) opts.then();
+    }
+    cheerAt(pr, opts) {
+      const at = pr ? this.propCentre(pr) : this.headCentre();
       this.sfx(opts.sound || 'cheer', { x: at[0], index: opts.index, count: opts.count });
       if (this.famName === 'nier') { this.ps.tiltv -= 1.2; } else this.hop(.8);
-      if (pr && !this.reduced) { pr.sv -= 2.2; pr.av += this.fam.kick * .8; }
+      if (pr && !this.reduced && !pr.spec.ground) { pr.sv -= 2.2; pr.av += this.fam.kick * .8; }
       if (this.tube) this.ok();
       if (this.reduced) { if (this.famName === 'nier') this.lockOn(pr); return; }
       const f = this.famName;
@@ -488,7 +499,7 @@
       let r = null;
       if (S && S.say) try { r = S.say(text, { mood: mood || (this.spec.pip && this.spec.pip.mood) || 'idle', kit: S.kitOf ? S.kitOf(this.theme) : undefined }); } catch (e) { r = null; }
       const cps = (r && r.cps) || this.fam.cps;
-      this.sayAt = performance.now();
+      this.sayAt = performance.now(); this.sayMs = text.length / cps * 1000;
       this.minShow = Math.min(1400, 450 + text.length / cps * 1000 * .6);
       this.btext.innerHTML = '<span class="pst-bt-on"></span><span class="pst-bt-off"></span>';
       const on = this.btext.firstChild, off = this.btext.lastChild;
@@ -500,6 +511,51 @@
         if (n !== i) { i = n; on.textContent = text.slice(0, i); off.textContent = text.slice(i); }
         if (i >= text.length) { clearInterval(this.typeT); b.classList.remove('typing'); }
       }, 16);
+    }
+
+    /* ------------------------------------------------------------- tips */
+    // the screen's tip: Pip writes it out once it has said its line (and only when awake)
+    tip(text) {
+      clearTimeout(this.tipT); clearInterval(this.tipW);
+      if ((text || '') === this.tipText) return;
+      this.tipText = text || '';
+      const el = this.tipEl(); if (el) el.classList.remove('on', 'typing');
+      if (!text) return;
+      this.tipT = setTimeout(() => this.showTip(), this.reduced ? 300 : 1300);
+    }
+    tipEl() { return this.overlay && this.overlay.querySelector('.pst-tip, .pst-ntip'); }
+    showTip(instant) {
+      clearTimeout(this.tipT); clearInterval(this.tipW);
+      const el = this.tipEl(), text = this.tipText;
+      if (!el || !text) return;
+      // wait for Pip to wake and to finish what it is saying
+      const left = (this.sayAt || 0) + (this.sayMs || 0) + 350 - performance.now();
+      if (!instant && (this.sleepZ || left > 0)) { this.tipT = setTimeout(() => this.showTip(), this.sleepZ ? 700 : left); return; }
+      const t = el.querySelector('.pst-tip-t');
+      t.innerHTML = '<span class="pst-bt-on"></span><span class="pst-bt-off"></span>';
+      const on = t.firstChild, off = t.lastChild;
+      el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
+      if (instant || this.reduced) { on.textContent = text; el.classList.remove('typing'); return; }
+      this.sfx('tip');
+      let i = 0; off.textContent = text; el.classList.add('typing');
+      const t0 = performance.now(), cps = this.tube ? 60 : 44;
+      this.tipW = setInterval(() => {
+        const n = Math.min(text.length, Math.floor((performance.now() - t0) / 1000 * cps) + 1);
+        if (n !== i) { i = n; on.textContent = text.slice(0, i); off.textContent = text.slice(i); }
+        if (i >= text.length) { clearInterval(this.tipW); el.classList.remove('typing'); }
+      }, 16);
+    }
+    // the note hangs under Pip and drifts after it, slowly enough to read while Pip sways
+    placeTip(H, ang, dt) {
+      const el = this.tipBox;
+      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') return;
+      const p = this.toScreen(this.headXf([32, 63], H, ang, 1, 1)), w = el.offsetWidth || 180, h = el.offsetHeight || 40, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
+      // under Pip, kept to the left of the stage where the props do not hang
+      const goal = [clamp(p[0] - w * .4, 8, Math.max(8, Math.min(bx * .62 - w, bx - w - 10))), clamp(p[1] + 12, 8, by - h - 8)];
+      if (!this.tipXY || this.reduced) this.tipXY = goal.slice();
+      const k = Math.min(1, (dt || .016) * 5); this.tipXY[0] += (goal[0] - this.tipXY[0]) * k; this.tipXY[1] += (goal[1] - this.tipXY[1]) * k;
+      el.style.transform = `translate(${R(this.tipXY[0])}px, ${R(this.tipXY[1])}px)`;
+      el.style.setProperty('--tx', R(clamp(p[0] - this.tipXY[0], 14, w - 14)) + 'px');
     }
 
     /* ------------------------------------------------- Retro: the terminal */
@@ -669,9 +725,23 @@
       if (this.reduced) return;
       if (this.famName === 'glass') this.ripple(x);
     }
-    ripple(x) {
-      const Lay = this.L, e = el('ellipse', { cx: R(x), cy: Lay.ground, rx: 4, ry: 1, fill: 'none', stroke: '#fff', 'stroke-width': 1.2 }, this.gRipple);
-      this.fx.push({ e, kind: 'ripple', x, y: Lay.ground, vx: 0, vy: 0, r: 0, vr: 0, life: 0, max: 1.4, g: 0, drag: 0 });
+    ripple(x, y, big) {
+      const Lay = this.L, yy = y == null ? Lay.ground : y, e = el('ellipse', { cx: R(x), cy: R(yy), rx: 4, ry: 1, fill: 'none', stroke: '#fff', 'stroke-width': 1.2 }, this.gRipple);
+      this.fx.push({ e, kind: 'ripple', x, y: yy, vx: 0, vy: 0, r: 0, vr: 0, life: 0, max: big === false ? .9 : 1.4, g: 0, drag: 0, small: big === false });
+    }
+    // a block set down on the stack: it takes its weight with a little squash, the ones beneath give a touch, the
+    // world answers in its material, and the moment's sound and flourish (if one waited) play now
+    touchdown(pr) {
+      if (!this.reduced) {
+        pr.sqv = (pr.sqv || 0) + 2.2;
+        this.props.forEach((o) => { if (o !== pr && o.spec.ground && o.landed && o.spec.stack < pr.spec.stack) o.sqv = (o.sqv || 0) + 1.1 * Math.pow(.5, pr.spec.stack - o.spec.stack - 1); });
+        const sc = this.propTarget(pr).sc, x = pr.pos ? pr.pos[0] : pr.ax, y = (pr.pos ? pr.pos[1] : this.L.ground) + pr.foot * sc, f = this.famName;
+        if (f === 'glass') this.ripple(x, y, false);
+        else if (f === 'friendly') this.burst([x, y], ['dot'], 5);
+        else if (this.tube === 'phosphor') this.burst([x, y], ['pix'], 4);
+        else if (this.tube === 'teletype') this.burst([x, y], ['chad'], 3);
+      }
+      if (pr.onLand) { const fn = pr.onLand; pr.onLand = null; fn(); }
     }
 
     /* --------------------------------------------------------- geometry */
@@ -748,16 +818,23 @@
         if (red) { pr.ax = tg.ax; pr.len = tg.len; pr.a = 0; pr.av = 0; pr.op = tg.op; pr.scale = (pr.spec.scale || 1); }
         else {
           const axA = F.pk * (tg.ax - pr.ax) - F.pc * pr.axv; pr.axv += axA * dt; pr.ax += pr.axv * dt;
-          const lA = F.pk * (tg.len - pr.len) - F.pc * pr.lenv; pr.lenv += lA * dt; pr.len += pr.lenv * dt;
+          // a block set on the stack is lowered, not dropped: a softer, critically damped spring, so it slows into
+          // its place and never bounces through the block beneath
+          const gr = pr.spec.ground, lk = gr ? Math.max(40, F.pk * .5) : F.pk, lc = gr ? 2.1 * Math.sqrt(lk) : F.pc;
+          const lA = lk * (tg.len - pr.len) - lc * pr.lenv; pr.lenv += lA * dt; pr.len += pr.lenv * dt;
           const Lp = Math.max(30, pr.len);
           const aA = -(F.pw * F.pw) * Math.sin(pr.a) * (170 / Lp) - F.pdamp * pr.av - (axA / Lp) * Math.cos(pr.a);
           pr.av += aA * dt; pr.a += pr.av * dt;
-          if (pr.spec.ground && pr.landed) { pr.a *= Math.max(0, 1 - dt * 12); pr.av *= Math.max(0, 1 - dt * 12); }
+          // and it is steadied as it nears its place, so it arrives level instead of being straightened on arrival
+          if (gr && !pr.landed) { const q = clamp(1 - (tg.len - pr.len) / 110, 0, 1) ** 2; pr.av *= Math.max(0, 1 - dt * 9 * q); pr.a *= Math.max(0, 1 - dt * 2.5 * q); }
+          if (gr && pr.landed) { pr.a *= Math.max(0, 1 - dt * 6); pr.av *= Math.max(0, 1 - dt * 6); }
+          // a squash at the foot when it takes weight (touchdown, or a block landing on top)
+          const qA = -340 * (pr.sq || 0) - 17 * (pr.sqv || 0); pr.sqv = (pr.sqv || 0) + qA * dt; pr.sq = (pr.sq || 0) + pr.sqv * dt;
           const sA = 260 * ((pr.spec.scale || 1) - pr.scale) - 16 * pr.sv; pr.sv += sA * dt; pr.scale += pr.sv * dt;
           pr.op += (tg.op - pr.op) * Math.min(1, dt * 8);
         }
         if (!pr.settled && pr.state !== 'out' && Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30) this.settle(pr);
-        if (pr.spec.ground && !pr.landed && Math.abs(pr.len - tg.len) < 3) { pr.landed = true; pr.landT = this.t; }
+        if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); }
         if (pr.state === 'out' && pr.len < 0 && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(id); }
       });
       // particles
@@ -825,11 +902,14 @@
         const hang = [pr.ax + Math.sin(pr.a) * Math.max(0, pr.len), Lay.anchorY + Math.cos(pr.a) * Math.max(0, pr.len)];
         const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
         pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
-        pr.el.setAttribute('transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})`);
+        const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12), squash = Math.abs(sq) > .002 ? ` translate(0 ${R(pr.foot)}) scale(${R(1 + sq * .6)} ${R(1 - sq)}) translate(0 ${R(-pr.foot)})` : '';
+        pr.el.setAttribute('transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})${squash}`);
         pr.el.setAttribute('opacity', R(pr.op));
-        const strOp = pr.spec.ground && pr.landed ? Math.max(0, 1 - (this.t - pr.landT) * 2.5) : pr.op;
+        // once a block is set down its strings are unhooked: they go slack, lift away and fade
+        const off = pr.spec.ground && pr.landed ? clamp((this.t - pr.landT) / .55, 0, 1) : 0;
+        const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
         pr.ties.forEach((t, i) => {
-          const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1]];
+          const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
           const top = [pr.ax + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
           pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
           pr.strs[i].setAttribute('opacity', R(strOp));
@@ -839,7 +919,7 @@
       // particles
       this.fx.forEach((p) => {
         const k = p.life / p.max;
-        if (p.kind === 'ripple') { const e = ease(k); p.e.setAttribute('rx', R(6 + e * 90)); p.e.setAttribute('ry', R(1.5 + e * 12)); p.e.setAttribute('stroke-opacity', R((1 - k) * .7)); return; }
+        if (p.kind === 'ripple') { const e = ease(k), m = p.small ? .45 : 1; p.e.setAttribute('rx', R(6 + e * 90 * m)); p.e.setAttribute('ry', R(1.5 + e * 12 * m)); p.e.setAttribute('stroke-opacity', R((1 - k) * .7)); return; }
         const op = p.kind === 'conf' ? (k > .85 ? (1 - k) / .15 : 1) : p.kind === 'check' ? (k < .75 ? 1 : (1 - k) / .25) : p.kind === 'ring' ? (1 - k) * .9 : 1 - k * k;
         const sc = p.kind === 'ring' ? 1 + ease(k) * 2.2 : p.kind === 'check' ? (k < .1 ? k / .1 * 1.18 : k < .18 ? 1.18 - (k - .1) / .08 * .18 : 1) : 1;
         p.e.setAttribute('transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
@@ -887,6 +967,7 @@
       if (f === 'nier') { this.renderBrackets(); this.renderSlice(); }
       // the speech bubble follows Pip (NieR's dialogue box sits at the foot of the stage instead)
       if (f !== 'nier') this.placeBubble(H, ang);
+      if (this.tipBox) this.placeTip(H, ang, this.t - (this.tipLast || this.t)); this.tipLast = this.t;
       // big swings can be heard
       if (!this.reduced && this.t - (this.swT || 0) > .07) { this.swT = this.t; this.loopSnd('swing', clamp((Math.abs(ps.thv) - .25) / 1.6, 0, 1)); }
       this.loopSnd('snore', this.sleepZ ? 1 : 0);
@@ -999,7 +1080,7 @@
       };
       flip();
     }
-    destroy() { if (this.off) this.off(); cancelAnimationFrame(this.raf); this.ro.disconnect(); clearTimeout(this.wakeT); clearInterval(this.typeT); clearInterval(this.decT); clearInterval(this.cmdT); clearInterval(this.bootT); this.root.innerHTML = ''; }
+    destroy() { if (this.off) this.off(); clearTimeout(this.tipT); clearInterval(this.tipW); cancelAnimationFrame(this.raf); this.ro.disconnect(); clearTimeout(this.wakeT); clearInterval(this.typeT); clearInterval(this.decT); clearInterval(this.cmdT); clearInterval(this.bootT); this.root.innerHTML = ''; }
   }
 
   G.PipStage = { Stage, LAYOUTS, FAM };

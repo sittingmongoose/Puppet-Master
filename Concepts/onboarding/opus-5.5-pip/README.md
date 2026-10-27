@@ -12,8 +12,9 @@ The control is you. Pip hangs from it, and every choice you make lowers somethin
   you choose, looks at what you pick, sleeps until you arrive, and powers up when AI is connected.
 - **Hover previews, choosing commits.** Resting the pointer on a choice lowers a ghost of its prop on a
   dashed string; clicking it drops the real prop in, which swings and settles, and Pip celebrates. A
-  preview waits until the pointer settles (sweeping across the list to find your way changes nothing),
-  stays at least a moment, and holds briefly when you leave, so the gaps between rows never flicker.
+  preview waits until the pointer has rested on a choice for about 0.4 s (moving across the list to find
+  your way changes nothing), stays at least 0.9 s, and holds 0.6 s when you leave, so the gaps between
+  rows never flicker.
 - **It is physics, not keyframes.** Pip is a pendulum on the hand: when the hand moves, Pip swings
   and settles, and both strings are solved every frame from the screw eyes on the bar to the eyes on
   its head (the same solver as the logo). Every prop hangs on its own string and swings too.
@@ -24,6 +25,12 @@ The control is you. Pip hangs from it, and every choice you make lowers somethin
 - **Pip talks.** Every line is typed into its bubble at the pace Pip's voice says it (see Sound). The
   bubble takes the whole line's size first and the letters arrive in place; a line that changes faster
   than Pip could say it (a name being typed) waits until things are still, then types.
+- **Pip gives tips.** Each screen has a tip (from PMConcept7's own explanations where it has them). Once
+  Pip has said its line, it writes the tip out, with a small "idea" chime, in the look's material: a
+  stitched paper note under Pip in Friendly, a frosted one in Glass, a dashed annotation in Basic, a
+  terminal box in Retro Dark, a printed NOTE in Retro Light, and in NieR a TIPS box at the top right
+  (its dialogue box already holds the foot of the stage). When the stage is only a strip (narrow
+  windows), the tip sits in the form under the screen's introduction.
 
 ## The screens
 
@@ -37,7 +44,7 @@ The control is you. Pip hangs from it, and every choice you make lowers somethin
 | Keep it safe | A vault; an online copy and a backup box join it when chosen |
 | Away from home | A house, or a house and a globe |
 | Review | A clipboard ticked off one line at a time as the review rows appear |
-| Creating | Each phase is a block lowered onto a stack; the strings drop away once a block lands; Pip rocks the control while it works |
+| Creating | Each phase is a block lowered onto a stack: it slows into its place and arrives level, takes its weight with a little squash (the blocks beneath give a touch), and its strings unhook and lift away; its sound plays at touchdown, and Creating is done when the last block is down; Pip rocks the control while it works |
 | AI | One orb per provider; each lights as it connects, and Pip's strings carry power |
 | Ready | Your choices return as charms, and the crew (Pips in a crown, a hard hat and glasses) takes a curtain call |
 
@@ -99,16 +106,17 @@ board: every kit and every event, and a box to make Pip say anything.
 
 | Look | Material | Pip's voice | While the window is open |
 |---|---|---|---|
-| Friendly | marimba, kalimba, music box, woodblocks, felt | warm, bouncy babble | a music box left running, a low kalimba every other bar |
-| Glass | glass bells, wine-glass tones, water drops, air | breathy, with a shimmer | glass harmonics ringing on their own, a drop of water, a slow swell |
-| Basic | clean sines, soft clicks | polite chirps | a clean ping now and then |
-| Retro Dark | chip beeps, the CRT's relay, static and degauss | text blips | the terminal's idle tune: a bass note, a few soft squares, a disk seeking |
-| Retro Light | key clacks, platen ratchet, carriage-return zip, margin bell, a small motor, celesta | struck notes with a key's tick | a celesta in the next room |
-| NieR | soft menu ticks, two-tone confirms, glitch grains, a pad, glockenspiel, a distant choir | a Pod's flat, stepped bleeps | a pad that swells and goes, a glockenspiel note in the air |
+| Friendly | marimba, kalimba, music box, woodblocks, felt | warm, bouncy babble | a music-box lullaby over a soft kalimba |
+| Glass | glass bells, wine-glass tones, water drops, air | breathy, with a shimmer | glass struck in a slow, open arpeggio |
+| Basic | clean sines, soft clicks | polite chirps | a few clean notes, question and answer, over soft low notes |
+| Retro Dark | chip beeps, the CRT's relay, static and degauss | text blips | the terminal's idle tune: a square lead, a triangle bass |
+| Retro Light | key clacks, platen ratchet, carriage-return zip, margin bell, a small motor, celesta | struck notes with a key's tick | a celesta tune, a clockwork of a song |
+| NieR | soft menu ticks, two-tone confirms, glitch grains, a soft pad, glockenspiel | a Pod's flat, stepped bleeps | a slow, wistful line on a soft bell, in A minor |
 
-The music follows the chapters: each has a chord (I, IV, V, vi, then I an octave up), the background
-and the power arpeggio on the AI screen play in it, and a chapter change adds a note of the motif until
-Ready resolves it. Nothing holds a tone: a held drone, or two tones a hair apart, reads as a hum, and a
+The music follows the chapters: each has a chord (I, IV, V, vi, then I an octave up), and a chapter
+change adds a note of the motif until Ready resolves it. Each look's background is a composed tune of
+eight bars in steady time, with phrases and short rests, that moves into the chapter's key by scale steps
+(so it stays in key); the power arpeggio on the AI screen is a sixteen-step phrase in the same chord. Nothing holds a tone: a held drone, or two tones a hair apart, reads as a hum, and a
 tone switched on and off fast reads as a speaker breaking up. `tools/sound_texture.mjs` measures both.
 
 ## Sizes and motion

@@ -24,6 +24,8 @@
   } catch (e) { /* file:// */ }
   const root = document.documentElement;
   if (root.getAttribute('data-reduced-motion') === '1') S.reduced = true;
+  const sysReduced = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+  if (sysReduced && sysReduced.matches) S.reduced = true;
   const famOf = (t) => TH[t].family;
   const schemeOf = (t) => TH[t].scheme;
 
@@ -158,12 +160,13 @@
       chapter: 'project', eyebrow: 'Creating', title: () => `Creating ${esc(S.name.trim() || 'your Project')}`,
       lead: 'This takes a moment. You can close the window; it keeps going.',
       body: () => `<ol class="ob-phases">${phases().map(([t], i) => `<li data-state="${i < S.phase ? 'done' : i === S.phase ? 'run' : 'wait'}"><span class="ob-ph-dot">${i < S.phase ? icon('check', 14) : ''}</span>${esc(t)}</li>`).join('')}</ol>`,
-      foot: () => ({ primary: [S.phase >= phases().length ? 'Continue' : 'Working…', 'next', S.phase < phases().length] }),
+      foot: () => ({ primary: [S.built ? 'Continue' : 'Working…', 'next', !S.built] }),
       scene: () => {
-        const ph = phases(), done = S.phase >= ph.length;
+        // built once the last block is set down on the stack (the stage reports its touchdown)
+        const ph = phases(), done = !!S.built, cur = ph[Math.min(S.phase, ph.length - 1)], last = S.phase >= ph.length;
         const props = ph.slice(0, S.phase).map(([, icn, hue], i) => ({ id: 'b' + i, kind: 'block', stack: i, ground: true, params: { icon: icn, hue } }));
         const line = { folder: 'Laying the first block…', history: 'Saving the very first version…', cloud: 'Making the online copy…', globe: 'Opening a door for later…', check: 'Checking it all holds…' };
-        return { chapter: 'project', props, pip: { mood: done ? 'happy' : 'dots', work: !done, look: props.length ? props[props.length - 1].id : [1, 1] }, say: done ? 'Built! Every block in place.' : line[ph[S.phase][1]] || 'Working…', target: props.length ? props[props.length - 1].id : null, label: done ? 'Complete' : 'Building', cmd: done ? 'pip build  done' : `pip build ${ph[S.phase][1]}  ${S.phase + 1}/${ph.length}` };
+        return { chapter: 'project', props, pip: { mood: done ? 'happy' : 'dots', work: !done, look: props.length ? props[props.length - 1].id : [1, 1] }, say: done ? 'Built! Every block in place.' : last ? 'And the last one…' : line[cur[1]] || 'Working…', target: props.length ? props[props.length - 1].id : null, label: done ? 'Complete' : 'Building', cmd: done ? 'pip build  done' : `pip build ${cur[1]}  ${Math.min(S.phase + 1, ph.length)}/${ph.length}` };
       }
     },
     ai: {
@@ -184,7 +187,7 @@
       body: () => `<div class="ob-summary">${[['Project', S.name.trim() || 'Not yet'], ['AI', PROVIDERS.filter(([k]) => S.ai[k] === 'ready').map(([, n]) => n).join(', ') || 'None yet'], ['Free Models', 'Not set up'], ['Backup', S.backup ? 'Home NAS' : 'Not set up']].map(([k, v]) => `<div><span>${k}</span><b>${esc(v)}</b></div>`).join('')}</div>
         <button type="button" class="ob-tour">${icon('play', 18)}<span><b>Take the Guided Tour</b><small>About 4 minutes. Uses a practice example; nothing changes.</small></span></button>
         <p class="ob-meet"><b>Meet the crew.</b> When Puppet Master runs a Plan, every agent is a Pip in its role's hat: the Coordinator's crown, the Builder's hard hat, the Reviewer's glasses.</p>`,
-      foot: { secondary: ['Enter Puppet Master', 'close'], primary: ['Create a Project now', 'close'] },
+      foot: () => { const n = S.name.trim(); return { primary: [n ? `Open ${n.length > 22 ? n.slice(0, 21) + '…' : n}` : 'Enter Puppet Master', 'close'] }; },
       scene: () => {
         // the choices come back as charms, and the crew lines up for its curtain call
         const charms = [{ this: 'laptop', connect: 'phone', server: 'server' }[S.where], { new: 'page', existing: 'folder', restore: 'restore' }[S.begin], 'vault'];
@@ -193,6 +196,20 @@
         return { chapter: 'ready', props, pip: { mood: 'happy', look: 'crew-hardhat' }, say: "We're ready. Let's make something!", target: 'crew-crown', label: 'All systems go', cmd: 'pip --go' };
       }
     }
+  };
+  // Pip's tip for each screen (PMConcept7's own explanations where it has them, in the same plain words)
+  const TIPS = {
+    welcome: 'You can close this window any time. Your choices are kept, and setup picks up where you left off.',
+    look: "Light or dark starts from your computer's setting. You can change the look any time.",
+    where: 'This computer is the easiest start. You can add other computers, or a Server, later.',
+    begin: 'Already have work? Puppet Master can bring in a folder, a Project stored online, or files from another device.',
+    name: 'Its files go in a folder with this name. You can choose where that folder lives.',
+    safe: 'Git is the most common way to keep versions. Jujutsu is built on Git and makes mistakes easier to undo.',
+    away: 'Tailscale is built into Puppet Master: sign in once. You can change this any time.',
+    review: 'Nothing has been made yet. Edit on any line takes you back to change it.',
+    creating: 'You can close the window: creating keeps going. The folder and Safe History come first.',
+    ai: 'API keys are kept in your system keychain and never shown again. You can add more AI later.',
+    ready: 'Need help later? Ask Assistant Chat for Teacher, or open Settings for the full controls.'
   };
   const PROVIDERS = [['claude', 'Claude', 'Claude plan, not the Anthropic API'], ['codex', 'ChatGPT / Codex', 'ChatGPT plan'], ['antigravity', 'Google Antigravity', 'Antigravity plan, not the Gemini API'], ['cursor', 'Cursor', 'Cursor account']];
   const phases = () => [['Making the folder', 'folder', 'a'], [`Starting Safe History with ${S.vcs === 'jj' ? 'Jujutsu' : 'Git'}`, 'history', 'b'], ...(S.online ? [['Making the online copy on GitHub', 'cloud', 'd']] : []), ...(S.away === 'anywhere' ? [['Setting up access away from home', 'globe', 'e']] : []), ['Checking everything works', 'check', 'c']];
@@ -300,6 +317,7 @@
     document.body.style.setProperty('--tint', (wd.chapter && wd.chapter[scr.chapter]) || '');
     const html = `<div class="ob-screen" data-screen="${S.screen}" data-dir="${dir || 0}">
       <p class="ob-eyebrow">${esc(val(scr.eyebrow))}</p><h1 class="ob-title" id="obTitle">${val(scr.title)}</h1><p class="ob-lead">${val(scr.lead)}</p>
+      ${TIPS[S.screen] ? `<p class="ob-tipline">${icon('spark', 16)}<span>${esc(TIPS[S.screen])}</span></p>` : ''}
       <div class="ob-bodyx">${scr.body()}</div></div>`;
     mainEl.innerHTML = html;
     if (famOf(S.theme) === 'retro' && dir && !S.reduced) typeTitle($('#obTitle'));
@@ -344,6 +362,7 @@
     clearInterval(hv.poll); clearTimeout(hv.leaveT); hv.want = null;
     if (from !== screen) sfx(opts && opts.back ? 'back' : 'next', { chapter: CHAPTERS.findIndex(([c]) => c === SCREENS[screen].chapter) });
     renderScreen(opts && opts.back ? -1 : 1);
+    if (stage) stage.tip(TIPS[screen]);
     enter(screen);
     if (stage && !(opts && opts.back) && from !== screen) stage.feel('happy', 600);
   }
@@ -352,9 +371,10 @@
     if (screen === 'welcome' && stage) stage.wake();
     if (screen === 'review') { S.reviewTicks = 0; for (let i = 1; i <= 4; i++) later(() => { S.reviewTicks = i; direct(); sfx('tick', { index: i - 1 }); if (i === 4 && stage) stage.cheer('clipboard'); }, 380 * i + 200); }
     if (screen === 'creating') {
-      S.phase = 0; renderScreen(1);
-      const n = phases().length;
-      for (let i = 1; i <= n; i++) later(() => { S.phase = i; renderScreen(0); if (stage) stage.cheer('b' + (i - 1), { mood: i === n ? 'happy' : 'dots', sound: 'block', index: i - 1, count: n }); }, 1100 * i + 300);
+      S.phase = 0; S.built = false; renderScreen(1);
+      const n = phases().length, built = () => { if (!S.built && S.screen === 'creating') { S.built = true; renderScreen(0); } };
+      for (let i = 1; i <= n; i++) later(() => { S.phase = i; renderScreen(0); if (stage) stage.cheer('b' + (i - 1), { mood: i === n ? 'happy' : 'dots', sound: 'block', index: i - 1, count: n, then: i === n ? built : null }); else if (i === n) built(); }, 1100 * i + 300);
+      later(built, 1100 * n + 3800);
     }
     if (screen === 'ai') {
       PROVIDERS.forEach(([k]) => { S.ai[k] = 'checking'; });
@@ -416,25 +436,29 @@
     clearInterval(hv.poll); clearTimeout(hv.leaveT);
     if (h === S.hover) return;
     S.hover = h; hv.shownAt = performance.now();
+    $$('.is-preview', mainEl).forEach((e) => e.classList.remove('is-preview'));
+    const row = h && $$('[data-hover]', mainEl).find((e) => e.dataset.hover === h); if (row) row.classList.add('is-preview');
     if (h) { sfx('hover'); if (stage) stage.busy(); if (performance.now() - thinkT > 2600) { thinkT = performance.now(); setTimeout(() => { if (S.hover === h) sfx('think'); }, 260); } }
     direct();
   };
-  /* Hover intent: a choice previews only once the pointer settles on it, so sweeping across the list to find
-     your way changes nothing. A preview stays at least HOLD ms, and leaving a choice keeps it a moment
-     (GRACE), so the gaps between rows never flicker. The keyboard is deliberate: focus previews at once. */
-  const STILL = 6, POLL = 90, HOLD = 650, GRACE = 450;
-  const hv = { want: null, x: 0, y: 0, px: 0, py: 0, poll: 0, leaveT: 0, shownAt: 0 };
+  /* Hover intent: a choice previews only once the pointer has rested on it for DWELL ms, so moving across the
+     list to find your way, or pausing on the way past, changes nothing. A preview stays at least HOLD ms, and
+     leaving a choice keeps it a moment (GRACE), so the gaps between rows never flicker. The keyboard is
+     deliberate: focus previews at once. */
+  const STILL = 6, POLL = 60, DWELL = 420, HOLD = 900, GRACE = 600;
+  const hv = { want: null, x: 0, y: 0, px: 0, py: 0, poll: 0, leaveT: 0, shownAt: 0, rest: 0 };
   function wantHover(h) {
     if (h === hv.want) return;
     hv.want = h;
     clearInterval(hv.poll); clearTimeout(hv.leaveT);
     if (!h) { hv.leaveT = setTimeout(() => setHover(null), GRACE); return; }
     if (h === S.hover) return;
-    hv.px = hv.x; hv.py = hv.y;
+    hv.px = hv.x; hv.py = hv.y; hv.rest = 0;
     hv.poll = setInterval(() => {
       const moved = Math.hypot(hv.x - hv.px, hv.y - hv.py);
       hv.px = hv.x; hv.py = hv.y;
-      if (moved < STILL && performance.now() - hv.shownAt > HOLD) setHover(hv.want);
+      hv.rest = moved < STILL ? hv.rest + POLL : 0;
+      if (hv.rest >= DWELL && performance.now() - hv.shownAt > HOLD) setHover(hv.want);
     }, POLL);
   }
   mainEl.addEventListener('pointermove', (e) => { hv.x = e.clientX; hv.y = e.clientY; }, { passive: true });
@@ -444,6 +468,14 @@
   mainEl.addEventListener('focusout', (e) => { const to = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('[data-hover]'); if (hv.byFocus && !to) { hv.byFocus = false; wantHover(null); } });
   document.addEventListener('keydown', (e) => {
     if (!S.open) return;
+    const rad = /^Arrow(Up|Down|Left|Right)$/.test(e.key) && e.target.closest && e.target.closest('[role="radio"]'), grp = rad && rad.closest('[role="radiogroup"]');
+    if (grp) {
+      const all = $$('[role="radio"]', grp), step = /Up|Left/.test(e.key) ? -1 : 1, nx = all[(all.indexOf(rad) + step + all.length) % all.length];
+      const key = ['pick', 'look', 'scheme', 'vcs', 'online', 'backup'].find((a) => nx.dataset[a] != null), sel = key ? `[data-${key}="${nx.dataset[key]}"]` : null;
+      e.preventDefault(); nx.click();
+      const again = sel && $(sel, mainEl); if (again) again.focus();
+      return;
+    }
     if (e.key === 'Enter' && !e.target.matches('button, input[type="checkbox"]')) { const p = $('.ob-primary'); if (p && !p.disabled) p.click(); }
     if (e.key === 'Escape') setOpen(false);
   });
@@ -461,7 +493,7 @@
   function setWidth(w) {
     S.width = w; document.body.dataset.width = w;
     $$('[data-width]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.width === w)));
-    requestAnimationFrame(() => { if (stage) { stage.setLayout(layoutFor()); S.layout = stage.layoutName; direct(); } });
+    requestAnimationFrame(() => { if (stage) { stage.setLayout(layoutFor()); S.layout = stage.layoutName; document.body.dataset.stage = S.layout; direct(); } });
   }
   function setReduced(r) {
     S.reduced = r; root.setAttribute('data-reduced-motion', r ? '1' : '0'); document.body.dataset.reduced = r ? '1' : '0';
@@ -483,7 +515,7 @@
       if (TH[t] && t !== S.theme) { S.theme = t; applyTheme(); renderScreen(0); }
       if (r !== S.reduced) setReduced(r);
     }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-reduced-motion'] });
-    new ResizeObserver(() => { if (stage) { const l = layoutFor(); if (l !== stage.layoutName) { stage.setLayout(l); S.layout = l; direct(); } } }).observe(win);
+    new ResizeObserver(() => { if (stage) { const l = layoutFor(); if (l !== stage.layoutName) { stage.setLayout(l); S.layout = l; document.body.dataset.stage = l; direct(); } } }).observe(win);
   }
 
   /* ----------------------------------------------------------------- boot */
@@ -492,14 +524,16 @@
   applyTheme();
   setReduced(S.reduced);
   stage = new window.PipStage.Stage(stageEl, { theme: S.theme, layout: layoutFor(), reduced: S.reduced });
-  S.layout = stage.layoutName;
+  S.layout = stage.layoutName; document.body.dataset.stage = S.layout;
   if (!SCREENS[S.screen]) S.screen = 'welcome';
   if (S.screen !== 'welcome') S.history = FLOW.slice(0, FLOW.indexOf(S.screen));
   // jumping straight past the AI screen: two providers are already connected
   if (FLOW.indexOf(S.screen) > FLOW.indexOf('ai')) { S.ai.claude = 'ready'; S.ai.codex = 'ready'; S.ai.antigravity = 'off'; S.ai.cursor = 'off'; }
   setOpen(true);
   setOpen.ready = true;
+  if (sysReduced && sysReduced.addEventListener) sysReduced.addEventListener('change', (e) => setReduced(e.matches || root.getAttribute('data-reduced-motion') === '1'));
   syncSound();
+  stage.tip(TIPS[S.screen]);
   enter(S.screen);
   window.__ob = { S, go, stage: () => stage };
 })();

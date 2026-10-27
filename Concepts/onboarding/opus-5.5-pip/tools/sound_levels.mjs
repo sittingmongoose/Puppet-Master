@@ -29,7 +29,7 @@ async function measure(page, mode) {
       const jobs = P.EVENTS.map((e) => ['play', e]).concat([['say', 'say']], P.LOOPS.map((l) => ['loop', l]));
       for (const [kind, name] of jobs) {
         const buf = await P._render(kit, kind, name, {}, { raw, notrim: raw, seconds: kind === 'loop' ? 8 : undefined });
-        const s = P._stats(buf);
+        const s = P._stats(buf, { whole: kind === 'loop' });
         const key = kind === 'loop' ? 'loop:' + name : name;
         const subtle = (P.SUBTLE[kit] || []).indexOf(name) >= 0;
         out.push(Object.assign({ kit, kind, name, key, target: P.TARGET[key] - (subtle ? 7 : 0) + (((P.OFFSET || {})[kit] || {})[key] || 0) }, s));
@@ -56,7 +56,9 @@ try {
     const m = await measure(page, 'raw'), trim = {};
     m.rows.forEach((r) => {
       if (r.rmsDb < -150) return;
-      (trim[r.kit] = trim[r.kit] || {})[r.key] = Math.round(Math.max(-30, Math.min(30, r.target - r.rmsDb)) * 2) / 2;
+      // as loud as it is heard (A-weighted), but never more than 3 dB over the target in plain energy: a low thump or
+      // hum would otherwise be raised until it booms on speakers that can play it
+      (trim[r.kit] = trim[r.kit] || {})[r.key] = Math.round(Math.max(-30, Math.min(30, r.target - r.rmsDb, r.target + 3 - r.rmsZ)) * 2) / 2;
     });
     let src = readFileSync(SOUND, 'utf8');
     const makeup = Math.round(m.chain * 1000) / 1000;
@@ -76,7 +78,7 @@ try {
     if (r.rmsDb < -70) why.push('silent');
     if (Math.abs(r.dc) > 0.005) why.push(`DC ${r.dc}`);
     if (why.length) bad.push(`${r.kit}/${r.key}: ${why.join(', ')}`);
-    if (!why.length && Math.abs(r.rmsDb - r.target) > 4) warn.push(`${r.kit}/${r.key}: ${r.rmsDb} vs ${r.target}`);
+    if (!why.length && Math.abs(r.rmsDb - r.target) > 4 && r.rmsZ < r.target + 2.5) warn.push(`${r.kit}/${r.key}: ${r.rmsDb} vs ${r.target}`);
     if (r.hfDb > -10 && r.dur > 0.3) warn.push(`${r.kit}/${r.key}: bright above 10 kHz (${r.hfDb} dB)`);
   });
   const kits = [...new Set(m.rows.map((r) => r.kit))];

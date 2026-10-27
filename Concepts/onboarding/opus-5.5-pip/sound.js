@@ -33,23 +33,24 @@
   const KITS = ['friendly', 'glass', 'basic', 'phosphor', 'teletype', 'nier'];
   const UI = ['tap', 'hover', 'select', 'toggleOn', 'toggleOff', 'next', 'back', 'open', 'close', 'key', 'warn'];
   const STAGE = ['lower', 'ghost', 'land', 'lift', 'hop', 'swing', 'tryOn', 'sparkle', 'confetti', 'chapter', 'tick', 'block',
-    'power', 'score', 'lock', 'decode', 'slice', 'degauss', 'feed', 'powerOn', 'powerOff', 'rail'];
+    'power', 'score', 'lock', 'decode', 'slice', 'degauss', 'feed', 'powerOn', 'powerOff', 'rail', 'tip'];
   const VOCAL = ['wake', 'sleep', 'think', 'happy', 'wink', 'alert', 'cheer', 'crew'];
   const EVENTS = UI.concat(STAGE, VOCAL);
   const LOOPS = ['snore', 'work', 'power', 'swing', 'bed'];
   const MOTION = new Set(['lower', 'ghost', 'lift', 'swing', 'hop', 'rail']);
   const VOICED = new Set(['say', 'wake', 'sleep', 'think', 'happy', 'wink', 'alert']);
   // the quick ones you hear again and again get little room, so their tails never pile up and navigation never smears
-  const DRY = { hover: 0.15, tap: 0.2, key: 0.15, tick: 0.35, toggleOn: 0.35, toggleOff: 0.35, select: 0.4, next: 0.45, back: 0.4, slice: 0.3, lock: 0.4 };
+  const DRY = { tip: 0.4, hover: 0.15, tap: 0.2, key: 0.15, tick: 0.35, toggleOn: 0.35, toggleOff: 0.35, select: 0.4, next: 0.45, back: 0.4, slice: 0.3, lock: 0.4 };
   // the least time between two of the same event (ms); more often than this is dropped
-  const RATE = { hover: 45, key: 40, tap: 30, select: 40, lower: 60, ghost: 80, land: 50, tick: 80, sparkle: 90, rail: 120, decode: 90, score: 150, lock: 120, hop: 90, swing: 140, toggleOn: 40, toggleOff: 40 };
+  const RATE = { tip: 600, hover: 45, key: 40, tap: 30, select: 40, lower: 60, ghost: 80, land: 50, tick: 80, sparkle: 90, rail: 120, decode: 90, score: 150, lock: 120, hop: 90, swing: 140, toggleOn: 40, toggleOff: 40 };
   // target loudness (dBFS RMS over the sound's active part) that tools/sound_levels.mjs trims every take to
   const TARGET = {
     tap: -34, hover: -37, select: -32, toggleOn: -34, toggleOff: -34, next: -32, back: -33, open: -29, close: -30, key: -35, warn: -30,
-    lower: -31, ghost: -35, land: -30, lift: -32, hop: -30, swing: -34, tryOn: -27, sparkle: -30, confetti: -20, chapter: -23, tick: -27, block: -26,
-    power: -24, score: -31, lock: -28, decode: -32, slice: -30, degauss: -27, feed: -29, powerOn: -27, powerOff: -29, rail: -33,
+    lower: -31, ghost: -35, land: -30, lift: -32, hop: -30, swing: -34, tryOn: -27, sparkle: -30, confetti: -20, chapter: -27, tick: -27, block: -26,
+    power: -24, score: -31, lock: -28, decode: -32, slice: -30, degauss: -27, feed: -29, powerOn: -27, powerOff: -29, rail: -33, tip: -33,
     wake: -26, sleep: -28, think: -27, happy: -26, wink: -27, alert: -26, cheer: -22, crew: -20, say: -26,
-    'loop:snore': -42, 'loop:work': -40, 'loop:power': -44, 'loop:swing': -40, 'loop:bed': -46
+    // loops are measured over their whole length (rests included), the way they are heard
+    'loop:snore': -44, 'loop:work': -42, 'loop:power': -45, 'loop:swing': -41, 'loop:bed': -43
   };
   // a kit's own exceptions to the targets (dB): NieR is the quiet one, its confirm a whisper next to its menu
   const OFFSET = { nier: { cheer: -5, crew: -5, hover: -3, slice: -3 }, glass: { confetti: -5 } };
@@ -63,7 +64,7 @@
     nier: ['score', 'feed', 'degauss', 'hop', 'swing']
   };
   /* per-kit level trims in dB, measured: tools/sound_levels.mjs --write */
-  const TRIM = /* TRIM:begin */{"friendly":{"tap":2.5,"hover":2.5,"select":-4,"toggleOn":1,"toggleOff":3.5,"next":-3.5,"back":-2,"open":-0.5,"close":-2.5,"key":4,"warn":0.5,"lower":5.5,"ghost":10.5,"land":11,"lift":13.5,"hop":12,"swing":24,"tryOn":-0.5,"sparkle":2.5,"confetti":8,"chapter":3,"tick":3.5,"block":2.5,"power":5,"score":6,"lock":5.5,"decode":9,"slice":23.5,"degauss":28.5,"feed":10.5,"powerOn":2,"powerOff":0.5,"rail":14,"wake":-4,"sleep":2.5,"think":-12,"happy":-5,"wink":-3,"alert":-8.5,"cheer":-3,"crew":-5.5,"say":-5,"loop:snore":13,"loop:work":-0.5,"loop:power":-9.5,"loop:swing":-10.5,"loop:bed":-10},"glass":{"tap":4.5,"hover":4.5,"select":2.5,"toggleOn":1.5,"toggleOff":0.5,"next":2.5,"back":5,"open":5,"close":5,"key":5,"warn":11,"lower":12.5,"ghost":8,"land":11.5,"lift":16,"hop":14,"swing":28,"tryOn":5.5,"sparkle":12,"confetti":6,"chapter":10,"tick":12.5,"block":12.5,"power":8,"score":10.5,"lock":7.5,"decode":11.5,"slice":24.5,"degauss":30,"feed":13,"powerOn":8.5,"powerOff":11,"rail":15,"wake":-9,"sleep":-3,"think":-14,"happy":-11.5,"wink":-10,"alert":-16.5,"cheer":-8.5,"crew":-12,"say":-13,"loop:snore":11,"loop:work":4,"loop:power":-3,"loop:swing":-11.5,"loop:bed":-6},"basic":{"tap":20,"hover":18.5,"select":5.5,"toggleOn":5.5,"toggleOff":5.5,"next":6,"back":4.5,"open":8.5,"close":7.5,"key":21.5,"warn":9.5,"lower":13.5,"ghost":19,"land":11,"lift":12.5,"hop":14.5,"swing":24.5,"tryOn":8.5,"sparkle":12,"confetti":15,"chapter":12.5,"tick":10.5,"block":11.5,"power":13,"score":18.5,"lock":15.5,"decode":16.5,"slice":18,"degauss":26,"feed":22,"powerOn":14,"powerOff":12.5,"rail":14,"wake":-7.5,"sleep":-5.5,"think":-4.5,"happy":-8,"wink":-7.5,"alert":-9.5,"cheer":-6.5,"crew":-6.5,"say":-7,"loop:snore":20,"loop:work":8,"loop:power":-5.5,"loop:swing":-17.5,"loop:bed":-5.5},"phosphor":{"tap":8,"hover":13.5,"select":5.5,"toggleOn":5.5,"toggleOff":5,"next":8.5,"back":7.5,"open":11.5,"close":9,"key":12.5,"warn":16,"lower":17,"ghost":1.5,"land":11,"lift":9.5,"hop":9,"swing":17,"tryOn":11,"sparkle":19,"confetti":15,"chapter":15.5,"tick":11,"block":14.5,"power":16.5,"score":12.5,"lock":13.5,"decode":19,"slice":10,"degauss":11.5,"feed":29.5,"powerOn":15.5,"powerOff":8,"rail":11,"wake":3,"sleep":4.5,"think":2.5,"happy":2,"wink":1.5,"alert":0.5,"cheer":4,"crew":6,"say":2,"loop:snore":3.5,"loop:work":8.5,"loop:power":-3,"loop:swing":-16,"loop:bed":-2},"teletype":{"tap":20.5,"hover":28,"select":5.5,"toggleOn":18.5,"toggleOff":19.5,"next":22.5,"back":20,"open":26.5,"close":25,"key":21,"warn":-0.5,"lower":19,"ghost":26,"land":17.5,"lift":22.5,"hop":23.5,"swing":28,"tryOn":3.5,"sparkle":7,"confetti":8.5,"chapter":8.5,"tick":8.5,"block":9.5,"power":10,"score":24,"lock":27.5,"decode":18.5,"slice":18.5,"degauss":28.5,"feed":22.5,"powerOn":26.5,"powerOff":25,"rail":23.5,"wake":2,"sleep":3.5,"think":1.5,"happy":1,"wink":1.5,"alert":1.5,"cheer":4.5,"crew":3.5,"say":1.5,"loop:snore":3.5,"loop:work":15,"loop:power":-7,"loop:swing":-10.5,"loop:bed":-9.5},"nier":{"tap":9.5,"hover":7,"select":4.5,"toggleOn":10,"toggleOff":11,"next":9,"back":10,"open":17.5,"close":19,"key":18,"warn":15,"lower":20.5,"ghost":19.5,"land":19,"lift":18,"hop":15,"swing":27,"tryOn":12,"sparkle":19.5,"confetti":11.5,"chapter":11,"tick":14,"block":16.5,"power":13.5,"score":16,"lock":13,"decode":22.5,"slice":21.5,"degauss":21,"feed":16.5,"powerOn":13,"powerOff":19.5,"rail":17,"wake":-4,"sleep":-2.5,"think":17.5,"happy":-4.5,"wink":-4,"alert":-5.5,"cheer":14.5,"crew":-7,"say":-3.5,"loop:snore":7,"loop:work":12,"loop:power":-2,"loop:swing":-18.5,"loop:bed":-9}}/* TRIM:end */;
+  const TRIM = /* TRIM:begin */{"friendly":{"tap":2.5,"hover":2.5,"select":-4,"toggleOn":1,"toggleOff":3.5,"next":-3.5,"back":-2,"open":-0.5,"close":-2.5,"key":4,"warn":0.5,"lower":5.5,"ghost":10.5,"land":11,"lift":13.5,"hop":12,"swing":24,"tryOn":-0.5,"sparkle":2.5,"confetti":8,"chapter":-1,"tick":3.5,"block":2.5,"power":5,"score":6,"lock":5.5,"decode":9,"slice":23.5,"degauss":28.5,"feed":10.5,"powerOn":2,"powerOff":0.5,"rail":14,"tip":-0.5,"wake":-4,"sleep":2.5,"think":-12,"happy":-5,"wink":-3,"alert":-8.5,"cheer":-3,"crew":-5.5,"say":-5,"loop:snore":10,"loop:work":8,"loop:power":-6.5,"loop:swing":-11.5,"loop:bed":-5.5},"glass":{"tap":4.5,"hover":4.5,"select":2.5,"toggleOn":1.5,"toggleOff":0.5,"next":2.5,"back":5,"open":5,"close":5,"key":5,"warn":11,"lower":12.5,"ghost":8,"land":11.5,"lift":16,"hop":14,"swing":28,"tryOn":5.5,"sparkle":12,"confetti":6,"chapter":6,"tick":12.5,"block":12.5,"power":8,"score":10.5,"lock":7.5,"decode":11.5,"slice":24.5,"degauss":30,"feed":13,"powerOn":8.5,"powerOff":11,"rail":15,"tip":5,"wake":-9,"sleep":-3,"think":-14,"happy":-11.5,"wink":-10,"alert":-16.5,"cheer":-8.5,"crew":-12,"say":-13,"loop:snore":10,"loop:work":8.5,"loop:power":0,"loop:swing":-12.5,"loop:bed":-0.5},"basic":{"tap":20,"hover":18.5,"select":5.5,"toggleOn":5.5,"toggleOff":5.5,"next":6,"back":4.5,"open":8.5,"close":7.5,"key":21.5,"warn":9.5,"lower":13.5,"ghost":19,"land":11,"lift":12.5,"hop":14.5,"swing":24.5,"tryOn":8.5,"sparkle":12,"confetti":15,"chapter":8.5,"tick":10.5,"block":11.5,"power":13,"score":18.5,"lock":15.5,"decode":16.5,"slice":18,"degauss":26,"feed":22,"powerOn":14,"powerOff":12.5,"rail":14,"tip":5,"wake":-7.5,"sleep":-5.5,"think":-4.5,"happy":-8,"wink":-7.5,"alert":-9.5,"cheer":-6.5,"crew":-6.5,"say":-7,"loop:snore":24,"loop:work":23,"loop:power":4.5,"loop:swing":-18.5,"loop:bed":3},"phosphor":{"tap":8,"hover":13.5,"select":5.5,"toggleOn":5.5,"toggleOff":5,"next":8.5,"back":7.5,"open":11.5,"close":9,"key":12.5,"warn":16,"lower":17,"ghost":1.5,"land":11,"lift":9.5,"hop":9,"swing":17,"tryOn":11,"sparkle":19,"confetti":15,"chapter":11.5,"tick":11,"block":14.5,"power":16.5,"score":12.5,"lock":13.5,"decode":19,"slice":10,"degauss":11.5,"feed":29.5,"powerOn":15.5,"powerOff":8,"rail":11,"tip":8,"wake":3,"sleep":4.5,"think":2.5,"happy":2,"wink":1.5,"alert":0.5,"cheer":4,"crew":6,"say":2,"loop:snore":11.5,"loop:work":17,"loop:power":6.5,"loop:swing":-17,"loop:bed":7.5},"teletype":{"tap":20.5,"hover":28,"select":5.5,"toggleOn":18.5,"toggleOff":19.5,"next":22.5,"back":20,"open":26.5,"close":25,"key":21,"warn":-0.5,"lower":19,"ghost":26,"land":17.5,"lift":22.5,"hop":23.5,"swing":28,"tryOn":3.5,"sparkle":7,"confetti":8.5,"chapter":4.5,"tick":8.5,"block":9.5,"power":10,"score":24,"lock":27.5,"decode":18.5,"slice":18.5,"degauss":28.5,"feed":22.5,"powerOn":26.5,"powerOff":25,"rail":23.5,"tip":2.5,"wake":2,"sleep":3.5,"think":1.5,"happy":1,"wink":1.5,"alert":1.5,"cheer":4.5,"crew":3.5,"say":1.5,"loop:snore":8,"loop:work":22,"loop:power":-2,"loop:swing":-11.5,"loop:bed":-2},"nier":{"tap":9.5,"hover":7,"select":4.5,"toggleOn":10,"toggleOff":11,"next":9,"back":10,"open":17.5,"close":19,"key":18,"warn":15,"lower":20.5,"ghost":19.5,"land":19,"lift":18,"hop":15,"swing":27,"tryOn":12,"sparkle":19.5,"confetti":11.5,"chapter":5.5,"tick":14,"block":16.5,"power":13.5,"score":16,"lock":13,"decode":22.5,"slice":21.5,"degauss":21,"feed":16.5,"powerOn":13,"powerOff":19.5,"rail":17,"tip":7.5,"wake":-4,"sleep":-2.5,"think":17.5,"happy":-4.5,"wink":-4,"alert":-5.5,"cheer":14.5,"crew":-7,"say":-3.5,"loop:snore":12,"loop:work":14,"loop:power":4,"loop:swing":-19.5,"loop:bed":-1.5}}/* TRIM:end */;
   // the master chain's gain below its compressor's threshold, measured by the same tool, taken back out at the end
   const MAKEUP = /* MAKEUP:begin */1.42/* MAKEUP:end */;
 
@@ -252,11 +253,11 @@
   };
 
   /* ---------------------------------------------------------------- music */
-  const SCALE = { major: [0, 2, 4, 5, 7, 9, 11], dorian: [0, 2, 3, 5, 7, 9, 10] };
-  // the chapter chords: Welcome I, Computer IV, Project V, AI vi, Ready I an octave up (NieR: i, VI, III, VII, IV)
+  const SCALE = { major: [0, 2, 4, 5, 7, 9, 11], minor: [0, 2, 3, 5, 7, 8, 10] };
+  // the chapter chords: Welcome I, Computer IV, Project V, AI vi, Ready I an octave up (NieR, in A minor: i, VI, III, VII, iv)
   const CHORDS = {
     major: [[0, 4, 7], [5, 9, 12], [7, 11, 14], [9, 12, 16], [12, 16, 19]],
-    dorian: [[0, 3, 7], [-4, 0, 3], [3, 7, 10], [-2, 2, 5], [5, 9, 12]]
+    minor: [[0, 3, 7], [-4, 0, 3], [3, 7, 10], [-2, 2, 5], [5, 8, 12]]
   };
 
   /* ---------------------------------------------------------------- Pip's voice */
@@ -780,7 +781,7 @@
     hiss(c, o, t, { d, f: 3000, q: 0.6, g: 0.012, a: d * 0.2, pink: true });
   }
   KIT.nier = {
-    root: 69, mode: 'dorian', motif: [12, 15, 19, 22], room: { len: 1.6, rt: 1.2, bright: 0.3, pre: 0.03, wet: 0.24 },
+    root: 69, mode: 'minor', motif: [12, 15, 19, 22], room: { len: 1.6, rt: 1.2, bright: 0.3, pre: 0.03, wet: 0.24 },
     ev: {
       tap: (c, o, t) => I.ntick(c, o, t, 2640, 0.05),
       hover: (c, o, t, op, k) => I.ntick(c, o, t, [2640, 2349, 2794][k.v % 3], 0.035, 0.03),
@@ -796,7 +797,7 @@
       warn: (c, o, t) => { I.ntick(c, o, t, 1760, 0.035); tone(c, o, t + 0.01, { f: 440, d: 0.09, g: 0.07, a: 0.004, lp: 1200 }); tone(c, o, t + 0.1, { f: 330, d: 0.16, g: 0.07, a: 0.004, lp: 1200 }); },
       lower: (c, o, t) => { tone(c, o, t, { f: 4200, d: 0.02, g: 0.02, a: 0.001 }); tone(c, o, t, { f: 2100, d: 0.04, g: 0.02, a: 0.001 }); tone(c, o, t + 0.02, { f: 1760, f2: 1318, d: 0.05, g: 0.02 }); },
       ghost: (c, o, t) => { hiss(c, o, t, { d: 0.3, f: 3000, q: 2, g: 0.01, a: 0.1 }); I.ntick(c, o, t + 0.1, 2349, 0.02); },
-      land: (c, o, t) => { tone(c, o, t, { f: 220, f2: 160, d: 0.05, g: 0.08, a: 0.001 }); I.ntick(c, o, t, 1760, 0.03); },
+      land: (c, o, t) => { I.ntick(c, o, t, 1760, 0.03); tone(c, o, t + 0.005, { f: 880, f2: 700, d: 0.05, g: 0.03, a: 0.002 }); },
       lift: (c, o, t) => { I.ntick(c, o, t, 1760, 0.03); I.ntick(c, o, t + 0.04, 2349, 0.03); I.whoosh(c, o, t, 0.25, 900, 2400, 0.012); },
       hop: (c, o, t) => { I.ntick(c, o, t, 2093, 0.025); I.ntick(c, o, t + 0.03, 2640, 0.02); },
       swing: (c, o, t) => hiss(c, o, t, { d: 0.5, f: 900, q: 0.6, type: 'lowpass', g: 0.015, a: 0.2, pink: true }),
@@ -805,12 +806,12 @@
       confetti: (c, o, t, op, k) => { I.pad(c, o, t, [69, 72, 76, 79], 2.8, 0.05, 'sine', 2400, 0.7); [81, 88, 93].forEach((m, i) => I.glock(c, o, t + 0.3 + i * 0.4, m, 0.05, 2)); tone(c, o, t, { f: 110, d: 2.4, g: 0.04, a: 0.6, hold: 1.2 }); },
       chapter: (c, o, t, op, k) => {
         for (let i = 0; i < 4; i++) I.ntick(c, o, t + i * 0.03, 2093 + i * 180, 0.03);
-        I.pad(c, o, t + 0.1, k.chord().map((m) => m - 12), 1.6, 0.05, 'triangle', 1400, 0.3);
+        I.pad(c, o, t + 0.1, k.chord(), 1.4, 0.035, 'sine', 1800, 0.3);
         const n = motifRun(k, t + 0.15, 0.2, (at, m, i, last) => I.glock(c, o, at, m, 0.05, last ? 2 : 1.2));
         if (k.ch >= 4) I.pad(c, o, t + 0.15 + n * 0.2, k.chord(4), 2, 0.04, 'sine', 2400, 0.6);
       },
       tick: (c, o, t, op, k) => { I.ntick(c, o, t, 2640, 0.04); const s = [0, 2, 3, 7][clamp(k.idx, 0, 3)]; I.sine(c, o, t + 0.01, k.root + 12 + s, 0.05, 0.25, 0.004); if (k.idx >= 3) { I.sine(c, o, t + 0.1, 88, 0.05, 0.07, 0.004); I.sine(c, o, t + 0.16, 93, 0.05, 0.3, 0.004); } },
-      block: (c, o, t, op, k) => { tone(c, o, t, { f: 200, f2: 140, d: 0.06, g: 0.09, a: 0.001 }); I.ntick(c, o, t, 1760, 0.03); const s = [0, 2, 3, 5, 7, 9][clamp(k.idx, 0, 5)]; I.sine(c, o, t + 0.02, k.root + 12 + s, 0.05, 0.3, 0.004); if (k.count && k.idx >= k.count - 1) KIT.nier.ev.chapter(c, o, t + 0.15, op, Object.assign({}, k, { ch: 2 })); },
+      block: (c, o, t, op, k) => { tone(c, o, t, { f: 660, f2: 520, d: 0.05, g: 0.04, a: 0.002 }); I.ntick(c, o, t, 1760, 0.03); const s = [0, 2, 3, 5, 7, 9][clamp(k.idx, 0, 5)]; I.sine(c, o, t + 0.02, k.root + 12 + s, 0.05, 0.3, 0.004); if (k.count && k.idx >= k.count - 1) KIT.nier.ev.chapter(c, o, t + 0.15, op, Object.assign({}, k, { ch: 2 })); },
       power: (c, o, t, op, k) => { for (let i = 0; i < 6; i++) I.ntick(c, o, t + i * 0.025, 2200 + R() * 1600, 0.02, 0.02); I.hum(c, o, t + 0.05, 196, 392, 0.5, 0.025); I.glock(c, o, t + 0.3, k.chord()[k.idx % 3] + 12, 0.05, 1.5); },
       score: (c, o, t) => I.ntick(c, o, t, 2640, 0.02),
       lock: (c, o, t) => { [0, 0.07, 0.11].forEach((d, i) => I.ntick(c, o, t + d, 2093 + i * 270, 0.04)); I.sine(c, o, t + 0.15, 88, 0.05, 0.06, 0.004); I.sine(c, o, t + 0.21, 93, 0.05, 0.22, 0.004); },
@@ -839,6 +840,16 @@
       KIT[kn].ev[name] = (c, o, t, op) => { vocal(c, o, t, kn, name, { voice: op.voice, mood: MOOD[name] ? name : 'idle' }); const a = KIT[kn].accent && KIT[kn].accent[name]; if (a) a(c, o, t); };
     });
   });
+  // Pip has a tip: a small rising two-note "idea", each look in its own material
+  const TIP = {
+    friendly: (c, o, t, op, k) => { const ch = k.chord(); I.kalimba(c, o, t, ch[1] + 12, 0.06, 0.6); I.kalimba(c, o, t + 0.09, ch[2] + 12, 0.07, 0.8); },
+    glass: (c, o, t, op, k) => { const ch = k.chord(); I.tink(c, o, t, ch[1] + 12, 0.05); I.tink(c, o, t + 0.08, ch[2] + 12, 0.06); },
+    basic: (c, o, t, op, k) => { const ch = k.chord(); I.sine(c, o, t, ch[1] + 12, 0.05, 0.25, 0.004); I.sine(c, o, t + 0.09, ch[2] + 12, 0.05, 0.4, 0.004); },
+    phosphor: (c, o, t, op, k) => { const ch = k.chord(); [ch[0], ch[1], ch[2]].forEach((m, i) => I.chip(c, o, t + i * 0.05, m + 12, 0.05, 0.035, 0.5)); },
+    teletype: (c, o, t, op, k) => { I.clack(c, o, t, 0.07, 1.1); I.celesta(c, o, t + 0.04, k.chord()[2] + 12, 0.06, 0.6); },
+    nier: (c, o, t, op, k) => { I.ntick(c, o, t, 2349, 0.03); I.sine(c, o, t + 0.05, k.chord()[0] + 24, 0.045, 0.12, 0.003); I.sine(c, o, t + 0.11, k.chord()[2] + 24, 0.045, 0.3, 0.003); }
+  };
+  KITS.forEach((kn) => { KIT[kn].ev.tip = TIP[kn]; });
   // except a Pod thinking: the unit analysing, three dry ticks climbing (a "hmm" in NieR's flat voice read as a moan)
   KIT.nier.ev.think = (c, o, t) => { [0, 0.045, 0.09].forEach((d, i) => I.ntick(c, o, t + d, 2093 + i * 330, 0.03, 0.03)); };
 
@@ -875,6 +886,7 @@
     },
     // power running down Pip's strings: a soft arpeggio climbing the chord, round and round (its level is the volume)
     power: {
+      steady: true,
       period: (k) => ({ basic: 0.5, nier: 0.42 }[k.kit] || 0.34),
       step(c, o, t, k, n) {
         // sixteen steps, the notes of the chord in a kit's own order (-1 a rest), so it breathes and never ticks like a clock
@@ -900,44 +912,61 @@
         return { set(level, tt) { b.frequency.setTargetAtTime(300 + level * 1300, tt, 0.08); }, stop(tt) { try { s.stop(tt); } catch (e) { /* stopped */ } } };
       }
     },
-    /* each look's quiet music while the window is open: sparse notes from the chapter's chord, so it follows the story
-       and never holds a tone (a held drone, or two tones beating, reads as a hum) */
+    /* each look's quiet music while the window is open: a short tune of its own in steady time, phrases with rests
+       between them, played in the chapter's key (it moves to the chapter's chord by scale steps, so it stays in key and
+       follows the story). Every note is struck and dies away: nothing is held, so nothing hums. */
     bed: {
-      period: (k) => ({ friendly: 0.5, glass: 0.75, basic: 0.9, phosphor: 0.3, teletype: 0.5, nier: 0.75 }[k.kit] || 0.6),
+      steady: true,
+      period: (k) => SONG[k.kit].step,
       step(c, o, t, k, n) {
-        const kn = k.kit, ch = k.chord(), tones = ch.concat(ch.map((m) => m + 12)), pick = (a) => a[Math.floor(R() * a.length)];
-        if (kn === 'friendly') {
-          // a music box left running, a low kalimba every other bar
-          const b = n % 8;
-          if (b === 0 && n % 16 === 0) I.kalimba(c, o, t, ch[0] - 12, 0.05, 1.6);
-          if (R() < ([0, 3, 6].indexOf(b) >= 0 ? 0.5 : 0.18)) I.musicbox(c, o, t, pick(tones), 0.045, 1.4);
-        } else if (kn === 'glass') {
-          // single glass notes struck on their own, with rests between, and a drop of water now and then; each note one
-          // pure tone and a faint inharmonic partial (rubbed glass, or two tones a hair apart, beat: heard as a hum)
-          if (n % 2 === 0 && R() < 0.5) { const f = mf(pick(tones)); tone(c, o, t, { f, d: 1.8, g: 0.03, a: 0.004 }); tone(c, o, t, { f: f * 2.76, d: 0.5, g: 0.006, a: 0.002 }); }
-          if (R() < 0.05) I.bloop(c, o, t + 0.3, 500 + R() * 400, 0.016);
-        } else if (kn === 'basic') {
-          // a clean ping now and then, a two-note figure every eighth
-          if (n % 8 === 0) { I.sine(c, o, t, ch[0] + 12, 0.032, 0.9, 0.01); I.sine(c, o, t + 0.2, ch[2] + 12, 0.028, 1.1, 0.01); }
-          else if (R() < 0.5) I.sine(c, o, t, pick(tones), 0.03, 1, 0.01);
-        } else if (kn === 'phosphor') {
-          // the terminal's idle tune: a triangle bass on the bar, a few soft square notes, a disk seeking now and then
-          const b = n % 32, busy = Math.floor(n / 32) % 2 === 0;
-          if (b === 0 || b === 16) tone(c, o, t, { type: 'triangle', f: mf(ch[0] - 12), d: 0.6, g: 0.035, a: 0.004, lp: 600 });
-          if ([0, 3, 6, 8, 11, 14].indexOf(b % 16) >= 0 && R() < (busy ? 0.55 : 0.3)) I.chip(c, o, t, pick(tones), 0.06, 0.03, 0.5);
-          if (R() < 0.012) for (let i = 0; i < 3; i++) hiss(c, o, t + i * 0.045, { d: 0.006, f: 1300 + R() * 900, q: 2, g: 0.02 });
-        } else if (kn === 'teletype') {
-          // a celesta in the next room, and once in a while a distant key
-          if (R() < (n % 4 === 0 ? 0.55 : 0.25)) I.celesta(c, o, t, pick(tones), 0.045, 0.9);
-          if (R() < 0.02) I.clack(c, o, t + 0.2, 0.02, 0.9);
-        } else {
-          // NieR: a pad that swells and goes, a glockenspiel note in the air, the odd tick of the unit
-          if (n % 16 === 0) I.pad(c, o, t, ch.map((m) => m - 12), 7, 0.03, 'triangle', 1100, 2.6);
-          if (R() < 0.45) I.glock(c, o, t, pick(tones) + 12, 0.03, 2.4);
-          if (R() < 0.03) I.ntick(c, o, t, 2640, 0.012);
-        }
+        const S = SONG[k.kit], bar = Math.floor(n / 8) % S.mel.length, i = n % 8, cyc = Math.floor(n / (8 * S.mel.length));
+        const root = ROOTDEG[k.K.mode][k.ch], d = S.mel[bar][i], lo = S.low[bar];
+        // every third time round, the tune thins to its first beats and the bass: room to breathe
+        const thin = cyc % 3 === 2 && i % 4 !== 0;
+        if (d != null && !thin) S.note(c, o, t, k.deg(root + d + (S.oct || 0) * 7), i === 0);
+        if (i === 0 && lo != null) S.bass(c, o, t, k.deg(root + lo - 7));
+        if (S.extra) S.extra(c, o, t, k, n, bar, i);
       }
     }
+  };
+  // the chapter chords' roots, as scale steps (so the tunes move to them and stay in key)
+  const ROOTDEG = { major: [0, 3, 4, 5, 7], minor: [0, -2, 2, -1, 3] };
+  // the tunes: eight bars of eight steps, scale steps above the chord's root (null a rest), a bass note per bar
+  const _ = null;
+  const SONG = {
+    // Friendly: a music-box lullaby over a soft kalimba
+    friendly: { step: 0.27,
+      mel: [[4, _, 2, _, 0, _, 2, _], [4, _, 5, 4, 2, _, _, _], [4, _, 2, _, 0, _, 1, _], [2, _, 1, _, 0, _, _, _], [_, _, 4, _, 2, _, _, _], [7, _, 6, _, 4, _, 5, _], [4, _, 2, _, 4, _, _, _], [2, _, 1, _, 0, _, _, _]],
+      low: [0, -3, 0, -3, 0, 0, -3, 0],
+      note: (c, o, t, m, down) => I.musicbox(c, o, t, m, down ? 0.05 : 0.042, 1.2), bass: (c, o, t, m) => I.kalimba(c, o, t, m, 0.05, 1.4) },
+    // Glass: glass struck in a slow, open arpeggio, a soft low note under each phrase
+    glass: { step: 0.3,
+      mel: [[0, _, 4, _, 7, _, _, _], [_, _, 9, _, 7, _, 4, _], [2, _, 4, _, 6, _, _, _], [_, _, _, _, 9, _, _, _], [7, _, _, 4, _, _, 2, _], [4, _, _, _, _, _, _, _], [2, _, 4, _, 1, _, _, _], [_, _, 0, _, _, _, _, _]],
+      low: [0, _, -2, _, -3, _, -1, _],
+      note: (c, o, t, m) => { const f = mf(m); tone(c, o, t, { f, d: 1.6, g: 0.03, a: 0.004 }); tone(c, o, t, { f: f * 2.76, d: 0.45, g: 0.005, a: 0.002 }); },
+      bass: (c, o, t, m) => tone(c, o, t, { f: mf(m), d: 2.4, g: 0.022, a: 0.02 }) },
+    // Basic: a few clean notes, question and answer, a lot of quiet
+    basic: { step: 0.32,
+      mel: [[0, _, _, _, 4, _, _, _], [_, _, 2, _, _, _, _, _], [2, _, _, _, 1, _, _, _], [_, _, _, _, 0, _, _, _], [4, _, _, _, 5, _, 4, _], [_, _, 2, _, _, _, _, _], [2, _, _, _, 0, _, _, _], [_, _, _, _, _, _, _, _]],
+      low: [0, -2, -3, -1, 0, -2, -3, 0], oct: 1,
+      note: (c, o, t, m) => I.sine(c, o, t, m, 0.032, 0.9, 0.006), bass: (c, o, t, m) => I.sine(c, o, t, m, 0.022, 1.6, 0.01) },
+    // Retro Dark: the terminal's idle tune, square lead and a triangle bass
+    phosphor: { step: 0.2,
+      mel: [[0, _, 2, 4, _, 4, 2, _], [1, _, _, _, _, _, _, _], [0, _, 2, 4, _, 7, 6, 4], [2, _, _, _, _, _, _, _], [_, _, _, _, _, _, _, _], [4, _, 5, 6, _, 7, _, _], [6, _, 4, _, 2, _, 1, _], [0, _, _, _, _, _, _, _]],
+      low: [0, -3, 0, -2, _, -3, -2, 0],
+      note: (c, o, t, m) => I.chip(c, o, t, m, 0.07, 0.03, 0.5), bass: (c, o, t, m) => tone(c, o, t, { type: 'triangle', f: mf(m), d: 0.5, g: 0.04, a: 0.004, lp: 700 }) },
+    // Retro Light: a celesta tune, a clockwork of a song
+    teletype: { step: 0.28,
+      mel: [[0, _, 4, _, 2, _, 4, _], [5, _, 4, _, 2, _, _, _], [1, _, 3, _, 2, _, 1, _], [0, _, _, _, _, _, _, _], [_, _, 4, _, _, _, 2, _], [4, _, 5, _, 7, _, 5, _], [4, _, 2, _, 3, _, 1, _], [0, _, _, _, _, _, _, _]],
+      low: [0, -3, -2, 0, _, 0, -3, 0], oct: -1,
+      note: (c, o, t, m) => I.celesta(c, o, t, m, 0.045, 0.9), bass: (c, o, t, m) => I.celesta(c, o, t, m, 0.035, 1.1) },
+    // NieR: a slow, wistful line on a soft bell, a pad breathing in at the top of the tune
+    nier: { step: 0.45,
+      mel: [[4, _, _, 3, 2, _, _, _], [0, _, _, _, _, _, 2, _], [2, _, _, 3, 4, _, 5, _], [4, _, _, _, _, _, _, _], [_, _, _, _, 0, _, _, _], [7, _, _, 6, 4, _, _, _], [5, _, _, 4, 2, _, 3, _], [2, _, _, _, _, _, _, _]],
+      low: [0, _, -2, _, 0, -3, _, -1],
+      note: (c, o, t, m) => { const f = mf(m); tone(c, o, t, { f, d: 1.7, g: 0.034, a: 0.004 }); tone(c, o, t, { f: f * 2, d: 0.6, g: 0.008, a: 0.003 }); },
+      bass: (c, o, t, m) => tone(c, o, t, { f: mf(m + 12), d: 2, g: 0.02, a: 0.03 }),
+      extra: (c, o, t, k, n, bar, i) => { if (bar === 0 && i === 0) I.pad(c, o, t, k.chord(), 5, 0.02, 'sine', 1600, 1.8); } }
   };
 
   // the continuous loops are built hot; this brings them near their place before the trims
@@ -1139,7 +1168,7 @@
         if (!D.step) return;
         const prevR = R; R = st.r;
         try {
-          while (inst.next < until) { if (!gate || inst.levelAt(inst.next) > 0.001) D.step(c, o, inst.next, helper(kitName, { chapter: chAt(st, inst.next) }, st, 0), inst.n++); inst.next += D.period(k) * (1 + jit(0.08)); }
+          while (inst.next < until) { if (!gate || inst.levelAt(inst.next) > 0.001) D.step(c, o, inst.next, helper(kitName, { chapter: chAt(st, inst.next) }, st, 0), inst.n++); inst.next += D.period(k) * (D.steady ? 1 : 1 + jit(0.08)); }
         } finally { R = prevR; }
       },
       stop(tt) { o.gain.cancelScheduledValues(tt); o.gain.setTargetAtTime(0, tt, 0.12); if (parts) parts.stop(tt + 1.2); inst.dead = true; }
@@ -1250,7 +1279,7 @@
      not counted louder than it sounds, nor a sound that lives below what laptop speakers play */
   const AW = { b: [0.234301792299513, -0.468603584599026, -0.234301792299513, 0.937207169198054, -0.234301792299515, -0.468603584599025, 0.234301792299513],
     a: [1, -4.113043408775871, 6.553121752655047, -4.990849294163381, 1.785737302937573, -0.246190595319487, 0.011224250033231] };
-  function stats(buf) {
+  function stats(buf, o) {
     const n = buf.length, sr = buf.sampleRate, L = buf.getChannelData(0), Rr = buf.numberOfChannels > 1 ? buf.getChannelData(1) : L;
     const xa = new Float64Array(7), ya = new Float64Array(7);
     let peak = 0, nan = 0, sum = 0, last = 0, zacc = 0, zn = 0;
@@ -1273,7 +1302,7 @@
       if (k === W) { wins.push(acc / W); acc = 0; k = 0; }
       const y = b0 * m + b1 * x1 + b2 * x2 - a1 * y1 - a2 * y2; x2 = x1; x1 = m; y2 = y1; y1 = y; hf += y * y; tot += m * m;
     }
-    const top = wins.reduce((q, v) => Math.max(q, v), 0), act = wins.filter((v) => v >= top * 0.01);
+    const top = wins.reduce((q, v) => Math.max(q, v), 0), act = o && o.whole ? wins.slice(Math.round(0.6 / 0.01)) : wins.filter((v) => v >= top * 0.01);
     // loudness integrates over at least 50 ms (the ear sums short sounds), so a 5 ms click reads as quiet as it sounds
     const rms = act.length ? Math.sqrt(act.reduce((q, v) => q + v, 0) / Math.max(act.length, 5)) : 0;
     const dbf = (v) => (v > 0 ? Math.round(20 * Math.log10(v) * 10) / 10 : -200);
