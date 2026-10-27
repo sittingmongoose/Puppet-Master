@@ -1,6 +1,6 @@
 # Background activity: how other tools show running work
 
-Research for the chat's Running domain and the status bar's Running work. Done 2026-10-26 by Opus 5.5 with eight
+Research for the chat's Processes domain (first called Running) and the status bar's agents and processes. Done 2026-10-26 by Opus 5.5 with eight
 research agents. Each agent read source code where it is public and docs, changelogs and issue trackers where it is
 not.
 

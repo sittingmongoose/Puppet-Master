@@ -1,6 +1,6 @@
 /* rw-data.js — one store for both surfaces (Background activity concept, Opus 5.5).
  *
- * The point this file makes: the chat's Running domain and the status bar's Running work are two FILTERS of one
+ * The point this file makes: the chat's Processes domain and the status bar's agents and processes are two FILTERS of one
  * projection, never two registries. In canon that projection is OperationalAwarenessProjection over ObservableWork
  * (Plans/Shared_Integration_Runtime.md §8.2, §9.2); here it is RW.items. The thread surface reads
  * items where thread === the open thread; the platform surface reads all of them.
@@ -22,9 +22,8 @@
   RW.state = {
     scenario: 'busy',
     threadVariant: 'state',     /* state | owner | list */
-    barVariant: 'words',        /* words | marks | single */
-    popVariant: 'surface',      /* surface | triage | table */
-    icon: 'pulse',              /* pulse | terminal | gauge | layers */
+    barVariant: 'words',        /* words | compact */
+    popVariant: 'tabs',         /* tabs | side | table */
     feed: 'current',            /* current | stale */
     restarted: false,
     thread: 'thr-qp',
@@ -85,6 +84,9 @@
   RW.word = function (it) {
     if (it.stopping) return 'Stopping';
     if (it.word) return it.word;
+    /* An agent waiting on you has a question; a process waiting on you needs input (the terminal's own word, F3-658's
+       st-waiting map: "Needs input"). Two words, so the status bar and its panel can keep them apart. */
+    if (it.state === 'waiting' && it.kind !== 'agent') return 'Needs input';
     if (it.kind === 'scheduled' && it.state === 'pending') return 'Scheduled';
     if (it.state === 'failed' && it.exit != null) return 'Failed';
     return WORD[it.state] || it.state;
@@ -94,6 +96,8 @@
   RW.isLive = function (it) { return !it.stopping && /^(waiting|blocked|recovering|working|reviewing|waiting-dep)$/.test(it.state) || !!it.stopping; };
   RW.isDone = function (it) { return /^(complete|failed|skipped|warning)$/.test(it.state) && !it.stopping; };
   RW.needsYou = function (it) { return it.state === 'waiting' && !it.stopping; };
+  RW.isQuestion = function (it) { return it.kind === 'agent' && RW.needsYou(it); };
+  RW.needsInput = function (it) { return it.kind !== 'agent' && RW.needsYou(it); };
   RW.sort = function (list) {
     return list.slice().sort(function (a, b) {
       var r = RW.rank(a) - RW.rank(b);

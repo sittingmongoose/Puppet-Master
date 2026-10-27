@@ -1,11 +1,11 @@
 /* Background activity concept (Opus 5.5): the host page frames the published PMConcept7 and injects this concept's
    layer (rw.css and the rw-*.js files) when it loads, the way Concepts/notifications/opus-5.5 does. PMConcept7 itself
-   is never edited. html[data-rw-open] on the host page says which surface to open first: "thread" (the chat's Running
-   domain) or "platform" (the status bar's pop-out). The Concept Hub's look and Reduced Motion go to the framed page. */
+   is never edited. html[data-rw-open] on the host page says which surface to open first: "thread" (the chat's Processes
+   domain) or "platform" (the status bar's panel). The Concept Hub's look and Reduced Motion go to the framed page. */
 (async function () {
   'use strict';
   var frame = document.getElementById('rw-frame'), msg = document.getElementById('rw-msg');
-  var FILES = ['rw.css', 'rw-data.js', 'rw-thread.js', 'rw-platform.js', 'rw-lab.js'];
+  var FILES = ['rw.css', 'rw-data.js', 'rw-glyphs.js', 'rw-thread.js', 'rw-platform.js', 'rw-lab.js'];
   var parts;
   try {
     parts = await Promise.all(FILES.map(function (f) {

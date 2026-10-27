@@ -18,7 +18,7 @@
   "entries": [
     {
       "id": "background-activity-both",
-      "title": "Background activity: the chat's Running domain and the status bar's Running work, with the lab",
+      "title": "Background activity: the chat's Processes domain and the status bar's agents and processes, with the lab",
       "path": "index.html",
       "openPath": "index.html",
       "openActions": "both",
@@ -28,7 +28,7 @@
     },
     {
       "id": "background-activity-thread",
-      "title": "Thread scope: the Running domain open in Activity Detail (a migration dry run needs you)",
+      "title": "Thread scope: the Processes domain open in Activity Detail (a migration dry run needs input)",
       "path": "thread.html",
       "openPath": "thread.html",
       "openActions": "both",
@@ -38,12 +38,12 @@
     },
     {
       "id": "background-activity-platform",
-      "title": "Platform scope: the status bar's Running work pop-out (every agent, process and scheduled run)",
+      "title": "Platform scope: the status bar's agents and processes panel (every agent, process and scheduled run)",
       "path": "platform.html",
       "openPath": "platform.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["background-activity", "status-bar", "pop-out", "agents", "processes"],
+      "tags": ["background-activity", "status-bar", "panel", "agents", "processes"],
       "order": 30
     }
   ]

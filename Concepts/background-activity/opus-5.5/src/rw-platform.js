@@ -1,12 +1,14 @@
-/* rw-platform.js — Running work in the status bar (Background activity concept, Opus 5.5).
+/* rw-platform.js — agents and processes in the status bar (Background activity concept, Opus 5.5).
  *
- * One status-bar item says how much is running across all of Puppet Master and whether anything needs you; clicking
- * it pops out one panel with every agent and subagent (Assistant threads, the Orchestrator, the Planning Wizard, the
- * PRD Builder, Scout) and every process, script and scheduled run, plus a read-only mirror of system services. It
- * reads the same store as the chat's Running domain (rw-data.js) and uses the same detail block (RW.ui.detail).
+ * Two status-bar items in their own group, between the project folder and the branch: one for agents and one for
+ * processes, each with its own count and its own "needs you" count. Agents have questions; processes need input
+ * (Jared, 2026-10-27: keep them apart, and say "processes" everywhere, as the chat's domain does). Clicking either
+ * opens one panel at its tab: every agent and subagent (Assistant threads, the Orchestrator, the Planning Wizard,
+ * the PRD Builder, Scout), every process, script and scheduled run, and a read-only mirror of system services. It
+ * reads the same store as the chat's Processes domain (rw-data.js) and uses the same detail block (RW.ui.detail).
  *
- * Three layouts for the pop-out, switched in the lab: "surface" (grouped by where the work lives), "triage" (one
- * list, tabs by state, needs-you first) and "table" (a task manager: sortable columns and an inspector).
+ * Three layouts for the panel, switched in the lab: "tabs" (Agents and Processes tabs, questions or input first),
+ * "side" (the two lists side by side) and "table" (a task manager: sortable columns and an inspector).
  */
 (function () {
   'use strict';
@@ -14,68 +16,109 @@
   if (!RW || !RW.ui || window.RW_PLATFORM) return;
   var P = window.RW_PLATFORM = {};
   var esc = RW.esc, doc = document;
-  var ui = { open: false, floating: false, expanded: {}, subOpen: {}, collapsed: { system: true }, tab: null, sort: ['rank', 1], selected: null, filter: 'all' };
+  var ui = { open: false, floating: false, expanded: {}, subOpen: {}, collapsed: { system: true }, tab: 'agents', sort: ['rank', 1], selected: null, jump: null };
 
   /* ---------------------------------------------------------- counting */
   function counts() {
-    var c = { agents: 0, procs: 0, needs: 0, sched: 0, done: 0, failed: 0, services: 0 };
+    var c = { agents: 0, questions: 0, procs: 0, input: 0, sched: 0, done: 0, services: 0 };
     RW.items.forEach(function (x) {
       if (x.kind === 'service') { if (RW.isLive(x)) c.services++; return; }
       if (x.kind === 'scheduled') { if (x.state === 'pending') c.sched++; else if (RW.isDone(x)) c.done++; return; }
-      if (RW.needsYou(x)) c.needs++;
+      if (RW.isQuestion(x)) c.questions++;
+      if (RW.needsInput(x)) c.input++;
       if (RW.isLive(x)) { if (x.kind === 'agent') c.agents++; else c.procs++; }
-      else if (RW.isDone(x)) { c.done++; if (x.state === 'failed' || x.state === 'warning') c.failed++; }
+      else if (RW.isDone(x)) c.done++;
     });
     return c;
   }
   function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+  function qWord(n) { return plural(n, 'question', 'questions'); }
+  function iWord(n) { return n + ' need' + (n === 1 ? 's' : '') + ' input'; }
   function sumText(c) {
-    var p = [];
-    if (c.agents) p.push(plural(c.agents, 'agent', 'agents'));
-    if (c.procs) p.push(plural(c.procs, 'process', 'processes'));
+    var p = [plural(c.agents, 'agent', 'agents')];
+    if (c.questions) p.push(qWord(c.questions));
+    p.push(plural(c.procs, 'process', 'processes'));
+    if (c.input) p.push(iWord(c.input));
     if (c.sched) p.push(c.sched + ' scheduled');
-    return p.length ? p.join(' · ') : 'Nothing running';
+    return p.join(' · ');
   }
+  /* the agent a process belongs to: its owner's top agent, or the thread's own agent */
+  function topOf(x) {
+    var o = x.owner ? RW.byId(x.owner) : null;
+    while (o && o.parent && RW.byId(o.parent)) o = RW.byId(o.parent);
+    if (o) return o;
+    if (x.thread) for (var i = 0; i < RW.items.length; i++) { var a = RW.items[i]; if (a.kind === 'agent' && a.role === 'main' && a.thread === x.thread) return a; }
+    return null;
+  }
+  function liveProcs() { return RW.items.filter(function (x) { return x.kind === 'process' && RW.isLive(x); }); }
+  function procsOf(a) { return liveProcs().filter(function (x) { var t = topOf(x); return t && t.id === a.id; }); }
 
-  /* --------------------------------------------------- the status bar item */
-  var item = doc.createElement('button');
-  item.type = 'button';
-  item.className = 'pm7-statusitem rw-sb';
-  item.setAttribute('data-rw-sb', 'running');
-  item.setAttribute('aria-haspopup', 'dialog');
-  item.setAttribute('aria-controls', 'rw-pop');
+  /* -------------------------------------------- the status-bar group: two items */
+  var group = doc.createElement('div');
+  group.className = 'pm7-statusbar-group rw-sb-group';
+  group.setAttribute('data-rw-sb-group', '1');
+  function mkItem(kind) {
+    var b = doc.createElement('button');
+    b.type = 'button'; b.className = 'pm7-statusitem rw-sb';
+    b.setAttribute('data-rw-sb', kind); b.setAttribute('aria-haspopup', 'dialog'); b.setAttribute('aria-controls', 'rw-pop');
+    group.appendChild(b);
+    return b;
+  }
+  var itemA = mkItem('agents'), itemP = mkItem('processes');
+  var stale = doc.createElement('span');
+  stale.className = 'pm7-statusitem rw-sb-stale';
+  stale.setAttribute('data-pm-hover-label', 'Out of date');
+  stale.setAttribute('data-pm-hover-detail', 'These counts are what was known 40 seconds ago. Reconnecting to the server; nothing has been stopped.');
+  group.appendChild(stale);
+  function bySurface(list) {
+    var by = {};
+    list.forEach(function (x) { var n = RW.ui.surfaceName(x.surface); by[n] = (by[n] || 0) + 1; });
+    return Object.keys(by).map(function (k) { return k + ' ' + by[k]; }).join(', ');
+  }
+  function paintOne(b, kind, c) {
+    var v = RW.state.barVariant, n = kind === 'agents' ? c.agents : c.procs, ask = kind === 'agents' ? c.questions : c.input;
+    var tone = n ? 'working' : 'idle', h = '<span class="rw-gh">' + RW.glyph(kind, 12, 'rw-g') + '</span>';
+    if (!n && !ask) h += '<span class="rw-dim">' + (kind === 'agents' ? 'No agents' : 'No processes') + '</span>';
+    else if (v === 'compact') h += '<strong>' + n + '</strong>' + (ask ? '<span class="rw-sb-ask">' + RW.st('waiting', 10) + '<strong>' + ask + '</strong></span>' : '');
+    else h += '<span><strong>' + n + '</strong> ' + (kind === 'agents' ? (n === 1 ? 'agent' : 'agents') : (n === 1 ? 'process' : 'processes')) + '</span>' +
+      (ask ? '<span class="rw-sb-ask">' + RW.st('waiting', 10) + '<span><strong>' + ask + '</strong> ' + (kind === 'agents' ? (ask === 1 ? 'question' : 'questions') : (ask === 1 ? 'needs input' : 'need input')) + '</span></span>' : '');
+    b.setAttribute('data-tone', tone);
+    b.setAttribute('data-ask', String(!!ask));
+    b.setAttribute('data-variant', v);
+    var on = ui.open && (RW.state.popVariant === 'side' || ui.tab === kind);
+    b.setAttribute('aria-expanded', String(on));
+    b.classList.toggle('is-open', on);
+    if (b.getAttribute('data-html') !== h) { b.innerHTML = h; b.setAttribute('data-html', h); }
+    var live = kind === 'agents' ? RW.items.filter(function (x) { return x.kind === 'agent' && RW.isLive(x); }) : liveProcs();
+    b.setAttribute('data-pm-hover-label', kind === 'agents' ? 'Agents' : 'Processes');
+    b.setAttribute('data-pm-hover-detail', (n ? (kind === 'agents' ? plural(n, 'agent', 'agents') : plural(n, 'process', 'processes')) + ' running across Puppet Master (' + bySurface(live) + ').' : (kind === 'agents' ? 'No agents are running.' : 'No processes are running.')) +
+      (ask ? ' ' + (kind === 'agents' ? qWord(ask) + ' for you.' : iWord(ask) + ' from you.') : '') +
+      (kind === 'processes' && c.sched ? ' ' + c.sched + ' scheduled.' : '') + ' Click to see them.');
+    b.setAttribute('aria-label', (kind === 'agents' ? 'Agents: ' : 'Processes: ') + n + ' running' + (ask ? ', ' + (kind === 'agents' ? qWord(ask) : iWord(ask)) : ''));
+  }
   function paintItem() {
-    var c = counts(), v = RW.state.barVariant, h = '';
-    var live = c.agents + c.procs;
-    item.setAttribute('data-tone', c.needs ? 'attention' : (live ? 'working' : 'idle'));
-    item.setAttribute('data-variant', v);
-    item.setAttribute('aria-expanded', String(ui.open));
-    item.classList.toggle('is-open', ui.open);
-    var needs = c.needs ? '<span class="rw-sb-needs">' + RW.st('waiting', 10) + '<strong>' + c.needs + '</strong>' + (v === 'marks' ? '' : ' need' + (c.needs === 1 ? 's' : '') + ' you') + '</span>' : '';
-    if (!live && !c.sched) h = RW.st('idle', 10) + '<span class="rw-dim">Nothing running</span>';
-    else if (v === 'words') h = RW.st('working', 10) + '<span>' + (c.agents ? '<strong>' + c.agents + '</strong> ' + (c.agents === 1 ? 'agent' : 'agents') : '') + (c.agents && c.procs ? ' · ' : '') + (c.procs ? '<strong>' + c.procs + '</strong> ' + (c.procs === 1 ? 'process' : 'processes') : '') + '</span>' + (needs ? '<span class="rw-sb-sep">·</span>' + needs : '');
-    else if (v === 'marks') h = '<span class="rw-sb-seg" title="Agents running">' + RW.icon('robot', 11) + '<strong>' + c.agents + '</strong></span><span class="rw-sb-seg" title="Processes running">' + RW.icon('terminal', 11) + '<strong>' + c.procs + '</strong></span>' + (needs ? '<span class="rw-sb-seg">' + needs + '</span>' : '');
-    else h = (c.needs ? needs + '<span class="rw-sb-sep">·</span>' : RW.st('working', 10)) + '<span>Running <strong>' + (live + c.sched) + '</strong></span>';
-    if (RW.state.feed === 'stale') h += '<span class="rw-sb-sep">·</span>' + RW.st('offline', 10) + '<span class="rw-dim">stale</span>';
-    if (item.getAttribute('data-html') !== h) { item.innerHTML = h; item.setAttribute('data-html', h); }
-    item.setAttribute('data-pm-hover-label', 'Running work');
-    item.setAttribute('data-pm-hover-detail', (live || c.sched ? sumText(c) + ' across Puppet Master' + (c.needs ? '; ' + c.needs + ' need' + (c.needs === 1 ? 's' : '') + ' you' : '') + '. Click to see them.' : 'Nothing is running. Click to see what finished recently.'));
-    item.setAttribute('aria-label', 'Running work: ' + sumText(c) + (c.needs ? ', ' + c.needs + ' need you' : ''));
+    var c = counts();
+    paintOne(itemA, 'agents', c); paintOne(itemP, 'processes', c);
+    var st = RW.state.feed === 'stale';
+    stale.hidden = !st;
+    var sh = RW.st('offline', 10) + '<span class="rw-dim">stale</span>';
+    if (st && stale.getAttribute('data-html') !== sh) { stale.innerHTML = sh; stale.setAttribute('data-html', sh); }
   }
   function placeItem() {
     var bar = doc.getElementById('pm7GlobalStatusBar');
     if (!bar) return;
+    /* its own group, after the group that holds Ready and the project folder, so the bar's dividers frame it */
     var sys = bar.querySelector('[data-status-action="system"]');
-    var group = sys ? sys.parentNode : bar.querySelector('.pm7-statusbar-group');
-    if (!group) return;
-    if (item.parentNode !== group || item.previousElementSibling !== sys) group.insertBefore(item, sys ? sys.nextSibling : group.firstChild);
+    var after = sys ? sys.closest('.pm7-statusbar-group') : bar.querySelector('.pm7-statusbar-group');
+    if (!after || after === group) return;
+    if (group.parentNode !== bar || group.previousElementSibling !== after) bar.insertBefore(group, after.nextSibling);
   }
 
-  /* ------------------------------------------------------------- pop-out */
+  /* ------------------------------------------------------------- the panel */
   var pop = doc.createElement('section');
   pop.id = 'rw-pop';
   pop.className = 'rw-pop';
-  pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-modal', 'false'); pop.setAttribute('aria-label', 'Running across Puppet Master');
+  pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-modal', 'false'); pop.setAttribute('aria-label', 'Agents and processes');
   pop.hidden = true;
 
   function rowHtml(it, depth, opts) {
@@ -97,73 +140,86 @@
       '<span class="rw-right"><b data-tone="' + t + '">' + esc(RW.word(it)) + '</b><i data-rw-time="' + esc(it.id) + '">' + esc(RW.time(it)) + '</i></span></button>' +
       (open ? RW.ui.detail(it, true) : '') + '</div>';
   }
-  function ofThread(thr) { return RW.items.filter(function (x) { return x.thread === thr && x.kind !== 'agent'; }); }
-  function agentBlock(a, depth) {
-    var h = rowHtml(a, depth, { owner: false });
-    var subs = RW.sort(RW.items.filter(function (x) { return x.parent === a.id; }));
-    var own = RW.sort(RW.items.filter(function (x) { return x.owner === a.id || (a.role === 'main' && a.thread && x.thread === a.thread && x.kind !== 'agent' && !x.owner); }));
-    own.forEach(function (p) { h += rowHtml(p, depth + 1, { owner: false }); });
-    if (subs.length) {
-      var live = subs.filter(RW.isLive), by = {};
-      subs.forEach(function (s) { var w = RW.word(s).toLowerCase(); by[w] = (by[w] || 0) + 1; });
-      var open = !!ui.subOpen[a.id];
-      h += '<button type="button" class="rw-subs" style="--d:' + (depth + 1) + '" data-rw-subs="' + esc(a.id) + '" aria-expanded="' + open + '">' + RW.icon(open ? 'chevron-down' : 'arrow-right', 10) + '<span>' + plural(subs.length, 'subagent', 'subagents') + ': ' + Object.keys(by).map(function (k) { return by[k] + ' ' + k; }).join(', ') + '</span></button>';
-      if (open) subs.forEach(function (s) {
-        h += rowHtml(s, depth + 1, { owner: false });
-        RW.sort(RW.items.filter(function (x) { return x.owner === s.id; })).forEach(function (p) { h += rowHtml(p, depth + 2, { owner: false }); });
-      });
-      else {
-        /* a subagent's process that needs you never hides behind a collapsed row (F3-472 blocked-outside) */
-        subs.forEach(function (s) { RW.items.filter(function (x) { return x.owner === s.id && RW.needsYou(x); }).forEach(function (p) { h += rowHtml(p, depth + 1, { owner: true }); }); });
-        subs.filter(RW.needsYou).forEach(function (s) { h += rowHtml(s, depth + 1, { owner: false }); });
-      }
-      void live;
-    }
-    return h;
+  /* a fixed section: Questions, Needs input, Scheduled, Finished */
+  function sec(key, title, list, opts) {
+    if (!list.length) return '';
+    opts = opts || {};
+    return '<section class="rw-group rw-fixed" data-sec="' + key + '"' + (opts.tone ? ' data-tone="' + opts.tone + '"' : '') + '><div class="rw-shead">' +
+      (opts.tone === 'attention' ? RW.st('waiting', 11) : '') + '<strong>' + title + '</strong><span class="rw-gsum">' + (opts.sum || list.length) + '</span>' +
+      (opts.clear ? '<button type="button" class="rw-link" data-rw-p="clear">Clear</button>' : '') + '</div>' +
+      list.map(function (x) { return rowHtml(x, 0, opts.row || { where: true }); }).join('') + '</section>';
   }
-  function bodySurface() {
-    var h = '';
+  function surfaceIcon(key) { for (var i = 0; i < RW.SURFACES.length; i++) if (RW.SURFACES[i][0] === key) return RW.SURFACES[i][2]; return 'robot'; }
+  function ghead(id, icon, title, sumHtml, gotoKey, col) {
+    return '<button type="button" class="rw-ghead" data-rw-g="' + esc(id) + '" aria-expanded="' + !col + '">' +
+      RW.icon(col ? 'arrow-right' : 'chevron-down', 10) + RW.icon(icon, 13) + '<strong>' + esc(title) + '</strong><span class="rw-gsum">' + sumHtml + '</span>' +
+      (gotoKey ? '<span class="rw-gopen" data-rw-goto="' + esc(gotoKey) + '">' + (gotoKey === 'system' ? 'System status' : 'Open') + '</span>' : '') + '</button>';
+  }
+
+  /* Agents: their questions first, then each surface's agents. Processes are counted on the row, listed on the other tab. */
+  function agentsBody() {
+    var h = sec('questions', 'Questions', RW.sort(RW.items.filter(RW.isQuestion)), { tone: 'attention', sum: 'answer each in its thread' });
     RW.SURFACES.forEach(function (sf) {
-      var key = sf[0], list = RW.items.filter(function (x) { return x.surface === key; });
-      if (!list.length) return;
-      if (ui.filter === 'needs' && !list.some(RW.needsYou)) return;
-      var c = { a: 0, p: 0, n: 0 };
-      list.forEach(function (x) { if (RW.needsYou(x)) c.n++; if (RW.isLive(x)) { if (x.kind === 'agent') c.a++; else c.p++; } });
-      var col = !!ui.collapsed[key];
-      h += '<section class="rw-group" data-surface="' + key + '"><button type="button" class="rw-ghead" data-rw-g="' + key + '" aria-expanded="' + !col + '">' +
-        RW.icon(col ? 'arrow-right' : 'chevron-down', 10) + RW.icon(sf[2], 13) + '<strong>' + sf[1] + '</strong><span class="rw-gsum">' +
-        [c.a ? plural(c.a, key === 'system' ? 'service' : 'agent', key === 'system' ? 'services' : 'agents') : '', c.p ? plural(c.p, 'process', 'processes') : ''].filter(Boolean).join(' · ') +
-        (c.n ? ' · <b data-tone="attention">' + c.n + ' need' + (c.n === 1 ? 's' : '') + ' you</b>' : '') + '</span><span class="rw-gopen" data-rw-goto="' + key + '">' + (key === 'system' ? 'System status' : 'Open') + '</span></button>';
-      if (!col) {
-        var tops = RW.sort(list.filter(function (x) { return (x.kind === 'agent' && x.role === 'main') || x.kind === 'service'; }));
-        var stray = RW.sort(list.filter(function (x) { return x.kind === 'agent' && x.role !== 'main' && !RW.byId(x.parent); }));
-        if (ui.filter === 'needs') tops = tops.filter(function (a) { return RW.needsYou(a) || RW.items.some(function (x) { return (x.parent === a.id || x.thread === a.thread && a.thread) && RW.needsYou(x); }) || RW.items.some(function (x) { var o = RW.byId(x.owner); return o && o.parent === a.id && RW.needsYou(x); }); });
-        tops.concat(stray).forEach(function (a) { h += a.kind === 'service' ? rowHtml(a, 0) : agentBlock(a, 0); });
-        if (key === 'system') h += '<p class="rw-note rw-dim">A mirror of System status. Services are started and stopped there, never from here.</p>';
-      }
+      var key = sf[0];
+      if (key === 'system') return;
+      var mine = RW.items.filter(function (x) { return x.surface === key && x.kind === 'agent' && !RW.isDone(x); });
+      if (!mine.length) return;
+      /* an agent with a question is listed once, under Questions; its surface counts it */
+      var tops = RW.sort(mine.filter(function (x) { return (x.role === 'main' || !x.parent || !RW.byId(x.parent)) && !RW.isQuestion(x); }));
+      var live = mine.filter(RW.isLive).length, q = mine.filter(RW.isQuestion).length, col = !!ui.collapsed['a:' + key];
+      h += '<section class="rw-group" data-surface="' + key + '">' + ghead('a:' + key, sf[2], sf[1], plural(live, 'agent', 'agents') + ' running' + (q ? ' · <b data-tone="attention">' + qWord(q) + ' above</b>' : ''), key, col);
+      if (!col) tops.forEach(function (a) {
+        h += rowHtml(a, 0, { owner: false });
+        var subs = RW.sort(RW.items.filter(function (x) { return x.parent === a.id && !RW.isDone(x); })), np = procsOf(a).length;
+        if (!subs.length && !np) return;
+        var open = !!ui.subOpen[a.id];
+        /* under the row, outside its button: the subagents fold and the way to this agent's processes */
+        h += '<div class="rw-alinks">';
+        if (subs.length) {
+          var by = {};
+          subs.forEach(function (s) { var w = RW.word(s).toLowerCase(); by[w] = (by[w] || 0) + 1; });
+          h += '<button type="button" class="rw-subs" data-rw-subs="' + esc(a.id) + '" aria-expanded="' + open + '">' + RW.icon(open ? 'chevron-down' : 'arrow-right', 10) + '<span>' + plural(subs.length, 'subagent', 'subagents') + ': ' + Object.keys(by).map(function (k) { return by[k] + ' ' + k; }).join(', ') + '</span></button>';
+        }
+        if (np) h += '<button type="button" class="rw-plink" data-rw-procs="' + esc(a.id) + '" title="Show the processes ' + esc(a.title) + ' started">' + '<span class="rw-gh" data-tone="working">' + RW.glyph('processes', 11, 'rw-g') + '</span>' + plural(np, 'process', 'processes') + '</button>';
+        h += '</div>';
+        if (open) subs.forEach(function (s) { h += rowHtml(s, 1, { owner: false }); });
+      });
       h += '</section>';
     });
-    return h || '<div class="rw-empty">Nothing needs you.</div>';
+    h += sec('finished', 'Finished this session', RW.sort(RW.items.filter(function (x) { return x.kind === 'agent' && RW.isDone(x); })), { clear: true });
+    return h || '<div class="rw-empty">No agents are running.</div>';
   }
-  var TRIAGE = [['needs', 'Needs you'], ['running', 'Running'], ['scheduled', 'Scheduled'], ['finished', 'Finished']];
-  function triageList(tab) {
-    return RW.sort(RW.items.filter(function (x) {
-      if (x.kind === 'service') return false;
-      if (tab === 'needs') return RW.needsYou(x);
-      if (tab === 'running') return RW.isLive(x) && !RW.needsYou(x);
-      if (tab === 'scheduled') return (x.kind === 'scheduled' && x.state === 'pending') || (x.kind === 'agent' && x.state === 'pending');
-      return RW.isDone(x);
-    }));
-  }
-  function bodyTriage() {
-    if (!ui.tab || !TRIAGE.some(function (t) { return t[0] === ui.tab; })) ui.tab = triageList('needs').length ? 'needs' : 'running';
-    var list = triageList(ui.tab);
-    if (!list.length) return '<div class="rw-empty">' + { needs: 'Nothing needs you right now.', running: 'Nothing is running.', scheduled: 'Nothing is scheduled.', finished: 'Nothing has finished yet.' }[ui.tab] + '</div>';
-    return list.map(function (x) { return rowHtml(x, 0, { where: true }); }).join('');
+  /* Processes: what needs input first, then running processes under the agent that started them. */
+  function procsBody() {
+    var h = sec('input', 'Needs input', RW.sort(RW.items.filter(RW.needsInput)), { tone: 'attention', sum: 'answer here or in Terminal' });
+    var groups = [], byId = {};
+    RW.sort(liveProcs().filter(function (x) { return !RW.needsYou(x); })).forEach(function (x) {
+      var t = topOf(x), k = t ? t.id : 'other:' + x.surface;
+      if (!byId[k]) { byId[k] = { id: k, top: t, surface: x.surface, list: [] }; groups.push(byId[k]); }
+      byId[k].list.push(x);
+    });
+    var order = RW.SURFACES.map(function (s) { return s[0]; });
+    groups.sort(function (a, b) { return order.indexOf(a.surface) - order.indexOf(b.surface); });
+    groups.forEach(function (g) {
+      var col = !!ui.collapsed['p:' + g.id], title = g.top ? (g.top.where || g.top.title) : RW.ui.surfaceName(g.surface);
+      h += '<section class="rw-group" data-owner-group="' + esc(g.id) + '"' + (ui.jump === g.id ? ' data-jump="1"' : '') + '>' +
+        ghead('p:' + g.id, surfaceIcon(g.surface), title, esc(RW.ui.surfaceName(g.surface)) + ' · ' + plural(g.list.length, 'process', 'processes'), g.surface, col);
+      if (!col) g.list.forEach(function (x) { h += rowHtml(x, 0, {}); });
+      h += '</section>';
+    });
+    h += sec('scheduled', 'Scheduled', RW.sort(RW.items.filter(function (x) { return x.kind === 'scheduled' && x.state === 'pending'; })));
+    h += sec('finished', 'Finished this session', RW.sort(RW.items.filter(function (x) { return (x.kind === 'process' || x.kind === 'scheduled') && RW.isDone(x); })), { clear: true });
+    var svc = RW.sort(RW.items.filter(function (x) { return x.kind === 'service'; }));
+    if (svc.length) {
+      var col = !!ui.collapsed.system;
+      h += '<section class="rw-group" data-surface="system">' + ghead('system', 'server', 'System services', plural(svc.filter(RW.isLive).length, 'service', 'services') + ' · read only', 'system', col);
+      if (!col) { svc.forEach(function (x) { h += rowHtml(x, 0, {}); }); h += '<p class="rw-note rw-dim">A mirror of System status. Services are started and stopped there, never from here.</p>'; }
+      h += '</section>';
+    }
+    return h || '<div class="rw-empty">No processes are running.</div>';
   }
   var COLS = [['title', 'Name'], ['where', 'Where'], ['rank', 'State'], ['time', 'Time'], ['cpu', 'CPU'], ['mem', 'Memory'], ['ports', 'Port']];
   function bodyTable() {
-    if (!ui.tab || ['agents', 'procs', 'services'].indexOf(ui.tab) < 0) ui.tab = 'procs';
     var list = RW.items.filter(function (x) {
       if (ui.tab === 'agents') return x.kind === 'agent';
       if (ui.tab === 'services') return x.kind === 'service';
@@ -198,56 +254,81 @@
     if (sel) h += '<section class="rw-inspector"><div class="rw-ihead">' + RW.st(sel.state, 12) + '<strong>' + esc(sel.title) + '</strong><b data-tone="' + RW.tone(sel) + '">' + esc(RW.word(sel)) + '</b></div>' + RW.ui.detail(sel, true) + '</section>';
     return h;
   }
-  function tabsHtml() {
-    var v = RW.state.popVariant, tabs = [];
-    if (v === 'triage') tabs = TRIAGE.map(function (t) { return [t[0], t[1], triageList(t[0]).length]; });
-    else if (v === 'table') tabs = [['agents', 'Agents', RW.items.filter(function (x) { return x.kind === 'agent' && RW.isLive(x); }).length], ['procs', 'Processes', RW.items.filter(function (x) { return x.kind === 'process' && RW.isLive(x); }).length], ['services', 'Services', RW.items.filter(function (x) { return x.kind === 'service'; }).length]];
-    else return '<div class="rw-pop-tabs rw-seg" role="group" aria-label="Show">' + [['all', 'Everything'], ['needs', 'Needs you']].map(function (t) { return '<button type="button" data-rw-filter="' + t[0] + '" aria-pressed="' + (ui.filter === t[0]) + '">' + t[1] + (t[0] === 'needs' ? ' <span class="rw-n">' + counts().needs + '</span>' : '') + '</button>'; }).join('') + '</div>';
-    return '<div class="rw-pop-tabs rw-seg" role="tablist">' + tabs.map(function (t) {
-      return '<button type="button" role="tab" data-rw-tab2="' + t[0] + '" aria-selected="' + (ui.tab === t[0]) + '" aria-pressed="' + (ui.tab === t[0]) + '"' + (t[0] === 'needs' && t[2] ? ' data-tone="attention"' : '') + '>' + t[1] + ' <span class="rw-n">' + t[2] + '</span></button>';
+  /* the two lists' heads: a tab (tabs, table) or a column head (side by side), each with its own ask count */
+  function headLabel(kind, c) {
+    var n = kind === 'agents' ? c.agents : c.procs, ask = kind === 'agents' ? c.questions : c.input;
+    return '<span class="rw-gh" data-tone="' + (n ? 'working' : 'idle') + '">' + RW.glyph(kind, 13, 'rw-g') + '</span><span>' + (kind === 'agents' ? 'Agents' : 'Processes') + '</span><span class="rw-n">' + n + '</span>' +
+      (ask ? '<span class="rw-ask-n" data-tone="attention">' + RW.st('waiting', 10) + (kind === 'agents' ? qWord(ask) : iWord(ask)) + '</span>' : '');
+  }
+  function tabsHtml(c) {
+    var v = RW.state.popVariant;
+    if (v === 'side') return '';
+    var tabs = [['agents', headLabel('agents', c)], ['processes', headLabel('processes', c)]];
+    if (v === 'table') tabs.push(['services', RW.icon('server', 13) + '<span>Services</span><span class="rw-n">' + c.services + '</span>']);
+    return '<div class="rw-pop-tabs rw-tabs2" role="tablist">' + tabs.map(function (t) {
+      return '<button type="button" role="tab" data-rw-tab2="' + t[0] + '" data-kind="' + t[0] + '" aria-selected="' + (ui.tab === t[0]) + '">' + t[1] + '</button>';
     }).join('') + '</div>';
   }
+  function bodyHtml(c) {
+    var v = RW.state.popVariant;
+    if (v === 'table') return bodyTable();
+    if (v === 'side') return '<div class="rw-cols"><div class="rw-col" data-kind="agents"><div class="rw-colhead">' + headLabel('agents', c) + '</div>' + agentsBody() + '</div>' +
+      '<div class="rw-col" data-kind="processes"><div class="rw-colhead">' + headLabel('processes', c) + '</div>' + procsBody() + '</div></div>';
+    return ui.tab === 'processes' ? procsBody() : agentsBody();
+  }
   function render(keep) {
-    var sc = pop.querySelector('.rw-pop-body'), top = sc ? sc.scrollTop : 0;
+    var sc = pop.querySelectorAll('.rw-pop-body, .rw-col'), tops = [].map.call(sc, function (e) { return e.scrollTop; });
     var c = counts(), v = RW.state.popVariant;
-    if (v === 'triage') bodyTriage(); /* settles ui.tab before the tabs draw */
-    if (v === 'table') { if (!ui.tab || ['agents', 'procs', 'services'].indexOf(ui.tab) < 0) ui.tab = 'procs'; }
+    if (v !== 'table' && ui.tab === 'services') ui.tab = 'processes';
     pop.setAttribute('data-variant', v);
+    pop.setAttribute('data-tab', ui.tab);
     pop.classList.toggle('is-floating', ui.floating);
-    var body = v === 'triage' ? bodyTriage() : v === 'table' ? bodyTable() : bodySurface();
     var cpu = 0, mem = 0;
     RW.items.forEach(function (x) { if (RW.isLive(x) && x.kind !== 'agent') { cpu += x.cpu || 0; mem += x.mem || 0; } });
-    pop.innerHTML = '<header class="rw-pop-head" data-rw-drag="1">' + RW.icon(RW.state.icon, 14) + '<strong>Running across Puppet Master</strong>' +
-      '<span class="rw-pop-sum">' + esc(sumText(c)) + (c.needs ? ' · <b data-tone="attention">' + c.needs + ' need' + (c.needs === 1 ? 's' : '') + ' you</b>' : '') + '</span><span class="rw-grow"></span>' +
+    /* the counts live on the tabs (or the column heads), once */
+    pop.innerHTML = '<header class="rw-pop-head" data-rw-drag="1"><strong>Agents and processes</strong>' +
+      (c.sched ? '<span class="rw-pop-sum">' + c.sched + ' scheduled</span>' : '') + '<span class="rw-grow"></span>' +
       '<button type="button" class="icon-button rw-ib" data-rw-p="tab" title="Open as a panel tab on Home" aria-label="Open as a panel tab">' + RW.icon('panel', 13) + '</button>' +
       '<button type="button" class="icon-button rw-ib" data-rw-p="float" aria-pressed="' + ui.floating + '" title="' + (ui.floating ? 'Dock back to the status bar' : 'Pop out to a floating window') + '" aria-label="Pop out">' + RW.icon(ui.floating ? 'arrow-down' : 'open', 13) + '</button>' +
       '<button type="button" class="icon-button rw-ib" data-rw-p="close" title="Close" aria-label="Close">' + RW.icon('close', 13) + '</button></header>' +
       (RW.state.restarted ? '<div class="rw-strip" data-tone="attention">' + RW.st('warning', 12) + '<span>Puppet Master restarted 2m ago. 2 processes ended while it was closed; each agent was told once.</span></div>' : '') +
       (RW.state.feed === 'stale' ? '<div class="rw-strip" data-tone="attention">' + RW.st('offline', 12) + '<span>Showing what was known 40s ago. Reconnecting to the server; nothing has been stopped.</span></div>' : '') +
-      tabsHtml() + '<div class="rw-pop-body">' + body + '</div>' +
+      tabsHtml(c) + '<div class="rw-pop-body">' + bodyHtml(c) + '</div>' +
       '<footer class="rw-pop-foot"><button type="button" class="rw-link" data-rw-p="clear">Clear finished</button>' +
-      (v === 'table' ? '<span class="rw-dim rw-res">Work started by Puppet Master: CPU ' + cpu + '% · memory ' + (mem / 1000).toFixed(1) + ' GB · sampled every 2 s while this is open</span>' : '<span class="rw-grow"></span>') +
+      (v === 'table' ? '<span class="rw-dim rw-res">Processes Puppet Master started: CPU ' + cpu + '% · memory ' + (mem / 1000).toFixed(1) + ' GB · sampled every 2 s while this is open</span>' : '<span class="rw-grow"></span>') +
       '<button type="button" class="rw-btn danger" data-rw-p="stopall"' + (c.agents + c.procs + c.sched ? '' : ' disabled') + '>Stop all…</button></footer>';
-    if (keep) { var s2 = pop.querySelector('.rw-pop-body'); if (s2) s2.scrollTop = top; }
+    if (keep) [].forEach.call(pop.querySelectorAll('.rw-pop-body, .rw-col'), function (e, i) { if (tops[i] != null) e.scrollTop = tops[i]; });
+    var j = ui.jump && pop.querySelector('[data-jump="1"]');
+    if (j) { j.scrollIntoView({ block: 'nearest' }); setTimeout(function () { ui.jump = null; var g = pop.querySelector('[data-jump="1"]'); if (g) g.removeAttribute('data-jump'); }, 1600); }
   }
+  function anchorItem() { return RW.state.popVariant === 'side' || ui.tab !== 'processes' ? itemA : itemP; }
   function place() {
     if (pop.parentNode !== doc.body) doc.body.appendChild(pop);
     if (ui.floating) {
-      if (!pop.style.getPropertyValue('--rw-fx')) { pop.style.setProperty('--rw-fx', Math.round(innerWidth / 2 - 380) + 'px'); pop.style.setProperty('--rw-fy', '90px'); }
+      if (!pop.style.getPropertyValue('--rw-fx')) { pop.style.setProperty('--rw-fx', Math.round(innerWidth / 2 - 400) + 'px'); pop.style.setProperty('--rw-fy', '90px'); }
       pop.style.left = pop.style.getPropertyValue('--rw-fx'); pop.style.top = pop.style.getPropertyValue('--rw-fy'); pop.style.bottom = 'auto';
       return;
     }
-    var bar = doc.getElementById('pm7GlobalStatusBar'), br = bar ? bar.getBoundingClientRect() : { top: innerHeight - 25 }, ir = item.getBoundingClientRect();
-    var w = pop.offsetWidth || 560;
+    var bar = doc.getElementById('pm7GlobalStatusBar'), br = bar ? bar.getBoundingClientRect() : { top: innerHeight - 25 }, ir = anchorItem().getBoundingClientRect();
+    var w = pop.offsetWidth || 600;
     pop.style.left = Math.max(8, Math.min(ir.left - 6, innerWidth - w - 8)) + 'px';
     pop.style.top = 'auto';
     pop.style.bottom = Math.round(innerHeight - br.top + 6) + 'px';
   }
-  P.open = function () { ui.open = true; pop.hidden = false; render(); place(); paintItem(); setTimeout(function () { var b = pop.querySelector('.rw-pop-tabs button[aria-pressed="true"]') || pop.querySelector('.rw-ib'); if (b) b.focus({ preventScroll: true }); }, 0); };
-  P.close = function () { ui.open = false; pop.hidden = true; paintItem(); item.focus({ preventScroll: true }); };
-  P.toggle = function () { if (ui.open) P.close(); else P.open(); };
+  P.open = function (tab) {
+    if (tab) ui.tab = tab;
+    ui.open = true; pop.hidden = false; render(); place(); paintItem();
+    setTimeout(function () { var b = pop.querySelector('.rw-pop-tabs [aria-selected="true"]') || pop.querySelector('.rw-ib'); if (b) b.focus({ preventScroll: true }); }, 0);
+  };
+  P.close = function () { var back = anchorItem(); ui.open = false; pop.hidden = true; paintItem(); back.focus({ preventScroll: true }); };
+  P.toggle = function (tab) {
+    if (ui.open && (!tab || ui.tab === tab || RW.state.popVariant === 'side')) P.close();
+    else P.open(tab);
+  };
 
-  item.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); P.toggle(); });
+  [itemA, itemP].forEach(function (b) {
+    b.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); P.toggle(b.getAttribute('data-rw-sb')); });
+  });
   pop.addEventListener('click', function (e) {
     if (RW.ui.handle(e, pop)) return;
     var t = e.target.closest('button,[data-rw-goto]');
@@ -260,17 +341,22 @@
       RW.toast({ assistant: 'Opens the thread list with these threads first', prd: 'Opens the PRD Builder', scout: 'Opens Scout', system: 'Opens System status (the Ready item), which owns services' }[g] || 'Opens ' + g);
       return;
     }
+    if (t.hasAttribute('data-rw-procs')) {
+      e.stopPropagation();
+      ui.jump = t.getAttribute('data-rw-procs');
+      if (RW.state.popVariant !== 'side') ui.tab = 'processes';
+      ui.collapsed['p:' + ui.jump] = false; render(true); place(); paintItem(); return;
+    }
     if (t.hasAttribute('data-rw-x')) { var id = t.getAttribute('data-rw-x'); ui.expanded[id] = !ui.expanded[id]; render(true); return; }
     if (t.hasAttribute('data-rw-subs')) { var a = t.getAttribute('data-rw-subs'); ui.subOpen[a] = !ui.subOpen[a]; render(true); return; }
     if (t.hasAttribute('data-rw-g')) { var g2 = t.getAttribute('data-rw-g'); ui.collapsed[g2] = !ui.collapsed[g2]; render(true); return; }
-    if (t.hasAttribute('data-rw-tab2')) { ui.tab = t.getAttribute('data-rw-tab2'); ui.selected = null; render(); return; }
-    if (t.hasAttribute('data-rw-filter')) { ui.filter = t.getAttribute('data-rw-filter'); render(); return; }
+    if (t.hasAttribute('data-rw-tab2')) { ui.tab = t.getAttribute('data-rw-tab2'); ui.selected = null; render(); place(); paintItem(); return; }
     if (t.hasAttribute('data-rw-sort')) { var k = t.getAttribute('data-rw-sort'); ui.sort = [k, ui.sort[0] === k ? -ui.sort[1] : 1]; render(true); return; }
     if (t.hasAttribute('data-rw-sel')) { ui.selected = t.getAttribute('data-rw-sel'); render(true); return; }
     var p = t.getAttribute('data-rw-p');
     if (p === 'close') P.close();
     else if (p === 'float') { ui.floating = !ui.floating; render(true); place(); }
-    else if (p === 'tab') RW.toast('Adds a Running tab to the Home panels: a tab kind beside Terminal, Problems, Output and Ports');
+    else if (p === 'tab') RW.toast('Adds an Agents and processes tab to the Home panels: a tab kind beside Terminal, Problems, Output and Ports');
     else if (p === 'clear') RW.clearFinished();
     else if (p === 'stopall') P.confirmStopAll();
   });
@@ -284,7 +370,7 @@
   });
   doc.addEventListener('pointerdown', function (e) {
     if (!ui.open || ui.floating) return;
-    if (pop.contains(e.target) || item.contains(e.target) || (e.target.closest && e.target.closest('.rw-dialog-scrim,#pmn-lab,#rw-lab'))) return;
+    if (pop.contains(e.target) || group.contains(e.target) || (e.target.closest && e.target.closest('.rw-dialog-scrim,#pmn-lab,#rw-lab'))) return;
     P.close();
   }, true);
   doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ui.open && !doc.querySelector('.rw-dialog-scrim')) P.close(); });
@@ -304,7 +390,7 @@
     var c = counts();
     RW.ui.confirm({
       title: 'Quit Puppet Master?',
-      lead: sumText(c) + ' are running. They run on your Puppet Master server, not in this window, so they can keep going and be here when you come back.',
+      lead: plural(c.agents, 'agent', 'agents') + ' and ' + plural(c.procs, 'process', 'processes') + ' are running. They run on your Puppet Master server, not in this window, so they can keep going and be here when you come back.',
       choice: [['keep', 'Keep it all running'], ['all', 'Stop everything']],
       items: RW.sort(RW.items.filter(function (x) { return x.kind !== 'service' && RW.isLive(x) && !(x.kind === 'agent' && x.parent); })),
       note: 'Untick anything you want to keep when you stop everything.', go: 'Quit', goWord: 'Quit and stop', goZero: 'Quit',
@@ -332,5 +418,5 @@
   window.addEventListener('resize', function () { if (ui.open) place(); });
   placeItem(); paintItem();
   P.ui = ui;
-  if (window.RW_OPEN === 'platform') setTimeout(P.open, 700);
+  if (window.RW_OPEN === 'platform') setTimeout(function () { P.open('agents'); }, 700);
 })();

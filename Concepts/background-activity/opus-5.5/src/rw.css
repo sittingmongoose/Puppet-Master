@@ -1,9 +1,9 @@
-/* Background activity concept (Opus 5.5): the chat's Running domain and the status bar's Running work, injected into
-   the framed PMConcept7. Colours come from PMConcept7's own tokens and the glyph registry's inks, so every look and
+/* Background activity concept (Opus 5.5): the chat's Processes domain and the status bar's agents and processes,
+   injected into the framed PMConcept7. Colours come from PMConcept7's own tokens and the glyph registry's inks, so every look and
    NieR apply. No side stripes, no emoji, no pill-shaped labels (DR-069): a state is a registry mark and a word. */
 
 /* ---------------------------------------------------------------- tones */
-#rw-pop, #rw-chat-layer, #rw-chat-hover, #rw-dialog-layer, .rw-sb {
+#rw-pop, #rw-chat-layer, #rw-chat-hover, #rw-dialog-layer, .rw-sb-group {
   --rw-attn: var(--pmg-ink-attention, var(--warning, #ffb74d));
   --rw-work: var(--pmg-ink-working, var(--accent, #64b5f6));
   --rw-bad: var(--pmg-ink-blocked, var(--danger, #ef5350));
@@ -29,12 +29,27 @@
 #rw-chat-hover { z-index: 950 !important; }
 #rw-chat-layer > .rw-panel { z-index: 900; }
 
-/* the Activity-bar button: the chat styles it as an .activity-item; only its icon light is ours */
-.rw-ab-item[data-tone="attention"] .rw-ab-icon { color: var(--rw-attn); }
-.rw-ab-item[data-tone="blocked"] .rw-ab-icon { color: var(--rw-bad); }
-.rw-ab-item[data-tone="working"] .rw-ab-icon { color: var(--rw-work); }
+/* The Activity-bar button. The chat styles it as an .activity-item and lights its svg from --ab-ink, --ab-anim, --ab-hi,
+   --ab-bl and --ab-stroke (pm56-activity-bar.css). The chat writes those per domain from its TONE_INK, TONE_ANIM,
+   TONE_HALO and TONE_STROKE tables (activity-bar.js); this button takes the same four values from its own tone, so its
+   glyph glows, breathes and weighs exactly as the other nine domains do in every look. */
+.pm56-host .rw-ab-item { --ab-ink: var(--subtle); --ab-anim: none; --ab-hi: var(--nx-h-quiet-i); --ab-bl: 0; --ab-stroke: 1.4; }
+.pm56-host .rw-ab-item[data-tone="working"] { --ab-ink: var(--accent); --ab-anim: ab-breathe 2200ms ease-in-out infinite; --ab-hi: var(--nx-h-working-i); --ab-bl: var(--nx-bl-working); --ab-stroke: 2.1; }
+.pm56-host .rw-ab-item[data-tone="attention"] { --ab-ink: var(--warning); --ab-anim: ab-breathe 3200ms ease-in-out infinite; --ab-hi: var(--nx-h-attention-i); --ab-bl: var(--nx-bl-attention); --ab-stroke: 2.1; }
+.pm56-host .rw-ab-item[data-tone="blocked"] { --ab-ink: var(--danger); --ab-anim: ab-alert 1900ms steps(1,end) infinite; --ab-hi: var(--nx-h-blocked-i); --ab-bl: var(--nx-bl-blocked); --ab-stroke: 2.2; }
+html[data-ab-ready] .pm56-host .activity-item.rw-ab-item { position: relative; isolation: isolate; anchor-scope: --nx-ab-icon; }
+html[data-ab-ready] .pm56-host .activity-item.rw-ab-item::after {
+  content: ""; position: absolute; position-anchor: --nx-ab-icon; left: anchor(center); top: anchor(center); width: 31px; height: 31px;
+  translate: -50% -50%; border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(closest-side, var(--ab-ink, var(--subtle)), transparent); opacity: var(--ab-bl, 0);
+}
+html[data-ab-ready] .pm56-host .rw-ab-item[data-tone="working"] > svg .nx-p { animation: var(--kl) 2200ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.2ms - 2200ms); }
+html[data-ab-ready] .pm56-host .rw-ab-item[data-tone="attention"] > svg .nx-p { animation: var(--kl) 3200ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 3.2ms - 3200ms); }
+html[data-o55-nier="on"] .pm56-host .rw-ab-item::after { display: none; }
+html[data-o55-nier="on"] .pm56-host .rw-ab-item[data-tone="working"]::after { display: block; top: anchor(bottom); width: 12px; height: 2px; translate: -50% 3px; border-radius: 0; z-index: 0; background: var(--o55-nier-ink); opacity: 1; }
+html[data-motion="reduced"] .pm56-host .rw-ab-item > svg, html[data-motion="reduced"] .pm56-host .rw-ab-item > svg .nx-p { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .pm56-host .rw-ab-item > svg, .pm56-host .rw-ab-item > svg .nx-p { animation: none !important; } }
 .rw-ab-item[data-tone="idle"] .count { opacity: .6; }
-.rw-ab-item .rw-ab-icon { flex: none; }
 
 /* hover card: the chat's .hover-card.ab-card, positioned by rw-thread.js */
 .rw-card { position: absolute !important; width: 360px; max-width: 360px; margin: 0 !important; transform: none !important; }
@@ -114,23 +129,36 @@ html[data-theme^="retro"] :is(.rw-layer, .rw-pop, #rw-dialog-layer) .rw-btn { bo
 html[data-theme^="friendly"] :is(.rw-layer, .rw-pop, #rw-dialog-layer) .rw-btn { border-radius: 999px; padding: 0 11px; }
 .rw-primary { font-weight: 600 !important; }
 
-/* --------------------------------------------------- the status bar item */
+/* ------------------------------------------- the status bar: agents │ processes */
+/* Its own group, framed by the bar's dividers like the source-control group beside it; a divider between the two. */
+.rw-sb-group { display: inline-flex !important; align-items: stretch; border-left: 1px solid var(--rw-line2); }
 .rw-sb { display: inline-flex !important; align-items: center; gap: 5px; }
+.rw-sb + .rw-sb { border-left: 1px solid var(--rw-line2); }
 .rw-sb .nx-st, .rw-sb svg { flex: none; }
 .rw-sb strong { font-weight: 700; }
-.rw-sb-needs { display: inline-flex; align-items: center; gap: 4px; color: var(--rw-attn); }
-.rw-sb-sep { opacity: .55; }
-.rw-sb-seg { display: inline-flex; align-items: center; gap: 3px; }
-.rw-sb-seg + .rw-sb-seg { margin-left: 4px; }
-.rw-sb[data-tone="working"] > .nx-st:first-child { color: var(--rw-work); }
+/* the two glyphs, lit like the Activity bar's: the status tone's ink, its halo, and a faint backlight while running
+   (neon grammar §3: the soft tail is a backlight on the HTML host, not in the svg) */
+.rw-gh { position: relative; display: inline-grid; place-items: center; flex: none; isolation: isolate; }
+.rw-gh > svg.rw-g { width: 13px; height: 13px; color: var(--rw-idle); --nx-stroke-base: 2.2; --nx-tone-k: 1; --nx-hiv: visible; --nx-hi-a: var(--nx-h-quiet-i, .1); }
+.rw-gh::before { content: ""; position: absolute; left: 50%; top: 50%; width: 220%; height: 220%; translate: -50% -50%; border-radius: 50%; z-index: -1; pointer-events: none;
+  background: radial-gradient(closest-side, var(--rw-work), transparent); opacity: 0; }
+:is(.rw-sb, .rw-gh)[data-tone="working"] .rw-gh > svg.rw-g, .rw-gh[data-tone="working"] > svg.rw-g { color: var(--rw-work); --nx-hi-a: var(--nx-h-working-i, .2); }
+:is(.rw-sb[data-tone="working"] .rw-gh, .rw-gh[data-tone="working"])::before { opacity: var(--nx-bl-working, .1); }
+.rw-sb-ask { display: inline-flex; align-items: center; gap: 4px; margin-left: 4px; color: var(--rw-attn); }
+.rw-sb-ask strong { color: var(--rw-attn); }
 .rw-sb.is-open { background: color-mix(in srgb, var(--accent-primary, #64b5f6) 14%, transparent) !important; }
+.rw-sb-stale { display: inline-flex !important; align-items: center; gap: 4px; border-left: 1px solid var(--rw-line2); }
+.rw-sb-stale[hidden] { display: none !important; }
+html[data-o55-nier="on"] .rw-gh::before { display: none; }
 
-/* ------------------------------------------------------------- pop-out */
+/* -------------------------------------------- the status bar panel */
 .rw-pop { position: fixed; z-index: 2147482000; display: flex; flex-direction: column; width: 560px; max-width: calc(100vw - 16px); max-height: min(74vh, 760px); box-sizing: border-box;
   background: var(--rw-face); color: var(--rw-ink); border: 1px solid var(--rw-line); border-radius: 12px;
   box-shadow: 0 18px 60px rgba(0, 0, 0, .42), 0 4px 16px rgba(0, 0, 0, .24); font: 12.5px/1.35 Inter, system-ui, sans-serif; }
 .rw-pop[hidden] { display: none; }
-.rw-pop[data-variant="table"] { width: 820px; }
+.rw-pop[data-variant="table"] { width: 840px; }
+.rw-pop[data-variant="tabs"] { width: 600px; }
+.rw-pop[data-variant="side"] { width: min(1080px, calc(100vw - 16px)); }
 .rw-pop.is-floating { max-height: 80vh; box-shadow: 0 26px 80px rgba(0, 0, 0, .5), 0 4px 16px rgba(0, 0, 0, .24); }
 .rw-pop.is-floating .rw-pop-head { cursor: move; }
 .rw-pop-head, .rw-pop > .rw-strip, .rw-pop-tabs, .rw-pop-foot { flex: none; }
@@ -144,6 +172,33 @@ html[data-theme^="friendly"] :is(.rw-layer, .rw-pop, #rw-dialog-layer) .rw-btn {
 .rw-ib:focus-visible { outline: 2px solid var(--rw-work); outline-offset: 1px; }
 .rw-pop > .rw-strip { margin: 8px 10px 0; }
 .rw-pop-tabs { margin: 8px 10px 2px; align-self: flex-start; }
+/* Agents │ Processes: two tabs that say what each holds and how many wait on you */
+.rw-tabs2 { display: flex; align-self: stretch; gap: 0; margin: 0; padding: 0 8px; border-bottom: 1px solid var(--rw-line2); }
+.rw-tabs2 > button { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px 7px; margin-bottom: -1px; border-bottom: 2px solid transparent; cursor: pointer; color: var(--rw-ink2); font-size: 12.5px; }
+.rw-tabs2 > button[aria-selected="true"] { color: var(--rw-ink); border-bottom-color: var(--rw-ink); font-weight: 600; }
+.rw-tabs2 > button:hover { color: var(--rw-ink); }
+.rw-tabs2 > button:focus-visible { outline: 2px solid var(--rw-work); outline-offset: -2px; }
+.rw-tabs2 .rw-n, .rw-colhead .rw-n { opacity: .75; font-variant-numeric: tabular-nums; }
+.rw-ask-n { display: inline-flex; align-items: center; gap: 4px; margin-left: 4px; color: var(--rw-attn); font-weight: 600; font-size: 11.5px; }
+.rw-sumsep { margin: 0 8px; opacity: .45; }
+/* side by side: the two lists in two columns, each scrolling on its own */
+.rw-pop[data-variant="side"] .rw-pop-body { display: flex; padding: 0; overflow: hidden; }
+.rw-cols { display: grid; grid-template-columns: 1fr 1fr; width: 100%; min-height: 0; }
+.rw-col { min-width: 0; overflow: auto; padding: 0 6px 8px; }
+.rw-col + .rw-col { border-left: 1px solid var(--rw-line2); }
+.rw-colhead { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 6px; margin: 0 -6px 4px; padding: 9px 14px 8px; background: var(--rw-face); border-bottom: 1px solid var(--rw-line2); font-weight: 600; font-size: 12.5px; }
+/* fixed sections (Questions, Needs input, Scheduled, Finished): a heading, not a fold */
+.rw-shead { display: flex; align-items: center; gap: 7px; padding: 8px 8px 4px; font-size: 12px; color: var(--rw-ink2); }
+.rw-shead > strong { color: var(--rw-ink); font-size: 12.5px; }
+.rw-fixed[data-tone="attention"] .rw-shead > strong { color: var(--rw-attn); }
+.rw-fixed[data-sec="questions"], .rw-fixed[data-sec="input"] { margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--rw-line2); }
+.rw-alinks { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 14px; padding: 0 8px 4px 52px; }
+.rw-alinks .rw-subs { margin-left: 0; padding-left: 0; }
+.rw-plink { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; gap: 5px; padding: 3px 4px; border-radius: 6px; cursor: pointer; font-size: 11.5px; color: var(--rw-ink2); }
+.rw-plink:hover { color: var(--rw-ink); background: color-mix(in srgb, var(--rw-ink) 6%, transparent); }
+.rw-plink:focus-visible { outline: 2px solid var(--rw-work); outline-offset: 1px; }
+.rw-plink .rw-gh > svg.rw-g { width: 11px; height: 11px; }
+.rw-group[data-jump="1"] > .rw-ghead { background: color-mix(in srgb, var(--rw-work) 16%, transparent); }
 .rw-pop-tabs .rw-n { opacity: .7; margin-left: 2px; }
 .rw-pop-tabs button[data-tone="attention"] .rw-n { color: var(--rw-attn); opacity: 1; font-weight: 700; }
 .rw-pop-body { flex: 1 1 auto; min-height: 120px; overflow: auto; padding: 6px 6px 8px; }

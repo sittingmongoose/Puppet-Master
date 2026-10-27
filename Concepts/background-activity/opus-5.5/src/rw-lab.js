@@ -8,9 +8,8 @@
   var GROUPS = [
     ['scenario', 'Scenario', [['busy', 'Busy'], ['working', 'No asks'], ['quiet', 'Quiet'], ['many', 'Many'], ['stale', 'Stale feed'], ['restart', 'After restart']]],
     ['threadVariant', 'Thread view', [['state', 'By state'], ['owner', 'By owner'], ['list', 'List + output']]],
-    ['barVariant', 'Status item', [['words', 'Words'], ['marks', 'Marks'], ['single', 'One count']]],
-    ['popVariant', 'Pop-out', [['surface', 'By surface'], ['triage', 'Needs you first'], ['table', 'Task manager']]],
-    ['icon', 'Domain icon', [['pulse', 'Pulse'], ['terminal', 'Terminal'], ['gauge', 'Gauge'], ['layers', 'Layers']]]
+    ['barVariant', 'Status bar', [['words', 'Words'], ['compact', 'Numbers']]],
+    ['popVariant', 'Panel', [['tabs', 'Tabs'], ['side', 'Side by side'], ['table', 'Task manager']]]
   ];
   function setLook(fam, mode) {
     var cap = function (s) { return s.charAt(0).toUpperCase() + s.slice(1); };
@@ -38,8 +37,7 @@
   GROUPS.forEach(function (g) {
     h += '<div class="lab-row"><span>' + g[1] + '</span>' + g[2].map(function (o) { return '<button type="button" data-k="' + g[0] + '" data-v="' + o[0] + '">' + o[1] + '</button>'; }).join('') + '</div>';
   });
-  h += '<div class="lab-row"><label><input type="checkbox" data-lab="always"> Show Running even when nothing has run</label></div>';
-  h += '<div class="lab-row"><button type="button" data-lab="thread">Open thread view</button><button type="button" data-lab="pop">Open pop-out</button><button type="button" data-lab="quit">Quit…</button></div></div>';
+  h += '<div class="lab-row"><button type="button" data-lab="thread">Open Processes view</button><button type="button" data-lab="pop">Open status bar panel</button><button type="button" data-lab="quit">Quit…</button></div></div>';
   root.innerHTML = h;
   document.body.appendChild(root);
   function sync() {
@@ -48,7 +46,6 @@
     root.querySelectorAll('[data-mode]').forEach(function (b) { b.toggleAttribute('data-on', b.getAttribute('data-mode') === c.mode); });
     root.querySelectorAll('[data-k]').forEach(function (b) { b.toggleAttribute('data-on', RW.state[b.getAttribute('data-k')] === b.getAttribute('data-v')); });
     root.querySelector('[data-lab="reduced"]').checked = c.reduced;
-    root.querySelector('[data-lab="always"]').checked = !!RW.state.alwaysShow;
   }
   root.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
@@ -58,19 +55,18 @@
     else if (b.hasAttribute('data-k')) {
       var k = b.getAttribute('data-k'), v = b.getAttribute('data-v');
       if (k === 'scenario') RW.load(v); else { RW.state[k] = v; RW.emit(k); }
-      if (k === 'popVariant' && window.RW_PLATFORM) { window.RW_PLATFORM.ui.tab = null; if (!window.RW_PLATFORM.ui.open) window.RW_PLATFORM.open(); }
+      if (k === 'popVariant' && window.RW_PLATFORM && !window.RW_PLATFORM.ui.open) window.RW_PLATFORM.open();
       if (k === 'threadVariant' && window.RW_THREAD && !window.RW_THREAD.ui.open) window.RW_THREAD.open();
       sync();
     }
     else if (b.getAttribute('data-lab') === 'thread') window.RW_THREAD && window.RW_THREAD.open();
-    else if (b.getAttribute('data-lab') === 'pop') window.RW_PLATFORM && window.RW_PLATFORM.open();
+    else if (b.getAttribute('data-lab') === 'pop') window.RW_PLATFORM && window.RW_PLATFORM.open('agents');
     else if (b.getAttribute('data-lab') === 'quit') window.RW_PLATFORM && window.RW_PLATFORM.quit();
     else if (b.getAttribute('data-lab') === 'fold') root.toggleAttribute('data-folded');
   });
   root.addEventListener('change', function (e) {
     var k = e.target.getAttribute('data-lab');
     if (k === 'reduced') { if (e.target.checked) document.documentElement.setAttribute('data-motion', 'reduced'); else document.documentElement.removeAttribute('data-motion'); }
-    if (k === 'always') { RW.state.alwaysShow = e.target.checked; RW.emit('always'); }
   });
   setTimeout(sync, 600);
   window.RW_LAB = { setLook: setLook, sync: sync };

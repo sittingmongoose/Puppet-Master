@@ -1,14 +1,18 @@
-/* rw-thread.js — the chat's Running domain (Background activity concept, Opus 5.5).
+/* rw-thread.js — the chat's Processes domain (Background activity concept, Opus 5.5).
  *
- * A tenth Activity-bar domain, "Running", with the same three parts every domain has: the icon in the Activity bar,
+ * A tenth Activity-bar domain, "Processes", with the same three parts every domain has: the icon in the Activity bar,
  * its hover card, and its view in Activity Detail. It lists what THIS thread has running: processes and scripts the
  * thread's agent or its subagents started (dev servers, watchers, tests, builds, browser sessions), scheduled runs,
  * and what finished this session. Subagents stay in the Subagents domain; here they appear only as the owner of a
  * process, linked back to their own domain (DRY: one domain per thing).
  *
+ * One word everywhere: "Processes", here and in the status bar (Jared, 2026-10-27). The icon is there only while a
+ * process runs: when the last one ends it goes, unless its hover card or its view is open, so it never vanishes
+ * under the pointer. Its glyph is lit by the same tone inks as the other nine domains.
+ *
  * How it lives inside PMConcept7 without editing it: the chat re-renders its tree with a keyed reconcile (pmPatch),
  * so the injected button and the Activity Detail tab carry a data-k the chat does not know; the reconcile removes
- * them and a MutationObserver puts the same nodes back before the next paint. The hover card and the Running view of
+ * them and a MutationObserver puts the same nodes back before the next paint. The hover card and the Processes view of
  * Activity Detail are this file's own nodes, drawn with the chat's own classes so every look applies.
  */
 (function () {
@@ -34,38 +38,39 @@
   function tone(c) { return c.needs || c.lost ? 'attention' : (c.failed ? 'blocked' : (c.live ? 'working' : 'idle')); }
   function summary(c) {
     var p = [];
-    if (c.live) p.push(c.live + ' running' + (c.needs ? ', ' + c.needs + ' needs you' : ''));
+    if (c.live) p.push(c.live + ' running');
+    if (c.needs) p.push(c.needs + ' need' + (c.needs === 1 ? 's' : '') + ' input');
     if (c.sched) p.push(c.sched + ' scheduled');
     if (c.done) { var why = [c.failed ? c.failed + ' failed' : '', c.lost ? c.lost + ' lost' : ''].filter(Boolean).join(', '); p.push(c.done + ' finished' + (why ? ' (' + why + ')' : '')); }
-    return p.length ? p.join(' · ') : 'Nothing has run in this thread.';
+    return p.length ? p.join(' · ') : 'No processes in this thread.';
   }
 
   /* --------------------------------------------- the Activity-bar button */
   var btn = doc.createElement('button');
   btn.type = 'button';
   btn.className = 'activity-item rw-ab-item';
-  btn.setAttribute('data-k', 'rw-running');
-  btn.setAttribute('data-rw-domain', 'running');
+  btn.setAttribute('data-k', 'rw-processes');
+  btn.setAttribute('data-rw-domain', 'processes');
   btn.setAttribute('aria-haspopup', 'dialog');
   btn.setAttribute('aria-controls', 'rw-activity-detail');
   btn.setAttribute('data-pm-hover-visual-suppressed', 'true');
   function paintButton() {
     var c = counts();
     btn.setAttribute('data-tone', tone(c));
-    btn.setAttribute('aria-label', 'Running activity, ' + c.live + ' running' + (c.needs ? ', ' + c.needs + ' needs you' : ''));
+    btn.setAttribute('aria-label', 'Processes activity, ' + c.live + ' running' + (c.needs ? ', ' + c.needs + ' need' + (c.needs === 1 ? 's' : '') + ' input' : ''));
     btn.setAttribute('aria-expanded', ui.open ? 'true' : 'false');
     btn.classList.toggle('active', ui.open);
-    var html = RW.icon(RW.state.icon, 12, 'nx nx-r-concept rw-ab-icon') + '<span class="label">Running</span><span class="count">' + c.live + '</span>';
+    var html = RW.glyph('processes', 12, 'rw-ab-icon') + '<span class="label">Processes</span><span class="count">' + c.live + '</span>';
     if (btn.getAttribute('data-html') !== html) { btn.innerHTML = html; btn.setAttribute('data-html', html); }
   }
   function realBar() { return doc.querySelector('.pm56-activity-bar'); }
+  /* There while a process runs (or waits for input); a scheduled run or a finished one alone does not keep it. */
+  function shown() { return counts().live > 0 || ui.open || ui.hoverOpen; }
   function placeButton() {
     var bar = realBar();
     if (!bar) return;
-    var c = counts();
-    var show = c.live || c.sched || c.done || RW.state.alwaysShow;
-    if (!show) { if (btn.parentNode) btn.parentNode.removeChild(btn); return; }
-    /* After Subagents: the compaction tiers drop the right-hand domains first, and Running is not a file-level one. */
+    if (!shown()) { if (btn.parentNode) btn.parentNode.removeChild(btn); return; }
+    /* After Subagents: the compaction tiers drop the right-hand domains first, and Processes is not a file-level one. */
     var after = bar.querySelector('.activity-item[data-domain="subagents"]') || bar.querySelector('.activity-item[data-domain="todo"]') || bar.querySelector('.activity-item[data-domain="goal"]');
     var ref = after ? after.nextSibling : bar.firstChild;
     if (btn.parentNode !== bar || (after && btn.previousSibling !== after) || (!after && bar.firstChild !== btn)) bar.insertBefore(btn, ref);
@@ -76,11 +81,12 @@
     var filt = doc.querySelector('#pmRoot .activity-panel .activity-filter');
     if (!filt) return;
     var tab = filt.querySelector('[data-rw-tab]');
+    if (!shown()) { if (tab) tab.remove(); filt.style.setProperty('--activity-n', String(filt.querySelectorAll('button').length)); return; }
     if (!tab) {
       tab = doc.createElement('button');
-      tab.setAttribute('data-k', 'rw-tab'); tab.setAttribute('data-rw-tab', 'running');
-      tab.setAttribute('aria-pressed', 'false'); tab.setAttribute('data-hover-tip', 'Running');
-      tab.innerHTML = RW.icon(RW.state.icon, 12, 'nx nx-r-concept') + '<span>Running</span>';
+      tab.setAttribute('data-k', 'rw-tab'); tab.setAttribute('data-rw-tab', 'processes');
+      tab.setAttribute('aria-pressed', 'false'); tab.setAttribute('data-hover-tip', 'Processes');
+      tab.innerHTML = RW.glyph('processes', 12) + '<span>Processes</span>';
     }
     var after = filt.querySelector('[data-domain="subagents"]') || filt.querySelector('[data-domain="todo"]');
     var ref = after ? after.nextSibling : filt.firstChild;
@@ -99,9 +105,9 @@
   /* ---------------------------------------------------------- hover card */
   var card = doc.createElement('div');
   card.className = 'hover-card ab-card rw-card';
-  card.id = 'rw-running-preview';
-  card.setAttribute('role', 'dialog'); card.setAttribute('aria-modal', 'false'); card.setAttribute('aria-label', 'Running activity preview');
-  card.setAttribute('data-domain', 'running');
+  card.id = 'rw-processes-preview';
+  card.setAttribute('role', 'dialog'); card.setAttribute('aria-modal', 'false'); card.setAttribute('aria-label', 'Processes preview');
+  card.setAttribute('data-domain', 'processes');
   var hoverT = null, leaveT = null, lastXY = [0, 0];
   doc.addEventListener('pointermove', function (e) { lastXY = [e.clientX, e.clientY]; }, true);
   function inRect(el) { if (!el || !el.isConnected) return false; var r = el.getBoundingClientRect(); return lastXY[0] >= r.left - 2 && lastXY[0] <= r.right + 2 && lastXY[1] >= r.top - 2 && lastXY[1] <= r.bottom + 2; }
@@ -117,14 +123,14 @@
   function renderCard() {
     var c = counts(), list = RW.sort(mine()), shown = list.slice(0, 5);
     card.setAttribute('data-tone', tone(c));
-    var meta = c.live ? c.live + ' running' : (c.sched ? c.sched + ' scheduled' : 'none running');
-    var body = shown.length ? shown.map(function (x) { return rowHtml(x); }).join('') : '<div class="ab-empty">Nothing is running in this thread. Commands, servers and scripts its agents start show up here.</div>';
+    var meta = c.live ? c.live + ' running' : 'none running';
+    var body = shown.length ? shown.map(function (x) { return rowHtml(x); }).join('') : '<div class="ab-empty">No processes are running in this thread.</div>';
     card.innerHTML = '<button type="button" class="ab-head" data-rw-act="open-detail">' +
-      '<span class="ab-head-icon" data-tone="' + tone(c) + '">' + RW.icon(RW.state.icon, 13, 'nx nx-r-concept') + '</span>' +
-      '<strong>Running</strong><span class="ab-head-meta">' + esc(meta) + '</span></button>' +
+      '<span class="ab-head-icon" data-tone="' + tone(c) + '">' + RW.glyph('processes', 13) + '</span>' +
+      '<strong>Processes</strong><span class="ab-head-meta">' + esc(meta) + '</span></button>' +
       (RW.state.feed === 'stale' ? '<div class="rw-strip" data-tone="attention">' + RW.st('offline', 11) + '<span>Last known 40s ago · reconnecting</span></div>' : '') +
       '<div class="ab-body">' + body + (list.length > shown.length ? '<div class="ab-more">+' + (list.length - shown.length) + ' more</div>' : '') + '</div>' +
-      (c.needs ? '<div class="rw-card-foot">' + RW.st('waiting', 11) + '<span>' + c.needs + ' needs you. Open to answer.</span></div>' : '');
+      (c.needs ? '<div class="rw-card-foot">' + RW.st('waiting', 11) + '<span>' + c.needs + ' need' + (c.needs === 1 ? 's' : '') + ' input. Open to answer.</span></div>' : '');
   }
   function showCard() {
     if (ui.open) return;
@@ -142,7 +148,7 @@
     card.style.top = Math.round(r.top - card.offsetHeight - 8) + 'px';
     ui.hoverOpen = true;
   }
-  function hideCard() { card.hidden = true; ui.hoverOpen = false; }
+  function hideCard() { card.hidden = true; ui.hoverOpen = false; placeButton(); placeTab(); }
   btn.addEventListener('pointerenter', function () { clearTimeout(leaveT); clearTimeout(hoverT); hoverT = setTimeout(showCard, 220); });
   btn.addEventListener('pointerleave', function () {
     clearTimeout(hoverT);
@@ -155,8 +161,8 @@
   var panel = doc.createElement('aside');
   panel.id = 'rw-activity-detail';
   panel.className = 'activity-panel transient rw-panel';
-  panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'false'); panel.setAttribute('aria-label', 'Activity Detail: Running');
-  panel.setAttribute('data-domain', 'running'); panel.setAttribute('data-scope', 'focus');
+  panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'false'); panel.setAttribute('aria-label', 'Activity Detail: Processes');
+  panel.setAttribute('data-domain', 'processes'); panel.setAttribute('data-scope', 'focus');
   panel.hidden = true;
   var DOMAINS = [['goal', 'Goal'], ['todo', 'Todo'], ['subagents', 'Subagents'], ['crew', 'Crew'], ['brainstorm', 'BrainStorm'], ['review', 'Review'], ['chat_room', 'Chat Room'], ['changes', 'Changes'], ['artifacts', 'Artifacts']];
   function liveDomains() {
@@ -173,15 +179,15 @@
       if (d[0] === 'goal' || d[0] === 'todo' || d[0] === 'subagents') at = i;
     });
     out.splice(at + 1, 0, runTab());
-    return '<div class="activity-panel-head"><span class="event-icon activity-head-icon" data-tone="' + tone(c) + '">' + RW.icon(RW.state.icon, 13, 'nx nx-r-concept') + '</span>' +
+    return '<div class="activity-panel-head"><span class="event-icon activity-head-icon" data-tone="' + tone(c) + '">' + RW.glyph('processes', 13) + '</span>' +
       '<strong>Activity Detail</strong><span class="spacer"></span>' +
       '<button type="button" class="icon-button' + (ui.pinned ? ' is-pinned' : '') + '" data-rw-act="pin" aria-pressed="' + ui.pinned + '" aria-label="' + (ui.pinned ? 'Unpin' : 'Pin') + ' Activity Detail" title="' + (ui.pinned ? 'Unpin: float over the thread again' : 'Pin to the left of the thread') + '">' + RW.icon('pin', 13) + '</button>' +
       '<button type="button" class="icon-button" data-rw-act="close" aria-label="Close Activity Detail" title="Close">' + RW.icon('close', 13) + '</button></div>' +
       '<div class="activity-filter" role="toolbar" aria-label="Activity domains" style="--activity-n:' + (tabs.length + 1) + '">' + out.join('') + '</div>';
   }
-  function runTab() { return '<button type="button" class="active" data-rw-self="1" aria-pressed="true" data-hover-tip="Running">' + RW.icon(RW.state.icon, 12, 'nx nx-r-concept') + '<span>Running</span></button>'; }
+  function runTab() { return '<button type="button" class="active" data-rw-self="1" aria-pressed="true" data-hover-tip="Processes">' + RW.glyph('processes', 12) + '<span>Processes</span></button>'; }
 
-  /* One detail block, shared with the status bar's pop-out (rw-platform.js): the same facts, the same actions. */
+  /* One detail block, shared with the status bar's panel (rw-platform.js): the same facts, the same actions. */
   RW.ui = RW.ui || {};
   RW.ui.detail = function (it, where) {
     var n = Date.now(), facts = [];
@@ -251,13 +257,13 @@
     var live = all.filter(function (x) { return RW.isLive(x) && !RW.needsYou(x); }), needs = all.filter(RW.needsYou),
       sched = all.filter(function (x) { return x.kind === 'scheduled' && x.state === 'pending'; }), done = all.filter(RW.isDone);
     var h = '<div class="pmap pmap-statusboard is-focused rw-board" data-variant="' + RW.state.threadVariant + '">';
-    h += '<section class="pmap-focus-summary" data-tone="' + tone(c) + '"><div class="pmap-focus-head"><span class="pmap-focus-ident">' + RW.icon(RW.state.icon, 13, 'nx nx-r-concept') + '<strong>Running</strong></span><span class="pmap-focus-count">' + c.live + '</span></div><p>' + esc(summary(c)) + '</p></section>';
+    h += '<section class="pmap-focus-summary" data-tone="' + tone(c) + '"><div class="pmap-focus-head"><span class="pmap-focus-ident">' + RW.glyph('processes', 13) + '<strong>Processes</strong></span><span class="pmap-focus-count">' + c.live + '</span></div><p>' + esc(summary(c)) + '</p></section>';
     if (RW.state.restarted) h += '<div class="rw-strip" data-tone="attention">' + RW.st('warning', 12) + '<span>Puppet Master restarted 2m ago. 2 processes ended while it was closed; the agents were told once.</span></div>';
     if (RW.state.feed === 'stale') h += '<div class="rw-strip" data-tone="attention">' + RW.st('offline', 12) + '<span>Showing what was known 40s ago. Reconnecting to the server; nothing here has been stopped.</span></div>';
-    if (!all.length) h += '<div class="ab-empty rw-empty">Nothing is running in this thread. When its agent or a subagent starts a command, a server or a script, it shows up here, and so do scheduled runs.</div>';
+    if (!all.length) h += '<div class="ab-empty rw-empty">No processes in this thread. When its agent or a subagent starts a command, a server or a script, it shows up here, and so do scheduled runs.</div>';
     var v = RW.state.threadVariant;
     if (v === 'state') {
-      h += section('Needs you', needs) + section('Running', live) + section('Scheduled', sched);
+      h += section('Needs input', needs) + section('Running', live) + section('Scheduled', sched);
       if (done.length) h += '<section class="pmap-records rw-sec"><div class="pmap-records-head"><strong>Finished this session</strong><span><button type="button" class="rw-link" data-rw-act="clear">Clear</button></span></div>' + done.map(recordRow).join('') + '</section>';
     } else if (v === 'owner') {
       var owners = [null];
@@ -289,7 +295,7 @@
   function footHtml() {
     var c = counts();
     var n = c.live + c.sched;
-    return '<div class="rw-foot"><span class="rw-dim">Stop in the composer ends the reply, not these.</span><button type="button" class="rw-btn danger" data-rw-act="stop-all"' + (n ? '' : ' disabled') + '>Stop all in this thread' + (n ? ' (' + n + ')' : '') + '</button></div>';
+    return '<div class="rw-foot"><span class="rw-dim">Stop in the composer ends the reply, not these processes.</span><button type="button" class="rw-btn danger" data-rw-act="stop-all"' + (n ? '' : ' disabled') + '>Stop all in this thread' + (n ? ' (' + n + ')' : '') + '</button></div>';
   }
   function renderPanel(keepScroll) {
     var sc = panel.querySelector('.activity-scroll'), top = sc ? sc.scrollTop : 0;
@@ -321,10 +327,10 @@
   T.open = function () {
     hideCard(); closeReal();
     ui.open = true; panel.hidden = false; ensureLayers();
-    renderPanel(); placePanel(); paintButton();
+    renderPanel(); placePanel(); paintButton(); placeButton(); placeTab();
     setTimeout(function () { var f = panel.querySelector('[data-rw-self]'); if (f) f.focus({ preventScroll: true }); }, 0);
   };
-  T.close = function () { ui.open = false; panel.hidden = true; paintButton(); };
+  T.close = function () { ui.open = false; panel.hidden = true; paintButton(); placeButton(); placeTab(); };
   T.toggle = function () { if (ui.open) T.close(); else T.open(); };
   T.expand = function (id) { ui.expanded[id] = true; if (ui.open) renderPanel(true); };
 
