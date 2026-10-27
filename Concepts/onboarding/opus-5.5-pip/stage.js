@@ -5,10 +5,11 @@
    on its own string and swings too. Hovering a choice previews its prop; choosing it drops it in
    and Pip reacts. Between moments Pip is alive: it breathes, follows the pointer with its eyes and
    fidgets now and then.
-   Retro is a monitor, after PMConcept7's own terminal: Retro Dark a green-phosphor tube (glow,
+   Retro is PMConcept7's own terminal: Retro Dark a green-phosphor tube in a charcoal monitor case (glow,
    scanlines, an aperture grille, grain, a rolling bar, phosphor persistence, a degauss on a chapter
-   change) in a charcoal case, Retro Light the same machine's Paper Teletype printout on green-bar
-   paper in a putty case, the paper feeding on a chapter change. NieR is a YoRHa unit: Pip hovers like
+   change); Retro Light the same machine's Paper Teletype printout, no screen at all: green-bar paper
+   rising out of the printer at the foot of the stage, its head printing the command line, the paper
+   feeding on a chapter change. NieR is a YoRHa unit: Pip hovers like
    a Pod, a scanner turns, targets lock with leader lines, quests update and Pip talks in a dialogue box.
    Sound goes through window.PipSound (sound.js) when it is there. */
 (function (G) {
@@ -26,7 +27,7 @@
     portrait: {
       w: 400, h: 560, ground: 492, s: 2.6, ctl: [146, 112], rope: 184, propScale: 1.18, anchorY: -60,
       slots: {
-        side: [306, 372], pairA: [284, 318], pairB: [360, 426], hi: [306, 262],
+        side: [306, 372], sign: [294, 360], pairA: [284, 318], pairB: [360, 426], hi: [306, 262],
         o1: [262, 300], o2: [340, 322], o3: [262, 398], o4: [340, 420],
         m1: [250, 132], m2: [312, 162], m3: [374, 132], m4: [300, 318], m5: [52, 352],
         c1: [254, 378], c2: [316, 400], c3: [378, 378]
@@ -36,7 +37,7 @@
     banner: {
       w: 720, h: 240, ground: 234, s: 1.42, ctl: [150, 30], rope: 76, propScale: .74, anchorY: -40,
       slots: {
-        side: [420, 132], pairA: [396, 112], pairB: [480, 152], hi: [420, 92],
+        side: [420, 132], sign: [432, 124], pairA: [396, 112], pairB: [480, 152], hi: [420, 92],
         o1: [330, 96], o2: [390, 118], o3: [450, 96], o4: [510, 118],
         m1: [330, 64], m2: [380, 80], m3: [430, 64], m4: [410, 78], m5: [480, 108],
         c1: [470, 150], c2: [526, 164], c3: [582, 150]
@@ -47,7 +48,7 @@
     compact: {
       w: 420, h: 200, ground: 196, s: 1.2, ctl: [84, 26], rope: 62, propScale: .64, anchorY: -40,
       slots: {
-        side: [292, 112], pairA: [268, 96], pairB: [340, 130], hi: [300, 70],
+        side: [292, 112], sign: [296, 104], pairA: [268, 96], pairB: [340, 130], hi: [300, 70],
         o1: [218, 86], o2: [270, 104], o3: [322, 86], o4: [374, 104],
         m1: [230, 56], m2: [290, 72], m3: [350, 56], m4: [300, 90], m5: [380, 90],
         c1: [262, 124], c2: [318, 138], c3: [374, 124]
@@ -118,16 +119,21 @@
       root.innerHTML = '';
       root.classList.add('pst');
       root.dataset.fam = w.fam; root.dataset.scheme = w.scheme; root.dataset.layout = this.layoutName;
-      root.dataset.tube = this.tube || '';
+      // only Retro's stages carry data-tube (the monitor and paper rules key on it)
+      if (this.tube) root.dataset.tube = this.tube; else delete root.dataset.tube;
       root.dataset.reduced = this.reduced ? '1' : '0';
       root.style.setProperty('--st-tint', (w.chapter && w.chapter[this.chapter || 'welcome']) || w.ink);
-      // Retro: a monitor case, its sloped face and the tube; everything on stage lives on the tube
-      this.screen = root; this.content = root;
-      if (this.tube) {
+      // Retro Dark: a monitor case, its sloped face and the tube; everything on stage lives on the tube.
+      // Retro Light: a sheet of paper and the printer it comes out of
+      this.screen = root; this.content = root; this.head = null;
+      if (this.tube === 'phosphor') {
         const cs = div('pst-case', root);
         div('pst-brand', cs, `<span>PUPPET MASTER</span><i class="pst-led"></i>`);
         const face = div('pst-face', cs);
         this.screen = div('pst-tube', face);
+        this.content = div('pst-content', this.screen);
+      } else if (this.tube) {
+        this.screen = div('pst-sheet', root);
         this.content = div('pst-content', this.screen);
       }
       this.wall = div('pst-wall', this.content);
@@ -140,7 +146,7 @@
       const bd = PW.backdrop(w, this.id + 'w', Lay);
       this.pen = PW.pen(w, this.id + 'p'); this.pen.theme = this.theme;
       this.backDefs = bd.defs;
-      this.gBack = el('g', { class: 'pst-back' }, svg); this.gBack.innerHTML = bd.back;
+      this.gBack = el('g', { class: 'pst-back', id: this.id + 'bk' }, svg); this.gBack.innerHTML = bd.back;
       this.paper = this.gBack.querySelector('.st-paper');
       if (this.paper) this.paper.style.transform = `translateY(${-this.feed}px)`;
       this.terrain = bd.terrain || null;
@@ -159,6 +165,14 @@
       this.gPropStr = el('g', { class: 'pst-pstr' }, this.gActors);
       this.gProps = el('g', { class: 'pst-props' }, this.gActors);
       this.gPip = el('g', { class: 'pst-pip' }, this.gActors);
+      // NieR's chapter glitch: two bands of the whole picture, backdrop and all, slip sideways for a moment
+      this.gSlice = null;
+      if (w.fam === 'nier') {
+        const cp = el('clipPath', { id: this.id + 'slc' }, svg);
+        this.sliceR = [0, 1].map(() => el('rect', { x: -2000, y: 0, width: 4000, height: 0 }, cp));
+        this.gSlice = el('g', { 'clip-path': `url(#${this.id}slc)`, display: 'none' }, svg);
+        el('use', { href: `#${this.id}bk` }, this.gSlice); el('use', { href: `#${this.id}act` }, this.gSlice);
+      }
       this.gFx = el('g', { class: 'pst-fx' }, svg);
       this.gHud = el('g', { class: 'pst-hud' }, svg);
       this.overlay = div('pst-overlay', this.content);
@@ -166,7 +180,8 @@
       this.bubble.setAttribute('role', 'status');
       this.bubble.innerHTML = (w.fam === 'nier' ? '<b class="pst-bn">PIP</b>' : '') + '<span class="pst-bt"></span>' + (w.fam === 'nier' ? '<i class="pst-bgo" aria-hidden="true"></i>' : '');
       this.btext = this.bubble.querySelector('.pst-bt');
-      if (this.tube) div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
+      if (this.tube === 'phosphor') div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
+      if (this.tube === 'teletype') { div('pst-grain', this.screen); this.head = div('pst-printer', this.screen, '<i class="pst-bail"></i><i class="pst-platen"></i><i class="pst-head"><b></b></i>').querySelector('.pst-head'); }
       this.hudHtml();
       this.buildPip();
       // re-create the props that were on stage, in the new material
@@ -361,7 +376,9 @@
       this.root.style.setProperty('--st-power', String(Math.min(1, this.power / 3)));
       this.loopSnd('work', this.work ? 1 : 0);
       this.loopSnd('power', Math.min(1, this.power / 2));
-      if (spec.say !== undefined && !this.sleepZ) this.say(spec.say);
+      // a new screen's line starts at once; changes within a screen take their turn (see say)
+      const fresh = spec.sayNow || (spec.screen != null && spec.screen !== this.lastScreen); this.lastScreen = spec.screen;
+      if (spec.say !== undefined && !this.sleepZ) this.say(spec.say, null, fresh);
       this.hudTarget(spec.target, spec.label);
       if (this.tube) this.cmd(spec.cmd || null);
       if (this.famName === 'nier' && this.hudEl && spec.label) this.decode(spec.label);
@@ -377,7 +394,7 @@
       this.sfx('chapter', { chapter: CHAPTER_N[ch] });
       if (this.reduced) return;
       const f = this.famName, again = (node, cls) => { node.classList.remove(cls); void node.offsetWidth; node.classList.add(cls); };
-      if (f === 'nier') { again(this.root, 'pst-slice'); this.quest(CHAPTER_NAMES[ch]); setTimeout(() => this.sfx('slice'), 40); }
+      if (f === 'nier') { this.sliceT = this.t; this.quest(CHAPTER_NAMES[ch]); setTimeout(() => this.sfx('slice'), 40); }
       if (f === 'glass') again(this.root, 'pst-sweep');
       if (this.tube === 'phosphor') { this.screen.classList.remove('pst-on'); again(this.screen, 'pst-degauss'); setTimeout(() => this.sfx('degauss'), 30); }
       if (this.tube === 'teletype') this.feedPaper(2);
@@ -401,7 +418,7 @@
       const f = this.famName;
       if (f === 'friendly') this.burst(at, ['star', 'heart', 'dot'], 12);
       else if (f === 'glass') this.burst(at, ['glint', 'bubble'], 10);
-      else if (f === 'basic') this.burst(at, ['ring', 'check'], 2);
+      else if (f === 'basic') this.badge(pr, at);
       else if (this.tube === 'phosphor') this.burst(at, ['pix', 'glyph'], 14);
       else if (this.tube === 'teletype') this.burst(at, ['print', 'chad'], 12);
       else if (f === 'nier') { this.lockOn(pr); this.burst(at, ['nsq'], 10); }
@@ -442,37 +459,45 @@
     }
 
     /* ---------------------------------------------------------- speech */
-    // Pip types its line at the pace its voice speaks it (sound.js), in every look
-    say(text, mood) {
+    /* Pip types its line at the pace its voice speaks it (sound.js), in every look. Every line is typed, never
+       swapped in whole: the bubble takes the whole line's size first and the letters arrive in place, so
+       nothing jumps. Lines that come faster than Pip could say them (a name being typed, a quick change of
+       mind) wait: Pip says the one you settle on, once things are still for a moment, and a line it has
+       started stays up long enough to read. */
+    say(text, mood, now) {
       const b = this.bubble;
-      if (text && text === this.saying && b.classList.contains('on')) return;
-      clearInterval(this.typeT);
-      this.saying = text || '';
-      if (!text) { b.classList.remove('on'); const S = snd(); if (S && S.hush) S.hush(); return; }
-      const S = snd(), voice = () => {
-        if (!S || !S.say) return null;
-        try { return S.say(text, { mood: mood || (this.spec.pip && this.spec.pip.mood) || 'idle', kit: S.kitOf ? S.kitOf(this.theme) : undefined }); } catch (e) { return null; }
-      };
-      // lines that change faster than Pip can say them (typing a name, sweeping across choices) show at
-      // once, and Pip speaks only the one you stop on
-      const tn = performance.now(), quick = tn - (this.sayCall || 0) < 450;
+      text = text || '';
+      clearTimeout(this.sayT);
+      if (!text || now) { this.sayNext = null; if (text !== this.saying || !b.classList.contains('on')) this.sayNow(text, mood); return; }
+      if (text === this.saying && b.classList.contains('on')) { this.sayNext = null; return; }
+      const tn = performance.now(), calm = tn - (this.sayCall || 0) > 380;
       this.sayCall = tn;
-      clearTimeout(this.voiceT);
-      if (quick && b.classList.contains('on')) {
-        this.btext.textContent = text; b.classList.remove('typing');
-        if (S && S.hush) S.hush();
-        this.voiceT = setTimeout(() => { if (this.saying === text) voice(); }, 600);
-        return;
-      }
-      b.classList.remove('on'); void b.offsetWidth; b.classList.add('on');
-      const r = voice();
+      const shown = tn - (this.sayAt || 0), open = b.classList.contains('on');
+      // the first line, or one after a calm moment, starts at once; otherwise it waits its turn
+      const wait = !open ? 0 : Math.max(calm ? 0 : 380, (this.minShow || 0) - shown);
+      if (wait <= 0) { this.sayNow(text, mood); return; }
+      this.sayNext = [text, mood];
+      this.sayT = setTimeout(() => { const n = this.sayNext; this.sayNext = null; if (n) this.sayNow(n[0], n[1]); }, wait);
+    }
+    sayNow(text, mood) {
+      const b = this.bubble, S = snd();
+      clearInterval(this.typeT);
+      this.saying = text;
+      if (!text) { b.classList.remove('on', 'typing'); if (S && S.hush) S.hush(); return; }
+      if (!b.classList.contains('on')) { b.classList.remove('on'); void b.offsetWidth; b.classList.add('on'); }
+      let r = null;
+      if (S && S.say) try { r = S.say(text, { mood: mood || (this.spec.pip && this.spec.pip.mood) || 'idle', kit: S.kitOf ? S.kitOf(this.theme) : undefined }); } catch (e) { r = null; }
       const cps = (r && r.cps) || this.fam.cps;
-      if (this.reduced) { this.btext.textContent = text; b.classList.remove('typing'); return; }
-      let i = 0; this.btext.textContent = ''; b.classList.add('typing');
+      this.sayAt = performance.now();
+      this.minShow = Math.min(1400, 450 + text.length / cps * 1000 * .6);
+      this.btext.innerHTML = '<span class="pst-bt-on"></span><span class="pst-bt-off"></span>';
+      const on = this.btext.firstChild, off = this.btext.lastChild;
+      if (this.reduced) { on.textContent = text; b.classList.remove('typing'); return; }
+      let i = 0; off.textContent = text; b.classList.add('typing');
       const t0 = performance.now();
       this.typeT = setInterval(() => {
         const n = Math.min(text.length, Math.floor((performance.now() - t0) / 1000 * cps) + 1);
-        if (n !== i) { i = n; this.btext.textContent = text.slice(0, i); }
+        if (n !== i) { i = n; on.textContent = text.slice(0, i); off.textContent = text.slice(i); }
         if (i >= text.length) { clearInterval(this.typeT); b.classList.remove('typing'); }
       }, 16);
     }
@@ -485,17 +510,28 @@
       const inp = this.hudEl.querySelector('.pst-term-in'), ok = this.hudEl.querySelector('.pst-term-ok');
       if (!inp) return;
       clearInterval(this.cmdT);
+      // the teletype: the head returns to the margin and prints the next line
+      const tty = this.tube === 'teletype';
       ok.textContent = '';
       const s = text || '';
-      if (this.reduced) { inp.textContent = s; return; }
-      let i = 0; inp.textContent = '';
-      this.cmdT = setInterval(() => { i += 1; inp.textContent = s.slice(0, i); if (i >= s.length) clearInterval(this.cmdT); }, this.tube === 'teletype' ? 34 : 24);
+      if (this.reduced) { inp.textContent = s; this.headTo(); return; }
+      let i = 0; inp.textContent = ''; this.headTo();
+      if (tty && s) this.sfx('decode', { len: s.length });
+      this.cmdT = setInterval(() => { i += 1; inp.textContent = s.slice(0, i); this.headTo(); if (i >= s.length) clearInterval(this.cmdT); }, tty ? 30 : 24);
+    }
+    // the print head sits where the next letter will land
+    headTo() {
+      if (!this.head || !this.hudEl) return;
+      const cur = this.hudEl.querySelector('.pst-term-cur'), sh = this.screen.getBoundingClientRect();
+      if (!cur || !sh.width) return;
+      this.head.style.transform = `translateX(${R(cur.getBoundingClientRect().left - sh.left)}px)`;
     }
     ok() {
       const ok = this.hudEl && this.hudEl.querySelector('.pst-term-ok');
       if (!ok) return;
       ok.textContent = this.tube === 'teletype' ? '  ✓ DONE' : '  [ OK ]';
       ok.classList.remove('flash'); void ok.offsetWidth; ok.classList.add('flash');
+      this.headTo();
     }
     // the welcome on a cold machine: a few lines of boot text, then the screen clears
     boot() {
@@ -590,19 +626,26 @@
         if (kind === 'dot') sh = `<circle r="3.2" fill="${c}"/>`;
         if (kind === 'glint') sh = `<path d="M0 -9Q.6 -.6 9 0Q.6 .6 0 9Q-.6 .6 -9 0Q-.6 -.6 0 -9Z" fill="#fff" style="mix-blend-mode:plus-lighter"/>`;
         if (kind === 'bubble') sh = `<circle r="${3 + Math.random() * 4}" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.2"/>`;
-        if (kind === 'ring') sh = `<circle r="10" fill="none" stroke="${w.accent}" stroke-width="2"/>`;
-        if (kind === 'check') sh = `<circle r="11" fill="${w.accent}"/><path d="M-5 0L-1.5 3.5L5.5 -4" fill="none" stroke="${w.surface}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>`;
         if (kind === 'pix') sh = `<rect x="-2.5" y="-2.5" width="5" height="5" fill="${i % 3 ? w.ink : w.bright}"/>`;
         if (kind === 'glyph') sh = `<text font-family="VT323, monospace" font-size="18" text-anchor="middle" dominant-baseline="central" fill="${w.bright}">${['*', '+', '#', '$', '@'][i % 5]}</text>`;
         if (kind === 'print') sh = `<text font-family="'IBM Plex Mono', monospace" font-weight="700" font-size="15" text-anchor="middle" dominant-baseline="central" fill="${i % 2 ? w.ink : w.red}">${['*', '+', '×', '✓'][i % 4]}</text>`;
         if (kind === 'chad') sh = `<circle r="3.4" fill="${w.hole}" stroke="${w.rule}" stroke-width=".8"/>`;
         if (kind === 'nsq') sh = `<rect x="-2.5" y="-2.5" width="5" height="5" fill="${w.ink}" transform="rotate(45)"/>`;
         e.innerHTML = sh;
-        const still = kind === 'ring' || kind === 'check';
         const nsq = kind === 'nsq', ang = nsq ? i / n * Math.PI * 2 : a;
-        const p = { e, kind, x: at[0], y: at[1] - (kind === 'check' ? 46 * this.L.propScale : 0), vx: still ? 0 : Math.cos(ang) * (nsq ? 150 : sp), vy: still ? 0 : Math.sin(ang) * (nsq ? 150 : sp) - (nsq ? 0 : 60), r: nsq ? 0 : Math.random() * 6, vr: nsq ? 0 : (Math.random() - .5) * 8, life: 0, max: kind === 'check' ? 1.1 : kind === 'ring' ? .7 : nsq ? .55 : .9 + Math.random() * .5, g: kind === 'bubble' ? -120 : kind === 'glint' || nsq ? 0 : 260, drag: nsq ? 5 : .8 };
+        const p = { e, kind, x: at[0], y: at[1], vx: Math.cos(ang) * (nsq ? 150 : sp), vy: Math.sin(ang) * (nsq ? 150 : sp) - (nsq ? 0 : 60), r: nsq ? 0 : Math.random() * 6, vr: nsq ? 0 : (Math.random() - .5) * 8, life: 0, max: nsq ? .55 : .9 + Math.random() * .5, g: kind === 'bubble' ? -120 : kind === 'glint' || nsq ? 0 : 260, drag: nsq ? 5 : .8 };
         this.fx.push(p);
       }
+    }
+    // Basic marks a choice the way a diagram would: a check badge on the prop's corner and a ring spreading
+    // from it, both riding the prop as it swings
+    badge(pr, at) {
+      const w = this.w, sc = pr ? this.propTarget(pr).sc : this.L.propScale;
+      const off = pr ? [34 * sc, -30 * sc] : [0, -50 * sc];
+      const mk = (html) => { const e = el('g', { class: 'pst-p' }, this.gFx); e.innerHTML = html; return e; };
+      const ring = mk(`<circle r="11" fill="none" stroke="${w.accent}" stroke-width="1.5"/>`);
+      const chk = mk(`<circle r="11" fill="${w.accent}" stroke="${w.bg}" stroke-width="2"/><path d="M-5 .5L-1.6 3.9L5.2 -3.4" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>`);
+      [[ring, 'ring', .8], [chk, 'check', 1.5]].forEach(([e, kind, max]) => this.fx.push({ e, kind, x: at[0] + off[0], y: at[1] + off[1], vx: 0, vy: 0, r: 0, vr: 0, life: 0, max, g: 0, follow: pr || null, off }));
     }
     confetti(n) {
       if (this.reduced || this.famName === 'nier') return;
@@ -637,6 +680,7 @@
       this.box = r;
       const k = this.tube ? Math.max(r.width / Lay.w, r.height / Lay.h) : Math.min(r.width / Lay.w, r.height / Lay.h);
       this.map = { k, ox: (r.width - Lay.w * k) / 2, oy: (r.height - Lay.h * k) / 2 };
+      this.headTo();
     }
     toScreen(p) { const m = this.map || { k: 1, ox: 0, oy: 0 }; return [m.ox + p[0] * m.k, m.oy + p[1] * m.k]; }
     headCentre() { const ps = this.ps, H = this.H || this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy); return this.headXf([32, 45], H, this.ang || 0, 1, 1); }
@@ -720,6 +764,7 @@
       for (let i = this.fx.length - 1; i >= 0; i--) {
         const p = this.fx[i]; p.life += dt;
         if (p.life >= p.max) { p.e.remove(); this.fx.splice(i, 1); continue; }
+        if (p.follow) { if (p.follow.pos) { p.x = p.follow.pos[0] + p.off[0]; p.y = p.follow.pos[1] + p.off[1]; } continue; }
         p.vy += p.g * dt; p.x += (p.vx + (p.sway ? Math.sin(this.t * 2 + p.sway) * 20 : 0)) * dt; p.y += p.vy * dt; p.r += p.vr * dt;
         const k = Math.max(0, 1 - dt * (p.drag || 0)); p.vx *= k; if (p.drag > 1) p.vy *= k;
       }
@@ -795,8 +840,8 @@
       this.fx.forEach((p) => {
         const k = p.life / p.max;
         if (p.kind === 'ripple') { const e = ease(k); p.e.setAttribute('rx', R(6 + e * 90)); p.e.setAttribute('ry', R(1.5 + e * 12)); p.e.setAttribute('stroke-opacity', R((1 - k) * .7)); return; }
-        const op = p.kind === 'conf' ? (k > .85 ? (1 - k) / .15 : 1) : 1 - k * k;
-        const sc = p.kind === 'ring' ? 1 + k * 3.2 : p.kind === 'check' ? (k < .2 ? k / .2 * 1.1 : 1) : 1;
+        const op = p.kind === 'conf' ? (k > .85 ? (1 - k) / .15 : 1) : p.kind === 'check' ? (k < .75 ? 1 : (1 - k) / .25) : p.kind === 'ring' ? (1 - k) * .9 : 1 - k * k;
+        const sc = p.kind === 'ring' ? 1 + ease(k) * 2.2 : p.kind === 'check' ? (k < .1 ? k / .1 * 1.18 : k < .18 ? 1.18 - (k - .1) / .08 * .18 : 1) : 1;
         p.e.setAttribute('transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
         p.e.setAttribute('opacity', R(Math.max(0, op)));
       });
@@ -816,9 +861,19 @@
         this.gShadow.innerHTML = out;
       }
       // Basic measures: a plumb line from Pip to the floor and a marker riding the ruler
+      // and a protractor under the hand that reads Pip's swing, its marker on the angle of the string
       if (f === 'basic') {
-        const c = this.w.accent, x = R(hc[0]), y0 = R(H[1] + 30 * Lay.s);
-        this.gShadow.innerHTML = `<path d="M${x} ${y0}V${Lay.ground - 6}" stroke="${this.w.line}" stroke-opacity=".22" stroke-dasharray="2 4"/><path d="M${x} ${Lay.ground + 1}l-5 8h10z" fill="${c}"/><text x="${x}" y="${Lay.ground + 22}" text-anchor="middle" font-family="'Inter',system-ui,sans-serif" font-size="9" font-weight="600" fill="${this.w.line}" opacity=".55">${Math.round(hc[0])}</text>`;
+        const c = this.w.accent, ln = this.w.line, x = R(hc[0]), y0 = R(H[1] + 30 * Lay.s);
+        const r = Lay.rope * .52, cx = ps.C.x, cy = ps.C.y, A = (d) => d / 57.3, P = (q, rr) => `${R(cx + Math.sin(q) * rr)} ${R(cy + Math.cos(q) * rr)}`;
+        let tk = '';
+        for (let d = -30; d <= 30; d += 5) tk += `M${P(A(d), r)}L${P(A(d), r + (d % 15 ? 3.5 : 7))}`;
+        const th = clamp(ps.th, -A(34), A(34)), deg = ps.th * 57.3, lab = `${deg < -.05 ? '−' : ''}${Math.abs(deg).toFixed(1)}°`;
+        const m = (q, rr) => [cx + Math.sin(q) * rr, cy + Math.cos(q) * rr], tip = m(th, r - 1), b1 = m(th - .045, r - 9), b2 = m(th + .045, r - 9), lp = m(A(-38), r + 4);
+        this.gShadow.innerHTML = `<path d="M${P(A(-30), r)}A${R(r)} ${R(r)} 0 0 0 ${P(A(30), r)}${tk}" fill="none" stroke="${ln}" stroke-opacity=".28" stroke-width="1"/>`
+          + `<path d="M${R(cx)} ${R(cy)}L${P(0, r + 7)}" stroke="${ln}" stroke-opacity=".18" stroke-dasharray="2 3"/>`
+          + `<path d="M${R(tip[0])} ${R(tip[1])}L${R(b1[0])} ${R(b1[1])}L${R(b2[0])} ${R(b2[1])}Z" fill="${c}"/>`
+          + (Lay.w > 300 ? `<text x="${R(lp[0])}" y="${R(lp[1])}" text-anchor="end" font-family="'Inter',system-ui,sans-serif" font-size="9" font-weight="600" fill="${ln}" opacity=".55">θ ${lab}</text>` : '')
+          + `<path d="M${x} ${y0}V${Lay.ground - 6}" stroke="${ln}" stroke-opacity=".22" stroke-dasharray="2 4"/><path d="M${x} ${Lay.ground + 1}l-5 8h10z" fill="${c}"/><text x="${x}" y="${Lay.ground + 22}" text-anchor="middle" font-family="'Inter',system-ui,sans-serif" font-size="9" font-weight="600" fill="${ln}" opacity=".55">${Math.round(hc[0])}</text>`;
       }
       // Retro: the vector terrain rolls toward you, and the phosphor remembers where Pip was
       if (this.gTerrain && !this.reduced) {
@@ -827,9 +882,9 @@
         for (let k = 1; k < 16; k++) { const z = k - ph + .6, y = T.vy + D / (z * z * .45 + .2); if (y > T.vy + 1 && y < T.H) d += `M-400 ${R(y)}H${Lay.w + 400}`; }
         this.gTerrain.setAttribute('d', d); this.gTerrain.setAttribute('stroke-opacity', '.32');
       }
-      if (this.tube) this.persist();
-      // NieR: target brackets, a leader line and the lock
-      if (f === 'nier') this.renderBrackets();
+      if (this.tube === 'phosphor') this.persist();
+      // NieR: target brackets, a leader line and the lock; the glitch on a chapter change
+      if (f === 'nier') { this.renderBrackets(); this.renderSlice(); }
       // the speech bubble follows Pip (NieR's dialogue box sits at the foot of the stage instead)
       if (f !== 'nier') this.placeBubble(H, ang);
       // big swings can be heard
@@ -841,7 +896,7 @@
       const head = this.toScreen(this.headXf([32, 34], H, ang, 1, 1));
       const sp = this.toScreen(this.headXf(tall ? [44, 30] : [58, 44], H, ang, 1, 1));
       const bw = this.bubble.offsetWidth || 160, bh = this.bubble.offsetHeight || 34, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
-      const pad = this.tube ? 14 : 8, top = this.tube ? (tall ? 44 : 34) : 8, foot = this.tube ? (tall ? 44 : 34) : 8;
+      const pad = this.tube ? 14 : 8, top = this.tube ? (tall ? 44 : 34) : 8, foot = this.tube === 'teletype' ? (tall ? 70 : 48) : this.tube ? (tall ? 44 : 34) : 8;
       const x = clamp(sp[0] + (tall ? -bw * .3 : 6), pad, bx - bw - pad), y = clamp(tall ? sp[1] - bh - 22 : sp[1] - bh / 2, top, by - bh - foot);
       this.bubble.style.transform = `translate(${R(x)}px, ${R(y)}px)`;
       this.bubble.dataset.side = tall ? 'down' : 'left';
@@ -867,6 +922,15 @@
         if (k >= 1) { g.e.remove(); this.ghosts.splice(i, 1); continue; }
         g.e.setAttribute('opacity', R(peak * (1 - k)));
       }
+    }
+    renderSlice() {
+      const k = this.sliceT != null && !this.reduced ? (this.t - this.sliceT) / .42 : 1;
+      if (k >= 1) { if (this.gSlice.getAttribute('display') !== 'none') this.gSlice.setAttribute('display', 'none'); return; }
+      const H = this.L.h, step = [[.14, .27, -16, .55, .61], [.5, .58, 12, .3, .36], [.33, .44, -9, .7, .74], [.64, .79, 7, .2, .24], [.06, .13, -5, .46, .52], [.4, .47, 3, .82, .86]][Math.min(5, Math.floor(k * 6))];
+      this.sliceR[0].setAttribute('y', R(step[0] * H)); this.sliceR[0].setAttribute('height', R((step[1] - step[0]) * H));
+      this.sliceR[1].setAttribute('y', R(step[3] * H)); this.sliceR[1].setAttribute('height', R((step[4] - step[3]) * H));
+      this.gSlice.setAttribute('transform', `translate(${step[2]} 0)`);
+      this.gSlice.setAttribute('display', 'inline');
     }
     renderBrackets() {
       const id = this.target, pr = id && this.props.get(id);

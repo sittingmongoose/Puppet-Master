@@ -118,7 +118,7 @@ body[data-width="phone"] .ob-rail-l, body[data-width="phone"] .ob-rail li[data-s
 .ob-rail li button { position: absolute; left: 0; top: 0; translate: -50% 0; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 0 2px; border: 0; background: none; color: var(--faint); font: 500 11.5px var(--font); white-space: nowrap; }
 .ob-rail li button:disabled { cursor: default; }
 .ob-bead { width: 14px; height: 14px; border-radius: 50%; border: 1.6px solid var(--line2); background: var(--surface); display: grid; place-items: center; transition: transform .3s; }
-.ob-bead svg { display: block; }
+.ob-bead svg { display: block; width: 72%; height: 72%; }
 .ob-rail li[data-state="done"] .ob-bead { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .ob-rail li[data-state="done"] button { color: var(--muted); }
 .ob-rail li[data-state="done"] button:hover .ob-bead { transform: scale(1.2); }
@@ -272,7 +272,7 @@ body[data-fam="glass"] .ob-rail-hi { filter: drop-shadow(0 0 4px var(--accent));
 body[data-fam="basic"] .ob-choice, body[data-fam="basic"] .ob-look, body[data-fam="basic"] .ob-srow, body[data-fam="basic"] .ob-prov { border-width: 1px; background: var(--surface); }
 body[data-fam="basic"] .ob-choice[aria-checked="true"], body[data-fam="basic"] .ob-look[aria-checked="true"] { box-shadow: inset 0 0 0 1px var(--accent); }
 body[data-fam="basic"] .ob-choice:hover, body[data-fam="basic"] .ob-look:hover { transform: none; }
-body[data-fam="basic"] .ob-bead { width: 10px; height: 10px; border-width: 1.5px; }
+body[data-fam="basic"] .ob-bead { width: 12px; height: 12px; border-width: 1.5px; }
 body[data-fam="basic"] .ob-rail-str { stroke-width: 1.2; }
 body[data-fam="basic"] .ob-rail-hi { stroke-width: 1.6; }
 
@@ -298,10 +298,16 @@ body[data-fam="retro"] .ob-choice[aria-checked="true"] .ob-radio { border-color:
 body[data-fam="retro"] .ob-primary { text-transform: uppercase; letter-spacing: .06em; border: 2px solid var(--line); box-shadow: 4px 4px 0 var(--hard); }
 body[data-fam="retro"] .ob-primary:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--hard); }
 body[data-fam="retro"] .ob-ghost { text-transform: uppercase; letter-spacing: .06em; }
-body[data-fam="retro"] .ob-bead { border-radius: 0; width: 10px; height: 10px; border-width: 2px; }
+body[data-fam="retro"] .ob-bead { border-radius: 0; width: 13px; height: 13px; border-width: 2px; }
+body[data-fam="retro"] .ob-bead svg { width: 100%; height: 100%; stroke-width: 3.4; stroke-linecap: square; stroke-linejoin: miter; }
 body[data-fam="retro"] .ob-rail li button { text-transform: uppercase; letter-spacing: .06em; font-size: 10.5px; }
 body[data-fam="retro"] .ob-seg button[aria-checked="true"], body[data-fam="retro"] .ob-seg { border-radius: 0; }
 body[data-fam="retro"] .ob-promise .ob-ic, body[data-fam="retro"] .ob-ph-dot, body[data-fam="retro"] .ob-spin { border-radius: 0; }
+/* Retro's spinner is the terminal's own: a bar stepping | / - \ inside a still box */
+body[data-fam="retro"] .ob-phases li[data-state="run"] .ob-ph-dot, body[data-fam="retro"] .ob-spin { animation: none; border-color: var(--accent); position: relative; }
+body[data-fam="retro"] .ob-phases li[data-state="run"] .ob-ph-dot::after, body[data-fam="retro"] .ob-spin::after { content: ''; position: absolute; left: 50%; top: 50%; width: 2px; height: 62%; margin: -31% 0 0 -1px; background: var(--accent); animation: obAscii .56s steps(4, end) infinite; }
+body[data-fam="retro"] .ob-spin { width: 13px; height: 13px; border-width: 2px; }
+@keyframes obAscii { to { transform: rotate(180deg); } }
 
 /* -------------------------------------------------------------------- NieR: YoRHa */
 body[data-fam="nier"] .ob { box-shadow: none; border-color: var(--line2); background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--text) 5%, transparent) 0 1px, transparent 1px 22px), repeating-linear-gradient(90deg, color-mix(in srgb, var(--text) 5%, transparent) 0 1px, transparent 1px 22px); }
@@ -326,13 +332,20 @@ body[data-fam="nier"] .ob-choice[aria-checked="true"] .ob-radio { border-color: 
 body[data-fam="nier"] .ob-primary { font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
 body[data-fam="nier"] .ob-primary::before { content: ''; width: 6px; height: 6px; background: currentColor; margin-right: 6px; }
 body[data-fam="nier"] .ob-ghost { font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
-body[data-fam="nier"] .ob-bead { border-radius: 0; width: 9px; height: 9px; border-width: 1px; }
+body[data-fam="nier"] .ob-bead { border-radius: 0; width: 12px; height: 12px; border-width: 1px; }
+body[data-fam="nier"] .ob-bead svg { width: 86%; height: 86%; stroke-width: 2.6; stroke-linecap: square; }
 body[data-fam="nier"] .ob-rail li button { text-transform: uppercase; letter-spacing: .14em; font-size: 10.5px; font-weight: 500; }
 body[data-fam="nier"] .ob-rail li[data-state="now"] .ob-rail-l { padding: 3px 6px; background: var(--text); color: var(--bg); }
 body[data-fam="nier"] .ob-rail-str { stroke: var(--text); stroke-width: 1; opacity: .5; }
 body[data-fam="nier"] .ob-rail-hi { stroke: var(--text); stroke-width: 3; stroke-linecap: butt; }
 body[data-fam="nier"] .ob-promise .ob-ic, body[data-fam="nier"] .ob-ph-dot, body[data-fam="nier"] .ob-spin, body[data-fam="nier"] .ob-seg, body[data-fam="nier"] .ob-seg button { border-radius: 0; }
 body[data-fam="nier"] .ob-promise .ob-ic { background: transparent; border: 1px solid var(--line2); color: var(--text); }
+/* NieR's spinner: a whole square turning a quarter at a time, its core blinking */
+body[data-fam="nier"] .ob-phases li[data-state="run"] .ob-ph-dot, body[data-fam="nier"] .ob-spin { border: 1px solid var(--text); animation: obNierTurn 1.2s cubic-bezier(.7, 0, .2, 1) infinite; position: relative; }
+body[data-fam="nier"] .ob-phases li[data-state="run"] .ob-ph-dot::after, body[data-fam="nier"] .ob-spin::after { content: ''; position: absolute; inset: 30%; background: var(--text); animation: stLed .6s steps(1, end) infinite; }
+body[data-fam="nier"] .ob-phases li[data-state="run"] .ob-ph-dot { width: 18px; height: 18px; margin: 3px; }
+body[data-fam="nier"] .ob-spin { width: 11px; height: 11px; }
+@keyframes obNierTurn { 0%, 15% { transform: rotate(0deg); } 50%, 65% { transform: rotate(90deg); } 100% { transform: rotate(180deg); } }
 body[data-fam="nier"] .ob-foot::before { content: 'ENTER  CONTINUE    ESC  CLOSE'; white-space: pre; position: absolute; left: 50%; transform: translateX(-50%); font: 500 10.5px var(--font); letter-spacing: .16em; color: var(--faint); pointer-events: none; }
 body[data-fam="nier"] .ob-foot { position: relative; }
 body[data-fam="nier"] .ob-foot:has(.ob-foot-r .ob-ghost)::before { display: none; }

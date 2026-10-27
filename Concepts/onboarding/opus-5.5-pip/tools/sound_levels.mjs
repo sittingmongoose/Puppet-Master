@@ -32,7 +32,7 @@ async function measure(page, mode) {
         const s = P._stats(buf);
         const key = kind === 'loop' ? 'loop:' + name : name;
         const subtle = (P.SUBTLE[kit] || []).indexOf(name) >= 0;
-        out.push(Object.assign({ kit, kind, name, key, target: P.TARGET[key] - (subtle ? 7 : 0) }, s));
+        out.push(Object.assign({ kit, kind, name, key, target: P.TARGET[key] - (subtle ? 7 : 0) + (((P.OFFSET || {})[kit] || {})[key] || 0) }, s));
       }
     }
     return { rows: out, chain: await P._chainGain(), makeup: P._MAKEUP };

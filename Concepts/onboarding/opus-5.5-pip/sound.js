@@ -4,8 +4,11 @@
      glass     Liquid Glass: FM glass bells, wine-glass tones, water bloops, airy whooshes, shimmer, a long room
      basic     calm and precise: clean sines, soft clicks, two-tone confirms, almost no room
      phosphor  Retro Dark, the green-phosphor terminal: chip pulses, terminal beeps, the CRT's power-on and degauss
-     teletype  Retro Light, the same machine's printout: key clacks, the platen ratchet, the margin bell, a print head
-     nier      YoRHa: soft high menu ticks, two-tone confirms, data chatter, glitch tears, a drone, a distant choir
+     teletype  Retro Light, the same machine's printout: key clacks, the platen ratchet, the carriage return, the margin
+               bell, a small motor, a celesta
+     nier      YoRHa: soft high menu ticks, two-tone confirms, data chatter, glitch grains, a soft pad, a glockenspiel
+   Nothing holds a tone or gates one: a held drone, or two tones a hair apart, is heard as a hum, and a tone switched on
+   and off fast as a speaker breaking up (tools/sound_texture.mjs measures both). Loudness is A-weighted.
    Pip speaks: say(text) turns the words of a line into babble in the kit's voice (one syllable per vowel group, onsets
    from the consonants, vowels from the letters, a contour from the punctuation and the mood), timed to the typing.
 
@@ -36,6 +39,8 @@
   const LOOPS = ['snore', 'work', 'power', 'swing', 'bed'];
   const MOTION = new Set(['lower', 'ghost', 'lift', 'swing', 'hop', 'rail']);
   const VOICED = new Set(['say', 'wake', 'sleep', 'think', 'happy', 'wink', 'alert']);
+  // the quick ones you hear again and again get little room, so their tails never pile up and navigation never smears
+  const DRY = { hover: 0.15, tap: 0.2, key: 0.15, tick: 0.35, toggleOn: 0.35, toggleOff: 0.35, select: 0.4, next: 0.45, back: 0.4, slice: 0.3, lock: 0.4 };
   // the least time between two of the same event (ms); more often than this is dropped
   const RATE = { hover: 45, key: 40, tap: 30, select: 40, lower: 60, ghost: 80, land: 50, tick: 80, sparkle: 90, rail: 120, decode: 90, score: 150, lock: 120, hop: 90, swing: 140, toggleOn: 40, toggleOff: 40 };
   // target loudness (dBFS RMS over the sound's active part) that tools/sound_levels.mjs trims every take to
@@ -44,8 +49,10 @@
     lower: -31, ghost: -35, land: -30, lift: -32, hop: -30, swing: -34, tryOn: -27, sparkle: -30, confetti: -20, chapter: -23, tick: -27, block: -26,
     power: -24, score: -31, lock: -28, decode: -32, slice: -30, degauss: -27, feed: -29, powerOn: -27, powerOff: -29, rail: -33,
     wake: -26, sleep: -28, think: -27, happy: -26, wink: -27, alert: -26, cheer: -22, crew: -20, say: -26,
-    'loop:snore': -42, 'loop:work': -40, 'loop:power': -40, 'loop:swing': -40, 'loop:bed': -47
+    'loop:snore': -42, 'loop:work': -40, 'loop:power': -44, 'loop:swing': -40, 'loop:bed': -46
   };
+  // a kit's own exceptions to the targets (dB): NieR is the quiet one, its confirm a whisper next to its menu
+  const OFFSET = { nier: { cheer: -5, crew: -5, hover: -3, slice: -3 }, glass: { confetti: -5 } };
   // events a kit plays only as a faint courtesy (another look's speciality): trimmed 7 dB under their target
   const SUBTLE = {
     friendly: ['score', 'lock', 'decode', 'slice', 'degauss', 'feed'],
@@ -56,7 +63,7 @@
     nier: ['score', 'feed', 'degauss', 'hop', 'swing']
   };
   /* per-kit level trims in dB, measured: tools/sound_levels.mjs --write */
-  const TRIM = /* TRIM:begin */{"friendly":{"tap":5.5,"hover":4.5,"select":-3,"toggleOn":5.5,"toggleOff":5.5,"next":-2.5,"back":-1,"open":-1,"close":-1.5,"key":6.5,"warn":-1.5,"lower":1.5,"ghost":7.5,"land":-2,"lift":11,"hop":4,"swing":21.5,"tryOn":0.5,"sparkle":3.5,"confetti":7,"chapter":2.5,"tick":2.5,"block":0,"power":6,"score":9,"lock":7.5,"decode":10.5,"slice":26,"degauss":24,"feed":10.5,"powerOn":0,"powerOff":-1.5,"rail":12.5,"wake":-8,"sleep":-4,"think":-19,"happy":-8.5,"wink":-7.5,"alert":-12,"cheer":-6.5,"crew":-11.5,"say":-11.5,"loop:snore":2,"loop:work":-1,"loop:power":-5.5,"loop:swing":-10.5,"loop:bed":9},"glass":{"tap":12.5,"hover":13.5,"select":4.5,"toggleOn":5,"toggleOff":6,"next":3,"back":6.5,"open":4.5,"close":4.5,"key":12,"warn":9.5,"lower":10,"ghost":8.5,"land":11.5,"lift":12.5,"hop":7.5,"swing":26.5,"tryOn":5.5,"sparkle":12.5,"confetti":8.5,"chapter":9,"tick":14.5,"block":12.5,"power":8,"score":12,"lock":13.5,"decode":12,"slice":30,"degauss":29,"feed":15,"powerOn":5.5,"powerOff":10,"rail":15.5,"wake":-12,"sleep":-8.5,"think":-19,"happy":-12.5,"wink":-12,"alert":-17,"cheer":-10.5,"crew":-16.5,"say":-17.5,"loop:snore":3,"loop:work":6.5,"loop:power":-3.5,"loop:swing":-12,"loop:bed":8},"basic":{"tap":20.5,"hover":19,"select":6.5,"toggleOn":6.5,"toggleOff":6.5,"next":6.5,"back":6,"open":8.5,"close":7.5,"key":22,"warn":8,"lower":10.5,"ghost":19.5,"land":9,"lift":9.5,"hop":12.5,"swing":23.5,"tryOn":9,"sparkle":13.5,"confetti":15,"chapter":13.5,"tick":12,"block":12,"power":14,"score":19.5,"lock":17,"decode":19,"slice":18,"degauss":24.5,"feed":22,"powerOn":12,"powerOff":11,"rail":13,"wake":-8,"sleep":-7,"think":-5.5,"happy":-8,"wink":-7.5,"alert":-9.5,"cheer":-6,"crew":-7.5,"say":-8,"loop:snore":19,"loop:work":8.5,"loop:power":-4,"loop:swing":-17,"loop:bed":17.5},"phosphor":{"tap":9,"hover":14.5,"select":6,"toggleOn":5.5,"toggleOff":5.5,"next":7.5,"back":7,"open":1.5,"close":9.5,"key":13,"warn":6,"lower":15,"ghost":1.5,"land":4,"lift":8,"hop":7.5,"swing":18.5,"tryOn":10.5,"sparkle":18,"confetti":7.5,"chapter":16,"tick":11.5,"block":9.5,"power":7,"score":13.5,"lock":14,"decode":18.5,"slice":5.5,"degauss":-3.5,"feed":30,"powerOn":-4,"powerOff":8.5,"rail":11.5,"wake":3,"sleep":3.5,"think":2.5,"happy":2.5,"wink":2.5,"alert":1.5,"cheer":5.5,"crew":4,"say":2.5,"loop:snore":4,"loop:work":8,"loop:power":1,"loop:swing":-15,"loop:bed":-5},"teletype":{"tap":5,"hover":29.5,"select":5.5,"toggleOn":5,"toggleOff":4.5,"next":11,"back":9.5,"open":8.5,"close":8.5,"key":5.5,"warn":0,"lower":7,"ghost":25,"land":-1,"lift":23.5,"hop":22,"swing":26.5,"tryOn":4,"sparkle":7.5,"confetti":9.5,"chapter":9.5,"tick":7.5,"block":5.5,"power":11.5,"score":11,"lock":12,"decode":2.5,"slice":6,"degauss":9,"feed":8,"powerOn":4.5,"powerOff":9.5,"rail":24,"wake":0,"sleep":1.5,"think":-0.5,"happy":-1,"wink":-1,"alert":1,"cheer":3.5,"crew":2,"say":0,"loop:snore":10,"loop:work":0,"loop:power":0,"loop:swing":-10,"loop:bed":-3},"nier":{"tap":16.5,"hover":17,"select":9.5,"toggleOn":16.5,"toggleOff":17.5,"next":11.5,"back":11.5,"open":17,"close":18.5,"key":25,"warn":19.5,"lower":23,"ghost":23,"land":14.5,"lift":21,"hop":17.5,"swing":21,"tryOn":12.5,"sparkle":22.5,"confetti":10,"chapter":9,"tick":16,"block":14.5,"power":13,"score":20,"lock":14.5,"decode":25.5,"slice":24,"degauss":15.5,"feed":19,"powerOn":14.5,"powerOff":18,"rail":20.5,"wake":-1.5,"sleep":-0.5,"think":0,"happy":-0.5,"wink":-1,"alert":-3.5,"cheer":3,"crew":-5,"say":-1,"loop:snore":-5.5,"loop:work":15.5,"loop:power":0,"loop:swing":-19.5,"loop:bed":-3}}/* TRIM:end */;
+  const TRIM = /* TRIM:begin */{"friendly":{"tap":2.5,"hover":2.5,"select":-4,"toggleOn":1,"toggleOff":3.5,"next":-3.5,"back":-2,"open":-0.5,"close":-2.5,"key":4,"warn":0.5,"lower":5.5,"ghost":10.5,"land":11,"lift":13.5,"hop":12,"swing":24,"tryOn":-0.5,"sparkle":2.5,"confetti":8,"chapter":3,"tick":3.5,"block":2.5,"power":5,"score":6,"lock":5.5,"decode":9,"slice":23.5,"degauss":28.5,"feed":10.5,"powerOn":2,"powerOff":0.5,"rail":14,"wake":-4,"sleep":2.5,"think":-12,"happy":-5,"wink":-3,"alert":-8.5,"cheer":-3,"crew":-5.5,"say":-5,"loop:snore":13,"loop:work":-0.5,"loop:power":-9.5,"loop:swing":-10.5,"loop:bed":-10},"glass":{"tap":4.5,"hover":4.5,"select":2.5,"toggleOn":1.5,"toggleOff":0.5,"next":2.5,"back":5,"open":5,"close":5,"key":5,"warn":11,"lower":12.5,"ghost":8,"land":11.5,"lift":16,"hop":14,"swing":28,"tryOn":5.5,"sparkle":12,"confetti":6,"chapter":10,"tick":12.5,"block":12.5,"power":8,"score":10.5,"lock":7.5,"decode":11.5,"slice":24.5,"degauss":30,"feed":13,"powerOn":8.5,"powerOff":11,"rail":15,"wake":-9,"sleep":-3,"think":-14,"happy":-11.5,"wink":-10,"alert":-16.5,"cheer":-8.5,"crew":-12,"say":-13,"loop:snore":11,"loop:work":4,"loop:power":-3,"loop:swing":-11.5,"loop:bed":-6},"basic":{"tap":20,"hover":18.5,"select":5.5,"toggleOn":5.5,"toggleOff":5.5,"next":6,"back":4.5,"open":8.5,"close":7.5,"key":21.5,"warn":9.5,"lower":13.5,"ghost":19,"land":11,"lift":12.5,"hop":14.5,"swing":24.5,"tryOn":8.5,"sparkle":12,"confetti":15,"chapter":12.5,"tick":10.5,"block":11.5,"power":13,"score":18.5,"lock":15.5,"decode":16.5,"slice":18,"degauss":26,"feed":22,"powerOn":14,"powerOff":12.5,"rail":14,"wake":-7.5,"sleep":-5.5,"think":-4.5,"happy":-8,"wink":-7.5,"alert":-9.5,"cheer":-6.5,"crew":-6.5,"say":-7,"loop:snore":20,"loop:work":8,"loop:power":-5.5,"loop:swing":-17.5,"loop:bed":-5.5},"phosphor":{"tap":8,"hover":13.5,"select":5.5,"toggleOn":5.5,"toggleOff":5,"next":8.5,"back":7.5,"open":11.5,"close":9,"key":12.5,"warn":16,"lower":17,"ghost":1.5,"land":11,"lift":9.5,"hop":9,"swing":17,"tryOn":11,"sparkle":19,"confetti":15,"chapter":15.5,"tick":11,"block":14.5,"power":16.5,"score":12.5,"lock":13.5,"decode":19,"slice":10,"degauss":11.5,"feed":29.5,"powerOn":15.5,"powerOff":8,"rail":11,"wake":3,"sleep":4.5,"think":2.5,"happy":2,"wink":1.5,"alert":0.5,"cheer":4,"crew":6,"say":2,"loop:snore":3.5,"loop:work":8.5,"loop:power":-3,"loop:swing":-16,"loop:bed":-2},"teletype":{"tap":20.5,"hover":28,"select":5.5,"toggleOn":18.5,"toggleOff":19.5,"next":22.5,"back":20,"open":26.5,"close":25,"key":21,"warn":-0.5,"lower":19,"ghost":26,"land":17.5,"lift":22.5,"hop":23.5,"swing":28,"tryOn":3.5,"sparkle":7,"confetti":8.5,"chapter":8.5,"tick":8.5,"block":9.5,"power":10,"score":24,"lock":27.5,"decode":18.5,"slice":18.5,"degauss":28.5,"feed":22.5,"powerOn":26.5,"powerOff":25,"rail":23.5,"wake":2,"sleep":3.5,"think":1.5,"happy":1,"wink":1.5,"alert":1.5,"cheer":4.5,"crew":3.5,"say":1.5,"loop:snore":3.5,"loop:work":15,"loop:power":-7,"loop:swing":-10.5,"loop:bed":-9.5},"nier":{"tap":9.5,"hover":7,"select":4.5,"toggleOn":10,"toggleOff":11,"next":9,"back":10,"open":17.5,"close":19,"key":18,"warn":15,"lower":20.5,"ghost":19.5,"land":19,"lift":18,"hop":15,"swing":27,"tryOn":12,"sparkle":19.5,"confetti":11.5,"chapter":11,"tick":14,"block":16.5,"power":13.5,"score":16,"lock":13,"decode":22.5,"slice":21.5,"degauss":21,"feed":16.5,"powerOn":13,"powerOff":19.5,"rail":17,"wake":-4,"sleep":-2.5,"think":17.5,"happy":-4.5,"wink":-4,"alert":-5.5,"cheer":14.5,"crew":-7,"say":-3.5,"loop:snore":7,"loop:work":12,"loop:power":-2,"loop:swing":-18.5,"loop:bed":-9}}/* TRIM:end */;
   // the master chain's gain below its compressor's threshold, measured by the same tool, taken back out at the end
   const MAKEUP = /* MAKEUP:begin */1.42/* MAKEUP:end */;
 
@@ -151,6 +158,7 @@
     const g = env(c, t, o.g == null ? 0.1 : o.g, o.a == null ? 0.002 : o.a, o.d, o.hold);
     n.connect(g); g.connect(out);
     s.start(t, R() * 1.6); s.stop(t + o.d + 0.05);
+    return s;
   }
   function fmb(c, out, t, o) {
     const car = c.createOscillator(), mod = c.createOscillator(), mg = c.createGain();
@@ -202,64 +210,45 @@
     felt(c, o, t, g, f) { g = g == null ? 0.25 : g; f = f || 110; tone(c, o, t, { f: f * 1.6, f2: f * 0.7, d: 0.14, g, a: 0.004, lp: 700 }); hiss(c, o, t, { d: 0.06, f: 520, q: 0.7, type: 'lowpass', g: g * 0.3 }); },
     creak(c, o, t, g) { hiss(c, o, t, { d: 0.13, f: 950, f2: 720, q: 7, g: g == null ? 0.03 : g, a: 0.03 }); },
     glassBell(c, o, t, m, g, d) { const f = mf(fold(m, 100)); g = g == null ? 0.1 : g; d = d || 1.6; fmb(c, o, t, { f, ratio: 3.5, index: 0.8, d: d * 0.7, g: g * 0.55 }); tone(c, o, t, { f: f * 1.0015, d, g: g * 0.6 }); if (f * 2.32 < PMAX) tone(c, o, t, { f: f * 2.32, d: d * 0.35, g: g * 0.16 }); },
-    wineGlass(c, o, t, m, g, d) { const f = mf(fold(m, 102)); g = g == null ? 0.08 : g; d = d || 1.4; tone(c, o, t, { f, d, g, a: 0.05, hold: d * 0.3 }); tone(c, o, t, { f: f * 1.0035, d, g: g * 0.6, a: 0.07 }); if (f * 2.32 < PMAX) tone(c, o, t, { f: f * 2.32, d: d * 0.6, g: g * 0.1, a: 0.04 }); },
+    wineGlass(c, o, t, m, g, d) { const f = mf(fold(m, 102)); g = g == null ? 0.08 : g; d = d || 1.4; tone(c, o, t, { f, d, g, a: 0.05, hold: d * 0.3 }); tone(c, o, t, { f: f * 1.001, d, g: g * 0.3, a: 0.07 }); if (f * 2.32 < PMAX) tone(c, o, t, { f: f * 2.32, d: d * 0.6, g: g * 0.1, a: 0.04 }); },
     tink(c, o, t, m, g) { const f = mf(fold(m, 106)); g = g == null ? 0.06 : g; tone(c, o, t, { f, d: 0.11, g, a: 0.001 }); if (f * 2.32 < PMAX) tone(c, o, t, { f: f * 2.32, d: 0.05, g: g * 0.3, a: 0.001 }); },
     bloop(c, o, t, f, g, up) { tone(c, o, t, { f, f2: up === false ? f * 0.45 : f * 2.6, glide: 0.07, d: 0.12, g: g == null ? 0.15 : g, a: 0.003 }); },
     sine(c, o, t, m, g, d, a) { tone(c, o, t, { f: mf(m), d: d || 0.25, g: g == null ? 0.12 : g, a: a || 0.005 }); },
     click(c, o, t, g, f) { g = g == null ? 0.08 : g; f = f || 3000; hiss(c, o, t, { d: 0.006, f, q: 1.2, g }); tone(c, o, t, { f: f * 0.6, d: 0.018, g: g * 0.4, a: 0.0008 }); },
-    chip(c, o, t, m, d, g, duty, m2) { tone(c, o, t, { wave: pulse(c, duty || 0.25), f: mf(m), f2: m2 != null ? mf(m2) : null, d: d || 0.08, g: g == null ? 0.08 : g, a: 0.001, lp: 7000, hold: (d || 0.08) * 0.75 }); },
+    chip(c, o, t, m, d, g, duty, m2) { tone(c, o, t, { wave: pulse(c, duty || 0.25), f: mf(m), f2: m2 != null ? mf(m2) : null, d: d || 0.08, g: g == null ? 0.08 : g, a: 0.0015, lp: 5200, hold: (d || 0.08) * 0.7 }); },
     tri(c, o, t, m, d, g, m2) { tone(c, o, t, { type: 'triangle', f: mf(m), f2: m2 != null ? mf(m2) : null, d: d || 0.1, g: g == null ? 0.12 : g, a: 0.001, hold: (d || 0.1) * 0.7 }); },
     crunch(c, o, t, d, g, f) { hiss(c, o, t, { d: d || 0.06, f: f || 1800, q: 0.6, type: 'lowpass', g: g == null ? 0.1 : g, a: 0.001 }); },
-    clack(c, o, t, g, p) { g = g == null ? 0.14 : g; p = p || 1; hiss(c, o, t, { d: 0.012, f: 2600 * p, q: 1.4, g }); hiss(c, o, t, { d: 0.004, f: 5000, q: 2, g: g * 0.35 }); tone(c, o, t, { f: 175 * p, f2: 90 * p, d: 0.04, g: g * 0.7, a: 0.0008 }); tone(c, o, t + 0.003, { f: 3150 * p, d: 0.022, g: g * 0.12, a: 0.0005 }); },
+    // a typewriter key: the type bar's snap, the body's short wooden knock, a soft thud into the platen
+    clack(c, o, t, g, p) { g = g == null ? 0.14 : g; p = p || 1; hiss(c, o, t, { d: 0.008, f: 3400 * p, q: 1.1, g: g * 0.6, a: 0.0022 }); hiss(c, o, t + 0.001, { d: 0.028, f: 1250 * p, q: 5, g: g * 0.9 }); tone(c, o, t + 0.002, { f: 230 * p, f2: 160 * p, d: 0.03, g: g * 0.16, a: 0.001 }); },
     ratchet(c, o, t, n, step, g, p) { g = g == null ? 0.08 : g; p = p || 1; for (let i = 0; i < n; i++) { const tt = t + i * step * (1 + jit(0.08)); hiss(c, o, tt, { d: 0.007, f: 3300 * p, q: 2, g: g * (1 - (i / n) * 0.3) }); tone(c, o, tt, { f: 880 * p, d: 0.012, g: g * 0.25, a: 0.0005 }); } },
-    ding(c, o, t, g, m) { const f = mf(m || 93); partials(c, o, t, f, [[1, 1, 1], [1.006, 0.5, 0.9], [2.76, 0.32, 0.4], [5.4, 0.12, 0.15]], 1.5, g == null ? 0.1 : g, 0.001); hiss(c, o, t, { d: 0.005, f: 4200, q: 2, g: (g || 0.1) * 0.4 }); },
+    ding(c, o, t, g, m) { const f = mf(m || 93); partials(c, o, t, f, [[1, 1, 1], [1.0015, 0.2, 0.9], [2.76, 0.32, 0.4], [5.4, 0.12, 0.15]], 1.5, g == null ? 0.1 : g, 0.001); hiss(c, o, t, { d: 0.005, f: 4200, q: 2, g: (g || 0.1) * 0.4 }); },
     celesta(c, o, t, m, g, d) { const f = mf(fold(m, 103)); g = g == null ? 0.09 : g; partials(c, o, t, f, [[1, 1, 1], [4, 0.16, 0.25], [2, 0.12, 0.5]], d || 0.7, g, 0.001); hiss(c, o, t, { d: 0.004, f: 4000, q: 2, g: g * 0.2 }); },
-    // a dot-matrix print-head burst: a square at the pin rate, gated by a slower square, through the head's band
-    printBuzz(c, o, t, d, f, g) {
-      const s = c.createOscillator(); s.type = 'square'; s.frequency.value = f || 700;
-      const bp = filt(c, s, 'bandpass', 2300, 1.4), hp = filt(c, bp, 'highpass', 500, 0.7);
-      const am = c.createGain(); am.gain.value = 0.5; hp.connect(am);
-      const l = c.createOscillator(); l.type = 'square'; l.frequency.value = 95 + R() * 20; const lg = c.createGain(); lg.gain.value = 0.5; l.connect(lg); lg.connect(am.gain);
-      const e = env(c, t, g == null ? 0.12 : g, 0.002, d, d * 0.85); am.connect(e); e.connect(o);
-      s.start(t); l.start(t); s.stop(t + d + 0.05); l.stop(t + d + 0.05);
-      hiss(c, o, t, { d, f: 3000, q: 1, g: (g || 0.12) * 0.15, hold: d * 0.8 });
+    // the print head running along a line: light, uneven pin ticks (never a gated tone: that reads as distortion)
+    pins(c, o, t, n, g, p) {
+      g = g == null ? 0.05 : g; p = p || 1; let tt = t;
+      for (let i = 0; i < n; i++) { const k = 0.75 + R() * 0.5; hiss(c, o, tt, { d: 0.004, f: (2900 + R() * 900) * p, q: 2.6, g: g * k }); tone(c, o, tt, { f: (1500 + R() * 300) * p, d: 0.007, g: g * 0.18 * k, a: 0.0006 }); tt += 0.016 + R() * 0.014; }
+      return tt - t;
     },
-    ntick(c, o, t, f, g, d) { g = g == null ? 0.06 : g; tone(c, o, t, { f: f || 2640, d: d || 0.035, g, a: 0.004 }); hiss(c, o, t, { d: 0.004, f: 5000, q: 2.5, g: g * 0.3, a: 0.0006 }); },
+    // a small motor spinning up (or down): a band of air rising in pitch with a soft fundamental, no buzz
+    motor(c, o, t, d, up, g) {
+      g = g == null ? 0.05 : g;
+      hiss(c, o, t, { d, f: up ? 420 : 1100, f2: up ? 1100 : 380, q: 2.4, g, a: up ? d * 0.5 : 0.02, hold: up ? d * 0.7 : 0, pink: true });
+      tone(c, o, t, { f: up ? 140 : 320, f2: up ? 320 : 120, d, g: g * 0.35, a: up ? d * 0.45 : 0.02 });
+    },
+    // NieR's soft menu tick
+    ntick(c, o, t, f, g, d) { g = g == null ? 0.06 : g; tone(c, o, t, { f: f || 2640, d: d || 0.035, g, a: 0.006 }); hiss(c, o, t, { d: 0.004, f: 5000, q: 2.5, g: g * 0.3, a: 0.0006 }); },
     hum(c, o, t, f1, f2, d, g, lp1, lp2) {
-      const s = c.createOscillator(); s.type = 'sawtooth'; s.frequency.setValueAtTime(f1, t); s.frequency.exponentialRampToValueAtTime(f2, t + d * 0.9);
-      const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 5; lp.frequency.setValueAtTime(lp1 || 260, t); lp.frequency.exponentialRampToValueAtTime(lp2 || 2600, t + d * 0.8);
-      const e = env(c, t, g == null ? 0.05 : g, 0.04, d); s.connect(lp); lp.connect(e); e.connect(o); s.start(t); s.stop(t + d + 0.05);
+      const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 0.9; lp.frequency.setValueAtTime(lp1 || 400, t); lp.frequency.exponentialRampToValueAtTime(lp2 || 2600, t + d * 0.8);
+      const e = env(c, t, g == null ? 0.05 : g, Math.min(0.12, d * 0.3), d); lp.connect(e); e.connect(o);
+      [[1, 'triangle', 1], [2, 'sine', 0.45]].forEach(([m, type, gg]) => { const s = c.createOscillator(), sg = c.createGain(); s.type = type; s.frequency.setValueAtTime(f1 * m, t); s.frequency.exponentialRampToValueAtTime(f2 * m, t + d * 0.9); sg.gain.value = gg; s.connect(sg); sg.connect(lp); s.start(t); s.stop(t + d + 0.05); });
     },
-    buzz(c, o, t, f, d, g, bp) {
-      const s = c.createOscillator(); s.type = 'sawtooth'; s.frequency.value = f;
-      const b = filt(c, s, 'bandpass', bp || 850, 1.1), l = filt(c, b, 'lowpass', 1800, 0.5), h = filt(c, l, 'highpass', 220, 0.6);
-      const am = c.createGain(); am.gain.value = 0.65; h.connect(am);
-      const lf = c.createOscillator(), lg = c.createGain(); lf.frequency.value = 31; lg.gain.value = 0.35; lf.connect(lg); lg.connect(am.gain);
-      const e = env(c, t, g == null ? 0.08 : g, 0.005, d, d * 0.7); am.connect(e); e.connect(o);
-      s.start(t); lf.start(t); s.stop(t + d + 0.05); lf.stop(t + d + 0.05);
-    },
+    // a digital glitch grain: a short band of noise with a pitched edge, never a tremolo
+    glitch(c, o, t, f, d, g) { g = g == null ? 0.04 : g; hiss(c, o, t, { d, f, q: 4, g, hold: d * 0.7, a: 0.0008 }); tone(c, o, t, { type: 'square', f: f * 0.25, d: d * 0.8, g: g * 0.18, a: 0.0008, lp: 2400, hold: d * 0.6 }); },
     whoosh(c, o, t, d, f1, f2, g, q) { hiss(c, o, t, { d, f: f1, f2, q: q || 0.9, g: g == null ? 0.06 : g, a: d * 0.42, pink: true }); },
     pad(c, o, t, ms, d, g, type, lp, a) {
       const lo = c.createBiquadFilter(); lo.type = 'lowpass'; lo.frequency.value = lp || 2400; lo.Q.value = 0.5; lo.connect(o);
       ms.forEach((m, i) => { const f = mf(m); tone(c, lo, t, { f, type: type || 'triangle', d, g: g / Math.sqrt(ms.length), a: a || 0.06, hold: d * 0.5, det: i % 2 ? 4 : -4 }); });
     },
-    choir(c, o, t, ms, d, g, vowel) {
-      const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3200; lp.Q.value = 0.5; const hp = filt(c, lp, 'highpass', 150, 0.6); hp.connect(o);
-      const F = FORM[vowel || 'a'];
-      ms.forEach((m, i) => {
-        const f = mf(m), peak = (g || 0.05) / Math.sqrt(ms.length), e = c.createGain();
-        e.gain.setValueAtTime(1e-4, t); e.gain.exponentialRampToValueAtTime(peak, t + d * 0.3); e.gain.setValueAtTime(peak, t + d * 0.55); e.gain.exponentialRampToValueAtTime(1e-4, t + d);
-        const mix = c.createGain();
-        [-7, 6].forEach((cents, j) => {
-          const s = c.createOscillator(), l = c.createOscillator(), lg = c.createGain();
-          s.type = 'sawtooth'; s.frequency.value = f; s.detune.value = cents; l.frequency.value = 4.7 + i * 0.31 + j * 0.2; lg.gain.value = 9;
-          l.connect(lg); lg.connect(s.detune); s.connect(mix); s.start(t); l.start(t); s.stop(t + d + 0.05); l.stop(t + d + 0.05);
-        });
-        F.forEach((fr, j) => { const b = c.createBiquadFilter(), bg = c.createGain(); b.type = 'bandpass'; b.frequency.value = fr; b.Q.value = fr / (80 + fr * 0.05); bg.gain.value = [1, 0.5, 0.18][j]; mix.connect(b); b.connect(bg); bg.connect(e); });
-        e.connect(lp);
-      });
-      hiss(c, lp, t, { d, f: 1200, q: 3, g: (g || 0.05) * 0.06, a: d * 0.3, hold: d * 0.5 });
-    }
   };
 
   /* ---------------------------------------------------------------- music */
@@ -288,11 +277,11 @@
   const CREW = { pip: { mul: 1, rate: 1, grit: 0, fs: 1 }, crown: { mul: 0.72, rate: 0.9, grit: 0.12, fs: 0.9 }, hardhat: { mul: 0.86, rate: 1, grit: 0.3, fs: 0.95 }, glasses: { mul: 1.32, rate: 1.12, grit: 0, fs: 1.1 } };
   const VOX = {
     friendly: { kind: 'formant', w1: 'triangle', saw: 0.28, q: 7, fs: 1.18, lp: 4300, direct: 0.25, vib: [5.8, 16], gain: 0.55, att: 0.01, cons: 0.35, base: 285, bounce: 2.4, cps: 32 },
-    glass: { kind: 'formant', w1: 'sine', saw: 0.1, oct: 0.32, q: 5, fs: 1.3, lp: 6000, direct: 0.35, vib: [4.6, 12], breath: 0.22, shimmer: 0.05, gain: 0.55, att: 0.016, cons: 0.25, base: 345, bounce: 1.9, cps: 29 },
+    glass: { kind: 'formant', w1: 'sine', saw: 0.1, oct: 0.32, q: 5, fs: 1.3, lp: 6000, direct: 0.35, vib: [4.6, 12], breath: 0.11, shimmer: 0.05, gain: 0.55, att: 0.016, cons: 0.16, base: 345, bounce: 1.9, cps: 29, legato: 0.15 },
     basic: { kind: 'chirp', gain: 0.32, base: 740, bounce: 1.3, att: 0.004, rel: 0.012, maxSyl: 0.075, cons: 0.1, cps: 36 },
-    phosphor: { kind: 'pulse', duty: 0.25, gain: 0.24, root: 72, quant: [0, 2, 4, 7, 9, 12, 14, 16], maxSyl: 0.03, blip: 2, lp: 6500, cps: 50 },
-    teletype: { kind: 'buzz', gain: 0.42, root: 74, quant: [0, 2, 4, 5, 7, 9, 11, 12], maxSyl: 0.034, blip: 2, cps: 46 },
-    nier: { kind: 'formant', w1: 'sawtooth', saw: 0, q: 10, fs: 1.0, lp: 3200, direct: 0.08, vib: null, gain: 0.5, att: 0.004, rel: 0.006, cons: 0.2, base: 205, bounce: 0.25, mono: true, ring: 32, maxSyl: 0.075, cps: 52 }
+    phosphor: { kind: 'pulse', duty: 0.375, gain: 0.22, root: 72, quant: [0, 2, 4, 7, 9, 12, 14, 16], maxSyl: 0.036, blip: 3, lp: 3000, cps: 50 },
+    teletype: { kind: 'tick', gain: 0.2, root: 74, quant: [0, 2, 4, 5, 7, 9, 11, 12], maxSyl: 0.06, blip: 3, cps: 46 },
+    nier: { kind: 'chirp', w1: 'triangle', harm: 0.16, lp: 3600, gain: 0.3, base: 560, bounce: 0.4, mono: true, step: true, att: 0.003, rel: 0.01, maxSyl: 0.07, cons: 0.06, cps: 52 }
   };
   const VOWEL_RE = /[aeiouyàáâäèéêëìíîïòóôöùúûü]/i;
   function vowelOf(g) {
@@ -415,13 +404,14 @@
      into each other as speech does). Returns { stop(t), end } */
   function voice(c, out, t0, script, kitName, opt) {
     const V = VOX[kitName], C = CREW[(opt && opt.voice) || 'pip'] || CREW.pip, mood = MOOD[(opt && opt.mood) || 'idle'] || MOOD.idle;
+    if (V.kind === 'tick') return tickVoice(c, out, t0, script, V, C);
     const last = new Map();
     const setT = (p, v, t, tc) => { const lt = last.get(p) || 0; t = Math.max(t, lt + 1e-4); last.set(p, t); p.setTargetAtTime(v, t, Math.max(0.0008, tc)); };
     const end = script.reduce((m, s) => Math.max(m, s.t + s.d), 0), stopAt = t0 + end + 0.4;
     const oscs = [], fps = [], pitched = [];
     const env = c.createGain(); env.gain.setValueAtTime(0, t0);
     let into = env;
-    if (V.ring) { const rg = c.createGain(); rg.gain.value = 0.7; const l = c.createOscillator(), lg = c.createGain(); l.frequency.value = V.ring; lg.gain.value = 0.3; l.connect(lg); lg.connect(rg.gain); l.start(t0); l.stop(stopAt); oscs.push(l); env.connect(rg); rg.connect(out); } else env.connect(out);
+    env.connect(out);
     const mk = (type, mul, wave) => { const o = c.createOscillator(); if (wave) o.setPeriodicWave(wave); else o.type = type; o.start(t0); o.stop(stopAt); oscs.push(o); pitched.push(o); fps.push([o.frequency, mul]); return o; };
     let bands = null, ng = null, nbp = null;
     const base = (V.base || 300) * C.mul;
@@ -436,14 +426,11 @@
       const dg = c.createGain(); dg.gain.value = V.direct || 0.2; mix.connect(dg); dg.connect(lp);
       if (V.shimmer) { const sg = c.createGain(); sg.gain.value = V.shimmer; mk('sine', 4).connect(sg); sg.connect(lp); }
     } else if (V.kind === 'chirp') {
-      mk('sine', 1).connect(into);
-    } else if (V.kind === 'pulse') {
-      const lp = filt(c, mk(null, 1, pulse(c, V.duty)), 'lowpass', V.lp, 0.6); lp.connect(into);
+      // a clean tone; NieR's adds a quiet third harmonic for a glassy, digital edge
+      const o1 = mk(V.w1 || 'sine', 1);
+      if (V.harm) { filt(c, o1, 'lowpass', V.lp || 4000, 0.5).connect(into); const hg = c.createGain(); hg.gain.value = V.harm; mk('sine', 3).connect(hg); hg.connect(into); } else o1.connect(into);
     } else {
-      // teletype: a pin-rate square gated by a slower square through the print head's band
-      const s = mk('square', 1), bp = filt(c, s, 'bandpass', 2300, 1.4), hp = filt(c, bp, 'highpass', 450, 0.7);
-      const am = c.createGain(); am.gain.value = 0.55; hp.connect(am); am.connect(into);
-      const l = c.createOscillator(); l.type = 'square'; l.frequency.value = 92; const lg = c.createGain(); lg.gain.value = 0.45; l.connect(lg); lg.connect(am.gain); l.start(t0); l.stop(stopAt); oscs.push(l);
+      const lp = filt(c, mk(null, 1, pulse(c, V.duty)), 'lowpass', V.lp, 0.6); lp.connect(into);
     }
     if (V.vib) { const l = c.createOscillator(), lg = c.createGain(); l.frequency.value = V.vib[0]; lg.gain.value = V.vib[1]; l.connect(lg); pitched.forEach((o) => lg.connect(o.detune)); l.start(t0); l.stop(stopAt); oscs.push(l); }
     if (V.kind === 'formant' || V.kind === 'chirp') {
@@ -451,7 +438,7 @@
       ng = c.createGain(); ng.gain.setValueAtTime(0, t0); ns.connect(nbp); nbp.connect(ng); ng.connect(out); ns.start(t0, R()); ns.stop(stopAt); oscs.push(ns);
     }
     const peak = V.gain;
-    if (V.kind === 'pulse' || V.kind === 'buzz') {
+    if (V.kind === 'pulse') {
       const tr = 12 * Math.log2(C.mul);
       script.forEach((s) => {
         const ts = t0 + s.t, te = ts + s.d, q = V.quant, deg = s.deg | 0;
@@ -462,13 +449,15 @@
       });
     } else {
       script.forEach((s, j) => {
-        const ts = t0 + s.t, te = ts + s.d, f0 = base * Math.pow(2, s.p / 12), f1 = base * Math.pow(2, s.p2 / 12);
+        // a Pod speaks in steps: each syllable on one note, a small lift on every third, the ending's contour kept
+        const p0 = V.step ? Math.round(s.p) + (j % 3 === 1 ? 2 : 0) : s.p, p1 = V.step ? (j === script.length - 1 ? Math.round(s.p2) : p0) : s.p2;
+        const ts = t0 + s.t, te = ts + s.d, f0 = base * Math.pow(2, p0 / 12), f1 = base * Math.pow(2, p1 / 12);
         fps.forEach(([p, mul]) => { setT(p, f0 * mul, ts - 0.004, 0.004); setT(p, f1 * mul, ts + s.d * 0.3, s.d * 0.35); });
         if (bands) { const F = FORM[s.v] || FORM.a; bands.forEach((b, k) => setT(b.frequency, F[k] * V.fs * C.fs, ts - 0.01, 0.012)); }
         const lvl = peak * (s.g || 1) * (s.v === 'm' ? 0.7 : 1);
         setT(env.gain, lvl, ts, s.on === 'n' ? 0.02 : V.att || 0.01);
         const nx = script[j + 1], leg = V.kind !== 'chirp' && !V.mono && s.leg && nx && nx.t - (s.t + s.d) < 0.03;
-        setT(env.gain, leg ? lvl * 0.4 : 0, te - 0.01, V.rel || 0.014);
+        setT(env.gain, leg ? lvl * (V.legato != null ? V.legato : 0.4) : 0, te - 0.01, V.rel || 0.014);
         const O = s.on && ONSET[s.on];
         if (O && ng) {
           setT(nbp.frequency, O[0], ts - 0.022, 0.001);
@@ -486,9 +475,26 @@
       }
     };
   }
+  /* Retro Light's voice: each blip a struck note (and a faint twelfth) with the light tick of a key. One voice at a time:
+     each note is damped as the next is struck, since two neighbouring notes ringing together beat, and read as rough. */
+  function tickVoice(c, out, t0, script, V, C) {
+    const tr = 12 * Math.log2(C.mul), q = V.quant, srcs = [], env = c.createGain(); env.gain.setValueAtTime(0, t0); env.connect(out);
+    const end = script.reduce((m, s) => Math.max(m, s.t + s.d * 2.2), 0), stopAt = t0 + end + 0.3;
+    const osc = [[1, 1], [3, 0.08]].map(([mul, g]) => { const o = c.createOscillator(), og = c.createGain(); og.gain.value = g; o.connect(og); og.connect(env); o.start(t0); o.stop(stopAt); srcs.push([t0, o]); return [o, mul]; });
+    script.forEach((s, j) => {
+      const deg = s.deg | 0, midi = V.root + tr + q[((deg % q.length) + q.length) % q.length] + 12 * Math.floor(deg / q.length);
+      const f = mf(midi), ts = t0 + s.t, g = V.gain * (s.g || 1), nx = script[j + 1], cut = nx ? t0 + nx.t - 0.003 : ts + s.d * 2.2;
+      env.gain.setTargetAtTime(0, Math.max(t0, ts - 0.003), 0.0008);
+      osc.forEach(([o, mul]) => o.frequency.setValueAtTime(f * mul, ts));
+      env.gain.setTargetAtTime(g, ts, 0.0012);
+      env.gain.setTargetAtTime(0, ts + 0.006, Math.min(0.03, Math.max(0.006, (cut - ts) * 0.35)));
+      srcs.push([ts, hiss(c, out, ts, { d: 0.003, f: 3600, q: 2.5, g: g * 0.3 })]);
+    });
+    return { end: stopAt, stop(t) { env.gain.cancelScheduledValues(t); env.gain.setTargetAtTime(0, t, 0.005); srcs.forEach(([ts, o]) => { try { o.stop(ts > t ? t : t + 0.05); } catch (e) { /* gone */ } }); } };
+  }
   function scriptFor(kitName, name) {
     const V = VOX[kitName], s = VS[name];
-    if (V.kind === 'pulse' || V.kind === 'buzz') return blipsFromScript(s, V);
+    if (V.kind === 'pulse' || V.kind === 'tick') return blipsFromScript(s, V);
     if (V.mono) return s.map((q) => Object.assign({}, q, { p: q.p * 0.25, p2: q.p2 * 0.25, d: Math.min(q.d, 0.2) }));
     return s;
   }
@@ -561,7 +567,7 @@
     root: 74, mode: 'major', motif: [0, 7, 14, 21], room: { len: 3, rt: 2.6, bright: 0.65, pre: 0.015, wet: 0.32, hp: 300 },
     ev: {
       tap: (c, o, t, op, k) => I.tink(c, o, t, [98, 100, 102, 105][k.v % 4], 0.05),
-      hover: (c, o, t, op, k) => I.wineGlass(c, o, t, k.chord()[k.v % 3] + 24, 0.02, 0.3),
+      hover: (c, o, t, op, k) => I.tink(c, o, t, k.chord()[k.v % 3] + 24, 0.035),
       select: (c, o, t, op, k) => { const ch = k.chord(); I.glassBell(c, o, t, ch[0] + 12, 0.07, 1); I.glassBell(c, o, t + 0.05, ch[2] + 12, 0.06, 1); },
       toggleOn: (c, o, t) => I.bloop(c, o, t, 520, 0.12),
       toggleOff: (c, o, t) => I.bloop(c, o, t, 900, 0.1, false),
@@ -580,10 +586,10 @@
       tryOn: (c, o, t, op, k) => { I.whoosh(c, o, t, 0.25, 700, 3000, 0.035); SIG.glass(c, o, t + 0.12, k); },
       sparkle: (c, o, t, op, k) => { const ch = k.chord(); for (let i = 0; i < 6; i++) I.glassBell(c, o, t + i * 0.05 + R() * 0.03, ch[(i + k.v) % 3] + 24, 0.025, 0.5); for (let i = 0; i < 3; i++) I.bloop(c, o, t + 0.05 + i * 0.09, 900 + R() * 600, 0.03); },
       confetti: (c, o, t, op, k) => {
-        const ch = k.chord(4); I.pad(c, o, t, ch.concat(ch.map((m) => m + 12)), 2.4, 0.06, 'sine', 6000, 0.4);
-        for (let i = 0; i < 9; i++) I.glassBell(c, o, t + 0.2 + i * 0.075, ch[i % 3] + 12 * Math.floor(i / 3), 0.06, 1.3);
-        for (let i = 0; i < 5; i++) I.bloop(c, o, t + 0.4 + i * 0.12, 700 + R() * 900, 0.035);
-        I.glassBell(c, o, t + 0.95, k.root + 36, 0.05, 1.8);
+        const ch = k.chord(4); I.pad(c, o, t, ch, 1.8, 0.05, 'sine', 4000, 0.35);
+        for (let i = 0; i < 6; i++) I.glassBell(c, o, t + 0.2 + i * 0.09, ch[i % 3] + 12 * Math.floor(i / 3), i < 3 ? 0.06 : 0.045, 1);
+        for (let i = 0; i < 3; i++) I.bloop(c, o, t + 0.4 + i * 0.16, 700 + R() * 700, 0.03);
+        I.glassBell(c, o, t + 0.8, k.root + 24, 0.03, 1.2);
       },
       chapter: (c, o, t, op, k) => { const n = motifRun(k, t, 0.16, (at, m, i, last) => I.glassBell(c, o, at, m + 12, 0.08, last ? 2 : 1.2)); I.pad(c, o, t, k.chord().map((m) => m), 0.6 + n * 0.25, 0.03, 'sine', 4000, 0.2); },
       tick: (c, o, t, op, k) => { const s = [4, 7, 11, 12][clamp(k.idx, 0, 3)]; I.tink(c, o, t, k.root + s + 12, 0.06); I.glassBell(c, o, t + 0.01, k.root + s + 12, 0.05, 0.9); if (k.idx >= 3) k.chord(4).forEach((m, i) => I.glassBell(c, o, t + 0.12 + i * 0.05, m + 12, 0.04, 1.4)); },
@@ -654,7 +660,7 @@
       toggleOff: (c, o, t) => I.chip(c, o, t, 88, 0.07, 0.05, 0.5, 76),
       next: (c, o, t) => { [72, 76, 79, 84].forEach((m, i) => I.chip(c, o, t + i * 0.035, m, 0.04, 0.05)); },
       back: (c, o, t) => { I.chip(c, o, t, 79, 0.04, 0.05); I.chip(c, o, t + 0.04, 72, 0.05, 0.05); },
-      open: (c, o, t) => { hiss(c, o, t, { d: 0.005, f: 1800, q: 3, g: 0.08 }); tone(c, o, t, { f: 62, f2: 40, d: 0.16, g: 0.2, a: 0.002 }); hiss(c, o, t + 0.01, { d: 0.22, f: 3000, type: 'highpass', g: 0.03 }); [72, 79, 84].forEach((m, i) => I.chip(c, o, t + 0.12 + i * 0.04, m, 0.05, 0.05)); },
+      open: (c, o, t) => { hiss(c, o, t, { d: 0.005, f: 1800, q: 3, g: 0.08 }); tone(c, o, t, { f: 110, f2: 55, d: 0.16, g: 0.16, a: 0.002 }); hiss(c, o, t + 0.01, { d: 0.2, f: 2600, f2: 1500, q: 0.5, g: 0.025 }); [72, 79, 84].forEach((m, i) => I.chip(c, o, t + 0.12 + i * 0.04, m, 0.05, 0.05, 0.5)); },
       close: (c, o, t) => crtOff(c, o, t, 0.8),
       key: (c, o, t, op, k) => { I.chip(c, o, t, 91 + [0, 2, 4, 7, 9][k.idx % 5], 0.02, 0.03, 0.5); hiss(c, o, t, { d: 0.003, f: 2600, q: 3, g: 0.03 }); },
       warn: (c, o, t) => { I.chip(c, o, t, 45, 0.09, 0.07, 0.5); I.chip(c, o, t + 0.12, 45, 0.13, 0.07, 0.5); },
@@ -681,13 +687,14 @@
       lock: (c, o, t) => { I.chip(c, o, t, 96, 0.03, 0.04); I.chip(c, o, t + 0.03, 103, 0.05, 0.04); },
       decode: (c, o, t) => { for (let i = 0; i < 8; i++) I.chip(c, o, t + i * 0.025, 90 + Math.floor(R() * 14), 0.02, 0.02, 0.125); },
       slice: (c, o, t) => { I.crunch(c, o, t, 0.06, 0.06, 3000); I.chip(c, o, t + 0.02, 40, 0.05, 0.04, 0.5, 70); },
+      // the degauss coil: a deep "thoom" that wobbles as the field swings out (sines only, so it stays round)
       degauss: (c, o, t) => {
-        tone(c, o, t, { f: 55, f2: 38, d: 0.7, g: 0.24, a: 0.005 });
-        const s = c.createOscillator(); s.type = 'sawtooth'; s.frequency.value = 60; const lp = filt(c, s, 'lowpass', 320, 0.8);
-        const am = c.createGain(); am.gain.value = 0.6; lp.connect(am); const l = c.createOscillator(), lg = c.createGain(); l.frequency.setValueAtTime(11, t); l.frequency.exponentialRampToValueAtTime(3, t + 0.9); lg.gain.value = 0.4; l.connect(lg); lg.connect(am.gain);
-        const e = env(c, t, 0.06, 0.01, 0.95); am.connect(e); e.connect(o); s.start(t); l.start(t); s.stop(t + 1); l.stop(t + 1);
-        tone(c, o, t + 0.02, { f: 1250, d: 0.8, g: 0.018, a: 0.01, vib: [7, 70] });
-        hiss(c, o, t + 0.2, { d: 0.6, f: 3500, type: 'highpass', g: 0.012, a: 0.1 });
+        tone(c, o, t, { f: 110, f2: 60, d: 0.7, g: 0.08, a: 0.005 });
+        const e = env(c, t, 0.05, 0.01, 0.9), am = c.createGain(); am.gain.value = 0.6; am.connect(e); e.connect(o);
+        [[120, 1], [240, 0.4]].forEach(([f, gg]) => { const s = c.createOscillator(), sg = c.createGain(); s.frequency.value = f; sg.gain.value = gg; s.connect(sg); sg.connect(am); s.start(t); s.stop(t + 1); });
+        const l = c.createOscillator(), lg = c.createGain(); l.frequency.setValueAtTime(9, t); l.frequency.exponentialRampToValueAtTime(3, t + 0.9); lg.gain.value = 0.35; l.connect(lg); lg.connect(am.gain); l.start(t); l.stop(t + 1);
+        tone(c, o, t + 0.02, { f: 1250, d: 0.6, g: 0.012, a: 0.01, vib: [7, 50] });
+        [[360, 0.08], [540, 0.04]].forEach(([f, gg]) => tone(c, o, t, { f, f2: f * 0.8, d: 0.75, g: gg, a: 0.01, vib: [6, 40] }));
       },
       feed: (c, o, t) => hiss(c, o, t, { d: 0.004, f: 1800, q: 3, g: 0.05 }),
       powerOn: (c, o, t) => crtOn(c, o, t),
@@ -698,86 +705,95 @@
     },
     accent: {}
   };
-  // the tube switching on: a relay, a thump, static, a faint rising whine that fades, the hum coming up
+  // the tube switching on: a relay, a thump, a burst of static settling, the tube warming up in a soft swell
   function crtOn(c, o, t) {
     I.clack(c, o, t, 0.08, 1.3);
-    tone(c, o, t + 0.02, { f: 48, f2: 30, d: 0.28, g: 0.3, a: 0.003 });
-    hiss(c, o, t + 0.03, { d: 0.35, f: 2600, type: 'highpass', g: 0.05, a: 0.004 });
-    for (let i = 0; i < 6; i++) hiss(c, o, t + 0.05 + R() * 0.3, { d: 0.004, f: 3000, q: 2, g: 0.04 });
-    tone(c, o, t + 0.1, { f: 7600, f2: 8300, lin: true, glide: 1.2, d: 1.6, g: 0.005, a: 0.35 });
-    tone(c, o, t + 0.05, { type: 'sawtooth', f: 60, d: 1.1, g: 0.03, a: 0.3, lp: 250 });
+    tone(c, o, t + 0.02, { f: 90, f2: 48, d: 0.24, g: 0.07, a: 0.003 });
+    hiss(c, o, t + 0.03, { d: 0.32, f: 2600, f2: 1400, q: 0.5, g: 0.04, a: 0.004 });
+    for (let i = 0; i < 6; i++) hiss(c, o, t + 0.05 + R() * 0.3, { d: 0.004, f: 3000, q: 2, g: 0.035 });
+    tone(c, o, t + 0.12, { type: 'triangle', f: 120, f2: 180, d: 0.9, g: 0.03, a: 0.35, lp: 700 });
+    tone(c, o, t + 0.02, { f: 420, f2: 260, d: 0.22, g: 0.09, a: 0.003 }); tone(c, o, t + 0.12, { f: 880, f2: 990, d: 0.7, g: 0.012, a: 0.25 });
   }
   function crtOff(c, o, t, k) {
     tone(c, o, t, { f: 1200, f2: 60, glide: 0.35, d: 0.4, g: 0.06 * k, a: 0.002 });
     hiss(c, o, t, { d: 0.005, f: 1800, q: 3, g: 0.06 * k });
     hiss(c, o, t + 0.05, { d: 0.4, f: 3000, type: 'highpass', g: 0.02 * k, a: 0.01 });
   }
+  /* Retro Light, the Paper Teletype: everything is the machine and its paper. Keys snap, the platen ratchets, the
+     carriage returns with a zip, the margin bell rings, a small motor spins up; the music is a celesta. Nothing here
+     is a gated tone or a low sawtooth: on paper those read as a speaker breaking up. */
   KIT.teletype = {
-    root: 79, mode: 'major', motif: [0, 2, 4, 7], room: { len: 0.45, rt: 0.3, bright: 0.75, er: true, wet: 0.1 },
+    root: 79, mode: 'major', motif: [0, 2, 4, 7], room: { len: 0.45, rt: 0.3, bright: 0.6, er: true, wet: 0.08 },
     ev: {
       tap: (c, o, t, op, k) => I.clack(c, o, t, 0.12, 0.95 + (k.v % 3) * 0.05),
-      hover: (c, o, t) => { hiss(c, o, t, { d: 0.003, f: 2800, q: 3, g: 0.02 }); tone(c, o, t, { f: 1200, d: 0.008, g: 0.006, a: 0.0005 }); },
-      select: (c, o, t, op, k) => { I.clack(c, o, t, 0.12); I.celesta(c, o, t + 0.02, k.chord()[2] + 12, 0.045, 0.5); },
-      toggleOn: (c, o, t) => { I.clack(c, o, t, 0.1, 0.9); I.clack(c, o, t + 0.03, 0.08, 1.15); },
-      toggleOff: (c, o, t) => { I.clack(c, o, t, 0.08, 1.1); I.clack(c, o, t + 0.03, 0.1, 0.8); },
-      next: (c, o, t) => { hiss(c, o, t, { d: 0.14, f: 1800, f2: 3500, q: 3, g: 0.05, a: 0.02 }); I.ratchet(c, o, t + 0.02, 3, 0.02, 0.05); I.clack(c, o, t + 0.15, 0.1, 0.9); },
-      back: (c, o, t) => { I.ratchet(c, o, t, 2, 0.035, 0.07, 0.85); I.clack(c, o, t + 0.07, 0.08, 0.85); },
-      open: (c, o, t) => { tone(c, o, t, { type: 'sawtooth', f: 30, f2: 55, glide: 0.4, d: 0.5, g: 0.07, a: 0.15, lp: 320 }); I.clack(c, o, t + 0.42, 0.12, 0.75); },
-      close: (c, o, t) => { tone(c, o, t, { type: 'sawtooth', f: 55, f2: 28, glide: 0.45, d: 0.5, g: 0.06, a: 0.02, lp: 320 }); I.clack(c, o, t + 0.05, 0.1, 0.8); },
+      hover: (c, o, t, op, k) => { hiss(c, o, t, { d: 0.004, f: 3200 + (k.v % 3) * 300, q: 2.5, g: 0.022 }); tone(c, o, t, { f: 1400, d: 0.01, g: 0.006, a: 0.0006 }); },
+      select: (c, o, t, op, k) => { I.clack(c, o, t, 0.12); I.celesta(c, o, t + 0.03, k.chord()[2] + 12, 0.05, 0.6); },
+      toggleOn: (c, o, t) => { I.clack(c, o, t, 0.1, 0.9); I.clack(c, o, t + 0.045, 0.08, 1.15); },
+      toggleOff: (c, o, t) => { I.clack(c, o, t, 0.08, 1.1); I.clack(c, o, t + 0.045, 0.1, 0.8); },
+      next: (c, o, t) => { cr(c, o, t, 0.16); I.ratchet(c, o, t + 0.17, 2, 0.03, 0.05); },
+      back: (c, o, t) => { I.ratchet(c, o, t, 2, 0.035, 0.06, 0.85); I.clack(c, o, t + 0.08, 0.08, 0.85); },
+      open: (c, o, t) => { I.motor(c, o, t, 0.42, true, 0.04); I.ratchet(c, o, t + 0.3, 3, 0.035, 0.045); I.clack(c, o, t + 0.44, 0.06, 0.8); },
+      close: (c, o, t) => { I.motor(c, o, t, 0.4, false, 0.035); I.clack(c, o, t + 0.02, 0.09, 0.8); },
       key: (c, o, t, op, k) => I.clack(c, o, t, 0.1, 0.92 + ((k.idx * 7 + k.v) % 5) * 0.04),
       warn: (c, o, t) => I.ding(c, o, t, 0.1, 93),
-      lower: (c, o, t, op, k) => { I.ratchet(c, o, t, 3 + Math.round(clamp(k.len || 150, 0, 400) / 120), 0.028, 0.05); tone(c, o, t, { f: 140, f2: 90, d: 0.06, g: 0.08, a: 0.001 }); },
-      ghost: (c, o, t) => { I.ratchet(c, o, t, 1, 0.03, 0.04); hiss(c, o, t, { d: 0.2, f: 2500, q: 0.7, g: 0.012, a: 0.06 }); },
-      land: (c, o, t, op, k) => { tone(c, o, t, { f: 120 + (k.v % 3) * 10, f2: 70, d: 0.08, g: 0.16, a: 0.001 }); I.clack(c, o, t, 0.08, 0.7); },
-      lift: (c, o, t) => I.ratchet(c, o, t, 4, 0.022, 0.05, 1.2),
-      hop: (c, o, t) => { hiss(c, o, t, { d: 0.03, f: 2000, f2: 4000, q: 2, g: 0.06 }); I.click(c, o, t, 0.05, 2600); },
-      swing: (c, o, t) => hiss(c, o, t, { d: 0.25, f: 1500, f2: 3000, q: 0.9, g: 0.03, a: 0.08, pink: true }),
-      tryOn: (c, o, t, op, k) => { hiss(c, o, t, { d: 0.1, f: 2500, q: 0.8, g: 0.05, a: 0.02, pink: true }); hiss(c, o, t + 0.09, { d: 0.08, f: 3500, q: 0.8, g: 0.04, a: 0.02, pink: true }); SIG.teletype(c, o, t + 0.12, k); },
+      lower: (c, o, t, op, k) => { I.ratchet(c, o, t, 3 + Math.round(clamp(k.len || 150, 0, 400) / 120), 0.028, 0.05); tone(c, o, t, { f: 150, f2: 100, d: 0.05, g: 0.06, a: 0.001 }); },
+      ghost: (c, o, t) => { I.ratchet(c, o, t, 1, 0.03, 0.035); hiss(c, o, t, { d: 0.18, f: 2600, q: 0.8, g: 0.008, a: 0.06 }); },
+      land: (c, o, t, op, k) => { tone(c, o, t, { f: 130 + (k.v % 3) * 10, f2: 85, d: 0.07, g: 0.12, a: 0.001 }); I.clack(c, o, t, 0.07, 0.7); },
+      lift: (c, o, t) => I.ratchet(c, o, t, 4, 0.022, 0.045, 1.2),
+      hop: (c, o, t) => { hiss(c, o, t, { d: 0.03, f: 2200, f2: 3800, q: 2, g: 0.04 }); I.click(c, o, t, 0.04, 2600); },
+      swing: (c, o, t) => hiss(c, o, t, { d: 0.25, f: 1500, f2: 3000, q: 0.9, g: 0.025, a: 0.08, pink: true }),
+      tryOn: (c, o, t, op, k) => { hiss(c, o, t, { d: 0.1, f: 2500, q: 0.8, g: 0.04, a: 0.02, pink: true }); hiss(c, o, t + 0.09, { d: 0.08, f: 3500, q: 0.8, g: 0.03, a: 0.02, pink: true }); SIG.teletype(c, o, t + 0.12, k); },
       sparkle: (c, o, t, op, k) => { const ch = k.chord(); for (let i = 0; i < 4; i++) I.celesta(c, o, t + i * 0.06 + R() * 0.02, ch[(i + k.v) % 3] + 12, 0.035, 0.5); },
       confetti: (c, o, t, op, k) => {
-        for (let i = 0; i < 10; i++) I.clack(c, o, t + i * 0.045, 0.09, 0.9 + R() * 0.2);
-        hiss(c, o, t + 0.47, { d: 0.18, f: 1800, f2: 3800, q: 3, g: 0.05, a: 0.03 }); I.ding(c, o, t + 0.64, 0.1, 93);
-        [[79, 0.1], [81, 0.1], [83, 0.1], [86, 0.2], [91, 0.5]].reduce((tt, [m, d]) => { I.celesta(c, o, tt, m, 0.09, 0.9); return tt + d; }, t + 0.75);
-        tear(c, o, t + 1.4, 0.4);
+        for (let i = 0; i < 8; i++) I.clack(c, o, t + i * 0.05 + R() * 0.012, 0.08, 0.9 + R() * 0.2);
+        cr(c, o, t + 0.42, 0.16); I.ding(c, o, t + 0.6, 0.1, 93);
+        [[79, 0.1], [81, 0.1], [83, 0.1], [86, 0.2], [91, 0.5]].reduce((tt, [m, d]) => { I.celesta(c, o, tt, m, 0.09, 0.9); return tt + d; }, t + 0.72);
+        tear(c, o, t + 1.45, 0.38);
       },
       chapter: (c, o, t, op, k) => { feed(c, o, t); const n = motifRun(k, t + 0.25, 0.12, (at, m, i, last) => I.celesta(c, o, at, m + 12, 0.09, last ? 1 : 0.5)); if (k.ch >= 4) I.ding(c, o, t + 0.25 + n * 0.12, 0.08, 93); },
-      tick: (c, o, t, op, k) => { I.clack(c, o, t, 0.12); I.clack(c, o, t + 0.04, 0.08, 1.1); const s = [0, 2, 4, 7][clamp(k.idx, 0, 3)]; I.celesta(c, o, t + 0.02, k.root + s, 0.08, 0.6); if (k.idx >= 3) { hiss(c, o, t + 0.12, { d: 0.14, f: 1800, f2: 3500, q: 3, g: 0.04, a: 0.02 }); I.ding(c, o, t + 0.27, 0.08, 93); } },
-      block: (c, o, t, op, k) => { I.clack(c, o, t, 0.14, 0.7); tone(c, o, t, { f: 110, f2: 70, d: 0.07, g: 0.12, a: 0.001 }); const s = [0, 2, 4, 5, 7, 9][clamp(k.idx, 0, 5)]; I.celesta(c, o, t + 0.02, k.root + s, 0.08, 0.6); if (k.count && k.idx >= k.count - 1) { hiss(c, o, t + 0.12, { d: 0.14, f: 1800, f2: 3500, q: 3, g: 0.04, a: 0.02 }); I.ding(c, o, t + 0.28, 0.09, 93); } },
-      power: (c, o, t, op, k) => { tone(c, o, t, { type: 'sawtooth', f: 40, f2: 90, glide: 0.4, d: 0.5, g: 0.06, a: 0.1, lp: 600 }); I.celesta(c, o, t + 0.3, k.chord()[k.idx % 3] + 12, 0.08, 0.8); },
+      tick: (c, o, t, op, k) => { I.clack(c, o, t, 0.11); I.clack(c, o, t + 0.045, 0.07, 1.1); const s = [0, 2, 4, 7][clamp(k.idx, 0, 3)]; I.celesta(c, o, t + 0.02, k.root + s, 0.08, 0.6); if (k.idx >= 3) { cr(c, o, t + 0.12, 0.14); I.ding(c, o, t + 0.27, 0.08, 93); } },
+      block: (c, o, t, op, k) => { I.clack(c, o, t, 0.13, 0.7); tone(c, o, t, { f: 120, f2: 80, d: 0.06, g: 0.1, a: 0.001 }); const s = [0, 2, 4, 5, 7, 9][clamp(k.idx, 0, 5)]; I.celesta(c, o, t + 0.02, k.root + s, 0.08, 0.6); if (k.count && k.idx >= k.count - 1) { cr(c, o, t + 0.12, 0.14); I.ding(c, o, t + 0.28, 0.09, 93); } },
+      power: (c, o, t, op, k) => { I.motor(c, o, t, 0.4, true, 0.035); I.celesta(c, o, t + 0.3, k.chord()[k.idx % 3] + 12, 0.08, 0.8); },
       score: (c, o, t) => { for (let i = 0; i < 4; i++) I.clack(c, o, t + i * 0.05, 0.06, 1.1); },
       lock: (c, o, t) => I.clack(c, o, t, 0.1, 1.05),
-      decode: (c, o, t) => I.printBuzz(c, o, t, 0.12, 700, 0.06),
-      slice: (c, o, t) => tear(c, o, t, 0.12),
-      degauss: (c, o, t) => tone(c, o, t, { type: 'sawtooth', f: 40, f2: 60, d: 0.3, g: 0.04, a: 0.05, lp: 300 }),
+      // a line printed: the head runs its length in light ticks
+      decode: (c, o, t, op) => I.pins(c, o, t, clamp(Math.round((op.len || 12) / 2), 4, 14), 0.045),
+      slice: (c, o, t) => tear(c, o, t, 0.14),
+      degauss: (c, o, t) => I.motor(c, o, t, 0.25, true, 0.02),
       feed: (c, o, t) => feed(c, o, t),
-      powerOn: (c, o, t) => { tone(c, o, t, { type: 'sawtooth', f: 25, f2: 60, glide: 0.8, d: 1.2, g: 0.07, a: 0.3, hold: 0.9, lp: 400 }); hiss(c, o, t, { d: 1.1, f: 400, f2: 900, q: 0.8, g: 0.015, a: 0.4, pink: true }); I.clack(c, o, t + 0.9, 0.12, 0.75); tone(c, o, t + 0.9, { f: 120, f2: 70, d: 0.08, g: 0.1 }); },
-      powerOff: (c, o, t) => { tone(c, o, t, { type: 'sawtooth', f: 60, f2: 25, glide: 0.6, d: 0.7, g: 0.06, a: 0.02, lp: 400 }); I.clack(c, o, t + 0.05, 0.1, 0.75); },
-      rail: (c, o, t) => { hiss(c, o, t, { d: 0.12, f: 1200, f2: 2400, q: 2, g: 0.03, a: 0.02 }); I.ratchet(c, o, t + 0.04, 2, 0.04, 0.04); },
-      cheer: (c, o, t, op, k) => { vocal(c, o, t, 'teletype', 'cheer', { mood: 'happy' }); const ch = k.chord(); ch.forEach((m, i) => I.celesta(c, o, t + 0.14 + i * 0.04, m + 12, 0.07, 0.8)); I.ding(c, o, t + 0.3, 0.06, 93 + (k.v % 2) * 2); },
+      powerOn: (c, o, t) => { I.motor(c, o, t, 0.6, true, 0.045); feed(c, o, t + 0.45); I.clack(c, o, t + 0.95, 0.055, 0.75); },
+      powerOff: (c, o, t) => { feed(c, o, t); tear(c, o, t + 0.22, 0.3); I.motor(c, o, t + 0.1, 0.5, false, 0.03); },
+      rail: (c, o, t) => { hiss(c, o, t, { d: 0.12, f: 1300, f2: 2600, q: 2, g: 0.025, a: 0.02 }); I.ratchet(c, o, t + 0.04, 2, 0.04, 0.04); },
+      cheer: (c, o, t, op, k) => { vocal(c, o, t, 'teletype', 'cheer', { mood: 'happy' }); const ch = k.chord(); ch.forEach((m, i) => I.celesta(c, o, t + 0.14 + i * 0.045, m + 12, 0.07, 0.8)); I.ding(c, o, t + 0.32, 0.06, 93 + (k.v % 2) * 2); },
       crew: (c, o, t, op, k) => { crewVoices(c, o, t, 'teletype'); [[79, 0.1], [83, 0.1], [86, 0.1], [91, 0.5]].reduce((tt, [m, d]) => { I.celesta(c, o, tt, m, 0.09, 0.9); return tt + d; }, t + 0.5); I.ding(c, o, t + 0.85, 0.09, 93); }
     },
     accent: { alert: (c, o, t) => I.ding(c, o, t + 0.05, 0.05, 98) }
   };
-  function feed(c, o, t) { I.ratchet(c, o, t, 6, 0.03, 0.07); hiss(c, o, t, { d: 0.22, f: 2200, q: 0.7, g: 0.02, a: 0.05 }); tone(c, o, t + 0.2, { f: 90, d: 0.05, g: 0.1, a: 0.001 }); }
+  // the platen turning a line or two: its ratchet, the paper sliding over the bail, the bail settling
+  function feed(c, o, t) { I.ratchet(c, o, t, 5, 0.032, 0.06); hiss(c, o, t, { d: 0.2, f: 2400, q: 0.7, g: 0.012, a: 0.05, pink: true }); tone(c, o, t + 0.18, { f: 210, f2: 150, d: 0.04, g: 0.06, a: 0.001 }); }
+  // the carriage return: the carriage zips back along its rail and stops against the margin
+  function cr(c, o, t, d) { hiss(c, o, t, { d, f: 1300, f2: 3200, q: 1.6, g: 0.075, a: d * 0.35, pink: true }); I.ratchet(c, o, t, Math.max(2, Math.round(d / 0.038)), 0.038, 0.018, 1.25); I.clack(c, o, t + d, 0.07, 0.75); }
+  // paper torn off against the bar: fibres giving way unevenly (irregular grains, never a tremolo)
   function tear(c, o, t, d) {
-    const s = c.createBufferSource(); s.buffer = noiseBuf(c); s.loop = true; const b = filt(c, s, 'bandpass', 2500, 0.9);
-    const am = c.createGain(); am.gain.value = 0.5; b.connect(am); const l = c.createOscillator(), lg = c.createGain(); l.type = 'square'; l.frequency.value = 55 + R() * 20; lg.gain.value = 0.5; l.connect(lg); lg.connect(am.gain);
-    const e = env(c, t, 0.08, 0.01, d, d * 0.6); am.connect(e); e.connect(o); s.start(t, R()); l.start(t); s.stop(t + d + 0.05); l.stop(t + d + 0.05);
+    const n = Math.round(d / 0.007);
+    for (let i = 0; i < n; i++) { const tt = t + (i / n) * d + R() * 0.004, k = 0.5 + R() * 0.5; hiss(c, o, tt, { d: 0.004 + R() * 0.006, f: 2200 + R() * 2200, q: 1.2, g: 0.05 * k * (0.6 + 0.4 * Math.sin((i / n) * Math.PI)) }); }
+    hiss(c, o, t, { d, f: 3000, q: 0.6, g: 0.012, a: d * 0.2, pink: true });
   }
   KIT.nier = {
-    root: 69, mode: 'dorian', motif: [12, 15, 19, 22], room: { len: 3.4, rt: 3, bright: 0.3, pre: 0.03, wet: 0.28 },
+    root: 69, mode: 'dorian', motif: [12, 15, 19, 22], room: { len: 1.6, rt: 1.2, bright: 0.3, pre: 0.03, wet: 0.24 },
     ev: {
       tap: (c, o, t) => I.ntick(c, o, t, 2640, 0.05),
       hover: (c, o, t, op, k) => I.ntick(c, o, t, [2640, 2349, 2794][k.v % 3], 0.035, 0.03),
-      select: (c, o, t) => { I.sine(c, o, t, 88, 0.06, 0.07, 0.004); I.sine(c, o, t + 0.06, 93, 0.06, 0.2, 0.004); I.ntick(c, o, t, 2640, 0.03); },
+      select: (c, o, t) => { I.sine(c, o, t, 88, 0.06, 0.12, 0.004); I.sine(c, o, t + 0.06, 93, 0.06, 0.9, 0.004); I.ntick(c, o, t, 2640, 0.03); },
       toggleOn: (c, o, t) => { I.ntick(c, o, t, 2093, 0.04); I.ntick(c, o, t + 0.04, 2640, 0.04); },
       toggleOff: (c, o, t) => { I.ntick(c, o, t, 2640, 0.03); tone(c, o, t + 0.04, { f: 1760, d: 0.04, g: 0.03, a: 0.004, lp: 1800 }); },
       next: (c, o, t) => { I.sine(c, o, t, 88, 0.05, 0.06, 0.004); I.sine(c, o, t + 0.05, 93, 0.05, 0.16, 0.004); I.whoosh(c, o, t, 0.25, 800, 2000, 0.02); },
       back: (c, o, t) => { tone(c, o, t, { f: 880, d: 0.06, g: 0.05, a: 0.004, lp: 1800 }); tone(c, o, t + 0.06, { f: 659, d: 0.12, g: 0.05, a: 0.004, lp: 1800 }); },
-      open: (c, o, t) => { I.hum(c, o, t, 98, 196, 0.5, 0.035); for (let i = 0; i < 4; i++) I.ntick(c, o, t + 0.1 + i * 0.03, 2093 + i * 180, 0.03); },
-      close: (c, o, t) => { I.hum(c, o, t, 196, 98, 0.45, 0.03, 2600, 260); I.ntick(c, o, t, 2349, 0.03); },
+      open: (c, o, t) => { I.hum(c, o, t, 196, 392, 0.5, 0.03); for (let i = 0; i < 4; i++) I.ntick(c, o, t + 0.1 + i * 0.03, 2093 + i * 180, 0.03); },
+      close: (c, o, t) => { I.hum(c, o, t, 392, 196, 0.45, 0.028, 2600, 400); I.ntick(c, o, t, 2349, 0.03); },
       key: (c, o, t, op, k) => I.ntick(c, o, t, 3000 + (k.v % 3) * 200, 0.02, 0.02),
-      warn: (c, o, t) => I.buzz(c, o, t, 110, 0.22, 0.06),
+      // denied: two low, clean steps down and a tick (NieR's own refusal is quiet, not a buzzer)
+      warn: (c, o, t) => { I.ntick(c, o, t, 1760, 0.035); tone(c, o, t + 0.01, { f: 440, d: 0.09, g: 0.07, a: 0.004, lp: 1200 }); tone(c, o, t + 0.1, { f: 330, d: 0.16, g: 0.07, a: 0.004, lp: 1200 }); },
       lower: (c, o, t) => { tone(c, o, t, { f: 4200, d: 0.02, g: 0.02, a: 0.001 }); tone(c, o, t, { f: 2100, d: 0.04, g: 0.02, a: 0.001 }); tone(c, o, t + 0.02, { f: 1760, f2: 1318, d: 0.05, g: 0.02 }); },
       ghost: (c, o, t) => { hiss(c, o, t, { d: 0.3, f: 3000, q: 2, g: 0.01, a: 0.1 }); I.ntick(c, o, t + 0.1, 2349, 0.02); },
       land: (c, o, t) => { tone(c, o, t, { f: 220, f2: 160, d: 0.05, g: 0.08, a: 0.001 }); I.ntick(c, o, t, 1760, 0.03); },
@@ -786,27 +802,27 @@
       swing: (c, o, t) => hiss(c, o, t, { d: 0.5, f: 900, q: 0.6, type: 'lowpass', g: 0.015, a: 0.2, pink: true }),
       tryOn: (c, o, t, op, k) => { for (let i = 0; i < 6; i++) I.ntick(c, o, t + i * 0.022, 2000 + R() * 2000, 0.015, 0.02); SIG.nier(c, o, t + 0.14, k); },
       sparkle: (c, o, t) => { for (let i = 0; i < 4; i++) I.ntick(c, o, t + i * 0.05 + R() * 0.02, 2400 + R() * 1400, 0.025, 0.04); },
-      confetti: (c, o, t, op, k) => { I.choir(c, o, t, [57, 60, 64, 67], 2.8, 0.07, 'a'); [81, 88, 93].forEach((m, i) => I.glock(c, o, t + 0.3 + i * 0.4, m, 0.05, 2)); tone(c, o, t, { f: 55, d: 2.4, g: 0.05, a: 0.6, hold: 1.2 }); },
+      confetti: (c, o, t, op, k) => { I.pad(c, o, t, [69, 72, 76, 79], 2.8, 0.05, 'sine', 2400, 0.7); [81, 88, 93].forEach((m, i) => I.glock(c, o, t + 0.3 + i * 0.4, m, 0.05, 2)); tone(c, o, t, { f: 110, d: 2.4, g: 0.04, a: 0.6, hold: 1.2 }); },
       chapter: (c, o, t, op, k) => {
         for (let i = 0; i < 4; i++) I.ntick(c, o, t + i * 0.03, 2093 + i * 180, 0.03);
         I.pad(c, o, t + 0.1, k.chord().map((m) => m - 12), 1.6, 0.05, 'triangle', 1400, 0.3);
         const n = motifRun(k, t + 0.15, 0.2, (at, m, i, last) => I.glock(c, o, at, m, 0.05, last ? 2 : 1.2));
-        if (k.ch >= 4) I.choir(c, o, t + 0.15 + n * 0.2, k.chord(4).map((m) => m - 12), 2, 0.05, 'a');
+        if (k.ch >= 4) I.pad(c, o, t + 0.15 + n * 0.2, k.chord(4), 2, 0.04, 'sine', 2400, 0.6);
       },
       tick: (c, o, t, op, k) => { I.ntick(c, o, t, 2640, 0.04); const s = [0, 2, 3, 7][clamp(k.idx, 0, 3)]; I.sine(c, o, t + 0.01, k.root + 12 + s, 0.05, 0.25, 0.004); if (k.idx >= 3) { I.sine(c, o, t + 0.1, 88, 0.05, 0.07, 0.004); I.sine(c, o, t + 0.16, 93, 0.05, 0.3, 0.004); } },
       block: (c, o, t, op, k) => { tone(c, o, t, { f: 200, f2: 140, d: 0.06, g: 0.09, a: 0.001 }); I.ntick(c, o, t, 1760, 0.03); const s = [0, 2, 3, 5, 7, 9][clamp(k.idx, 0, 5)]; I.sine(c, o, t + 0.02, k.root + 12 + s, 0.05, 0.3, 0.004); if (k.count && k.idx >= k.count - 1) KIT.nier.ev.chapter(c, o, t + 0.15, op, Object.assign({}, k, { ch: 2 })); },
-      power: (c, o, t, op, k) => { for (let i = 0; i < 6; i++) I.ntick(c, o, t + i * 0.025, 2200 + R() * 1600, 0.02, 0.02); I.hum(c, o, t + 0.05, 98, 196, 0.5, 0.03); I.glock(c, o, t + 0.3, k.chord()[k.idx % 3] + 12, 0.05, 1.5); },
+      power: (c, o, t, op, k) => { for (let i = 0; i < 6; i++) I.ntick(c, o, t + i * 0.025, 2200 + R() * 1600, 0.02, 0.02); I.hum(c, o, t + 0.05, 196, 392, 0.5, 0.025); I.glock(c, o, t + 0.3, k.chord()[k.idx % 3] + 12, 0.05, 1.5); },
       score: (c, o, t) => I.ntick(c, o, t, 2640, 0.02),
       lock: (c, o, t) => { [0, 0.07, 0.11].forEach((d, i) => I.ntick(c, o, t + d, 2093 + i * 270, 0.04)); I.sine(c, o, t + 0.15, 88, 0.05, 0.06, 0.004); I.sine(c, o, t + 0.21, 93, 0.05, 0.22, 0.004); },
       decode: (c, o, t) => { for (let i = 0; i < 14; i++) I.ntick(c, o, t + i * 0.02 + R() * 0.008, 2000 + R() * 2200, 0.015, 0.012); },
-      slice: (c, o, t) => { for (let i = 0; i < 5; i++) I.buzz(c, o, t + i * 0.03 + R() * 0.006, 98 + R() * 220, 0.026, 0.035, 900 + R() * 1400); hiss(c, o, t + 0.01, { d: 0.16, f: 2400, q: 0.8, g: 0.012, a: 0.02 }); },
-      degauss: (c, o, t) => { I.hum(c, o, t, 110, 82, 0.4, 0.03, 900, 300); },
+      slice: (c, o, t) => { for (let i = 0; i < 4; i++) I.glitch(c, o, t + i * 0.05 + R() * 0.01, 1400 + R() * 2600, 0.012 + R() * 0.012, 0.035); hiss(c, o, t + 0.01, { d: 0.16, f: 2400, q: 0.8, g: 0.008, a: 0.02 }); },
+      degauss: (c, o, t) => { I.hum(c, o, t, 220, 165, 0.4, 0.025, 900, 400); },
       feed: (c, o, t) => { for (let i = 0; i < 3; i++) I.ntick(c, o, t + i * 0.04, 2349, 0.02); },
-      powerOn: (c, o, t) => { I.hum(c, o, t, 98, 196, 0.8, 0.04); I.choir(c, o, t + 0.1, [57, 64], 1.3, 0.03, 'u'); for (let i = 0; i < 5; i++) I.ntick(c, o, t + 0.5 + i * 0.03, 2093 + i * 160, 0.03); },
-      powerOff: (c, o, t) => { I.hum(c, o, t, 196, 98, 0.5, 0.035, 2600, 260); I.ntick(c, o, t, 2349, 0.03); },
+      powerOn: (c, o, t) => { I.hum(c, o, t, 196, 392, 0.8, 0.035); I.pad(c, o, t + 0.1, [69, 76], 1.3, 0.025, 'sine', 2400, 0.4); for (let i = 0; i < 5; i++) I.ntick(c, o, t + 0.5 + i * 0.03, 2093 + i * 160, 0.03); },
+      powerOff: (c, o, t) => { I.hum(c, o, t, 392, 196, 0.5, 0.03, 2600, 400); I.ntick(c, o, t, 2349, 0.03); },
       rail: (c, o, t) => { I.ntick(c, o, t, 2349, 0.03); I.ntick(c, o, t + 0.06, 2640, 0.025); },
-      cheer: (c, o, t, op, k) => { vocal(c, o, t, 'nier', 'cheer', {}); I.sine(c, o, t + 0.15, 88, 0.05, 0.07, 0.004); I.sine(c, o, t + 0.21, 93, 0.05, 0.25, 0.004); I.glock(c, o, t + 0.3, k.chord()[k.v % 3] + 12, 0.04, 1.4); },
-      crew: (c, o, t, op, k) => { crewVoices(c, o, t, 'nier'); I.choir(c, o, t + 0.35, [57, 64, 69, 72], 2.2, 0.06, 'a'); I.glock(c, o, t + 0.6, 93, 0.05, 1.8); }
+      cheer: (c, o, t, op, k) => { [0, 0.035, 0.07].forEach((d, i) => I.ntick(c, o, t + d, 2349 + i * 300, 0.03)); I.glock(c, o, t + 0.16, k.chord()[k.v % 3] + 24, 0.03, 0.9); },
+      crew: (c, o, t, op, k) => { crewVoices(c, o, t, 'nier'); I.pad(c, o, t + 0.35, [72, 76, 81], 1.5, 0.035, 'triangle', 1800, 0.4); I.glock(c, o, t + 0.6, 93, 0.05, 1.8); }
     },
     accent: { alert: (c, o, t) => I.ntick(c, o, t, 2794, 0.04) }
   };
@@ -823,6 +839,8 @@
       KIT[kn].ev[name] = (c, o, t, op) => { vocal(c, o, t, kn, name, { voice: op.voice, mood: MOOD[name] ? name : 'idle' }); const a = KIT[kn].accent && KIT[kn].accent[name]; if (a) a(c, o, t); };
     });
   });
+  // except a Pod thinking: the unit analysing, three dry ticks climbing (a "hmm" in NieR's flat voice read as a moan)
+  KIT.nier.ev.think = (c, o, t) => { [0, 0.045, 0.09].forEach((d, i) => I.ntick(c, o, t + d, 2093 + i * 330, 0.03, 0.03)); };
 
   /* ---------------------------------------------------------------- loops */
   // { period(k) -> s, step(c, out, t, k, n) } for cycles; { make(c, out, t, k) -> { set(level, t), stop(t) } } for continuous
@@ -832,8 +850,9 @@
       step(c, o, t, k) {
         const kn = k.kit;
         if (kn === 'phosphor') { hiss(c, o, t, { d: 1.2, f: 900, q: 1, g: 0.03, a: 0.5, pink: true }); [84, 81, 77].forEach((m, i) => I.chip(c, o, t + 1.6 + i * 0.28, m, 0.08, 0.025, 0.25)); return; }
-        if (kn === 'teletype') { hiss(c, o, t, { d: 1.1, f: 800, q: 1, g: 0.03, a: 0.5, pink: true }); for (let i = 0; i < 3; i++) I.printBuzz(c, o, t + 1.6 + i * 0.3, 0.07, 520 - i * 60, 0.025); return; }
-        if (kn === 'nier') { tone(c, o, t, { f: 110, d: 1.8, g: 0.04, a: 0.7 }); tone(c, o, t, { f: 165, d: 1.6, g: 0.015, a: 0.7 }); I.ntick(c, o, t + 0.9, 1760, 0.015); return; }
+        if (kn === 'teletype') { hiss(c, o, t, { d: 1.2, f: 700, f2: 1000, q: 1, g: 0.035, a: 0.5, pink: true }); hiss(c, o, t + 1.4, { d: 1.2, f: 520, f2: 360, q: 1, g: 0.03, a: 0.25, pink: true }); [91, 88, 84].forEach((m, i) => I.celesta(c, o, t + 2.7 + i * 0.22, m, 0.018, 0.5)); return; }
+        // a unit on standby: a slow breath of air and a soft pulse, like its light (a low held tone here read as a hum)
+        if (kn === 'nier') { hiss(c, o, t, { d: 1.6, f: 900, f2: 1300, q: 1.2, g: 0.025, a: 0.6, pink: true }); tone(c, o, t + 0.3, { f: 880, d: 1.2, g: 0.008, a: 0.5 }); I.ntick(c, o, t + 1.9, 1760, 0.012); return; }
         const br = kn === 'basic' ? 0.5 : 1;
         hiss(c, o, t, { d: 1.25, f: 700, f2: 1100, q: 1.1, g: 0.045 * br, a: 0.55, pink: true });
         hiss(c, o, t + 1.45, { d: 1.3, f: 520, f2: 340, q: 1, g: 0.04 * br, a: 0.25, pink: true });
@@ -850,23 +869,26 @@
         else if (kn === 'glass') { I.tink(c, o, t, alt ? 93 : 98, 0.03); hiss(c, o, t, { d: 0.2, f: 1600, q: 1, g: 0.006, a: 0.06, pink: true }); }
         else if (kn === 'basic') I.click(c, o, t, 0.04, alt ? 1800 : 2200);
         else if (kn === 'phosphor') { for (let i = 0; i < 3; i++) hiss(c, o, t + i * 0.03, { d: 0.006, f: 1500 + R() * 1000, q: 2, g: 0.05 }); I.chip(c, o, t + 0.1, alt ? 79 : 84, 0.03, 0.02, 0.5); }
-        else if (kn === 'teletype') { I.printBuzz(c, o, t, 0.16, alt ? 640 : 760, 0.05); if (!alt) I.ratchet(c, o, t + 0.2, 1, 0.03, 0.04); }
+        else if (kn === 'teletype') { I.pins(c, o, t, 6, 0.04, alt ? 0.9 : 1); if (!alt) I.ratchet(c, o, t + 0.24, 1, 0.03, 0.035); }
         else for (let i = 0; i < 4; i++) I.ntick(c, o, t + i * 0.035, 2000 + R() * 1500, 0.02, 0.015);
       }
     },
+    // power running down Pip's strings: a soft arpeggio climbing the chord, round and round (its level is the volume)
     power: {
-      make(c, o, t, k) {
-        const kn = k.kit, parts = [], lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 600; lp.Q.value = 0.5; lp.connect(o);
-        const add = (type, f, g, det) => { const s = c.createOscillator(); s.type = type; s.frequency.value = f; if (det) s.detune.value = det; const gg = c.createGain(); gg.gain.value = g; s.connect(gg); gg.connect(lp); s.start(t); parts.push(s); return s; };
-        const r = mf(k.root - 24);
-        if (kn === 'friendly') { add('sine', r, 0.5); add('sine', r * 1.5, 0.3); add('triangle', r * 2, 0.15, 5); }
-        else if (kn === 'glass') { add('sine', r * 4, 0.3); add('sine', r * 4 * 1.003, 0.3); add('sine', r * 6, 0.18, 3); add('sine', r * 8, 0.1, -4); lp.frequency.value = 5000; }
-        else if (kn === 'basic') { add('sine', r, 0.5); add('sine', r * 1.5, 0.25); }
-        else if (kn === 'phosphor') { add('sawtooth', 60, 0.4); add('sine', 120, 0.25); add('sine', 2600, 0.01); }
-        else if (kn === 'teletype') { add('sawtooth', 50, 0.5); add('sine', 100, 0.2); }
-        else { add('sawtooth', 55, 0.35); add('sawtooth', 82.4, 0.25, 4); add('sine', 220, 0.12); }
-        const base = kn === 'glass' ? 2500 : 300;
-        return { set(level, tt) { lp.frequency.setTargetAtTime(base + level * (kn === 'glass' ? 3000 : 1200), tt, 0.3); }, stop(tt) { parts.forEach((s) => { try { s.stop(tt); } catch (e) { /* stopped */ } }); } };
+      period: (k) => ({ basic: 0.5, nier: 0.42 }[k.kit] || 0.34),
+      step(c, o, t, k, n) {
+        // sixteen steps, the notes of the chord in a kit's own order (-1 a rest), so it breathes and never ticks like a clock
+        const P = { friendly: [0, 1, 2, -1, 3, 2, -1, -1, 0, 2, 1, -1, 3, -1, -1, -1], glass: [3, -1, 2, -1, 1, -1, -1, 0, -1, 2, -1, -1, 3, -1, -1, -1],
+          basic: [0, -1, 2, -1, -1, -1, 1, -1, 0, -1, -1, 3, -1, -1, -1, -1], phosphor: [0, 2, 1, 3, -1, -1, 0, 2, 1, 3, -1, 2, -1, -1, -1, -1],
+          teletype: [0, -1, 1, 2, -1, -1, 3, -1, 0, -1, 2, -1, -1, -1, -1, -1], nier: [0, -1, -1, 2, -1, 1, -1, -1, 3, -1, -1, -1, 2, -1, -1, -1] }[k.kit];
+        const i = P[n % 16]; if (i < 0) return;
+        const ch = k.chord(), m = [ch[0], ch[1], ch[2], ch[0] + 12][i] + 12, kn = k.kit;
+        if (kn === 'friendly') I.kalimba(c, o, t, m, 0.05, 0.6);
+        else if (kn === 'glass') I.glassBell(c, o, t, m, 0.035, 0.7);
+        else if (kn === 'basic') I.sine(c, o, t, m, 0.035, 0.35);
+        else if (kn === 'phosphor') I.chip(c, o, t, m, 0.05, 0.03, 0.5);
+        else if (kn === 'teletype') I.celesta(c, o, t, m, 0.04, 0.5);
+        else { I.ntick(c, o, t, 2093 + (n % 4) * 260, 0.018); I.sine(c, o, t + 0.01, m, 0.03, 0.3, 0.004); }
       }
     },
     swing: {
@@ -878,36 +900,48 @@
         return { set(level, tt) { b.frequency.setTargetAtTime(300 + level * 1300, tt, 0.08); }, stop(tt) { try { s.stop(tt); } catch (e) { /* stopped */ } } };
       }
     },
+    /* each look's quiet music while the window is open: sparse notes from the chapter's chord, so it follows the story
+       and never holds a tone (a held drone, or two tones beating, reads as a hum) */
     bed: {
-      period: (k) => ({ friendly: 11, glass: 13, basic: 30, phosphor: 0.7, teletype: 8, nier: 15 }[k.kit] || 10),
-      step(c, o, t, k) {
-        const kn = k.kit;
-        if (kn === 'friendly') I.kalimba(c, o, t, [96, 100, 103, 108][Math.floor(R() * 4)], 0.012, 1.2);
-        else if (kn === 'glass') I.wineGlass(c, o, t, [98, 105, 110][Math.floor(R() * 3)], 0.006, 2);
-        else if (kn === 'phosphor') { if (R() < 0.6) hiss(c, o, t + R() * 0.5, { d: 0.003, f: 2500 + R() * 2000, q: 2, g: 0.012 }); }
-        else if (kn === 'teletype') I.click(c, o, t, 0.02, 1500);
-        else if (kn === 'nier') I.glock(c, o, t, [81, 88, 93][Math.floor(R() * 3)], 0.008, 2.5);
-      },
-      make(c, o, t, k) {
-        const kn = k.kit, parts = [];
-        const add = (type, f, g, lpf) => { const s = c.createOscillator(); s.type = type; s.frequency.value = f; const n = lpf ? filt(c, s, 'lowpass', lpf, 0.6) : s; const gg = c.createGain(); gg.gain.value = g; n.connect(gg); gg.connect(o); s.start(t); parts.push(s); return gg; };
-        const nz = (pink, type, f, g) => { const s = c.createBufferSource(); s.buffer = pink ? pinkBuf(c) : noiseBuf(c); s.loop = true; const b = filt(c, s, type, f, 0.7), gg = c.createGain(); gg.gain.value = g; b.connect(gg); gg.connect(o); s.start(t, R() * 2); parts.push(s); return b; };
-        if (kn === 'friendly') nz(true, 'lowpass', 350, 0.3);
-        else if (kn === 'glass') { add('sine', mf(98), 0.05); add('sine', mf(98) * 1.004, 0.05); add('sine', mf(105), 0.03); nz(false, 'highpass', 3000, 0.02); }
-        else if (kn === 'basic') nz(true, 'lowpass', 200, 0.12);
-        else if (kn === 'phosphor') { add('sawtooth', 60, 0.5, 180); add('sine', 120, 0.2); nz(false, 'highpass', 4000, 0.02); }
-        else if (kn === 'teletype') { add('sawtooth', 50, 0.4, 220); nz(true, 'lowpass', 600, 0.12); }
-        else {
-          add('sawtooth', 55, 0.3, 400); add('sawtooth', 82.4, 0.2, 400);
-          const b = nz(true, 'bandpass', 400, 0.3); const l = c.createOscillator(), lg = c.createGain(); l.frequency.value = 0.07; lg.gain.value = 180; l.connect(lg); lg.connect(b.frequency); l.start(t); parts.push(l);
+      period: (k) => ({ friendly: 0.5, glass: 0.75, basic: 0.9, phosphor: 0.3, teletype: 0.5, nier: 0.75 }[k.kit] || 0.6),
+      step(c, o, t, k, n) {
+        const kn = k.kit, ch = k.chord(), tones = ch.concat(ch.map((m) => m + 12)), pick = (a) => a[Math.floor(R() * a.length)];
+        if (kn === 'friendly') {
+          // a music box left running, a low kalimba every other bar
+          const b = n % 8;
+          if (b === 0 && n % 16 === 0) I.kalimba(c, o, t, ch[0] - 12, 0.05, 1.6);
+          if (R() < ([0, 3, 6].indexOf(b) >= 0 ? 0.5 : 0.18)) I.musicbox(c, o, t, pick(tones), 0.045, 1.4);
+        } else if (kn === 'glass') {
+          // single glass notes struck on their own, with rests between, and a drop of water now and then; each note one
+          // pure tone and a faint inharmonic partial (rubbed glass, or two tones a hair apart, beat: heard as a hum)
+          if (n % 2 === 0 && R() < 0.5) { const f = mf(pick(tones)); tone(c, o, t, { f, d: 1.8, g: 0.03, a: 0.004 }); tone(c, o, t, { f: f * 2.76, d: 0.5, g: 0.006, a: 0.002 }); }
+          if (R() < 0.05) I.bloop(c, o, t + 0.3, 500 + R() * 400, 0.016);
+        } else if (kn === 'basic') {
+          // a clean ping now and then, a two-note figure every eighth
+          if (n % 8 === 0) { I.sine(c, o, t, ch[0] + 12, 0.032, 0.9, 0.01); I.sine(c, o, t + 0.2, ch[2] + 12, 0.028, 1.1, 0.01); }
+          else if (R() < 0.5) I.sine(c, o, t, pick(tones), 0.03, 1, 0.01);
+        } else if (kn === 'phosphor') {
+          // the terminal's idle tune: a triangle bass on the bar, a few soft square notes, a disk seeking now and then
+          const b = n % 32, busy = Math.floor(n / 32) % 2 === 0;
+          if (b === 0 || b === 16) tone(c, o, t, { type: 'triangle', f: mf(ch[0] - 12), d: 0.6, g: 0.035, a: 0.004, lp: 600 });
+          if ([0, 3, 6, 8, 11, 14].indexOf(b % 16) >= 0 && R() < (busy ? 0.55 : 0.3)) I.chip(c, o, t, pick(tones), 0.06, 0.03, 0.5);
+          if (R() < 0.012) for (let i = 0; i < 3; i++) hiss(c, o, t + i * 0.045, { d: 0.006, f: 1300 + R() * 900, q: 2, g: 0.02 });
+        } else if (kn === 'teletype') {
+          // a celesta in the next room, and once in a while a distant key
+          if (R() < (n % 4 === 0 ? 0.55 : 0.25)) I.celesta(c, o, t, pick(tones), 0.045, 0.9);
+          if (R() < 0.02) I.clack(c, o, t + 0.2, 0.02, 0.9);
+        } else {
+          // NieR: a pad that swells and goes, a glockenspiel note in the air, the odd tick of the unit
+          if (n % 16 === 0) I.pad(c, o, t, ch.map((m) => m - 12), 7, 0.03, 'triangle', 1100, 2.6);
+          if (R() < 0.45) I.glock(c, o, t, pick(tones) + 12, 0.03, 2.4);
+          if (R() < 0.03) I.ntick(c, o, t, 2640, 0.012);
         }
-        return { set() {}, stop(tt) { parts.forEach((s) => { try { s.stop(tt); } catch (e) { /* stopped */ } }); } };
       }
     }
   };
 
   // the continuous loops are built hot; this brings them near their place before the trims
-  const LOOP_BASE = { snore: 1, work: 1, power: 0.04, swing: 0.3, bed: 0.03 };
+  const LOOP_BASE = { snore: 1, work: 1, power: 1, swing: 0.3, bed: 1 };
 
   /* ---------------------------------------------------------------- the engine */
   const ROOMS = new WeakMap();
@@ -976,10 +1010,13 @@
     if (c.createStereoPanner) { const p = c.createStereoPanner(); p.pan.value = pan; vg.connect(p); head = p; }
     head.connect(g.bus);
     // Pip's voice sits closer than the music: less of it reaches the room, so the words stay clear in Glass's and NieR's halls
-    const send = c.createGain(); send.gain.value = VOICED.has(name) ? ({ glass: 0.3, nier: 0.16 }[kitName] || 0.35) : 1; head.connect(send); send.connect(roomOf(c, kitName, g.bus));
+    const send = c.createGain(); send.gain.value = VOICED.has(name) ? ({ glass: 0.3, nier: 0.16 }[kitName] || 0.35) : DRY[name] != null ? DRY[name] : 1; head.connect(send); send.connect(roomOf(c, kitName, g.bus));
     return vg;
   }
-  function newState(seed) { return { last: {}, at: {}, chapter: 0, r: seed != null ? rng(seed) : Math.random }; }
+  function newState(seed) { return { last: {}, at: {}, chapter: 0, ch0: 0, hist: [], r: seed != null ? rng(seed) : Math.random }; }
+  // the chapter (for the chord) at a moment: the loops are scheduled ahead, and a render knows when each chapter came
+  function setCh(st, ch, t) { st.chapter = clamp(ch | 0, 0, 4); st.hist.push([t, st.chapter]); if (st.hist.length > 24) st.ch0 = st.hist.shift()[1]; }
+  function chAt(st, t) { let ch = st.ch0; for (const [tt, c] of st.hist) { if (tt <= t + 1e-6) ch = c; else break; } return ch; }
   function helper(kitName, op, st, v) {
     const K = KIT[kitName], ch = clamp(op.chapter != null ? op.chapter | 0 : st.chapter, 0, 4);
     return {
@@ -1003,7 +1040,7 @@
     const gap = RATE[name];
     if (gap && st.at[kitName + name] != null && (t - st.at[kitName + name]) * 1000 < gap) return false;
     st.at[kitName + name] = t;
-    if (op.chapter != null) st.chapter = clamp(op.chapter | 0, 0, 4);
+    if (op.chapter != null) setCh(st, op.chapter, t);
     const prevR = R; R = st.r;
     try { fn(c, chain(c, g, kitName, name, op, raw), t, op, helper(kitName, op, st, variant(st, kitName, name))); }
     finally { R = prevR; }
@@ -1013,7 +1050,7 @@
     const V = VOX[kitName], timing = sayTiming(kitName, text, op);
     const prevR = R; R = st.r;
     try {
-      const script = V.kind === 'pulse' || V.kind === 'buzz' ? blipScript(text, V, op.mood, timing.cps) : textScript(text, V, op.mood, timing.cps);
+      const script = V.kind === 'pulse' || V.kind === 'tick' ? blipScript(text, V, op.mood, timing.cps) : textScript(text, V, op.mood, timing.cps);
       if (!script.length) return null;
       return voice(c, chain(c, g, kitName, 'say', op, raw), t, script, kitName, op);
     } finally { R = prevR; }
@@ -1073,7 +1110,7 @@
     if (EVENTS.indexOf(name) < 0) return false;
     if (S.reduced && MOTION.has(name)) return false;
     rec('play', name, null, op);
-    if (op.chapter != null) S.st.chapter = clamp(op.chapter | 0, 0, 4);
+    if (op.chapter != null && !live()) setCh(S.st, op.chapter, now());
     if (!live()) return false;
     return dispatch(S.ctx, S.g, S.st, kn, name, op, now(), false);
   }
@@ -1102,7 +1139,7 @@
         if (!D.step) return;
         const prevR = R; R = st.r;
         try {
-          while (inst.next < until) { if (!gate || inst.levelAt(inst.next) > 0.001) D.step(c, o, inst.next, k, inst.n++); inst.next += D.period(k) * (1 + jit(0.08)); }
+          while (inst.next < until) { if (!gate || inst.levelAt(inst.next) > 0.001) D.step(c, o, inst.next, helper(kitName, { chapter: chAt(st, inst.next) }, st, 0), inst.n++); inst.next += D.period(k) * (1 + jit(0.08)); }
         } finally { R = prevR; }
       },
       stop(tt) { o.gain.cancelScheduledValues(tt); o.gain.setTargetAtTime(0, tt, 0.12); if (parts) parts.stop(tt + 1.2); inst.dead = true; }
@@ -1209,9 +1246,14 @@
     let e = 0; for (let i = sr / 2; i < sr; i++) e += d[i] * d[i];
     return Math.sqrt(e / (sr / 2)) / (0.02 / Math.SQRT2);
   }
+  /* loudness as the ear hears it at a quiet listening level: A-weighted (at 48 kHz), so a low thump or a warm voice is
+     not counted louder than it sounds, nor a sound that lives below what laptop speakers play */
+  const AW = { b: [0.234301792299513, -0.468603584599026, -0.234301792299513, 0.937207169198054, -0.234301792299515, -0.468603584599025, 0.234301792299513],
+    a: [1, -4.113043408775871, 6.553121752655047, -4.990849294163381, 1.785737302937573, -0.246190595319487, 0.011224250033231] };
   function stats(buf) {
     const n = buf.length, sr = buf.sampleRate, L = buf.getChannelData(0), Rr = buf.numberOfChannels > 1 ? buf.getChannelData(1) : L;
-    let peak = 0, nan = 0, sum = 0, last = 0;
+    const xa = new Float64Array(7), ya = new Float64Array(7);
+    let peak = 0, nan = 0, sum = 0, last = 0, zacc = 0, zn = 0;
     const W = Math.round(sr * 0.01), wins = [];
     let acc = 0, k = 0;
     // a high-pass at 10 kHz (biquad, Q .707) to see how much of the sound is up there
@@ -1224,7 +1266,10 @@
       const p = Math.max(Math.abs(a), Math.abs(b)); if (p > peak) peak = p;
       if (p > 0.001) last = i;
       const m = (a + b) / 2; sum += m;
-      acc += (a * a + b * b) / 2; k++;
+      // the A-weighted mid signal, for loudness (direct form, the filter's own state)
+      for (let j = 6; j > 0; j--) { xa[j] = xa[j - 1]; ya[j] = ya[j - 1]; }
+      xa[0] = m; let wv = 0; for (let j = 0; j < 7; j++) wv += AW.b[j] * xa[j]; for (let j = 1; j < 7; j++) wv -= AW.a[j] * ya[j]; ya[0] = wv;
+      acc += sr === 48000 ? wv * wv : (a * a + b * b) / 2; k++; zacc += (a * a + b * b) / 2; zn++;
       if (k === W) { wins.push(acc / W); acc = 0; k = 0; }
       const y = b0 * m + b1 * x1 + b2 * x2 - a1 * y1 - a2 * y2; x2 = x1; x1 = m; y2 = y1; y1 = y; hf += y * y; tot += m * m;
     }
@@ -1232,11 +1277,11 @@
     // loudness integrates over at least 50 ms (the ear sums short sounds), so a 5 ms click reads as quiet as it sounds
     const rms = act.length ? Math.sqrt(act.reduce((q, v) => q + v, 0) / Math.max(act.length, 5)) : 0;
     const dbf = (v) => (v > 0 ? Math.round(20 * Math.log10(v) * 10) / 10 : -200);
-    return { peakDb: dbf(peak), rmsDb: dbf(rms), dur: Math.round(((last + 1) / sr) * 100) / 100, nan, dc: Math.round((sum / n) * 1e5) / 1e5, hfDb: tot > 0 ? Math.round(10 * Math.log10(hf / tot + 1e-12) * 10) / 10 : -200 };
+    return { peakDb: dbf(peak), rmsDb: dbf(rms), rmsZ: dbf(Math.sqrt(zacc / Math.max(1, zn))), dur: Math.round(((last + 1) / sr) * 100) / 100, nan, dc: Math.round((sum / n) * 1e5) / 1e5, hfDb: tot > 0 ? Math.round(10 * Math.log10(hf / tot + 1e-12) * 10) / 10 : -200 };
   }
 
   G.PipSound = {
-    EVENTS, KITS, LOOPS, kitOf, TARGET, SUBTLE, TRIM,
+    EVENTS, KITS, LOOPS, kitOf, TARGET, SUBTLE, OFFSET, TRIM,
     get muted() { return S.muted; },
     get kit() { return S.kit; },
     get unlocked() { return S.unlocked; },

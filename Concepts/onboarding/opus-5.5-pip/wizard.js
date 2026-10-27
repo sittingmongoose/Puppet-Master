@@ -110,7 +110,7 @@
       foot: { primary: ['Continue', 'next'] },
       scene: () => {
         const n = S.name.trim(), mood = !n ? 'think' : n.length > 60 ? 'alert' : 'idle';
-        return { chapter: 'project', props: [{ id: 'sign', kind: 'sign', slot: 'side', params: { text: n } }], pip: { mood, look: 'sign' }, say: !n ? 'What shall we call it?' : n.length > 60 ? "That won't fit on my sign!" : `“${n.length > 26 ? n.slice(0, 25) + '…' : n}”. Lovely.`, target: 'sign', label: n ? n : 'Awaiting name', cmd: `pip sign "${n.length > 18 ? n.slice(0, 17) + '…' : n}"` };
+        return { chapter: 'project', props: [{ id: 'sign', kind: 'sign', slot: 'sign', params: { text: n } }], pip: { mood, look: 'sign' }, say: !n ? 'What shall we call it?' : n.length > 60 ? "That won't fit on my sign!" : `“${n.length > 26 ? n.slice(0, 25) + '…' : n}”. Lovely.`, target: 'sign', label: n ? (n.length > 24 ? n.slice(0, 23) + '…' : n) : 'Awaiting name', cmd: `pip sign "${n.length > 18 ? n.slice(0, 17) + '…' : n}"` };
       }
     },
     safe: {
@@ -275,7 +275,9 @@
       eyes[0].setAttribute('cx', x0); eyes[0].setAttribute('cy', y0); eyes[1].setAttribute('cx', x1); eyes[1].setAttribute('cy', y0);
     }
     // beads ride the string; their labels keep one line, the current one under Pip
-    railEl.querySelectorAll('li').forEach((li, i) => { const x = bx(i), top = yAt(x) - 7; li.style.left = x.toFixed(1) + 'px'; li.style.top = top.toFixed(1) + 'px'; li.style.setProperty('--ly', ((i === rail.cur ? 41 : 28) - top).toFixed(1) + 'px'); });
+    // (each look sizes its beads; the bead's centre sits on the string)
+    const bh = (railEl.querySelector('.ob-bead') || {}).offsetHeight || 14;
+    railEl.querySelectorAll('li').forEach((li, i) => { const x = bx(i), top = yAt(x) - bh / 2; li.style.left = x.toFixed(1) + 'px'; li.style.top = top.toFixed(1) + 'px'; li.style.setProperty('--ly', ((i === rail.cur ? 41 : 28) - top).toFixed(1) + 'px'); });
     const pip = railEl.querySelector('.ob-railpip');
     // the mark's pin (32, 14.5 of 64) rides the string; at 30 px that is (15, 6.8)
     if (pip) pip.style.transform = `translate(${(px - 15).toFixed(1)}px, ${(y0 + dip - 6.8).toFixed(1)}px) rotate(${(rail.ang * 57.3).toFixed(2)}deg)`;
@@ -287,8 +289,9 @@
   // Retro: the title arrives the way a terminal prints, a few characters at a time
   function typeTitle(h) {
     const full = h.textContent; let i = 0;
+    clearInterval(typeTitle.t);
     h.textContent = ''; h.dataset.typing = '1';
-    const t = setInterval(() => { i += 2; h.textContent = full.slice(0, i); if (i >= full.length) { clearInterval(t); delete h.dataset.typing; } }, 16);
+    typeTitle.t = setInterval(() => { i += 2; h.textContent = full.slice(0, i); if (i >= full.length) { clearInterval(typeTitle.t); delete h.dataset.typing; } }, 16);
   }
   function renderScreen(dir) {
     const scr = SCREENS[S.screen];
@@ -323,6 +326,7 @@
     let hov = null;
     if (S.hover) { const [k, v] = S.hover.split(':'); hov = (k === S.screen || k === 'look' || k === 'safe' || k === 'ai') ? (S.screen === 'safe' ? S.hover : v) : null; }
     const spec = scr.scene(hov);
+    spec.screen = S.screen;
     if (S.screen === 'look' && stage) stage.tryOn(hov ? (hov === 'nier' ? 'nier-' + schemeOf(S.theme) : hov + '-' + schemeOf(S.theme)) : S.theme);
     if (stage) stage.direct(spec);
   }
@@ -337,6 +341,7 @@
     clearTimers();
     if (!(opts && opts.back) && from !== screen) S.history.push(from);
     S.screen = screen; S.hover = null;
+    clearInterval(hv.poll); clearTimeout(hv.leaveT); hv.want = null;
     if (from !== screen) sfx(opts && opts.back ? 'back' : 'next', { chapter: CHAPTERS.findIndex(([c]) => c === SCREENS[screen].chapter) });
     renderScreen(opts && opts.back ? -1 : 1);
     enter(screen);
@@ -370,7 +375,8 @@
       const [k, v] = b.dataset.pick.split(':');
       S[k] = v; S.hover = null; renderScreen(0);
       sfx('select');
-      const spec = SCREENS[S.screen].scene(null); if (stage) { stage.busy(); stage.direct(spec); stage.cheer(spec.target); }
+      // a choice made: Pip answers it at once
+      const spec = SCREENS[S.screen].scene(null); spec.screen = S.screen; spec.sayNow = true; if (stage) { stage.busy(); stage.direct(spec); stage.cheer(spec.target); }
       return;
     }
     if (b.dataset.look) {
@@ -407,15 +413,35 @@
   // hovering or focusing a choice previews it on the stage
   let thinkT = 0;
   const setHover = (h) => {
+    clearInterval(hv.poll); clearTimeout(hv.leaveT);
     if (h === S.hover) return;
-    S.hover = h;
+    S.hover = h; hv.shownAt = performance.now();
     if (h) { sfx('hover'); if (stage) stage.busy(); if (performance.now() - thinkT > 2600) { thinkT = performance.now(); setTimeout(() => { if (S.hover === h) sfx('think'); }, 260); } }
     direct();
   };
-  mainEl.addEventListener('pointerover', (e) => { const h = e.target.closest('[data-hover]'); setHover(h ? h.dataset.hover : null); });
-  mainEl.addEventListener('pointerleave', () => setHover(null));
-  mainEl.addEventListener('focusin', (e) => { const h = e.target.closest('[data-hover]'); if (h) setHover(h.dataset.hover); });
-  mainEl.addEventListener('focusout', () => setHover(null));
+  /* Hover intent: a choice previews only once the pointer settles on it, so sweeping across the list to find
+     your way changes nothing. A preview stays at least HOLD ms, and leaving a choice keeps it a moment
+     (GRACE), so the gaps between rows never flicker. The keyboard is deliberate: focus previews at once. */
+  const STILL = 6, POLL = 90, HOLD = 650, GRACE = 450;
+  const hv = { want: null, x: 0, y: 0, px: 0, py: 0, poll: 0, leaveT: 0, shownAt: 0 };
+  function wantHover(h) {
+    if (h === hv.want) return;
+    hv.want = h;
+    clearInterval(hv.poll); clearTimeout(hv.leaveT);
+    if (!h) { hv.leaveT = setTimeout(() => setHover(null), GRACE); return; }
+    if (h === S.hover) return;
+    hv.px = hv.x; hv.py = hv.y;
+    hv.poll = setInterval(() => {
+      const moved = Math.hypot(hv.x - hv.px, hv.y - hv.py);
+      hv.px = hv.x; hv.py = hv.y;
+      if (moved < STILL && performance.now() - hv.shownAt > HOLD) setHover(hv.want);
+    }, POLL);
+  }
+  mainEl.addEventListener('pointermove', (e) => { hv.x = e.clientX; hv.y = e.clientY; }, { passive: true });
+  mainEl.addEventListener('pointerover', (e) => { hv.x = e.clientX; hv.y = e.clientY; const h = e.target.closest('[data-hover]'); wantHover(h ? h.dataset.hover : null); });
+  mainEl.addEventListener('pointerleave', () => wantHover(null));
+  mainEl.addEventListener('focusin', (e) => { const h = e.target.closest('[data-hover]'); if (h && e.target.matches(':focus-visible')) { hv.byFocus = true; hv.want = h.dataset.hover; setHover(h.dataset.hover); } });
+  mainEl.addEventListener('focusout', (e) => { const to = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('[data-hover]'); if (hv.byFocus && !to) { hv.byFocus = false; wantHover(null); } });
   document.addEventListener('keydown', (e) => {
     if (!S.open) return;
     if (e.key === 'Enter' && !e.target.matches('button, input[type="checkbox"]')) { const p = $('.ob-primary'); if (p && !p.disabled) p.click(); }

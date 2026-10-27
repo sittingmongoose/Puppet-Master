@@ -10,8 +10,10 @@ The control is you. Pip hangs from it, and every choice you make lowers somethin
 
 - **Pip is the guide.** It reacts to what you do: it wonders while you hover, cheers or winks when
   you choose, looks at what you pick, sleeps until you arrive, and powers up when AI is connected.
-- **Hover previews, choosing commits.** Pointing at a choice lowers a ghost of its prop on a dashed
-  string; clicking it drops the real prop in, which swings and settles, and Pip celebrates.
+- **Hover previews, choosing commits.** Resting the pointer on a choice lowers a ghost of its prop on a
+  dashed string; clicking it drops the real prop in, which swings and settles, and Pip celebrates. A
+  preview waits until the pointer settles (sweeping across the list to find your way changes nothing),
+  stays at least a moment, and holds briefly when you leave, so the gaps between rows never flicker.
 - **It is physics, not keyframes.** Pip is a pendulum on the hand: when the hand moves, Pip swings
   and settles, and both strings are solved every frame from the screw eyes on the bar to the eyes on
   its head (the same solver as the logo). Every prop hangs on its own string and swings too.
@@ -19,7 +21,9 @@ The control is you. Pip hangs from it, and every choice you make lowers somethin
   you point at, and now and then it fidgets: looks up at the bar, kicks into a little swing, wiggles
   or glances round. It only wakes on the Welcome screen when you really arrive (a key, or the pointer
   travelling), not when the page loads under a resting pointer.
-- **Pip talks.** Every line is typed into its bubble at the pace Pip's voice says it (see Sound).
+- **Pip talks.** Every line is typed into its bubble at the pace Pip's voice says it (see Sound). The
+  bubble takes the whole line's size first and the letters arrive in place; a line that changes faster
+  than Pip could say it (a name being typed) waits until things are still, then types.
 
 ## The screens
 
@@ -29,7 +33,7 @@ The control is you. Pip hangs from it, and every choice you make lowers somethin
 | Pick a look | Hovering a look makes Pip try it on (it flips into that look's Pip, with that look's sound); the world follows once picked |
 | The computer | A laptop, a laptop and a phone, or a server, lowered in on strings |
 | Project begins | A blank page, a folder, or a restore box |
-| Name | A sign that spells your Project's name as you type; Pip gasps if it gets too long |
+| Name | A sign that spells your Project's name as you type, sized to it: one line as large as fits, then two or three smaller ones; Pip gasps if it gets too long |
 | Keep it safe | A vault; an online copy and a backup box join it when chosen |
 | Away from home | A house, or a house and a globe |
 | Review | A clipboard ticked off one line at a time as the review rows appear |
@@ -43,32 +47,38 @@ The control is you. Pip hangs from it, and every choice you make lowers somethin
 |---|---|---|---|---|
 | Friendly | felt diorama: stitched hills, a glow in the chapter's colour | felt clouds swaying on their threads, crumbs drifting, fireflies (dark) or paper butterflies (light) | stars, hearts and a wink | Pip hops |
 | Glass | PMConcept7's Ribbons wallpaper, a glass floor with Pip's reflection | caustics moving, bubbles rising, ripples on the floor where a prop lands | glints and rising bubbles | a light sweep |
-| Basic | dot grid, a ruled floor, one accent | a dot orbiting the guide circle, a plumb line from Pip and a marker riding the ruler | a ring and a check | a small hop |
+| Basic | dot grid, a ruled floor, one accent | a protractor under the hand reading Pip's swing in degrees, a plumb line from Pip and a marker riding the ruler | a check badge on the prop's corner, a ring spreading from it | a small hop |
 | Retro Dark | a green-phosphor monitor (PMConcept7's Retro Dark terminal, PM Phosphor Green) | a phosphor graticule, a vector terrain rolling toward you, the tube's grain, flicker and rolling bar, phosphor persistence trailing Pip | phosphor pixels and glyphs, `[ OK ]` | a degauss: the picture wobbles and tints, then settles |
-| Retro Light | the same machine's printout (PM Paper Teletype) on green-bar paper with tractor-feed margins | halftone props in ink with red and blue accents, faint ink persistence | printed `* + × ✓` and paper chads | the paper feeds up a page |
-| NieR | parchment, graph paper, a YoRHa Pip that hovers like a Pod | a scanner ring turning, motes rising, a data column, a scan line sweeping the stage | target brackets fly in and lock with a leader line, `// CONFIRMED`, a burst of squares | a slice glitch and QUEST UPDATED |
+| Retro Light | the same machine's printout (PM Paper Teletype): green-bar paper with tractor-feed margins rising out of the printer, no screen | halftone props in ink with red and blue accents, the print head riding the line it prints | printed `* + × ✓` and paper chads | the paper feeds up a page |
+| NieR | parchment, graph paper, a YoRHa Pip that hovers like a Pod | a scanner ring turning, motes rising, a data column, a scan line sweeping the stage | target brackets fly in and lock with a leader line, `// CONFIRMED`, a burst of squares | two bands of the picture slip sideways, and QUEST UPDATED |
 
 ### Retro, after PMConcept7's terminal
 
-The Retro stage is a monitor built the way PMConcept7's terminal draws one (its Full CRT effects,
-`50-fx-gl.js`, and its monitor bezel, `71-bezel.js`): a case with a sloped face in four parts lit
-from above, the screen's light spilling onto it, a power LED; inside, the tube with rounded corners,
-phosphor glow, scanlines, an aperture grille (dark), grain, a flicker held under 3 % (the terminal's
-own cap), a rolling bar, a vignette and the glass's sheen. Retro Dark is the charcoal case and the
-green phosphor; Retro Light is the putty case and the Paper Teletype printout. The tube refreshes in
-steps (20 a second) and the phosphor holds the last frames of Pip while it moves. It powers on with
-the classic line-then-picture (Retro Light prints itself from the top instead) and switches off to a
-line and a dot when the window closes. A terminal runs on the tube: a status line with the chapter,
-boot text on the Welcome screen, and a command line that types what the scene is doing
-(`pip lower laptop phone --preview`, `pip vault --git --github`, `pip build history 2/4`). The faces
-are VT323 (Retro Dark, as the terminal uses) and IBM Plex Mono (Retro Light).
+Retro Dark is a monitor built the way PMConcept7's terminal draws one (its Full CRT effects,
+`50-fx-gl.js`, and its monitor bezel, `71-bezel.js`): a charcoal case with a sloped face in four parts
+lit from above, the screen's light spilling onto it, a power LED; inside, the tube with rounded corners,
+phosphor glow, scanlines, an aperture grille, grain, a flicker held under 3 % (the terminal's own cap),
+a rolling bar, a vignette and the glass's sheen. The tube refreshes in steps (20 a second) and the
+phosphor holds the last frames of Pip while it moves. It powers on with the classic line-then-picture
+and switches off to a line and a dot when the window closes.
+
+Retro Light is the same machine's printout, so it has no screen at all: a sheet of green-bar continuous
+form rises out of the printer at the foot of the stage, held to the platen by the bail bar, with the
+print head riding the line it prints. Opening the window feeds the paper in; a chapter change feeds it
+up a page; closing it tears it off.
+
+On both, a terminal runs: a status line with the chapter, boot text on the Welcome screen, and a
+command line that types what the scene is doing (`pip lower laptop phone --preview`,
+`pip vault --git --github`, `pip build history 2/4`). The faces are VT323 (Retro Dark, as the
+terminal uses) and IBM Plex Mono (Retro Light).
 
 ### NieR
 
 Pip hovers like a Pod (a slow bob, a little drift), talks in a YoRHa dialogue box with its name tab,
 and the stage is a unit's HUD: a unit header with a decoding label, a scanner ring, a scan line that
 sweeps every few seconds, a coordinate readout, target brackets that fly in and lock with a turning
-marker and a leader line labelled at its elbow, and QUEST UPDATED on a chapter change. The window
+marker and a leader line labelled at its elbow, and on a chapter change QUEST UPDATED and a glitch in
+which two bands of the whole picture slip sideways for a moment. The window
 follows: the menu cursor square slides in beside whatever you point at, the chosen row fills from the
 left, and screens wipe in behind an ink bar.
 
@@ -86,6 +96,20 @@ along.
 look has its own kit, and Pip has a voice in each. Nothing plays before the first click or key press;
 the speaker in the window's header (or the concept toolbar) turns it off. `sounds.html` is a sound
 board: every kit and every event, and a box to make Pip say anything.
+
+| Look | Material | Pip's voice | While the window is open |
+|---|---|---|---|
+| Friendly | marimba, kalimba, music box, woodblocks, felt | warm, bouncy babble | a music box left running, a low kalimba every other bar |
+| Glass | glass bells, wine-glass tones, water drops, air | breathy, with a shimmer | glass harmonics ringing on their own, a drop of water, a slow swell |
+| Basic | clean sines, soft clicks | polite chirps | a clean ping now and then |
+| Retro Dark | chip beeps, the CRT's relay, static and degauss | text blips | the terminal's idle tune: a bass note, a few soft squares, a disk seeking |
+| Retro Light | key clacks, platen ratchet, carriage-return zip, margin bell, a small motor, celesta | struck notes with a key's tick | a celesta in the next room |
+| NieR | soft menu ticks, two-tone confirms, glitch grains, a pad, glockenspiel, a distant choir | a Pod's flat, stepped bleeps | a pad that swells and goes, a glockenspiel note in the air |
+
+The music follows the chapters: each has a chord (I, IV, V, vi, then I an octave up), the background
+and the power arpeggio on the AI screen play in it, and a chapter change adds a note of the motif until
+Ready resolves it. Nothing holds a tone: a held drone, or two tones a hair apart, reads as a hum, and a
+tone switched on and off fast reads as a speaker breaking up. `tools/sound_texture.mjs` measures both.
 
 ## Sizes and motion
 
@@ -109,6 +133,7 @@ styles.css       the window in each look
 fonts-extra.css  VT323 and PM NieR Mono, copied from PMConcept7's own font faces
 tools/build_standalone.py   writes self-contained HTML files for sharing (the concept and the sound board)
 tools/sound_levels.mjs      renders every kit and event offline and checks levels
+tools/sound_texture.mjs     renders them again and measures buzz, wobble and drones
 ```
 
 Pip comes from `../../Icon-Concepts/Opus5.5icon/pm-logo.js` (its `kit` export), so the mascot here is

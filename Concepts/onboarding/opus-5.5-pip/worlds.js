@@ -65,6 +65,7 @@
     }
   };
 
+  const MEAS = document.createElement('canvas').getContext('2d');
   function mix(a, b, t) {
     const h = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
     const A = h(a), B = h(b);
@@ -130,9 +131,7 @@
     if (w.fam === 'basic') {
       defs += `<pattern id="${ids}dot" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1.1" fill="${w.dot}"/></pattern>`;
       s += rect(w.bg) + rect(`url(#${ids}dot)`);
-      const ocx = L.ctl[0], ocy = R(L.ctl[1] + L.rope * .8), orr = R(L.rope * .82);
-      s += `<circle cx="${ocx}" cy="${ocy}" r="${orr}" fill="none" stroke="${w.line}" stroke-opacity=".08" stroke-width="1"/>`;
-      s += `<g class="st-orbit" style="transform-origin:${ocx}px ${ocy}px"><circle cx="${ocx}" cy="${R(ocy - orr)}" r="3" fill="${w.accent}"/><path d="M${R(ocx - 30)} ${R(ocy - orr)}A${orr} ${orr} 0 0 1 ${ocx} ${R(ocy - orr)}" fill="none" stroke="${w.accent}" stroke-opacity=".35" stroke-width="1.2"/></g>`;
+      // (the stage draws a protractor under the hand that measures Pip's swing)
       s += `<path d="M${X0} ${gy}H${X1}" stroke="${w.line}" stroke-opacity=".5" stroke-width="1.5"/>`;
       for (let x = 0; x <= W; x += 40) s += `<path d="M${x} ${gy}v6" stroke="${w.line}" stroke-opacity=".3" stroke-width="1"/>`;
       return { defs, back: s };
@@ -279,13 +278,17 @@
         ink: `fill="${w.ink}"`, light: `fill="${w.paper}"`, line: `fill="none" stroke="${w.ink}" stroke-width="1.4" stroke-linecap="square"`
       }[role];
     }
+    // each world's face, for prop text and for measuring it (a sign sizes itself to its words)
+    const FACE = fam === 'retro' ? (w.tube === 'phosphor' ? "'VT323', 'IBM Plex Mono', ui-monospace, monospace" : "'IBM Plex Mono', ui-monospace, monospace") : fam === 'nier' ? "'PM NieR Sans','Inter',system-ui,sans-serif" : fam === 'glass' || fam === 'basic' ? "'Inter',system-ui,sans-serif" : "'Poppins',system-ui,sans-serif";
+    const WEIGHT = fam === 'nier' ? 500 : 700;
     const P = {
       fam, w,
+      measure: (t, size) => { MEAS.font = `${WEIGHT} ${size}px ${FACE}`; return MEAS.measureText(String(t)).width; },
       rect: (x, y, ww, hh, r, role, hue) => `<rect x="${R(x)}" y="${R(y)}" width="${R(ww)}" height="${R(hh)}" rx="${fam === 'retro' || fam === 'nier' ? Math.min(r, 2) : r}" ${style(role, hue)}/>`,
       circle: (x, y, r, role, hue) => `<circle cx="${R(x)}" cy="${R(y)}" r="${R(r)}" ${style(role, hue)}/>`,
       path: (d, role, hue) => `<path d="${d}" ${style(role, hue)}/>`,
       line: (x1, y1, x2, y2, role) => `<path d="M${R(x1)} ${R(y1)}L${R(x2)} ${R(y2)}" ${style(role || 'line')}/>`,
-      text: (x, y, t, size, role, extra) => `<text x="${R(x)}" y="${R(y)}" font-size="${size}" text-anchor="middle" dominant-baseline="central" ${style(role || 'ink')} font-family="${fam === 'retro' ? (w.tube === 'phosphor' ? "'VT323', 'IBM Plex Mono', ui-monospace, monospace" : "'IBM Plex Mono', ui-monospace, monospace") : fam === 'nier' ? "'PM NieR Sans','Inter',system-ui,sans-serif" : fam === 'glass' || fam === 'basic' ? "'Inter',system-ui,sans-serif" : "'Poppins',system-ui,sans-serif"}" font-weight="${fam === 'nier' ? 500 : 700}"${extra || ''}>${String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;')}</text>`,
+      text: (x, y, t, size, role, extra) => `<text x="${R(x)}" y="${R(y)}" font-size="${size}" text-anchor="middle" dominant-baseline="central" ${style(role || 'ink')} font-family="${FACE.replace(/"/g, '')}" font-weight="${WEIGHT}"${extra || ''}>${String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;')}</text>`,
       // a floor shadow under a prop (Friendly and Glass only)
       shadow: () => '',
       sparkle: (x, y, r, hue) => fam === 'nier' ? `<rect x="${R(x - r * .45)}" y="${R(y - r * .45)}" width="${R(r * .9)}" height="${R(r * .9)}" transform="rotate(45 ${R(x)} ${R(y)})" fill="${w.ink}"/>`
@@ -343,16 +346,41 @@
       s += `<path d="M-8 4A10 10 0 1 1 -9 16" ${p.fam === 'friendly' ? `stroke="${p.w.ink}"` : `stroke="${p.w.ink}"`} stroke-width="${p.fam === 'retro' ? 2.4 : 2.6}" fill="none" stroke-linecap="round"/>` + p.path('M-12 -1L-7 6L-14 7Z', 'ink');
       return { svg: s, ties: [[-30, -26], [30, -26]], foot: 40 };
     },
+    // the sign sizes itself to the name: one line as large as fits, then two or three smaller lines, and only
+    // past that does the end give way to an ellipsis
     sign(p, o) {
-      const name = (o && o.text) || '';
-      const shown = name.length > 22 ? name.slice(0, 21) + '…' : name;
-      const size = shown.length > 15 ? 13 : shown.length > 10 ? 16 : 19;
+      const vt = p.fam === 'retro' && p.w.tube === 'phosphor', k = vt ? 1.35 : 1;
+      const name = String((o && o.text) || '').replace(/\s+/g, ' ').trim(), txt = vt ? name.toUpperCase() : name;
+      const MAXW = 152, PAD = 15, room = MAXW - PAD * 2, wid = (t, sz) => p.measure(t, sz * k) * 1.05;
+      // greedy wrap at a size; a word too long for a line is broken where it must be
+      const wrap = (sz) => {
+        const out = []; let line = '';
+        txt.split(' ').forEach((wd) => {
+          const next = line ? line + ' ' + wd : wd;
+          if (wid(next, sz) <= room) { line = next; return; }
+          if (line) out.push(line);
+          line = wd;
+          while (wid(line, sz) > room && line.length > 1) { let n = line.length - 1; while (n > 1 && wid(line.slice(0, n) + '-', sz) > room) n--; out.push(line.slice(0, n) + '-'); line = line.slice(n); }
+        });
+        if (line) out.push(line);
+        return out;
+      };
+      let size = 0, lines = [txt];
+      for (const sz of [19, 18, 17, 16, 15]) if (wid(txt, sz) <= room) { size = sz; break; }
+      if (!size) for (const sz of [15, 14, 13, 12]) { lines = wrap(sz); if (lines.length <= (sz > 13 ? 2 : 3)) { size = sz; break; } }
+      if (!size) {
+        size = 12; lines = wrap(12).slice(0, 3);
+        let last = lines[2]; while (last.length > 1 && wid(last + '…', 12) > room) last = last.slice(0, -1);
+        lines[2] = last.replace(/[\s-]+$/, '') + '…';
+      }
+      const lh = size * k * 1.18, tw = txt ? Math.max(...lines.map((l) => wid(l, size))) : 30;
+      const W = Math.max(116, Math.min(MAXW, Math.ceil(tw + PAD * 2))), H = Math.max(58, Math.ceil(lines.length * lh + 26)), x0 = -W / 2, y0 = -28;
       let s = p.shadow(36, 52);
-      s += p.rect(-66, -28, 132, 58, 10, 'body', 'e') + p.rect(-58, -20, 116, 42, 6, 'panel', 'e');
-      s += p.circle(-52, -22, 2.6, 'shade', 'e') + p.circle(52, -22, 2.6, 'shade', 'e');
-      const vt = p.fam === 'retro' && p.w.tube === 'phosphor';
-      s += shown ? p.text(0, 1, vt ? shown.toUpperCase() : shown, vt ? size * 1.35 : size, 'ink') : `<g class="st-caret">${p.rect(-1.5, -10, 3, 22, 1, 'ink')}</g>`;
-      return { svg: s, ties: [[-52, -28], [52, -28]], foot: 30 };
+      s += p.rect(x0, y0, W, H, 10, 'body', 'e') + p.rect(x0 + 8, y0 + 8, W - 16, H - 16, 6, 'panel', 'e');
+      s += p.circle(x0 + 14, y0 + 6, 2.6, 'shade', 'e') + p.circle(-x0 - 14, y0 + 6, 2.6, 'shade', 'e');
+      const cy = y0 + H / 2 + 1;
+      s += txt ? lines.map((l, i) => p.text(0, cy + (i - (lines.length - 1) / 2) * lh, l, size * k, 'ink')).join('') : `<g class="st-caret">${p.rect(-1.5, cy - 11, 3, 22, 1, 'ink')}</g>`;
+      return { svg: s, ties: [[x0 + 14, y0], [-x0 - 14, y0]], foot: y0 + H };
     },
     vault(p) {
       let s = p.shadow(44, 40);
