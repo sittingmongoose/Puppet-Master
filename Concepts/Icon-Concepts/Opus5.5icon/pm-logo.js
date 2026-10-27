@@ -219,6 +219,10 @@
         const dr = r * .8, gap = r * 2.35;
         return [-1, 0, 1].map((i) => `<g class="${(c.dot || '') + (i + 2)}">${dot(cx + i * gap, y + 2.5, dr)}</g>`).join('');
       }
+      case 'wink': {
+        const arc = `M${R(Rx - r)} ${R(y + r * .2)}Q${Rx} ${R(y - r * 1.05)} ${R(Rx + r)} ${R(y + r * .2)}`;
+        return eyes(dot(L, y, r) + shine(L, y, r) + st(arc, r * .78)) + st(`M${R(cx - m.w / 2)} ${m.y}Q${R(cx + m.w * .1)} ${R(m.y + m.d * 1.15)} ${R(cx + m.w / 2 + .6)} ${R(m.y - .8)}`, m.sw);
+      }
       case 'blank': return '';
       default:
         return eyes(dot(L, y, r) + dot(Rx, y, r) + shine(L, y, r) + shine(Rx, y, r)) + smile;
@@ -386,6 +390,8 @@
       : mood === 'error' || mood === 'sleep' ? `<rect x="${R(32 - mw * .35)}" y="${R(my)}" width="${R(mw * .7)}" height="${mt}" fill="${ink}"/>`
       : `<rect x="${R(32 - mw / 2)}" y="${R(my)}" width="${R(mw)}" height="${mt}" fill="${ink}"/>`;
     const head = `<g class="${cls.pup || ''}">${headS}${visor}${hud}${mouth}</g>`;
+    // parts, for places that hang the head at their own distance (the onboarding stage)
+    if (opts.parts) return { ctl, headInner: headS + visor + hud + mouth, barNodes: nodes, headNodes: E.map((e) => [e.x, e.base]) };
     return { defs: '', body: strings + head + `<g class="${cls.ctl || ''}">${ctl}</g>` };
   }
 
@@ -892,5 +898,9 @@
     return `<svg xmlns="http://www.w3.org/2000/svg" class="${p}" ${size} viewBox="${vbox}"${m.crisp ? ' shape-rendering="crispEdges"' : ''} ${role}>${style}${m.defs ? `<defs>${m.defs}</defs>` : ''}${m.body}</svg>`;
   }
 
-  G.PMLogo = { svg, THEMES, THEME_ORDER, MOTION, pickTier, version: '0.2' };
+  // The drawing kit, for places that animate Pip themselves (the onboarding stage): the same
+  // geometry, faces, control and string solver the marks use, so there is one Pip everywhere.
+  const kit = { GEO, R, mix, solid, solidStr, grad, sticks, anchors, barAttach, eyelets, stringEnds, headPath, headPathNier,
+    faceShapes, controlSvg, pipHead, eyeletRings, nierHud, pipNier, ribbonsSvg, RIBBONS, pose, wave, transformsAt };
+  G.PMLogo = { svg, THEMES, THEME_ORDER, MOTION, pickTier, kit, version: '0.3' };
 })(typeof window !== 'undefined' ? window : globalThis);

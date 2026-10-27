@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "onboarding:opus-5.5-pip",
+  "topic": "onboarding",
+  "model": "Opus 5.5",
+  "presentation": "entries",
+  "order": 30,
+  "widthControl": {
+    "enabled": false,
+    "label": "Workspace width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "entries": [
+    {
+      "id": "pip-onboarding",
+      "title": "Onboarding with Pip",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["onboarding", "pip", "mascot", "motion"],
+      "order": 10
+    }
+  ]
+}
