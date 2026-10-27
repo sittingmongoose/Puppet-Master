@@ -3,8 +3,14 @@
    the hand moves, Pip swings and settles, and its strings are solved every frame from the screw
    eyes on the bar to the eyes on its head (the same solver as the logo). Every prop is lowered in
    on its own string and swings too. Hovering a choice previews its prop; choosing it drops it in
-   and Pip reacts. Retro draws the same scene as true pixel art (rendered small and snapped to
-   Retro's palette at 8 frames a second); NieR keeps still and speaks in its HUD. */
+   and Pip reacts. Between moments Pip is alive: it breathes, follows the pointer with its eyes and
+   fidgets now and then.
+   Retro is a monitor, after PMConcept7's own terminal: Retro Dark a green-phosphor tube (glow,
+   scanlines, an aperture grille, grain, a rolling bar, phosphor persistence, a degauss on a chapter
+   change) in a charcoal case, Retro Light the same machine's Paper Teletype printout on green-bar
+   paper in a putty case, the paper feeding on a chapter change. NieR is a YoRHa unit: Pip hovers like
+   a Pod, a scanner turns, targets lock with leader lines, quests update and Pip talks in a dialogue box.
+   Sound goes through window.PipSound (sound.js) when it is there. */
 (function (G) {
   'use strict';
   const L = G.PMLogo, K = L.kit, TH = L.THEMES, PW = G.PipWorlds;
@@ -12,6 +18,7 @@
   const R = (v) => +(+v).toFixed(2);
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const now = () => performance.now() / 1000;
+  const ease = (k) => 1 - Math.pow(1 - clamp(k, 0, 1), 3);
 
   /* ------------------------------------------------------------- layouts */
   // portrait: the left pane of the window. banner: the strip above the content on narrow windows.
@@ -49,14 +56,22 @@
     }
   };
 
-  // how each family moves (PMConcept7's own motion personalities)
+  // how each family moves (PMConcept7's own motion personalities). fps: Retro's tube refreshes at
+  // a stepped rate with phosphor persistence between frames. bob: NieR hovers like a Pod.
   const FAM = {
-    friendly: { w: 3.9, damp: .9, sway: 5, swayW: .9, k: 120, c: 12, pk: 130, pc: 11, pw: 3.6, pdamp: 1.1, kick: .45 },
-    glass: { w: 2.8, damp: .55, sway: 4, swayW: .55, k: 40, c: 10, pk: 42, pc: 10, pw: 2.6, pdamp: .7, kick: .32 },
-    basic: { w: 3.6, damp: 2.4, sway: 1.6, swayW: .6, k: 170, c: 26, pk: 170, pc: 25, pw: 3.6, pdamp: 3, kick: .16 },
-    retro: { w: 4.2, damp: 1.4, sway: 5, swayW: 1, k: 190, c: 20, pk: 190, pc: 20, pw: 4, pdamp: 1.6, kick: .4, fps: 8 },
-    nier: { w: 3, damp: 9, sway: 0, swayW: 0, k: 260, c: 34, pk: 260, pc: 34, pw: 3, pdamp: 9, kick: 0, still: true }
+    friendly: { w: 3.9, damp: .9, sway: 5, swayW: .9, k: 120, c: 12, pk: 130, pc: 11, pw: 3.6, pdamp: 1.1, kick: .45, breathe: .014, cps: 32 },
+    glass: { w: 2.8, damp: .55, sway: 4, swayW: .55, k: 40, c: 10, pk: 42, pc: 10, pw: 2.6, pdamp: .7, kick: .32, breathe: .01, cps: 30 },
+    basic: { w: 3.6, damp: 2.4, sway: 1.6, swayW: .6, k: 170, c: 26, pk: 170, pc: 25, pw: 3.6, pdamp: 3, kick: .16, breathe: .006, cps: 38 },
+    retro: { w: 4.2, damp: 1.4, sway: 4, swayW: 1, k: 190, c: 20, pk: 190, pc: 20, pw: 4, pdamp: 1.6, kick: .4, breathe: .01, fps: 20, cps: 50 },
+    nier: { w: 2.6, damp: 3.4, sway: 2.4, swayW: .42, k: 55, c: 15, pk: 60, pc: 16, pw: 2.8, pdamp: 3.2, kick: .1, bob: 3.2, breathe: 0, noHop: true, cps: 55 }
   };
+  // Pip on the tube: Retro Dark's Pip in PM Phosphor Green, Retro Light's in Paper Teletype ink
+  const TUBE_PIP = {
+    phosphor: Object.assign({}, TH['retro-dark'], { bg: '#071109', head: '#4FCB60', eye: '#041008', cheek: '#C4EC35', ctl: '#9BF5A6', str: '#3E8A48', pin: '#D3FFB0' }),
+    teletype: Object.assign({}, TH['retro-light'], { bg: '#F4ECDD', head: '#346B37', eye: '#F4ECDD', cheek: '#A13126', ctl: '#231E19', str: '#5B544A', pin: '#A13126' })
+  };
+  const CHAPTER_NAMES = { welcome: 'Welcome', computer: 'The computer', project: 'Your Project', ai: 'Power', ready: 'Ready' };
+  const CHAPTER_N = { welcome: 0, computer: 1, project: 2, ai: 3, ready: 4 };
 
   function el(tag, attrs, parent) {
     const e = document.createElementNS(NS, tag);
@@ -64,7 +79,13 @@
     if (parent) parent.appendChild(e);
     return e;
   }
+  const div = (cls, parent, html) => { const d = document.createElement('div'); d.className = cls; if (html) d.innerHTML = html; if (parent) parent.appendChild(d); return d; };
   const rot = (p, a) => { const c = Math.cos(a), s = Math.sin(a); return [p[0] * c - p[1] * s, p[0] * s + p[1] * c]; };
+  const snd = () => G.PipSound || null;
+
+  // where the pointer is, for Pip's eyes (shared by every stage)
+  const pointer = { x: -1, y: -1, t: 0 };
+  document.addEventListener('pointermove', (e) => { pointer.x = e.clientX; pointer.y = e.clientY; pointer.t = now(); }, { passive: true });
 
   /* --------------------------------------------------------------- stage */
   let seq = 0;
@@ -77,10 +98,12 @@
       this.reduced = !!(opts && opts.reduced);
       this.props = new Map();
       this.fx = [];
+      this.ghosts = [];
       this.spec = { props: [], pip: {} };
       this.moodOverride = null; this.moodUntil = 0;
-      this.score = 0;
-      this.t = 0; this.last = now();
+      this.t = 0; this.last = now(); this.frameT = 0;
+      this.feed = 0; this.loops = {};
+      this.idleNext = 6 + Math.random() * 4; this.idleUntil = 0; this.idleLook = null;
       this.build();
       this.loop = this.loop.bind(this);
       this.raf = requestAnimationFrame(this.loop);
@@ -90,24 +113,38 @@
 
     /* ------------------------------------------------------- building */
     build() {
-      const root = this.root, th = TH[this.theme], w = PW.WORLDS[this.theme], Lay = LAYOUTS[this.layoutName];
-      this.th = th; this.w = w; this.L = Lay; this.fam = FAM[w.fam]; this.famName = w.fam;
+      const root = this.root, w = PW.WORLDS[this.theme], Lay = this.L = LAYOUTS[this.layoutName];
+      this.w = w; this.fam = FAM[w.fam]; this.famName = w.fam; this.tube = w.tube || null;
       root.innerHTML = '';
       root.classList.add('pst');
       root.dataset.fam = w.fam; root.dataset.scheme = w.scheme; root.dataset.layout = this.layoutName;
+      root.dataset.tube = this.tube || '';
       root.dataset.reduced = this.reduced ? '1' : '0';
       root.style.setProperty('--st-tint', (w.chapter && w.chapter[this.chapter || 'welcome']) || w.ink);
-      this.wall = document.createElement('div'); this.wall.className = 'pst-wall'; root.appendChild(this.wall);
+      // Retro: a monitor case, its sloped face and the tube; everything on stage lives on the tube
+      this.screen = root; this.content = root;
+      if (this.tube) {
+        const cs = div('pst-case', root);
+        div('pst-brand', cs, `<span>PUPPET MASTER</span><i class="pst-led"></i>`);
+        const face = div('pst-face', cs);
+        this.screen = div('pst-tube', face);
+        this.content = div('pst-content', this.screen);
+      }
+      this.wall = div('pst-wall', this.content);
       // Glass stands on PMConcept7's own Ribbons wallpaper (kept with the logo; a standalone build inlines it)
       if (w.fam === 'glass') root.style.setProperty('--wall', `url(${(G.PIP_WALLS && G.PIP_WALLS[w.scheme]) || `../../Icon-Concepts/Opus5.5icon/wall-ribbons-${w.scheme}.webp`})`);
       if (w.fam === 'glass') this.wall.innerHTML = '<i class="pst-caustic c1"></i><i class="pst-caustic c2"></i><i class="pst-caustic c3"></i>';
-      const svg = this.svg = el('svg', { class: 'pst-svg', viewBox: `0 0 ${Lay.w} ${Lay.h}`, preserveAspectRatio: w.fam === 'retro' ? 'xMidYMid slice' : 'xMidYMid meet', 'aria-hidden': 'true' }, root);
+      const svg = this.svg = el('svg', { class: 'pst-svg', viewBox: `0 0 ${Lay.w} ${Lay.h}`, preserveAspectRatio: this.tube ? 'xMidYMid slice' : 'xMidYMid meet', 'aria-hidden': 'true' }, this.content);
       svg.setAttribute('xmlns', NS);
       this.defs = el('defs', null, svg);
       const bd = PW.backdrop(w, this.id + 'w', Lay);
       this.pen = PW.pen(w, this.id + 'p'); this.pen.theme = this.theme;
       this.backDefs = bd.defs;
       this.gBack = el('g', { class: 'pst-back' }, svg); this.gBack.innerHTML = bd.back;
+      this.paper = this.gBack.querySelector('.st-paper');
+      if (this.paper) this.paper.style.transform = `translateY(${-this.feed}px)`;
+      this.terrain = bd.terrain || null;
+      this.gTerrain = this.terrain ? el('path', { class: 'pst-terrain', fill: 'none', stroke: w.ink, 'stroke-width': '1.1' }, svg) : null;
       if (w.fam === 'glass') {
         // a faint mirror image in the glass floor, of everything that hangs
         const m = this.id + 'rm';
@@ -116,46 +153,54 @@
         el('use', { href: `#${this.id}act`, transform: `translate(0 ${2 * Lay.ground}) scale(1 -1)` }, this.gReflect);
       }
       this.gShadow = el('g', { class: 'pst-shadows' }, svg);
+      this.gRipple = el('g', { class: 'pst-ripples' }, svg);
+      this.gTrail = el('g', { class: 'pst-trail' }, svg);
       this.gActors = el('g', { id: `${this.id}act` }, svg);
       this.gPropStr = el('g', { class: 'pst-pstr' }, this.gActors);
       this.gProps = el('g', { class: 'pst-props' }, this.gActors);
       this.gPip = el('g', { class: 'pst-pip' }, this.gActors);
       this.gFx = el('g', { class: 'pst-fx' }, svg);
       this.gHud = el('g', { class: 'pst-hud' }, svg);
-      if (w.fam === 'retro') {
-        this.canvas = document.createElement('canvas'); this.canvas.className = 'pst-px'; root.appendChild(this.canvas);
-        this.ctx = this.canvas.getContext('2d', { willReadFrequently: true });
-        this.img = new Image(); this.pxBusy = false; this.pxLast = 0; this.pxCache = new Map();
-        this.palette = w.palette.map((h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)));
-      }
-      this.overlay = document.createElement('div'); this.overlay.className = 'pst-overlay'; root.appendChild(this.overlay);
-      this.bubble = document.createElement('div'); this.bubble.className = 'pst-bubble'; this.bubble.setAttribute('role', 'status'); this.overlay.appendChild(this.bubble);
+      this.overlay = div('pst-overlay', this.content);
+      this.bubble = div('pst-bubble', this.overlay);
+      this.bubble.setAttribute('role', 'status');
+      this.bubble.innerHTML = (w.fam === 'nier' ? '<b class="pst-bn">PIP</b>' : '') + '<span class="pst-bt"></span>' + (w.fam === 'nier' ? '<i class="pst-bgo" aria-hidden="true"></i>' : '');
+      this.btext = this.bubble.querySelector('.pst-bt');
+      if (this.tube) div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
       this.hudHtml();
       this.buildPip();
       // re-create the props that were on stage, in the new material
       const keep = [...this.props.values()];
       this.props.clear();
-      keep.forEach((p) => { if (p.labelEl) p.labelEl.remove(); if (p.state !== 'out') this.addProp(p.spec, true); });
+      keep.forEach((p) => { if (p.state !== 'out') this.addProp(p.spec, true); });
+      this.ghosts = [];
       this.syncDefs();
       this.measure();
+      if (this.tube) this.powerOn();
     }
     syncDefs() { this.defs.innerHTML = this.backDefs + this.pen.defs(); }
 
     hudHtml() {
       const f = this.famName;
       let h = '';
-      if (f === 'retro') h = `<div class="pst-hud-top"><span class="pst-1up">1UP <b class="pst-score">${String(this.score).padStart(6, '0')}</b></span><span class="pst-stage">STAGE <b class="pst-stagen">1-1</b></span></div><div class="pst-press">PRESS ▶ TO START</div>`;
-      if (f === 'nier') h = `<div class="pst-nhud"><div class="pst-ntop"><span>PIP // UNIT P-01</span><span class="pst-decode" aria-hidden="true"></span></div><div class="pst-nlab"><span class="pst-nlab-k">■ <b class="pst-target">STANDBY</b></span><span>MAP 1:1</span></div><i class="pst-nb tl"></i><i class="pst-nb tr"></i><i class="pst-nb bl"></i><i class="pst-nb br"></i></div>`;
-      const wrap = document.createElement('div'); wrap.className = 'pst-hudhtml'; wrap.innerHTML = h;
-      this.overlay.appendChild(wrap);
+      if (this.tube === 'phosphor') h = `<div class="pst-term"><div class="pst-term-top"><span>PIP.SYS 1.0</span><span class="pst-term-ch">[ WELCOME ]</span></div><pre class="pst-term-boot" aria-hidden="true"></pre><div class="pst-term-cmd"><span class="pst-term-ps">C:\\PIP&gt;</span> <span class="pst-term-in"></span><i class="pst-term-cur"></i><span class="pst-term-ok"></span></div></div>`;
+      if (this.tube === 'teletype') h = `<div class="pst-term"><div class="pst-term-top"><span>PUPPET MASTER · SETUP LOG</span><span class="pst-term-ch">PAGE 01</span></div><pre class="pst-term-boot" aria-hidden="true"></pre><div class="pst-term-cmd"><span class="pst-term-ps">»</span> <span class="pst-term-in"></span><i class="pst-term-cur"></i><span class="pst-term-ok"></span></div></div>`;
+      if (f === 'nier') h = `<div class="pst-nhud"><div class="pst-ntop"><span>PIP // UNIT P-01</span><span class="pst-decode" aria-hidden="true"></span></div>
+        <div class="pst-nscan" aria-hidden="true"><i></i><span class="pst-nscan-l">SCAN</span></div>
+        <div class="pst-nquest" aria-hidden="true"><b>QUEST UPDATED</b><span class="pst-nquest-t"></span></div>
+        <div class="pst-nlab"><span class="pst-nlab-k">■ <b class="pst-target">STANDBY</b></span><span class="pst-ncoord">MAP 1:1</span></div><i class="pst-nb tl"></i><i class="pst-nb tr"></i><i class="pst-nb bl"></i><i class="pst-nb br"></i></div>`;
+      const wrap = div('pst-hudhtml', this.overlay, h);
       this.hudEl = wrap;
+      this.cmdText = null;
+      const lab = wrap.querySelector('.pst-term-ch'), ch = this.chapter || 'welcome';
+      if (lab) lab.textContent = this.tube === 'teletype' ? `PAGE ${String(CHAPTER_N[ch] + 1).padStart(2, '0')}` : `[ ${CHAPTER_NAMES[ch].toUpperCase()} ]`;
     }
 
     /* -------------------------------------------------------------- Pip */
+    pipTh(theme) { return theme === this.theme && this.tube ? TUBE_PIP[this.tube] : TH[theme]; }
     buildPip(themeOverride) {
-      const Lay = this.L, g = K.GEO.full, theme = themeOverride || this.theme, th = TH[theme], nier = !!th.nier;
+      const Lay = this.L, g = K.GEO.full, theme = themeOverride || this.theme, th = this.pipTh(theme), nier = !!th.nier;
       this.pipTheme = theme;
-      const s = Lay.s;
       if (!this.ps) {
         this.ps = { C: { x: Lay.ctl[0], y: Lay.ctl[1], vx: 0, vy: 0 }, Ct: { x: Lay.ctl[0], y: Lay.ctl[1] }, th: 0, thv: 0, dy: 0, dyv: 0, tilt: 0, tiltv: 0, tiltT: 0, phi: 0, phiv: 0,
           sx: 1, sy: 1, sv: 0, look: [0, 0], lookT: [0, 0], blink: 1, nextBlink: 2, asleep: false };
@@ -165,7 +210,7 @@
       this.pglow = [0, 1].map(() => el('path', { class: 'pst-power', fill: 'none', 'stroke-linecap': 'round' }, this.gPip));
       this.gHead = el('g', { class: 'pst-head' }, this.gPip);
       this.gCtl = el('g', { class: 'pst-ctl' }, this.gPip);
-      const strW = this.famName === 'retro' ? 4.2 : this.famName === 'nier' ? 1.4 : 2.2;
+      const strW = this.famName === 'nier' ? 1.4 : 2.2;
       this.pstrs.forEach((p) => { p.setAttribute('stroke', th.str); p.setAttribute('stroke-width', strW); });
       this.pglow.forEach((p) => { p.setAttribute('stroke-width', strW + 1.6); });
       if (nier) {
@@ -186,10 +231,10 @@
     renderHead(mood, force) {
       if (!force && mood === this.curMood) return;
       this.curMood = mood;
-      const g = K.GEO.full, th = TH[this.pipTheme];
+      const g = K.GEO.full, th = this.pipTh(this.pipTheme);
       const p = this.id + 'h' + (++this.hseq || (this.hseq = 1));
       if (th.nier) {
-        const parts = K.pipNier(g, th, mood === 'dots' ? 'think' : mood, { face: 'pf', dot: 'pst-dot' }, { face: p + 'f' }, { parts: true });
+        const parts = K.pipNier(g, th, mood === 'dots' ? 'think' : mood === 'wink' ? 'happy' : mood, { face: 'pf', dot: 'pst-dot' }, { face: p + 'f' }, { parts: true });
         this.gHead.innerHTML = parts.headInner;
       } else {
         const hd = K.pipHead(g, th, mood, { face: p + 'f', grad: p + 'g', clip: p + 'c', rim: p + 'r', glow: p + 'w', spec: p + 's', drop: p + 'd' }, { face: 'pf', eyes: 'pe', blink: 'pb', dot: 'pst-dot' }, {});
@@ -215,17 +260,43 @@
       });
     }
 
+    /* ------------------------------------------------------------ sound */
+    sfx(ev, o) {
+      const S = snd(); if (!S) return;
+      // a scene change lowers and lifts several props at once: one sound for the moment, not six
+      const gap = { lower: .12, lift: .16, land: .1, ghost: .12, sparkle: .15, hop: .2 }[ev];
+      if (gap) { this.sfxT = this.sfxT || {}; if (this.t - (this.sfxT[ev] || -9) < gap) return; this.sfxT[ev] = this.t; }
+      o = Object.assign({}, o || {});
+      if (o.x != null) { o.pan = R(clamp(o.x / this.L.w * 2 - 1, -1, 1) * .8); delete o.x; }
+      try { S.play(ev, o); } catch (e) { /* sound never stops the stage */ }
+    }
+    loopSnd(name, level) {
+      level = R(level);
+      if (this.loops[name] === level) return;
+      this.loops[name] = level;
+      const S = snd(); if (S && S.loop) try { S.loop(name, level); } catch (e) { /* ignore */ }
+    }
+    // the window opened or closed: ambience and loops follow
+    setActive(on) {
+      this.active = on;
+      this.loopSnd('bed', on ? 1 : 0);
+      if (!on) ['snore', 'work', 'power', 'swing'].forEach((n) => this.loopSnd(n, 0));
+    }
+
     /* ----------------------------------------------------------- props */
     addProp(spec, instant) {
-      const Lay = this.L, P = PW.PROPS[spec.kind];
+      const P = PW.PROPS[spec.kind];
       if (!P) return null;
       const g = el('g', { class: 'pst-prop', 'data-kind': spec.kind }, this.gProps);
-      const pr = { spec, el: g, strs: [], state: 'in', a: 0, av: 0, len: 0, lenv: 0, ax: 0, axv: 0, scale: spec.scale || 1, sv: 0, op: 0, born: this.t, key: '' };
+      const pr = { spec, el: g, strs: [], state: 'in', a: 0, av: 0, len: 0, lenv: 0, ax: 0, axv: 0, scale: spec.scale || 1, sv: 0, op: 0, born: this.t, key: '', settled: !!instant };
       this.props.set(spec.id, pr);
       this.drawProp(pr);
       const tgt = this.propTarget(pr);
       pr.ax = tgt.ax; pr.len = instant ? tgt.len : 0; pr.op = instant ? tgt.op : 0;
-      if (!instant) pr.av = (Math.random() - .5) * this.fam.kick * 2;
+      if (!instant) {
+        pr.av = (Math.random() - .5) * this.fam.kick * 2;
+        this.sfx(spec.preview ? 'ghost' : 'lower', { x: tgt.ax, len: clamp(tgt.len, 0, 400) });
+      }
       return pr;
     }
     drawProp(pr) {
@@ -233,19 +304,14 @@
       if (key === pr.key) return;
       pr.key = key;
       const d = PW.PROPS[pr.spec.kind](this.pen, pr.spec.params || {});
-      let inner = d.svg;
-      if (pr.spec.hat) inner += '';
-      pr.el.innerHTML = inner;
+      pr.el.innerHTML = d.svg;
       pr.ties = d.ties; pr.foot = d.foot;
-      if (d.label != null) {
-        if (!pr.labelEl) { pr.labelEl = document.createElement('span'); pr.labelEl.className = 'pst-plabel'; this.overlay.appendChild(pr.labelEl); }
-        pr.labelEl.textContent = d.label;
-      } else if (pr.labelEl) { pr.labelEl.remove(); pr.labelEl = null; }
       const n = d.ties.length;
       while (pr.strs.length < n) pr.strs.push(el('path', { class: 'pst-pstrl', fill: 'none' }, this.gPropStr));
       while (pr.strs.length > n) pr.strs.pop().remove();
-      const w = this.w, col = this.famName === 'glass' ? (w.scheme === 'dark' ? 'rgba(246,248,252,.5)' : 'rgba(12,15,21,.38)') : this.famName === 'basic' ? w.line : this.famName === 'retro' ? w.ink : this.famName === 'nier' ? w.ink : TH[this.theme].str;
-      pr.strs.forEach((p) => { p.setAttribute('stroke', col); p.setAttribute('stroke-width', this.famName === 'retro' ? 4 : this.famName === 'nier' ? 1 : this.famName === 'basic' ? 1.5 : 2); if (this.famName === 'basic') p.setAttribute('stroke-opacity', '.55'); });
+      const w = this.w, f = this.famName;
+      const col = f === 'glass' ? (w.scheme === 'dark' ? 'rgba(246,248,252,.5)' : 'rgba(12,15,21,.38)') : f === 'basic' ? w.line : f === 'retro' ? (this.tube === 'phosphor' ? w.mid : '#5B544A') : f === 'nier' ? w.ink : TH[this.theme].str;
+      pr.strs.forEach((p) => { p.setAttribute('stroke', col); p.setAttribute('stroke-width', f === 'retro' ? 1.8 : f === 'nier' ? 1 : f === 'basic' ? 1.5 : 2); if (f === 'basic') p.setAttribute('stroke-opacity', '.55'); });
       this.syncDefs();
     }
     slotXY(spec) {
@@ -256,7 +322,7 @@
     }
     propTarget(pr) {
       const Lay = this.L, [x, y] = this.slotXY(pr.spec), sc = (pr.spec.scale || 1) * Lay.propScale;
-      const tie = pr.ties[0], tieY = pr.ties.reduce((m, t) => Math.min(m, t[1]), 0);
+      const tieY = pr.ties.reduce((m, t) => Math.min(m, t[1]), 0);
       let len = (y + tieY * sc) - Lay.anchorY;
       if (pr.spec.preview) len -= 26 * Lay.propScale;
       if (pr.state === 'out') len = -10;
@@ -264,7 +330,7 @@
     }
 
     /* ------------------------------------------------------ direction */
-    // spec: { chapter, props:[{id,kind,slot|at|stack,params,preview,scale,ground}], pip:{mood,look,at,pose,work,power,tilt}, say, target, label }
+    // spec: { chapter, props:[{id,kind,slot|at|stack,params,preview,scale,ground}], pip:{mood,look,at,pose,work,power,tilt}, say, target, label, cmd }
     direct(spec) {
       this.spec = spec;
       if (spec.chapter && spec.chapter !== this.chapter) this.setChapter(spec.chapter);
@@ -278,9 +344,10 @@
           const wasPreview = pr.spec.preview;
           pr.spec = ps; this.drawProp(pr);
           if (moved || (wasPreview && !ps.preview)) pr.av += (Math.random() > .5 ? 1 : -1) * this.fam.kick;
+          if (wasPreview && !ps.preview) { pr.settled = false; this.sfx('lower', { x: pr.ax, len: clamp(pr.len, 0, 400) }); }
         }
       });
-      this.props.forEach((pr, id) => { if (!ids.has(id) && pr.state !== 'out') { pr.state = 'out'; pr.av += this.fam.kick * .6; } });
+      this.props.forEach((pr, id) => { if (!ids.has(id) && pr.state !== 'out') { pr.state = 'out'; pr.av += this.fam.kick * .6; if (!pr.spec.preview) this.sfx('lift', { x: pr.ax }); } });
       const pip = spec.pip || {};
       const Lay = this.L;
       const at = pip.at ? (Array.isArray(pip.at) ? pip.at : { left: [Lay.ctl[0] - 30 * (Lay.s / 2.3), Lay.ctl[1]], home: Lay.ctl }[pip.at] || Lay.ctl) : Lay.ctl;
@@ -292,12 +359,11 @@
       this.work = !!pip.work; this.power = pip.power || 0;
       this.pglow.forEach((p) => p.classList.toggle('on', this.power > 0));
       this.root.style.setProperty('--st-power', String(Math.min(1, this.power / 3)));
-      if (spec.say !== undefined) this.say(spec.say);
+      this.loopSnd('work', this.work ? 1 : 0);
+      this.loopSnd('power', Math.min(1, this.power / 2));
+      if (spec.say !== undefined && !this.sleepZ) this.say(spec.say);
       this.hudTarget(spec.target, spec.label);
-      if (this.famName === 'retro' && this.hudEl) {
-        const press = this.hudEl.querySelector('.pst-press'); if (press) press.hidden = !spec.press;
-        const st = this.hudEl.querySelector('.pst-stagen'); if (st && spec.stageNo) st.textContent = spec.stageNo;
-      }
+      if (this.tube) this.cmd(spec.cmd || null);
       if (this.famName === 'nier' && this.hudEl && spec.label) this.decode(spec.label);
     }
     setChapter(ch) {
@@ -305,31 +371,41 @@
       this.chapter = ch;
       const tint = this.w.chapter && this.w.chapter[ch];
       if (tint) this.root.style.setProperty('--st-tint', tint);
-      if (prev && !this.reduced) {
-        if (this.famName === 'nier') { this.root.classList.remove('pst-slice'); void this.root.offsetWidth; this.root.classList.add('pst-slice'); }
-        if (this.famName === 'glass') { this.root.classList.remove('pst-sweep'); void this.root.offsetWidth; this.root.classList.add('pst-sweep'); }
-        if (this.famName === 'retro') { this.root.classList.remove('pst-clear'); void this.root.offsetWidth; this.root.classList.add('pst-clear'); }
-        if (this.famName === 'friendly' || this.famName === 'basic') this.hop(.6);
-      }
+      const lab = this.hudEl && this.hudEl.querySelector('.pst-term-ch');
+      if (lab) lab.textContent = this.tube === 'teletype' ? `PAGE ${String(CHAPTER_N[ch] + 1).padStart(2, '0')}` : `[ ${CHAPTER_NAMES[ch].toUpperCase()} ]`;
+      if (!prev) return;
+      this.sfx('chapter', { chapter: CHAPTER_N[ch] });
+      if (this.reduced) return;
+      const f = this.famName, again = (node, cls) => { node.classList.remove(cls); void node.offsetWidth; node.classList.add(cls); };
+      if (f === 'nier') { again(this.root, 'pst-slice'); this.quest(CHAPTER_NAMES[ch]); setTimeout(() => this.sfx('slice'), 40); }
+      if (f === 'glass') again(this.root, 'pst-sweep');
+      if (this.tube === 'phosphor') { this.screen.classList.remove('pst-on'); again(this.screen, 'pst-degauss'); setTimeout(() => this.sfx('degauss'), 30); }
+      if (this.tube === 'teletype') this.feedPaper(2);
+      if (f === 'friendly' || f === 'basic') this.hop(.6);
     }
     // a transient expression, then back to the scene's own
     feel(mood, ms) { this.moodOverride = mood; this.moodUntil = this.t + (ms || 1200) / 1000; }
-    hop(k) { if (this.reduced || this.fam.still) return; this.ps.dyv -= 210 * (k || 1); }
-    nod() { if (this.reduced || this.fam.still) return; this.ps.tiltv += 2.4; }
+    hop(k) { if (this.reduced || this.fam.noHop) return; this.ps.dyv -= 210 * (k || 1); this.sfx('hop', { x: this.ps.C.x }); }
+    nod() { if (this.reduced) return; this.ps.tiltv += 2.4; }
     // the moment a choice lands: the prop pops, Pip is pleased, the world celebrates in its own way
     cheer(propId, opts) {
+      opts = opts || {};
       const pr = propId && this.props.get(propId);
       const at = pr ? this.propCentre(pr) : this.headCentre();
-      this.feel(opts && opts.mood || (this.famName === 'friendly' && Math.random() < .35 ? 'wink' : 'happy'), 1400);
-      this.hop(.8);
+      this.feel(opts.mood || (this.famName === 'friendly' && Math.random() < .35 ? 'wink' : 'happy'), 1400);
+      this.sfx(opts.sound || 'cheer', { x: at[0], index: opts.index, count: opts.count });
+      if (this.famName === 'nier') { this.ps.tiltv -= 1.2; } else this.hop(.8);
       if (pr && !this.reduced) { pr.sv -= 2.2; pr.av += this.fam.kick * .8; }
-      if (this.reduced) return;
+      if (this.tube) this.ok();
+      if (this.reduced) { if (this.famName === 'nier') this.lockOn(pr); return; }
       const f = this.famName;
       if (f === 'friendly') this.burst(at, ['star', 'heart', 'dot'], 12);
       else if (f === 'glass') this.burst(at, ['glint', 'bubble'], 10);
       else if (f === 'basic') this.burst(at, ['ring', 'check'], 2);
-      else if (f === 'retro') { this.burst(at, ['pix'], 14); this.addScore(100, at); }
-      else if (f === 'nier') this.lockOn(pr);
+      else if (this.tube === 'phosphor') this.burst(at, ['pix', 'glyph'], 14);
+      else if (this.tube === 'teletype') this.burst(at, ['print', 'chad'], 12);
+      else if (f === 'nier') { this.lockOn(pr); this.burst(at, ['nsq'], 10); }
+      if (f !== 'nier' && f !== 'basic') setTimeout(() => this.sfx('sparkle', { x: at[0] }), 90);
     }
     wake() {
       // the welcome: Pip asleep on slack strings. It wakes when you arrive (the first pointer move or
@@ -340,37 +416,130 @@
       this.direct(this.spec);
       ps.C.y = ps.Ct.y; ps.C.vy = 0; ps.th = 0; ps.thv = 0;
       this.renderHead('sleep');
+      if (this.tube) this.boot();
       clearTimeout(this.wakeT);
-      const up = () => {
+      if (this.off) this.off();
+      // a real arrival only: the browser's own pointer event on load, or a pointer at rest, does not count
+      const t0 = performance.now();
+      let travel = 0;
+      const up = (e) => {
         if (!this.sleepZ) return;
+        if (e && e.type === 'pointermove') { travel += Math.abs(e.movementX || 0) + Math.abs(e.movementY || 0); if (performance.now() - t0 < 900 || travel < 24) return; }
         clearTimeout(this.wakeT); off();
         this.feel('alert', 650);
+        this.sfx('wake');
         this.wakeT = setTimeout(() => {
           this.sleepZ = false;
           this.direct(this.spec);
           this.feel('happy', 1600);
-          setTimeout(() => { this.hop(.5); if (this.spec.wakeSay) this.say(this.spec.wakeSay); }, this.reduced ? 0 : 450);
+          setTimeout(() => { this.hop(.5); if (this.spec.wakeSay) this.say(this.spec.wakeSay, 'happy'); }, this.reduced ? 0 : 450);
         }, this.reduced ? 0 : 650);
       };
       const off = () => { document.removeEventListener('pointermove', up); document.removeEventListener('keydown', up); };
-      document.addEventListener('pointermove', up, { once: true }); document.addEventListener('keydown', up, { once: true });
-      this.wakeT = setTimeout(up, this.reduced ? 200 : 2600);
+      document.addEventListener('pointermove', up); document.addEventListener('keydown', up);
+      this.off = off;
+      this.wakeT = setTimeout(up, this.reduced ? 200 : 3200);
     }
 
     /* ---------------------------------------------------------- speech */
-    say(text) {
+    // Pip types its line at the pace its voice speaks it (sound.js), in every look
+    say(text, mood) {
       const b = this.bubble;
+      if (text && text === this.saying && b.classList.contains('on')) return;
       clearInterval(this.typeT);
-      if (!text) { b.classList.remove('on'); return; }
+      this.saying = text || '';
+      if (!text) { b.classList.remove('on'); const S = snd(); if (S && S.hush) S.hush(); return; }
+      const S = snd(), voice = () => {
+        if (!S || !S.say) return null;
+        try { return S.say(text, { mood: mood || (this.spec.pip && this.spec.pip.mood) || 'idle', kit: S.kitOf ? S.kitOf(this.theme) : undefined }); } catch (e) { return null; }
+      };
+      // lines that change faster than Pip can say them (typing a name, sweeping across choices) show at
+      // once, and Pip speaks only the one you stop on
+      const tn = performance.now(), quick = tn - (this.sayCall || 0) < 450;
+      this.sayCall = tn;
+      clearTimeout(this.voiceT);
+      if (quick && b.classList.contains('on')) {
+        this.btext.textContent = text; b.classList.remove('typing');
+        if (S && S.hush) S.hush();
+        this.voiceT = setTimeout(() => { if (this.saying === text) voice(); }, 600);
+        return;
+      }
       b.classList.remove('on'); void b.offsetWidth; b.classList.add('on');
-      const typed = (this.famName === 'retro' || this.famName === 'nier') && !this.reduced;
-      if (!typed) { b.textContent = text; return; }
-      let i = 0; b.textContent = '';
-      this.typeT = setInterval(() => { i += 1; b.textContent = text.slice(0, i); if (i >= text.length) clearInterval(this.typeT); }, this.famName === 'retro' ? 28 : 18);
+      const r = voice();
+      const cps = (r && r.cps) || this.fam.cps;
+      if (this.reduced) { this.btext.textContent = text; b.classList.remove('typing'); return; }
+      let i = 0; this.btext.textContent = ''; b.classList.add('typing');
+      const t0 = performance.now();
+      this.typeT = setInterval(() => {
+        const n = Math.min(text.length, Math.floor((performance.now() - t0) / 1000 * cps) + 1);
+        if (n !== i) { i = n; this.btext.textContent = text.slice(0, i); }
+        if (i >= text.length) { clearInterval(this.typeT); b.classList.remove('typing'); }
+      }, 16);
+    }
+
+    /* ------------------------------------------------- Retro: the terminal */
+    // the command line at the foot of the tube types what the scene is doing
+    cmd(text) {
+      if (!this.hudEl || text === this.cmdText) return;
+      this.cmdText = text;
+      const inp = this.hudEl.querySelector('.pst-term-in'), ok = this.hudEl.querySelector('.pst-term-ok');
+      if (!inp) return;
+      clearInterval(this.cmdT);
+      ok.textContent = '';
+      const s = text || '';
+      if (this.reduced) { inp.textContent = s; return; }
+      let i = 0; inp.textContent = '';
+      this.cmdT = setInterval(() => { i += 1; inp.textContent = s.slice(0, i); if (i >= s.length) clearInterval(this.cmdT); }, this.tube === 'teletype' ? 34 : 24);
+    }
+    ok() {
+      const ok = this.hudEl && this.hudEl.querySelector('.pst-term-ok');
+      if (!ok) return;
+      ok.textContent = this.tube === 'teletype' ? '  ✓ DONE' : '  [ OK ]';
+      ok.classList.remove('flash'); void ok.offsetWidth; ok.classList.add('flash');
+    }
+    // the welcome on a cold machine: a few lines of boot text, then the screen clears
+    boot() {
+      const pre = this.hudEl && this.hudEl.querySelector('.pst-term-boot');
+      if (!pre || this.booted) return;
+      this.booted = true;
+      const lines = this.tube === 'teletype'
+        ? ['PUPPET MASTER TELETYPE MODEL 33', 'PAPER ...... OK   RIBBON ...... OK', 'LOADING PIP ......................', '']
+        : ['PUPPET MASTER BIOS v1.0', 'MEMORY TEST  640K OK', 'STRINGS      2 OK', 'LOADING PIP.SYS ......', ''];
+      const all = lines.join('\n');
+      if (this.reduced) { pre.textContent = ''; return; }
+      let i = 0; pre.textContent = ''; pre.classList.remove('gone');
+      clearInterval(this.bootT);
+      this.bootT = setInterval(() => {
+        i += 2; pre.textContent = all.slice(0, i);
+        if (i >= all.length) { clearInterval(this.bootT); setTimeout(() => pre.classList.add('gone'), 900); }
+      }, 14);
+    }
+    powerOn() {
+      if (this.reduced) return;
+      const s = this.screen;
+      s.classList.remove('pst-on', 'pst-off', 'pst-degauss'); void s.offsetWidth; s.classList.add('pst-on');
+      setTimeout(() => this.sfx('powerOn'), 20);
+    }
+    powerOff() {
+      if (!this.tube || this.reduced) return;
+      const s = this.screen;
+      s.classList.remove('pst-on', 'pst-off'); void s.offsetWidth; s.classList.add('pst-off');
+      this.sfx('powerOff');
+    }
+    // Paper Teletype: the platen turns and the paper feeds up a band or two
+    feedPaper(n) {
+      if (!this.paper) return;
+      const band = +this.paper.dataset.band || 72;
+      this.feed += band * (n || 1);
+      if (this.feed > band * 12) { this.paper.style.transition = 'none'; this.feed -= band * 6; this.paper.style.transform = `translateY(${-(this.feed - band * (n || 1))}px)`; void this.paper.getBoundingClientRect(); }
+      this.paper.style.transition = '';
+      this.paper.style.transform = `translateY(${-this.feed}px)`;
+      this.sfx('feed');
     }
 
     /* -------------------------------------------------------- NieR HUD */
     hudTarget(id, label) {
+      if ((id || null) !== this.target) this.tgtT = this.t;
       this.target = id || null;
       if (this.famName !== 'nier') return;
       const t = this.hudEl && this.hudEl.querySelector('.pst-target');
@@ -381,9 +550,12 @@
       if (!d) return;
       const glyphs = '▚▞▖▘▝▗#±‡⌗∴∵01';
       const goal = text.toUpperCase().slice(0, 28);
+      if (goal === this.decoded) return;
+      this.decoded = goal;
       let n = 0;
       clearInterval(this.decT);
       if (this.reduced) { d.textContent = goal; return; }
+      this.sfx('decode');
       this.decT = setInterval(() => {
         n += 1;
         d.textContent = goal.split('').map((ch, i) => i < n / 2 || ch === ' ' ? ch : glyphs[(i * 7 + n) % glyphs.length]).join('');
@@ -393,8 +565,16 @@
     lockOn(pr) {
       if (!pr) return;
       this.lockT = this.t;
+      this.sfx('lock', { x: pr.ax });
       const lab = this.hudEl && this.hudEl.querySelector('.pst-target');
       if (lab) { lab.dataset.state = 'confirmed'; clearTimeout(this.lockTO); this.lockTO = setTimeout(() => { delete lab.dataset.state; }, 1400); }
+    }
+    // a chapter change in NieR: QUEST UPDATED wipes across the top of the stage
+    quest(name) {
+      const q = this.hudEl && this.hudEl.querySelector('.pst-nquest');
+      if (!q) return;
+      q.querySelector('.pst-nquest-t').textContent = name.toUpperCase();
+      q.classList.remove('on'); void q.offsetWidth; q.classList.add('on');
     }
 
     /* ----------------------------------------------------------- effects */
@@ -412,46 +592,51 @@
         if (kind === 'bubble') sh = `<circle r="${3 + Math.random() * 4}" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.2"/>`;
         if (kind === 'ring') sh = `<circle r="10" fill="none" stroke="${w.accent}" stroke-width="2"/>`;
         if (kind === 'check') sh = `<circle r="11" fill="${w.accent}"/><path d="M-5 0L-1.5 3.5L5.5 -4" fill="none" stroke="${w.surface}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>`;
-        if (kind === 'pix') sh = `<rect x="-3" y="-3" width="6" height="6" fill="${w.palette[6 + (i % 4)]}"/>`;
+        if (kind === 'pix') sh = `<rect x="-2.5" y="-2.5" width="5" height="5" fill="${i % 3 ? w.ink : w.bright}"/>`;
+        if (kind === 'glyph') sh = `<text font-family="VT323, monospace" font-size="18" text-anchor="middle" dominant-baseline="central" fill="${w.bright}">${['*', '+', '#', '$', '@'][i % 5]}</text>`;
+        if (kind === 'print') sh = `<text font-family="'IBM Plex Mono', monospace" font-weight="700" font-size="15" text-anchor="middle" dominant-baseline="central" fill="${i % 2 ? w.ink : w.red}">${['*', '+', '×', '✓'][i % 4]}</text>`;
+        if (kind === 'chad') sh = `<circle r="3.4" fill="${w.hole}" stroke="${w.rule}" stroke-width=".8"/>`;
+        if (kind === 'nsq') sh = `<rect x="-2.5" y="-2.5" width="5" height="5" fill="${w.ink}" transform="rotate(45)"/>`;
         e.innerHTML = sh;
         const still = kind === 'ring' || kind === 'check';
-        const p = { e, kind, x: at[0], y: at[1] - (kind === 'check' ? 46 * this.L.propScale : 0), vx: still ? 0 : Math.cos(a) * sp, vy: still ? 0 : Math.sin(a) * sp - 60, r: Math.random() * 6, vr: (Math.random() - .5) * 8, life: 0, max: kind === 'check' ? 1.1 : kind === 'ring' ? .7 : .9 + Math.random() * .5, g: kind === 'bubble' ? -120 : kind === 'glint' ? 0 : 260 };
+        const nsq = kind === 'nsq', ang = nsq ? i / n * Math.PI * 2 : a;
+        const p = { e, kind, x: at[0], y: at[1] - (kind === 'check' ? 46 * this.L.propScale : 0), vx: still ? 0 : Math.cos(ang) * (nsq ? 150 : sp), vy: still ? 0 : Math.sin(ang) * (nsq ? 150 : sp) - (nsq ? 0 : 60), r: nsq ? 0 : Math.random() * 6, vr: nsq ? 0 : (Math.random() - .5) * 8, life: 0, max: kind === 'check' ? 1.1 : kind === 'ring' ? .7 : nsq ? .55 : .9 + Math.random() * .5, g: kind === 'bubble' ? -120 : kind === 'glint' || nsq ? 0 : 260, drag: nsq ? 5 : .8 };
         this.fx.push(p);
       }
     }
     confetti(n) {
       if (this.reduced || this.famName === 'nier') return;
-      const w = this.w, Lay = this.L, hues = this.famName === 'basic' ? [w.accent, w.line] : this.famName === 'retro' ? w.palette.slice(6) : Object.values(w.hues);
+      this.sfx('confetti');
+      const w = this.w, Lay = this.L, f = this.famName, hues = f === 'basic' ? [w.accent, w.line] : Object.values(w.hues);
       for (let i = 0; i < n; i++) {
         const e = el('g', { class: 'pst-p' }, this.gFx), c = hues[i % hues.length];
-        e.innerHTML = this.famName === 'glass' ? `<circle r="${3 + Math.random() * 5}" fill="#fff" fill-opacity=".18" stroke="#fff" stroke-opacity=".8" stroke-width="1"/>`
-          : this.famName === 'retro' ? `<rect x="-3" y="-3" width="6" height="6" fill="${c}"/>` : `<rect x="-4" y="-2.2" width="8" height="4.4" rx="1" fill="${c}"/>`;
-        this.fx.push({ e, kind: 'conf', x: Math.random() * Lay.w, y: -20 - Math.random() * Lay.h * .6, vx: (Math.random() - .5) * 30, vy: 40 + Math.random() * 60, r: Math.random() * 6, vr: (Math.random() - .5) * 6, life: 0, max: 4 + Math.random() * 2, g: this.famName === 'glass' ? -10 : 40, sway: Math.random() * 6 });
+        e.innerHTML = f === 'glass' ? `<circle r="${3 + Math.random() * 5}" fill="#fff" fill-opacity=".18" stroke="#fff" stroke-opacity=".8" stroke-width="1"/>`
+          : this.tube === 'phosphor' ? (i % 3 ? `<rect x="-2.5" y="-2.5" width="5" height="5" fill="${c}"/>` : `<text font-family="VT323, monospace" font-size="16" fill="${w.bright}" text-anchor="middle">${'*+$#'[i % 4]}</text>`)
+          : this.tube === 'teletype' ? `<circle r="3.4" fill="${i % 4 ? w.hole : w.red}" stroke="${w.rule}" stroke-width=".8"/>`
+          : `<rect x="-4" y="-2.2" width="8" height="4.4" rx="1" fill="${c}"/>`;
+        this.fx.push({ e, kind: 'conf', x: Math.random() * Lay.w, y: -20 - Math.random() * Lay.h * .6, vx: (Math.random() - .5) * 30, vy: 40 + Math.random() * 60, r: Math.random() * 6, vr: (Math.random() - .5) * 6, life: 0, max: 4 + Math.random() * 2, g: f === 'glass' ? -10 : 40, sway: Math.random() * 6, drag: .8 });
       }
     }
-    addScore(n, at) {
-      if (!this.hudEl) return;
-      const from = this.score, to = this.score + n; this.score = to;
-      const sc = this.hudEl.querySelector('.pst-score');
-      let k = 0; clearInterval(this.scoreT);
-      this.scoreT = setInterval(() => { k += 1; const v = Math.round(from + (to - from) * Math.min(1, k / 6)); if (sc) sc.textContent = String(v).padStart(6, '0'); if (k >= 6) clearInterval(this.scoreT); }, 60);
-      const pop = document.createElement('span'); pop.className = 'pst-pop'; pop.textContent = '+' + n;
-      const p = this.toScreen(at); pop.style.left = p[0] + 'px'; pop.style.top = p[1] + 'px';
-      this.overlay.appendChild(pop); setTimeout(() => pop.remove(), 1000);
+    // a prop has come to rest: the floor answers in the world's material
+    settle(pr) {
+      pr.settled = true;
+      if (pr.spec.preview || pr.state === 'out') return;
+      const x = pr.pos ? pr.pos[0] : pr.ax;
+      if (!pr.spec.stack && pr.spec.stack !== 0) this.sfx('land', { x });
+      if (this.reduced) return;
+      if (this.famName === 'glass') this.ripple(x);
+    }
+    ripple(x) {
+      const Lay = this.L, e = el('ellipse', { cx: R(x), cy: Lay.ground, rx: 4, ry: 1, fill: 'none', stroke: '#fff', 'stroke-width': 1.2 }, this.gRipple);
+      this.fx.push({ e, kind: 'ripple', x, y: Lay.ground, vx: 0, vy: 0, r: 0, vr: 0, life: 0, max: 1.4, g: 0, drag: 0 });
     }
 
     /* --------------------------------------------------------- geometry */
     measure() {
-      const r = this.root.getBoundingClientRect(), Lay = this.L;
+      const r = this.screen.getBoundingClientRect(), Lay = this.L;
       this.box = r;
-      const slice = this.famName === 'retro';
-      const k = slice ? Math.max(r.width / Lay.w, r.height / Lay.h) : Math.min(r.width / Lay.w, r.height / Lay.h);
+      const k = this.tube ? Math.max(r.width / Lay.w, r.height / Lay.h) : Math.min(r.width / Lay.w, r.height / Lay.h);
       this.map = { k, ox: (r.width - Lay.w * k) / 2, oy: (r.height - Lay.h * k) / 2 };
-      if (this.canvas) {
-        const px = Math.max(2.4, r.width / 128);
-        this.canvas.width = Math.max(40, Math.round(r.width / px)); this.canvas.height = Math.max(30, Math.round(r.height / px));
-        this.pxDirty = true;
-      }
     }
     toScreen(p) { const m = this.map || { k: 1, ox: 0, oy: 0 }; return [m.ox + p[0] * m.k, m.oy + p[1] * m.k]; }
     headCentre() { const ps = this.ps, H = this.H || this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy); return this.headXf([32, 45], H, this.ang || 0, 1, 1); }
@@ -464,15 +649,33 @@
       if (document.hidden) return;
       this.t += dt;
       const sub = 3; for (let i = 0; i < sub; i++) this.step(dt / sub);
+      this.life(dt);
+      // Retro's tube refreshes in steps; the phosphor holds what was there a moment longer
+      const fps = this.fam.fps;
+      if (fps && !this.reduced) { if (this.t - this.frameT < 1 / fps) return; this.frameT = this.t; }
       this.render();
-      if (this.canvas) this.pixelate();
+    }
+    // Pip's idle life: now and then it looks up at the bar, kicks its feet, wiggles or glances round
+    life(dt) {
+      if (this.reduced || this.sleepZ) return;
+      const quiet = this.t - (this.busyT || 0) > 3.5;
+      if (this.t > this.idleNext && quiet) {
+        this.idleNext = this.t + 7 + Math.random() * 6;
+        const ps = this.ps, f = this.famName, pick = Math.floor(Math.random() * 4);
+        if (pick === 0) { this.idleLook = [0, -2.4]; this.idleUntil = this.t + 1.3; this.ps.tiltv -= .8; }
+        else if (pick === 1 && f !== 'nier') { ps.thv += (Math.random() > .5 ? 1 : -1) * .5; this.sfx('swing', { x: ps.C.x, intensity: .35 }); }
+        else if (pick === 2) { ps.tiltv += (Math.random() > .5 ? 1 : -1) * 3; this.feel('wink', 700); }
+        else { this.idleLook = [Math.random() > .5 ? 2.2 : -2.2, .3]; this.idleUntil = this.t + 1.1; }
+      }
+      if (this.idleLook && this.t > this.idleUntil) this.idleLook = null;
     }
     step(dt) {
-      const ps = this.ps, F = this.fam, Lay = this.L, red = this.reduced || F.still;
+      const ps = this.ps, F = this.fam, Lay = this.L, red = this.reduced;
       // the hand: springs to its spot, with a slow idle drift that keeps Pip alive
       const swayX = red ? 0 : F.sway * Math.sin(this.t * F.swayW) * (ps.asleep ? .2 : 1);
-      const tx = ps.Ct.x + swayX, ty = ps.Ct.y;
-      if (red) { ps.C.x = tx; ps.C.y = ty; ps.C.vx = ps.C.vy = 0; ps.th = ps.asleep ? 0 : 0; ps.thv = 0; }
+      const swayY = red || !F.bob ? 0 : F.bob * .6 * Math.sin(this.t * F.swayW * 1.7);
+      const tx = ps.Ct.x + swayX, ty = ps.Ct.y + swayY;
+      if (red) { ps.C.x = tx; ps.C.y = ty; ps.C.vx = ps.C.vy = 0; ps.th = 0; ps.thv = 0; }
       else {
         const ax = F.k * (tx - ps.C.x) - F.c * ps.C.vx, ay = F.k * (ty - ps.C.y) - F.c * ps.C.vy;
         ps.C.vx += ax * dt; ps.C.vy += ay * dt; ps.C.x += ps.C.vx * dt; ps.C.y += ps.C.vy * dt;
@@ -500,27 +703,29 @@
         const tg = this.propTarget(pr);
         if (red) { pr.ax = tg.ax; pr.len = tg.len; pr.a = 0; pr.av = 0; pr.op = tg.op; pr.scale = (pr.spec.scale || 1); }
         else {
-          const axA = this.fam.pk * (tg.ax - pr.ax) - this.fam.pc * pr.axv; pr.axv += axA * dt; pr.ax += pr.axv * dt;
-          const lA = this.fam.pk * (tg.len - pr.len) - this.fam.pc * pr.lenv; pr.lenv += lA * dt; pr.len += pr.lenv * dt;
+          const axA = F.pk * (tg.ax - pr.ax) - F.pc * pr.axv; pr.axv += axA * dt; pr.ax += pr.axv * dt;
+          const lA = F.pk * (tg.len - pr.len) - F.pc * pr.lenv; pr.lenv += lA * dt; pr.len += pr.lenv * dt;
           const Lp = Math.max(30, pr.len);
-          const aA = -(this.fam.pw * this.fam.pw) * Math.sin(pr.a) * (170 / Lp) - this.fam.pdamp * pr.av - (axA / Lp) * Math.cos(pr.a);
+          const aA = -(F.pw * F.pw) * Math.sin(pr.a) * (170 / Lp) - F.pdamp * pr.av - (axA / Lp) * Math.cos(pr.a);
           pr.av += aA * dt; pr.a += pr.av * dt;
           if (pr.spec.ground && pr.landed) { pr.a *= Math.max(0, 1 - dt * 12); pr.av *= Math.max(0, 1 - dt * 12); }
           const sA = 260 * ((pr.spec.scale || 1) - pr.scale) - 16 * pr.sv; pr.sv += sA * dt; pr.scale += pr.sv * dt;
           pr.op += (tg.op - pr.op) * Math.min(1, dt * 8);
         }
+        if (!pr.settled && pr.state !== 'out' && Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30) this.settle(pr);
         if (pr.spec.ground && !pr.landed && Math.abs(pr.len - tg.len) < 3) { pr.landed = true; pr.landT = this.t; }
-        if (pr.state === 'out' && pr.len < 0 && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); if (pr.labelEl) pr.labelEl.remove(); this.props.delete(id); }
+        if (pr.state === 'out' && pr.len < 0 && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(id); }
       });
       // particles
       for (let i = this.fx.length - 1; i >= 0; i--) {
         const p = this.fx[i]; p.life += dt;
         if (p.life >= p.max) { p.e.remove(); this.fx.splice(i, 1); continue; }
-        p.vy += p.g * dt; p.x += (p.vx + (p.sway ? Math.sin(this.t * 2 + p.sway) * 20 : 0)) * dt; p.y += p.vy * dt; p.r += p.vr * dt; p.vx *= (1 - dt * .8);
+        p.vy += p.g * dt; p.x += (p.vx + (p.sway ? Math.sin(this.t * 2 + p.sway) * 20 : 0)) * dt; p.y += p.vy * dt; p.r += p.vr * dt;
+        const k = Math.max(0, 1 - dt * (p.drag || 0)); p.vx *= k; if (p.drag > 1) p.vy *= k;
       }
     }
     render() {
-      const ps = this.ps, Lay = this.L;
+      const ps = this.ps, Lay = this.L, f = this.famName;
       // mood: a transient feeling wins over the scene's own
       if (this.moodOverride && this.t > this.moodUntil) this.moodOverride = null;
       const base = (this.spec.pip && this.spec.pip.mood) || 'idle';
@@ -528,11 +733,15 @@
       this.renderHead(mood);
       let H = this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy);
       let ang = ps.th * .9 + ps.tilt;
+      // NieR hovers: a slow bob and a little drift of the visor
+      if (this.fam.bob && !this.reduced) { H = [H[0], H[1] + Math.sin(this.t * 1.35) * this.fam.bob * Lay.s / 2.6]; ang += Math.sin(this.t * .9) * .025; }
       // asleep: the head rests on the floor and the strings go slack
       const headH = 28 * Lay.s;
       if (H[1] + headH > Lay.ground - 2) { H = [H[0], Lay.ground - 2 - headH]; }
       this.H = H; this.ang = ang;
-      const sx = ps.sx, sy = ps.sy, s = Lay.s;
+      // breathing: Pip's head swells a touch, slower when it sleeps
+      const br = this.reduced ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
+      const sx = ps.sx * (1 - br * .4), sy = ps.sy * (1 + br), s = Lay.s;
       this.gCtl.setAttribute('transform', `translate(${R(ps.C.x)} ${R(ps.C.y)}) rotate(${R(ps.phi * 57.3)}) scale(${s}) translate(-32 -14.5)`);
       this.gHead.setAttribute('transform', `translate(${R(H[0])} ${R(H[1])}) rotate(${R(ang * 57.3)}) scale(${s}) translate(-32 -31.5) translate(32 59.5) scale(${R(sx)} ${R(sy)}) translate(-32 -59.5)`);
       const ends = this.solveStrings({ C: ps.C, phi: ps.phi, H, ang, sx, sy });
@@ -541,12 +750,21 @@
         const d = slack > 1 ? `M${R(e.T[0])} ${R(e.T[1])}Q${R((e.T[0] + e.E[0]) / 2 + (i ? 1 : -1) * slack * .25)} ${R((e.T[1] + e.E[1]) / 2 + slack * .55)} ${R(e.E[0])} ${R(e.E[1])}` : `M${R(e.T[0])} ${R(e.T[1])}L${R(e.E[0])} ${R(e.E[1])}`;
         this.pstrs[i].setAttribute('d', d); this.pglow[i].setAttribute('d', d);
       });
-      // where the eyes look: at the target prop, or where the scene says
+      // where the eyes look: at the target prop, at an idle glance, or at the pointer
       const pip = this.spec.pip || {};
       let look = [0, 0];
       const tgt = pip.look && this.props.get(pip.look);
-      if (tgt && tgt.pos) { const hc = this.headCentre(), vx = tgt.pos[0] - hc[0], vy = tgt.pos[1] - hc[1], l = Math.hypot(vx, vy) || 1; look = [vx / l * 2.2, vy / l * 1.5]; }
+      const hc = this.headCentre();
+      const atTarget = (p) => { const vx = p[0] - hc[0], vy = p[1] - hc[1], l = Math.hypot(vx, vy) || 1; return [vx / l * 2.2, vy / l * 1.5]; };
+      if (this.idleLook) look = this.idleLook;
       else if (Array.isArray(pip.look)) look = pip.look;
+      else if (tgt && tgt.pos && this.t - (this.busyT || -9) < 2.5) look = atTarget(tgt.pos);
+      else if (!this.reduced && this.box && pointer.t > 0 && now() - pointer.t < 6) {
+        // the pointer, in stage units
+        const m = this.map || { k: 1, ox: 0, oy: 0 }, px = (pointer.x - this.box.left - m.ox) / m.k, py = (pointer.y - this.box.top - m.oy) / m.k;
+        const vx = px - hc[0], vy = py - hc[1], l = Math.hypot(vx, vy) || 1, k = Math.min(1, l / 120);
+        look = [vx / l * 2.3 * k, vy / l * 1.6 * k];
+      } else if (tgt && tgt.pos) look = atTarget(tgt.pos);
       ps.lookT = look;
       if (this.eyesEl) this.eyesEl.setAttribute('transform', `translate(${R(ps.look[0])} ${R(ps.look[1])})`);
       // blink
@@ -562,7 +780,6 @@
         const hang = [pr.ax + Math.sin(pr.a) * Math.max(0, pr.len), Lay.anchorY + Math.cos(pr.a) * Math.max(0, pr.len)];
         const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
         pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
-        if (pr.labelEl) { const q = this.toScreen(pr.pos), k = (this.map ? this.map.k : 1) * sc; pr.labelEl.style.transform = `translate(${R(q[0])}px, ${R(q[1])}px) translate(-50%, -50%) rotate(${R(pr.a * 57.3)}deg)`; pr.labelEl.style.fontSize = R(Math.min(15, 1400 / Math.max(10, pr.labelEl.textContent.length * 9) ) * k) + 'px'; pr.labelEl.style.opacity = R(pr.op); }
         pr.el.setAttribute('transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})`);
         pr.el.setAttribute('opacity', R(pr.op));
         const strOp = pr.spec.ground && pr.landed ? Math.max(0, 1 - (this.t - pr.landT) * 2.5) : pr.op;
@@ -576,82 +793,117 @@
       });
       // particles
       this.fx.forEach((p) => {
-        const k = p.life / p.max, op = p.kind === 'conf' ? (k > .85 ? (1 - k) / .15 : 1) : 1 - k * k;
+        const k = p.life / p.max;
+        if (p.kind === 'ripple') { const e = ease(k); p.e.setAttribute('rx', R(6 + e * 90)); p.e.setAttribute('ry', R(1.5 + e * 12)); p.e.setAttribute('stroke-opacity', R((1 - k) * .7)); return; }
+        const op = p.kind === 'conf' ? (k > .85 ? (1 - k) / .15 : 1) : 1 - k * k;
         const sc = p.kind === 'ring' ? 1 + k * 3.2 : p.kind === 'check' ? (k < .2 ? k / .2 * 1.1 : 1) : 1;
         p.e.setAttribute('transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
         p.e.setAttribute('opacity', R(Math.max(0, op)));
       });
       // sleeping z's
-      if (this.sleepZ && !this.reduced && this.t - (this.lastZ || 0) > .9 && this.famName !== 'nier') {
+      if (this.sleepZ && !this.reduced && this.t - (this.lastZ || 0) > .9 && f !== 'nier') {
         this.lastZ = this.t;
-        const hc = this.headCentre(), e = el('g', { class: 'pst-p' }, this.gFx);
-        e.innerHTML = `<text font-family="system-ui,sans-serif" font-weight="800" font-size="${this.famName === 'retro' ? 20 : 16}" fill="${this.w.text}">z</text>`;
+        const e = el('g', { class: 'pst-p' }, this.gFx);
+        const font = this.tube === 'phosphor' ? 'VT323, monospace' : this.tube ? "'IBM Plex Mono', monospace" : 'system-ui,sans-serif';
+        e.innerHTML = `<text font-family="${font}" font-weight="800" font-size="${this.tube ? 22 : 16}" fill="${this.w.text}">z</text>`;
         this.fx.push({ e, kind: 'z', x: hc[0] + 40, y: hc[1] - 30, vx: 14, vy: -26, r: 0, vr: .4, life: 0, max: 2, g: 0 });
       }
       // soft shadows on the floor: Pip's and each prop's, smaller and fainter the higher they hang
-      if (this.famName === 'friendly' || this.famName === 'glass') {
+      if (f === 'friendly' || f === 'glass') {
         const sh = (x, y, r) => { const h = Math.max(0, Lay.ground - y), k = clamp(1 - h / (Lay.h * .9), .25, 1); return `<ellipse cx="${R(x)}" cy="${Lay.ground + 2}" rx="${R(r * (.6 + k * .5))}" ry="${R(r * .13 * (.6 + k * .5))}" fill="${this.w.shadow}" opacity="${R(k * .7)}"/>`; };
         let out = sh(H[0], H[1] + 64 * Lay.s / 2.6, 46 * Lay.s / 2.6);
         this.props.forEach((pr) => { if (pr.pos) out += sh(pr.pos[0], pr.pos[1] + pr.foot * (pr.spec.scale || 1) * Lay.propScale, 40 * (pr.spec.scale || 1) * Lay.propScale * pr.op); });
         this.gShadow.innerHTML = out;
       }
-      // NieR target brackets around what Pip is looking at
-      if (this.famName === 'nier') this.renderBrackets();
-      // the speech bubble follows Pip
-      // tall stages put the bubble above Pip; short strips put it beside Pip. Always inside the stage.
+      // Basic measures: a plumb line from Pip to the floor and a marker riding the ruler
+      if (f === 'basic') {
+        const c = this.w.accent, x = R(hc[0]), y0 = R(H[1] + 30 * Lay.s);
+        this.gShadow.innerHTML = `<path d="M${x} ${y0}V${Lay.ground - 6}" stroke="${this.w.line}" stroke-opacity=".22" stroke-dasharray="2 4"/><path d="M${x} ${Lay.ground + 1}l-5 8h10z" fill="${c}"/><text x="${x}" y="${Lay.ground + 22}" text-anchor="middle" font-family="'Inter',system-ui,sans-serif" font-size="9" font-weight="600" fill="${this.w.line}" opacity=".55">${Math.round(hc[0])}</text>`;
+      }
+      // Retro: the vector terrain rolls toward you, and the phosphor remembers where Pip was
+      if (this.gTerrain && !this.reduced) {
+        const T = this.terrain, ph = (this.t * .55) % 1, D = T.H - T.vy;
+        let d = '';
+        for (let k = 1; k < 16; k++) { const z = k - ph + .6, y = T.vy + D / (z * z * .45 + .2); if (y > T.vy + 1 && y < T.H) d += `M-400 ${R(y)}H${Lay.w + 400}`; }
+        this.gTerrain.setAttribute('d', d); this.gTerrain.setAttribute('stroke-opacity', '.32');
+      }
+      if (this.tube) this.persist();
+      // NieR: target brackets, a leader line and the lock
+      if (f === 'nier') this.renderBrackets();
+      // the speech bubble follows Pip (NieR's dialogue box sits at the foot of the stage instead)
+      if (f !== 'nier') this.placeBubble(H, ang);
+      // big swings can be heard
+      if (!this.reduced && this.t - (this.swT || 0) > .07) { this.swT = this.t; this.loopSnd('swing', clamp((Math.abs(ps.thv) - .25) / 1.6, 0, 1)); }
+      this.loopSnd('snore', this.sleepZ ? 1 : 0);
+    }
+    placeBubble(H, ang) {
       const tall = this.layoutName === 'portrait';
+      const head = this.toScreen(this.headXf([32, 34], H, ang, 1, 1));
       const sp = this.toScreen(this.headXf(tall ? [44, 30] : [58, 44], H, ang, 1, 1));
       const bw = this.bubble.offsetWidth || 160, bh = this.bubble.offsetHeight || 34, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
-      const x = clamp(sp[0] + (tall ? 0 : 6), 8, bx - bw - 8), y = clamp(tall ? sp[1] - bh - 14 : sp[1] - bh / 2, 8, by - bh - 8);
+      const pad = this.tube ? 14 : 8, top = this.tube ? (tall ? 44 : 34) : 8, foot = this.tube ? (tall ? 44 : 34) : 8;
+      const x = clamp(sp[0] + (tall ? -bw * .3 : 6), pad, bx - bw - pad), y = clamp(tall ? sp[1] - bh - 22 : sp[1] - bh / 2, top, by - bh - foot);
       this.bubble.style.transform = `translate(${R(x)}px, ${R(y)}px)`;
+      this.bubble.dataset.side = tall ? 'down' : 'left';
+      this.bubble.style.setProperty('--tx', R(clamp(head[0] - x, 16, bw - 16)) + 'px');
+      this.bubble.style.setProperty('--ty', R(clamp(head[1] - y, 12, bh - 12)) + 'px');
+    }
+    // phosphor persistence: each refresh leaves a fading copy of Pip while it moves
+    persist() {
+      const ps = this.ps, moving = Math.abs(ps.thv) > .12 || Math.hypot(ps.C.vx, ps.C.vy) > 25 || Math.abs(ps.dyv) > 30;
+      if (!this.reduced && moving && this.t - (this.ghostT || 0) > .045) {
+        this.ghostT = this.t;
+        const gcl = this.gPip.cloneNode(true);
+        gcl.removeAttribute('class');
+        gcl.querySelectorAll('[class]').forEach((n) => n.removeAttribute('class'));
+        gcl.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+        this.gTrail.appendChild(gcl);
+        this.ghosts.push({ e: gcl, t: this.t });
+        while (this.ghosts.length > 9) this.ghosts.shift().e.remove();
+      }
+      const life = this.tube === 'phosphor' ? .5 : .32, peak = this.tube === 'phosphor' ? .42 : .16;
+      for (let i = this.ghosts.length - 1; i >= 0; i--) {
+        const g = this.ghosts[i], k = (this.t - g.t) / life;
+        if (k >= 1) { g.e.remove(); this.ghosts.splice(i, 1); continue; }
+        g.e.setAttribute('opacity', R(peak * (1 - k)));
+      }
     }
     renderBrackets() {
       const id = this.target, pr = id && this.props.get(id);
       if (!pr || !pr.pos) { this.gHud.innerHTML = ''; return; }
-      const sc = this.propTarget(pr).sc, x = pr.pos[0], y = pr.pos[1];
+      const sc = this.propTarget(pr).sc, x = pr.pos[0], y = pr.pos[1], Lay = this.L;
+      // brackets fly in and lock when the target changes, then breathe a little
+      const inK = this.reduced ? 1 : ease((this.t - (this.tgtT || 0)) / .4);
       const lock = this.lockT != null && this.t - this.lockT < 1.2 ? 1 - Math.min(1, (this.t - this.lockT) / .25) : 0;
-      const hw = (58 + lock * 14) * sc, hh = (Math.max(48, pr.foot + 8) + lock * 12) * sc, k = 12 * sc, c = this.w.ink;
+      const pulse = this.reduced ? 0 : Math.sin(this.t * 3) * 1.2;
+      const grow = (1 - inK) * 34 + lock * 14 + pulse;
+      const hw = 58 * sc + grow, hh = Math.max(48, pr.foot + 8) * sc + grow, k = 12 * sc, c = this.w.ink;
       const corner = (cx, cy, dx, dy) => `<path d="M${R(cx)} ${R(cy + dy * k)}V${R(cy)}H${R(cx + dx * k)}" fill="none" stroke="${c}" stroke-width="1.6"/>`;
-      this.gHud.innerHTML = corner(x - hw, y - hh, 1, 1) + corner(x + hw, y - hh, -1, 1) + corner(x - hw, y + hh, 1, -1) + corner(x + hw, y + hh, -1, -1)
+      let s = corner(x - hw, y - hh, 1, 1) + corner(x + hw, y - hh, -1, 1) + corner(x - hw, y + hh, 1, -1) + corner(x + hw, y + hh, -1, -1)
         + `<path d="M${R(x - hw - 10)} ${R(y)}H${R(x - hw - 3)}M${R(x + hw + 3)} ${R(y)}H${R(x + hw + 10)}" stroke="${c}" stroke-width="1"/>`;
-    }
-
-    /* ------------------------------------------------------ Retro pixels */
-    pixelate() {
-      const tn = this.t;
-      if (this.pxBusy || tn - this.pxLast < 1 / FAM.retro.fps) return;
-      this.pxBusy = true; this.pxLast = tn;
-      const cw = this.canvas.width, ch = this.canvas.height;
-      const svg = this.svg.cloneNode(true);
-      svg.setAttribute('width', cw); svg.setAttribute('height', ch);
-      const xml = new XMLSerializer().serializeToString(svg);
-      const img = this.img;
-      img.onload = () => {
-        const c = this.ctx;
-        c.imageSmoothingEnabled = true;
-        c.clearRect(0, 0, cw, ch); c.drawImage(img, 0, 0, cw, ch);
-        const d = c.getImageData(0, 0, cw, ch), a = d.data, pal = this.palette, cache = this.pxCache;
-        for (let i = 0; i < a.length; i += 4) {
-          const key = (a[i] >> 2) << 12 | (a[i + 1] >> 2) << 6 | (a[i + 2] >> 2);
-          let best = cache.get(key);
-          if (best === undefined) {
-            let bd = 1e9; best = 0;
-            for (let j = 0; j < pal.length; j++) { const dr = a[i] - pal[j][0], dg = a[i + 1] - pal[j][1], db = a[i + 2] - pal[j][2], dd = dr * dr * 3 + dg * dg * 4 + db * db * 2; if (dd < bd) { bd = dd; best = j; } }
-            cache.set(key, best);
-          }
-          a[i] = pal[best][0]; a[i + 1] = pal[best][1]; a[i + 2] = pal[best][2]; a[i + 3] = 255;
-        }
-        c.putImageData(d, 0, 0);
-        this.pxBusy = false;
-      };
-      img.onerror = () => { this.pxBusy = false; };
-      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml);
+      // the marker: a diamond turning above the target
+      const my = y - hh - 12, a = this.reduced ? 45 : (this.t * 120) % 360;
+      s += `<rect x="${R(x - 3.5)}" y="${R(my - 3.5)}" width="7" height="7" fill="none" stroke="${c}" stroke-width="1.2" transform="rotate(${R(a)} ${R(x)} ${R(my)})"/>`;
+      // a leader line from Pip to the target, drawn once the brackets lock, with its label at the elbow
+      if (inK > .6 && this.H) {
+        const hc = this.headXf([50, 40], this.H, this.ang || 0, 1, 1), ex = x - hw - 4, ey = y - hh;
+        const mx = hc[0] + Math.min(26, Math.max(10, (ex - hc[0]) * .3)), myy = Math.min(hc[1] - 16, ey);
+        const len = Math.hypot(mx - hc[0], myy - hc[1]) + Math.abs(ex - mx), drawn = this.reduced ? 1 : ease((inK - .6) / .4);
+        s += `<path d="M${R(hc[0])} ${R(hc[1])}L${R(mx)} ${R(myy)}H${R(ex)}" fill="none" stroke="${c}" stroke-width="1" stroke-dasharray="${R(len)}" stroke-dashoffset="${R(len * (1 - drawn))}"/>`;
+        s += `<rect x="${R(hc[0] - 2)}" y="${R(hc[1] - 2)}" width="4" height="4" fill="${c}"/>`;
+        const lab = (this.hudEl && this.hudEl.querySelector('.pst-target') || {}).textContent || '';
+        if (drawn > .9 && mx + 6 < ex - 20 && Lay.w > 300) s += `<text x="${R(mx + 4)}" y="${R(myy - 5)}" font-family="'PM NieR Sans','Inter',sans-serif" font-size="8.5" letter-spacing="1.4" fill="${c}">${lab.replace(/&/g, '&amp;').replace(/</g, '&lt;').slice(0, 18)}</text>`;
+      }
+      this.gHud.innerHTML = s;
+      const co = this.hudEl && this.hudEl.querySelector('.pst-ncoord');
+      if (co && this.t - (this.coT || 0) > .25) { this.coT = this.t; co.textContent = `X ${String(Math.round(x)).padStart(3, '0')} Y ${String(Math.round(y)).padStart(3, '0')}`; }
     }
 
     /* --------------------------------------------------------------- API */
     setTheme(theme) {
       if (theme === this.theme) return;
       this.theme = theme;
+      this.booted = false;
       this.root.classList.add('pst-swap');
       this.build();
       this.direct(this.spec);
@@ -662,18 +914,20 @@
       this.layoutName = name; this.ps = null;
       this.build(); this.direct(this.spec);
     }
-    setReduced(r) { this.reduced = !!r; this.root.dataset.reduced = r ? '1' : '0'; }
+    setReduced(r) { this.reduced = !!r; this.root.dataset.reduced = r ? '1' : '0'; const S = snd(); if (S && S.setReduced) S.setReduced(this.reduced); }
+    // something on the screen is being pointed at: Pip turns to it rather than to the pointer
+    busy() { this.busyT = this.t; }
     // Pip tries on another look (the Pick a look screen): only Pip changes, the world stays
     tryOn(theme) {
       const t = theme || this.theme;
       if (t === this.pipTheme) return;
+      const S = snd();
+      if (theme && theme !== this.theme) this.sfx('tryOn', { kit: S && S.kitOf ? S.kitOf(t) : undefined });
       if (this.reduced) { this.buildPip(t); return; }
-      const g = this.gHead, c = this.gCtl;
       let k = 0;
       const flip = () => {
         k += 1;
         const sx = k <= 6 ? 1 - k / 6 : (k - 6) / 6;
-        [g, c].forEach((n) => n.style.transformBox = 'fill-box');
         this.gPip.style.transformOrigin = `${this.ps.C.x}px 0`;
         this.gPip.style.transform = `scaleX(${R(Math.max(.02, sx))})`;
         if (k === 6) { this.buildPip(t); }
@@ -681,7 +935,7 @@
       };
       flip();
     }
-    destroy() { cancelAnimationFrame(this.raf); this.ro.disconnect(); clearTimeout(this.wakeT); clearInterval(this.typeT); clearInterval(this.decT); this.root.innerHTML = ''; }
+    destroy() { if (this.off) this.off(); cancelAnimationFrame(this.raf); this.ro.disconnect(); clearTimeout(this.wakeT); clearInterval(this.typeT); clearInterval(this.decT); clearInterval(this.cmdT); clearInterval(this.bootT); this.root.innerHTML = ''; }
   }
 
   G.PipStage = { Stage, LAYOUTS, FAM };

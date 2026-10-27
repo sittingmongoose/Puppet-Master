@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pip's sounds (Opus 5.5)</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../../Icon-Concepts/Opus5.5icon/fonts.css">
+  <style>
+    :root { color-scheme: dark; --bg: #121116; --panel: #1b1a21; --line: #2e2c37; --text: #ecebf1; --muted: #a29fae; --faint: #75727f; --accent: #8fd0ec; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 'Inter', system-ui, sans-serif; }
+    header { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 12px 20px; background: rgba(18, 17, 22, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    header h1 { margin: 0; font-size: 16px; font-weight: 700; }
+    .model { font: 700 10.5px system-ui; letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; color: var(--accent); border: 1px solid rgba(143, 208, 236, .45); }
+    .gap { flex: 1; }
+    button, select, input { font: inherit; color: inherit; }
+    .btn { background: #26242e; border: 1px solid #3a3744; border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+    .btn:hover { background: #302d3a; }
+    .btn[aria-pressed="true"] { background: #3a3550; border-color: #6a5f99; }
+    main { padding: 18px 20px 60px; display: grid; gap: 18px; max-width: 1280px; margin: 0 auto; }
+    section { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+    section h2 { margin: 0 0 4px; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    section p.note { margin: 0 0 12px; color: var(--faint); font-size: 13px; }
+    .row { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+    .row label { display: inline-flex; gap: 6px; align-items: center; color: var(--muted); }
+    select, input[type="text"], input[type="number"] { background: #24222b; border: 1px solid #3a3744; border-radius: 8px; padding: 6px 9px; }
+    input[type="text"] { min-width: 320px; flex: 1; }
+    input[type="number"] { width: 64px; }
+    .typed { margin-top: 12px; min-height: 26px; padding: 8px 12px; border-radius: 10px; background: #f6f1fb; color: #3b3442; font-weight: 600; font-family: 'Poppins', system-ui, sans-serif; display: inline-block; }
+    .typed:empty { display: none; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 4px 6px; text-align: center; border-bottom: 1px solid #25232c; }
+    th { font-size: 12px; font-weight: 700; color: var(--muted); position: sticky; top: 58px; background: var(--panel); }
+    th small { display: block; font-weight: 500; color: var(--faint); font-size: 11px; }
+    td.ev { text-align: left; white-space: nowrap; color: var(--text); font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12.5px; }
+    td.ev small { display: block; font-family: 'Inter', system-ui, sans-serif; color: var(--faint); font-size: 11.5px; white-space: normal; max-width: 300px; }
+    tr.grp td { text-align: left; padding-top: 14px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); border-bottom: 0; }
+    .p { width: 34px; height: 28px; border-radius: 7px; border: 1px solid #3a3744; background: #24222b; cursor: pointer; color: var(--muted); }
+    .p:hover { background: #34303f; color: var(--text); }
+    .p.on { background: #3a3550; color: #fff; border-color: #7a6fb0; }
+    .loops { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px 18px; }
+    .loops label { display: grid; grid-template-columns: 64px 1fr 34px; gap: 8px; align-items: center; color: var(--muted); font-size: 13px; }
+    .loops output { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--faint); }
+    .kits { display: flex; flex-wrap: wrap; gap: 6px; }
+    footer { color: var(--faint); font-size: 12.5px; text-align: center; padding: 0 20px 30px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pip's sounds</h1><span class="model" data-concept-model="Opus 5.5">Opus 5.5</span>
+    <span class="gap"></span>
+    <button type="button" class="btn" id="mute" aria-pressed="false">Sound on</button>
+    <button type="button" class="btn" id="reduced" aria-pressed="false">Reduced motion</button>
+  </header>
+  <main>
+    <section>
+      <h2>Pip says</h2>
+      <p class="note">Pip turns the words of any line into babble in the look's voice, timed to the typing. Pick a look, a mood and who is speaking.</p>
+      <div class="row">
+        <input type="text" id="line" value="Oh! Hi. I'm Pip. Shall we set things up?" aria-label="Line">
+        <label>Look <select id="sayKit"></select></label>
+        <label>Mood <select id="mood"></select></label>
+        <label>Voice <select id="voice"><option value="pip">Pip</option><option value="crown">Coordinator (crown)</option><option value="hardhat">Builder (hard hat)</option><option value="glasses">Reviewer (glasses)</option></select></label>
+        <button type="button" class="btn" id="speak">Speak</button>
+        <button type="button" class="btn" id="lines">Speak the onboarding lines</button>
+      </div>
+      <div class="typed" id="typed" aria-live="polite"></div>
+    </section>
+    <section>
+      <h2>Loops</h2>
+      <p class="note">Continuous layers for the look below: Pip asleep, Pip working the control, the AI power hum, the air of a swing, the world's quiet ambience.</p>
+      <div class="row" style="margin-bottom:10px"><span style="color:var(--muted)">Look</span><div class="kits" id="loopKits"></div></div>
+      <div class="loops" id="loops"></div>
+    </section>
+    <section>
+      <h2>Every event in every look</h2>
+      <p class="note">Index, chapter and string length shape the musical events (ticks climb, blocks stack, stings build a motif one note per chapter).</p>
+      <div class="row" style="margin-bottom:8px">
+        <label>Chapter <select id="chapter"><option value="0">Welcome</option><option value="1">Computer</option><option value="2" selected>Project</option><option value="3">AI</option><option value="4">Ready</option></select></label>
+        <label>Index <input type="number" id="index" value="0" min="0" max="8"></label>
+        <label>Count <input type="number" id="count" value="4" min="1" max="8"></label>
+        <label>String length <input type="number" id="len" value="160" min="0" max="400" step="20"></label>
+        <button type="button" class="btn" id="reel">Play this look's reel</button>
+        <select id="reelKit" aria-label="Reel look"></select>
+      </div>
+      <table id="grid"></table>
+    </section>
+  </main>
+  <footer>Every sound is synthesised in the page with Web Audio: no audio files, no samples. Nothing plays until the first click or key.</footer>
+  <script src="sound.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    const P = window.PipSound, $ = (s) => document.querySelector(s);
+    const NAMES = { friendly: ['Friendly', 'felt, wood, warmth'], glass: ['Glass', 'bells, water, air'], basic: ['Basic', 'sines and clicks'], phosphor: ['Retro Dark', 'phosphor terminal'], teletype: ['Retro Light', 'teletype printout'], nier: ['NieR', 'YoRHa interface'] };
+    const ABOUT = {
+      tap: 'a button press', hover: 'pointer onto a choice', select: 'a choice picked', toggleOn: 'switch on', toggleOff: 'switch off', next: 'forward a screen', back: 'back a screen',
+      open: 'the window opens', close: 'the window closes', key: 'a letter typed', warn: 'the name is too long',
+      lower: 'a prop lowered on its string', ghost: 'a hover preview lowers', land: 'a prop settles', lift: 'a prop pulled away', hop: 'Pip hops', swing: 'a big swing',
+      tryOn: 'Pip tries on this look', sparkle: 'a burst of particles', confetti: 'Ready: the celebration', chapter: 'a new chapter', tick: 'a review line ticked',
+      block: 'a block lands (Creating)', power: 'an AI account connects', score: 'Retro +100', lock: 'NieR target lock', decode: 'NieR label decode', slice: 'NieR chapter glitch',
+      degauss: 'Retro Dark chapter change', feed: 'Retro Light paper feed', powerOn: 'the stage switches on', powerOff: 'the stage switches off', rail: 'Pip rides the progress string',
+      wake: 'yawn and wake', sleep: 'sigh into sleep', think: 'hmm', happy: 'giggle', wink: 'hehe', alert: 'oh!', cheer: 'yay! and a flourish', crew: 'the crew cheers'
+    };
+    const GROUPS = [['The window', ['tap', 'hover', 'select', 'toggleOn', 'toggleOff', 'next', 'back', 'open', 'close', 'key', 'warn']],
+      ['The stage', ['lower', 'ghost', 'land', 'lift', 'hop', 'swing', 'tryOn', 'sparkle', 'tick', 'block', 'power', 'chapter', 'confetti', 'rail', 'powerOn', 'powerOff']],
+      ['Look specials', ['score', 'lock', 'decode', 'slice', 'degauss', 'feed']],
+      ['Pip', ['wake', 'sleep', 'think', 'happy', 'wink', 'alert', 'cheer', 'crew']]];
+    const opts = (kit) => ({ kit, chapter: +$('#chapter').value, index: +$('#index').value, count: +$('#count').value, len: +$('#len').value });
+
+    // the grid
+    let html = '<thead><tr><th></th>' + P.KITS.map((k) => `<th>${NAMES[k][0]}<small>${NAMES[k][1]}</small></th>`).join('') + '</tr></thead><tbody>';
+    GROUPS.forEach(([g, evs]) => {
+      html += `<tr class="grp"><td colspan="${P.KITS.length + 1}">${g}</td></tr>`;
+      evs.forEach((ev) => { html += `<tr><td class="ev">${ev}<small>${ABOUT[ev] || ''}</small></td>` + P.KITS.map((k) => `<td><button type="button" class="p" data-ev="${ev}" data-kit="${k}" aria-label="${ev}, ${NAMES[k][0]}">▶</button></td>`).join('') + '</tr>'; });
+    });
+    $('#grid').innerHTML = html + '</tbody>';
+    $('#grid').addEventListener('click', (e) => {
+      const b = e.target.closest('.p'); if (!b) return;
+      P.unlock(); P.play(b.dataset.ev, opts(b.dataset.kit));
+      b.classList.add('on'); setTimeout(() => b.classList.remove('on'), 300);
+    });
+
+    // say
+    ['sayKit', 'reelKit'].forEach((id) => { $('#' + id).innerHTML = P.KITS.map((k) => `<option value="${k}">${NAMES[k][0]}</option>`).join(''); });
+    $('#mood').innerHTML = ['idle', 'happy', 'think', 'alert', 'sleep', 'wink', 'dots'].map((m) => `<option>${m}</option>`).join('');
+    let typeT = 0;
+    function speak(text, kit, mood, voice) {
+      P.unlock();
+      const tm = P.say(text, { kit, mood, voice });
+      const el = $('#typed'); clearInterval(typeT); el.textContent = ''; let i = 0;
+      const step = 1000 / tm.cps;
+      typeT = setInterval(() => { i++; el.textContent = text.slice(0, i); if (i >= text.length) clearInterval(typeT); }, step);
+      return tm.ms;
+    }
+    $('#speak').addEventListener('click', () => speak($('#line').value, $('#sayKit').value, $('#mood').value, $('#voice').value));
+    $('#line').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('#speak').click(); });
+    const LINES = [["Oh! Hi. I'm Pip.", 'happy'], ['Dress me up. It changes everything.', 'idle'], ['Right here works great.', 'idle'], ['A blank page. My favourite.', 'happy'], ['What shall we call it?', 'think'],
+      ["That won't fit on my sign!", 'alert'], ['Let me check everything…', 'think'], ['Laying the first block…', 'dots'], ['Power! I can think now.', 'happy'], ["We're ready. Let's make something!", 'happy']];
+    $('#lines').addEventListener('click', () => {
+      const kit = $('#sayKit').value; let t = 0;
+      LINES.forEach(([l, m]) => { setTimeout(() => speak(l, kit, m, 'pip'), t); t += P.sayTiming(l, { kit, mood: m }).ms + 650; });
+    });
+
+    // loops
+    let loopKit = 'friendly';
+    $('#loopKits').innerHTML = P.KITS.map((k) => `<button type="button" class="btn" data-lk="${k}" aria-pressed="${k === loopKit}">${NAMES[k][0]}</button>`).join('');
+    $('#loopKits').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-lk]'); if (!b) return; loopKit = b.dataset.lk; P.unlock(); P.setTheme(loopKit);
+      document.querySelectorAll('[data-lk]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.lk === loopKit)));
+    });
+    $('#loops').innerHTML = P.LOOPS.map((n) => `<label>${n}<input type="range" min="0" max="1" step="0.01" value="0" data-loop="${n}"><output>0</output></label>`).join('');
+    $('#loops').addEventListener('input', (e) => { const r = e.target.closest('[data-loop]'); if (!r) return; P.unlock(); P.setTheme(loopKit); P.loop(r.dataset.loop, +r.value); r.nextElementSibling.textContent = (+r.value).toFixed(2); });
+
+    // a reel: the main moments of one look in order
+    $('#reel').addEventListener('click', () => {
+      const kit = $('#reelKit').value; P.unlock();
+      const seq = [['powerOn', {}], ['wake', {}], ['hover', {}], ['ghost', {}], ['select', {}], ['lower', {}], ['cheer', {}], ['next', { chapter: 1 }], ['chapter', { chapter: 1 }], ['tryOn', {}],
+        ['key', { index: 0 }], ['key', { index: 1 }], ['key', { index: 2 }], ['tick', { index: 0 }], ['tick', { index: 1 }], ['tick', { index: 2 }], ['tick', { index: 3 }],
+        ['block', { index: 0, count: 3 }], ['block', { index: 1, count: 3 }], ['block', { index: 2, count: 3 }], ['power', { index: 0 }], ['power', { index: 1 }], ['chapter', { chapter: 4 }], ['confetti', {}], ['crew', {}]];
+      const gaps = { powerOn: 1300, wake: 1300, cheer: 900, chapter: 1300, tryOn: 900, confetti: 2400, crew: 2000, block: 700, power: 900, tick: 450, key: 160, lower: 600 };
+      let t = 0; seq.forEach(([ev, o]) => { setTimeout(() => P.play(ev, Object.assign({ kit, chapter: 2 }, o)), t); t += gaps[ev] || 450; });
+    });
+
+    // header
+    const syncMute = () => { $('#mute').textContent = P.muted ? 'Sound off' : 'Sound on'; $('#mute').setAttribute('aria-pressed', String(!P.muted)); };
+    $('#mute').addEventListener('click', () => { P.unlock(); P.toggle(); syncMute(); });
+    $('#reduced').addEventListener('click', (e) => { const on = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', String(on)); P.setReduced(on); });
+    syncMute();
+  })();
+  </script>
+</body>
+</html>
