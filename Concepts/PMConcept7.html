@@ -28464,6 +28464,9 @@ html:not([data-o55-tour]) #chatPanel[data-pm56="on"] > .float-content.pm6-chat-r
 @property --pmh-py { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
 @property --pmh-dx { syntax: '<number>';     inherits: false; initial-value: 0; }
 @property --pmh-dy { syntax: '<number>';     inherits: false; initial-value: 0; }
+/* a target's own proxy shape (js/18-hover.js prefetch): set on the target, never passed down to a target inside it */
+@property --pmh-radius { syntax: '*'; inherits: false; }
+@property --pmh-inset  { syntax: '*'; inherits: false; }
 [data-pmh-kind]::before,
 [data-pmh-kind]::after {
   --pmh-i: inherit; --pmh-x: inherit; --pmh-y: inherit; --pmh-px: inherit; --pmh-py: inherit; --pmh-dx: inherit; --pmh-dy: inherit;
@@ -34083,6 +34086,15 @@ html:not([data-theme^="glass"]):not(#lgz) #pm-o55-onboarding .o55-seg[data-lg-le
    the switcher's faint track let the resting words fall to 2.4-3.3:1 there. It is a recessed well of the look's surface
    instead, so every word sits on a calm ground. (Glass sets no tokens and keeps its own track.) */
 html:not([data-theme^="glass"]) #pmuRange { --pm-switch-track: color-mix(in srgb, var(--surface) 72%, transparent); }
+/* The title bar's page tabs have no track outside Glass. The base pads the strip 12 px above and below as a glow gutter
+   for Friendly's mint glow and the focus ring (PM7-base .title-bar .page-tabs), so the switcher's track, painted on the
+   strip's padding box, was a 52 px box spilling past the 40 px title bar in every look but Glass (Jared, 2026-10-28:
+   "The top bar page selector has a glow box around it"). The chip alone marks the page, as the bar's other controls
+   sit on the bar itself; Glass keeps its own seated track (glass.css, 2 px strip padding). */
+html:not([data-theme^="glass"]) .title-bar nav.page-tabs { --pm-switch-track: transparent; }
+/* the Orchestrator's views fill their 36 px strip in Basic and Retro (NieR is Basic's), so their chip is the view's own
+   box, not 2 px over the strip's edges (2026-10-28 review R03); Friendly's and Glass's views sit inside theirs */
+html:is([data-theme^="basic"], [data-theme^="retro"]) .orch-tabs { --lg-lens-pad: 0px; }
 /* a count on a chosen view reads in the chip's full ink (it was at 78 % opacity: 3.5:1 on Retro Light's chip) */
 html:not([data-theme^="glass"]) #panel-orchestrator .orch-tabs .orch-tab.active .orch-tab-badge { opacity: 1; }
 /* an opaque chip reaches a pressed view before its click lands: the view's count takes the chip's ink with it, as it will
@@ -34098,6 +34110,12 @@ html:not([data-theme^="glass"]) #panel-orchestrator .orch-tabs .orch-tab.active 
    phosphor line, NieR's ink line) without covering it, at every tab size and panel width. A seated tab casts no drop
    shadow onto that rule (Retro Light's printed shadow stays on its other chips). Glass keeps its approved lens drop. */
 html:not([data-theme^="glass"]):not(#lgz):not(#lgy) .pmw-plate::before { top: 0; bottom: 2px; }
+/* ...and the hover marker on a tab (#pmh-frame, 25-hover-controls.css) takes the chip's shape: the chip's corners and its
+   box, 1 px over the strip's foot. It took the tab's own folder crown (round top corners, square foot, down to the
+   strip's foot), so the hover and the choice were two shapes, and hovering the chosen tab drew one over the other
+   (Jared, 2026-10-28: "the tabs on the home page panels are a different shape than the selector"). Read by
+   js/18-hover.js (prefetch). */
+html:not([data-theme^="glass"]):not(#lgz) .pmw-tab { --pmh-radius: var(--pm-switch-r); --pmh-inset: 0px 0px 1px 0px; }
 /* the chosen tab's words are the switcher's chosen ink, as on every other chip of the look */
 html:not([data-theme^="glass"]):not(#lgz) :is(#pm-home-centre),
 html:not([data-theme^="glass"]):not(#lgz) :where(.pmw-scope):not(#t7:not(*)) { --pmw-tab-active: var(--pm-switch-ink-on); }
@@ -34766,13 +34784,22 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab {
   position: relative !important; display: flex !important; gap: 0; box-sizing: border-box !important;
   width: auto !important; max-width: none !important; min-width: 0 !important;
-  margin: 0 !important; padding: calc(var(--d-in) + 1px) calc(var(--d-gx) + var(--d-in) + 1px) calc(var(--d-g) + var(--d-in) + 1px) !important;
+  margin: 0 !important; padding: calc(var(--d-in) + 1px) calc(var(--d-gx) + var(--d-sb, 0px) + var(--d-in) + 1px) calc(var(--d-g) + var(--d-in) + 1px) calc(var(--d-gx) + var(--d-in) + 1px) !important;
   border: 0 !important; border-radius: 0 !important; overflow: visible !important; box-shadow: none !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab::before {
-  content: ''; position: absolute; z-index: 0; inset: 0 var(--d-gx) var(--d-g); pointer-events: none;
+  content: ''; position: absolute; z-index: 0; inset: 0 calc(var(--d-gx) + var(--d-sb, 0px)) var(--d-g) var(--d-gx); pointer-events: none;
   border-radius: var(--d-R); background: var(--d-ctl-bg); box-shadow: inset 0 0 0 1px var(--d-ctl-line);
 }
+/* one track: this one. The switcher's own track (glass.js inserts .pm-segtab-track in Glass and glass.css draws it in
+   every look, 6 px in and 3 px lower, for the shell's strip) stayed as a second, offset box under it, in every look once
+   Glass had been shown (Jared, 2026-10-28: "the boxes dont line up perfectly"). The chip is the switcher's lens, placed
+   on the chosen tab's own box (--lg-lens-pad 0, read by glass.js) and rounded to the inner radius, so it sits 3 px inside this
+   track on every side. --d-sb is the panel scroller's scrollbar width (20-fit.js): the track's right edge stays on the
+   shelves' right edge when the panel scrolls */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-track { display: none !important; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab { --lg-lens-pad: 0px; }
+[data-rail-skin="d"] .lg-lens[data-lg-for="rail-tabs"] { border-radius: var(--d-r) !important; }
 /* the ink: the shell's is hidden, the skin's sits at the chosen tab's box (inline size and transform, 31-tabs.js) */
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-ink:not(.d-ink) { display: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-ink {
@@ -35409,7 +35436,12 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-files .fm-children { margin-left: 8px !important; padding-left: 2px !important; border-left: 1px solid var(--d-line) !important; }
 [data-rail-skin="d"] #panel-files .fm-trail { min-width: 40px; gap: 6px; }
 [data-rail-skin="d"] #panel-files .fm-count { font: 400 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; }
-[data-rail-skin="d"] #panel-files .fm-quick { gap: 1px !important; }
+/* the quick actions span the row's height and centre their buttons by layout: the shell's top: 50% and
+   translateY(-50%) put Glass's hover bead, which measures a button without its ancestors' transforms, 11 px under the
+   icon (Jared, 2026-10-28: "the selectors next to the files dont line up with the buttons"). The slide in from the
+   right stays a transform; at rest it is none, so the bead lands on the button */
+[data-rail-skin="d"] #panel-files .fm-quick { gap: 1px !important; top: 0 !important; bottom: 0; transform: translateX(6px) !important; }
+[data-rail-skin="d"] #panel-files :is(.fm-row:hover, .fm-row.selected) .fm-quick { transform: none !important; }
 [data-rail-skin="d"] #panel-files .fm-quick .pm-minibtn { width: 22px !important; height: 22px !important; border-radius: var(--d-r) !important; }
 [data-rail-skin="d"] #panel-files .fm-quick .pm-minibtn:hover { transform: none !important; }
 [data-rail-skin="d"] #panel-files .fm-showmore { padding: 4px 6px 4px 30px !important; font: 400 var(--d-fs-small)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; }
@@ -36320,9 +36352,11 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-run .sh-scope-h > .sh-main { display: flex !important; flex-direction: row !important; align-items: baseline; gap: 6px; flex: 1 1 auto; min-width: 0; font: 600 var(--d-fs-label)/1.3 var(--body-font) !important; color: var(--d-text) !important; }
 [data-rail-skin="d"] #panel-run .sh-scope-h .sh-meta { display: inline !important; margin-left: auto; font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; overflow: visible; }
 [data-rail-skin="d"] #panel-run .sh-scope > .sh-accb { padding: 0 !important; }
-/* row actions float over the row's end instead of pushing its text about */
+/* row actions float over the row's end instead of pushing its text about. Centred by layout (auto margins between a
+   zero top and bottom), not by translateY(-50%): Glass's hover bead measures a button without its ancestors'
+   transforms, so a transform-centred group put the bead half a button (12 px) under its icon (2026-10-28) */
 [data-rail-skin="d"] #panel-run .sh-rowbtns {
-  position: absolute; right: 2px; top: 50%; transform: translateY(-50%); z-index: 1; gap: 0 !important; padding: 0 1px;
+  position: absolute; right: 2px; top: 0; bottom: 0; margin-block: auto; height: max-content; z-index: 1; gap: 0 !important; padding: 0 1px;
   border-radius: var(--d-r); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 18%, var(--surface));
   box-shadow: -10px 0 8px -6px color-mix(in srgb, var(--cat, var(--accent-blue)) 18%, var(--surface));
 }
@@ -67065,6 +67099,17 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root nav.workspace-tabs {
   background: var(--pm-switch-track, var(--lg-fill)) !important; border: 0 !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; box-shadow: none !important; position: relative;
 }
+/* (2026-10-28 review R03, R04, R07) On that track the section tabs sit centred, not on its foot (the base seats them as
+   folder tabs: 7 px above, none below), and the chip is the tab's own box, so it no longer hangs 2 px under the track.
+   A hovered tab's fill has the chip's corners, not the folder's (8 8 0 0). A tab the click has acknowledged (.active,
+   ahead of the app's .is-current) keeps no fill of its own while the chip travels to it: its 14 % fill showed under
+   the moving chip for the length of the acknowledgement. */
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root nav.workspace-tabs { padding-top: 4px !important; padding-bottom: 4px !important; --lg-lens-pad: 0px; }
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .workspace-tab { border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root nav.workspace-tabs[data-lg-lensed] > .workspace-tab.active:not(.is-current) { background: transparent !important; }
+/* Usage's range: its segments are as tall as its track, so the chip is the segment's own box (it was 2 px over the
+   track above and below in every look) */
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pmuRange { --lg-lens-pad: 0px; }
 /* the manager tabs stay a sticky bar, frosted: the rows scrolling under it are blurred and nearly covered, so none of
    their words reads between or behind its labels (review r3: at 90 % with no blur, "Work Claude" read through
    "Limits & switching") */
@@ -67189,6 +67234,16 @@ html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.activ
 html[data-lg="on"][data-theme^="friendly"] #pmuScroll { background: transparent !important; }
 /* the rail's panel is a lighter field, so its dots step back a little */
 html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.active > .sh-scroll { --pm6-cozy-glow-mint: transparent; }
+/* ...and its dots are the ground's own field, not a second one. The activity bar and the gutters beside the rail show
+   Friendly's ground (1 px dots on the window's 18 px grid); the panel drew a larger dot on a grid of its own that rode
+   with the scroll, so two fields met at the panel's edge out of step (Jared, 2026-10-28: "The dot pattern behind the left
+   rail seems a bit out of place and inconsistently applied"). The panel's dots are now the ground's dot, fixed to the
+   window like the ground, so the rail reads as one field and its rows scroll over it; the soft light still rides with
+   the content. */
+html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.active > .sh-scroll {
+  background: radial-gradient(var(--pm6-cozy-dot) 1px, transparent 1.5px) 0 0 / 18px 18px, var(--lg-dots-glow) !important;
+  background-attachment: fixed, local, local !important;
+}
 
 /* ---------------------------------------------------------------------------------------------------------------
    11. Onboarding and the tour in Liquid Glass (Jared, 2026-10-11: "dont forget about the onboarding wizard and the
@@ -161703,10 +161758,23 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
     if (post) post.port1.onmessage = afterFrame;
     /* what the proxies need of a target, read once: its box, radius and clipping ancestors */
+    /* A target may give its proxies a shape of its own (CSS, on the target): --pmh-radius replaces its border-radius and
+       --pmh-inset (top right bottom left, px) shrinks the box they sit on, so a control whose chosen state is drawn as
+       a chip of another shape (the home panels' tabs: a folder crown for the tab, a rounded chip 2 px above the strip's
+       foot for the choice) is hovered in the chip's shape, not its own (Jared, 2026-10-28). Both are looks' values, so
+       they are read again after a look change (lookGen): the radius was read once per target for its lifetime, and a
+       control first hovered in Basic kept Basic's corners in Friendly. */
+    var lookGen = 0;
     function prefetch(s) {
       if (s.kind === 'icon' && s.box === null) s.box = s.el.matches('.activity-bar .icon') ? s.el.querySelector('.symbol') || false : false;
       if (!proxyWanted(s.kind)) return;
-      if (s.radius === null) s.radius = getComputedStyle(s.box || s.el).borderRadius || '';
+      if (s.radius === null || s.gen !== lookGen) {
+        var cs = getComputedStyle(s.box || s.el), ownR = cs.getPropertyValue('--pmh-radius').trim(), ins = cs.getPropertyValue('--pmh-inset').trim();
+        s.radius = ownR || cs.borderRadius || '';
+        s.inset = null;
+        if (ins) { var q = ins.split(/\s+/).map(parseFloat); if (q.length === 4 && q.every(isFinite) && (q[0] || q[1] || q[2] || q[3])) s.inset = q; }
+        s.gen = lookGen;
+      }
       if (!s.clippers) s.clippers = clippersOf(s.el);
     }
     function candOf(el) { for (var i = 0; i < cands.length; i++) if (cands[i].el === el) return cands[i]; return null; }
@@ -161755,6 +161823,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
     function retokenNextFrame() {
       tokensDirty = true; rectsDirty = geomDirty = true;   /* a look change can change every box's size */
+      lookGen++;                                           /* ...and every target's own proxy shape (prefetch) */
       if (tokenFrame) return;
       var retokenFrame = function () {
         if (busy()) { raf(function () { window.PM_AFTER_LAYOUT(retokenFrame); }); return; }
@@ -161842,7 +161911,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
            enter reads nothing, and the read after this frame corrects a box that moved without a scroll, resize or DOM
            change in the scope (each of those marks the rects dirty, and a dirty rect is read in the frame as before) */
         cached = !rectsDirty && !!nc && nc.w > 0 && now - rectsAt < 5000 && (ns.kind !== 'icon' || ns.box !== null) &&
-          (!proxyWanted(ns.kind) || (ns.radius !== null && !!ns.clippers && !!ns.vis));
+          (!proxyWanted(ns.kind) || (ns.radius !== null && ns.gen === lookGen && !!ns.clippers && !!ns.vis));
         /* a target never measured (a new scope) while nothing moved: this frame writes its classes only and the read after
            the frame measures it, so this frame's :hover restyle is not forced early and then repeated; the light, plate,
            magnet and reticle start on the next frame. A box that may have moved (geomDirty) is read here, as before. */
@@ -162056,8 +162125,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       return v;
     }
     function boxFor(c) {
-      var s = ST.get(c.el);
-      return s && s.boxR ? s.boxR : { l: c.l, t: c.t, w: c.w, h: c.h };
+      var s = ST.get(c.el), b = s && s.boxR ? s.boxR : { l: c.l, t: c.t, w: c.w, h: c.h }, q = s && s.inset;
+      return q ? { l: b.l + q[3], t: b.t + q[0], w: Math.max(0, b.w - q[1] - q[3]), h: Math.max(0, b.h - q[0] - q[2]) } : b;
     }
     function clipFor(b, v, reach) {
       if (!v) return '';
@@ -184476,10 +184545,27 @@ function stackRows(root) {
     if (m.scrollWidth > m.clientWidth) h.setAttribute('data-d-stack', '');
   });
 }
+/* --d-sb: the width of a panel scroller's scrollbar, 0 without one. The scrollbar is see-through at rest but still takes
+   its width out of the scroller, so the shelves end that much short of the chrome above it; the tab strip's track
+   (22-tabs.src.css) draws inside it, so its right edge stays on the shelves' right edge (2026-10-28). Written after
+   layout (the scroller's resize) and before the panel's fit, so the strip's labels are fitted in the room they have. */
+function syncScrollbar(p) {
+  const sc = p.querySelector(':scope > .sh-scroll');
+  const sb = sc && sc.getClientRects().length ? Math.max(0, sc.offsetWidth - sc.clientWidth - sc.clientLeft * 2) : 0;
+  const v = sb ? sb + 'px' : '';
+  if ((p._dSb || '') === v) return;
+  if (!('_dSb' in p)) {
+    const had = p.hasAttribute('style');
+    remember(() => { p.style.removeProperty('--d-sb'); delete p._dSb; if (!had && p.getAttribute('style') === '') p.removeAttribute('style'); });
+  }
+  p._dSb = v;
+  if (v) p.style.setProperty('--d-sb', v); else p.style.removeProperty('--d-sb');
+}
 function fitAll(only) {
   panelEls().forEach(p => {
     if (only && p !== only) return;
     if (!p.offsetWidth) return;
+    syncScrollbar(p);
     p.querySelectorAll(':scope > .pm-segtab').forEach(fitTabs);
     stackHeads(p);
     stackRows(p);
@@ -184542,6 +184628,7 @@ function watchFit() {
        (landing review SF6-1); the fit follows as before */
     const ro = new ResizeObserver(() => {
       if (D.on) panelEls().forEach(p => { if (p._dSkinStale && p.getClientRects().length) { p._dSkinStale = false; applyPanel(p, false); } });
+      if (D.on) panelEls().forEach(p => { if (p.offsetWidth) syncScrollbar(p); });
       fitSoon();
     });
     ro.observe(slot);
@@ -301722,7 +301809,9 @@ try {
     { sel: 'nav.page-tabs', items: '.page-tab', scrub: true, kind: 'lens' },
     { sel: '#pmuRange', items: ':scope > button', scrub: true, kind: 'lens' },
     { sel: '#pmuNav', items: '.pmu-navbtn', vertical: true, kind: 'lensRow' },
-    { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens' },
+    /* tag: the rail's tab strips' lenses carry data-lg-for="rail-tabs", so the rail skin can shape them (concept D,
+       22-tabs.src.css: the chosen tab's own box, rounded to its track's inner radius) */
+    { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens', tag: 'rail-tabs' },
     { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon,
       box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
@@ -301867,6 +301956,14 @@ try {
   }
   /* lay (optional, the read phase of a sync: layerOf): the layer the lens is or will be in, which is not made here; when
      its box would be needed and it does not exist yet, rectIn returns null and the write measures it */
+  /* the lens's margin around its item: the strip's STRIPS pad (2 px unless it says), or the look's own for that strip,
+     --lg-lens-pad on the strip (px). A strip whose items already fill its track (Usage's range, the Orchestrator's views
+     in Basic and Retro, Settings' section tabs) takes 0, so the chip is the item's box instead of 2 px over the track's
+     edges (2026-10-28 review R03) */
+  function lensPad(strip, cfg) {
+    var v = strip ? parseFloat(getComputedStyle(strip).getPropertyValue('--lg-lens-pad')) : NaN;
+    return isFinite(v) ? v : cfg.pad == null ? 2 : cfg.pad;
+  }
   function rectIn(strip, t, pad, lay) {
     var L = lay ? lay.el : lensLayer(strip), parent = lay ? lay.parent : L.parentElement, app = lay ? lay.app : L === layer;
     pad = pad || 0;
@@ -301902,7 +301999,9 @@ try {
        it replaced: same strip kind, same label and choices, gone within the last 1.2 s. Its chip starts where the old one
        was drawn, so it moves on to the new choice instead of appearing there */
     var heir = cfg.under ? inheritLens(strip, cfg) : null;
-    var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
+    var lensAttrs = { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind };
+    if (cfg.tag) lensAttrs['data-lg-for'] = cfg.tag;   /* a lens in the shared layer, styled for its strip (STRIPS tag) */
+    var lens = el('i', lensAttrs), own = lensLayer(strip);
     own.appendChild(lens);
     L = { strip: strip, lens: lens, layer: own, under: own.classList.contains('lg-lenses-under'), rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: preread(strip) ? preread(strip).scroller : scrollerOf(strip) }; lenses.set(strip, L); strip.__lgPre = null;
     /* an under-layer lens lost with its layer while its strip stays (the app redrew the strip's rows: Settings' left bar
@@ -301985,7 +302084,7 @@ try {
   }
   function prewarm(L, cfg, strip) {
     if (!gpu() || !isGlass() || cfg.under) return;
-    var pad = cfg.pad == null ? 2 : cfg.pad, sizes = [];
+    var pad = lensPad(strip, cfg), sizes = [];
     strip.querySelectorAll(cfg.items).forEach(function (it) {
       if (!visible(it)) return; var b = cfg.box ? cfg.box(it) : it; if (!b) return; var r = b.getBoundingClientRect ? boxRect(b) : b;
       var s = Math.round(r.width + 2 * pad) + 'x' + Math.round(r.height + 2 * pad); if (sizes.indexOf(s) < 0) sizes.push(s);
@@ -302354,7 +302453,7 @@ try {
     /* a parked lens's strip is made relative again only when it is brought back: its box is read then */
     if (parked) return m;
     var lay = layerOf(strip, cfg);
-    m.R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad, lay);
+    m.R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg), lay);
     m.lay = lay;
     return m;
   }
@@ -302387,7 +302486,7 @@ try {
     if (L.lens.style.opacity) L.lens.style.opacity = '';
     prewarmSoon(L, cfg, strip);
     var lay = pre && pre.R && pre.lay, R = lay && L.layer.parentElement === lay.parent && (!lay.usedEl || L.layer === lay.el) ? pre.R : null;
-    if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad);
+    if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
     var A = L.rect;
     if (L.dragging) return;
     if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); return; }
@@ -302435,7 +302534,7 @@ try {
      ink, looks the same (F3-621: only the tab under the ink looks chosen). */
   var HOP_MS = 33;
   function hopStops(A, B, strip, cfg, target, vertical) {
-    var c = function (r) { return vertical ? r.y + r.h / 2 : r.x + r.w / 2; }, a = c(A), b = c(B), lo = Math.min(a, b), hi = Math.max(a, b), pad = cfg.pad == null ? 2 : cfg.pad;
+    var c = function (r) { return vertical ? r.y + r.h / 2 : r.x + r.w / 2; }, a = c(A), b = c(B), lo = Math.min(a, b), hi = Math.max(a, b), pad = lensPad(strip, cfg);
     var mids = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(function (it) { return it !== target && visible(it); })
       .map(function (it) { return { it: it, r: rectIn(strip, cfg.box ? cfg.box(it) : it, pad) }; })
       .filter(function (s) { var m = c(s.r); return m > lo + 1 && m < hi - 1; })
@@ -302502,7 +302601,7 @@ try {
     var stops = hopStops(A, B, strip, cfg, target, vertical);
     if (stops.length < 2 || !L.under) { setLensBox(L, B); return; }
     var now = strip.querySelector(cfg.items + (cfg.active || '.active')), weight = getComputedStyle(now || target).fontWeight;
-    var over = overLayer(strip), pad = cfg.pad == null ? 2 : cfg.pad, frames = stops.map(function (s) {
+    var over = overLayer(strip), pad = lensPad(strip, cfg), frames = stops.map(function (s) {
       var F = el('i', { class: 'lg-lens lg-hop', 'aria-hidden': 'true' }), st = F.style, ir = rectIn(strip, s.it, 0);
       st.left = s.r.x + 'px'; st.top = s.r.y + 'px'; st.width = s.r.w + 'px'; st.height = s.r.h + 'px';
       F.appendChild(twinOf(s.it, { x: ir.x - s.r.x, y: ir.y - s.r.y, w: ir.w, h: ir.h }, weight)); over.appendChild(F); return F;

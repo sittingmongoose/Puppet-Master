@@ -398,10 +398,23 @@
     }
     if (post) post.port1.onmessage = afterFrame;
     /* what the proxies need of a target, read once: its box, radius and clipping ancestors */
+    /* A target may give its proxies a shape of its own (CSS, on the target): --pmh-radius replaces its border-radius and
+       --pmh-inset (top right bottom left, px) shrinks the box they sit on, so a control whose chosen state is drawn as
+       a chip of another shape (the home panels' tabs: a folder crown for the tab, a rounded chip 2 px above the strip's
+       foot for the choice) is hovered in the chip's shape, not its own (Jared, 2026-10-28). Both are looks' values, so
+       they are read again after a look change (lookGen): the radius was read once per target for its lifetime, and a
+       control first hovered in Basic kept Basic's corners in Friendly. */
+    var lookGen = 0;
     function prefetch(s) {
       if (s.kind === 'icon' && s.box === null) s.box = s.el.matches('.activity-bar .icon') ? s.el.querySelector('.symbol') || false : false;
       if (!proxyWanted(s.kind)) return;
-      if (s.radius === null) s.radius = getComputedStyle(s.box || s.el).borderRadius || '';
+      if (s.radius === null || s.gen !== lookGen) {
+        var cs = getComputedStyle(s.box || s.el), ownR = cs.getPropertyValue('--pmh-radius').trim(), ins = cs.getPropertyValue('--pmh-inset').trim();
+        s.radius = ownR || cs.borderRadius || '';
+        s.inset = null;
+        if (ins) { var q = ins.split(/\s+/).map(parseFloat); if (q.length === 4 && q.every(isFinite) && (q[0] || q[1] || q[2] || q[3])) s.inset = q; }
+        s.gen = lookGen;
+      }
       if (!s.clippers) s.clippers = clippersOf(s.el);
     }
     function candOf(el) { for (var i = 0; i < cands.length; i++) if (cands[i].el === el) return cands[i]; return null; }
@@ -450,6 +463,7 @@
     }
     function retokenNextFrame() {
       tokensDirty = true; rectsDirty = geomDirty = true;   /* a look change can change every box's size */
+      lookGen++;                                           /* ...and every target's own proxy shape (prefetch) */
       if (tokenFrame) return;
       var retokenFrame = function () {
         if (busy()) { raf(function () { window.PM_AFTER_LAYOUT(retokenFrame); }); return; }
@@ -537,7 +551,7 @@
            enter reads nothing, and the read after this frame corrects a box that moved without a scroll, resize or DOM
            change in the scope (each of those marks the rects dirty, and a dirty rect is read in the frame as before) */
         cached = !rectsDirty && !!nc && nc.w > 0 && now - rectsAt < 5000 && (ns.kind !== 'icon' || ns.box !== null) &&
-          (!proxyWanted(ns.kind) || (ns.radius !== null && !!ns.clippers && !!ns.vis));
+          (!proxyWanted(ns.kind) || (ns.radius !== null && ns.gen === lookGen && !!ns.clippers && !!ns.vis));
         /* a target never measured (a new scope) while nothing moved: this frame writes its classes only and the read after
            the frame measures it, so this frame's :hover restyle is not forced early and then repeated; the light, plate,
            magnet and reticle start on the next frame. A box that may have moved (geomDirty) is read here, as before. */
@@ -751,8 +765,8 @@
       return v;
     }
     function boxFor(c) {
-      var s = ST.get(c.el);
-      return s && s.boxR ? s.boxR : { l: c.l, t: c.t, w: c.w, h: c.h };
+      var s = ST.get(c.el), b = s && s.boxR ? s.boxR : { l: c.l, t: c.t, w: c.w, h: c.h }, q = s && s.inset;
+      return q ? { l: b.l + q[3], t: b.t + q[0], w: Math.max(0, b.w - q[1] - q[3]), h: Math.max(0, b.h - q[0] - q[2]) } : b;
     }
     function clipFor(b, v, reach) {
       if (!v) return '';

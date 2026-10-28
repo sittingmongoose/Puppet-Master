@@ -20,7 +20,12 @@
 §F .fm-children { margin-left: 8px !important; padding-left: 2px !important; border-left: 1px solid var(--d-line) !important; }
 §F .fm-trail { min-width: 40px; gap: 6px; }
 §F .fm-count { font: 400 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; }
-§F .fm-quick { gap: 1px !important; }
+/* the quick actions span the row's height and centre their buttons by layout: the shell's top: 50% and
+   translateY(-50%) put Glass's hover bead, which measures a button without its ancestors' transforms, 11 px under the
+   icon (Jared, 2026-10-28: "the selectors next to the files dont line up with the buttons"). The slide in from the
+   right stays a transform; at rest it is none, so the bead lands on the button */
+§F .fm-quick { gap: 1px !important; top: 0 !important; bottom: 0; transform: translateX(6px) !important; }
+§F :is(.fm-row:hover, .fm-row.selected) .fm-quick { transform: none !important; }
 §F .fm-quick .pm-minibtn { width: 22px !important; height: 22px !important; border-radius: var(--d-r) !important; }
 §F .fm-quick .pm-minibtn:hover { transform: none !important; }
 §F .fm-showmore { padding: 4px 6px 4px 30px !important; font: 400 var(--d-fs-small)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; }

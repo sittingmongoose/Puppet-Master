@@ -620,6 +620,17 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root nav.workspace-tabs {
   background: var(--pm-switch-track, var(--lg-fill)) !important; border: 0 !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; box-shadow: none !important; position: relative;
 }
+/* (2026-10-28 review R03, R04, R07) On that track the section tabs sit centred, not on its foot (the base seats them as
+   folder tabs: 7 px above, none below), and the chip is the tab's own box, so it no longer hangs 2 px under the track.
+   A hovered tab's fill has the chip's corners, not the folder's (8 8 0 0). A tab the click has acknowledged (.active,
+   ahead of the app's .is-current) keeps no fill of its own while the chip travels to it: its 14 % fill showed under
+   the moving chip for the length of the acknowledgement. */
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root nav.workspace-tabs { padding-top: 4px !important; padding-bottom: 4px !important; --lg-lens-pad: 0px; }
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .workspace-tab { border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root nav.workspace-tabs[data-lg-lensed] > .workspace-tab.active:not(.is-current) { background: transparent !important; }
+/* Usage's range: its segments are as tall as its track, so the chip is the segment's own box (it was 2 px over the
+   track above and below in every look) */
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pmuRange { --lg-lens-pad: 0px; }
 /* the manager tabs stay a sticky bar, frosted: the rows scrolling under it are blurred and nearly covered, so none of
    their words reads between or behind its labels (review r3: at 90 % with no blur, "Work Claude" read through
    "Limits & switching") */
@@ -728,6 +739,16 @@ html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.activ
 html[data-lg="on"][data-theme^="friendly"] #pmuScroll { background: transparent !important; }
 /* the rail's panel is a lighter field, so its dots step back a little */
 html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.active > .sh-scroll { --pm6-cozy-glow-mint: transparent; }
+/* ...and its dots are the ground's own field, not a second one. The activity bar and the gutters beside the rail show
+   Friendly's ground (1 px dots on the window's 18 px grid); the panel drew a larger dot on a grid of its own that rode
+   with the scroll, so two fields met at the panel's edge out of step (Jared, 2026-10-28: "The dot pattern behind the left
+   rail seems a bit out of place and inconsistently applied"). The panel's dots are now the ground's dot, fixed to the
+   window like the ground, so the rail reads as one field and its rows scroll over it; the soft light still rides with
+   the content. */
+html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.active > .sh-scroll {
+  background: radial-gradient(var(--pm6-cozy-dot) 1px, transparent 1.5px) 0 0 / 18px 18px, var(--lg-dots-glow) !important;
+  background-attachment: fixed, local, local !important;
+}
 
 /* ---------------------------------------------------------------------------------------------------------------
    11. Onboarding and the tour in Liquid Glass (Jared, 2026-10-11: "dont forget about the onboarding wizard and the

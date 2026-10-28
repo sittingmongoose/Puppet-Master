@@ -14,6 +14,9 @@
 @property --pmh-py { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
 @property --pmh-dx { syntax: '<number>';     inherits: false; initial-value: 0; }
 @property --pmh-dy { syntax: '<number>';     inherits: false; initial-value: 0; }
+/* a target's own proxy shape (js/18-hover.js prefetch): set on the target, never passed down to a target inside it */
+@property --pmh-radius { syntax: '*'; inherits: false; }
+@property --pmh-inset  { syntax: '*'; inherits: false; }
 [data-pmh-kind]::before,
 [data-pmh-kind]::after {
   --pmh-i: inherit; --pmh-x: inherit; --pmh-y: inherit; --pmh-px: inherit; --pmh-py: inherit; --pmh-dx: inherit; --pmh-dy: inherit;

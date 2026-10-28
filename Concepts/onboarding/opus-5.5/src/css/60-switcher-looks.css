@@ -228,6 +228,15 @@ html:not([data-theme^="glass"]):not(#lgz) #pm-o55-onboarding .o55-seg[data-lg-le
    the switcher's faint track let the resting words fall to 2.4-3.3:1 there. It is a recessed well of the look's surface
    instead, so every word sits on a calm ground. (Glass sets no tokens and keeps its own track.) */
 html:not([data-theme^="glass"]) #pmuRange { --pm-switch-track: color-mix(in srgb, var(--surface) 72%, transparent); }
+/* The title bar's page tabs have no track outside Glass. The base pads the strip 12 px above and below as a glow gutter
+   for Friendly's mint glow and the focus ring (PM7-base .title-bar .page-tabs), so the switcher's track, painted on the
+   strip's padding box, was a 52 px box spilling past the 40 px title bar in every look but Glass (Jared, 2026-10-28:
+   "The top bar page selector has a glow box around it"). The chip alone marks the page, as the bar's other controls
+   sit on the bar itself; Glass keeps its own seated track (glass.css, 2 px strip padding). */
+html:not([data-theme^="glass"]) .title-bar nav.page-tabs { --pm-switch-track: transparent; }
+/* the Orchestrator's views fill their 36 px strip in Basic and Retro (NieR is Basic's), so their chip is the view's own
+   box, not 2 px over the strip's edges (2026-10-28 review R03); Friendly's and Glass's views sit inside theirs */
+html:is([data-theme^="basic"], [data-theme^="retro"]) .orch-tabs { --lg-lens-pad: 0px; }
 /* a count on a chosen view reads in the chip's full ink (it was at 78 % opacity: 3.5:1 on Retro Light's chip) */
 html:not([data-theme^="glass"]) #panel-orchestrator .orch-tabs .orch-tab.active .orch-tab-badge { opacity: 1; }
 /* an opaque chip reaches a pressed view before its click lands: the view's count takes the chip's ink with it, as it will
@@ -243,6 +252,12 @@ html:not([data-theme^="glass"]) #panel-orchestrator .orch-tabs .orch-tab.active 
    phosphor line, NieR's ink line) without covering it, at every tab size and panel width. A seated tab casts no drop
    shadow onto that rule (Retro Light's printed shadow stays on its other chips). Glass keeps its approved lens drop. */
 html:not([data-theme^="glass"]):not(#lgz):not(#lgy) .pmw-plate::before { top: 0; bottom: 2px; }
+/* ...and the hover marker on a tab (#pmh-frame, 25-hover-controls.css) takes the chip's shape: the chip's corners and its
+   box, 1 px over the strip's foot. It took the tab's own folder crown (round top corners, square foot, down to the
+   strip's foot), so the hover and the choice were two shapes, and hovering the chosen tab drew one over the other
+   (Jared, 2026-10-28: "the tabs on the home page panels are a different shape than the selector"). Read by
+   js/18-hover.js (prefetch). */
+html:not([data-theme^="glass"]):not(#lgz) .pmw-tab { --pmh-radius: var(--pm-switch-r); --pmh-inset: 0px 0px 1px 0px; }
 /* the chosen tab's words are the switcher's chosen ink, as on every other chip of the look */
 html:not([data-theme^="glass"]):not(#lgz) :is(#pm-home-centre, .pmw-scope) { --pmw-tab-active: var(--pm-switch-ink-on); }
 /* and its close x (and the unsaved dot in it) is part of the chip too: the chip's ink, with a square of that ink under the

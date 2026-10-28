@@ -158,10 +158,27 @@ function stackRows(root) {
     if (m.scrollWidth > m.clientWidth) h.setAttribute('data-d-stack', '');
   });
 }
+/* --d-sb: the width of a panel scroller's scrollbar, 0 without one. The scrollbar is see-through at rest but still takes
+   its width out of the scroller, so the shelves end that much short of the chrome above it; the tab strip's track
+   (22-tabs.src.css) draws inside it, so its right edge stays on the shelves' right edge (2026-10-28). Written after
+   layout (the scroller's resize) and before the panel's fit, so the strip's labels are fitted in the room they have. */
+function syncScrollbar(p) {
+  const sc = p.querySelector(':scope > .sh-scroll');
+  const sb = sc && sc.getClientRects().length ? Math.max(0, sc.offsetWidth - sc.clientWidth - sc.clientLeft * 2) : 0;
+  const v = sb ? sb + 'px' : '';
+  if ((p._dSb || '') === v) return;
+  if (!('_dSb' in p)) {
+    const had = p.hasAttribute('style');
+    remember(() => { p.style.removeProperty('--d-sb'); delete p._dSb; if (!had && p.getAttribute('style') === '') p.removeAttribute('style'); });
+  }
+  p._dSb = v;
+  if (v) p.style.setProperty('--d-sb', v); else p.style.removeProperty('--d-sb');
+}
 function fitAll(only) {
   panelEls().forEach(p => {
     if (only && p !== only) return;
     if (!p.offsetWidth) return;
+    syncScrollbar(p);
     p.querySelectorAll(':scope > .pm-segtab').forEach(fitTabs);
     stackHeads(p);
     stackRows(p);
@@ -224,6 +241,7 @@ function watchFit() {
        (landing review SF6-1); the fit follows as before */
     const ro = new ResizeObserver(() => {
       if (D.on) panelEls().forEach(p => { if (p._dSkinStale && p.getClientRects().length) { p._dSkinStale = false; applyPanel(p, false); } });
+      if (D.on) panelEls().forEach(p => { if (p.offsetWidth) syncScrollbar(p); });
       fitSoon();
     });
     ro.observe(slot);

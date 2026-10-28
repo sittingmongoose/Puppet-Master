@@ -1319,7 +1319,9 @@
     { sel: 'nav.page-tabs', items: '.page-tab', scrub: true, kind: 'lens' },
     { sel: '#pmuRange', items: ':scope > button', scrub: true, kind: 'lens' },
     { sel: '#pmuNav', items: '.pmu-navbtn', vertical: true, kind: 'lensRow' },
-    { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens' },
+    /* tag: the rail's tab strips' lenses carry data-lg-for="rail-tabs", so the rail skin can shape them (concept D,
+       22-tabs.src.css: the chosen tab's own box, rounded to its track's inner radius) */
+    { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens', tag: 'rail-tabs' },
     { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon,
       box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
@@ -1464,6 +1466,14 @@
   }
   /* lay (optional, the read phase of a sync: layerOf): the layer the lens is or will be in, which is not made here; when
      its box would be needed and it does not exist yet, rectIn returns null and the write measures it */
+  /* the lens's margin around its item: the strip's STRIPS pad (2 px unless it says), or the look's own for that strip,
+     --lg-lens-pad on the strip (px). A strip whose items already fill its track (Usage's range, the Orchestrator's views
+     in Basic and Retro, Settings' section tabs) takes 0, so the chip is the item's box instead of 2 px over the track's
+     edges (2026-10-28 review R03) */
+  function lensPad(strip, cfg) {
+    var v = strip ? parseFloat(getComputedStyle(strip).getPropertyValue('--lg-lens-pad')) : NaN;
+    return isFinite(v) ? v : cfg.pad == null ? 2 : cfg.pad;
+  }
   function rectIn(strip, t, pad, lay) {
     var L = lay ? lay.el : lensLayer(strip), parent = lay ? lay.parent : L.parentElement, app = lay ? lay.app : L === layer;
     pad = pad || 0;
@@ -1499,7 +1509,9 @@
        it replaced: same strip kind, same label and choices, gone within the last 1.2 s. Its chip starts where the old one
        was drawn, so it moves on to the new choice instead of appearing there */
     var heir = cfg.under ? inheritLens(strip, cfg) : null;
-    var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
+    var lensAttrs = { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind };
+    if (cfg.tag) lensAttrs['data-lg-for'] = cfg.tag;   /* a lens in the shared layer, styled for its strip (STRIPS tag) */
+    var lens = el('i', lensAttrs), own = lensLayer(strip);
     own.appendChild(lens);
     L = { strip: strip, lens: lens, layer: own, under: own.classList.contains('lg-lenses-under'), rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: preread(strip) ? preread(strip).scroller : scrollerOf(strip) }; lenses.set(strip, L); strip.__lgPre = null;
     /* an under-layer lens lost with its layer while its strip stays (the app redrew the strip's rows: Settings' left bar
@@ -1582,7 +1594,7 @@
   }
   function prewarm(L, cfg, strip) {
     if (!gpu() || !isGlass() || cfg.under) return;
-    var pad = cfg.pad == null ? 2 : cfg.pad, sizes = [];
+    var pad = lensPad(strip, cfg), sizes = [];
     strip.querySelectorAll(cfg.items).forEach(function (it) {
       if (!visible(it)) return; var b = cfg.box ? cfg.box(it) : it; if (!b) return; var r = b.getBoundingClientRect ? boxRect(b) : b;
       var s = Math.round(r.width + 2 * pad) + 'x' + Math.round(r.height + 2 * pad); if (sizes.indexOf(s) < 0) sizes.push(s);
@@ -1951,7 +1963,7 @@
     /* a parked lens's strip is made relative again only when it is brought back: its box is read then */
     if (parked) return m;
     var lay = layerOf(strip, cfg);
-    m.R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad, lay);
+    m.R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg), lay);
     m.lay = lay;
     return m;
   }
@@ -1984,7 +1996,7 @@
     if (L.lens.style.opacity) L.lens.style.opacity = '';
     prewarmSoon(L, cfg, strip);
     var lay = pre && pre.R && pre.lay, R = lay && L.layer.parentElement === lay.parent && (!lay.usedEl || L.layer === lay.el) ? pre.R : null;
-    if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad);
+    if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
     var A = L.rect;
     if (L.dragging) return;
     if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); return; }
@@ -2032,7 +2044,7 @@
      ink, looks the same (F3-621: only the tab under the ink looks chosen). */
   var HOP_MS = 33;
   function hopStops(A, B, strip, cfg, target, vertical) {
-    var c = function (r) { return vertical ? r.y + r.h / 2 : r.x + r.w / 2; }, a = c(A), b = c(B), lo = Math.min(a, b), hi = Math.max(a, b), pad = cfg.pad == null ? 2 : cfg.pad;
+    var c = function (r) { return vertical ? r.y + r.h / 2 : r.x + r.w / 2; }, a = c(A), b = c(B), lo = Math.min(a, b), hi = Math.max(a, b), pad = lensPad(strip, cfg);
     var mids = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(function (it) { return it !== target && visible(it); })
       .map(function (it) { return { it: it, r: rectIn(strip, cfg.box ? cfg.box(it) : it, pad) }; })
       .filter(function (s) { var m = c(s.r); return m > lo + 1 && m < hi - 1; })
@@ -2099,7 +2111,7 @@
     var stops = hopStops(A, B, strip, cfg, target, vertical);
     if (stops.length < 2 || !L.under) { setLensBox(L, B); return; }
     var now = strip.querySelector(cfg.items + (cfg.active || '.active')), weight = getComputedStyle(now || target).fontWeight;
-    var over = overLayer(strip), pad = cfg.pad == null ? 2 : cfg.pad, frames = stops.map(function (s) {
+    var over = overLayer(strip), pad = lensPad(strip, cfg), frames = stops.map(function (s) {
       var F = el('i', { class: 'lg-lens lg-hop', 'aria-hidden': 'true' }), st = F.style, ir = rectIn(strip, s.it, 0);
       st.left = s.r.x + 'px'; st.top = s.r.y + 'px'; st.width = s.r.w + 'px'; st.height = s.r.h + 'px';
       F.appendChild(twinOf(s.it, { x: ir.x - s.r.x, y: ir.y - s.r.y, w: ir.w, h: ir.h }, weight)); over.appendChild(F); return F;
