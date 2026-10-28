@@ -29,9 +29,12 @@ The control is you. Pip hangs from it, and every choice you make lowers somethin
   its head (the same solver as the logo). Every prop hangs on its own string and swings too.
 - **Pip is alive between moments.** It breathes, its eyes follow your pointer (and stay on where it was
   last seen when it leaves the window), it turns to whatever you point at, and now and then it fidgets:
-  kicks into a little swing or wiggles with a wink (before it has seen a pointer, it also looks up at the
-  bar or glances round). Its faces change like a blink: the old one closes as the new one opens. Three
-  thinking dots, NieR's three squares and sleeping eyes stay still rather than follow the pointer. It only wakes on the Welcome screen when you really arrive (a key, or the pointer
+  kicks into a little swing or wiggles (before it has seen a pointer, it also looks up at the bar or
+  glances round); its face never changes on its own, and it winks once, at its sign-off on Ready. Its faces
+  change like a blink: the eyes (and brows) shut on the eye line and the mouth shrinks to its centre, then the
+  new face opens a touch past full; nothing fades, so two faces never show at once (about 0.2 s; on Retro, in
+  its own steps: shut, most of the way, open). Three thinking dots, NieR's three squares and sleeping eyes
+  stay still rather than follow the pointer. It only wakes on the Welcome screen when you really arrive (a key, or the pointer
   travelling), not when the page loads under a resting pointer.
 - **Pip talks.** Every line is typed into its bubble at the pace Pip's voice says it (see Sound). The
   bubble takes the whole line's size first and the letters arrive in place; a line that changes faster

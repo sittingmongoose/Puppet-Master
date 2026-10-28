@@ -504,7 +504,8 @@
       let lit = 0;
       [['claude', 'ready', 1300], ['codex', 'ready', 2300], ['antigravity', 'off', 2900], ['cursor', 'off', 3300]].forEach(([k, st, ms]) => later(() => { S.ai[k] = st; renderScreen(0); if (st === 'ready' && stage) stage.cheer('o' + k, { sound: 'power', index: lit++ }); }, ms));
     }
-    if (screen === 'ready' && stage) { later(() => { stage.confetti(60); stage.cheer(null, { sound: 'crew' }); }, 500); }
+    // Pip's one wink: its sign-off on Ready, once it has said its line
+    if (screen === 'ready' && stage) { later(() => { stage.confetti(60); stage.cheer(null, { sound: 'crew' }); }, 500); later(() => stage.feel('wink', 900), 2700); }
   }
   function next() { const i = FLOW.indexOf(S.screen); if (i < FLOW.length - 1) go(FLOW[i + 1]); }
   function back() { const prev = S.history.pop(); if (prev) go(prev, { back: true }); }

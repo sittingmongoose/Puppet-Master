@@ -282,30 +282,48 @@
         this.gHead.insertBefore(face, pf); face.appendChild(pf);
         const m = th.nier && this.gHead.lastElementChild; if (m && m !== face) face.appendChild(m);
       }
+      // each part wrapped, so a change of face can close and open it in place: the eyes (with their brows; NieR's
+      // marks on the band) blink shut on their own line, the mouth and anything else shrink to their own centre
+      (th.nier ? [...face.children] : pf ? [...pf.children] : []).forEach((n) => {
+        const w = el('g', { class: 'pst-part' }); n.parentNode.insertBefore(w, n); w.appendChild(n);
+        w.eyes = n.classList.contains('pe') || n.classList.contains('pf');
+      });
       this.faceEl = face;
-      if (leaving) { this.faceOut = leaving; this.faceOutOp = +(leaving.getAttribute('opacity') || 1); this.faceOutSy = this.faceSy || 1; this.gHead.appendChild(leaving); this.faceT0 = this.t; this.faceSy = .2; }
-      else this.faceT0 = null;
+      if (leaving) { this.faceOut = leaving; this.faceOutV = this.faceT0 == null ? 1 : clamp(this.faceV, 0, 1); this.gHead.appendChild(leaving); this.faceT0 = this.t; this.faceV = 0; }
+      else { this.faceT0 = null; this.faceV = 1; }
       // the eyes follow what Pip looks at, but not three thinking dots, NieR's three squares, or eyes closed in sleep
       const still = mood === 'dots' || mood === 'sleep' || (th.nier && mood === 'think');
       this.eyesEl = still ? null : face.querySelector('.pe') || (th.nier ? face.querySelector('.pf') : null);
       this.blinkEl = face.querySelector('.pb');
     }
-    // a change of face, like a blink: the old one closes (squashed toward the middle of the face, fading) while the
-    // new one opens with a touch of overshoot. A Retro stage shows it in its own steps
+    /* A change of face is a blink: the face being left closes (eyes shut on their line, the mouth shrinks to its centre)
+       and only then does the new one open, a touch past full before it settles. Nothing fades, so no two faces ever
+       show at once. About 0.2 s. A Retro stage draws in steps, so there the old face goes at once and the new one
+       opens from shut over two of its frames: shut, most of the way, open; never a straight swap. */
     animFace() {
-      const OUT = .11, IN = .17, LAG = .05, xf = (sx, sy) => `translate(32 47.5) scale(${R(sx)} ${R(sy)}) translate(-32 -47.5)`;
+      const fps = this.frameRate(), CLOSE = fps ? 0 : .075, OPEN = fps ? 2 / fps : .13, e = this.t - (this.faceT0 == null ? -9 : this.faceT0);
+      const set = (face, v) => face.querySelectorAll('.pst-part').forEach((w) => {
+        if (v == null) { w.removeAttribute('transform'); return; }
+        // the eyes close on the eye line (not between eyes and brows); everything else on its own centre
+        if (!w.c) { const b = w.getBBox(), pb = w.eyes && w.querySelector('.pb'), e = pb ? pb.getBBox() : b; w.c = [b.x + b.width / 2, e.y + e.height / 2]; }
+        const sx = w.eyes ? 1 : .25 + .75 * v, sy = w.eyes ? .06 + .94 * v : sx;
+        w.setAttribute('transform', `translate(${R(w.c[0])} ${R(w.c[1])}) scale(${R(sx)} ${R(sy)}) translate(${R(-w.c[0])} ${R(-w.c[1])})`);
+      });
+      const close = CLOSE * (this.faceOutV == null ? 1 : this.faceOutV);
       if (this.faceOut) {
-        const k = clamp((this.t - this.faceT0) / OUT, 0, 1);
-        if (k >= 1) { this.faceOut.remove(); this.faceOut = null; }
-        else { this.faceOut.setAttribute('opacity', R(this.faceOutOp * (1 - k))); this.faceOut.setAttribute('transform', xf(1 + .05 * k, this.faceOutSy * (1 - .8 * ease(k)))); }
+        if (e >= close) { this.faceOut.remove(); this.faceOut = null; }
+        else { const k = e / close; set(this.faceOut, this.faceOutV * (1 - k * k)); }
       }
       const f = this.faceEl;
       if (!f || this.faceT0 == null) return;
-      const k = clamp((this.t - this.faceT0 - LAG) / IN, 0, 1);
-      if (k >= 1) { f.removeAttribute('transform'); f.removeAttribute('opacity'); this.faceSy = 1; this.faceT0 = null; return; }
-      const x = k - 1, back = 1 + 2.2 * x * x * x + 1.2 * x * x;
-      this.faceSy = .2 + .8 * back;
-      f.setAttribute('opacity', R(Math.min(1, k * 1.8))); f.setAttribute('transform', xf(1, this.faceSy));
+      if (e < close) { f.setAttribute('visibility', 'hidden'); this.faceV = 0; return; }
+      f.removeAttribute('visibility');
+      const q = clamp((e - close) / OPEN, 0, 1);
+      if (q >= 1) { set(f, null); this.faceV = 1; this.faceT0 = null; return; }
+      // a stepped stage shows shut, then most of the way open, then open; elsewhere the eyes open a touch past full
+      const x = q - 1;
+      this.faceV = fps ? 1 - x * x : 1 + 2.4 * x * x * x + 1.4 * x * x;
+      set(f, this.faceV);
     }
     // where Pip's head hangs for a pose: anchor at the top centre of the head
     headAt(cx, cy, th, dy) { return [cx + Math.sin(th) * this.L.rope, cy + Math.cos(th) * this.L.rope + dy]; }
@@ -457,7 +475,7 @@
     cheer(propId, opts) {
       opts = opts || {};
       const pr = propId && this.props.get(propId);
-      this.feel(opts.mood || (this.famName === 'friendly' && Math.random() < .35 ? 'wink' : 'happy'), opts.hold || 1400);
+      this.feel(opts.mood || 'happy', opts.hold || 1400);
       // a block still being lowered: Pip is pleased now, the sound and the flourish wait for its touchdown
       if (pr && pr.spec.ground && !pr.landed && !this.reduced) { pr.onLand = () => { this.cheerAt(pr, opts); if (opts.then) opts.then(); }; return; }
       this.cheerAt(pr, opts);
@@ -837,11 +855,13 @@
       const sub = 3; for (let i = 0; i < sub; i++) this.step(dt / sub);
       this.life(dt);
       // Retro's tube refreshes in steps; the phosphor holds what was there a moment longer
-      // Retro Light is paper: it moves at half Retro Dark's rate, a flipbook of printouts
-      const fps = this.tube === 'teletype' ? 10 : this.fam.fps;
+      const fps = this.frameRate();
       if (fps && !this.reduced) { if (this.t - this.frameT < 1 / fps) return; this.frameT = this.t; }
       this.render();
     }
+    // how often the stage is drawn: every frame, but Retro in steps (Retro Light, paper, at half Retro Dark's rate,
+    // a flipbook of printouts)
+    frameRate() { return this.reduced ? 0 : this.tube === 'teletype' ? 10 : this.fam.fps || 0; }
     // Pip's idle life: now and then it looks up at the bar, kicks its feet, wiggles or glances round
     life(dt) {
       if (this.reduced || this.sleepZ) return;
@@ -850,11 +870,12 @@
         this.idleNext = this.t + 7 + Math.random() * 6;
         // glances (up at the bar, or to one side) only while there is no pointer to look at: once Pip has seen the
         // pointer it keeps its eyes on where it last was
-        const ps = this.ps, f = this.famName, acts = ['wink'].concat(f !== 'nier' ? ['swing'] : [], pointer.t > 0 ? [] : ['up', 'side']);
+        // (no face changes here: a wink with no reason read as random)
+        const ps = this.ps, f = this.famName, acts = ['wiggle'].concat(f !== 'nier' ? ['swing'] : [], pointer.t > 0 ? [] : ['up', 'side']);
         const pick = acts[Math.floor(Math.random() * acts.length)];
         if (pick === 'up') { this.idleLook = [0, -2.4]; this.idleUntil = this.t + 1.3; this.ps.tiltv -= .8; }
         else if (pick === 'swing') { ps.thv += (Math.random() > .5 ? 1 : -1) * .5; this.sfx('swing', { x: ps.C.x, intensity: .35 }); }
-        else if (pick === 'wink') { ps.tiltv += (Math.random() > .5 ? 1 : -1) * 3; this.feel('wink', 700); }
+        else if (pick === 'wiggle') ps.tiltv += (Math.random() > .5 ? 1 : -1) * 3;
         else { this.idleLook = [Math.random() > .5 ? 2.2 : -2.2, .3]; this.idleUntil = this.t + 1.1; }
       }
       if (this.idleLook && this.t > this.idleUntil) this.idleLook = null;
