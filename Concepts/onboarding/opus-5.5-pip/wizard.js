@@ -325,6 +325,11 @@
     rail.v += ax * dt; rail.x += rail.v * dt;
     const dA = 160 * (weight + Math.min(5, Math.abs(rail.v) * .012) - rail.dip) - 9 * rail.dv; rail.dv += dA * dt; rail.dip += rail.dv * dt;
     const aA = -38 * rail.ang - 3.2 * rail.av - ax * .0016; rail.av += aA * dt; rail.ang += rail.av * dt;
+    const moving = Math.abs(tx - rail.x) > .3 || Math.abs(rail.v) > 1 || Math.abs(rail.av) > .01 || Math.abs(rail.ang) > .004 || Math.abs(rail.dip - weight) > .05;
+    // Retro Light is paper: the rail is drawn ten times a second, like the stage (the spring still runs every frame)
+    const now = tn || performance.now();
+    if (S.theme === 'retro-light' && moving && !S.reduced && now - (rail.drawn || 0) < 100) { railKick(); return; }
+    rail.drawn = now;
     let px = rail.x, dip = Math.max(0, rail.dip);
     if (fam === 'retro') { px = Math.round(px / 4) * 4; dip = Math.round(dip); }
     const yAt = (x) => x <= px ? y0 + dip * (x - x0) / Math.max(1, px - x0) : y0 + dip * (x1 - x) / Math.max(1, x1 - px);
@@ -345,7 +350,6 @@
     const pip = railEl.querySelector('.ob-railpip');
     // the mark's pin (32, 14.5 of 64) rides the string; at 30 px that is (15, 6.8)
     if (pip) pip.style.transform = `translate(${(px - 15).toFixed(1)}px, ${(y0 + dip - 6.8).toFixed(1)}px) rotate(${(rail.ang * 57.3).toFixed(2)}deg)`;
-    const moving = Math.abs(tx - rail.x) > .3 || Math.abs(rail.v) > 1 || Math.abs(rail.av) > .01 || Math.abs(rail.ang) > .004 || Math.abs(rail.dip - weight) > .05;
     if (moving && !S.reduced) railKick();
   }
   new ResizeObserver(() => railKick()).observe(railEl);

@@ -254,6 +254,9 @@
     }
     renderHead(mood, force) {
       if (!force && mood === this.curMood) return;
+      // the face being left closes as the new one opens (animFace), unless the whole head is being rebuilt
+      const leaving = !force && !this.reduced && this.faceEl && this.faceEl.isConnected ? this.faceEl : null;
+      if (this.faceOut) { this.faceOut.remove(); this.faceOut = null; }
       this.curMood = mood;
       const g = K.GEO.full, th = this.pipTh(this.pipTheme);
       const p = this.id + 'h' + (++this.hseq || (this.hseq = 1));
@@ -273,8 +276,36 @@
         const hd = K.pipHead(g, th, mood, { face: p + 'f', grad: p + 'g', clip: p + 'c', rim: p + 'r', glow: p + 'w', spec: p + 's', drop: p + 'd' }, { face: 'pf', eyes: 'pe', blink: 'pb', dot: 'pst-dot' }, {});
         this.gHead.innerHTML = (hd.defs ? `<defs>${hd.defs}</defs>` : '') + K.eyeletRings(g, th, {}) + hd.body;
       }
-      this.eyesEl = this.gHead.querySelector('.pe') || this.gHead.querySelector('.pf');
-      this.blinkEl = this.gHead.querySelector('.pb');
+      // the face as one group (eyes, brows, mouth; on NieR the band's marks and the mouth after them), so it changes as one
+      const pf = this.gHead.querySelector('.pf'), face = el('g', { class: 'pst-face' });
+      if (pf) {
+        this.gHead.insertBefore(face, pf); face.appendChild(pf);
+        const m = th.nier && this.gHead.lastElementChild; if (m && m !== face) face.appendChild(m);
+      }
+      this.faceEl = face;
+      if (leaving) { this.faceOut = leaving; this.faceOutOp = +(leaving.getAttribute('opacity') || 1); this.faceOutSy = this.faceSy || 1; this.gHead.appendChild(leaving); this.faceT0 = this.t; this.faceSy = .2; }
+      else this.faceT0 = null;
+      // the eyes follow what Pip looks at, but not three thinking dots, NieR's three squares, or eyes closed in sleep
+      const still = mood === 'dots' || mood === 'sleep' || (th.nier && mood === 'think');
+      this.eyesEl = still ? null : face.querySelector('.pe') || (th.nier ? face.querySelector('.pf') : null);
+      this.blinkEl = face.querySelector('.pb');
+    }
+    // a change of face, like a blink: the old one closes (squashed toward the middle of the face, fading) while the
+    // new one opens with a touch of overshoot. A Retro stage shows it in its own steps
+    animFace() {
+      const OUT = .11, IN = .17, LAG = .05, xf = (sx, sy) => `translate(32 47.5) scale(${R(sx)} ${R(sy)}) translate(-32 -47.5)`;
+      if (this.faceOut) {
+        const k = clamp((this.t - this.faceT0) / OUT, 0, 1);
+        if (k >= 1) { this.faceOut.remove(); this.faceOut = null; }
+        else { this.faceOut.setAttribute('opacity', R(this.faceOutOp * (1 - k))); this.faceOut.setAttribute('transform', xf(1 + .05 * k, this.faceOutSy * (1 - .8 * ease(k)))); }
+      }
+      const f = this.faceEl;
+      if (!f || this.faceT0 == null) return;
+      const k = clamp((this.t - this.faceT0 - LAG) / IN, 0, 1);
+      if (k >= 1) { f.removeAttribute('transform'); f.removeAttribute('opacity'); this.faceSy = 1; this.faceT0 = null; return; }
+      const x = k - 1, back = 1 + 2.2 * x * x * x + 1.2 * x * x;
+      this.faceSy = .2 + .8 * back;
+      f.setAttribute('opacity', R(Math.min(1, k * 1.8))); f.setAttribute('transform', xf(1, this.faceSy));
     }
     // where Pip's head hangs for a pose: anchor at the top centre of the head
     headAt(cx, cy, th, dy) { return [cx + Math.sin(th) * this.L.rope, cy + Math.cos(th) * this.L.rope + dy]; }
@@ -806,7 +837,8 @@
       const sub = 3; for (let i = 0; i < sub; i++) this.step(dt / sub);
       this.life(dt);
       // Retro's tube refreshes in steps; the phosphor holds what was there a moment longer
-      const fps = this.fam.fps;
+      // Retro Light is paper: it moves at half Retro Dark's rate, a flipbook of printouts
+      const fps = this.tube === 'teletype' ? 10 : this.fam.fps;
       if (fps && !this.reduced) { if (this.t - this.frameT < 1 / fps) return; this.frameT = this.t; }
       this.render();
     }
@@ -816,10 +848,13 @@
       const quiet = this.t - (this.busyT || 0) > 3.5;
       if (this.t > this.idleNext && quiet) {
         this.idleNext = this.t + 7 + Math.random() * 6;
-        const ps = this.ps, f = this.famName, pick = Math.floor(Math.random() * 4);
-        if (pick === 0) { this.idleLook = [0, -2.4]; this.idleUntil = this.t + 1.3; this.ps.tiltv -= .8; }
-        else if (pick === 1 && f !== 'nier') { ps.thv += (Math.random() > .5 ? 1 : -1) * .5; this.sfx('swing', { x: ps.C.x, intensity: .35 }); }
-        else if (pick === 2) { ps.tiltv += (Math.random() > .5 ? 1 : -1) * 3; this.feel('wink', 700); }
+        // glances (up at the bar, or to one side) only while there is no pointer to look at: once Pip has seen the
+        // pointer it keeps its eyes on where it last was
+        const ps = this.ps, f = this.famName, acts = ['wink'].concat(f !== 'nier' ? ['swing'] : [], pointer.t > 0 ? [] : ['up', 'side']);
+        const pick = acts[Math.floor(Math.random() * acts.length)];
+        if (pick === 'up') { this.idleLook = [0, -2.4]; this.idleUntil = this.t + 1.3; this.ps.tiltv -= .8; }
+        else if (pick === 'swing') { ps.thv += (Math.random() > .5 ? 1 : -1) * .5; this.sfx('swing', { x: ps.C.x, intensity: .35 }); }
+        else if (pick === 'wink') { ps.tiltv += (Math.random() > .5 ? 1 : -1) * 3; this.feel('wink', 700); }
         else { this.idleLook = [Math.random() > .5 ? 2.2 : -2.2, .3]; this.idleUntil = this.t + 1.1; }
       }
       if (this.idleLook && this.t > this.idleUntil) this.idleLook = null;
@@ -895,6 +930,7 @@
       const base = (this.spec.pip && this.spec.pip.mood) || 'idle';
       const mood = this.sleepZ ? 'sleep' : (this.moodOverride || base);
       this.renderHead(mood);
+      this.animFace();
       let H = this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy);
       let ang = ps.th * .9 + ps.tilt;
       // NieR hovers: a slow bob and a little drift of the visor
@@ -925,7 +961,8 @@
       else if (this.idleLook) look = this.idleLook;
       else if (Array.isArray(pip.look)) look = pip.look;
       else if (tgt && tgt.pos && this.t - (this.busyT || -9) < 2.5) look = atTarget(tgt.pos);
-      else if (!this.reduced && this.box && pointer.t > 0 && now() - pointer.t < 6) {
+      // the pointer, or where it was last seen (a pointer that leaves the window is not forgotten)
+      else if (!this.reduced && this.box && pointer.t > 0) {
         // the pointer, in stage units
         const m = this.map || { k: 1, ox: 0, oy: 0 }, px = (pointer.x - this.box.left - m.ox) / m.k, py = (pointer.y - this.box.top - m.oy) / m.k;
         const vx = px - hc[0], vy = py - hc[1], l = Math.hypot(vx, vy) || 1, k = Math.min(1, l / 120);

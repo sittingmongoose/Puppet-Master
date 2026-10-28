@@ -27,9 +27,11 @@ The control is you. Pip hangs from it, and every choice you make lowers somethin
 - **It is physics, not keyframes.** Pip is a pendulum on the hand: when the hand moves, Pip swings
   and settles, and both strings are solved every frame from the screw eyes on the bar to the eyes on
   its head (the same solver as the logo). Every prop hangs on its own string and swings too.
-- **Pip is alive between moments.** It breathes, its eyes follow your pointer, it turns to whatever
-  you point at, and now and then it fidgets: looks up at the bar, kicks into a little swing, wiggles
-  or glances round. It only wakes on the Welcome screen when you really arrive (a key, or the pointer
+- **Pip is alive between moments.** It breathes, its eyes follow your pointer (and stay on where it was
+  last seen when it leaves the window), it turns to whatever you point at, and now and then it fidgets:
+  kicks into a little swing or wiggles with a wink (before it has seen a pointer, it also looks up at the
+  bar or glances round). Its faces change like a blink: the old one closes as the new one opens. Three
+  thinking dots, NieR's three squares and sleeping eyes stay still rather than follow the pointer. It only wakes on the Welcome screen when you really arrive (a key, or the pointer
   travelling), not when the page loads under a resting pointer.
 - **Pip talks.** Every line is typed into its bubble at the pace Pip's voice says it (see Sound). The
   bubble takes the whole line's size first and the letters arrive in place; a line that changes faster
@@ -85,7 +87,8 @@ a rolling bar, a vignette and the glass's sheen. The tube refreshes in steps (20
 phosphor holds the last frames of Pip while it moves. It powers on with the classic line-then-picture
 and switches off to a line and a dot when the window closes.
 
-Retro Light is the same machine's printout, so it has no screen at all: a sheet of green-bar continuous
+Retro Light is the same machine's printout, so it has no screen at all, and it moves like paper: ten
+frames a second (a flipbook of printouts, half Retro Dark's rate), the chapter rail too: a sheet of green-bar continuous
 form rises out of the printer at the foot of the stage, held to the platen by the bail bar, with the
 print head riding the line it prints. Opening the window feeds the paper in; a chapter change feeds it
 up a page; closing it tears it off.
