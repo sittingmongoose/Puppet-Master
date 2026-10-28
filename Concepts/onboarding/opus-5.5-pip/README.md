@@ -25,12 +25,16 @@ The control is you. Pip hangs from it, and every choice you make lowers somethin
 - **Pip talks.** Every line is typed into its bubble at the pace Pip's voice says it (see Sound). The
   bubble takes the whole line's size first and the letters arrive in place; a line that changes faster
   than Pip could say it (a name being typed) waits until things are still, then types.
-- **Pip gives tips.** Each screen has a tip (from PMConcept7's own explanations where it has them). Once
-  Pip has said its line, it writes the tip out, with a small "idea" chime, in the look's material: a
-  stitched paper note under Pip in Friendly, a frosted one in Glass, a dashed annotation in Basic, a
-  terminal box in Retro Dark, a printed NOTE in Retro Light, and in NieR a TIPS box at the top right
-  (its dialogue box already holds the foot of the stage). When the stage is only a strip (narrow
-  windows), the tip sits in the form under the screen's introduction.
+- **Ask Pip with ?.** Every choice has a ? at its right edge (a look tile in its corner; Light or dark,
+  Project name and Free Models beside their label). Clicking it asks Pip about that one choice: Pip
+  previews it, glances at its note and writes the answer out, with a small "idea" chime, in the look's
+  material: a stitched paper note under Pip in Friendly, a frosted one in Glass, a dashed annotation in
+  Basic, a terminal box in Retro Dark, a printed NOTE in Retro Light, and in NieR a TIPS box at the top
+  right (its dialogue box already holds the foot of the stage). When the stage is only a strip (narrow
+  windows), the answer opens in the form under that choice. Clicking the ? again, Esc, the note's close
+  button or moving on puts it away, and focus returns to the ?. The answers are PMConcept7's own
+  explanations, in its words where it has them (what a Server is, Git and Jujutsu, Tailscale's private
+  name, "Claude plan, not the Anthropic API", the keychain). Nothing shows unless asked.
 
 ## The screens
 
@@ -88,6 +92,17 @@ marker and a leader line labelled at its elbow, and on a chapter change QUEST UP
 which two bands of the whole picture slip sideways for a moment. The window
 follows: the menu cursor square slides in beside whatever you point at, the chosen row fills from the
 left, and screens wipe in behind an ink bar.
+
+## Three ideas to try
+
+A review suggested three changes. They are built but off: turn them on with the Ideas buttons in the
+concept toolbar, or `?try=bar,eyes,mood` (any of the three).
+
+| Idea | What changes |
+|---|---|
+| Prop bars | Each prop hangs from its own small control (a copy of Pip's, in the look's material) a hand's width above it, instead of on strings from above the stage |
+| NieR eyes | At rest NieR Pip's blindfold shows two eyes, which blink, instead of a blank band |
+| Hover faces | While Pip previews a choice it wears the face of what it says (happy, curious), instead of its "considering" face |
 
 ## The chapter rail
 

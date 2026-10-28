@@ -97,6 +97,8 @@
       this.theme = (opts && opts.theme) || 'friendly-dark';
       this.layoutName = (opts && opts.layout) || 'portrait';
       this.reduced = !!(opts && opts.reduced);
+      // reviewers' ideas, shown on request: bar (each prop on its own small control), eyes (NieR Pip's eyes on its visor)
+      this.ideas = Object.assign({ bar: false, eyes: false }, opts && opts.ideas);
       this.props = new Map();
       this.fx = [];
       this.ghosts = [];
@@ -163,6 +165,7 @@
       this.gTrail = el('g', { class: 'pst-trail' }, svg);
       this.gActors = el('g', { id: `${this.id}act` }, svg);
       this.gPropStr = el('g', { class: 'pst-pstr' }, this.gActors);
+      this.gPropBar = el('g', { class: 'pst-pbars' }, this.gActors);
       this.gProps = el('g', { class: 'pst-props' }, this.gActors);
       this.gPip = el('g', { class: 'pst-pip' }, this.gActors);
       // NieR's chapter glitch: two bands of the whole picture, backdrop and all, slip sideways for a moment
@@ -185,8 +188,12 @@
       this.hudHtml();
       // Pip's tip: a note hanging under Pip, in the look's own material (NieR files it in a TIPS box in its HUD)
       this.tipBox = null; this.tipXY = null;
-      if (w.fam !== 'nier') this.tipBox = div('pst-tip', this.overlay, `<b class="pst-tip-k">${this.tube === 'phosphor' ? 'TIP:' : this.tube ? 'NOTE' : { friendly: "Pip's tip", glass: 'Tip', basic: 'Note' }[w.fam]}</b><span class="pst-tip-t"></span>`);
-      if (this.tipText) this.showTip(true);
+      const kl = w.fam === 'nier' ? '◆ TIPS' : this.tube === 'phosphor' ? 'HELP' : this.tube ? 'NOTE' : { friendly: "Pip's tip", glass: 'Tip', basic: 'Note' }[w.fam];
+      const tipHtml = `<b class="pst-tip-k"><span class="pst-tip-kl">${kl}</span><button type="button" class="pst-tip-x" data-help-close aria-label="Close tip">×</button></b><span class="pst-tip-h"></span><span class="pst-tip-t" aria-hidden="true"></span><span class="pst-tip-sr"></span>`;
+      if (w.fam !== 'nier') this.tipBox = div('pst-tip', this.overlay, tipHtml);
+      else { const nt = this.hudEl.querySelector('.pst-ntip'); nt.innerHTML = tipHtml; }
+      const te = this.tipEl(); if (te) te.setAttribute('role', 'status');
+      if (this.tipData) this.showTip(true);
       this.buildPip();
       // re-create the props that were on stage, in the new material
       const keep = [...this.props.values()];
@@ -207,7 +214,7 @@
       if (f === 'nier') h = `<div class="pst-nhud"><div class="pst-ntop"><span>PIP // UNIT P-01</span><span class="pst-decode" aria-hidden="true"></span></div>
         <div class="pst-nscan" aria-hidden="true"><i></i><span class="pst-nscan-l">SCAN</span></div>
         <div class="pst-nquest" aria-hidden="true"><b>QUEST UPDATED</b><span class="pst-nquest-t"></span></div>
-        <div class="pst-ntip"><b class="pst-tip-k">TIPS</b><span class="pst-tip-t"></span></div>
+        <div class="pst-ntip"></div>
         <div class="pst-nlab"><span class="pst-nlab-k">■ <b class="pst-target">STANDBY</b></span><span class="pst-ncoord">MAP 1:1</span></div><i class="pst-nb tl"></i><i class="pst-nb tr"></i><i class="pst-nb bl"></i><i class="pst-nb br"></i></div>`;
       const wrap = div('pst-hudhtml', this.overlay, h);
       this.hudEl = wrap;
@@ -253,9 +260,18 @@
       this.curMood = mood;
       const g = K.GEO.full, th = this.pipTh(this.pipTheme);
       const p = this.id + 'h' + (++this.hseq || (this.hseq = 1));
+      this.blinkY = 44;
       if (th.nier) {
-        const parts = K.pipNier(g, th, mood === 'dots' ? 'think' : mood === 'wink' ? 'happy' : mood, { face: 'pf', dot: 'pst-dot' }, { face: p + 'f' }, { parts: true });
+        const nm = mood === 'dots' ? 'think' : mood === 'wink' ? 'happy' : mood;
+        const parts = K.pipNier(g, th, nm, { face: 'pf', dot: 'pst-dot' }, { face: p + 'f' }, { parts: true });
         this.gHead.innerHTML = parts.headInner;
+        // the eyes idea: at rest the visor is not blank, two eyes show through it (and blink); other moods keep their HUD marks
+        const f = this.gHead.querySelector('.pf');
+        if (this.ideas.eyes && f && nm === 'idle') {
+          const e = (x) => `<rect x="${R(x - 1.35)}" y="38.2" width="2.7" height="4.8" rx=".8" fill="${th.paper}"/>`;
+          f.insertAdjacentHTML('beforeend', `<g class="pb">${e(25.5) + e(38.5)}</g>`);
+          this.blinkY = 40.6;
+        }
       } else {
         const hd = K.pipHead(g, th, mood, { face: p + 'f', grad: p + 'g', clip: p + 'c', rim: p + 'r', glow: p + 'w', spec: p + 's', drop: p + 'd' }, { face: 'pf', eyes: 'pe', blink: 'pb', dot: 'pst-dot' }, {});
         this.gHead.innerHTML = (hd.defs ? `<defs>${hd.defs}</defs>` : '') + K.eyeletRings(g, th, {}) + hd.body;
@@ -358,7 +374,7 @@
       (spec.props || []).forEach((ps) => {
         ids.add(ps.id);
         const pr = this.props.get(ps.id);
-        if (!pr || pr.state === 'out') { if (pr) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(ps.id); } this.addProp(ps); }
+        if (!pr || pr.state === 'out') { if (pr) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); if (pr.bar) pr.bar.remove(); this.props.delete(ps.id); } this.addProp(ps); }
         else {
           const moved = JSON.stringify(this.slotXY(ps)) !== JSON.stringify(this.slotXY(pr.spec));
           const wasPreview = pr.spec.preview;
@@ -514,44 +530,63 @@
     }
 
     /* ------------------------------------------------------------- tips */
-    // the screen's tip: Pip writes it out once it has said its line (and only when awake)
-    tip(text) {
-      clearTimeout(this.tipT); clearInterval(this.tipW);
-      if ((text || '') === this.tipText) return;
-      this.tipText = text || '';
-      const el = this.tipEl(); if (el) el.classList.remove('on', 'typing');
-      if (!text) return;
-      this.tipT = setTimeout(() => this.showTip(), this.reduced ? 300 : 1300);
+    // a tip Pip writes out when asked (the ? beside a choice): t = { title, text }, or null to put it away
+    tip(t, instant) {
+      const key = t ? t.title + '\n' + t.text : '';
+      if (key === (this.tipKey || '')) return;
+      clearInterval(this.tipW);
+      this.tipKey = key; this.tipData = t || null; this.tipLook = 0;
+      const el = this.tipEl();
+      if (!t) { if (el) el.classList.remove('on', 'typing'); return; }
+      this.showTip(instant);
     }
     tipEl() { return this.overlay && this.overlay.querySelector('.pst-tip, .pst-ntip'); }
     showTip(instant) {
-      clearTimeout(this.tipT); clearInterval(this.tipW);
-      const el = this.tipEl(), text = this.tipText;
-      if (!el || !text) return;
-      // wait for Pip to wake and to finish what it is saying
-      const left = (this.sayAt || 0) + (this.sayMs || 0) + 350 - performance.now();
-      if (!instant && (this.sleepZ || left > 0)) { this.tipT = setTimeout(() => this.showTip(), this.sleepZ ? 700 : left); return; }
-      const t = el.querySelector('.pst-tip-t');
-      t.innerHTML = '<span class="pst-bt-on"></span><span class="pst-bt-off"></span>';
-      const on = t.firstChild, off = t.lastChild;
+      clearInterval(this.tipW);
+      const el = this.tipEl(), t = this.tipData;
+      if (!el || !t) return;
+      // NieR: QUEST UPDATED gives way to a tip asked for
+      const q = this.hudEl && this.hudEl.querySelector('.pst-nquest'); if (q) q.classList.remove('on');
+      el.querySelector('.pst-tip-h').textContent = t.title;
+      el.querySelector('.pst-tip-sr').textContent = t.text;
+      const tx = el.querySelector('.pst-tip-t');
+      tx.innerHTML = '<span class="pst-bt-on"></span><span class="pst-bt-off"></span>';
+      const on = tx.firstChild, off = tx.lastChild;
+      this.tipRect = null;
+      if (instant || this.reduced) { el.classList.add('on'); el.classList.remove('typing'); on.textContent = t.text; return; }
       el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
-      if (instant || this.reduced) { on.textContent = text; el.classList.remove('typing'); return; }
       this.sfx('tip');
-      let i = 0; off.textContent = text; el.classList.add('typing');
-      const t0 = performance.now(), cps = this.tube ? 60 : 44;
+      // Pip is pleased to be asked, and reads along while it writes
+      const cps = this.tube ? 60 : this.famName === 'nier' ? 55 : 44;
+      this.tipLook = this.t + Math.min(3, t.text.length / cps);
+      this.feel(this.famName === 'nier' ? 'alert' : 'happy', 900); this.nod(); this.busy();
+      let i = 0; off.textContent = t.text; el.classList.add('typing');
+      const t0 = performance.now();
       this.tipW = setInterval(() => {
-        const n = Math.min(text.length, Math.floor((performance.now() - t0) / 1000 * cps) + 1);
-        if (n !== i) { i = n; on.textContent = text.slice(0, i); off.textContent = text.slice(i); }
-        if (i >= text.length) { clearInterval(this.tipW); el.classList.remove('typing'); }
+        const n = Math.min(t.text.length, Math.floor((performance.now() - t0) / 1000 * cps) + 1);
+        if (n !== i) { i = n; on.textContent = t.text.slice(0, i); off.textContent = t.text.slice(i); }
+        if (i >= t.text.length) { clearInterval(this.tipW); el.classList.remove('typing'); }
       }, 16);
+    }
+    // where the note is, in stage units (for Pip's eyes)
+    tipAt() {
+      const el = this.tipEl(), m = this.map;
+      if (!el || !m || !this.box || !el.classList.contains('on')) return null;
+      let x, y;
+      if (el === this.tipBox && this.tipXY) { x = this.tipXY[0] + 40; y = this.tipXY[1] + 24; }
+      else { const r = this.tipRect || (this.tipRect = el.getBoundingClientRect()); x = r.left - this.box.left + 40; y = r.top - this.box.top + 24; }
+      return [(x - m.ox) / m.k, (y - m.oy) / m.k];
     }
     // the note hangs under Pip and drifts after it, slowly enough to read while Pip sways
     placeTip(H, ang, dt) {
       const el = this.tipBox;
-      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') return;
+      // it holds still while the pointer is on it, so its close button is easy to hit
+      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait' || el.matches(':hover')) return;
       const p = this.toScreen(this.headXf([32, 63], H, ang, 1, 1)), w = el.offsetWidth || 180, h = el.offsetHeight || 40, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
-      // under Pip, kept to the left of the stage where the props do not hang
-      const goal = [clamp(p[0] - w * .4, 8, Math.max(8, Math.min(bx * .62 - w, bx - w - 10))), clamp(p[1] + 12, 8, by - h - 8)];
+      // under Pip, kept to the left of the stage where the props do not hang, and above a tube's command line
+      // when there is room (never over Pip's own face)
+      const foot = this.tube === 'teletype' ? 74 : this.tube ? 50 : 8;
+      const goal = [clamp(p[0] - w * .4, 8, Math.max(8, Math.min(bx * .62 - w, bx - w - 10))), Math.max(p[1] + 4, clamp(p[1] + 12, 8, by - h - foot))];
       if (!this.tipXY || this.reduced) this.tipXY = goal.slice();
       const k = Math.min(1, (dt || .016) * 5); this.tipXY[0] += (goal[0] - this.tipXY[0]) * k; this.tipXY[1] += (goal[1] - this.tipXY[1]) * k;
       el.style.transform = `translate(${R(this.tipXY[0])}px, ${R(this.tipXY[1])}px)`;
@@ -667,6 +702,8 @@
       if (!q) return;
       q.querySelector('.pst-nquest-t').textContent = name.toUpperCase();
       q.classList.remove('on'); void q.offsetWidth; q.classList.add('on');
+      // and it lets go once it has wiped out again (it used to stay "on", which hid every tip after the first chapter)
+      clearTimeout(this.questT); this.questT = setTimeout(() => q.classList.remove('on'), 2900);
     }
 
     /* ----------------------------------------------------------- effects */
@@ -835,7 +872,7 @@
         }
         if (!pr.settled && pr.state !== 'out' && Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30) this.settle(pr);
         if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); }
-        if (pr.state === 'out' && pr.len < 0 && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(id); }
+        if (pr.state === 'out' && pr.len < 0 && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); if (pr.bar) pr.bar.remove(); this.props.delete(id); }
       });
       // particles
       for (let i = this.fx.length - 1; i >= 0; i--) {
@@ -878,7 +915,9 @@
       const tgt = pip.look && this.props.get(pip.look);
       const hc = this.headCentre();
       const atTarget = (p) => { const vx = p[0] - hc[0], vy = p[1] - hc[1], l = Math.hypot(vx, vy) || 1; return [vx / l * 2.2, vy / l * 1.5]; };
-      if (this.idleLook) look = this.idleLook;
+      const tipP = this.tipLook > this.t && !this.reduced ? this.tipAt() : null;
+      if (tipP) look = atTarget(tipP);
+      else if (this.idleLook) look = this.idleLook;
       else if (Array.isArray(pip.look)) look = pip.look;
       else if (tgt && tgt.pos && this.t - (this.busyT || -9) < 2.5) look = atTarget(tgt.pos);
       else if (!this.reduced && this.box && pointer.t > 0 && now() - pointer.t < 6) {
@@ -893,7 +932,7 @@
       if (this.blinkEl && !this.reduced) {
         if (this.t > ps.nextBlink) { ps.blinkAt = this.t; ps.nextBlink = this.t + 2.2 + Math.random() * 3.4; }
         const b = ps.blinkAt != null ? this.t - ps.blinkAt : 9, k = b < .16 ? Math.max(.1, Math.abs(1 - b / .08)) : 1;
-        this.blinkEl.setAttribute('transform', `translate(0 44) scale(1 ${R(k)}) translate(0 -44)`);
+        this.blinkEl.setAttribute('transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
       }
       // props
       this.props.forEach((pr) => {
@@ -908,9 +947,20 @@
         // once a block is set down its strings are unhooked: they go slack, lift away and fade
         const off = pr.spec.ground && pr.landed ? clamp((this.t - pr.landT) / .55, 0, 1) : 0;
         const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
+        // the bar idea: each prop hangs from its own small control, a hand's width above it, in the look's own
+        // material (a copy of Pip's); its strings run up to that bar's screw eyes, and it swings with the prop
+        let ends = null;
+        if (this.ideas.bar) {
+          const k = pr.spec.scale || 1, bs = Lay.s * .42 * k, up = rot([0, -64 * Lay.propScale * k], pr.a);
+          const c = [hang[0] + up[0], hang[1] + up[1] - ease(off) * 70];
+          if (!pr.bar) { pr.bar = el('g', { class: 'pst-pbar' }, this.gPropBar); pr.bar.innerHTML = this.gCtl.innerHTML; }
+          pr.bar.setAttribute('transform', `translate(${R(c[0])} ${R(c[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(bs)}) translate(-32 -14.5)`);
+          pr.bar.setAttribute('opacity', R(strOp));
+          ends = this.barPts.map((q) => { const v = rot([(q[0] - 32) * bs, (q[1] - 14.5) * bs], pr.a); return [c[0] + v[0], c[1] + v[1]]; });
+        } else if (pr.bar) { pr.bar.remove(); pr.bar = null; }
         pr.ties.forEach((t, i) => {
           const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
-          const top = [pr.ax + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
+          const top = !ends ? [pr.ax + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200] : pr.ties.length === 1 ? [(ends[0][0] + ends[1][0]) / 2, (ends[0][1] + ends[1][1]) / 2] : ends[Math.round(i / (pr.ties.length - 1))];
           pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
           pr.strs[i].setAttribute('opacity', R(strOp));
           pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
@@ -1059,6 +1109,7 @@
       this.layoutName = name; this.ps = null;
       this.build(); this.direct(this.spec);
     }
+    setIdeas(ideas) { this.ideas = Object.assign({}, this.ideas, ideas); this.renderHead(this.curMood || 'idle', true); }
     setReduced(r) { this.reduced = !!r; this.root.dataset.reduced = r ? '1' : '0'; const S = snd(); if (S && S.setReduced) S.setReduced(this.reduced); }
     // something on the screen is being pointed at: Pip turns to it rather than to the pointer
     busy() { this.busyT = this.t; }
@@ -1080,7 +1131,7 @@
       };
       flip();
     }
-    destroy() { if (this.off) this.off(); clearTimeout(this.tipT); clearInterval(this.tipW); cancelAnimationFrame(this.raf); this.ro.disconnect(); clearTimeout(this.wakeT); clearInterval(this.typeT); clearInterval(this.decT); clearInterval(this.cmdT); clearInterval(this.bootT); this.root.innerHTML = ''; }
+    destroy() { if (this.off) this.off(); clearTimeout(this.questT); clearInterval(this.tipW); cancelAnimationFrame(this.raf); this.ro.disconnect(); clearTimeout(this.wakeT); clearInterval(this.typeT); clearInterval(this.decT); clearInterval(this.cmdT); clearInterval(this.bootT); this.root.innerHTML = ''; }
   }
 
   G.PipStage = { Stage, LAYOUTS, FAM };

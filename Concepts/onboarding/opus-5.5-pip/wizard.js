@@ -13,7 +13,9 @@
     theme: 'friendly-dark', screen: 'welcome', history: [], hover: null,
     where: 'this', begin: 'new', name: 'Book club website', vcs: 'git', online: false, backup: null, away: 'home',
     ai: { claude: 'checking', codex: 'checking', antigravity: 'checking', cursor: 'checking' },
-    phase: 0, reduced: false, width: 'full', open: true, rev: 0
+    phase: 0, reduced: false, width: 'full', open: true, rev: 0, help: null,
+    // three reviewers' ideas, off unless asked for (?try=bar,eyes,mood or the Ideas buttons)
+    ideas: { bar: false, eyes: false, mood: false }
   };
   try {
     const q = new URLSearchParams(location.search);
@@ -21,6 +23,7 @@
     if (q.get('screen')) S.screen = q.get('screen');
     if (q.get('reduced') === '1') S.reduced = true;
     if (/^(full|laptop|narrow|phone)$/.test(q.get('width') || '')) S.width = q.get('width');
+    (q.get('try') || '').split(',').forEach((k) => { if (k in S.ideas) S.ideas[k] = true; });
   } catch (e) { /* file:// */ }
   const root = document.documentElement;
   if (root.getAttribute('data-reduced-motion') === '1') S.reduced = true;
@@ -49,6 +52,8 @@
   /* -------------------------------------------------------------- screens */
   // Each screen: chapter, words, a body, the footer, and scene(S, hover) for the stage.
   const LOOK_LINES = { friendly: 'Soft and cosy. I like it.', glass: 'Ooh, shiny. Am I glass now?', basic: 'Clean and calm. Very tidy.', retro: 'A real monitor! I glow now.' };
+  // the hover-faces idea: the face each preview line is said with
+  const HOVER_MOOD = { 'Ooh, shiny. Am I glass now?': 'alert', 'NieR? I can do stoic.': 'idle', "Bring it in. I'll learn my way round.": 'alert', "Home it is. I'll keep the lights on.": 'idle' };
   const SCREENS = {
     welcome: {
       chapter: 'welcome', eyebrow: 'Welcome', title: 'Welcome to Puppet Master',
@@ -65,12 +70,12 @@
         const fam = famOf(S.theme), sch = schemeOf(S.theme), nier = fam === 'nier';
         return `<div class="ob-looks" role="radiogroup" aria-label="Look">${FAMS.map((f) => {
           const t = f + '-' + sch, on = !nier && f === fam;
-          return `<button type="button" class="ob-look" role="radio" aria-checked="${on}" data-look="${f}" data-hover="look:${f}">
+          return `<div class="ob-opt"><button type="button" class="ob-look" role="radio" aria-checked="${on}" data-look="${f}" data-hover="look:${f}">
             <span class="ob-look-art">${L.svg({ theme: t, form: 'tile', px: 64, decorative: true })}</span>
-            <span class="ob-look-t"><b>${f[0].toUpperCase() + f.slice(1)}</b><small>${{ friendly: 'Felt diorama · warm and playful', glass: 'Liquid glass · bright and airy', basic: 'Clean diagram · calm and precise', retro: 'Terminal · phosphor and paper' }[f]}</small></span></button>`;
+            <span class="ob-look-t"><b>${f[0].toUpperCase() + f.slice(1)}</b><small>${{ friendly: 'Felt diorama · warm and playful', glass: 'Liquid glass · bright and airy', basic: 'Clean diagram · calm and precise', retro: 'Terminal · phosphor and paper' }[f]}</small></span></button>${qb('look:' + f, true)}</div>`;
         }).join('')}</div>
-        <div class="ob-row ob-row-tight"><span class="ob-label">Light or dark</span><div class="ob-seg" role="radiogroup" aria-label="Light or dark">${['light', 'dark'].map((m) => `<button type="button" role="radio" aria-checked="${sch === m}" data-scheme="${m}">${m[0].toUpperCase() + m.slice(1)}</button>`).join('')}</div></div>
-        <label class="ob-check" data-hover="look:nier"><input type="checkbox" data-nier ${nier ? 'checked' : ''}><span class="ob-check-box"></span><span><b>NieR Mode</b><small>Ink on parchment, a YoRHa Pip that hovers like a Pod, its own sounds.</small></span></label>`;
+        <div class="ob-row ob-row-tight"><span class="ob-labq"><span class="ob-label">Light or dark</span>${qb('look:scheme')}</span><div class="ob-seg" role="radiogroup" aria-label="Light or dark">${['light', 'dark'].map((m) => `<button type="button" role="radio" aria-checked="${sch === m}" data-scheme="${m}">${m[0].toUpperCase() + m.slice(1)}</button>`).join('')}</div></div>
+        <div class="ob-opt"><label class="ob-check" data-hover="look:nier"><input type="checkbox" data-nier ${nier ? 'checked' : ''}><span class="ob-check-box"></span><span><b>NieR Mode</b><small>Ink on parchment, a YoRHa Pip that hovers like a Pod, its own sounds.</small></span></label>${qb('look:nier', true)}</div>`;
       },
       foot: { primary: ['Continue', 'next'] },
       scene: (h) => ({ chapter: 'welcome', props: [{ id: 'palette', kind: 'palette', slot: 'side' }], pip: { mood: h ? 'think' : 'idle', look: 'palette' }, say: h ? LOOK_LINES[h] || 'NieR? I can do stoic.' : 'Dress me up. It changes everything.', target: 'palette', label: 'Select look', cmd: `pip dress ${h || famOf(S.theme)}${h ? ' --try' : ''}` })
@@ -107,7 +112,7 @@
     },
     name: {
       chapter: 'project', eyebrow: 'Your Project', title: 'Name your Project', lead: "Use words you'll recognise later.",
-      body: () => `<label class="ob-field"><span class="ob-label">Project name</span><input type="text" id="obName" value="${esc(S.name)}" placeholder="Book club website" maxlength="80" autocomplete="off" spellcheck="false"></label>
+      body: () => `<div class="ob-field"><span class="ob-labq"><label class="ob-label" for="obName">Project name</label>${qb('name:field')}</span><input type="text" id="obName" value="${esc(S.name)}" placeholder="Book club website" maxlength="80" autocomplete="off" spellcheck="false"></div>
         <p class="ob-hint" id="obNameHint">${nameHint()}</p>`,
       foot: { primary: ['Continue', 'next'] },
       scene: () => {
@@ -120,11 +125,11 @@
       lead: 'Every version is saved on this computer. Online copies and backups are optional.',
       body: () => `<div class="ob-rows">
         <div class="ob-srow" data-hover="safe:history">${icon('shield')}<div><b>Every version saved on this computer</b><small>Safe History: undo any change, any time</small></div>
-          <div class="ob-seg ob-seg-sm" role="radiogroup" aria-label="Kept with">${[['git', 'Git'], ['jj', 'Jujutsu']].map(([k, t]) => `<button type="button" role="radio" aria-checked="${S.vcs === k}" data-vcs="${k}">${t}</button>`).join('')}</div></div>
+          <div class="ob-seg ob-seg-sm" role="radiogroup" aria-label="Kept with">${[['git', 'Git'], ['jj', 'Jujutsu']].map(([k, t]) => `<button type="button" role="radio" aria-checked="${S.vcs === k}" data-vcs="${k}">${t}</button>`).join('')}</div>${qb('safe:history')}</div>
         <div class="ob-srow" data-hover="safe:online">${icon('cloud')}<div><b>Online copy</b><small>Keeps a copy on a website like GitHub</small></div>
-          <div class="ob-seg ob-seg-sm" role="radiogroup" aria-label="Online copy">${[[false, 'Not now'], [true, 'GitHub']].map(([k, t]) => `<button type="button" role="radio" aria-checked="${S.online === k}" data-online="${k}">${t}</button>`).join('')}</div></div>
+          <div class="ob-seg ob-seg-sm" role="radiogroup" aria-label="Online copy">${[[false, 'Not now'], [true, 'GitHub']].map(([k, t]) => `<button type="button" role="radio" aria-checked="${S.online === k}" data-online="${k}">${t}</button>`).join('')}</div>${qb('safe:online')}</div>
         <div class="ob-srow" data-hover="safe:backup">${icon('drive')}<div><b>Backup</b><small>A full copy you can restore from</small></div>
-          <div class="ob-seg ob-seg-sm" role="radiogroup" aria-label="Backup">${[[null, 'Later'], ['nas', 'Home NAS']].map(([k, t]) => `<button type="button" role="radio" aria-checked="${S.backup === k}" data-backup="${k}">${t}</button>`).join('')}</div></div>
+          <div class="ob-seg ob-seg-sm" role="radiogroup" aria-label="Backup">${[[null, 'Later'], ['nas', 'Home NAS']].map(([k, t]) => `<button type="button" role="radio" aria-checked="${S.backup === k}" data-backup="${k}">${t}</button>`).join('')}</div>${qb('safe:backup')}</div>
       </div>`,
       foot: { primary: ['Continue', 'next'] },
       scene: (h) => {
@@ -172,7 +177,7 @@
     ai: {
       chapter: 'ai', eyebrow: 'AI', title: 'Choose what powers Puppet Master',
       lead: 'Use an AI subscription or API account you already have. You can add more later.',
-      body: () => `<div class="ob-providers">${PROVIDERS.map(([k, n, sub]) => `<div class="ob-prov" data-state="${S.ai[k]}" data-hover="ai:${k}"><span class="ob-prov-ic">${n[0]}</span><div><b>${n}</b><small>${sub}</small></div><span class="ob-prov-s">${S.ai[k] === 'ready' ? icon('check', 15) + 'Ready' : S.ai[k] === 'off' ? 'Not signed in' : '<i class="ob-spin"></i>Checking…'}</span></div>`).join('')}</div>
+      body: () => `<div class="ob-providers">${PROVIDERS.map(([k, n, sub]) => `<div class="ob-prov" data-state="${S.ai[k]}" data-hover="ai:${k}"><span class="ob-prov-ic">${n[0]}</span><div><b>${n}</b><small>${sub}</small></div><span class="ob-prov-s">${S.ai[k] === 'ready' ? icon('check', 15) + 'Ready' : S.ai[k] === 'off' ? 'Not signed in' : '<i class="ob-spin"></i>Checking…'}</span>${qb('ai:' + k)}</div>`).join('')}</div>
         <div class="ob-links"><button type="button" class="ob-link">See all providers</button><button type="button" class="ob-link" data-act="noai">I don't have any of these</button></div>`,
       foot: { secondary: ['Skip for now', 'next'], primary: ['Continue', 'next'] },
       scene: () => {
@@ -184,7 +189,7 @@
     },
     ready: {
       chapter: 'ready', eyebrow: 'Ready', title: "You're ready", lead: () => `${esc(S.name.trim() || 'Your Project')} is set up.`,
-      body: () => `<div class="ob-summary">${[['Project', S.name.trim() || 'Not yet'], ['AI', PROVIDERS.filter(([k]) => S.ai[k] === 'ready').map(([, n]) => n).join(', ') || 'None yet'], ['Free Models', 'Not set up'], ['Backup', S.backup ? 'Home NAS' : 'Not set up']].map(([k, v]) => `<div><span>${k}</span><b>${esc(v)}</b></div>`).join('')}</div>
+      body: () => `<div class="ob-summary">${[['Project', S.name.trim() || 'Not yet'], ['AI', PROVIDERS.filter(([k]) => S.ai[k] === 'ready').map(([, n]) => n).join(', ') || 'None yet'], ['Free Models', 'Not set up', 'ready:free'], ['Backup', S.backup ? 'Home NAS' : 'Not set up']].map(([k, v, h]) => `<div><span class="ob-labq">${k}${h ? qb(h) : ''}</span><b>${esc(v)}</b></div>`).join('')}</div>
         <button type="button" class="ob-tour">${icon('play', 18)}<span><b>Take the Guided Tour</b><small>About 4 minutes. Uses a practice example; nothing changes.</small></span></button>
         <p class="ob-meet"><b>Meet the crew.</b> When Puppet Master runs a Plan, every agent is a Pip in its role's hat: the Coordinator's crown, the Builder's hard hat, the Reviewer's glasses.</p>`,
       foot: () => { const n = S.name.trim(); return { primary: [n ? `Open ${n.length > 22 ? n.slice(0, 21) + '…' : n}` : 'Enter Puppet Master', 'close'] }; },
@@ -197,20 +202,35 @@
       }
     }
   };
-  // Pip's tip for each screen (PMConcept7's own explanations where it has them, in the same plain words)
-  const TIPS = {
-    welcome: 'You can close this window any time. Your choices are kept, and setup picks up where you left off.',
-    look: "Light or dark starts from your computer's setting. You can change the look any time.",
-    where: 'This computer is the easiest start. You can add other computers, or a Server, later.',
-    begin: 'Already have work? Puppet Master can bring in a folder, a Project stored online, or files from another device.',
-    name: 'Its files go in a folder with this name. You can choose where that folder lives.',
-    safe: 'Git is the most common way to keep versions. Jujutsu is built on Git and makes mistakes easier to undo.',
-    away: 'Tailscale is built into Puppet Master: sign in once. You can change this any time.',
-    review: 'Nothing has been made yet. Edit on any line takes you back to change it.',
-    creating: 'You can close the window: creating keeps going. The folder and Safe History come first.',
-    ai: 'API keys are kept in your system keychain and never shown again. You can add more AI later.',
-    ready: 'Need help later? Ask Assistant Chat for Teacher, or open Settings for the full controls.'
+  /* What each ? says: one choice at a time, asked for, in PMConcept7's own explanations (its words where it has them).
+     [title, text]; the keys are the choices' own hover keys, plus three that are not choices. */
+  const HELP = {
+    'look:friendly': ['Friendly', 'Warm colours, rounded shapes and playful movement. The window takes each chapter\'s colour as you go.'],
+    'look:glass': ['Glass', 'Frosted glass over soft, moving light. Settings choose how see-through the panels are; text always stays readable.'],
+    'look:basic': ['Basic', 'A clean diagram: plain shapes, calm and precise movement, quiet sounds. The calmest of the four.'],
+    'look:retro': ['Retro', 'A terminal. Dark is a glowing green screen; Light is printed on paper by a teletype.'],
+    'look:nier': ['NieR Mode', 'An ink-and-parchment look inspired by NieR: Automata. It paints over the look you pick; turn it off any time.'],
+    'look:scheme': ['Light or dark', "Starts from your computer's setting. Every look has a light and a dark version."],
+    'where:this': ['This computer', 'Puppet Master does the work here and everything stays on this computer. You can add other computers, or a Server, later.'],
+    'where:connect': ['Connect this device', 'Already use Puppet Master on another computer? This device joins it and uses its Projects and AI. You confirm it is really you, once.'],
+    'where:server': ['Server', 'The computer that does the work is called a Server. One that stays on, like a NAS, can keep working while your laptop sleeps.'],
+    'begin:new': ['New Project', 'Puppet Master makes an empty folder for it and saves every version from the very first file.'],
+    'begin:existing': ['Existing work', 'A folder on this computer, a Project stored online like GitHub, or files on another device. Puppet Master reads it but changes nothing until you create the Project.'],
+    'begin:restore': ['Restore', 'Brings a Project back from one of your backups.'],
+    'name:field': ['Project name', 'Its folder gets this name, and you can choose where the folder is kept. Renaming the Project later leaves the folder as it is.'],
+    'safe:history': ['Git or Jujutsu', 'Both save every version of your Project on this computer, and neither needs an account. Git is the most common. Jujutsu is newer, built on Git, and makes mistakes easier to undo.'],
+    'safe:online': ['Online copy', 'A private copy on a website like GitHub, free for private Projects. Puppet Master only asks for access to the Project you choose.'],
+    'safe:backup': ['Backup', 'A full copy you can restore from, kept somewhere else: a Home NAS over your home network, Google Drive, OneDrive, or another server.'],
+    'away:home': ['Only at home', 'Your devices reach it on your home network, or through a VPN you already use.'],
+    'away:anywhere': ['Away from home', 'Tailscale is built into Puppet Master: sign in once, and your Project gets a private name that works from anywhere, only for your devices.'],
+    'ai:claude': ['Claude', 'Uses the Claude plan you already pay for each month. Paying as you go with the Anthropic API is a separate choice.'],
+    'ai:codex': ['ChatGPT / Codex', 'Signs in with your ChatGPT plan. An OpenAI API key works too, billed by what you use.'],
+    'ai:antigravity': ['Google Antigravity', 'Uses your Antigravity plan. The Gemini API, billed by what you use, is a separate choice.'],
+    'ai:cursor': ['Cursor', 'Connects with an API key from your Cursor dashboard. The key is kept in your system keychain and never shown again.'],
+    'ready:free': ['Free Models', 'Free options with limits, good for trying things out. Your paid accounts are always used first.']
   };
+  // the ? button; on a choice card it carries the card's hover key, so resting on it previews that choice too
+  const qb = (key, hover) => `<button type="button" class="ob-q" data-help="${key}"${hover ? ` data-hover="${key}"` : ''} aria-expanded="${S.help === key}" aria-label="About ${esc(HELP[key][0])}" title="What is this?">?</button>`;
   const PROVIDERS = [['claude', 'Claude', 'Claude plan, not the Anthropic API'], ['codex', 'ChatGPT / Codex', 'ChatGPT plan'], ['antigravity', 'Google Antigravity', 'Antigravity plan, not the Gemini API'], ['cursor', 'Cursor', 'Cursor account']];
   const phases = () => [['Making the folder', 'folder', 'a'], [`Starting Safe History with ${S.vcs === 'jj' ? 'Jujutsu' : 'Git'}`, 'history', 'b'], ...(S.online ? [['Making the online copy on GitHub', 'cloud', 'd']] : []), ...(S.away === 'anywhere' ? [['Setting up access away from home', 'globe', 'e']] : []), ['Checking everything works', 'check', 'c']];
   const reviewRows = () => [
@@ -221,8 +241,8 @@
   ];
   function nameHint() { const n = S.name.trim(); return !n ? 'Give it a name' : n.length > 60 ? 'Keep it under 60 characters' : `${icon('check', 14)} Good name`; }
   function choices(key, list) {
-    return `<div class="ob-choices" role="radiogroup">${list.map(([k, ic, t, sub, rec]) => `<button type="button" class="ob-choice" role="radio" aria-checked="${S[key] === k}" data-pick="${key}:${k}" data-hover="${key}:${k}">
-      <span class="ob-choice-ic">${icon(ic, 22)}</span><span class="ob-choice-t"><b>${t}</b><small>${sub}</small></span>${rec ? '<span class="ob-rec">Recommended</span>' : ''}<span class="ob-radio" aria-hidden="true"></span></button>`).join('')}</div>`;
+    return `<div class="ob-choices" role="radiogroup">${list.map(([k, ic, t, sub, rec]) => `<div class="ob-opt"><button type="button" class="ob-choice" role="radio" aria-checked="${S[key] === k}" data-pick="${key}:${k}" data-hover="${key}:${k}">
+      <span class="ob-choice-ic">${icon(ic, 22)}</span><span class="ob-choice-t"><b>${t}</b><small>${sub}</small></span>${rec ? '<span class="ob-rec">Recommended</span>' : ''}<span class="ob-radio" aria-hidden="true"></span></button>${qb(key + ':' + k, true)}</div>`).join('')}</div>`;
   }
 
   /* --------------------------------------------------------------- window */
@@ -317,9 +337,9 @@
     document.body.style.setProperty('--tint', (wd.chapter && wd.chapter[scr.chapter]) || '');
     const html = `<div class="ob-screen" data-screen="${S.screen}" data-dir="${dir || 0}">
       <p class="ob-eyebrow">${esc(val(scr.eyebrow))}</p><h1 class="ob-title" id="obTitle">${val(scr.title)}</h1><p class="ob-lead">${val(scr.lead)}</p>
-      ${TIPS[S.screen] ? `<p class="ob-tipline">${icon('spark', 16)}<span>${esc(TIPS[S.screen])}</span></p>` : ''}
       <div class="ob-bodyx">${scr.body()}</div></div>`;
     mainEl.innerHTML = html;
+    if (S.help) showHelp(true);
     if (famOf(S.theme) === 'retro' && dir && !S.reduced) typeTitle($('#obTitle'));
     const f = val(scr.foot) || {};
     const back = S.history.length ? `<button type="button" class="ob-btn ob-ghost ob-back" data-act="back">${icon('back', 18)}Back</button>` : '<span></span>';
@@ -345,8 +365,47 @@
     if (S.hover) { const [k, v] = S.hover.split(':'); hov = (k === S.screen || k === 'look' || k === 'safe' || k === 'ai') ? (S.screen === 'safe' ? S.hover : v) : null; }
     const spec = scr.scene(hov);
     spec.screen = S.screen;
+    // idea: Pip's face follows what it says while it previews a choice, instead of its "considering" face
+    if (S.ideas.mood && hov && spec.pip && spec.pip.mood === 'think') spec.pip.mood = HOVER_MOOD[spec.say] || 'happy';
     if (S.screen === 'look' && stage) stage.tryOn(hov ? (hov === 'nier' ? 'nier-' + schemeOf(S.theme) : hov + '-' + schemeOf(S.theme)) : S.theme);
     if (stage) stage.direct(spec);
+  }
+
+  /* ---------------------------------------------------------------- help */
+  /* A ? asks Pip about one choice. Pip writes the answer out where its notes go in the look (under itself, in
+     NieR's TIPS box), or in the form under that choice when the stage is only a strip. Asking again, Esc, the
+     note's close button or moving on puts it away. Asking about a choice is looking at it: Pip previews it. */
+  function setHelp(key, btn) {
+    S.help = key && HELP[key] ? key : null;
+    $$('.ob-q', mainEl).forEach((q) => q.setAttribute('aria-expanded', String(q.dataset.help === S.help)));
+    showHelp();
+    const host = S.help && btn && btn.closest('[data-hover]'), hk = host && host.dataset.hover;
+    if (hk && hk !== S.hover) { clearInterval(hv.poll); clearTimeout(hv.leaveT); hv.want = hk; setHover(hk); }
+  }
+  function showHelp(instant) {
+    const h = S.help && HELP[S.help], onStage = (S.layout || 'portrait') === 'portrait';
+    if (stage) stage.tip(h && onStage ? { title: h[0], text: h[1] } : null, instant);
+    clearInterval(showHelp.t);
+    $$('.ob-tipline', mainEl).forEach((n) => n.remove());
+    const q = h && !onStage && $(`.ob-q[data-help="${S.help}"]`, mainEl);
+    if (!q) return;
+    // under its own row (under the whole grid where the rows are tiles side by side)
+    const at = q.closest('.ob-looks, .ob-summary') || q.closest('.ob-opt, .ob-srow, .ob-prov, .ob-row, .ob-field') || q;
+    const note = document.createElement('div');
+    note.className = 'ob-tipline';
+    note.innerHTML = `<span class="ob-tipline-pip" aria-hidden="true">${L.svg({ theme: S.theme, px: 26, decorative: true })}</span><span class="ob-tipline-t"><b>${esc(h[0])}</b><span class="ob-tipline-w" aria-hidden="true"><span class="pst-bt-on"></span><span class="pst-bt-off"></span></span><span class="ob-sr">${esc(h[1])}</span></span><button type="button" class="ob-tipline-x" data-help-close aria-label="Close">${icon('close', 14)}</button>`;
+    at.after(note);
+    const on = note.querySelector('.pst-bt-on'), off = note.querySelector('.pst-bt-off'), text = h[1];
+    if (instant || S.reduced) { on.textContent = text; return; }
+    sfx('tip');
+    // written out at the pace Pip writes its notes on the stage
+    const t0 = performance.now(), cps = famOf(S.theme) === 'retro' ? 60 : 44;
+    off.textContent = text; note.classList.add('typing');
+    showHelp.t = setInterval(() => {
+      const n = Math.min(text.length, Math.floor((performance.now() - t0) / 1000 * cps) + 1);
+      on.textContent = text.slice(0, n); off.textContent = text.slice(n);
+      if (n >= text.length) { clearInterval(showHelp.t); note.classList.remove('typing'); }
+    }, 16);
   }
 
   /* ----------------------------------------------------------------- flow */
@@ -358,11 +417,11 @@
     const from = S.screen;
     clearTimers();
     if (!(opts && opts.back) && from !== screen) S.history.push(from);
-    S.screen = screen; S.hover = null;
+    S.screen = screen; S.hover = null; S.help = null;
     clearInterval(hv.poll); clearTimeout(hv.leaveT); hv.want = null;
     if (from !== screen) sfx(opts && opts.back ? 'back' : 'next', { chapter: CHAPTERS.findIndex(([c]) => c === SCREENS[screen].chapter) });
     renderScreen(opts && opts.back ? -1 : 1);
-    if (stage) stage.tip(TIPS[screen]);
+    showHelp();
     enter(screen);
     if (stage && !(opts && opts.back) && from !== screen) stage.feel('happy', 600);
   }
@@ -391,6 +450,8 @@
   document.addEventListener('click', (e) => {
     const b = e.target.closest('button, [data-hover]');
     if (!b) return;
+    if (b.dataset.help) { setHelp(b.dataset.help === S.help ? null : b.dataset.help, b); return; }
+    if (b.dataset.helpClose != null) { const k = S.help; setHelp(null); const q = k && $(`.ob-q[data-help="${k}"]`, mainEl); if (q) q.focus(); return; }
     if (b.dataset.pick) {
       const [k, v] = b.dataset.pick.split(':');
       S[k] = v; S.hover = null; renderScreen(0);
@@ -477,7 +538,10 @@
       return;
     }
     if (e.key === 'Enter' && !e.target.matches('button, input[type="checkbox"]')) { const p = $('.ob-primary'); if (p && !p.disabled) p.click(); }
-    if (e.key === 'Escape') setOpen(false);
+    if (e.key === 'Escape') {
+      if (S.help) { const k = S.help; setHelp(null); const q = $(`.ob-q[data-help="${k}"]`, mainEl); if (q) q.focus(); return; }
+      setOpen(false);
+    }
   });
 
   /* ------------------------------------------------------- concept controls */
@@ -492,14 +556,20 @@
   }
   function setWidth(w) {
     S.width = w; document.body.dataset.width = w;
-    $$('[data-width]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.width === w)));
-    requestAnimationFrame(() => { if (stage) { stage.setLayout(layoutFor()); S.layout = stage.layoutName; document.body.dataset.stage = S.layout; direct(); } });
+    $$('.cc [data-width]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.width === w)));
+    requestAnimationFrame(() => { if (stage) { stage.setLayout(layoutFor()); S.layout = stage.layoutName; document.body.dataset.stage = S.layout; direct(); showHelp(true); } });
   }
   function setReduced(r) {
     S.reduced = r; root.setAttribute('data-reduced-motion', r ? '1' : '0'); document.body.dataset.reduced = r ? '1' : '0';
     if (stage) stage.setReduced(r);
     const P = SND(); if (P && P.setReduced) P.setReduced(r);
     $('#reducedBtn').setAttribute('aria-pressed', String(r));
+  }
+  function setIdea(k, on) {
+    S.ideas[k] = on;
+    $$('[data-idea]').forEach((b) => b.setAttribute('aria-pressed', String(!!S.ideas[b.dataset.idea])));
+    if (stage) stage.setIdeas(S.ideas);
+    direct();
   }
   function buildControls() {
     $('#themeSel').innerHTML = THEMES10.map((t) => `<option value="${t}">${TH[t].label}</option>`).join('');
@@ -508,14 +578,16 @@
     $('#screenSel').addEventListener('change', (e) => { S.history = FLOW.slice(0, FLOW.indexOf(e.target.value)); go(e.target.value, { back: true }); });
     $('#replayBtn').addEventListener('click', () => { clearTimers(); renderScreen(0); enter(S.screen); });
     $('#reducedBtn').addEventListener('click', () => setReduced(!S.reduced));
-    $$('[data-width]').forEach((b) => b.addEventListener('click', () => setWidth(b.dataset.width)));
+    // the control bar's buttons only (body carries data-width too, and every click on the page used to land here)
+    $$('.cc [data-width]').forEach((b) => b.addEventListener('click', () => setWidth(b.dataset.width)));
+    $$('[data-idea]').forEach((b) => b.addEventListener('click', () => setIdea(b.dataset.idea, !S.ideas[b.dataset.idea])));
     new MutationObserver(() => {
       if (applyTheme.self) { applyTheme.self = false; return; }
       const t = root.getAttribute('data-theme'), r = root.getAttribute('data-reduced-motion') === '1';
       if (TH[t] && t !== S.theme) { S.theme = t; applyTheme(); renderScreen(0); }
       if (r !== S.reduced) setReduced(r);
     }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-reduced-motion'] });
-    new ResizeObserver(() => { if (stage) { const l = layoutFor(); if (l !== stage.layoutName) { stage.setLayout(l); S.layout = l; document.body.dataset.stage = l; direct(); } } }).observe(win);
+    new ResizeObserver(() => { if (stage) { const l = layoutFor(); if (l !== stage.layoutName) { stage.setLayout(l); S.layout = l; document.body.dataset.stage = l; direct(); showHelp(true); } } }).observe(win);
   }
 
   /* ----------------------------------------------------------------- boot */
@@ -523,7 +595,8 @@
   setWidth(S.width);
   applyTheme();
   setReduced(S.reduced);
-  stage = new window.PipStage.Stage(stageEl, { theme: S.theme, layout: layoutFor(), reduced: S.reduced });
+  stage = new window.PipStage.Stage(stageEl, { theme: S.theme, layout: layoutFor(), reduced: S.reduced, ideas: S.ideas });
+  $$('[data-idea]').forEach((b) => b.setAttribute('aria-pressed', String(!!S.ideas[b.dataset.idea])));
   S.layout = stage.layoutName; document.body.dataset.stage = S.layout;
   if (!SCREENS[S.screen]) S.screen = 'welcome';
   if (S.screen !== 'welcome') S.history = FLOW.slice(0, FLOW.indexOf(S.screen));
@@ -533,7 +606,6 @@
   setOpen.ready = true;
   if (sysReduced && sysReduced.addEventListener) sysReduced.addEventListener('change', (e) => setReduced(e.matches || root.getAttribute('data-reduced-motion') === '1'));
   syncSound();
-  stage.tip(TIPS[S.screen]);
   enter(S.screen);
   window.__ob = { S, go, stage: () => stage };
 })();

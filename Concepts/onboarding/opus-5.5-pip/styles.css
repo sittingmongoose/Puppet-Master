@@ -105,6 +105,7 @@ body[data-width="phone"] .ob-foot-r { gap: 4px; }
 body[data-width="phone"] .ob-btn { padding: 0 10px; font-size: 13px; height: 40px; }
 body[data-width="phone"] .ob-back { font-size: 0; gap: 0; }
 body[data-width="phone"] .ob-summary { grid-template-columns: 1fr; }
+body[data-width="phone"] .ob-looks { grid-template-columns: 1fr; }
 body[data-width="phone"] .ob-rail-l, body[data-width="phone"] .ob-rail li[data-state="now"] .ob-rail-l { display: none; }
 
 /* --------------------------------- chapter rail: a taut string Pip rides like a zip line */
@@ -146,10 +147,37 @@ body[data-fam="nier"] .ob-screen::before { content: ''; position: absolute; top:
 .ob-screen[data-dir="0"], .ob-screen[data-dir="0"]::before { animation: none !important; }
 @keyframes obIn { from { opacity: 0; transform: translateX(22px); } }
 @keyframes obInBack { from { opacity: 0; transform: translateX(-18px); } }
-/* Pip's tip, in the form, when the stage is only a strip above it */
-.ob-tipline { display: none; gap: 8px; align-items: flex-start; margin: -2px 0 16px; padding: 9px 12px; border-radius: var(--r-sm); background: color-mix(in srgb, var(--accent) 9%, transparent); color: var(--muted); font-size: 13px; line-height: 1.45; }
-.ob-tipline .ob-ic { flex: none; margin-top: 1px; color: var(--accent); }
-body[data-stage="banner"] .ob-tipline, body[data-stage="compact"] .ob-tipline { display: flex; }
+/* the ? beside a choice asks Pip about it. On a card it keeps the card's right edge, in a column the card leaves
+   for it, so every ? lines up; beside a label it follows the label */
+.ob-opt { position: relative; }
+.ob-q { position: relative; flex: none; display: inline-grid; place-items: center; width: 22px; height: 22px; padding: 0; border-radius: 50%; border: 1.5px solid var(--line2); background: transparent; color: var(--muted); font: 700 12px/1 var(--font); transition: color .2s, border-color .2s, background .2s; }
+.ob-q::before { content: ''; position: absolute; inset: -6px; }
+.ob-q:hover { color: var(--accent); border-color: var(--accent); }
+.ob-q[aria-expanded="true"] { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+.ob-q:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ob-opt > .ob-q { position: absolute; top: 50%; right: 17px; margin-top: -11px; }
+.ob-opt > .ob-choice { width: 100%; grid-template-columns: 44px 1fr auto 22px 22px; }
+/* a look tile keeps its ? in its top corner, beside the name, so the description keeps the tile's width */
+.ob-opt > .ob-look { width: 100%; height: 100%; }
+.ob-opt > .ob-look .ob-look-t b { padding-right: 26px; }
+.ob-opt > .ob-look + .ob-q { top: 9px; right: 9px; margin-top: 0; }
+.ob-opt > .ob-check { padding-right: 48px; }
+.ob-opt > .ob-check + .ob-q { right: 14px; }
+.ob-labq { display: inline-flex; align-items: center; gap: 8px; }
+.ob-summary .ob-labq { gap: 6px; }
+.ob-summary .ob-q { width: 18px; height: 18px; font-size: 10.5px; letter-spacing: 0; }
+.ob-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* the answer in the form, under its choice, when the stage is only a strip above it: Pip writes it out there */
+.ob-tipline { display: flex; gap: 10px; align-items: flex-start; margin-top: 8px; padding: 10px 8px 10px 12px; border-radius: var(--r-sm); border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); background: color-mix(in srgb, var(--accent) 9%, var(--surface2)); color: var(--muted); font-size: 13px; line-height: 1.45; animation: obTipIn .3s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes obTipIn { from { opacity: 0; transform: translateY(-6px); } }
+.ob-choices > .ob-tipline, .ob-rows > .ob-tipline, .ob-providers > .ob-tipline { margin-top: 0; }
+.ob-tipline-pip svg { display: block; }
+.ob-tipline-t { flex: 1; min-width: 0; }
+.ob-tipline-t b { display: block; color: var(--text); }
+.ob-tipline-x { flex: none; display: grid; place-items: center; width: 26px; height: 26px; margin: -4px 0 0; padding: 0; border: 0; border-radius: var(--r-sm); background: none; color: var(--faint); }
+.ob-tipline-x:hover { color: var(--text); background: var(--surface2); }
+.ob-tipline-x:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.ob-tipline .pst-bt-off { visibility: hidden; }
 .ob-eyebrow { margin: 0 0 8px; font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
 .ob-title { margin: 0 0 10px; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.15; font-weight: 700; letter-spacing: -.01em; }
 .ob-lead { margin: 0 0 22px; color: var(--muted); font-size: 15px; max-width: 46ch; }
@@ -211,7 +239,7 @@ body[data-stage="banner"] .ob-tipline, body[data-stage="compact"] .ob-tipline { 
 
 /* keep it safe */
 .ob-rows { display: grid; gap: 10px; }
-.ob-srow { display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; border-radius: var(--r); border: 1.5px solid var(--line); background: var(--surface2); }
+.ob-srow { display: grid; grid-template-columns: 24px 1fr auto 22px; gap: 12px; align-items: center; padding: 12px 14px; border-radius: var(--r); border: 1.5px solid var(--line); background: var(--surface2); }
 .ob-srow > .ob-ic { color: var(--accent); }
 .ob-srow > div:not(.ob-seg) { display: grid; } .ob-srow small { color: var(--faint); font-size: 12.5px; }
 
@@ -230,7 +258,7 @@ body[data-stage="banner"] .ob-tipline, body[data-stage="compact"] .ob-tipline { 
 .ob-phases li[data-state="run"] .ob-ph-dot { border-color: var(--accent); border-top-color: transparent; animation: obSpin .9s linear infinite; }
 @keyframes obSpin { to { transform: rotate(360deg); } }
 .ob-providers { display: grid; gap: 8px; }
-.ob-prov { display: grid; grid-template-columns: 36px 1fr auto; gap: 12px; align-items: center; padding: 10px 14px; border-radius: var(--r); border: 1.5px solid var(--line); background: var(--surface2); }
+.ob-prov { display: grid; grid-template-columns: 36px 1fr auto 22px; gap: 12px; align-items: center; padding: 10px 14px; border-radius: var(--r); border: 1.5px solid var(--line); background: var(--surface2); }
 .ob-prov-ic { width: 36px; height: 36px; display: grid; place-items: center; border-radius: var(--r-sm); background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent); font-weight: 800; }
 .ob-prov div { display: grid; } .ob-prov small { color: var(--faint); font-size: 12.5px; }
 .ob-prov-s { display: inline-flex; gap: 6px; align-items: center; font-size: 12.5px; font-weight: 600; color: var(--faint); }
@@ -302,6 +330,10 @@ body[data-fam="retro"] .ob-choice[aria-checked="true"], body[data-fam="retro"] .
 body[data-fam="retro"] .ob-choice[aria-checked="true"] small, body[data-fam="retro"] .ob-choice[aria-checked="true"] .ob-rec, body[data-fam="retro"] .ob-look[aria-checked="true"] small { color: var(--on-accent); }
 body[data-fam="retro"] .ob-choice[aria-checked="true"] .ob-choice-ic { background: var(--on-accent); color: var(--accent); }
 body[data-fam="retro"] .ob-radio { border-radius: 0; }
+body[data-fam="retro"] .ob-q, body[data-fam="retro"] .ob-tipline, body[data-fam="retro"] .ob-tipline-x { border-radius: 0; }
+body[data-fam="retro"] .ob-q { border-width: 2px; }
+body[data-fam="retro"] .ob-tipline { border: 2px solid var(--line); box-shadow: 3px 3px 0 var(--hard); background: var(--surface2); }
+body[data-fam="retro"] .ob-opt:has(> [aria-checked="true"]) > .ob-q:not([aria-expanded="true"]) { color: var(--on-accent); border-color: var(--on-accent); }
 body[data-fam="retro"] .ob-choice[aria-checked="true"] .ob-radio { border-color: var(--on-accent); background: var(--on-accent); box-shadow: inset 0 0 0 3px var(--accent); }
 body[data-fam="retro"] .ob-primary { text-transform: uppercase; letter-spacing: .06em; border: 2px solid var(--line); box-shadow: 4px 4px 0 var(--hard); }
 body[data-fam="retro"] .ob-primary:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--hard); }
@@ -336,6 +368,10 @@ body[data-fam="nier"] .ob-choice[aria-checked="true"] small, body[data-fam="nier
 body[data-fam="nier"] .ob-choice[aria-checked="true"] .ob-choice-ic { color: var(--bg); background: transparent; border: 1px solid var(--bg); }
 body[data-fam="nier"] .ob-choice-ic, body[data-fam="nier"] .ob-prov-ic { background: transparent; border: 1px solid var(--line2); color: var(--text); }
 body[data-fam="nier"] .ob-radio { border-radius: 0; width: 14px; height: 14px; border-width: 1px; }
+body[data-fam="nier"] .ob-q, body[data-fam="nier"] .ob-tipline, body[data-fam="nier"] .ob-tipline-x { border-radius: 0; }
+body[data-fam="nier"] .ob-q { border-width: 1px; font-family: var(--mono); }
+body[data-fam="nier"] .ob-tipline { border-color: var(--text); background: color-mix(in srgb, var(--bg) 70%, #fff 6%); }
+body[data-fam="nier"] .ob-opt:has(> [aria-checked="true"]) > .ob-q:not([aria-expanded="true"]) { color: var(--bg); border-color: var(--bg); }
 body[data-fam="nier"] .ob-choice[aria-checked="true"] .ob-radio { border-color: var(--bg); background: var(--bg); box-shadow: inset 0 0 0 3px var(--text); }
 body[data-fam="nier"] .ob-primary { font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
 body[data-fam="nier"] .ob-primary::before { content: ''; width: 6px; height: 6px; background: currentColor; margin-right: 6px; }

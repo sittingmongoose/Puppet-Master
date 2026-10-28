@@ -60,7 +60,7 @@
 .pst-wall::after { content: ''; position: absolute; inset: 0; }
 .pst[data-fam="glass"][data-scheme="dark"] .pst-wall::after { background: linear-gradient(180deg, rgba(4, 6, 13, .55), rgba(4, 6, 13, .18) 45%, rgba(4, 6, 13, .4)); }
 .pst[data-fam="glass"][data-scheme="light"] .pst-wall::after { background: linear-gradient(180deg, rgba(255, 255, 255, .62), rgba(255, 255, 255, .22) 45%, rgba(255, 255, 255, .45)); }
-.pst-caustic { position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%; filter: blur(28px); mix-blend-mode: soft-light; z-index: 1; animation: pstCaustic 14s ease-in-out infinite alternate; }
+.pst-caustic { position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%; filter: blur(28px); mix-blend-mode: soft-light; z-index: 1; pointer-events: none; animation: pstCaustic 14s ease-in-out infinite alternate; }
 .pst-caustic.c1 { left: 6%; top: 18%; background: rgba(255, 255, 255, .55); }
 .pst-caustic.c2 { right: -6%; top: 40%; background: var(--st-tint); animation-duration: 18s; animation-delay: -6s; }
 .pst-caustic.c3 { left: 30%; bottom: 4%; background: rgba(255, 255, 255, .4); animation-duration: 11s; animation-delay: -3s; }
@@ -232,10 +232,15 @@
 @media (prefers-reduced-motion: reduce) { .pst *, .pst::before, .pst::after { animation: none !important; } }
 
 /* ------------------------------------------------------ Pip's tip */
-/* Friendly, Glass and Basic: a note that hangs under Pip, its tail pointing up at it, written out after Pip's line */
-.pst-tip { position: absolute; left: 0; top: 0; display: grid; gap: 3px; width: max-content; max-width: min(58%, 226px); padding: 7px 11px 8px;
+/* asked for with a ? beside a choice: a note that hangs under Pip, its tail pointing up at it, written out as you watch */
+.pst-tip { position: absolute; left: 0; top: 0; display: grid; gap: 3px; width: max-content; max-width: min(58%, 226px); padding: 7px 9px 8px 11px;
   font: 500 12.5px/1.42 var(--pst-font, 'Poppins', system-ui, sans-serif); opacity: 0; visibility: hidden; transition: opacity .3s, visibility 0s .3s; pointer-events: none; will-change: transform; }
-.pst-tip.on { opacity: 1; visibility: visible; transition: opacity .3s; }
+.pst-tip.on { opacity: 1; visibility: visible; transition: opacity .3s; pointer-events: auto; }
+.pst-tip-h { font-weight: 700; font-size: 13.5px; line-height: 1.25; }
+.pst-tip-x { margin-left: auto; padding: 0 2px; border: 0; background: none; color: inherit; font: 400 16px/1 system-ui, sans-serif; letter-spacing: 0; opacity: .55; cursor: pointer; }
+.pst-tip-x:hover, .pst-tip-x:focus-visible { opacity: 1; }
+.pst-tip-x:focus-visible { outline: 1.5px solid currentColor; outline-offset: 1px; }
+.pst-tip-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .pst-tip::after { content: ''; position: absolute; left: var(--tx, 30px); top: -5px; width: 9px; height: 9px; translate: -50% 0; rotate: 45deg; background: inherit; border: inherit; border-right: 0; border-bottom: 0; }
 .pst-tip-k { display: flex; align-items: center; gap: 6px; font-size: 9.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .pst-tip .pst-tip-k::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 2.5px color-mix(in srgb, currentColor 22%, transparent); }
@@ -252,22 +257,23 @@
 .pst[data-fam="basic"] .pst-tip .pst-tip-k::before { border-radius: 1px; }
 
 /* Retro: a terminal box on the tube; on paper, a note in a dashed box with its label in red */
+.pst[data-tube] .pst-tip { max-width: min(66%, 262px); }
 .pst[data-tube="phosphor"] .pst-tip { --pst-font: 'VT323', monospace; font-size: 17px; line-height: 1.05; font-weight: 400; color: #77ea83; background: rgba(4, 16, 8, .94); border: 2px solid #3dcc56; border-radius: 0; text-shadow: 0 0 4px rgba(18, 251, 86, .7); box-shadow: 0 0 10px rgba(18, 251, 86, .25); }
 .pst[data-tube="phosphor"] .pst-tip-k { font-size: 16px; letter-spacing: 0; color: #d3ffb0; }
+.pst[data-tube="phosphor"] .pst-tip-h { font-size: 20px; font-weight: 400; text-transform: uppercase; color: #d3ffb0; }
+.pst[data-tube="teletype"] .pst-tip-h { font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; }
 .pst[data-tube="teletype"] .pst-tip { --pst-font: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11.5px; font-weight: 600; color: #231e19; background: #f4ecdd; border: 1.5px dashed #231e19; border-radius: 0; }
 .pst[data-tube="teletype"] .pst-tip-k { color: #a13126; letter-spacing: .2em; }
 .pst[data-tube] .pst-tip .pst-tip-k::before { display: none; }
 .pst[data-tube] .pst-tip.typing .pst-bt-on::after { content: ''; display: inline-block; width: .5em; height: .8em; margin: 0 -.5em 0 0; background: currentColor; vertical-align: -.05em; }
 
 /* NieR: a TIPS box at the top right, opened like its menus */
-.pst-ntip { position: absolute; right: 2px; top: 26px; width: 47%; transition: opacity .25s; display: grid; border: 1px solid currentColor; background: color-mix(in srgb, var(--np) 82%, transparent); opacity: 0; visibility: hidden; text-transform: none; letter-spacing: .03em; }
-.pst-ntip.on { opacity: 1; visibility: visible; animation: pstNtip .45s steps(6, end); }
-.pst-nquest.on ~ .pst-ntip { opacity: 0; }
+.pst-ntip { position: absolute; right: 2px; top: 26px; width: 47%; display: grid; border: 1px solid currentColor; background: color-mix(in srgb, var(--np) 88%, transparent); opacity: 0; visibility: hidden; transition: opacity .25s, visibility 0s .25s; text-transform: none; letter-spacing: .03em; pointer-events: none; }
+.pst-ntip.on { opacity: 1; visibility: visible; transition: opacity .25s; pointer-events: auto; animation: pstNtip .45s steps(6, end); }
 @keyframes pstNtip { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
-.pst-ntip .pst-tip-k { padding: 3px 7px; font-size: 8.5px; font-weight: 600; letter-spacing: .3em; background: currentColor; }
-.pst-ntip .pst-tip-k { color: inherit; }
-.pst-ntip .pst-tip-k::before { content: '◆ TIPS'; color: var(--np); }
-.pst-ntip .pst-tip-k { font-size: 0; }
-.pst-ntip .pst-tip-k::before { font-size: 8.5px; }
-.pst-ntip .pst-tip-t { padding: 6px 8px 7px; font-size: 11.5px; line-height: 1.45; }
+.pst-ntip .pst-tip-k { display: flex; align-items: center; padding: 3px 3px 3px 7px; font-size: 8.5px; font-weight: 600; letter-spacing: .3em; background: currentColor; }
+.pst-ntip .pst-tip-kl, .pst-ntip .pst-tip-x { color: var(--np); }
+.pst-ntip .pst-tip-x { font-size: 13px; opacity: .8; }
+.pst-ntip .pst-tip-h { padding: 6px 8px 0; font-size: 10px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
+.pst-ntip .pst-tip-t { padding: 3px 8px 7px; font-size: 11.5px; line-height: 1.45; }
 .pst[data-fam="nier"]:not([data-layout="portrait"]) .pst-ntip { display: none; }
