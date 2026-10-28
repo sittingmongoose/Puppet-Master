@@ -274,7 +274,8 @@
     wink: { st: 2, bounce: 1.25, rate: 1.05, bright: 1.1 },
     dots: { st: -1, bounce: 0.8, rate: 0.92, bright: 0.9 },
     oops: { st: -3, bounce: 0.7, rate: 0.94, bright: 0.85 },
-    wonder: { st: 1, bounce: 1.1, rate: 0.96, bright: 1.05 }
+    watch: { st: 1, bounce: 1.1, rate: 0.96, bright: 1.05 },
+    wonder: { st: 4, bounce: 1.2, rate: 1.04, bright: 1.15 }
   };
   // the crew: Coordinator (crown) low and grand, Builder (hard hat) gruff, Reviewer (glasses) high and precise
   const CREW = { pip: { mul: 1, rate: 1, grit: 0, fs: 1 }, crown: { mul: 0.72, rate: 0.9, grit: 0.12, fs: 0.9 }, hardhat: { mul: 0.86, rate: 1, grit: 0.3, fs: 0.95 }, glasses: { mul: 1.32, rate: 1.12, grit: 0, fs: 1.1 } };

@@ -8,10 +8,11 @@ PMConcept7's onboarding copy; Pip's lines are new. Open `index.html` (double-cli
 
 The control is you. Pip hangs from it, and every choice you make lowers something onto the stage.
 
-- **Pip is the guide.** It reacts to what you do: while you rest on a choice it wonders about it (bright
-  eyes glancing up, a brow lifted, a small smile), and when you choose it is happy, through its whole
-  line; it looks at what you pick, sleeps until you arrive, and powers up when AI is connected. It wonders
-  while it waits too (a name to come, the review being checked, AI being looked for).
+- **Pip is the guide.** It reacts to what you do. While you rest on a choice it **watches** it (bright
+  eyes glancing up, a brow lifted, a small smile), and when you choose it is **happy**, through its whole
+  line. While you type into a field (the Project name, an API key) it watches in **wonder** (big eyes, a
+  round mouth). It also watches while it waits (the review being checked, AI being looked for), looks at
+  what you pick, sleeps until you arrive, and powers up when AI is connected.
 - **When something goes wrong, Pip is worried with you** (worried brows, a wobbly mouth, a bead of sweat;
   in NieR, worried eyes on its band) and says so, and the warning sound plays. Three places show it: a
   Project name you already have (type `tastebook`: Continue waits for another name); Google Antigravity's

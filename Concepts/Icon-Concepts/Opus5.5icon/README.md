@@ -84,8 +84,9 @@ PMLogo.svg({
 
 `PMLogo.kit` exposes the drawing parts (geometry, faces, control, head, the string solver, NieR
 parts) for places that animate Pip themselves, such as `Concepts/onboarding/opus-5.5-pip/`. The `wink`
-mood was added for it, `wonder` (bright eyes glancing up, a brow lifted, a small smile: curious about a
-choice, where `think` is busy working something out), and `oops` (worried brows, a wobbly mouth and a bead of sweat; in NieR, worried eyes
+mood was added for it, `watch` (bright eyes glancing up, a brow lifted, a small smile: interested in a
+choice, where `think` is busy working something out), `wonder` (the `alert` face, big eyes and a round
+mouth, by the name the onboarding gives it while you type), and `oops` (worried brows, a wobbly mouth and a bead of sweat; in NieR, worried eyes
 on the band) for a sign-in that failed or a key that was refused: sympathetic, where `error` is broken.
 
 Every animated file keeps the static pose as its base markup, so a renderer that ignores CSS

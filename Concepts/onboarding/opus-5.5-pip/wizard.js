@@ -15,7 +15,9 @@
     ai: { claude: 'checking', codex: 'checking', antigravity: 'checking', cursor: 'checking' },
     phase: 0, reduced: false, width: 'full', open: true, rev: 0, help: null,
     // the AI screen's sign-ins: tries per provider (a first browser sign-in fails, to show what Pip does), the key typed
-    tries: {}, key: '', aiOops: null
+    tries: {}, key: '', aiOops: null,
+    // the field being typed in ('name' or 'key'): Pip watches it in wonder
+    typing: null
   };
   try {
     const q = new URLSearchParams(location.search);
@@ -75,7 +77,7 @@
         <div class="ob-opt"><label class="ob-check" data-hover="look:nier"><input type="checkbox" data-nier ${nier ? 'checked' : ''}><span class="ob-check-box"></span><span><b>NieR Mode</b><small>Ink on parchment, a YoRHa Pip that hovers like a Pod, its own sounds.</small></span></label>${qb('look:nier', true)}</div>`;
       },
       foot: { primary: ['Continue', 'next'] },
-      scene: (h) => ({ chapter: 'welcome', props: [{ id: 'palette', kind: 'palette', slot: 'side' }], pip: { mood: h ? 'wonder' : 'idle', look: 'palette' }, say: h ? LOOK_LINES[h] || 'NieR? I can do stoic.' : 'Dress me up. It changes everything.', target: 'palette', label: 'Select look', cmd: `pip dress ${h || famOf(S.theme)}${h ? ' --try' : ''}` })
+      scene: (h) => ({ chapter: 'welcome', props: [{ id: 'palette', kind: 'palette', slot: 'side' }], pip: { mood: h ? 'watch' : 'idle', look: 'palette' }, say: h ? LOOK_LINES[h] || 'NieR? I can do stoic.' : 'Dress me up. It changes everything.', target: 'palette', label: 'Select look', cmd: `pip dress ${h || famOf(S.theme)}${h ? ' --try' : ''}` })
     },
     where: {
       chapter: 'computer', eyebrow: 'The computer', title: 'Where should Puppet Master do the work?',
@@ -90,7 +92,7 @@
         const b = h || S.where, pv = !!h && h !== S.where;
         const props = b === 'connect' ? [{ id: 'laptop', kind: 'laptop', slot: 'pairA', preview: pv }, { id: 'phone', kind: 'phone', slot: 'pairB', preview: pv }]
           : [{ id: b === 'server' ? 'server' : 'laptop', kind: b === 'server' ? 'server' : 'laptop', slot: 'side', preview: pv }];
-        return { chapter: 'computer', props, pip: { mood: pv ? 'wonder' : 'idle', look: props[0].id }, say: { this: 'Right here works great.', connect: "Let's tie your devices together.", server: "A server never sleeps. Lucky thing." }[b], target: props[0].id, label: { this: 'This computer', connect: 'Connect device', server: 'Server' }[b], cmd: `pip lower ${props.map((p) => p.kind).join(' ')}${pv ? ' --preview' : ''}` };
+        return { chapter: 'computer', props, pip: { mood: pv ? 'watch' : 'idle', look: props[0].id }, say: { this: 'Right here works great.', connect: "Let's tie your devices together.", server: "A server never sleeps. Lucky thing." }[b], target: props[0].id, label: { this: 'This computer', connect: 'Connect device', server: 'Server' }[b], cmd: `pip lower ${props.map((p) => p.kind).join(' ')}${pv ? ' --preview' : ''}` };
       }
     },
     begin: {
@@ -104,7 +106,7 @@
       foot: { primary: ['Continue', 'next'] },
       scene: (h) => {
         const b = h || S.begin, pv = !!h && h !== S.begin, kind = { new: 'page', existing: 'folder', restore: 'restore' }[b];
-        return { chapter: 'project', props: [{ id: kind, kind, slot: 'side', preview: pv }], pip: { mood: pv ? 'wonder' : 'idle', look: kind }, say: { new: 'A blank page. My favourite.', existing: "Bring it in. I'll learn my way round.", restore: 'Back from the archive, good as new.' }[b], target: kind, label: { new: 'New Project', existing: 'Existing work', restore: 'Restore' }[b], cmd: `pip project --${b}${pv ? ' --preview' : ''}` };
+        return { chapter: 'project', props: [{ id: kind, kind, slot: 'side', preview: pv }], pip: { mood: pv ? 'watch' : 'idle', look: kind }, say: { new: 'A blank page. My favourite.', existing: "Bring it in. I'll learn my way round.", restore: 'Back from the archive, good as new.' }[b], target: kind, label: { new: 'New Project', existing: 'Existing work', restore: 'Restore' }[b], cmd: `pip project --${b}${pv ? ' --preview' : ''}` };
       }
     },
     name: {
@@ -113,7 +115,7 @@
         <p class="ob-hint${nameState() === 'taken' ? ' is-err' : ''}" id="obNameHint">${nameHint()}</p>`,
       foot: () => ({ primary: ['Continue', 'next', nameState() === 'taken'] }),
       scene: () => {
-        const n = S.name.trim(), st = nameState(), mood = { empty: 'wonder', long: 'alert', taken: 'oops' }[st] || 'idle';
+        const n = S.name.trim(), st = nameState(), mood = st === 'taken' ? 'oops' : st === 'long' ? 'alert' : S.typing === 'name' ? 'wonder' : st === 'empty' ? 'watch' : 'idle';
         return { chapter: 'project', props: [{ id: 'sign', kind: 'sign', slot: 'sign', params: { text: n } }], pip: { mood, look: 'sign' }, say: { empty: 'What shall we call it?', long: "That won't fit on my sign!", taken: 'Oh! You already have one called that.' }[st] || `“${n.length > 26 ? n.slice(0, 25) + '…' : n}”. Lovely.`, target: 'sign', label: st === 'taken' ? 'Name taken' : n ? (n.length > 24 ? n.slice(0, 23) + '…' : n) : 'Awaiting name', cmd: `pip sign "${n.length > 18 ? n.slice(0, 17) + '…' : n}"${st === 'taken' ? '  TAKEN' : ''}` };
       }
     },
@@ -135,7 +137,7 @@
         if (online) props.push({ id: 'cloud', kind: 'cloud', slot: 'hi', preview: !S.online });
         if (backup) props.push({ id: 'backup', kind: 'backup', slot: 'pairB', preview: !S.backup });
         const pv = (h === 'safe:online' && !S.online) || (h === 'safe:backup' && !S.backup);
-        return { chapter: 'project', props, pip: { mood: pv ? 'wonder' : 'idle', look: h === 'safe:online' ? 'cloud' : h === 'safe:backup' ? 'backup' : 'vault' }, say: h === 'safe:online' ? 'A copy in the cloud, just in case.' : h === 'safe:backup' ? 'A backup box. Sensible.' : 'Every version goes in the vault.', target: 'vault', label: 'Safe History', cmd: `pip vault --${S.vcs}${S.online ? ' --github' : ''}${S.backup ? ' --nas' : ''}` };
+        return { chapter: 'project', props, pip: { mood: pv ? 'watch' : 'idle', look: h === 'safe:online' ? 'cloud' : h === 'safe:backup' ? 'backup' : 'vault' }, say: h === 'safe:online' ? 'A copy in the cloud, just in case.' : h === 'safe:backup' ? 'A backup box. Sensible.' : 'Every version goes in the vault.', target: 'vault', label: 'Safe History', cmd: `pip vault --${S.vcs}${S.online ? ' --github' : ''}${S.backup ? ' --nas' : ''}` };
       }
     },
     away: {
@@ -149,7 +151,7 @@
       scene: (h) => {
         const b = h || S.away, pv = !!h && h !== S.away;
         const props = b === 'anywhere' ? [{ id: 'house', kind: 'house', slot: 'pairA', preview: pv }, { id: 'globe', kind: 'globe', slot: 'pairB', preview: pv }] : [{ id: 'house', kind: 'house', slot: 'side', preview: pv }];
-        return { chapter: 'project', props, pip: { mood: pv ? 'wonder' : 'idle', look: props[props.length - 1].id }, say: b === 'anywhere' ? "I'll come with you. Anywhere." : "Home it is. I'll keep the lights on.", target: props[props.length - 1].id, label: b === 'anywhere' ? 'Anywhere' : 'Home only', cmd: `pip reach --${b}${pv ? ' --preview' : ''}` };
+        return { chapter: 'project', props, pip: { mood: pv ? 'watch' : 'idle', look: props[props.length - 1].id }, say: b === 'anywhere' ? "I'll come with you. Anywhere." : "Home it is. I'll keep the lights on.", target: props[props.length - 1].id, label: b === 'anywhere' ? 'Anywhere' : 'Home only', cmd: `pip reach --${b}${pv ? ' --preview' : ''}` };
       }
     },
     review: {
@@ -157,7 +159,7 @@
       lead: 'Nothing has been created yet. Check it, then create it in one step.',
       body: () => `<div class="ob-review">${reviewRows().map(([g, v, at], i) => `<div class="ob-rv" style="--i:${i}"><span class="ob-rv-k">${g}</span><span class="ob-rv-v">${esc(v)}</span><button type="button" class="ob-link ob-rv-e" data-go="${at}">${icon('edit', 14)}Edit</button></div>`).join('')}</div>`,
       foot: { primary: ['Create Project', 'next'] },
-      scene: () => ({ chapter: 'project', props: [{ id: 'clipboard', kind: 'clipboard', slot: 'side', params: { ticks: Math.min(4, S.reviewTicks || 0), rows: 4 } }], pip: { mood: (S.reviewTicks || 0) >= 4 ? 'happy' : 'wonder', look: 'clipboard' }, say: (S.reviewTicks || 0) >= 4 ? 'All checked. Ready when you are.' : 'Let me check everything…', target: 'clipboard', label: 'Review', cmd: `pip check --all  ${S.reviewTicks || 0}/4` })
+      scene: () => ({ chapter: 'project', props: [{ id: 'clipboard', kind: 'clipboard', slot: 'side', params: { ticks: Math.min(4, S.reviewTicks || 0), rows: 4 } }], pip: { mood: (S.reviewTicks || 0) >= 4 ? 'happy' : 'watch', look: 'clipboard' }, say: (S.reviewTicks || 0) >= 4 ? 'All checked. Ready when you are.' : 'Let me check everything…', target: 'clipboard', label: 'Review', cmd: `pip check --all  ${S.reviewTicks || 0}/4` })
     },
     creating: {
       chapter: 'project', eyebrow: 'Creating', title: () => `Creating ${esc(S.name.trim() || 'your Project')}`,
@@ -181,10 +183,13 @@
       scene: () => {
         // a sign-in that failed or a key that was refused: Pip is worried for you, looking at that provider
         if (S.aiOops) { const [k, line] = S.aiOops; return { chapter: 'ai', props: PROVIDERS.map(([pk, n], i) => ({ id: 'o' + pk, kind: 'orb', slot: 'o' + (i + 1), scale: .9, params: { lit: S.ai[pk] === 'ready', label: n[0], hue: ['e', 'b', 'c', 'd'][i] } })), pip: { mood: 'oops', power: PROVIDERS.filter(([pk]) => S.ai[pk] === 'ready').length, look: 'o' + k }, say: line, target: 'o' + k, label: AUTH[k] === 'key' ? 'Key refused' : 'Sign-in failed', cmd: `pip power --${AUTH[k] === 'key' ? 'key' : 'signin'} ${k}  ERR` }; }
+        // a key being typed in: Pip watches the field in wonder; a key being tried: Pip watches the orb
+        const keyK = PROVIDERS.map(([k]) => k).find((k) => AUTH[k] === 'key' && (S.ai[k] === 'testing' || (S.typing === 'key' && ['key', 'badkey'].includes(S.ai[k]))));
+        if (keyK) { const testing = S.ai[keyK] === 'testing'; return { chapter: 'ai', props: PROVIDERS.map(([pk, n], i) => ({ id: 'o' + pk, kind: 'orb', slot: 'o' + (i + 1), scale: .9, params: { lit: S.ai[pk] === 'ready', label: n[0], hue: ['e', 'b', 'c', 'd'][i] } })), pip: { mood: testing ? 'watch' : 'wonder', power: PROVIDERS.filter(([pk]) => S.ai[pk] === 'ready').length, look: 'o' + keyK }, say: testing ? 'Trying it…' : "Ooh, a key. I'll keep it secret.", target: 'o' + keyK, label: testing ? 'Checking key' : 'Key entry', cmd: `pip power --key ${keyK}${testing ? '  ...' : ''}` }; }
         const ready = PROVIDERS.filter(([k]) => S.ai[k] === 'ready');
         const props = PROVIDERS.map(([k, n], i) => ({ id: 'o' + k, kind: 'orb', slot: 'o' + (i + 1), scale: .9, params: { lit: S.ai[k] === 'ready', label: n[0], hue: ['e', 'b', 'c', 'd'][i] } }));
         const n = ready.length, checking = PROVIDERS.some(([k]) => S.ai[k] === 'checking');
-        return { chapter: 'ai', props, pip: { mood: n ? 'happy' : checking ? 'wonder' : 'sleep', power: n, look: props[Math.max(0, n - 1)].id }, say: n >= 2 ? `${n} power sources. I feel brilliant.` : n === 1 ? 'Power! I can think now.' : checking ? 'Looking for power…' : "No power yet. I'll nap.", target: props[Math.max(0, n - 1)].id, label: n ? n + ' connected' : 'No power', cmd: checking ? 'pip power --scan' : `pip power  ${n} online` };
+        return { chapter: 'ai', props, pip: { mood: n ? 'happy' : checking ? 'watch' : 'sleep', power: n, look: props[Math.max(0, n - 1)].id }, say: n >= 2 ? `${n} power sources. I feel brilliant.` : n === 1 ? 'Power! I can think now.' : checking ? 'Looking for power…' : "No power yet. I'll nap.", target: props[Math.max(0, n - 1)].id, label: n ? n + ' connected' : 'No power', cmd: checking ? 'pip power --scan' : `pip power  ${n} online` };
       }
     },
     ready: {
@@ -470,7 +475,7 @@
     const from = S.screen;
     clearTimers();
     if (!(opts && opts.back) && from !== screen) S.history.push(from);
-    S.screen = screen; S.hover = null; S.help = null;
+    S.screen = screen; S.hover = null; S.help = null; S.typing = null;
     clearInterval(hv.poll); clearTimeout(hv.leaveT); hv.want = null;
     if (from !== screen) sfx(opts && opts.back ? 'back' : 'next', { chapter: CHAPTERS.findIndex(([c]) => c === SCREENS[screen].chapter) });
     renderScreen(opts && opts.back ? -1 : 1);
@@ -501,7 +506,7 @@
   function back() { const prev = S.history.pop(); if (prev) go(prev, { back: true }); }
 
   /* --------------------------------------------------------------- events */
-  // Pip wonders while you look at a choice and is happy when you make it: the happy face holds through its line
+  // Pip watches while you look at a choice and is happy when you make it: the happy face holds through its line
   const PICKED = { mood: 'happy', hold: 2600 };
   document.addEventListener('click', (e) => {
     const b = e.target.closest('button, [data-hover]');
@@ -582,7 +587,11 @@
     }, POLL);
   }
   mainEl.addEventListener('pointermove', (e) => { hv.x = e.clientX; hv.y = e.clientY; }, { passive: true });
-  mainEl.addEventListener('input', (e) => { if (e.target.id === 'obKey') S.key = e.target.value; });
+  mainEl.addEventListener('input', (e) => { if (e.target.id !== 'obKey') return; S.key = e.target.value; if (S.aiOops) { S.aiOops = null; direct(); } });
+  // typing into a field (the Project name, an API key): Pip watches it in wonder until you leave it
+  const FIELD = { obName: 'name', obKey: 'key' };
+  mainEl.addEventListener('focusin', (e) => { const f = FIELD[e.target.id]; if (f && S.typing !== f) { S.typing = f; direct(); } });
+  mainEl.addEventListener('focusout', (e) => { if (FIELD[e.target.id] && S.typing) { S.typing = null; setTimeout(direct, 0); } });
   mainEl.addEventListener('pointerover', (e) => { hv.x = e.clientX; hv.y = e.clientY; const h = e.target.closest('[data-hover]'); wantHover(h ? h.dataset.hover : null); });
   mainEl.addEventListener('pointerleave', () => wantHover(null));
   mainEl.addEventListener('focusin', (e) => { const h = e.target.closest('[data-hover]'); if (h && e.target.matches(':focus-visible')) { hv.byFocus = true; hv.want = h.dataset.hover; setHover(h.dataset.hover); } });
