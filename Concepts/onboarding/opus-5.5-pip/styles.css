@@ -160,6 +160,8 @@ body[data-fam="nier"] .ob-screen::before { content: ''; position: absolute; top:
 .ob-q::before { content: ''; position: absolute; inset: -6px; }
 .ob-q:hover { color: var(--accent); border-color: var(--accent); }
 .ob-q[aria-expanded="true"] { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+/* open: filled and ringed, so it reads as on whatever it sits on (a filled card included) */
+.ob-q[aria-expanded="true"] { outline: 1.5px solid var(--accent); outline-offset: 2px; }
 .ob-q:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .ob-opt > .ob-q { position: absolute; top: 50%; right: 17px; margin-top: -11px; }
 .ob-opt > .ob-choice { width: 100%; grid-template-columns: 44px 1fr auto 22px 22px; }
@@ -353,6 +355,7 @@ body[data-fam="retro"] .ob-tipline { border: 2px solid var(--line); box-shadow: 
 body[data-fam="retro"] .ob-opt:has(> [aria-checked="true"]) > .ob-q:not([aria-expanded="true"]) { color: var(--on-accent); border-color: var(--on-accent); }
 /* an open ? on the chosen card, which is already filled with the accent: it turns over so it still shows */
 body[data-fam="retro"] .ob-opt:has(> [aria-checked="true"]) > .ob-q[aria-expanded="true"] { color: var(--accent); background: var(--on-accent); border-color: var(--on-accent); }
+body[data-fam="retro"] .ob-opt:has(> [aria-checked="true"]) > .ob-q:is([aria-expanded="true"], :focus-visible) { outline-color: var(--on-accent); }
 body[data-fam="retro"] .ob-choice[aria-checked="true"] .ob-radio { border-color: var(--on-accent); background: var(--on-accent); box-shadow: inset 0 0 0 3px var(--accent); }
 body[data-fam="retro"] .ob-primary { text-transform: uppercase; letter-spacing: .06em; border: 2px solid var(--line); box-shadow: 4px 4px 0 var(--hard); }
 body[data-fam="retro"] .ob-primary:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--hard); }
@@ -390,8 +393,11 @@ body[data-fam="nier"] .ob-radio { border-radius: 0; width: 14px; height: 14px; b
 body[data-fam="nier"] .ob-q, body[data-fam="nier"] .ob-tipline, body[data-fam="nier"] .ob-tipline-x { border-radius: 0; }
 body[data-fam="nier"] .ob-q { border-width: 1px; font-family: var(--mono); }
 body[data-fam="nier"] .ob-tipline { border-color: var(--text); background: color-mix(in srgb, var(--bg) 70%, #fff 6%); }
-body[data-fam="nier"] .ob-opt:has(> [aria-checked="true"]) > .ob-q:not([aria-expanded="true"]) { color: var(--bg); border-color: var(--bg); }
-body[data-fam="nier"] .ob-opt:has(> [aria-checked="true"]) > .ob-q[aria-expanded="true"] { color: var(--text); background: var(--bg); border-color: var(--bg); }
+/* NieR marks what is chosen with ink and a ring around it, and an open ? does the same. So that the two never meet,
+   a chosen card's ink stops short of its ? cell: the ? always sits on paper, closed (an outline) or open (ink and a ring) */
+body[data-fam="nier"] .ob-opt > .ob-choice[aria-checked="true"] { background-size: calc(100% - 45px) 100%; }
+body[data-fam="nier"] .ob-opt > .ob-choice[aria-checked="true"]::after { content: ''; position: absolute; top: 6px; bottom: 6px; right: 44px; width: 1px; background: var(--text); opacity: .35; }
+body[data-fam="nier"] .ob-q[aria-expanded="true"] { outline-width: 1px; }
 body[data-fam="nier"] .ob-choice[aria-checked="true"] .ob-radio { border-color: var(--bg); background: var(--bg); box-shadow: inset 0 0 0 3px var(--text); }
 body[data-fam="nier"] .ob-primary { font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
 body[data-fam="nier"] .ob-primary::before { content: ''; width: 6px; height: 6px; background: currentColor; margin-right: 6px; }

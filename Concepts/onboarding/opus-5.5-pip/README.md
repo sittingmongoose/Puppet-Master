@@ -8,9 +8,10 @@ PMConcept7's onboarding copy; Pip's lines are new. Open `index.html` (double-cli
 
 The control is you. Pip hangs from it, and every choice you make lowers something onto the stage.
 
-- **Pip is the guide.** It reacts to what you do: while you rest on a choice it wears the face of what
-  it says about it (pleased, or curious), cheers or winks when you choose, looks at what you pick, sleeps
-  until you arrive, and powers up when AI is connected.
+- **Pip is the guide.** It reacts to what you do: while you rest on a choice it wonders about it (bright
+  eyes glancing up, a brow lifted, a small smile), and when you choose it is happy, through its whole
+  line; it looks at what you pick, sleeps until you arrive, and powers up when AI is connected. It wonders
+  while it waits too (a name to come, the review being checked, AI being looked for).
 - **When something goes wrong, Pip is worried with you** (worried brows, a wobbly mouth, a bead of sweat;
   in NieR, worried eyes on its band) and says so, and the warning sound plays. Three places show it: a
   Project name you already have (type `tastebook`: Continue waits for another name); Google Antigravity's
@@ -38,7 +39,8 @@ The control is you. Pip hangs from it, and every choice you make lowers somethin
   material: a stitched paper note under Pip in Friendly, a frosted one in Glass, a dashed annotation in
   Basic, a terminal box in Retro Dark, a printed NOTE in Retro Light, and in NieR a TIPS box at the top
   right (its dialogue box already holds the foot of the stage). When the stage is only a strip (narrow
-  windows), the answer opens in the form under that choice. Clicking the ? again, Esc, the note's close
+  windows), the answer opens in the form under that choice. An open ? is filled and ringed; in NieR a
+  chosen card's ink stops short of its ?, so the ? always sits on paper. Clicking the ? again, Esc, the note's close
   button or moving on puts it away, and focus returns to the ?. On a small stage a long note still fits:
   the hand lifts Pip to make room, as far as keeps its face in view, and its bubble steps aside meanwhile;
   on the monitor the note may run nearly the screen's width, in type sized to the screen. The answers are PMConcept7's own

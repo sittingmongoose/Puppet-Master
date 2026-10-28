@@ -209,6 +209,14 @@
         const x = (xx) => `M${R(xx - r)} ${R(y - r)}L${R(xx + r)} ${R(y + r)}M${R(xx + r)} ${R(y - r)}L${R(xx - r)} ${R(y + r)}`;
         return eyes(st(x(L) + x(Rx), r * .66)) + st(`M${R(cx - m.w / 2)} ${R(m.y + 1.6)}Q${R(cx - m.w / 4)} ${R(m.y)} ${cx} ${R(m.y + 1.6)}T${R(cx + m.w / 2)} ${R(m.y + 1.6)}`, m.sw * .85);
       }
+      case 'wonder': {
+        // curious about something new (a choice being looked at): bright eyes glancing up to one side, that side's brow
+        // lifted, a small smile turned the same way. Where 'think' is busy working something out, this one is delighted to wonder
+        const ex = r * .42, ey = -r * .5, er = r * 1.05, gx = Rx + ex;
+        const brow = st(`M${R(gx - r * 1.15)} ${R(y - r * 1.95)}Q${R(gx - r * .1)} ${R(y - r * 2.8)} ${R(gx + r * 1.1)} ${R(y - r * 2.2)}`, r * .48);
+        return `<g class="${c.eyes || ''}"><g class="${c.blink || ''}">${dot(L + ex, y + ey, er) + dot(gx, y + ey, er) + shine(L + ex, y + ey, er) + shine(gx, y + ey, er)}</g>${brow}</g>`
+          + st(`M${R(cx - m.w * .26)} ${R(m.y)}Q${R(cx + m.w * .08)} ${R(m.y + m.d * 1.1)} ${R(cx + m.w * .42)} ${R(m.y)}`, m.sw * .9);
+      }
       case 'oops': {
         // something went wrong (a sign-in that failed, a key that was refused): worried brows, a wobbly mouth and a
         // bead of sweat; sympathetic, not broken (that is 'error')
@@ -346,6 +354,8 @@
       case 'alert': return both((x) => rect(x - 1.7, cy - 1.7, 3.4, 3.4));
       case 'error': return both((x) => st(`M${x - 2} ${cy - 1.9}L${x + 2} ${cy + 1.9}M${x + 2} ${cy - 1.9}L${x - 2} ${cy + 1.9}`, 1.2, red));
       case 'sleep': return both((x) => rect(x - 2.6, cy + .9, 5.2, 1));
+      // wondering: both eyes glance up to one side
+      case 'wonder': return both((x) => rect(x + .4, cy - 2.4, 2.8, 2.8));
       // worried: each eye's top edge rises toward the middle
       case 'oops': return both((x) => { const s = x < cx ? 1 : -1; return `<path d="M${R(x - 1.5 * s)} ${R(cy - .3)}L${R(x + 1.5 * s)} ${R(cy - 2)}L${R(x + 1.5 * s)} ${R(cy + 2.1)}L${R(x - 1.5 * s)} ${R(cy + 2.1)}Z" fill="${paper}"/>`; });
       case 'think': case 'dots': return [-1, 0, 1].map((i) => `<g class="${(cls.dot || '') + (i + 2)}">${rect(cx + i * 4.4 - 1.2, cy - 1.2, 2.4, 2.4)}</g>`).join('');
@@ -398,6 +408,7 @@
     const my = small ? 52.5 : 51, mw = small ? 8 : 6, mt = small ? 2.8 : 1.5;
     const mouth = mood === 'alert' ? `<rect x="30.4" y="${R(my - 1)}" width="3.2" height="3.2" fill="${ink}"/>`
       : mood === 'happy' ? `<path d="M${R(32 - mw / 2 - .6)} ${R(my - .4)}L${R(32 - mw / 4)} ${R(my + 1.6)}H${R(32 + mw / 4)}L${R(32 + mw / 2 + .6)} ${R(my - .4)}" fill="none" stroke="${ink}" stroke-width="${mt}"/>`
+      : mood === 'wonder' ? `<path d="M${R(32 - mw * .3)} ${R(my - .2)}L${R(32 - mw * .05)} ${R(my + 1.2)}H${R(32 + mw * .3)}L${R(32 + mw * .55)} ${R(my - .6)}" fill="none" stroke="${ink}" stroke-width="${mt}"/>`
       : mood === 'oops' ? `<path d="M${R(32 - mw / 2)} ${R(my + .8)}Q${R(32 - mw / 4)} ${R(my - .7)} 32 ${R(my + .8)}T${R(32 + mw / 2)} ${R(my + .8)}" fill="none" stroke="${ink}" stroke-width="${mt}"/>`
       : mood === 'error' || mood === 'sleep' ? `<rect x="${R(32 - mw * .35)}" y="${R(my)}" width="${R(mw * .7)}" height="${mt}" fill="${ink}"/>`
       : `<rect x="${R(32 - mw / 2)}" y="${R(my)}" width="${R(mw)}" height="${mt}" fill="${ink}"/>`;

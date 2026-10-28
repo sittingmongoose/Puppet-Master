@@ -426,7 +426,7 @@
     cheer(propId, opts) {
       opts = opts || {};
       const pr = propId && this.props.get(propId);
-      this.feel(opts.mood || (this.famName === 'friendly' && Math.random() < .35 ? 'wink' : 'happy'), 1400);
+      this.feel(opts.mood || (this.famName === 'friendly' && Math.random() < .35 ? 'wink' : 'happy'), opts.hold || 1400);
       // a block still being lowered: Pip is pleased now, the sound and the flourish wait for its touchdown
       if (pr && pr.spec.ground && !pr.landed && !this.reduced) { pr.onLand = () => { this.cheerAt(pr, opts); if (opts.then) opts.then(); }; return; }
       this.cheerAt(pr, opts);

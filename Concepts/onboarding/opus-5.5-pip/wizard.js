@@ -51,8 +51,6 @@
   /* -------------------------------------------------------------- screens */
   // Each screen: chapter, words, a body, the footer, and scene(S, hover) for the stage.
   const LOOK_LINES = { friendly: 'Soft and cosy. I like it.', glass: 'Ooh, shiny. Am I glass now?', basic: 'Clean and calm. Very tidy.', retro: 'A real monitor! I glow now.' };
-  // the face each preview line is said with (happy unless named here)
-  const HOVER_MOOD = { 'Ooh, shiny. Am I glass now?': 'alert', 'NieR? I can do stoic.': 'idle', "Bring it in. I'll learn my way round.": 'alert', "Home it is. I'll keep the lights on.": 'idle' };
   const SCREENS = {
     welcome: {
       chapter: 'welcome', eyebrow: 'Welcome', title: 'Welcome to Puppet Master',
@@ -77,7 +75,7 @@
         <div class="ob-opt"><label class="ob-check" data-hover="look:nier"><input type="checkbox" data-nier ${nier ? 'checked' : ''}><span class="ob-check-box"></span><span><b>NieR Mode</b><small>Ink on parchment, a YoRHa Pip that hovers like a Pod, its own sounds.</small></span></label>${qb('look:nier', true)}</div>`;
       },
       foot: { primary: ['Continue', 'next'] },
-      scene: (h) => ({ chapter: 'welcome', props: [{ id: 'palette', kind: 'palette', slot: 'side' }], pip: { mood: h ? 'think' : 'idle', look: 'palette' }, say: h ? LOOK_LINES[h] || 'NieR? I can do stoic.' : 'Dress me up. It changes everything.', target: 'palette', label: 'Select look', cmd: `pip dress ${h || famOf(S.theme)}${h ? ' --try' : ''}` })
+      scene: (h) => ({ chapter: 'welcome', props: [{ id: 'palette', kind: 'palette', slot: 'side' }], pip: { mood: h ? 'wonder' : 'idle', look: 'palette' }, say: h ? LOOK_LINES[h] || 'NieR? I can do stoic.' : 'Dress me up. It changes everything.', target: 'palette', label: 'Select look', cmd: `pip dress ${h || famOf(S.theme)}${h ? ' --try' : ''}` })
     },
     where: {
       chapter: 'computer', eyebrow: 'The computer', title: 'Where should Puppet Master do the work?',
@@ -92,7 +90,7 @@
         const b = h || S.where, pv = !!h && h !== S.where;
         const props = b === 'connect' ? [{ id: 'laptop', kind: 'laptop', slot: 'pairA', preview: pv }, { id: 'phone', kind: 'phone', slot: 'pairB', preview: pv }]
           : [{ id: b === 'server' ? 'server' : 'laptop', kind: b === 'server' ? 'server' : 'laptop', slot: 'side', preview: pv }];
-        return { chapter: 'computer', props, pip: { mood: pv ? 'think' : 'idle', look: props[0].id }, say: { this: 'Right here works great.', connect: "Let's tie your devices together.", server: "A server never sleeps. Lucky thing." }[b], target: props[0].id, label: { this: 'This computer', connect: 'Connect device', server: 'Server' }[b], cmd: `pip lower ${props.map((p) => p.kind).join(' ')}${pv ? ' --preview' : ''}` };
+        return { chapter: 'computer', props, pip: { mood: pv ? 'wonder' : 'idle', look: props[0].id }, say: { this: 'Right here works great.', connect: "Let's tie your devices together.", server: "A server never sleeps. Lucky thing." }[b], target: props[0].id, label: { this: 'This computer', connect: 'Connect device', server: 'Server' }[b], cmd: `pip lower ${props.map((p) => p.kind).join(' ')}${pv ? ' --preview' : ''}` };
       }
     },
     begin: {
@@ -106,7 +104,7 @@
       foot: { primary: ['Continue', 'next'] },
       scene: (h) => {
         const b = h || S.begin, pv = !!h && h !== S.begin, kind = { new: 'page', existing: 'folder', restore: 'restore' }[b];
-        return { chapter: 'project', props: [{ id: kind, kind, slot: 'side', preview: pv }], pip: { mood: pv ? 'think' : 'idle', look: kind }, say: { new: 'A blank page. My favourite.', existing: "Bring it in. I'll learn my way round.", restore: 'Back from the archive, good as new.' }[b], target: kind, label: { new: 'New Project', existing: 'Existing work', restore: 'Restore' }[b], cmd: `pip project --${b}${pv ? ' --preview' : ''}` };
+        return { chapter: 'project', props: [{ id: kind, kind, slot: 'side', preview: pv }], pip: { mood: pv ? 'wonder' : 'idle', look: kind }, say: { new: 'A blank page. My favourite.', existing: "Bring it in. I'll learn my way round.", restore: 'Back from the archive, good as new.' }[b], target: kind, label: { new: 'New Project', existing: 'Existing work', restore: 'Restore' }[b], cmd: `pip project --${b}${pv ? ' --preview' : ''}` };
       }
     },
     name: {
@@ -115,7 +113,7 @@
         <p class="ob-hint${nameState() === 'taken' ? ' is-err' : ''}" id="obNameHint">${nameHint()}</p>`,
       foot: () => ({ primary: ['Continue', 'next', nameState() === 'taken'] }),
       scene: () => {
-        const n = S.name.trim(), st = nameState(), mood = { empty: 'think', long: 'alert', taken: 'oops' }[st] || 'idle';
+        const n = S.name.trim(), st = nameState(), mood = { empty: 'wonder', long: 'alert', taken: 'oops' }[st] || 'idle';
         return { chapter: 'project', props: [{ id: 'sign', kind: 'sign', slot: 'sign', params: { text: n } }], pip: { mood, look: 'sign' }, say: { empty: 'What shall we call it?', long: "That won't fit on my sign!", taken: 'Oh! You already have one called that.' }[st] || `“${n.length > 26 ? n.slice(0, 25) + '…' : n}”. Lovely.`, target: 'sign', label: st === 'taken' ? 'Name taken' : n ? (n.length > 24 ? n.slice(0, 23) + '…' : n) : 'Awaiting name', cmd: `pip sign "${n.length > 18 ? n.slice(0, 17) + '…' : n}"${st === 'taken' ? '  TAKEN' : ''}` };
       }
     },
@@ -136,7 +134,8 @@
         const online = S.online || h === 'safe:online', backup = S.backup || h === 'safe:backup';
         if (online) props.push({ id: 'cloud', kind: 'cloud', slot: 'hi', preview: !S.online });
         if (backup) props.push({ id: 'backup', kind: 'backup', slot: 'pairB', preview: !S.backup });
-        return { chapter: 'project', props, pip: { mood: 'idle', look: h === 'safe:online' ? 'cloud' : h === 'safe:backup' ? 'backup' : 'vault' }, say: h === 'safe:online' ? 'A copy in the cloud, just in case.' : h === 'safe:backup' ? 'A backup box. Sensible.' : 'Every version goes in the vault.', target: 'vault', label: 'Safe History', cmd: `pip vault --${S.vcs}${S.online ? ' --github' : ''}${S.backup ? ' --nas' : ''}` };
+        const pv = (h === 'safe:online' && !S.online) || (h === 'safe:backup' && !S.backup);
+        return { chapter: 'project', props, pip: { mood: pv ? 'wonder' : 'idle', look: h === 'safe:online' ? 'cloud' : h === 'safe:backup' ? 'backup' : 'vault' }, say: h === 'safe:online' ? 'A copy in the cloud, just in case.' : h === 'safe:backup' ? 'A backup box. Sensible.' : 'Every version goes in the vault.', target: 'vault', label: 'Safe History', cmd: `pip vault --${S.vcs}${S.online ? ' --github' : ''}${S.backup ? ' --nas' : ''}` };
       }
     },
     away: {
@@ -150,7 +149,7 @@
       scene: (h) => {
         const b = h || S.away, pv = !!h && h !== S.away;
         const props = b === 'anywhere' ? [{ id: 'house', kind: 'house', slot: 'pairA', preview: pv }, { id: 'globe', kind: 'globe', slot: 'pairB', preview: pv }] : [{ id: 'house', kind: 'house', slot: 'side', preview: pv }];
-        return { chapter: 'project', props, pip: { mood: pv ? 'think' : 'idle', look: props[props.length - 1].id }, say: b === 'anywhere' ? "I'll come with you. Anywhere." : "Home it is. I'll keep the lights on.", target: props[props.length - 1].id, label: b === 'anywhere' ? 'Anywhere' : 'Home only', cmd: `pip reach --${b}${pv ? ' --preview' : ''}` };
+        return { chapter: 'project', props, pip: { mood: pv ? 'wonder' : 'idle', look: props[props.length - 1].id }, say: b === 'anywhere' ? "I'll come with you. Anywhere." : "Home it is. I'll keep the lights on.", target: props[props.length - 1].id, label: b === 'anywhere' ? 'Anywhere' : 'Home only', cmd: `pip reach --${b}${pv ? ' --preview' : ''}` };
       }
     },
     review: {
@@ -158,7 +157,7 @@
       lead: 'Nothing has been created yet. Check it, then create it in one step.',
       body: () => `<div class="ob-review">${reviewRows().map(([g, v, at], i) => `<div class="ob-rv" style="--i:${i}"><span class="ob-rv-k">${g}</span><span class="ob-rv-v">${esc(v)}</span><button type="button" class="ob-link ob-rv-e" data-go="${at}">${icon('edit', 14)}Edit</button></div>`).join('')}</div>`,
       foot: { primary: ['Create Project', 'next'] },
-      scene: () => ({ chapter: 'project', props: [{ id: 'clipboard', kind: 'clipboard', slot: 'side', params: { ticks: Math.min(4, S.reviewTicks || 0), rows: 4 } }], pip: { mood: (S.reviewTicks || 0) >= 4 ? 'happy' : 'think', look: 'clipboard' }, say: (S.reviewTicks || 0) >= 4 ? 'All checked. Ready when you are.' : 'Let me check everything…', target: 'clipboard', label: 'Review', cmd: `pip check --all  ${S.reviewTicks || 0}/4` })
+      scene: () => ({ chapter: 'project', props: [{ id: 'clipboard', kind: 'clipboard', slot: 'side', params: { ticks: Math.min(4, S.reviewTicks || 0), rows: 4 } }], pip: { mood: (S.reviewTicks || 0) >= 4 ? 'happy' : 'wonder', look: 'clipboard' }, say: (S.reviewTicks || 0) >= 4 ? 'All checked. Ready when you are.' : 'Let me check everything…', target: 'clipboard', label: 'Review', cmd: `pip check --all  ${S.reviewTicks || 0}/4` })
     },
     creating: {
       chapter: 'project', eyebrow: 'Creating', title: () => `Creating ${esc(S.name.trim() || 'your Project')}`,
@@ -185,7 +184,7 @@
         const ready = PROVIDERS.filter(([k]) => S.ai[k] === 'ready');
         const props = PROVIDERS.map(([k, n], i) => ({ id: 'o' + k, kind: 'orb', slot: 'o' + (i + 1), scale: .9, params: { lit: S.ai[k] === 'ready', label: n[0], hue: ['e', 'b', 'c', 'd'][i] } }));
         const n = ready.length, checking = PROVIDERS.some(([k]) => S.ai[k] === 'checking');
-        return { chapter: 'ai', props, pip: { mood: n ? 'happy' : checking ? 'think' : 'sleep', power: n, look: props[Math.max(0, n - 1)].id }, say: n >= 2 ? `${n} power sources. I feel brilliant.` : n === 1 ? 'Power! I can think now.' : checking ? 'Looking for power…' : "No power yet. I'll nap.", target: props[Math.max(0, n - 1)].id, label: n ? n + ' connected' : 'No power', cmd: checking ? 'pip power --scan' : `pip power  ${n} online` };
+        return { chapter: 'ai', props, pip: { mood: n ? 'happy' : checking ? 'wonder' : 'sleep', power: n, look: props[Math.max(0, n - 1)].id }, say: n >= 2 ? `${n} power sources. I feel brilliant.` : n === 1 ? 'Power! I can think now.' : checking ? 'Looking for power…' : "No power yet. I'll nap.", target: props[Math.max(0, n - 1)].id, label: n ? n + ' connected' : 'No power', cmd: checking ? 'pip power --scan' : `pip power  ${n} online` };
       }
     },
     ready: {
@@ -394,8 +393,6 @@
     if (S.hover) { const [k, v] = S.hover.split(':'); hov = (k === S.screen || k === 'look' || k === 'safe' || k === 'ai') ? (S.screen === 'safe' ? S.hover : v) : null; }
     const spec = scr.scene(hov);
     spec.screen = S.screen;
-    // while Pip previews a choice it wears the face of what it says, not a "considering" face that read as worried
-    if (hov && /^(look|where|begin|away)$/.test(S.screen) && spec.pip && spec.pip.mood === 'think') spec.pip.mood = HOVER_MOOD[spec.say] || 'happy';
     if (S.sayNow) { spec.sayNow = true; S.sayNow = false; }
     if (S.screen === 'look' && stage) stage.tryOn(hov ? (hov === 'nier' ? 'nier-' + schemeOf(S.theme) : hov + '-' + schemeOf(S.theme)) : S.theme);
     if (stage) stage.direct(spec);
@@ -504,6 +501,8 @@
   function back() { const prev = S.history.pop(); if (prev) go(prev, { back: true }); }
 
   /* --------------------------------------------------------------- events */
+  // Pip wonders while you look at a choice and is happy when you make it: the happy face holds through its line
+  const PICKED = { mood: 'happy', hold: 2600 };
   document.addEventListener('click', (e) => {
     const b = e.target.closest('button, [data-hover]');
     if (!b) return;
@@ -517,19 +516,19 @@
       S[k] = v; S.hover = null; renderScreen(0);
       sfx('select');
       // a choice made: Pip answers it at once
-      const spec = SCREENS[S.screen].scene(null); spec.screen = S.screen; spec.sayNow = true; if (stage) { stage.busy(); stage.direct(spec); stage.cheer(spec.target); }
+      const spec = SCREENS[S.screen].scene(null); spec.screen = S.screen; spec.sayNow = true; if (stage) { stage.busy(); stage.direct(spec); stage.cheer(spec.target, PICKED); }
       return;
     }
     if (b.dataset.look) {
       const t = b.dataset.look + '-' + schemeOf(S.theme === 'nier-light' ? 'basic-light' : S.theme === 'nier-dark' ? 'basic-dark' : S.theme);
-      S.theme = t; S.hover = null; applyTheme(); renderScreen(0); sfx('select'); if (stage) stage.cheer('palette', { mood: 'wink' }); return;
+      S.theme = t; S.hover = null; applyTheme(); renderScreen(0); sfx('select'); if (stage) stage.cheer('palette', PICKED); return;
     }
     if (b.dataset.scheme) {
       const fam = famOf(S.theme); S.theme = (fam === 'nier' ? 'nier' : fam) + '-' + b.dataset.scheme; applyTheme(); renderScreen(0); sfx('tap'); return;
     }
-    if (b.dataset.vcs) { S.vcs = b.dataset.vcs; renderScreen(0); sfx('select'); if (stage) stage.cheer('vault'); return; }
-    if (b.dataset.online) { S.online = b.dataset.online === 'true'; renderScreen(0); sfx(S.online ? 'toggleOn' : 'toggleOff'); if (stage && S.online) stage.cheer('cloud'); return; }
-    if (b.dataset.backup) { S.backup = b.dataset.backup === 'null' ? null : b.dataset.backup; renderScreen(0); sfx(S.backup ? 'toggleOn' : 'toggleOff'); if (stage && S.backup) stage.cheer('backup'); return; }
+    if (b.dataset.vcs) { S.vcs = b.dataset.vcs; renderScreen(0); sfx('select'); if (stage) stage.cheer('vault', PICKED); return; }
+    if (b.dataset.online) { S.online = b.dataset.online === 'true'; renderScreen(0); sfx(S.online ? 'toggleOn' : 'toggleOff'); if (stage && S.online) stage.cheer('cloud', PICKED); return; }
+    if (b.dataset.backup) { S.backup = b.dataset.backup === 'null' ? null : b.dataset.backup; renderScreen(0); sfx(S.backup ? 'toggleOn' : 'toggleOff'); if (stage && S.backup) stage.cheer('backup', PICKED); return; }
     if (b.dataset.go) { go(b.dataset.go); return; }
     if (b.dataset.chapter) { const first = { welcome: 'welcome', computer: 'where', project: 'begin', ai: 'ai' }[b.dataset.chapter]; while (S.history.length && S.history[S.history.length - 1] !== first) S.history.pop(); S.history.pop(); go(first, { back: true }); return; }
     const act = b.dataset.act;
@@ -548,7 +547,7 @@
       const sch = schemeOf(S.theme);
       S.theme = e.target.checked ? 'nier-' + sch : 'basic-' + sch; applyTheme(); renderScreen(0);
       sfx(e.target.checked ? 'toggleOn' : 'toggleOff');
-      if (stage) stage.cheer('palette');
+      if (stage) stage.cheer('palette', PICKED);
     }
   });
   // hovering or focusing a choice previews it on the stage
