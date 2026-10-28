@@ -298,7 +298,10 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # saying so.
 # A3-css (2026-10-19): twenty certified dead whole rules removed from the authored Usage CSS;
 # their twenty descendant anchors leave the hosted-board census. Compound uses stay unchanged.
-HOST_SCOPE_EXPECT = {'rewritten': 2659, 'compound': 20}
+# The readout's quick exit (2026-10-28, 30-charts.css: a card that is not on fades in 70 ms; on a hosted board it is the
+# Home budget card's readout, which lingered over the terminal's tabs, so it is meant to reach hosted boards) adds one
+# anchor: 'rewritten' 2,660.
+HOST_SCOPE_EXPECT = {'rewritten': 2660, 'compound': 20}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

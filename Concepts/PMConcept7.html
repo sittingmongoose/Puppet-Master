@@ -28467,6 +28467,7 @@ html:not([data-o55-tour]) #chatPanel[data-pm56="on"] > .float-content.pm6-chat-r
 /* a target's own proxy shape (js/18-hover.js prefetch): set on the target, never passed down to a target inside it */
 @property --pmh-radius { syntax: '*'; inherits: false; }
 @property --pmh-inset  { syntax: '*'; inherits: false; }
+@property --pmh-variant { syntax: '*'; inherits: false; }
 [data-pmh-kind]::before,
 [data-pmh-kind]::after {
   --pmh-i: inherit; --pmh-x: inherit; --pmh-y: inherit; --pmh-px: inherit; --pmh-py: inherit; --pmh-dx: inherit; --pmh-dy: inherit;
@@ -29432,6 +29433,19 @@ html[data-theme="glass-light"] .o55-demo[data-o55-narrow] .o55-demopill > svg.nx
 }
 @keyframes pmh-f-ripple { from { opacity: 1; scale: .96; } to { opacity: 0; scale: 1.28; } }
 
+/* On a switcher's item (a home panel's tab, a page tab, a rail segment: --pmh-variant chip, 60-switcher-looks.css) the
+   bubble is an echo of the chip it would become: the chip's shape, a fill and a ring in the chip's own mint, without the
+   dot aura, the halo, the breathing and the press ripple. In a tab strip those drew past the chip on every side, and
+   the strip cut the aura into dotted lines beside the tab and a second outline round the chip (Jared, 2026-10-28: the
+   tab hover was "a different shape than the selector" with "artifacts from other animations coming in"). */
+#pmh-frame[data-pmh-family="friendly"][data-pmh-kind="ctl"][data-pmh-variant="chip"] {
+  background: var(--pm-switch-hover, var(--pmc-fill));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pm-switch-mark, var(--accent-primary)) 50%, transparent), 0 2px 6px -3px var(--pmc-drop);
+}
+#pmh-frame[data-pmh-family="friendly"][data-pmh-kind="ctl"][data-pmh-variant="chip"] > i:first-child,
+#pmh-frame[data-pmh-family="friendly"][data-pmh-kind="ctl"][data-pmh-variant="chip"]::before,
+#pmh-frame[data-pmh-family="friendly"][data-pmh-kind="ctl"][data-pmh-variant="chip"]::after { display: none; }
+
 /* ---- Basic and Friendly: the control's own hover fill steps aside while the marker is on it, for the controls that
    rest clear (icon buttons, tabs, segments, rows, quiet text buttons). Selected, active and pressed-state controls,
    filled buttons and the title bar's project and look buttons keep theirs, under the marker. Weighted with ids: the
@@ -29504,10 +29518,16 @@ html[data-theme="glass-light"] .o55-demo[data-o55-narrow] .o55-demopill > svg.nx
   content: ""; position: absolute; inset: 2px; pointer-events: none; background: var(--pmc-bar); opacity: 0;
 }
 #pmh-frame[data-pmh-family="retro"][data-pmh-kind="ctl"].pmh-frame-press::after { opacity: 1; }
+/* on a switcher's item the rule and the label take the chip's phosphor (--pm-switch-mark): in Retro Light the shell's
+   --accent-primary is cobalt, so a hovered tab was a blue rule and blue words beside a green chip (2026-10-28 review) */
+#pmh-frame[data-pmh-family="retro"][data-pmh-kind="ctl"][data-pmh-variant="chip"] { box-shadow: inset 0 0 0 1px var(--pm-switch-mark, var(--pmh-r-rule)); }
 /* a pressed tab is the chip's from the press on (data-lg-press, glass.js): the phosphor ink would sit on the arriving
    chip, lime on lime, until the app's click lands (Q16 review F3) */
 :root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
   color: var(--accent-primary) !important; transition-duration: 0s !important;
+}
+:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
+  color: var(--pm-switch-mark, var(--accent-primary)) !important;
 }
 /* the commander's bar on a rail row */
 :root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row).pmh-on:not(.active, .selected, [aria-selected="true"]) {
@@ -34115,7 +34135,12 @@ html:not([data-theme^="glass"]):not(#lgz):not(#lgy) .pmw-plate::before { top: 0;
    strip's foot), so the hover and the choice were two shapes, and hovering the chosen tab drew one over the other
    (Jared, 2026-10-28: "the tabs on the home page panels are a different shape than the selector"). Read by
    js/18-hover.js (prefetch). */
-html:not([data-theme^="glass"]):not(#lgz) .pmw-tab { --pmh-radius: var(--pm-switch-r); --pmh-inset: 0px 0px 1px 0px; }
+html:not([data-theme^="glass"]):not(#lgz) .pmw-tab { --pmh-radius: var(--pm-switch-r); --pmh-inset: 0px 0px 1px 0px; --pmh-variant: chip; }
+/* the same for the title bar's page tabs, whose chip is the lens 2 px round the tab (glass.js STRIPS pad), and the rail's
+   segments, whose chip is the segment's own box (rail skin D, 22-tabs.src.css). --pmh-variant: chip lets a look draw
+   the marker on a switcher's item as an echo of its chip (25-hover-controls.css) */
+html:not([data-theme^="glass"]):not(#lgz) .title-bar .page-tab { --pmh-radius: var(--pm-switch-r); --pmh-inset: -2px -2px -2px -2px; --pmh-variant: chip; }
+html:not([data-theme^="glass"]):not(#lgz) #sidePanelSlot .pm-segtab-item { --pmh-variant: chip; }
 /* the chosen tab's words are the switcher's chosen ink, as on every other chip of the look */
 html:not([data-theme^="glass"]):not(#lgz) :is(#pm-home-centre),
 html:not([data-theme^="glass"]):not(#lgz) :where(.pmw-scope):not(#t7:not(*)) { --pmw-tab-active: var(--pm-switch-ink-on); }
@@ -67063,6 +67088,19 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
   background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint)), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens)), var(--pm-switch-fill, var(--lg-tint-lens))), linear-gradient(var(--pm-switch-body, var(--lg-lens-body)), var(--pm-switch-body, var(--lg-lens-body)));
   box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), inset 0 -1px 1px var(--pm-switch-bottom, var(--lg-edge-bot)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), var(--pm-switch-shadow, var(--lg-lens-drop));
 }
+/* (2026-10-28 review, muse A1) In Glass a hovered tab's fill is the lens's shape above: 3 px under the tab's top, 4 px
+   over its foot, the switcher's corners. It was the tab's own folder crown down to the strip's foot, so the hover and
+   the choice were two shapes, as they were in the other looks (whose hover marker takes the chip's shape,
+   60-switcher-looks.css). The tab is its own stacking context (z-index 1), so the fill sits under its words. */
+html[data-lg="on"][data-theme^="glass"]:not([data-o55-nier="on"]):not(#lgz) .pmw-tab:hover:not([data-active]) { background: var(--pmw-tab-idle-fill, transparent); }
+html[data-lg="on"][data-theme^="glass"]:not([data-o55-nier="on"]):not(#lgz) .pmw-tab:not([data-active])::before {
+  content: ''; position: absolute; inset: 3px 0 4px; z-index: -1; pointer-events: none;
+  border-radius: var(--pm-switch-r, var(--pm-ctl-r)); background: var(--pmw-tab-hover); opacity: 0; transition: opacity 120ms ease-out;
+}
+html[data-lg="on"][data-theme^="glass"]:not([data-o55-nier="on"]):not(#lgz) .pmw-strip:not(.is-dragging) .pmw-tab:hover:not([data-active])::before { opacity: 1; }
+/* Glass Light's tab hover (white at 13 % on a near-white strip) did not show at all: it takes the track's wash, as the
+   switcher's tracks do (muse A10) */
+html[data-lg="on"][data-theme="glass-light"]:not([data-o55-nier="on"]):not(#lgz) .pmw-tab:not([data-active])::before { background: var(--lg-fill); }
 /* Jared #2 (2026-10-14): Usage's list has one highlight in Glass, the lens; its own sliding ink steps aside */
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #panel-usage .pmu-navink { opacity: 0 !important; }
 /* Jared #22 (2026-10-15): every selector in Settings is the one switcher. The left bar, the section tabs, the page index
@@ -72839,6 +72877,10 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-mark[data-mark=
   font-size: 12.5px; line-height: 1.35; color: var(--pmu-ink); opacity: 0; font-variant-numeric: tabular-nums;
   transition: opacity calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), translate calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
 :is(#panel-usage,[data-pmu-host]) .pmu-readout.is-flip { transition: opacity calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), translate calc(220ms * var(--pmu-speed, 1)) cubic-bezier(.22,1,.36,1); }
+/* leaving, the card goes at once: it sits in the window's top layer, so the pointer leaving a chart for the panel under it
+   (Home's budget card over the terminal's tabs) left it fading over that panel's tabs for half a second, a ghost of the
+   chart over another panel's hover (2026-10-28 review, muse A9) */
+:is(#panel-usage,[data-pmu-host]) .pmu-readout:not(.is-on) { transition: opacity 70ms linear, translate 0s; }
 html[data-theme="glass-dark"] :is(#panel-usage,[data-pmu-host]) .pmu-readout { background: #2A2140; }
 html[data-theme="glass-light"] :is(#panel-usage,[data-pmu-host]) .pmu-readout { background: #FBFCFE; }
 :is(#panel-usage,[data-pmu-host]) .pmu-readout strong { display: block; margin-bottom: 6px; font-family: var(--pmu-mono); font-size: 11px; font-weight: 400; letter-spacing: .04em;
@@ -161759,7 +161801,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (post) post.port1.onmessage = afterFrame;
     /* what the proxies need of a target, read once: its box, radius and clipping ancestors */
     /* A target may give its proxies a shape of its own (CSS, on the target): --pmh-radius replaces its border-radius and
-       --pmh-inset (top right bottom left, px) shrinks the box they sit on, so a control whose chosen state is drawn as
+       --pmh-inset (top right bottom left, px) shrinks the box they sit on (negative grows it), --pmh-variant names a
+       variant of the marker for CSS (#pmh-frame[data-pmh-variant]), so a control whose chosen state is drawn as
        a chip of another shape (the home panels' tabs: a folder crown for the tab, a rounded chip 2 px above the strip's
        foot for the choice) is hovered in the chip's shape, not its own (Jared, 2026-10-28). Both are looks' values, so
        they are read again after a look change (lookGen): the radius was read once per target for its lifetime, and a
@@ -161771,6 +161814,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (s.radius === null || s.gen !== lookGen) {
         var cs = getComputedStyle(s.box || s.el), ownR = cs.getPropertyValue('--pmh-radius').trim(), ins = cs.getPropertyValue('--pmh-inset').trim();
         s.radius = ownR || cs.borderRadius || '';
+        s.variant = cs.getPropertyValue('--pmh-variant').trim() || null;   /* the marker's data-pmh-variant on this target */
         s.inset = null;
         if (ins) { var q = ins.split(/\s+/).map(parseFloat); if (q.length === 4 && q.every(isFinite) && (q[0] || q[1] || q[2] || q[3])) s.inset = q; }
         s.gen = lookGen;
@@ -162096,7 +162140,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
     /* ---- proxies ---- */
     var glowEl = null, GL = [], glowCur = -1, glowLastOff = 1;
-    var frameEl = null, FR = { fresh: false, press: false, on: false, x: 0, y: 0, w: 0, h: 0, vx: 0, vy: 0, vw: 0, vh: 0, acc: 0, offAt: -1e9, travel: false, clip: '', host: null };
+    var frameEl = null, FR = { fresh: false, press: false, on: false, x: 0, y: 0, w: 0, h: 0, vx: 0, vy: 0, vw: 0, vh: 0, acc: 0, offAt: -1e9, travel: false, clip: '', host: null, variant: null };
     function proxyWanted(kind) { var t = tk(kind); return !!(t.glow || t.frame); }
     function proxyShown() { return !!(glowCur >= 0 || FR.on); }
     var clipMemo = new WeakMap();   /* ancestor -> 1 clips, 2 clips and is fixed, 3 is fixed, 0 neither (siblings share them) */
@@ -162214,6 +162258,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         if (frameEl.getAttribute('data-pmh-kind') !== s.kind) frameEl.setAttribute('data-pmh-kind', s.kind);
         far = tok.fmax > 0 && Math.max(Math.abs(gx - FR.x), Math.abs(gy - FR.y)) > tok.fmax;
         FR.host = target;
+      }
+      /* the variant is the look's (prefetch reads it again after a look change), so it is checked on every frame, not
+         only when the frame meets a new target: a tab hovered through a look change kept the last look's variant */
+      if ((s.variant || null) !== FR.variant) {
+        FR.variant = s.variant || null;
+        if (FR.variant) frameEl.setAttribute('data-pmh-variant', FR.variant); else frameEl.removeAttribute('data-pmh-variant');
+        stats.writes++;
       }
       var snap = reduced || far || !FR.on && now - FR.offAt > tok.fsnap;
       /* .pmh-frame-new: the frame met this target anew (placed, not travelled), so a look can play an arrival there;
@@ -192860,8 +192911,9 @@ function capSwap(c) {
 /* The tab strip (D5), one for every panel. Anatomy, left to right:
      [narrow switcher] [pinned tabs] [tabs ...] [+N] [+]  ...  [panel menu]      (corner grip at the top right)
    Widths are set by the fitter, never by flex shrinking (the old strip's `flex-shrink:1 !important` is what killed its
-   overflow): natural 96-200 px, then inactive tabs shrink to 72, then to 36 px icons; the active tab keeps at least
-   120 px and never hides; then a contiguous window of tabs around the active one stays and "+N" counts the rest.
+   overflow): natural 96-200 px, then inactive tabs shrink to 72, then to 36 px icons; the active tab keeps its width
+   down to 120 px (never padded past its own) and never hides; then a contiguous window of tabs around the active one
+   stays and "+N" counts the rest.
    ARIA tabs pattern: arrows, Home/End, Enter/Space, Delete closes, Shift+F10 the tab menu. */
 
 var TAB = PMW.TAB = { max: 200, natural: 96, shrunk: 72, icon: 36, activeMin: 120, pinned: 36, gap: 8, padL: 10, padR: 4, iconSlot: 16, iconGap: 6, close: 24, plus: 28, more: 34, menu: 28, stripPadL: 6, stripPadR: 6, gripReserve: 14 };
@@ -192912,8 +192964,13 @@ function exitWords(code) { return 'exited ' + code; }
 /* natural width of a tab: icon + gap + label + marks + close slot + padding, clamped */
 function naturalWidth(rec, font, host, active) {
   var label = tabLabel(rec);
+  /* a tab that is not chosen keeps room for its label in the chosen weight, so choosing it widens no tab: the chosen
+     label's 600 weight made it 1-4 px wider at the click, and every tab after it moved while the chip flew to it
+     (2026-10-28 review, muse A8). Not in NieR, whose chosen label also draws the cursor square (60-nier.css). */
+  var lw = labelWidth(label, font, host, !!rec.preview, !!active);
+  if (!active && !look().nier) lw = Math.max(lw, labelWidth(label, font, host, !!rec.preview, true));
   // padding, icon, the two 6 px gaps (icon-label, label-close), the label, the 24 px close slot, 2 px of slack
-  var w = TAB.padL + TAB.iconSlot + TAB.iconGap + labelWidth(label, font, host, !!rec.preview, !!active) + TAB.iconGap + TAB.close + TAB.padR + 2;
+  var w = TAB.padL + TAB.iconSlot + TAB.iconGap + lw + TAB.iconGap + TAB.close + TAB.padR + 2;
   if (rec.exitCode != null && rec.exitCode !== 0) w += labelWidth(exitWords(rec.exitCode), font, host) + 18;
   if (rec.agent) w += 14;
   return clamp(w, TAB.natural, TAB.max);
@@ -192942,17 +192999,22 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
   var nat = {};
   rest.forEach(function (t) { nat[t] = naturalWidth(recs[t], font, host, t === activeId); });
   var activeIn = rest.indexOf(activeId) >= 0;
-  var aW = activeIn ? Math.max(TAB.activeMin, nat[activeId]) : 0;
+  /* the active tab keeps its own width and never shrinks under 120 px (or under its own width, when that is less); it is
+     never padded wider than it is. It was: a 112 px tab grew to 120 when chosen, so every tab after it jumped 8 px at the
+     click while the chip glided to it, and back again when another tab was chosen (Jared, 2026-10-28: "the hover/tab
+     selector and moving animations are also a little janky") */
+  var aMin = activeIn ? Math.min(TAB.activeMin, nat[activeId]) : 0;
+  var aW = activeIn ? nat[activeId] : 0;
   var others = rest.filter(function (t) { return t !== activeId; });
   var gaps = rest.length * TAB.gap;
   // the active tab gives up width (down to 120) before the others shrink past a step; it never covers "+" or "+N"
-  function activeFor(each) { return activeIn ? Math.max(TAB.activeMin, Math.min(aW, room - gaps - others.length * each)) : 0; }
+  function activeFor(each) { return activeIn ? Math.max(aMin, Math.min(aW, room - gaps - others.length * each)) : 0; }
   var sumNat = others.reduce(function (a, t) { return a + nat[t]; }, 0) + aW + gaps;
   if (sumNat <= room) {
     rest.forEach(function (t) { res.widths[t] = t === activeId ? aW : nat[t]; res.size[t] = 'full'; });
     return res;
   }
-  if (!others.length) {   // the active tab alone: as wide as the room allows, never under 120
+  if (!others.length) {   // the active tab alone: its own width, as far as the room allows, never under 120 (or its own)
     res.widths[activeId] = activeFor(0); res.size[activeId] = res.widths[activeId] < nat[activeId] ? 'shrunk' : 'full';
     return res;
   }
@@ -192960,7 +193022,7 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
      width around the active one, and what does not fit waits behind "+N" at once (pinned tabs stay 36 px and the active
      tab stays shown and at least 120 px wide, as in Shrink to fit) */
   if (PMW.settings.get('panels.tabs.sizing') === 'fixed') {
-    if (activeIn) aW = Math.max(TAB.activeMin, Math.min(aW, room - TAB.more - 2 * TAB.gap));
+    if (activeIn) aW = Math.max(aMin, Math.min(aW, room - TAB.more - 2 * TAB.gap));
     var leftRoom = room - TAB.more - (activeIn ? aW + TAB.gap : 0), keepF = {};
     var ai0 = activeIn ? rest.indexOf(activeId) : -1, lo = ai0, hi = ai0, goR = true, goL = true;
     if (ai0 < 0) { lo = -1; hi = -1; goL = false; }
@@ -192998,7 +193060,7 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
     return res;
   }
   // 3. a window of icon tabs around the active tab; the rest hide behind "+N" (the active tab leaves room for it)
-  if (activeIn) aW = Math.max(TAB.activeMin, Math.min(aW, room - TAB.more - 2 * TAB.gap));
+  if (activeIn) aW = Math.max(aMin, Math.min(aW, room - TAB.more - 2 * TAB.gap));
   var capacity = Math.max(0, Math.floor((room - TAB.more - (activeIn ? aW + TAB.gap : 0)) / (TAB.icon + TAB.gap)));
   var order = rest.slice();
   var ai = order.indexOf(activeId);

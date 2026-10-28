@@ -602,6 +602,19 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
   background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint)), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens)), var(--pm-switch-fill, var(--lg-tint-lens))), linear-gradient(var(--pm-switch-body, var(--lg-lens-body)), var(--pm-switch-body, var(--lg-lens-body)));
   box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), inset 0 -1px 1px var(--pm-switch-bottom, var(--lg-edge-bot)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), var(--pm-switch-shadow, var(--lg-lens-drop));
 }
+/* (2026-10-28 review, muse A1) In Glass a hovered tab's fill is the lens's shape above: 3 px under the tab's top, 4 px
+   over its foot, the switcher's corners. It was the tab's own folder crown down to the strip's foot, so the hover and
+   the choice were two shapes, as they were in the other looks (whose hover marker takes the chip's shape,
+   60-switcher-looks.css). The tab is its own stacking context (z-index 1), so the fill sits under its words. */
+html[data-lg="on"][data-theme^="glass"]:not([data-o55-nier="on"]):not(#lgz) .pmw-tab:hover:not([data-active]) { background: var(--pmw-tab-idle-fill, transparent); }
+html[data-lg="on"][data-theme^="glass"]:not([data-o55-nier="on"]):not(#lgz) .pmw-tab:not([data-active])::before {
+  content: ''; position: absolute; inset: 3px 0 4px; z-index: -1; pointer-events: none;
+  border-radius: var(--pm-switch-r, var(--pm-ctl-r)); background: var(--pmw-tab-hover); opacity: 0; transition: opacity 120ms ease-out;
+}
+html[data-lg="on"][data-theme^="glass"]:not([data-o55-nier="on"]):not(#lgz) .pmw-strip:not(.is-dragging) .pmw-tab:hover:not([data-active])::before { opacity: 1; }
+/* Glass Light's tab hover (white at 13 % on a near-white strip) did not show at all: it takes the track's wash, as the
+   switcher's tracks do (muse A10) */
+html[data-lg="on"][data-theme="glass-light"]:not([data-o55-nier="on"]):not(#lgz) .pmw-tab:not([data-active])::before { background: var(--lg-fill); }
 /* Jared #2 (2026-10-14): Usage's list has one highlight in Glass, the lens; its own sliding ink steps aside */
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #panel-usage .pmu-navink { opacity: 0 !important; }
 /* Jared #22 (2026-10-15): every selector in Settings is the one switcher. The left bar, the section tabs, the page index

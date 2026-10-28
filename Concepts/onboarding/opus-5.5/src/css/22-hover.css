@@ -17,6 +17,7 @@
 /* a target's own proxy shape (js/18-hover.js prefetch): set on the target, never passed down to a target inside it */
 @property --pmh-radius { syntax: '*'; inherits: false; }
 @property --pmh-inset  { syntax: '*'; inherits: false; }
+@property --pmh-variant { syntax: '*'; inherits: false; }
 [data-pmh-kind]::before,
 [data-pmh-kind]::after {
   --pmh-i: inherit; --pmh-x: inherit; --pmh-y: inherit; --pmh-px: inherit; --pmh-py: inherit; --pmh-dx: inherit; --pmh-dy: inherit;

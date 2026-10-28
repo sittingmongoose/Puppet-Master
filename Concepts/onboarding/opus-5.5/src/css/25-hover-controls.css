@@ -114,6 +114,19 @@
 }
 @keyframes pmh-f-ripple { from { opacity: 1; scale: .96; } to { opacity: 0; scale: 1.28; } }
 
+/* On a switcher's item (a home panel's tab, a page tab, a rail segment: --pmh-variant chip, 60-switcher-looks.css) the
+   bubble is an echo of the chip it would become: the chip's shape, a fill and a ring in the chip's own mint, without the
+   dot aura, the halo, the breathing and the press ripple. In a tab strip those drew past the chip on every side, and
+   the strip cut the aura into dotted lines beside the tab and a second outline round the chip (Jared, 2026-10-28: the
+   tab hover was "a different shape than the selector" with "artifacts from other animations coming in"). */
+#pmh-frame[data-pmh-family="friendly"][data-pmh-kind="ctl"][data-pmh-variant="chip"] {
+  background: var(--pm-switch-hover, var(--pmc-fill));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pm-switch-mark, var(--accent-primary)) 50%, transparent), 0 2px 6px -3px var(--pmc-drop);
+}
+#pmh-frame[data-pmh-family="friendly"][data-pmh-kind="ctl"][data-pmh-variant="chip"] > i:first-child,
+#pmh-frame[data-pmh-family="friendly"][data-pmh-kind="ctl"][data-pmh-variant="chip"]::before,
+#pmh-frame[data-pmh-family="friendly"][data-pmh-kind="ctl"][data-pmh-variant="chip"]::after { display: none; }
+
 /* ---- Basic and Friendly: the control's own hover fill steps aside while the marker is on it, for the controls that
    rest clear (icon buttons, tabs, segments, rows, quiet text buttons). Selected, active and pressed-state controls,
    filled buttons and the title bar's project and look buttons keep theirs, under the marker. Weighted with ids: the
@@ -182,10 +195,16 @@
   content: ""; position: absolute; inset: 2px; pointer-events: none; background: var(--pmc-bar); opacity: 0;
 }
 #pmh-frame[data-pmh-family="retro"][data-pmh-kind="ctl"].pmh-frame-press::after { opacity: 1; }
+/* on a switcher's item the rule and the label take the chip's phosphor (--pm-switch-mark): in Retro Light the shell's
+   --accent-primary is cobalt, so a hovered tab was a blue rule and blue words beside a green chip (2026-10-28 review) */
+#pmh-frame[data-pmh-family="retro"][data-pmh-kind="ctl"][data-pmh-variant="chip"] { box-shadow: inset 0 0 0 1px var(--pm-switch-mark, var(--pmh-r-rule)); }
 /* a pressed tab is the chip's from the press on (data-lg-press, glass.js): the phosphor ink would sit on the arriving
    chip, lime on lime, until the app's click lands (Q16 review F3) */
 :root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
   color: var(--accent-primary) !important; transition-duration: 0s !important;
+}
+:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
+  color: var(--pm-switch-mark, var(--accent-primary)) !important;
 }
 /* the commander's bar on a rail row */
 :root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row).pmh-on:not(.active, .selected, [aria-selected="true"]) {

@@ -257,7 +257,12 @@ html:not([data-theme^="glass"]):not(#lgz):not(#lgy) .pmw-plate::before { top: 0;
    strip's foot), so the hover and the choice were two shapes, and hovering the chosen tab drew one over the other
    (Jared, 2026-10-28: "the tabs on the home page panels are a different shape than the selector"). Read by
    js/18-hover.js (prefetch). */
-html:not([data-theme^="glass"]):not(#lgz) .pmw-tab { --pmh-radius: var(--pm-switch-r); --pmh-inset: 0px 0px 1px 0px; }
+html:not([data-theme^="glass"]):not(#lgz) .pmw-tab { --pmh-radius: var(--pm-switch-r); --pmh-inset: 0px 0px 1px 0px; --pmh-variant: chip; }
+/* the same for the title bar's page tabs, whose chip is the lens 2 px round the tab (glass.js STRIPS pad), and the rail's
+   segments, whose chip is the segment's own box (rail skin D, 22-tabs.src.css). --pmh-variant: chip lets a look draw
+   the marker on a switcher's item as an echo of its chip (25-hover-controls.css) */
+html:not([data-theme^="glass"]):not(#lgz) .title-bar .page-tab { --pmh-radius: var(--pm-switch-r); --pmh-inset: -2px -2px -2px -2px; --pmh-variant: chip; }
+html:not([data-theme^="glass"]):not(#lgz) #sidePanelSlot .pm-segtab-item { --pmh-variant: chip; }
 /* the chosen tab's words are the switcher's chosen ink, as on every other chip of the look */
 html:not([data-theme^="glass"]):not(#lgz) :is(#pm-home-centre, .pmw-scope) { --pmw-tab-active: var(--pm-switch-ink-on); }
 /* and its close x (and the unsaved dot in it) is part of the chip too: the chip's ink, with a square of that ink under the

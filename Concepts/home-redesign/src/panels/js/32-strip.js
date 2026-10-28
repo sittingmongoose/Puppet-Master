@@ -1,8 +1,9 @@
 /* The tab strip (D5), one for every panel. Anatomy, left to right:
      [narrow switcher] [pinned tabs] [tabs ...] [+N] [+]  ...  [panel menu]      (corner grip at the top right)
    Widths are set by the fitter, never by flex shrinking (the old strip's `flex-shrink:1 !important` is what killed its
-   overflow): natural 96-200 px, then inactive tabs shrink to 72, then to 36 px icons; the active tab keeps at least
-   120 px and never hides; then a contiguous window of tabs around the active one stays and "+N" counts the rest.
+   overflow): natural 96-200 px, then inactive tabs shrink to 72, then to 36 px icons; the active tab keeps its width
+   down to 120 px (never padded past its own) and never hides; then a contiguous window of tabs around the active one
+   stays and "+N" counts the rest.
    ARIA tabs pattern: arrows, Home/End, Enter/Space, Delete closes, Shift+F10 the tab menu. */
 
 var TAB = PMW.TAB = { max: 200, natural: 96, shrunk: 72, icon: 36, activeMin: 120, pinned: 36, gap: 8, padL: 10, padR: 4, iconSlot: 16, iconGap: 6, close: 24, plus: 28, more: 34, menu: 28, stripPadL: 6, stripPadR: 6, gripReserve: 14 };
@@ -53,8 +54,13 @@ function exitWords(code) { return 'exited ' + code; }
 /* natural width of a tab: icon + gap + label + marks + close slot + padding, clamped */
 function naturalWidth(rec, font, host, active) {
   var label = tabLabel(rec);
+  /* a tab that is not chosen keeps room for its label in the chosen weight, so choosing it widens no tab: the chosen
+     label's 600 weight made it 1-4 px wider at the click, and every tab after it moved while the chip flew to it
+     (2026-10-28 review, muse A8). Not in NieR, whose chosen label also draws the cursor square (60-nier.css). */
+  var lw = labelWidth(label, font, host, !!rec.preview, !!active);
+  if (!active && !look().nier) lw = Math.max(lw, labelWidth(label, font, host, !!rec.preview, true));
   // padding, icon, the two 6 px gaps (icon-label, label-close), the label, the 24 px close slot, 2 px of slack
-  var w = TAB.padL + TAB.iconSlot + TAB.iconGap + labelWidth(label, font, host, !!rec.preview, !!active) + TAB.iconGap + TAB.close + TAB.padR + 2;
+  var w = TAB.padL + TAB.iconSlot + TAB.iconGap + lw + TAB.iconGap + TAB.close + TAB.padR + 2;
   if (rec.exitCode != null && rec.exitCode !== 0) w += labelWidth(exitWords(rec.exitCode), font, host) + 18;
   if (rec.agent) w += 14;
   return clamp(w, TAB.natural, TAB.max);
@@ -83,17 +89,22 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
   var nat = {};
   rest.forEach(function (t) { nat[t] = naturalWidth(recs[t], font, host, t === activeId); });
   var activeIn = rest.indexOf(activeId) >= 0;
-  var aW = activeIn ? Math.max(TAB.activeMin, nat[activeId]) : 0;
+  /* the active tab keeps its own width and never shrinks under 120 px (or under its own width, when that is less); it is
+     never padded wider than it is. It was: a 112 px tab grew to 120 when chosen, so every tab after it jumped 8 px at the
+     click while the chip glided to it, and back again when another tab was chosen (Jared, 2026-10-28: "the hover/tab
+     selector and moving animations are also a little janky") */
+  var aMin = activeIn ? Math.min(TAB.activeMin, nat[activeId]) : 0;
+  var aW = activeIn ? nat[activeId] : 0;
   var others = rest.filter(function (t) { return t !== activeId; });
   var gaps = rest.length * TAB.gap;
   // the active tab gives up width (down to 120) before the others shrink past a step; it never covers "+" or "+N"
-  function activeFor(each) { return activeIn ? Math.max(TAB.activeMin, Math.min(aW, room - gaps - others.length * each)) : 0; }
+  function activeFor(each) { return activeIn ? Math.max(aMin, Math.min(aW, room - gaps - others.length * each)) : 0; }
   var sumNat = others.reduce(function (a, t) { return a + nat[t]; }, 0) + aW + gaps;
   if (sumNat <= room) {
     rest.forEach(function (t) { res.widths[t] = t === activeId ? aW : nat[t]; res.size[t] = 'full'; });
     return res;
   }
-  if (!others.length) {   // the active tab alone: as wide as the room allows, never under 120
+  if (!others.length) {   // the active tab alone: its own width, as far as the room allows, never under 120 (or its own)
     res.widths[activeId] = activeFor(0); res.size[activeId] = res.widths[activeId] < nat[activeId] ? 'shrunk' : 'full';
     return res;
   }
@@ -101,7 +112,7 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
      width around the active one, and what does not fit waits behind "+N" at once (pinned tabs stay 36 px and the active
      tab stays shown and at least 120 px wide, as in Shrink to fit) */
   if (PMW.settings.get('panels.tabs.sizing') === 'fixed') {
-    if (activeIn) aW = Math.max(TAB.activeMin, Math.min(aW, room - TAB.more - 2 * TAB.gap));
+    if (activeIn) aW = Math.max(aMin, Math.min(aW, room - TAB.more - 2 * TAB.gap));
     var leftRoom = room - TAB.more - (activeIn ? aW + TAB.gap : 0), keepF = {};
     var ai0 = activeIn ? rest.indexOf(activeId) : -1, lo = ai0, hi = ai0, goR = true, goL = true;
     if (ai0 < 0) { lo = -1; hi = -1; goL = false; }
@@ -139,7 +150,7 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
     return res;
   }
   // 3. a window of icon tabs around the active tab; the rest hide behind "+N" (the active tab leaves room for it)
-  if (activeIn) aW = Math.max(TAB.activeMin, Math.min(aW, room - TAB.more - 2 * TAB.gap));
+  if (activeIn) aW = Math.max(aMin, Math.min(aW, room - TAB.more - 2 * TAB.gap));
   var capacity = Math.max(0, Math.floor((room - TAB.more - (activeIn ? aW + TAB.gap : 0)) / (TAB.icon + TAB.gap)));
   var order = rest.slice();
   var ai = order.indexOf(activeId);

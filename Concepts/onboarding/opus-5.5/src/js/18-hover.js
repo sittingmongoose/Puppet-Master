@@ -399,7 +399,8 @@
     if (post) post.port1.onmessage = afterFrame;
     /* what the proxies need of a target, read once: its box, radius and clipping ancestors */
     /* A target may give its proxies a shape of its own (CSS, on the target): --pmh-radius replaces its border-radius and
-       --pmh-inset (top right bottom left, px) shrinks the box they sit on, so a control whose chosen state is drawn as
+       --pmh-inset (top right bottom left, px) shrinks the box they sit on (negative grows it), --pmh-variant names a
+       variant of the marker for CSS (#pmh-frame[data-pmh-variant]), so a control whose chosen state is drawn as
        a chip of another shape (the home panels' tabs: a folder crown for the tab, a rounded chip 2 px above the strip's
        foot for the choice) is hovered in the chip's shape, not its own (Jared, 2026-10-28). Both are looks' values, so
        they are read again after a look change (lookGen): the radius was read once per target for its lifetime, and a
@@ -411,6 +412,7 @@
       if (s.radius === null || s.gen !== lookGen) {
         var cs = getComputedStyle(s.box || s.el), ownR = cs.getPropertyValue('--pmh-radius').trim(), ins = cs.getPropertyValue('--pmh-inset').trim();
         s.radius = ownR || cs.borderRadius || '';
+        s.variant = cs.getPropertyValue('--pmh-variant').trim() || null;   /* the marker's data-pmh-variant on this target */
         s.inset = null;
         if (ins) { var q = ins.split(/\s+/).map(parseFloat); if (q.length === 4 && q.every(isFinite) && (q[0] || q[1] || q[2] || q[3])) s.inset = q; }
         s.gen = lookGen;
@@ -736,7 +738,7 @@
 
     /* ---- proxies ---- */
     var glowEl = null, GL = [], glowCur = -1, glowLastOff = 1;
-    var frameEl = null, FR = { fresh: false, press: false, on: false, x: 0, y: 0, w: 0, h: 0, vx: 0, vy: 0, vw: 0, vh: 0, acc: 0, offAt: -1e9, travel: false, clip: '', host: null };
+    var frameEl = null, FR = { fresh: false, press: false, on: false, x: 0, y: 0, w: 0, h: 0, vx: 0, vy: 0, vw: 0, vh: 0, acc: 0, offAt: -1e9, travel: false, clip: '', host: null, variant: null };
     function proxyWanted(kind) { var t = tk(kind); return !!(t.glow || t.frame); }
     function proxyShown() { return !!(glowCur >= 0 || FR.on); }
     var clipMemo = new WeakMap();   /* ancestor -> 1 clips, 2 clips and is fixed, 3 is fixed, 0 neither (siblings share them) */
@@ -854,6 +856,13 @@
         if (frameEl.getAttribute('data-pmh-kind') !== s.kind) frameEl.setAttribute('data-pmh-kind', s.kind);
         far = tok.fmax > 0 && Math.max(Math.abs(gx - FR.x), Math.abs(gy - FR.y)) > tok.fmax;
         FR.host = target;
+      }
+      /* the variant is the look's (prefetch reads it again after a look change), so it is checked on every frame, not
+         only when the frame meets a new target: a tab hovered through a look change kept the last look's variant */
+      if ((s.variant || null) !== FR.variant) {
+        FR.variant = s.variant || null;
+        if (FR.variant) frameEl.setAttribute('data-pmh-variant', FR.variant); else frameEl.removeAttribute('data-pmh-variant');
+        stats.writes++;
       }
       var snap = reduced || far || !FR.on && now - FR.offAt > tok.fsnap;
       /* .pmh-frame-new: the frame met this target anew (placed, not travelled), so a look can play an arrival there;

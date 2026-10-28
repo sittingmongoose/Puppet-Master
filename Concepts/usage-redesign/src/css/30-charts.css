@@ -209,6 +209,10 @@ html[data-theme^="retro"] #panel-usage .pmu-mark[data-mark="glow"] { stroke-widt
   font-size: 12.5px; line-height: 1.35; color: var(--pmu-ink); opacity: 0; font-variant-numeric: tabular-nums;
   transition: opacity calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), translate calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
 #panel-usage .pmu-readout.is-flip { transition: opacity calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), translate calc(220ms * var(--pmu-speed, 1)) cubic-bezier(.22,1,.36,1); }
+/* leaving, the card goes at once: it sits in the window's top layer, so the pointer leaving a chart for the panel under it
+   (Home's budget card over the terminal's tabs) left it fading over that panel's tabs for half a second, a ghost of the
+   chart over another panel's hover (2026-10-28 review, muse A9) */
+#panel-usage .pmu-readout:not(.is-on) { transition: opacity 70ms linear, translate 0s; }
 html[data-theme="glass-dark"] #panel-usage .pmu-readout { background: #2A2140; }
 html[data-theme="glass-light"] #panel-usage .pmu-readout { background: #FBFCFE; }
 #panel-usage .pmu-readout strong { display: block; margin-bottom: 6px; font-family: var(--pmu-mono); font-size: 11px; font-weight: 400; letter-spacing: .04em;
