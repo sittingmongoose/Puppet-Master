@@ -24,6 +24,22 @@ Claude and Devin do this.
 | Use the status bar's processes symbol in the chat, in the neon look, and the agents symbol too | New glyphs drawn in the neon grammar through the registry's own `PMG.def` (`src/rw-glyphs.js`). Processes is the terminal's `>_` in a console frame, which carries the same weight as Goal and Subagents and stays distinct from the bare `>_` of a terminal tab. Agents is the robot with a lit antenna. Both are lit by status colour, halo and backlight exactly like the other domain icons, in every look. |
 | Organise the status bar and keep agents' questions apart from processes | Two status-bar items in their own group, framed by the bar's dividers, between the project folder and the branch. Each has its own count and its own needs-you count: `16 agents · 2 questions` and `10 processes · 1 needs input`. The panel has an Agents tab that leads with Questions and a Processes tab that leads with Needs input. Each process sits under the agent that started it. |
 
+## Second review (2026-10-28)
+
+Jared approved the concept and decided every open point. One fix came with it.
+
+| Feedback | What changed |
+|---|---|
+| The icons are not animated in the status bar | While anything runs, the two glyphs move exactly as the chat's Activity bar icon does: the tube breathes on the bar's 2200 ms beat and the parts loop on it (the cursor types in, the antenna blinks). The panel's tab and column heads move too. Row marks stay still, as every list in the chat keeps them (`module-shell.js` `pmxStatus`, the loop budget). Reduced Motion shows the lit rest pose. |
+| D5: Numbers by default, Words as a setting | The status bar shows glyph and number pairs (`16 · 2`), with the words on hover. A setting switches to Words; the lab's Status bar switch stands in for it here. Proposed setting: `general.interaction.status-bar-words` beside `general.interaction.activity-bar-labels` (see `IMPACT_TRACKER.md` §6). |
+| D5: fold the orchestrator chip into the agents item | Yes. The Orchestrator is a group in the panel's Agents tab. |
+| D6: panel layout | Tabs. Side by side and Task manager stay in the lab only, for comparison. |
+| D14: the two glyphs | Approved. |
+| D2, D3, D7 to D13 | Approved as recommended. |
+
+The rest of that review (wider chat, Activity Detail opening at full size, opaque Glass plates, the context ring, Demo
+Studio, Plans) is a build round of its own: `HANDOFF.md`.
+
 ## Pages
 
 Open through the Concept Hub (`Concepts/StartConceptHub.command`): the pages fetch their layer over http.
@@ -46,7 +62,7 @@ The panel at the top left switches:
 - **Scenario**: Busy (three things need you), No asks, Quiet (nothing running: the chat's icon is gone), Many (40 more
   processes), Stale feed, After restart.
 - **Thread view**: By state, By owner, List + output.
-- **Status bar**: Words (`16 agents · 2 questions`) or Numbers (glyph and number pairs, words on hover).
+- **Status bar**: Numbers (the default: glyph and number pairs, words on hover) or Words (`16 agents · 2 questions`), the setting's other choice.
 - **Panel**: Tabs, Side by side, Task manager (sortable table, CPU and memory, inspector).
 - **Quit…** for the quit dialog.
 
@@ -63,24 +79,25 @@ What works:
 
 ## Decisions
 
-Each has a recommendation; decided ones say so. Their effect on Plans is in `IMPACT_TRACKER.md`.
+All decided by Jared: D1, D4 and D5 in part on 2026-10-27, the rest on 2026-10-28. Their effect on Plans is in
+`IMPACT_TRACKER.md`.
 
-| # | Question | Status and recommendation |
+| # | Question | Decision |
 |---|---|---|
-| D1 | Name | **Decided:** Processes for the chat domain and the status bar's item. Agents stay agents. |
+| D1 | Name | Processes for the chat domain and the status bar's item. Agents stay agents. |
 | D2 | What the thread view lists | Processes, scripts, servers, watchers, browser sessions and scheduled runs, including those its subagents started. Subagents stay in Subagents; here they appear only as a process's owner, linked to their domain. |
-| D3 | Thread view layout | **By state** (Needs input, Running, Scheduled, Finished this session). By owner is the fallback when many subagents run. |
-| D4 | When the chat's icon shows | **Decided:** only while a process runs or needs input; it stays while its card or view is open. |
-| D5 | Status bar | **Decided:** two items in their own group, agents with questions and processes with needs input. Open: Words or Numbers (recommend Words); merge F3-448's orchestrator chip into the agents item, with the Orchestrator as a group in the panel (recommend yes). |
-| D6 | Panel layout | **Tabs** (Agents, Processes), each leading with what waits on you. Side by side as a wide alternative; Task manager kept as a third view. Pop out to a window: yes. Panel tab: later. |
+| D3 | Thread view layout | By state (Needs input, Running, Scheduled, Finished this session). By owner is the fallback when many subagents run. |
+| D4 | When the chat's icon shows | Only while a process runs or needs input; it stays while its card or view is open. |
+| D5 | Status bar | Two items in their own group, agents with questions and processes with needs input. Numbers by default (glyph and number pairs, words on hover); a setting switches to Words. F3-448's orchestrator chip folds into the agents item, with the Orchestrator as a group in the panel. |
+| D6 | Panel layout | Tabs (Agents, Processes), each leading with what waits on you. Pop out to a window: yes. Side by side and Task manager are not in the product. Panel tab: later. |
 | D7 | Agents panel and Home Agents board | One projection and one row anatomy. The panel is for a glance and triage; the Agents rail panel stays the deep view for lanes, queue and lineage. |
 | D8 | Stopping | Composer Stop ends the reply only, and the view says so. Stop per item; Stop all per thread and across the platform, each listing what it stops; stopping an agent stops its subagents and their processes; SIGTERM, then SIGKILL after 3 seconds, to the whole process group. |
 | D9 | When it ends | Per item: **Tell the agent** (default for scripts, tests and builds an agent started), **Notify me** (default for servers, watchers and databases), **Quiet**. Never wake a thread the user stopped; coalesce notices. |
 | D10 | Quitting | Ask. Default: keep everything running on the server (the window is only a client, SIR §8.2); the other choice stops everything, with a list you can untick. |
 | D11 | System services | A read-only, collapsed group at the end of the Processes tab, linking to System status. They are never stopped from here. |
-| D12 | CPU and memory | Only in the Task manager view, sampled while it is open. |
+| D12 | CPU and memory | Only in a Task manager view, sampled while it is open. With D6 at Tabs, this waits until that view is wanted. |
 | D13 | Answering prompts | Quick answers only for plain yes/no prompts, with the safe default first; anything else goes to Answer in Terminal. |
-| D14 | Glyphs | **To confirm:** Processes is `>_` in a console frame; agents is the robot with a lit antenna. In canon, a new `processes` glyph and a redraw of `robot`, so every surface that shows an agent changes with it. |
+| D14 | Glyphs | Approved: Processes is `>_` in a console frame; agents is the robot with a lit antenna. In canon, a new `processes` glyph and a redraw of `robot`, so every surface that shows an agent changes with it. |
 
 ## Not in this concept
 

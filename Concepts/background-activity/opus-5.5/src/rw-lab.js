@@ -8,7 +8,7 @@
   var GROUPS = [
     ['scenario', 'Scenario', [['busy', 'Busy'], ['working', 'No asks'], ['quiet', 'Quiet'], ['many', 'Many'], ['stale', 'Stale feed'], ['restart', 'After restart']]],
     ['threadVariant', 'Thread view', [['state', 'By state'], ['owner', 'By owner'], ['list', 'List + output']]],
-    ['barVariant', 'Status bar', [['words', 'Words'], ['compact', 'Numbers']]],
+    ['barVariant', 'Status bar', [['compact', 'Numbers'], ['words', 'Words']]],
     ['popVariant', 'Panel', [['tabs', 'Tabs'], ['side', 'Side by side'], ['table', 'Task manager']]]
   ];
   function setLook(fam, mode) {

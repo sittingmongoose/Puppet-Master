@@ -150,6 +150,18 @@ html[data-theme^="friendly"] :is(.rw-layer, .rw-pop, #rw-dialog-layer) .rw-btn {
 .rw-sb-stale { display: inline-flex !important; align-items: center; gap: 4px; border-left: 1px solid var(--rw-line2); }
 .rw-sb-stale[hidden] { display: none !important; }
 html[data-o55-nier="on"] .rw-gh::before { display: none; }
+/* While running, the glyph moves exactly as it does in the chat's Activity bar (neon grammar §4: a status mark loops
+   in its own rhythm): the tube breathes on ab-breathe's 2200 ms and its parts play the same loop on the same beat, so
+   the chevron nudges and the cursor types in, the robot's eyes glance and its antenna blinks. The status bar items and
+   the panel's tab and column heads move; the "N processes" links in its rows stay still, so a long list stays calm. */
+.rw-sb[data-tone="working"] .rw-gh > svg.rw-g,
+:is(.rw-tabs2, .rw-colhead) .rw-gh[data-tone="working"] > svg.rw-g { animation: ab-breathe 2200ms ease-in-out infinite; }
+.rw-sb[data-tone="working"] .rw-gh > svg.rw-g .nx-p,
+:is(.rw-tabs2, .rw-colhead) .rw-gh[data-tone="working"] > svg.rw-g .nx-p { animation: var(--kl) 2200ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.2ms - 2200ms); }
+/* Reduced Motion, all three routes (grammar §8): the rest pose, which is the finished lit drawing. */
+html[data-motion="reduced"] .rw-gh > svg.rw-g, html[data-motion="reduced"] .rw-gh > svg.rw-g .nx-p,
+body.pm56-reduced .rw-gh > svg.rw-g, body.pm56-reduced .rw-gh > svg.rw-g .nx-p { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .rw-gh > svg.rw-g, .rw-gh > svg.rw-g .nx-p { animation: none !important; } }
 
 /* -------------------------------------------- the status bar panel */
 .rw-pop { position: fixed; z-index: 2147482000; display: flex; flex-direction: column; width: 560px; max-width: calc(100vw - 16px); max-height: min(74vh, 760px); box-sizing: border-box;

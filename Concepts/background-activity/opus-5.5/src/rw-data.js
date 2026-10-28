@@ -22,7 +22,7 @@
   RW.state = {
     scenario: 'busy',
     threadVariant: 'state',     /* state | owner | list */
-    barVariant: 'words',        /* words | compact */
+    barVariant: 'compact',      /* compact (Numbers, the default) | words (the setting's other choice) */
     popVariant: 'tabs',         /* tabs | side | table */
     feed: 'current',            /* current | stale */
     restarted: false,
