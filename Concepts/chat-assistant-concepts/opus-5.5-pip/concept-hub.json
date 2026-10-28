@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "chat-assistant-concepts:opus-5.5-pip",
+  "topic": "chat-assistant-concepts",
+  "model": "Opus 5.5",
+  "presentation": "entries",
+  "order": 40,
+  "widthControl": {
+    "enabled": false,
+    "label": "Workspace width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "entries": [
+    {
+      "id": "pip-chat",
+      "title": "Pip in the chat's sheets, menus and work panels",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["chat", "pip", "mascot", "sheets", "settings"],
+      "order": 10
+    }
+  ]
+}
