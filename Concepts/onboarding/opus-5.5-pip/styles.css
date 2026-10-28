@@ -17,6 +17,12 @@ body[data-theme="retro-dark"] { --bg: #10120E; --surface: #171A14; --surface2: #
 body[data-theme="retro-light"] { --bg: #F5F0E8; --surface: #F5F0E8; --surface2: #FAF7F2; --text: #1A1A1A; --muted: #444; --faint: #6A665E; --line: #1A1A1A; --line2: #4A463F; --accent: #2F7A3D; --on-accent: #F5F0E8; --hard: #1A1A1A; --font: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace; --r: 0; --r-sm: 0; --win-r: 0; --shadow: 6px 6px 0 #1A1A1A; }
 body[data-theme="nier-light"] { --bg: #CCC8B1; --surface: #CCC8B1; --surface2: #C6C2AB; --text: #211F1B; --muted: #4D4B40; --faint: #6E6B5E; --line: #A29E89; --line2: #211F1B; --accent: #211F1B; --on-accent: #DCD8C2; --font: 'PM NieR Sans', 'Inter', system-ui, sans-serif; --mono: 'PM NieR Mono', 'JetBrains Mono', ui-monospace, monospace; --r: 0; --r-sm: 0; --win-r: 0; --shadow: 4px 4px 0 rgba(33, 31, 27, .18); }
 body[data-theme="nier-dark"] { --bg: #2F2D26; --surface: #2F2D26; --surface2: #36342C; --text: #D1CDB7; --muted: #B9B59F; --faint: #9D9986; --line: #4F4D45; --line2: #D1CDB7; --accent: #D1CDB7; --on-accent: #2F2D26; --font: 'PM NieR Sans', 'Inter', system-ui, sans-serif; --mono: 'PM NieR Mono', 'JetBrains Mono', ui-monospace, monospace; --r: 0; --r-sm: 0; --win-r: 0; --shadow: 4px 4px 0 rgba(0, 0, 0, .3); }
+/* the colour of something gone wrong, in each look (a refused key, a name already used) */
+body[data-theme="friendly-dark"] { --err: #ff9a8f; } body[data-theme="friendly-light"] { --err: #c0392b; }
+body[data-theme="glass-dark"] { --err: #ff8f8f; } body[data-theme="glass-light"] { --err: #c62828; }
+body[data-theme="basic-dark"] { --err: #f2716d; } body[data-theme="basic-light"] { --err: #c62828; }
+body[data-theme="retro-dark"] { --err: #ff7a5c; } body[data-theme="retro-light"] { --err: #a13126; }
+body[data-theme="nier-light"] { --err: #9e3b2c; } body[data-theme="nier-dark"] { --err: #e0957a; }
 /* Friendly and Glass follow the chapter: lavender, sky, mint, butter, coral */
 body[data-fam="friendly"] { --accent: var(--tint, #C3B1E4); }
 
@@ -236,6 +242,7 @@ body[data-fam="nier"] .ob-screen::before { content: ''; position: absolute; top:
 .ob-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
 .ob-hint { margin: 8px 0 0; color: var(--faint); display: flex; gap: 6px; align-items: center; font-size: 13px; }
 .ob-hint .ob-ic { color: var(--accent); }
+.ob-hint.is-err, .ob-hint.is-err .ob-ic, .ob-prov-err, .ob-keyhint.is-err, .ob-keyhint.is-err .ob-ic { color: var(--err); }
 
 /* keep it safe */
 .ob-rows { display: grid; gap: 10px; }
@@ -264,6 +271,16 @@ body[data-fam="nier"] .ob-screen::before { content: ''; position: absolute; top:
 .ob-prov-s { display: inline-flex; gap: 6px; align-items: center; font-size: 12.5px; font-weight: 600; color: var(--faint); }
 .ob-prov[data-state="ready"] { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
 .ob-prov[data-state="ready"] .ob-prov-s { color: var(--accent); }
+.ob-prov-s { flex-wrap: wrap; justify-content: flex-end; column-gap: 10px; }
+.ob-prov-go { font-size: 12.5px; }
+.ob-prov[data-state="failed"], .ob-prov[data-state="badkey"] { border-color: color-mix(in srgb, var(--err) 60%, var(--line)); }
+/* an API key's field, under its provider */
+.ob-prov .ob-keyrow { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 8px; align-items: center; padding: 2px 0 2px 48px; }
+.ob-keyrow input { min-width: 0; font: 600 14px/1 var(--mono, var(--font)); letter-spacing: .04em; padding: 9px 11px; border-radius: var(--r-sm); border: 1.5px solid var(--line2); background: var(--surface); outline: none; }
+.ob-keyrow input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+.ob-keyrow input[aria-invalid="true"] { border-color: var(--err); }
+.ob-keygo { height: 36px; padding: 0 14px; border: 1.5px solid var(--line2); }
+.ob-keyhint { grid-column: 1 / -1; margin: 0; display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--faint); }
 .ob-spin { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--line2); border-top-color: var(--accent); animation: obSpin .8s linear infinite; }
 .ob-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .ob-summary div { padding: 10px 14px; border-radius: var(--r-sm); background: var(--surface2); border: 1px solid var(--line); display: grid; }
@@ -334,6 +351,8 @@ body[data-fam="retro"] .ob-q, body[data-fam="retro"] .ob-tipline, body[data-fam=
 body[data-fam="retro"] .ob-q { border-width: 2px; }
 body[data-fam="retro"] .ob-tipline { border: 2px solid var(--line); box-shadow: 3px 3px 0 var(--hard); background: var(--surface2); }
 body[data-fam="retro"] .ob-opt:has(> [aria-checked="true"]) > .ob-q:not([aria-expanded="true"]) { color: var(--on-accent); border-color: var(--on-accent); }
+/* an open ? on the chosen card, which is already filled with the accent: it turns over so it still shows */
+body[data-fam="retro"] .ob-opt:has(> [aria-checked="true"]) > .ob-q[aria-expanded="true"] { color: var(--accent); background: var(--on-accent); border-color: var(--on-accent); }
 body[data-fam="retro"] .ob-choice[aria-checked="true"] .ob-radio { border-color: var(--on-accent); background: var(--on-accent); box-shadow: inset 0 0 0 3px var(--accent); }
 body[data-fam="retro"] .ob-primary { text-transform: uppercase; letter-spacing: .06em; border: 2px solid var(--line); box-shadow: 4px 4px 0 var(--hard); }
 body[data-fam="retro"] .ob-primary:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--hard); }
@@ -372,6 +391,7 @@ body[data-fam="nier"] .ob-q, body[data-fam="nier"] .ob-tipline, body[data-fam="n
 body[data-fam="nier"] .ob-q { border-width: 1px; font-family: var(--mono); }
 body[data-fam="nier"] .ob-tipline { border-color: var(--text); background: color-mix(in srgb, var(--bg) 70%, #fff 6%); }
 body[data-fam="nier"] .ob-opt:has(> [aria-checked="true"]) > .ob-q:not([aria-expanded="true"]) { color: var(--bg); border-color: var(--bg); }
+body[data-fam="nier"] .ob-opt:has(> [aria-checked="true"]) > .ob-q[aria-expanded="true"] { color: var(--text); background: var(--bg); border-color: var(--bg); }
 body[data-fam="nier"] .ob-choice[aria-checked="true"] .ob-radio { border-color: var(--bg); background: var(--bg); box-shadow: inset 0 0 0 3px var(--text); }
 body[data-fam="nier"] .ob-primary { font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
 body[data-fam="nier"] .ob-primary::before { content: ''; width: 6px; height: 6px; background: currentColor; margin-right: 6px; }

@@ -8,8 +8,15 @@ PMConcept7's onboarding copy; Pip's lines are new. Open `index.html` (double-cli
 
 The control is you. Pip hangs from it, and every choice you make lowers something onto the stage.
 
-- **Pip is the guide.** It reacts to what you do: it wonders while you hover, cheers or winks when
-  you choose, looks at what you pick, sleeps until you arrive, and powers up when AI is connected.
+- **Pip is the guide.** It reacts to what you do: while you rest on a choice it wears the face of what
+  it says about it (pleased, or curious), cheers or winks when you choose, looks at what you pick, sleeps
+  until you arrive, and powers up when AI is connected.
+- **When something goes wrong, Pip is worried with you** (worried brows, a wobbly mouth, a bead of sweat;
+  in NieR, worried eyes on its band) and says so, and the warning sound plays. Three places show it: a
+  Project name you already have (type `tastebook`: Continue waits for another name); Google Antigravity's
+  Sign in on the AI screen (the first try fails, as if the browser was closed; Try again works); and
+  Cursor's API key (a key shorter than 20 characters is refused, in PMConcept7's words). Pip cheers when
+  it is put right.
 - **Hover previews, choosing commits.** Resting the pointer on a choice lowers a ghost of its prop on a
   dashed string; clicking it drops the real prop in, which swings and settles, and Pip celebrates. A
   preview waits until the pointer has rested on a choice for about 0.4 s (moving across the list to find
@@ -32,7 +39,9 @@ The control is you. Pip hangs from it, and every choice you make lowers somethin
   Basic, a terminal box in Retro Dark, a printed NOTE in Retro Light, and in NieR a TIPS box at the top
   right (its dialogue box already holds the foot of the stage). When the stage is only a strip (narrow
   windows), the answer opens in the form under that choice. Clicking the ? again, Esc, the note's close
-  button or moving on puts it away, and focus returns to the ?. The answers are PMConcept7's own
+  button or moving on puts it away, and focus returns to the ?. On a small stage a long note still fits:
+  the hand lifts Pip to make room, as far as keeps its face in view, and its bubble steps aside meanwhile;
+  on the monitor the note may run nearly the screen's width, in type sized to the screen. The answers are PMConcept7's own
   explanations, in its words where it has them (what a Server is, Git and Jujutsu, Tailscale's private
   name, "Claude plan, not the Anthropic API", the keychain). Nothing shows unless asked.
 
@@ -85,24 +94,14 @@ terminal uses) and IBM Plex Mono (Retro Light).
 
 ### NieR
 
-Pip hovers like a Pod (a slow bob, a little drift), talks in a YoRHa dialogue box with its name tab,
+Pip hovers like a Pod (a slow bob, a little drift); at rest two eyes show through its blindfold and
+blink, and its other moods light the band up. It talks in a YoRHa dialogue box with its name tab,
 and the stage is a unit's HUD: a unit header with a decoding label, a scanner ring, a scan line that
 sweeps every few seconds, a coordinate readout, target brackets that fly in and lock with a turning
 marker and a leader line labelled at its elbow, and on a chapter change QUEST UPDATED and a glitch in
 which two bands of the whole picture slip sideways for a moment. The window
 follows: the menu cursor square slides in beside whatever you point at, the chosen row fills from the
 left, and screens wipe in behind an ink bar.
-
-## Three ideas to try
-
-A review suggested three changes. They are built but off: turn them on with the Ideas buttons in the
-concept toolbar, or `?try=bar,eyes,mood` (any of the three).
-
-| Idea | What changes |
-|---|---|
-| Prop bars | Each prop hangs from its own small control (a copy of Pip's, in the look's material) a hand's width above it, instead of on strings from above the stage |
-| NieR eyes | At rest NieR Pip's blindfold shows two eyes, which blink, instead of a blank band |
-| Hover faces | While Pip previews a choice it wears the face of what it says (happy, curious), instead of its "considering" face |
 
 ## The chapter rail
 

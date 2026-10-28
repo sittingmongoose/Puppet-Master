@@ -97,8 +97,6 @@
       this.theme = (opts && opts.theme) || 'friendly-dark';
       this.layoutName = (opts && opts.layout) || 'portrait';
       this.reduced = !!(opts && opts.reduced);
-      // reviewers' ideas, shown on request: bar (each prop on its own small control), eyes (NieR Pip's eyes on its visor)
-      this.ideas = Object.assign({ bar: false, eyes: false }, opts && opts.ideas);
       this.props = new Map();
       this.fx = [];
       this.ghosts = [];
@@ -165,7 +163,6 @@
       this.gTrail = el('g', { class: 'pst-trail' }, svg);
       this.gActors = el('g', { id: `${this.id}act` }, svg);
       this.gPropStr = el('g', { class: 'pst-pstr' }, this.gActors);
-      this.gPropBar = el('g', { class: 'pst-pbars' }, this.gActors);
       this.gProps = el('g', { class: 'pst-props' }, this.gActors);
       this.gPip = el('g', { class: 'pst-pip' }, this.gActors);
       // NieR's chapter glitch: two bands of the whole picture, backdrop and all, slip sideways for a moment
@@ -265,9 +262,9 @@
         const nm = mood === 'dots' ? 'think' : mood === 'wink' ? 'happy' : mood;
         const parts = K.pipNier(g, th, nm, { face: 'pf', dot: 'pst-dot' }, { face: p + 'f' }, { parts: true });
         this.gHead.innerHTML = parts.headInner;
-        // the eyes idea: at rest the visor is not blank, two eyes show through it (and blink); other moods keep their HUD marks
+        // at rest the blindfold is not blank: two eyes show through it, and blink (the other moods light the band up)
         const f = this.gHead.querySelector('.pf');
-        if (this.ideas.eyes && f && nm === 'idle') {
+        if (f && nm === 'idle') {
           const e = (x) => `<rect x="${R(x - 1.35)}" y="38.2" width="2.7" height="4.8" rx=".8" fill="${th.paper}"/>`;
           f.insertAdjacentHTML('beforeend', `<g class="pb">${e(25.5) + e(38.5)}</g>`);
           this.blinkY = 40.6;
@@ -374,7 +371,7 @@
       (spec.props || []).forEach((ps) => {
         ids.add(ps.id);
         const pr = this.props.get(ps.id);
-        if (!pr || pr.state === 'out') { if (pr) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); if (pr.bar) pr.bar.remove(); this.props.delete(ps.id); } this.addProp(ps); }
+        if (!pr || pr.state === 'out') { if (pr) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(ps.id); } this.addProp(ps); }
         else {
           const moved = JSON.stringify(this.slotXY(ps)) !== JSON.stringify(this.slotXY(pr.spec));
           const wasPreview = pr.spec.preview;
@@ -580,13 +577,20 @@
     // the note hangs under Pip and drifts after it, slowly enough to read while Pip sways
     placeTip(H, ang, dt) {
       const el = this.tipBox;
+      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; this.bubble.classList.remove('pst-hush'); return; }
       // it holds still while the pointer is on it, so its close button is easy to hit
-      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait' || el.matches(':hover')) return;
+      if (el.matches(':hover')) return;
       const p = this.toScreen(this.headXf([32, 63], H, ang, 1, 1)), w = el.offsetWidth || 180, h = el.offsetHeight || 40, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
-      // under Pip, kept to the left of the stage where the props do not hang, and above a tube's command line
-      // when there is room (never over Pip's own face)
-      const foot = this.tube === 'teletype' ? 74 : this.tube ? 50 : 8;
-      const goal = [clamp(p[0] - w * .4, 8, Math.max(8, Math.min(bx * .62 - w, bx - w - 10))), Math.max(p[1] + 4, clamp(p[1] + 12, 8, by - h - foot))];
+      // under Pip, kept to the left of the stage where the props do not hang, above a tube's command line, and
+      // always whole on the stage. A long note on a small stage: the hand lifts Pip to make room for it
+      // always whole on the stage. A long note on a small stage: the hand lifts Pip to make room for it, as far as
+      // keeps Pip's face below the top of the stage, and Pip's bubble steps aside while it does (the note is Pip talking)
+      const foot = this.tube === 'teletype' ? 74 : this.tube ? 46 : 8, top = this.tube ? 16 : 8, mk = (this.map && this.map.k) || 1;
+      const lifted = (this.ps.lift || 0) * mk, restY = p[1] + lifted, headTop = this.toScreen(this.headXf([32, 31.5], H, ang, 1, 1))[1] + lifted;
+      const short = restY + 12 + h - (by - foot), room = Math.max(0, headTop - top - 4);
+      this.ps.liftT = clamp(short, 0, room) / mk;
+      this.bubble.classList.toggle('pst-hush', this.ps.liftT * mk > 18);
+      const goal = [clamp(p[0] - w * .4, 8, Math.max(8, Math.min(bx * .62 - w, bx - w - 10))), clamp(p[1] + 12, 8, by - h - foot)];
       if (!this.tipXY || this.reduced) this.tipXY = goal.slice();
       const k = Math.min(1, (dt || .016) * 5); this.tipXY[0] += (goal[0] - this.tipXY[0]) * k; this.tipXY[1] += (goal[1] - this.tipXY[1]) * k;
       el.style.transform = `translate(${R(this.tipXY[0])}px, ${R(this.tipXY[1])}px)`;
@@ -825,7 +829,8 @@
       // the hand: springs to its spot, with a slow idle drift that keeps Pip alive
       const swayX = red ? 0 : F.sway * Math.sin(this.t * F.swayW) * (ps.asleep ? .2 : 1);
       const swayY = red || !F.bob ? 0 : F.bob * .6 * Math.sin(this.t * F.swayW * 1.7);
-      const tx = ps.Ct.x + swayX, ty = ps.Ct.y + swayY;
+      ps.lift = (ps.lift || 0) + ((ps.liftT || 0) - (ps.lift || 0)) * Math.min(1, dt * 5);
+      const tx = ps.Ct.x + swayX, ty = ps.Ct.y + swayY - ps.lift;
       if (red) { ps.C.x = tx; ps.C.y = ty; ps.C.vx = ps.C.vy = 0; ps.th = 0; ps.thv = 0; }
       else {
         const ax = F.k * (tx - ps.C.x) - F.c * ps.C.vx, ay = F.k * (ty - ps.C.y) - F.c * ps.C.vy;
@@ -872,7 +877,7 @@
         }
         if (!pr.settled && pr.state !== 'out' && Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30) this.settle(pr);
         if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); }
-        if (pr.state === 'out' && pr.len < 0 && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); if (pr.bar) pr.bar.remove(); this.props.delete(id); }
+        if (pr.state === 'out' && pr.len < 0 && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(id); }
       });
       // particles
       for (let i = this.fx.length - 1; i >= 0; i--) {
@@ -947,20 +952,9 @@
         // once a block is set down its strings are unhooked: they go slack, lift away and fade
         const off = pr.spec.ground && pr.landed ? clamp((this.t - pr.landT) / .55, 0, 1) : 0;
         const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
-        // the bar idea: each prop hangs from its own small control, a hand's width above it, in the look's own
-        // material (a copy of Pip's); its strings run up to that bar's screw eyes, and it swings with the prop
-        let ends = null;
-        if (this.ideas.bar) {
-          const k = pr.spec.scale || 1, bs = Lay.s * .42 * k, up = rot([0, -64 * Lay.propScale * k], pr.a);
-          const c = [hang[0] + up[0], hang[1] + up[1] - ease(off) * 70];
-          if (!pr.bar) { pr.bar = el('g', { class: 'pst-pbar' }, this.gPropBar); pr.bar.innerHTML = this.gCtl.innerHTML; }
-          pr.bar.setAttribute('transform', `translate(${R(c[0])} ${R(c[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(bs)}) translate(-32 -14.5)`);
-          pr.bar.setAttribute('opacity', R(strOp));
-          ends = this.barPts.map((q) => { const v = rot([(q[0] - 32) * bs, (q[1] - 14.5) * bs], pr.a); return [c[0] + v[0], c[1] + v[1]]; });
-        } else if (pr.bar) { pr.bar.remove(); pr.bar = null; }
         pr.ties.forEach((t, i) => {
           const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
-          const top = !ends ? [pr.ax + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200] : pr.ties.length === 1 ? [(ends[0][0] + ends[1][0]) / 2, (ends[0][1] + ends[1][1]) / 2] : ends[Math.round(i / (pr.ties.length - 1))];
+          const top = [pr.ax + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
           pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
           pr.strs[i].setAttribute('opacity', R(strOp));
           pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
@@ -1109,7 +1103,6 @@
       this.layoutName = name; this.ps = null;
       this.build(); this.direct(this.spec);
     }
-    setIdeas(ideas) { this.ideas = Object.assign({}, this.ideas, ideas); this.renderHead(this.curMood || 'idle', true); }
     setReduced(r) { this.reduced = !!r; this.root.dataset.reduced = r ? '1' : '0'; const S = snd(); if (S && S.setReduced) S.setReduced(this.reduced); }
     // something on the screen is being pointed at: Pip turns to it rather than to the pointer
     busy() { this.busyT = this.t; }

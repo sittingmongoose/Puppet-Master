@@ -209,6 +209,15 @@
         const x = (xx) => `M${R(xx - r)} ${R(y - r)}L${R(xx + r)} ${R(y + r)}M${R(xx + r)} ${R(y - r)}L${R(xx - r)} ${R(y + r)}`;
         return eyes(st(x(L) + x(Rx), r * .66)) + st(`M${R(cx - m.w / 2)} ${R(m.y + 1.6)}Q${R(cx - m.w / 4)} ${R(m.y)} ${cx} ${R(m.y + 1.6)}T${R(cx + m.w / 2)} ${R(m.y + 1.6)}`, m.sw * .85);
       }
+      case 'oops': {
+        // something went wrong (a sign-in that failed, a key that was refused): worried brows, a wobbly mouth and a
+        // bead of sweat; sympathetic, not broken (that is 'error')
+        const brow = (xx, s) => `M${R(xx - s * r * 1.15)} ${R(y - r * 1.5)}L${R(xx + s * r * .95)} ${R(y - r * 2.25)}`;
+        const qx = Rx + r * 2.35, qy = y - r * 1.55;
+        const drop = g.detail ? `<path d="M${R(qx)} ${R(qy - 2.7)}C${R(qx + 2)} ${R(qy - .2)} ${R(qx + 2)} ${R(qy + 2)} ${R(qx)} ${R(qy + 2)}C${R(qx - 2)} ${R(qy + 2)} ${R(qx - 2)} ${R(qy - .2)} ${R(qx)} ${R(qy - 2.7)}Z" fill="#fff" fill-opacity=".92" stroke="${ink}" stroke-width=".55"/>` : '';
+        return `<g class="${c.eyes || ''}"><g class="${c.blink || ''}">${dot(L, y + .4, r * .9) + dot(Rx, y + .4, r * .9) + shine(L, y + .4, r * .9) + shine(Rx, y + .4, r * .9)}</g>${st(brow(L, 1) + brow(Rx, -1), r * .5)}</g>`
+          + st(`M${R(cx - m.w * .45)} ${R(m.y + 1)}Q${R(cx - m.w * .22)} ${R(m.y - .7)} ${cx} ${R(m.y + 1)}T${R(cx + m.w * .45)} ${R(m.y + 1)}`, m.sw * .85) + drop;
+      }
       case 'sleep': {
         const cl = (xx) => `M${R(xx - r)} ${R(y)}Q${xx} ${R(y + r * 1.15)} ${R(xx + r)} ${R(y)}`;
         return eyes(st(cl(L) + cl(Rx), r * .7)) + `<ellipse cx="${cx}" cy="${R(m.y + 1.4)}" rx="${R(m.w * .14)}" ry="${R(m.w * .18)}" fill="${ink}"/>`;
@@ -337,6 +346,8 @@
       case 'alert': return both((x) => rect(x - 1.7, cy - 1.7, 3.4, 3.4));
       case 'error': return both((x) => st(`M${x - 2} ${cy - 1.9}L${x + 2} ${cy + 1.9}M${x + 2} ${cy - 1.9}L${x - 2} ${cy + 1.9}`, 1.2, red));
       case 'sleep': return both((x) => rect(x - 2.6, cy + .9, 5.2, 1));
+      // worried: each eye's top edge rises toward the middle
+      case 'oops': return both((x) => { const s = x < cx ? 1 : -1; return `<path d="M${R(x - 1.5 * s)} ${R(cy - .3)}L${R(x + 1.5 * s)} ${R(cy - 2)}L${R(x + 1.5 * s)} ${R(cy + 2.1)}L${R(x - 1.5 * s)} ${R(cy + 2.1)}Z" fill="${paper}"/>`; });
       case 'think': case 'dots': return [-1, 0, 1].map((i) => `<g class="${(cls.dot || '') + (i + 2)}">${rect(cx + i * 4.4 - 1.2, cy - 1.2, 2.4, 2.4)}</g>`).join('');
       default: return '';
     }
@@ -387,6 +398,7 @@
     const my = small ? 52.5 : 51, mw = small ? 8 : 6, mt = small ? 2.8 : 1.5;
     const mouth = mood === 'alert' ? `<rect x="30.4" y="${R(my - 1)}" width="3.2" height="3.2" fill="${ink}"/>`
       : mood === 'happy' ? `<path d="M${R(32 - mw / 2 - .6)} ${R(my - .4)}L${R(32 - mw / 4)} ${R(my + 1.6)}H${R(32 + mw / 4)}L${R(32 + mw / 2 + .6)} ${R(my - .4)}" fill="none" stroke="${ink}" stroke-width="${mt}"/>`
+      : mood === 'oops' ? `<path d="M${R(32 - mw / 2)} ${R(my + .8)}Q${R(32 - mw / 4)} ${R(my - .7)} 32 ${R(my + .8)}T${R(32 + mw / 2)} ${R(my + .8)}" fill="none" stroke="${ink}" stroke-width="${mt}"/>`
       : mood === 'error' || mood === 'sleep' ? `<rect x="${R(32 - mw * .35)}" y="${R(my)}" width="${R(mw * .7)}" height="${mt}" fill="${ink}"/>`
       : `<rect x="${R(32 - mw / 2)}" y="${R(my)}" width="${R(mw)}" height="${mt}" fill="${ink}"/>`;
     const head = `<g class="${cls.pup || ''}">${headS}${visor}${hud}${mouth}</g>`;

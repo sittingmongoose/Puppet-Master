@@ -84,7 +84,8 @@ PMLogo.svg({
 
 `PMLogo.kit` exposes the drawing parts (geometry, faces, control, head, the string solver, NieR
 parts) for places that animate Pip themselves, such as `Concepts/onboarding/opus-5.5-pip/`. The `wink`
-mood was added for it.
+mood was added for it, and `oops` (worried brows, a wobbly mouth and a bead of sweat; in NieR, worried eyes
+on the band) for a sign-in that failed or a key that was refused: sympathetic, where `error` is broken.
 
 Every animated file keeps the static pose as its base markup, so a renderer that ignores CSS
 (a tray image, Slint's SVG loader) still shows the finished mark.

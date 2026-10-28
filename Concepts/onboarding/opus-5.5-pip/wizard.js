@@ -14,8 +14,8 @@
     where: 'this', begin: 'new', name: 'Book club website', vcs: 'git', online: false, backup: null, away: 'home',
     ai: { claude: 'checking', codex: 'checking', antigravity: 'checking', cursor: 'checking' },
     phase: 0, reduced: false, width: 'full', open: true, rev: 0, help: null,
-    // three reviewers' ideas, off unless asked for (?try=bar,eyes,mood or the Ideas buttons)
-    ideas: { bar: false, eyes: false, mood: false }
+    // the AI screen's sign-ins: tries per provider (a first browser sign-in fails, to show what Pip does), the key typed
+    tries: {}, key: '', aiOops: null
   };
   try {
     const q = new URLSearchParams(location.search);
@@ -23,7 +23,6 @@
     if (q.get('screen')) S.screen = q.get('screen');
     if (q.get('reduced') === '1') S.reduced = true;
     if (/^(full|laptop|narrow|phone)$/.test(q.get('width') || '')) S.width = q.get('width');
-    (q.get('try') || '').split(',').forEach((k) => { if (k in S.ideas) S.ideas[k] = true; });
   } catch (e) { /* file:// */ }
   const root = document.documentElement;
   if (root.getAttribute('data-reduced-motion') === '1') S.reduced = true;
@@ -52,7 +51,7 @@
   /* -------------------------------------------------------------- screens */
   // Each screen: chapter, words, a body, the footer, and scene(S, hover) for the stage.
   const LOOK_LINES = { friendly: 'Soft and cosy. I like it.', glass: 'Ooh, shiny. Am I glass now?', basic: 'Clean and calm. Very tidy.', retro: 'A real monitor! I glow now.' };
-  // the hover-faces idea: the face each preview line is said with
+  // the face each preview line is said with (happy unless named here)
   const HOVER_MOOD = { 'Ooh, shiny. Am I glass now?': 'alert', 'NieR? I can do stoic.': 'idle', "Bring it in. I'll learn my way round.": 'alert', "Home it is. I'll keep the lights on.": 'idle' };
   const SCREENS = {
     welcome: {
@@ -113,11 +112,11 @@
     name: {
       chapter: 'project', eyebrow: 'Your Project', title: 'Name your Project', lead: "Use words you'll recognise later.",
       body: () => `<div class="ob-field"><span class="ob-labq"><label class="ob-label" for="obName">Project name</label>${qb('name:field')}</span><input type="text" id="obName" value="${esc(S.name)}" placeholder="Book club website" maxlength="80" autocomplete="off" spellcheck="false"></div>
-        <p class="ob-hint" id="obNameHint">${nameHint()}</p>`,
-      foot: { primary: ['Continue', 'next'] },
+        <p class="ob-hint${nameState() === 'taken' ? ' is-err' : ''}" id="obNameHint">${nameHint()}</p>`,
+      foot: () => ({ primary: ['Continue', 'next', nameState() === 'taken'] }),
       scene: () => {
-        const n = S.name.trim(), mood = !n ? 'think' : n.length > 60 ? 'alert' : 'idle';
-        return { chapter: 'project', props: [{ id: 'sign', kind: 'sign', slot: 'sign', params: { text: n } }], pip: { mood, look: 'sign' }, say: !n ? 'What shall we call it?' : n.length > 60 ? "That won't fit on my sign!" : `“${n.length > 26 ? n.slice(0, 25) + '…' : n}”. Lovely.`, target: 'sign', label: n ? (n.length > 24 ? n.slice(0, 23) + '…' : n) : 'Awaiting name', cmd: `pip sign "${n.length > 18 ? n.slice(0, 17) + '…' : n}"` };
+        const n = S.name.trim(), st = nameState(), mood = { empty: 'think', long: 'alert', taken: 'oops' }[st] || 'idle';
+        return { chapter: 'project', props: [{ id: 'sign', kind: 'sign', slot: 'sign', params: { text: n } }], pip: { mood, look: 'sign' }, say: { empty: 'What shall we call it?', long: "That won't fit on my sign!", taken: 'Oh! You already have one called that.' }[st] || `“${n.length > 26 ? n.slice(0, 25) + '…' : n}”. Lovely.`, target: 'sign', label: st === 'taken' ? 'Name taken' : n ? (n.length > 24 ? n.slice(0, 23) + '…' : n) : 'Awaiting name', cmd: `pip sign "${n.length > 18 ? n.slice(0, 17) + '…' : n}"${st === 'taken' ? '  TAKEN' : ''}` };
       }
     },
     safe: {
@@ -177,10 +176,12 @@
     ai: {
       chapter: 'ai', eyebrow: 'AI', title: 'Choose what powers Puppet Master',
       lead: 'Use an AI subscription or API account you already have. You can add more later.',
-      body: () => `<div class="ob-providers">${PROVIDERS.map(([k, n, sub]) => `<div class="ob-prov" data-state="${S.ai[k]}" data-hover="ai:${k}"><span class="ob-prov-ic">${n[0]}</span><div><b>${n}</b><small>${sub}</small></div><span class="ob-prov-s">${S.ai[k] === 'ready' ? icon('check', 15) + 'Ready' : S.ai[k] === 'off' ? 'Not signed in' : '<i class="ob-spin"></i>Checking…'}</span>${qb('ai:' + k)}</div>`).join('')}</div>
+      body: () => `<div class="ob-providers">${PROVIDERS.map(([k, n, sub]) => `<div class="ob-prov" data-state="${S.ai[k]}" data-hover="ai:${k}"><span class="ob-prov-ic">${n[0]}</span><div><b>${n}</b><small>${sub}</small></div><span class="ob-prov-s">${provStatus(k)}</span>${qb('ai:' + k)}${keyRow(k)}</div>`).join('')}</div>
         <div class="ob-links"><button type="button" class="ob-link">See all providers</button><button type="button" class="ob-link" data-act="noai">I don't have any of these</button></div>`,
       foot: { secondary: ['Skip for now', 'next'], primary: ['Continue', 'next'] },
       scene: () => {
+        // a sign-in that failed or a key that was refused: Pip is worried for you, looking at that provider
+        if (S.aiOops) { const [k, line] = S.aiOops; return { chapter: 'ai', props: PROVIDERS.map(([pk, n], i) => ({ id: 'o' + pk, kind: 'orb', slot: 'o' + (i + 1), scale: .9, params: { lit: S.ai[pk] === 'ready', label: n[0], hue: ['e', 'b', 'c', 'd'][i] } })), pip: { mood: 'oops', power: PROVIDERS.filter(([pk]) => S.ai[pk] === 'ready').length, look: 'o' + k }, say: line, target: 'o' + k, label: AUTH[k] === 'key' ? 'Key refused' : 'Sign-in failed', cmd: `pip power --${AUTH[k] === 'key' ? 'key' : 'signin'} ${k}  ERR` }; }
         const ready = PROVIDERS.filter(([k]) => S.ai[k] === 'ready');
         const props = PROVIDERS.map(([k, n], i) => ({ id: 'o' + k, kind: 'orb', slot: 'o' + (i + 1), scale: .9, params: { lit: S.ai[k] === 'ready', label: n[0], hue: ['e', 'b', 'c', 'd'][i] } }));
         const n = ready.length, checking = PROVIDERS.some(([k]) => S.ai[k] === 'checking');
@@ -232,6 +233,25 @@
   // the ? button; on a choice card it carries the card's hover key, so resting on it previews that choice too
   const qb = (key, hover) => `<button type="button" class="ob-q" data-help="${key}"${hover ? ` data-hover="${key}"` : ''} aria-expanded="${S.help === key}" aria-label="About ${esc(HELP[key][0])}" title="What is this?">?</button>`;
   const PROVIDERS = [['claude', 'Claude', 'Claude plan, not the Anthropic API'], ['codex', 'ChatGPT / Codex', 'ChatGPT plan'], ['antigravity', 'Google Antigravity', 'Antigravity plan, not the Gemini API'], ['cursor', 'Cursor', 'Cursor account']];
+  // how each provider connects, and what its row shows while it does
+  const AUTH = { claude: 'signin', codex: 'signin', antigravity: 'signin', cursor: 'key' };
+  function provStatus(k) {
+    const st = S.ai[k], go = (t) => `<button type="button" class="ob-link ob-prov-go" data-signin="${k}">${t}</button>`;
+    if (st === 'ready') return icon('check', 15) + 'Ready';
+    if (st === 'checking') return '<i class="ob-spin"></i>Checking…';
+    if (st === 'signing') return '<i class="ob-spin"></i>Finish in your browser…';
+    if (st === 'testing') return '<i class="ob-spin"></i>Checking the key…';
+    if (st === 'failed') return `<span class="ob-prov-err">Didn't sign in</span>${go('Try again')}`;
+    if (AUTH[k] === 'key') return st === 'off' ? `<button type="button" class="ob-link ob-prov-go" data-keyopen="${k}">Enter API key</button>` : st === 'badkey' ? '<span class="ob-prov-err">Key not accepted</span>' : 'Paste its key';
+    return `<span>Not signed in</span>${go('Sign in')}`;
+  }
+  // a key-based provider opens a field under its row (PMConcept7's own words for the hint and the refusal)
+  function keyRow(k) {
+    if (AUTH[k] !== 'key' || !['key', 'badkey', 'testing'].includes(S.ai[k])) return '';
+    const bad = S.ai[k] === 'badkey';
+    return `<div class="ob-keyrow"><input type="password" id="obKey" value="${esc(S.key)}" placeholder="Paste the key from your Cursor dashboard" aria-label="API key for Cursor" aria-invalid="${bad}" aria-describedby="obKeyHint" autocomplete="off" spellcheck="false"${S.ai[k] === 'testing' ? ' disabled' : ''}><button type="button" class="ob-btn ob-ghost ob-keygo" data-keycheck="${k}"${S.ai[k] === 'testing' ? ' disabled' : ''}>Check key</button>
+      <p class="ob-keyhint${bad ? ' is-err' : ''}" id="obKeyHint">${bad ? icon('close', 14) + "That key wasn't accepted. Check it and try again." : 'Kept in your system keychain. Never shown again.'}</p></div>`;
+  }
   const phases = () => [['Making the folder', 'folder', 'a'], [`Starting Safe History with ${S.vcs === 'jj' ? 'Jujutsu' : 'Git'}`, 'history', 'b'], ...(S.online ? [['Making the online copy on GitHub', 'cloud', 'd']] : []), ...(S.away === 'anywhere' ? [['Setting up access away from home', 'globe', 'e']] : []), ['Checking everything works', 'check', 'c']];
   const reviewRows = () => [
     ['Project', `${S.name.trim() || 'Untitled'} · ${{ new: 'new, empty folder', existing: 'existing work', restore: 'restored from a backup' }[S.begin]}`, 'begin'],
@@ -239,7 +259,10 @@
     ['Keeping it safe', `Safe History with ${S.vcs === 'jj' ? 'Jujutsu' : 'Git'}${S.online ? ' · online copy on GitHub' : ''}${S.backup ? ' · backup to Home NAS' : ''}`, 'safe'],
     ['Access', S.away === 'anywhere' ? 'At home and away (Tailscale)' : 'Only at home', 'away']
   ];
-  function nameHint() { const n = S.name.trim(); return !n ? 'Give it a name' : n.length > 60 ? 'Keep it under 60 characters' : `${icon('check', 14)} Good name`; }
+  // Projects this computer already has (the shell behind the window shows the first)
+  const TAKEN = ['tastebook', 'family recipes'];
+  function nameState() { const n = S.name.trim(); return !n ? 'empty' : n.length > 60 ? 'long' : TAKEN.includes(n.toLowerCase()) ? 'taken' : 'ok'; }
+  function nameHint() { const n = S.name.trim(), st = nameState(); return st === 'empty' ? 'Give it a name' : st === 'long' ? 'Keep it under 60 characters' : st === 'taken' ? `${icon('close', 14)} You already have a Project called ${esc(n)}` : `${icon('check', 14)} Good name`; }
   function choices(key, list) {
     return `<div class="ob-choices" role="radiogroup">${list.map(([k, ic, t, sub, rec]) => `<div class="ob-opt"><button type="button" class="ob-choice" role="radio" aria-checked="${S[key] === k}" data-pick="${key}:${k}" data-hover="${key}:${k}">
       <span class="ob-choice-ic">${icon(ic, 22)}</span><span class="ob-choice-t"><b>${t}</b><small>${sub}</small></span>${rec ? '<span class="ob-rec">Recommended</span>' : ''}<span class="ob-radio" aria-hidden="true"></span></button>${qb(key + ':' + k, true)}</div>`).join('')}</div>`;
@@ -338,7 +361,10 @@
     const html = `<div class="ob-screen" data-screen="${S.screen}" data-dir="${dir || 0}">
       <p class="ob-eyebrow">${esc(val(scr.eyebrow))}</p><h1 class="ob-title" id="obTitle">${val(scr.title)}</h1><p class="ob-lead">${val(scr.lead)}</p>
       <div class="ob-bodyx">${scr.body()}</div></div>`;
+    // a redraw keeps the key being typed, and its focus
+    const typing = document.activeElement && document.activeElement.id === 'obKey';
     mainEl.innerHTML = html;
+    if (typing) { const f = $('#obKey'); if (f && !f.disabled) { f.focus(); f.setSelectionRange(f.value.length, f.value.length); } }
     if (S.help) showHelp(true);
     if (famOf(S.theme) === 'retro' && dir && !S.reduced) typeTitle($('#obTitle'));
     const f = val(scr.foot) || {};
@@ -350,12 +376,15 @@
     if (S.screen === 'name') {
       const inp = $('#obName');
       inp.addEventListener('input', () => {
-        const was = S.name.trim().length > 60;
-        S.name = inp.value; $('#obNameHint').innerHTML = nameHint();
+        const was = nameState();
+        S.name = inp.value; const hint = $('#obNameHint'); hint.innerHTML = nameHint();
+        const now = nameState(); hint.classList.toggle('is-err', now === 'taken');
+        const cont = $('.ob-primary'); if (cont) cont.disabled = now === 'taken';
         sfx('key', { index: inp.value.length });
         if (stage) stage.busy();
         direct();
-        if (!was && S.name.trim().length > 60) { sfx('warn'); sfx('alert'); }
+        if (was !== 'long' && now === 'long') { sfx('warn'); sfx('alert'); }
+        if (was !== 'taken' && now === 'taken') sfx('warn');
       });
     }
   }
@@ -365,8 +394,9 @@
     if (S.hover) { const [k, v] = S.hover.split(':'); hov = (k === S.screen || k === 'look' || k === 'safe' || k === 'ai') ? (S.screen === 'safe' ? S.hover : v) : null; }
     const spec = scr.scene(hov);
     spec.screen = S.screen;
-    // idea: Pip's face follows what it says while it previews a choice, instead of its "considering" face
-    if (S.ideas.mood && hov && spec.pip && spec.pip.mood === 'think') spec.pip.mood = HOVER_MOOD[spec.say] || 'happy';
+    // while Pip previews a choice it wears the face of what it says, not a "considering" face that read as worried
+    if (hov && /^(look|where|begin|away)$/.test(S.screen) && spec.pip && spec.pip.mood === 'think') spec.pip.mood = HOVER_MOOD[spec.say] || 'happy';
+    if (S.sayNow) { spec.sayNow = true; S.sayNow = false; }
     if (S.screen === 'look' && stage) stage.tryOn(hov ? (hov === 'nier' ? 'nier-' + schemeOf(S.theme) : hov + '-' + schemeOf(S.theme)) : S.theme);
     if (stage) stage.direct(spec);
   }
@@ -408,6 +438,32 @@
     }, 16);
   }
 
+  /* ---------------------------------------------------- AI: when it goes wrong */
+  // a browser sign-in: the first try fails here (the browser was closed before it finished), so the concept shows
+  // what Pip does when something goes wrong; trying again works
+  function signIn(k) {
+    S.ai[k] = 'signing'; S.aiOops = null; renderScreen(0); sfx('tap');
+    const fail = !S.tries[k]; S.tries[k] = (S.tries[k] || 0) + 1;
+    later(() => {
+      if (fail) { S.ai[k] = 'failed'; S.aiOops = [k, "Oh no. That sign-in didn't go through."]; S.sayNow = true; renderScreen(0); sfx('warn'); return; }
+      S.ai[k] = 'ready'; S.sayNow = true; renderScreen(0); if (stage) stage.cheer('o' + k, { sound: 'power', index: PROVIDERS.filter(([pk]) => S.ai[pk] === 'ready').length - 1 });
+    }, fail ? 1800 : 1300);
+  }
+  // an API key: one that is too short to be real is refused (PMConcept7's "That key wasn't accepted")
+  function checkKey(k) {
+    const f = $('#obKey'); S.key = f ? f.value : S.key;
+    if (!S.key.trim()) { if (f) f.focus(); return; }
+    S.ai[k] = 'testing'; S.aiOops = null; renderScreen(0); sfx('tap');
+    later(() => {
+      if (S.key.trim().length < 20) {
+        S.ai[k] = 'badkey'; S.aiOops = [k, "Hmm, that key didn't work."]; S.sayNow = true; renderScreen(0); sfx('warn');
+        const g = $('#obKey'); if (g) { g.focus(); g.select(); }
+        return;
+      }
+      S.ai[k] = 'ready'; S.key = ''; S.sayNow = true; renderScreen(0); if (stage) stage.cheer('o' + k, { sound: 'power', index: PROVIDERS.filter(([pk]) => S.ai[pk] === 'ready').length - 1 });
+    }, 900);
+  }
+
   /* ----------------------------------------------------------------- flow */
   let timers = [];
   const later = (fn, ms) => timers.push(setTimeout(fn, S.reduced ? Math.min(ms, 120) : ms));
@@ -437,6 +493,7 @@
     }
     if (screen === 'ai') {
       PROVIDERS.forEach(([k]) => { S.ai[k] = 'checking'; });
+      S.tries = {}; S.key = ''; S.aiOops = null;
       renderScreen(0);
       let lit = 0;
       [['claude', 'ready', 1300], ['codex', 'ready', 2300], ['antigravity', 'off', 2900], ['cursor', 'off', 3300]].forEach(([k, st, ms]) => later(() => { S.ai[k] = st; renderScreen(0); if (st === 'ready' && stage) stage.cheer('o' + k, { sound: 'power', index: lit++ }); }, ms));
@@ -452,6 +509,9 @@
     if (!b) return;
     if (b.dataset.help) { setHelp(b.dataset.help === S.help ? null : b.dataset.help, b); return; }
     if (b.dataset.helpClose != null) { const k = S.help; setHelp(null); const q = k && $(`.ob-q[data-help="${k}"]`, mainEl); if (q) q.focus(); return; }
+    if (b.dataset.signin) { signIn(b.dataset.signin); return; }
+    if (b.dataset.keyopen) { S.ai[b.dataset.keyopen] = 'key'; S.aiOops = null; renderScreen(0); sfx('tap'); const f = $('#obKey'); if (f) f.focus(); return; }
+    if (b.dataset.keycheck) { checkKey(b.dataset.keycheck); return; }
     if (b.dataset.pick) {
       const [k, v] = b.dataset.pick.split(':');
       S[k] = v; S.hover = null; renderScreen(0);
@@ -523,6 +583,7 @@
     }, POLL);
   }
   mainEl.addEventListener('pointermove', (e) => { hv.x = e.clientX; hv.y = e.clientY; }, { passive: true });
+  mainEl.addEventListener('input', (e) => { if (e.target.id === 'obKey') S.key = e.target.value; });
   mainEl.addEventListener('pointerover', (e) => { hv.x = e.clientX; hv.y = e.clientY; const h = e.target.closest('[data-hover]'); wantHover(h ? h.dataset.hover : null); });
   mainEl.addEventListener('pointerleave', () => wantHover(null));
   mainEl.addEventListener('focusin', (e) => { const h = e.target.closest('[data-hover]'); if (h && e.target.matches(':focus-visible')) { hv.byFocus = true; hv.want = h.dataset.hover; setHover(h.dataset.hover); } });
@@ -537,6 +598,7 @@
       const again = sel && $(sel, mainEl); if (again) again.focus();
       return;
     }
+    if (e.key === 'Enter' && e.target.id === 'obKey') { e.preventDefault(); const c = $('[data-keycheck]'); if (c) c.click(); return; }
     if (e.key === 'Enter' && !e.target.matches('button, input[type="checkbox"]')) { const p = $('.ob-primary'); if (p && !p.disabled) p.click(); }
     if (e.key === 'Escape') {
       if (S.help) { const k = S.help; setHelp(null); const q = $(`.ob-q[data-help="${k}"]`, mainEl); if (q) q.focus(); return; }
@@ -565,12 +627,6 @@
     const P = SND(); if (P && P.setReduced) P.setReduced(r);
     $('#reducedBtn').setAttribute('aria-pressed', String(r));
   }
-  function setIdea(k, on) {
-    S.ideas[k] = on;
-    $$('[data-idea]').forEach((b) => b.setAttribute('aria-pressed', String(!!S.ideas[b.dataset.idea])));
-    if (stage) stage.setIdeas(S.ideas);
-    direct();
-  }
   function buildControls() {
     $('#themeSel').innerHTML = THEMES10.map((t) => `<option value="${t}">${TH[t].label}</option>`).join('');
     $('#screenSel').innerHTML = FLOW.map((s, i) => `<option value="${s}">${i + 1}. ${{ welcome: 'Welcome', look: 'Pick a look', where: 'The computer', begin: 'Project begins', name: 'Name', safe: 'Keep it safe', away: 'Away from home', review: 'Review', creating: 'Creating', ai: 'AI power', ready: 'Ready' }[s]}</option>`).join('');
@@ -580,7 +636,6 @@
     $('#reducedBtn').addEventListener('click', () => setReduced(!S.reduced));
     // the control bar's buttons only (body carries data-width too, and every click on the page used to land here)
     $$('.cc [data-width]').forEach((b) => b.addEventListener('click', () => setWidth(b.dataset.width)));
-    $$('[data-idea]').forEach((b) => b.addEventListener('click', () => setIdea(b.dataset.idea, !S.ideas[b.dataset.idea])));
     new MutationObserver(() => {
       if (applyTheme.self) { applyTheme.self = false; return; }
       const t = root.getAttribute('data-theme'), r = root.getAttribute('data-reduced-motion') === '1';
@@ -595,8 +650,7 @@
   setWidth(S.width);
   applyTheme();
   setReduced(S.reduced);
-  stage = new window.PipStage.Stage(stageEl, { theme: S.theme, layout: layoutFor(), reduced: S.reduced, ideas: S.ideas });
-  $$('[data-idea]').forEach((b) => b.setAttribute('aria-pressed', String(!!S.ideas[b.dataset.idea])));
+  stage = new window.PipStage.Stage(stageEl, { theme: S.theme, layout: layoutFor(), reduced: S.reduced });
   S.layout = stage.layoutName; document.body.dataset.stage = S.layout;
   if (!SCREENS[S.screen]) S.screen = 'welcome';
   if (S.screen !== 'welcome') S.history = FLOW.slice(0, FLOW.indexOf(S.screen));
