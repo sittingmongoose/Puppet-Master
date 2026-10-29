@@ -533,8 +533,8 @@
      One of the title bar's tabs: the page tabs' height, type and resting ink, a folder from PMG, a drawn chevron, the
      project's badge, and the chosen tab's chip while its menu is open (style-002.css with the switcher tokens). The menu
      lists every project in two-line rows: renderProjectRow is the one row renderer, and onboarding adds its project through
-     PM_PROJECT_BOX.add (O55.shell.selectProject). The badge and each row's state read the work projection: PM_WORK's
-     project(id) when it is there, else a stub of the same shape that answers calm until the projection lands. A pick
+     PM_PROJECT_BOX.add (O55.shell.selectProject). The badge and each row's state read the work projection,
+     PM_WORK.project(id), which keeps B5's order; the box passes it the active project's unsaved shell state. A pick
      dispatches cmd.project.switch_active_tab (B1), Ctrl/Cmd+Enter or Ctrl/Cmd+click cmd.project.open_in_new_workspace_tab
      (B6), and Ctrl+Shift+P opens the menu (ui.project_switcher.open, B2). #projectMenuLabel keeps the bare project name:
      Home, Settings, the dashboard and the sound binding read it. The chosen tab's chip follows the box's width in the same
@@ -546,7 +546,6 @@
     working: { rank: 2, word: 'Working' },
     'change-modified': { rank: 1, word: 'Unsaved' }
   };
-  var projectStub = Object.create(null);
   var projectLog = [];
   function projectEsc(v) { return String(v == null ? '' : v).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function projectIcon(name, px) { var G = window.PMG; return G && G.icon ? G.icon(name, px) : ''; }
@@ -558,10 +557,19 @@
     keys.forEach(function (k) { if (PROJECT_STATES[k] && (!best || PROJECT_STATES[k].rank > PROJECT_STATES[best].rank)) best = k; });
     return { key: best, say: best ? String(v.say || '') : '' };
   }
+  /* FinalGUISpec 3.4's "unsaved shell state": a Home tab with unsaved changes. Home saves its layout by itself, so its
+     open buffers are the only unsaved state, and only the active project has its tabs open (Home fires pm7.home.unsaved
+     when a tab's mark changes) */
+  function projectUnsaved(id) {
+    var P = window.PMW, tabs = P && P.state && P.state.layout && P.state.layout.tabs, sel = projectSelected();
+    if (!tabs || !sel || sel.getAttribute('data-project') !== id) return false;
+    for (var k in tabs) if (tabs[k] && tabs[k].dirty) return true;
+    return false;
+  }
   function projectState(id) {
     var W = window.PM_WORK;
-    if (W && typeof W.project === 'function') { try { return projectNormalize(W.project(id)); } catch (e) {} }
-    return projectNormalize(projectStub[id]);
+    if (!W || typeof W.project !== 'function') return { key: '', say: '' };
+    try { return projectNormalize(W.project(id, { unsaved: projectUnsaved(id) })); } catch (e) { return { key: '', say: '' }; }
   }
   function projectInfo(item) {
     var id = item.getAttribute('data-project') || '';
@@ -736,10 +744,10 @@
     }, true);
 
     refreshProjectBox();
-    /* PMG is a head module, so it is here first; the projection may come later and says when its states change */
-    var W = window.PM_WORK;
-    if (W && typeof W.on === 'function') { try { W.on('change', refreshProjectBox); } catch (e1) {} }
+    /* PMG and the work projection are head modules, so both are here first; the projection says when its states change
+       (also as the window event, which is all this listens to), and Home when a tab gains or loses unsaved changes */
     window.addEventListener('pm7.work.changed', refreshProjectBox);
+    window.addEventListener('pm7.home.unsaved', refreshProjectBox);
 
     window.PM_PROJECT_BOX = {
       /* the one row renderer: a row element with data-project (and data-project-name, -path, -branch, -stack) */
@@ -766,9 +774,7 @@
       refresh: refreshProjectBox,
       open: function () { projectMenuOpen(false); },
       close: function () { projectMenuClose(false); },
-      log: function () { return projectLog.slice(); },
-      /* until the work projection lands: a state per project for Demo Studio and checks (calm when cleared) */
-      stub: function (id, key, say) { if (key && PROJECT_STATES[key]) projectStub[id] = { key: key, say: say || '' }; else delete projectStub[id]; refreshProjectBox(); }
+      log: function () { return projectLog.slice(); }
     };
   }
 
