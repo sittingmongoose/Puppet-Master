@@ -102,7 +102,8 @@
         "stoppable",
         "restartable",
         "is_system_service",
-        "observed_at"
+        "observed_at",
+        "scope_kind"
       ],
       "properties": {
         "schema_id": {
@@ -118,7 +119,12 @@
           "$ref": "#/$defs/Id"
         },
         "project_id": {
-          "$ref": "#/$defs/Id"
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
         },
         "server_id": {
           "$ref": "#/$defs/Id"
@@ -211,6 +217,12 @@
         "observed_at": {
           "type": "string",
           "format": "date-time"
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
       },
       "allOf": [
@@ -229,6 +241,31 @@
               },
               "restartable": {
                 "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
               }
             }
           }
@@ -251,7 +288,8 @@
         "memory_used_bytes",
         "memory_total_bytes",
         "reason",
-        "processes"
+        "processes",
+        "scope_kind"
       ],
       "properties": {
         "schema_id": {
@@ -264,7 +302,12 @@
           "$ref": "#/$defs/Id"
         },
         "project_id": {
-          "$ref": "#/$defs/Id"
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
         },
         "server_id": {
           "$ref": "#/$defs/Id"
@@ -358,6 +401,12 @@
               }
             }
           }
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
       },
       "allOf": [
@@ -381,6 +430,31 @@
                 "type": "null"
               },
               "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 256

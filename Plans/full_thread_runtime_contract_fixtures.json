@@ -697,7 +697,8 @@
         "stoppable": true,
         "restartable": false,
         "is_system_service": false,
-        "observed_at": "2026-10-29T22:00:00Z"
+        "observed_at": "2026-10-29T22:00:00Z",
+        "scope_kind": "project"
       }
     },
     {
@@ -725,7 +726,8 @@
               3000
             ]
           }
-        ]
+        ],
+        "scope_kind": "project"
       }
     },
     {
@@ -753,7 +755,8 @@
               3000
             ]
           }
-        ]
+        ],
+        "scope_kind": "project"
       }
     },
     {
@@ -862,7 +865,41 @@
         "stoppable": true,
         "restartable": false,
         "is_system_service": false,
-        "observed_at": "2026-10-29T22:00:00Z"
+        "observed_at": "2026-10-29T22:00:00Z",
+        "scope_kind": "project"
+      }
+    },
+    {
+      "name": "application_service_has_no_invented_project",
+      "instance": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "process_facts",
+        "process_facts_id": "pf-service",
+        "observable_work_id": "service-work",
+        "project_id": null,
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "pid": 123,
+        "pid_start_time": "2026-10-29T22:00:00Z",
+        "process_group": 123,
+        "command": "npm test",
+        "cwd": "/workspace/project",
+        "ports": [
+          3000
+        ],
+        "exit_code": null,
+        "ended_reason": null,
+        "output_ref": {
+          "artifact_ref": "out-1",
+          "head_line_limit": 100,
+          "tail_line_limit": 100,
+          "omitted_line_count": 500
+        },
+        "stoppable": false,
+        "restartable": false,
+        "is_system_service": true,
+        "observed_at": "2026-10-29T22:00:00Z",
+        "scope_kind": "application"
       }
     }
   ],
@@ -1097,7 +1134,8 @@
         "stoppable": true,
         "restartable": false,
         "is_system_service": false,
-        "observed_at": "2026-10-29T22:00:00Z"
+        "observed_at": "2026-10-29T22:00:00Z",
+        "scope_kind": "project"
       },
       "expected_failure": "pid_start_time_required"
     },
@@ -1130,7 +1168,8 @@
         "stoppable": true,
         "restartable": false,
         "is_system_service": true,
-        "observed_at": "2026-10-29T22:00:00Z"
+        "observed_at": "2026-10-29T22:00:00Z",
+        "scope_kind": "project"
       },
       "expected_failure": "system_services_read_only"
     },
@@ -1158,7 +1197,8 @@
               3000
             ]
           }
-        ]
+        ],
+        "scope_kind": "project"
       },
       "expected_failure": "server_identity_required"
     },
@@ -1187,7 +1227,8 @@
               3000
             ]
           }
-        ]
+        ],
+        "scope_kind": "project"
       },
       "expected_failure": "unavailable_requires_null_readings"
     },
@@ -1296,10 +1337,45 @@
               3000
             ]
           }
-        ]
+        ],
+        "scope_kind": "project"
       },
       "expected_failure": "resource_memory_exceeds_host_total",
       "semantic_rule": "resource_memory_exceeds_host_total"
+    },
+    {
+      "name": "application_service_cannot_invent_project",
+      "instance": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "process_facts",
+        "process_facts_id": "pf-service",
+        "observable_work_id": "service-work",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "pid": 123,
+        "pid_start_time": "2026-10-29T22:00:00Z",
+        "process_group": 123,
+        "command": "npm test",
+        "cwd": "/workspace/project",
+        "ports": [
+          3000
+        ],
+        "exit_code": null,
+        "ended_reason": null,
+        "output_ref": {
+          "artifact_ref": "out-1",
+          "head_line_limit": 100,
+          "tail_line_limit": 100,
+          "omitted_line_count": 500
+        },
+        "stoppable": false,
+        "restartable": false,
+        "is_system_service": true,
+        "observed_at": "2026-10-29T22:00:00Z",
+        "scope_kind": "application"
+      },
+      "expected_failure": "application_scope_project_forbidden"
     }
   ]
 }

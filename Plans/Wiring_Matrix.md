@@ -6637,7 +6637,11 @@ canonical_text: >-
   rows resolve declared no-write actions with focus return and teardown. Stop all shares cmd.work.stop.
   Existing terminal/owner/schedule/Settings routes are reused. New event candidates do not emit. Counts are
   derived/pinned together in companions; partial native evidence remains partial. Decorative brand/loader
-  are excluded because they are not controls.
+  are excluded because they are not controls. D10/D13/G4: Each production row has command-specific
+  locations and falsifiable effect checks. Request/source scope pairing is explicit: application scope has
+  project_id null, project scope has a real Project, and platform target permissions remain per owner. Null
+  is never permission to substitute an active/default Project. Local action requests preserve the same
+  source scope without persistence.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

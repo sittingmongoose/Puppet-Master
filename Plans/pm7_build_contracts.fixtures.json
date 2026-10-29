@@ -31,7 +31,8 @@
             "process_group": 123
           }
         ],
-        "reviewed_generation": 4
+        "reviewed_generation": 4,
+        "scope_kind": "project"
       },
       "valid": true
     },
@@ -63,7 +64,8 @@
             "process_group": 123
           }
         ],
-        "reviewed_generation": 4
+        "reviewed_generation": 4,
+        "scope_kind": "project"
       },
       "valid": false
     },
@@ -72,7 +74,7 @@
       "definition": "work_quit_request",
       "instance": {
         "command_id": "cmd.work.quit",
-        "project_id": "p-1",
+        "project_id": null,
         "server_id": "srv-1",
         "environment_id": "env-1",
         "expected_generation": 4,
@@ -81,7 +83,8 @@
         "origin": "keyboard",
         "choice": "keep_running",
         "targets": [],
-        "reviewed_generation": 4
+        "reviewed_generation": 4,
+        "scope_kind": "application"
       },
       "valid": true
     },
@@ -90,7 +93,7 @@
       "definition": "work_quit_request",
       "instance": {
         "command_id": "cmd.work.quit",
-        "project_id": "p-1",
+        "project_id": null,
         "server_id": "srv-1",
         "environment_id": "env-1",
         "expected_generation": 4,
@@ -112,7 +115,8 @@
             "process_group": 123
           }
         ],
-        "reviewed_generation": 4
+        "reviewed_generation": 4,
+        "scope_kind": "application"
       },
       "valid": false
     },
@@ -129,7 +133,8 @@
         "idempotency_key": "once-1",
         "origin": "keyboard",
         "tab": "resources",
-        "view_id": "view-1"
+        "view_id": "view-1",
+        "scope_kind": "project"
       },
       "valid": true
     },
@@ -146,7 +151,8 @@
         "idempotency_key": "once-1",
         "origin": "keyboard",
         "tab": "task_manager",
-        "view_id": "view-1"
+        "view_id": "view-1",
+        "scope_kind": "project"
       },
       "valid": false
     },
@@ -175,7 +181,106 @@
           "process_group": 123
         },
         "input_generation": 3,
-        "answer": "rm -rf /"
+        "answer": "rm -rf /",
+        "scope_kind": "project"
+      },
+      "valid": false
+    },
+    {
+      "name": "application_quit_without_invented_project",
+      "definition": "work_quit_request",
+      "instance": {
+        "command_id": "cmd.work.quit",
+        "project_id": null,
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "choice": "keep_running",
+        "targets": [],
+        "reviewed_generation": 4,
+        "scope_kind": "application"
+      },
+      "valid": true
+    },
+    {
+      "name": "application_cannot_smuggle_project",
+      "definition": "work_quit_request",
+      "instance": {
+        "command_id": "cmd.work.quit",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "choice": "keep_running",
+        "targets": [],
+        "reviewed_generation": 4,
+        "scope_kind": "application"
+      },
+      "valid": false
+    },
+    {
+      "name": "missing_scope_fails_closed",
+      "definition": "work_quit_request",
+      "instance": {
+        "command_id": "cmd.work.quit",
+        "project_id": null,
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "choice": "keep_running",
+        "targets": [],
+        "reviewed_generation": 4
+      },
+      "valid": false
+    },
+    {
+      "name": "platform_panel_without_active_project",
+      "definition": "work_panel_show_request",
+      "instance": {
+        "command_id": "cmd.agents_and_processes.show",
+        "project_id": null,
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "tab": "resources",
+        "view_id": "view-1",
+        "scope_kind": "application"
+      },
+      "valid": true
+    },
+    {
+      "name": "local_editor_without_active_project",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.settings.pip_editor.open",
+        "scope_kind": "application",
+        "project_id": null,
+        "view_id": "settings",
+        "return_focus_id": "pip-row"
+      },
+      "valid": true
+    },
+    {
+      "name": "project_scope_cannot_omit_project",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.close",
+        "scope_kind": "project",
+        "project_id": null,
+        "view_id": "panel",
+        "return_focus_id": "statusbar"
       },
       "valid": false
     }

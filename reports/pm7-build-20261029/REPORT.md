@@ -3,13 +3,13 @@
 Branch: `t3/plans/pm7-plans-canon`. Lead: `pm7-build`.
 
 - **Step 1 done:** checked allocation against live owner documents; published shared `IDS.md` and committed its mirror at `reports/pm7-build-20261029/IDS.md`. DL-235–256, F3-660–665, DR-076–078, SSYS-056–057 reserved with all command, binding and glyph identities and the 22-key mood map.
-- **Step 2 done:** 25 owner docs amended across W1–W9 with decision IDs, including D1–D14 and G4 amendments, stale counts/title geometry, one Pip/loader/projection, full onboarding, chat, ProcessFacts and per-server Resources. Shards and PlanUnit index regenerated. Ledger compilation not used.
+- **Step 2 done:** 26 owner docs amended across W1–W9 with decision IDs, including D1–D14 and G4 amendments, stale counts/title geometry, one Pip/loader/projection, full onboarding, chat, ProcessFacts and per-server Resources. Shards and PlanUnit index regenerated. Ledger compilation not used.
 - **Step 3 implemented; aggregate verification running:** command/request/result/local schemas, ProcessFacts and per-server resource records, closed input requests, positive/negative and identity fixtures, 45 new bindings, 11 new production-intent rows, 26 Touch obligations / 3 profiles, two Settings rows and 25-part registry. Derived files regenerated; focused companion checks pass.
 - **Step 4 pending:** GUI lanes' merged implementation names, then reconciliation.
 
 ## Checks
 
-Allocation scan: next free starts verified DL-235, F3-660, DR-076, SSYS-056. Initial tree clean at dddfe5a763. No raw evidence generated. No governance reseal, landing, lock or shared-main changes.
+Allocation scan: next free starts verified DL-235, F3-660, DR-076, SSYS-056. Initial tree clean at dddfe5a763. No browser or media captures were generated; validation logs are retained outside the repository. No governance reseal, landing, lock or shared-main changes.
 
 ## Names introduced
 
@@ -17,7 +17,7 @@ See `../../IDS.md`. Two new Settings rows admitted (1011 total). Stop all reuses
 
 ## Open items
 
-Aggregate gates/dry landing check and any branch-owned fixes; GUI lane reconciliation after lead merges. Lead asked found to adopt the 25 admitted option IDs. Resources reuses server glyph. Independent review is lead-owned. No ledger is being compiled, so the ledger compile witness is not applicable.
+Aggregate gates/dry landing check and any branch-owned fixes; GUI lane reconciliation after lead merges. Lead asked found to adopt the 25 admitted option IDs. Resources reuses the existing gauge glyph. Independent review is lead-owned. No ledger is being compiled, so the ledger compile witness is not applicable.
 
 ## Step 2 validation and boundary
 
@@ -46,7 +46,7 @@ Names: Plans/pip_parts.json; Plans/pm7_build_contracts.schema.json and .fixtures
 | W6 | F3-664/665 three-tab platform panel, two status items, quit; ACD-505 thread Processes; D1–D14 in DL-240–253; SIR-054 and runtime schemas/fixtures for process facts, safe prompts, identity and per-server Resources. |
 | W7 | ACD-506 and F3-637 remove small Activity Detail/Pin and fixed width cap; layout schema/fixtures permit wide preferences; shared Glass plates and clean ring requirements. |
 | W8 | F3-649/DL-256 specify one lab Demo Studio with Pip/sound/parts, full onboarding tips/errors, project states/widths and Activity/Resources/quit scenarios. GUI implementation belongs to demo lane. |
-| W9 | Shared IDs, 25 owner docs, DRY/glossary/index, command catalog, production-intent wiring, bindings, Touch, settings/part/glyph companions and count pins. Regeneration and focused checks pass; final aggregate attribution follows. |
+| W9 | Shared IDs, 26 owner docs, DRY/glossary/index, command catalog, production-intent wiring, bindings, Touch, settings/part/glyph companions and count pins. Regeneration and focused checks pass; final aggregate attribution follows. |
 
 The report-only `reports/pm7-build-20261029/decision-map.json` maps all 62 packet/ruling IDs (including the lead's RM1 clarification) to canonical owner units, for applying later answers. The new main reseal/snapshot/baseline was inherited through integration, never edited by this lane. The obsolete pre-merge check attempt was stopped before completion; final verification runs on the merged base with 600 s subcheck bounds.
 
@@ -62,3 +62,9 @@ The completed pre-review aggregate returned 1. Two own new-contract fixture fail
 ## GUI reconciliation input received
 
 Activity lane report at 52b68952ad records no fixed chat maximum, current centre floor 480, Activity width reservation/drop order and one Glass plate, with concept names PM56_HOST.reserveActivity/activityWidth, PMW.chatCol.activityW, narrow.state.act/actDropped, --pmw-chat-act-w and activity-panel.cover/data-layout dock|cover. It reports no context-ring spec change. These are captured for Step 4 once the lead confirms the GUI integration merge; they are concept lineage, not new native APIs. PM7-C5-CONTEXT-RING remains integration/verification work rather than an invented drawing mechanism.
+
+## Application scope completion
+
+D2/D10/D13/G4: companion requests now carry explicit application/project scope. Quit, platform controls, editor/navigation and service facts work without inventing a Project. Source/owner scope and every target’s real Project/server/environment permission remain required. CS-106, SIR-054 and WM-097 state this existing-policy boundary. Production rows now carry command-specific locations and effect checks. Focused PM7 checks pass: 13 request cases, 4 identity cases, 11 runtime fact cases; all counts unchanged. Final aggregate and dry attribution will run on the frozen follow-up head.
+
+Foundation names received at 46e222c5c9: PMLogo, PM_PIP_LOADER, PM_WORK, PM_PIP_PARTS; exact 25 parts agree. Exported preset IDs are lowercase full|quiet|still|plain with display names Full/Quiet/Still/Plain, and projection field delivery maps the owner contract completion_delivery. Step 4 reconciles these after the lead confirms GUI integration.

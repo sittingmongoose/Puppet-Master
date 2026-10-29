@@ -75981,15 +75981,15 @@
     },
     "pm7.project_switch": {
       "ui_element_id": "pm7.project_switch",
-      "ui_location": "PM7 project box / status bar / thread Processes / Agents, Processes, Resources panel / quit dialog > Switch active workspace Project",
+      "ui_location": "Title bar > Project box > Project row; Projects view / command palette",
       "ui_command_id": "cmd.project.switch_active_tab",
       "handler_location": "handlers::project::switch_active_tab",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Keyboard and pointer dispatch identical typed current-scope requests to handlers::project::switch_active_tab.",
-        "Validate permission, storage, idempotency and owner identity/generation before effect; stale/PID-reused/service/protected input targets refuse without mutation.",
-        "Stop all is one cmd.work.stop request over the reviewed set; clear_finished hides only this view; quit defaults keep_running.",
-        "One shared projection; no synthetic successful state or new semantic event emission; any existing owner event remains its admitted contract."
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Switch only the named current workspace tab to target_project_id after currentness/permission checks; a stale target changes nothing.",
+        "Do not create a new workspace tab or dispatch merely to open the menu."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-661",
       "state_selector": "state.pm7.project_switch.availability",
@@ -76030,22 +76030,22 @@
         }
       ],
       "event_test_requirements": [
-        "No new completion/input candidate event emits before Event Authority; existing owner event contracts remain unchanged."
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
       ],
       "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/project_switch_request",
       "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
     },
     "pm7.project_open_new": {
       "ui_element_id": "pm7.project_open_new",
-      "ui_location": "PM7 project box / status bar / thread Processes / Agents, Processes, Resources panel / quit dialog > Open Project in new workspace tab",
+      "ui_location": "Title bar > Project row Ctrl/Cmd+Enter; Projects view / command palette",
       "ui_command_id": "cmd.project.open_in_new_workspace_tab",
       "handler_location": "handlers::project::open_in_new_workspace_tab",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Keyboard and pointer dispatch identical typed current-scope requests to handlers::project::open_in_new_workspace_tab.",
-        "Validate permission, storage, idempotency and owner identity/generation before effect; stale/PID-reused/service/protected input targets refuse without mutation.",
-        "Stop all is one cmd.work.stop request over the reviewed set; clear_finished hides only this view; quit defaults keep_running.",
-        "One shared projection; no synthetic successful state or new semantic event emission; any existing owner event remains its admitted contract."
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Open exactly one new workspace tab for target_project_id; retain the source workspace identity and existing route normalization.",
+        "Replay the same request without a duplicate tab; ordinary row pick remains switch_active_tab."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-661",
       "state_selector": "state.pm7.project_open_new.availability",
@@ -76086,22 +76086,22 @@
         }
       ],
       "event_test_requirements": [
-        "No new completion/input candidate event emits before Event Authority; existing owner event contracts remain unchanged."
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
       ],
       "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/project_open_new_request",
       "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
     },
     "pm7.processes_open": {
       "ui_element_id": "pm7.processes_open",
-      "ui_location": "PM7 project box / status bar / thread Processes / Agents, Processes, Resources panel / quit dialog > Open Processes",
+      "ui_location": "Assistant Chat > Activity bar / Activity Detail > Processes",
       "ui_command_id": "cmd.chat.processes.open",
       "handler_location": "handlers::chat::open_processes",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Keyboard and pointer dispatch identical typed current-scope requests to handlers::chat::open_processes.",
-        "Validate permission, storage, idempotency and owner identity/generation before effect; stale/PID-reused/service/protected input targets refuse without mutation.",
-        "Stop all is one cmd.work.stop request over the reviewed set; clear_finished hides only this view; quit defaults keep_running.",
-        "One shared projection; no synthetic successful state or new semantic event emission; any existing owner event remains its admitted contract."
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Reveal only this Project/thread’s Processes detail with D4 presence and full-size G1/G2 geometry.",
+        "Opening this view starts/stops no process and does not duplicate a subagent as process work."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/assistant-chat-design.md#ACD-505",
       "state_selector": "state.pm7.processes_open.availability",
@@ -76142,22 +76142,22 @@
         }
       ],
       "event_test_requirements": [
-        "No new completion/input candidate event emits before Event Authority; existing owner event contracts remain unchanged."
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
       ],
       "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/processes_open_request",
       "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
     },
     "pm7.work_panel_show": {
       "ui_element_id": "pm7.work_panel_show",
-      "ui_location": "PM7 project box / status bar / thread Processes / Agents, Processes, Resources panel / quit dialog > Show agents and processes",
+      "ui_location": "Status bar > Agents or Processes > platform panel",
       "ui_command_id": "cmd.agents_and_processes.show",
       "handler_location": "handlers::work_panel::show",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Keyboard and pointer dispatch identical typed current-scope requests to handlers::work_panel::show.",
-        "Validate permission, storage, idempotency and owner identity/generation before effect; stale/PID-reused/service/protected input targets refuse without mutation.",
-        "Stop all is one cmd.work.stop request over the reviewed set; clear_finished hides only this view; quit defaults keep_running.",
-        "One shared projection; no synthetic successful state or new semantic event emission; any existing owner event remains its admitted contract."
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Select agents/processes/resources in the one shared panel; repeat activation of the already-open status item closes it.",
+        "Application scope permits project_id null, never invents a Project; no CPU/RAM status item is added."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-664",
       "state_selector": "state.pm7.work_panel_show.availability",
@@ -76198,22 +76198,22 @@
         }
       ],
       "event_test_requirements": [
-        "No new completion/input candidate event emits before Event Authority; existing owner event contracts remain unchanged."
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
       ],
       "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_panel_show_request",
       "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
     },
     "pm7.work_panel_pop_out": {
       "ui_element_id": "pm7.work_panel_pop_out",
-      "ui_location": "PM7 project box / status bar / thread Processes / Agents, Processes, Resources panel / quit dialog > Pop out agents and processes",
+      "ui_location": "Agents / Processes / Resources panel > Pop out",
       "ui_command_id": "cmd.agents_and_processes.pop_out",
       "handler_location": "handlers::work_panel::pop_out",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Keyboard and pointer dispatch identical typed current-scope requests to handlers::work_panel::pop_out.",
-        "Validate permission, storage, idempotency and owner identity/generation before effect; stale/PID-reused/service/protected input targets refuse without mutation.",
-        "Stop all is one cmd.work.stop request over the reviewed set; clear_finished hides only this view; quit defaults keep_running.",
-        "One shared projection; no synthetic successful state or new semantic event emission; any existing owner event remains its admitted contract."
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Move the same selected view/filter into one draggable desktop window, preserving its owner projection and focus route.",
+        "Unsupported clients expose a reason and never create a second runtime or hidden duplicate panel."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-664",
       "state_selector": "state.pm7.work_panel_pop_out.availability",
@@ -76254,22 +76254,22 @@
         }
       ],
       "event_test_requirements": [
-        "No new completion/input candidate event emits before Event Authority; existing owner event contracts remain unchanged."
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
       ],
       "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_panel_pop_out_request",
       "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
     },
     "pm7.work_stop": {
       "ui_element_id": "pm7.work_stop",
-      "ui_location": "PM7 project box / status bar / thread Processes / Agents, Processes, Resources panel / quit dialog > Stop work",
+      "ui_location": "Work panel > Stop / Stop all; thread Processes > Stop all",
       "ui_command_id": "cmd.work.stop",
       "handler_location": "handlers::work::stop",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Keyboard and pointer dispatch identical typed current-scope requests to handlers::work::stop.",
-        "Validate permission, storage, idempotency and owner identity/generation before effect; stale/PID-reused/service/protected input targets refuse without mutation.",
-        "Stop all is one cmd.work.stop request over the reviewed set; clear_finished hides only this view; quit defaults keep_running.",
-        "One shared projection; no synthetic successful state or new semantic event emission; any existing owner event remains its admitted contract."
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Bind every reviewed target’s work/project/server/environment/pid/start/group/generation before stop; platform scope is application, per-target permission stays required.",
+        "SIGTERM the whole group, SIGKILL after 3 s if still live, exclude services, and stay Stopping until observed exit; ended replay is idempotent."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/Shared_Integration_Runtime.md#SIR-054",
       "state_selector": "state.pm7.work_stop.availability",
@@ -76310,22 +76310,22 @@
         }
       ],
       "event_test_requirements": [
-        "No new completion/input candidate event emits before Event Authority; existing owner event contracts remain unchanged."
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
       ],
       "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_stop_request",
       "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
     },
     "pm7.work_restart": {
       "ui_element_id": "pm7.work_restart",
-      "ui_location": "PM7 project box / status bar / thread Processes / Agents, Processes, Resources panel / quit dialog > Restart work",
+      "ui_location": "Work panel / thread Processes > eligible process Restart",
       "ui_command_id": "cmd.work.restart",
       "handler_location": "handlers::work::restart",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Keyboard and pointer dispatch identical typed current-scope requests to handlers::work::restart.",
-        "Validate permission, storage, idempotency and owner identity/generation before effect; stale/PID-reused/service/protected input targets refuse without mutation.",
-        "Stop all is one cmd.work.stop request over the reviewed set; clear_finished hides only this view; quit defaults keep_running.",
-        "One shared projection; no synthetic successful state or new semantic event emission; any existing owner event remains its admitted contract."
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Restart only an owner-declared restartable current process, as a new invocation with preserved lineage and fresh process identity.",
+        "Refuse a stale/non-restartable/service target without replaying its command or silently starting another shell."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/Shared_Integration_Runtime.md#SIR-054",
       "state_selector": "state.pm7.work_restart.availability",
@@ -76366,22 +76366,22 @@
         }
       ],
       "event_test_requirements": [
-        "No new completion/input candidate event emits before Event Authority; existing owner event contracts remain unchanged."
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
       ],
       "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_restart_request",
       "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
     },
     "pm7.work_send_input": {
       "ui_element_id": "pm7.work_send_input",
-      "ui_location": "PM7 project box / status bar / thread Processes / Agents, Processes, Resources panel / quit dialog > Answer process prompt",
+      "ui_location": "Work panel / thread Processes > current yes/no prompt",
       "ui_command_id": "cmd.work.send_input",
       "handler_location": "handlers::work::send_input",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Keyboard and pointer dispatch identical typed current-scope requests to handlers::work::send_input.",
-        "Validate permission, storage, idempotency and owner identity/generation before effect; stale/PID-reused/service/protected input targets refuse without mutation.",
-        "Stop all is one cmd.work.stop request over the reviewed set; clear_finished hides only this view; quit defaults keep_running.",
-        "One shared projection; no synthetic successful state or new semantic event emission; any existing owner event remains its admitted contract."
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Bind current input generation and exact process identity; offer only detected plain yes/no with safe answer first.",
+        "Free-text/secret/protected/stale prompts go to the owning Terminal or refuse; never synthesize unauthorized stdin."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/Shared_Integration_Runtime.md#SIR-054",
       "state_selector": "state.pm7.work_send_input.availability",
@@ -76422,22 +76422,22 @@
         }
       ],
       "event_test_requirements": [
-        "No new completion/input candidate event emits before Event Authority; existing owner event contracts remain unchanged."
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
       ],
       "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_send_input_request",
       "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
     },
     "pm7.work_completion_delivery": {
       "ui_element_id": "pm7.work_completion_delivery",
-      "ui_location": "PM7 project box / status bar / thread Processes / Agents, Processes, Resources panel / quit dialog > When it ends",
+      "ui_location": "Work panel / thread Processes > When it ends",
       "ui_command_id": "cmd.work.set_completion_delivery",
       "handler_location": "handlers::work::set_completion_delivery",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Keyboard and pointer dispatch identical typed current-scope requests to handlers::work::set_completion_delivery.",
-        "Validate permission, storage, idempotency and owner identity/generation before effect; stale/PID-reused/service/protected input targets refuse without mutation.",
-        "Stop all is one cmd.work.stop request over the reviewed set; clear_finished hides only this view; quit defaults keep_running.",
-        "One shared projection; no synthetic successful state or new semantic event emission; any existing owner event remains its admitted contract."
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Write only the selected current work item’s agent/user/quiet policy, independent of holds_reply.",
+        "Default routing/coalescing follows D9 and never wakes a user-stopped thread or duplicates a completion notice."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/Shared_Integration_Runtime.md#SIR-054",
       "state_selector": "state.pm7.work_completion_delivery.availability",
@@ -76478,22 +76478,22 @@
         }
       ],
       "event_test_requirements": [
-        "No new completion/input candidate event emits before Event Authority; existing owner event contracts remain unchanged."
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
       ],
       "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_completion_delivery_request",
       "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
     },
     "pm7.work_clear_finished": {
       "ui_element_id": "pm7.work_clear_finished",
-      "ui_location": "PM7 project box / status bar / thread Processes / Agents, Processes, Resources panel / quit dialog > Clear finished",
+      "ui_location": "Work panel / thread Processes > Clear finished",
       "ui_command_id": "cmd.work.clear_finished",
       "handler_location": "handlers::work_panel::clear_finished",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Keyboard and pointer dispatch identical typed current-scope requests to handlers::work_panel::clear_finished.",
-        "Validate permission, storage, idempotency and owner identity/generation before effect; stale/PID-reused/service/protected input targets refuse without mutation.",
-        "Stop all is one cmd.work.stop request over the reviewed set; clear_finished hides only this view; quit defaults keep_running.",
-        "One shared projection; no synthetic successful state or new semantic event emission; any existing owner event remains its admitted contract."
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Hide only finished rows in the invoking view_id, retaining all owner records and other views.",
+        "Record a no-persist view-local disposition; do not delete history, change retention or emit a work lifecycle event."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-664",
       "state_selector": "state.pm7.work_clear_finished.availability",
@@ -76534,22 +76534,22 @@
         }
       ],
       "event_test_requirements": [
-        "No new completion/input candidate event emits before Event Authority; existing owner event contracts remain unchanged."
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
       ],
       "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_clear_finished_request",
       "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
     },
     "pm7.work_quit": {
       "ui_element_id": "pm7.work_quit",
-      "ui_location": "PM7 project box / status bar / thread Processes / Agents, Processes, Resources panel / quit dialog > Quit with running work",
+      "ui_location": "Quit with running work dialog > Confirm",
       "ui_command_id": "cmd.work.quit",
       "handler_location": "handlers::work::quit",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Keyboard and pointer dispatch identical typed current-scope requests to handlers::work::quit.",
-        "Validate permission, storage, idempotency and owner identity/generation before effect; stale/PID-reused/service/protected input targets refuse without mutation.",
-        "Stop all is one cmd.work.stop request over the reviewed set; clear_finished hides only this view; quit defaults keep_running.",
-        "One shared projection; no synthetic successful state or new semantic event emission; any existing owner event remains its admitted contract."
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Use application scope with project_id null; keep_running has no stop targets and closes only the client.",
+        "Stop_selected uses the reviewed target generation and per-target owner permission; excludes services, observes exit/failure and never silently kills server work."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-665",
       "state_selector": "state.pm7.work_quit.availability",
@@ -76590,7 +76590,7 @@
         }
       ],
       "event_test_requirements": [
-        "No new completion/input candidate event emits before Event Authority; existing owner event contracts remain unchanged."
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
       ],
       "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_quit_request",
       "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"

@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7999-L8294
+Source lines: L7999-L8299
 
-Source SHA256: `7eb5248491c5c32964ec65eb764ad0ffd95dbe23d9fc9e1e9706034a5cae457f`
+Source SHA256: `0eb128cc231dc0cd6e39e906e458b178eca62d2a5930efa8db602f62ee658b0e`
 
 ---
 
@@ -263,7 +263,12 @@ canonical_text: >-
   fixtures are static contracts; new input/completion event candidates remain non-emitting until Event
   Authority. B2: ui.project_switcher.all_projects is the typed local action that focuses the existing
   Projects page route tab_id projects. It never misuses cmd.panel.switch, which is only a rail side-panel
-  shell action.
+  shell action. D10/D13/G4: Requests carry explicit scope_kind under the existing application/project
+  policy. Quit and platform Stop all are application-scoped with project_id null; thread Processes is
+  project-scoped with a real Project. A global panel or local editor/navigation action works without an
+  active Project. Every reviewed target still carries its actual Project/server/environment and current
+  owner permission. Dispatch verifies source/target scope rather than inferring a default Project; a
+  mismatch refuses before effects. This adds no Settings store or event family.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -273,8 +278,8 @@ depends_on:
 - EP-043
 unblocks: []
 acceptance_criteria:
-- Every declared command has one sole handler and closed typed request/result; owner/permission/storage/currentness
-  rejects before effects.
+- Every command has one sole handler and closed typed request/result; explicit source scope, target owner/permission/storage/currentness
+  reject before effects, including application controls with no active Project.
 - Stop all reuses cmd.work.stop; pid/start/group/descendant targeting and 3 s grace are enforced by the owner.
 - Prompt input is current safe yes/no only, quit defaults keep-running, clear is view-local and candidate events
   remain non-emitting.

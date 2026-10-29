@@ -277,7 +277,8 @@
         "action_id",
         "project_id",
         "return_focus_id",
-        "view_id"
+        "view_id",
+        "scope_kind"
       ],
       "properties": {
         "action_id": {
@@ -303,7 +304,9 @@
           "type": [
             "string",
             "null"
-          ]
+          ],
+          "minLength": 1,
+          "maxLength": 256
         },
         "return_focus_id": {
           "type": "string",
@@ -315,8 +318,41 @@
           "minLength": 1,
           "maxLength": 256
         },
-        "value": {}
-      }
+        "value": {},
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
     },
     "PipPartsRegistry": {
       "type": "object",
@@ -593,14 +629,18 @@
         "idempotency_key",
         "origin",
         "workspace_tab_id",
-        "target_project_id"
+        "target_project_id",
+        "scope_kind"
       ],
       "properties": {
         "command_id": {
           "const": "cmd.project.switch_active_tab"
         },
         "project_id": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1,
           "maxLength": 256
         },
@@ -644,8 +684,41 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 256
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
     },
     "project_open_new_request": {
       "type": "object",
@@ -660,14 +733,18 @@
         "idempotency_key",
         "origin",
         "workspace_tab_id",
-        "target_project_id"
+        "target_project_id",
+        "scope_kind"
       ],
       "properties": {
         "command_id": {
           "const": "cmd.project.open_in_new_workspace_tab"
         },
         "project_id": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1,
           "maxLength": 256
         },
@@ -711,8 +788,41 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 256
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
     },
     "processes_open_request": {
       "type": "object",
@@ -726,14 +836,18 @@
         "actor_id",
         "idempotency_key",
         "origin",
-        "thread_id"
+        "thread_id",
+        "scope_kind"
       ],
       "properties": {
         "command_id": {
           "const": "cmd.chat.processes.open"
         },
         "project_id": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1,
           "maxLength": 256
         },
@@ -772,8 +886,53 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 256
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "scope_kind": {
+              "const": "project"
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        }
+      ]
     },
     "work_panel_show_request": {
       "type": "object",
@@ -788,14 +947,18 @@
         "idempotency_key",
         "origin",
         "tab",
-        "view_id"
+        "view_id",
+        "scope_kind"
       ],
       "properties": {
         "command_id": {
           "const": "cmd.agents_and_processes.show"
         },
         "project_id": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1,
           "maxLength": 256
         },
@@ -841,8 +1004,41 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 256
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
     },
     "work_panel_pop_out_request": {
       "type": "object",
@@ -857,14 +1053,18 @@
         "idempotency_key",
         "origin",
         "tab",
-        "view_id"
+        "view_id",
+        "scope_kind"
       ],
       "properties": {
         "command_id": {
           "const": "cmd.agents_and_processes.pop_out"
         },
         "project_id": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1,
           "maxLength": 256
         },
@@ -910,8 +1110,41 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 256
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
     },
     "work_stop_request": {
       "type": "object",
@@ -928,14 +1161,18 @@
         "scope",
         "thread_id",
         "targets",
-        "reviewed_generation"
+        "reviewed_generation",
+        "scope_kind"
       ],
       "properties": {
         "command_id": {
           "const": "cmd.work.stop"
         },
         "project_id": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1,
           "maxLength": 256
         },
@@ -994,8 +1231,60 @@
         "reviewed_generation": {
           "type": "integer",
           "minimum": 0
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "platform"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              },
+              "project_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
     },
     "work_restart_request": {
       "type": "object",
@@ -1009,14 +1298,18 @@
         "actor_id",
         "idempotency_key",
         "origin",
-        "target"
+        "target",
+        "scope_kind"
       ],
       "properties": {
         "command_id": {
           "const": "cmd.work.restart"
         },
         "project_id": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1,
           "maxLength": 256
         },
@@ -1053,8 +1346,41 @@
         },
         "target": {
           "$ref": "#/$defs/WorkTarget"
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
     },
     "work_send_input_request": {
       "type": "object",
@@ -1070,14 +1396,18 @@
         "origin",
         "target",
         "input_generation",
-        "answer"
+        "answer",
+        "scope_kind"
       ],
       "properties": {
         "command_id": {
           "const": "cmd.work.send_input"
         },
         "project_id": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1,
           "maxLength": 256
         },
@@ -1124,8 +1454,41 @@
             "yes",
             "no"
           ]
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
     },
     "work_completion_delivery_request": {
       "type": "object",
@@ -1140,14 +1503,18 @@
         "idempotency_key",
         "origin",
         "work_id",
-        "completion_delivery"
+        "completion_delivery",
+        "scope_kind"
       ],
       "properties": {
         "command_id": {
           "const": "cmd.work.set_completion_delivery"
         },
         "project_id": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1,
           "maxLength": 256
         },
@@ -1193,8 +1560,41 @@
             "user",
             "quiet"
           ]
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
     },
     "work_clear_finished_request": {
       "type": "object",
@@ -1208,14 +1608,18 @@
         "actor_id",
         "idempotency_key",
         "origin",
-        "view_id"
+        "view_id",
+        "scope_kind"
       ],
       "properties": {
         "command_id": {
           "const": "cmd.work.clear_finished"
         },
         "project_id": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1,
           "maxLength": 256
         },
@@ -1254,8 +1658,41 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 256
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
     },
     "work_quit_request": {
       "type": "object",
@@ -1271,14 +1708,18 @@
         "origin",
         "choice",
         "targets",
-        "reviewed_generation"
+        "reviewed_generation",
+        "scope_kind"
       ],
       "properties": {
         "command_id": {
           "const": "cmd.work.quit"
         },
         "project_id": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1,
           "maxLength": 256
         },
@@ -1329,6 +1770,12 @@
         "reviewed_generation": {
           "type": "integer",
           "minimum": 0
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
         }
       },
       "allOf": [
@@ -1345,6 +1792,41 @@
               "targets": {
                 "maxItems": 0
               }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "scope_kind": {
+              "const": "application"
+            },
+            "project_id": {
+              "type": "null"
             }
           }
         }

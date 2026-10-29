@@ -3097,7 +3097,12 @@ canonical_text: >-
   Authority; existing owner state/receipt families are reused without changing admitted event schemas.
   Static companion records are specifications, not native handlers or evidence admission. G6: Clear
   Finished hides finished records in the invoking view only and deletes no owner record, retention state or
-  other view. Runtime record ownership and completion delivery are unaffected.
+  other view. Runtime record ownership and completion delivery are unaffected. D2/D10/G4: ProcessFacts and
+  ServerResourceSample inherit the authoritative parent/source scope_kind and identity. Project scope
+  requires a nonempty project_id; application scope uses project_id null, including platform services and
+  host samples with no active Project. A mismatched scope or owner join refuses before display/control;
+  never invent a default Project. Application-wide views do not grant permission over their target
+  Projects, servers or environments.
 gui_related: false
 gui_classification_reason: Defines owner authority, record semantics or lifecycle.
 split_recommended: false
@@ -3110,8 +3115,8 @@ acceptance_criteria:
   and missing joins reject.
 - Stop identity includes pid/start/group/owner/generation; 3 s graceful/force sequence is idempotent and stays
   Stopping until observed exit.
-- Resources attributes every sample to Project/server/environment; unknown is null/reason and memory cannot
-  exceed the host total.
+- 'Every fact/sample matches its authoritative source scope: project requires a real Project, application requires
+  project_id null; unknown values use null/reason and host memory cannot exceed total.'
 - Only visible/open Resources subscribes; stale generations cannot repaint a newer scope.
 - Current input requests enforce detected safe-answer order/protected-input refusal and exact Terminal fallback.
 - Completion delivery is idempotent/coalesced, never wakes stopped threads, and view-local clear/service read-only
