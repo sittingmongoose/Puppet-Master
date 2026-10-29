@@ -38,7 +38,7 @@ html[data-o55-nier="on"] .wk-g::before { display: none; }
    Words with the setting. The category glyph (X1) breathes on the 2200 ms beat while anything runs (.pmg-beat); what
    waits on you is the waiting mark and its number in the attention ink. No CPU or RAM item (G4). */
 .pm7-work-group[hidden], .pm7-work-stale[hidden] { display: none !important; }
-.pm7-work-item { gap: 5px; }
+.pm7-work-item { gap: 5px; flex: none; }
 .pm7-work-item .wk-dim { color: var(--text-muted); font-weight: 600; }
 .wk-sb-ask { display: inline-flex; align-items: center; gap: 4px; margin-left: 4px; color: var(--pmg-ink-attention, var(--accent-orange)); }
 .wk-sb-ask strong { color: inherit; }
@@ -224,6 +224,8 @@ html[data-theme^="glass"]:not([data-o55-nier="on"]) :is(#pm7-work, .wk-dialog) {
 html[data-o55-nier="on"] :is(#pm7-work, .wk-dialog) { border-radius: 0; letter-spacing: .02em; border-color: var(--o55-nier-ink, var(--wk-line)); box-shadow: none; }
 html[data-o55-nier="on"] :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) :is(.wk-row-btn, .wk-tr, .wk-ghead, .wk-seg, .wk-ask, .wk-strip, .wk-tail, .wk-btn, .wk-ib, .wk-subs, .wk-plink, .wk-dialog-list) { border-radius: 0; }
 html[data-o55-nier="on"] .wk-tabs > button[aria-selected="true"] { background: var(--o55-nier-ink, var(--wk-ink)); color: var(--o55-nier-on-ink, #fff); border-bottom-color: transparent; }
+html[data-o55-nier="on"] .wk-tabs > button[aria-selected="true"] :is(.wk-ask-n, .wk-g > svg) { color: var(--o55-nier-on-ink, #fff); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .wk-tabs > button[aria-selected="true"] :is(.wk-ask-n, .wk-g > svg) { color: var(--pmw-surface, #000); }
 html[data-o55-nier="on"] :is(.wk-tr.is-sel, .wk-row.is-open > .wk-row-btn) { background: var(--o55-nier-ink, var(--wk-ink)); }
 html[data-o55-nier="on"] :is(.wk-tr.is-sel, .wk-row.is-open > .wk-row-btn) :is(span, b, i, strong, .wk-kind) { color: var(--o55-nier-on-ink, #fff) !important; }
 

@@ -671,7 +671,7 @@
   /* --------------------------------------------------------------------------------------- staying current */
   function onChange(why) {
     paintBar();
-    if (why !== 'tick') notices();
+    notices();
     if (!ui.open || !pop) return;
     if (why === 'tick') {
       pop.querySelectorAll('[data-work-time]').forEach((el) => { const it = byId(el.getAttribute('data-work-time')); if (it) { const v = time(it); if (el.textContent !== v) el.textContent = v; } });
