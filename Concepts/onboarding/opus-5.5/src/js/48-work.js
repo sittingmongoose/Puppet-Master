@@ -582,7 +582,7 @@
     const back = doc.activeElement;
     const d = dlg = doc.createElement('div');
     d.className = 'wk-dialog-scrim';
-    d.innerHTML = '<div class="wk-dialog" role="alertdialog" aria-modal="true" aria-labelledby="wk-dialog-title" aria-describedby="wk-dialog-lead"><h2 id="wk-dialog-title">' + esc(o.title) + '</h2><p id="wk-dialog-lead">' + esc(o.lead) + '</p>' +
+    d.innerHTML = '<div class="wk-dialog" id="pm7-work-dialog" role="alertdialog" aria-modal="true" aria-labelledby="wk-dialog-title" aria-describedby="wk-dialog-lead"><h2 id="wk-dialog-title">' + esc(o.title) + '</h2><p id="wk-dialog-lead">' + esc(o.lead) + '</p>' +
       (o.choice ? '<div class="wk-seg wk-choice" role="radiogroup" aria-label="' + esc(o.title) + '">' + o.choice.map((c, i) => '<button type="button" role="radio" aria-checked="' + (i === 0) + '" data-choice="' + c[0] + '">' + esc(c[1]) + '</button>').join('') + '</div>' : '') +
       (o.items.length ? '<ul class="wk-dialog-list">' + o.items.map((it) => '<li><label><input type="checkbox" checked data-id="' + esc(it.id) + '" data-kind="' + esc(it.kind) + '">' + st(it.state, 11) + '<b>' + esc(it.title) + '</b><span>' + esc(it.where || '') + (it.command ? ' · ' + esc(it.command) : '') + '</span></label></li>').join('') + '</ul>' : '') +
       (o.note ? '<p class="wk-dim">' + esc(o.note) + '</p>' : '') +
@@ -619,7 +619,9 @@
   /* Stop all in one chat thread (D8; the chat's Processes view calls this) */
   function confirmThread(threadId, where) {
     const w = W(); if (!w) return;
-    const ids = w.stopTargets({ scope: 'thread', thread: threadId }), list = sort(ids.map(byId).filter(Boolean));
+    /* the chat's Stop all is for what the thread started: its processes and scheduled runs; the composer's Stop ends the
+       reply, and an agent is stopped from its own row */
+    const ids = w.stopTargets({ scope: 'thread', thread: threadId }), list = sort(ids.map(byId).filter((x) => x && x.kind !== 'agent'));
     confirm({ title: T('stopDialog.threadTitle', { n: list.length, where: where || '' }), lead: T('stopDialog.threadLead'), items: list,
       goLabel: (n) => (n ? T('stopDialog.go', { n: n }) : T('stopDialog.goNone')),
       onGo: (sel) => { if (sel.length) { w.stop({ scope: 'thread', thread: threadId, targets: sel }); say(T('say.stopped', { n: sel.length }), true); } } });

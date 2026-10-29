@@ -40,12 +40,12 @@
      app.js's activityScope() now derives `todos` from window.PM56_TODOS, so the
      tiles and counts below read the OWNER's data, and todos.js's own panel body
      renders only in focused 'todo' scope. */
-  var DOMAINS = ['goal', 'todo', 'subagents', 'crew', 'changes', 'artifacts'];
-  var LABELS = { goal: 'Goal', todo: 'Todo', subagents: 'Subagents', crew: 'Crew', changes: 'Changes', artifacts: 'Artifacts' };
+  var DOMAINS = ['goal', 'todo', 'subagents', 'processes', 'crew', 'changes', 'artifacts'];
+  var LABELS = { goal: 'Goal', todo: 'Todo', subagents: 'Subagents', processes: 'Processes', crew: 'Crew', changes: 'Changes', artifacts: 'Artifacts' };
   /* Neon icons (step 3B): the collaborative domains draw their kind marks (one glyph per concept), and every domain
      glyph in a head, chip, rail, branch or section is lit in its domain's tone (lit(), below): the tone ink with its
      core halo, steady. Nothing here loops; a glyph inside a button plays its act once on hover, like every lit glyph. */
-  var ICONS = { goal: 'goal', todo: 'todo', subagents: 'users', crew: 'kind-crew', brainstorm: 'kind-brainstorm', review: 'kind-review', chat_room: 'kind-chat_room', changes: 'changes', artifacts: 'artifact' };
+  var ICONS = { goal: 'goal', todo: 'todo', subagents: 'users', processes: 'processes', crew: 'kind-crew', brainstorm: 'kind-brainstorm', review: 'kind-review', chat_room: 'kind-chat_room', changes: 'changes', artifacts: 'artifact' };
   /* a tone (this panel's or the shared vocabulary's) -> the neon tone class that lights a glyph */
   var NX_TONE = { blocked: 'blocked', attention: 'attention', waiting: 'attention', working: 'working', changed: 'changed', done: 'done', idle: 'idle', pending: 'idle', muted: 'paused', paused: 'paused' };
   function lit(tone) { return 'nx-t-' + (NX_TONE[tone] || 'idle'); }
@@ -354,6 +354,21 @@
         };
       });
     }
+    if (domain === 'processes') {
+      var W = window.PM_WORK;
+      if (!W) return [];
+      return W.sort(sc.processes || []).map(function (p) {
+        var o = W.owner(p), t = W.tone(p);
+        return {
+          domain: 'processes', id: p.id, title: p.title,
+          sub: W.needsYou(p) && p.ask ? p.ask : [o ? o.title : '', p.kind === 'scheduled' ? p.detail : p.command].filter(Boolean).join(' · '),
+          right: W.word(p), tone: t === 'attention' ? 'attention' : t,
+          ledger: W.time(p), progress: p.progress && W.isLive(p) ? pct(p.progress.done, p.progress.total) : null,
+          state: W.word(p), elapsed: W.time(p), action: 'open-process',
+          attrs: ' data-id="' + esc(ctx, p.id) + '"', group: o ? o.title : 'This thread', raw: p
+        };
+      });
+    }
     if (domain === 'crew') {
       var seatIn = {};
       return (sc.crew || []).concat(window.PM56_CREW?.activityMembers(ctx)||[]).map(function (a) {
@@ -410,6 +425,7 @@
 
   function countOf(ctx, domain) {
     if (domain === 'goal') { var gp = goalProgress(ctx); return gp.total ? gp.completed + '/' + gp.total : '—'; }
+    if (domain === 'processes') { var d = (ctx.activityDefs() || {}).processes; return d ? d.count : '0'; }
     return String(items(ctx, domain).length);
   }
   function domainTone(ctx, domain) {
@@ -486,6 +502,11 @@
   }
   function detailCard(ctx, domain, id) {
     if (domain === 'goal') return '<div class="pmap-detail" data-k="pmap-detail:goal">' + goalBody(ctx) + '</div>';
+    /* a process's detail is the one detail block every surface shows (48-work.js, PM7_WORK_UI.detail) */
+    if (domain === 'processes') {
+      var W = window.PM_WORK, UI = window.PM7_WORK_UI, pr = W && W.item(id);
+      return pr && UI ? '<div class="pmap-detail pmap-proc-detail" data-k="pmap-detail:processes:' + esc(ctx, id) + '">' + UI.detail(pr) + '</div>' : '';
+    }
     var list = items(ctx, domain);
     var it = list.filter(function (x) { return x.id === id; })[0];
     if (!it) return '';
@@ -585,6 +606,7 @@
     return '<button class="pmap-row pmap-agent-row' + (on ? ' is-selected' : '') +
       '" data-k="pmap-r:' + esc(ctx, it.domain + ':' + it.id) + '" data-action="' + it.action +
       '" data-domain="' + it.domain + '" data-state="' + it.tone + '"' + it.attrs + '>' +
+      (it.mark || '') +
       '<span class="copy"><strong>' + esc(ctx, it.title) + '</strong>' +
       (it.sub ? '<span>' + (it.subHtml || esc(ctx, it.sub)) + '</span>' : '') + '</span>' +
       '<span class="right"><b>' + esc(ctx, it.state) + '</b>' +
@@ -647,6 +669,8 @@
     } else if (id === 'todo') {
       facts = [fact('Active', toneCount(list, ['working'])), fact('Blocked', toneCount(list, ['blocked']))];
       if (list.length) meter = { value: settledShare(ctx, id), label: 'Todos completed' };
+    } else if (id === 'processes') {
+      facts = [fact('Running', toneCount(list, ['working'])), fact('Needs input', list.filter(function (it) { return window.PM_WORK && window.PM_WORK.needsYou(it.raw); }).length)];
     } else if (id === 'crew') {
       facts = [fact('Working', toneCount(list, ['working'])), fact('Waiting', toneCount(list, ['attention', 'idle']))];
       if (list.length) meter = { value: settledShare(ctx, id), label: 'Crew members ready' };
@@ -1008,11 +1032,116 @@
       domainList(ctx, f) + '</div></div>';
   }
 
+  /* =======================================================================
+     PROCESSES (W6: D2, D3, D8, D13) — the focused view of what this thread's
+     agent and its subagents started, read from the one work projection
+     (PM_WORK). By state: Needs input, Running, Scheduled, Finished this
+     session. By owner when many subagents run (D3's fallback). A row opens
+     the shared detail block in place; the foot says what composer Stop does
+     and holds Stop all in this thread (the shared Stop list, 48-work.js).
+     Words are the build's copy (O55 work.*). Every variant shows it alike.
+     ===================================================================== */
+  var BY_OWNER_AT = 3;
+  function wt(k, v) { return window.O55 && typeof window.O55.t === 'function' ? window.O55.t('work.' + k, v) : k; }
+  function since(t) {
+    var s = Math.max(0, Math.round((Date.now() - (t || Date.now())) / 1000));
+    if (s < 60) return s + 's';
+    var m = Math.floor(s / 60);
+    return m < 60 ? m + 'm' : Math.floor(m / 60) + 'h ' + (m % 60) + 'm';
+  }
+  function procMark(W, p) {
+    var N = window.PM56_NEON;
+    return N && typeof N.status === 'function' ? N.status(W.key(p), 12, 'nx-still') : toneDot(W.tone(p));
+  }
+  function procRow(ctx, W, p, byOwner) {
+    var on = isSelected(ctx, 'processes', p.id), t = W.tone(p), o = W.owner(p);
+    var sub = W.needsYou(p) && p.ask ? '<b class="pmap-askline">' + esc(ctx, p.ask) + '</b>' :
+      (o && !byOwner ? '<u class="agent-model">' + esc(ctx, o.title) + '</u> · ' : '') +
+      esc(ctx, p.kind === 'scheduled' ? p.detail : (p.command || p.detail || '')) +
+      (p.ports && p.ports.length && W.isLive(p) ? ' · <span class="pmap-mono">:' + p.ports.join(', :') + '</span>' : '') +
+      (p.progress && W.isLive(p) ? ' · ' + esc(ctx, p.progress.done + '/' + p.progress.total + ' ' + p.progress.unit) : '');
+    return '<div class="pmap-proc' + (on ? ' is-open' : '') + '" data-k="pmap-proc:' + esc(ctx, p.id) + '">' +
+      '<button class="pmap-row pmap-proc-row" data-action="open-process" data-domain="processes" data-id="' + esc(ctx, p.id) + '" data-state="' + t + '" aria-expanded="' + on + '">' +
+      '<span class="pmap-proc-lead">' + procMark(W, p) + '</span>' +
+      '<span class="copy"><strong>' + esc(ctx, p.title) + '</strong><span>' + sub + '</span></span>' +
+      '<span class="right"><b data-tone="' + t + '">' + esc(ctx, W.word(p)) + '</b><i data-work-time="' + esc(ctx, p.id) + '">' + esc(ctx, W.time(p)) + '</i></span></button>' +
+      (on && window.PM7_WORK_UI ? window.PM7_WORK_UI.detail(p) : '') + '</div>';
+  }
+  function procSection(ctx, W, key, title, list, extra, byOwner) {
+    if (!list.length) return '';
+    return '<section class="pmap-records pmap-proc-sec" data-k="pmap-proc-sec:' + key + '"><div class="pmap-records-head"><strong>' + title + '</strong><span>' +
+      (extra || list.length) + '</span></div>' + list.map(function (p) { return procRow(ctx, W, p, byOwner); }).join('') + '</section>';
+  }
+  function processesView(ctx) {
+    var W = window.PM_WORK, d = (ctx.activityDefs() || {}).processes;
+    if (!W || !d) return emptyNote(ctx, wt('chat.empty'));
+    var tid = ctx.state.selectedThread, all = W.sort(coll(ctx).processes || []);
+    var needs = all.filter(W.needsYou), live = all.filter(function (p) { return W.isLive(p) && !W.needsYou(p); });
+    var sched = all.filter(function (p) { return p.kind === 'scheduled' && p.state === 'pending' && !p.stopping; });
+    var done = all.filter(W.isDone), failed = done.filter(function (p) { return p.state === 'failed'; }).length, lost = done.filter(function (p) { return p.state === 'warning'; }).length;
+    var feed = W.feed ? W.feed() : null;
+    var sum = [];
+    if (live.length + needs.length) sum.push(wt('chat.summaryRunning', { n: live.length + needs.length }));
+    if (needs.length) sum.push(wt(needs.length === 1 ? 'chat.summaryNeeds' : 'chat.summaryNeedsMany', { n: needs.length }));
+    if (sched.length) sum.push(wt('chat.summaryScheduled', { n: sched.length }));
+    if (done.length) { var why = [failed ? wt('chat.summaryFailed', { n: failed }) : '', lost ? wt('chat.summaryLost', { n: lost }) : ''].filter(Boolean).join(', '); sum.push(why ? wt('chat.summaryWhy', { n: done.length, why: why }) : wt('chat.summaryFinished', { n: done.length })); }
+    var h = '<div class="pmap pmap-statusboard is-focused pmap-procs" data-k="pmap:procs">' +
+      '<section class="pmap-focus-summary" data-k="pmap-proc-sum" data-tone="' + d.tone + '"><div class="pmap-focus-head"><span class="pmap-focus-ident">' + ctx.icon('processes', 13, lit(d.tone)) +
+      '<strong>' + esc(ctx, wt('chat.label')) + '</strong></span><span class="pmap-focus-count">' + esc(ctx, d.count) + '</span></div><p>' + esc(ctx, sum.join(' · ') || wt('chat.summaryNone')) + '</p></section>';
+    if (feed && feed.restarted) h += '<div class="pmap-proc-strip" data-k="pmap-proc-restart" data-tone="attention">' + procMark(W, { state: 'warning' }) + '<span>' + esc(ctx, wt('strip.restarted', { ago: since(feed.restarted.at), n: feed.restarted.lost || 0 })) + '</span></div>';
+    if (feed && feed.state === 'stale') h += '<div class="pmap-proc-strip" data-k="pmap-proc-stale" data-tone="attention">' + procMark(W, { state: 'offline' }) + '<span>' + esc(ctx, wt('strip.stale', { ago: since(feed.at) })) + '</span></div>';
+    if (!all.length) h += emptyNote(ctx, wt('chat.empty'));
+    var owners = {};
+    live.forEach(function (p) { if (p.owner) owners[p.owner] = 1; });
+    if (Object.keys(owners).length >= BY_OWNER_AT) {
+      /* D3's fallback: many subagents run, so each one's processes sit under it (this thread's agent first) */
+      h += procSection(ctx, W, 'input', wt('sec.input'), needs);
+      var order = [null].concat(Object.keys(owners));
+      order.forEach(function (oid) {
+        var list = live.filter(function (p) { return (p.owner || null) === oid; });
+        if (!list.length) return;
+        var ag = oid ? W.item(oid) : null;
+        h += procSection(ctx, W, 'owner:' + (oid || 'self'), esc(ctx, ag ? ag.title : wt('sec.byOwnerThis')),
+          list, ag ? '<b data-tone="' + W.tone(ag) + '">' + esc(ctx, W.word(ag)) + '</b>' : String(list.length), true);
+      });
+      h += procSection(ctx, W, 'scheduled', wt('sec.scheduled'), sched);
+    } else {
+      h += procSection(ctx, W, 'input', wt('sec.input'), needs) + procSection(ctx, W, 'running', wt('sec.running'), live) + procSection(ctx, W, 'scheduled', wt('sec.scheduled'), sched);
+    }
+    if (done.length) h += procSection(ctx, W, 'finished', wt('sec.finished'), done, '<button type="button" class="pmap-link" data-action="proc-clear">' + esc(ctx, wt('act.clear')) + '</button>');
+    var n = W.stopTargets ? W.stopTargets({ scope: 'thread', thread: tid }).filter(function (id) { var x = W.item(id); return x && x.kind !== 'agent'; }).length : 0;
+    h += '</div><div class="pmap-proc-foot" data-k="pmap-proc-foot"><span>' + esc(ctx, wt('chat.foot')) + '</span>' +
+      '<button type="button" class="soft-button danger pmap-proc-stopall" data-action="proc-stop-all"' + (n ? '' : ' disabled') + '>' + esc(ctx, n ? wt('chat.stopAllN', { n: n }) : wt('chat.stopAll')) + '</button></div>';
+    return h;
+  }
+  /* a process row (in this view, Show all or the hover card) opens Activity Detail at it, its detail block open */
+  EXT.action('open-process', function (ctx, btn) {
+    var id = btn && btn.dataset.id; if (!id) return true;
+    var a = act(ctx), fromCard = !!(btn.closest && btn.closest('.ab-card'));
+    if (fromCard) { a.open = true; a.domain = 'processes'; a.scope = 'focus'; a.selected = { domain: 'processes', id: id }; ctx.state.hover = null; }
+    else select(ctx, 'processes', id);
+    if (Array.isArray(a.expanded) && a.expanded.indexOf('processes') < 0) a.expanded.push('processes');
+    ctx.renderApp();
+    return true;
+  });
+  EXT.action('proc-stop-all', function (ctx) {
+    var t = (ctx.state.threads || []).filter(function (x) { return x.id === ctx.state.selectedThread; })[0];
+    if (window.PM7_WORK_UI) window.PM7_WORK_UI.confirmThread(ctx.state.selectedThread, t ? t.title : '');
+    return true;
+  });
+  /* G6: clearing hides finished rows from this thread's view only; no record is deleted */
+  EXT.action('proc-clear', function (ctx) {
+    var tid = ctx.state.selectedThread;
+    if (window.PM_WORK) window.PM_WORK.clearFinished('thread:' + tid, function (x) { return x.thread === tid; });
+    return true;
+  });
+
   /* ---------------------------------------------------------------- router */
   var CONCEPTS = [conceptAccordion, conceptStatusBoard, conceptGoalTree,
     conceptMasterDetail, conceptAgentBoard, conceptLedger, conceptLiveFeed, conceptDashboard];
 
   EXT.slot('activityPanelBody', function (ctx) {
+    if (ctx.domain === 'processes' && ctx.state.activity.scope === 'focus') return processesView(ctx);
     if(ctx.domain==='crew'&&ctx.state.activity.scope==='focus'&&window.PM56_CREW?.activityRuns(ctx).length)return window.PM56_CREW.activityBody(ctx);
     if(ctx.domain === 'todo' && window.PM56_TODOS) return '';
     if(['brainstorm','review','chat_room'].includes(ctx.domain)&&ctx.state.activity.scope==='focus')return '';
