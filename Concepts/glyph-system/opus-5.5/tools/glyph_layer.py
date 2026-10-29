@@ -62,10 +62,10 @@ def css_parts():
 
 
 # The Pip kit and the head modules built on it (PM7 build, lane found, 2026-10-29): Pip's drawing kit, the system
-# loader and the work projection. They ride in this head block, not in registry/families/ (Pip is not a glyph family),
-# so the title bar's mark and every body script find window.PMLogo, PM_PIP_LOADER and PM_WORK already there.
+# loader, the Pip parts registry and the work projection. They ride in this head block, not in registry/families/ (Pip is not a glyph family),
+# so the title bar's mark and every body script find window.PMLogo, PM_PIP_LOADER, PM_PIP_PARTS and PM_WORK already there.
 LOGO_CSS = [SRC / 'logo' / 'pm-logo.css', SRC / 'logo' / 'pm-loader.css']
-LOGO_JS = [SRC / 'logo' / 'pm-logo.js', SRC / 'logo' / 'pm-loader.js']
+LOGO_JS = [SRC / 'logo' / 'pm-logo.js', SRC / 'logo' / 'pm-loader.js', SRC / 'logo' / 'pm-pip-parts.js']
 
 
 def js_parts():

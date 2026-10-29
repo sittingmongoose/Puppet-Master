@@ -7,5 +7,16 @@
 .pml-ld:not([data-pml-run]) { animation: pml-arm 1ms; }
 .pml-ld:not([data-pml-run]) > .pml { opacity: 0; }
 .pml-ld[data-pml-run="on"] > .pml { animation: pml-ld-in 160ms ease-out; }
+.pml-ld[data-pml-redraw] > .pml { animation: none; }
 @keyframes pml-arm { from { outline-color: currentColor; } to { outline-color: currentColor; } }
 @keyframes pml-ld-in { from { opacity: 0; } to { opacity: 1; } }
+/* NieR (L7, pm-loader.js NIER): Pip never animates in NieR. The loader's one part is the plain ink ring every spinner
+   showed in NieR before this build (the Basic spinner); the Diamond loaders part turns it into NieR's hollow diamond
+   (styles.d/14-nier-parts.css). It turns only while armed (data-pml-run="on"), at Animation speed (--pml-k), and holds
+   during drags (--pml-ps). Reduced Motion: the ring stands still and breathes. */
+.pml-ld > .pml-nier { display: block; box-sizing: border-box; width: 72%; height: 72%; margin: 14%; border-radius: 50%; border: max(1.5px, .09em) solid currentColor; border-right-color: transparent; color: var(--o55-nier-ink, currentColor); }
+.pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-spin calc(.8s * var(--pml-k, 1)) linear infinite var(--pml-ps, running); }
+@keyframes pml-nier-spin { to { transform: rotate(360deg); } }
+@keyframes pml-nier-breath { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+:root[data-motion="reduced"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out infinite var(--pml-ps, running); }
+@media (prefers-reduced-motion: reduce) { .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out infinite var(--pml-ps, running); } }

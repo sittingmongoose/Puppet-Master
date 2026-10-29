@@ -16,7 +16,7 @@ html[data-o55-open] body > [data-o55-held], html[data-o55-open] body > [data-o55
    resets the play state and outranks the line above: under the window they are paused here by name, so ticking NieR
    Mode in the window never wakes the app beneath (performance rule 6; review W9).
    The impossible t7.t7.t7:not(*) arm preserves the retired spinner's (0,2,1) specificity. */
-html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .thread-working-pulse, .pm6-spin svg, t7.t7.t7:not(*)) { animation-play-state: paused !important; }
+html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .thread-working-pulse, .pm6-spin svg, .pml-nier, t7.t7.t7:not(*)) { animation-play-state: paused !important; }
 /* the solid backdrop (60-ui-core.js): on a computer that cannot composite the app beneath at full rate, the app is
    not drawn at all while the window is open; the scrim then lies over the page's own ground */
 html[data-o55-open][data-o55-solid] body > [data-o55-held] { visibility: hidden !important; }

@@ -744,6 +744,7 @@
     const b = 'pml-' + family + '-' + tk + (form === 'tray' ? '-tray-' + mood : '');
     return { face: b + '-m', grad: b + '-h', clip: b + '-c', rim: b + '-r', glow: b + '-g', spec: b + '-s', drop: b + '-d' };
   };
+  function hashKey(str) { let h = 5381; for (let i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
   function look() {
     if (!D) return 'basic-dark';
     const h = D.documentElement, t = h.getAttribute('data-theme') || 'basic-dark';
@@ -760,9 +761,12 @@
     const anim = !!o.motion && MOTIONS.indexOf(o.motion) >= 0 && family !== 'nier' && o.px >= 12;
     if (!anim) o.motion = null;
     o.cls = CLS;
-    o.ids = fixedIds(family, tk, o.form, moodOf(o.mood));
-    const m = markBody(o, th, tier), body = m.body;
-    if (m.defs) ensureDefs(family, o.ids.grad, m.defs);
+    // per-instance colours (vars) reach gradients only through defs inside this svg: keyed by the vars, so the markup
+    // stays a pure function of its options; marks without vars share one <defs> per family
+    const vk = o.vars ? '-v' + hashKey(JSON.stringify(o.vars)) : '';
+    o.ids = fixedIds(family, tk + vk, o.form, moodOf(o.mood));
+    const m = markBody(o, th, tier), own = !!vk && !!m.defs, body = (own ? `<defs>${m.defs}</defs>` : '') + m.body;
+    if (m.defs && !own) ensureDefs(family, o.ids.grad, m.defs);
     const key = anim ? family + '-' + o.motion + '-' + tk : '';
     if (anim) ensureAnim(family, o.motion, tier, tk, o.px);
     const label = o.title || 'Puppet Master';
@@ -1036,8 +1040,9 @@
     // sprites land on whole device pixels: pad the view box instead of scaling by a fraction
     let vbox = `0 0 ${m.vb} ${m.vb}`;
     if (m.crisp) {
+      // k device pixels per sprite cell; the view box is in sprite cells: device size / k (never divided by dpr again)
       const Dp = Math.round(o.px * (o.dpr || 1)), k = Math.floor(Dp / m.vb);
-      if (k >= 1 && Dp < 64 && Dp % m.vb) { const V = R(Dp / k / (o.dpr || 1)), pad = R((V - m.vb) / 2); vbox = `${-pad} ${-pad} ${V} ${V}`; }
+      if (k >= 1 && Dp < 64 && Dp % m.vb) { const V = R(Dp / k), pad = R((V - m.vb) / 2); vbox = `${-pad} ${-pad} ${V} ${V}`; }
     }
     return `<svg xmlns="http://www.w3.org/2000/svg" class="${p}" ${size} viewBox="${vbox}"${m.crisp ? ' shape-rendering="crispEdges"' : ''} ${role}>${style}${m.defs ? `<defs>${m.defs}</defs>` : ''}${body}</svg>`;
   }
@@ -1054,6 +1059,7 @@
      animation of period p in that phase at the current frame. speed() is Animation speed's factor (kit.d/17-look.js:
      Fast .6, Measured 1, Cinematic 1.6). */
   const DRAG = ['pm-resizing', 'pm-ab-dragging', 'pmw-dragging', 'pmu-pointer-op', 'pm7u-pointer-op'];
+  const SPEED = Object.freeze({ Fast: 0.6, Measured: 1, Cinematic: 1.6 });
   const tl = () => (D && D.timeline && typeof D.timeline.currentTime === 'number' ? D.timeline.currentTime : (G.performance ? G.performance.now() : Date.now()));
   const clockSubs = new Set(), holds = new Set();
   let heldAt = null, heldFor = 0;
@@ -1062,8 +1068,9 @@
     now() { return (heldAt != null ? heldAt : tl()) - heldFor; },
     phase(p) { const n = clock.now(); return p > 0 ? ((n % p) + p) % p / p : 0; },
     delay(p) { return p > 0 ? -(((clock.now() % p) + p) % p) : 0; },
-    // o55SpeedFactor is the Settings script's global (kit.d/17-look.js); read late, so this head script never waits for it
-    speed() { try { return typeof o55SpeedFactor === 'number' && o55SpeedFactor > 0 ? o55SpeedFactor : 1; } catch (_) { return 1; } },
+    // Animation speed (general.visual.animation-speed), read through the Settings script's public PM51.value with the
+    // look pass's own table (kit.d/17-look.js O55_SPEED); its factor variable is private to that script
+    speed() { try { const P = G.PM51, v = P && typeof P.value === 'function' ? P.value('general.visual.animation-speed') : null; return SPEED[v] || 1; } catch (_) { return 1; } },
     hold(why) { const w = String(why || 'hold'); if (holds.has(w)) return; if (!holds.size) heldAt = tl(); holds.add(w); emitClock('hold'); },
     release(why) { const w = String(why || 'hold'); if (!holds.delete(w)) return; if (!holds.size && heldAt != null) { heldFor += tl() - heldAt; heldAt = null; emitClock('release'); } },
     held() { return [...holds]; },
@@ -1117,25 +1124,38 @@
   });
   /* A3, the tray: one face for the whole app, summed over every Project, on existing keys only: waiting (needs you,
      always wins) > failed > blocked > working > paused (only when everything left is paused) > complete (about 10 s
-     after the work finished) > idle. Blocked shows oops, never the needs-you face (B5 keeps them apart). The work
-     projection applies this table to live work (PM_WORK.tray()); trayFace(states) applies it to a plain list
-     [{ key, at? }]. */
+     after the work finished) > idle. Blocked shows oops, never the needs-you face (B5 keeps them apart). This is the
+     one reducer: PM_WORK.tray() hands it live work, and a caller may hand it any status list.
+     states: [{ key, at?, stopping?, seen? }]. Live keys (waiting, blocked, recovering, working, reviewing, waiting-dep)
+     are outstanding work, and so is anything stopping (G5); paused counts as remaining work; complete counts for
+     completeMs after at (or when at is absent); failed counts until seen; skipped, warning, pending and the rest are
+     not outstanding. Returns { key, mood, frames, counts }. */
   const TRAY = Object.freeze({ order: Object.freeze(['waiting', 'failed', 'blocked', 'working', 'paused', 'complete', 'idle']), completeMs: 10000,
+    live: Object.freeze(['waiting', 'blocked', 'recovering', 'working', 'reviewing', 'waiting-dep']),
     faces: Object.freeze({ waiting: 'alert', failed: 'error', blocked: 'oops', working: 'working', paused: 'sleep', complete: 'happy', idle: 'idle' }) });
   function trayFace(states, now) {
-    const t = now == null ? Date.now() : now, list = Array.isArray(states) ? states : [];
-    const has = (k) => list.some((s) => s && (s.key === k) && (k !== 'complete' || s.at == null || t - s.at < TRAY.completeMs));
-    const live = list.filter((s) => s && s.key !== 'idle' && s.key !== 'complete');
-    let key = 'idle';
-    for (const k of TRAY.order) { if (k === 'paused' ? live.length && live.every((s) => s.key === 'paused') : has(k)) { key = k; break; } }
-    return { key, mood: TRAY.faces[key], frames: key === 'working' ? 4 : 1 };
+    const t = now == null ? Date.now() : now, has = {};
+    const add = (k) => { has[k] = (has[k] || 0) + 1; };
+    let live = 0, paused = 0;
+    (Array.isArray(states) ? states : []).forEach((s) => {
+      if (!s) return;
+      const k = s.stopping ? 'working' : String(s.key);
+      if (TRAY.live.indexOf(k) >= 0) { live++; add(k === 'waiting' ? 'waiting' : k === 'blocked' ? 'blocked' : 'working'); }
+      else if (k === 'paused') { live++; paused++; }
+      else if (k === 'failed') { if (!s.seen) add('failed'); }
+      else if (k === 'complete') { if (s.at == null || t - s.at < TRAY.completeMs) add('complete'); }
+    });
+    if (live && paused === live) has.paused = paused;
+    const key = TRAY.order.find((k) => has[k]) || 'idle';
+    return { key, mood: TRAY.faces[key], frames: key === 'working' ? 4 : 1, counts: has };
   }
 
   /* ---------------------------------------------------------------- export */
   // THEMES keeps the concept's shape (label, family, scheme beside the colours) for the live rigs ported from it
   // (onboarding's stage, the chat's sheet hosts); solidStr is the concept's opaque string colour.
   const THEMES = Object.freeze(LOOKS.reduce((o, lk) => {
-    o[lk] = Object.assign({ label: lk.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' '), family: familyOf(lk), scheme: schemeOf(lk) }, EXPORT[lk]);
+    // filePalette adds what the drawing parts derive: back (the back stick), headSolid, glass.rodBack, NieR's flags
+    o[lk] = Object.assign({ label: lk.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') }, filePalette(lk));
     return o;
   }, {}));
   const solidStr = (th) => (String(th.str).indexOf('rgba') === 0 ? (th.scheme === 'dark' ? '#B9C2D2' : '#5B6476') : th.str);
