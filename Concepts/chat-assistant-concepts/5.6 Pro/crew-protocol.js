@@ -271,8 +271,8 @@
     S.pmxSentence({status:sn.status,word:H(sn.word),reason:H(sn.reason)})+(track?.nowText?'<p class="pmx-fine pmx-crew-ab-now">'+track.nowText+'</p>':'')+
     '<div class="pmx-crew-ab-team">'+team+'</div><div class="pmx-actions pmx-crew-ab-acts">'+
     '<button type="button" class="text-button pmx-act" data-action="'+open+'" '+ra+'>Open Panel</button>'+(ended?'':'<button type="button" class="text-button pmx-act" data-action="collab-message" '+ra+'>Message</button>')+'</div></section>';}).join('')+'</div>';}
- E.chainAction('open-activity',(c,b)=>{if(!b.dataset.crewRun||!activityRuns(c).some(r=>r.id===b.dataset.crewRun))return false;c.state.activity.pinned=true;c.state.activity.selected={domain:'crew',id:b.dataset.crewRun};return false;});
- E.chainAction('open-crew',(c,b)=>{const r=activityRuns(c).find(r=>r.participants.some(p=>p.id===b.dataset.id));if(!r)return false;c.state.activity.pinned=true;c.state.activity.selected={domain:'crew',id:r.id};c.state.activity.scope='focus';c.state.activity.open=true;c.renderApp();return true;});
+ E.chainAction('open-activity',(c,b)=>{if(!b.dataset.crewRun||!activityRuns(c).some(r=>r.id===b.dataset.crewRun))return false;c.state.activity.selected={domain:'crew',id:b.dataset.crewRun};return false;});
+ E.chainAction('open-crew',(c,b)=>{const r=activityRuns(c).find(r=>r.participants.some(p=>p.id===b.dataset.id));if(!r)return false;c.state.activity.selected={domain:'crew',id:r.id};c.state.activity.scope='focus';c.state.activity.open=true;c.renderApp();return true;});
  E.chainAction('collab-modal-commit',(c)=>{const d=C.draft();if(d?.kind!=='crew')return false;
   if(d.autoMode){const wasOn=autoProjectOn(),res=commitPolicy(d);if(!res.ok){d.lastFailure={message:(wasOn?'Nothing was saved.':'Nothing was turned on.')+' Your rules are unchanged.',...res};c.renderOverlays();return true;}window.PM56_RUNTIME.collab.draft=null;autoReceipt(c,res.revision);c.closeDialog();c.renderApp();return true;}
   /* IMPACT A1-23: the recorded-example preflight (three core rows, no specialists, this chat's assistant leading,

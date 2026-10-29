@@ -79,8 +79,9 @@ html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"][data-pmw-chat-peek] #
   right: 0 !important;
   top: 0 !important;
   bottom: 0 !important;
-  /* 400 for the messages plus pinned History, never wider than the row less a 48 px margin to click out on */
-  width: min(calc(400px + var(--pmw-chat-hist-w, 0px)), calc(100% - 48px)) !important;
+  /* 400 for the messages plus pinned History and an open Activity Detail, never wider than the row less a 48 px
+     margin to click out on */
+  width: min(calc(400px + var(--pmw-chat-hist-w, 0px) + var(--pmw-chat-act-w, 0px)), calc(100% - 48px)) !important;
   flex: none !important;
   z-index: 60 !important;
   box-shadow: -18px 0 40px -12px rgba(0, 0, 0, .45);
@@ -112,8 +113,8 @@ html[data-pmw-home="on"] .main-area[data-pmw-chat-float] #chatPanel.chat-panel {
   bottom: 48px !important;
   top: auto !important;
   height: min(720px, calc(100vh - 140px)) !important;
-  /* 440 for the messages plus pinned History (the native window grows the same way) */
-  width: min(calc(440px + var(--pmw-chat-hist-w, 0px)), calc(100vw - 48px)) !important;
+  /* 440 for the messages plus pinned History and an open Activity Detail (the native window grows the same way) */
+  width: min(calc(440px + var(--pmw-chat-hist-w, 0px) + var(--pmw-chat-act-w, 0px)), calc(100vw - 48px)) !important;
   flex: none !important;
   z-index: 70 !important;
   border-radius: 12px;

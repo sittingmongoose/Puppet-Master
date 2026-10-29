@@ -6,9 +6,9 @@
       --editor-w, --history-w and --activity-w) land on the chat's own hosts instead, where the chat's rules read them.
       On <html> every element of PMConcept7 inherited them, so each write restyled the whole page, and the Usage board
       re-fits every card when <html>'s style changes.
-   2. The body state the hosted CSS reads in place of four body:has(...) rules: data-pm56-drag while a divider drags,
-      data-pm56-activity-transient while a transient Activity Detail shows, data-pm56-editor-revealed while the
-      workspace shows its editor. A :has() on <body> was checked again on every insertion anywhere in the page, and
+   2. The body state the hosted CSS reads in place of body:has(...) rules: data-pm56-drag while a divider drags and
+      data-pm56-editor-revealed while the workspace shows its editor (Activity Detail has no small transient form since
+      DL-254, so its two rules and their mark are gone). A :has() on <body> was checked again on every insertion anywhere in the page, and
       each check restyled the chat's hosts.
 
    Measured on the integrated build (live agent turn, 2400 x 900, 759 px column, GPU Chrome on the P1000): long tasks
@@ -59,7 +59,6 @@
     return !!((a && a.querySelector(sel)) || (b && b.querySelector(sel)));
   }
   function sync() {
-    mark('data-pm56-activity-transient', inHosts('.activity-panel.transient'));
     mark('data-pm56-editor-revealed', inHosts('.workspace.editor-revealed'));
   }
   var DRAG = '.resizer.dragging, .panel-resize.dragging';

@@ -335,7 +335,6 @@ body[data-theme^="retro"] .activity-bar { background: var(--surface-2); border-c
 body[data-theme^="retro"] .activity-item:hover,
 body[data-theme^="retro"] .activity-item.active { background: var(--rt-soft); }
 body[data-theme^="retro"] .activity-panel { background: var(--surface); border-right-color: var(--rt-line); }
-body[data-theme^="retro"] .activity-panel.transient { border-color: var(--rt-line); box-shadow: var(--rt-frame-lg); }
 body[data-theme^="retro"] .activity-panel-head, body[data-theme^="retro"] .activity-filter { border-bottom-color: var(--rt-hair); }
 body[data-theme^="retro"] .activity-filter button.active { background: var(--rt-soft); box-shadow: inset 0 0 0 1px var(--rt-line); }
 /* To-Do rows stay what they are in every theme, flat one-line rows like the hover preview (no box per row); retro

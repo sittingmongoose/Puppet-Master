@@ -417,9 +417,8 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
    the box that goes away. `.chat-float` is an in-flow grid row so Plan /
    questionnaire hosts sit visually above the Activity Bar. Jump-to-bottom
    is still `position:absolute; bottom:100%` on this relative stack.
-   `--chat-dock-h` is the composer height (transient Activity Detail
-   clearance). `--thread-float-h` is unused for transcript padding now that
-   the bar no longer overlays the thread.
+   `--chat-dock-h` is the composer height. `--thread-float-h` is unused
+   for transcript padding now that the bar no longer overlays the thread.
 
    Compact is pane-width, not viewport-width: three tiers with ~8px
    hysteresis (labeled → icon+count → icon-only), applied to every
@@ -533,10 +532,6 @@ html[data-o55-nier="on"] .jump-bottom.is-working > svg { animation-timing-functi
     padding-top: calc(12px + var(--lens-strip-h, 0px));
     padding-bottom: 16px;
   }
-}
-
-.activity-panel.transient {
-  bottom: 10px;
 }
 
 html[data-ab-ready] .activity-bar {
