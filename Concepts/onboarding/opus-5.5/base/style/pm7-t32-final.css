@@ -84,6 +84,25 @@ button.pm7-statusitem:focus-visible {
   background: color-mix(in srgb, var(--surface) 78%, transparent);
   backdrop-filter: blur(16px) saturate(1.08);
 }
+/* Agents and processes (W6, D5): their own group between the project folder and source control, painted by O55's
+   48-work.js. Numbers by default (glyph and number pairs, the words in the hover tag), Words with the setting. The
+   category glyph (X1) breathes on the 2200 ms beat while anything runs (.pmg-beat); what waits on you is the waiting
+   mark and its number in the attention ink. No CPU or RAM item (G4). */
+.pm7-work-group[hidden], .pm7-work-stale[hidden] { display: none !important; }
+.pm7-work-item { gap: 5px; }
+.pm7-work-item .wk-dim { color: var(--text-muted); font-weight: 600; }
+.wk-sb-ask { display: inline-flex; align-items: center; gap: 4px; margin-left: 4px; color: var(--pmg-ink-attention, var(--accent-orange)); }
+.wk-sb-ask strong { color: inherit; }
+.pm7-work-item.is-open { color: var(--text-primary); background: color-mix(in srgb, var(--accent-primary) 14%, transparent); }
+.pm7-work-stale { gap: 4px; }
+/* NieR's unit readouts (G9): the inverted mono label the bar's other readouts wear, and square marks */
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-work-item::before { order: -2; padding: 1px 4px 0; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  font: 600 8.5px/12px var(--mono-font); letter-spacing: .14em; }
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-work-item[data-status-action="agents"]::before { content: "AGT"; }
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-work-item[data-status-action="processes"]::before { content: "PRC"; }
+html[data-o55-nier="on"] .pm7-work-item .wk-g > svg { color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pm7-work-item.is-open { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pm7-work-item.is-open :is(strong, .wk-g > svg, .wk-sb-ask) { color: var(--o55-nier-on-ink); }
 @media (max-width: 1050px) {
   .pm7-statusitem[data-status-priority="low"] { display: none; }
 }
