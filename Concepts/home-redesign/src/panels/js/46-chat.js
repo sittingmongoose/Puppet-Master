@@ -2,16 +2,18 @@
    layout; Pop out is the only way to move it. It reuses the page's own #chatPanel and #chatResizer nodes (other code
    holds references to both; never wrap, move or replace them). Width: an inline custom property on #chatPanel
    (--pmw-chat-w) that the narrow ladder writes; the default scales with the window (about 480 at 1470, 600 at 1920,
-   at most 640); the user drags 400-760 on the existing resizer, taken over in the capture phase so the legacy resizer
-   (which writes inline !important widths up to 1200) never starts. One command per committed change.
+   at most 640); the user drags it on the existing resizer from 400 until the page beside it reaches the centre's floor
+   (no fixed upper width since DL-254), taken over in the capture phase so the legacy resizer (which writes inline
+   !important widths up to 1200) never starts. One command per committed change.
    The column's saved state is the layout record's chat column (canon's v2 chat_column, 10-model.js; none of it is a
    Settings value, SSYS-050): width_px, history_pinned and keep_open. A project switch shows that project's own; a named
    layout and Restore home layout keep it.
-   Pinned History (D3): the 400-760 range and the saved width_px are the message area; while the chat on screen
+   Pinned History (D3): the drag's range and the saved width_px are the message area; while the chat on screen
    draws its History pinned, the column is wider by the History's own width (chatCol.historyW below: the width the
    chat draws it at, a width the person dragged included, else LADDER.chatHistoryW, 44-narrow.js) and the drag moves
-   the same edge over the same message range. The chat surface that draws the History (the hosted 5.6 Pro chat,
-   app.js claimSurface over pm7-port/js/00-host.js) registers itself as chatCol.surface (below). */
+   the same edge over the same message range. An open Activity Detail widens it the same way (chatCol.activityW,
+   DL-254). The chat surface that draws them (the hosted 5.6 Pro chat, app.js claimSurface over
+   pm7-port/js/00-host.js) registers itself as chatCol.surface (below). */
 
 var chatCol = PMW.chatCol = {};
 var CHAT_VIS_KEY = 'pm.home.chat:v1';
@@ -48,7 +50,7 @@ chatCol.setVisible = function (visible, commandId) {
 /* the layout record's chat column (10-model.js), read through one place */
 function chatColumn() { var l = state.layout; return l && l.chat_column ? l.chat_column : model.chatColumn(null); }
 
-/* The width (D3): the message area's width the user dragged, the record's width_px (400-760), or null for the default
+/* The width (D3): the message area's width the user dragged, the record's width_px (at least 400), or null for the default
    for the window (44-narrow.js chatDefault). Written only by the one structural command
    cmd.workspace_layout.resize_surface { surface: 'chat', width } (a number, or null to go back to the default): one
    commit with its pm:command-dispatch, its receipt and the one workspace.layout_changed event, rolled back on a
@@ -103,24 +105,35 @@ chatCol.historyW = function (mw) {
   try { w = sf && sf.historyWidth ? sf.historyWidth(mw) : null; } catch (_) { w = null; }
   return typeof w === 'number' && isFinite(w) && w > 0 ? w : LADDER.chatHistoryW;
 };
+/* what an open Activity Detail adds to the column (DL-254, G2: it widens the chat instead of squeezing the messages):
+   the width the chat surface on screen reserves for it while it is open (PM56_HOST.reserveActivity), else 0; the
+   ladder gives it back when the centre would fall under its floor, and it is never saved */
+chatCol.activityW = function () {
+  var sf = chatCol.surface, w = 0;
+  if (!surfaceShown()) return 0;
+  try { w = sf.activityWidth ? sf.activityWidth() : 0; } catch (_) { w = 0; }
+  return typeof w === 'number' && isFinite(w) && w > 0 ? w : 0;
+};
 
-/* drag 400-760 on the existing resizer (one command on release); with pinned History the column is the message area
-   plus the History, and the range and the saved width stay the message area's */
+/* drag on the existing resizer (one command on release); with pinned History or an open Activity Detail the column is
+   the message area plus their widths, and the range and the saved width stay the message area's */
 chatCol.beginDrag = function (e, handle) {
   var c = chatPanel();
   if (!c) return;
   var startX = e.clientX, startW = c.getBoundingClientRect().width;
-  var hist = narrow.state.hist || 0;
+  var hist = narrow.state.hist || 0, act = parseFloat(c.style.getPropertyValue('--pmw-chat-act-w')) || 0;
   // A width the person drags to is saved (width_px) and the ladder respects saved widths (44-narrow.js:
-  // user-sized columns are never eased back), so on Home the drag takes the whole 400-760 range and the
-  // centre gives — rail and chat can both be wide at once.
-  // On the Usage page the board still keeps its 400 px floor (narrow.usageFloor eases the column there
-  // regardless of the saved width, planner 2026-10-10), so the drag keeps that page's room rule; another
-  // page (the centre is hidden there and measured 0, which froze the drag) takes the whole range
+  // user-sized columns are never eased back), so the centre gives — rail and chat can both be wide at once.
+  // There is no fixed upper width (DL-254, G3): the drag runs until the page beside the column reaches the centre's
+  // floor (LADDER.chatStrip). On Home that is the panels' centre; on the Usage page the board keeps its own 400 px
+  // floor (narrow.usageFloor eases the column there regardless of the saved width, planner 2026-10-10); on another
+  // page (Home's centre is hidden there and measures 0) it is that page's own column, .center-column
   var C = homeIsPage() && state.centre && state.centre.getClientRects().length ? state.centre.clientWidth : 0;
-  var ub = qs('#panel-usage #pmuBoard'), room = Infinity;
-  if (!C && ub && ub.offsetParent !== null) room = ub.getBoundingClientRect().width - LADDER.usageBoardMin;
-  var lo = LADDER.chatMin + hist, hi = clamp(startW + Math.max(0, room), lo, LADDER.chatMax + hist);
+  var ub = qs('#panel-usage #pmuBoard'), cc = qs('.center-column'), room = 0;
+  if (C) room = C - LADDER.chatStrip;
+  else if (ub && ub.offsetParent !== null) room = ub.getBoundingClientRect().width - LADDER.usageBoardMin;
+  else if (cc && cc.getClientRects().length) room = cc.getBoundingClientRect().width - LADDER.chatStrip;
+  var lo = LADDER.chatMin + hist + act, hi = Math.max(lo, startW + Math.max(0, room));
   var last = startW, moved = false;
   try { handle.setPointerCapture(e.pointerId); } catch (_) {}
   handle.classList.add('resizing');
@@ -152,7 +165,7 @@ chatCol.beginDrag = function (e, handle) {
        its own final resize flush) must measure the width that actually landed, not the dragged one */
     var fireDragEnd = function () { try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {} };
     if (cancel || !moved) { c.style.setProperty('--pmw-chat-w', Math.round(startW) + 'px'); narrow.schedule(); fireDragEnd(); render.flushResizes(true); return; }
-    var w = clamp(Math.round(last) - hist, LADDER.chatMin, LADDER.chatMax);   // the message area; the History is never saved
+    var w = Math.max(LADDER.chatMin, Math.round(last) - hist - act);   // the message area; History and Activity Detail are never saved
     // one commit on release; a cancelled dispatch or a failed write leaves the saved width, which the ladder puts back
     var res = chatCol.setWidth(w);
     // say the width the ladder applies, never a width that is not on screen
