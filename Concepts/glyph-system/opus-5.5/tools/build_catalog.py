@@ -40,7 +40,7 @@ def guard(text: str, what: str) -> str:
 def parts():
     bridge = [SRC / 'bridge' / n for n in ('pm7-looks.css', 'pm7-glyph-inks.css', 'pm7-bridge.css')]
     # the Retro phosphor voice (designer2) restates neon rules, so it follows the neon sheet when it exists
-    after = [p for p in [SRC / 'bridge' / 'pm7-retro-phosphor.css', SRC / 'bridge' / 'pm7-hover-bridge.css'] if p.exists()]
+    after = [p for p in [SRC / 'bridge' / 'pm7-retro-phosphor.css', SRC / 'bridge' / 'pm7-hover-bridge.css', SRC / 'bridge' / 'pm7-beat.css'] if p.exists()]
     css = bridge + [NEON / 'neon-icons.css'] + after + sorted((SRC / 'catalog').glob('*.css'))
     js = [NEON / 'neon-icons.js'] + sorted((SRC / 'registry').glob('*.js')) + \
         sorted((SRC / 'registry' / 'families').glob('*.js')) + sorted((SRC / 'catalog').glob('*.js'))
