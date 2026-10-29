@@ -1135,7 +1135,8 @@
   // THEMES keeps the concept's shape (label, family, scheme beside the colours) for the live rigs ported from it
   // (onboarding's stage, the chat's sheet hosts); solidStr is the concept's opaque string colour.
   const THEMES = Object.freeze(LOOKS.reduce((o, lk) => {
-    o[lk] = Object.assign({ label: lk.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' '), family: familyOf(lk), scheme: schemeOf(lk) }, EXPORT[lk]);
+    // filePalette adds what the drawing parts derive: back (the back stick), headSolid, glass.rodBack, NieR's flags
+    o[lk] = Object.assign({ label: lk.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') }, filePalette(lk));
     return o;
   }, {}));
   const solidStr = (th) => (String(th.str).indexOf('rgba') === 0 ? (th.scheme === 'dark' ? '#B9C2D2' : '#5B6476') : th.str);

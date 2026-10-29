@@ -2,7 +2,7 @@
    work refs), pm.o55.tour.v1 (safe-step checkpoint: ids + completed predicates only; the tour's restoration basis, layout and
    Chat identities without the composer's text, is its own record pm.o55.tour-basis.v1, see 80-tour-core.js). Sound is deliberately not
    stored here: the sound control mirrors the current Project's Settings row general.interaction.sound-effects
-   (default off), and with no Project it is a session-only preview that persists nothing.
+   (default on), and with no Project it is a session-only preview that persists nothing.
    Passwords, tokens, device codes and key material never enter these records. */
 (function () {
   'use strict';
