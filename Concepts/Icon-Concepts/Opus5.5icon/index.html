@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Puppet Master logo: Pip (Opus 5.5)</title>
+  <link rel="icon" id="favicon" href="data:,">
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar" aria-label="Concept header">
+    <span class="pm-lockup" id="topLockup"></span>
+    <span class="crumb">Logo, app icon, tray and loader concept</span>
+    <span class="model-badge" data-concept-model="Opus 5.5">Opus 5.5</span>
+  </header>
+
+  <div class="controls" role="toolbar" aria-label="Preview controls">
+    <div class="wrap">
+      <div class="ctl"><span class="lbl" id="lblDir">Direction</span>
+        <div class="seg" role="group" aria-labelledby="lblDir">
+          <button type="button" data-dir="pip" aria-pressed="true">Pip</button>
+          <button type="button" data-dir="mono" aria-pressed="false">PM monogram</button>
+        </div>
+      </div>
+      <div class="ctl"><label class="lbl" for="themeSel">Theme</label>
+        <select class="sel" id="themeSel"></select>
+        <div class="swatches" id="swatches" role="group" aria-label="Theme shortcuts"></div>
+      </div>
+      <div class="ctl"><span class="lbl" id="lblLoader">Loader</span>
+        <div class="seg" role="group" aria-labelledby="lblLoader" id="loaderSeg">
+          <button type="button" data-loader="swing" aria-pressed="true">Swing</button>
+          <button type="button" data-loader="think" aria-pressed="false">Think</button>
+          <button type="button" data-loader="hop" aria-pressed="false">Hop</button>
+        </div>
+      </div>
+      <div class="ctl"><span class="lbl" id="lblMotion">Motion</span>
+        <div class="seg" role="group" aria-labelledby="lblMotion">
+          <button type="button" id="playBtn" aria-pressed="false">Pause</button>
+          <button type="button" id="reducedBtn" aria-pressed="false">Reduced motion</button>
+        </div>
+      </div>
+      <div class="ctl"><span class="lbl" id="lblDpr">Screen</span>
+        <div class="seg" role="group" aria-labelledby="lblDpr">
+          <button type="button" data-dpr="1" aria-pressed="false">1x</button>
+          <button type="button" data-dpr="2" aria-pressed="false">2x</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="hero" id="hero" aria-label="Introduction"></section>
+
+    <section class="block" id="titlebar" aria-labelledby="h-titlebar">
+      <p class="eyebrow">Static · title bar</p>
+      <h2 id="h-titlebar">In the PMConcept7 top bar</h2>
+      <p class="sub" id="titlebarSub"></p>
+      <div class="ctl" style="margin-bottom:14px;gap:14px;flex-wrap:wrap">
+        <div class="seg" role="group" aria-label="Before or after">
+          <button type="button" data-ba="after" aria-pressed="true">New logo</button>
+          <button type="button" data-ba="before" aria-pressed="false">Today (text only)</button>
+        </div>
+        <div class="seg" role="group" aria-label="Lockup">
+          <button type="button" data-lock="auto" aria-pressed="true">Mark + name, mark only when squeezed</button>
+          <button type="button" data-lock="mark" aria-pressed="false">Mark only</button>
+        </div>
+      </div>
+      <div class="shells" id="shells"></div>
+      <div class="card zoombox" style="margin-top:14px" id="tbZoom"></div>
+    </section>
+
+    <section class="block" id="live" aria-labelledby="h-live">
+      <p class="eyebrow">Static · real app</p>
+      <h2 id="h-live">Inside PMConcept7 itself</h2>
+      <p class="sub">Loads the real <code>PMConcept7.html</code> and swaps its text wordmark for this logo at runtime. PMConcept7 is not edited. Change themes with its own theme menu and the logo follows. Needs the page served over http (the Concept Hub does this).</p>
+      <div class="card live" id="liveBox"></div>
+    </section>
+
+    <section class="block" id="appicon" aria-labelledby="h-appicon">
+      <p class="eyebrow">Static · app icon</p>
+      <h2 id="h-appicon">Dock, taskbar and launcher</h2>
+      <p class="sub">The tile follows the theme, and every theme's tile can ship as an alternate app icon. At 24 px and below the tile is dropped and the mark stands on its own, because a tile at that size shrinks Pip to a smudge.</p>
+      <div class="grid icons-grid" id="iconsGrid"></div>
+    </section>
+
+    <section class="block" id="tray" aria-labelledby="h-tray">
+      <p class="eyebrow">Static + animated · tray</p>
+      <h2 id="h-tray">Menu bar and system tray</h2>
+      <p class="sub" id="traySub"></p>
+      <div class="grid tray-grid" id="trayGrid"></div>
+      <div class="card state-strip" id="stateStrip" style="margin-top:14px"></div>
+    </section>
+
+    <section class="block" id="loading" aria-labelledby="h-loading">
+      <p class="eyebrow">Animated · loading</p>
+      <h2 id="h-loading">Loading, everywhere except NieR</h2>
+      <p class="sub" id="loadingSub"></p>
+      <div id="nierNote"></div>
+      <div class="grid load-grid" id="loadGrid"></div>
+      <div class="styles-row" id="stylesRow"></div>
+    </section>
+
+    <section class="block" id="moods" aria-labelledby="h-moods">
+      <p class="eyebrow">Static · states</p>
+      <h2 id="h-moods">Pip reports status with its face</h2>
+      <p class="sub">Six expressions, each drawn for large sizes and as pixel sprites at 16 and 24 px. They replace coloured badges in the tray, notifications and the chat avatar. Everything except Working is static. In NieR, Pip wears a blindfold: idle shows no eyes, and the other states light up on the band like a HUD.</p>
+      <div class="grid moods" id="moodGrid"></div>
+    </section>
+
+    <section class="block" id="themes" aria-labelledby="h-themes">
+      <p class="eyebrow">Every theme</p>
+      <h2 id="h-themes">Ten themes, one character</h2>
+      <p class="sub">Each theme family changes material, not identity, and every colour is PMConcept7's own for that theme. <b>Friendly</b> is a soft vinyl toy with pastel cheeks. <b>Glass</b> is Liquid Glass: a clear blue lens with a lit rim, and on the app icon it refracts PMConcept7's Ribbons wallpaper. <b>Basic</b> stays flat with one accent. <b>Retro</b> is a pixel sprite on PMConcept7's olive and green, with stepped motion. <b>NieR</b> becomes a YoRHa unit: hairline line art, a blindfold whose tails fly past the ear, square nodes where lines end and a diamond pin, on graph paper with target brackets. Click a row to switch the page to that theme.</p>
+      <div class="card matrix" id="matrix"></div>
+    </section>
+
+    <section class="block" id="pixels" aria-labelledby="h-pixels">
+      <p class="eyebrow">Small sizes</p>
+      <h2 id="h-pixels">Real pixels, magnified</h2>
+      <p class="sub">Each size rendered at its true pixel count, then enlarged without smoothing. 16 and 18 px use hand-placed sprites; 20 to 40 px use a heavier vector cut; above that, full detail. Retro uses sprites at every size.</p>
+      <div class="card pix-grid" id="pixGrid"></div>
+    </section>
+
+    <section class="block" id="specs" aria-labelledby="h-specs">
+      <p class="eyebrow">Construction</p>
+      <h2 id="h-specs">How it is built</h2>
+      <p class="sub">One generator, <code>pm-logo.js</code>, draws every asset on this page and every download, so the preview and the files cannot drift apart. It returns plain SVG strings and needs no browser, so a build script or the Slint app can call the same code.</p>
+      <div class="grid spec-grid" id="specGrid"></div>
+    </section>
+
+    <section class="block" id="downloads" aria-labelledby="h-downloads">
+      <p class="eyebrow">Take it</p>
+      <h2 id="h-downloads">Downloads</h2>
+      <p class="sub">Everything is generated in the page, so it works from a double-clicked file. The packs use the current direction.</p>
+      <div class="grid dl-grid" id="dlGrid"></div>
+    </section>
+  </main>
+
+  <footer class="wrap">Concept work, illustrative only: the product spec stays in <code>Plans/</code>. Fonts are the Latin subsets PMConcept7 already embeds.</footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="concept-hub-bridge.js"></script>
+  <script src="pm-logo.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

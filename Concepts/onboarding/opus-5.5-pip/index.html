@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Onboarding with Pip (Opus 5.5)</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../../Icon-Concepts/Opus5.5icon/fonts.css">
+  <link rel="stylesheet" href="fonts-extra.css">
+  <link rel="stylesheet" href="stage.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-open="1" data-width="full">
+  <div class="cc" role="toolbar" aria-label="Concept controls">
+    <span class="cc-brand"><span data-pip-mark="20"></span><b>Onboarding with Pip</b><span class="cc-model" data-concept-model="Opus 5.5">Opus 5.5</span></span>
+    <label class="cc-ctl"><span>Look</span><select id="themeSel"></select></label>
+    <label class="cc-ctl"><span>Screen</span><select id="screenSel"></select></label>
+    <div class="cc-ctl"><span id="lblW">Window</span><div class="cc-seg" role="group" aria-labelledby="lblW">
+      <button type="button" data-width="full" aria-pressed="true">Desktop</button>
+      <button type="button" data-width="laptop" aria-pressed="false">Laptop</button>
+      <button type="button" data-width="narrow" aria-pressed="false">Narrow</button>
+      <button type="button" data-width="phone" aria-pressed="false">Squeezed</button>
+    </div></div>
+    <div class="cc-seg" role="group" aria-label="Motion and sound">
+      <button type="button" id="replayBtn">Replay scene</button>
+      <button type="button" id="reducedBtn" aria-pressed="false">Reduced motion</button>
+      <button type="button" class="cc-btn" data-act="sound" aria-pressed="true">Sound</button>
+    </div>
+    <a class="cc-link" href="sounds.html" target="_blank" rel="noopener">Sound board ↗</a>
+  </div>
+
+  <div class="frame">
+    <!-- a quiet PMConcept7 shell, dimmed behind the onboarding window -->
+    <div class="shell" aria-hidden="true">
+      <div class="sh-title"><span class="sh-lockup"><span data-pip-mark="24"></span><b>Puppet Master</b></span>
+        <span class="sh-proj">tastebook ▾</span>
+        <span class="sh-tabs"><i class="on">Home</i><i>Projects</i><i>Planning Wizard</i><i>Orchestrator</i><i>Usage</i><i>Settings</i></span>
+        <span class="sh-gap"></span><button type="button" class="sh-resume" id="resumePill" data-act="resume" hidden><span data-pip-mark="18"></span>Finish setting up</button>
+      </div>
+      <div class="sh-body"><div class="sh-act"></div><div class="sh-left"></div><div class="sh-main"></div><div class="sh-chat"></div></div>
+      <div class="sh-status"><span>● Ready</span><span>~/Puppet-Master</span><span>main</span></div>
+    </div>
+    <div class="scrim"></div>
+
+    <div class="ob" id="obWin" role="dialog" aria-modal="true" aria-labelledby="obTitle">
+      <header class="ob-head">
+        <span class="ob-brand"><span data-pip-mark="24"></span><b>Puppet Master</b></span>
+        <nav class="ob-rail" id="obRail"></nav>
+        <div class="ob-tools">
+          <button type="button" class="ob-iconbtn ob-sound" data-act="sound" aria-pressed="true" title="Sound on" aria-label="Sound on"></button>
+          <button type="button" class="ob-iconbtn" data-act="look" title="Change the look" aria-label="Change the look"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1 0 2-1 1-2.5S14 15 16 15h2a3 3 0 0 0 3-3 9 9 0 0 0-9-9z"/><circle cx="7.5" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="11" r="1"/></svg></button>
+          <button type="button" class="ob-iconbtn ob-close" data-act="close" title="Close — your choices are saved"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Close</span></button>
+        </div>
+      </header>
+      <div class="ob-body">
+        <div class="ob-stage" id="obStage"></div>
+        <section class="ob-main" id="obMain" aria-live="polite"></section>
+      </div>
+      <footer class="ob-foot" id="obFoot"></footer>
+    </div>
+  </div>
+
+  <script src="concept-hub-bridge.js"></script>
+  <script src="../../Icon-Concepts/Opus5.5icon/pm-logo.js"></script>
+  <script src="worlds.js"></script>
+  <script src="sound.js"></script>
+  <script src="stage.js"></script>
+  <script src="wizard.js"></script>
+</body>
+</html>

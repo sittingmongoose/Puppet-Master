@@ -1,0 +1,112 @@
+/* Pip in the chat (Opus 5.5 concept): the styles pip-chat.js adds to the 5.6 Pro chat. Every colour comes from the
+   chat's own tokens or from the Pip drawings themselves, so each theme family keeps its look. */
+
+/* ------------------------------------------------------------ the marks */
+/* The chat's puppets stand on a floor bar while they work; Pip hangs, so the bar goes */
+.pmx-pp[data-pip] ~ .pmx-pp-floor { display: none; }
+.pip-m .pip-blink, .pip-m .pip-eyes { transform-box: fill-box; transform-origin: center; }
+html[data-pip-blink="1"] .pip-m .pip-blink { animation: pip-mblink 9s infinite; animation-delay: var(--pip-bd, 0s); }
+@keyframes pip-mblink { 0%, 96.6%, 100% { transform: none; } 97.8% { transform: scaleY(.1); } }
+:is(.pip-m, .pip-host) :is(.pip-dot2, .pip-dot3, .pip-dot4) { transform-box: fill-box; transform-origin: center; }
+html[data-pip-dots="1"] :is(.pip-m, .pip-host) :is(.pip-dot2, .pip-dot3, .pip-dot4) { animation: pip-dot 1.15s ease-in-out infinite; }
+html[data-pip-dots="1"] :is(.pip-m, .pip-host) .pip-dot3 { animation-delay: .16s; }
+html[data-pip-dots="1"] :is(.pip-m, .pip-host) .pip-dot4 { animation-delay: .32s; }
+@keyframes pip-dot { 0%, 58%, 100% { transform: none; } 28% { transform: translateY(-3px); } }
+/* Retro's pixels move in whole cells */
+html[data-pip-dots="1"] .pip-px :is(.pip-dot2, .pip-dot3, .pip-dot4) { animation-timing-function: steps(1, end); }
+.pmx-mark[data-state="abstained"] .pip-m, .pmx-p-mark[data-state="abstained"] .pip-m,
+.pmx-mark[data-state="optional"] .pip-m, .pmx-p-mark[data-state="optional"] .pip-m { opacity: .55; }
+
+/* ------------------------------------------------------ the sheet's host */
+/* the host's box is in its markup (pip-chat.js), so it survives the chat's exit copy */
+.pip-host-svg { display: block; overflow: visible; }
+.pip-host .pip-rig { transform-box: view-box; transform-origin: 32px 8px; }
+.pip-host .pip-card { transform-box: view-box; transform-origin: 54px 21px; }
+.pip-host-svg[data-sway="1"] .pip-rig { animation: pip-sway 4.4s ease-in-out infinite alternate; }
+.pip-host-svg[data-sway="1"] .pip-card { animation: pip-card 4.4s ease-in-out -.7s infinite alternate; }
+.pip-host-svg[data-sway="1"][data-fam="retro"] .pip-rig { animation-timing-function: steps(4, end); }
+.pip-host-svg[data-sway="1"][data-fam="nier"] .pip-rig, .pip-host-svg[data-sway="1"][data-fam="nier"] .pip-card { animation: none; }
+@keyframes pip-sway { from { transform: rotate(-1.8deg); } to { transform: rotate(1.8deg); } }
+@keyframes pip-card { from { transform: rotate(2.4deg); } to { transform: rotate(-2.4deg); } }
+/* a sheet closed by its main button: Pip cheers where it hung, then is lifted away on its strings */
+.pip-ghost { position: fixed; z-index: 2147483000; pointer-events: none; }
+.pip-host-svg.pip-flick .pip-pup { animation: pip-flick .2s steps(2, end); }
+@keyframes pip-flick { 0% { opacity: .2; } 50% { opacity: 1; } 75% { opacity: .5; } 100% { opacity: 1; } }
+
+/* face changes, from the onboarding: the eyes close on their line, the other parts shrink to their centres,
+   the new face opens the same way; nothing fades */
+.pip-host .pip-face { transition: transform .16s ease-out; }
+.pip-host .pip-face > *, .pip-host .pip-face .pip-blink { transform-box: fill-box; transform-origin: center; }
+.pip-host .pip-face.pip-closing .pip-eyes { transform: scaleY(.08); transition: transform .095s ease-in; }
+.pip-host .pip-face.pip-closing > :not(.pip-eyes) { transform: scale(.2); transition: transform .095s ease-in; }
+.pip-host .pip-face.pip-opening .pip-eyes { animation: pip-open .17s cubic-bezier(.2, .8, .3, 1.15) both; }
+.pip-host .pip-face.pip-opening > :not(.pip-eyes) { animation: pip-open-part .17s cubic-bezier(.2, .8, .3, 1.15) both; }
+@keyframes pip-open { from { transform: scaleY(.08); } to { transform: none; } }
+@keyframes pip-open-part { from { transform: scale(.2); } to { transform: none; } }
+.pip-host .pip-face.pip-blinking .pip-blink { animation: pip-blink1 .17s ease-in-out; }
+@keyframes pip-blink1 { 0%, 100% { transform: none; } 42%, 58% { transform: scaleY(.1); } }
+
+/* still: no motion anywhere, whatever the parts say */
+@media (prefers-reduced-motion: reduce) {
+  .pip-m *, .pip-host, .pip-host * { animation: none !important; transition: none !important; }
+}
+html[data-motion="reduced"] :is(.pip-m *, .pip-host, .pip-host *), body.pm56-reduced :is(.pip-m *, .pip-host, .pip-host *) { animation: none !important; transition: none !important; }
+
+/* --------------------------------------------------------- other places */
+.pmap-agent-row[data-pip] { grid-template-columns: 30px minmax(0, 1fr) auto; }
+.pip-row { width: 30px; height: 30px; align-self: center; }
+.pmx-sched-rowglyph[data-pip] svg, .pmx-mem-rglyph[data-pip] svg, .pip-row svg, .pip-core svg, .pip-empty svg, .pip-wand svg, .qs-head-icon[data-pip] svg, .plan-sched-mark[data-pip] svg { display: block; overflow: visible; }
+.orbit-core .orbit-core-icon[data-pip] { position: relative; width: 40px; height: 40px; margin-top: -6px; }
+.orbit-core-icon[data-pip] > .pip-core { display: block; width: 40px; height: 40px; }
+.orbit-core-icon[data-pip] > svg:not(.pip-mk) { position: absolute; right: -9px; bottom: -3px; width: 14px; height: 14px; padding: 1.5px; border-radius: 50%; background: var(--surface-2, var(--surface)); box-shadow: 0 0 0 1px var(--border, transparent); }
+.qs-head-icon[data-pip] { width: 22px; height: 22px; background: none; }
+.pmx-sched-rowglyph[data-pip], .pmx-mem-rglyph[data-pip] { width: 22px; height: 22px; margin: -3px -2px 0; display: inline-block; }
+.plan-sched-mark[data-pip] { width: 22px; height: 22px; }
+.pip-wand { display: inline-flex; margin: -4px 2px -4px 0; }
+.pip-wand-row .menu-icon svg { width: 15px; height: 15px; }
+.pip-empty { display: inline-block; width: 30px; height: 30px; vertical-align: middle; margin: -6px 8px -4px 0; }
+
+/* -------------------------------------------------- the Pip settings */
+.pip-sheet .pmx-body { padding-top: 6px; }
+.pipc { display: grid; gap: 16px; color: var(--text); }
+.pipc-top { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; align-items: stretch; }
+.pipc-stage { display: flex; justify-content: space-around; align-items: center; gap: 6px; min-height: 150px; padding: 12px 10px; border-radius: 12px;
+  background: var(--surface-2, rgba(127, 127, 127, .08)); border: 1px solid var(--border, rgba(127, 127, 127, .2)); }
+.pipc-seat { margin: 0; display: grid; justify-items: center; gap: 6px; min-width: 64px; }
+.pipc-seat .pipc-mk { display: block; width: 76px; height: 76px; }
+.pipc-seat figcaption { font-size: 12px; font-weight: 600; text-align: center; line-height: 1.25; }
+.pipc-seat figcaption small { display: block; font-weight: 400; color: var(--muted); font-size: 11px; }
+.pipc-side { display: grid; gap: 10px; align-content: start; }
+.pipc-meter-head { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.pipc-meter-head b { color: var(--text); font-weight: 650; }
+.pipc-meter-cells { display: grid; grid-template-columns: repeat(24, 1fr); gap: 2px; }
+.pipc-meter-cells i { height: 8px; border-radius: 2px; background: var(--border, rgba(127, 127, 127, .25)); }
+.pipc-meter-cells i.on { background: var(--accent); }
+.pipc-presets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.pipc-preset { display: grid; gap: 2px; text-align: left; padding: 7px 10px; border-radius: 9px; border: 1px solid var(--border, rgba(127, 127, 127, .25)); background: transparent; color: var(--text); cursor: pointer; font: inherit; }
+.pipc-preset span { font-size: 13px; font-weight: 600; }
+.pipc-preset small { font-size: 11px; color: var(--muted); }
+.pipc-preset[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.pipc-play { justify-self: start; }
+.pipc-play[aria-disabled="true"] { opacity: .5; cursor: default; }
+.pipc-group { display: grid; gap: 8px; }
+.pipc-ghead { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border, rgba(127, 127, 127, .2)); padding-bottom: 4px; }
+.pipc-ghead h4 { margin: 0; font-size: 13px; font-weight: 650; }
+.pipc-ghead span { font-size: 12px; color: var(--muted); }
+.pipc-note { margin: 0; font-size: 12px; color: var(--muted); }
+.pipc-chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+.pipc-chip { display: grid; gap: 4px; align-content: start; text-align: left; padding: 9px 11px; border-radius: 10px; cursor: pointer; font: inherit; color: var(--text);
+  border: 1px solid var(--border, rgba(127, 127, 127, .25)); background: transparent; transition: border-color .15s, background-color .15s; }
+.pipc-chip:hover { border-color: var(--border-strong, var(--muted)); }
+.pipc-chip-name { font-size: 13px; font-weight: 600; }
+.pipc-chip-help { font-size: 11.5px; line-height: 1.35; color: var(--muted); }
+.pipc-chip-foot { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 2px; }
+.pipc-chip-state { font-weight: 650; }
+.pipc-chip[aria-checked="true"] { border-color: color-mix(in srgb, var(--accent) 55%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent); }
+.pipc-chip[aria-checked="true"] .pipc-chip-state { color: var(--accent); }
+.pipc-chip:focus-visible, .pipc-preset:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Demo Studio is narrower: one column on top */
+.pipc[data-where="studio"] .pipc-top { grid-template-columns: 1fr; }
+.pipc[data-where="studio"] .pipc-chips { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+/* NieR and Retro keep their square corners */
+html[data-o55-nier="on"] :is(.pipc-chip, .pipc-preset, .pipc-stage, .pipc-meter-cells i), body[data-theme^="retro"] :is(.pipc-chip, .pipc-preset, .pipc-stage, .pipc-meter-cells i) { border-radius: 0; }

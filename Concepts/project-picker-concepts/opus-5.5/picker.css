@@ -1,0 +1,243 @@
+/* Project picker concepts (Opus 5.5): the styles picker.js adds to PMConcept7.
+   Every colour, corner and shadow is a PMConcept7 token: the shared switcher material (--pm-switch-*, the chosen tab's
+   chip in every look: Basic's tinted chip, Friendly's mint plate, Retro's reverse video, NieR's ink bar), the text and
+   border tokens, and Glass's own fills. Nothing here sets a hover: PMConcept7's one hover engine (.pmh-on, #pmh-frame)
+   keeps drawing it, so every rule that paints ink or a fill stands aside while .pmh-on is on.
+   The :not(#p0):not(#p1):not(#p2) run lifts these rules over PMConcept7's per-look title-bar rules (Glass's are
+   !important at two ids) and still leaves its hover rules (four ids and four classes) on top. */
+
+/* ------------------------------------------------------------ the logo: Pip and the wordmark */
+.title-bar .app-name.ppk-logo { display: inline-flex !important; align-items: center; gap: 8px; }
+.title-bar .app-name.ppk-logo .ppk-pip { display: inline-flex; width: 24px; height: 24px; flex: none; }
+.title-bar .app-name.ppk-logo .ppk-pip svg { display: block; width: 24px; height: 24px; overflow: visible; }
+
+/* ------------------------------------------------------------ before: PMConcept7's own box, untouched */
+:root:not([data-ppk]) :is(.ppk-lead, .ppk-sub, .ppk-badge, .ppk-chev, .ppk-hang, .ppk-slash, .ppk-mhead, .ppk-mfoot, .ppk-mono, .ppk-mstate, .ppk-mtext small) { display: none !important; }
+:root:not([data-ppk]) .ppk-text, :root:not([data-ppk]) .ppk-mtext { display: contents; }
+:root:not([data-ppk]) .ppk-mtext b { font-weight: inherit; }
+svg.ppk-string { display: none; }
+
+/* ------------------------------------------------------------ every option: the trigger's frame */
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) #projectMenuWrap :is(.pm6-tb-project-chevron, .pm6-tb-project-ico) { display: none !important; }
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) #projectMenuWrap { display: inline-flex !important; align-items: center; position: relative; }
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn {
+  position: relative !important; display: inline-flex !important; align-items: center !important; gap: 6px !important;
+  box-sizing: border-box !important; height: 28px !important; min-height: 0 !important; width: auto !important;
+  padding: 0 8px !important; margin: 0 !important; max-width: none !important; overflow: visible !important;
+  border: 0 !important; border-radius: var(--pm-switch-r-in, var(--pm-ctl-r, 4px)) !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  font-family: var(--body-font) !important; line-height: 1 !important; text-align: left !important;
+  transition: background-color .16s ease, color .16s ease, box-shadow .16s ease !important;
+}
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn:not(.pmh-on) {
+  background: transparent !important; box-shadow: none !important; color: var(--pm-switch-ink, var(--text-secondary)) !important;
+}
+/* open: the chosen tab's chip, from PMConcept7's switcher tokens */
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn[aria-expanded="true"]:not(.pmh-on) {
+  background-color: transparent !important;
+  background-image: linear-gradient(var(--pm-switch-fill, transparent), var(--pm-switch-fill, transparent)), linear-gradient(var(--pm-switch-body, transparent), var(--pm-switch-body, transparent)) !important;
+  box-shadow: inset 0 0 0 .5px var(--pm-switch-line, transparent), inset 0 1px 0 var(--pm-switch-top, transparent), 0 0 0 .5px var(--pm-switch-edge, transparent), var(--pm-switch-shadow, 0 0 0 0 transparent) !important;
+  color: var(--pm-switch-ink-on, var(--text-primary)) !important;
+}
+/* Glass draws its press as a clear lens with a lit rim, as its menus' chosen rows do */
+:root[data-ppk][data-theme^="glass"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn[aria-expanded="true"]:not(.pmh-on) {
+  background-image: none !important; background-color: var(--lg-fill-press, rgba(255, 255, 255, .14)) !important;
+  box-shadow: inset 0 0 0 1px var(--rg-rim-soft, rgba(255, 255, 255, .22)), inset 0 1px 0 rgba(255, 255, 255, .22), 0 6px 14px rgba(0, 0, 0, .12) !important;
+  color: var(--text-primary) !important;
+}
+
+/* parts (Glass styles every span that is a first child in this box as a clipped inline block: these keep their own box) */
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) #projectMenuBtn :is(.ppk-lead, .ppk-badge, .ppk-chev) { display: inline-flex !important; max-width: none !important; overflow: visible !important; }
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) #projectMenuBtn .ppk-mono { display: inline-grid !important; max-width: none !important; overflow: visible !important; }
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) #projectMenuBtn .ppk-text { display: inline-flex !important; max-width: none !important; overflow: visible !important; }
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) #projectMenuBtn .ppk-badge:empty { display: none !important; }
+#projectMenuBtn .ppk-lead { display: inline-flex; align-items: center; justify-content: center; flex: none; }
+#projectMenuBtn .ppk-lead svg { display: block; width: 15px; height: 15px; }
+#projectMenuBtn .ppk-text { display: inline-flex; flex-direction: column; justify-content: center; min-width: 0; }
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) #projectMenuBtn #projectMenuLabel {
+  display: block !important; max-width: 168px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: inherit;
+}
+#projectMenuBtn .ppk-sub { display: none; }
+#projectMenuBtn .ppk-badge { display: inline-flex; align-items: center; flex: none; }
+#projectMenuBtn .ppk-badge:empty { display: none; }
+#projectMenuBtn .ppk-badge svg { display: block; }
+#projectMenuBtn .ppk-chev { display: inline-flex; flex: none; opacity: .75; transition: transform .18s cubic-bezier(.3, .7, .3, 1); }
+#projectMenuBtn .ppk-chev svg { display: block; width: 12px; height: 12px; }
+#projectMenuBtn[aria-expanded="true"] .ppk-chev { transform: rotate(180deg); opacity: 1; }
+#projectMenuBtn .ppk-hang, #projectMenuWrap .ppk-slash { display: none; }
+/* Retro and NieR step; reduced motion places it */
+:root[data-theme^="retro"] #projectMenuBtn .ppk-chev, :root[data-o55-nier="on"] #projectMenuBtn .ppk-chev { transition-timing-function: steps(1, end); transition-duration: .08s; }
+
+/* narrow: PMConcept7's title-bar density folds the box to its lead (data-mode="icon") */
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap[data-mode="icon"] #projectMenuBtn { width: 30px !important; padding: 0 !important; justify-content: center !important; gap: 0 !important; }
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap[data-mode="icon"] :is(.ppk-text, .ppk-chev, .ppk-hang, .ppk-slash) { display: none !important; }
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap[data-mode="icon"] .ppk-badge { position: absolute; right: -3px; top: -2px; }
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap[data-mode="icon"]::after { display: none !important; }
+
+/* the monogram tile: the chosen material in small, so the tile says "this is the chosen project" in every look */
+.ppk-mono {
+  display: inline-grid; place-items: center; flex: none; width: 20px; height: 20px; box-sizing: border-box;
+  border-radius: var(--pm-switch-r-in, 4px); font: 750 10.5px/1 var(--display-font, var(--body-font)); letter-spacing: 0;
+  color: var(--pm-switch-ink-on, var(--text-primary));
+  background-image: linear-gradient(var(--pm-switch-fill, rgba(127, 127, 127, .2)), var(--pm-switch-fill, rgba(127, 127, 127, .2))), linear-gradient(var(--pm-switch-body, transparent), var(--pm-switch-body, transparent));
+  box-shadow: inset 0 0 0 .5px var(--pm-switch-line, transparent), inset 0 1px 0 var(--pm-switch-top, transparent);
+}
+:root[data-theme^="glass"] .ppk-mono { background: var(--lg-fill-press, rgba(255, 255, 255, .16)); box-shadow: inset 0 0 0 1px var(--rg-rim-soft, rgba(255, 255, 255, .24)), inset 0 1px 0 rgba(255, 255, 255, .25); color: var(--text-primary); }
+:root[data-theme^="retro"]:not([data-o55-nier="on"]) .ppk-mono { font-family: var(--mono-font, var(--body-font)); }
+
+/* ============================================================ A · Tab: one of the tabs */
+:root[data-ppk="tab"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn {
+  font-size: 11px !important; font-weight: 700 !important; letter-spacing: .3px !important; padding: 0 8px 0 7px !important; gap: 6px !important;
+}
+:root[data-ppk="tab"][data-theme^="friendly"]:not([data-o55-nier="on"]):not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn { letter-spacing: .88px !important; border-radius: 7px !important; padding: 0 10px 0 9px !important; }
+:root[data-ppk="tab"][data-theme^="glass"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn { letter-spacing: .14px !important; font-weight: 600 !important; }
+:root[data-ppk="tab"][data-theme^="retro"]:not([data-o55-nier="on"]):not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn { letter-spacing: 0 !important; }
+/* a hairline after it, so the project reads as the tabs' owner, not as one more page */
+:root[data-ppk="tab"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap::after {
+  content: ""; display: block; width: 1px; height: 16px; margin-left: 10px; background: var(--border); opacity: .9;
+}
+:root[data-ppk="tab"][data-theme^="retro"]:not([data-o55-nier="on"]):not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap::after { width: 2px; }
+/* Glass sets its tabs in a clear track; the project gets the same track of its own */
+:root[data-ppk="tab"][data-theme^="glass"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap {
+  padding: 2px; border-radius: calc(var(--pm-ctl-r, 6px) + 2px); background: color-mix(in srgb, var(--rg-chrome-strong, rgba(255, 255, 255, .2)) 54%, transparent);
+}
+:root[data-ppk="tab"][data-theme^="glass"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap::after { display: none; }
+
+/* ============================================================ B · Breadcrumb: Puppet Master / tastebook */
+:root[data-ppk="crumb"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap { margin-left: -4px; }
+:root[data-ppk="crumb"][data-theme^="glass"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap { margin-left: 4px; }
+:root[data-ppk="crumb"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap .ppk-slash {
+  display: inline-block; margin: 0 2px 0 0; font: 300 19px/1 var(--display-font, var(--body-font)); color: var(--text-muted); opacity: .8; transform: translateY(-.5px);
+  user-select: none;
+}
+:root[data-ppk="crumb"][data-theme^="retro"]:not([data-o55-nier="on"]):not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap .ppk-slash { font: 400 15px/1 var(--mono-font, monospace); opacity: 1; }
+:root[data-ppk="crumb"][data-o55-nier="on"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap .ppk-slash {
+  /* NieR's separator is a hairline at its own slant, ending in a square node, as its rules do */
+  font-size: 0; width: 9px; height: 16px; margin: 0 3px 0 0; transform: none; opacity: 1;
+  background: linear-gradient(to bottom right, transparent calc(50% - .6px), var(--text-primary) calc(50% - .6px), var(--text-primary) calc(50% + .6px), transparent calc(50% + .6px));
+}
+:root[data-ppk="crumb"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn {
+  font-size: 13.5px !important; font-weight: 600 !important; letter-spacing: -.005em !important; padding: 0 6px 0 7px !important; gap: 5px !important;
+  font-family: var(--display-font, var(--body-font)) !important;
+}
+:root[data-ppk="crumb"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn:not(.pmh-on):not([aria-expanded="true"]) { color: var(--text-primary) !important; }
+:root[data-ppk="crumb"][data-theme^="retro"]:not([data-o55-nier="on"]):not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn { font-size: 12.5px !important; letter-spacing: 0 !important; font-family: var(--mono-font, var(--body-font)) !important; }
+:root[data-ppk="crumb"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap:not([data-mode="icon"]) #projectMenuBtn .ppk-lead { display: none !important; }
+:root[data-ppk="crumb"] #projectMenuBtn .ppk-chev { opacity: .55; }
+:root[data-ppk="crumb"] #projectMenuBtn .ppk-chev svg { width: 11px; height: 11px; }
+
+/* ============================================================ C · Plate: monogram, name and path */
+:root[data-ppk="plate"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn {
+  height: 32px !important; padding: 0 9px 0 5px !important; gap: 8px !important; border-radius: var(--pm-switch-r, 6px) !important;
+}
+:root[data-ppk="plate"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn:not(.pmh-on):not([aria-expanded="true"]) {
+  background: var(--pm-switch-track, rgba(127, 127, 127, .08)) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 70%, transparent) !important; color: var(--text-primary) !important;
+}
+:root[data-ppk="plate"][data-theme^="glass"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn:not(.pmh-on):not([aria-expanded="true"]) {
+  background: var(--lg-fill, rgba(255, 255, 255, .08)) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), inset 0 0 0 1px var(--rg-rim-soft, rgba(255, 255, 255, .14)) !important;
+}
+:root[data-ppk="plate"][data-theme^="retro"]:not([data-o55-nier="on"]):not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn:not(.pmh-on):not([aria-expanded="true"]) {
+  box-shadow: inset 0 0 0 2px var(--border) !important;
+}
+:root[data-ppk="plate"][data-o55-nier="on"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn:not(.pmh-on):not([aria-expanded="true"]) {
+  background: transparent !important; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text-primary) 55%, transparent) !important;
+}
+:root[data-ppk="plate"] #projectMenuBtn .ppk-mono { width: 22px; height: 22px; font-size: 11px; }
+:root[data-ppk="plate"]:not(#p0):not(#p1):not(#p2) #projectMenuBtn #projectMenuLabel { font-size: 12px; font-weight: 650; line-height: 14px; letter-spacing: -.003em; max-width: 176px; }
+:root[data-ppk="plate"] #projectMenuBtn .ppk-sub {
+  display: block; max-width: 176px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: 10.5px; font-weight: 450; line-height: 12px; letter-spacing: 0; opacity: .72;
+}
+:root[data-ppk="plate"][data-theme^="retro"]:not([data-o55-nier="on"]) #projectMenuBtn :is(#projectMenuLabel, .ppk-sub) { font-family: var(--mono-font, var(--body-font)); }
+:root[data-ppk="plate"] #projectMenuBtn[aria-expanded="true"] .ppk-mono { box-shadow: inset 0 0 0 1px currentColor; background: transparent; color: inherit; }
+
+/* ============================================================ D · Pip's sign */
+:root[data-ppk="sign"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuWrap { margin-left: 4px; }
+:root[data-ppk="sign"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn {
+  height: 23px !important; padding: 0 8px 0 4px !important; gap: 6px !important; margin-top: 7px !important;
+  font-size: 12px !important; font-weight: 650 !important; letter-spacing: 0 !important;
+  border-radius: var(--pm-switch-r-in, 4px) !important; transform-origin: 50% -7px;
+}
+:root[data-ppk="sign"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn:not(.pmh-on):not([aria-expanded="true"]) {
+  color: var(--text-primary) !important; background: var(--surface-elevated) !important;
+  box-shadow: inset 0 0 0 1px var(--border), 0 2px 4px -2px rgba(0, 0, 0, .35) !important;
+}
+/* Friendly's card is felt: a stitched line just inside its edge */
+:root[data-ppk="sign"][data-theme^="friendly"]:not([data-o55-nier="on"]):not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn { border-radius: 8px !important; }
+:root[data-ppk="sign"][data-theme^="friendly"]:not([data-o55-nier="on"]):not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn:not(.pmh-on):not([aria-expanded="true"]) {
+  background: var(--pm6-cozy-field, var(--surface-elevated)) !important;
+  box-shadow: inset 0 0 0 1px var(--pm6-cozy-chrome-border, var(--border)), inset 0 1px 0 rgba(255, 255, 255, .10), 0 3px 8px -4px rgba(0, 0, 0, .4) !important;
+}
+:root[data-ppk="sign"][data-theme^="glass"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn:not(.pmh-on):not([aria-expanded="true"]) {
+  background: var(--lg-fill, rgba(255, 255, 255, .1)) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), inset 0 0 0 1px var(--rg-rim-soft, rgba(255, 255, 255, .18)), 0 6px 14px rgba(0, 0, 0, .14) !important;
+}
+:root[data-ppk="sign"][data-theme^="retro"]:not([data-o55-nier="on"]):not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn:not(.pmh-on):not([aria-expanded="true"]) {
+  box-shadow: inset 0 0 0 2px var(--border), 2px 2px 0 color-mix(in srgb, var(--border) 80%, transparent) !important;
+}
+:root[data-ppk="sign"][data-o55-nier="on"]:not(#p0):not(#p1):not(#p2) .title-bar #projectMenuBtn:not(.pmh-on):not([aria-expanded="true"]) {
+  background: var(--surface-elevated) !important; box-shadow: inset 0 0 0 1px var(--text-primary) !important;
+}
+:root[data-ppk="sign"] #projectMenuBtn .ppk-mono { width: 17px; height: 17px; font-size: 9.5px; }
+:root[data-ppk="sign"]:not(#p0):not(#p1):not(#p2) #projectMenuBtn #projectMenuLabel { max-width: 150px; }
+:root[data-ppk="sign"] #projectMenuBtn .ppk-chev svg { width: 11px; height: 11px; }
+/* the two short strings from the hook to the card's top corners, and the hook itself */
+:root[data-ppk="sign"] #projectMenuBtn .ppk-hang { display: block; position: absolute; left: 0; right: 0; top: var(--ppk-hang-top, -9px); height: 0; pointer-events: none; }
+#projectMenuBtn .ppk-hang i { position: absolute; top: 0; width: 1px; height: var(--ppk-hang-l, 10px); margin-left: -.5px; background: var(--ppk-string, color-mix(in srgb, var(--text-secondary) 80%, transparent)); transform-origin: 50% 0; }
+#projectMenuBtn .ppk-hang i:first-child { left: 50%; transform: rotate(var(--ppk-hang-a, 62deg)); }
+#projectMenuBtn .ppk-hang i:nth-child(2) { left: 50%; transform: rotate(calc(-1 * var(--ppk-hang-a, 62deg))); }
+#projectMenuBtn .ppk-hang b { display: none; }
+:root[data-theme^="retro"]:not([data-o55-nier="on"]) #projectMenuBtn .ppk-hang i { width: 2px; }
+:root[data-theme^="retro"]:not([data-o55-nier="on"]) #projectMenuBtn .ppk-hang b, :root[data-o55-nier="on"] #projectMenuBtn .ppk-hang b { border-radius: 0; }
+:root[data-o55-nier="on"] #projectMenuBtn .ppk-hang i { background: var(--text-primary); }
+:root[data-o55-nier="on"] #projectMenuBtn .ppk-hang b { background: var(--text-primary); }
+/* the long string from Pip's control */
+svg.ppk-string { position: fixed; left: 0; top: 0; width: 100vw; height: 64px; overflow: visible; pointer-events: none; z-index: 60; }
+svg.ppk-string path { stroke: var(--ppk-string, color-mix(in srgb, var(--text-secondary) 80%, transparent)); stroke-width: 1; }
+svg.ppk-string rect { fill: var(--ppk-string, var(--text-secondary)); rx: 1.5px; }
+:root[data-theme^="retro"]:not([data-o55-nier="on"]) svg.ppk-string rect { rx: 0; }
+:root[data-theme^="retro"]:not([data-o55-nier="on"]) svg.ppk-string path { stroke-width: 2; shape-rendering: crispEdges; }
+:root[data-o55-nier="on"] svg.ppk-string path { stroke: var(--text-primary); }
+:root[data-o55-nier="on"] svg.ppk-string rect { fill: var(--text-primary); rx: 0; }
+
+/* ============================================================ the menu: every option */
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) #projectMenu { min-width: 292px !important; padding: 4px !important; box-sizing: border-box; }
+:root[data-ppk] #projectMenu .ppk-mhead {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 8px 6px 10px;
+  font: 700 10px/1 var(--body-font); letter-spacing: .09em; text-transform: uppercase; color: var(--text-muted);
+}
+:root[data-ppk] #projectMenu .ppk-keys { display: inline-flex; gap: 3px; text-transform: none; letter-spacing: 0; }
+:root[data-ppk] #projectMenu .ppk-keys kbd {
+  font: 600 10px/1 var(--mono-font, ui-monospace, monospace); padding: 3px 4px; border-radius: var(--pm-switch-r-in, 3px);
+  color: var(--text-secondary); background: var(--pm-switch-track, rgba(127, 127, 127, .1)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 80%, transparent);
+}
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) #projectMenu .pm6-tb-menu-item:is([data-project], .ppk-all) {
+  display: grid !important; grid-template-columns: 22px minmax(0, 1fr) auto; align-items: center; column-gap: 10px;
+  width: 100% !important; box-sizing: border-box; height: auto !important; min-height: 44px; padding: 6px 10px 6px 8px !important; text-align: left;
+  font-size: 12px !important; letter-spacing: 0 !important; white-space: nowrap;
+}
+#projectMenu .ppk-mono { width: 22px; height: 22px; font-size: 11px; }
+/* a row at rest: the tile is the track, not the chip; the chosen row's tile turns over with its chip */
+#projectMenu .pm6-tb-menu-item:not(.is-selected) .ppk-mono {
+  background: var(--pm-switch-track, rgba(127, 127, 127, .1)); color: var(--text-secondary);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 85%, transparent);
+}
+#projectMenu .pm6-tb-menu-item.is-selected .ppk-mono { background: transparent; color: inherit; box-shadow: inset 0 0 0 1px currentColor; }
+#projectMenu .ppk-mono-ico svg { width: 13px; height: 13px; display: block; }
+#projectMenu .ppk-mtext { display: grid; gap: 2px; min-width: 0; }
+#projectMenu .ppk-mtext b { font-weight: 650; font-size: 12.5px; line-height: 15px; overflow: hidden; text-overflow: ellipsis; }
+#projectMenu .ppk-mtext small { font-size: 11px; font-weight: 450; line-height: 13px; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; }
+#projectMenu .pm6-tb-menu-item.is-selected .ppk-mtext small { color: inherit; opacity: .78; }
+#projectMenu .ppk-mstate { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; color: var(--text-secondary); }
+#projectMenu .pm6-tb-menu-item.is-selected .ppk-mstate { color: inherit; }
+#projectMenu .ppk-mstate svg { display: block; }
+:root[data-theme^="retro"]:not([data-o55-nier="on"]) #projectMenu :is(.ppk-mtext b, .ppk-mtext small, .ppk-mstate) { font-family: var(--mono-font, var(--body-font)); }
+:root[data-ppk] #projectMenu .ppk-mfoot { margin-top: 4px; padding-top: 4px; border-top: 1px solid color-mix(in srgb, var(--border) 85%, transparent); }
+:root[data-theme^="retro"]:not([data-o55-nier="on"]) #projectMenu .ppk-mfoot { border-top-width: 2px; }
+:root[data-ppk]:not(#p0):not(#p1):not(#p2) #projectMenu .ppk-all { min-height: 38px; }
+#projectMenu .ppk-all .ppk-mtext small { display: none; }
+#projectMenu .ppk-all .ppk-mono { background: transparent !important; box-shadow: none !important; color: var(--text-secondary); }
+
+/* reduced motion: nothing turns or swings */
+@media (prefers-reduced-motion: reduce) { #projectMenuBtn .ppk-chev { transition: none !important; } }
+:root[data-motion="reduced"] #projectMenuBtn .ppk-chev { transition: none !important; }

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" data-theme="basic-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pip in the chat · Opus 5.5</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body { margin: 0; height: 100%; background: #121212; overflow: hidden; }
+  #chat { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+  /* the concept's own bar: centred over the chat's empty top bar, out of the chat's way */
+  .pc-bar { position: fixed; top: 6px; left: 50%; transform: translateX(-50%); z-index: 5; display: flex; align-items: center; gap: 8px;
+    padding: 4px 6px 4px 10px; border-radius: 10px; font: 500 12px/1 Inter, system-ui, sans-serif; color: #e8e8ea;
+    background: rgba(28, 28, 32, .92); border: 1px solid rgba(255, 255, 255, .12); box-shadow: 0 6px 22px rgba(0, 0, 0, .35); }
+  .pc-bar b { font-weight: 650; white-space: nowrap; }
+  .pc-model { padding: 3px 6px; border-radius: 6px; background: rgba(255, 255, 255, .08); color: #b9b9c2; white-space: nowrap; }
+  .pc-bar select, .pc-bar button { font: inherit; color: inherit; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .14); border-radius: 7px; padding: 5px 8px; cursor: pointer; }
+  .pc-bar button:hover, .pc-bar select:hover { background: rgba(255, 255, 255, .12); }
+  .pc-bar button:focus-visible, .pc-bar select:focus-visible { outline: 2px solid #7aa7ff; outline-offset: 1px; }
+  .pc-wait { position: fixed; inset: 0; display: grid; place-items: center; color: #9a9aa3; font: 13px Inter, system-ui, sans-serif; pointer-events: none; }
+  @media (max-width: 1100px) { .pc-model, .pc-bar b { display: none; } }
+</style>
+</head>
+<body>
+<div class="pc-wait" id="wait">Loading the 5.6 Pro chat…</div>
+<iframe id="chat" title="Puppet Master chat with Pip" src="../5.6%20Pro/index.html"></iframe>
+<div class="pc-bar" role="toolbar" aria-label="Pip in the chat">
+  <b>Pip in the chat</b><span class="pc-model" data-concept-model="Opus 5.5">Opus 5.5</span>
+  <label><span class="pc-sr" hidden>Open</span>
+    <select id="open" aria-label="Open a sheet or panel">
+      <option value="">Open…</option>
+      <optgroup label="Sheets">
+        <option value="Memory & teaching|af-memory-open">Memory</option>
+        <option value="Memory & teaching|af-teach-open">Teach Puppet Master</option>
+        <option value="Workflows|collab-open-configure|brainstorm">BrainStorm</option>
+        <option value="Workflows|collab-open-configure|crew">Crew</option>
+        <option value="Workflows|collab-open-configure|review">Review</option>
+        <option value="Workflows|collab-open-configure|chat_room">Chat Room</option>
+        <option value="Scheduling|sched-open-message">Schedule a message</option>
+        <option value="Scheduling|sched-open-manage">Scheduled</option>
+        <option value="Assistance|eli5-open">Explain simply</option>
+        <option value="Preferences|af-settings-open">New chat defaults</option>
+      </optgroup>
+      <optgroup label="Work and plans">
+        <option value="@plan">Plan ready for review</option>
+        <option value="@subagents">Activity: Subagents</option>
+        <option value="@wand">Wand menu</option>
+      </optgroup>
+      <optgroup label="Settings">
+        <option value="@pip">Pip settings</option>
+        <option value="@studio">Demo Studio (Pip parts)</option>
+      </optgroup>
+    </select>
+  </label>
+  <select id="theme" aria-label="Theme">
+    <option value="basic-dark">Basic Dark</option><option value="basic-light">Basic Light</option>
+    <option value="friendly-dark">Friendly Dark</option><option value="friendly-light">Friendly Light</option>
+    <option value="glass-dark">Glass Dark</option><option value="glass-light">Glass Light</option>
+    <option value="retro-dark">Retro Dark</option><option value="retro-light">Retro Light</option>
+    <option value="nier-dark">NieR Dark</option><option value="nier-light">NieR Light</option>
+  </select>
+  <button type="button" id="pipset">Pip settings</button>
+</div>
+<script>
+(function () {
+  'use strict';
+  const frame = document.getElementById('chat');
+  const base = new URL('./', location.href);
+  // what the chat needs, in order: the logo kit (Pip's drawing), the onboarding's voice, then the layer
+  const STEPS = [
+    ['css', new URL('pip-chat.css', base).href],
+    ['js', new URL('../../Icon-Concepts/Opus5.5icon/pm-logo.js', base).href],
+    ['js', new URL('../../onboarding/opus-5.5-pip/sound.js', base).href],
+    ['js', new URL('pip-chat.js', base).href]
+  ];
+  /* This page and the chat talk by message only. Served (the Concept Hub), the two share an origin and this page also adds
+     Pip to the chat. In the shared single file Pip is already inside, and a sandboxed preview (T3's file preview) gives the
+     chat an origin of its own, where reaching into it fails; messages cross that line. */
+  let live = false;
+  const send = (msg) => { try { frame.contentWindow.postMessage(Object.assign({ source: 'pip-host' }, msg), '*'); } catch (e) { /* not there yet */ } };
+  function inject() {
+    let d = null;
+    try { d = frame.contentDocument; } catch (e) { d = null; }
+    // out of reach, or the shared single file: Pip is inside the chat already
+    if (!d || !d.documentElement || d.documentElement.hasAttribute('data-pip-chat')) return;
+    const W = frame.contentWindow;
+    if (!(W.PM56_DEMO && W.PM56_EXT && d.body && d.body.dataset.theme)) { setTimeout(inject, 100); return; }
+    d.documentElement.setAttribute('data-pip-chat', 'loading');
+    let i = 0;
+    const next = () => {
+      if (i >= STEPS.length) { d.documentElement.setAttribute('data-pip-chat', 'on'); return; }
+      const [kind, url] = STEPS[i++];
+      const el = d.createElement(kind === 'css' ? 'link' : 'script');
+      if (kind === 'css') { el.rel = 'stylesheet'; el.href = url; } else el.src = url;
+      el.onload = next;
+      el.onerror = () => { console.error('Pip in the chat: could not load', url); next(); };
+      (kind === 'css' ? d.head : d.body).appendChild(el);
+    };
+    next();
+  }
+  frame.addEventListener('load', () => { live = false; inject(); });
+  // until Pip answers, ask every 300 ms whether it is there (it may have spoken before this page was listening)
+  setInterval(() => { if (!live) send({ cmd: 'hello' }); }, 300);
+
+  const open = (v) => send({ cmd: 'open', v });
+  const themeSel = document.getElementById('theme');
+  function setTheme(t) { send({ cmd: 'theme', theme: t }); themeSel.value = t; }
+  document.getElementById('open').addEventListener('change', (e) => { open(e.target.value); e.target.value = ''; });
+  document.getElementById('pipset').addEventListener('click', () => open('@pip'));
+  themeSel.addEventListener('change', () => setTheme(themeSel.value));
+  window.addEventListener('message', (ev) => {
+    const m = ev.data;
+    if (!m || typeof m !== 'object') return;
+    if (m.source === 'pip-chat' && ev.source === frame.contentWindow) {
+      if (!live && m.type === 'ready') { live = true; const w = document.getElementById('wait'); if (w) w.remove(); }
+      if (m.theme && themeSel.querySelector(`option[value="${m.theme}"]`)) themeSel.value = m.theme;
+      return;
+    }
+    // the Concept Hub's theme and motion reach the chat inside
+    if (m.source !== 'pm-concept-hub' || m.type !== 'pm-concept-state' || !m.state) return;
+    if (m.state.theme) setTheme(m.state.theme);
+    send({ cmd: 'motion', reduced: !!m.state.reducedMotion });
+  });
+  if (window.parent !== window) window.parent.postMessage({ source: 'pm-concept', type: 'pm-concept-ready' }, '*');
+  window.PIP_HOST = { open, setTheme, frame };
+})();
+</script>
+</body>
+</html>

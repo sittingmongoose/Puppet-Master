@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "icons:opus-5.5",
+  "topic": "icons",
+  "model": "Opus 5.5",
+  "presentation": "workspace",
+  "order": 80,
+  "widthControl": {
+    "enabled": false,
+    "label": "Workspace width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "workspace": {
+    "id": "workspace",
+    "path": "index.html",
+    "openPath": "index.html",
+    "title": "Pip: logo, app icon, tray and loader",
+    "openActions": "both",
+    "controlMode": "standard",
+    "tags": ["icons", "loading", "tray", "themes"]
+  }
+}

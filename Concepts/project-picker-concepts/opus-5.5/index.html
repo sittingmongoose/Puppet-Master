@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en" data-theme="basic-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project box options · Opus 5.5</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body { margin: 0; height: 100%; background: #101012; overflow: hidden; font: 500 12px/1.2 Inter, system-ui, sans-serif; color: #e6e6ea; }
+  :root { --dock-h: 78px; }
+  /* the concept's own controls sit under PMConcept7, so its title bar, the thing being judged, stays at the top */
+  .pc-dock { position: fixed; inset: auto 0 0 0; height: var(--dock-h); box-sizing: border-box; display: grid; grid-template-rows: 44px 1fr;
+    background: #18181b; border-top: 1px solid #2a2a30; z-index: 3; }
+  .pc-bar { display: flex; align-items: center; gap: 10px; padding: 0 12px; white-space: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .pc-bar b { font-weight: 650; }
+  .pc-model { padding: 3px 6px; border-radius: 6px; background: rgba(255, 255, 255, .08); color: #b9b9c2; }
+  .pc-sep { width: 1px; align-self: stretch; margin: 10px 2px; background: #2e2e35; flex: none; }
+  .pc-seg { display: inline-flex; padding: 2px; gap: 2px; border-radius: 8px; background: #222226; border: 1px solid #2e2e35; }
+  .pc-seg button { font: inherit; color: #c9c9d1; background: transparent; border: 0; border-radius: 6px; padding: 5px 9px; cursor: pointer; }
+  .pc-seg button:hover { background: rgba(255, 255, 255, .07); color: #fff; }
+  .pc-seg button[aria-pressed="true"] { background: #e6e6ea; color: #111; }
+  .pc-seg button kbd { font: 600 9.5px/1 ui-monospace, monospace; opacity: .55; margin-left: 4px; }
+  .pc-bar select, .pc-bar .pc-btn { font: inherit; color: inherit; background: #222226; border: 1px solid #2e2e35; border-radius: 7px; padding: 5px 8px; cursor: pointer; }
+  .pc-bar select:hover, .pc-bar .pc-btn:hover { background: #2a2a2f; }
+  .pc-bar select:disabled { opacity: .6; cursor: progress; }
+  .pc-bar label.pc-check { display: inline-flex; align-items: center; gap: 5px; color: #c9c9d1; cursor: pointer; }
+  .pc-bar :focus-visible { outline: 2px solid #7aa7ff; outline-offset: 1px; }
+  .pc-note { padding: 0 14px 0; color: #b4b4bd; line-height: 1.35; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .pc-note b { color: #fff; font-weight: 650; }
+  .pc-stage { position: fixed; inset: 0 0 var(--dock-h) 0; display: flex; justify-content: center; background: #0b0b0d; }
+  #pm7 { display: block; height: 100%; width: 100%; border: 0; background: #1e1e1e; transition: width .2s ease; }
+  .pc-wait { position: fixed; inset: 0 0 var(--dock-h) 0; display: grid; place-items: center; color: #8d8d96; pointer-events: none; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) { #pm7 { transition: none; } }
+</style>
+</head>
+<body>
+<div class="pc-stage"><iframe id="pm7" title="PMConcept7 with the project box options" src="../../PMConcept7.html?o55=off"></iframe></div>
+<div class="pc-wait" id="wait">Loading PMConcept7…</div>
+<div class="pc-dock">
+  <div class="pc-bar" role="toolbar" aria-label="Project box options">
+    <b>Project box</b><span class="pc-model" data-concept-model="Opus 5.5">Opus 5.5</span>
+    <span class="pc-sep" aria-hidden="true"></span>
+    <div class="pc-seg" id="opt" role="group" aria-label="Option">
+      <button type="button" data-opt="tab" aria-pressed="true">A · Tab<kbd>1</kbd></button>
+      <button type="button" data-opt="crumb" aria-pressed="false">B · Breadcrumb<kbd>2</kbd></button>
+      <button type="button" data-opt="plate" aria-pressed="false">C · Plate<kbd>3</kbd></button>
+      <button type="button" data-opt="sign" aria-pressed="false">D · Pip's sign<kbd>4</kbd></button>
+      <button type="button" data-opt="before" aria-pressed="false">Today<kbd>0</kbd></button>
+    </div>
+    <select id="look" aria-label="Look">
+      <option value="basic-dark">Basic Dark</option><option value="basic-light">Basic Light</option>
+      <option value="friendly-dark">Friendly Dark</option><option value="friendly-light">Friendly Light</option>
+      <option value="glass-dark">Glass Dark</option><option value="glass-light">Glass Light</option>
+      <option value="retro-dark">Retro Dark</option><option value="retro-light">Retro Light</option>
+      <option value="nier-dark">NieR Dark</option><option value="nier-light">NieR Light</option>
+    </select>
+    <select id="state" aria-label="Project state">
+      <option value="calm">Project: calm</option>
+      <option value="working">Project: working in the background</option>
+      <option value="needs">Project: blocked, needs you</option>
+      <option value="unsaved">Project: unsaved layout</option>
+    </select>
+    <label class="pc-check"><input type="checkbox" id="long"> Long name</label>
+    <select id="width" aria-label="Window width">
+      <option value="">Full width</option><option value="1280">1280 px</option><option value="1024">1024 px</option><option value="860">860 px</option>
+    </select>
+    <button type="button" class="pc-btn" id="menu">Open the menu</button>
+  </div>
+  <div class="pc-note" id="note"></div>
+</div>
+<script src="concept-hub-bridge.js"></script>
+<script>
+(function () {
+  'use strict';
+  /* This page and PMConcept7 talk only by message. Served (the Concept Hub), the two share an origin and this page also adds
+     the layer to PMConcept7. In the shared single file the layer is already inside, and a sandboxed preview (T3's file
+     preview) gives PMConcept7 an origin of its own, where reaching into it fails; messages cross that line. */
+  const frame = document.getElementById('pm7');
+  const base = new URL('./', location.href);
+  const STEPS = [
+    ['css', new URL('picker.css', base).href],
+    ['js', new URL('../../Icon-Concepts/Opus5.5icon/pm-logo.js', base).href],
+    ['js', new URL('picker.js', base).href]
+  ];
+  const NOTES = {
+    tab: '<b>A · Tab.</b> The project becomes one of the title bar’s tabs: the page tabs’ height, type and resting ink, a folder mark and a drawn chevron, and the chosen-tab chip while its menu is open. A hairline separates it from the pages it owns. The smallest change.',
+    crumb: '<b>B · Breadcrumb.</b> Puppet Master / tastebook. The project reads as the next step after the app’s name, with no box until the pointer or the menu: the bar gets quieter, and the name gets the weight of a place.',
+    plate: '<b>C · Plate.</b> A two-line plate: a monogram tile in the chosen material, the name, and the path and branch the title bar is asked to show. The most information, at 32 px tall.',
+    sign: '<b>D · Pip’s sign.</b> The project’s name is on a card Pip holds up on a string from its control. The card swings once when it is picked up. Pip’s face shows the project’s state, so the card carries no badge.',
+    before: '<b>Today.</b> PMConcept7’s current box, beside the new logo: 20 px tall in a 28 px row of tabs, a text ▼, and a field’s fill and border rather than the title bar’s own material.'
+  };
+  const UI = { opt: 'tab', state: 'calm', long: false };
+  const $ = (id) => document.getElementById(id);
+  let live = false;
+
+  const send = (msg) => { try { frame.contentWindow.postMessage(Object.assign({ source: 'ppk-host' }, msg), '*'); } catch (e) { /* not there yet */ } };
+  const config = () => send({ cmd: 'config', opt: UI.opt, state: UI.state, long: UI.long });
+  function paintBar() {
+    document.querySelectorAll('#opt button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.opt === UI.opt)));
+    $('note').innerHTML = NOTES[UI.opt];
+    $('state').value = UI.state; $('long').checked = UI.long;
+  }
+
+  /* PMConcept7 keeps each project's look in that project's Settings. Switching looks here goes through its own theme menu,
+     which writes those Settings; the values found on arrival are put back when this page closes. (A sandboxed preview has
+     no storage at all, so there is nothing to put back.) */
+  const KEYS = ['tastebook', 'harbor', 'loom'].map((p) => 'pm7:settings:tome-tabs:v1:' + p);
+  const OB = 'pm.o55.onboarding.v1';
+  const SNAP = {};
+  try { KEYS.concat(OB).forEach((k) => { SNAP[k] = localStorage.getItem(k); }); } catch (e) { /* storage may be off */ }
+  window.addEventListener('pagehide', () => {
+    try {
+      KEYS.forEach((k) => { if (SNAP[k] === null) localStorage.removeItem(k); else if (SNAP[k] !== undefined) localStorage.setItem(k, SNAP[k]); });
+      // the single file's PMConcept7 writes an onboarding record to open as the app; it goes again here
+      if (SNAP[OB] === null && /project-box-concept/.test(localStorage.getItem(OB) || '')) localStorage.removeItem(OB);
+    } catch (e) { /* ignore */ }
+  });
+
+  // served: add the layer to PMConcept7 once its title bar is there (skipped when the layer is inside already, or out of reach)
+  function inject() {
+    let d = null;
+    try { d = frame.contentDocument; } catch (e) { d = null; }
+    if (!d || !d.documentElement || d.documentElement.hasAttribute('data-ppk-layer')) return;
+    const W = frame.contentWindow;
+    if (!(W.PMG && d.getElementById('projectMenuBtn') && d.getElementById('themeSelect'))) { setTimeout(inject, 150); return; }
+    d.documentElement.setAttribute('data-ppk-layer', 'loading');
+    let i = 0;
+    const next = () => {
+      if (i >= STEPS.length) return;
+      const [kind, url] = STEPS[i++];
+      const el = d.createElement(kind === 'css' ? 'link' : 'script');
+      if (kind === 'css') { el.rel = 'stylesheet'; el.href = url; } else el.src = url;
+      el.onload = next;
+      el.onerror = () => { console.error('Project box concept: could not load', url); next(); };
+      (kind === 'css' ? d.head : d.body).appendChild(el);
+    };
+    next();
+  }
+  frame.addEventListener('load', () => { live = false; inject(); });
+
+  // until the layer answers, ask every 300 ms whether it is there (it may have spoken before this page was listening)
+  setInterval(() => { if (!live) send({ cmd: 'hello' }); }, 300);
+
+  window.addEventListener('message', (ev) => {
+    const m = ev.data;
+    if (!m || typeof m !== 'object') return;
+    if (m.source === 'ppk' && ev.source === frame.contentWindow) {
+      if (m.type === 'ready' && !live) {
+        live = true;
+        const w = $('wait'); if (w) w.remove();
+        config();
+      }
+      if (m.state) {
+        // the layer is the truth: a key pressed inside PMConcept7 (1 to 4, 0) changes the option there
+        if (m.state.look) $('look').value = m.state.look;
+        if (m.state.opt) { UI.opt = m.state.before ? 'before' : m.state.opt; UI.state = m.state.state || UI.state; UI.long = !!m.state.long; paintBar(); }
+        if (m.type === 'look-done') $('look').disabled = false;
+      }
+      return;
+    }
+    // the Concept Hub's look and reduced motion reach PMConcept7 inside
+    if (m.source === 'pm-concept-hub' && m.type === 'pm-concept-state' && m.state) {
+      send({ cmd: 'motion', reduced: !!m.state.reducedMotion });
+      if (m.state.theme && m.state.theme !== $('look').value) send({ cmd: 'look', look: m.state.theme });
+    }
+  });
+
+  $('opt').addEventListener('click', (e) => { const b = e.target.closest('button[data-opt]'); if (!b) return; UI.opt = b.dataset.opt; paintBar(); config(); });
+  $('state').addEventListener('change', (e) => { UI.state = e.target.value; config(); });
+  $('long').addEventListener('change', (e) => { UI.long = e.target.checked; config(); });
+  $('look').addEventListener('change', (e) => { e.target.disabled = true; send({ cmd: 'look', look: e.target.value }); setTimeout(() => { e.target.disabled = false; }, 4000); });
+  $('width').addEventListener('change', (e) => { frame.style.width = e.target.value ? e.target.value + 'px' : '100%'; });
+  $('menu').addEventListener('click', () => send({ cmd: 'menu' }));
+  // 1-4 pick an option and 0 shows today's box (outside text fields; inside PMConcept7 the layer listens for the same keys)
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey || /input|select|textarea/i.test((e.target && e.target.tagName) || '')) return;
+    const map = { 1: 'tab', 2: 'crumb', 3: 'plate', 4: 'sign', 0: 'before' };
+    if (map[e.key]) { UI.opt = map[e.key]; paintBar(); config(); }
+  });
+  paintBar();
+  window.PPK_HOST = { frame, UI, send, config, isLive: () => live };
+})();
+</script>
+</body>
+</html>
