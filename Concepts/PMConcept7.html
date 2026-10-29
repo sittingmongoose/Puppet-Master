@@ -46556,7 +46556,17 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-chip { border-radius: 0
 /* ---- the selection effects (35-retro.js) ---- */
 .pmw-strip.pmw-rfx-live .pmw-plate { opacity: 0; }
 .pmw-tab.pmw-rfx-phos { color: var(--accent-lime); background: repeating-conic-gradient(color-mix(in srgb, var(--accent-lime) 55%, transparent) 0% 25%, transparent 0% 50%) 0 0 / 8px 8px; animation: pmw-rfx-phos 240ms steps(3, end) forwards; }
-@keyframes pmw-rfx-phos { 0% { background-size: 8px 8px; } 66% { background-size: 4px 4px; } 100% { background: var(--accent-lime); color: var(--surface); } }
+/* the words stay phosphor through the dither, and the block and its dark words land together in one step, as the CRT
+   wipe's do: the words faded toward the block's ink over the whole effect, and at the fine mesh they matched its average
+   (an unreadable tab for about 80 ms in the films, 2026-10-29 review, muse R1) */
+@keyframes pmw-rfx-phos {
+  0% { background-size: 8px 8px; }
+  50% { background-size: 4px 4px; color: var(--accent-lime); animation-timing-function: steps(1, end); }
+  66%, 100% { background: var(--accent-lime); color: var(--surface); }
+}
+/* an effect draws the block on the tab itself, square like Retro's chip (it kept the tab's rounded crown, 2026-10-28
+   review, astra R1) */
+.pmw-tab:is(.pmw-rfx-phos, .pmw-rfx-crt, .pmw-rfx-dos) { border-radius: 0; }
 .pmw-tab.pmw-rfx-glow { box-shadow: 0 0 14px color-mix(in srgb, var(--accent-lime) 35%, transparent); animation: pmw-rfx-glow 650ms ease-out forwards; }
 @keyframes pmw-rfx-glow { to { box-shadow: 0 0 14px transparent; } }
 .pmw-tab.pmw-rfx-crt { color: var(--accent-lime); background: repeating-linear-gradient(transparent 0 2px, color-mix(in srgb, var(--accent-lime) 70%, transparent) 2px 3px) 0 0 / 100% 0% no-repeat; animation: pmw-rfx-crt 300ms steps(6, end) forwards; }
