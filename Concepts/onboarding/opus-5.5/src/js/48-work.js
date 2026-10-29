@@ -444,7 +444,7 @@
     let h = '<div class="wk-detail" data-work-detail="' + esc(it.id) + '">';
     if (needsYou(it) && it.ask) {
       /* D13: quick answers only for a plain yes/no prompt, the safe one first; anything else goes to the terminal */
-      const quick = (it.quick || []).length === 2 ? it.quick : [];
+      const quick = W().canSendInput ? (W().canSendInput(it) ? it.quick : []) : ((it.quick || []).length === 2 ? it.quick : []);
       h += '<div class="wk-ask"><span class="wk-ask-q">' + st('waiting', 12) + '<b>' + esc(it.ask) + '</b></span><span class="wk-ask-a">' +
         quick.map((q, i) => '<button type="button" class="wk-btn' + (i === 0 ? ' wk-primary' : '') + '" data-work-act="answer" data-value="' + esc(q) + '">' + esc(q) + '</button>').join('') +
         (it.kind === 'agent' ? '<button type="button" class="wk-btn wk-primary" data-work-act="goto">' + T('act.answer') + '</button>' : '<button type="button" class="wk-btn" data-work-act="terminal">' + T('act.answerTerminal') + '</button>') + '</span></div>';

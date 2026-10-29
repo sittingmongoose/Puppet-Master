@@ -11,7 +11,8 @@
  *   busy     three things wait on you: 16 agents · 2 questions, 10 processes · 1 needs input (the concept's numbers)
  *   no-asks  the same work with nothing waiting on you and no failures
  *   quiet    nothing running: the chat's Processes icon is gone, the status bar reads No agents / No processes
- *   many     busy plus 34 more processes, for long lists and the narrow layouts
+ *   many     busy plus 34 more processes across four of the thread's agents, for long lists, the narrow layouts and
+ *            the chat view's By-owner layout (D3)
  *   stale    busy, last known 40 s ago (the feed is reconnecting; nothing has been stopped)
  *   restart  busy after Puppet Master restarted: two processes ended while it was closed (Lost)
  *   servers  busy on four servers and six environments, for the Resources tab
@@ -123,7 +124,7 @@
       var c = cmds[i % cmds.length], mine = i < 22, failed = i % 9 === 4, done = i % 11 === 6;
       list.push({
         id: 'm-' + i, kind: 'process', role: c[1], project: 'tastebook', surface: mine ? 'assistant' : (i % 2 ? 'orchestrator' : 'scout'), thread: mine ? 'query' : null,
-        where: mine ? 'Query Performance' : (i % 2 ? 'Run #47' : 'Recipe apps survey'), owner: mine ? (i % 3 ? null : 'agent-query') : (i % 2 ? 'o-laned' : 'sc-web1'),
+        where: mine ? 'Query Performance' : (i % 2 ? 'Run #47' : 'Recipe apps survey'), owner: mine ? [null, 'agent-query', 'agent-rollback', 'agent-schema'][i % 4] : (i % 2 ? 'o-laned' : 'sc-web1'),
         title: c[0].split(' ')[0] + ' job ' + (i + 1), command: c[0] + ' ' + (i + 1), cwd: '~/tastebook', pid: 49000 + i, ports: c[1] === 'server' ? [6006 + i] : [],
         server: 'local', environment: c[1] === 'test' ? 'test' : 'dev',
         state: failed ? 'failed' : (done ? 'complete' : 'working'), exit: failed ? 2 : (done ? 0 : null),
