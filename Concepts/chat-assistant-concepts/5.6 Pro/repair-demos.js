@@ -61,7 +61,7 @@
    }else{ctx.switchThread('route');invoke(E.ctx(),'open-work-record',{id:id==='record-provider'?'route-04':'route-12'});}
    return;
   }
-  if(id.startsWith('activity-')){ctx.switchThread('query');ctx.state.activity.pinned=true;ctx.state.hover={type:'activity',domain:id==='activity-todo'?'todo':'changes'};ctx.renderApp();return;}
+  if(id.startsWith('activity-')){ctx.switchThread('query');ctx.state.hover={type:'activity',domain:id==='activity-todo'?'todo':'changes'};ctx.renderApp();return;}
   /* the run holds the thread's later turns until it completes (app.js armWorkGate), so its card is the last item and
      the switch's stick-to-bottom already shows it; centring it would only unstick the follow under a card taller
      than the view */

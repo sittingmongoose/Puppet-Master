@@ -2089,7 +2089,7 @@
 
     'pd-open-todos': function(ctx,btn){
       var r=rec(btn.dataset.id); if(!r) return;
-      ctx.state.activity.open=true;ctx.state.activity.pinned=true; ctx.state.activity.domain='todo';
+      ctx.state.activity.open=true; ctx.state.activity.domain='todo';
       ctx.renderApp();
     },
 

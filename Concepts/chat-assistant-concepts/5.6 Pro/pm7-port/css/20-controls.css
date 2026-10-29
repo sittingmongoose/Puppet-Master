@@ -94,6 +94,14 @@ html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^
   border-color: var(--pmw-pop-line, var(--border-strong));
   border-radius: var(--pm56-r-menu);
 }
+/* One plate for every floating surface (DL-254; Jared, 2026-10-28: "follow the way that the pop up menus on the
+   personas/models work"): the menus' --glass, which is PMConcept7's --pmw-pop (10-tokens-host.css), Glass's near-opaque
+   menu tint. Activity Detail (docked or over the messages), the Activity bar's hover cards, History (flyout or pinned)
+   and an attachment's card painted --surface-2 or --surface instead: the same colour as the menus in Basic and
+   Friendly, but in Glass a 21-28 % tint and a clear ground over the wallpaper, so they read see-through. */
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) :is(.hover-card.ab-card, .activity-panel, .history-flyout, .att-chrome-body) {
+  background: var(--glass);
+}
 /* PMConcept7's menus do not blur (Glass's menu tint is near opaque, and the page's own pickers carry no filter): the
    chat's 18-24 px backdrop blurs cost a full repaint under every open menu and show nothing */
 html:not([data-o55-nier="on"]) .pm56-host[data-theme] :is(.overlay-menu, .hover-card, .drawer, .dialog, .history-flyout) {
@@ -113,6 +121,30 @@ html:not([data-o55-nier="on"]) .pm56-host[data-theme^="friendly"] .menu-item:is(
    the page's header buttons are clear at rest (as the panels' header buttons are); the ring is a meter, so it stays
    round */
 html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .chat-header .icon-button:not(.active):not(:hover) { background: transparent; }
+/* The ring draws clean in every look (DL-254; Jared, 2026-10-28: "broken up and artifacted on the friendly and glass
+   themes"). The chat paints its conic as the button's background and covers the middle with an --surface disc. Two
+   faults followed. The gradient starts at the padding edge and tiles into the 1 px border, so where the border is a
+   faint hairline (Friendly 6 %, Glass 9 %) the far side of the meter showed through as slivers around it. And
+   hosted Glass leaves --surface clear, so the disc vanished and the meter read as a pie under its number. Here the
+   conic is its own layer, the button's padding box cut to a 3 px ring, so the middle is the header's own ground and
+   nothing tiles; the number keeps ::after on a clear ground. Retro and NieR keep their own drawings. */
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .chat-header .context-ring {
+  position: relative;
+  isolation: isolate;
+  background: none;
+}
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .chat-header .context-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent) calc(var(--context-pct, 64) * 1%), var(--surface-3) 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3.25px), #000 calc(100% - 2.75px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3.25px), #000 calc(100% - 2.75px));
+  pointer-events: none;
+}
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .chat-header .context-ring::after { background: transparent; }
 
 /* ---- Glass: PMConcept7's field skin stays off the chat's framed fields ----------------------------------------------
    Liquid Glass paints every input and textarea with its control fill and hairline, !important at (1,6,2)

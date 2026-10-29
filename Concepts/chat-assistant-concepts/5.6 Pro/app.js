@@ -156,7 +156,7 @@
     threads:clone(D.threads), editorTabs:['plan-query'], activeEditor:'plan-query',
     historyMode:'pinned', historySearch:'', historyWidth:224, editorWidth:54, activityWidth:280,
     historySections:{pinned:true, recent:true, archived:false},
-    activity:{open:false,pinned:true,domain:'goal',scope:'all',filterVisible:true,expanded:['goal','todo','subagents','crew','changes','artifacts']},
+    activity:{open:false,domain:'goal',scope:'all',filterVisible:true,expanded:['goal','todo','subagents','crew','changes','artifacts']},
     context:{
       compact:false,details:false,compacted:false,drawerView:'curated',dispatchSeq:0,
       projections:clone(D.contextByThread||{})
@@ -489,10 +489,16 @@
     if(isNarrow()) return window.innerWidth;
     return Math.max(0,window.innerWidth*(1-state.editorWidth/100)-5);
   }
-  function activityPinnedInLayout() {
+  /* Activity Detail is one panel at its full size (Jared, 2026-10-28; DL-254, G1 and G2): it stays open until its x,
+     Escape or its Activity-bar icon again, with no Pin and no small view. It docks beside the messages while the column
+     has room for it; hosted, the Home column widens by its width to make that room, as it does for pinned History
+     (PM56_HOST.reserveActivity, renderApp), and past the window's limit it covers the messages at the column's full
+     height (renderChat). Docked, the messages keep at least the 360 px isNarrow() keeps beside pinned History. */
+  function activityDocked() {
+    if(!state.activity.open || isPhone()) return false;
     const gutter=document.body.dataset.phDrawer==='pinned'?Math.min(360,parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-user-w'))||200):0;
-    if(HOSTED) return !!(state.activity.open && state.activity.pinned && !isPhone() && HOST.width()-gutter>=540+(state.activityWidth||280));
-    return !!(state.activity.open && state.activity.pinned && !isPhone() && (innerWidth>=821 || innerWidth-gutter>=540));
+    if(HOSTED) return HOST.width()-gutter>=360+(state.activityWidth||280);
+    return innerWidth>=821 || innerWidth-gutter>=540;
   }
   function focusActivityControl(selector) {
     requestAnimationFrame(() => {
@@ -505,7 +511,7 @@
     focusActivityControl(`[data-hover-domain="${CSS.escape(domain||'')}"]`);
   }
   let phoneLayout=isPhone();
-  let activityPinLayout=activityPinnedInLayout();
+  let activityDockLayout=activityDocked();
   function savePrefs() {
     if(HOSTED){ safeStorage.set('pm56-hosted-prefs', JSON.stringify(hostedPrefs())); return; }
     safeStorage.set(HOSTED?'pm56-hosted-prefs':'pm56-prefs', JSON.stringify({theme:state.theme,historyMode:state.historyMode,historyWidth:state.historyWidth,editorWidth:state.editorWidth,activityWidth:state.activityWidth,model:state.model,effort:state.effort||'',effortChosen:!!state.effort,fast:state.fast,capabilities:state.capabilities}));
@@ -979,7 +985,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       ${renderDecisionHost()}
       ${renderChatFloat()}
       ${renderComposer()}
-      ${state.activity.open&&!activityPinnedInLayout()?renderActivityPanel(true):''}
+      ${state.activity.open&&!activityDocked()?renderActivityPanel('cover'):''}
     </section>`;
   }
 
@@ -2087,7 +2093,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     });
   }
 
-  function renderActivityPanel(transient=false){
+  function renderActivityPanel(layout='dock'){
+    const cover=layout==='cover';
     const defs=activityDefs();
     const live=ACTIVITY_ORDER.filter(id=>defs[id]);
     if(!live.length) return '';
@@ -2096,11 +2103,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const sections=allScope?live:[d];
     const n=live.length;
     const headDef=defs[d]||defs[live[0]];
-    const pinAction=state.activity.pinned?'unpin-activity':'pin-activity';
-    const pinLabel=(state.activity.pinned?'Unpin':'Pin')+' Activity Detail';
     const filterButton=`<button class="icon-button activity-head-filter" data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}"${hoverAttrs('act-filter','Show or hide category filter')}>${icon('filter',13)}</button>`;
     const overflow=`<details class="activity-head-overflow"><summary class="icon-button" aria-label="More Activity Detail actions">${icon('more',13)}</summary><div class="activity-head-menu"><button data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}">${icon('filter',12)} ${state.activity.filterVisible?'Hide':'Show'} domains</button></div></details>`;
-    return `<aside class="activity-panel ${transient?'transient':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-pinned="${activityPinnedInLayout()?'true':'false'}" ${transient?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button${state.activity.pinned?' is-pinned':''}" data-action="${pinAction}" aria-pressed="${state.activity.pinned?'true':'false'}"${hoverAttrs('act-pin',pinLabel)}>${icon(state.activity.pinned?'unpin':'pin',13)}</button><button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,transient},sections.map(renderActivitySection).join(''))}</div>${transient?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    return `<aside class="activity-panel${cover?' cover':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
   }
 
   function renderActivitySection(id){
@@ -2550,8 +2555,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(HOSTED){ state.theme=HOST.syncTheme(); }
     else document.body.dataset.theme=window.PM56_NIER_PAINT?window.PM56_NIER_PAINT(state.theme):state.theme;
     const historyPinned=state.historyMode==='pinned'&&!isNarrow();
-    const activityPinned=activityPinnedInLayout();
-    activityPinLayout=activityPinned;
+    /* hosted: the Home column takes Activity Detail's width first (one synchronous ladder pass), so the panel docks in
+       the same frame the column widens, never a frame squeezed beside the messages */
+    if(HOSTED&&HOST.reserveActivity) HOST.reserveActivity(state.activity.open?(state.activityWidth||280):0);
+    const activityPinned=activityDocked();
+    activityDockLayout=activityPinned;
     const gridClass=`assistant-grid ${historyPinned?'':'history-closed'} ${activityPinned?'activity-pinned':''}`;
     const panelWidth=(historyPinned?Math.min(state.historyWidth,200):0)+(activityPinned?state.activityWidth:0);
     const editorMax=Math.max(220,window.innerWidth-5-panelWidth-360);
@@ -2561,8 +2569,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     varRoot.style.setProperty('--history-w',`${Math.min(state.historyWidth,200)}px`);
     varRoot.style.setProperty('--activity-w',`${state.activityWidth}px`);
     const preTop=keepTopBefore();
-    if(HOSTED) pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell" data-pm56-hosted><div class="workspace"><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div></main>`);
-    else pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
+    if(HOSTED) pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell" data-pm56-hosted><div class="workspace"><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel('dock'):''}${renderChat()}</div></section></div></main>`);
+    else pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel('dock'):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
     document.getElementById('pmRoot').setAttribute('aria-busy','false');
     const post=snapScroll();
     const flips=cut?[]:flipHeights(flipTargets, flipBefore);
@@ -4639,7 +4647,6 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(handleScopedPickerAction(a,btn,e)) return;
     const preview=btn.closest('.ab-card');
     if(preview && ['open-activity','todo-show-item','open-agent','open-crew','open-change','open-artifact','collab-open-panel','collab-open-participant'].includes(a)){
-      state.activity.pinned=true;
       if(!['open-activity','todo-show-item'].includes(a)){
         const run=btn.dataset.run&&window.PM56_COLLAB?.run(btn.dataset.run);
         const domain=run?run.kind:a==='open-change'?'changes':a==='open-artifact'?'artifacts':a==='open-crew'?'crew':'subagents';
@@ -4653,6 +4660,9 @@ suggested path                    migration 0043, reversible</div></div></sectio
         return;
       }
     }
+    /* the domain Activity Detail shows before a module's open-activity hook moves it (activity-panel.js focuses the
+       clicked domain first): its own icon again closes it */
+    const activityShown=a==='open-activity'&&state.activity.open&&state.activity.scope==='focus'?state.activity.domain:null;
     /* Feature modules first, so a module can add an action or override one. */
     if(extRun(a,btn,e))return;
     if(a==='open-menu'){e.stopPropagation();const type=btn.dataset.menu,anchor=btn.dataset.menuAnchor;toggleMenu(type,anchor);return;}
@@ -4721,12 +4731,19 @@ suggested path                    migration 0043, reversible</div></div></sectio
       if(a==='inspect-work-step'){rec.running=false;endGateOnPause(rec);scrubTo(rec,Number(btn.dataset.value));if(!runningRecs().length)stopWorkTimer();renderApp();return;}
       if(a==='toggle-work-phase'){const k=btn.dataset.value, was=rec.openPhase;rec.openPhase=(rec.openPhase===k?null:k);renderApp();if(was!=null&&rec.openPhase==null)letRoomGo(rec);return;}
     }
-    if(a==='open-activity'){if(!activityDefs()[btn.dataset.domain])return;const fromPreview=!!btn.closest('.ab-card');if(fromPreview||!state.activity.open)state.activity.pinned=true;state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();if(fromPreview)focusActivityControl('.activity-panel [data-action="unpin-activity"], .activity-panel [data-action="pin-activity"]');return;}
+    if(a==='open-activity'){
+      if(!activityDefs()[btn.dataset.domain])return;
+      const fromPreview=!!btn.closest('.ab-card');
+      /* its own icon in the Activity bar again closes it (G1) */
+      if(!fromPreview&&btn.closest('.activity-bar')&&activityShown===btn.dataset.domain){state.activity.open=false;state.hover=null;renderApp();focusActivityBarDomain(btn.dataset.domain);return;}
+      state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();
+      /* covering the messages, or opened from a hover card, focus goes into the panel; Escape brings it back to the icon */
+      if(fromPreview||!activityDocked())focusActivityControl('.activity-panel [data-action="close-activity"]');
+      return;
+    }
     if(a==='focus-activity'){if(!activityDefs()[btn.dataset.domain])return;state.activity.domain=btn.dataset.domain;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);renderApp();return;}
     if(a==='toggle-activity-section'){const id=btn.dataset.domain;state.activity.expanded=state.activity.expanded.includes(id)?state.activity.expanded.filter(x=>x!==id):[...state.activity.expanded,id];renderApp();return;}
     if(a==='toggle-activity-filter'){state.activity.filterVisible=!state.activity.filterVisible;renderApp();return;}
-    if(a==='pin-activity'){state.activity.pinned=true;state.activity.open=true;renderApp();focusActivityControl('.activity-panel [data-action="unpin-activity"]');return;}
-    if(a==='unpin-activity'){state.activity.pinned=false;renderApp();focusActivityControl('.activity-panel [data-action="pin-activity"]');return;}
     if(a==='close-activity'){const domain=state.activity.domain;state.activity.open=false;renderApp();focusActivityBarDomain(domain);return;}
     if(a==='context-details'){state.context.details=true;state.menu=null;renderApp();return;}
     if(a==='close-context-details'){state.context.details=false;renderOverlays();return;}
@@ -4854,8 +4871,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
       if(state.menu){closeMenu();return;}
       if(state.dialog){if(state.dialog.type==='collab-configure'){EXT._actions['collab-modal-cancel'](EXT.ctx(),null,e);return;}if(window.PM56_CTX&&window.PM56_CTX.cancelPreview&&window.PM56_CTX.cancelPreview(state.dialog,'escape'))return;{/* F0b: Escape runs a pmx sheet's own cancel (its x), like the scrim (DESIGN-SPEC 6.7, 4.6). */const x=document.querySelector('#pmOverlayRoot .pmx-sheet .pmx-close');if(x){x.click();return;}}if(state.dialog.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom};state.dialog=null;renderOverlays();return;}
       if(state.context.details){state.context.details=false;renderOverlays();return;}
-      if(state.activity.open&&!activityPinnedInLayout()){const domain=state.activity.domain;state.hover=null;state.activity.open=false;state.activity.pinned=false;renderApp();focusActivityBarDomain(domain);return;}
       if(state.hover){state.hover=null;syncHoverCard();return;}
+      if(state.activity.open){const domain=state.activity.domain;state.activity.open=false;renderApp();focusActivityBarDomain(domain);return;}
       if(state.historyMode==='floating'&&document.body.dataset.phDrawer!=='pinned'){state.historyMode='closed';renderApp();return;}
       if(state.decision||decisionExit){closeDecision();}
     }
@@ -5044,17 +5061,18 @@ suggested path                    migration 0043, reversible</div></div></sectio
     }
     const settledKind=dragState.kind;
     document.querySelectorAll('.dragging').forEach(x=>x.classList.remove('dragging'));dragState=null;savePrefs();
-    if(settledKind==='editor'&&state.activity.open&&state.activity.pinned)renderApp();
-    else if(settledKind==='activity') fitActivityTabs();
+    if(settledKind==='editor'&&state.activity.open)renderApp();
+    /* the column holds while the panel's edge drags; on release it takes the new width, and the messages theirs back */
+    else if(settledKind==='activity') renderApp();
   });
 
   window.addEventListener('resize',()=>{
     const nextPhone=isPhone();
     const phoneChanged=nextPhone!==phoneLayout;
     phoneLayout=nextPhone;
-    const nextActivityPin=activityPinnedInLayout();
-    const activityPinChanged=nextActivityPin!==activityPinLayout;
-    activityPinLayout=nextActivityPin;
+    const nextActivityPin=activityDocked();
+    const activityPinChanged=nextActivityPin!==activityDockLayout;
+    activityDockLayout=nextActivityPin;
     if(state.dialog?.type==='demo'&&state.dialog.geom){
       state.dialog.geom=clampDemoGeom(state.dialog.geom);lastDemoGeom={...state.dialog.geom};
       applyDemoGeomStyles(document.querySelector('.demo-dialog'),state.dialog.geom);
@@ -5073,7 +5091,6 @@ suggested path                    migration 0043, reversible</div></div></sectio
     setVariant:(family,option)=>{const f=Number(family);state.variants[f]=clamp(Number(option),0,familyMax(f));state.recipe=-1;renderApp();},
     selectThread:switchThread,
     openActivity:(domain)=>{if(activityDefs()[domain]){state.activity.open=true;state.activity.domain=domain;state.activity.scope='focus';renderApp();}},
-    pinActivity:()=>{state.activity.open=true;state.activity.pinned=true;renderApp();},
     openContext:()=>{state.context.details=true;renderOverlays();},
     openQuestionnaire:()=>{decisionExit=null;state.decision={type:'question'};renderApp();},
     openPlan:()=>{decisionExit=null;state.decision={type:'plan',mode:'review'};renderApp();},
@@ -5253,7 +5270,9 @@ suggested path                    migration 0043, reversible</div></div></sectio
       shown:()=>HOST.shown(),
       compose:text=>hostedCompose(text),
       reveal:o=>hostedReveal(o),
-      historyWidth:mw=>HOST.historyWidth?HOST.historyWidth(mw):null
+      historyWidth:mw=>HOST.historyWidth?HOST.historyWidth(mw):null,
+      /* what an open Activity Detail adds to the column (PM56_HOST.reserveActivity) */
+      activityWidth:()=>HOST.activityWidth?HOST.activityWidth():0
     };
     SC.surface=hostedSurface;
     /* the column measures again with this surface: a History pinned at boot widens it now */
@@ -5279,10 +5298,11 @@ suggested path                    migration 0043, reversible</div></div></sectio
   }
   /* the column resizes without a window resize (its divider, the narrow ladder, a pop out): the same re-render rules */
   if(HOSTED&&typeof ResizeObserver==='function'&&HOST.frame()){
-    let lastNarrow=isNarrow(), lastPin=activityPinnedInLayout(), queued=false, frameTrailT=null;
+    let lastNarrow=isNarrow(), queued=false, frameTrailT=null;
     new ResizeObserver(()=>{ if(queued) return; queued=true; requestAnimationFrame(()=>{ queued=false;
-      const n=isNarrow(), p=activityPinnedInLayout();
-      if(n!==lastNarrow||p!==lastPin){ lastNarrow=n; lastPin=p; activityPinLayout=p; renderApp(); }
+      const n=isNarrow(), p=activityDocked();
+      /* renderApp keeps activityDockLayout, so a column it already widened for Activity Detail is not drawn twice */
+      if(n!==lastNarrow||p!==activityDockLayout){ lastNarrow=n; renderApp(); }
       else if(document.body && document.body.classList.contains('pm-resizing')){
         // Mid-drag the frame resizes every frame; fitActivityTabs toggles a class and reads rects each
         // time (forced layouts). Tab fit and the jump pill may lag one cadence; a trailing pass lands

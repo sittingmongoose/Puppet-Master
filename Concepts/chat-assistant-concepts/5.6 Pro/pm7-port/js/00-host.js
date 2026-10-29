@@ -18,6 +18,7 @@
   var doc = document;
   var THEMES = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light'];
   var app = null;                 // what app.js hands over at boot (PM56_HOST.bind)
+  var activityW = 0;              // Activity Detail's width the chat column reserves (reserveActivity)
   var bodies = Object.create(null);   // tab id -> { el, host, api } for mounted chat tab bodies
   var themeFns = [];
 
@@ -351,6 +352,18 @@
       var m = doc.body.getAttribute('data-ph-drawer');
       return m === 'pinned' || (H.historyRecord() && (m === 'shut' || H.historyDropped()));
     },
+    /* Activity Detail's width, which the chat column reserves while it is open (DL-254, G2): like pinned History, the
+       column widens by it instead of squeezing the messages. renderApp hands it over before it decides dock or cover,
+       and a change runs the narrow ladder at once (not on the next frame), so the panel docks in the frame the column
+       widens. The ladder gives the width back (narrow.state.actDropped, 44-narrow.js) when the centre would fall
+       under its floor; the chat then covers the messages at the column's full height instead. */
+    reserveActivity: function (w) {
+      w = w > 0 ? Math.round(w) : 0;
+      if (w === activityW) return;
+      activityW = w;
+      try { if (window.PMW && PMW.narrow && PMW.narrow.update) PMW.narrow.update(); } catch (err) { try { console.error('[pm56] reserving Activity Detail failed', err); } catch (_) {} }
+    },
+    activityWidth: function () { return activityW; },
     frame: function () { return frame; },
     hosts: hosts,
     paintHost: paintHost,

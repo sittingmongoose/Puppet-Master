@@ -36,15 +36,16 @@ model.empty = function () {
 };
 
 /* The chat column (canon's v2 chat_column, SP-330 and DL-180; none of its fields is a Settings value, SSYS-050):
-   width_px is the message area's width the user dragged (400-760; null = the default for the window, 44-narrow.js),
-   committed by cmd.workspace_layout.resize_surface { surface: 'chat', width }; history_pinned (History pinned beside the
-   messages, else a flyout) and keep_open (D4's pin) are view state, ui.chat_column.pin_history and
-   ui.chat_column.keep_open (46-chat.js). A record written before a field existed reads as its default; a width that is
-   not a finite number is null, any other is rounded into 400-760; anything but true is false. */
+   width_px is the message area's width the user dragged (at least 400, with no fixed upper bound since DL-254: the drag
+   runs until the centre reaches its floor, and the ladder holds a saved width at that floor in a narrower window,
+   44-narrow.js; null = the default for the window), committed by cmd.workspace_layout.resize_surface
+   { surface: 'chat', width }; history_pinned (History pinned beside the messages, else a flyout) and keep_open (D4's
+   pin) are view state, ui.chat_column.pin_history and ui.chat_column.keep_open (46-chat.js). A record written before a
+   field existed reads as its default; a width that is not a finite number is null, any other is rounded and raised to
+   400; anything but true is false. */
 model.CHAT_W_MIN = 400;
-model.CHAT_W_MAX = 760;
 model.chatWidth = function (w) {
-  return typeof w === 'number' && isFinite(w) ? Math.min(model.CHAT_W_MAX, Math.max(model.CHAT_W_MIN, Math.round(w))) : null;
+  return typeof w === 'number' && isFinite(w) ? Math.max(model.CHAT_W_MIN, Math.round(w)) : null;
 };
 model.chatColumn = function (c) {
   c = c && typeof c === 'object' ? c : {};

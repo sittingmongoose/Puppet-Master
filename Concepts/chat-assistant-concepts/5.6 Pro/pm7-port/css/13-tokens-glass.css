@@ -49,5 +49,10 @@ html:not([data-o55-nier="on"]) div.pm56-host[data-theme="glass-light"] {
   --pmx-sheet-bg: #eef1f5;
 }
 @supports (color: rgb(from red r g b)) {
-  html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="glass"] { --pmx-sheet-bg: rgb(from var(--pmw-pop, var(--surface-elevated)) r g b); }
+  /* "/ 1": a relative colour keeps its origin's alpha when it names none, so without it the sheets kept the menu
+     tint's 6-7 % show-through (found for DL-254's cover) */
+  html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="glass"] { --pmx-sheet-bg: rgb(from var(--pmw-pop, var(--surface-elevated)) r g b / 1); }
 }
+/* Activity Detail over the messages (DL-254) is a sheet over the chat's own text too: the floating plate made opaque
+   (docked beside them it keeps the plate, 20-controls.css) */
+html:not([data-o55-nier="on"]) div.pm56-host[data-theme^="glass"] .activity-panel.cover { background: var(--pmx-sheet-bg); }
