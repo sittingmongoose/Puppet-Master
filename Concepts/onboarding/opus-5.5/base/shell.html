@@ -2325,8 +2325,8 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
             <!-- STAGE 3: DISCOVERY --------------------------------------------->
             <section class="pm6-wiz-stage pm6-wiz-stage-discovery" id="pm6WizStageDiscovery" data-wiz-stage="discovery">
               <div class="pm6-wiz-disc-wrap">
-                <div data-lg-surface="card" class="pm6-wiz-disc-card pm-enter-scale">
-                  <div class="pm6-wiz-disc-spin" aria-hidden="true"></div>
+                <div data-lg-surface="card" class="pm6-wiz-disc-card pm-enter-scale" id="pm6WizDiscCard" aria-busy="true">
+                  <span class="pml-ld pm6-wiz-disc-ld" id="pm6WizDiscLd" data-pip-loader="swing" data-pip-px="44" aria-hidden="true"></span>
                   <div class="pm6-wiz-disc-title">Reading your project&hellip;</div>
                   <div class="pm6-wiz-disc-sub"><span class="pm6-wiz-ro-badge">READ-ONLY</span> Looking, not touching. This takes a few seconds.</div>
                   <div class="pm6-wiz-scanrows" id="pm6WizScanRows"></div>
@@ -2532,8 +2532,8 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
 
               <!-- ============ PLAN COMPILE ============ -->
               <div class="orch-tab-content pm6-orch-pane" id="orch-panel-plan_compile" data-tab="plan_compile">
-                <div class="pm6-orch-pc-pending" id="pm6OrchPcPending" hidden>
-                  <div class="pm6-orch-pc-ring" aria-hidden="true"><span></span></div>
+                <div class="pm6-orch-pc-pending" id="pm6OrchPcPending" aria-busy="true" hidden>
+                  <span class="pml-ld pm6-orch-pc-ld" data-pip-loader="swing" data-pip-px="44" aria-hidden="true"></span>
                   <div class="pm6-orch-pc-pending-title">Waiting for PlanApproved…</div>
                   <div class="pm6-orch-pc-pending-sub">The approval receipt from the Planning Wizard is being reconciled. A durable PlanCompileRun binds the moment it lands.</div>
                   <div class="pm6-orch-pc-recon" id="pm6OrchPcRecon">

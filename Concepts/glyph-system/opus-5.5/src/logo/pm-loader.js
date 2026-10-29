@@ -19,15 +19,16 @@
  *
  * data-pml-run on the loader (written only here):
  *   on     moving, in phase                     off    held at the still pose: offscreen, the tab hidden, or the
- *   still  never moves: below 12 px, or NieR            person away (window not focused for 60 s)
+ *   still  never moves: below 12 px                      person away (window not focused for 60 s)
  *   wait   still until a busy spell ends (PM_BUSY: a page change, the look cover, a NieR switch); the onboarding
  *          window's own loaders are not held by the window being open
  * Drags hold every loader where it is (body.pm-resizing and the other drag classes set --pml-ps: paused, and the clock
  * stands still with them), and the onboarding window holds the app beneath it (10-window.css).
  *
- * Reduced Motion (L3, X2): the control breathes in opacity and Pip blinks; nothing travels. NieR (L7): with its
- * Diamond loaders part the loader is NieR's hollow diamond (styles.d/14-nier-parts.css); with the part off it is NieR
- * Pip, still. Animation speed scales every period (kit.d/17-look.js). Loop ranking (F3-658, X2): a loader is a wait
+ * Reduced Motion (L3, X2): the control breathes in opacity and Pip blinks; nothing travels. NieR (L7): Pip never
+ * animates in NieR. With its Diamond loaders part the loader is NieR's hollow diamond (styles.d/14-nier-parts.css);
+ * with the part off it is today's fallback, the plain ink ring (pm-loader.css); under Reduced Motion both hold still
+ * and the ring breathes. Animation speed scales every period (kit.d/17-look.js). Loop ranking (F3-658, X2): a loader is a wait
  * signal below needs-you: it is never put in a list row or tab for an item's state (that is st-working, L1).
  *
  * API: html(o) -> markup; mount(root?) arms loaders now; busy(host, on, o) marks a host busy with a loader;
@@ -48,17 +49,23 @@
   const pxOf = (el) => { const n = +el.getAttribute('data-pip-px'); return n > 0 ? n : 16; };
   const reduced = () => D.documentElement.getAttribute('data-motion') === 'reduced' || (W.matchMedia && W.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
+  /* NieR (L7): Pip never animates in NieR, so a NieR loader is not Pip. It is one empty part that NieR's styles draw:
+     the Diamond loaders part's hollow diamond (styles.d/14-nier-parts.css), or with that part off today's fallback,
+     the plain ink ring every spinner showed in NieR before (pm-loader.css). */
+  const NIER = '<span class="pml-nier" aria-hidden="true"></span>';
+  const isNier = (look) => L.family(look) === 'nier';
   function draw(el) {
     const look = L.look();
-    // NieR never moves (its loader is the Diamond part): a still Pip, thinking for the think motion
-    el.innerHTML = L.mark({ px: pxOf(el), motion: motionOf(el), mood: motionOf(el) === 'think' ? 'working' : 'idle', look, decorative: true });
+    el.innerHTML = isNier(look) ? NIER : L.mark({ px: pxOf(el), motion: motionOf(el), mood: motionOf(el) === 'think' ? 'working' : 'idle', look, decorative: true });
     el.setAttribute('data-pml-look', look);
   }
-  const drawn = (el) => el.getAttribute('data-pml-look') === L.look() && el.firstElementChild && el.firstElementChild.classList.contains('pml');
+  const drawn = (el) => el.getAttribute('data-pml-look') === L.look() && el.firstElementChild && el.firstElementChild.classList.contains(isNier(L.look()) ? 'pml-nier' : 'pml');
 
   /* the periods and phases one loader needs, from the shared clock and Animation speed */
   function phase(el) {
     const look = L.look(), family = L.family(look), motion = motionOf(el), px = pxOf(el), k = L.clock.speed();
+    el.style.setProperty('--pml-k', String(k));
+    if (family === 'nier') return;   // NieR's part keeps its own period, scaled by --pml-k
     const P = L.period({ family, motion, px }) * k, base = (L.MOTION[family] || L.MOTION.basic).dur * 1000 * k;
     const rP = base * 1.3, bP = base * 2.6, kP = P * 2, c = L.clock;
     const ms = (v) => Math.round(v) + 'ms';
@@ -74,7 +81,7 @@
     return why;
   }
   function set(el, run) { if (el.getAttribute('data-pml-run') !== run) el.setAttribute('data-pml-run', run); }
-  function stillFor(el) { return pxOf(el) < 12 || L.family(L.look()) === 'nier'; }
+  function stillFor(el) { return pxOf(el) < 12; }
   /* one frame on: the frame whose style starts the animations is the frame whose time the phase was taken from */
   const pending = new Set();
   let raf = 0;
@@ -140,19 +147,24 @@
   });
   /* a new look: every loader is drawn again in it and joins the phase */
   L.onLook(() => refresh());
-  /* Animation speed has no event of its own: a changed factor is caught at the next arm, after a drag, a return to
-     the window or the tab, and the end of a busy spell, and every loader is phased again at the new period */
+  /* Animation speed: a change in Settings (PM51.watch), and otherwise at the next arm, after a drag, a return to the
+     window or the tab, and the end of a busy spell; every loader is phased again at the new period */
   let lastSpeed = L.clock.speed();
   const speedCheck = () => { if (L.clock.speed() !== lastSpeed) refresh(); };
   if (typeof W.PM_ON_DRAGEND === 'function') W.PM_ON_DRAGEND(speedCheck);
   W.addEventListener('focus', speedCheck);
   D.addEventListener('visibilitychange', speedCheck);
   W.addEventListener('pm-idle', speedCheck);
+  // a change in Settings (PM51 loads after this head script)
+  W.addEventListener('load', () => { try { if (W.PM51 && typeof W.PM51.watch === 'function') W.PM51.watch('general.visual.animation-speed', () => setTimeout(speedCheck, 0)); } catch (_) { /* no Settings */ } }, { once: true });
 
+  /* A redraw (a new look, a new Animation speed) swaps the drawing in place: no fade-in (data-pml-redraw), so a loader
+     never blinks out; it joins the shared clock's phase at once. */
   function refresh() {
     lastSpeed = L.clock.speed();
     [...live, ...waiting].forEach((el) => {
       if (!el.isConnected) return;
+      el.setAttribute('data-pml-redraw', '');
       draw(el);
       if (stillFor(el)) { set(el, 'still'); return; }
       if (el.getAttribute('data-pml-run') === 'on') start(el);
@@ -170,7 +182,7 @@
     const motion = MOTIONS.indexOf(o.motion) >= 0 ? o.motion : 'swing', px = +o.px > 0 ? +o.px : 16, look = L.look();
     const size = o.size ? ` style="--pml-size:${esc(o.size)}"` : '';
     return `<span class="pml-ld${o.className ? ' ' + esc(o.className) : ''}" data-pip-loader="${motion}" data-pip-px="${px}" data-pml-look="${look}" aria-hidden="true"${size}>` +
-      L.mark({ px, motion, mood: motion === 'think' ? 'working' : 'idle', look, decorative: true }) + '</span>';
+      (isNier(look) ? NIER : L.mark({ px, motion, mood: motion === 'think' ? 'working' : 'idle', look, decorative: true })) + '</span>';
   }
   /* A host waiting: aria-busy on the host and a loader in it (first, or o.slot: 'end' or an element). The host's own
      words say what it waits for; o.status adds role="status" for a wait with no words of its own. */

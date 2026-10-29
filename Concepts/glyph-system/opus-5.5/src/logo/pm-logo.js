@@ -1054,6 +1054,7 @@
      animation of period p in that phase at the current frame. speed() is Animation speed's factor (kit.d/17-look.js:
      Fast .6, Measured 1, Cinematic 1.6). */
   const DRAG = ['pm-resizing', 'pm-ab-dragging', 'pmw-dragging', 'pmu-pointer-op', 'pm7u-pointer-op'];
+  const SPEED = Object.freeze({ Fast: 0.6, Measured: 1, Cinematic: 1.6 });
   const tl = () => (D && D.timeline && typeof D.timeline.currentTime === 'number' ? D.timeline.currentTime : (G.performance ? G.performance.now() : Date.now()));
   const clockSubs = new Set(), holds = new Set();
   let heldAt = null, heldFor = 0;
@@ -1062,8 +1063,9 @@
     now() { return (heldAt != null ? heldAt : tl()) - heldFor; },
     phase(p) { const n = clock.now(); return p > 0 ? ((n % p) + p) % p / p : 0; },
     delay(p) { return p > 0 ? -(((clock.now() % p) + p) % p) : 0; },
-    // o55SpeedFactor is the Settings script's global (kit.d/17-look.js); read late, so this head script never waits for it
-    speed() { try { return typeof o55SpeedFactor === 'number' && o55SpeedFactor > 0 ? o55SpeedFactor : 1; } catch (_) { return 1; } },
+    // Animation speed (general.visual.animation-speed), read through the Settings script's public PM51.value with the
+    // look pass's own table (kit.d/17-look.js O55_SPEED); its factor variable is private to that script
+    speed() { try { const P = G.PM51, v = P && typeof P.value === 'function' ? P.value('general.visual.animation-speed') : null; return SPEED[v] || 1; } catch (_) { return 1; } },
     hold(why) { const w = String(why || 'hold'); if (holds.has(w)) return; if (!holds.size) heldAt = tl(); holds.add(w); emitClock('hold'); },
     release(why) { const w = String(why || 'hold'); if (!holds.delete(w)) return; if (!holds.size && heldAt != null) { heldFor += tl() - heldAt; heldAt = null; emitClock('release'); } },
     held() { return [...holds]; },
