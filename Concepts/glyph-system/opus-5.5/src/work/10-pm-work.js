@@ -12,7 +12,8 @@
  *   id, kind agent|process|scheduled|service, role (main|subagent|server|script|test|watcher|build|browser|db|lsp|mcp|
  *   index), title, detail, model, project (the shell's data-project id), surface (assistant|orchestrator|wizard|prd|
  *   scout|system), where, thread, owner (agent id or null for the thread's own agent), parent (agent id),
- *   state (one of the 22 catalog keys, never a new one), word (an override), stopping (written here), stoppedBy, ask,
+ *   state (one of the 22 catalog keys, never a new one), word (an override), stopping and restarting (written here),
+ *   stoppedBy, ask,
  *   quick[], askedAt, startedAt, endedAt, exit, at (scheduled), queuePos, progress {done,total,unit,source} or null
  *   (never invented), delivery agent|user|quiet, waits, tail[], lines, command, cwd, pid, ports[], cpu, mem,
  *   server, environment, lost (with state warning).
@@ -28,7 +29,8 @@
  *   events   on(type, cb) -> off; types 'change' (cb(why)) and 'sample'; subscribe(cb) = on('change', cb);
  *            window event 'pm7.work.changed' {detail: {why}}
  *   actions  dispatch(commandId, args) for cmd.work.stop | restart | send_input | set_completion_delivery |
- *            clear_finished | quit; or stop(args), stopTargets(args), restart(id), sendInput(id, reply),
+ *            clear_finished | quit; or stop(args), stopTargets(args), restart(id), sendInput(id, reply) (a
+ *            process's plain yes/no prompt only; canSendInput(it)), answer(id, text) (an agent's question),
  *            setCompletionDelivery(id, v), clearFinished(viewId, pred?), showFinished(viewId), quit(args), quitTargets(),
  *            seen() (the person has looked: older failures leave the tray)
  *   sampling sample(cb, {project}) -> stop(): CPU, memory and ports move only while a sampler is open (D12)
@@ -65,7 +67,7 @@
   const needsInput = (it) => needsYou(it) && it.kind !== 'agent';
   const key = (it) => (it.stopping ? 'pending' : KEYS.indexOf(it.state) >= 0 ? it.state : 'idle');
   function word(it) {
-    if (it.stopping) return 'Stopping';
+    if (it.stopping) return it.restarting ? 'Restarting' : 'Stopping';
     if (it.word) return it.word;
     // an agent waiting on you has a question; a process waiting on you needs input (the terminal's own word)
     if (it.state === 'waiting' && it.kind !== 'agent') return 'Needs input';
@@ -188,17 +190,23 @@
     const c = counts({ project: id }), keys = [];
     if (c.questions + c.needsInput) keys.push('waiting');
     if (c.blocked) keys.push('blocked');
-    if (c.agents + c.processes - c.stopping > 0) keys.push('working');
+    if (c.agents + c.processes > 0) keys.push('working');   // stopping work stays outstanding until it ends (G5)
     if (opts && opts.unsaved) keys.push('change-modified');
     const k = B5.find((x) => keys.indexOf(x) >= 0) || 'idle';
     let say = '';
     if (k === 'waiting') { const n = c.questions + c.needsInput; say = n === 1 ? '1 item needs you' : n + ' items need you'; }
     else if (k === 'blocked') say = c.blocked === 1 ? '1 item is blocked' : c.blocked + ' items are blocked';
     else if (k === 'working') {
-      const p = [];
-      if (c.agents) p.push(plural(c.agents, 'agent', 'agents'));
-      if (c.processes) p.push(plural(c.processes, 'process', 'processes'));
-      say = p.join(' and ') + ' running';
+      const p = [], run = c.agents + c.processes - c.stopping;
+      if (run > 0) {
+        const pa = items({ project: id }).filter((x) => x.kind === 'agent' && isLive(x) && !x.stopping).length;
+        if (pa) p.push(plural(pa, 'agent', 'agents'));
+        if (run - pa) p.push(plural(run - pa, 'process', 'processes'));
+        say = p.join(' and ') + ' running' + (c.stopping ? ', ' + c.stopping + ' stopping' : '');
+      } else {
+        const rs = items({ project: id }).filter((x) => x.stopping && x.restarting).length;
+        say = rs === c.stopping ? plural(rs, 'item', 'items') + ' restarting' : plural(c.stopping, 'item', 'items') + ' stopping';
+      }
     } else if (k === 'change-modified') say = 'Unsaved layout';
     return { key: k, keys, say, counts: c, stale: c.stale };
   }
@@ -209,31 +217,21 @@
     return { key: k, counts: c, processes: c.processes + c.needsInput > 0 || items({ thread: id, kind: 'process' }).some(isLive) };
   }
 
-  /* A3, the tray: one face summed over every Project. waiting > failed > blocked > working > paused (only when all that
-     is left is paused) > complete (about 10 s after it finished) > idle; existing keys only. Failures count until the
-     person has looked (seen()). */
-  const KT = W.PMLogo && W.PMLogo.TRAY;   // the kit owns the A3 table; this is its copy if the kit is missing
+  /* A3, the tray: one face summed over every Project, through the kit's one reducer (PMLogo.trayFace: waiting >
+     failed > blocked > working > paused > complete ~10 s > idle; stopping work is outstanding). Failures count until
+     the person has looked (seen()). System services never move the tray. */
+  const KT = W.PMLogo && W.PMLogo.TRAY;
   const TRAY_ORDER = KT ? KT.order : ['waiting', 'failed', 'blocked', 'working', 'paused', 'complete', 'idle'];
   const TRAY_FACE = KT ? KT.faces : { waiting: 'alert', failed: 'error', blocked: 'oops', working: 'working', paused: 'sleep', complete: 'happy', idle: 'idle' };
   const COMPLETE_MS = KT ? KT.completeMs : 10000;
   function tray() {
-    const n = Date.now(), has = {};
-    let live = 0, paused = 0;
-    all().forEach((x) => {
-      if (x.kind === 'service') return;
-      if (needsYou(x)) has.waiting = (has.waiting || 0) + 1;
-      if (x.state === 'failed' && !x.stopping && (x.endedAt || 0) > S.seenAt) has.failed = (has.failed || 0) + 1;
-      if (x.state === 'blocked' && !x.stopping) has.blocked = (has.blocked || 0) + 1;
-      if (isLive(x)) { live++; if (!needsYou(x) && x.state !== 'blocked') has.working = (has.working || 0) + 1; }
-      if (x.state === 'paused') { live++; paused++; }
-      if (x.state === 'complete' && x.endedAt && n - x.endedAt < COMPLETE_MS) has.complete = (has.complete || 0) + 1;
-    });
-    if (live && paused === live) has.paused = paused;
-    const k = TRAY_ORDER.find((x) => has[x]) || 'idle';
-    const say = k === 'waiting' ? (has.waiting === 1 ? '1 item needs you' : has.waiting + ' items need you')
-      : k === 'failed' ? (has.failed === 1 ? '1 run failed' : has.failed + ' runs failed')
-      : k === 'blocked' ? (has.blocked === 1 ? '1 item is blocked' : has.blocked + ' items are blocked')
-      : k === 'working' ? plural(has.working, 'item', 'items') + ' running'
+    const list = all().filter((x) => x.kind !== 'service').map((x) => ({ key: x.state, at: x.endedAt, stopping: !!x.stopping, seen: x.state === 'failed' && (x.endedAt || 0) <= S.seenAt }));
+    const r = W.PMLogo && typeof W.PMLogo.trayFace === 'function' ? W.PMLogo.trayFace(list) : { key: 'idle', counts: {} };
+    const k = r.key, n = r.counts[k] || 0;
+    const say = k === 'waiting' ? (n === 1 ? '1 item needs you' : n + ' items need you')
+      : k === 'failed' ? (n === 1 ? '1 run failed' : n + ' runs failed')
+      : k === 'blocked' ? (n === 1 ? '1 item is blocked' : n + ' items are blocked')
+      : k === 'working' ? plural(n, 'item', 'items') + ' running'
       : k === 'paused' ? 'Paused' : k === 'complete' ? 'Done' : 'Ready';
     return { key: k, mood: TRAY_FACE[k], say, stale: S.feed.state === 'stale' };
   }
@@ -282,31 +280,41 @@
   function restart(id) {
     const it = item(id);
     if (!canRestart(it)) return false;
-    it.stopping = true; emit('restart');
+    it.stopping = true; it.restarting = true; emit('restart');
     later(() => {
-      it.stopping = false; it.state = 'working'; it.word = null; it.exit = null; it.endedAt = null; it.lost = null;
+      it.stopping = false; it.restarting = false; it.state = 'working'; it.word = null; it.exit = null; it.endedAt = null; it.lost = null;
       it.startedAt = Date.now(); it.pid = (it.pid || 40000) + 7; it.ask = null; it.quick = null;
       if (it.tail) it.tail = it.tail.slice(0, 2);
       emit('restarted');
     }, 1200);
     return true;
   }
-  /* D13: a plain yes/no prompt takes a quick answer (safe answer first); anything else goes to the terminal */
+  /* D13: only a process's plain yes/no prompt takes a quick answer (its quick choices, safe answer first, every one a
+     yes or a no); any other prompt keeps waiting for Answer in Terminal. Services are read-only (D11). An agent's
+     question is answered in its thread (answer()), never through process input. */
+  const YES_NO = /^(yes|no|y|n)$/i;
+  const canSendInput = (it) => !!it && it.kind === 'process' && needsYou(it) && Array.isArray(it.quick) && it.quick.length > 0 && it.quick.every((q) => YES_NO.test(String(q)));
   function sendInput(id, reply) {
     const it = item(id);
-    if (!needsYou(it)) return false;
-    if (it.kind !== 'agent' && Array.isArray(it.quick) && it.quick.indexOf(reply) < 0) return false;
+    if (!canSendInput(it) || it.quick.indexOf(reply) < 0) return false;
     it.state = 'working'; it.ask = null; it.quick = null; it.word = null; it.askedAt = null;
     if (it.tail) it.tail.push('> ' + reply);
     emit('answer');
-    if (it.kind === 'process') {
-      later(() => {
-        if (it.state !== 'working' || it.stopping) return;
-        it.state = 'complete'; it.exit = 0; it.endedAt = Date.now();
-        if (it.tail) it.tail.push(/^n/i.test(reply) ? 'Skipped. Dry run finished: 1 applied, 1 skipped.' : 'Dry run finished: 2 applied.');
-        emit('done'); trayLater();
-      }, 2600);
-    }
+    // the fixture's prompt finishes a moment after its answer
+    later(() => {
+      if (it.state !== 'working' || it.stopping) return;
+      it.state = 'complete'; it.exit = 0; it.endedAt = Date.now();
+      if (it.tail) it.tail.push(/^n/i.test(reply) ? 'Skipped. Dry run finished: 1 applied, 1 skipped.' : 'Dry run finished: 2 applied.');
+      emit('done'); trayLater();
+    }, 2600);
+    return true;
+  }
+  /* an agent's question, answered (the fixture's stand-in for the reply sent in its thread) */
+  function answer(id, text) {
+    const it = item(id);
+    if (!it || it.kind !== 'agent' || !needsYou(it) || !String(text || '').trim()) return false;
+    it.state = 'working'; it.ask = null; it.quick = null; it.word = null; it.askedAt = null;
+    emit('answer');
     return true;
   }
   /* D9: agent (tell the agent), user (notify me), quiet */
@@ -427,9 +435,9 @@
     version: 1,
     KEYS, WORD, TRAY_ORDER, TRAY_FACE, SCENARIOS, GRACE_MS,
     items, item, counts, project, thread, tray, feed, servers,
-    key, word, tone, rank, sort, time, dur, short, isLive, isDone, needsYou, isQuestion, needsInput, owner, children, descendants, canRestart,
+    key, word, tone, rank, sort, time, dur, short, isLive, isDone, needsYou, isQuestion, needsInput, owner, children, descendants, canRestart, canSendInput,
     on, subscribe: (fn) => on('change', fn),
-    dispatch, stop, stopTargets, restart, sendInput, setCompletionDelivery, clearFinished, showFinished, quit, quitTargets, seen,
+    dispatch, stop, stopTargets, restart, sendInput, answer, setCompletionDelivery, clearFinished, showFinished, quit, quitTargets, seen,
     sample, scenario, fixture
   };
 })();

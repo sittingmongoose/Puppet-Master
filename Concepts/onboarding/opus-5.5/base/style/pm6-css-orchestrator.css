@@ -334,15 +334,8 @@
       animation: pm-enter-scale var(--motion-med) var(--ease-default) both;
     }
     .pm6-orch-pc-pending[hidden] { display: none; }
-    .pm6-orch-pc-ring { width: 44px; height: 44px; position: relative; }
-    .pm6-orch-pc-ring span {
-      position: absolute; inset: 0;
-      border: 3px solid var(--border-light);
-      border-top-color: var(--accent-primary);
-      border-radius: 50%;
-      animation: pm6-orch-spin 1s linear infinite;
-    }
-    @keyframes pm6-orch-spin { to { transform: rotate(360deg); } }
+    /* the wait is the system loader (W5, DR-077; PM_PIP_LOADER, glyph-system src/logo/pm-loader.js), at the old ring's size */
+    .pm6-orch-pc-ld { --pml-size: 44px; }
     .pm6-orch-pc-pending-title { font: 700 var(--fs-lg) var(--display-font); color: var(--text-primary); }
     .pm6-orch-pc-pending-sub { font-size: var(--fs-xs); color: var(--text-secondary); max-width: 420px; line-height: var(--lh-body); }
     .pm6-orch-pc-recon { margin-top: var(--md); display: flex; flex-direction: column; gap: var(--xs); text-align: left; }

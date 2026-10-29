@@ -60,6 +60,9 @@
      preview(id, { volume? }) -> Promise<{ ok, id, duration }>   one CATALOG entry now (an explicit gesture: not muted).
      stopPreview(), bars(id, n) -> Promise<number[]>, entry(id)
      KITS, EVENTS, KIT_NAMES (= FAMILIES), variants(kit, event), resolve(kit, event), kitFor(event, opts)
+     pip                           Pip's voice, kits and music (PM7 build, lane found): say(text, o), hush(), vocal(name, o),
+                                   registerKit / play, registerMusic / music / stopMusic, hold(name, on), chatMute; see
+                                   "Pip's voice" below. say = pip.say.
      Test hooks: log (trace, 400), tap (AnalyserNode), ctx, master, binding(), refresh(source), unlock(). */
 (function () {
   'use strict';
@@ -2121,6 +2124,456 @@
     logEntry({ t: Math.round(performance.now()), event: e.event, kit: e.kit, family: e.kit, muted: S.muted, played: true, variant: e.variant, preview: id });
     return { ok: true, id, duration: e.duration };
   };
+
+  /* ---- Pip's voice (PM7 build, lane found, 2026-10-29; HANDOFF conflict 8, O4, O5, S3, S4, SND1) ----
+     One say() voice per look, through this one player: under general.interaction.sound-effects (S.muted, the master
+     switch) and its first-gesture rule, and under Pip's parts (PM_PIP_PARTS): a setup line sounds only with the
+     setup-voice part on, an in-app chirp only with app-voice (off by default), setup music only with setup-music. No
+     storage of its own: no localStorage key, no second switch. Reduced Motion never mutes (O5).
+     Ported from the approved Pip concept (Concepts/onboarding/opus-5.5-pip/sound.js, "Pip's voice"): live synthesis
+     (O4). A line becomes babble in its look's voice (one syllable per vowel group, onsets from the consonants, a contour
+     from the punctuation and the mood), timed to the typing, so the stage types the line at the pace it is said.
+     Voices: friendly (soft formant), glass (airy formant with breath), basic (a clean chirp), phosphor (Retro Dark's
+     chip pulse), teletype (Retro Light's struck keys), nier (a Pod's stepped chirp). Levels are the concept's measured
+     'say' and vocal trims; lane onb's sound tools re-measure them in this player and Jared listens once (SND1).
+
+     API: O55.sound.pip (O55.sound.say is pip.say)
+       say(text, { mood?, look? | voice?, where? 'setup' (default) | 'app', crew? 'pip' | 'crown' | 'hardhat' |
+           'glasses', pan? -1..1 }) -> { ms, cps, played }   the timing always; sound only when allowed. A new line
+           cuts the last one.
+       hush()                     stops the line now
+       timing(text, o)            -> { ms, cps }, never sounds
+       vocal(name, o) -> bool     a scripted non-verbal sound: wake, sleep, think, happy, wink, alert, cheer, crew
+       voiceOf(look?)             -> the voice id for a look (default: the painted one, PMLogo.look())
+       allowed(where?)            -> may Pip sound there now (switch, gesture, part, holds)
+       hold(name, on) / held()    a named extra mute for Pip's voice, kits and music
+       registerKit(id, { events: { name: fn(ctx, out, t0, opts) }, trim?: { name: dB } }) -> bool   lane onb's kits
+           (id: a voice id, or any id passed as opts.kit)
+       play(event, { kit?, look?, pan?, intensity?, priority?, motion? }) -> bool   a registered kit's event through
+           synth() (mute, gesture, rest and merge rules); motion: true drops it under Reduced Motion (foley that only
+           describes motion)
+       registerMusic(id, { start(ctx, out, t0, opts) -> { stop(t, fade) } }) -> bool   setup music and loops
+       music(id, opts) -> bool    one at a time, with the setup-music part on and sound allowed; it stops when sound
+                                  goes off, the part goes off, a hold starts, or stopMusic(fade = .4)
+       kits(), musics()           registered ids
+       chatMute                   the chat's mute while hosted (5.6 Pro/chat-sound.js muted / setMuted): { muted (getter),
+                                  setMuted(m) -> bool (writes the Project's row through setMuted above), onChange(cb) -> off } */
+  S.pip = (function pipVoice() {
+    const W = window;
+    /* ---- small synth helpers of the concept's own (kept apart from the kits' primitives above) */
+    function rng(seed) {
+      let a = seed >>> 0;
+      return function () { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+    }
+    const VR = Math.random;
+    const jit = (a) => (VR() * 2 - 1) * a;
+    const mf = (m) => 440 * Math.pow(2, (m - 69) / 12);
+    const db = (d) => Math.pow(10, d / 20);
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const RES = new WeakMap();
+    const res = (c) => { let r = RES.get(c); if (!r) { r = { waves: {} }; RES.set(c, r); } return r; };
+    function noiseBuf(c) {
+      const r = res(c); if (r.noise) return r.noise;
+      const len = c.sampleRate * 2, b = c.createBuffer(1, len, c.sampleRate), d = b.getChannelData(0), q = rng(11);
+      for (let i = 0; i < len; i++) d[i] = q() * 2 - 1;
+      return (r.noise = b);
+    }
+    function pulseWave(c, duty) {
+      const r = res(c), k = String(duty); if (r.waves[k]) return r.waves[k];
+      const n = 40, re = new Float32Array(n), im = new Float32Array(n);
+      for (let i = 1; i < n; i++) im[i] = (2 / (i * Math.PI)) * Math.sin(i * Math.PI * duty) * (i > 24 ? 0.5 : 1);
+      return (r.waves[k] = c.createPeriodicWave(re, im));
+    }
+    function filt(c, from, type, f, q) { const b = c.createBiquadFilter(); b.type = type; b.frequency.value = f; b.Q.value = q == null ? 0.7 : q; from.connect(b); return b; }
+    function envG(c, t, peak, a, d) {
+      const g = c.createGain(), p = Math.max(2e-4, peak);
+      a = Math.max(0.0008, a); d = Math.max(a + 0.004, d);
+      g.gain.setValueAtTime(1e-4, t); g.gain.exponentialRampToValueAtTime(p, t + a); g.gain.exponentialRampToValueAtTime(1e-4, t + d);
+      return g;
+    }
+    function hiss(c, out, t, o) {
+      const s = c.createBufferSource(); s.buffer = noiseBuf(c); s.loop = true;
+      const b = c.createBiquadFilter(); b.type = 'bandpass'; b.Q.value = o.q == null ? 1 : o.q; b.frequency.setValueAtTime(o.f || 2000, t);
+      const g = envG(c, t, o.g == null ? 0.1 : o.g, 0.002, o.d);
+      s.connect(b); b.connect(g); g.connect(out);
+      s.start(t, VR()); s.stop(t + o.d + 0.05);
+      return s;
+    }
+
+    /* ---- the voices (concept tables, unchanged) */
+    const FORM = { a: [800, 1250, 2600], e: [500, 1850, 2550], i: [320, 2300, 3000], o: [520, 880, 2450], u: [340, 800, 2300], m: [260, 1050, 2300] };
+    const ONSET = { p: [2300, 0.55, 0.012], s: [5200, 0.32, 0.05], h: [1500, 0.25, 0.045], n: null, l: null };
+    const MOOD = {
+      idle: { st: 0, bounce: 1, rate: 1, bright: 1 }, happy: { st: 3, bounce: 1.35, rate: 1.08, bright: 1.15 },
+      think: { st: -2, bounce: 0.6, rate: 0.86, bright: 0.85, hum: true }, alert: { st: 5, bounce: 1.1, rate: 1.2, bright: 1.2 },
+      sleep: { st: -6, bounce: 0.35, rate: 0.72, bright: 0.6 }, wink: { st: 2, bounce: 1.25, rate: 1.05, bright: 1.1 },
+      dots: { st: -1, bounce: 0.8, rate: 0.92, bright: 0.9 }, oops: { st: -3, bounce: 0.7, rate: 0.94, bright: 0.85 },
+      watch: { st: 1, bounce: 1.1, rate: 0.96, bright: 1.05 }, wonder: { st: 4, bounce: 1.2, rate: 1.04, bright: 1.15 }
+    };
+    MOOD.working = MOOD.dots; MOOD.error = MOOD.oops;
+    // the crew: Coordinator (crown) low and grand, Builder (hard hat) gruff, Reviewer (glasses) high and precise
+    const CREW = { pip: { mul: 1, rate: 1, grit: 0, fs: 1 }, crown: { mul: 0.72, rate: 0.9, grit: 0.12, fs: 0.9 }, hardhat: { mul: 0.86, rate: 1, grit: 0.3, fs: 0.95 }, glasses: { mul: 1.32, rate: 1.12, grit: 0, fs: 1.1 } };
+    const VOX = {
+      friendly: { kind: 'formant', w1: 'triangle', saw: 0.28, q: 7, fs: 1.18, lp: 4300, direct: 0.25, vib: [5.8, 16], gain: 0.55, att: 0.01, cons: 0.35, base: 285, bounce: 2.4, cps: 32 },
+      glass: { kind: 'formant', w1: 'sine', saw: 0.1, oct: 0.32, q: 5, fs: 1.3, lp: 6000, direct: 0.35, vib: [4.6, 12], breath: 0.11, shimmer: 0.05, gain: 0.55, att: 0.016, cons: 0.16, base: 345, bounce: 1.9, cps: 29, legato: 0.15 },
+      basic: { kind: 'chirp', gain: 0.32, base: 740, bounce: 1.3, att: 0.004, rel: 0.012, maxSyl: 0.075, cons: 0.1, cps: 36 },
+      phosphor: { kind: 'pulse', duty: 0.375, gain: 0.22, root: 72, quant: [0, 2, 4, 7, 9, 12, 14, 16], maxSyl: 0.036, blip: 3, lp: 3000, cps: 50 },
+      teletype: { kind: 'tick', gain: 0.2, root: 74, quant: [0, 2, 4, 5, 7, 9, 11, 12], maxSyl: 0.06, blip: 3, cps: 46 },
+      nier: { kind: 'chirp', w1: 'triangle', harm: 0.16, lp: 3600, gain: 0.3, base: 560, bounce: 0.4, mono: true, step: true, att: 0.003, rel: 0.01, maxSyl: 0.07, cons: 0.06, cps: 52 }
+    };
+    const VOICES = Object.keys(VOX);
+    /* the concept's measured trims (tools/sound_levels.mjs) for the line and the vocal sounds, dB */
+    const TRIM = {
+      friendly: { say: -5, wake: -4, sleep: 2.5, think: -12, happy: -5, wink: -3, alert: -8.5, cheer: -3, crew: -5.5 },
+      glass: { say: -13, wake: -9, sleep: -3, think: -14, happy: -11.5, wink: -10, alert: -16.5, cheer: -8.5, crew: -12 },
+      basic: { say: -7, wake: -7.5, sleep: -5.5, think: -4.5, happy: -8, wink: -7.5, alert: -9.5, cheer: -6.5, crew: -6.5 },
+      phosphor: { say: 2, wake: 3, sleep: 4.5, think: 2.5, happy: 2, wink: 1.5, alert: 0.5, cheer: 4, crew: 6 },
+      teletype: { say: 1.5, wake: 2, sleep: 3.5, think: 1.5, happy: 1, wink: 1.5, alert: 1.5, cheer: 4.5, crew: 3.5 },
+      nier: { say: -3.5, wake: -4, sleep: -2.5, think: 17.5, happy: -4.5, wink: -4, alert: -5.5, cheer: 14.5, crew: -7 }
+    };
+    const LEVEL = 0.7;   // the concept's master makeup (1 / 1.42), so a trim means what it meant there
+    const VOWEL_RE = /[aeiouyàáâäèéêëìíîïòóôöùúûü]/i;
+    function vowelOf(g) {
+      g = g.toLowerCase();
+      if (/^(ee|ea|ie|ey)/.test(g)) return 'i';
+      if (/^(oo|ew)/.test(g)) return 'u';
+      if (/^(ai|ay|ei)/.test(g)) return 'e';
+      if (/^(ou|au|aw|oa)/.test(g)) return 'o';
+      const ch = g.normalize('NFD')[0];
+      return { a: 'a', e: 'e', i: 'i', y: 'i', o: 'o', u: 'u' }[ch] || 'a';
+    }
+    function onsetOf(cl) {
+      cl = cl.toLowerCase();
+      if (!cl) return null;
+      if (/(sh|ch|th)$/.test(cl)) return 's';
+      const ch = cl[cl.length - 1];
+      if ('pbtdkgcq'.indexOf(ch) >= 0) return 'p';
+      if ('szfvxj'.indexOf(ch) >= 0) return 's';
+      if (ch === 'h') return 'h';
+      if ('mn'.indexOf(ch) >= 0) return 'n';
+      return 'l';
+    }
+    function endOf(text) {
+      const s = String(text).trim();
+      if (/(…|\.\.\.)["”’)]*$/.test(s)) return 'trail';
+      if (/\?["”’)]*$/.test(s)) return 'ask';
+      if (/!["”’)]*$/.test(s)) return 'exclaim';
+      if (/\.["”’)]*$/.test(s)) return 'stop';
+      return 'open';
+    }
+    // the line's syllables, each at the moment its letters are typed: [{ t, d, v, p, p2, on, g, leg }]
+    function textScript(text, V, mood, cps) {
+      const M = MOOD[mood] || MOOD.idle, s = String(text), out = [], words = [];
+      const re = /[A-Za-zÀ-ÿ0-9']+/g; let m;
+      while ((m = re.exec(s))) words.push([m[0], m.index]);
+      words.forEach(([w, w0], wi) => {
+        const groups = [];
+        for (let j = 0; j < w.length;) {
+          if (VOWEL_RE.test(w[j]) && !(j === 0 && /y/i.test(w[j]) && w.length > 1)) { let k = j; while (k < w.length && VOWEL_RE.test(w[k])) k++; groups.push([j, k]); j = k; } else j++;
+        }
+        // a silent final e ("time", "name") is no syllable
+        if (groups.length > 1) { const [a, b] = groups[groups.length - 1]; if (b === w.length && b - a === 1 && /e/i.test(w[a]) && w.length > 3) groups.pop(); }
+        if (!groups.length) { if (/^\d+$/.test(w)) for (let k = 0; k < Math.min(w.length, 4); k++) groups.push([k, k + 1]); else groups.push([0, w.length]); }
+        groups.forEach(([a, b], gi) => {
+          const prevEnd = gi === 0 ? 0 : groups[gi - 1][1];
+          const i0 = w0 + (gi === 0 ? 0 : Math.floor((prevEnd + a) / 2));
+          const i1 = w0 + (gi === groups.length - 1 ? w.length : Math.floor((b + groups[gi + 1][0]) / 2));
+          const digit = /\d/.test(w[a]);
+          out.push({ i0, i1, v: digit ? 'i' : vowelOf(w.slice(a, b)), on: onsetOf(w.slice(prevEnd, a)), stress: gi === 0 && groups.length > 1, wi });
+        });
+      });
+      const n = out.length, end = endOf(s), excl = /!/.test(s), maxSyl = V.maxSyl || 0.16;
+      const bounce = (V.bounce || 1) * M.bounce * (V.mono ? 0.15 : 1);
+      return out.map((q, j) => {
+        const t = q.i0 / cps, room = (q.i1 - q.i0) / cps;
+        let d = clamp(room - 0.012, 0.045, maxSyl);
+        let p = M.st + (excl ? 1.5 : 0) - 2.2 * (n > 1 ? j / (n - 1) : 0) * (V.mono ? 0.25 : 1);
+        p += (j % 2 ? 0.8 : -0.4) * bounce * 0.6 + jit(bounce * 0.7);
+        if (q.stress) p += 1.4 * (V.mono ? 0.2 : 1);
+        let p2 = p - 0.6, g = q.stress ? 1.08 : 1;
+        if (j === n - 1) {
+          const k = V.mono ? 0.25 : 1;
+          if (end === 'ask') p2 = p + 5 * k;
+          else if (end === 'exclaim') { p += 1.5 * k; p2 = p - 2 * k; g = 1.1; }
+          else if (end === 'trail') { p2 = p - 4 * k; d = Math.min(maxSyl * 1.6, d * 1.5); g = 0.8; }
+          else if (end === 'stop') p2 = p - 3 * k;
+          else p2 = p - 1.5 * k;
+        }
+        if (j === 0 && M.hum && !V.mono) q.on = 'n';
+        const next = out[j + 1], leg = !!(next && next.wi === q.wi);
+        return { t, d, v: q.v, p, p2, on: q.on, g, leg };
+      });
+    }
+    // the beeping voices (phosphor, teletype): a blip every few letters, each on a note of the scale
+    function blipScript(text, V, mood, cps) {
+      const M = MOOD[mood] || MOOD.idle, s = String(text), out = [], end = endOf(s);
+      let letters = 0;
+      for (let i = 0; i < s.length; i++) {
+        const ch = s[i];
+        if (!/[A-Za-zÀ-ÿ0-9]/.test(ch)) continue;
+        if (letters++ % (V.blip || 2)) continue;
+        const vow = VOWEL_RE.test(ch), h = (ch.toLowerCase().charCodeAt(0) * 7 + i) % 4;
+        out.push({ t: i / cps, d: V.maxSyl, deg: vow ? 4 + (h % 3) : h, p: 0, p2: 0, g: vow ? 1 : 0.85 });
+      }
+      const n = out.length;
+      out.forEach((q, j) => {
+        q.deg += Math.round(M.st / 2.5);
+        if (j >= n - 2 && end === 'ask') q.deg += j === n - 1 ? 3 : 1;
+        if (j === n - 1 && end === 'exclaim') q.deg += 2;
+        if (j >= n - 2 && (end === 'stop' || end === 'trail')) q.deg -= j === n - 1 ? 2 : 1;
+        if (end === 'trail' && j === n - 1) q.d *= 2;
+      });
+      return out;
+    }
+    function blipsFromScript(script, V) {
+      const out = [];
+      script.forEach((s) => {
+        const k = Math.max(1, Math.round(s.d / 0.055));
+        for (let i = 0; i < k; i++) {
+          const p = s.p + (s.p2 - s.p) * (k > 1 ? i / (k - 1) : 0);
+          out.push({ t: s.t + (s.d * i) / k, d: Math.min(V.maxSyl, (s.d / k) * 0.85), deg: Math.round(p / 2) + 3, p: 0, p2: 0, g: s.g || 1 });
+        }
+      });
+      return out;
+    }
+    const VS = {
+      wake: [{ t: 0, d: 0.34, v: 'a', p: -3, p2: 4, on: 'h', g: 0.8, leg: true }, { t: 0.34, d: 0.42, v: 'o', p: 4, p2: -6, g: 0.75 }, { t: 0.9, d: 0.08, v: 'e', p: 5, p2: 7, on: 'p' }, { t: 1.0, d: 0.12, v: 'i', p: 9, p2: 11 }],
+      sleep: [{ t: 0, d: 0.5, v: 'a', p: 1, p2: -6, on: 'h', g: 0.7, leg: true }, { t: 0.5, d: 0.42, v: 'm', p: -6, p2: -9, g: 0.55 }],
+      think: [{ t: 0, d: 0.18, v: 'm', p: 0, p2: 2, g: 0.8, leg: true }, { t: 0.18, d: 0.32, v: 'm', p: 2, p2: -1, g: 0.8 }],
+      happy: [{ t: 0, d: 0.09, v: 'e', p: 3, p2: 5, on: 'l', leg: true }, { t: 0.09, d: 0.17, v: 'a', p: 7, p2: 10 }, { t: 0.33, d: 0.06, v: 'i', p: 12, p2: 11, on: 'h', g: 0.6 }, { t: 0.41, d: 0.06, v: 'i', p: 10, p2: 9, on: 'h', g: 0.55 }, { t: 0.49, d: 0.07, v: 'i', p: 8, p2: 6, on: 'h', g: 0.5 }],
+      wink: [{ t: 0, d: 0.07, v: 'e', p: 6, p2: 7, on: 'h', g: 0.8 }, { t: 0.13, d: 0.1, v: 'e', p: 4, p2: 2, on: 'h', g: 0.75 }],
+      alert: [{ t: 0, d: 0.17, v: 'o', p: 5, p2: 10, g: 1 }],
+      cheer: [{ t: 0, d: 0.1, v: 'a', p: 5, p2: 8, on: 'l', leg: true }, { t: 0.1, d: 0.24, v: 'a', p: 10, p2: 12, g: 1.05 }],
+      crew: [{ t: 0, d: 0.14, v: 'u', p: 0, p2: 1, on: 'h' }, { t: 0.17, d: 0.3, v: 'e', p: 4, p2: 7, on: 'l', g: 1.05 }]
+    };
+
+    /* one graph per line, its pitch, formants and level moved syllable by syllable. Returns { stop(t), end } */
+    function voice(c, out, t0, script, vk, opt) {
+      const V = VOX[vk], C = CREW[(opt && opt.crew) || 'pip'] || CREW.pip, mood = MOOD[(opt && opt.mood) || 'idle'] || MOOD.idle;
+      if (V.kind === 'tick') return tickVoice(c, out, t0, script, V, C);
+      const last = new Map();
+      const setT = (p, v, t, tc) => { const lt = last.get(p) || 0; t = Math.max(t, lt + 1e-4); last.set(p, t); p.setTargetAtTime(v, t, Math.max(0.0008, tc)); };
+      const end = script.reduce((mx, s) => Math.max(mx, s.t + s.d), 0), stopAt = t0 + end + 0.4;
+      const oscs = [], fps = [], pitched = [];
+      const env = c.createGain(); env.gain.setValueAtTime(0, t0); env.connect(out);
+      const mk = (type, mul, wave) => { const o = c.createOscillator(); if (wave) o.setPeriodicWave(wave); else o.type = type; o.start(t0); o.stop(stopAt); oscs.push(o); pitched.push(o); fps.push([o.frequency, mul]); return o; };
+      let bands = null, ng = null, nbp = null;
+      const base = (V.base || 300) * C.mul;
+      if (V.kind === 'formant') {
+        const mix = c.createGain(), lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = V.lp * (mood.bright || 1); lp.Q.value = 0.5; lp.connect(env);
+        mk(V.w1, 1).connect(mix);
+        const saw = (V.saw || 0) + C.grit;
+        if (saw > 0) { const g2 = c.createGain(); g2.gain.value = saw; mk('sawtooth', 1).connect(g2); g2.connect(mix); }
+        if (V.oct) { const g3 = c.createGain(); g3.gain.value = V.oct; mk('sine', 2).connect(g3); g3.connect(mix); }
+        if (V.breath) { const nb = c.createBufferSource(); nb.buffer = noiseBuf(c); nb.loop = true; const bg = c.createGain(); bg.gain.value = V.breath; nb.connect(bg); bg.connect(mix); nb.start(t0, VR()); nb.stop(stopAt); oscs.push(nb); }
+        bands = [0, 1, 2].map((j) => { const b = c.createBiquadFilter(); b.type = 'bandpass'; b.Q.value = V.q * (j ? 1.3 : 1); b.frequency.value = FORM.a[j] * V.fs; const g = c.createGain(); g.gain.value = [1, 0.62, 0.28][j] * (j ? mood.bright || 1 : 1) * 3.2; mix.connect(b); b.connect(g); g.connect(lp); return b; });
+        const dg = c.createGain(); dg.gain.value = V.direct || 0.2; mix.connect(dg); dg.connect(lp);
+        if (V.shimmer) { const sg = c.createGain(); sg.gain.value = V.shimmer; mk('sine', 4).connect(sg); sg.connect(lp); }
+      } else if (V.kind === 'chirp') {
+        // a clean tone; NieR's adds a quiet third harmonic for a glassy, digital edge
+        const o1 = mk(V.w1 || 'sine', 1);
+        if (V.harm) { filt(c, o1, 'lowpass', V.lp || 4000, 0.5).connect(env); const hg = c.createGain(); hg.gain.value = V.harm; mk('sine', 3).connect(hg); hg.connect(env); } else o1.connect(env);
+      } else {
+        filt(c, mk(null, 1, pulseWave(c, V.duty)), 'lowpass', V.lp, 0.6).connect(env);
+      }
+      if (V.vib) { const l = c.createOscillator(), lg = c.createGain(); l.frequency.value = V.vib[0]; lg.gain.value = V.vib[1]; l.connect(lg); pitched.forEach((o) => lg.connect(o.detune)); l.start(t0); l.stop(stopAt); oscs.push(l); }
+      if (V.kind === 'formant' || V.kind === 'chirp') {
+        const ns = c.createBufferSource(); ns.buffer = noiseBuf(c); ns.loop = true; nbp = c.createBiquadFilter(); nbp.type = 'bandpass'; nbp.Q.value = 1.2; nbp.frequency.value = 2500;
+        ng = c.createGain(); ng.gain.setValueAtTime(0, t0); ns.connect(nbp); nbp.connect(ng); ng.connect(out); ns.start(t0, VR()); ns.stop(stopAt); oscs.push(ns);
+      }
+      const peak = V.gain;
+      if (V.kind === 'pulse') {
+        const tr = 12 * Math.log2(C.mul);
+        script.forEach((s) => {
+          const ts = t0 + s.t, te = ts + s.d, q = V.quant, deg = s.deg | 0;
+          const midi = V.root + tr + q[((deg % q.length) + q.length) % q.length] + 12 * Math.floor(deg / q.length);
+          fps.forEach(([p, mul]) => setT(p, mf(midi) * mul, ts - 0.001, 0.0008));
+          setT(env.gain, peak * (s.g || 1), ts, 0.0015);
+          setT(env.gain, 0, te - 0.004, 0.004);
+        });
+      } else {
+        script.forEach((s, j) => {
+          // a Pod speaks in steps: each syllable on one note, a small lift on every third, the ending's contour kept
+          const p0 = V.step ? Math.round(s.p) + (j % 3 === 1 ? 2 : 0) : s.p, p1 = V.step ? (j === script.length - 1 ? Math.round(s.p2) : p0) : s.p2;
+          const ts = t0 + s.t, te = ts + s.d, f0 = base * Math.pow(2, p0 / 12), f1 = base * Math.pow(2, p1 / 12);
+          fps.forEach(([p, mul]) => { setT(p, f0 * mul, ts - 0.004, 0.004); setT(p, f1 * mul, ts + s.d * 0.3, s.d * 0.35); });
+          if (bands) { const F = FORM[s.v] || FORM.a; bands.forEach((b, k) => setT(b.frequency, F[k] * V.fs * C.fs, ts - 0.01, 0.012)); }
+          const lvl = peak * (s.g || 1) * (s.v === 'm' ? 0.7 : 1);
+          setT(env.gain, lvl, ts, s.on === 'n' ? 0.02 : V.att || 0.01);
+          const nx = script[j + 1], leg = V.kind !== 'chirp' && !V.mono && s.leg && nx && nx.t - (s.t + s.d) < 0.03;
+          setT(env.gain, leg ? lvl * (V.legato != null ? V.legato : 0.4) : 0, te - 0.01, V.rel || 0.014);
+          const O = s.on && ONSET[s.on];
+          if (O && ng) {
+            setT(nbp.frequency, O[0], ts - 0.022, 0.001);
+            setT(ng.gain, O[1] * (V.cons || 0.3) * peak, ts - 0.02, 0.002);
+            setT(ng.gain, 0, ts - 0.02 + O[2], 0.008);
+          }
+        });
+      }
+      return {
+        end: stopAt,
+        stop(t) {
+          try { env.gain.cancelScheduledValues(t); env.gain.setTargetAtTime(0, t, 0.01); } catch (_) { /* already gone */ }
+          if (ng) try { ng.gain.cancelScheduledValues(t); ng.gain.setTargetAtTime(0, t, 0.005); } catch (_) { /* already gone */ }
+          oscs.forEach((o) => { try { o.stop(t + 0.08); } catch (_) { /* already stopped */ } });
+        }
+      };
+    }
+    /* Retro Light's voice: each blip a struck note (and a faint twelfth) with the light tick of a key; one note at a time */
+    function tickVoice(c, out, t0, script, V, C) {
+      const tr = 12 * Math.log2(C.mul), q = V.quant, srcs = [], env = c.createGain(); env.gain.setValueAtTime(0, t0); env.connect(out);
+      const end = script.reduce((mx, s) => Math.max(mx, s.t + s.d * 2.2), 0), stopAt = t0 + end + 0.3;
+      const osc = [[1, 1], [3, 0.08]].map(([mul, g]) => { const o = c.createOscillator(), og = c.createGain(); og.gain.value = g; o.connect(og); og.connect(env); o.start(t0); o.stop(stopAt); srcs.push([t0, o]); return [o, mul]; });
+      script.forEach((s, j) => {
+        const deg = s.deg | 0, midi = V.root + tr + q[((deg % q.length) + q.length) % q.length] + 12 * Math.floor(deg / q.length);
+        const f = mf(midi), ts = t0 + s.t, g = V.gain * (s.g || 1), nx = script[j + 1], cut = nx ? t0 + nx.t - 0.003 : ts + s.d * 2.2;
+        env.gain.setTargetAtTime(0, Math.max(t0, ts - 0.003), 0.0008);
+        osc.forEach(([o, mul]) => o.frequency.setValueAtTime(f * mul, ts));
+        env.gain.setTargetAtTime(g, ts, 0.0012);
+        env.gain.setTargetAtTime(0, ts + 0.006, Math.min(0.03, Math.max(0.006, (cut - ts) * 0.35)));
+        srcs.push([ts, hiss(c, out, ts, { d: 0.003, f: 3600, q: 2.5, g: g * 0.3 })]);
+      });
+      return { end: stopAt, stop(t) { env.gain.cancelScheduledValues(t); env.gain.setTargetAtTime(0, t, 0.005); srcs.forEach(([ts, o]) => { try { o.stop(ts > t ? t : t + 0.05); } catch (_) { /* gone */ } }); } };
+    }
+    function scriptFor(vk, name) {
+      const V = VOX[vk], s = VS[name];
+      if (V.kind === 'pulse' || V.kind === 'tick') return blipsFromScript(s, V);
+      if (V.mono) return s.map((q) => Object.assign({}, q, { p: q.p * 0.25, p2: q.p2 * 0.25, d: Math.min(q.d, 0.2) }));
+      return s;
+    }
+
+    /* ---- gates */
+    const holds = new Set();
+    const parts = () => W.PM_PIP_PARTS;
+    function part(id, fallback) { const P = parts(); try { return P && typeof P.get === 'function' ? P.get(id) : fallback; } catch (_) { return fallback; } }
+    function soundOn() {
+      if (performance.now() - refreshedAt > 250) S.refresh('synth');
+      return !S.muted && !holds.size && hasGesture();
+    }
+    const allowed = (where) => soundOn() && (where === 'app' ? part('app-voice', false) : part('setup-voice', true));
+    function voiceOf(look) {
+      let lk = look;
+      if (!lk) { try { lk = W.PMLogo ? W.PMLogo.look() : ''; } catch (_) { lk = ''; } }
+      lk = String(lk || '');
+      if (VOX[lk]) return lk;
+      if (lk === 'retro-dark') return 'phosphor';
+      if (lk === 'retro-light') return 'teletype';
+      return { friendly: 'friendly', glass: 'glass', basic: 'basic', nier: 'nier', retro: 'phosphor' }[lk.split('-')[0]] || 'basic';
+    }
+    /* one chain per sound: trim and pan into the master, gone when the sound is */
+    function chain(c, vk, name, o, life) {
+      const g = c.createGain();
+      g.gain.value = db((TRIM[vk] && TRIM[vk][name]) || 0) * LEVEL;
+      let head = g;
+      if (c.createStereoPanner) { const p = c.createStereoPanner(); p.pan.value = o.pan != null ? clamp(+o.pan || 0, -1, 1) : jit(0.12); g.connect(p); head = p; }
+      head.connect(S.master);
+      W.setTimeout(() => { try { head.disconnect(); } catch (_) {} try { g.disconnect(); } catch (_) {} }, Math.round(life * 1000) + 600);
+      return g;
+    }
+
+    /* ---- the line */
+    let line = null;
+    function hush() { if (line && S.ctx) { try { line.stop(S.ctx.currentTime); } catch (_) {} } line = null; }
+    function timing(text, o, vk) {
+      const V = VOX[vk || (o && o.voice && VOX[o.voice] ? o.voice : voiceOf(o && o.look))];
+      const M = MOOD[(o && o.mood) || 'idle'] || MOOD.idle, C = CREW[(o && o.crew) || 'pip'] || CREW.pip;
+      const cps = Math.round(V.cps * M.rate * C.rate * 10) / 10, n = String(text || '').length;
+      return { cps, ms: n ? Math.round((n / cps) * 1000 + 140) : 0 };
+    }
+    function speak(build, vk, name, o) {
+      const ctx = ensureContext();
+      if (!ctx || ctx.state === 'closed' || mNow() < restUntil) return false;
+      const script = build();
+      if (!script || !script.length) return false;
+      const t0 = ctx.currentTime + 0.006, end = script.reduce((mx, s) => Math.max(mx, s.t + s.d * 2.2), 0) + 0.5;
+      line = voice(ctx, chain(ctx, vk, name, o, end), t0, script, vk, o);
+      logEntry({ t: Math.round(performance.now()), event: 'pip:' + name, kit: vk, muted: false, played: true });
+      return true;
+    }
+    function say(text, opts) {
+      const o = opts || {}, vk = o.voice && VOX[o.voice] ? o.voice : voiceOf(o.look), t = timing(text, o, vk);
+      hush();
+      if (!text || !allowed(o.where)) return Object.assign(t, { played: false });
+      const V = VOX[vk];
+      const played = speak(() => (V.kind === 'pulse' || V.kind === 'tick' ? blipScript(text, V, o.mood, t.cps) : textScript(text, V, o.mood, t.cps)), vk, 'say', o);
+      return Object.assign(t, { played });
+    }
+    function vocal(name, opts) {
+      const o = opts || {}, vk = o.voice && VOX[o.voice] ? o.voice : voiceOf(o.look);
+      if (!VS[name] || !allowed(o.where)) return false;
+      hush();
+      return speak(() => scriptFor(vk, name), vk, name, o);
+    }
+
+    /* ---- lane onb's kits and music */
+    const KITS2 = Object.create(null), MUSIC = Object.create(null);
+    function registerKit(id, def) {
+      if (!id || !def || !def.events || typeof def.events !== 'object') return false;
+      KITS2[String(id)] = def; return true;
+    }
+    function play(event, opts) {
+      const o = opts || {}, kid = o.kit && KITS2[o.kit] ? String(o.kit) : voiceOf(o.look), k = KITS2[kid], fn = k && k.events[event];
+      if (typeof fn !== 'function' || holds.size) return false;
+      if (o.motion && reducedMotion()) return false;
+      const trim = k.trim && k.trim[event] != null ? +k.trim[event] : 0, int = o.intensity == null ? 1 : clamp(+o.intensity, 0, 1);
+      return S.synth((ctx, out, t0) => {
+        let head = ctx.createGain(); head.gain.value = db(trim) * int; head.connect(out);
+        if (ctx.createStereoPanner && o.pan != null) { const p = ctx.createStereoPanner(); p.pan.value = clamp(+o.pan || 0, -1, 1); p.connect(head); head = p; }
+        fn(ctx, head, t0, o);
+      }, { name: 'pip:' + event, priority: o.priority });
+    }
+    let tune = null;
+    function registerMusic(id, def) { if (!id || !def || typeof def.start !== 'function') return false; MUSIC[String(id)] = def; return true; }
+    const musicOk = () => soundOn() && part('setup-music', true);
+    function stopMusic(fade) {
+      const m = tune; tune = null;
+      if (!m || !S.ctx) return;
+      const f = fade == null ? 0.4 : Math.max(0, +fade || 0), t = S.ctx.currentTime;
+      try { if (m.h && typeof m.h.stop === 'function') m.h.stop(t, f); } catch (_) {}
+      try { m.g.gain.cancelScheduledValues(t); m.g.gain.setTargetAtTime(0, t, Math.max(0.01, f / 3)); } catch (_) {}
+      W.setTimeout(() => { try { m.g.disconnect(); } catch (_) {} }, Math.round(f * 1000) + 800);
+    }
+    function music(id, opts) {
+      const def = MUSIC[id];
+      if (!def) return false;
+      if (tune && tune.id === id) return true;
+      stopMusic(0.3);
+      if (!musicOk()) return false;
+      const ctx = ensureContext(); if (!ctx || ctx.state === 'closed') return false;
+      const g = ctx.createGain(); g.gain.value = 1; g.connect(S.master);
+      let h = null;
+      try { h = def.start(ctx, g, ctx.currentTime + 0.01, opts || {}); } catch (_) { try { g.disconnect(); } catch (e) {} return false; }
+      tune = { id, g, h };
+      return true;
+    }
+    /* sound off, a hold, or the part going off: the line and the music stop */
+    function follow() {
+      if (S.muted || holds.size) { hush(); stopMusic(0.2); return; }
+      if (tune && !part('setup-music', true)) stopMusic(0.4);
+      if (line && !part('setup-voice', true) && !part('app-voice', false)) hush();
+    }
+    W.addEventListener('o55:sound', follow);
+    W.addEventListener('pm7.pip-parts.changed', follow);
+    function hold(name, on) { const n = String(name || 'hold'); if (on === false) holds.delete(n); else holds.add(n); follow(); return holds.size > 0; }
+
+    const chatMute = Object.freeze({
+      get muted() { if (performance.now() - refreshedAt > 250) S.refresh('synth'); return !!S.muted; },
+      setMuted(m) { return S.setMuted(!!m, 'chat'); },
+      onChange(cb) {
+        if (typeof cb !== 'function') return () => {};
+        const h = (e) => { try { cb(!!(e && e.detail ? e.detail.muted : S.muted)); } catch (_) { /* a listener's error is its own */ } };
+        W.addEventListener('o55:sound', h);
+        return () => W.removeEventListener('o55:sound', h);
+      }
+    });
+
+    return Object.freeze({
+      VOICES, say, hush, timing: (text, o) => timing(text, o), vocal, voiceOf, allowed, hold, held: () => [...holds],
+      registerKit, play, registerMusic, music, stopMusic, kits: () => Object.keys(KITS2), musics: () => Object.keys(MUSIC),
+      playing: () => ({ line: !!line, music: tune ? tune.id : null }), chatMute
+    });
+  })();
+  S.say = S.pip.say;
 
   /* ---- boot binding: read once at load, again when the shell finishes mounting, then follow Project switches
      on the same surfaces the Settings owner watches for its own reload (label text, menu selection) ---- */
