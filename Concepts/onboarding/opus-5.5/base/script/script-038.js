@@ -2097,7 +2097,6 @@
             a.resizer.classList.remove('resizing');
             document.body.classList.remove('pm-resizing');
             glowRect = null;
-            document.body.style.cursor = '';
             if (a.endHandler) a.endHandler();
             window.PM_DRAGEND();
         }
@@ -2137,11 +2136,16 @@
                 if (active) endDrag(null);
                 active = { resizer: resizerEl, moveHandler: opts.onMove, endHandler: opts.onEnd };
                 try { resizerEl.setPointerCapture(e.pointerId); } catch (e2) {}
+                /* Reads before writes: the glow rect (and onStart's clamp reads inside it) used to run
+                   after the class writes, forcing a full style+layout inside the pickup handler.
+                   No body cursor either: cursor is inherited, so writing it on <body> restyled the
+                   whole document at pickup and release (measured 45-70ms each); the resizer's own CSS
+                   cursor (.resizer-col/.resizer-row) applies for the whole captured drag, exactly as
+                   Home's own divider/chat drags already rely on. */
+                glowRect = resizerEl.getBoundingClientRect();
+                if (opts.onStart) opts.onStart(e);
                 resizerEl.classList.add('resizing');
                 document.body.classList.add('pm-resizing');
-                glowRect = resizerEl.getBoundingClientRect();
-                document.body.style.cursor = opts.isHorizontal ? 'col-resize' : 'row-resize';
-                if (opts.onStart) opts.onStart(e);
                 e.preventDefault();
             });
             /* placed before the drag guard: the glow must track plain hover
@@ -2180,7 +2184,6 @@
             onStart(e) {
                 const prev = getPrev();
                 const next = getNext();
-                if (prev) prev.classList.add('pm6-noanim');
                 startX = e.clientX; startY = e.clientY;
                 dragCache = null; lastWritten = null;
                 if (isHorizontal && prev) {
@@ -2203,6 +2206,8 @@
                     startH = next.getBoundingClientRect().height;
                     dragCache = { containerH: resizer.parentNode ? resizer.parentNode.getBoundingClientRect().height : 0 };
                 }
+                /* class write last, after every read above (see registerResizer's pickup note) */
+                if (prev) prev.classList.add('pm6-noanim');
             },
             onEnd() {
                 const prev = getPrev();

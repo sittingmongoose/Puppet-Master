@@ -5,5 +5,10 @@ html[data-theme^="glass"] #sidePanelSlot {
   max-width: min(480px, 50vw) !important;
   border-radius: 16px !important;
   overflow: visible !important;
+}
+/* The width transition is for ladder eases and programmatic width changes. During a hand drag
+   (body.pm-resizing) it made the Glass rail chase the pointer 0.36s behind (14-34px of lag plus a
+   ~200ms settle tail) because this rule outranked the drag's .pm6-noanim. Measured pass-2 probe. */
+html[data-theme^="glass"] body:not(.pm-resizing) #sidePanelSlot {
   transition: width var(--motion-med) var(--ease-out) !important;
 }

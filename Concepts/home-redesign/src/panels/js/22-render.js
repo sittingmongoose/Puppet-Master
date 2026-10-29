@@ -148,9 +148,15 @@ render.paint = function (opts) {
 
   // With motion off, commit every target while transitions are disabled, then restore them after one layout.
   // No frame can paint between these writes; forcing a layout for each panel/divider only repeats the same work.
+  // Outside .pmw-animating there are no geometry transitions to suppress at all (10-panels.css: panels
+  // transition opacity only, dividers none), so the forced layout only pre-paid the frame's own layout.
   if (placedWithoutMotion.length) {
-    void c.offsetWidth;
-    placedWithoutMotion.forEach(function (el) { el.style.transition = ''; });
+    if (!animate && !c.classList.contains('pmw-animating')) {
+      placedWithoutMotion.forEach(function (el) { el.style.transition = ''; });
+    } else {
+      void c.offsetWidth;
+      placedWithoutMotion.forEach(function (el) { el.style.transition = ''; });
+    }
   }
 
   // Place all panels and dividers before any strip reads layout. Fit every strip before updating tab bodies: a
@@ -160,7 +166,10 @@ render.paint = function (opts) {
   var resizingNow = !!(state.resizing || (doc.body && doc.body.classList.contains('pm-resizing')));
   function paintSig(p) {
     var r = shown.panels[p.panel.id];
-    return (r ? r.w + 'x' + r.h : '-') + '|' + (p.hidden ? 1 : 0) + '|' + (p.panel.collapsed ? 1 : 0) + '|' +
+    /* An ordinary strip fits against panel width; a collapsed vertical strip against height. Keying on
+       both made a height-only divider drag refit every horizontal strip (and vice versa). */
+    var dim = r ? (p.panel.collapsed ? 'h' + r.h : 'w' + r.w) : '-';
+    return dim + '|' + (p.hidden ? 1 : 0) + '|' + (p.panel.collapsed ? 1 : 0) + '|' +
       (p.panel.locked ? 1 : 0) + '|' + (narrow ? 1 : 0) + '|' + p.panel.active + '|' + p.panel.tabs.join(',');
   }
   /* Tab bodies follow the tab set, visibility and focus only — never the panel's size. While the centre is

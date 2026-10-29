@@ -19718,6 +19718,11 @@ html[data-theme^="glass"] #sidePanelSlot {
   max-width: min(480px, 50vw) !important;
   border-radius: 16px !important;
   overflow: visible !important;
+}
+/* The width transition is for ladder eases and programmatic width changes. During a hand drag
+   (body.pm-resizing) it made the Glass rail chase the pointer 0.36s behind (14-34px of lag plus a
+   ~200ms settle tail) because this rule outranked the drag's .pm6-noanim. Measured pass-2 probe. */
+html[data-theme^="glass"] body:not(.pm-resizing) #sidePanelSlot {
   transition: width var(--motion-med) var(--ease-out) !important;
 }
 html[data-theme^="glass"] #sidePanelSlot > .side-panel-view {
@@ -42533,6 +42538,11 @@ html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-fx {
   transform-origin: 0 0;
 }
 html[data-pmw-home="on"] .pmw-gl:not(.pmw-gl-on) > .pmw-gl-fx { visibility: hidden; }
+/* While a divider is held, the multi-element decoration groups (Friendly dots/echos, Retro ghosts) repaint
+   their shadows and masks every drag frame; the lit core stays, the groups rest until release. */
+html[data-pmw-home="on"] body.pm-resizing .pmw-gl-fx > :is(.pmw-gl-dots),
+html[data-pmw-home="on"] body.pm-resizing .pmw-gl-fx > :is(.pmw-gl-echos),
+html[data-pmw-home="on"] body.pm-resizing .pmw-gl-fx > :is(.pmw-gl-ghosts) { display: none; }
 html[data-pmw-home="on"] :where(.pmw-gl-fx i) { position: absolute; display: block; left: 140px; top: 0; pointer-events: none; opacity: 0; }
 html[data-pmw-home="on"] .pmw-gl-fx > :is(.pmw-gl-dots),
 html[data-pmw-home="on"] .pmw-gl-fx > :is(.pmw-gl-echos),
@@ -66354,6 +66364,25 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host :is(.qs-ask .
    the sheet itself reads them (#pmOverlayRoot > .pmx-sheet's transform-origin); an open History is 1,325 elements */
 .pm56-host > :not(.pmx-sheet),
 .pm56-host > .pmx-sheet > * { --pmx-from-x: initial; --pmx-from-y: initial; }
+
+/* Resize-drag paint diet (2026-10-28 pass 2): while the host page is mid-drag the transcript rewraps every
+   frame; ambient infinite animations repaint on top of that for no user benefit (the eyes are on the edge).
+   Pausing the play state keeps each element's current keyframe — the shimmer band freezes where it is rather
+   than vanishing — and everything resumes on release. The composer's soft shadow is width-dependent paint;
+   its border keeps the shape while dragging. Drag-scoped only: resting pixels unchanged. */
+body.pm-resizing .pm56-host :where(.pm-shimmer):not(.t7.t7:not(*)),
+body.pm-resizing .pm56-host :is(.tx-stretch-verb.pm-shimmer),
+body.pm-resizing .pm56-host :where(.todo-glyph-pulse):not(.t7.t7:not(*)),
+body.pm-resizing .pm56-host :is(.status-dot.working),
+body.pm-resizing .pm56-host :is(.status-dot.reviewing),
+body.pm-resizing .pm56-host :where(.status-branch):not(.t7.t7:not(*)),
+body.pm-resizing .pm56-host :is(.state-mark.live),
+body.pm-resizing .pm56-host :where(.lane-wave i):not(.t7.t7:not(*)),
+body.pm-resizing .pm56-host :where(.lane-pulse):not(.t7.t7:not(*)) {
+  animation-play-state: paused;
+}
+body.pm-resizing .pm56-host .composer-box,
+body.pm-resizing .pm56-host .chat-stage .composer-box { box-shadow: none; }
 </style>
 <!-- C56:CSS:END -->
 <style id="lg-css">
@@ -66643,6 +66672,19 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-light, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-bar) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 16px 34px -18px var(--lg-shadow), 0 1px 4px var(--lg-shadow-near) !important;
+}
+/* Resize-drag paint diet (2026-10-28 pass 2): while a column divider drags, the sheets being resized repaint
+   their six-layer background stack every frame; the baked specular/rim/glow images are size-locked to the
+   previous geometry anyway (glass.js holds bakes during .pm-resizing), so flatten them and the deep shadow
+   for the gesture. Tint, head shade and frost stay, so the sheet still reads as glass; the exact optics
+   return on release when the held bake flushes. The vars are written inline by glass.js, hence !important. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) body.pm-resizing :is([data-lg-kind="panel"]),
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) body.pm-resizing :is([data-lg-kind="card"]),
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) body.pm-resizing :is([data-lg-kind="bar"]) {
+  --lg-spec: none !important;
+  --lg-glow: none !important;
+  --lg-ring: none !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot) !important;
 }
 /* Jared #13 (2026-10-14): while its scroller moves, a sheet's frost is pinned to the viewport by the browser itself, so
    it never trails the content (glass.js sets data-lg-fixed at the first scroll event and lifts it when the scroll settles) */
@@ -82349,9 +82391,22 @@ var PMU_SERIES = {
      that changes its host's height cannot loop the observer); flow charts (content sets their height) track width only.
      A box of 0 x 0 is a hidden page or tab (D10 7.1): the chart keeps the size it was drawn at and draws again only when it
      shows at another size. */
-  var watched = new Map(), resizeQ = [], resizeRaf = 0;
+  var watched = new Map(), resizeQ = [], resizeRaf = 0, resizeHoldT = 0;
+  /* While a shell/Home resize drag runs, chart hosts change size every frame and each redraw is obsolete
+     a frame later (the board itself already defers non-final resizes; these per-chart observers defeated
+     that). Park the queue and flush it once the drag ends: _w/_h still hold the drawn size, so the flush
+     sees the difference and redraws exactly the charts whose hosts moved. */
+  function holdResizes() {
+    if (resizeHoldT) return;
+    resizeHoldT = setInterval(function () {
+      if (document.body && document.body.classList.contains('pm-resizing')) return;
+      clearInterval(resizeHoldT); resizeHoldT = 0;
+      if (resizeQ.length && !resizeRaf) resizeRaf = requestAnimationFrame(runResizes);
+    }, 120);
+  }
   function runResizes() {
     resizeRaf = 0;
+    if (document.body && document.body.classList.contains('pm-resizing')) { holdResizes(); return; }
     var list = resizeQ; resizeQ = [];
     var sizes = list.map(function (c) { return c._dead || gone(c) ? null : { w: c.host.clientWidth, h: c.host.clientHeight }; });
     list.forEach(function (c, i) {
@@ -101893,7 +101948,6 @@ status: completed with warnings</pre>
             a.resizer.classList.remove('resizing');
             document.body.classList.remove('pm-resizing');
             glowRect = null;
-            document.body.style.cursor = '';
             if (a.endHandler) a.endHandler();
             window.PM_DRAGEND();
         }
@@ -101933,11 +101987,16 @@ status: completed with warnings</pre>
                 if (active) endDrag(null);
                 active = { resizer: resizerEl, moveHandler: opts.onMove, endHandler: opts.onEnd };
                 try { resizerEl.setPointerCapture(e.pointerId); } catch (e2) {}
+                /* Reads before writes: the glow rect (and onStart's clamp reads inside it) used to run
+                   after the class writes, forcing a full style+layout inside the pickup handler.
+                   No body cursor either: cursor is inherited, so writing it on <body> restyled the
+                   whole document at pickup and release (measured 45-70ms each); the resizer's own CSS
+                   cursor (.resizer-col/.resizer-row) applies for the whole captured drag, exactly as
+                   Home's own divider/chat drags already rely on. */
+                glowRect = resizerEl.getBoundingClientRect();
+                if (opts.onStart) opts.onStart(e);
                 resizerEl.classList.add('resizing');
                 document.body.classList.add('pm-resizing');
-                glowRect = resizerEl.getBoundingClientRect();
-                document.body.style.cursor = opts.isHorizontal ? 'col-resize' : 'row-resize';
-                if (opts.onStart) opts.onStart(e);
                 e.preventDefault();
             });
             /* placed before the drag guard: the glow must track plain hover
@@ -101976,7 +102035,6 @@ status: completed with warnings</pre>
             onStart(e) {
                 const prev = getPrev();
                 const next = getNext();
-                if (prev) prev.classList.add('pm6-noanim');
                 startX = e.clientX; startY = e.clientY;
                 dragCache = null; lastWritten = null;
                 if (isHorizontal && prev) {
@@ -101999,6 +102057,8 @@ status: completed with warnings</pre>
                     startH = next.getBoundingClientRect().height;
                     dragCache = { containerH: resizer.parentNode ? resizer.parentNode.getBoundingClientRect().height : 0 };
                 }
+                /* class write last, after every read above (see registerResizer's pickup note) */
+                if (prev) prev.classList.add('pm6-noanim');
             },
             onEnd() {
                 const prev = getPrev();
@@ -154086,15 +154146,24 @@ policies for tenant isolation, and add migration script.</textarea>
       var tb = byId('fmToolbar'); if (!tb) return;
       var chip = byId('fmSelChip');
       var chipLbl = chip ? chip.querySelector('.fm-selchip-lbl') : null;
+      /* The labelled width is intrinsic (content/font/theme), not a function of the available width.
+         Probing it by toggling the class and reading scrollWidth on every observer delivery forced a
+         layout per rail-drag frame. Measure it once (an overflowing scrollWidth IS the intrinsic
+         width), then decide from the cached value against the current width. */
+      var fitCache = { key: null, labelled: 0 };
+      function applyFit(labelled, avail) {
+        tb.classList.toggle('txt', labelled <= avail);
+        if (chip && chipLbl && chip.style.display !== 'none') chipLbl.style.display = labelled > avail ? 'none' : '';
+      }
       function fit() {
+        var avail = tb.clientWidth + 1;
+        var key = tb.textContent + '|' + document.documentElement.getAttribute('data-theme') + '|' + (document.fonts ? document.fonts.status : '');
+        if (fitCache.key === key && fitCache.labelled > 0) { applyFit(fitCache.labelled, avail); return; }
         if (chipLbl) chipLbl.style.display = '';
         tb.classList.add('txt');
-        var fits = tb.scrollWidth <= tb.clientWidth + 1;
-        if (!fits) tb.classList.remove('txt');
-        if (chip && chipLbl && chip.style.display !== 'none') {
-          chipLbl.style.display = '';
-          if (tb.scrollWidth > tb.clientWidth + 1) chipLbl.style.display = 'none';
-        }
+        var sw = tb.scrollWidth;
+        if (sw > tb.clientWidth) fitCache = { key: key, labelled: sw };
+        applyFit(sw, avail);
       }
       fit();
       if ('ResizeObserver' in window) new ResizeObserver(fit).observe(tb);
@@ -189548,9 +189617,15 @@ render.paint = function (opts) {
 
   // With motion off, commit every target while transitions are disabled, then restore them after one layout.
   // No frame can paint between these writes; forcing a layout for each panel/divider only repeats the same work.
+  // Outside .pmw-animating there are no geometry transitions to suppress at all (10-panels.css: panels
+  // transition opacity only, dividers none), so the forced layout only pre-paid the frame's own layout.
   if (placedWithoutMotion.length) {
-    void c.offsetWidth;
-    placedWithoutMotion.forEach(function (el) { el.style.transition = ''; });
+    if (!animate && !c.classList.contains('pmw-animating')) {
+      placedWithoutMotion.forEach(function (el) { el.style.transition = ''; });
+    } else {
+      void c.offsetWidth;
+      placedWithoutMotion.forEach(function (el) { el.style.transition = ''; });
+    }
   }
 
   // Place all panels and dividers before any strip reads layout. Fit every strip before updating tab bodies: a
@@ -189560,7 +189635,10 @@ render.paint = function (opts) {
   var resizingNow = !!(state.resizing || (doc.body && doc.body.classList.contains('pm-resizing')));
   function paintSig(p) {
     var r = shown.panels[p.panel.id];
-    return (r ? r.w + 'x' + r.h : '-') + '|' + (p.hidden ? 1 : 0) + '|' + (p.panel.collapsed ? 1 : 0) + '|' +
+    /* An ordinary strip fits against panel width; a collapsed vertical strip against height. Keying on
+       both made a height-only divider drag refit every horizontal strip (and vice versa). */
+    var dim = r ? (p.panel.collapsed ? 'h' + r.h : 'w' + r.w) : '-';
+    return dim + '|' + (p.hidden ? 1 : 0) + '|' + (p.panel.collapsed ? 1 : 0) + '|' +
       (p.panel.locked ? 1 : 0) + '|' + (narrow ? 1 : 0) + '|' + p.panel.active + '|' + p.panel.tabs.join(',');
   }
   /* Tab bodies follow the tab set, visibility and focus only — never the panel's size. While the centre is
@@ -193239,16 +193317,18 @@ function middleEllipsis(el, rec, size) {
      label; while resizing, fit against the room rounded down to 24px buckets (a text fitted for the
      bucket always fits the room), so a label refits at most once per 24px travelled and reuses its fit
      while the room only grows. The first non-resizing paint refits at the exact room again. */
-  var resizing = !!(typeof state !== 'undefined' && state && state.resizing);
+  var resizing = !!((typeof state !== 'undefined' && state && state.resizing) || (doc.body && doc.body.classList.contains('pm-resizing')));
   var fitRoom = resizing ? Math.max(24, Math.floor(room / 24) * 24) : room;
   var theme = doc.documentElement.getAttribute('data-theme') + '|' + size + '|' + (doc.fonts ? doc.fonts.status : '');
   var cache = lab._pmwEll;
-  if (cache && cache.full === full && cache.theme === theme && (cache.room === fitRoom || (resizing && fitRoom > cache.room))) {
+  if (cache && cache.full === full && cache.theme === theme && cache.room >= 0 && (cache.room === fitRoom || (resizing && fitRoom > cache.room))) {
     if (lab.textContent !== cache.out) lab.textContent = cache.out;
     return;
   }
   if (lab.textContent !== full) lab.textContent = full;
-  if (lab.scrollWidth <= room) { lab._pmwEll = { full: full, theme: theme, room: fitRoom, out: full }; return; }
+  // cache the full-fit result against fitRoom only when it truly fits fitRoom (the bucket is below room
+  // while resizing; claiming the bucket would let a later smaller room reuse an overflowing full label)
+  if (lab.scrollWidth <= room) { lab._pmwEll = { full: full, theme: theme, room: lab.scrollWidth <= fitRoom ? fitRoom : -1, out: full }; return; }
   function fits(t) { lab.textContent = t; return lab.scrollWidth <= fitRoom; }
   var dot = full.lastIndexOf('.');
   var ext = dot > 0 && full.length - dot <= 6 ? full.length - dot : 0;
@@ -193308,7 +193388,10 @@ function updateTab(el, rec, p, l) {
   var inst = instances[rec.id];
   if (inst) el.setAttribute('aria-controls', inst.host.id); else el.removeAttribute('aria-controls');
   var lab = el.querySelector('.pmw-tlabel');
-  setText(lab, label);
+  /* The fitted (middle-truncated) text IS this label's text at the current room: restoring the full label
+     here on every strip prepare only to have middleEllipsis truncate it again in finish wrote the label
+     twice per paint and flushed layout in between. Keep the fitted text while it fits this same label. */
+  if (!(lab._pmwEll && lab._pmwEll.full === label && lab.textContent === lab._pmwEll.out)) setText(lab, label);
   // icon: the pushed one, the kind's iconFor, the kind's own (tabIcon, 22-render.js)
   var ico = el.querySelector('.pmw-tico');
   var k = kindDef(rec.kind);
@@ -197643,9 +197726,19 @@ PM_HOME.boot = function () {
   try { persist.foldSaved(); } catch (err) { try { console.error('[pm-home] saved layouts could not be folded', err); } catch (_) {} }
   try { persist.watchProject(); } catch (err) { try { console.error('[pm-home] project watch failed', err); } catch (_) {} }
   if (typeof ResizeObserver === 'function') {
-    new ResizeObserver(function () {
+    new ResizeObserver(function (entries) {
       if (!homeIsPage()) return;
       narrow.schedule();
+      /* During a resize drag the scheduled paint lands a frame after the rail/chat edge that caused it
+         (panels visibly trail the edge). The observer's own box is already the post-layout size, so paint
+         from it in this frame; the observer remains the source of truth — any later size paints again. */
+      if (doc.body && doc.body.classList.contains('pm-resizing') && entries && entries[0] && entries[0].contentRect) {
+        var cr = entries[0].contentRect, pad = PMW.CENTRE_PAD || 6;
+        try {
+          render.now({ animate: false, centreRect: { x: pad, y: pad, w: Math.max(0, cr.width - 2 * pad), h: Math.max(0, cr.height - 2 * pad) } });
+          return;
+        } catch (_) { /* fall through to the scheduled paint */ }
+      }
       render.schedule({ animate: false });
     }).observe(centre);
   }
@@ -200749,11 +200842,20 @@ function mountEditor(host, st, api) {
     var mk = marksOf(d);
     return mk ? mk.kinds[r] : '';
   }
+  var drawSig = null;
   function drawTrack() {
     if (special || !V) return;
     timers.drawQueued = false;
     var tw = trackW, th = geo.trackH;
     if (!tw || !th) return;
+    /* The minimap is a function of the document, wrap map, geometry and colours only. Width-only
+       resizes (and every cadence-skipped cheap resize) used to rescan every line to redraw the
+       same pixels; skip when none of its inputs changed. colorCache is nulled by look changes. */
+    var sig = tw + 'x' + th + '|' + geo.sh + '|' + geo.ch + '|' + mode + '|' + (WR ? WR.total : 0) + '|' + (colorCache ? 1 : 0)
+      + '|' + (d ? d.version : 0) + '|' + V.n + '|' + caret.r + ':' + caret.c
+      + '|' + (find.open ? find.hits.length + ':' + find.cur : '-') + '|' + R.behavior.diagnostics + '|' + R.lines.minimap;
+    if (sig === drawSig && canvas.width) return;
+    drawSig = sig;
     var dpr = window.devicePixelRatio || 1;
     var W0 = Math.round(tw * dpr), H0 = Math.round(th * dpr);
     if (canvas.width !== W0) canvas.width = W0;
@@ -202009,12 +202111,17 @@ function mountEditor(host, st, api) {
     if (sz && sz.final === false) {
       var nowMs = performance.now();
       if (nowMs - resizeFullAt < 120) {
-        layout(); updateThumb(); updateHbar(); queueDraw();
+        /* Between cadence ticks do not even layout(): it rescans the wrap map over every line and
+           re-derives scroll geometry, while the rendered rows still follow the previous map. Keeping
+           geo, the wrap map and the rows on the same (≤120ms old) geometry is consistent; adopting a
+           new wrap map under rows painted against the old one would not be. Thumbs follow stale geo
+           for the same interval; the trailing pass below restores exactness. */
+        updateThumb(); updateHbar(); queueDraw();
         if (!resizeTrailT) resizeTrailT = setTimeout(function () { resizeTrailT = 0; onResize({ final: false }); }, 120);
         return;
       }
       resizeFullAt = nowMs;
-    }
+    } else if (resizeTrailT) { clearTimeout(resizeTrailT); resizeTrailT = 0; }
     if (sz && sz.final === false && mode === 'diff') { layout(); renderRows(true); renderOverlays(); updateThumb(); return; }
     var changed = resolveLayout(false);
     if (!changed) { layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar(); sticky._key = null; updateSticky(); }
@@ -202101,15 +202208,16 @@ function mountEditor(host, st, api) {
      slider being dragged repaints without rebuilding a row */
   function colorSig() { var c = R.colors; return [c.syntax, c.bracketPairs]; }
   function rowLookKey() { return JSON.stringify([colorSig(), R.lines, R.behavior.diagnostics, IND.unit, IND.tabs]); }
-  var appliedLook = '';
+  var appliedLook = '', appliedLookRef = null;
   function onLook(R2) {
     // The owner of a parked preview resumes its latest look after a cover.
     // Model broadcasts and late font arrivals must honor the same guard as
     // that owner's idle preparation, before any style or geometry is read.
     if (paintDeferred()) return;
+    if (R2 === appliedLookRef) { if (preview && pendingLayout && isShown()) relayoutAll(); return; }
     var applied = JSON.stringify(R2);
-    if (applied === appliedLook) { if (preview && pendingLayout && isShown()) relayoutAll(); return; }
-    appliedLook = applied;
+    if (applied === appliedLook) { appliedLookRef = R2; if (preview && pendingLayout && isShown()) relayoutAll(); return; }
+    appliedLook = applied; appliedLookRef = R2;
     var prev = R; R = R2;
     if (!alive) return;
     var reopened = resolveIndent();
@@ -202140,7 +202248,7 @@ function mountEditor(host, st, api) {
   }
   geoSig = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
   lookSig = rowLookKey();
-  appliedLook = JSON.stringify(R);
+  appliedLook = JSON.stringify(R); appliedLookRef = R;
   function noTokens(k, x) { return k === 'tokens' ? undefined : x; }
   var drawKey = JSON.stringify(R, noTokens);
   applyAttrs();
@@ -206654,8 +206762,10 @@ function mountBrowser(host, st, api) {
     api.saveSoon();
     api.announce(S.devtools ? 'DevTools shown' : 'DevTools hidden');
   }
-  function placeDock() {
-    var sz = api.size();
+  function placeDock(knownW) {
+    // onResize hands over the host's measured size; re-reading it here would force a layout right
+    // after the host wrote the new panel geometry, once per drag frame.
+    var sz = knownW != null ? { w: knownW } : api.size();
     dock = sz.w >= 900 ? 'right' : 'below';
     root.setAttribute('data-dock', dock);
     if (dock === 'right') {
@@ -207159,7 +207269,7 @@ function mountBrowser(host, st, api) {
 
   return {
     focus: function () { if (page && page.missing) addrIn.focus(); else viewport.focus({ preventScroll: true }); },
-    onResize: function () { placeDock(); hl.hidden = true; if (picked) outline(pickBox, picked.el, null); positionPrompt(); },
+    onResize: function (sz) { placeDock(sz && sz.width); hl.hidden = true; if (sz && sz.final === false) return; if (picked) outline(pickBox, picked.el, null); positionPrompt(); },
     onHide: function () { disarm(); closePrompt(); },
     wantsKey: function (e) { return e.key === 'Escape' && (!!armed || !prompt.hidden); },
     /* an open of this tab that carries an address (the chat, Ports, an agent) goes there; other keys are ignored */
@@ -296177,6 +296287,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(followHoldFn&&followHoldFn()){ glideTs=0; return; }
     const limit=el.scrollHeight-el.clientHeight, target=followTargetFn&&followTargetFn(el,limit);
     const max=target==null?limit:Math.min(limit,target), cur=el.scrollTop, d=max-cur;
+    // Hosted resize drag: the transcript is rewrapping every frame and the glide's reads pay that
+    // frame's forced layout in every drag (even Home divider drags). While stuck to the bottom,
+    // pin instantly (the same follow target/clamp) and let the normal glide resume after release.
+    if(document.body && document.body.classList.contains('pm-resizing')){ if(d>0.5) writeScrollInstant(el,max); glideTs=0; glideRAF=requestAnimationFrame(glideStep); return; }
     if(target!=null&&d<-.5){ writeScrollInstant(el,max); glideRAF=requestAnimationFrame(glideStep); return; }
     if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
     const tn=performance.now(), dt=glideTs?Math.min(GLIDE_DT_MAX,Math.max(1,tn-glideTs)):16.7; glideTs=tn;
@@ -296351,7 +296465,15 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     jumpScrollEl=tr;
     if(tr){
       tr.addEventListener('scroll', onTranscriptScroll, {passive:true});
-      jumpResizeRO=new ResizeObserver(()=>syncJumpBottom());
+      let jumpTrail=null, jumpLast=0;
+      jumpResizeRO=new ResizeObserver(()=>{
+        // During a hosted resize drag the transcript box changes every frame; the jump pill may lag
+        // one 100ms cadence (same rule as runChromeSync) instead of reading scroll metrics per frame.
+        if(document.body && document.body.classList.contains('pm-resizing')){
+          if(performance.now()-jumpLast<100){ if(!jumpTrail) jumpTrail=setTimeout(()=>{jumpTrail=null;jumpLast=performance.now();syncJumpBottom();},100); return; }
+        }
+        jumpLast=performance.now(); syncJumpBottom();
+      });
       jumpResizeRO.observe(tr);
     }
   }

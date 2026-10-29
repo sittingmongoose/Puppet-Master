@@ -696,8 +696,10 @@ function mountBrowser(host, st, api) {
     api.saveSoon();
     api.announce(S.devtools ? 'DevTools shown' : 'DevTools hidden');
   }
-  function placeDock() {
-    var sz = api.size();
+  function placeDock(knownW) {
+    // onResize hands over the host's measured size; re-reading it here would force a layout right
+    // after the host wrote the new panel geometry, once per drag frame.
+    var sz = knownW != null ? { w: knownW } : api.size();
     dock = sz.w >= 900 ? 'right' : 'below';
     root.setAttribute('data-dock', dock);
     if (dock === 'right') {
@@ -1201,7 +1203,7 @@ function mountBrowser(host, st, api) {
 
   return {
     focus: function () { if (page && page.missing) addrIn.focus(); else viewport.focus({ preventScroll: true }); },
-    onResize: function () { placeDock(); hl.hidden = true; if (picked) outline(pickBox, picked.el, null); positionPrompt(); },
+    onResize: function (sz) { placeDock(sz && sz.width); hl.hidden = true; if (sz && sz.final === false) return; if (picked) outline(pickBox, picked.el, null); positionPrompt(); },
     onHide: function () { disarm(); closePrompt(); },
     wantsKey: function (e) { return e.key === 'Escape' && (!!armed || !prompt.hidden); },
     /* an open of this tab that carries an address (the chat, Ports, an agent) goes there; other keys are ignored */

@@ -50,3 +50,15 @@
    the sheet itself reads them (#pmOverlayRoot > .pmx-sheet's transform-origin); an open History is 1,325 elements */
 .pm56-host > :not(.pmx-sheet),
 .pm56-host > .pmx-sheet > * { --pmx-from-x: initial; --pmx-from-y: initial; }
+
+/* Resize-drag paint diet (2026-10-28 pass 2): while the host page is mid-drag the transcript rewraps every
+   frame; ambient infinite animations repaint on top of that for no user benefit (the eyes are on the edge).
+   Pausing the play state keeps each element's current keyframe — the shimmer band freezes where it is rather
+   than vanishing — and everything resumes on release. The composer's soft shadow is width-dependent paint;
+   its border keeps the shape while dragging. Drag-scoped only: resting pixels unchanged. */
+body.pm-resizing .pm56-host :is(.pm-shimmer, .tx-stretch-verb.pm-shimmer, .todo-glyph-pulse,
+  .status-dot.working, .status-dot.reviewing, .status-branch, .state-mark.live, .lane-wave i, .lane-pulse) {
+  animation-play-state: paused;
+}
+body.pm-resizing .pm56-host .composer-box,
+body.pm-resizing .pm56-host .chat-stage .composer-box { box-shadow: none; }

@@ -3010,6 +3010,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(followHoldFn&&followHoldFn()){ glideTs=0; return; }
     const limit=el.scrollHeight-el.clientHeight, target=followTargetFn&&followTargetFn(el,limit);
     const max=target==null?limit:Math.min(limit,target), cur=el.scrollTop, d=max-cur;
+    // Hosted resize drag: the transcript is rewrapping every frame and the glide's reads pay that
+    // frame's forced layout in every drag (even Home divider drags). While stuck to the bottom,
+    // pin instantly (the same follow target/clamp) and let the normal glide resume after release.
+    if(document.body && document.body.classList.contains('pm-resizing')){ if(d>0.5) writeScrollInstant(el,max); glideTs=0; glideRAF=requestAnimationFrame(glideStep); return; }
     if(target!=null&&d<-.5){ writeScrollInstant(el,max); glideRAF=requestAnimationFrame(glideStep); return; }
     if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
     const tn=performance.now(), dt=glideTs?Math.min(GLIDE_DT_MAX,Math.max(1,tn-glideTs)):16.7; glideTs=tn;
@@ -3184,7 +3188,15 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     jumpScrollEl=tr;
     if(tr){
       tr.addEventListener('scroll', onTranscriptScroll, {passive:true});
-      jumpResizeRO=new ResizeObserver(()=>syncJumpBottom());
+      let jumpTrail=null, jumpLast=0;
+      jumpResizeRO=new ResizeObserver(()=>{
+        // During a hosted resize drag the transcript box changes every frame; the jump pill may lag
+        // one 100ms cadence (same rule as runChromeSync) instead of reading scroll metrics per frame.
+        if(document.body && document.body.classList.contains('pm-resizing')){
+          if(performance.now()-jumpLast<100){ if(!jumpTrail) jumpTrail=setTimeout(()=>{jumpTrail=null;jumpLast=performance.now();syncJumpBottom();},100); return; }
+        }
+        jumpLast=performance.now(); syncJumpBottom();
+      });
       jumpResizeRO.observe(tr);
     }
   }

@@ -1125,15 +1125,24 @@
       var tb = byId('fmToolbar'); if (!tb) return;
       var chip = byId('fmSelChip');
       var chipLbl = chip ? chip.querySelector('.fm-selchip-lbl') : null;
+      /* The labelled width is intrinsic (content/font/theme), not a function of the available width.
+         Probing it by toggling the class and reading scrollWidth on every observer delivery forced a
+         layout per rail-drag frame. Measure it once (an overflowing scrollWidth IS the intrinsic
+         width), then decide from the cached value against the current width. */
+      var fitCache = { key: null, labelled: 0 };
+      function applyFit(labelled, avail) {
+        tb.classList.toggle('txt', labelled <= avail);
+        if (chip && chipLbl && chip.style.display !== 'none') chipLbl.style.display = labelled > avail ? 'none' : '';
+      }
       function fit() {
+        var avail = tb.clientWidth + 1;
+        var key = tb.textContent + '|' + document.documentElement.getAttribute('data-theme') + '|' + (document.fonts ? document.fonts.status : '');
+        if (fitCache.key === key && fitCache.labelled > 0) { applyFit(fitCache.labelled, avail); return; }
         if (chipLbl) chipLbl.style.display = '';
         tb.classList.add('txt');
-        var fits = tb.scrollWidth <= tb.clientWidth + 1;
-        if (!fits) tb.classList.remove('txt');
-        if (chip && chipLbl && chip.style.display !== 'none') {
-          chipLbl.style.display = '';
-          if (tb.scrollWidth > tb.clientWidth + 1) chipLbl.style.display = 'none';
-        }
+        var sw = tb.scrollWidth;
+        if (sw > tb.clientWidth) fitCache = { key: key, labelled: sw };
+        applyFit(sw, avail);
       }
       fit();
       if ('ResizeObserver' in window) new ResizeObserver(fit).observe(tb);

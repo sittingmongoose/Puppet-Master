@@ -231,6 +231,17 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
   border-radius: var(--lg-r-bar) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 16px 34px -18px var(--lg-shadow), 0 1px 4px var(--lg-shadow-near) !important;
 }
+/* Resize-drag paint diet (2026-10-28 pass 2): while a column divider drags, the sheets being resized repaint
+   their six-layer background stack every frame; the baked specular/rim/glow images are size-locked to the
+   previous geometry anyway (glass.js holds bakes during .pm-resizing), so flatten them and the deep shadow
+   for the gesture. Tint, head shade and frost stay, so the sheet still reads as glass; the exact optics
+   return on release when the held bake flushes. The vars are written inline by glass.js, hence !important. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) body.pm-resizing :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"]) {
+  --lg-spec: none !important;
+  --lg-glow: none !important;
+  --lg-ring: none !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot) !important;
+}
 /* Jared #13 (2026-10-14): while its scroller moves, a sheet's frost is pinned to the viewport by the browser itself, so
    it never trails the content (glass.js sets data-lg-fixed at the first scroll event and lifts it when the scroll settles) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed] {

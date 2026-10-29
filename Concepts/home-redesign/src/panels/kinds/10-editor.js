@@ -2477,11 +2477,20 @@ function mountEditor(host, st, api) {
     var mk = marksOf(d);
     return mk ? mk.kinds[r] : '';
   }
+  var drawSig = null;
   function drawTrack() {
     if (special || !V) return;
     timers.drawQueued = false;
     var tw = trackW, th = geo.trackH;
     if (!tw || !th) return;
+    /* The minimap is a function of the document, wrap map, geometry and colours only. Width-only
+       resizes (and every cadence-skipped cheap resize) used to rescan every line to redraw the
+       same pixels; skip when none of its inputs changed. colorCache is nulled by look changes. */
+    var sig = tw + 'x' + th + '|' + geo.sh + '|' + geo.ch + '|' + mode + '|' + (WR ? WR.total : 0) + '|' + (colorCache ? 1 : 0)
+      + '|' + (d ? d.version : 0) + '|' + V.n + '|' + caret.r + ':' + caret.c
+      + '|' + (find.open ? find.hits.length + ':' + find.cur : '-') + '|' + R.behavior.diagnostics + '|' + R.lines.minimap;
+    if (sig === drawSig && canvas.width) return;
+    drawSig = sig;
     var dpr = window.devicePixelRatio || 1;
     var W0 = Math.round(tw * dpr), H0 = Math.round(th * dpr);
     if (canvas.width !== W0) canvas.width = W0;
@@ -3737,12 +3746,17 @@ function mountEditor(host, st, api) {
     if (sz && sz.final === false) {
       var nowMs = performance.now();
       if (nowMs - resizeFullAt < 120) {
-        layout(); updateThumb(); updateHbar(); queueDraw();
+        /* Between cadence ticks do not even layout(): it rescans the wrap map over every line and
+           re-derives scroll geometry, while the rendered rows still follow the previous map. Keeping
+           geo, the wrap map and the rows on the same (≤120ms old) geometry is consistent; adopting a
+           new wrap map under rows painted against the old one would not be. Thumbs follow stale geo
+           for the same interval; the trailing pass below restores exactness. */
+        updateThumb(); updateHbar(); queueDraw();
         if (!resizeTrailT) resizeTrailT = setTimeout(function () { resizeTrailT = 0; onResize({ final: false }); }, 120);
         return;
       }
       resizeFullAt = nowMs;
-    }
+    } else if (resizeTrailT) { clearTimeout(resizeTrailT); resizeTrailT = 0; }
     if (sz && sz.final === false && mode === 'diff') { layout(); renderRows(true); renderOverlays(); updateThumb(); return; }
     var changed = resolveLayout(false);
     if (!changed) { layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar(); sticky._key = null; updateSticky(); }
@@ -3829,15 +3843,16 @@ function mountEditor(host, st, api) {
      slider being dragged repaints without rebuilding a row */
   function colorSig() { var c = R.colors; return [c.syntax, c.bracketPairs]; }
   function rowLookKey() { return JSON.stringify([colorSig(), R.lines, R.behavior.diagnostics, IND.unit, IND.tabs]); }
-  var appliedLook = '';
+  var appliedLook = '', appliedLookRef = null;
   function onLook(R2) {
     // The owner of a parked preview resumes its latest look after a cover.
     // Model broadcasts and late font arrivals must honor the same guard as
     // that owner's idle preparation, before any style or geometry is read.
     if (paintDeferred()) return;
+    if (R2 === appliedLookRef) { if (preview && pendingLayout && isShown()) relayoutAll(); return; }
     var applied = JSON.stringify(R2);
-    if (applied === appliedLook) { if (preview && pendingLayout && isShown()) relayoutAll(); return; }
-    appliedLook = applied;
+    if (applied === appliedLook) { appliedLookRef = R2; if (preview && pendingLayout && isShown()) relayoutAll(); return; }
+    appliedLook = applied; appliedLookRef = R2;
     var prev = R; R = R2;
     if (!alive) return;
     var reopened = resolveIndent();
@@ -3868,7 +3883,7 @@ function mountEditor(host, st, api) {
   }
   geoSig = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
   lookSig = rowLookKey();
-  appliedLook = JSON.stringify(R);
+  appliedLook = JSON.stringify(R); appliedLookRef = R;
   function noTokens(k, x) { return k === 'tokens' ? undefined : x; }
   var drawKey = JSON.stringify(R, noTokens);
   applyAttrs();

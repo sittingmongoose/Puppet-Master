@@ -71,9 +71,19 @@ PM_HOME.boot = function () {
   try { persist.foldSaved(); } catch (err) { try { console.error('[pm-home] saved layouts could not be folded', err); } catch (_) {} }
   try { persist.watchProject(); } catch (err) { try { console.error('[pm-home] project watch failed', err); } catch (_) {} }
   if (typeof ResizeObserver === 'function') {
-    new ResizeObserver(function () {
+    new ResizeObserver(function (entries) {
       if (!homeIsPage()) return;
       narrow.schedule();
+      /* During a resize drag the scheduled paint lands a frame after the rail/chat edge that caused it
+         (panels visibly trail the edge). The observer's own box is already the post-layout size, so paint
+         from it in this frame; the observer remains the source of truth — any later size paints again. */
+      if (doc.body && doc.body.classList.contains('pm-resizing') && entries && entries[0] && entries[0].contentRect) {
+        var cr = entries[0].contentRect, pad = PMW.CENTRE_PAD || 6;
+        try {
+          render.now({ animate: false, centreRect: { x: pad, y: pad, w: Math.max(0, cr.width - 2 * pad), h: Math.max(0, cr.height - 2 * pad) } });
+          return;
+        } catch (_) { /* fall through to the scheduled paint */ }
+      }
       render.schedule({ animate: false });
     }).observe(centre);
   }

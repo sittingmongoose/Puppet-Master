@@ -347,9 +347,22 @@
      that changes its host's height cannot loop the observer); flow charts (content sets their height) track width only.
      A box of 0 x 0 is a hidden page or tab (D10 7.1): the chart keeps the size it was drawn at and draws again only when it
      shows at another size. */
-  var watched = new Map(), resizeQ = [], resizeRaf = 0;
+  var watched = new Map(), resizeQ = [], resizeRaf = 0, resizeHoldT = 0;
+  /* While a shell/Home resize drag runs, chart hosts change size every frame and each redraw is obsolete
+     a frame later (the board itself already defers non-final resizes; these per-chart observers defeated
+     that). Park the queue and flush it once the drag ends: _w/_h still hold the drawn size, so the flush
+     sees the difference and redraws exactly the charts whose hosts moved. */
+  function holdResizes() {
+    if (resizeHoldT) return;
+    resizeHoldT = setInterval(function () {
+      if (document.body && document.body.classList.contains('pm-resizing')) return;
+      clearInterval(resizeHoldT); resizeHoldT = 0;
+      if (resizeQ.length && !resizeRaf) resizeRaf = requestAnimationFrame(runResizes);
+    }, 120);
+  }
   function runResizes() {
     resizeRaf = 0;
+    if (document.body && document.body.classList.contains('pm-resizing')) { holdResizes(); return; }
     var list = resizeQ; resizeQ = [];
     var sizes = list.map(function (c) { return c._dead || gone(c) ? null : { w: c.host.clientWidth, h: c.host.clientHeight }; });
     list.forEach(function (c, i) {

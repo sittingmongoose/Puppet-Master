@@ -298,16 +298,18 @@ function middleEllipsis(el, rec, size) {
      label; while resizing, fit against the room rounded down to 24px buckets (a text fitted for the
      bucket always fits the room), so a label refits at most once per 24px travelled and reuses its fit
      while the room only grows. The first non-resizing paint refits at the exact room again. */
-  var resizing = !!(typeof state !== 'undefined' && state && state.resizing);
+  var resizing = !!((typeof state !== 'undefined' && state && state.resizing) || (doc.body && doc.body.classList.contains('pm-resizing')));
   var fitRoom = resizing ? Math.max(24, Math.floor(room / 24) * 24) : room;
   var theme = doc.documentElement.getAttribute('data-theme') + '|' + size + '|' + (doc.fonts ? doc.fonts.status : '');
   var cache = lab._pmwEll;
-  if (cache && cache.full === full && cache.theme === theme && (cache.room === fitRoom || (resizing && fitRoom > cache.room))) {
+  if (cache && cache.full === full && cache.theme === theme && cache.room >= 0 && (cache.room === fitRoom || (resizing && fitRoom > cache.room))) {
     if (lab.textContent !== cache.out) lab.textContent = cache.out;
     return;
   }
   if (lab.textContent !== full) lab.textContent = full;
-  if (lab.scrollWidth <= room) { lab._pmwEll = { full: full, theme: theme, room: fitRoom, out: full }; return; }
+  // cache the full-fit result against fitRoom only when it truly fits fitRoom (the bucket is below room
+  // while resizing; claiming the bucket would let a later smaller room reuse an overflowing full label)
+  if (lab.scrollWidth <= room) { lab._pmwEll = { full: full, theme: theme, room: lab.scrollWidth <= fitRoom ? fitRoom : -1, out: full }; return; }
   function fits(t) { lab.textContent = t; return lab.scrollWidth <= fitRoom; }
   var dot = full.lastIndexOf('.');
   var ext = dot > 0 && full.length - dot <= 6 ? full.length - dot : 0;
@@ -367,7 +369,10 @@ function updateTab(el, rec, p, l) {
   var inst = instances[rec.id];
   if (inst) el.setAttribute('aria-controls', inst.host.id); else el.removeAttribute('aria-controls');
   var lab = el.querySelector('.pmw-tlabel');
-  setText(lab, label);
+  /* The fitted (middle-truncated) text IS this label's text at the current room: restoring the full label
+     here on every strip prepare only to have middleEllipsis truncate it again in finish wrote the label
+     twice per paint and flushed layout in between. Keep the fitted text while it fits this same label. */
+  if (!(lab._pmwEll && lab._pmwEll.full === label && lab.textContent === lab._pmwEll.out)) setText(lab, label);
   // icon: the pushed one, the kind's iconFor, the kind's own (tabIcon, 22-render.js)
   var ico = el.querySelector('.pmw-tico');
   var k = kindDef(rec.kind);
