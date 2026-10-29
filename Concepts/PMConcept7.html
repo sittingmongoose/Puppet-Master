@@ -67300,7 +67300,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root aside.domain
        but its not used in a lot of places... Like in the settings/usage/left rail sections and the transcript area of
        the new chat system"). Friendly is the DS / 3DS / Wii / Wii U menus, Cocoon and iiSU: the same 18 px dot grid as
        Friendly's ground, with its soft mint and lavender light, now behind Usage's cards and behind Settings' sections
-       (the rail's panels had them too, until 2026-10-29: see below). The dots ride with the content as it scrolls (local attachment), like a handheld's menu, and
+       (the rail's panel had them too, until 2026-10-29: see below). The dots ride with the content as it scrolls (local attachment), like a handheld's menu, and
        never sit inside a card under text. The chat transcript's dots were the stand-in chat's (#pmw-chat), which was
        removed on 2026-10-23 (DL-233); the hosted 5.6 Pro chat never drew them.
    --------------------------------------------------------------------------------------------------------------- */
@@ -67316,18 +67316,9 @@ html[data-lg="on"][data-theme^="friendly"] #pm-settings-root .document-main {
   background-attachment: local, local, local !important;
 }
 html[data-lg="on"][data-theme^="friendly"] #pmuScroll { background: transparent !important; }
-/* ...but not in the left rail (Jared, 2026-10-29: "I dont think the friendly themes dot pattern should be in the left
-   rail"; it had the panel's dots from 2026-10-11, and the activity bar and its gutter showed the ground's). The rail's
-   panel is its plain surface, and the column around it (the activity bar and the gutter beside the panel) is the ground
-   without its dots: the paper and the ground's three soft lights, fixed to the window as the ground's are, so the rail's
-   edge meets the ground with no seam. A chosen wallpaper (data-lg-wall-any) keeps showing through the rail as before. */
-html[data-lg="on"][data-theme^="friendly"]:not([data-lg-wall-any]):not([data-o55-nier="on"]) .left-panel {
-  background:
-    radial-gradient(46% 38% at 16% 6%, var(--pm6-cozy-glow-mint), transparent 65%) fixed,
-    radial-gradient(50% 42% at 88% 12%, var(--pm6-cozy-glow-lav), transparent 65%) fixed,
-    radial-gradient(55% 40% at 55% 108%, var(--pm6-cozy-glow-sky), transparent 65%) fixed,
-    var(--background) !important;
-}
+/* ...but not in the left rail's panel (Jared, 2026-10-29: "I dont think the friendly themes dot pattern should be in
+   the left rail"; it had them from 2026-10-11). The panel is its plain surface; the icon column beside it keeps the
+   ground's dots (Jared: "the icon column can keep the dot background"). */
 
 /* ---------------------------------------------------------------------------------------------------------------
    11. Onboarding and the tour in Liquid Glass (Jared, 2026-10-11: "dont forget about the onboarding wizard and the
