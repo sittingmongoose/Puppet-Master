@@ -218,8 +218,25 @@
     const name = D.querySelector('.title-bar .app-name');
     if (name) delete name.dataset.ppkLogo;
     refresh();
-    // the bar's widths changed: PMConcept7 re-measures its tab ink and its title-bar density on resize
-    requestAnimationFrame(() => requestAnimationFrame(() => W.dispatchEvent(new Event('resize'))));
+    tabsMoved();
+    report('state');
+  }
+  /* The title bar lays out the logo, this box and then the page tabs, so whenever the box changes width (another option,
+     another project's name, a long name, the density fold) the tabs move and the chosen tab's ink has to follow them.
+     PMConcept7 re-measures its ink and its title-bar density on a window resize; one is sent per frame at most. */
+  let lastW = -1, pending = false;
+  function tabsMoved() {
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(() => requestAnimationFrame(() => { pending = false; W.dispatchEvent(new Event('resize')); }));
+  }
+  function watchWidth() {
+    const wrap = $('projectMenuWrap');
+    if (!wrap || !W.ResizeObserver) return;
+    new W.ResizeObserver(() => {
+      const w = Math.round(wrap.getBoundingClientRect().width);
+      if (Math.abs(w - lastW) >= 1) { lastW = w; tabsMoved(); }
+    }).observe(wrap);
   }
   const API = {
     OPTIONS, STATES: Object.keys(STATES),
@@ -227,20 +244,49 @@
     before(on) { S.before = !!on; apply(); },
     state(s) { if (s in STATES) { S.state = s; apply(); } },
     long(on) { S.long = !!on; apply(); },
+    config(c) {
+      if (c.opt === 'before') S.before = true; else if (OPTIONS.indexOf(c.opt) >= 0) { S.opt = c.opt; S.before = false; }
+      if (c.state in STATES) S.state = c.state;
+      if (typeof c.long === 'boolean') S.long = c.long;
+      apply();
+    },
     look: setLook,
     open() { const b = $('projectMenuBtn'); if (b && b.getAttribute('aria-expanded') !== 'true') b.click(); },
     close() { D.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })); },
-    get: () => Object.assign({}, S, { look: logoKey() })
+    get: () => ({ opt: S.opt, before: S.before, state: S.state, long: S.long, look: logoKey() })
   };
+
+  /* The page around PMConcept7 (index.html) speaks by message only: in a sandboxed preview the two have different origins,
+     and neither can reach into the other. */
+  function report(type) { if (W.parent !== W) { try { W.parent.postMessage({ source: 'ppk', type, state: API.get() }, '*'); } catch (e) { /* no parent */ } } }
+  W.addEventListener('message', async (ev) => {
+    const m = ev.data;
+    if (!m || m.source !== 'ppk-host' || ev.source !== W.parent) return;
+    if (m.cmd === 'hello') report('ready');
+    else if (m.cmd === 'config') API.config(m);
+    else if (m.cmd === 'look') { await API.look(m.look); report('look-done'); }
+    else if (m.cmd === 'menu') { API.close(); await wait(120); API.open(); }
+    else if (m.cmd === 'motion') { if (m.reduced) H.setAttribute('data-motion', 'reduced'); else if (H.getAttribute('data-motion') === 'reduced') H.removeAttribute('data-motion'); }
+  });
+  // 1 to 4 pick an option and 0 shows today's box, here too (never while typing, never with a modifier)
+  D.addEventListener('keydown', (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey || e.defaultPrevented) return;
+    const t = e.target, tag = (t && t.tagName) || '';
+    if (/input|select|textarea/i.test(tag) || (t && t.isContentEditable)) return;
+    const map = { 1: 'tab', 2: 'crumb', 3: 'plate', 4: 'sign', 0: 'before' };
+    if (map[e.key]) API.config({ opt: map[e.key] });
+  });
 
   function boot(n) {
     if (!build() || !W.PMG) { if (n < 100) setTimeout(() => boot(n + 1), 100); return; }
     W.PPK = API;
-    new MutationObserver(() => { const nm = D.querySelector('.title-bar .app-name'); if (nm) delete nm.dataset.ppkLogo; paintLogo(); refresh(); })
+    new MutationObserver(() => { const nm = D.querySelector('.title-bar .app-name'); if (nm) delete nm.dataset.ppkLogo; paintLogo(); refresh(); report('state'); })
       .observe(H, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] });
     if (D.fonts && D.fonts.ready) D.fonts.ready.then(placeStrings);
+    watchWidth();
     apply();
     W.dispatchEvent(new CustomEvent('ppk:ready'));
+    report('ready');
   }
   boot(0);
 })(window);

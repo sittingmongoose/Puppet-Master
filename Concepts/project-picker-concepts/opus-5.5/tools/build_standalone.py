@@ -25,8 +25,15 @@ PARTS = [
     ("script", HERE.parent.parent / "Icon-Concepts" / "Opus5.5icon" / "pm-logo.js"),
     ("script", HERE / "picker.js"),
 ]
-FIRST = ("<script>try{if(!localStorage.getItem('pm.o55.onboarding.v1')){localStorage.setItem('pm.o55.onboarding.v1',"
-         "JSON.stringify({schema:'pm.o55.onboarding.v1',status:'done',source:'project-box-concept'}));}}catch(e){}</script>")
+# A sandboxed preview (T3's file preview) gives the frame an opaque origin with no storage at all: there PMConcept7 gets an
+# in-memory stand-in, so its Settings, look switching and onboarding record work for the visit and keep nothing.
+FIRST = ("<script>(function(){var ok=true;try{localStorage.getItem('x');}catch(e){ok=false;}"
+         "if(!ok){var m=new Map();var s={getItem:function(k){return m.has(String(k))?m.get(String(k)):null;},"
+         "setItem:function(k,v){m.set(String(k),String(v));},removeItem:function(k){m.delete(String(k));},clear:function(){m.clear();},"
+         "key:function(i){return Array.from(m.keys())[i]||null;},get length(){return m.size;}};"
+         "try{Object.defineProperty(window,'localStorage',{value:s,configurable:true});}catch(e){}}"
+         "try{if(!localStorage.getItem('pm.o55.onboarding.v1')){localStorage.setItem('pm.o55.onboarding.v1',"
+         "JSON.stringify({schema:'pm.o55.onboarding.v1',status:'done',source:'project-box-concept'}));}}catch(e){}})();</script>")
 
 
 def main():

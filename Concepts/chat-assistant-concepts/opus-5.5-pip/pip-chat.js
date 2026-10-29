@@ -901,7 +901,44 @@
     markSvg, markInner, decorate, rerender, hosts: () => [...HOSTS].map((s) => ({ kind: s.kind, mood: s.mood })),
     feel: (mood, hold) => HOSTS.forEach((st) => feel(st, mood, hold))
   });
+  /* The concept page around the chat (index.html) speaks by message only. In a sandboxed preview (T3's file preview) the
+     shared single file's chat has an origin of its own, and reaching into it from outside fails; messages cross that line.
+     These open a surface the way a person would: the wand, its group, the row. */
+  const pause = (ms) => new Promise((r) => setTimeout(r, ms));
+  async function press(sel) { const el = D.querySelector(sel); if (el) { el.click(); await pause(380); return true; } return false; }
+  async function escape() { for (let i = 0; i < 3; i++) { D.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })); await pause(120); } }
+  async function openRow(group, action, kind) {
+    await escape();
+    await press('[data-menu="wand"]');
+    const sel = `.overlay-menu button[data-action="${action}"]${kind ? `[data-kind="${kind}"]` : ''}`;
+    if (!D.querySelector(sel)) {
+      const g = [...D.querySelectorAll('.overlay-menu [data-action="polish-wand-group"]')].find((x) => x.textContent.trim().indexOf(group) === 0);
+      if (g) { g.click(); await pause(380); }
+    }
+    await press(sel);
+  }
+  async function openSurface(v) {
+    const X = W.PM56_DEMO;
+    if (!v || !X) return;
+    if (v === '@plan') { await escape(); X.openPlan(); return; }
+    if (v === '@subagents') { await escape(); X.openActivity('subagents'); return; }
+    if (v === '@wand') { await escape(); await press('[data-menu="wand"]'); return; }
+    if (v === '@pip') { await escape(); W.PIP_CHAT.open(); return; }
+    if (v === '@studio') { await escape(); const btn = [...D.querySelectorAll('button')].find((x) => /Demo Studio/.test(x.textContent)); if (btn) btn.click(); return; }
+    const [group, action, kind] = v.split('|');
+    await openRow(group, action, kind);
+  }
+  const tell = (type) => { if (W.parent !== W) { try { W.parent.postMessage({ source: 'pip-chat', type, theme: D.body.getAttribute('data-theme') }, '*'); } catch (e) { /* no parent */ } } };
+  W.addEventListener('message', async (ev) => {
+    const m = ev.data;
+    if (!m || m.source !== 'pip-host' || ev.source !== W.parent) return;
+    if (m.cmd === 'hello') tell('ready');
+    else if (m.cmd === 'open') await openSurface(m.v);
+    else if (m.cmd === 'theme' && W.PM56_DEMO) { W.PM56_DEMO.setTheme(m.theme); tell('theme'); }
+    else if (m.cmd === 'motion') D.documentElement.setAttribute('data-motion', m.reduced ? 'reduced' : 'full');
+  });
+
   // the chat was drawn before this file arrived: decorate what is there, then let it re-render through the hook
-  const boot = () => { decorate(D.body); rerender(); };
+  const boot = () => { decorate(D.body); rerender(); tell('ready'); };
   if (W.PM56_DEMO && D.body && D.body.getAttribute('data-theme')) boot(); else W.addEventListener('load', boot, { once: true });
 })(window);

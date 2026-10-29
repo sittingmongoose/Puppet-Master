@@ -83,6 +83,13 @@ The bar at the top of the page is for reviewing, not part of the chat:
 - **Pip settings** opens the Pip settings sheet.
 - **Concept Hub:** its theme and reduced-motion state are passed through to the chat.
 
+The bar and the chat talk only by `postMessage`:
+
+- **From the bar:** `{source: 'pip-host', cmd}` with `hello`, `open`, `theme` and `motion`.
+- **From the chat:** `{source: 'pip-chat', type}`.
+
+`pip-chat.js` opens each surface itself, the way a person would. A sandboxed preview (T3's file preview) gives the single file's chat an origin of its own, where the bar cannot reach into it.
+
 ## Single file
 
     python3 tools/build_standalone.py OUTDIR

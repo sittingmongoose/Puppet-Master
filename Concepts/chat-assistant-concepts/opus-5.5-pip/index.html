@@ -73,18 +73,22 @@
     ['js', new URL('../../onboarding/opus-5.5-pip/sound.js', base).href],
     ['js', new URL('pip-chat.js', base).href]
   ];
-  const win = () => frame.contentWindow, doc = () => frame.contentDocument;
-  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-  const ready = () => { const w = document.getElementById('wait'); if (w) w.remove(); };
+  /* This page and the chat talk by message only. Served (the Concept Hub), the two share an origin and this page also adds
+     Pip to the chat. In the shared single file Pip is already inside, and a sandboxed preview (T3's file preview) gives the
+     chat an origin of its own, where reaching into it fails; messages cross that line. */
+  let live = false;
+  const send = (msg) => { try { frame.contentWindow.postMessage(Object.assign({ source: 'pip-host' }, msg), '*'); } catch (e) { /* not there yet */ } };
   function inject() {
-    const d = doc(); if (!d) return;
-    // the shared single file carries Pip inside the chat already
-    if (d.documentElement.getAttribute('data-pip-chat') === 'on') { ready(); return; }
-    if (d.documentElement.hasAttribute('data-pip-chat')) return;
+    let d = null;
+    try { d = frame.contentDocument; } catch (e) { d = null; }
+    // out of reach, or the shared single file: Pip is inside the chat already
+    if (!d || !d.documentElement || d.documentElement.hasAttribute('data-pip-chat')) return;
+    const W = frame.contentWindow;
+    if (!(W.PM56_DEMO && W.PM56_EXT && d.body && d.body.dataset.theme)) { setTimeout(inject, 100); return; }
     d.documentElement.setAttribute('data-pip-chat', 'loading');
     let i = 0;
     const next = () => {
-      if (i >= STEPS.length) { d.documentElement.setAttribute('data-pip-chat', 'on'); ready(); return; }
+      if (i >= STEPS.length) { d.documentElement.setAttribute('data-pip-chat', 'on'); return; }
       const [kind, url] = STEPS[i++];
       const el = d.createElement(kind === 'css' ? 'link' : 'script');
       if (kind === 'css') { el.rel = 'stylesheet'; el.href = url; } else el.src = url;
@@ -94,49 +98,28 @@
     };
     next();
   }
-  frame.addEventListener('load', () => {
-    // the chat builds itself on load; give it a beat, then bring Pip in
-    const tryIt = (n) => { if (win().PM56_DEMO && win().PM56_EXT && doc().body.dataset.theme) inject(); else if (n < 60) setTimeout(() => tryIt(n + 1), 100); };
-    tryIt(0);
-  });
+  frame.addEventListener('load', () => { live = false; inject(); });
+  // until Pip answers, ask every 300 ms whether it is there (it may have spoken before this page was listening)
+  setInterval(() => { if (!live) send({ cmd: 'hello' }); }, 300);
 
-  /* open a surface the way a person would: the wand, its group, the row */
-  async function press(sel) { const el = doc().querySelector(sel); if (el) { el.click(); await wait(380); return true; } return false; }
-  async function escape() {
-    for (let i = 0; i < 3; i++) { doc().dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })); await wait(120); }
-  }
-  async function openRow(group, action, kind) {
-    await escape();
-    await press('[data-menu="wand"]');
-    const sel = `.overlay-menu button[data-action="${action}"]${kind ? `[data-kind="${kind}"]` : ''}`;
-    if (!doc().querySelector(sel)) {
-      const g = [...doc().querySelectorAll('.overlay-menu [data-action="polish-wand-group"]')].find((b) => b.textContent.trim().indexOf(group) === 0);
-      if (g) { g.click(); await wait(380); }
-    }
-    await press(sel);
-  }
-  async function open(v) {
-    const W = win();
-    if (!v || !W.PM56_DEMO) return;
-    if (v === '@plan') { await escape(); W.PM56_DEMO.openPlan(); return; }
-    if (v === '@subagents') { await escape(); W.PM56_DEMO.openActivity('subagents'); return; }
-    if (v === '@wand') { await escape(); await press('[data-menu="wand"]'); return; }
-    if (v === '@pip') { await escape(); if (W.PIP_CHAT) W.PIP_CHAT.open(); return; }
-    if (v === '@studio') { await escape(); const b = [...doc().querySelectorAll('button')].find((x) => /Demo Studio/.test(x.textContent)); if (b) b.click(); return; }
-    const [group, action, kind] = v.split('|');
-    await openRow(group, action, kind);
-  }
+  const open = (v) => send({ cmd: 'open', v });
+  const themeSel = document.getElementById('theme');
+  function setTheme(t) { send({ cmd: 'theme', theme: t }); themeSel.value = t; }
   document.getElementById('open').addEventListener('change', (e) => { open(e.target.value); e.target.value = ''; });
   document.getElementById('pipset').addEventListener('click', () => open('@pip'));
-  const themeSel = document.getElementById('theme');
-  function setTheme(t) { const W = win(); if (W && W.PM56_DEMO) W.PM56_DEMO.setTheme(t); themeSel.value = t; }
   themeSel.addEventListener('change', () => setTheme(themeSel.value));
-  // the Concept Hub's theme and motion reach the chat inside
   window.addEventListener('message', (ev) => {
     const m = ev.data;
-    if (!m || m.source !== 'pm-concept-hub' || m.type !== 'pm-concept-state' || !m.state) return;
+    if (!m || typeof m !== 'object') return;
+    if (m.source === 'pip-chat' && ev.source === frame.contentWindow) {
+      if (!live && m.type === 'ready') { live = true; const w = document.getElementById('wait'); if (w) w.remove(); }
+      if (m.theme && themeSel.querySelector(`option[value="${m.theme}"]`)) themeSel.value = m.theme;
+      return;
+    }
+    // the Concept Hub's theme and motion reach the chat inside
+    if (m.source !== 'pm-concept-hub' || m.type !== 'pm-concept-state' || !m.state) return;
     if (m.state.theme) setTheme(m.state.theme);
-    const d = doc(); if (d) d.documentElement.setAttribute('data-motion', m.state.reducedMotion ? 'reduced' : 'full');
+    send({ cmd: 'motion', reduced: !!m.state.reducedMotion });
   });
   if (window.parent !== window) window.parent.postMessage({ source: 'pm-concept', type: 'pm-concept-ready' }, '*');
   window.PIP_HOST = { open, setTheme, frame };

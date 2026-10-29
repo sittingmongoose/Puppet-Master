@@ -55,7 +55,7 @@ The chosen row keeps PMConcept7's own chosen-row material (DL-214: Basic's tinte
 
 ## The concept bar
 
-The strip above PMConcept7 is for reviewing. It is not part of the design.
+The strip under PMConcept7 is for reviewing. It is not part of the design. It sits at the bottom so the title bar being judged is the only thing at the top.
 
 - **Option:** A to D, and Today (keys 1 to 4, and 0).
 - **Look:** all ten. Looks are switched through PMConcept7's own theme menu (family, mode, NieR Mode), the way a person would.
@@ -74,13 +74,22 @@ PMConcept7 keeps each project's look in that project's Settings, so the theme me
 2. `../../Icon-Concepts/Opus5.5icon/pm-logo.js` (Pip's drawing kit, for the logo)
 3. `picker.js`
 
-`picker.js` exposes `window.PPK`, with `set`, `before`, `state`, `long`, `look`, `open`, `close` and `get`.
+`picker.js` exposes `window.PPK`, with `set`, `before`, `state`, `long`, `config`, `look`, `open`, `close` and `get`.
+
+The strip and PMConcept7 talk only by `postMessage`:
+
+- **From the strip:** `{source: 'ppk-host', cmd}` with `hello`, `config`, `look`, `menu` and `motion`.
+- **From PMConcept7:** `{source: 'ppk', type, state}`.
+
+The strip never reaches into the frame, because a sandboxed preview gives PMConcept7 an origin of its own. T3's file preview opens HTML that way, and in it the strip's controls did nothing until this change.
+
+When the box changes width (another option, another project's name, a long name, the narrow fold), the page tabs move. The layer then sends one window resize, so PMConcept7 re-measures the chosen tab's ink.
 
 ## Single file
 
     python3 tools/build_standalone.py OUTDIR [path/to/PMConcept7.html]
 
-This writes `OUTDIR/project-box.html` (about 37 MB), with PMConcept7 and the layer inside the frame. A frame built this way has no address to carry `?o55=off`. So a first script writes an onboarding record if none exists, and the page removes that record again when it closes.
+This writes `OUTDIR/project-box.html` (about 37 MB), with PMConcept7 and the layer inside the frame. A frame built this way has no address to carry `?o55=off`. So a first script writes an onboarding record if none exists, and the page removes that record again when it closes. In a sandboxed preview the frame has no storage at all, so the same script gives PMConcept7 an in-memory stand-in. Settings and look switching then work for the visit and keep nothing.
 
 ## What it would touch in Plans
 
