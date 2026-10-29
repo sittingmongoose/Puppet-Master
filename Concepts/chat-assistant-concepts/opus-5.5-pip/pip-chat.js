@@ -462,7 +462,7 @@
       host.setAttribute('data-pip-kind', kind);
       host.setAttribute('aria-hidden', 'true');
       // its box rides in the markup, not only in the stylesheet: a closing sheet keeps only its pmx-* classes
-      host.setAttribute('style', 'flex:none;width:92px;height:66px;margin:-20px 8px -18px 12px;align-self:flex-start;pointer-events:none;position:relative;display:block');
+      host.setAttribute('style', 'flex:none;width:92px;height:66px;margin:-10px 8px -28px 12px;align-self:flex-start;pointer-events:none;position:relative;display:block');
       const close = head.querySelector(':scope > .pmx-close');
       head.insertBefore(host, close || null);
     });
