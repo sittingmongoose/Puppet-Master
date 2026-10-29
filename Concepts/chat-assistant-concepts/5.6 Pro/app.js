@@ -496,8 +496,14 @@
      height (renderChat). Docked, the messages keep at least the 360 px isNarrow() keeps beside pinned History. */
   function activityDocked() {
     if(!state.activity.open || isPhone()) return false;
+    if(HOSTED){
+      /* the History drawer as it is drawn pinned beside the messages, its hairline included (A4: a 200 px fallback
+         let Activity dock beside 331 px of messages when the drawer was its hosted 240) */
+      const fl=document.body.dataset.phDrawer==='pinned'?document.querySelector('#pmOverlayRoot .history-flyout'):null;
+      const drawer=fl?Math.ceil(fl.getBoundingClientRect().width)+1:0;
+      return HOST.width()-drawer>=360+(state.activityWidth||280);
+    }
     const gutter=document.body.dataset.phDrawer==='pinned'?Math.min(360,parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-user-w'))||200):0;
-    if(HOSTED) return HOST.width()-gutter>=360+(state.activityWidth||280);
     return innerWidth>=821 || innerWidth-gutter>=540;
   }
   function focusActivityControl(selector) {
@@ -855,7 +861,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="thread-row ${t.id===state.selectedThread?'active':''}" data-k="thread:${esc(t.id)}" data-action="select-thread" data-id="${esc(t.id)}" tabindex="0"${hoverAttrs('thread-st-'+t.id,statusLabel(t.status))}><span class="thread-lead"><span class="thread-status-slot">${extReplace('threadRowStatus',{thread:t,variant:state.variants[1]},renderStatus(t,state.variants[1]))}</span></span><div class="thread-copy"><div class="thread-title"><span class="thread-time">${esc(t.updated)}</span><span class="thread-name">${esc(t.title)}</span></div><div class="thread-sub"><span class="summary">${esc(t.summary)}</span></div></div><button class="icon-button thread-more" data-action="thread-menu" data-id="${esc(t.id)}" data-menu-anchor="thread-${esc(t.id)}"${hoverAttrs('thread-more-'+t.id,'Thread options')}>${icon('more',14)}</button></div>`;
   }
 
-  function renderHistory(){ return `<aside class="history-panel" data-history-variant="${state.variants[1]}">${renderHistoryContent(false)}<div class="panel-resize" data-resize="history"></div></aside>`; }
+  function renderHistory(){ return `<aside class="history-panel" data-k="history-panel" data-history-variant="${state.variants[1]}">${renderHistoryContent(false)}<div class="panel-resize" data-resize="history"></div></aside>`; }
   function formatText(body){
     return esc(body).split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
   }
@@ -978,7 +984,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function renderChat(){
     const t=activeThread();
-    return `<section class="chat-stage" data-shell="${state.variants[0]}">
+    /* keyed, with the grid's other children (A1): a docked Activity Detail or a pinned History coming or going ahead
+       of it must not make the reconcile take the stage for a new node and replay the transcript */
+    return `<section class="chat-stage" data-k="chat-stage" data-shell="${state.variants[0]}">
       ${renderChatHeader(t)}
       <div class="lens-dock" data-k="context-lens-dock">${renderInlineLens()}</div>
       <div class="transcript" data-variant="${state.variants[5]}" data-voice="${motionVoice()}" data-scroll-key="transcript"><div class="tx-spine-layer" data-k="tx-spine" data-pm-keep aria-hidden="true"></div><div class="transcript-inner">${renderTranscriptItems(t)}</div></div>
@@ -2125,7 +2133,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const headDef=defs[d]||defs[live[0]];
     const filterButton=`<button class="icon-button activity-head-filter" data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}"${hoverAttrs('act-filter','Show or hide category filter')}>${icon('filter',13)}</button>`;
     const overflow=`<details class="activity-head-overflow"><summary class="icon-button" aria-label="More Activity Detail actions">${icon('more',13)}</summary><div class="activity-head-menu"><button data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}">${icon('filter',12)} ${state.activity.filterVisible?'Hide':'Show'} domains</button></div></details>`;
-    return `<aside class="activity-panel${cover?' cover':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    return `<aside class="activity-panel${cover?' cover':''}" data-k="activity-panel-${layout}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
   }
 
   function renderActivitySection(id){

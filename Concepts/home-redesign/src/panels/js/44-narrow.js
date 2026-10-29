@@ -90,8 +90,12 @@ narrow.solve = function (base, railUser, chatW, chatShown, pinned, prev, hist, r
   if (chatShown) c = fit();
   if (chatShown && hist > 0 && on(prev.histDropped, base - s - c, LADDER.chatStrip)) { dropped = true; h = 0; c = fit(); }
   if (chatShown && act > 0 && on(prev.actDropped, base - s - c, LADDER.chatStrip)) { actDropped = true; a = 0; c = fit(); }
+  /* a user-sized column folds only when even its minimum leaves the centre under the floor; held at the floor, its
+     centre would sit exactly on the threshold and never clear the hysteresis back out of the strip (A2), so the fold is
+     decided on the minimum, then the column is held */
+  var cMin = chatShown && chatPinned ? Math.min(c, LADDER.chatMin + h + a) : c;
   if (chatShown && chatPinned) c = Math.max(LADDER.chatMin + h + a, Math.min(c, base - s - LADDER.chatStrip));
-  if (chatShown && !pinned && on(prev.chatStrip, base - s - c, LADDER.chatStrip)) { c = LADDER.chatStripW; strip = true; dropped = hist > 0; actDropped = act > 0; }
+  if (chatShown && !pinned && on(prev.chatStrip, base - s - cMin, LADDER.chatStrip)) { c = LADDER.chatStripW; strip = true; dropped = hist > 0; actDropped = act > 0; }
   var C = base - s - c;
   var one = on(prev.oneColumn, C, LADDER.oneColumn);
   var step = strip ? 4 : one ? 3 : rail === 'fold' ? 2 : (rail === 'ease' || (chatShown && c < chatW)) ? 1 : 0;
@@ -193,6 +197,7 @@ narrow.plainChat = function () {
 
 narrow.update = function () {
   if (narrow.frozen) return;
+  floatExtras();
   /* A shell resizer drag (the left rail) does not freeze the ladder the way the chat drag does, so solving
      mid-drag capped the rail back to its eased 240px while the person was still widening it: the rendered
      width oscillated between the drag's width and the cap. The drag is one gesture; solve once it ends
@@ -204,6 +209,13 @@ narrow.update = function () {
   var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!(PMW.chatCol && PMW.chatCol.keepOpen()), prev, m.hist, m.railPinned, m.chatPinned, m.act);
   narrow.apply(next, prev);
 };
+/* a popped-out chat grows by pinned History and an open Activity Detail on every page (20-shell.css reads the two
+   widths), so they are written before the Home, Usage and other-page paths, which all leave a floating chat alone (A3) */
+function floatExtras() {
+  var chat = qs('#chatPanel'), ma = mainArea();
+  if (!chat || chat.classList.contains('hidden') || !(ma && ma.hasAttribute('data-pmw-chat-float'))) return;
+  writeExtras(chat, null, historyW(), activityW());
+}
 /* the hook agreed with the left rail lead: data-pm-rail-fold on #sidePanelSlot (never on <html>) and the document event
    pm:rail-fold { mode: 'eased'|'overlay'|'docked', width }; the rail's concept D refits and styles its overlay from it */
 var lastFold = null;

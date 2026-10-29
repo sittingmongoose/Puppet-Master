@@ -61,7 +61,7 @@ try {
   });
   await check(2, 'Quiet: nothing runs, so the chat\'s icon is gone and the bar reads No agents and No processes (D4)', async () => {
     await scenario('quiet');
-    const r = await ev(() => ({ icon: !!document.querySelector('#pmRoot .activity-item[data-domain="processes"]'), a: document.querySelector('[data-status-action="agents"]').textContent.trim(), p: document.querySelector('[data-status-action="processes"]').textContent.trim() }));
+    const r = await ev(() => { const st = window.PM56_DEMO.getState(); return { icon: !!document.querySelector('#pmRoot .activity-item[data-domain="processes"]'), a: document.querySelector('[data-status-action="agents"]').textContent.trim(), p: document.querySelector('[data-status-action="processes"]').textContent.trim(), open: st.activity.open, dom: st.activity.domain, hover: st.hover }; });
     return { ok: !r.icon && /No agents/.test(r.a) && /No processes/.test(r.p), note: JSON.stringify(r) };
   });
   await check(3, 'The icon stays while its view is open after the last process ends, and goes when it closes (D4)', async () => {
@@ -219,7 +219,7 @@ try {
     await clickAt('.wk-dialog [data-x="cancel"]'); await sleep(200);
     await clickAt('#pm7-work [data-work-p="float"]'); await ev(() => window.PM7_WORK_UI.close());
     await ev(() => window.PM7_WORK_UI.quit()); await sleep(300);
-    const q = await ev(() => { const d = document.querySelector('.wk-dialog'); return { go: d.querySelector('[data-x="go"]').textContent, enabled: d.querySelectorAll('input:not(:disabled)').length, checked: d.querySelector('[data-choice][aria-checked="true"]').getAttribute('data-choice') }; });
+    const q = await ev(() => { const all = document.querySelectorAll('.wk-dialog'), d = all[all.length - 1]; return { dialogs: all.length, go: d.querySelector('[data-x="go"]').textContent, enabled: d.querySelectorAll('input:not(:disabled)').length, checked: d.querySelector('[data-choice][aria-checked="true"]').getAttribute('data-choice') }; });
     await clickAt('.wk-dialog [data-choice="stop_selected"]'); await sleep(150);
     const q2 = await ev(() => document.querySelector('.wk-dialog [data-x="go"]').textContent);
     await clickAt('.wk-dialog [data-x="cancel"]');
