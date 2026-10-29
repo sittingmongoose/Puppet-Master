@@ -97,13 +97,16 @@ import fs from 'fs';
  * - .sp-svg, .sp-mark: turn-stage spine (turn-stage.js:40,89; keeps its filter)
  * - .bc-capture-img: browser-capture image (browser-capture.js:326, an <img>)
  * - #o55np-pod: NieR's Pod 042, an illustration (nier-parts.js POD_SVG / POD_SHADOW; NieR themes only)
+ * - .pmx-pip-mk, .pmx-pip-host, .pml-ld: Pip, the mascot (W4/W5, PM7 build 2026-10-29), drawn by the one Pip kit
+ *   (window.PMLogo, DR-076), not a glyph: a status face, the Orbit's centre, the sheet's Pip, the thinking loader
  * .closest() covers both "inside" and "is" (ar-graph-svg, pmx-mark svg itself).
  * .mermaid-stage has no emitter in this build; kept so the list stays total. */
 const EXCLUDED_SVG_HOSTS = [
   '.ctx-growth', '.ring-mini', '.ar-graph-svg', '.artifact-preview', '.mermaid-stage',
   '.pm12-gauge', '.pm12-scope', '.pm13-sheet', '.c19-sky', '.c23-body',
   '.pmx-plate-svg', '.pmx-mark', '.pmx-ag', '.pmx-bubble-ring', '.pmx-bsd-half',
-  '.plan-sched-ribbon', '.pmx-sched-strip', '.sp-svg', '.sp-mark', '.bc-capture-img', '#o55np-pod'
+  '.plan-sched-ribbon', '.pmx-sched-strip', '.sp-svg', '.sp-mark', '.bc-capture-img', '#o55np-pod',
+  '.pmx-pip-mk', '.pmx-pip-host', '.pml-ld'
 ];
 const EXCLUDED_SEL = EXCLUDED_SVG_HOSTS.join(',');
 

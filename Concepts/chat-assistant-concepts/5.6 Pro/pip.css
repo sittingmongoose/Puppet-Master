@@ -169,6 +169,16 @@ html[data-motion="reduced"] .pmx-pip-host :is(.pmx-pip-rig, .pmx-pip-card), body
 .orbit-core-face > .pmx-pip-mk { width: 40px; height: 40px; }
 .orbit-core-face > .orbit-core-icon { position: absolute; right: -9px; bottom: -3px; width: 17px; height: 17px; border-radius: 50%; background: var(--nx-disc); box-shadow: 0 0 0 1px var(--pm-step, var(--accent)); }
 .orbit-core-face > .orbit-core-icon svg { width: 12px; height: 12px; }
+/* the core is the live subject's dark puck in every look but NieR, so on a light look Pip's ink control and strings
+   take the puck's own ink (Friendly's lilac control reads on it as it is) */
+html:not([data-o55-nier="on"]) body:is([data-theme="basic-light"], [data-theme="glass-light"], [data-theme="retro-light"]) .orbit-core-face .pmx-pip {
+  --pip-ctl: var(--nx-disc-text); --pip-rod: var(--nx-disc-text); --pip-rodback: color-mix(in srgb, var(--nx-disc-text) 58%, var(--nx-disc));
+  --pip-back: color-mix(in srgb, var(--nx-disc-text) 58%, var(--nx-disc)); --pip-pin: color-mix(in srgb, var(--nx-disc-text) 60%, var(--nx-disc));
+  --pip-str: color-mix(in srgb, var(--nx-disc-text) 55%, var(--nx-disc));
+}
+/* NieR and Retro square the badge off, as their nodes are */
+html[data-o55-nier="on"] .orbit-core-face > .orbit-core-icon { border-radius: 0; background: var(--o55-nier-raised, var(--surface)); box-shadow: 0 0 0 1px var(--o55-nier-ink, var(--text)); }
+body[data-theme^="retro"] .orbit-core-face > .orbit-core-icon { border-radius: 0; }
 @container orbitdial (max-width: 150px) {
   .orbit-core-face, .orbit-core-face > .pmx-pip-mk { width: 32px; height: 32px; }
   .orbit-core-face > .orbit-core-icon svg { width: 11px; height: 11px; }
@@ -190,8 +200,9 @@ html[data-motion="reduced"] .orbit-core-face :is(.pmx-pip-dot2, .pmx-pip-dot3, .
 /* an empty list that draws its glyph faint keeps Pip whole */
 .af-empty > .pmx-empty-pip { opacity: 1; }
 .af-empty.pmx-empty-line { flex-direction: column; }
-/* NieR parts win where both draw (S7): with Ink empty states on, NieR's own art stands in Pip's place */
-html[data-o55-nier-parts~="empty"] .pmx-empty-line > .pmx-empty-pip { display: none; }
+/* NieR parts win where both draw (S7): with Ink empty states on, NieR's own art (nier-world.css, on .pmx-empty and
+   .collab-empty) stands in Pip's place; the other empty lines keep Pip */
+html[data-o55-nier-parts~="empty"] :is(.pmx-empty, .collab-empty).pmx-empty-line > .pmx-empty-pip { display: none; }
 
 /* a sheet's main button, pressed: the press is acknowledged in the next frame while its work waits one paint (app.js
    holdForAck); Pip's cheer is the rest of the acknowledgement */
