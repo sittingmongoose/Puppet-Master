@@ -1364,47 +1364,169 @@
       flex: 0 0 auto;
       margin-inline-start: 0; /* inset comes only from title-bar padding */
     }
-    /* Left cluster: brand + project never shrink; gap stays title-bar gap */
+    /* The project box (option A "Tab"; F3-661, DL-236): one of the title bar's tabs. It has the page tabs' 28 px height,
+       type and resting ink, a folder and a drawn chevron from PMG, the project's badge from the shared status marks, and
+       while its menu is open it wears the chosen tab's chip (the switcher's tokens, 60-switcher-looks.css). A hairline
+       after it says it owns the pages beside it. Hover is the hover engine's (18-hover.js), in the chip's shape
+       (60-switcher-looks.css); Glass seats it in a track of its own (glass.css). The brand and the box never shrink. */
     .title-bar #projectMenuWrap {
       flex: 0 0 auto;
-    }
-    .title-bar .project-dropdown {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: var(--xs);
-      padding: 2px var(--sm);
-      background: var(--surface-elevated);
-      border: var(--border-width) solid var(--border);
-      border-radius: var(--border-radius);
-      cursor: pointer;
-      font-family: var(--body-font);
-      font-size: 13px;
-      flex: 0 0 auto;
+      position: relative;
     }
-    /* Project trigger: labeled full mode vs 32×32 folder icon */
-    .title-bar #projectMenuWrap .pm6-tb-project-ico {
-      display: none;
-      width: 16px;
+    .title-bar #projectMenuWrap::after {
+      content: "";
+      flex: none;
+      width: 1px;
       height: 16px;
-      flex-shrink: 0;
+      margin-left: 10px;
+      background: var(--border);
     }
-    .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-menu-trigger {
+    .title-bar #projectMenuBtn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-sizing: border-box;
+      height: 28px;
+      min-width: 0;
+      max-width: none;
+      margin: 0;
+      padding: 0 8px 0 7px;
+      border: 0;
+      border-radius: var(--pm-switch-r-in, var(--pm-ctl-r-in, 4px));
+      background: transparent;
+      box-shadow: none;
+      color: var(--pm-switch-ink, var(--text-secondary));
+      font-family: inherit;
+      font-size: var(--fs-xs);
+      font-weight: inherit;
+      letter-spacing: inherit;
+      line-height: 1;
+      text-align: left;
+      cursor: pointer;
+      overflow: visible;
+      transition: color var(--motion-fast, 160ms) ease, background-color var(--motion-fast, 160ms) ease, box-shadow var(--motion-fast, 160ms) ease;
+    }
+    .title-bar #projectMenuBtn:hover { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))); }
+    .title-bar #projectMenuBtn[aria-expanded="true"] {
+      background-image: linear-gradient(var(--pm-switch-fill, transparent), var(--pm-switch-fill, transparent)), linear-gradient(var(--pm-switch-body, transparent), var(--pm-switch-body, transparent));
+      box-shadow: inset 0 0 0 .5px var(--pm-switch-line, transparent), inset 0 1px 0 var(--pm-switch-top, transparent), 0 0 0 .5px var(--pm-switch-edge, transparent), var(--pm-switch-shadow, 0 0 0 0 transparent);
+      color: var(--pm-switch-ink-on, var(--text-primary));
+    }
+    /* long names end in an ellipsis; the label is still the whole name (Home, Settings and the sound binding read it) */
+    .title-bar #projectMenuLabel {
+      display: block;
+      min-width: 0;
+      max-width: 168px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      line-height: 16px;
+    }
+    /* every part keeps its size from the first paint, before PMG draws into it, so the box never changes width then */
+    .title-bar #projectMenuBtn :is(.pm6-tb-project-ico, .pm6-tb-project-badge, .pm6-tb-project-chevron) {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
+      flex: none;
+    }
+    .title-bar #projectMenuBtn .pm6-tb-project-ico { width: 15px; height: 15px; }
+    .title-bar #projectMenuBtn .pm6-tb-project-badge { width: 12px; height: 12px; }
+    .title-bar #projectMenuBtn .pm6-tb-project-badge[hidden] { display: none; }
+    .title-bar #projectMenuBtn .pm6-tb-project-chevron {
+      width: 12px;
+      height: 12px;
+      opacity: .75;
+      transition: transform .18s cubic-bezier(.3, .7, .3, 1), opacity .18s ease;
+    }
+    .title-bar #projectMenuBtn :is(.pm6-tb-project-ico, .pm6-tb-project-badge, .pm6-tb-project-chevron) svg { display: block; }
+    .title-bar #projectMenuBtn[aria-expanded="true"] .pm6-tb-project-chevron { transform: rotate(180deg); opacity: 1; }
+    /* Retro and NieR step the chevron (their switcher steps and cuts); Reduced Motion places it */
+    :is([data-theme^="retro"], [data-o55-nier="on"]) .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition-timing-function: steps(1, end); transition-duration: 80ms; }
+    [data-motion="reduced"] .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition: none; }
+    @media (prefers-reduced-motion: reduce) { .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition: none; } }
+    /* a resize drag holds the badge's loop (body.pm-resizing; the badge is the shared status mark) */
+    body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st, .nx-st-move) { animation-play-state: paused; }
+    /* Narrow windows: the density ladder folds the box to its folder (pm6-js-panels.js applyDensity, data-mode="icon") */
+    .title-bar #projectMenuWrap[data-mode="icon"] #projectMenuBtn {
+      width: 28px;
       padding: 0;
       gap: 0;
+      justify-content: center;
+    }
+    .title-bar #projectMenuWrap[data-mode="icon"] :is(#projectMenuLabel, .pm6-tb-project-chevron) { display: none; }
+    .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-project-badge { position: absolute; top: -2px; right: -3px; }
+    .title-bar #projectMenuWrap[data-mode="icon"]::after { display: none; }
+    [data-theme^="retro"]:not([data-o55-nier="on"]) .title-bar #projectMenuWrap::after { width: 2px; }
+
+    /* The menu: "Projects" with its shortcut, two-line rows (a monogram tile, the name, the path and branch, the state in
+       words beside its mark) and All projects. The chosen row keeps DL-214's chosen-row material in each look
+       (60-switcher-looks.css; Glass's clear lens in glass.css; NieR's ink bar in 14-nier-parts.css) and its tile turns
+       over with it. */
+    #projectMenu { min-width: 292px; padding: 4px; box-sizing: border-box; }
+    #projectMenu .pm6-tb-project-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 7px 8px 6px 10px;
+      font: 700 10px/1 var(--body-font);
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    #projectMenu .pm6-tb-project-keys { display: inline-flex; gap: 3px; text-transform: none; letter-spacing: 0; }
+    #projectMenu .pm6-tb-project-keys kbd {
+      font: 600 10px/1 var(--mono-font, ui-monospace, monospace);
+      padding: 3px 4px;
+      border-radius: var(--pm-switch-r-in, 3px);
+      color: var(--text-secondary);
+      background: var(--pm-switch-track, color-mix(in srgb, var(--text-primary) 6%, transparent));
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 80%, transparent);
+    }
+    #projectMenu .pm6-tb-menu-item:is([data-project], .pm6-tb-project-all) {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr) auto;
+      align-items: center;
+      column-gap: 10px;
+      width: 100%;
+      min-height: 44px;
+      padding: 6px 10px 6px 8px;
+      font-size: 12px;
+      letter-spacing: 0;
+      white-space: nowrap;
+      text-align: left;
+    }
+    #projectMenu .pm6-tb-project-all { min-height: 38px; }
+    #projectMenu .pm6-tb-project-tile {
+      display: inline-grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
       box-sizing: border-box;
+      border-radius: var(--pm-switch-r-in, 4px);
+      font: 750 11px/1 var(--display-font, var(--body-font));
+      letter-spacing: 0;
+      color: var(--text-secondary);
+      background: var(--pm-switch-track, color-mix(in srgb, var(--text-primary) 6%, transparent));
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 85%, transparent);
     }
-    .title-bar #projectMenuWrap[data-mode="icon"] #projectMenuLabel,
-    .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-project-chevron {
-      display: none;
-    }
-    .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-project-ico {
-      display: block;
-    }
+    /* the chosen row's tile turns over with its chip: clear, ringed in the row's own ink */
+    #projectMenu .pm6-tb-menu-item.is-selected .pm6-tb-project-tile { background: transparent; color: inherit; box-shadow: inset 0 0 0 1px currentColor; }
+    #projectMenu .pm6-tb-project-all .pm6-tb-project-tile { background: transparent; box-shadow: none; }
+    #projectMenu .pm6-tb-project-tile svg { display: block; width: 13px; height: 13px; }
+    #projectMenu .pm6-tb-project-text { display: grid; gap: 2px; min-width: 0; }
+    #projectMenu .pm6-tb-project-name { font-weight: 650; font-size: 12.5px; line-height: 15px; overflow: hidden; text-overflow: ellipsis; }
+    #projectMenu .pm6-tb-project-path { font-size: 11px; font-weight: 450; line-height: 13px; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; }
+    #projectMenu .pm6-tb-menu-item.is-selected .pm6-tb-project-path { color: inherit; opacity: .78; }
+    #projectMenu .pm6-tb-project-state { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; color: var(--text-secondary); }
+    #projectMenu .pm6-tb-menu-item.is-selected .pm6-tb-project-state { color: inherit; }
+    #projectMenu .pm6-tb-project-state svg { display: block; }
+    #projectMenu .pm6-tb-project-sep { height: 1px; margin: 4px 2px; background: color-mix(in srgb, var(--border) 85%, transparent); }
+    [data-theme^="retro"]:not([data-o55-nier="on"]) #projectMenu .pm6-tb-project-sep { height: 2px; }
+    [data-theme^="retro"]:not([data-o55-nier="on"]) #projectMenu :is(.pm6-tb-project-name, .pm6-tb-project-path, .pm6-tb-project-state, .pm6-tb-project-tile) { font-family: var(--mono-font, var(--body-font)); }
      /* legacy; unused when notify-slot present */
     .title-bar .notify-slot {
       flex: 0 0 auto;
