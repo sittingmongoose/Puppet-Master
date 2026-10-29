@@ -97,10 +97,14 @@ This writes `OUTDIR/project-box.html` (about 37 MB), with PMConcept7 and the lay
   - the chosen option's look;
   - in C, the path summary shown in the bar;
   - in D, Pip's face as the 3.4 badge.
-- **No new command, setting or glyph.**
+- **No new setting or glyph.**
   - Opening the menu is view state.
   - "All projects" opens an existing page.
-  - Ctrl Shift P is already in FinalGUISpec's keyboard table.
   - Every icon is already in the registry.
-  - I found no `pm7_control_bindings`, UI_Command_Catalog or Wiring_Matrix row that names the title-bar project box, so no wiring row changes.
+- **Wiring and commands do change.** An earlier version of this section said no wiring row changes. That was wrong:
+  - UIW-043 needs `pm7_control_bindings` rows for every shell control, and the box has none.
+  - Picking a row switches the project. That command is named only in Wiring_Matrix.md (WM-019) and needs a catalog
+    row, or the existing `cmd.project.open` must name the box.
+  - Ctrl Shift P is in FinalGUISpec's keyboard table but bound to nothing, which F3-058 requires.
+  - The build handoff (`share/puppet-master/2026-10-29-pm7-build-handoff/`, `research/03`) has the full map.
 - **D only:** Pip's face would carry the project's state. That is the logo concept's own idea ("the face is the status"), but it would need a ruling beside the notification stack, which 3.4 makes the title bar's only notification affordance.
