@@ -1761,6 +1761,7 @@ canonical_text: >-
   section 1.6; move/resize of a terminal is the move and resize of its tab and panel (`Plans/FinalGUISpec.md#F3-630`).
   The former model of up to four terminal sections, tabs and panes in layout families, the bottom default placement
   and section detach is retired; Terminals 2x2 is a named layout of four panels.
+  Amended 2026-10-29 (B1–B6; PM7): Project box A is an admitted secondary project switch entry; Projects view remains primary. Ctrl+Shift+P opens the box menu without dispatch; ordinary pick switches active workspace, Ctrl/Cmd+Enter opens new workspace tab.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -6750,6 +6751,7 @@ canonical_text: >-
   eligibility, and crash recovery. Protected AuthBrowserSession is the explicit exception: it is human-only and
   ephemeral, uses a domain-restricted transient store, and cannot persist, restore, copy, promote, capture, or
   export profile/content state.
+  Amended 2026-10-29 (B1/B6; PM7): Promote cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab into UCC-209/CS-105; the title-bar menu is an additional producer using stable project_id and the same workspace owner.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43339-L43432
+Source lines: L43348-L43442
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -54,6 +54,7 @@ canonical_text: >-
   arrow). Ready still hands the window over to the Guided Tour's first callout in every family. The moments add no
   settings key, theme family, theme variant, NieR part, sound setting, `ui.onboarding.*` action or `ui.guided_tour.*`
   action; their one trigger, end state, snap and sound path are shared by all five styles (DR-056).
+  Amended 2026-10-29 (O1–O12; PM7): F3-663 replaces the troupe/one-shot-only hero art with one Pip, bounded living worlds and Retro Light/Dark distinction. One trigger/end-state/sound path remains; Ready hands to first callout and never waits on animation. O11 leaves the Tour untouched.
 gui_related: true
 gui_classification_reason: Defines the act card, the wake and the curtain call of onboarding in the four theme families.
 split_recommended: false

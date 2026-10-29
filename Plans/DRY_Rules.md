@@ -2678,6 +2678,7 @@ canonical_text: >-
   assistant-turn presentation vocabulary (segment roles, subject statuses, terminal states) is
   defined once in EP-128; other owners, including collaboration runs, reference it and do not
   redefine it.
+  Amended 2026-10-29 (O3–O6, S3/S4; PM7): Pip setup voice/music and app chirps are parts, not separate sound keys/players. Live synthesis recipes register with the one Notifications & Sounds player/library and master switch. Retro has distinct Light/Dark kits; no approved music re-key. Loader periods are family-owned (F3-662), not per-view overrides.
 gui_related: true
 gui_classification_reason: "Fixes single owners for chat presentation rules."
 split_recommended: false
@@ -2742,6 +2743,7 @@ canonical_text: >-
   DR-043's owners stand: the transcript family map is ACD-469's and the accent budget is a
   theme-token role rule, and the assistant-turn vocabulary is EP-128's. The wand grammar consumes
   them and never restates them, and DR-043's owners do not restate this grammar.
+  Amended 2026-10-29 (X1, PC1–PC5; PM7): Pip redraws the one agent primitive (F3-594), no second legacy puppet or Classic preset. Small robot denotes the agent category only, never an alternate figure. Sheet hosts and empty marks use this kit rather than layered replacements.
 gui_related: true
 gui_classification_reason: "Fixes one owner for the wand modules' presentation grammar."
 split_recommended: false
@@ -2988,7 +2990,7 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   Every icon in the assistant chat is drawn from one icon registry with one drawing per concept (FinalGUISpec F3-584,
-  DL-140), and every status is drawn from one set of 13 status marks (F3-585, DL-141). The transcript, the composer,
+  DL-140), and every status is drawn from one set of 22 status keys (F3-658; the chat run-state subset is 13, F3-585). The transcript, the composer,
   thread history, the chat header, the activity bar and Activity Detail, the working activity, menus, wand sheets and
   module cards draw through them; no surface keeps its own icon table or status glyphs, and a module mark primitive
   draws the registry's glyphs rather than its own. Roles (control, status, concept), acts, tones and the per-family
@@ -3001,6 +3003,7 @@ canonical_text: >-
   and Plans/glyph_catalog.json. No surface anywhere keeps its own icon table or status glyphs; the Planning
   Wizard and the Orchestrator may consume the registry without adopting it in full; DR-057, DR-065 and DR-069
   read through this rule.
+  Amended 2026-10-29 (A5, X1, G5; PM7): The shared status vocabulary has 22 keys; the chat’s 13 are a subset. Pip faces map to these keys; no stopping/mood key. robot and processes are category glyphs, each individual agent is Pip. Typed status wins over decorative expression.
 gui_related: true
 gui_classification_reason: "Fixes one owner each for the chat's icons and its status marks."
 split_recommended: false
@@ -3119,6 +3122,7 @@ canonical_text: >-
   and the curtain call) have one trigger, one end state, one snap to that end state and one sound path through the
   Notifications & Sounds owner's player (DR-043); their five styles, NieR's (F3-598) and the four families' (F3-600),
   differ in presentation only.
+  Amended 2026-10-29 (O1–O12, S1–S9; PM7): Pip has one SSYS-056 row editor, one parts/default/preset registry and one Project Settings transaction, reached from Settings/wand/titlebar only. Onboarding reads factory/Project parts, no editor inside it. One hero trigger/end state/snap/sound path remains for all Pip worlds and Ready handoff; no second local store.
 gui_related: true
 gui_classification_reason: "Fixes single owners for the NieR Mode editor, the reboot plate, the look store and onboarding's hero moments."
 split_recommended: false
@@ -3397,6 +3401,7 @@ canonical_text: >-
   surfaces never receive card effects; small controls use F3-465's shared marker without card magnet, Glass uses
   F3-652's optical marker, and dividers use F3-657's one resize grammar. Tab silhouettes stay with their tab
   owners (F3-505, F3-466), and parallax stays with F3-446.
+  Amended 2026-10-29 (O2, PC1; PM7): Pip gaze/watch dwell subscribe to the shared pointer/hover owner, with one bounded kit rig clock for illustration, not a per-surface pointer listener or hover effect. It pauses hidden/offscreen/during drags and keeps the last pointer position.
 gui_related: true
 gui_classification_reason: "Fixes one owner for PMConcept7's hover grammar."
 split_recommended: false
@@ -3658,6 +3663,7 @@ canonical_text: >-
   onboarding window with its scrim and the NieR editor panel inside it, then the look cover and the NieR
   reboot plate and calm cover (F3-077, F3-598), which cover everything. Escape closes only the innermost open
   thing; the numbers are the rebuild's.
+  Amended 2026-10-29 (PC1, D6/D10, G9; PM7): Work panel/quit dialog/pop-out view and sheet Pip lift-off use this overlay owner; teardown releases copies/timers. All floating Glass Activity/History/attachment surfaces use the persona/model menu plate token, not new plates.
 gui_related: true
 gui_classification_reason: "Fixes one overlay root and one stacking order for the home centre and the ported chat."
 split_recommended: false
@@ -4221,8 +4227,7 @@ canonical_text: >-
   settings sheet and the Settings page edit the same admitted setting through the same Settings
   transaction; copying a value to a concept renderer is a projection, not another source of truth. The
   application/project ELI5 default and the active chat's override remain separate. The History default
-  is a starting value only; History pin, chat width and Keep open remain layout view state, and an
-  Activity unpin remains temporary. Recipe selectors, arbitrary family takes, motion-voice overrides
+  is a starting value only; History pin, chat width and Keep open remain layout view state, and Activity Detail opens full size until closed (G1/G2). Recipe selectors, arbitrary family takes, motion-voice overrides
   and guided examples belong only to the concept's one Demo Studio (DR-070). The port's class names,
   DOM roots, JavaScript globals, localStorage keys and build-layer APIs are concept lineage and grant
   no native API or persistence authority. Integrated concept 59ca2d4382 is assembled from the
@@ -4237,6 +4242,7 @@ canonical_text: >-
   the chat's first-paint reader, theme picker and NieR scripts and follows the host's existing look
   and NieR controllers. SSYS-055 records the project-only adapter and session-only ELI5 limit rather
   than treating every concept control as a persistent application setting.
+  Amended 2026-10-29 (G1–G3, S1–S9; PM7): Activity Detail now opens full size until closed; its Pin/unpin contract is retired. History pin remains local layout state. Pip parts read the same Project row/transaction in every host, never pip-chat:v1 or a second option registry.
 gui_related: true
 gui_classification_reason: Keeps shared host presentation and Settings control ownership single.
 split_recommended: false
@@ -4274,3 +4280,144 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/assistant-chat-design.md#ACD-501
+
+
+### DR-076 - One Brand Mark And One Pip Kit
+
+```yaml
+plan_unit_id: DR-076
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: 'X1/X3, A1–A5, O1/O8, PC1–PC5, S1/S9: one kit owns Pip geometry, string solver, faces, role
+  props, token colours and shared styles for static brand/release assets/tray/notifications, loader, onboarding
+  and the single chat-agent primitive. Robot is only category art. No per-surface renderer/palette, legacy
+  puppet fallback, random drawing IDs or switchable brand/loader. Pip parts is one registry/editor/Settings
+  row, not a shadow store. Declarative static base remains meaningful without animation.'
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-235
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-235
+
+
+### DR-077 - One Loading Indicator
+
+```yaml
+plan_unit_id: DR-077
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: 'L1–L8, X2: one F3-662 loader owner/opt-in/class contract and clock supplies every indeterminate
+  wait with contextual Swing/Think/Hop, per-family timing, size/accessibility and pause gates. Preserve layout
+  skeletons and determinate bars; working status remains st-working. NieR routes to its Diamond owner/fallback.
+  No surface spinner, loader-setting or duplicate thinking/Orbit Pip. Deferred debt L8: chat menus.js, Usage
+  PMU.menu and Home PMW.menu still duplicate sprout; do not silently claim DRY closure for them.'
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-237
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-237
+
+
+### DR-078 - One Work Projection And Resource Owner
+
+```yaml
+plan_unit_id: DR-078
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: 'D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project
+  badge and composer attention are filtered OperationalAwareness over ObservableWork and registry lineage.
+  No consumer owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate ProcessFacts;
+  host monitor owns server/environment resource samples while Resources is open only. Actions route to one
+  owner command/handler; services are read-only and stop lists are generation-bound.'
+gui_related: false
+gui_classification_reason: Defines owner authority, record semantics or lifecycle.
+split_recommended: false
+depends_on:
+- DL-246
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-246

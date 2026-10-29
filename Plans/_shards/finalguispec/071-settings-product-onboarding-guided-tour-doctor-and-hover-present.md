@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36482-L37276
+Source lines: L36501-L37296
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -184,6 +184,7 @@ canonical_text: >-
   the only move, and the hand-over never passes through Home (PWIZ-021 keeps the destination). F3-598 consumes
   this rule. The Home options menu row is named Run Onboarding Again everywhere (DL-153, UCC-200); Run setup
   wizard is its earlier name, and it sits directly below Restore home layout, the former Reset Layout.
+  Amended 2026-10-29 (O1–O12; PM7): F3-663 supersedes the troupe, no-physics/no-loop prohibition and separately drawn spinner. One Pip in distinct family worlds, bounded transform-only life and shared solver, six kits including Retro split, live voice/music through one player. One option-anchored ? note is pm7ob-explainer. All real routes/errors/203 tips expand beyond the small concept. Owner phases gate progress, animation never does; real flow and 14 onboarding actions remain. O11 defers the Tour.
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3004-L3164
+Source lines: L3004-L3165
 
-Source SHA256: `c02ebd69937ed9a53ae6c47e151123f6da410c3d572c2e2c60518019ced1b6af`
+Source SHA256: `519632af48035fcf225f8301fcf4350110793624ba16f6808ff1499770c68af9`
 
 ---
 
@@ -27,6 +27,7 @@ canonical_text: >-
   targets; wiring implementers must follow the named PlanUnits and referenced
   Contracts_V0 event identities instead of inferring precedence from adjacent
   addendum order.
+  Amended 2026-10-29 (PM7): B1/B6: title-bar project box adds producers for cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab, retaining Projects view/palette as primary and the same project/workspace owner.
 gui_related: false
 gui_classification_reason: This unit defines runtime producer/consumer/action wiring and precedence; GUI consumers are referenced, but the unit does not define visual presentation.
 depends_on:

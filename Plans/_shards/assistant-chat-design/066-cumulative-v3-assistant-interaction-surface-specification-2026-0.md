@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25087-L25456
+Source lines: L25087-L25458
 
-Source SHA256: `c0c6409fa65d05d98a600d5145ecae0efae9602af2b85f17b5f91023a204798c`
+Source SHA256: `355a20416a8470efa1330c645472dc1c460f56f4e4535386ee62cba4a25805b1`
 
 ---
 
@@ -45,6 +45,7 @@ canonical_text: >-
   Amended 2026-10-09 (DL-184): the Activity Bar keeps its floating, pass-through and clearance rules but is no longer
   a pill in any look; read "pill" in this unit as the bar's centred interactive body (Plans/DRY_Rules.md#DR-069,
   Plans/FinalGUISpec.md#F3-648).
+  Amended 2026-10-29 (PC4; PM7): The protected working Orbit now has Pip at its centre and a current-tool badge, with a single-Pip handoff from the thinking loader (ACD-507). Existing wand compact submenu/working choreography remains.
 gui_related: true
 gui_classification_reason: Floating activity bar geometry, pointer pass-through, and transcript horizontal extent.
 depends_on: [ACD-448]
@@ -96,6 +97,7 @@ canonical_text: >-
   column by the list's own width instead of narrowing the messages (Plans/FinalGUISpec.md#F3-637, ACD-500). The width
   that pinned History and pinned Activity Detail share is the chat column's, never the window's (ACD-501), and
   Activity Detail stays inside the chat.
+  Amended 2026-10-29 (G1/G2; PM7): Full Activity Detail opens directly and remains until ×, Esc or its icon closes it. Remove Pin/unpin and small transient view; first widen chat then cover transcript at full column height if constrained (ACD-506). History pin is separate.
 gui_related: true
 gui_classification_reason: Activity Detail panel docking, preview navigation, and sidebar coexistence.
 depends_on: [ACD-452, DL-180, ACD-500]

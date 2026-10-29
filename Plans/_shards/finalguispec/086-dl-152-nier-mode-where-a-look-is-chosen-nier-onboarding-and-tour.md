@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42580-L42863
+Source lines: L42584-L42869
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -103,6 +103,7 @@ canonical_text: >-
   in the outgoing look's colours, with no slats or travel, that names what is being applied, is announced
   politely, and lifts once the new look is drawn; the waiting reboot cover's movement is a compositor ink
   sweep across its segmented meter.
+  Amended 2026-10-29 (O8/O11, X3; PM7): F3-663’s NieR Pip replaces the unit marionette for onboarding and chat agents. Static marks keep plain band, live stage/sheet Pip shows blinking eyes. Retain NieR material/HUD/reboot and Pod 042 as Tour/Chat narrator; no Tour redesign now.
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look under it.
 split_recommended: false
@@ -237,6 +238,7 @@ canonical_text: >-
   sounds; the four families' pictures change only at their own hero moments (F3-600, DL-153), which play those kits'
   existing cues and add no take. Production built-in cues carry source, licence, version,
   duration and hash metadata, and no game audio is used.
+  Amended 2026-10-29 (O3–O6, S3/S4; PM7): Onboarding now has six live-synthesized kits with distinct Retro Dark/Light, voice and eight-bar music as Pip parts through the existing player/master sound, with recipe metadata in the existing library/tools. The earlier 354 cue count is a historical cue-only snapshot, not a total that excludes new recipes. Approved tunes are not re-keyed. Reduced Motion never mutes; look-tile hover is silent. No hums/drones/beating/gated buzz/moan/deep thump. Master sound defaults on; first input gates audio. Preserve library preview and licence/source/hash rules for shipped assets.
 gui_related: true
 gui_classification_reason: Places onboarding and Guided Tour sound cues, their kits and the NieR kit in the sound settings model.
 split_recommended: false

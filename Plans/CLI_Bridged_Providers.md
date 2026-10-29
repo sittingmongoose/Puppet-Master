@@ -1861,6 +1861,7 @@ canonical_text: >-
   payload or a named empty stream, env is a redacted allowlist map, and every bridge emits a BridgeInvocationReceipt,
   BridgeExitReceipt, and BridgeStreamReceipt. Exit handling normalizes provider-native statuses into success,
   provider_error, usage_error, auth_required, timeout, cancelled, killed, invalid_json, protocol_error, and transport_error.
+  Amended 2026-10-29 (D8/D9; PM7): Process reaping/stop observes whole-group SIGTERM then SIGKILL after 3 s with pid/start-time identity; reconciliation names vanished work Lost and tells the owner once; no silent live-process kill on idle unload.
 gui_related: false
 gui_classification_reason: CLI bridge invocation, exit, and stream contracts are backend provider integration contracts.
 depends_on: [CBP-005, CBP-007, CBP-008, CBP-009, CBP-010, CBP-024, CBP-025]

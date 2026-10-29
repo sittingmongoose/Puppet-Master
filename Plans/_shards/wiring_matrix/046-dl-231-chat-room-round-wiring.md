@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L6435-L6592
+Source lines: L6437-L6644
 
-Source SHA256: `c02ebd69937ed9a53ae6c47e151123f6da410c3d572c2e2c60518019ced1b6af`
+Source SHA256: `519632af48035fcf225f8301fcf4350110793624ba16f6808ff1499770c68af9`
 
 ---
 
@@ -128,6 +128,7 @@ canonical_text: >-
   composer attachment, list and insertion can lose that destination after the origin composer changes.
   Those paths still require restoring the saved destination or refusing a mismatch before draft
   mutation; the original thread alone is not sufficient reverse coverage.
+  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
 gui_related: true
 gui_classification_reason: Binds hosted chat producers to existing wiring rows and their reverse GUI consumers.
 split_recommended: false
@@ -166,3 +167,52 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/UI_Command_Catalog.md#UCC-208, ContractName:Plans/UI_Wiring_Rules.md#UIW-044
+
+
+### WM-097 - PM7 Project Pip And Work Control Closure
+
+```yaml
+plan_unit_id: WM-097
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: B1/B2/B6, S1–S9, D1–D14, G1–G10. pm7_control_bindings.json enumerates project-box rows/keys,
+  statusbar.agents/processes, Agents/Processes/Resources tabs and view controls, thread Processes, stop/restart/input/delivery/clear/quit,
+  and the one Pip editor/entry hosts. Command rows resolve production-intent wiring and typed owner payload/availability/permission/error/receipt
+  contracts; local rows resolve declared no-write actions with focus return and teardown. Stop all shares cmd.work.stop.
+  Existing terminal/owner/schedule/Settings routes are reused. New event candidates do not emit. Counts are
+  derived/pinned together in companions; partial native evidence remains partial. Decorative brand/loader are
+  excluded because they are not controls.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-255
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/Wiring_Matrix.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-255

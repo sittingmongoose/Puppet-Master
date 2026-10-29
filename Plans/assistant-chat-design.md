@@ -25121,6 +25121,7 @@ canonical_text: >-
   Amended 2026-10-09 (DL-184): the Activity Bar keeps its floating, pass-through and clearance rules but is no longer
   a pill in any look; read "pill" in this unit as the bar's centred interactive body (Plans/DRY_Rules.md#DR-069,
   Plans/FinalGUISpec.md#F3-648).
+  Amended 2026-10-29 (PC4; PM7): The protected working Orbit now has Pip at its centre and a current-tool badge, with a single-Pip handoff from the thinking loader (ACD-507). Existing wand compact submenu/working choreography remains.
 gui_related: true
 gui_classification_reason: Floating activity bar geometry, pointer pass-through, and transcript horizontal extent.
 depends_on: [ACD-448]
@@ -25172,6 +25173,7 @@ canonical_text: >-
   column by the list's own width instead of narrowing the messages (Plans/FinalGUISpec.md#F3-637, ACD-500). The width
   that pinned History and pinned Activity Detail share is the chat column's, never the window's (ACD-501), and
   Activity Detail stays inside the chat.
+  Amended 2026-10-29 (G1/G2; PM7): Full Activity Detail opens directly and remains until ×, Esc or its icon closes it. Remove Pin/unpin and small transient view; first widen chat then cover transcript at full column height if constrained (ACD-506). History pin is separate.
 gui_related: true
 gui_classification_reason: Activity Detail panel docking, preview navigation, and sidebar coexistence.
 depends_on: [ACD-452, DL-180, ACD-500]
@@ -26134,6 +26136,7 @@ canonical_text: >-
   For scheduled-message cards, the Time-family ticket and time block identify the transcript
   family only. Scheduling_and_Quota_Resume SQR-012 owns the card's internal layout and renders its
   time in the schedule's own time zone; that layout is accepted within Time (DL-138).
+  Amended 2026-10-29 (PC1–PC5, X1; PM7): Agents use the one Pip primitive F3-594; category marks use robot. Families/states remain this owner’s; Pip adds no welcome-back or other conversation capability.
 gui_related: true
 gui_classification_reason: "Defines how every transcript item renders in the default chat presentation."
 split_recommended: false
@@ -26222,6 +26225,7 @@ canonical_text: >-
   (EP-128). Leaving the thread never cancels the reply: APR-020 invalidates the view's pending
   callbacks, not the run or the reply, which is complete when the user returns. A fallback batch
   reply (ACD-229) appears whole with the settle beat only; it is never pseudo-streamed.
+  Amended 2026-10-29 (L1, PC4; PM7): Thinking placeholder consumes the shared Think loader, handing over to Orbit’s Pip without duplication; one Pip per reply and no extra status key.
 gui_related: true
 gui_classification_reason: "Defines the visible life cycle of a streaming assistant reply."
 split_recommended: false
@@ -26294,6 +26298,7 @@ canonical_text: >-
   Send now, Edit or Remove, as section 4 already says that Stop does not clear the queue. Every
   automatic advance and every Send now goes through the same send handler as an ordinary send, so
   holds and validations run again.
+  Amended 2026-10-29 (D8; PM7): Composer Stop ends the current reply and holds the queue only. It does not stop background processes; Processes explicitly says so and offers owner-routed Stop/Stop all.
 gui_related: true
 gui_classification_reason: "Defines the visible composer behaviour while the assistant is busy."
 split_recommended: false
@@ -26433,6 +26438,7 @@ canonical_text: >-
   live cards re-render on the working clock. In a provider tier without internal visibility
   (PROVIDER-005) the card shows only subjects and narration the provider actually reported and never
   invents them.
+  Amended 2026-10-29 (PC4; PM7): Keep protected Orbit choreography, replacing centre with Pip and current tool badge; coordinate with thinking placeholder so a reply never has two visible Pips.
 gui_related: true
 gui_classification_reason: "Defines the visible behaviour of the working activity card."
 split_recommended: false
@@ -26650,6 +26656,7 @@ canonical_text: >-
   settle under Reduced Motion (F3-520's onboarding steps, F3-438's switch colour) it never moves or scales,
   and a Usage room change takes none, so the concept's Usage dissolve under Reduced Motion is not adopted. A
   waiting cover's calm, travel-free pulse is waiting feedback and stays (F3-077, DL-216).
+  Amended 2026-10-29 (X2, L3/L4, PC1; PM7): Pip’s optional sheet sway/blink/gaze and bounded onboarding life supersede nothing-animates-at-idle only on those illustrative surfaces. Needs-you remains louder; motion pauses hidden/offscreen/during drags. Loader uses family periods and reduced-motion breath/blink exception of F3-662, no travel. App chirps use the one master player and existing chat mute, default off as a Pip part. Main-button pointer/keyboard acknowledgement is within 100 ms with no busy stall/deferral workaround and no double commit; disabled oops never activates.
 gui_related: true
 gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
 split_recommended: false
@@ -26788,6 +26795,7 @@ canonical_text: >-
   taken only in its transcript item or the approval owner's host. The families of the records the
   dock mirrors are ACD-469's map. The dock's live-run lines and the per-reply files row replace
   the stream footer pill's helpers and files chips (ACD-482, DL-129).
+  Amended 2026-10-29 (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes to live runs; both are views of the same owner identity, not duplicate attention. Process stop differs from reply Stop; delivery never wakes a stopped thread.
 gui_related: true
 gui_classification_reason: "Defines the dock above the composer and the attention items it shows."
 split_recommended: false
@@ -27812,6 +27820,7 @@ canonical_text: >-
   tab at start; the home layout is the layout record's (SP-330). Pop out keeps the chat's History and Activity Detail
   with it (F3-637); the web client offers no Pop out and the chat stays in its column (F3-637, UCC-203). This adds the port's
   requirements to the binding-by-reference of the 5.6 Pro concept and supersedes nothing else.
+  Amended 2026-10-29 (G1–G3, PC1; PM7): Pip parts/gaze/overlays reuse host owners. Chat width has no fixed 760 cap; Activity Detail has no small/Pin view, first widening then full-height covering. History and detail floating plates use one Glass menu token.
 gui_related: true
 gui_classification_reason: Lists what the 5.6 Pro chat's colours, names, sizing, layers, hover tags, bans, demo controls and keys must meet when it moves into PMConcept7.
 split_recommended: false
@@ -27912,6 +27921,7 @@ canonical_text: >-
   Terminal opens a new terminal tab in the command's folder and runs it there, as for a command with no
   session; Restart in the old tab stays the terminal's own action. A Rerun while an agent drives that terminal
   is a take-over by the person (F3-646), typed as the person.
+  Amended 2026-10-29 (D2/D13; PM7): Process rows reuse the exact Open in Terminal and Rerun in Terminal routing specified here, preserving session identity and new-invocation semantics; Answer in Terminal reveals the same input-owning session, no synthetic input.
 gui_related: true
 gui_classification_reason: Defines which terminal tab each chat card action opens or reveals, how agent-started terminals appear, and which terminal canon leaves the chat document.
 split_recommended: false
@@ -28186,3 +28196,154 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-659, ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/Decision_Log.md#DL-218, ContractName:Plans/Decision_Log.md#DL-231
+
+
+### ACD-505 - Processes Activity Domain
+
+```yaml
+plan_unit_id: ACD-505
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: D1–D4/D7–D14, G4/G5/G7; F3-664. Processes is the tenth domain after Subagents; it covers this
+  thread/subagents’ processes, scripts, servers, watchers, browser sessions and scheduled runs. Subagents stay
+  separate and appear only as linked owners here. Presence requires running/input work, retained while card/detail
+  open; scheduled/finished alone never keep icon. By state orders Needs input, Running, Scheduled, Finished
+  this session; many subagents can use By owner. Hover uses existing dwell/compaction/tones; full detail has
+  Stop and thread Stop all and bounded output. Footer says composer Stop ends reply only. Prompt quick answers
+  are safe-first yes/no; other input opens exact terminal. Processes uses console glyph, agent category robot,
+  individual rows Pip; glyph colour/backlight use common domain tones. All consume SIR-054 and one needs-you
+  set, no duplicate runtime.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-241
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-241
+
+
+### ACD-506 - Full Activity Detail And Dynamic Chat Width
+
+```yaml
+plan_unit_id: ACD-506
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: G1–G3/G9, DL-254. Activity-bar click directly opens full-size Activity Detail, never a small
+  transient view and never Pin/unpin. Keep it until ×, Esc or icon-again. If dock does not fit, widen chat
+  within centre/page floor; at window limit cover transcript at full column height. No fixed 760 px cap; preserve
+  400 px message minimum, current centre floor/narrow ladder and History’s user-sized pin. Popped-out chat
+  uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu plate.
+  Friendly/Glass context ring is continuous, antialiased and never segmented by broken transforms. All ten
+  looks, widths 860/1024/1280/~1390/1920, narrow/short, Reduced Motion and drag budgets are acceptance surfaces.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-254
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-254
+
+
+### ACD-507 - Pip Hosts Faces And Orbit
+
+```yaml
+plan_unit_id: ACD-507
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent primitive, reached through shared
+  mark/row/empty/sheet functions rather than innerHTML hooks, observers or layered legacy drawings. Cast/role
+  props, helper marks, Activity agent rows, sheet host by Close, Scheduled/Memory faces, Plans, wand and sleeping
+  empty lists share kit/parts. Host watches at 420 ms, wonders while typing, oops on unusable primary without
+  activation and cheers on success; blink changes, stable last-pointer gaze, no random wink, paused shared
+  sway. Lift-off is one overlay-owned copy released on finish. Pip in Orbit centre has current-tool badge and
+  hands off with thinking placeholder, one Pip per reply. No added chat capability/welcome-back message. Main-button
+  keyboard/pointer acknowledgement ≤100 ms, single commit; fix busy stall instead of delaying dispatch. Parts
+  use SSYS-056’s one transaction and app voice obeys master/chat mute.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-239
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-239

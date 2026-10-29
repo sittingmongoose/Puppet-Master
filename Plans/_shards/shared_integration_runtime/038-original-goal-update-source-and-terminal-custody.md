@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2666-L3064
+Source lines: L2666-L3119
 
-Source SHA256: `1b371fa64868d93fdc1a2e92d21c7755579af6262182519f61adbf042197aff5`
+Source SHA256: `6a648892da43ca0c5dfc0febd40273b930e5cc2cf1b4c6c56a3a2acc31d0e65d`
 
 ---
 
@@ -407,3 +407,58 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-078, ContractName:Plans/Shared_Integration_Runtime.md#SIR-052, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Backup_Restore_System.md#BRS-026, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json, ContractName:Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
+
+
+### SIR-054 - Process Facts And Server Resource Projection
+
+```yaml
+plan_unit_id: SIR-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: |-
+  D2/D7–D13, G4/G5/G7; DL-255. OperationalAwareness consumes ObservableWork across all platform owners; add thread Processes, two status items, Agents/Processes/Resources, tray/project badge and composer attention as filtered consumers. Agent registry/lineage is the owner link, no view-private list or status. Extend process work with owner_thread_id, completion_delivery agent|user|quiet, holds_reply, current input_request(prompt, detected_at, generation, quick_answers), stopped_by, and process_facts_ref present in subject_refs. Keep non-process work free of process payloads.
+  Executor/terminal owns subordinate ProcessFacts: stable process_facts_id, observable_work_id, Project/server/environment identity, pid, pid_start_time, process_group, command, cwd, ports, exit_code, ended_reason exited|stopped_by_user|stopped_by_agent|stopped_with_owner|lost, output_ref with bounded head/tail and omitted_line_count, stoppable and restartable. Bind stop/input/restart to current identity/generation; whole-group SIGTERM then SIGKILL after 3 s, Stopping until observed exit, ended stop idempotent. Input only safe-first plain yes/no, other prompts to Terminal; protect secret/permission ownership.
+  Host monitor owns ServerResourceSample: stable sample_id, project_id/server_id/environment_id, sampled_at, freshness current|partial|stale|unavailable|conflicted, cpu_percent, memory_used_bytes/memory_total_bytes, per-process CPU/memory and ports. Unknown values are null with reason, never synthetic zero; process identity includes pid_start_time. Resources alone subscribes while open and visible; close/hidden cancels sampling and stale generations never repaint a newer Project/tab. No CPU/RAM status-bar indicator.
+  D9 defaults scripts/tests/builds to agent, servers/watchers/databases to user; quiet suppresses delivery. Delivery is idempotent per work completion generation, coalesces notices, never wakes a user-stopped thread; holds_reply is independent. Detect/reconcile restart before Lost, tell owning agent once, no silent kill on idle unload. System services are read-only and excluded from stop sets. New completion/input semantic events remain non-emitting candidates pending Event Authority; existing owner state/receipt families are reused without changing admitted event schemas. Static companion records are specifications, not native handlers or evidence admission.
+gui_related: false
+gui_classification_reason: Defines owner authority, record semantics or lifecycle.
+split_recommended: false
+depends_on:
+- DL-255
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/background-activity/opus-5.5/README.md
+preserved_exact_tokens:
+- ProcessFacts
+- ServerResourceSample
+- owner_thread_id
+- completion_delivery
+- holds_reply
+- input_request
+- stopped_by
+- process_facts_ref
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/Shared_Integration_Runtime.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-255

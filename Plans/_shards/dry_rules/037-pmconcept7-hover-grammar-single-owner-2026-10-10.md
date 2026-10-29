@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3374-L3450
+Source lines: L3378-L3455
 
-Source SHA256: `bccd54e33ea58b285a0e6ea9aafae3a46a5bf8dc437d5e2828ed313de3dd286c`
+Source SHA256: `eec3cf961f928e51b457c9122057aa10b422732a24fae68c7e9c68e99d0e552d`
 
 ---
 
@@ -34,6 +34,7 @@ canonical_text: >-
   surfaces never receive card effects; small controls use F3-465's shared marker without card magnet, Glass uses
   F3-652's optical marker, and dividers use F3-657's one resize grammar. Tab silhouettes stay with their tab
   owners (F3-505, F3-466), and parallax stays with F3-446.
+  Amended 2026-10-29 (O2, PC1; PM7): Pip gaze/watch dwell subscribe to the shared pointer/hover owner, with one bounded kit rig clock for illustration, not a per-surface pointer listener or hover effect. It pauses hidden/offscreen/during drags and keeps the last pointer position.
 gui_related: true
 gui_classification_reason: "Fixes one owner for PMConcept7's hover grammar."
 split_recommended: false

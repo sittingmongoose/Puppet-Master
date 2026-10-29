@@ -2,13 +2,17 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L13-L164
+Source lines: L13-L168
 
-Source SHA256: `0e67f6c9aa98812f9535e44cfef93ed0c83adf111c31c0dfda063095b4228cea`
+Source SHA256: `011c79e84c77ccae4f3f89f0407fa144f1ce9ad6a4af9664e641391721e0569a`
 
 ---
 
 ## Change Summary
+
+- 2026-10-29: PM7 build W1–W9 adopts Pip brand/agent kit, project box A, full onboarding/Pip parts, universal loader, thread Processes and platform Agents/Processes/Resources with quit, plus the full-size Activity Detail/wider chat/Glass repairs. DL-235–DL-256 retain decision IDs X1–X3, A1–A5, B1–B7, L1–L8, O1–O12, S1–S9, PC1–PC5 and G1–G10; X1/L1/S9/O11/G4 are explicit Jared rulings. F3-660–F3-665, DR-076–DR-078, SSYS-056/057 and SIR-054 own the changes. Two inventory rows bring the count to 1011; status keys remain 22. Tour redesign, Home work-panel tab, new panel shortcuts/OS badge rollout and duplicate sprout cleanup remain deferred. No governance reseal or native certification is supplied.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-235, ContractName:Plans/FinalGUISpec.md#F3-660, ContractName:Plans/FinalGUISpec.md#F3-664, ContractName:Plans/Shared_Integration_Runtime.md#SIR-054
+
 
 - 2026-10-23: DL-233 records Jared's answers on two of the 5.6 Pro port's open items. The scripted stand-in chat is removed, with its value, its Home options row and its Demo Studio row; the hosted 5.6 Pro chat is the Home column's only chat surface. Pinned History follows the panel redesign: 240 px, or 200 px only in a capped column under 540 px, and the column grows by the width History is drawn at, a width the person dragged included, so the messages keep theirs; while the narrow ladder takes that width back History shows as its flyout and the pin is kept. DL-232, F3-637, F3-659, ACD-504 and SSYS-055 are amended in place. Concept checks supply no native or governance certification.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-233, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-659, ContractName:Plans/assistant-chat-design.md#ACD-504, ContractName:Plans/Settings_System.md#SSYS-055

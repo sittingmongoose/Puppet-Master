@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L8683-L8757
+Source lines: L8684-L8759
 
-Source SHA256: `7a1eafa8989ffd2cab6c9a85bb29f93b001a791de71b6eaa6f0986a301fdf601`
+Source SHA256: `704060fece43cad29d680fbe8e2318e81f61c6bb07e3c3f9f57e3667e0903a50`
 
 ---
 
@@ -34,6 +34,7 @@ canonical_text: >-
   summary attributed to its turn. A provider tier that does not report streaming events, tool
   boundaries or internal visibility (PROVIDER-004, PROVIDER-005) degrades to showing only what it
   reported: its reply appears whole and no subject or narration is invented.
+  Amended 2026-10-29 (D8; PM7): Recovery reconciles observed process identity before any stop; PID reuse cannot target a different process, cancellation never silently unloads live owner work.
 gui_related: false
 gui_classification_reason: "Defines the stream vocabulary the chat's live turn presentation consumes."
 split_recommended: false

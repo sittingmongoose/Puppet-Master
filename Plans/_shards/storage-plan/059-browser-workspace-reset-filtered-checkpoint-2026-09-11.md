@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L21321-L22102
+Source lines: L21321-L22104
 
-Source SHA256: `cce7b8d8b0cf5548ce56220a1f4a21225b7a5ba992f89025f6d60611ba3fb117`
+Source SHA256: `34c30a5a6f63c6676679e807302bec56f6f025b9975b701433d5edc4d61e5ee6`
 
 ---
 
@@ -220,6 +220,7 @@ canonical_text: >-
   complete examined coverage before atomic filtered-checkpoint CAS and fenced
   historical reset disclosure. Preserve original owner effects and all existing
   source/index/checkpoint retention, recovery, deletion and withdrawal boundaries.
+  Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer width ≥400 or null for default and dynamically clamp rendering to current centre/page floors. Keep History pin/user width and narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the constrained fallback.
 gui_related: false
 gui_classification_reason: Defines backend persistence, replay and source authority.
 depends_on: [DL-046, SP-262, SP-278, SMPFS-168]
@@ -698,6 +699,7 @@ canonical_text: >-
   read by the 1.1.0 schema, which stays in place, and append admission takes 2.0.0 alone.
   Amended 2026-10-10 (DL-188): Event Authority admitted the 2.0.0 payload (D42); the registry names it at revision
   2026-10-09.1 and the earlier condition "once Event Authority admits it" is met.
+  Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer width ≥400 or null for default and dynamically clamp rendering to current centre/page floors. Keep History pin/user width and narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the constrained fallback.
 gui_related: true
 gui_classification_reason: Layout mutation, rollback, currentness and receipt publication govern visible
   Home placement and recovery.

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2645-L2950
+Source lines: L2645-L2951
 
-Source SHA256: `54696f30f5d966fff4e0ade5503f5fe290dadacce90f550027f4cbe94903a00e`
+Source SHA256: `9fa7d17086b3348bd4ce47f0664e12bd56b4060be7493a82fa500f7138be6c59`
 
 ---
 
@@ -21,6 +21,7 @@ status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: >-
   The capsule preview ("What's in capsule now") is labelled for people as "See what your next message will include". Its token count and space meter count memory notes only, against assistant.memory.capsule_budget_tokens (default 350); taught rules that ride along may be listed beside the notes but come from the rules pipeline and are never counted against the memory capsule budget, and any figure shown for them names the rules budget it belongs to, because Memory is not rules. A gist whose last evaluation was Verified but which holds a claim whose currentness is needs_revalidation or source_unavailable may be shown under the display group "Out of date" until it is reassessed; the group is derived at read time from currentness, its gists do not auto-inject, and it is never stored, emitted or offered as a fourth verification_state, which stays exactly Unverified, Verified or Discarded. In chat, memory is never a card and never a pop-up: a reply that saved a note carries a "Noted" mark in its meta row that relaxes to the glyph alone after 3 s, a milestone that verifies a note earns one "Verified: …" line once, and a note going out of date makes no chat noise.
+  Amended 2026-10-29 (PC3; PM7): Optional Pip faces in Memory rows project the row’s existing catalog key: unverified pending/reviewing as owner specifies, held waiting, completed complete and failed failed. No face creates a Memory state or catalog key; fall back to the shared status mark when the part is off.
 gui_related: true
 gui_classification_reason: The capsule preview label, the list grouping and the in-chat memory marks are user-visible presentation of memory state.
 depends_on: [AMS-014, AMS-018, AMS-021, AMS-044, AMS-045]

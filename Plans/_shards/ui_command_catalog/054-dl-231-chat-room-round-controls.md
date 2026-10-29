@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16245-L16413
+Source lines: L16248-L16560
 
-Source SHA256: `c14181f8a6fbc45bf628a3dd7404309ebd191fbec9962524c46d8f1d77bf8876`
+Source SHA256: `9d9436c110ebbf9752035d098f87aa5e30ed4b7769070f57278d83a3b36934ee`
 
 ---
 
@@ -135,6 +135,7 @@ canonical_text: >-
   application-scope Settings transaction above. In that snapshot Thought Stream changed only its
   shared preference and preview; the live thinking display it drives followed on 2026-10-23
   (ACD-221, DL-234).
+  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
 gui_related: true
 gui_classification_reason: Maps hosted chat controls to existing commands, Settings transactions and local actions.
 split_recommended: false
@@ -177,3 +178,146 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md#CS-104, ContractName:Plans/Wiring_Matrix.md#WM-096, ContractName:Plans/UI_Wiring_Rules.md#UIW-044, ContractName:Plans/Settings_System.md#SSYS-055
+
+
+### UCC-209 - Project Box Command And Shortcut Producers
+
+```yaml
+plan_unit_id: UCC-209
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: B1/B2/B6; CS-105. The project box and row-key producer add cmd.project.switch_active_tab and
+  cmd.project.open_in_new_workspace_tab as canonical workspace-owner commands with stable project_id. ui.project_switcher.open/close
+  are typed local presentation actions, Ctrl+Shift+P opens and Ctrl/Cmd+Enter on a row dispatches the new-tab
+  command. All projects uses the existing Projects route. Binding census includes all six shell.project.* controls;
+  decorative mark/loader dispatch nothing.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-236
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-236
+
+
+### UCC-210 - Work Commands And Navigation
+
+```yaml
+plan_unit_id: UCC-210
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: D2/D6/D8–D13, G4–G8/G10; CS-106. cmd.chat.processes.open is thread navigation; cmd.agents_and_processes.show
+  selects agents|processes|resources; cmd.agents_and_processes.pop_out moves the same desktop view. cmd.work.stop
+  is item|thread|platform owner mutation over current reviewed IDs, services excluded; cmd.work.restart restarts
+  eligible work; cmd.work.send_input answers current safe yes/no; cmd.work.set_completion_delivery writes agent|user|quiet;
+  cmd.work.clear_finished is view-local navigation_wrapper hiding only; cmd.work.quit confirms keep_running|stop_selected.
+  Each canonical row has one handler and identity. Reuse cmd.terminal.open, owner thread/node routes and schedule
+  cancel. New Home panel-tab route and keyboard shortcuts remain deferred. Typed local ui.work_panel.* and
+  ui.work_quit.* are no-write view state.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-255
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-255
+
+
+### UCC-211 - Pip Editor And Settings Hosts
+
+```yaml
+plan_unit_id: UCC-211
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: S1–S9. ui.settings.pip_editor.open/close/replay are typed local no-write actions; Settings
+  row, wand Pip… and title-bar Customize Pip… share one editor. Parts/presets and status-bar words use cmd.settings.transaction.preview/apply
+  over their two admitted IDs. Wand census grows 195→196 with Pip… as a Settings disposition, no new capability
+  or command. No editor inside onboarding, no Classic/master Pip/loader preference.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-239
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-239

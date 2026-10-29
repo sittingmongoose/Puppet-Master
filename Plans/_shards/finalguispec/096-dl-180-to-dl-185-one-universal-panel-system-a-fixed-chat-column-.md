@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44512-L46905
+Source lines: L44523-L46920
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -438,6 +438,7 @@ canonical_text: >-
   (DL-208) the marks above are the interim: the 7 px dirty dot, the 6 px hollow square and the 7 px square
   agent mark then give way to F3-658's change-modified mark in the close slot, news and the agent-driving and
   agent-cursor marks.
+  Amended 2026-10-29 (L1; PM7): A busy item’s tab state uses st-working. A tab awaiting its content may show the shared loader of F3-662, NieR routed to Diamond loaders; no bespoke tab spinner and no ambiguity with determinate progress.
 gui_related: true
 gui_classification_reason: Defines the one tab strip every panel uses, its silhouette, widths, marks, reorder and keyboard.
 split_recommended: false
@@ -1167,6 +1168,7 @@ canonical_text: >-
   tab has Preview compact and Redacted JSON; a record has Show in chat, which reveals and marks the work row
   in its thread or says the message is not available, and Copy. Each row dispatches its content owner's
   existing command or is view-local; none adds a command id here.
+  Amended 2026-10-29 (PC5; PM7): Seat hues remain this one owner table. Pip reads them rather than owning another palette; gold crown/hat are role material and do not change the seat or status hue.
 gui_related: true
 gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
 split_recommended: false
@@ -1504,6 +1506,7 @@ canonical_text: >-
   and 20 px in other looks. The Orchestrator Glass header and board are inset 6 px instead of 16 px;
   F3-655 consumes that shell placement. This changes no chat or panel minimum, collapse threshold or
   persistence boundary.
+  Amended 2026-10-29 (G1–G3; PM7): No fixed 760 px message-area cap remains; the chat drag runs until the centre/page floor, with the existing narrow ladder and user-sized History preserved. Full Activity Detail opens docked directly, first widens chat, then covers transcript at full column height if it cannot fit. Remove Activity Pin/unpin/small fallback, not History pin. Stored finite widths are integer ≥400 and dynamically clamped to available space, no saved 760 upper bound.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
 split_recommended: false
@@ -2363,6 +2366,7 @@ canonical_text: >-
   above the one overlay root and below hover tags and the Guided Tour (F3-635). It follows the bans (F3-648) and the
   looks (F3-647) like any surface. This supersedes the concept practice of a demo panel per surface and changes no
   product unit.
+  Amended 2026-10-29 (W8, SND1; PM7): One lab Demo Studio covers Pip/loader/sound/parts, project box states/widths, expanded onboarding tips/errors and Activity/Resources/quit. Owner APIs only, missing owners unavailable; no lab toolbar or magic demo errors in product. Jared listens to the sound board before landing.
 gui_related: true
 gui_classification_reason: Defines the one Demo Studio for PMConcept7's concept surfaces and keeps it out of the product.
 split_recommended: false

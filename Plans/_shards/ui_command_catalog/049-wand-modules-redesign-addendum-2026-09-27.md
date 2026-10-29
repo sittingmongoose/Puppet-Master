@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L13699-L14811
+Source lines: L13699-L14813
 
-Source SHA256: `c14181f8a6fbc45bf628a3dd7404309ebd191fbec9962524c46d8f1d77bf8876`
+Source SHA256: `9d9436c110ebbf9752035d098f87aa5e30ed4b7769070f57278d83a3b36934ee`
 
 ---
 
@@ -82,6 +82,7 @@ canonical_text: >-
   The Plan card's Cancel schedule control produces cmd.execution_window.cancel from plan_card
   (SQR-013, DL-138), alongside schedule_manager; it cancels only the future execution schedule
   through the existing request, never an already-running plan.
+  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
 gui_related: true
 gui_classification_reason: "Names the visible sheets, cards, dock lines and header that produce existing commands, and their disabled states."
 split_recommended: false
@@ -498,6 +499,7 @@ canonical_text: >-
   The Followed or Missed note is saved reply metadata, not an extra action. See which rule is view
   state; Ask for a fix on message_chrome dispatches cmd.review.send_findings_to_agent with
   taught_rule_check and obeys UCC-172's empty-composer, source-thread and no-send contract (DL-138).
+  Amended 2026-10-29 (PM7): S5: census now has 196 dispositions, adding wand Pip… → SSYS-056 editor (Settings disposition, no command). Earlier 195 totals are historical.
 gui_related: true
 gui_classification_reason: "Classifies every visible control of the redesigned sheets, cards, dock, run view, header and managers."
 split_recommended: false

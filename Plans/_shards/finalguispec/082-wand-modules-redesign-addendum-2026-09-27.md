@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40151-L41371
+Source lines: L40173-L41395
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -85,6 +85,7 @@ canonical_text: >-
   DL-138 confirms this scope: theme durations govern sheets and a card's own changes; transcript
   entrances retain ACD-475's shared timing and order. Wand cards that opt out of the family entrance
   do not acquire a second entrance animation.
+  Amended 2026-10-29 (PC1/PC2; PM7): The common sheet header may add Pip holding the kind sign on a third string, 10 px lower than the first concept and level with Close. Existing title/kind/lead/close/focus/commit grammar remains; presentation adds no feature or dispatch. Optional host follows SSYS-056.
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
@@ -1080,6 +1081,7 @@ canonical_text: >-
   grid and no pills. Every other Activity Detail family (Goal, To-Dos, Subagents, Changes, Artifacts)
   and every other Context Details section keeps the restored native card, panel and grid
   presentation, apart from the To-Do rows, which are DL-147's second scoped exception (F3-593).
+  Amended 2026-10-29 (PC1–PC5; PM7): Agent and helper appearances consume F3-594’s single Pip primitive and SSYS-056’s optional extras, never a second drawing or runtime identity.
 gui_related: true
 gui_classification_reason: "Defines the compact Activity Detail and Back Seat Driver Context Details surfaces."
 split_recommended: false

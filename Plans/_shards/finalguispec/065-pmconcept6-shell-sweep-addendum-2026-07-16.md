@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32464-L33088
+Source lines: L32474-L33102
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -191,6 +191,7 @@ canonical_text: >-
   there. A page's own quiet confirmation, Home's panel notes and Usage's notes included, is a Quiet notice
   through this one staging under the bell (DL-193: Usage notices appear under the bell like every other page);
   no page keeps a toast line of its own.
+  Amended 2026-10-29 (A4, D9, G10; PM7): D9 Notify me uses the alert owner once per item with coalescing; no view-local notification store. OS Pip faces follow A4; new OS badge/flow implementation is deferred under G10 and later reads the shared needs-you projection.
 gui_related: true
 gui_classification_reason: This unit defines visible ephemeral toast staging, lifetime, and dismissal behavior.
 split_recommended: false
@@ -285,6 +286,7 @@ canonical_text: >-
   with a plain detail, for example System status, "Everything Puppet Master needs is running. Click to see
   each service." An item without words of its own takes the button default ("Click to see the details.") or
   the readout default ("Shows the latest known state."), never the generic "Choose this option."
+  Amended 2026-10-29 (D5, G4; PM7): Replace the separate Orchestrator chip by agents/questions and processes/needs-input between project and source control, Numbers by default, Words through SSYS-057, one stale strip. Orchestrator is an Agents group. No CPU/RAM bar item: multiple servers/environments have no single implicit reading; Resources owns them.
 gui_related: true
 gui_classification_reason: This unit defines visible status bar chips and their click behaviors.
 split_recommended: false
@@ -503,6 +505,7 @@ canonical_text: >-
   The Agents side panel joins the canonical side-panel inventory. The occupant mirrors the
   subagent registry, listing active and available subagents, and provides lineage
   entrypoints that navigate to the corresponding agent lineage views.
+  Amended 2026-10-29 (D2/D7, G4; PM7): Deep rail and platform triage share row anatomy and registry/OperationalAwareness, across Assistant, Orchestrator, Planning Wizard, PRD Builder, Scout and all owners. F3-664 owns triage and Resources; rail keeps deep lanes/queue/lineage, no parallel runtime.
 gui_related: true
 gui_classification_reason: This unit defines a visible side panel and its displayed subagent surface.
 split_recommended: false
@@ -576,6 +579,7 @@ canonical_text: >-
   Amended 2026-10-17 (DL-228): the inbox keeps a bounded number of items (the concept keeps 60). At the bound
   the oldest item that is read and needs nothing leaves first; an unresolved Needs you item is never dropped
   to make room.
+  Amended 2026-10-29 (D9, G10; PM7): Completion notices are one alert-owner delivery per work identity/generation, coalesced and deduplicated. Quiet emits none; user-stopped threads are never woken. Future OS badge consumes only the shared needs-you set; no OS badge rollout here.
 gui_related: true
 gui_classification_reason: This unit defines the shared alert store, alert lifecycle controls, and the unread indicator contract.
 split_recommended: false

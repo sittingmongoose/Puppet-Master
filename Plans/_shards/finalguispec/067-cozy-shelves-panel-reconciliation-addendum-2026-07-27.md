@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33931-L34633
+Source lines: L33949-L34652
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -417,6 +417,7 @@ canonical_text: >-
   question stays readable in the collapsed row and the waiting or elapsed time appears once, in the row head; the
   economics and lane facts read as plain words and numbers, and model names are plain words, not capsules; the
   vocabulary, mapping and ordering above are unchanged.
+  Amended 2026-10-29 (D7; PM7): Its ordering, lifecycle words and stale strip are reused by F3-664’s platform panel and Home Agents board. The rail remains deep management; all named product owners are included, no Orchestrator-only narrowing.
 gui_related: true
 gui_classification_reason: This unit defines the visible Agents panel lifecycle chips, queue and attention presentation, economics, staleness treatment, and icon substitution.
 split_recommended: false

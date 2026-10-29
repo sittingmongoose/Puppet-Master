@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46907-L49358
+Source lines: L46922-L49670
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -1704,6 +1704,7 @@ canonical_text: >-
   requirements. Amended 2026-10-17 (DL-230, Jared): no requirement is set for how Glass reads when the
   operating system asks for reduced transparency or more contrast; the proposed static near-opaque form and
   near-opaque tints were withdrawn when Jared answered "Don't worry about it", and no Settings row is added.
+  Amended 2026-10-29 (B4, G9; PM7): Project box may wear the shared selected chip while its menu is open even beside a selected page chip; this is a pressed context entry. Glass Activity Detail, all hover/attachment cards and History share the persona/model menu’s near-opaque plate token; no local translucent variant.
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -2089,6 +2090,7 @@ canonical_text: >-
   current answers on return to PRD. This is continuity of the existing flow, not a new Wizard stage
   or transition-time performance guarantee. F3-637 owns the landed 6 px Glass inset for the
   Orchestrator header and board; it changes no planning flow.
+  Amended 2026-10-29 (X2, L3; PM7): Reduced Motion’s still-state rule admits only F3-662’s loader opacity breath/blink wait signal, no travel; glyph categories remain lit/still and no other idle motion is admitted by this exception.
 gui_related: true
 gui_classification_reason: Planning Wizard and Orchestrator match the look.
 split_recommended: false
@@ -2165,6 +2167,7 @@ canonical_text: >-
   existing skip/end-state and Reduced Motion contracts; connected geometry and meaningful end states remain.
   This amends the presentation of F3-520, F3-521 and F3-600 without adding onboarding commands, steps
   or approval flows.
+  Amended 2026-10-29 (O1/O2/O8; PM7): One Pip in each family’s own world/material replaces articulated felt/crystal/blueprint troupe and NieR unit geometry. Strings remain attached throughout physics. F3-663 governs bounded solver, Retro worlds, live NieR eyes and reduced-motion end states; interface controls still consume shared glyphs.
 gui_related: true
 gui_classification_reason: Onboarding art and Glass controls.
 split_recommended: false
@@ -2339,6 +2342,7 @@ canonical_text: >-
   mapping row names the surfaces it serves (the panels' browser tab is the globe, Settings' browser row the
   browser window); a status meaning always maps to its status glyph, so failed is st-failed and a card's
   waiting is st-waiting, never the close or terminal glyph.
+  Amended 2026-10-29 (A5, X1/X2, O9, D14, G5; PM7): No new status keys: catalog remains 22. A5 face mappings preserve underlying owner state; waiting vs blocked distinct, stopping pending, stopped skipped, lost warning. Working item bead stays st-working; indeterminate waits use F3-662. Onboarding Pip may be the current-chapter marker, beads retain ring-dot; tour pip-done is unrelated. Category robot/processes loops rank below needs-you and rest lit/still under Reduced Motion; loader alone permits breath/blink.
 gui_related: true
 gui_classification_reason: Shared glyph vocabulary and presentation.
 split_recommended: false
@@ -2460,3 +2464,296 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-504, ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/Planning_Wizard.md#PWIZ-036
+
+
+### F3-660 - Pip Brand And Shared Drawing Kit
+
+```yaml
+plan_unit_id: F3-660
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  X1, X3, A1–A5, S8/S9; DL-235/DL-239. Pip is the Puppet Master brand: crossed control held by the user, brace-shaped head, eyes joined by strings to underside screw eyes 5 units in from the sticks’ lower tips. One solver joins both ends in every still and sampled moving pose; rods are opaque, rear rod solid-shaded; NieR nodes square; Retro strings redraw pixelwise. The 24 px static title-bar mark takes no click or state and yields to mark-only density without moving the bell. The favicon and release tile are static; one Basic Dark app tile, ICO/ICNS/PNG/SVG assets with manifest. Logical micro ≤18, small 19–40 and full >40 tiers remain consistent across DPR. Each look reads its tokens: Friendly vinyl, Glass clear blue lens/rim/base without brow band, Basic flat single accent without cheeks, Retro pixel grids, NieR ink/visor/diamond. Static NieR keeps the plain band; live Pip shows its eyes. Every animated asset has a complete still base.
+  The gated tray uses A3’s aggregate status faces across Projects; waiting always wins and complete lasts about 10 s. Its accessible name carries the typed status, no colored badge. OS notifications and Friendly’s app tile use Pip while in-app cards keep their kind marks and the notification stack remains the only in-app notification entry. Individual agents consume F3-594’s Pip primitive; small category marks consume robot. Mood mappings in glyph_catalog.json add no keys; onboarding expressions remain illustration unless paired to an owner state. Brand, tray, icon, notification faces and loader are independent of Pip parts. No per-instance stylesheet, random render IDs, second kit or per-surface palette.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-235
+unblocks: []
+acceptance_criteria:
+- Title mark is static and non-interactive at every density and DPR; no bell displacement.
+- All assets and live consumers share geometry/tokens and connected strings; static base remains visible without
+  CSS.
+- Tray gating and priority agree with the shared work projection and existing settings.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-235
+
+
+### F3-661 - Project Box A And Same Frame Selection
+
+```yaml
+plan_unit_id: F3-661
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  B1–B7; DL-236. A Tab is the only product project-box design: 28 px tab height, shared type/resting ink, PMG folder, drawn chevron, hairline between the box and page tabs. Name truncates; density folds to folder. The visible label remains the bare Project name; path/branch and full name are in the hover tag and two-line menu rows with monogram, shared status mark and state words. Chosen row and its tile use Basic tinted chip, Friendly mint plate, Glass clear lens, Retro reverse video, NieR ink bar. Opening the menu may show the box’s chosen chip beside the selected page’s chip (F3-652 exception B4). One row renderer serves onboarding-created and existing Projects.
+  Projects view stays primary; this secondary menu opens with ui.project_switcher.open and Ctrl+Shift+P. Pick dispatches cmd.project.switch_active_tab(project_id); Ctrl/Cmd+Enter dispatches cmd.project.open_in_new_workspace_tab(project_id); All projects navigates to Projects. Menu closure restores focus. Badge reads the shared work/layout owner: waiting > blocked > working > change-modified > idle, preserving other states in the accessible description. Never conflate blocked and needs-you.
+  A native layout observer resynchronizes the lens and tab ink after layout and before paint, honoring resize-drag pause/defer rules, without lazySync’s 140 ms delay or synthetic resize. Zero painted frames show a displaced chip at ~1390 px or full width, including long-name picks and folds. NieR’s cover reveals an already-correct chip; its input guard ends with the cover (B7), with any other failure documented. Shared hover engine and --pm-switch-* materials own hover/selection; Retro/NieR chevron steps, Reduced Motion is instant. No concept STATE fixture or local theme store supplies live status.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-236
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens:
+- cmd.project.switch_active_tab
+- cmd.project.open_in_new_workspace_tab
+- ui.project_switcher.open
+- Ctrl+Shift+P
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-236
+
+
+### F3-662 - One System Loading Indicator
+
+```yaml
+plan_unit_id: F3-662
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  X2, L1–L8; DL-237. One loader owner serves every indeterminate wait: pages, panels, splash, buttons, sign-ins/checks, chat thinking, project refresh, Planning Wizard reads, Orchestrator waits, Compacting, answer preparation/submission, Usage refresh, browser navigation, onboarding and Settings managers. Busy-tab content waiting opts in; an item’s row/tab working status remains st-working. Preserve skeletons where layout is known (F3-172) and measured determinate bars; terminal program output and decoration are not application loaders. No reduced-motion 30 percent stub may imply measured progress.
+  The one opt-in/class contract sizes from em/baseline. Think represents chat thinking, Swing is the default, Hop is a short wait ending successfully. Friendly springs at 1.8 s, Glass glides 2.6 s, Basic eases 1.7 s, Retro samples eight frames/1.2 s, scaled by Animation speed on one shared clock. String endpoints remain connected. Pause offscreen, hidden, idle and during body.pm-resizing; defer idle work until PM_DRAGEND. No motion below 12 px. Reduced Motion keeps only control opacity breath and blink as wait-feedback exception, never travel; needs-you remains louder. NieR always routes to Diamond loaders or its existing disabled-part fallback, never animated Pip. Loader and Orbit hand off: one visible Pip per reply, with no duplicate or empty frame.
+  Drawing is decorative aria-hidden; the host has aria-busy or role=status and a meaningful accessible wait label, announced once rather than by every Pip. No loader preference or switch. The first-paint owner reads the Project look without another theme copy. All 35 inventoried sites and the missing Settings/tab busy states consume this owner; the loader rollout report records each site. L8’s menu-sprout duplicates are recorded debt outside this change.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-237
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-237
+
+
+### F3-663 - Full Onboarding With Pip
+
+```yaml
+plan_unit_id: F3-663
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit drawings on every real onboarding route (about 44 screens), including Connect, Server, Restore, NAS, online copy, existing folder/repository, Like, Protect, AI-all/none/free, Later, begin subchoices, kept-in sheet, recovery/FileSafe/backup, resumed/returning banners and Adjust NieR look. Preserve PWIZ-021’s real stage graphs and journey-specific chapter counts; narrow <760 px and short <520 px use the real layout. Basic is first, first run Basic Dark. Away is new-Server only and recommended; Later skips AI; Creating goes to Protect with backup; AI has no Back and Continue needs a Ready account or explicit skip. Ready’s Tour/help work. The Tour itself is unchanged (O11); Pod 042 remains its NieR narrator.
+  One bounded transform solver makes Pip/props pendulums and joins strings eye-to-eye; world/idle life pauses offscreen, hidden, in low-resource mode and during drags. Theme tokens supply materials. Friendly is a felt world with vinyl Pip; Glass uses Ribbons, glass floor/reflection, ripples; Basic has dot grid/ruler/protractor/plumb; Retro Dark is the existing CRT with grain, persistence, rolling bar and <3 percent flicker at 20 fps; Retro Light is green-bar printer paper without bezel at 10 fps, rail included; NieR is a HUD with hovering eyed/visored Pip, QUEST UPDATED and two slipping bands, never black frames. Filters are changed only after frame-by-frame A/B preserves the look (O2). No per-page physics clock.
+  Welcome sleeps until real pointer travel or key arrival. Watch follows 420 ms stable dwell, stays ≥900 ms and holds 600 ms after leave; preview highlights the choice without committing. Choosing is happy through the whole line; field typing is wonder; work think; owner errors oops with warning and a recovery cheer. Wink occurs once at Ready sign-off, never random. Face transitions close eyes/brows on the eye line and mouth at its centre then open beyond full in ~0.2 s, with no opacity crossfade or two faces together; Retro steps. Gaze keeps the last known pointer position; thinking dots/squares and sleep never track. A bubble reserves its whole line then types at the voice pace, coalescing faster changes; decorative bubble is aria-hidden, headings/choices convey meaning.
+  Every choice/field/option (about 203, not only the concept’s 23) has a right-edge ? with beginner-safe words. ui.onboarding.open_details/toggle_choice_explanation owns the single pm7ob-explainer with aria-controls/aria-describedby. It is Friendly stitched note, Glass frosted, Basic dashed annotation, Retro Dark terminal box, Retro Light NOTE, NieR TIPS on every page; narrow puts it under its exact choice. One at a time; filled/ringed open ?, chosen NieR ink stops before ?. Close by ? again, Esc, close or navigation and restore focus. Long notes lift Pip and move its bubble without clipping. Radio circles align with or without Recommended.
+  Props: laptop/phone/server, page/folder/restore, adaptive name sign (one large line then 2–3 lines then ellipsis), vault/cloud/backup, house/globe, review clipboard, Creating blocks, AI orbs, Ready charms/crew; expanded routes add NAS, key, identity card, QR/code, Recovery Kit, lock, settings copy, forge services and free models. Blocks slow into place level, squash on touchdown, give below, unhook strings and rest on floor; each follows its owner phase and never delays Continue/Ready, instant under Reduced Motion (O12). Name empty/long/taken, wrong/expired pairing, NAS, token/key/sign-in and Creating failures use real errors, including retryable sign-in failure, not demo-only magic names. Cursor accepts ≥12; rejected demo is ≤11, label API key for Cursor / Check key; no unsupported OpenAI API key claim and Family recipes remains valid.
+  Six original sound kits (Retro split) retain the approved music/no re-key. Eight-bar tunes follow chapter I/IV/V/vi/high-I and motif grows to Ready; no hum/drone, near-unison beating, gated buzz, moaning selection or deep NieR thump. Voice/music live synthesis passes the one Notifications & Sounds player/gesture gate/master general.interaction.sound-effects and header speaker, with recipe/source/licence/version metadata in the existing sound tools/library. Setup voice/music are Pip parts, app chirps default off; Reduced Motion never mutes and look hover is silent. Preserve Sound on — click to mute and Sound off — click to turn on. No local mute store; first run is factory parts plus session sound preview, rerun reads the Project. Reduced Motion stops all swing/travel/flicker/trails and places props instantly; state faces remain meaningful. Ready hands strings to the existing first Tour callout without a Tour redesign.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-238
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens:
+- pm7ob-explainer
+- ui.onboarding.open_details
+- Sound on — click to mute
+- Sound off — click to turn on
+- API key for Cursor
+- Check key
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-238
+
+
+### F3-664 - Agents Processes And Resources Panel
+
+```yaml
+plan_unit_id: F3-664
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  D1–D14, G4/G8–G10, X1; DL-240–DL-255. The two status-bar controls open one platform-wide projection at Agents or Processes; Resources is its third tab, not a CPU/RAM bar indicator. Every Assistant thread, Orchestrator, Planning Wizard, PRD Builder, Scout, agent/subagent, process and scheduled run is in scope, with explicit Project/server/environment identity. Questions leads Agents, each question/agent listed once and counted in its owning surface group; Needs input leads Processes, running processes grouped under their starting agent, then Scheduled, Finished this session and collapsed read-only System services linking System status. Agent processes links select that owner’s process filter. Shared F3-477 ordering/row anatomy/freshness match the Agents deep rail and Home board; stale is one explicit strip, never healthy zeros. Subagents remain in their own chat domain and appear here as process owners, not duplicate process work.
+  Resources replaces the old Task manager layout: sortable CPU/memory/ports table and inspector grouped by server/environment for all represented Projects, never one assumed machine. SIR-054 defines subordinate ProcessFacts and per-server samples. Sample only while Resources is open and visible, stop on close/hidden; unknown/stale is labelled. Agents/Processes/Resources are tabs only: no Side by side, no Home panel tab (deferred), no panel keyboard-shortcut/OS badge rollout in this build. Desktop Pop out moves the same view/state into one window; no second runtime, and unsupported clients show their reason. Floating panel, quit dialog and exit animations use DR-067’s overlay owner and near-opaque Glass menu plate.
+  Stop per item and Stop all (thread/platform target list) use cmd.work.stop and D8 process-group semantics; restart/input/completion routing use UCC-210. Questions and process input remain separate counts over one needs-you set. Clear finished hides only this view’s rows. Lost follows reconciliation, warning; Stopping uses pending until observed exit, Stopped skipped, Scheduled pending, Done complete, Failed failed with exit N. Live category glyphs robot/processes use the shared 2200 ms beat below needs-you, Reduced Motion lit/still; row marks stay still, individual agents use Pip. Design narrow and NieR readouts without hiding meaning; accessibility retains full words even in Numbers.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-245
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-245
+
+
+### F3-665 - Quit While Work Runs
+
+```yaml
+plan_unit_id: F3-665
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: D10, DL-249. With live work, quitting opens a focus-contained dialog with Keep everything running
+  on the server selected by default. Stop selected work exposes the exact target list, each untickable, excluding
+  system services. ui.work_quit.select/cancel change only the draft; cmd.work.quit confirms a generation-bound
+  choice. Keep-running closes only the client; selected-stop delegates the reviewed identities to cmd.work.stop
+  and observes exit before claiming completion, exposing failures/stale targets. Cancel/Esc restores the opener
+  without work mutation. Closing a window under minimize-to-tray retains its existing tray behavior. No silent
+  kill, quit preference row or duplicated work owner.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-249
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-249

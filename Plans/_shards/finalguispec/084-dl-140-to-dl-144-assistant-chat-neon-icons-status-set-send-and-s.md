@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41542-L41957
+Source lines: L41566-L41986
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -41,6 +41,7 @@ canonical_text: >-
   easing only: Friendly overshoots, Glass glides, Retro steps, NieR steps. Reduced motion stops every act and loop
   while the lit ink, the halo and the silhouette still carry each state. On light themes the halo stays faint and
   never forms a smudge or a plate.
+  Amended 2026-10-29 (X1/X2, PC5, D14; PM7): robot and processes are category glyphs; individual agents are Pip. Needs-you outranks all loader/idle/category loops. Crown/hat gold is an explicit role-material exception, not status ink; reduced-motion categories keep a lit still pose.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
@@ -112,6 +113,7 @@ canonical_text: >-
   the chat's placements and domain states.
   Amended 2026-10-17 (DL-228): the 13 status marks are the chat's run-state subset of F3-658's one 22-key
   vocabulary (17 states and 5 file-change marks), not a separate set; the count 13 names that subset only.
+  Amended 2026-10-29 (A5, G5; PM7): Keep 22 keys. Faces project catalog status, never new meanings: agent waiting is Needs you/questions; process waiting Needs input; stopping pending, stopped skipped, lost warning, scheduled pending. working is item state, never an application loading synonym.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
@@ -173,6 +175,7 @@ canonical_text: >-
   reader shows the needs-you mark as its flag and in the centre disc (F3-585).
   The compact strip and the Step Rail follow the same rule: the current disc is a dark disc with its glyph lit, and
   finished discs are lit green. Under NieR Mode the disc is ink with a paper glyph and its pulse steps.
+  Amended 2026-10-29 (PC4, L1; PM7): Pip occupies the Orbit centre, active tool a small badge. Thinking loader hands over to it; no two Pips for a reply. Existing Orbit choreography, activity ownership and reduced-motion behavior remain.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
@@ -308,6 +311,7 @@ canonical_text: >-
   all three are lit and still. Under NieR Mode they draw no glow and no colour: the wand stays ink, its handle a
   lighter ink and its star filled, and its sparkles twinkle in held steps; the bolt's leader steps down band by band
   in ink and the bolt then flashes solid ink; and the grill's act steps.
+  Amended 2026-10-29 (S5/PC1; PM7): Wand adds Pip… as a Settings-hosted editor entry, no new chat capability. Its Pip draws through the kit; role props and kind glyphs retain their owners.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
@@ -384,6 +388,7 @@ canonical_text: >-
   swap instantly. This cross-fade applies wherever a scene changes, PMConcept7 included. The chat adds no moving
   touches inside the scenes. NieR Mode stays the Settings switch, not a ninth theme; the concept's NieR Light and NieR
   Dark Demo Studio themes are lab only (ACD-474).
+  Amended 2026-10-29 (S7/S9, L7; PM7): NieR parts win overlapping drawings: Diamond loaders (or existing fallback when off), Ink empty states, Pod companion/voice. Parts never switch the universal brand/tray/icon/notification/loader. Static NieR Pip does not animate; live sheet/onboarding Pip has eyes (X3).
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30369-L31486
+Source lines: L30378-L31495
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -734,7 +734,7 @@ Source since 2026-10-08 (DL-151): PMConcept7's retro-light, `Concepts/PMConcept7
 | Accents | `--accent-lime` | `#0B8043` |
 | Accents | `--accent-orange` | `#E65100` |
 | Accents | `--accent-warning` | `#E65100` |
-| Accents | `--accent-error` | `#C62828` |
+| Accents | `--accent-error` | `#C621011` |
 | Accents | `--accent-primary` | not defined (inherits root: `var(--accent-blue)`; resolves to `#0056B3` in this variant) |
 | Accents | `--accent-primary-rgb` | `0,86,179` |
 | Graph | `--graph-pending` | `#ADB5BD` |

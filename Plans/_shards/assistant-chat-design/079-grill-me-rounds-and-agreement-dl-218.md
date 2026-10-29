@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27975-L28188
+Source lines: L27985-L28349
 
-Source SHA256: `c0c6409fa65d05d98a600d5145ecae0efae9602af2b85f17b5f91023a204798c`
+Source SHA256: `355a20416a8470efa1330c645472dc1c460f56f4e4535386ee62cba4a25805b1`
 
 ---
 
@@ -222,3 +222,154 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-659, ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/Decision_Log.md#DL-218, ContractName:Plans/Decision_Log.md#DL-231
+
+
+### ACD-505 - Processes Activity Domain
+
+```yaml
+plan_unit_id: ACD-505
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: D1–D4/D7–D14, G4/G5/G7; F3-664. Processes is the tenth domain after Subagents; it covers this
+  thread/subagents’ processes, scripts, servers, watchers, browser sessions and scheduled runs. Subagents stay
+  separate and appear only as linked owners here. Presence requires running/input work, retained while card/detail
+  open; scheduled/finished alone never keep icon. By state orders Needs input, Running, Scheduled, Finished
+  this session; many subagents can use By owner. Hover uses existing dwell/compaction/tones; full detail has
+  Stop and thread Stop all and bounded output. Footer says composer Stop ends reply only. Prompt quick answers
+  are safe-first yes/no; other input opens exact terminal. Processes uses console glyph, agent category robot,
+  individual rows Pip; glyph colour/backlight use common domain tones. All consume SIR-054 and one needs-you
+  set, no duplicate runtime.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-241
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-241
+
+
+### ACD-506 - Full Activity Detail And Dynamic Chat Width
+
+```yaml
+plan_unit_id: ACD-506
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: G1–G3/G9, DL-254. Activity-bar click directly opens full-size Activity Detail, never a small
+  transient view and never Pin/unpin. Keep it until ×, Esc or icon-again. If dock does not fit, widen chat
+  within centre/page floor; at window limit cover transcript at full column height. No fixed 760 px cap; preserve
+  400 px message minimum, current centre floor/narrow ladder and History’s user-sized pin. Popped-out chat
+  uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu plate.
+  Friendly/Glass context ring is continuous, antialiased and never segmented by broken transforms. All ten
+  looks, widths 860/1024/1280/~1390/1920, narrow/short, Reduced Motion and drag budgets are acceptance surfaces.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-254
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-254
+
+
+### ACD-507 - Pip Hosts Faces And Orbit
+
+```yaml
+plan_unit_id: ACD-507
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent primitive, reached through shared
+  mark/row/empty/sheet functions rather than innerHTML hooks, observers or layered legacy drawings. Cast/role
+  props, helper marks, Activity agent rows, sheet host by Close, Scheduled/Memory faces, Plans, wand and sleeping
+  empty lists share kit/parts. Host watches at 420 ms, wonders while typing, oops on unusable primary without
+  activation and cheers on success; blink changes, stable last-pointer gaze, no random wink, paused shared
+  sway. Lift-off is one overlay-owned copy released on finish. Pip in Orbit centre has current-tool badge and
+  hands off with thinking placeholder, one Pip per reply. No added chat capability/welcome-back message. Main-button
+  keyboard/pointer acknowledgement ≤100 ms, single commit; fix busy stall instead of delaying dispatch. Parts
+  use SSYS-056’s one transaction and app voice obeys master/chat mute.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-239
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-239

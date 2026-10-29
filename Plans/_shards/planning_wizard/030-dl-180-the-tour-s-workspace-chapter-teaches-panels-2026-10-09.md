@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2765-L2996
+Source lines: L2766-L2998
 
-Source SHA256: `24aaf1baf742822ec779fc6f9669a12b57f48269676e0c1a293e51b3ec9dbb2f`
+Source SHA256: `d8c48f50af90b27c3c244a117d3a9984dd7ec9a1eb78639acc3ff7fe9fe56d6e`
 
 ---
 
@@ -204,6 +204,7 @@ canonical_text: >-
   Demo Studio's new Chat examples are independent of that accepted teaching flow. This implements
   tour isolation for the port; the tour redo, its future selectors and native completion evidence
   remain pending, and no tour chapter or saved-checkpoint contract is revised by this reconciliation.
+  Amended 2026-10-29 (O10/O11; PM7): Ready’s Pip hands strings to the existing first Tour callout. Leave Tour steps/characters unchanged until the Planning Wizard redo; base Tour has no character, NieR keeps Pod 042. No Pip Tour work in this build.
 gui_related: true
 gui_classification_reason: Keeps the visible Guided Tour teaching surface and the hosted chat mutually exclusive until the accepted redo.
 split_recommended: false

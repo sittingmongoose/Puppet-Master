@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2187
+Source lines: L1781-L2188
 
-Source SHA256: `24aaf1baf742822ec779fc6f9669a12b57f48269676e0c1a293e51b3ec9dbb2f`
+Source SHA256: `d8c48f50af90b27c3c244a117d3a9984dd7ec9a1eb78639acc3ff7fe9fe56d6e`
 
 ---
 
@@ -141,6 +141,7 @@ canonical_text: >-
   (cmd.ssh_connection.keys.discover, cmd.ssh_connection.key.install) and enabling a free-model route
   (cmd.free_models.route.enable) have no owner command yet, so onboarding offers those steps as their owners'
   own screens, reached through cmd.settings.open, until the SSH and Models owners admit them.
+  Amended 2026-10-29 (O1–O12; PM7): Onboarding presentation is F3-663’s one Pip with family worlds, bounded transform-only physics/shared strings and optional live voice/music; its former no-physics/no-loop presentation prohibition is superseded. Preserve every stage graph, commit/recovery boundary and the fourteen ui.onboarding actions. Bubble is decorative aria-hidden; option question note is the one pm7ob-explainer. Creating’s owner phases gate progress, not animation.
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Graph_View.md`
 
-Source lines: L194-L823
+Source lines: L194-L824
 
-Source SHA256: `4c36a97a9ff93a1ac9e93977df0e548345aa32b97c9dadb5d85e33204a560544`
+Source SHA256: `a79d6ebcf126b372314b28118934c716b0b8607db633b63bdbfe8beb8f42ea3e`
 
 ---
 
@@ -26,6 +26,7 @@ canonical_text: >-
   low-confidence URLs, and does not persist transient port discoveries as canonical state without source, confidence,
   health, staleness, and override evidence from port_access_record. Open App and Open Container actions resolve through
   UI_Command_Catalog and HostCapabilityCommand when authority permits them.
+  Amended 2026-10-29 (D7; PM7): The old Background Runs card is superseded by the shared agents/processes projection and F3-664’s triage panel; run graph links retain exact run/node identity, no second background-work runtime.
 gui_related: true
 gui_classification_reason: This PlanUnit defines visible Run Graph evidence presentation, links, and access pivots.
 depends_on: [F3-410, UCC-105, OP-028, RAP-042, CV-303]

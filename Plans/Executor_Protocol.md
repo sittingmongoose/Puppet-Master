@@ -5318,6 +5318,7 @@ canonical_text: >-
   same worktree handoff context as other executor file operations; later OS
   handoff must be a separate explicit command such as
   cmd.file.open_in_system_default.
+  Amended 2026-10-29 (D8/D13, G5/G7; PM7): ProcessFacts is subordinate to ObservableWork (SIR-054). cmd.work.stop validates pid plus start time/process group/generation; SIGTERM then SIGKILL after 3 s to the whole group including descendants; Stopping pending persists until observed exit; ended stop is idempotent. Detect current stdin prompt with input generation, only plain yes/no quick answers safe-first; other input reveals the exact terminal.
 gui_related: true
 gui_classification_reason: This unit governs user-visible file/editor Open With behavior and its worktree handoff boundary.
 split_recommended: false
@@ -8706,6 +8707,7 @@ canonical_text: >-
   summary attributed to its turn. A provider tier that does not report streaming events, tool
   boundaries or internal visibility (PROVIDER-004, PROVIDER-005) degrades to showing only what it
   reported: its reply appears whole and no subject or narration is invented.
+  Amended 2026-10-29 (D8; PM7): Recovery reconciles observed process identity before any stop; PID reuse cannot target a different process, cancellation never silently unloads live owner work.
 gui_related: false
 gui_classification_reason: "Defines the stream vocabulary the chat's live turn presentation consumes."
 split_recommended: false

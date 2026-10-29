@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7999-L8148
+Source lines: L7999-L8247
 
-Source SHA256: `49e1a349a19e411aca0f69c9f226a8ab132a687ebe6a4a4676193f6169025c34`
+Source SHA256: `5904d4146c13db64458e0b8b3069ab27d6690663f6f212455bc064e541d23aa9`
 
 ---
 
@@ -121,6 +121,7 @@ canonical_text: >-
   Thought Stream's shared preference drives the chat's live thinking display (ACD-221, DL-234);
   opening or folding a thinking block is local presentation with no command, receipt or event. Demo
   Studio launches, lab-only document ids and unknown-id document fallback add no product command.
+  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
 gui_related: true
 gui_classification_reason: Defines shared dispatch, alias normalization and local actions for the hosted chat controls.
 split_recommended: false
@@ -158,3 +159,101 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-208, ContractName:Plans/Wiring_Matrix.md#WM-096
+
+
+### CS-105 - Project Box Dispatch And Shortcuts
+
+```yaml
+plan_unit_id: CS-105
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: B1/B2/B6. cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab are canonical
+  owner commands of the workspace/project router, not aliases of opening the menu. Stable project_id and current
+  workspace identity/generation are required; stale/not-found/not-permitted refuse without changing the active
+  tab. Ctrl+Shift+P binds typed local ui.project_switcher.open (registered ui.project_switcher.* prefix); .close
+  restores opener focus. Ctrl/Cmd+Enter on a row chooses the new-workspace-tab command; keyboard/pointer send
+  identical typed payloads. Opening/closing/filtering a picker does not dispatch a domain command. Existing
+  project open/switch receipts and events stay owner-authoritative, no new event emission by these producers.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-236
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/Commands_System.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens:
+- cmd.project.switch_active_tab
+- cmd.project.open_in_new_workspace_tab
+- ui.project_switcher.open
+- ui.project_switcher.close
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/Commands_System.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-236
+
+
+### CS-106 - Work Action Contracts And Local Prefixes
+
+```yaml
+plan_unit_id: CS-106
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: |-
+  D8–D13, G5–G7/G10. UCC-210 declares cmd.work.stop, cmd.work.restart, cmd.work.send_input, cmd.work.set_completion_delivery, cmd.work.clear_finished, cmd.work.quit, cmd.chat.processes.open, cmd.agents_and_processes.show and cmd.agents_and_processes.pop_out. Runtime commands bind project/server/environment, stable work/owner and process identity, expected projection/input generation, actor/permission and idempotency key, return an owner receipt or typed rejection, and never optimistically manufacture success. Unknown/stale/unavailable owner refuses. Navigation and view-local clear do not write runtime state or emit events. Stop all is cmd.work.stop with scope thread/platform and the reviewed target list, never a second handler; process-group semantics are EP-043/SIR-054. Input is current safe yes/no only; other input reveals terminal. Restart is eligible owner-controlled new invocation, no PID-only replay. Completion policy writes one owner value; delivery does not wake stopped threads. Quit defaults keep_running; stop_selected excludes services and binds the reviewed current target set.
+  Registered local prefixes: ui.work_panel.* (close/select_tab/filter/sort/expand/select), ui.work_quit.* (select/cancel), ui.project_switcher.* (open/close), ui.settings.pip_editor.* (open/close/replay), plus ui.work_quit.open to draft the quit dialog. They write no durable/runtime state, carry return focus/scope and release timers/subscriptions/copies. cmd.work.clear_finished is a navigation_wrapper with view-local hiding, not record deletion. All settings hosts use preview/apply. No Home panel-tab command or panel shortcut in this build. ProcessFacts and command request/result/error fixtures are static contracts; new input/completion event candidates remain non-emitting until Event Authority.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-255
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/Commands_System.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/Commands_System.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-255

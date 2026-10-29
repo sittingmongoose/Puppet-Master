@@ -1114,6 +1114,7 @@ canonical_text: >-
   shared dock only one needs-you line while a message in the thread is Held and one lowest-priority Coming up
   line with the next send time, a preview and +N more; Show only reveals the card, and no second strip, quota
   strip or checkbox is added.
+  Amended 2026-10-29 (D2/D9, PC3; PM7): Scheduled runs are also read-only consumers in thread Processes and platform panel. Cancel reuses Schedule Manager’s existing command, never a work-private schedule writer. Optional Pip list face maps to the same catalog status; scheduled pending, held waiting, dependency waiting-dep, sent complete, failed failed.
 gui_related: true
 gui_classification_reason: Defines the in-chat forms of a scheduled message and the dock lines scheduling supplies.
 depends_on: [SQR-002, SQR-007, SQR-009, ACD-469]
@@ -1285,6 +1286,7 @@ canonical_text: >-
   Canceled, and keeps All for no filter; its labels Waiting, Paused, Needs you (held messages and invalidated
   build schedules), Done or sent, Didn't send, Skipped and Canceled each name one stored value and map onto owner
   states. Selecting a record opens a focused view in the same sheet with its full sentence, time track and actions.
+  Amended 2026-10-29 (D2/D9, PC3; PM7): Processes consumes scheduled snapshots without owning dispatch. Completion policy and holds_reply are distinct; Pip faces preserve typed catalog status and accessible words.
 gui_related: true
 gui_classification_reason: Defines the Schedule Manager's grouping, filter labels and focused view.
 depends_on: [SQR-009]

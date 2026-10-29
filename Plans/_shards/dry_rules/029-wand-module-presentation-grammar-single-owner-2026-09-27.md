@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2720-L2788
+Source lines: L2721-L2790
 
-Source SHA256: `bccd54e33ea58b285a0e6ea9aafae3a46a5bf8dc437d5e2828ed313de3dd286c`
+Source SHA256: `eec3cf961f928e51b457c9122057aa10b422732a24fae68c7e9c68e99d0e552d`
 
 ---
 
@@ -33,6 +33,7 @@ canonical_text: >-
   DR-043's owners stand: the transcript family map is ACD-469's and the accent budget is a
   theme-token role rule, and the assistant-turn vocabulary is EP-128's. The wand grammar consumes
   them and never restates them, and DR-043's owners do not restate this grammar.
+  Amended 2026-10-29 (X1, PC1–PC5; PM7): Pip redraws the one agent primitive (F3-594), no second legacy puppet or Classic preset. Small robot denotes the agent category only, never an alternate figure. Sheet hosts and empty marks use this kit rather than layered replacements.
 gui_related: true
 gui_classification_reason: "Fixes one owner for the wand modules' presentation grammar."
 split_recommended: false

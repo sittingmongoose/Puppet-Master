@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5556-L6337
+Source lines: L5557-L6339
 
-Source SHA256: `c02ebd69937ed9a53ae6c47e151123f6da410c3d572c2e2c60518019ced1b6af`
+Source SHA256: `519632af48035fcf225f8301fcf4350110793624ba16f6808ff1499770c68af9`
 
 ---
 
@@ -742,6 +742,7 @@ canonical_text: >-
   wiring and its sole obsolete Touch Closure obligation/profile; its rejected packet token is
   retained and explicitly excluded as lineage under UCC-204; this does not exclude either Settings
   transaction command.
+  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
 gui_related: true
 gui_classification_reason: Appearance controls and Settings bindings.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3095-L3171
+Source lines: L3098-L3175
 
-Source SHA256: `bccd54e33ea58b285a0e6ea9aafae3a46a5bf8dc437d5e2828ed313de3dd286c`
+Source SHA256: `eec3cf961f928e51b457c9122057aa10b422732a24fae68c7e9c68e99d0e552d`
 
 ---
 
@@ -35,6 +35,7 @@ canonical_text: >-
   and the curtain call) have one trigger, one end state, one snap to that end state and one sound path through the
   Notifications & Sounds owner's player (DR-043); their five styles, NieR's (F3-598) and the four families' (F3-600),
   differ in presentation only.
+  Amended 2026-10-29 (O1–O12, S1–S9; PM7): Pip has one SSYS-056 row editor, one parts/default/preset registry and one Project Settings transaction, reached from Settings/wand/titlebar only. Onboarding reads factory/Project parts, no editor inside it. One hero trigger/end state/snap/sound path remains for all Pip worlds and Ready handoff; no second local store.
 gui_related: true
 gui_classification_reason: "Fixes single owners for the NieR Mode editor, the reboot plate, the look store and onboarding's hero moments."
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37537-L37841
+Source lines: L37557-L37862
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -223,6 +223,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The Plan is a transcript card with a title, a Plan Vn badge, and a Rich Text / Markdown toggle defaulting to Rich Text; its body renders full document content with no editable caret and its footer carries exactly one primary status control reading Build, Building…, Completed, or Canceled alongside Build With Crew, Build At, Revise, Send To Planning Wizard, Export, Cancel and Open To-Dos as applicable. A pause or quota wait appears as small support copy while the button still reads Building…. Historical Completed and Canceled cards stay in place and default compact, with no Plan picker and no Superseded label. Goal and To-Dos are Activity domains and have no transcript card: the Goal hover offers Pause, Cancel and an edit icon opening Activity Detail in edit mode, and Goal detail shows only the objective, Save and Cancel edit, lifecycle controls and a revision History (since 2026-10-08 one control row with Edit objective and Cancel Goal alone at the far edge, and an Objective history footer; DL-147, F3-593). The To-Do hover shows a completed-over-total count with several current rows allowed, and To-Do detail shows one hierarchical tree with completed items inline with a filled dot and strike-through and no Done heading, source chip, verification badge, Goal grouping, or cross-thread row; its rows are one line each, like the hover preview, with no buttons (DL-147, F3-593). Activity domains become Goal, To-Dos, Subagents, Crew, BrainStorm, Review, Chat Room, Changes and Artifacts, preserving per-thread presence, empty-domain omission, compaction tiers, hover dwell and detail routing, with Subagents distinct from Crew.
+  Amended 2026-10-29 (D1–D4, G1/G2; PM7): Activity domains are ten: Goal, To-Dos, Subagents, Processes, Crew, BrainStorm, Review, Chat Room, Changes, Artifacts. Processes is conditional on running/input work and retained while its card/detail is open; scheduled/finished alone never keep it. Full-size detail opens directly; no Pin or small transient fallback.
 gui_related: true
 gui_classification_reason: This unit specifies the Plan card and every Activity surface in the redesign.
 depends_on: [F3-531]

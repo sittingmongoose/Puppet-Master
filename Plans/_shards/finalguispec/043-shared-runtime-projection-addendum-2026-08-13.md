@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5594-L27157
+Source lines: L5596-L27166
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -1848,6 +1848,7 @@ canonical_text: >-
   the right from the title bar to the status bar (F3-637), and the status bar; on Home the primary content is the
   universal panel system, whose default layout keeps a full-width bottom row that is an ordinary panel row (F3-630).
   Section 3.1 carries the current diagram.
+  Amended 2026-10-29 (B1, A1, D5, G3; PM7): The current §3.1 diagram uses a 40 px title bar (46 px Glass): static Pip + wordmark, project box A, page tabs, centred notification stack, search, theme/settings. Status bar has workspace, agents/questions, processes/needs-input, index, ports, branch and sync; no separate Orchestrator or CPU/RAM item. Chat has no fixed 760 px drag cap; F3-637’s centre/page floors apply.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -1907,6 +1908,7 @@ canonical_text: >-
   Amended 2026-10-09 (DL-180): the collapsible bottom panel zone is retired (Terminal, Problems, Output, Ports and Debug
   Console are tab kinds in any panel, F3-635), a chat column zone is added (F3-637), and side-panel occupants are
   left-hand (F3-481); the side panel's width envelope is F3-471's.
+  Amended 2026-10-29 (B1, A1, D5, G3; PM7): Structural zones match F3-034: title bar 40 px / Glass 46 px, project box secondary to Projects view, two work status items and dynamically bounded right chat. Legacy 28 px shell-height, Orchestrator chip and 400–760 chat range are superseded.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2016,6 +2018,7 @@ canonical_text: >-
   When minimize to tray is enabled, close minimizes instead of quitting, the tray icon reflects
   orchestrator state, click restores focus, the tray menu offers Show/Hide, Pause/Resume
   Orchestrator, and Quit, and notifications respect system settings.
+  Amended 2026-10-29 (A2–A5, S8; PM7): Keep minimize-to-tray gate, restore/menu and notifications. Tray state is the aggregate Pip face of F3-660/DL-235, never accent-on-Orchestrator; waiting wins and done lasts about 10 s.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2068,6 +2071,7 @@ canonical_text: >-
   Project switching is a workspace-tab operation through Projects, project/session browser,
   command palette, and switch commands; the title bar may show compact context but no longer owns
   the primary project-switch shell.
+  Amended 2026-10-29 (B1–B6; PM7): Projects stays the primary switch shell; the title-bar project box A is an admitted secondary entry. Name is in the box, path/branch in hover/menu, Ctrl+Shift+P opens its menu, pick switches active workspace and Ctrl/Cmd+Enter opens a new workspace tab, per F3-661.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -3181,6 +3185,7 @@ canonical_text: >-
   Search, File Manager, Source Control, Chat, Artifacts, runtime, and Orchestrator shortcut
   candidates register through the shortcut registry, appear in Settings Shortcuts, and map through
   command catalog bindings.
+  Amended 2026-10-29 (B2; PM7): Register Ctrl+Shift+P → ui.project_switcher.open as a typed local shortcut in Commands & Shortcuts; it opens the project box, no runtime command. Ctrl/Cmd+Enter on a focused row dispatches cmd.project.open_in_new_workspace_tab.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -3233,6 +3238,7 @@ canonical_text: >-
   Shortcut tiers define day-one, productive, and power-user bindings including Ctrl+K,
   chat/file/search/runtime/debug commands, and a Rust-side registry normalizes Cmd on macOS and
   Ctrl on Windows/Linux while auto-generating help.
+  Amended 2026-10-29 (B2/B6; PM7): The project-switch shortcut opens F3-661’s secondary project-box menu; Ctrl/Cmd+Enter on its focused row opens that Project in a new workspace tab. Other editor/palette chords preserve their contexts.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -9523,6 +9529,7 @@ canonical_text: >-
   Panel and page loads use skeleton screens, discrete actions use inline spinners or progress
   indicators, and prior validated content remains visible during refresh with stale or
   degraded labels.
+  Amended 2026-10-29 (L1/L2; PM7): Known-layout content retains skeletons; every other indeterminate application wait consumes F3-662’s one loader, determinate progress a measured bar. Inline custom spinners are retired.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible loading indicators and stale/degraded display labels.

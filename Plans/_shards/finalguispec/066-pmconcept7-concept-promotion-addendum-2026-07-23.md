@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33090-L33929
+Source lines: L33104-L33947
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -50,6 +50,7 @@ canonical_text: >-
   row carries its kind's mark before its title, beside it and never in its place (success complete, warning
   warning, error failed, info info; F3-658), lit and still; the dismiss is the close glyph in the same button
   and keeps its name Dismiss; the empty stack shows the bell glyph; marks hold 3:1 on severity-tinted cards.
+  Amended 2026-10-29 (A4, D9; PM7): Keep every in-app kind mark beside its copy and the single title-bar notification entry. Only Friendly’s app tile and OS notification branding become Pip; completion notices route through this alert owner and never add a second affordance.
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
 split_recommended: false
@@ -152,6 +153,7 @@ canonical_text: >-
   focus to the next; Enter activates the row's body (F3-447); Escape closes from anywhere and returns focus to
   the bell. A timed item shows its countdown ("Expires in N s", FileSafe's 60 s hold), a folded group offers
   "N more" and "Show less", and an action that opens a page reads "Open <page>".
+  Amended 2026-10-29 (D9; PM7): Completion delivery user uses this alert store, deduplicated/coalesced by work identity and completion generation, with one durable notice and its existing transient treatment. Agent delivery never wakes a user-stopped thread.
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
 split_recommended: false
@@ -475,6 +477,7 @@ canonical_text: >-
   turned down, to 0.6 of its earlier strength in Basic, Friendly and Glass, dark and light, with the edge
   catch, size, falloff, lift and timings unchanged, and Glass Dark's own shine is lowered by the same ratio.
   Retro, NieR and Reduced Motion are unaffected. The factor is a concept token, not an acceptance number.
+  Amended 2026-10-29 (X2, L3; PM7): The universal loader alone retains control opacity breath and Pip blink under Reduced Motion as wait feedback; no travel. Shared glyph categories rest lit/still; onboarding/chat nonessential motion stays still.
 gui_related: true
 gui_classification_reason: This unit defines the visible magnet lean, pointer light, emitted glow and the Retro and NieR hover forms on PMConcept7's cards, rows, tiles and icons.
 split_recommended: false
@@ -686,6 +689,7 @@ canonical_text: >-
   the first frame is already that look and no default look shows before it. The pre-paint only
   reads it: it stores no theme of its own, and the Project's Settings stay the one owner and the
   one store of the theme (DL-153). A new install's onboarding paints Basic Dark instead (F3-520).
+  Amended 2026-10-29 (A1, L1; PM7): First-paint look owner also feeds the static Pip brand and splash loader, with no second theme reader, store or paint hint. App release icon stays fixed Basic Dark rather than following a Project.
 gui_related: true
 gui_classification_reason: This unit defines visible boot paint, font loading, and first-paint transition gating behavior.
 split_recommended: false

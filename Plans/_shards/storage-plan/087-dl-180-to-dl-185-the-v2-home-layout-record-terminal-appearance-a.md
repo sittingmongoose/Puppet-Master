@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L27470-L28100
+Source lines: L27472-L28103
 
-Source SHA256: `cce7b8d8b0cf5548ce56220a1f4a21225b7a5ba992f89025f6d60611ba3fb117`
+Source SHA256: `34c30a5a6f63c6676679e807302bec56f6f025b9975b701433d5edc4d61e5ee6`
 
 ---
 
@@ -122,6 +122,7 @@ canonical_text: >-
   Existing non-default values survive. The old keys are dropped only after this project's layout is written,
   never while an unreadable record waits to be set aside; old defaults null, flyout and false are just
   dropped.
+  Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer width ≥400 or null for default and dynamically clamp rendering to current centre/page floors. Keep History pin/user width and narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the constrained fallback.
 gui_related: true
 gui_classification_reason: The persisted record decides the visible panels, tabs, chat column and what survives an upgrade.
 split_recommended: false

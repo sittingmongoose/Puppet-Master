@@ -1814,6 +1814,7 @@ canonical_text: >-
   and the audio context's pending cues. Releasing them invalidates only the view's callbacks: runs
   and replies continue on the server and are complete when the thread is shown again (ACD-470). Each
   resource is released exactly once and none is duplicated when the view returns.
+  Amended 2026-10-29 (PM7): PC1/O2, D6/G4: teardown releases Pip rig/hover subscribers, loader clock subscriptions, lift-off copies, work panel windows and Resources sampling; stale project/thread generations cannot repaint a new target.
 gui_related: true
 gui_classification_reason: "Prevents stale chat presentation work after a thread switch."
 split_recommended: false
@@ -2477,6 +2478,7 @@ canonical_text: >-
   pair), the editor's Turn on NieR Mode button, offered while NieR Mode is off (nier.editor.turn_on, the pair
   over general.visual.nier-mode; review r2), and the editor's open, close and Play reboot moment
   (ui.settings.nier_editor.*).
+  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false
@@ -2564,6 +2566,7 @@ canonical_text: >-
   pass the composer-destination case. Shared editor-revealed state must also clear for collapsed or
   hidden Home bodies and when another page is in front. Astra finds that shared state still stale in
   this snapshot, even though the separate run-card visibility wrapper passes those cases.
+  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
 gui_related: true
 gui_classification_reason: Defines forward and reverse verification for visible hosted chat controls.
 split_recommended: false
@@ -2603,3 +2606,52 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Wiring_Matrix.md#WM-096, ContractName:Plans/UI_Command_Catalog.md#UCC-208, ContractName:Plans/Settings_System.md#SSYS-055
+
+
+### UIW-045 - PM7 Work And Pip Surface Wiring
+
+```yaml
+plan_unit_id: UIW-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: W1–W9, B1–B6, S5, G1–G10. Every visible control in WM-097 has an exact census row; repeated
+  rows use stable IDs, never array positions. Menu open and local view changes write nothing; work mutations
+  call owner handlers after permissions/currentness and match keyboard/pointer requests. Reduced Motion and
+  disabled states preserve meaningful feedback without activation; ack ≤100 ms and commit once. Full Activity
+  Detail replaces Pin/small view. Resources subscribes only while visible; stale requests cannot leak samples
+  across Project/server/environment. One overlay/hover/loader/Pip kit and one work projection; no injection
+  hooks, synthetic resize or replacement observers.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-255
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/UI_Wiring_Rules.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/UI_Wiring_Rules.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-255

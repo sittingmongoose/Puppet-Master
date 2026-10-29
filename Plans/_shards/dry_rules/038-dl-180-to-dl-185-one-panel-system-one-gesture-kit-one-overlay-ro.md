@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3453-L4276
+Source lines: L3458-L4423
 
-Source SHA256: `bccd54e33ea58b285a0e6ea9aafae3a46a5bf8dc437d5e2828ed313de3dd286c`
+Source SHA256: `eec3cf961f928e51b457c9122057aa10b422732a24fae68c7e9c68e99d0e552d`
 
 ---
 
@@ -216,6 +216,7 @@ canonical_text: >-
   onboarding window with its scrim and the NieR editor panel inside it, then the look cover and the NieR
   reboot plate and calm cover (F3-077, F3-598), which cover everything. Escape closes only the innermost open
   thing; the numbers are the rebuild's.
+  Amended 2026-10-29 (PC1, D6/D10, G9; PM7): Work panel/quit dialog/pop-out view and sheet Pip lift-off use this overlay owner; teardown releases copies/timers. All floating Glass Activity/History/attachment surfaces use the persona/model menu plate token, not new plates.
 gui_related: true
 gui_classification_reason: "Fixes one overlay root and one stacking order for the home centre and the ported chat."
 split_recommended: false
@@ -779,8 +780,7 @@ canonical_text: >-
   settings sheet and the Settings page edit the same admitted setting through the same Settings
   transaction; copying a value to a concept renderer is a projection, not another source of truth. The
   application/project ELI5 default and the active chat's override remain separate. The History default
-  is a starting value only; History pin, chat width and Keep open remain layout view state, and an
-  Activity unpin remains temporary. Recipe selectors, arbitrary family takes, motion-voice overrides
+  is a starting value only; History pin, chat width and Keep open remain layout view state, and Activity Detail opens full size until closed (G1/G2). Recipe selectors, arbitrary family takes, motion-voice overrides
   and guided examples belong only to the concept's one Demo Studio (DR-070). The port's class names,
   DOM roots, JavaScript globals, localStorage keys and build-layer APIs are concept lineage and grant
   no native API or persistence authority. Integrated concept 59ca2d4382 is assembled from the
@@ -795,6 +795,7 @@ canonical_text: >-
   the chat's first-paint reader, theme picker and NieR scripts and follows the host's existing look
   and NieR controllers. SSYS-055 records the project-only adapter and session-only ELI5 limit rather
   than treating every concept control as a persistent application setting.
+  Amended 2026-10-29 (G1–G3, S1–S9; PM7): Activity Detail now opens full size until closed; its Pin/unpin contract is retired. History pin remains local layout state. Pip parts read the same Project row/transaction in every host, never pip-chat:v1 or a second option registry.
 gui_related: true
 gui_classification_reason: Keeps shared host presentation and Settings control ownership single.
 split_recommended: false
@@ -832,3 +833,144 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/assistant-chat-design.md#ACD-501
+
+
+### DR-076 - One Brand Mark And One Pip Kit
+
+```yaml
+plan_unit_id: DR-076
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: 'X1/X3, A1–A5, O1/O8, PC1–PC5, S1/S9: one kit owns Pip geometry, string solver, faces, role
+  props, token colours and shared styles for static brand/release assets/tray/notifications, loader, onboarding
+  and the single chat-agent primitive. Robot is only category art. No per-surface renderer/palette, legacy
+  puppet fallback, random drawing IDs or switchable brand/loader. Pip parts is one registry/editor/Settings
+  row, not a shadow store. Declarative static base remains meaningful without animation.'
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-235
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-235
+
+
+### DR-077 - One Loading Indicator
+
+```yaml
+plan_unit_id: DR-077
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: 'L1–L8, X2: one F3-662 loader owner/opt-in/class contract and clock supplies every indeterminate
+  wait with contextual Swing/Think/Hop, per-family timing, size/accessibility and pause gates. Preserve layout
+  skeletons and determinate bars; working status remains st-working. NieR routes to its Diamond owner/fallback.
+  No surface spinner, loader-setting or duplicate thinking/Orbit Pip. Deferred debt L8: chat menus.js, Usage
+  PMU.menu and Home PMW.menu still duplicate sprout; do not silently claim DRY closure for them.'
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-237
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-237
+
+
+### DR-078 - One Work Projection And Resource Owner
+
+```yaml
+plan_unit_id: DR-078
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: 'D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project
+  badge and composer attention are filtered OperationalAwareness over ObservableWork and registry lineage.
+  No consumer owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate ProcessFacts;
+  host monitor owns server/environment resource samples while Resources is open only. Actions route to one
+  owner command/handler; services are read-only and stop lists are generation-bound.'
+gui_related: false
+gui_classification_reason: Defines owner authority, record semantics or lifecycle.
+split_recommended: false
+depends_on:
+- DL-246
+unblocks: []
+acceptance_criteria:
+- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
+  native implementation.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-246

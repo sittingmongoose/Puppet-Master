@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26098-L26752
+Source lines: L26100-L26759
 
-Source SHA256: `c0c6409fa65d05d98a600d5145ecae0efae9602af2b85f17b5f91023a204798c`
+Source SHA256: `355a20416a8470efa1330c645472dc1c460f56f4e4535386ee62cba4a25805b1`
 
 ---
 
@@ -47,6 +47,7 @@ canonical_text: >-
   For scheduled-message cards, the Time-family ticket and time block identify the transcript
   family only. Scheduling_and_Quota_Resume SQR-012 owns the card's internal layout and renders its
   time in the schedule's own time zone; that layout is accepted within Time (DL-138).
+  Amended 2026-10-29 (PC1–PC5, X1; PM7): Agents use the one Pip primitive F3-594; category marks use robot. Families/states remain this owner’s; Pip adds no welcome-back or other conversation capability.
 gui_related: true
 gui_classification_reason: "Defines how every transcript item renders in the default chat presentation."
 split_recommended: false
@@ -135,6 +136,7 @@ canonical_text: >-
   (EP-128). Leaving the thread never cancels the reply: APR-020 invalidates the view's pending
   callbacks, not the run or the reply, which is complete when the user returns. A fallback batch
   reply (ACD-229) appears whole with the settle beat only; it is never pseudo-streamed.
+  Amended 2026-10-29 (L1, PC4; PM7): Thinking placeholder consumes the shared Think loader, handing over to Orbit’s Pip without duplication; one Pip per reply and no extra status key.
 gui_related: true
 gui_classification_reason: "Defines the visible life cycle of a streaming assistant reply."
 split_recommended: false
@@ -207,6 +209,7 @@ canonical_text: >-
   Send now, Edit or Remove, as section 4 already says that Stop does not clear the queue. Every
   automatic advance and every Send now goes through the same send handler as an ordinary send, so
   holds and validations run again.
+  Amended 2026-10-29 (D8; PM7): Composer Stop ends the current reply and holds the queue only. It does not stop background processes; Processes explicitly says so and offers owner-routed Stop/Stop all.
 gui_related: true
 gui_classification_reason: "Defines the visible composer behaviour while the assistant is busy."
 split_recommended: false
@@ -346,6 +349,7 @@ canonical_text: >-
   live cards re-render on the working clock. In a provider tier without internal visibility
   (PROVIDER-005) the card shows only subjects and narration the provider actually reported and never
   invents them.
+  Amended 2026-10-29 (PC4; PM7): Keep protected Orbit choreography, replacing centre with Pip and current tool badge; coordinate with thinking placeholder so a reply never has two visible Pips.
 gui_related: true
 gui_classification_reason: "Defines the visible behaviour of the working activity card."
 split_recommended: false
@@ -563,6 +567,7 @@ canonical_text: >-
   settle under Reduced Motion (F3-520's onboarding steps, F3-438's switch colour) it never moves or scales,
   and a Usage room change takes none, so the concept's Usage dissolve under Reduced Motion is not adopted. A
   waiting cover's calm, travel-free pulse is waiting feedback and stays (F3-077, DL-216).
+  Amended 2026-10-29 (X2, L3/L4, PC1; PM7): Pip’s optional sheet sway/blink/gaze and bounded onboarding life supersede nothing-animates-at-idle only on those illustrative surfaces. Needs-you remains louder; motion pauses hidden/offscreen/during drags. Loader uses family periods and reduced-motion breath/blink exception of F3-662, no travel. App chirps use the one master player and existing chat mute, default off as a Pip part. Main-button pointer/keyboard acknowledgement is within 100 ms with no busy stall/deferral workaround and no double commit; disabled oops never activates.
 gui_related: true
 gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
 split_recommended: false

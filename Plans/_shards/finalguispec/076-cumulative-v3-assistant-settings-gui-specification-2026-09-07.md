@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38029-L38730
+Source lines: L38050-L38752
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
 
 ---
 
@@ -247,7 +247,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   38. `dry-method` (DRY enforcement and duplication guard policy)
   And across the three named visible-state projections: `teacher-help`, `project-search-index`,
   and `dry-method`, as well as the Assistant Settings projections (`settings.assistant`,
-  `settings.bsd`, `settings.schedule`). All 892 settings in the inventory remain preserved. Census (USER-SETTINGS-MANAGER-REFRESH-20260908): `Plans/settings_inventory.json` holds 887 ordinary setting ids and the concept's `PM12_REFERENCE` holds 892 (887 plus the five concept-proposed roster/stage rows); the 828 figure in SSYS-004/SSYS-005 is a preserved historical denominator token.
+  `settings.bsd`, `settings.schedule`). All 892 settings in the inventory remain preserved. Census (USER-SETTINGS-MANAGER-REFRESH-20260908): `Plans/settings_inventory.json` holds 887 ordinary setting ids and the concept's `PM12_REFERENCE` holds 892 (887 plus the five concept-proposed roster/stage rows); the 1011 figure in SSYS-004/SSYS-005 is a preserved historical denominator token.
 - **Context-Sensitive Manager Navigation (APR-065):** When opening a Settings manager from an
   in-canvas context link or dropdown picker, the picker retains and visually indicates the specific
   manager identity for which it was opened. Context is not dropped or reset during deep navigation.
@@ -465,6 +465,7 @@ canonical_text: >-
   preserving independent URL and attachment capabilities. All concept demonstration fixtures, replay
   commands, and sample loaders are isolated within a dedicated Demo Gallery and excluded from product
   command menus.
+  Amended 2026-10-29 (PC1/PC4; PM7): Working Orbit centre is Pip with tool badge; the thinking placeholder hands off to it with exactly one Pip per reply. Existing activity choreography and owner work state stay authoritative.
 gui_related: true
 gui_classification_reason: Governs wand menu grouping, composer browser boundary, and demo fixture isolation.
 depends_on: [F3-531]

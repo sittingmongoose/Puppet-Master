@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1801-L1848
+Source lines: L1801-L1849
 
-Source SHA256: `f65180635056fced8a33a2eed8098b926680f2be03a755f3b98c7564720a370c`
+Source SHA256: `63cb316a393dea764ccead6eac199c4bcdfedda5c244af64e196df2c51a80a19`
 
 ---
 
@@ -24,6 +24,7 @@ canonical_text: >-
   and the audio context's pending cues. Releasing them invalidates only the view's callbacks: runs
   and replies continue on the server and are complete when the thread is shown again (ACD-470). Each
   resource is released exactly once and none is duplicated when the view returns.
+  Amended 2026-10-29 (PM7): PC1/O2, D6/G4: teardown releases Pip rig/hover subscribers, loader clock subscriptions, lift-off copies, work panel windows and Resources sampling; stale project/thread generations cannot repaint a new target.
 gui_related: true
 gui_classification_reason: "Prevents stale chat presentation work after a thread switch."
 split_recommended: false
