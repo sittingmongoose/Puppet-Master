@@ -451,7 +451,8 @@
       if (this.followBottom) this.scrollAbs = this.bottomAbs();
     }
     var cw = cols * m.devW, ch = rows * m.devH;
-    if (this.canvas.width !== cw || this.canvas.height !== ch || force) {
+    var canvasChanged = this.canvas.width !== cw || this.canvas.height !== ch || force;
+    if (canvasChanged) {
       this.canvas.width = cw; this.canvas.height = ch;
       this.canvas.style.width = (cw / m.dpr) + 'px'; this.canvas.style.height = (ch / m.dpr) + 'px';
       [this.fxCanvas, this.trailCanvas].forEach(function (c) { c.width = cw; c.height = ch; c.style.width = (cw / m.dpr) + 'px'; c.style.height = (ch / m.dpr) + 'px'; });
@@ -469,12 +470,23 @@
       else { this.root.style.removeProperty('--pmt-grid-x'); this.root.style.removeProperty('--pmt-grid-y'); }
     }
     if (bez) this.bezel.layout(w, h, this.gridLeft, this.gridTop, cols * m.cellW, rows * m.cellH, m.dpr);
-    this.root.style.setProperty('--pmt-cell-h', m.cellH + 'px');
-    this.root.style.setProperty('--pmt-cell-w', m.cellW + 'px');
-    this.root.style.setProperty('--pmt-font', this.appearance.font.family);
-    this.root.style.setProperty('--pmt-font-size', this.appearance.font.size + 'px');
-    this.marksDirty = true;
-    this.schedule(true);
+    /* The four vars below are inherited by the whole terminal subtree: rewriting them on every 120ms
+       drag tick restyled it even when the grid had not moved a whole cell, and the unconditional full
+       repaint followed. Write and repaint only what actually changed. */
+    var varSig = m.cellW + '|' + m.cellH + '|' + this.appearance.font.family + '|' + this.appearance.font.size;
+    var varsChanged = varSig !== this._varSig;
+    if (varsChanged) {
+      this._varSig = varSig;
+      this.root.style.setProperty('--pmt-cell-h', m.cellH + 'px');
+      this.root.style.setProperty('--pmt-cell-w', m.cellW + 'px');
+      this.root.style.setProperty('--pmt-font', this.appearance.font.family);
+      this.root.style.setProperty('--pmt-font-size', this.appearance.font.size + 'px');
+    }
+    if (changed || canvasChanged || varsChanged || off !== this._lastOffPainted) {
+      this._lastOffPainted = off;
+      this.marksDirty = true;
+      this.schedule(true);
+    }
   };
   View.prototype.bottomAbs = function () { var b = this.term.buf; return b.trimmed + b.lines.length - b.rows; };
   View.prototype.topAbs = function () { var b = this.term.buf; return b.trimmed; };

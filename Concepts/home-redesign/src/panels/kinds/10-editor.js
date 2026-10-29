@@ -3759,7 +3759,12 @@ function mountEditor(host, st, api) {
     } else if (resizeTrailT) { clearTimeout(resizeTrailT); resizeTrailT = 0; }
     if (sz && sz.final === false && mode === 'diff') { layout(); renderRows(true); renderOverlays(); updateThumb(); return; }
     var changed = resolveLayout(false);
-    if (!changed) { layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar(); sticky._key = null; updateSticky(); }
+    if (!changed) {
+      layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar();
+      /* the sticky header stack is scroll-position decoration: on a cadence tick mid-drag its scope
+         scan can wait for the final delivery (rows and overlays above already follow the new geometry) */
+      if (!(sz && sz.final === false)) { sticky._key = null; updateSticky(); }
+    }
     queueDraw();
   }
   function relayoutAll(box, keepRows) {

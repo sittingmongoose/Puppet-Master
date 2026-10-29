@@ -1569,6 +1569,9 @@ function prepareSoon() {
   var build = function () {
     if (!prepared && !openRoot) {
       if (sheetBusy()) { setTimeout(prepareSoon, 1500); return; }
+      /* idle preparation must not land inside a resize drag: the build measures the sheet (~200ms of
+         forced style/layout on the P1000) and a drag begun in the app's first seconds paid it mid-gesture */
+      if (document.body && document.body.classList.contains('pm-resizing')) { setTimeout(prepareSoon, 1500); return; }
       // Settings is the app-level entry. Prepare its actual width and scope,
       // not the narrower editor cutout, which would reflow every tile on open.
       open({ view: inst.view, scope: 'app', from: 'settings', prepare: true });

@@ -137,8 +137,8 @@ dividers.bind = function (el) {
     state.resizing = true;
     function noSelect(e) { e.preventDefault(); }
     doc.addEventListener('selectstart', noSelect, true);
-    function move(e) {
-      var pos = info.axis === 'w' ? e.clientX : e.clientY;
+    var paintAt = 0, trailRaf = 0, trailPos = null, trailEv = null;
+    function applyMove(pos, e) {
       var delta = pos - start;
       if (!moved && Math.abs(delta) < 1) return;
       var live = liveSplit(state.layout, info);
@@ -149,9 +149,27 @@ dividers.bind = function (el) {
       last = res;
       state.sizePreview = previewOf(live, info, res);
       render.now({ animate: false });
+      paintAt = performance.now();
+      if (trailPos === pos) { trailPos = null; trailEv = null; }
+    }
+    function move(e) {
+      var pos = info.axis === 'w' ? e.clientX : e.clientY;
+      trailPos = pos; trailEv = e;
+      /* Paint in the event (the 1:1 rule), but at most once per ~10ms: with dense input (a 120Hz mouse,
+         or two coalesced dispatches in one frame) the old handler painted the whole Home per event —
+         450-600ms of forced style/layout per drag on the P1000 (pass-3 tape). The first move of a frame
+         still paints synchronously; a burst's remainder paints once on the next frame with the latest
+         point, and end() applies any pending point before it commits. */
+      if (performance.now() - paintAt >= 10) { applyMove(pos, e); return; }
+      if (!trailRaf) trailRaf = requestAnimationFrame(function () {
+        trailRaf = 0;
+        if (!ended && trailPos != null) applyMove(trailPos, trailEv);
+      });
     }
     function end(e, cancel) {
       if (ended) return;
+      if (trailRaf) { cancelAnimationFrame(trailRaf); trailRaf = 0; }
+      if (!cancel && trailPos != null) { var tp = trailPos, te = trailEv; trailPos = null; applyMove(tp, te); if (ended) return; }
       ended = true;
       doc.removeEventListener('selectstart', noSelect, true);
       el.removeEventListener('pointermove', move);
@@ -165,10 +183,14 @@ dividers.bind = function (el) {
       state.sizePreview = null;
       state.resizing = false;
       /* Shell observers idle behind body.pm-resizing and catch up on the shell's drag-end bus; this
-         gesture sets that class too, so it owes them the same single flush (the chat drag already pays it). */
-      try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {}
+         gesture sets that class too, so it owes them the same single flush (the chat drag already pays
+         it). It runs AFTER the commit/rollback below: fired first, the bus's own final flush (and
+         parked catch-ups like the Glass bake) measured the preview geometry, and a commit that then
+         clamped or rolled back left them baked/sized for a width that never landed. */
+      var fireDragEnd = function () { try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {} };
       if (cancel || !moved || !last) {
         if (previewed) render.now({ animate: !!cancel });
+        fireDragEnd();
         render.flushResizes(true);
         return;
       }
@@ -176,6 +198,7 @@ dividers.bind = function (el) {
       // anything but an applied change: paint the model again now, so the panels, the divider values and
       // render.rects() (the next keyboard step reads it) leave the dragged geometry (CONTRACT 8: a failed commit rolls back)
       if (!out.ok || out.noChange) render.now({ animate: !out.ok });
+      fireDragEnd();
       render.flushResizes(true);
     }
     function up(e) { end(e, false); }

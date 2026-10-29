@@ -31,18 +31,16 @@ else:
 SAMPLER = r"""
 (() => {
   if (window.__rz) return true;
-  const R = window.__rz = { on: false, frames: [], marks: [], lastX: 0, lastY: 0, el: null, kind: 'right', axis: 'x', raf: 0 };
-  addEventListener('pointermove', (e) => { R.lastX = e.clientX; R.lastY = e.clientY; }, { capture: true, passive: true });
+  const R = window.__rz = { on: false, frames: [], marks: [], moves: [], lastX: 0, lastY: 0, el: null, kind: 'right', axis: 'x', raf: 0 };
+  addEventListener('pointermove', (e) => { R.lastX = e.clientX; R.lastY = e.clientY; if (R.on) R.moves.push(performance.now()); }, { capture: true, passive: true });
   addEventListener('pointerdown', () => { if (R.on) R.marks.push(['down', performance.now()]); }, { capture: true, passive: true });
   addEventListener('pointerup', () => { if (R.on) R.marks.push(['up', performance.now()]); }, { capture: true, passive: true });
-  function edge() {
-    if (!R.el || !R.el.isConnected) return null;
-    const r = R.el.getBoundingClientRect();
+  function edge(r) {
     return R.kind === 'left' ? r.left : R.kind === 'cx' ? r.left + r.width / 2 : R.kind === 'cy' ? r.top + r.height / 2 : r.right;
   }
-  const loop = (t) => { if (!R.on) return; R.frames.push([t, R.axis === 'y' ? R.lastY : R.lastX, edge(), R.el.getBoundingClientRect().width]); R.raf = requestAnimationFrame(loop); };
-  R.start = (el, kind, axis) => { R.el = el; R.kind = kind; R.axis = axis || 'x'; R.frames = []; R.marks = []; R.on = true; R.raf = requestAnimationFrame(loop); return true; };
-  R.stop = () => { R.on = false; cancelAnimationFrame(R.raf); return { frames: R.frames, marks: R.marks }; };
+  const loop = (t) => { if (!R.on) return; const r = (R.el && R.el.isConnected) ? R.el.getBoundingClientRect() : null; R.frames.push([t, R.axis === 'y' ? R.lastY : R.lastX, r ? edge(r) : null, r ? r.width : null]); R.raf = requestAnimationFrame(loop); };
+  R.start = (el, kind, axis) => { R.el = el; R.kind = kind; R.axis = axis || 'x'; R.frames = []; R.marks = []; R.moves = []; R.on = true; R.raf = requestAnimationFrame(loop); return true; };
+  R.stop = () => { R.on = false; cancelAnimationFrame(R.raf); return { frames: R.frames, marks: R.marks, moves: R.moves }; };
   return true;
 })()
 """
@@ -210,7 +208,33 @@ def main():
                 lag95 = q(lags, 0.95)
                 edges = [f[2] for f in drag]
                 rng = (max(edges) - min(edges)) if edges else 0
-                print(f"{theme:15s} {surf:8s} fps {fps:5.1f} gapP95 {gap95:6.1f}ms lagP95 {lag95:6.1f}px range {rng:5.0f}px", flush=True)
+                # Input density: below ~0.15 moves/frame the gesture itself was starved and the run
+                # measures the injector, not the page. Boundary gaps: the worst single gap around
+                # pickup and release (reported; the p95 budget above can hide one long boundary frame).
+                drag_moves = len([m for m in raw.get('moves', []) if down <= m <= up])
+                mpf = drag_moves / len(drag) if drag else 0
+                def max_gap(lo, hi):
+                    gg = [b_[0] - a[0] for a, b_ in zip(frames, frames[1:]) if lo <= a[0] <= hi]
+                    return max(gg) if gg else 0
+                pickup_gap = max_gap(down - 50, down + 350)
+                release_gap = max_gap(up - 50, up + 500)
+                # Settle: after release the edge must be at its final position and stay there. A
+                # transition chasing the pointer (the Glass rail defect) keeps it moving for ~360ms.
+                after = [f for f in frames if f[0] > up]
+                settle_ms = None
+                if after:
+                    final_edge = after[-1][2]
+                    for f in after:
+                        if abs(f[2] - final_edge) <= 0.5:
+                            settle_ms = f[0] - up
+                            break
+                    if settle_ms is None:
+                        settle_ms = after[-1][0] - up
+                print(f"{theme:15s} {surf:8s} fps {fps:5.1f} gapP95 {gap95:6.1f}ms lagP95 {lag95:6.1f}px range {rng:5.0f}px moves/f {mpf:.2f} pickupGap {pickup_gap:5.0f}ms releaseGap {release_gap:5.0f}ms settle {settle_ms if settle_ms is None else round(settle_ms)}ms", flush=True)
+                if drag and mpf < 0.15:
+                    failures.append(f"{theme} {surf}: input starved ({mpf:.2f} moves/frame) — measurement invalid, rerun")
+                if settle_ms is not None and settle_ms > 450:
+                    failures.append(f"{theme} {surf}: edge still settling {settle_ms:.0f}ms after release (> 450ms)")
                 if rng < 50:
                     failures.append(f"{theme} {surf}: drag barely moved the edge ({rng:.0f}px)")
                 if surf == 'left':

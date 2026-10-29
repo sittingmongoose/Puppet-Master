@@ -97,9 +97,10 @@ html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-fx {
   transform-origin: 0 0;
 }
 html[data-pmw-home="on"] .pmw-gl:not(.pmw-gl-on) > .pmw-gl-fx { visibility: hidden; }
-/* While a divider is held, the multi-element decoration groups (Friendly dots/echos, Retro ghosts) repaint
-   their shadows and masks every drag frame; the lit core stays, the groups rest until release. */
-html[data-pmw-home="on"] body.pm-resizing .pmw-gl-fx > :is(.pmw-gl-dots, .pmw-gl-echos, .pmw-gl-ghosts) { display: none; }
+/* Pass-3 frame review: a drag-scoped hide for the decoration groups was tried here and removed. The
+   theme enables outranked it, and on inspection the groups are designed held-state feedback (the Friendly
+   dots' gl-pop on .pmw-gl-held, Retro's phosphor ghosts) whose measured paint cost is small; hiding them
+   traded designed motion for no measurable gain. */
 html[data-pmw-home="on"] :where(.pmw-gl-fx i) { position: absolute; display: block; left: 140px; top: 0; pointer-events: none; opacity: 0; }
 html[data-pmw-home="on"] .pmw-gl-fx > :is(.pmw-gl-dots, .pmw-gl-echos, .pmw-gl-ghosts) { left: 0; width: 100%; height: 100%; display: none; opacity: 1; }
 html[data-pmw-home="on"] :where(.pmw-gl-fx i)::before, html[data-pmw-home="on"] :where(.pmw-gl-fx i)::after { content: ''; position: absolute; pointer-events: none; }

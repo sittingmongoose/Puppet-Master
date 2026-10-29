@@ -826,6 +826,11 @@
       function next() { if (warm) idle(slice, { timeout: 1500 }); else requestAnimationFrame(slice); }
       function slice(deadline) {
         if (token !== buildToken) return;
+        /* the warm (idle) build must not land inside a resize drag: its fit pass measures the board
+           (pass-3 tape: 300-460ms freezes when it fired mid-gesture). Re-queue; the idle timeout
+           keeps retrying and the first slice after release runs as before. Arrival builds (sync,
+           non-warm) are user-visible and never defer. */
+        if (warm && document.body && document.body.classList.contains('pm-resizing')) { next(); return; }
         var t0 = performance.now(), builtNow = [], budget = warm && deadline && deadline.timeRemaining ? Math.min(8, Math.max(1, deadline.timeRemaining())) : 8;
         fitSliced(function () {
           if (sync) { builtNow = queue.splice(0).filter(function (c) { return c.isConnected; }); tierPass(builtNow, 'enter'); return; }

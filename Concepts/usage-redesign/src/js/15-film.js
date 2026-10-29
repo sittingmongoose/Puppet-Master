@@ -1945,7 +1945,7 @@
        where what the board reads can change (leaving it warms again) */
     var sp = document.getElementById('panel-settings');
     if (sp && sp.classList.contains('active')) return;
-    if (document.hidden || root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour') || root.hasAttribute('data-pm-page-transition')) { warmSoon(1200); return; }
+    if (document.hidden || root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour') || root.hasAttribute('data-pm-page-transition') || (document.body && document.body.classList.contains('pm-resizing'))) { warmSoon(1200); return; }
     /* no GPU, or the no-GPU profile forced (?pmu-soft=1): nothing is warmed */
     if (typeof softwareRendered === 'function' && softwareRendered()) { rasterLog.skipped = /[?&]pmu-soft=1\b/.test(location.search) ? 'soft' : 'software'; return; }
     var box = warmBox(panel); if (!box) { warmSoon(2000); return; }

@@ -102,7 +102,7 @@ render.paint = function (opts) {
   }
   paintedRects = dv ? shown : null;
   var animate = !!opts.animate && (!state.dragging || !!opts.preview) && dur('med') > 0;
-  c.setAttribute('data-pmw-mode', rects.mode);
+  setAttr(c, 'data-pmw-mode', rects.mode);
   // a paint without motion during a preview's glide leaves the glide running (dropping the class cancels it mid-way)
   if (animate || !(state.moving && PMW.dropView && PMW.dropView.gliding())) c.classList.toggle('pmw-animating', animate);
   setAttr(c, 'data-pmw-dv', dv ? 'on' : null);
@@ -136,10 +136,10 @@ render.paint = function (opts) {
     var key = d.split + ':' + d.index;
     seen[key] = true;
     var el = dividerEls[key] || (dividerEls[key] = createDivider(d));
-    el.setAttribute('data-key', key);
-    el.setAttribute('data-dir', d.dir);
+    setAttr(el, 'data-key', key);
+    setAttr(el, 'data-dir', d.dir);
     setAttr(el, 'hidden', d.virtual);
-    el.setAttribute('aria-orientation', d.dir === 'row' ? 'vertical' : 'horizontal');
+    setAttr(el, 'aria-orientation', d.dir === 'row' ? 'vertical' : 'horizontal');
     el._pmwDivider = d;
     placeEl(el, d.rect, animate, placedWithoutMotion);
     updateDividerAria(el, d, l);
@@ -535,8 +535,8 @@ function updateDividerAria(el, d, l) {
   if (!s || s.node.t !== 'split') return;
   var before = 0;
   for (var i = 0; i <= d.index; i++) before += s.node.sizes[i];
-  el.setAttribute('aria-valuenow', String(Math.round(before * 100)));
-  el.setAttribute('aria-label', d.dir === 'row' ? 'Resize the panels to the left and right' : 'Resize the panels above and below');
+  setAttr(el, 'aria-valuenow', Math.round(before * 100));
+  setAttr(el, 'aria-label', d.dir === 'row' ? 'Resize the panels to the left and right' : 'Resize the panels above and below');
 }
 
 /* ---- the missing-kind body (a kind not loaded in this build) ---- */

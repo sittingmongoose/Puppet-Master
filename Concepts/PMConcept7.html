@@ -42541,11 +42541,10 @@ html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-fx {
   transform-origin: 0 0;
 }
 html[data-pmw-home="on"] .pmw-gl:not(.pmw-gl-on) > .pmw-gl-fx { visibility: hidden; }
-/* While a divider is held, the multi-element decoration groups (Friendly dots/echos, Retro ghosts) repaint
-   their shadows and masks every drag frame; the lit core stays, the groups rest until release. */
-html[data-pmw-home="on"] body.pm-resizing .pmw-gl-fx > :is(.pmw-gl-dots),
-html[data-pmw-home="on"] body.pm-resizing .pmw-gl-fx > :is(.pmw-gl-echos),
-html[data-pmw-home="on"] body.pm-resizing .pmw-gl-fx > :is(.pmw-gl-ghosts) { display: none; }
+/* Pass-3 frame review: a drag-scoped hide for the decoration groups was tried here and removed. The
+   theme enables outranked it, and on inspection the groups are designed held-state feedback (the Friendly
+   dots' gl-pop on .pmw-gl-held, Retro's phosphor ghosts) whose measured paint cost is small; hiding them
+   traded designed motion for no measurable gain. */
 html[data-pmw-home="on"] :where(.pmw-gl-fx i) { position: absolute; display: block; left: 140px; top: 0; pointer-events: none; opacity: 0; }
 html[data-pmw-home="on"] .pmw-gl-fx > :is(.pmw-gl-dots),
 html[data-pmw-home="on"] .pmw-gl-fx > :is(.pmw-gl-echos),
@@ -79109,7 +79108,7 @@ var PMU_SERIES = {
        where what the board reads can change (leaving it warms again) */
     var sp = document.getElementById('panel-settings');
     if (sp && sp.classList.contains('active')) return;
-    if (document.hidden || root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour') || root.hasAttribute('data-pm-page-transition')) { warmSoon(1200); return; }
+    if (document.hidden || root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour') || root.hasAttribute('data-pm-page-transition') || (document.body && document.body.classList.contains('pm-resizing'))) { warmSoon(1200); return; }
     /* no GPU, or the no-GPU profile forced (?pmu-soft=1): nothing is warmed */
     if (typeof softwareRendered === 'function' && softwareRendered()) { rasterLog.skipped = /[?&]pmu-soft=1\b/.test(location.search) ? 'soft' : 'software'; return; }
     var box = warmBox(panel); if (!box) { warmSoon(2000); return; }
@@ -87323,6 +87322,11 @@ var PMU_SERIES = {
       function next() { if (warm) idle(slice, { timeout: 1500 }); else requestAnimationFrame(slice); }
       function slice(deadline) {
         if (token !== buildToken) return;
+        /* the warm (idle) build must not land inside a resize drag: its fit pass measures the board
+           (pass-3 tape: 300-460ms freezes when it fired mid-gesture). Re-queue; the idle timeout
+           keeps retrying and the first slice after release runs as before. Arrival builds (sync,
+           non-warm) are user-visible and never defer. */
+        if (warm && document.body && document.body.classList.contains('pm-resizing')) { next(); return; }
         var t0 = performance.now(), builtNow = [], budget = warm && deadline && deadline.timeRemaining ? Math.min(8, Math.max(1, deadline.timeRemaining())) : 8;
         fitSliced(function () {
           if (sync) { builtNow = queue.splice(0).filter(function (c) { return c.isConnected; }); tierPass(builtNow, 'enter'); return; }
@@ -101956,6 +101960,7 @@ status: completed with warnings</pre>
            this reads top/height, a row resizer in y while this reads
            left/width. Plain hover keeps measuring live (infrequent, and the
            layout may genuinely have moved since). */
+        let hoverRect = null, hoverEl = null, hoverAt = 0;
         function trackGlow(resizerEl, e) {
             /* Bars the Home grab light has adopted (.pmw-gl) paint no legacy pseudo glow at all
                (56-light.css retires ::before/::after on them), so the rect read and the variable
@@ -101963,6 +101968,7 @@ status: completed with warnings</pre>
                this controller never sees: glowRect stayed null and every move forced a fresh rect. */
             if (resizerEl.classList.contains('pmw-gl')) return;
             const r = glowRect || resizerEl.getBoundingClientRect();
+            if (!glowRect) { hoverRect = r; hoverEl = resizerEl; hoverAt = performance.now(); }
             const vertical = resizerEl.classList.contains('resizer-col');
             const len = (vertical ? r.height : r.width) || 1;
             const raw = vertical ? (e.clientY - r.top) / len : (e.clientX - r.left) / len;
@@ -101981,7 +101987,12 @@ status: completed with warnings</pre>
                    whole document at pickup and release (measured 45-70ms each); the resizer's own CSS
                    cursor (.resizer-col/.resizer-row) applies for the whole captured drag, exactly as
                    Home's own divider/chat drags already rely on. */
-                glowRect = resizerEl.getBoundingClientRect();
+                /* The hover move just before this press already measured the bar (trackGlow): reuse it
+                   when fresh instead of forcing the pickup frame's pending layout (45-69ms on the
+                   P1000). Adopted bars never read a rect for the glow at all. */
+                glowRect = resizerEl.classList.contains('pmw-gl') ? null
+                    : (hoverEl === resizerEl && performance.now() - hoverAt < 300 && hoverRect) ? hoverRect
+                    : resizerEl.getBoundingClientRect();
                 if (opts.onStart) opts.onStart(e);
                 resizerEl.classList.add('resizing');
                 document.body.classList.add('pm-resizing');
@@ -189571,7 +189582,7 @@ render.paint = function (opts) {
   }
   paintedRects = dv ? shown : null;
   var animate = !!opts.animate && (!state.dragging || !!opts.preview) && dur('med') > 0;
-  c.setAttribute('data-pmw-mode', rects.mode);
+  setAttr(c, 'data-pmw-mode', rects.mode);
   // a paint without motion during a preview's glide leaves the glide running (dropping the class cancels it mid-way)
   if (animate || !(state.moving && PMW.dropView && PMW.dropView.gliding())) c.classList.toggle('pmw-animating', animate);
   setAttr(c, 'data-pmw-dv', dv ? 'on' : null);
@@ -189605,10 +189616,10 @@ render.paint = function (opts) {
     var key = d.split + ':' + d.index;
     seen[key] = true;
     var el = dividerEls[key] || (dividerEls[key] = createDivider(d));
-    el.setAttribute('data-key', key);
-    el.setAttribute('data-dir', d.dir);
+    setAttr(el, 'data-key', key);
+    setAttr(el, 'data-dir', d.dir);
     setAttr(el, 'hidden', d.virtual);
-    el.setAttribute('aria-orientation', d.dir === 'row' ? 'vertical' : 'horizontal');
+    setAttr(el, 'aria-orientation', d.dir === 'row' ? 'vertical' : 'horizontal');
     el._pmwDivider = d;
     placeEl(el, d.rect, animate, placedWithoutMotion);
     updateDividerAria(el, d, l);
@@ -190004,8 +190015,8 @@ function updateDividerAria(el, d, l) {
   if (!s || s.node.t !== 'split') return;
   var before = 0;
   for (var i = 0; i <= d.index; i++) before += s.node.sizes[i];
-  el.setAttribute('aria-valuenow', String(Math.round(before * 100)));
-  el.setAttribute('aria-label', d.dir === 'row' ? 'Resize the panels to the left and right' : 'Resize the panels above and below');
+  setAttr(el, 'aria-valuenow', Math.round(before * 100));
+  setAttr(el, 'aria-label', d.dir === 'row' ? 'Resize the panels to the left and right' : 'Resize the panels above and below');
 }
 
 /* ---- the missing-kind body (a kind not loaded in this build) ---- */
@@ -190227,8 +190238,8 @@ dividers.bind = function (el) {
     state.resizing = true;
     function noSelect(e) { e.preventDefault(); }
     doc.addEventListener('selectstart', noSelect, true);
-    function move(e) {
-      var pos = info.axis === 'w' ? e.clientX : e.clientY;
+    var paintAt = 0, trailRaf = 0, trailPos = null, trailEv = null;
+    function applyMove(pos, e) {
       var delta = pos - start;
       if (!moved && Math.abs(delta) < 1) return;
       var live = liveSplit(state.layout, info);
@@ -190239,9 +190250,27 @@ dividers.bind = function (el) {
       last = res;
       state.sizePreview = previewOf(live, info, res);
       render.now({ animate: false });
+      paintAt = performance.now();
+      if (trailPos === pos) { trailPos = null; trailEv = null; }
+    }
+    function move(e) {
+      var pos = info.axis === 'w' ? e.clientX : e.clientY;
+      trailPos = pos; trailEv = e;
+      /* Paint in the event (the 1:1 rule), but at most once per ~10ms: with dense input (a 120Hz mouse,
+         or two coalesced dispatches in one frame) the old handler painted the whole Home per event —
+         450-600ms of forced style/layout per drag on the P1000 (pass-3 tape). The first move of a frame
+         still paints synchronously; a burst's remainder paints once on the next frame with the latest
+         point, and end() applies any pending point before it commits. */
+      if (performance.now() - paintAt >= 10) { applyMove(pos, e); return; }
+      if (!trailRaf) trailRaf = requestAnimationFrame(function () {
+        trailRaf = 0;
+        if (!ended && trailPos != null) applyMove(trailPos, trailEv);
+      });
     }
     function end(e, cancel) {
       if (ended) return;
+      if (trailRaf) { cancelAnimationFrame(trailRaf); trailRaf = 0; }
+      if (!cancel && trailPos != null) { var tp = trailPos, te = trailEv; trailPos = null; applyMove(tp, te); if (ended) return; }
       ended = true;
       doc.removeEventListener('selectstart', noSelect, true);
       el.removeEventListener('pointermove', move);
@@ -190255,10 +190284,14 @@ dividers.bind = function (el) {
       state.sizePreview = null;
       state.resizing = false;
       /* Shell observers idle behind body.pm-resizing and catch up on the shell's drag-end bus; this
-         gesture sets that class too, so it owes them the same single flush (the chat drag already pays it). */
-      try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {}
+         gesture sets that class too, so it owes them the same single flush (the chat drag already pays
+         it). It runs AFTER the commit/rollback below: fired first, the bus's own final flush (and
+         parked catch-ups like the Glass bake) measured the preview geometry, and a commit that then
+         clamped or rolled back left them baked/sized for a width that never landed. */
+      var fireDragEnd = function () { try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {} };
       if (cancel || !moved || !last) {
         if (previewed) render.now({ animate: !!cancel });
+        fireDragEnd();
         render.flushResizes(true);
         return;
       }
@@ -190266,6 +190299,7 @@ dividers.bind = function (el) {
       // anything but an applied change: paint the model again now, so the panels, the divider values and
       // render.rects() (the next keyboard step reads it) leave the dragged geometry (CONTRACT 8: a failed commit rolls back)
       if (!out.ok || out.noChange) render.now({ animate: !out.ok });
+      fireDragEnd();
       render.flushResizes(true);
     }
     function up(e) { end(e, false); }
@@ -196500,8 +196534,10 @@ chatCol.beginDrag = function (e, handle) {
     doc.body.classList.remove('pm-resizing', 'pmw-resizing');
     narrow.frozen = false;
     state.resizing = false;
-    try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {}
-    if (cancel || !moved) { c.style.setProperty('--pmw-chat-w', Math.round(startW) + 'px'); narrow.schedule(); render.flushResizes(true); return; }
+    /* the shell drag-end bus fires after the commit/rollback, not before: its parked catch-ups (and
+       its own final resize flush) must measure the width that actually landed, not the dragged one */
+    var fireDragEnd = function () { try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {} };
+    if (cancel || !moved) { c.style.setProperty('--pmw-chat-w', Math.round(startW) + 'px'); narrow.schedule(); fireDragEnd(); render.flushResizes(true); return; }
     var w = clamp(Math.round(last) - hist, LADDER.chatMin, LADDER.chatMax);   // the message area; the History is never saved
     // one commit on release; a cancelled dispatch or a failed write leaves the saved width, which the ladder puts back
     var res = chatCol.setWidth(w);
@@ -196511,6 +196547,7 @@ chatCol.beginDrag = function (e, handle) {
       var applied = narrow.state.chat != null ? Math.round(narrow.state.chat) : w + hist;
       announce('Chat width ' + applied + ' pixels');
     }
+    fireDragEnd();
     render.flushResizes(true);
   }
   function up(ev) { end(ev, false); }
@@ -202133,7 +202170,12 @@ function mountEditor(host, st, api) {
     } else if (resizeTrailT) { clearTimeout(resizeTrailT); resizeTrailT = 0; }
     if (sz && sz.final === false && mode === 'diff') { layout(); renderRows(true); renderOverlays(); updateThumb(); return; }
     var changed = resolveLayout(false);
-    if (!changed) { layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar(); sticky._key = null; updateSticky(); }
+    if (!changed) {
+      layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar();
+      /* the sticky header stack is scroll-position decoration: on a cadence tick mid-drag its scope
+         scan can wait for the final delivery (rows and overlays above already follow the new geometry) */
+      if (!(sz && sz.final === false)) { sticky._key = null; updateSticky(); }
+    }
     queueDraw();
   }
   function relayoutAll(box, keepRows) {
@@ -206037,6 +206079,9 @@ function prepareSoon() {
   var build = function () {
     if (!prepared && !openRoot) {
       if (sheetBusy()) { setTimeout(prepareSoon, 1500); return; }
+      /* idle preparation must not land inside a resize drag: the build measures the sheet (~200ms of
+         forced style/layout on the P1000) and a drag begun in the app's first seconds paid it mid-gesture */
+      if (document.body && document.body.classList.contains('pm-resizing')) { setTimeout(prepareSoon, 1500); return; }
       // Settings is the app-level entry. Prepare its actual width and scope,
       // not the narrower editor cutout, which would reflow every tile on open.
       open({ view: inst.view, scope: 'app', from: 'settings', prepare: true });
@@ -207278,7 +207323,7 @@ function mountBrowser(host, st, api) {
 
   return {
     focus: function () { if (page && page.missing) addrIn.focus(); else viewport.focus({ preventScroll: true }); },
-    onResize: function (sz) { placeDock(sz && sz.width); hl.hidden = true; if (sz && sz.final === false) return; if (picked) outline(pickBox, picked.el, null); positionPrompt(); },
+    onResize: function (sz) { placeDock(sz && sz.w); hl.hidden = true; if (sz && sz.final === false) return; if (picked) outline(pickBox, picked.el, null); positionPrompt(); },
     onHide: function () { disarm(); closePrompt(); },
     wantsKey: function (e) { return e.key === 'Escape' && (!!armed || !prompt.hidden); },
     /* an open of this tab that carries an address (the chat, Ports, an agent) goes there; other keys are ignored */
@@ -230689,7 +230734,8 @@ var T = {};
       if (this.followBottom) this.scrollAbs = this.bottomAbs();
     }
     var cw = cols * m.devW, ch = rows * m.devH;
-    if (this.canvas.width !== cw || this.canvas.height !== ch || force) {
+    var canvasChanged = this.canvas.width !== cw || this.canvas.height !== ch || force;
+    if (canvasChanged) {
       this.canvas.width = cw; this.canvas.height = ch;
       this.canvas.style.width = (cw / m.dpr) + 'px'; this.canvas.style.height = (ch / m.dpr) + 'px';
       [this.fxCanvas, this.trailCanvas].forEach(function (c) { c.width = cw; c.height = ch; c.style.width = (cw / m.dpr) + 'px'; c.style.height = (ch / m.dpr) + 'px'; });
@@ -230707,12 +230753,23 @@ var T = {};
       else { this.root.style.removeProperty('--pmt-grid-x'); this.root.style.removeProperty('--pmt-grid-y'); }
     }
     if (bez) this.bezel.layout(w, h, this.gridLeft, this.gridTop, cols * m.cellW, rows * m.cellH, m.dpr);
-    this.root.style.setProperty('--pmt-cell-h', m.cellH + 'px');
-    this.root.style.setProperty('--pmt-cell-w', m.cellW + 'px');
-    this.root.style.setProperty('--pmt-font', this.appearance.font.family);
-    this.root.style.setProperty('--pmt-font-size', this.appearance.font.size + 'px');
-    this.marksDirty = true;
-    this.schedule(true);
+    /* The four vars below are inherited by the whole terminal subtree: rewriting them on every 120ms
+       drag tick restyled it even when the grid had not moved a whole cell, and the unconditional full
+       repaint followed. Write and repaint only what actually changed. */
+    var varSig = m.cellW + '|' + m.cellH + '|' + this.appearance.font.family + '|' + this.appearance.font.size;
+    var varsChanged = varSig !== this._varSig;
+    if (varsChanged) {
+      this._varSig = varSig;
+      this.root.style.setProperty('--pmt-cell-h', m.cellH + 'px');
+      this.root.style.setProperty('--pmt-cell-w', m.cellW + 'px');
+      this.root.style.setProperty('--pmt-font', this.appearance.font.family);
+      this.root.style.setProperty('--pmt-font-size', this.appearance.font.size + 'px');
+    }
+    if (changed || canvasChanged || varsChanged || off !== this._lastOffPainted) {
+      this._lastOffPainted = off;
+      this.marksDirty = true;
+      this.schedule(true);
+    }
   };
   View.prototype.bottomAbs = function () { var b = this.term.buf; return b.trimmed + b.lines.length - b.rows; };
   View.prototype.topAbs = function () { var b = this.term.buf; return b.trimmed; };
@@ -296273,7 +296330,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      drag, or a scrolling key outside a text field. Scroll events we cause are
      not input, so anchoring and clamping never flip the state. */
   let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null, tLastCh=null, tInputDir=0;
-  let glideRAF=0, glideTs=0, tRO=null, tROTarget=null;
+  let glideRAF=0, glideTs=0, glideDragAt=0, tRO=null, tROTarget=null;
   let followTargetFn=null;
   function followTarget(fn){ followTargetFn=typeof fn==='function'?fn:null; }
   const GLIDE_TAU=70;
@@ -296294,12 +296351,24 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     glideRAF=0;
     const el=tEl(); if(!el||!tStick){ glideTs=0; return; }
     if(followHoldFn&&followHoldFn()){ glideTs=0; return; }
-    const limit=el.scrollHeight-el.clientHeight, target=followTargetFn&&followTargetFn(el,limit);
-    const max=target==null?limit:Math.min(limit,target), cur=el.scrollTop, d=max-cur;
     // Hosted resize drag: the transcript is rewrapping every frame and the glide's reads pay that
     // frame's forced layout in every drag (even Home divider drags). While stuck to the bottom,
     // pin instantly (the same follow target/clamp) and let the normal glide resume after release.
-    if(document.body && document.body.classList.contains('pm-resizing')){ if(d>0.5) writeScrollInstant(el,max); glideTs=0; glideRAF=requestAnimationFrame(glideStep); return; }
+    // The reads themselves are the cost, so during a drag they run on the same 100ms cadence as the
+    // chat's other held work: between ticks the step reschedules without touching scroll metrics.
+    if(document.body && document.body.classList.contains('pm-resizing')){
+      const nowD=performance.now();
+      if(nowD-glideDragAt>=100){
+        glideDragAt=nowD;
+        const limitD=el.scrollHeight-el.clientHeight, targetD=followTargetFn&&followTargetFn(el,limitD);
+        const maxD=targetD==null?limitD:Math.min(limitD,targetD);
+        if(maxD-el.scrollTop>0.5) writeScrollInstant(el,maxD);
+      }
+      glideTs=0; glideRAF=requestAnimationFrame(glideStep); return;
+    }
+    glideDragAt=0;
+    const limit=el.scrollHeight-el.clientHeight, target=followTargetFn&&followTargetFn(el,limit);
+    const max=target==null?limit:Math.min(limit,target), cur=el.scrollTop, d=max-cur;
     if(target!=null&&d<-.5){ writeScrollInstant(el,max); glideRAF=requestAnimationFrame(glideStep); return; }
     if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
     const tn=performance.now(), dt=glideTs?Math.min(GLIDE_DT_MAX,Math.max(1,tn-glideTs)):16.7; glideTs=tn;

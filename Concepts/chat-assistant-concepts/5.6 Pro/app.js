@@ -2987,7 +2987,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      drag, or a scrolling key outside a text field. Scroll events we cause are
      not input, so anchoring and clamping never flip the state. */
   let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null, tLastCh=null, tInputDir=0;
-  let glideRAF=0, glideTs=0, tRO=null, tROTarget=null;
+  let glideRAF=0, glideTs=0, glideDragAt=0, tRO=null, tROTarget=null;
   let followTargetFn=null;
   function followTarget(fn){ followTargetFn=typeof fn==='function'?fn:null; }
   const GLIDE_TAU=70;
@@ -3008,12 +3008,24 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     glideRAF=0;
     const el=tEl(); if(!el||!tStick){ glideTs=0; return; }
     if(followHoldFn&&followHoldFn()){ glideTs=0; return; }
-    const limit=el.scrollHeight-el.clientHeight, target=followTargetFn&&followTargetFn(el,limit);
-    const max=target==null?limit:Math.min(limit,target), cur=el.scrollTop, d=max-cur;
     // Hosted resize drag: the transcript is rewrapping every frame and the glide's reads pay that
     // frame's forced layout in every drag (even Home divider drags). While stuck to the bottom,
     // pin instantly (the same follow target/clamp) and let the normal glide resume after release.
-    if(document.body && document.body.classList.contains('pm-resizing')){ if(d>0.5) writeScrollInstant(el,max); glideTs=0; glideRAF=requestAnimationFrame(glideStep); return; }
+    // The reads themselves are the cost, so during a drag they run on the same 100ms cadence as the
+    // chat's other held work: between ticks the step reschedules without touching scroll metrics.
+    if(document.body && document.body.classList.contains('pm-resizing')){
+      const nowD=performance.now();
+      if(nowD-glideDragAt>=100){
+        glideDragAt=nowD;
+        const limitD=el.scrollHeight-el.clientHeight, targetD=followTargetFn&&followTargetFn(el,limitD);
+        const maxD=targetD==null?limitD:Math.min(limitD,targetD);
+        if(maxD-el.scrollTop>0.5) writeScrollInstant(el,maxD);
+      }
+      glideTs=0; glideRAF=requestAnimationFrame(glideStep); return;
+    }
+    glideDragAt=0;
+    const limit=el.scrollHeight-el.clientHeight, target=followTargetFn&&followTargetFn(el,limit);
+    const max=target==null?limit:Math.min(limit,target), cur=el.scrollTop, d=max-cur;
     if(target!=null&&d<-.5){ writeScrollInstant(el,max); glideRAF=requestAnimationFrame(glideStep); return; }
     if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
     const tn=performance.now(), dt=glideTs?Math.min(GLIDE_DT_MAX,Math.max(1,tn-glideTs)):16.7; glideTs=tn;

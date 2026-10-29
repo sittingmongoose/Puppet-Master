@@ -148,8 +148,10 @@ chatCol.beginDrag = function (e, handle) {
     doc.body.classList.remove('pm-resizing', 'pmw-resizing');
     narrow.frozen = false;
     state.resizing = false;
-    try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {}
-    if (cancel || !moved) { c.style.setProperty('--pmw-chat-w', Math.round(startW) + 'px'); narrow.schedule(); render.flushResizes(true); return; }
+    /* the shell drag-end bus fires after the commit/rollback, not before: its parked catch-ups (and
+       its own final resize flush) must measure the width that actually landed, not the dragged one */
+    var fireDragEnd = function () { try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {} };
+    if (cancel || !moved) { c.style.setProperty('--pmw-chat-w', Math.round(startW) + 'px'); narrow.schedule(); fireDragEnd(); render.flushResizes(true); return; }
     var w = clamp(Math.round(last) - hist, LADDER.chatMin, LADDER.chatMax);   // the message area; the History is never saved
     // one commit on release; a cancelled dispatch or a failed write leaves the saved width, which the ladder puts back
     var res = chatCol.setWidth(w);
@@ -159,6 +161,7 @@ chatCol.beginDrag = function (e, handle) {
       var applied = narrow.state.chat != null ? Math.round(narrow.state.chat) : w + hist;
       announce('Chat width ' + applied + ' pixels');
     }
+    fireDragEnd();
     render.flushResizes(true);
   }
   function up(ev) { end(ev, false); }

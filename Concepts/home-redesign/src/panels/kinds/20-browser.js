@@ -1203,7 +1203,7 @@ function mountBrowser(host, st, api) {
 
   return {
     focus: function () { if (page && page.missing) addrIn.focus(); else viewport.focus({ preventScroll: true }); },
-    onResize: function (sz) { placeDock(sz && sz.width); hl.hidden = true; if (sz && sz.final === false) return; if (picked) outline(pickBox, picked.el, null); positionPrompt(); },
+    onResize: function (sz) { placeDock(sz && sz.w); hl.hidden = true; if (sz && sz.final === false) return; if (picked) outline(pickBox, picked.el, null); positionPrompt(); },
     onHide: function () { disarm(); closePrompt(); },
     wantsKey: function (e) { return e.key === 'Escape' && (!!armed || !prompt.hidden); },
     /* an open of this tab that carries an address (the chat, Ports, an agent) goes there; other keys are ignored */

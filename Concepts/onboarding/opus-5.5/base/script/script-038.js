@@ -2117,6 +2117,7 @@
            this reads top/height, a row resizer in y while this reads
            left/width. Plain hover keeps measuring live (infrequent, and the
            layout may genuinely have moved since). */
+        let hoverRect = null, hoverEl = null, hoverAt = 0;
         function trackGlow(resizerEl, e) {
             /* Bars the Home grab light has adopted (.pmw-gl) paint no legacy pseudo glow at all
                (56-light.css retires ::before/::after on them), so the rect read and the variable
@@ -2124,6 +2125,7 @@
                this controller never sees: glowRect stayed null and every move forced a fresh rect. */
             if (resizerEl.classList.contains('pmw-gl')) return;
             const r = glowRect || resizerEl.getBoundingClientRect();
+            if (!glowRect) { hoverRect = r; hoverEl = resizerEl; hoverAt = performance.now(); }
             const vertical = resizerEl.classList.contains('resizer-col');
             const len = (vertical ? r.height : r.width) || 1;
             const raw = vertical ? (e.clientY - r.top) / len : (e.clientX - r.left) / len;
@@ -2142,7 +2144,12 @@
                    whole document at pickup and release (measured 45-70ms each); the resizer's own CSS
                    cursor (.resizer-col/.resizer-row) applies for the whole captured drag, exactly as
                    Home's own divider/chat drags already rely on. */
-                glowRect = resizerEl.getBoundingClientRect();
+                /* The hover move just before this press already measured the bar (trackGlow): reuse it
+                   when fresh instead of forcing the pickup frame's pending layout (45-69ms on the
+                   P1000). Adopted bars never read a rect for the glow at all. */
+                glowRect = resizerEl.classList.contains('pmw-gl') ? null
+                    : (hoverEl === resizerEl && performance.now() - hoverAt < 300 && hoverRect) ? hoverRect
+                    : resizerEl.getBoundingClientRect();
                 if (opts.onStart) opts.onStart(e);
                 resizerEl.classList.add('resizing');
                 document.body.classList.add('pm-resizing');
