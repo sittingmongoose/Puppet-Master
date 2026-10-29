@@ -164,7 +164,8 @@
     },
     do: {
       enter(S) { O55.finish(S, { tour: false }); },
-      tour(S) { O55.finish(S, { tour: true }); },
+      /* O10: Pip hands the strings on: its hand lifts away as the tour's first callout grows out of the window */
+      tour(S) { const st = O55.pipStage && O55.pipStage.of(S.root && S.root.querySelector('.o55-stage')); if (st && st.handOff) st.handOff(); O55.finish(S, { tour: true }); },
       createNow(S) { O55.draft.set(md(S), { project_mode: 'new', review_confirmed: false }); S.sess.commit = { state: 'none', attempt: 0 }; S.sess.ui.begin = 'new'; S.save(); O55.ui.go('begin'); }
     }
   });
