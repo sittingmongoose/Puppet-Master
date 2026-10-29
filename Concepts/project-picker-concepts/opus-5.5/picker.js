@@ -218,17 +218,18 @@
     const name = D.querySelector('.title-bar .app-name');
     if (name) delete name.dataset.ppkLogo;
     refresh();
-    tabsMoved();
     report('state');
   }
   /* The title bar lays out the logo, this box and then the page tabs, so whenever the box changes width (another option,
-     another project's name, a long name, the density fold) the tabs move and the chosen tab's ink has to follow them.
-     PMConcept7 re-measures its ink and its title-bar density on a window resize; one is sent per frame at most. */
-  let lastW = -1, pending = false;
+     another project's name, a long name, the density fold) the tabs move and the chosen tab's chip has to follow them.
+     The chip is the switcher's lens (PM_LG), not the tab, and on its own it follows a layout change only after a 140 ms
+     timer: it stayed on the old place for a fifth of a second and then jumped. This watch runs after the frame's layout
+     and before its paint, so the lens syncs here and moves in the same frame as the tabs. The tab ink under it (hidden
+     while the switcher draws the chip) is placed again too. */
+  let lastW = -1;
   function tabsMoved() {
-    if (pending) return;
-    pending = true;
-    requestAnimationFrame(() => requestAnimationFrame(() => { pending = false; W.dispatchEvent(new Event('resize')); }));
+    try { if (W.PM_LG && W.PM_LG.sync) W.PM_LG.sync(); } catch (e) {}
+    try { if (W.PM7_PAGE_TAB_INK && W.PM7_PAGE_TAB_INK.resync) W.PM7_PAGE_TAB_INK.resync(); } catch (e) {}
   }
   function watchWidth() {
     const wrap = $('projectMenuWrap');

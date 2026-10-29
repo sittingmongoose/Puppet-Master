@@ -83,7 +83,7 @@ The strip and PMConcept7 talk only by `postMessage`:
 
 The strip never reaches into the frame, because a sandboxed preview gives PMConcept7 an origin of its own. T3's file preview opens HTML that way, and in it the strip's controls did nothing until this change.
 
-When the box changes width (another option, another project's name, a long name, the narrow fold), the page tabs move. The layer then sends one window resize, so PMConcept7 re-measures the chosen tab's ink.
+When the box changes width (another option, another project's name, a long name, the narrow fold), the page tabs move. The chosen tab's chip is drawn by PMConcept7's switcher lens, which on its own follows a layout change only after a 140 ms timer: the chip stayed where the tab had been and then jumped. So the layer watches the box's width and, after that frame's layout and before its paint, asks the lens to place itself again (`PM_LG.sync`). The chip now moves in the same frame as the tabs. In NieR, picking a project plays PMConcept7's reboot cover, and the lens waits for it to lift. The chip is already in place on the first frame the cover reveals.
 
 ## Single file
 
