@@ -174,12 +174,9 @@
       padding: var(--3xl); display: flex; flex-direction: column; gap: var(--lg);
       align-items: center; text-align: center;
     }
-    .pm6-wiz-disc-spin {
-      width: 44px; height: 44px; border-radius: 50%;
-      border: 3px solid var(--accent-soft); border-top-color: var(--accent-primary);
-      animation: pm6-wiz-spin 900ms linear infinite;
-    }
-    @keyframes pm6-wiz-spin { to { transform: rotate(360deg); } }
+    /* the wait is the system loader (W5, DR-077; PM_PIP_LOADER, glyph-system src/logo/pm-loader.js), at the old spinner's size */
+    .pm6-wiz-disc-ld { --pml-size: 44px; }
+    .pm6-wiz-disc-ld[hidden] { display: none; }
     .pm6-wiz-disc-title { font-family: var(--display-font); font-size: var(--fs-xl); color: var(--text-primary); }
     .pm6-wiz-disc-sub { font-size: var(--fs-sm); color: var(--text-muted); display: flex; align-items: center; gap: var(--sm); }
     .pm6-wiz-ro-badge {
