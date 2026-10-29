@@ -1,14 +1,14 @@
 {
-  "body_reconstruction_checked": 2891,
+  "body_reconstruction_checked": 2954,
   "body_reconstruction_mismatches": 0,
   "config_path": "Plans/sharding_config.json",
   "docs": [
     {
-      "body_reconstruction_checked": 12,
+      "body_reconstruction_checked": 58,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/orchestrator-subagent-integration",
       "failures": [],
-      "shard_count": 12,
+      "shard_count": 58,
       "source": "Plans/orchestrator-subagent-integration.md"
     },
     {
@@ -284,11 +284,11 @@
       "source": "Plans/Executor_Protocol.md"
     },
     {
-      "body_reconstruction_checked": 53,
+      "body_reconstruction_checked": 54,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/ui_command_catalog",
       "failures": [],
-      "shard_count": 53,
+      "shard_count": 54,
       "source": "Plans/UI_Command_Catalog.md"
     },
     {
@@ -316,11 +316,11 @@
       "source": "Plans/Personas.md"
     },
     {
-      "body_reconstruction_checked": 26,
+      "body_reconstruction_checked": 28,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/provider_opencode",
       "failures": [],
-      "shard_count": 26,
+      "shard_count": 28,
       "source": "Plans/Provider_OpenCode.md"
     },
     {
@@ -420,11 +420,11 @@
       "source": "Plans/Glossary.md"
     },
     {
-      "body_reconstruction_checked": 6,
+      "body_reconstruction_checked": 20,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/media_generation_and_capabilities",
       "failures": [],
-      "shard_count": 6,
+      "shard_count": 20,
       "source": "Plans/Media_Generation_and_Capabilities.md"
     },
     {
@@ -798,13 +798,13 @@
   ],
   "docs_checked": 99,
   "failures": [],
-  "generated_at_utc": "2026-10-23T19:40:08Z",
+  "generated_at_utc": "2026-10-29T20:00:55Z",
   "mode": "check",
   "output_root": "Plans/_shards",
   "root_index_failures": [],
   "root_index_path": "Plans/00-plans-index.md",
   "schema_id": "pm.plan_shards.report.v1",
-  "shards_checked": 2891,
+  "shards_checked": 2954,
   "source_count": 99,
   "status": "pass"
 }
