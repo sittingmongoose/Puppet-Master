@@ -419,6 +419,18 @@
     if (sprout && sprout.isOpen) return sprout.isOpen(menu);
     return !!(menu && menu.classList.contains('is-open'));
   }
+  /* A title-bar menu hangs below the bar over the page, and the bar is a stacking context (z-index 50) beneath the
+     panels' resize strips (z-index 100; it stays there so the switcher's chips, at 51, are drawn over it). The strips are
+     clear, so a menu over one looked whole but gave the strip its clicks: the project menu's rows, which reach the left
+     panel's edge, started a resize drag instead of a pick (Retro at full width). While one of the bar's menus is open
+     the strips take no pointer (style-002.css, .app-shell[data-tb-menu-open]). */
+  function tbMenuShield() {
+    var shell = document.querySelector('.app-shell');
+    if (!shell) return;
+    var open = false;
+    document.querySelectorAll('.title-bar .pm6-tb-menu').forEach(function (m) { if (!open && tbMenuIsOpen(m)) open = true; });
+    if (open !== shell.hasAttribute('data-tb-menu-open')) { if (open) shell.setAttribute('data-tb-menu-open', ''); else shell.removeAttribute('data-tb-menu-open'); }
+  }
   function tbMenuOpen(menu, btn) {
     var sprout = window.PM6_SPROUT;
     if (sprout && sprout.open) sprout.open(menu, null, btn);
@@ -427,6 +439,7 @@
       menu.classList.remove('is-closing');
       menu.style.display = 'block';
     }
+    tbMenuShield();
   }
   function tbMenuClose(menu) {
     var sprout = window.PM6_SPROUT;
@@ -435,6 +448,7 @@
       menu.classList.remove('is-open', 'is-closing', 'active');
       menu.style.display = 'none';
     }
+    tbMenuShield();
   }
   function tbCloseAllMenus(except) {
     document.querySelectorAll('.pm6-tb-menu').forEach(function (m) {

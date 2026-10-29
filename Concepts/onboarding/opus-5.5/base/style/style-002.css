@@ -1461,6 +1461,10 @@
     .title-bar #projectMenuWrap[data-mode="icon"]::after { display: none; }
     [data-theme^="retro"]:not([data-o55-nier="on"]) .title-bar #projectMenuWrap::after { width: 2px; }
 
+    /* an open title-bar menu over a panel's resize strip keeps its clicks: the strips take no pointer while it is open
+       (pm6-js-panels.js tbMenuShield; the bar stays under the strips' z-index so the switcher's chips draw over it) */
+    .app-shell[data-tb-menu-open] :is(#leftPanelResizer, #terminalResizer, #chatResizer, .pane-header-drag) { pointer-events: none; }
+
     /* The menu: "Projects" with its shortcut, two-line rows (a monogram tile, the name, the path and branch, the state in
        words beside its mark) and All projects. The chosen row keeps DL-214's chosen-row material in each look
        (60-switcher-looks.css; Glass's clear lens in glass.css; NieR's ink bar in 14-nier-parts.css) and its tile turns
