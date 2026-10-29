@@ -81,7 +81,11 @@
     window.addEventListener('resize', () => { if (S.open) layoutClass(); });
     return root;
   }
+  /* The window's brand mark is Pip (DL-235, DR-076: the one kit), still (the brand mark never animates) and drawn in the
+     painted look, NieR's with its plain band (X3); the old marionette glyph is kept only for a page without the kit */
   function logo() {
+    const K = window.PMLogo;
+    if (K && typeof K.mark === 'function') { try { return `<span class="o55-logo o55-logo-pip" data-look="${U.esc(K.look())}">${K.mark({ px: 22, decorative: true })}</span>`; } catch (_) {} }
     return `<svg class="o55-logo" viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path d="M5 9h22M16 4v14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>`
       + `<path d="M8 9v9M24 9v9M16 18v5" stroke="currentColor" stroke-width="1.2" stroke-dasharray="1.6 2.2"/><circle cx="8" cy="21" r="2.6" fill="currentColor"/><circle cx="24" cy="21" r="2.6" fill="currentColor"/><circle cx="16" cy="26" r="2.6" fill="currentColor"/></svg>`;
   }
@@ -209,6 +213,9 @@
     /* NieR Mode repaints Basic in ink without changing the painted family, so it is part of the look */
     const look = th.family + '-' + th.mode + (document.documentElement.hasAttribute('data-o55-nier') ? '-nier' : '');
     S.root.setAttribute('data-family', th.family); S.root.setAttribute('data-mode', th.mode);
+    /* the brand's Pip follows the look (its drawing differs by family: Retro's pixels, NieR's band) */
+    const lp = S.root.querySelector('.o55-brand .o55-logo-pip');
+    if (lp && window.PMLogo && lp.getAttribute('data-look') !== window.PMLogo.look()) lp.outerHTML = logo();
     S.root.querySelector('.o55-stage').setAttribute('data-family', th.family);
     /* after the attributes, before any mount: one read of the colours the new look already computed */
     warmStageTokens();

@@ -224,7 +224,13 @@
       if (lab) lab.textContent = chapterLabel(this.tube, ch);
     }
     /* -------------------------------------------------------------- Pip */
-    pipTh(theme) { return theme === this.theme && this.tube ? TUBE()[this.tube] : TH()[theme]; }
+    pipTh(theme) {
+      const th = theme === this.theme && this.tube ? TUBE()[this.tube] : TH()[theme];
+      /* (the back stick's solid shade, as the concept mixed it, until the kit's THEMES carry it: found 7f204cbade) */
+      if (!th || th.back) return th;
+      const mx = KIT().kit.mix, back = th.ctl && th.bg && mx ? mx(th.ctl, th.bg, 0.42) : th.ctl;
+      return Object.assign({}, th, { back }, th.glass && !th.glass.rodBack && mx ? { glass: Object.assign({}, th.glass, { rodBack: mx(th.glass.rod, th.bg, 0.42) }) } : {});
+    }
     buildPip(themeOverride) {
       const K = KIT().kit, Lay = this.L, g = K.GEO.full, theme = themeOverride || this.theme, th = this.pipTh(theme), nier = !!th.nier;
       this.pipTheme = theme;

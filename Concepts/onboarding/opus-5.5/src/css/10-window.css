@@ -519,3 +519,11 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 /* the choice Pip is previewing (hover intent, 60-ui-core.js): it keeps its hover look while the preview holds */
 #pm-o55-onboarding .o55-card.o55-previewing:not(.o55-on), #pm-o55-onboarding .o55-tile.o55-previewing:not(.o55-on) { border-color: color-mix(in srgb, var(--o55-accent) 55%, var(--o55-line)); }
 #pm-o55-onboarding[data-family="retro"] .o55-card.o55-previewing:not(.o55-on) { border-color: var(--text-primary); }
+/* the header's look menu: each look's ?, beside its row (63-look-menu.js) */
+.o55-opt-menu { display: flex; align-items: center; gap: 4px; }
+.o55-opt-menu > .o55-lookopt { flex: 1; min-width: 0; }
+.o55-lookmenu .o55-tipq { width: 18px; height: 18px; font-size: 10px; flex: none; }
+.o55-lookmenu .o55-explainer { margin-top: 6px; }
+/* the brand's Pip: 22 px, on the text's line */
+.o55-logo-pip { display: inline-grid; place-items: center; width: 22px; height: 22px; flex: none; }
+.o55-logo-pip > svg { display: block; width: 22px; height: 22px; }

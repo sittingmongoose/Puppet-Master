@@ -22,8 +22,11 @@
       const opt = (f) => `<button type="button" class="o55-lookopt${f === th.chosen ? ' o55-on' : ''}" ${attr}="lookFamily" data-arg="${f}" role="menuitemradio" aria-checked="${f === th.chosen}" data-pm-hover-exempt="true">`
         + `<span class="o55-lookswatch" data-theme="${f}-${th.mode}" aria-hidden="true"><i></i><i></i><i></i></span><span class="o55-lookname">${U.esc(T('look.families.' + f + '.name'))}</span></button>`;
       const mode = (m) => `<button type="button" class="${m === th.mode ? 'o55-on' : ''}" ${attr}="lookMode" data-arg="${m}" role="menuitemradio" aria-checked="${m === th.mode}" data-pm-hover-exempt="true">${U.esc(T('look.' + m))}</button>`;
-      return `<div class="o55-lookmenu" role="menu" aria-label="${U.esc(T('chrome.look'))}"><div class="o55-lookopts">${FAMILIES.map(opt).join('')}</div>`
-        + `<div class="o55-lookmodes" role="group" aria-label="${U.esc(T('look.modeLabel'))}">${mode('light')}${mode('dark')}</div>${this.nierRow(attr)}</div>`;
+      /* in onboarding each choice has its ? (O55.tips: pip.tips.chrome), its note under the menu; the tour's bar has none */
+      const tq = attr === 'data-o55-do' && O55.tips ? (id) => O55.tips.q(id, { cls: 'o55-tipq-menu' }) : () => '';
+      const notes = attr === 'data-o55-do' && O55.tips ? FAMILIES.map((f) => 'lookFamily:' + f).concat(['lookMode:light', 'lookMode:dark', 'lookNier:nier', 'lookNierAdjust:nier-adjust']).map((id) => O55.tips.explainer(id)).join('') : '';
+      return `<div class="o55-lookmenu" role="menu" aria-label="${U.esc(T('chrome.look'))}"><div class="o55-lookopts">${FAMILIES.map((f) => `<span class="o55-opt o55-opt-menu">${opt(f)}${tq('lookFamily:' + f)}</span>`).join('')}</div>`
+        + `<div class="o55-lookmodes" role="group" aria-label="${U.esc(T('look.modeLabel'))}">${mode('light')}${mode('dark')}</div>${tq('lookMode:' + th.mode)}${this.nierRow(attr)}${tq('lookNier:nier')}${notes}</div>`;
     },
     /* NieR Mode: a menuitemcheckbox with a square box, and Adjust beside it (unique data-arg values keep focus on them
        across the redraw a click causes) */
