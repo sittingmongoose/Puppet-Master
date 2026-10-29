@@ -200,10 +200,10 @@
 #pmh-frame[data-pmh-family="retro"][data-pmh-kind="ctl"][data-pmh-variant="chip"] { box-shadow: inset 0 0 0 1px var(--pm-switch-mark, var(--pmh-r-rule)); }
 /* a pressed tab is the chip's from the press on (data-lg-press, glass.js): the phosphor ink would sit on the arriving
    chip, lime on lime, until the app's click lands (Q16 review F3) */
-:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
+:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"], [aria-expanded="true"], [data-lg-press]) {
   color: var(--accent-primary) !important; transition-duration: 0s !important;
 }
-:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
+:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, #projectMenuBtn).pmh-on:not(.active, .selected, [aria-selected="true"], [aria-expanded="true"], [data-lg-press]) {
   color: var(--pm-switch-mark, var(--accent-primary)) !important;
 }
 /* the commander's bar on a rail row */

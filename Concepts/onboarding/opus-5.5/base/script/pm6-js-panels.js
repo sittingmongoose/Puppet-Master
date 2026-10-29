@@ -529,41 +529,247 @@
     } catch (e) {}
   }
 
+  /* ================= the project box (option A "Tab"; F3-661, DL-236) =================
+     One of the title bar's tabs: the page tabs' height, type and resting ink, a folder from PMG, a drawn chevron, the
+     project's badge, and the chosen tab's chip while its menu is open (style-002.css with the switcher tokens). The menu
+     lists every project in two-line rows: renderProjectRow is the one row renderer, and onboarding adds its project through
+     PM_PROJECT_BOX.add (O55.shell.selectProject). The badge and each row's state read the work projection: PM_WORK's
+     project(id) when it is there, else a stub of the same shape that answers calm until the projection lands. A pick
+     dispatches cmd.project.switch_active_tab (B1), Ctrl/Cmd+Enter or Ctrl/Cmd+click cmd.project.open_in_new_workspace_tab
+     (B6), and Ctrl+Shift+P opens the menu (ui.project_switcher.open, B2). #projectMenuLabel keeps the bare project name:
+     Home, Settings, the dashboard and the sound binding read it. The chosen tab's chip follows the box's width in the same
+     frame (glass.js, the #projectMenuWrap observer), and the density ladder runs again whenever the box changes width. */
+  /* B5: needs you > blocked > working > unsaved > calm (calm has no mark) */
+  var PROJECT_STATES = {
+    waiting: { rank: 4, word: 'Needs you' },
+    blocked: { rank: 3, word: 'Blocked' },
+    working: { rank: 2, word: 'Working' },
+    'change-modified': { rank: 1, word: 'Unsaved' }
+  };
+  var projectStub = Object.create(null);
+  var projectLog = [];
+  function projectEsc(v) { return String(v == null ? '' : v).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function projectIcon(name, px) { var G = window.PMG; return G && G.icon ? G.icon(name, px) : ''; }
+  /* one state for a project: the highest-ranked key the projection reports, with its phrase */
+  function projectNormalize(v) {
+    if (!v) return { key: '', say: '' };
+    if (typeof v === 'string') return PROJECT_STATES[v] ? { key: v, say: '' } : { key: '', say: '' };
+    var keys = Array.isArray(v.keys) ? v.keys.slice() : [v.key], best = '';
+    keys.forEach(function (k) { if (PROJECT_STATES[k] && (!best || PROJECT_STATES[k].rank > PROJECT_STATES[best].rank)) best = k; });
+    return { key: best, say: best ? String(v.say || '') : '' };
+  }
+  function projectState(id) {
+    var W = window.PM_WORK;
+    if (W && typeof W.project === 'function') { try { return projectNormalize(W.project(id)); } catch (e) {} }
+    return projectNormalize(projectStub[id]);
+  }
+  function projectInfo(item) {
+    var id = item.getAttribute('data-project') || '';
+    return {
+      id: id, name: item.getAttribute('data-project-name') || id, path: item.getAttribute('data-project-path') || '',
+      branch: item.getAttribute('data-project-branch') || '', stack: item.getAttribute('data-project-stack') || ''
+    };
+  }
+  /* the path summary (FinalGUISpec 3.4, B3): the hover tag and the rows carry it, the box shows the name */
+  function projectWhere(info, on) { return info.path ? info.path + (info.branch ? (on ? ' on ' : ' · ') + info.branch : '') : info.branch; }
+  function projectMonogram(name) { var m = /[A-Za-z0-9]/.exec(name || ''); return m ? m[0].toUpperCase() : '?'; }
+  function projectRows() { var menu = byId('projectMenu'); return menu ? $all('.pm6-tb-menu-item[data-project]', menu) : []; }
+  function projectSelected() {
+    var rows = projectRows();
+    for (var i = 0; i < rows.length; i++) if (rows[i].classList.contains('is-selected')) return rows[i];
+    return rows[0] || null;
+  }
+  /* the one row renderer: a monogram tile, the name, the path and branch, and the state in words beside its mark */
+  function renderProjectRow(item) {
+    var info = projectInfo(item), st = projectState(info.id), where = projectWhere(info, false), G = window.PMG;
+    var word = st.key ? PROJECT_STATES[st.key].word : '', sig = [info.name, where, st.key, !!G].join('|');
+    if (item.__pmProjectRow === sig) return item;
+    item.__pmProjectRow = sig;
+    item.setAttribute('data-state', st.key || 'idle');
+    item.setAttribute('aria-label', info.name + (where ? ', ' + projectWhere(info, true) : '') + (word ? ', ' + word : ''));
+    item.innerHTML = '<span class="pm6-tb-project-tile" aria-hidden="true">' + projectEsc(projectMonogram(info.name)) + '</span>' +
+      '<span class="pm6-tb-project-text"><b class="pm6-tb-project-name">' + projectEsc(info.name) + '</b>' +
+      (where ? '<small class="pm6-tb-project-path">' + projectEsc(where) + '</small>' : '') + '</span>' +
+      '<span class="pm6-tb-project-state" aria-hidden="true">' + (st.key && G && G.calm ? G.calm(st.key, 12) + '<span>' + projectEsc(word) + '</span>' : '') + '</span>';
+    return item;
+  }
+  function renderProjectAll(item) {
+    if (!item || item.__pmProjectRow === 'all' || !window.PMG) return;
+    item.__pmProjectRow = 'all';
+    item.innerHTML = '<span class="pm6-tb-project-tile" aria-hidden="true">' + projectIcon('grid', 14) + '</span>' +
+      '<span class="pm6-tb-project-text"><b class="pm6-tb-project-name">All projects</b></span>' +
+      '<span class="pm6-tb-project-state" aria-hidden="true">' + projectIcon('arrow-right', 13) + '</span>';
+  }
+  /* the box: its folder and chevron once, its badge whenever the state changes, its hover tag (the name, then the path
+     summary, the stack and the state: B3) and its name for assistive tech (the folded box keeps the name) */
+  function paintProjectButton() {
+    var btn = byId('projectMenuBtn'), label = byId('projectMenuLabel'), wrap = byId('projectMenuWrap');
+    if (!btn || !label) return false;
+    var item = projectSelected(), info = item ? projectInfo(item) : { id: label.textContent.trim(), name: label.textContent.trim(), path: '', branch: '', stack: '' };
+    var name = label.textContent.trim() || info.name, st = projectState(info.id), G = window.PMG, widthMoved = false;
+    var ico = btn.querySelector('.pm6-tb-project-ico'), chev = btn.querySelector('.pm6-tb-project-chevron'), badge = btn.querySelector('.pm6-tb-project-badge');
+    if (G && ico && !ico.firstChild) ico.innerHTML = projectIcon('folder', 15);
+    if (G && chev && !chev.firstChild) chev.innerHTML = projectIcon('chevron-down', 12);
+    if (badge && G && badge.getAttribute('data-k') !== (st.key || 'idle')) {
+      badge.setAttribute('data-k', st.key || 'idle');
+      if (badge.hidden !== !st.key) widthMoved = true;
+      badge.innerHTML = st.key ? (st.key === 'change-modified' ? G.calm(st.key, 12) : G.status(st.key, 12)) : '';
+      badge.hidden = !st.key;
+    }
+    if (btn.getAttribute('data-state') !== (st.key || 'idle')) btn.setAttribute('data-state', st.key || 'idle');
+    var word = st.key ? PROJECT_STATES[st.key].word : '', say = st.say || word;
+    var detail = [projectWhere(info, true), info.stack, say].filter(Boolean).join(' · ') + '. Switch project: Ctrl+Shift+P';
+    if (btn.getAttribute('data-pm-hover-label') !== name) btn.setAttribute('data-pm-hover-label', name);
+    if (btn.getAttribute('data-pm-hover-detail') !== detail) btn.setAttribute('data-pm-hover-detail', detail);
+    var folded = wrap && wrap.getAttribute('data-mode') === 'icon';
+    var aria = folded || say ? 'Project: ' + name + (say ? ', ' + say : '') : '';
+    if (aria) { if (btn.getAttribute('aria-label') !== aria) btn.setAttribute('aria-label', aria); }
+    else if (btn.hasAttribute('aria-label')) btn.removeAttribute('aria-label');
+    return widthMoved;
+  }
+  function refreshProjectBox() {
+    var menu = byId('projectMenu');
+    projectRows().forEach(renderProjectRow);
+    if (menu) renderProjectAll(menu.querySelector('.pm6-tb-project-all'));
+    if (paintProjectButton() && window.PM_TB_DENSITY) window.PM_TB_DENSITY.apply();
+  }
+  function projectNote(kind, id, payload) {
+    var row = { kind: kind, id: id, payload: payload || {}, at: Date.now() };
+    projectLog.push(row); if (projectLog.length > 50) projectLog.shift();
+    try { window.dispatchEvent(new CustomEvent(kind === 'command' ? 'pm7.project.command' : 'pm7.project.ui_action', { detail: row })); } catch (e) {}
+  }
+  /* the shell state controller's answer in this concept: the chosen row, the label, the box */
+  function selectProjectRow(item) {
+    var label = byId('projectMenuLabel');
+    if (!item) return false;
+    var info = projectInfo(item);
+    projectRows().forEach(function (el) { if (el.classList.contains('is-selected') !== (el === item)) el.classList.toggle('is-selected', el === item); });
+    if (label && label.textContent !== info.name) label.textContent = info.name;
+    paintProjectButton();
+    return true;
+  }
+  function projectMenuOpen(focusRow) {
+    var btn = byId('projectMenuBtn'), menu = byId('projectMenu');
+    if (!btn || !menu) return;
+    if (!tbMenuIsOpen(menu)) {
+      if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
+      tbCloseAllMenus(menu);
+      refreshProjectBox();
+      tbMenuOpen(menu, btn);
+      btn.setAttribute('aria-expanded', 'true');
+      projectNote('ui', 'ui.project_switcher.open');
+    }
+    if (focusRow) { var row = projectSelected(); if (row) try { row.focus({ preventScroll: true }); } catch (e) { row.focus(); } }
+  }
+  function projectMenuClose(refocus) {
+    var btn = byId('projectMenuBtn'), menu = byId('projectMenu');
+    if (!btn || !menu) return;
+    var had = menu.contains(document.activeElement);
+    if (tbMenuIsOpen(menu)) { tbMenuClose(menu); projectNote('ui', 'ui.project_switcher.close'); }
+    if (btn.getAttribute('aria-expanded') !== 'false') btn.setAttribute('aria-expanded', 'false');
+    if (refocus || had) try { btn.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function pickProject(item, newTab, viaKey) {
+    var info = projectInfo(item);
+    projectNote('command', newTab ? 'cmd.project.open_in_new_workspace_tab' : 'cmd.project.switch_active_tab', { project_id: info.id, source: 'title_bar_project_box' });
+    selectProjectRow(item);
+    projectMenuClose(viaKey);
+  }
+
   function wireProjectMenu() {
     var btn = byId('projectMenuBtn');
     var menu = byId('projectMenu');
-    var label = byId('projectMenuLabel');
     if (!btn || !menu) return;
 
     btn.addEventListener('click', function (ev) {
       ev.preventDefault();
       ev.stopPropagation();
-      if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
-      var open = tbMenuIsOpen(menu);
-      tbCloseAllMenus(open ? null : menu);
-      if (open) {
-        tbMenuClose(menu);
-        btn.setAttribute('aria-expanded', 'false');
-      } else {
-        tbMenuOpen(menu, btn);
-        btn.setAttribute('aria-expanded', 'true');
-      }
+      if (tbMenuIsOpen(menu)) projectMenuClose(false);
+      else projectMenuOpen(ev.detail === 0);
+    });
+    btn.addEventListener('keydown', function (ev) {
+      if (ev.key !== 'ArrowDown' || ev.altKey || ev.ctrlKey || ev.metaKey) return;
+      ev.preventDefault();
+      projectMenuOpen(true);
     });
 
     menu.addEventListener('click', function (ev) {
-      var item = ev.target && ev.target.closest ? ev.target.closest('.pm6-tb-menu-item[data-project]') : null;
+      var t = ev.target && ev.target.closest ? ev.target : null;
+      if (t && t.closest('.pm6-tb-project-all')) {
+        ev.preventDefault();
+        projectNote('ui', 'ui.project_switcher.all_projects', { tab_id: 'projects' });
+        projectMenuClose(false);
+        try { if (window.PM_PAGES && window.PM_PAGES.go) window.PM_PAGES.go('projects'); } catch (e0) {}
+        return;
+      }
+      var item = t ? t.closest('.pm6-tb-menu-item[data-project]') : null;
       if (!item) return;
       ev.preventDefault();
-      var name = item.getAttribute('data-project') || '';
-      var title = item.getAttribute('data-project-title') || ('Active project: ' + name);
-      if (label) label.textContent = name;
-      btn.setAttribute('title', title);
-      menu.querySelectorAll('.pm6-tb-menu-item').forEach(function (el) {
-        el.classList.toggle('is-selected', el === item);
-      });
-      tbMenuClose(menu);
-      btn.setAttribute('aria-expanded', 'false');
+      pickProject(item, ev.ctrlKey || ev.metaKey, ev.detail === 0);
     });
+    /* the menu's keys: arrows, Home and End move between rows; Ctrl/Cmd+Enter opens a row in a new workspace tab;
+       Escape closes and hands focus back to the box (the page-wide Escape closes every other menu) */
+    menu.addEventListener('keydown', function (ev) {
+      var items = $all('.pm6-tb-menu-item', menu), i = items.indexOf(document.activeElement);
+      if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp' || ev.key === 'Home' || ev.key === 'End') {
+        ev.preventDefault();
+        var n = ev.key === 'Home' ? 0 : ev.key === 'End' ? items.length - 1 : ev.key === 'ArrowDown' ? (i + 1) % items.length : (i - 1 + items.length) % items.length;
+        if (items[n]) items[n].focus({ preventScroll: true });
+      } else if (ev.key === 'Enter' && (ev.ctrlKey || ev.metaKey)) {
+        var row = document.activeElement && document.activeElement.closest ? document.activeElement.closest('.pm6-tb-menu-item[data-project]') : null;
+        if (!row || !menu.contains(row)) return;
+        ev.preventDefault();
+        pickProject(row, true, true);
+      } else if (ev.key === 'Escape') {
+        projectMenuClose(true);
+      }
+    });
+    /* Ctrl+Shift+P (FinalGUISpec's keyboard table; F3-058): open the menu on the chosen row. Never under the onboarding
+       window or the tour, which cover the title bar. */
+    document.addEventListener('keydown', function (ev) {
+      if (!(ev.ctrlKey || ev.metaKey) || !ev.shiftKey || ev.altKey || ev.code !== 'KeyP' || ev.repeat) return;
+      var root = document.documentElement;
+      if (root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour')) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      projectMenuOpen(true);
+    }, true);
+
+    refreshProjectBox();
+    /* PMG is a head module, so it is here first; the projection may come later and says when its states change */
+    var W = window.PM_WORK;
+    if (W && typeof W.on === 'function') { try { W.on('change', refreshProjectBox); } catch (e1) {} }
+    window.addEventListener('pm7.work.changed', refreshProjectBox);
+
+    window.PM_PROJECT_BOX = {
+      /* the one row renderer: a row element with data-project (and data-project-name, -path, -branch, -stack) */
+      row: renderProjectRow,
+      /* a project the menu does not list yet: a row from the renderer, first in the list */
+      add: function (id, info) {
+        info = info || {};
+        var found = projectRows().filter(function (r) { return r.getAttribute('data-project') === id; })[0];
+        if (found) return found;
+        var item = document.createElement('button');
+        item.type = 'button'; item.className = 'pm6-tb-menu-item'; item.setAttribute('role', 'menuitem');
+        item.setAttribute('data-project', id);
+        if (info.name && info.name !== id) item.setAttribute('data-project-name', info.name);
+        ['path', 'branch', 'stack'].forEach(function (k) { if (info[k]) item.setAttribute('data-project-' + k, info[k]); });
+        item.setAttribute('data-command-id', 'cmd.project.switch_active_tab');
+        item.setAttribute('data-binding-id', 'shell.project.pick');
+        var first = projectRows()[0];
+        menu.insertBefore(renderProjectRow(item), first || menu.querySelector('.pm6-tb-project-sep'));
+        return item;
+      },
+      select: function (id) { return selectProjectRow(projectRows().filter(function (r) { return r.getAttribute('data-project') === id; })[0] || null); },
+      state: projectState,
+      states: function () { return Object.keys(PROJECT_STATES); },
+      refresh: refreshProjectBox,
+      open: function () { projectMenuOpen(false); },
+      close: function () { projectMenuClose(false); },
+      log: function () { return projectLog.slice(); },
+      /* until the work projection lands: a state per project for Demo Studio and checks (calm when cleared) */
+      stub: function (id, key, say) { if (key && PROJECT_STATES[key]) projectStub[id] = { key: key, say: say || '' }; else delete projectStub[id]; refreshProjectBox(); }
+    };
   }
 
   function wireTitleBarMenusDismiss() {
@@ -704,12 +910,9 @@
       }
     }
     function setProjectMode(mode) {
+      if (projectWrap.getAttribute('data-mode') === mode) return;
       projectWrap.setAttribute('data-mode', mode);
-      var trig = byId('projectMenuBtn');
-      if (trig) {
-        if (mode === 'icon') trig.setAttribute('aria-label', 'Active project');
-        else trig.removeAttribute('aria-label');
-      }
+      paintProjectButton();   /* the folded box keeps the project's name for assistive tech */
     }
 
     var pageStrip = document.querySelector('.title-bar .page-tabs');
@@ -972,6 +1175,21 @@
     setProjectMode('full');
     resetPageTabsOverflow();
     schedule();
+
+    /* The project box changes width with the project's name and its badge, not only with the bar: the ladder runs
+       again at once, in the task that changed it (a label written anywhere: a pick, onboarding, Demo Studio), so the
+       frame that draws the new name already draws the fold that fits it, and the tabs and their chip (glass.js) move
+       once, together. */
+    function applyNow() {
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
+      applyDensity();
+      if (window.PM7_PAGE_TAB_INK && typeof window.PM7_PAGE_TAB_INK.resync === 'function' && bar.getAttribute('data-tb-tabs') === 'overflow') window.PM7_PAGE_TAB_INK.resync();
+    }
+    var projectLabel = byId('projectMenuLabel');
+    if (projectLabel && typeof MutationObserver === 'function') {
+      new MutationObserver(applyNow).observe(projectLabel, { childList: true, characterData: true, subtree: true });
+    }
+    window.PM_TB_DENSITY = { apply: applyNow, schedule: schedule };
 
     if (typeof ResizeObserver !== 'undefined') {
       var lastBarWidth = bar.getBoundingClientRect().width;

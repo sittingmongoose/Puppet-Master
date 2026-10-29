@@ -5,23 +5,17 @@
   const O55 = window.O55, C = O55.c, U = O55.util, T = (k, v) => O55.t(k, v), def = (id, d) => O55.screens.define(id, d);
   const md = (S) => S.sess.drafts.main;
 
-  /* Shell helpers: select a Project in the title-bar menu (adding it when the app doesn't list it yet). The Settings
+  /* Shell helpers: select a Project in the title-bar menu (adding it when the app doesn't list it yet). The project box
+     owns the menu's rows (PM_PROJECT_BOX, pm6-js-panels.js: one row renderer, the label stays the bare name). The Settings
      owner watches the menu and reloads that Project's settings. */
   O55.shell = {
     selectProject(id, name) {
-      const menu = document.getElementById('projectMenu'), label = document.getElementById('projectMenuLabel');
-      if (!menu || !id) return false;
-      let item = menu.querySelector(`[data-project="${CSS.escape(id)}"]`);
-      if (!item) {
-        const proto = menu.querySelector('[data-project]');
-        item = proto ? proto.cloneNode(false) : document.createElement('button');
-        item.setAttribute('type', 'button'); item.className = 'pm6-tb-menu-item'; item.setAttribute('role', 'menuitem');
-        item.setAttribute('data-project', id); item.setAttribute('data-project-title', 'Active project: ' + (name || id)); item.textContent = name || id;
-        menu.insertBefore(item, menu.firstChild);
-      }
-      menu.querySelectorAll('[data-project]').forEach((n) => n.classList.toggle('is-selected', n === item));
+      const box = window.PM_PROJECT_BOX;
+      if (!box || !id) return false;
+      const item = box.add(id, { name: name || id });
+      if (name && item.getAttribute('data-project-name') !== name && name !== id) { item.setAttribute('data-project-name', name); box.row(item); }
       window.PM_ACTIVE_PROJECT_ID = id;
-      if (label) label.textContent = name || id;
+      box.select(id);
       if (O55.sound && O55.sound.refresh) O55.sound.refresh('project');
       return true;
     },

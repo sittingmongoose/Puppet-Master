@@ -1,5 +1,3 @@
-[data-theme^="glass"] .title-bar .project-dropdown {
-      padding: 3px 10px;
-      max-width: 200px;
-      overflow: hidden;
+[data-theme^="glass"] .title-bar #projectMenuBtn {
+      font-weight: 560;
     }
