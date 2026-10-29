@@ -1,0 +1,11 @@
+/* src/logo/pm-loader.css: the system loader's class contract (pm-loader.js). OWNER: pm7-found (PM7 build, 2026-10-29).
+ * .pml-ld[data-pip-loader] is the one loader. It is 1em square on the text baseline unless --pml-size sets a size, so
+ * a busy button, a tab, a panel and the splash use the same element. An unarmed loader runs pml-arm once, which is how
+ * pm-loader.js finds it, and stays unseen until it is armed; armed, it fades in already in the shared clock's phase. */
+.pml-ld { display: inline-block; flex: none; width: var(--pml-size, 1em); height: var(--pml-size, 1em); vertical-align: -.18em; line-height: 0; color: inherit; contain: layout style; }
+.pml-ld > .pml { display: block; width: 100%; height: 100%; }
+.pml-ld:not([data-pml-run]) { animation: pml-arm 1ms; }
+.pml-ld:not([data-pml-run]) > .pml { opacity: 0; }
+.pml-ld[data-pml-run="on"] > .pml { animation: pml-ld-in 160ms ease-out; }
+@keyframes pml-arm { from { outline-color: currentColor; } to { outline-color: currentColor; } }
+@keyframes pml-ld-in { from { opacity: 0; } to { opacity: 1; } }
