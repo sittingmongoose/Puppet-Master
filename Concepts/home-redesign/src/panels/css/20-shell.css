@@ -189,10 +189,6 @@ html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) .o55-
 }
 html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) .o55-demomenu { bottom: calc(var(--pmw-demo-h, 25px) + 6px); }
 
-/* the notice anchor (js/50-pageshell.js): the title bar's notification cards hang under the bell, just below the title
-   bar on every page, and drop past a tab strip right under it (on Home also past the panel's strip, header row or chat
-   header below it); measured again on every page change */
+/* the notice anchor (js/50-pageshell.js): the title bar's notification cards hang under the bell, tight under the title
+   bar on every page; nothing on the page moves them (Jared, 2026-10-29: they sat 50-110 px down, some 190 px aside) */
 html[data-pmw-home="on"] #rsStage { top: calc(100% + 10px + var(--pmw-notice-drop, 0px)); }
-/* ... and never over a control: the column moves down or to a side where it covers none (js/50-pageshell.js noticeSpot) */
-html[data-pmw-home="on"] #rsStage.pmn-stage { margin-left: calc(var(--pmn-stage-shift, 0px) + var(--pmw-notice-shift, 0px)); transition: top 180ms cubic-bezier(.2, .8, .2, 1), margin-left 180ms cubic-bezier(.2, .8, .2, 1); }
-html[data-pmw-home="on"][data-motion="reduced"] #rsStage.pmn-stage { transition: none; }

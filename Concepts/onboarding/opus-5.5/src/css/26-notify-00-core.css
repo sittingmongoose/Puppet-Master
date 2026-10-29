@@ -120,8 +120,8 @@ html[data-theme$="light"] {
 
 /* ---------------------------------------------------------------------------------------------------------------
    2. The stage: toasts under the bell, newest on top (the newest is #rsStage's last child; column-reverse shows it
-      first). Home drops the stage past its panel strip; Usage moves it to its stage's bottom right; while the inbox
-      is open the stage sits under it (--pmn-push).
+      first). The page shell hangs it tight under the title bar on every page (home-redesign 50-pageshell.js); Usage's
+      move to its stage's bottom right is undone below; while the inbox is open the stage sits under it (--pmn-push).
    --------------------------------------------------------------------------------------------------------------- */
 #rsStage.pmn-stage {
   width: var(--pmn-w); max-width: calc(100vw - 20px);

@@ -23,8 +23,8 @@
    src/css/26-notify-*.css. Reduced Motion shows end states at once (arrivals appear, exits are instant, the join swaps).
 
    Contracts kept for other owners:
-     - #rsStage stays the same element: Home (home-redesign 50-pageshell.js) observes it and drops it below its panel
-       strip. Usage (usage-redesign 46-shell.js) still moves it to its stage's bottom right, which 26-notify-00-core.css
+     - #rsStage stays the same element: the page shell (home-redesign 50-pageshell.js) observes it and hangs it tight
+       under the title bar at the bell on every page. Usage (usage-redesign 46-shell.js) still moves it to its stage's bottom right, which 26-notify-00-core.css
        undoes: on Usage too notices stage under the bell (Jared, 2026-10-13 22:10 ET). A new card is appended as its
        last child, synchronously, and the stage shows the newest on top with column-reverse, so NieR Mode's parts
        (src/settings/kit.d/19-nier-parts.js), which wrap window.toast and PM_TITLEBAR_NOTIFY.push once and read the new
@@ -475,24 +475,13 @@
     const rec = { it, el: c, timer: null, left: it.stageMs, started: 0, leaving: false };
     staged.set(it.id, rec);
     clampStage();
-    /* no card over a control (review r3, the coordinator's ruling on #19): the page shell places the stage clear of every
-       control near the bell (home-redesign 50-pageshell.js). Where nothing is clear: the older lasting cards join the
-       stack now, and it is placed again; still crowded, a lasting card joins the stack too (the badge counts it) and a
-       quick note shows for a shorter time. */
-    const place = () => typeof window.PM_NOTICE_PLACE === 'function' && window.PM_NOTICE_PLACE() === true;
-    /* placed after the coming frame's layout and before its paint (B5: placed at once, a toast staged inside a look
-       change's commit measured the whole page while that restyle was pending); the card's first frame is already
-       in its place */
-    const settle = (crowded) => {
+    /* the page shell places the stage tight under the title bar at the bell, on every page (home-redesign
+       50-pageshell.js; Jared, 2026-10-29: the cards used to move down or aside to a spot clear of every control, so
+       each page put them somewhere else). Placed after the coming frame's layout and before its paint (B5: placed at
+       once, a toast staged inside a look change's commit measured the whole page while that restyle was pending);
+       the card's first frame is already in its place */
+    const settle = () => {
       if (!staged.has(it.id) || staged.get(it.id) !== rec || rec.leaving) return;
-      if (crowded) {
-        let joined = false;
-        staged.forEach((r) => { if (r !== rec && !r.leaving && r.it.durable) { finishStaged(r, 'join'); joined = true; } });
-        if (!joined || place()) {
-          if (it.durable && method() !== 'Banner') { finishStaged(rec, 'join'); sound('callout', 0.4); return; }
-          it.stageMs = Math.min(it.stageMs, Math.max(1800, Math.round(it.stageMs * 0.5)));
-        }
-      }
       flip(before, c);
       /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
          show through each other (frame review, 2026-10-13) */
@@ -501,7 +490,7 @@
       startTimer(rec);
     };
     if (typeof window.PM_NOTICE_PLACE === 'function' && window.PM_NOTICE_PLACE.length >= 1) window.PM_NOTICE_PLACE(settle);
-    else settle(place());
+    else { if (typeof window.PM_NOTICE_PLACE === 'function') window.PM_NOTICE_PLACE(); settle(); }
     sound(it.level === 'blocking' ? (it.severity === 'error' ? 'error' : 'callout') : it.level === 'attention' ? 'warn' : it.level === 'notice' ? 'callout' : null, it.level === 'quiet' ? 0.3 : 0.55);
   }
   function enter(c, it, delay) {
@@ -1014,7 +1003,7 @@
     if (open) { const h = panelEl.getBoundingClientRect().height; stageEl.style.setProperty('--pmn-push', Math.round(h + 8) + 'px'); }
     else stageEl.style.removeProperty('--pmn-push');
   }
-  /* keep the stage inside the window (its place is under the bell on every page; Home drops it below its panel strip) */
+  /* keep the stage inside the window (its place is under the bell, tight under the title bar, on every page) */
   function clampStage() {
     stageEl.style.removeProperty('--pmn-stage-shift');
     const r = stageEl.getBoundingClientRect(), pad = 10;
