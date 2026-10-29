@@ -848,11 +848,19 @@ def iter_repo_files(capture_paths: Iterable[str] | None = None) -> list[Path]:
     # Git intentionally ignores raw evidence. Add the manifest's exact referents
     # through this one directory link, not the entire experimental archive.
     # Keep repository paths for manifest matching; never follow nested links.
+    # Canonicalize both sides: the evidence root itself may be a link (the Cursor
+    # share currently serves PuppetMaster-Evidence as a symlink into archive/), and
+    # comparing a resolved referent against the unresolved constant then rejects
+    # every manifest entry no matter where the checkout link points.
     capture_link = ROOT / RAW_EVIDENCE_CAPTURE_ROOT
+    try:
+        evidence_root = RAW_EVIDENCE_DIRECTORY.resolve(strict=True)
+    except (OSError, RuntimeError):
+        evidence_root = RAW_EVIDENCE_DIRECTORY
     try:
         allowed = (
             capture_link.is_symlink()
-            and capture_link.resolve(strict=True).is_relative_to(RAW_EVIDENCE_DIRECTORY)
+            and capture_link.resolve(strict=True).is_relative_to(evidence_root)
         )
     except (OSError, RuntimeError):
         allowed = False
@@ -870,7 +878,7 @@ def iter_repo_files(capture_paths: Iterable[str] | None = None) -> list[Path]:
                     if path.is_symlink():
                         break
                 else:
-                    if path.is_file() and path.resolve(strict=True).is_relative_to(RAW_EVIDENCE_DIRECTORY):
+                    if path.is_file() and path.resolve(strict=True).is_relative_to(evidence_root):
                         files.append(path)
             except (OSError, RuntimeError, ValueError):
                 continue
@@ -919,6 +927,19 @@ def load_raw_evidence_capture_modes() -> tuple[dict[str, dict[str, Any]], list[d
         failures.append({"path": rel(RAW_EVIDENCE_CAPTURE_MANIFEST), "error": "raw_capture_manifest_schema_invalid", "detail": error})
     if failures:
         return {}, failures
+
+    # The capture root is a machine-local ignored symlink into the evidence
+    # share, absent in a fresh clone. That is one missing link, not sixteen
+    # broken captures: name it once (still fail-closed) instead of reporting
+    # every manifest entry unresolved.
+    capture_link = ROOT / RAW_EVIDENCE_CAPTURE_ROOT
+    if not os.path.lexists(capture_link):
+        expected_target = RAW_EVIDENCE_DIRECTORY / RAW_EVIDENCE_CAPTURE_ROOT.rstrip("/")
+        return {}, [{
+            "path": rel(RAW_EVIDENCE_CAPTURE_MANIFEST),
+            "error": "raw_capture_link_missing",
+            "detail": f"{RAW_EVIDENCE_CAPTURE_ROOT.rstrip('/')} is absent; create it as a symlink to {expected_target}",
+        }]
 
     entries: dict[str, dict[str, Any]] = {}
     for index, entry in enumerate(manifest.get("entries", [])):

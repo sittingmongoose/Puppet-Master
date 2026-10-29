@@ -344,6 +344,10 @@
       scopes.forEach(function (s) { dirtyScope(s); });
       if (targets.size) mountMeasured(targets);
       if (targets.size || scopes.length) lazySync(false);
+      scheduleBakes();
+      /* A drag that ends back on geometry whose rim is still in the ring cache remounts from the cache:
+         no bake is queued and no flight ever finishes, so nothing else lifts the drag flattening. */
+      liftFlat();
     }, 160);
   }
   var sizeWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
@@ -356,7 +360,9 @@
       /* Size changes can move siblings without resizing them. Their positions belong to the same settle scope. */
       var box = en.borderBoxSize && en.borderBoxSize[0];
       if (KINDS[k] && KINDS[k].bake && e.__lgSize && (!box || e.__lgSize !== Math.round(box.inlineSize) + 'x' + Math.round(box.blockSize))) {
-        if (held) heldScopes.push(e.parentElement);
+        /* the flattening engages with the first held resize of a baked sheet, not with the first bake a
+           drag happens to defer: on a settled page an ordinary drag queues no bake at all */
+        if (held) { heldScopes.push(e.parentElement); root.classList.add('lg-drag-flat'); }
         else { dirtyScope(e.parentElement); lazySync(false); }
       }
     });
@@ -913,6 +919,7 @@
     bakeWOn = -1; try { if (bakeW) bakeW.terminate(); } catch (e) {} bakeW = null;
     bakeWJobs.forEach(function (job) { if (job.e.__lgBake === job) job.e.__lgSig = null; }); bakeWJobs.clear(); bakeWWalls.clear();
     dirtyAll = true; queueSync();
+    liftFlat();
   }
   /* the wallpaper's print goes to the worker once, as an ImageBitmap (the last two are kept there) */
   function bakeWWall(im, done) {
@@ -949,7 +956,7 @@
     var job = bakeWJobs.get(m.id); bakeWJobs.delete(m.id);
     if (m.spec && !specUrls.has(m.key)) keepSpec(m.key, URL.createObjectURL(m.spec));
     if (!job) return;
-    if (!m.ring) { if (job.e.__lgBake === job) { job.e.__lgSig = null; dirtyScope(job.e.parentElement || job.e); lazySync(false); } return; }
+    if (!m.ring) { if (job.e.__lgBake === job) { job.e.__lgSig = null; dirtyScope(job.e.parentElement || job.e); lazySync(false); } liftFlat(); return; }
     bakeWReady.push({ job: job, ring: m.ring });
     if (bakeWReady.length === 1 && !afterLayout(applyBakes)) applyBakes();
   }
@@ -968,16 +975,38 @@
       if (e.__lgRing !== url) { releaseRing(e); e.__lgRing = url; }
       e.style.setProperty('--lg-ring', 'url(' + url + ')');
     });
+    liftFlat();
+  }
+  /* While a resize drag runs, queued bakes wait: their geometry is obsolete a frame later, and a flush
+     at pickup/mid-drag was a 92-127ms stall on tape. Measures and var writes keep running (sheets stay
+     correctly sized); only the image generation waits. The sheets wear lg-drag-flat (glass.css flattens
+     spec/ring/shadow under it) from the first held resize of a baked sheet until liftFlat finds no bake
+     work left anywhere, so the rim comes back in ONE step with its fresh (or ring-cached) bake instead
+     of painting the stale rim first at release. */
+  function bakeHeld() {
+    root.classList.add('lg-drag-flat');
+    flushHeldSoon();
+  }
+  /* The flattening's single off-ramp: it lifts only when no drag runs and no bake work is queued, timed,
+     in flight, or still out with the worker. Called wherever one of those can empty without a flight
+     finishing (the held flush, a worker reply, a worker failure, a flight's end). */
+  function liftFlat() {
+    if (dragHeld() || bakeQ.size || bakeFlight || bakeT || bakeWJobs.size || bakeWReady.length) return;
+    root.classList.remove('lg-drag-flat');
   }
   function scheduleBakes() { if (!bakeT && !bakeFlight && bakeQ.size && isGlass()) bakeT = setTimeout(flushBakes, 60); }
   function flushBakes() {
     bakeT = 0; if (!isGlass() || !bakeQ.size || bakeFlight) return;
+    if (dragHeld()) { bakeHeld(); return; }
     var flight = { epoch: bakeEpoch }; bakeFlight = flight;
     function finish(failed) {
       if (bakeFlight !== flight) return;
       bakeFlight = null;
       if (failed) { bakeQ.forEach(function (job) { if (job.e.__lgBake === job) job.e.__lgSig = null; }); bakeQ.clear(); }
+      /* schedule first: a flight that ends by posting its jobs to the worker must not unflatten the
+         sheets onto their stale rims while the fresh ones are still out (liftFlat waits on them) */
       scheduleBakes();
+      liftFlat();
     }
     withWall(function (im) {
       if (bakeFlight !== flight) return;
@@ -985,6 +1014,9 @@
       if (im.__lgWallUrl !== currentWallUrl()) { finish(false); return; }
       bakeQ.forEach(function (job, e) { if (!currentBake(job, im)) bakeQ.delete(e); });
       if (!bakeQ.size) { finish(false); return; }
+      /* a drag that began while the wallpaper print was loading holds the flight here, before any
+         frost is generated for geometry the gesture is already leaving behind */
+      if (dragHeld()) { finish(false); return; }
       flight.vw = innerWidth; flight.vh = innerHeight;
       makeFrosts(im, function (ok) {
         if (bakeFlight !== flight) return;
@@ -999,6 +1031,12 @@
         function step(deadline) {
           bakeFrame = 0; bakeIdle = 0;
           if (bakeFlight !== flight || flight.epoch !== bakeEpoch || !isGlass()) { finish(false); return; }
+          /* a drag that began mid-flight parks the jobs this flight has not reached back on the queue;
+             finish() re-times the flush, which then holds them like any other queued bake */
+          if (dragHeld()) {
+            for (var i = next; i < list.length; i++) { if (list[i].e.__lgBake === list[i]) bakeQ.set(list[i].e, list[i]); }
+            finish(false); return;
+          }
           var t0 = performance.now(), ran = 0;
           while (next < list.length) {
             /* in a frame, 12 ms; in idle time, a bake starts only if the idle period has room for one (a bake is 5-15 ms:
@@ -1190,6 +1228,9 @@
     if (!keepLenses && typeof suspendLensMotion === 'function') suspendLensMotion();
     endFrostFade();
     bakeEpoch++; bakeFlight = null; bakeQ.clear(); bakeWReady = [];
+    /* teardown drops every queue a liftFlat could wait on, so the drag flattening goes with them;
+       a look returning later must not inherit it */
+    root.classList.remove('lg-drag-flat');
     if (bakeW) bakeW.postMessage({ type: 'epoch', epoch: bakeEpoch });
     if (bakeT) { clearTimeout(bakeT); bakeT = 0; }
     if (bakeFrame) { cancelAnimationFrame(bakeFrame); bakeFrame = 0; }
@@ -1275,7 +1316,9 @@
     }); }
     /* the settle (un-pin, re-bake rims, re-sync strips) runs once the scroll has been still for 160 ms; it used to run
        140 ms after the scroll began, so a long scroll re-baked every moving card's rims several times on the way */
-    clearTimeout(scrollSettleT); scrollSettleT = setTimeout(function () { scrollSettleT = 0; queueSync(); }, 160);
+    /* a drag reflows scrollers continuously; the settle sync would measure the whole shell mid-gesture.
+       lazySync re-arms itself while the drag runs and queues the same sync once it ends */
+    clearTimeout(scrollSettleT); scrollSettleT = setTimeout(function () { scrollSettleT = 0; if (dragHeld()) lazySync(false); else queueSync(); }, 160);
   }, true);
   var scrollSettleT = 0;
   /* a wheel arrives before the scroll it causes: pin that scroller's sheets now, so even its first step moves in step */
@@ -2850,7 +2893,7 @@
     /* the frost is drawn for one viewport: a resize mid-crossfade ends it */
     window.addEventListener('resize', function () { endFrostFade(); });
     mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open'] });
-    if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
+    if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { if (dragHeld()) { entries.forEach(function (en) { heldScopes.push(en.target); }); flushHeldSoon(); return; } entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     window.addEventListener('resize', lazySync);
     demo();
     syncAll(); setTimeout(syncAll, 500); setTimeout(syncAll, 1500);

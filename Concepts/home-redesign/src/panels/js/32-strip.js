@@ -45,7 +45,8 @@ function stripFont(stripEl) {
   return fontCache.value;
 }
 // a look change (theme, NieR and its parts, motion) can change every label's width: measure again and refit
-bus.on('look', function () { measureCache = {}; fontCache.value = ''; render.schedule({ animate: false, afterLayout: true }); });
+var insetGen = 0;
+bus.on('look', function () { measureCache = {}; fontCache.value = ''; insetGen++; render.schedule({ animate: false, afterLayout: true }); });
 // Tab Sizing changed in Settings: every strip fits again
 PMW.settings.on('panels.tabs.sizing', function () { render.schedule({ animate: false }); });
 
@@ -228,10 +229,15 @@ strip.prepare = function (panelEl, p, l, opts) {
   return {
     measure: function () {
       // fit against the panel's target width: an animated paint has only just written the new width, so the strip's own
-      // clientWidth still reports where the glide starts (the panel-to-strip inset is the same at either end of it)
+      // clientWidth still reports where the glide starts (the panel-to-strip inset is the same at either end of it).
+      // The inset itself is look-constant: measure it once per host instead of two layout reads per panel per paint
+      // (the cache clears with the look, like the label widths).
       var tr = opts.rects && opts.rects.panels && opts.rects.panels[p.id];
       var stripW = host.clientWidth;
-      if (tr && panelEl.offsetWidth) stripW = Math.max(0, tr.w - (panelEl.offsetWidth - host.clientWidth));
+      if (tr && panelEl.offsetWidth) {
+        if (s.insetGen !== insetGen) { s.inset = panelEl.offsetWidth - host.clientWidth; s.insetGen = insetGen; }
+        stripW = Math.max(0, tr.w - s.inset);
+      }
       else if (!stripW) stripW = render.rects() && render.rects().panels[p.id] ? render.rects().panels[p.id].w : 0;
       s.fitW = stripW;
       // a panel collapsed beside another (a row split) is a 35 px column: its tabs stand as icons, one above the other
@@ -262,7 +268,11 @@ strip.prepare = function (panelEl, p, l, opts) {
       });
     },
     finish: function () {
-      p.tabs.forEach(function (tid) { if (!hiddenSet[tid]) middleEllipsis(s.tabEls[tid], l.tabs[tid], fit.size[tid]); });
+      /* The controls whose visibility moves the flex row settle before the plate sync measures tab rects:
+         +N appearing or going shifts every tab after it, and a plate synced first keeps the stale edge
+         (measured 18-23 px off). Label fitting writes text inside the fixed-width tabs place() already
+         sized, so it stays after the sync: its reads then share the one layout the control writes and
+         the plate reads already paid for, instead of forcing a second one ahead of the plate. */
       // +N: plain text, counts the hidden tabs only
       var n = fit.hidden.length;
       setAttr(s.more, 'hidden', !n);
@@ -278,6 +288,7 @@ strip.prepare = function (panelEl, p, l, opts) {
       s.plus.setAttribute('data-pm-hover-detail', PMW.keyLabel(KEYS.plusMenu) + ' opens this menu, ' + PMW.keyLabel(KEYS.newTab) + ' makes a new tab of this panel\'s usual kind');
       setAttr(host, 'data-collapsed', p.collapsed ? 'yes' : null);
       if (PMW.shape) PMW.shape.sync(host, p, l, opts);
+      p.tabs.forEach(function (tid) { if (!hiddenSet[tid]) middleEllipsis(s.tabEls[tid], l.tabs[tid], fit.size[tid]); });
     }
   };
 };

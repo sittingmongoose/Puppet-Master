@@ -66671,14 +66671,16 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
   border-radius: var(--lg-r-bar) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 16px 34px -18px var(--lg-shadow), 0 1px 4px var(--lg-shadow-near) !important;
 }
-/* Resize-drag paint diet (2026-10-28 pass 2): while a column divider drags, the sheets being resized repaint
-   their six-layer background stack every frame; the baked specular/rim/glow images are size-locked to the
-   previous geometry anyway (glass.js holds bakes during .pm-resizing), so flatten them and the deep shadow
-   for the gesture. Tint, head shade and frost stay, so the sheet still reads as glass; the exact optics
-   return on release when the held bake flushes. The vars are written inline by glass.js, hence !important. */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) body.pm-resizing :is([data-lg-kind="panel"]),
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) body.pm-resizing :is([data-lg-kind="card"]),
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) body.pm-resizing :is([data-lg-kind="bar"]) {
+/* Resize-drag paint diet (2026-10-28 pass 2, pass 4): while a column divider drags, the sheets being resized
+   repaint their six-layer background stack every frame; the baked specular/rim/glow images are size-locked
+   to the previous geometry anyway (glass.js holds bakes during .pm-resizing), so flatten them and the deep
+   shadow. Tint, head shade and frost stay, so the sheet still reads as glass. glass.js puts lg-drag-flat on
+   <html> at the first held resize of a baked sheet and lifts it only once no bake work is left anywhere
+   (queued, timed, in flight, or out with the worker), so the exact optics return in one step with the fresh
+   or ring-cached rim. The vars are written inline by glass.js, hence !important. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz).lg-drag-flat :is([data-lg-kind="panel"]),
+html[data-lg="on"][data-theme^="glass"]:not(#lgz).lg-drag-flat :is([data-lg-kind="card"]),
+html[data-lg="on"][data-theme^="glass"]:not(#lgz).lg-drag-flat :is([data-lg-kind="bar"]) {
   --lg-spec: none !important;
   --lg-glow: none !important;
   --lg-ring: none !important;
@@ -193088,7 +193090,8 @@ function stripFont(stripEl) {
   return fontCache.value;
 }
 // a look change (theme, NieR and its parts, motion) can change every label's width: measure again and refit
-bus.on('look', function () { measureCache = {}; fontCache.value = ''; render.schedule({ animate: false, afterLayout: true }); });
+var insetGen = 0;
+bus.on('look', function () { measureCache = {}; fontCache.value = ''; insetGen++; render.schedule({ animate: false, afterLayout: true }); });
 // Tab Sizing changed in Settings: every strip fits again
 PMW.settings.on('panels.tabs.sizing', function () { render.schedule({ animate: false }); });
 
@@ -193271,10 +193274,15 @@ strip.prepare = function (panelEl, p, l, opts) {
   return {
     measure: function () {
       // fit against the panel's target width: an animated paint has only just written the new width, so the strip's own
-      // clientWidth still reports where the glide starts (the panel-to-strip inset is the same at either end of it)
+      // clientWidth still reports where the glide starts (the panel-to-strip inset is the same at either end of it).
+      // The inset itself is look-constant: measure it once per host instead of two layout reads per panel per paint
+      // (the cache clears with the look, like the label widths).
       var tr = opts.rects && opts.rects.panels && opts.rects.panels[p.id];
       var stripW = host.clientWidth;
-      if (tr && panelEl.offsetWidth) stripW = Math.max(0, tr.w - (panelEl.offsetWidth - host.clientWidth));
+      if (tr && panelEl.offsetWidth) {
+        if (s.insetGen !== insetGen) { s.inset = panelEl.offsetWidth - host.clientWidth; s.insetGen = insetGen; }
+        stripW = Math.max(0, tr.w - s.inset);
+      }
       else if (!stripW) stripW = render.rects() && render.rects().panels[p.id] ? render.rects().panels[p.id].w : 0;
       s.fitW = stripW;
       // a panel collapsed beside another (a row split) is a 35 px column: its tabs stand as icons, one above the other
@@ -193305,7 +193313,11 @@ strip.prepare = function (panelEl, p, l, opts) {
       });
     },
     finish: function () {
-      p.tabs.forEach(function (tid) { if (!hiddenSet[tid]) middleEllipsis(s.tabEls[tid], l.tabs[tid], fit.size[tid]); });
+      /* The controls whose visibility moves the flex row settle before the plate sync measures tab rects:
+         +N appearing or going shifts every tab after it, and a plate synced first keeps the stale edge
+         (measured 18-23 px off). Label fitting writes text inside the fixed-width tabs place() already
+         sized, so it stays after the sync: its reads then share the one layout the control writes and
+         the plate reads already paid for, instead of forcing a second one ahead of the plate. */
       // +N: plain text, counts the hidden tabs only
       var n = fit.hidden.length;
       setAttr(s.more, 'hidden', !n);
@@ -193321,6 +193333,7 @@ strip.prepare = function (panelEl, p, l, opts) {
       s.plus.setAttribute('data-pm-hover-detail', PMW.keyLabel(KEYS.plusMenu) + ' opens this menu, ' + PMW.keyLabel(KEYS.newTab) + ' makes a new tab of this panel\'s usual kind');
       setAttr(host, 'data-collapsed', p.collapsed ? 'yes' : null);
       if (PMW.shape) PMW.shape.sync(host, p, l, opts);
+      p.tabs.forEach(function (tid) { if (!hiddenSet[tid]) middleEllipsis(s.tabEls[tid], l.tabs[tid], fit.size[tid]); });
     }
   };
 };
@@ -295584,9 +295597,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function runChromeSync(){
     chromeSyncFrame=null;
     // Hosted resize drags resize the chat column every frame; the chrome syncs below read rects and
-    // scroll metrics after each width write. Compact tiers and dock heights may lag one cadence
+    // scroll metrics after each width write. Dock heights and the jump pill may lag one cadence
     // mid-drag (the editor/terminal kinds use the same 120ms rule); a trailing sync lands on release.
+    // The two compact tiers are not held: they compare a cached intrinsic width against the current
+    // one (no measuring), and on the pass-3 tape their one-cadence lag showed as labels overflowing
+    // for 1-2 frames at each threshold crossing.
     if(document.body && document.body.classList.contains('pm-resizing') && performance.now()-chromeLastSync<100){
+      syncComposerCompact();
+      syncActivityCompact();
       if(!chromeTrailT) chromeTrailT=setTimeout(()=>{chromeTrailT=null;chromeLastSync=performance.now();syncChatChrome();},100);
       return;
     }
@@ -301004,6 +301022,10 @@ try {
       scopes.forEach(function (s) { dirtyScope(s); });
       if (targets.size) mountMeasured(targets);
       if (targets.size || scopes.length) lazySync(false);
+      scheduleBakes();
+      /* A drag that ends back on geometry whose rim is still in the ring cache remounts from the cache:
+         no bake is queued and no flight ever finishes, so nothing else lifts the drag flattening. */
+      liftFlat();
     }, 160);
   }
   var sizeWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
@@ -301016,7 +301038,9 @@ try {
       /* Size changes can move siblings without resizing them. Their positions belong to the same settle scope. */
       var box = en.borderBoxSize && en.borderBoxSize[0];
       if (KINDS[k] && KINDS[k].bake && e.__lgSize && (!box || e.__lgSize !== Math.round(box.inlineSize) + 'x' + Math.round(box.blockSize))) {
-        if (held) heldScopes.push(e.parentElement);
+        /* the flattening engages with the first held resize of a baked sheet, not with the first bake a
+           drag happens to defer: on a settled page an ordinary drag queues no bake at all */
+        if (held) { heldScopes.push(e.parentElement); root.classList.add('lg-drag-flat'); }
         else { dirtyScope(e.parentElement); lazySync(false); }
       }
     });
@@ -301573,6 +301597,7 @@ try {
     bakeWOn = -1; try { if (bakeW) bakeW.terminate(); } catch (e) {} bakeW = null;
     bakeWJobs.forEach(function (job) { if (job.e.__lgBake === job) job.e.__lgSig = null; }); bakeWJobs.clear(); bakeWWalls.clear();
     dirtyAll = true; queueSync();
+    liftFlat();
   }
   /* the wallpaper's print goes to the worker once, as an ImageBitmap (the last two are kept there) */
   function bakeWWall(im, done) {
@@ -301609,7 +301634,7 @@ try {
     var job = bakeWJobs.get(m.id); bakeWJobs.delete(m.id);
     if (m.spec && !specUrls.has(m.key)) keepSpec(m.key, URL.createObjectURL(m.spec));
     if (!job) return;
-    if (!m.ring) { if (job.e.__lgBake === job) { job.e.__lgSig = null; dirtyScope(job.e.parentElement || job.e); lazySync(false); } return; }
+    if (!m.ring) { if (job.e.__lgBake === job) { job.e.__lgSig = null; dirtyScope(job.e.parentElement || job.e); lazySync(false); } liftFlat(); return; }
     bakeWReady.push({ job: job, ring: m.ring });
     if (bakeWReady.length === 1 && !afterLayout(applyBakes)) applyBakes();
   }
@@ -301628,16 +301653,38 @@ try {
       if (e.__lgRing !== url) { releaseRing(e); e.__lgRing = url; }
       e.style.setProperty('--lg-ring', 'url(' + url + ')');
     });
+    liftFlat();
+  }
+  /* While a resize drag runs, queued bakes wait: their geometry is obsolete a frame later, and a flush
+     at pickup/mid-drag was a 92-127ms stall on tape. Measures and var writes keep running (sheets stay
+     correctly sized); only the image generation waits. The sheets wear lg-drag-flat (glass.css flattens
+     spec/ring/shadow under it) from the first held resize of a baked sheet until liftFlat finds no bake
+     work left anywhere, so the rim comes back in ONE step with its fresh (or ring-cached) bake instead
+     of painting the stale rim first at release. */
+  function bakeHeld() {
+    root.classList.add('lg-drag-flat');
+    flushHeldSoon();
+  }
+  /* The flattening's single off-ramp: it lifts only when no drag runs and no bake work is queued, timed,
+     in flight, or still out with the worker. Called wherever one of those can empty without a flight
+     finishing (the held flush, a worker reply, a worker failure, a flight's end). */
+  function liftFlat() {
+    if (dragHeld() || bakeQ.size || bakeFlight || bakeT || bakeWJobs.size || bakeWReady.length) return;
+    root.classList.remove('lg-drag-flat');
   }
   function scheduleBakes() { if (!bakeT && !bakeFlight && bakeQ.size && isGlass()) bakeT = setTimeout(flushBakes, 60); }
   function flushBakes() {
     bakeT = 0; if (!isGlass() || !bakeQ.size || bakeFlight) return;
+    if (dragHeld()) { bakeHeld(); return; }
     var flight = { epoch: bakeEpoch }; bakeFlight = flight;
     function finish(failed) {
       if (bakeFlight !== flight) return;
       bakeFlight = null;
       if (failed) { bakeQ.forEach(function (job) { if (job.e.__lgBake === job) job.e.__lgSig = null; }); bakeQ.clear(); }
+      /* schedule first: a flight that ends by posting its jobs to the worker must not unflatten the
+         sheets onto their stale rims while the fresh ones are still out (liftFlat waits on them) */
       scheduleBakes();
+      liftFlat();
     }
     withWall(function (im) {
       if (bakeFlight !== flight) return;
@@ -301645,6 +301692,9 @@ try {
       if (im.__lgWallUrl !== currentWallUrl()) { finish(false); return; }
       bakeQ.forEach(function (job, e) { if (!currentBake(job, im)) bakeQ.delete(e); });
       if (!bakeQ.size) { finish(false); return; }
+      /* a drag that began while the wallpaper print was loading holds the flight here, before any
+         frost is generated for geometry the gesture is already leaving behind */
+      if (dragHeld()) { finish(false); return; }
       flight.vw = innerWidth; flight.vh = innerHeight;
       makeFrosts(im, function (ok) {
         if (bakeFlight !== flight) return;
@@ -301659,6 +301709,12 @@ try {
         function step(deadline) {
           bakeFrame = 0; bakeIdle = 0;
           if (bakeFlight !== flight || flight.epoch !== bakeEpoch || !isGlass()) { finish(false); return; }
+          /* a drag that began mid-flight parks the jobs this flight has not reached back on the queue;
+             finish() re-times the flush, which then holds them like any other queued bake */
+          if (dragHeld()) {
+            for (var i = next; i < list.length; i++) { if (list[i].e.__lgBake === list[i]) bakeQ.set(list[i].e, list[i]); }
+            finish(false); return;
+          }
           var t0 = performance.now(), ran = 0;
           while (next < list.length) {
             /* in a frame, 12 ms; in idle time, a bake starts only if the idle period has room for one (a bake is 5-15 ms:
@@ -301850,6 +301906,9 @@ try {
     if (!keepLenses && typeof suspendLensMotion === 'function') suspendLensMotion();
     endFrostFade();
     bakeEpoch++; bakeFlight = null; bakeQ.clear(); bakeWReady = [];
+    /* teardown drops every queue a liftFlat could wait on, so the drag flattening goes with them;
+       a look returning later must not inherit it */
+    root.classList.remove('lg-drag-flat');
     if (bakeW) bakeW.postMessage({ type: 'epoch', epoch: bakeEpoch });
     if (bakeT) { clearTimeout(bakeT); bakeT = 0; }
     if (bakeFrame) { cancelAnimationFrame(bakeFrame); bakeFrame = 0; }
@@ -301935,7 +301994,9 @@ try {
     }); }
     /* the settle (un-pin, re-bake rims, re-sync strips) runs once the scroll has been still for 160 ms; it used to run
        140 ms after the scroll began, so a long scroll re-baked every moving card's rims several times on the way */
-    clearTimeout(scrollSettleT); scrollSettleT = setTimeout(function () { scrollSettleT = 0; queueSync(); }, 160);
+    /* a drag reflows scrollers continuously; the settle sync would measure the whole shell mid-gesture.
+       lazySync re-arms itself while the drag runs and queues the same sync once it ends */
+    clearTimeout(scrollSettleT); scrollSettleT = setTimeout(function () { scrollSettleT = 0; if (dragHeld()) lazySync(false); else queueSync(); }, 160);
   }, true);
   var scrollSettleT = 0;
   /* a wheel arrives before the scroll it causes: pin that scroller's sheets now, so even its first step moves in step */
@@ -303510,7 +303571,7 @@ try {
     /* the frost is drawn for one viewport: a resize mid-crossfade ends it */
     window.addEventListener('resize', function () { endFrostFade(); });
     mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open'] });
-    if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
+    if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { if (dragHeld()) { entries.forEach(function (en) { heldScopes.push(en.target); }); flushHeldSoon(); return; } entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     window.addEventListener('resize', lazySync);
     demo();
     syncAll(); setTimeout(syncAll, 500); setTimeout(syncAll, 1500);

@@ -2381,9 +2381,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function runChromeSync(){
     chromeSyncFrame=null;
     // Hosted resize drags resize the chat column every frame; the chrome syncs below read rects and
-    // scroll metrics after each width write. Compact tiers and dock heights may lag one cadence
+    // scroll metrics after each width write. Dock heights and the jump pill may lag one cadence
     // mid-drag (the editor/terminal kinds use the same 120ms rule); a trailing sync lands on release.
+    // The two compact tiers are not held: they compare a cached intrinsic width against the current
+    // one (no measuring), and on the pass-3 tape their one-cadence lag showed as labels overflowing
+    // for 1-2 frames at each threshold crossing.
     if(document.body && document.body.classList.contains('pm-resizing') && performance.now()-chromeLastSync<100){
+      syncComposerCompact();
+      syncActivityCompact();
       if(!chromeTrailT) chromeTrailT=setTimeout(()=>{chromeTrailT=null;chromeLastSync=performance.now();syncChatChrome();},100);
       return;
     }
