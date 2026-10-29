@@ -675,6 +675,8 @@
   const VOICE_EVENT = { happy: 'happy', wonder: 'alert', watch: 'tap', oops: 'warn', cheer: 'cheer' };
   function voice(mood) {
     if (!has('voice')) return;
+    // the chat's speaker is the one sound switch: muted there, Pip is silent too
+    if (W.PM56_SOUND && W.PM56_SOUND.muted) return;
     const S = W.PipSound; if (!S || !S.play) return;
     try { S.setTheme(look().id); S.play(VOICE_EVENT[mood] || 'tap', {}); } catch (e) { /* sound is optional */ }
   }

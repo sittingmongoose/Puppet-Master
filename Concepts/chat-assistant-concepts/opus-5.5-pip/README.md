@@ -51,7 +51,7 @@ They follow NieR Mode's Plug-in Chips:
   - **Still:** nothing moves.
   - **Classic:** the chat's own puppets.
 - **Live preview:** a small team. **Play: the team works** runs it from queued to done.
-- **Pip's voice:** the onboarding's sound kit, in the theme's voice. It starts off.
+- **Pip's voice:** the onboarding's sound kit, in the theme's voice. It starts off, and it is silent while the chat's speaker is muted.
 - **Saving:** choices are saved in the browser (`pip-chat:v1`).
 - **Reduced motion:** Motion parts stay still while it is on. Your choices are kept for when it is off.
 
@@ -88,3 +88,7 @@ The bar at the top of the page is for reviewing, not part of the chat:
     python3 tools/build_standalone.py OUTDIR
 
 This writes `OUTDIR/pip-chat.html`, about 9 MB. It carries the chat in its frame (srcdoc) with Pip already inside, so it opens anywhere with no server and no network.
+
+## What it would touch in Plans
+
+`plans-impact.md` maps what making this real would change in the canon: the owner decisions it reopens (the chat's agents are already marionettes under DL-149 and F3-594), and the DRY, settings, commands and wiring rows it would need.
