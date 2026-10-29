@@ -819,7 +819,8 @@
         return true;
       }
       const F = fx();
-      if (!F || !F.enabled('banner') || R.chapters.has(prev)) return false;
+      /* (with Pip's stage up, its QUEST UPDATED and the two-band glitch are the chapter's moment: no act card over it) */
+      if (!F || !F.enabled('banner') || R.chapters.has(prev) || pipUp()) return false;
       R.chapters.add(prev);
       R.claim = { kind: 'card', from: prev, to: pr.current };
       return true;

@@ -622,7 +622,9 @@
       this.life(dt);
       // Retro's tube refreshes in steps; the phosphor holds what was there a moment longer
       const fps = this.frameRate();
-      if (fps && !this.reduced) { if (this.t - this.frameT < 1 / fps) return; this.frameT = this.t; }
+      /* (on a steady cadence: each draw is due one step after the last was due, so a frame that comes a little late
+         does not push every later draw back; Retro Light then draws ten times a second, Retro Dark twenty) */
+      if (fps && !this.reduced) { const step = 1 / fps; if (this.t - this.frameT < step - 0.006) return; this.frameT = this.t - this.frameT > 2 * step ? this.t : this.frameT + step; }
       this.render();
     }
     // how often the stage is drawn: every frame, but Retro in steps (Retro Light, paper, at half Retro Dark's rate,

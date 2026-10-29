@@ -427,7 +427,7 @@
     if (S.sess.screen === 'look') {
       const h = S.pipHover || '', mode = O55.theme().mode;
       st.tryOn(/^pickFamily:/.test(h) ? h.slice(11) + '-' + mode : h === 'pickNier' ? 'nier-' + mode : null);
-    }
+    } else st.tryOn(null); /* (a look only tried on is put back once the screen is left) */
     /* a fault shown now wins over a feeling still held from a moment before (a cheer, a pick) */
     if (oops) st.moodOverride = null;
     st.direct(spec);
