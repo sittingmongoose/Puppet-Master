@@ -1,0 +1,77 @@
+{
+  "authority": "Jared assigned the 2026-10-29 governance reseal in chat (You can reseal). Branch push and Astra max review follow; no explicit landing GO yet.",
+  "baseline_commit": "70275841aa3df61471e2449451138bffd59b9196",
+  "baseline_sha256": "550625bc90537a9b2fb144f34b696674f149f4a3fd5ccebc34c61cdda106767a",
+  "changed_locked_files": [
+    {
+      "commits": [],
+      "hash_at_previous_seal": "1e20d658f93d0abc33498578ffa4bf30637b07cc0f72e33f7f829b46528d50ce",
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+      "sealed_sha256": "d4e56389375ce5941af88158772e2523ec4024d7b5e3e1b8044e0e850051cb1f"
+    },
+    {
+      "commits": [
+        "70275841aa3df61471e2449451138bffd59b9196"
+      ],
+      "hash_at_previous_seal": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f",
+      "path": "Plans/Media_Generation_and_Capabilities.md",
+      "sealed_sha256": "418bc32eb7b2528e2e8654f6573ff22898801fe0881483bd4b3c18cc9a4115a4"
+    },
+    {
+      "commits": [
+        "70275841aa3df61471e2449451138bffd59b9196"
+      ],
+      "hash_at_previous_seal": "70e75fed74819bcca3a553f1dd94631b4766b8f8d0a06985c568bb285ad46cfc",
+      "path": "Plans/UI_Command_Catalog.md",
+      "sealed_sha256": "c14181f8a6fbc45bf628a3dd7404309ebd191fbec9962524c46d8f1d77bf8876"
+    },
+    {
+      "commits": [
+        "70275841aa3df61471e2449451138bffd59b9196"
+      ],
+      "hash_at_previous_seal": "f4358dd14b976a2a0a492347be7df4c1dcc23ccefabc017a98eaf2d76356a39c",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "sealed_sha256": "35d1512263810cd671e3c64529e82dd4eaee8b11fcf78a5b0aace7fc6c7328f4"
+    },
+    {
+      "commits": [
+        "bb62e4032aecb3f32e4f2b25b40d18ed7d5b34be"
+      ],
+      "hash_at_previous_seal": "e678cdf975dc77beceed5b9a85ad0e10de85fc2f53782516847afceb96281c39",
+      "path": "scripts/pm-plans-verify.py",
+      "sealed_sha256": "8bc08b9b52565e232ce08286774f7df726e5aafb53418d4ccc780ef29e2ed960"
+    }
+  ],
+  "checkpoint_module_sha256": "7542cdac292405ec0d9b7b644ad7c345cadca822d36c710cd3c6729120274f32",
+  "checkpoint_pin_refresh": "verify_only_noop",
+  "current_run_pointer_commit": "478bac5d64f0e99b8972ca29a17a3c4485a6aca1",
+  "current_snapshot_run": "Plans/.plan_migration/pds-20261026-001-current-planunit-snapshot",
+  "currentness_final_manifest_sha256": "bf082113652ad05e3d7c75232f9717245dfd624ae25be702c803c4478f010618",
+  "currentness_receipt_sha256": "f77437877e4cd00ae52867f03823f0ed731567213738b3e50e75ab11da1f263c",
+  "expected_checked_head_diff_paths": 9,
+  "expected_record_commit_paths": 15,
+  "final_aggregate_totals": {
+    "audit_governance": 1469,
+    "run_gates": 1469
+  },
+  "frozen_main": "bb62e4032aecb3f32e4f2b25b40d18ed7d5b34be",
+  "locked_entry_count": 101,
+  "main_base": "bb62e4032aecb3f32e4f2b25b40d18ed7d5b34be",
+  "new_auto_decision_ids": [
+    "dec-2026-10-29-governance-reseal"
+  ],
+  "owner_docs_registered": 0,
+  "previous_aggregate_totals": {
+    "audit_governance": 1729,
+    "run_gates": 1729
+  },
+  "previous_seal_commit": "72f6a79834e6287354ba62404361566094db39ce",
+  "receipt_complete_denominator_known": false,
+  "receipt_contract_depth_complete": false,
+  "receipt_event_authority_closed": false,
+  "receipt_evidence_valid": true,
+  "receipt_status": "UNKNOWN_OPEN",
+  "registered_kernel_rows": 43,
+  "schema_id": "pm.governance.reseal.attestation.v1",
+  "spec_lock_schema_versions_unchanged": true
+}
