@@ -542,7 +542,7 @@ canonical_text: >-
   the dropdown's optimistic label included. In Plans, Reduced Motion names the effective state above (the
   Project's request OR the platform preference) and Reduce Animations names the row that requests it
   (general.visual.reduce-animations); the two words never name two settings.
-  Amended 2026-10-29 (S2, X2, L3; PM7): general.visual.reduce-animations is globally applicable as the inventory says; scope metadata does not authorize a new app-global ordinary store (SSYS-002/004). Its effective request is combined with OS preference in every Project. The universal wait loader retains opacity breath/blink, while other nonessential motion rests. Pip parts are per Project, no brand/loader override.
+  Amended 2026-10-29 (S2, RM1, X2, L3; PM7): general.visual.reduce-animations is globally applicable as the inventory says; scope metadata does not authorize a new app-global ordinary store (SSYS-002/004). Its effective request is combined with OS preference in every Project. The universal wait loader retains opacity breath/blink, while other nonessential motion rests. Pip parts are per Project, no brand/loader override.
 gui_related: true
 gui_classification_reason: Themes, Glass composition and backgrounds are directly visible.
 depends_on: [SSYS-002, SSYS-009, F3-425, DL-180, DL-187]

@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L14505-L18266
 
-Source SHA256: `c0a38ead8236047c5372cba5fe2fbb0ea1bbce5114067ee4d25c7f726ac6a18d`
+Source SHA256: `72f2ee3232e5c5d212cd58d674f551c425705bd5fd973e9ca08353c50a735671`
 
 ---
 
@@ -2836,7 +2836,7 @@ plan_unit_id: DL-237
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. X2, L1–L8: Pip marks every indeterminate wait: page,
+canonical_text: 'Adopted 2026-10-29 for the PM7 build. X2, RM1, L1–L8: Pip marks every indeterminate wait: page,
   panel, splash, button, check, sign-in, thinking placeholder; st-working remains item state in rows and tabs.
   Keep meaningful skeletons and determinate bars. Think is the thinking context, Swing the default, Hop a short
   success wait; these are not preferences. Friendly 1.8 s, Glass 2.6 s, Basic 1.7 s, Retro eight frames/1.2

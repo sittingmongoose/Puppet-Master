@@ -745,7 +745,7 @@
         "reason": null,
         "processes": [
           {
-            "process_facts_ref": "pf-1",
+            "process_facts_ref": "pf-2",
             "pid_start_time": "2026-10-29T22:00:00Z",
             "cpu_percent": 2,
             "memory_bytes": 512,
@@ -779,7 +779,7 @@
         "record_kind": "observable_work",
         "identity": {
           "scope_kind": "project",
-          "operation_id": "op-2",
+          "operation_id": "op-process-facts",
           "operation_generation": 2,
           "attempt_id": "attempt-2",
           "command_instance_id": "cmdi-2",
@@ -794,7 +794,7 @@
           "source_location_id": null,
           "topology_generation": 8
         },
-        "observable_work_id": "work-2",
+        "observable_work_id": "work-with-process-facts",
         "title": "Resume provider work",
         "subject_refs": [
           "provider-attempt:attempt-2",
@@ -821,7 +821,7 @@
         "cancel_available": true,
         "background_available": true,
         "retry_available": false,
-        "dedupe_key": "work-2-generation-12",
+        "dedupe_key": "process-facts-fixture",
         "result_receipt_ref": null,
         "error_ref": null,
         "observed_at": "2026-08-31T00:00:01Z",
@@ -831,6 +831,38 @@
         "holds_reply": false,
         "input_request": null,
         "stopped_by": null
+      }
+    },
+    {
+      "name": "process_facts_second_server",
+      "instance": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "process_facts",
+        "process_facts_id": "pf-2",
+        "observable_work_id": "w-2",
+        "project_id": "p-1",
+        "server_id": "srv-2",
+        "environment_id": "env-2",
+        "pid": 123,
+        "pid_start_time": "2026-10-29T22:00:00Z",
+        "process_group": 123,
+        "command": "npm test",
+        "cwd": "/workspace/project",
+        "ports": [
+          3000
+        ],
+        "exit_code": null,
+        "ended_reason": null,
+        "output_ref": {
+          "artifact_ref": "out-1",
+          "head_line_limit": 100,
+          "tail_line_limit": 100,
+          "omitted_line_count": 500
+        },
+        "stoppable": true,
+        "restartable": false,
+        "is_system_service": false,
+        "observed_at": "2026-10-29T22:00:00Z"
       }
     }
   ],
@@ -1183,7 +1215,7 @@
         "record_kind": "observable_work",
         "identity": {
           "scope_kind": "project",
-          "operation_id": "op-2",
+          "operation_id": "op-process-facts",
           "operation_generation": 2,
           "attempt_id": "attempt-2",
           "command_instance_id": "cmdi-2",
@@ -1198,7 +1230,7 @@
           "source_location_id": null,
           "topology_generation": 8
         },
-        "observable_work_id": "work-2",
+        "observable_work_id": "work-with-process-facts",
         "title": "Resume provider work",
         "subject_refs": [
           "provider-attempt:attempt-2"
@@ -1224,7 +1256,7 @@
         "cancel_available": true,
         "background_available": true,
         "retry_available": false,
-        "dedupe_key": "work-2-generation-12",
+        "dedupe_key": "process-facts-fixture",
         "result_receipt_ref": null,
         "error_ref": null,
         "observed_at": "2026-08-31T00:00:01Z",

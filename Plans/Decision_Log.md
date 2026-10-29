@@ -17330,7 +17330,7 @@ plan_unit_id: DL-237
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. X2, L1–L8: Pip marks every indeterminate wait: page,
+canonical_text: 'Adopted 2026-10-29 for the PM7 build. X2, RM1, L1–L8: Pip marks every indeterminate wait: page,
   panel, splash, button, check, sign-in, thinking placeholder; st-working remains item state in rows and tabs.
   Keep meaningful skeletons and determinate bars. Think is the thinking context, Swing the default, Hop a short
   success wait; these are not preferences. Friendly 1.8 s, Glass 2.6 s, Basic 1.7 s, Retro eight frames/1.2
