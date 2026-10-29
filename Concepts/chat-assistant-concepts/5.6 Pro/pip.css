@@ -192,3 +192,12 @@ html[data-motion="reduced"] .orbit-core-face :is(.pmx-pip-dot2, .pmx-pip-dot3, .
 .af-empty.pmx-empty-line { flex-direction: column; }
 /* NieR parts win where both draw (S7): with Ink empty states on, NieR's own art stands in Pip's place */
 html[data-o55-nier-parts~="empty"] .pmx-empty-line > .pmx-empty-pip { display: none; }
+
+/* a sheet's main button, pressed: the press is acknowledged in the next frame while its work waits one paint (app.js
+   holdForAck); Pip's cheer is the rest of the acknowledgement */
+.pmx-sheet[data-pmx-committing] :is(.pmx-primary, .pmx-foot .primary-button) { transform: scale(.97); }
+
+/* the thinking placeholder's Pip (the system loader, Think motion), before the model's name */
+.tx-pending-pip { display: inline-flex; align-self: center; width: 16px; height: 16px; margin-right: 1px; line-height: 0; }
+.tx-pending-pip > .pml-ld { --pml-size: 16px; }
+.tx-pending-pip > .pml-ld[hidden] { display: none; }

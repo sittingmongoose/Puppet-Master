@@ -4633,7 +4633,33 @@ suggested path                    migration 0043, reversible</div></div></sectio
     o.style.setProperty('--pmx-from-w',`${Math.round(r.width)}px`);
     o.style.setProperty('--pmx-from-h',`${Math.round(r.height)}px`);
   }
-  document.addEventListener('click',e=>{
+  /* W4 (PM7 build 2026-10-29): a sheet's main button is acknowledged before its work runs. Starting something (a Crew,
+     a schedule, a review) re-renders the chat and lays the whole page out again, about half a second before the next
+     frame, and nothing repaints meanwhile (measured on Start Crew: a 575 ms click task, 212 ms of it the layout that
+     snapScroll's first read forces, then 100-300 ms frames). ACD-475 wants a press acknowledged within 100 ms. So the
+     press is recorded at once (a second press while it waits is dropped, so there is no double-commit window, UIW-025;
+     keyboard and pointer reach this one path alike), the acknowledgement paints in the next frame (the button's
+     pressed state, Pip's cheer and hop: pip.js, composited), and the press's own action runs in the task after that
+     paint, with the same button and event: nothing is replayed or synthesised. A sheet closed meanwhile (Esc, Cancel)
+     commits nothing. */
+  let pendingCommit=null;
+  function holdForAck(e,btn,a){
+    if(!btn.matches('.pmx-sheet .pmx-primary, .pmx-sheet .pmx-foot .primary-button')) return false;
+    const sheet=btn.closest('.pmx-sheet');
+    if(!sheet||sheet.classList.contains('pmx-ghost')||btn.disabled||btn.getAttribute('aria-disabled')==='true') return false;
+    if(pendingCommit) return true;
+    const dialog=state.dialog;
+    pendingCommit={e,btn,a};
+    sheet.setAttribute('data-pmx-committing','1');
+    requestAnimationFrame(()=>setTimeout(()=>{
+      const p=pendingCommit; pendingCommit=null;
+      if(sheet.isConnected) sheet.removeAttribute('data-pmx-committing');
+      if(!p||state.dialog!==dialog||!btn.isConnected||btn.disabled) return;
+      onAppClick(p.e,true);
+    },0));
+    return true;
+  }
+  function onAppClick(e,acked){
     if(HOSTED&&!HOST.inChat(e.target)) return;
     const btn=e.target.closest('[data-action]');
     const sub=e.target.closest('[data-submenu]');
@@ -4641,6 +4667,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(sub&&state.menu&&!btn){ e.stopPropagation(); setSubmenu(sub.dataset.submenu); return; }
     if(!btn){if(state.menu&&!e.target.closest('.overlay-menu,.lens-dock'))closeMenu();return;}
     const a=btn.dataset.action;
+    if(!acked&&holdForAck(e,btn,a)) return;
     /* Stop (send-stop.js): the second click of a double-click on Send lands on the Stop it became, so a click with
        detail > 1 is never a stop (a time window would also swallow a fast deliberate stop); a stop-run click is the
        one "stopped" signal (a turn, goal or plan that ends any other way has "finished"). Before the module actions,
@@ -4847,7 +4874,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(a==='retry-artifact'){state.artifactState.retrying=true;toast('Renderer retrying','Source fallback remains available during recovery.');setTimeout(()=>{const art=D.artifacts.find(x=>x.id===btn.dataset.id);if(art)art.status='ready';state.artifactState.retrying=false;renderApp();},900);return;}
     /* Nothing built in matched: give late-registered module handlers a turn. */
     if(extRunAfter(a,btn,e))return;
-  });
+  }
+  document.addEventListener('click',e=>onAppClick(e,false));
 
   document.addEventListener('input',e=>{
     const k=e.target.dataset.input;if(!k)return;

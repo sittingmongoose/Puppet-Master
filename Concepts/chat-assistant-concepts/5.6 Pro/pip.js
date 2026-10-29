@@ -267,6 +267,11 @@
   function blinkTick() {
     blinkT = setTimeout(blinkTick, Math.round(1400 + Math.random() * 1800));
     if (D.hidden || dragging() || !moves('blinks')) return;
+    /* read where Pips are in a frame's own layout pass, never forcing one mid-task */
+    W.requestAnimationFrame(blinkOne);
+  }
+  function blinkOne() {
+    if (D.hidden || dragging()) return;
     var all = D.querySelectorAll('.pmx-pip .pmx-pip-blink'), vh = W.innerHeight, vw = W.innerWidth, now = Date.now(), pick = [];
     var n = Math.min(all.length, 60), start = all.length > n ? Math.floor(Math.random() * all.length) : 0;
     for (var i = 0; i < n; i++) {
@@ -285,14 +290,38 @@
   function startBlinks() { if (!blinkT) blinkT = setTimeout(blinkTick, 1600); }
   D.addEventListener('visibilitychange', function () { if (!D.hidden) startBlinks(); });
 
+  /* ---------------------------------------------------------------- the thinking placeholder (W5 L5, conflict 2)
+     "is thinking" leads with the system loader in its Think motion (window.PM_PIP_LOADER, the one loader). One Pip per
+     reply: while the reply's work runs, Pip sits in the Orbit's centre (orbit.js) with its thinking dots, and the
+     placeholder's loader steps aside; it never shows twice. */
+  function loaderHtml() {
+    var LD = W.PM_PIP_LOADER;
+    return LD && LD.html ? LD.html({ motion: LD.motion ? LD.motion('thinking') : 'think', px: 16 }) : '';
+  }
+  function thinkingPip() {
+    var l = loaderHtml();
+    return l ? '<span class="tx-pending-pip" aria-hidden="true">' + l + '</span>' : '';
+  }
+  function syncThinking() {
+    var slots = D.querySelectorAll('.tx-pending-pip');
+    if (!slots.length) return;
+    var orbit = !!D.querySelector('.orbit-core-face.is-live');
+    slots.forEach(function (s) {
+      if (!s.firstElementChild) { var l = loaderHtml(); if (!l) return; s.innerHTML = l; }
+      var ld = s.firstElementChild;
+      if (ld.hidden !== orbit) ld.hidden = orbit;
+    });
+  }
+
   /* ---------------------------------------------------------------- hooks */
-  if (EXT && EXT.slot) EXT.slot('afterRender', function () { scan(); });
+  if (EXT && EXT.slot) EXT.slot('afterRender', function () { scan(); syncThinking(); });
   startBlinks();
 
   W.PM56_PIP = Object.freeze({
     version: '1.0',
     hostMood: hostMood,
     wants: wants,
+    thinkingPip: thinkingPip,
     /* tests and Demo Studio: the sheet Pips on screen and a face on each */
     hosts: function () { return [...hosts.values()].map(function (s) { return { kind: s.kind, mood: s.mood }; }); },
     feel: function (mood, hold) { hosts.forEach(function (st) { feel(st, mood, hold); }); }
