@@ -16,7 +16,7 @@
         },
         "provider:cursor": {
           "title": "Cursor",
-          "text": "Connects with an API key from your Cursor account: paste it into API key for Cursor, then choose Check key. The key is kept in your system keychain and never shown again."
+          "text": "Connects with an API key from your Cursor account: paste it into API key for Cursor, then choose Check key. The key stays in your computer's password store, never shown again."
         },
         "provider:grok": {
           "title": "Grok Build",
@@ -104,7 +104,7 @@
         },
         "field:acc-keyId": {
           "title": "Access key ID",
-          "text": "The ID half of the key your storage company gave you for this bucket. It is not secret; the secret access key is the private half."
+          "text": "The name that identifies this storage key. Copy it from your storage account; the separate secret access key is its password."
         },
         "field:acc-secret": {
           "title": "Secret access key",
@@ -124,7 +124,7 @@
         },
         "field:key": {
           "title": "API key",
-          "text": "A long secret code from the AI company that lets Puppet Master use your account. Paste it, then choose Check key. It is kept in your system keychain."
+          "text": "A long secret code from the AI company that lets Puppet Master use your account. Paste it, then choose Check key. It stays in your computer's password store."
         },
         "tour": {
           "title": "Take the Guided Tour",
@@ -133,10 +133,14 @@
         "enter": {
           "title": "Enter Puppet Master",
           "text": "Closes setup and opens Puppet Master now. You can start the Guided Tour any time from Settings."
+        },
+        "startOver": {
+          "title": "Start over",
+          "text": "Clears the choices from last time and begins setup again from the first page."
         }
       },
       "chrome": {
-        "look": {
+        "lookMenu": {
           "title": "Change the look",
           "text": "Opens the looks right here, without leaving setup. Your choices so far are kept."
         },
@@ -151,13 +155,41 @@
         "resume": {
           "title": "Finish setting up",
           "text": "Opens setup again where you left off. Every choice you made is still there."
+        },
+        "lookFamily:basic": {
+          "title": "Basic",
+          "text": "A clean diagram: plain shapes, calm and precise movement, quiet sounds. The calmest of the four."
+        },
+        "lookFamily:friendly": {
+          "title": "Friendly",
+          "text": "Warm colours, rounded shapes and playful movement, like a little paper theatre. The cosiest of the four."
+        },
+        "lookFamily:glass": {
+          "title": "Glass",
+          "text": "Frosted glass over soft, moving light. Settings choose how see-through the panels are; text always stays readable."
+        },
+        "lookFamily:retro": {
+          "title": "Retro",
+          "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light is printed on paper by a teletype."
+        },
+        "lookMode:light": {
+          "title": "Light or dark",
+          "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read."
+        },
+        "lookMode:dark": {
+          "title": "Light or dark",
+          "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read."
+        },
+        "lookNier:nier": {
+          "title": "NieR Mode",
+          "text": "An ink-and-parchment look inspired by NieR: Automata. It paints over the look you pick; turn it off any time."
+        },
+        "lookNierAdjust:nier-adjust": {
+          "title": "Adjust NieR look",
+          "text": "Choose which parts of NieR Mode you want, like its menu sounds, its motion and the picture behind it. Works with NieR Mode on or off."
         }
       },
       "welcome": {
-        "startOver": {
-          "title": "Start over",
-          "text": "Clears the choices from last time and begins setup again from the first page."
-        },
         "skipAll": {
           "title": "Skip",
           "text": "Closes setup and opens Puppet Master as it is. Run Onboarding Again in Settings brings setup back any time."
@@ -182,7 +214,7 @@
         },
         "group:pickMode": {
           "title": "Light or dark",
-          "text": "Starts from your computer's setting. Every look has a light and a dark version."
+          "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read."
         },
         "pickNier": {
           "title": "NieR Mode",
@@ -196,7 +228,7 @@
       "where": {
         "pick:this": {
           "title": "This computer",
-          "text": "Puppet Master does the work here and everything stays on this computer. You can add other computers, or a Server, later."
+          "text": "Puppet Master does the work on this computer. You choose where its files and backups go in the next steps, and can add a Server later."
         },
         "pick:connect": {
           "title": "Connect this device",
@@ -300,7 +332,7 @@
           "title": "Copy the install line",
           "text": "Copies the line to paste into a terminal on that computer. A terminal is the window where you type commands."
         },
-        "guide": {
+        "group:guide": {
           "title": "Open the install guide",
           "text": "Opens the step-by-step guide for that system in your browser."
         },
@@ -432,11 +464,11 @@
         },
         "sub:folder": {
           "title": "A folder on this computer",
-          "text": "Work already in a folder here. Pick the folder next; it is only read until you create the Project."
+          "text": "Work already in a folder on the computer doing the work. Pick the folder next; it is only read until you create the Project."
         },
         "sub:online": {
           "title": "A Project stored online",
-          "text": "Work kept on a website like GitHub or GitLab. You sign in, pick it, and a copy is kept on this computer."
+          "text": "Work kept on a website like GitHub or GitLab. Sign in and pick it; the next steps show where your working copy will live."
         },
         "sub:device": {
           "title": "Files on another device",
@@ -464,7 +496,7 @@
       "name": {
         "field:name": {
           "title": "Project name",
-          "text": "What you call it everywhere in Puppet Master. Its folder gets this name too, and you can choose where the folder is kept."
+          "text": "The name shown for this Project in Puppet Master. For a new Project it also names its folder. An existing folder keeps its own name and place."
         },
         "group:suggest": {
           "title": "Suggestions",
@@ -554,6 +586,10 @@
           "title": "Cursor Origin",
           "text": "Cursor's own service for keeping work online. It is still a preview, so expect changes."
         },
+        "notNow": {
+          "title": "Not now",
+          "text": "Leaves out the online copy for now. Safe History still keeps your versions; add an online copy later."
+        },
         "group:variant": {
           "title": "Which edition",
           "text": "The same service, run by the company itself or on your own server. Pick the one your account is on."
@@ -586,7 +622,7 @@
         },
         "field:token": {
           "title": "Access token",
-          "text": "Make one on your server under Settings › Applications. It is kept in your system keychain, never in Puppet Master's files."
+          "text": "Make one on your server under Settings › Applications. It stays in your computer's password store, never in Puppet Master's files."
         },
         "code": {
           "title": "Browser didn't open?",
@@ -595,6 +631,10 @@
         "copyLink": {
           "title": "Browser didn't open?",
           "text": "Copies the sign-in link, so you can paste it into your browser yourself."
+        },
+        "copy:dcode": {
+          "title": "Copy the code",
+          "text": "Copies this sign-in code. Paste it on the page named above."
         },
         "newCode": {
           "title": "New code",
@@ -620,7 +660,7 @@
         },
         "group:azProject": {
           "title": "Team project",
-          "text": "Azure DevOps keeps work inside team projects. Pick the Git one this online copy goes in."
+          "text": "Azure DevOps groups work into team projects. Pick one marked Git, the kind used for code. This is separate from your Puppet Master Project."
         },
         "azRefresh": {
           "title": "Refresh projects",
@@ -670,13 +710,13 @@
         },
         "group:pick": {
           "title": "Choose the Project",
-          "text": "Only the one you pick is copied, and a copy is kept on this computer."
+          "text": "Only the Project you pick is copied. The line below shows where the working copy will be kept."
         }
       },
       "safe": {
         "group:backend": {
           "title": "Git or Jujutsu",
-          "text": "Both save every version of your Project on this computer, and neither needs an account. Git is the most common. Jujutsu is newer, built on Git, and makes mistakes easier to undo."
+          "text": "Both keep saved versions of your Project without an account. Git is the usual choice; Jujutsu works with Git and makes mistakes easier to undo."
         },
         "backend:git": {
           "title": "Git",
@@ -692,7 +732,7 @@
         },
         "online": {
           "title": "Online copy",
-          "text": "A private copy on a website like GitHub, free for private Projects. Puppet Master only asks for access to the Project you choose."
+          "text": "A copy on a website like GitHub. You choose who can see it. Puppet Master only asks for access to the Project you choose."
         },
         "backup": {
           "title": "Backup",
@@ -720,17 +760,17 @@
         },
         "bdest:none": {
           "title": "Not now",
-          "text": "No backup for now. Safe History still keeps every version on this computer; add a backup later in Settings."
+          "text": "No separate backup for now. Safe History still keeps versions with your Project; add a backup later in Settings."
         }
       },
       "away": {
         "pick:home": {
           "title": "Only at home",
-          "text": "Your devices reach it on your home network, or through a VPN you already use."
+          "text": "Your devices reach the Server on your home network, or on a private network you already use, called a VPN."
         },
         "pick:anywhere": {
           "title": "Away from home",
-          "text": "Tailscale is built into Puppet Master: sign in once, and your Project gets a private name that works from anywhere, only for your devices."
+          "text": "Tailscale connects your devices through a private network. Sign in once to reach your Server while you are away from home."
         },
         "route:headscale": {
           "title": "My own Headscale server",
@@ -742,7 +782,7 @@
         },
         "route:remote_link": {
           "title": "Puppet Master Remote Link",
-          "text": "A private link through Puppet Master's relay. Nothing to set up on your network."
+          "text": "Puppet Master carries the connection between your devices. Use its private link without changing your network settings."
         },
         "field:proxy": {
           "title": "Web address",
@@ -780,13 +820,13 @@
       "review": {
         "group:edit": {
           "title": "Edit",
-          "text": "Goes back to that choice so you can change it. Nothing has been created yet."
+          "text": "Goes back to change this choice. Your Project hasn't been created yet."
         }
       },
       "creating": {
         "retry": {
           "title": "Try again",
-          "text": "Tries the online copy again. Your folder and Safe History are already made and stay as they are."
+          "text": "Tries the unfinished step again. Work that already finished is kept."
         },
         "rename": {
           "title": "Change the name",
@@ -795,6 +835,18 @@
         "skipOnline": {
           "title": "Skip the online copy",
           "text": "Finish without the online copy. You can add one later from Settings."
+        },
+        "askSkip": {
+          "title": "Skip the online copy",
+          "text": "Finish without the online copy. You can add one later from Settings."
+        },
+        "confirmDelete": {
+          "title": "Delete the online copy",
+          "text": "Deletes only the online copy named here. This can't be undone; your files here are kept."
+        },
+        "cancelDelete": {
+          "title": "Keep it",
+          "text": "Keeps the online copy and returns to the recovery choices."
         },
         "continueSetup": {
           "title": "Continue Setup",
@@ -836,7 +888,7 @@
         },
         "step:policy": {
           "title": "Turn on daily backups",
-          "text": "Backs up your Project every night by itself, so your newest backup is never more than a day old."
+          "text": "Turns on an automatic backup each night, while the computer doing the work and the backup place are available."
         },
         "stepUp": {
           "title": "Confirm it's you",
@@ -992,7 +1044,7 @@
       "nas-key": {
         "group:pick": {
           "title": "Choose a key",
-          "text": "A key lets Puppet Master connect without a password. These are already on this computer; only their public half is read."
+          "text": "A key lets Puppet Master connect without a password. These are on the computer that will connect; only the part safe to share is read."
         },
         "pick:new": {
           "title": "Make a new key",
@@ -1066,11 +1118,11 @@
       "nas-smb": {
         "field:user": {
           "title": "Username",
-          "text": "The name you use for the shared folder. Your sign-in is kept in the system keychain."
+          "text": "The name you use for the shared folder. Your sign-in stays in your computer's password store."
         },
         "field:pw": {
           "title": "Password",
-          "text": "The password for the shared folder. Kept in the system keychain, not in Puppet Master."
+          "text": "The password for the shared folder. It stays in your computer's password store, not in Puppet Master."
         }
       },
       "nas-mounted": {
@@ -1093,7 +1145,7 @@
         "pickFamily:basic": "Clean and calm. Very tidy.",
         "pickFamily:friendly": "Soft and cosy. I like it.",
         "pickFamily:glass": "Ooh, shiny. Am I glass now?",
-        "pickFamily:retro": "A real monitor! I glow now.",
+        "pickFamily:retro": "Retro! Straight out of an old computer.",
         "pickNier": "NieR? I can do stoic.",
         "pickMode:light": "Light it is. Bright and clear.",
         "pickMode:dark": "Dark. Easy on the eyes.",
@@ -1198,7 +1250,7 @@
         "pick:new": "A blank page. My favourite.",
         "pick:existing": "Bring it in. I'll learn my way round.",
         "pick:restore": "Back from the archive, good as new.",
-        "sub:folder": "A folder right here. Easy.",
+        "sub:folder": "A folder you already have. Easy.",
         "sub:online": "Online? I'll fetch a copy.",
         "sub:device": "On another device? I'll go and look.",
         "later": "Later's fine. I'll wait."
@@ -1232,7 +1284,7 @@
         "pick:gitlab": "GitLab. A good home for it.",
         "pick:azure_devops": "Azure DevOps. Very proper.",
         "pick:bitbucket_cloud": "Bitbucket. In it goes.",
-        "pick:forgejo": "Forgejo, on your own server.",
+        "pick:forgejo": "Forgejo. Where shall we find yours?",
         "pick:gitea": "Gitea. Small and tidy.",
         "pick:github_enterprise": "Your company's GitHub. Got it.",
         "pick:cursor_origin": "Cursor Origin. Still a preview!",
@@ -1252,7 +1304,7 @@
         "typing": "Ooh, a name for the copy.",
         "available": "That name's free. Lovely.",
         "vis:private": "Just you, and who you invite.",
-        "vis:public": "Everyone can see it. Brave!",
+        "vis:public": "Everyone can see this copy.",
         "vis:internal": "Only your organization. Cosy."
       },
       "ex-repos": {
@@ -1263,11 +1315,13 @@
       },
       "safe": {
         "enter": "Every version goes in the vault.",
-        "backend:git": "Git. Everyone knows Git.",
+        "backend:git": "Git keeps track of your changes.",
         "backend:jujutsu": "Jujutsu. Mistakes undo easily.",
         "install": "I'll install it while we build.",
         "keeps": "It keeps its own history. Good.",
-        "filesafe": "FileSafe on. Extra careful!",
+        "filesafe": "An extra safety copy before big changes.",
+        "filesafeOn": "FileSafe on. Extra careful!",
+        "filesafeOff": "FileSafe off. History stays on.",
         "online": "A copy in the cloud, just in case.",
         "backup": "A backup box. Sensible.",
         "bdest:nas": "On your home NAS. Close by.",
@@ -1311,8 +1365,8 @@
         "closeOk": "Close me if you like. I'll keep going."
       },
       "protect": {
-        "enter": "One sign-in and a test. Nearly there!",
-        "step:signin": "Sign in, and I'll do the rest.",
+        "enter": "Let's finish setting up your backup.",
+        "step:signin": "First, let's reach your backup.",
         "step:test": "A quick test run…",
         "step:kit": "Save your kit somewhere safe.",
         "step:kitTest": "Let's be sure the kit opens it.",
@@ -1369,7 +1423,10 @@
       "nas-key": {
         "enter": "Which key shall we use?",
         "looking": "Looking for your keys…",
-        "group:pick": "That key? It works already.",
+        "group:pick": "That key? Let's see what it needs.",
+        "works": "That key already works here!",
+        "locked": "That key needs unlocking first.",
+        "notAdded": "That key isn't on it yet. I'll add it.",
         "pick:new": "A brand-new key, just for me!",
         "typing": "A passphrase. I won't peek.",
         "testing": "Testing the key…"
@@ -1440,7 +1497,7 @@
         "confirm": {
           "codeWrong": "That setup code doesn't match.",
           "ownerFail": "The Server turned that step down.",
-          "evidenceMissing": "Its answer came without proof.",
+          "evidenceMissing": "I couldn't confirm that step finished.",
           "pendingHost": "No answer from the Server yet…"
         },
         "ready": {
@@ -1472,7 +1529,8 @@
           "changedTitle": "Wait! Its ID has changed."
         },
         "key": {
-          "passEmpty": "I need the passphrase first."
+          "passEmpty": "I need the passphrase first.",
+          "old": "That key is too old. Choose another."
         },
         "signin": {
           "wrong": "It didn't take that sign-in.",
@@ -1520,7 +1578,26 @@
           "failedLead": "Nothing was made yet. Try again?",
           "pending": "Waiting for its answer…",
           "mismatch": "That answer doesn't match. Odd.",
-          "unknown": "I'm not sure how that went yet."
+          "unknown": "I'm not sure how that went yet.",
+          "reasons": {
+            "waitingHost": "Waiting for the setup service…",
+            "claimBusy": "Another setup is still running. I'll wait.",
+            "pending": "Waiting for the setup answer…",
+            "deleteGated": "The service must confirm before deleting.",
+            "noBinding": "No confirmed online copy to open yet.",
+            "noRemote": "No online copy has been confirmed yet.",
+            "stale": "That answer was for the earlier setup.",
+            "mismatch": "That answer doesn't match this setup.",
+            "unknownOnly": "Still unclear. Let's check again.",
+            "confirmFirst": "Check which online copy to delete first.",
+            "openUnavailable": "I can't open that in this preview.",
+            "other": "That isn't available yet. Nothing changed."
+          }
+        }
+      },
+      "look": {
+        "nier": {
+          "missing": "Those choices aren't available here yet."
         }
       },
       "ai": {
@@ -1568,7 +1645,7 @@
         "confirm": {
           "codeWrong": "Code accepted!",
           "ownerFail": "Accepted this time!",
-          "evidenceMissing": "Proof received. All good.",
+          "evidenceMissing": "Confirmed. All good.",
           "pendingHost": "There it is. Answered!"
         },
         "ready": {
@@ -1600,7 +1677,8 @@
           "changedTitle": "New ID trusted. Carry on."
         },
         "key": {
-          "passEmpty": "Unlocked. Thank you!"
+          "passEmpty": "Unlocked. Thank you!",
+          "old": "A newer key. Good."
         },
         "signin": {
           "wrong": "In we go!",
@@ -1648,7 +1726,26 @@
           "failedLead": "Made it this time!",
           "pending": "Answered. Good.",
           "mismatch": "It matches now. Good.",
-          "unknown": "A clear answer. Phew."
+          "unknown": "A clear answer. Phew.",
+          "reasons": {
+            "waitingHost": "It answered. On we go!",
+            "claimBusy": "My turn now!",
+            "pending": "Answered. Good.",
+            "deleteGated": "Confirmed. Go ahead.",
+            "noBinding": "Confirmed. You can open it.",
+            "noRemote": "Confirmed now.",
+            "stale": "The current answer. Good.",
+            "mismatch": "It matches now. Good.",
+            "unknownOnly": "A clear answer. Phew.",
+            "confirmFirst": "That's the one.",
+            "openUnavailable": "Ready to open.",
+            "other": "Available now."
+          }
+        }
+      },
+      "look": {
+        "nier": {
+          "missing": "All there now."
         }
       },
       "ai": {
