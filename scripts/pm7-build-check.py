@@ -2,6 +2,7 @@
 """Read-only PM7 owner-contract checks; never runtime or rendering evidence."""
 from copy import deepcopy
 import json
+import hashlib
 from pathlib import Path
 import runpy
 import sys
@@ -114,6 +115,14 @@ def validate():
 
     full = read("full_thread_runtime_contracts.schema.json")
     jsonschema.Draft202012Validator.check_schema(full)
+    goal_realm = read("goal_workflow_cancel_schema_resources.json")["realms"]["goal"]
+    full_thread_pins = [entry for kind in ("whole_documents", "embedded_resources")
+                        for entry in goal_realm.get(kind, [])
+                        if entry["path"] == "Plans/full_thread_runtime_contracts.schema.json"]
+    full_thread_digest = hashlib.sha256((PLANS / "full_thread_runtime_contracts.schema.json").read_bytes()).hexdigest()
+    require(bool(full_thread_pins) and all(entry["complete_document_sha256"] == full_thread_digest
+                                         for entry in full_thread_pins),
+            "Live Goal resource realm has a stale full-thread dependency digest")
     runtime = read("full_thread_runtime_contract_fixtures.json")
     semantic_check = runpy.run_path(str(ROOT / "scripts/pm_full_thread_semantics.py"))["full_thread_semantic_failures"]
     runtime_cases = 0
@@ -128,9 +137,15 @@ def validate():
                       and not semantic_check(case.get("definition", "<root>"), case["instance"]))
             require(actual == valid,
                     "Runtime case differs: " + case["name"])
-    width = read("home_workspace_layout_v2.schema.json")["$defs"]["chat_column"]["properties"]["width_px"]
-    width_validator = jsonschema.Draft202012Validator(width)
-    require(width_validator.is_valid(1200) and not width_validator.is_valid(399), "Chat width still caps at 760 or loses its floor")
+    layout_schema = read("home_workspace_layout_v2.schema.json")
+    registered_layout = next(row["value_schema"] for row in read("storage_value_registry.json")["families"]
+                             if row["family_id"] == "home_workspace_layout_v2")
+    require(registered_layout == layout_schema, "Current registered v2 layout schema differs from its owner")
+    for label, value_schema in (("owner", layout_schema), ("registry", registered_layout)):
+        width = value_schema["$defs"]["chat_column"]["properties"]["width_px"]
+        width_validator = jsonschema.Draft202012Validator(width)
+        require(all(width_validator.is_valid(value) for value in (900, 1200, None))
+                and not width_validator.is_valid(399), label + ": chat width caps above 760 or loses its floor")
 
     touch = read("touch_closure.json")
     counts = fixtures["counts"]

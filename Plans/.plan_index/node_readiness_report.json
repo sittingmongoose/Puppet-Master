@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3229,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-10-29T23:21:02Z",
+  "generated_at_utc": "2026-10-29T23:52:43Z",
   "gui_related_units": {
     "count": 3665,
     "units": [
@@ -44578,7 +44578,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "a10eb2fd64c2dac06fc90ef7bd7531e871e7d8040727e391882818acfb4fcf79",
+        "expected": "6a7aa241ebd6bec44041fb090cd2ba89f8725a0e4bc812f161f413f1da93f0ef",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -44784,6 +44784,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/storage-plan.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage_value_registry.json"
       },
       {
         "error": "event_authority_currentness_source_drift",

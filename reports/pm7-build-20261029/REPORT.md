@@ -82,3 +82,13 @@ The completed d934851c07 aggregate returned 1: validate_new_contracts now PASS, 
 ## Combined recheck repairs ready for final verification
 
 Muse recheck at 78b06ddc00: 15 fixed / 5 partial originals, two major/eight minor follow-ups. All ten accepted and repaired; two overlap already-fixed Astra items. Cumulative §17, ACD-451/453, SSYS-056, EP-043 and F3-635 now agree with the operative PM7 owners. Retired art/loader descriptions are explicitly scoped as history, and four source-lineage residues are corrected. The per-item response table is in REVIEW-RESPONSES.md. No final prose approval is claimed until the lead’s final focused Astra check. After regeneration, source freezes for final full gates and dry attribution.
+
+## Final focused Astra review
+
+RECHECK2-prose-astra.md at c2a3acc3b4 closes all 21 prior review rows. It identifies three new items: N1 current storage-value mirror still caps chat width at 760 (major), N2 current All Settings fixture purpose still says 828 (minor), N3 PC4 decision map still cites removed ACD-451 (minor). Lead explicitly requested direct repair with proof, regeneration/push, and no further prose review cycle. Fixes are prepared outside source until the frozen dry check finishes; the companion checker will enforce whole current-v2 owner/registry parity and above-760 acceptance. Legacy v1 import remains unchanged. Companion review follows Step4 after GUI alignment.
+
+## Final companion corrections
+
+N1/N2/N3 are directly fixed with semantic and rg receipts in final-cycle-direct-fixes.json: current v2 registry/owner whole-schema parity and >760 acceptance; current-purpose copy derives the admitted inventory; PC4 retains correct Orbit owners only. No legacy v1 family changed. Frozen c2 dry completed exit2 with 26 blocking rows, all one full-thread dependency-digest mismatch repeated across run-gates/audit. Updated only two live Goal-realm pins after proving all six transitively referenced definitions unchanged, and all three exact stored-union validators now pass. Native/frozen realms and protected governance remain untouched. PM7 checker prevents both missing mirror and digest closure regressions. Source/companion corrections are ready for final validation; raw proofs are in the lane evidence folder.
+
+Foundation final API additions at f1e4ef8c38 introduce no IDs: canSendInput / answer, pending Restarting, one trayFace reducer, NieR diamond-or-ink loader fallback, O55.sound.pip and PM_PIP_PARTS_STORE. Captured for Step4 only; no GUI merge signal received.

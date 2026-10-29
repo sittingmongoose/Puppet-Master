@@ -84,3 +84,19 @@ All ten accepted. R-2/R-5 were already fixed in 58887ead09; remaining items are 
 | R-10 | Provider exclusion route wording now names the current D8 3 s grace; original exclusion scope remains. EP-043 also labels the retained 5-second token historical. |
 
 MN-5’s four lineage residues are also corrected: DL-240/245 use background-activity source, F3-663 uses onboarding Pip source, SSYS-057 includes the background-activity README/tracker. Final aggregate/dry attribution and the lead’s final focused Astra recheck remain pending.
+
+## Final focused Astra cycle — direct N1–N3 repairs
+
+Final review at c2a3acc3b4 closes all 21 prior rows and finds three new items. Lead requested direct fixes with proof, regeneration/push and no further prose review cycle. All three are accepted and repaired.
+
+| Item | Direct repair / proof |
+|---|---|
+| N1 | Current home_workspace_layout_v2 value_schema in storage_value_registry.json now exactly mirrors the owner schema; both accept 900/1200/null and reject 399. Every other registry family, including legacy v1, is unchanged. PM7 checker now enforces whole-schema parity plus above-760 behavior. |
+| N2 | All Settings purpose routes every admitted ordinary setting ID, with no fixed current count; admitted inventory remains 1011. Historical August 828 is preserved. |
+| N3 | Removed only PC4’s ACD-451 map edge; ACD-473/507 and all 76 decisions remain. |
+
+Semantic/grep receipts: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-cycle-direct-fixes.json`. These direct repairs are not represented as another independent review. Companion review remains after Step4.
+
+## Branch-owned dry-check repair
+
+Frozen c2a3acc3b4 full gates exit1; dry exit2 with 26 blocking rows, all one whole-document pin problem repeated in run-gates/audit. Only ObservableWorkRecord changed among pre-existing full-thread definitions. The five directly referenced Goal definitions plus transitive Sha256 are exactly unchanged from inherited main. Updated only the live Goal realm’s two full-thread dependency digests in goal_workflow_cancel_schema_resources.json; native realm and all stored member wrappers stay unchanged. The exact readiness stored-profile union validator now passes all three Goal union families, with no unresolved reference. Added a PM7 digest-consistency guard. Proof: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/schema-reference-closure-proof.json`. No protected governance reseal. Final aggregate/dry rerun follows this repair.
