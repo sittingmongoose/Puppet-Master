@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41988-L42582
+Source lines: L42275-L42920
 
-Source SHA256: `b88dbed9579de911698b77f4dfe726a1e998ba12fef41e8d213e9f0a80ce979e`
+Source SHA256: `36c5ffd042fbd9ee31121beb4871b8342bbe239e4537318cd5a69678db2b29f7`
 
 ---
 
@@ -326,56 +326,107 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Amended 2026-10-29 (X1/X3, PC1–PC5, O8, S1–S9; DL-239): every individual agent is Pip, drawn by the one PMLogo.kit-backed puppet primitive, never a second legacy figure or an avatar/initials. This supersedes DL-149 card 6’s still setup sheets, old body/limb geometry and puppet-native status silhouettes. Teams, specialists, plates, run cards/views, Activity rows and live agent cards share the primitive; category marks at ≤16 px remain robot (X1).
-  Roles match full Persona name then last word, unknown hard hat: Coordinator/chat assistant crown, Builder/implementer/helper hard hat, Checker/Reviewer/tester glasses, Moderator gavel, Critic jester cap, Wonderer orbit ring, Teacher/writer page, Architect set square, Product pennant. Gold crown/hat are role material exceptions, not status colours; seat hue comes only from F3-635. Grill Me is a switch, not a participant: the existing speaker peeks over its kettle grill. You hold strings, never an agent puppet.
-  Family materials are Friendly vinyl, Glass clear blue lens without brow band, Basic flat accent without cheeks, Retro pixel sprites, NieR ink with visor/square nodes/diamond. Live NieR shows eyes; static brand/tray keeps plain band. Strings use the kit’s shared eye-to-eye solver and may be hidden by the chat’s optional Strings part without restoring old art. Markup is a pure theme/identity/state function, no random or per-render IDs; exit copies survive ID stripping. Shared styles avoid per-instance style blocks.
-  Faces carry typed state: working think, queued sleep/pending, needs-you wonder/waiting, complete happy, failed oops, blocked remains blocked despite worried face; dependency wait and paused keep their own keys. Sheet host watches after 420 ms, wonders on typing, oops on refused action and happy/hop on success, preserving disabled-button refusal. It hangs 10 px lower than the original concept, level with Close, holding the sign on a third string. Face change is a blink not crossfade; gaze keeps the last pointer and dots/sleep do not track; blinks are not synchronized between Pips. Optional sheet sway and lift-off consume the shared rig/overlay owners, pause hidden/offscreen/during drags and obey Animation speed and parts. Reduced Motion stops nonessential motion, keeping immediate state feedback; smallest figures stay still. Full/Quiet/Still/Plain never introduce a second primitive.
+  Amended 2026-10-29 (X1/X3, PC1–PC5, O8, S1–S9; DL-239): every individual agent is Pip, drawn by the one
+  PMLogo.kit-backed puppet primitive, never a second legacy figure or an avatar/initials. This supersedes
+  DL-149 card 6’s still setup sheets, old body/limb geometry and puppet-native status silhouettes. Teams,
+  specialists, plates, run cards/views, Activity rows and live agent cards share the primitive; category
+  marks at ≤16 px remain robot (X1). Roles match full Persona name then last word, unknown hard hat:
+  Coordinator/chat assistant crown, Builder/implementer/helper hard hat, Checker/Reviewer/tester glasses,
+  Moderator gavel, Critic jester cap, Wonderer orbit ring, Teacher/writer page, Architect set square,
+  Product pennant. Gold crown/hat are role material exceptions, not status colours; seat hue comes only
+  from F3-635. Grill Me is a switch, not a participant: the existing speaker peeks over its kettle grill.
+  You hold strings, never an agent puppet. Family materials are Friendly vinyl, Glass clear blue lens
+  without brow band, Basic flat accent without cheeks, Retro pixel sprites, NieR ink with visor/square
+  nodes/diamond. Live NieR shows eyes; static brand/tray keeps plain band. Strings use the kit’s shared
+  eye-to-eye solver and may be hidden by the chat’s optional Strings part without restoring old art. Markup
+  is a pure theme/identity/state function, no random or per-render IDs; exit copies survive ID stripping.
+  Shared styles avoid per-instance style blocks. Faces carry typed state: working think, queued
+  sleep/pending, needs-you wonder/waiting, complete happy, failed oops, blocked remains blocked despite
+  worried face; dependency wait and paused keep their own keys. Sheet host watches after 420 ms, wonders on
+  typing, oops on refused action and happy/hop on success, preserving disabled-button refusal. It hangs 10
+  px lower than the original concept, level with Close, holding the sign on a third string. Face change is
+  a blink not crossfade; gaze keeps the last pointer and dots/sleep do not track; blinks are not
+  synchronized between Pips. Optional sheet sway and lift-off consume the shared rig/overlay owners, pause
+  hidden/offscreen/during drags and obey Animation speed and parts. Reduced Motion stops nonessential
+  motion, keeping immediate state feedback; smallest figures stay still. Full/Quiet/Still/Plain never
+  introduce a second primitive. PC1/X3 sheet motion (2026-10-29): a host drops in when its sheet opens,
+  using the shared rig and installed parts. Dots, sleep and happy faces never follow the pointer; other
+  gaze retains the last known position. Retro entrance/face changes step; live NieR sheet changes cut with
+  a bounded flicker, no black frame. Effective Reduced Motion/Still snaps to the settled state without
+  entrance, sway, flicker or lift-off travel. Static NieR brand/tray/app marks remain static;
+  acknowledgement stays ≤100 ms with no dispatch deferral or double commit. PC2/PC3 complete agent mapping:
+  working/reviewing/recovering use think with working/reviewing/recovering keys respectively;
+  pending/queued sleep, waiting/needs-you wonder, waiting-dep sleep, idle idle, complete happy,
+  blocked/failed oops with their distinct keys, paused/skipped sleep with their distinct keys, mixed alert
+  with mixed. The expression does not remap the owner key. Preserve abstained as dimmed/skipped when the
+  owner says abstained, optional as a dashed role/participation treatment and stand-in as the existing swap
+  notch; neither optional nor stand-in adds a runtime state. Parts-off state faces keep the same accessible
+  owner words and catalog-state fallback, never restore a second puppet. Pip is the shared marionette
+  puppet, and the live/static NieR visor band follows X3. These retained terms describe Pip’s strings and
+  blindfold, not the retired torso/collar geometry. PC1/PC5 rendering boundary: agent/sheet Pip SVG
+  contains no ids at all, uses flat drawing or plain fallbacks for gradients and survives the exit copy
+  that strips IDs. Static exported brand assets may retain their own self-contained definitions; they are
+  not the chat primitive. No innerHTML setter hook, re-insertion observer or data-pm-keep replacement
+  island is a product implementation.
 gui_related: true
 gui_classification_reason: Defines how every agent is drawn in the assistant chat and the wand module sheets.
 split_recommended: false
-depends_on: [DL-149, F3-566, F3-584, F3-585, F3-588, F3-589, F3-598, DL-111]
-unblocks: [F3-595]
+depends_on:
+- DL-149
+- F3-566
+- F3-584
+- F3-585
+- F3-588
+- F3-589
+- F3-598
+- DL-111
+unblocks:
+- F3-595
 acceptance_criteria:
-  - "One puppet primitive renders every agent in sheets, run cards, run views, Activity and the live agents card in every theme, NieR Mode included, and no agent is drawn as initials."
-  - "Every role prop is distinguishable in grayscale at the sizes the surfaces use."
-  - "No setup sheet runs a puppet motion, no run card or run view runs a looping one, and reduced motion shows the rest pose."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- One puppet primitive renders every agent in sheets, run cards, run views, Activity and the live agents card
+  in every theme, NieR Mode included, and no agent is drawn as initials.
+- Every role prop is distinguishable in grayscale at the sizes the surfaces use.
+- Optional sheet Pip motion uses the shared bounded rig and parts; run cards/views retain their scoped one-shot/live-work
+  budget, and Reduced Motion keeps state feedback with no nonessential travel.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: agent_mark_presentation_drift
 reasoning_tier: high
 context_scope: chat_tweaks_20261007
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: gui_promotion_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-218"
-  - "Plans/Decision_Log.md#DL-149"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/nier-puppets-final-handoff.md, SHA-256 492a3bbeae1285f1dd1d55dfbdc87da3bfa9fce207c9ef01a9f2005abb0ddfa0"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PM7-COORDINATION-20261008.md, SHA-256 c31bdbf5c69cf7f3110b2bbdc63258848bba8eee69da4154f976c295e2881002"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+- Plans/Decision_Log.md#DL-218
+- Plans/Decision_Log.md#DL-149
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/nier-puppets-final-handoff.md, SHA-256 492a3bbeae1285f1dd1d55dfbdc87da3bfa9fce207c9ef01a9f2005abb0ddfa0
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PM7-COORDINATION-20261008.md, SHA-256 c31bdbf5c69cf7f3110b2bbdc63258848bba8eee69da4154f976c295e2881002
+- Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)
 preserved_exact_tokens:
-  - "marionette puppet"
-  - "puppet primitive"
-  - "visor band"
-  - "kettle grill"
+- marionette puppet
+- puppet primitive
+- visor band
+- kettle grill
 negative_constraints:
-  - "Do not draw an agent with initials, letters or an avatar."
-  - "Do not draw a second puppet primitive for any surface."
-  - "Do not give the puppet a hue or a glow under NieR Mode."
-  - "Do not add a surface-owned puppet loop; shared optional sheet motion follows PC1/O2 and F3-594/F3-663."
+- Do not draw an agent with initials, letters or an avatar.
+- Do not draw a second puppet primitive for any surface.
+- Do not give the puppet a hue or a glow under NieR Mode.
+- Do not add a surface-owned puppet loop; shared optional sheet motion follows PC1/O2 and F3-594/F3-663.
 compatibility_only_notes: []
 stale_retired_dispositions:
-  - "F3-566's cast mark drawn from silhouette, spike and hue with its state as a ring, and ACD-469's avatar stack, are replaced by the puppet (DL-149)."
+- F3-566's cast mark drawn from silhouette, spike and hue with its state as a ring, and ACD-469's avatar stack,
+  are replaced by the puppet (DL-149).
 owner_hints:
-  - Plans/FinalGUISpec.md
+- Plans/FinalGUISpec.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-149, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-584, ContractName:Plans/FinalGUISpec.md#F3-589, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/DRY_Rules.md#DR-044

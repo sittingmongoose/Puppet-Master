@@ -1119,9 +1119,16 @@ plan_unit_id: SMPFS-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: 'The app shell is workspace-tab based: each workspace tab owns one active project, project switching is a workspace-tab concern rather than a title-bar project bar, and background, blocked, or failed activity remains visible through persistent shell regions.'
+canonical_text: |-
+  The app shell is workspace-tab based: each workspace tab owns one active project, project switching is a
+  workspace-tab concern rather than a title-bar project bar, and background, blocked, or failed activity
+  remains visible through persistent shell regions.
+  Amended 2026-10-29 (B1–B6; PM7): Project box A is an admitted secondary project switch entry; Projects
+  view remains primary. Ctrl+Shift+P opens the box menu without dispatch; ordinary pick switches active
+  workspace, Ctrl/Cmd+Enter opens new workspace tab.
 gui_related: true
-gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation
+  requirements.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -1133,8 +1140,10 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - SMPFS-003 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1755,15 +1764,16 @@ plan_unit_id: SMPFS-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: >-
-  The terminal is the canonical interactive shell surface. Since 2026-10-09 (DL-181) it is shown as terminal tabs of
-  the universal panels with one session per tab (SMPFS-180), with renameable labels and the settings vocabulary of
-  section 1.6; move/resize of a terminal is the move and resize of its tab and panel (`Plans/FinalGUISpec.md#F3-630`).
-  The former model of up to four terminal sections, tabs and panes in layout families, the bottom default placement
-  and section detach is retired; Terminals 2x2 is a named layout of four panels.
-  Amended 2026-10-29 (B1–B6; PM7): Project box A is an admitted secondary project switch entry; Projects view remains primary. Ctrl+Shift+P opens the box menu without dispatch; ordinary pick switches active workspace, Ctrl/Cmd+Enter opens new workspace tab.
+canonical_text: |-
+  The terminal is the canonical interactive shell surface. Since 2026-10-09 (DL-181) it is shown as
+  terminal tabs of the universal panels with one session per tab (SMPFS-180), with renameable labels and
+  the settings vocabulary of section 1.6; move/resize of a terminal is the move and resize of its tab and
+  panel (`Plans/FinalGUISpec.md#F3-630`). The former model of up to four terminal sections, tabs and panes
+  in layout families, the bottom default placement and section detach is retired; Terminals 2x2 is a named
+  layout of four panels.
 gui_related: true
-gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation
+  requirements.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -1777,9 +1787,12 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - SMPFS-014 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
-- "Amended 2026-10-09 (DL-181): no active text of this unit describes terminal sections, pane layout families, a bottom default or section detach; SMPFS-180 owns the terminal's container model."
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+- 'Amended 2026-10-09 (DL-181): no active text of this unit describes terminal sections, pane layout families,
+  a bottom default or section detach; SMPFS-180 owns the terminal''s container model.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1808,9 +1821,11 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md'
 compatibility_only_notes:
-- "The tokens up to four terminal sections, panes, bottom default and detach are retired lineage since 2026-10-09 (DL-181)."
+- The tokens up to four terminal sections, panes, bottom default and detach are retired lineage since 2026-10-09
+  (DL-181).
 stale_retired_dispositions:
-- "Amended 2026-10-09 (DL-181): the terminal surface is a panel tab kind with one session per tab; sections, pane layout families, the bottom default and section detach are retired (SMPFS-180)."
+- 'Amended 2026-10-09 (DL-181): the terminal surface is a panel tab kind with one session per tab; sections,
+  pane layout families, the bottom default and section detach are retired (SMPFS-180).'
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -6026,9 +6041,15 @@ plan_unit_id: SMPFS-083
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Instant project switch defaults to switching the active workspace tab, while an alternate command opens the target project in a new workspace tab.
+canonical_text: |-
+  Instant project switch defaults to switching the active workspace tab, while an alternate command opens
+  the target project in a new workspace tab.
+  Amended 2026-10-29 (B1/B6; PM7): Promote cmd.project.switch_active_tab and
+  cmd.project.open_in_new_workspace_tab into UCC-209/CS-105; the title-bar menu is an additional producer
+  using stable project_id and the same workspace owner.
 gui_related: false
-gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
+  rather than visual presentation.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -6040,8 +6061,10 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - SMPFS-083 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -6745,15 +6768,15 @@ plan_unit_id: SMPFS-094
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: >-
-  Browser persistence covers history, cookies, storage, profile { name, saveChanges }, project-scoped ordinary
-  BrowserSessions, workspace_preview/detached_preview sharing, isolated automation_session profiles, restore
-  eligibility, and crash recovery. Protected AuthBrowserSession is the explicit exception: it is human-only and
-  ephemeral, uses a domain-restricted transient store, and cannot persist, restore, copy, promote, capture, or
-  export profile/content state.
-  Amended 2026-10-29 (B1/B6; PM7): Promote cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab into UCC-209/CS-105; the title-bar menu is an additional producer using stable project_id and the same workspace owner.
+canonical_text: |-
+  Browser persistence covers history, cookies, storage, profile { name, saveChanges }, project-scoped
+  ordinary BrowserSessions, workspace_preview/detached_preview sharing, isolated automation_session
+  profiles, restore eligibility, and crash recovery. Protected AuthBrowserSession is the explicit
+  exception: it is human-only and ephemeral, uses a domain-restricted transient store, and cannot persist,
+  restore, copy, promote, capture, or export profile/content state.
 gui_related: false
-gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
+  rather than visual presentation.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -6765,8 +6788,10 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - SMPFS-094 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -6797,18 +6822,33 @@ preserved_exact_tokens:
 - crash recovery
 negative_constraints:
 - provider-routed fetch must not reuse the reserved native Site Reader identity.
-- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
-- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
-- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
-- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
-- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation
+  family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked
+  capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch,
+  site/page reading intents, or Site Reader-only behavior.'
+- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the
+  selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots
+  directly into prompt text.
+- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful
+  prompt attachments.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade,
+    compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution
+    surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and
+  capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol
+  escape hatch.
+- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background
+  labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because
+  degraded states are advertised through requested/effective browser capability fields, runtime_unavailable,
+  and /capability-degradation before a feature is offered.
 preserved_contractrefs:
-- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation
+  family runtime contract'
 compatibility_only_notes:
 - /localStorage slash notation remains lineage for the canonical localStorage storage field.
 stale_retired_dispositions:
-- The legacy auth_session-as-persistent-isolated-profile reading is retired; protected AuthBrowserSession has no persistent profile/store or restore eligibility.
+- The legacy auth_session-as-persistent-isolated-profile reading is retired; protected AuthBrowserSession has
+  no persistent profile/store or restore eligibility.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md

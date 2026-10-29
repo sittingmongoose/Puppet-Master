@@ -4,7 +4,7 @@ Source: `Plans/Glossary.md`
 
 Source lines: L367-L1695
 
-Source SHA256: `89708918bb16e498e7d3d4efbee1ba90464e2fa7ea1dbd4158c9771e9bea6a07`
+Source SHA256: `759065755e25e4c3a1541f14b9ada24182b4a65041697437a6978416e870d624`
 
 ---
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3458-L4425
+Source lines: L3458-L4445
 
-Source SHA256: `1f1167147159ee4aff768ceb2eb704ca12599a38f03e4e71224f7436c3fc2f70`
+Source SHA256: `818a665c0e08e56adf62f1e93f5ff45d9239d1b0c1399f0c8e2ad14e4f6228b6`
 
 ---
 
@@ -842,23 +842,29 @@ plan_unit_id: DR-076
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: 'X1/X3, A1–A5, O1/O8, PC1–PC5, S1/S9: one kit owns Pip geometry, string solver, faces, role
-  props, token colours and shared styles for static brand/release assets/tray/notifications, loader, onboarding
-  and the single chat-agent primitive. Robot is only category art. No per-surface renderer/palette, legacy
-  puppet fallback, random drawing IDs or switchable brand/loader. Pip parts is one registry/editor/Settings
-  row, not a shadow store. Declarative static base remains meaningful without animation.'
+canonical_text: >-
+  X1/X3, A1–A5, O1/O8, PC1–PC5, S1/S9: one kit owns Pip geometry, string solver, faces, role props, token
+  colours and shared styles for static brand/release assets/tray/notifications, loader, onboarding and the
+  single chat-agent primitive. Robot is only category art. No per-surface renderer/palette, legacy puppet
+  fallback, random drawing IDs or switchable brand/loader. Pip parts is one registry/editor/Settings row,
+  not a shadow store. Declarative static base remains meaningful without animation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on:
 - DL-235
+- DR-044
+- DR-051
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- A drawing-source audit finds one Pip kit/solver/palette owner and no legacy puppet/monogram fallback.
+- Brand, tray, release assets, onboarding and agents share tokens/geometry/static base at consistent logical
+  tiers across DPR.
+- Pip parts exclude brand/loader/notifications and every individual agent remains the same primitive.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -881,7 +887,9 @@ owner_hints:
 - Plans/DRY_Rules.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-235
+ContractRef: ContractName:Plans/Decision_Log.md#DL-235, ContractName:Plans/DRY_Rules.md#DR-044, ContractName:Plans/DRY_Rules.md#DR-051
+
+
 
 
 ### DR-077 - One Loading Indicator
@@ -891,23 +899,29 @@ plan_unit_id: DR-077
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: 'L1–L8, X2: one F3-662 loader owner/opt-in/class contract and clock supplies every indeterminate
-  wait with contextual Swing/Think/Hop, per-family timing, size/accessibility and pause gates. Preserve layout
-  skeletons and determinate bars; working status remains st-working. NieR routes to its Diamond owner/fallback.
-  No surface spinner, loader-setting or duplicate thinking/Orbit Pip. Deferred debt L8: chat menus.js, Usage
-  PMU.menu and Home PMW.menu still duplicate sprout; do not silently claim DRY closure for them.'
+canonical_text: >-
+  L1–L8, X2: one F3-662 loader owner/opt-in/class contract and clock supplies every indeterminate wait with
+  contextual Swing/Think/Hop, per-family timing, size/accessibility and pause gates. Preserve layout
+  skeletons and determinate bars; working status remains st-working. NieR routes to its Diamond
+  owner/fallback. No surface spinner, loader-setting or duplicate thinking/Orbit Pip. Deferred debt L8:
+  chat menus.js, Usage PMU.menu and Home PMW.menu still duplicate sprout; do not silently claim DRY closure
+  for them.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on:
 - DL-237
+- DR-043
+- SSYS-010
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Every loader consumer opts into one owner/class/clock rather than implementing a spinner.
+- Skeletons, measured bars and status marks retain their own contracts, including NieR routing.
+- Family periods, size gate, accessibility and hidden/drag/Reduced Motion behavior agree across all consumers.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -928,7 +942,9 @@ owner_hints:
 - Plans/DRY_Rules.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-237
+ContractRef: ContractName:Plans/Decision_Log.md#DL-237, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/Settings_System.md#SSYS-010
+
+
 
 
 ### DR-078 - One Work Projection And Resource Owner
@@ -938,23 +954,27 @@ plan_unit_id: DR-078
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: 'D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project
+canonical_text: >-
+  D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project
   badge and composer attention are filtered OperationalAwareness over ObservableWork and registry lineage.
-  No consumer owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate ProcessFacts;
-  host monitor owns server/environment resource samples while Resources is open only. Actions route to one
-  owner command/handler; services are read-only and stop lists are generation-bound.'
+  No consumer owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate
+  ProcessFacts; host monitor owns server/environment resource samples while Resources is open only. Actions
+  route to one owner command/handler; services are read-only and stop lists are generation-bound.
 gui_related: false
 gui_classification_reason: Defines owner authority, record semantics or lifecycle.
 split_recommended: false
 depends_on:
 - DL-246
+- SIR-054
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Counts, rows, freshness and attention agree across thread/status/panel/rail/board/tray/composer filters.
+- ProcessFacts and resource samples resolve their sole Executor/terminal/host owner with stable identity.
+- No surface-private runtime list/stop handler or system-service mutation is introduced.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -975,4 +995,4 @@ owner_hints:
 - Plans/DRY_Rules.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-246
+ContractRef: ContractName:Plans/Decision_Log.md#DL-246, ContractName:Plans/Shared_Integration_Runtime.md#SIR-054

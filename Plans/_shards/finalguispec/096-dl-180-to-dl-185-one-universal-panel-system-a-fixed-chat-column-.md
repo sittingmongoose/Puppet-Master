@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44523-L46817
+Source lines: L44972-L47368
 
-Source SHA256: `b88dbed9579de911698b77f4dfe726a1e998ba12fef41e8d213e9f0a80ce979e`
+Source SHA256: `36c5ffd042fbd9ee31121beb4871b8342bbe239e4537318cd5a69678db2b29f7`
 
 ---
 
@@ -1400,41 +1400,100 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Amended 2026-10-29 (G1–G3; DL-254, retaining DL-180/DL-233). Chat is one fixed right-hand column from title bar to status bar, never a tab or split-tree panel and never moved/floated inside the window. Only desktop Pop out moves it to a separate window via cmd.panel.undock with chat; cmd.panel.redock returns the same chat. Web has no Pop out. Pop-out is never saved: restart opens the column, ignoring/clearing the retired chat-layout-mode without notice. Default message width remains clamp(400, 0.26667 × window width + 88, 640) px until the user sizes it.
-  The message-area width is a finite integer ≥400 or null following the default, with no fixed 760 maximum. Drag goes until the active centre/page’s own floor; Usage’s board stays ≥400. Available-space clamping changes rendering, not the saved preference. F3-636’s narrow ladder and Keep open rule remain; no drag animation folds the person’s sized chat back. Release commits once through cmd.workspace_layout.resize_surface {surface: chat, width}, one receipt/revision/workspace.layout_changed; Escape/no-movement commits nothing; double-click sets null. Legacy finite saved widths clamp only to the minimum and current available space, never to a retired maximum. Storage owner SP-330 keeps shown, width_px, history_pinned and keep_open, no Settings row and no pop-out.
-  History is the one chat-owned history list, flyout by default. Pin widens the column by the width History is actually drawn at rather than squeezing messages: 240 px, or 200 only in a capped column under 540, or the person’s dragged width bounded to 170–360 and 42 percent of its pane (DL-233). During that drag only History moves; on release the column takes its width. The narrow ladder temporarily returns History to flyout while preserving the pin and restores it when space returns. A folded chat peeks at 400 with History as flyout; a pinned peek starts at 640 capped by available row width minus 48. ui.chat_column.pin_history(history_pinned) and ui.chat_column.keep_open(keep_open) are local saved layout state without receipt/event/revision, never Settings; absent booleans toggle. Home options and chat header share these controls. The earlier measured 760-cap/960-budget examples are superseded historical measurements, not current width limits.
-  Activity Detail opens full size directly, without Pin/unpin or a small transient view. It first asks the column for room, then covers the transcript at full column height if the window cannot fit it; ×, Esc or the same icon closes it. History pin is unaffected. Hosted chat sizes by its container and sends content opens through F3-634; one right chat and one history survive. This supersedes old movable chat, grips, bottom workspace mirroring and any fixed maximum-width Settings preference while keeping the narrow/popped-out resilience of F3-565/F3-423.
+  Amended 2026-10-29 (G1–G3; DL-254, retaining DL-180/DL-233). Chat is one fixed right-hand column from
+  title bar to status bar, never a tab or split-tree panel and never moved/floated inside the window. Only
+  desktop Pop out moves it to a separate window via cmd.panel.undock with chat; cmd.panel.redock returns
+  the same chat. Web has no Pop out. Pop-out is never saved: restart opens the column, ignoring/clearing
+  the retired chat-layout-mode without notice. Default message width remains clamp(400, 0.26667 × window
+  width + 88, 640) px until the user sizes it. The message-area width is a finite integer ≥400 or null
+  following the default, with no fixed 760 maximum. Drag goes until the active centre/page’s own floor;
+  Usage’s board stays ≥400. Available-space clamping changes rendering, not the saved preference. F3-636’s
+  narrow ladder and Keep open rule remain; no drag animation folds the person’s sized chat back. Release
+  commits once through cmd.workspace_layout.resize_surface {surface: chat, width}, one
+  receipt/revision/workspace.layout_changed; Escape/no-movement commits nothing; double-click sets null.
+  Legacy finite saved widths clamp only to the minimum and current available space, never to a retired
+  maximum. Storage owner SP-330 keeps shown, width_px, history_pinned and keep_open, no Settings row and no
+  pop-out. History is the one chat-owned history list, flyout by default. Pin widens the column by the
+  width History is actually drawn at rather than squeezing messages: 240 px, or 200 only in a capped column
+  under 540, or the person’s dragged width bounded to 170–360 and 42 percent of its pane (DL-233). During
+  that drag only History moves; on release the column takes its width. The narrow ladder temporarily
+  returns History to flyout while preserving the pin and restores it when space returns. A folded chat
+  peeks at 400 with History as flyout; a pinned peek starts at 640 capped by available row width minus 48.
+  ui.chat_column.pin_history(history_pinned) and ui.chat_column.keep_open(keep_open) are local saved layout
+  state without receipt/event/revision, never Settings; absent booleans toggle. Home options and chat
+  header share these controls. The earlier measured 760-cap/960-budget examples are superseded historical
+  measurements, not current width limits. Activity Detail opens full size directly, without Pin/unpin or a
+  small transient view. It first asks the column for room, then covers the transcript at full column height
+  if the window cannot fit it; ×, Esc or the same icon closes it. History pin is unaffected. Hosted chat
+  sizes by its container and sends content opens through F3-634; one right chat and one history survive.
+  This supersedes old movable chat, grips, bottom workspace mirroring and any fixed maximum-width Settings
+  preference while keeping the narrow/popped-out resilience of F3-565/F3-423. The default remains exactly
+  clamp(400, 0.26667 x window width + 88, 640) px: 480 at 1470, 600 at 1920 and 640 from 2070 px before
+  available-space rendering. The rail Chat control still uses cmd.panel.switch with panel_id chat to
+  show/hide without switching the primary page. Header/Home options retain Show the chat/Hide the chat,
+  desktop Pop out/Dock back and Keep the chat open in narrow windows, all routed to their existing
+  command/local identities. general.visual.chat-layout-mode is retired and ignored/cleared on first read,
+  never another layout store. Preserve Jared’s full-height requirement: The chat assistant window should be
+  full vertical height, unless it pops out, then the user can adjust it.
 gui_related: true
-gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
+gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout
+  and Activity Detail.
 split_recommended: false
-depends_on: [DL-180, DL-187, F3-504, F3-527, F3-630]
-unblocks: [ACD-500, ACD-501, SSYS-050, UCC-203, PWIZ-035, ATS-075]
+depends_on:
+- DL-180
+- DL-187
+- F3-504
+- F3-527
+- F3-630
+unblocks:
+- ACD-500
+- ACD-501
+- SSYS-050
+- UCC-203
+- PWIZ-035
+- ATS-075
 acceptance_criteria:
-  - "The chat column spans from the title bar to the status bar at full width of both bars, and no gesture, menu or key moves it inside the window."
-  - "The default width equals clamp(400, 0.26667 x window width + 88, 640) px (480 at 1470, 600 at 1920, 640 from 2070) until the user drags it."
-  - "A width drag stays within at least 400 px, bounded by current centre/page space and never leaves the centre below its current minimum, and commits once on release as cmd.workspace_layout.resize_surface with the surface chat."
-  - "Pop out in the desktop app opens the one chat in its own window and Dock back returns it to its column; no second chat surface ever exists."
-  - "History opens as a flyout by default and pinning it widens the column by the list's width without narrowing the messages; Activity Detail stays in the chat."
-  - "Below a centre width of 480 px the chat folds to a 32 px strip unless Keep the chat open in narrow windows is on."
-  - "Keep the chat open in narrow windows is reachable from the chat header's menu and the title bar's Home options menu and is not a Settings row."
-  - "Keep the chat open in narrow windows is a check in the chat header's menu and in the Home options menu; both dispatch ui.chat_column.keep_open with keep_open, and the value is saved in the v2 record's chat column (SP-330), never in Settings (amended 2026-10-10, lead ruling)."
-  - "After a restart a chat that was popped out shows in its column, and no stored Chat Layout value (Overlay or Detached) pops it out or shows a notice."
-  - "The left rail's Chat entry shows or hides the column on every page and never changes the page in front."
-  - "On the Usage page no chat width, drag or pinned History leaves the Usage board below 400 px: a pinned History drops to its flyout first, then the column gives way down to 400 px, and a drag stops there."
-  - "The narrow ladder acts only while Home is the page shown; on another page the column is the person's width plus a pinned History."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "History adds 240 px, or 200 px below a 540 px whole-column width, without changing the message area's width or its at least 400 px, bounded by current centre/page space drag range; the pinned column and peek obey the stated minima and centre budget."
+- The chat column spans from the title bar to the status bar at full width of both bars, and no gesture, menu
+  or key moves it inside the window.
+- The default width equals clamp(400, 0.26667 x window width + 88, 640) px (480 at 1470, 600 at 1920, 640 from
+  2070) until the user drags it.
+- A width drag stays within at least 400 px, bounded by current centre/page space and never leaves the centre
+  below its current minimum, and commits once on release as cmd.workspace_layout.resize_surface with the surface
+  chat.
+- Pop out in the desktop app opens the one chat in its own window and Dock back returns it to its column; no
+  second chat surface ever exists.
+- History opens as a flyout by default and pinning it widens the column by the list's width without narrowing
+  the messages; Activity Detail stays in the chat.
+- Below a centre width of 480 px the chat folds to a 32 px strip unless Keep the chat open in narrow windows
+  is on.
+- Keep the chat open in narrow windows is reachable from the chat header's menu and the title bar's Home options
+  menu and is not a Settings row.
+- Keep the chat open in narrow windows is a check in the chat header's menu and in the Home options menu; both
+  dispatch ui.chat_column.keep_open with keep_open, and the value is saved in the v2 record's chat column (SP-330),
+  never in Settings (amended 2026-10-10, lead ruling).
+- After a restart a chat that was popped out shows in its column, and no stored Chat Layout value (Overlay
+  or Detached) pops it out or shows a notice.
+- The left rail's Chat entry shows or hides the column on every page and never changes the page in front.
+- 'On the Usage page no chat width, drag or pinned History leaves the Usage board below 400 px: a pinned History
+  drops to its flyout first, then the column gives way down to 400 px, and a drag stops there.'
+- The narrow ladder acts only while Home is the page shown; on another page the column is the person's width
+  plus a pinned History.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
+- History adds 240 px, or 200 px below a 540 px whole-column width, without changing the message area's width
+  or its at least 400 px, bounded by current centre/page space drag range; the pinned column and peek obey
+  the stated minima and centre budget.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: home_panels_terminal_redesign_drift
 reasoning_tier: high
 context_scope: home_panels_terminal
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - Plans/assistant-chat-design.md
-  - Plans/Settings_System.md
-  - Plans/storage-plan.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/Settings_System.md
+- Plans/storage-plan.md
 node_compile_hint:
   mode: gui_promotion_contract
   create_worknodes: false
@@ -1442,16 +1501,15 @@ node_compile_hint:
 source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
   SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
-- Plans/FinalGUISpec.md#F3-636 (the narrow ladder consumes the chat column; cited, not a dependency (lead
-  ruling L22, 2026-10-10))
+- Plans/FinalGUISpec.md#F3-636 (the narrow ladder consumes the chat column; cited, not a dependency (lead ruling
+  L22, 2026-10-10))
 - Plans/Decision_Log.md#DL-180
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
   (D3, D4)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
   SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)
-- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256
-  52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage
-  only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981
+  (the agreed anatomy; concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5
   (sections 9 and 10; audit lineage only)
 - Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)
@@ -1459,23 +1517,20 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
   SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D40)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md,
-  SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (chat column, D32 and D40;
-  concept lineage only)
+  SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (chat column, D32 and D40; concept
+  lineage only)
 - 'The planning thread''s rulings of 2026-10-10: the Usage board''s 400 px floor (pm-mail 1010142236-fced)
   and Chat Layout''s retirement with the narrow-window pin on the chat''s header menu (pm-mail 1010211322-7b6c)'
 - Concepts/home-redesign/src/panels/js/44-narrow.js and 46-chat.js at 7ad8442ad4 on branch concept/home-panels-20261009
   (the Usage board floor as built; concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
-  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage
-  only)
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
-  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage
-  only)
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
   (decision/source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--LANDING-HANDOFF.md,
-  SHA-256 b920b1435478aaf5723b8051acc0aa07247680ed3d231fa6e5a67e1cfd11f48f (source lineage; not native
-  certification)
+  SHA-256 b920b1435478aaf5723b8051acc0aa07247680ed3d231fa6e5a67e1cfd11f48f (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/SPACING-4511b2c0eb.patch, SHA-256 57d02d7bfe773a8bde37c5c0aee4ade312a29d7530124c3e2e7ebc70629f147d
   (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/SPACING-84997e7cad.patch, SHA-256 2b5acd7b306e3133fa64dec16ff4c32a95fd229e2b89b563cf367f2c05cf96c3
@@ -1483,43 +1538,61 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/SPACING-dc743c7320.patch, SHA-256 d88a28be144814a3c486e810afcf8c3dd348b06ebef611bbbf44fd4d5095a20b
   (source lineage; not native certification)
 preserved_exact_tokens:
-  - "clamp(400, 0.26667 x window width + 88, 640)"
-  - "400"
-  - "760"
-  - "600"
-  - "Pop out"
-  - "Dock back"
-  - "cmd.panel.switch"
-  - "cmd.panel.undock"
-  - "cmd.panel.redock"
-  - "Keep the chat open in narrow windows"
-  - "general.visual.chat-layout-mode"
-  - "The chat assistant window should be full vertical height, unless it pops out, then the user can adjust it."
+- clamp(400, 0.26667 x window width + 88, 640)
+- '400'
+- '760'
+- '600'
+- Pop out
+- Dock back
+- cmd.panel.switch
+- cmd.panel.undock
+- cmd.panel.redock
+- Keep the chat open in narrow windows
+- general.visual.chat-layout-mode
+- The chat assistant window should be full vertical height, unless it pops out, then the user can adjust it.
 negative_constraints:
-  - "Do not dock, grab, float or move the chat inside the window or, in the web client, inside the page, or make it a tab."
-  - "Do not size the chat against the window inside its column."
-  - "Do not make Activity Detail or the History list a panel tab."
-  - "Do not keep a second thread-history list."
-  - "Do not save the chat's pop-out across a restart, or let a stored Chat Layout value pop it out."
-  - "Do not let the chat leave the Usage page's board below 400 px."
+- Do not dock, grab, float or move the chat inside the window or, in the web client, inside the page, or make
+  it a tab.
+- Do not size the chat against the window inside its column.
+- Do not make Activity Detail or the History list a panel tab.
+- Do not keep a second thread-history list.
+- Do not save the chat's pop-out across a restart, or let a stored Chat Layout value pop it out.
+- Do not let the chat leave the Usage page's board below 400 px.
 compatibility_only_notes:
-  - "The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back; that is the concept's browser stand-in, not a canon size."
+- The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back;
+  that is the concept's browser stand-in, not a canon size.
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds pinned History widths, keeps the width and drag range tied to the messages, and records the measured pinned History column and message widths from NUMBERS; a folded chat's peek opens at 400 px with History dropped, and is 640 px only with History pinned in the peek."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Saves History pin as view state with no layout event, revision advance or receipt."
-  - "Amended 2026-10-10 (lead ruling L9, corrected): The History pin is the typed local action ui.chat_column.pin_history, view state saved in the v2 record's chat column as history_pinned with no event; this supersedes the earlier L9 wording 'commits history_pinned with chat_column_changed'."
-  - "Amended 2026-10-10 (lead ruling L7): After restart the chat starts in its column; reopening popped out remains an open question for Jared."
-  - "Amended 2026-10-10 (lead ruling L6): Pop out is desktop only; the web chat stays in its column."
-  - "Amended 2026-10-10 (DL-187, D32): Jared answered L7's question: a popped-out chat starts back in its column after a restart, the pop-out is never saved, and a stored Chat Layout value (general.visual.chat-layout-mode, retired) never pops it out."
-  - "Amended 2026-10-10 (DL-187, D40): The left rail's Chat entry shows or hides the column on every page (F3-042)."
-  - "Amended 2026-10-10 (DL-187, the planning thread's rulings): Keep the chat open in narrow windows is the chat's own preference in its header menu and the Home options menu, not a Settings row; on the Usage page the chat never leaves the board below 400 px; the narrow ladder runs only while Home is the page shown."
-  - "Amended 2026-10-10 (lead ruling): Keep the chat open in narrow windows is a check in the chat header's menu, also offered in the Home options menu, both dispatching ui.chat_column.keep_open, saved in the v2 chat column."
-  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The layout chat column keeps the rounded message width and pins, migrates former preferences once, and owns the More rows."
-  - "Amended 2026-10-23 (DL-233): pinned History adds the width it is drawn at, a dragged width included, and drops to its flyout while the ladder takes that width back; the chat's header menu rows follow the hosted 5.6 Pro chat, the stand-in's rows (Show the current chat, Clear what you sent) leaving with the stand-in."
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds pinned History widths, keeps the width and drag
+  range tied to the messages, and records the measured pinned History column and message widths from NUMBERS;
+  a folded chat''s peek opens at 400 px with History dropped, and is 640 px only with History pinned in the
+  peek.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Saves History pin as view state with no layout event,
+  revision advance or receipt.'
+- 'Amended 2026-10-10 (lead ruling L9, corrected): The History pin is the typed local action ui.chat_column.pin_history,
+  view state saved in the v2 record''s chat column as history_pinned with no event; this supersedes the earlier
+  L9 wording ''commits history_pinned with chat_column_changed''.'
+- 'Amended 2026-10-10 (lead ruling L7): After restart the chat starts in its column; reopening popped out remains
+  an open question for Jared.'
+- 'Amended 2026-10-10 (lead ruling L6): Pop out is desktop only; the web chat stays in its column.'
+- 'Amended 2026-10-10 (DL-187, D32): Jared answered L7''s question: a popped-out chat starts back in its column
+  after a restart, the pop-out is never saved, and a stored Chat Layout value (general.visual.chat-layout-mode,
+  retired) never pops it out.'
+- 'Amended 2026-10-10 (DL-187, D40): The left rail''s Chat entry shows or hides the column on every page (F3-042).'
+- 'Amended 2026-10-10 (DL-187, the planning thread''s rulings): Keep the chat open in narrow windows is the
+  chat''s own preference in its header menu and the Home options menu, not a Settings row; on the Usage page
+  the chat never leaves the board below 400 px; the narrow ladder runs only while Home is the page shown.'
+- 'Amended 2026-10-10 (lead ruling): Keep the chat open in narrow windows is a check in the chat header''s
+  menu, also offered in the Home options menu, both dispatching ui.chat_column.keep_open, saved in the v2 chat
+  column.'
+- 'Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The layout chat column keeps the rounded message
+  width and pins, migrates former preferences once, and owns the More rows.'
+- 'Amended 2026-10-23 (DL-233): pinned History adds the width it is drawn at, a dragged width included, and
+  drops to its flyout while the ladder takes that width back; the chat''s header menu rows follow the hosted
+  5.6 Pro chat, the stand-in''s rows (Show the current chat, Clear what you sent) leaving with the stand-in.'
 owner_hints:
-  - Plans/FinalGUISpec.md
-  - Plans/assistant-chat-design.md
-  - Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/UI_Command_Catalog.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/assistant-chat-design.md#ACD-500, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/FinalGUISpec.md#F3-504, ContractName:Plans/UI_Command_Catalog.md#UCC-203, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-042, ContractName:Plans/Widget_System.md#WS-017, ContractName:Plans/Settings_System.md#SSYS-050
@@ -2254,52 +2327,81 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  PMConcept7 has one Demo Studio for every concept surface, modelled on the 5.6 Pro chat's (DL-185, D26; the rule is
-  Plans/DRY_Rules.md#DR-070). The Guided Tour's and onboarding's demo controls, the chat's demo controls, the home demos
-  and, later, the Orchestrator and Planning Wizard pages' demo controls are sections of that one studio; no surface
-  draws a demo panel of its own. The Demo Studio and every control in it are lab only, in the pattern of
-  Plans/assistant-chat-design.md#ACD-474: never a product control, setting, command, wiring row, saved value or test
-  gate, never shown in the product's menus or Settings, and no canon number comes from them. In the concept it opens
-  above the one overlay root and below hover tags and the Guided Tour (F3-635). It follows the bans (F3-648) and the
-  looks (F3-647) like any surface. This supersedes the concept practice of a demo panel per surface and changes no
-  product unit.
-  Amended 2026-10-29 (W8, SND1; PM7): One lab Demo Studio covers Pip/loader/sound/parts, project box states/widths, expanded onboarding tips/errors and Activity/Resources/quit. Owner APIs only, missing owners unavailable; no lab toolbar or magic demo errors in product. Jared listens to the sound board before landing.
+  PMConcept7 has one Demo Studio for every concept surface, modelled on the 5.6 Pro chat's (DL-185, D26;
+  the rule is Plans/DRY_Rules.md#DR-070). The Guided Tour's and onboarding's demo controls, the chat's demo
+  controls, the home demos and, later, the Orchestrator and Planning Wizard pages' demo controls are
+  sections of that one studio; no surface draws a demo panel of its own. The Demo Studio and every control
+  in it are lab only, in the pattern of Plans/assistant-chat-design.md#ACD-474: never a product control,
+  setting, command, wiring row, saved value or test gate, never shown in the product's menus or Settings,
+  and no canon number comes from them. In the concept it opens above the one overlay root and below hover
+  tags and the Guided Tour (F3-635). It follows the bans (F3-648) and the looks (F3-647) like any surface.
+  This supersedes the concept practice of a demo panel per surface and changes no product unit. Amended
+  2026-10-29 (W8, SND1; PM7): One lab Demo Studio covers Pip/loader/sound/parts, project box states/widths,
+  expanded onboarding tips/errors and Activity/Resources/quit. Owner APIs only, missing owners unavailable;
+  no lab toolbar or magic demo errors in product. Jared listens to the sound board before landing. W8
+  normative Demo Studio matrix (2026-10-29; DL-256): one lab only, strings in 75-demo-studio.json, public
+  owner APIs with unavailable controls when absent, 4.5:1 contrast in every look, Reset Everything clears
+  only OWNED keys. Pip section: marks/tiles/tray in all ten looks, mood stay-row firing on every live Pip,
+  Mark only, Swing/Think/Hop take, Every loader moment and Hold loaders. Sound board exposes
+  kit-by-look/choice, 42 events, 5 loops and Pip says input; Jared listens before landing (SND1).
+  Onboarding: pip twist antigravityOnce, Oops cases returning-name tastebook, Cursor refused key ≤11
+  characters and first Antigravity sign-in failure with real retry state; Ask Pip opens a screen with its
+  chosen ? note; pipRoughDay recipe. Chat: Adjust Pip beside Adjust NieR look, Full/Quiet/Still/Plain,
+  Crew-host faces, Scheduled faces, Activity rows and Orbit moments, recorded pip Crew run queued→done;
+  remove pip-chat:v1 when product settings bind or give Reset explicit ownership while it is still a lab
+  key. Workspace/Title bar: calm, working, blocked, needs-you and unsaved as separate states, long-name
+  switch, real density widths full/1280/1024/860 and Open project menu. Activity: Busy, No asks, Quiet,
+  Many, Stale feed, After restart and Right-now; open Agents/Processes/Resources and thread Processes, with
+  several servers/environments; Quit…, Stop all and Numbers/Words. Extend busy recipe and add quitWithWork;
+  optional D9 notices use the real alert owner. No imported concept toolbar, fake product errors, second
+  Demo Studio, new product command or preference is authorized by these lab cases. Documentation retires
+  the claim that sample notices cannot fire and updates the recorded-example census from its actual
+  registry.
 gui_related: true
-gui_classification_reason: Defines the one Demo Studio for PMConcept7's concept surfaces and keeps it out of the product.
+gui_classification_reason: Defines the one Demo Studio for PMConcept7's concept surfaces and keeps it out of
+  the product.
 split_recommended: false
-depends_on: [DL-185, ACD-474]
-unblocks: [DR-070, ACD-501]
+depends_on:
+- DL-185
+- ACD-474
+unblocks:
+- DR-070
+- ACD-501
 acceptance_criteria:
-  - "Every PMConcept7 concept surface's demo controls are sections of the one Demo Studio, and no surface draws its own demo panel."
-  - "No product catalog, settings inventory, wiring matrix, persisted key or test gate names the Demo Studio or a control in it."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- Every PMConcept7 concept surface's demo controls are sections of the one Demo Studio, and no surface draws
+  its own demo panel.
+- No product catalog, settings inventory, wiring matrix, persisted key or test gate names the Demo Studio or
+  a control in it.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: home_panels_terminal_redesign_drift
 reasoning_tier: high
 context_scope: home_panels_terminal
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - Plans/DRY_Rules.md
-  - Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/DRY_Rules.md
+- Plans/assistant-chat-design.md
 node_compile_hint:
   mode: gui_promotion_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D26)"
+- Plans/Decision_Log.md#DL-185
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D26)
 preserved_exact_tokens:
-  - "Demo Studio"
+- Demo Studio
 negative_constraints:
-  - "Do not give the Demo Studio or any demo control a command, setting, wiring row, saved value or test gate."
-  - "Do not draw a separate demo panel per surface."
+- Do not give the Demo Studio or any demo control a command, setting, wiring row, saved value or test gate.
+- Do not draw a separate demo panel per surface.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-  - Plans/FinalGUISpec.md
-  - Plans/DRY_Rules.md
+- Plans/FinalGUISpec.md
+- Plans/DRY_Rules.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/DRY_Rules.md#DR-070, ContractName:Plans/assistant-chat-design.md#ACD-474

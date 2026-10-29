@@ -1267,7 +1267,8 @@
         "input_request": null,
         "stopped_by": null
       },
-      "expected_failure": "process_facts_subject_ref_missing"
+      "expected_failure": "process_facts_subject_ref_missing",
+      "semantic_rule": "process_facts_subject_ref_missing"
     },
     {
       "name": "resource_memory_cannot_exceed_host_total",
@@ -1297,7 +1298,8 @@
           }
         ]
       },
-      "expected_failure": "resource_memory_exceeds_host_total"
+      "expected_failure": "resource_memory_exceeds_host_total",
+      "semantic_rule": "resource_memory_exceeds_host_total"
     }
   ]
 }

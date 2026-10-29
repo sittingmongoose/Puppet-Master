@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24977-L25085
+Source lines: L24977-L25108
 
-Source SHA256: `661fcb19f8645b67e86ed67d20e930675a6f75b50b6e244bb41717c6cf1eada2`
+Source SHA256: `9d0fb1351e15ba5d2df7be742c0ef98139f1a36f90babf25ce5cca131da9bc40`
 
 ---
 
@@ -88,32 +88,55 @@ plan_unit_id: ACD-451
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: "Chat integration is eligibility-aware across long research, editing, debugging, model changes, pause/resume, and thread recovery. The notebook and fresh-window affordances appear only where eligible; a trivial chat uses neither and produces no notebook or helper overhead. Debug flows keep Investigation Context authority: debug notes reference investigation/target/instrumentation/cleanup records, and transition or recovery rechecks active/redacted/revoked/blocked/expired/omitted evidence and target/worktree/session drift before reuse; raw logs and media remain artifacts. Thread restore and model change never silently rebind a notebook to a different target; provider-hidden content is never shown as PM-authored notes (WNC-N17)."
+canonical_text: |-
+  Chat integration is eligibility-aware across long research, editing, debugging, model changes,
+  pause/resume, and thread recovery. The notebook and fresh-window affordances appear only where eligible;
+  a trivial chat uses neither and produces no notebook or helper overhead. Debug flows keep Investigation
+  Context authority: debug notes reference investigation/target/instrumentation/cleanup records, and
+  transition or recovery rechecks active/redacted/revoked/blocked/expired/omitted evidence and
+  target/worktree/session drift before reuse; raw logs and media remain artifacts. Thread restore and model
+  change never silently rebind a notebook to a different target; provider-hidden content is never shown as
+  PM-authored notes (WNC-N17).
+  Amended 2026-10-29 (PC4; PM7): The protected working Orbit now has Pip at its centre and a current-tool
+  badge, with a single-Pip handoff from the thinking loader (ACD-507). Existing wand compact
+  submenu/working choreography remains.
 gui_related: true
 gui_classification_reason: This unit specifies chat eligibility and debug-note surface behavior.
-depends_on: [ACD-449]
+depends_on:
+- ACD-449
 unblocks: []
 acceptance_criteria:
-  - A trivial exchange creates no notebook and no fabricated usage attempt.
-  - Old debug notes never reactivate revoked evidence or imply cleanup occurred.
-  - Thread recovery rehydrates notebook access without rebinding to a different target.
+- A trivial exchange creates no notebook and no fabricated usage attempt.
+- Old debug notes never reactivate revoked evidence or imply cleanup occurred.
+- Thread recovery rehydrates notebook access without rebinding to a different target.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: evidence_staleness
 reasoning_tier: high
 context_scope: assistant_chat
-implementation_surfaces: [Plans/assistant-chat-design.md, Plans/Working_Notebook.md, Plans/Runtime_Artifacts_Panel.md]
-node_compile_hint: {mode: gui_surface_spec, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+- Plans/Working_Notebook.md
+- Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: gui_surface_spec
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-I01
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-I09
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-N17
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A02
-preserved_exact_tokens: ["Investigation Context", "trivial chat", "rehydrates"]
+- source_packet:PM-WNC-2026-09-05-v1:WNC-I01
+- source_packet:PM-WNC-2026-09-05-v1:WNC-I09
+- source_packet:PM-WNC-2026-09-05-v1:WNC-N17
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A02
+preserved_exact_tokens:
+- Investigation Context
+- trivial chat
+- rehydrates
 negative_constraints:
-  - Do not scrape hidden provider notes into the notebook UI.
-  - Do not rebind notebooks to a different target on restore.
-owner_hints: [Plans/assistant-chat-design.md, Plans/Working_Notebook.md]
+- Do not scrape hidden provider notes into the notebook UI.
+- Do not rebind notebooks to a different target on restore.
+owner_hints:
+- Plans/assistant-chat-design.md
+- Plans/Working_Notebook.md
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Working_Notebook.md, ContractName:Plans/Runtime_Artifacts_Panel.md

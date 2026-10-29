@@ -104,7 +104,7 @@ Repeated rows carry stable work/project IDs; these binding IDs identify control 
 - **`PM_PIP_LOADER`**: proposed shared loader owner; context variants `swing`, `think`, `hop`; common opt-in `data-pip-loader`, decorative drawing with busy semantics on host. Found may refine its API and report it; no per-surface loader implementation.
 - **`PM_WORK`**: proposed shared OperationalAwareness/ObservableWork projection API; found may refine the API and report it. ProcessFacts stays subordinate; server resource samples carry server/environment identity.
 - **Pip parts registry**: found owns its final exported name and option IDs. It is the only option/default/preset table; Plans will mirror its admitted contract.
-- **Resources tab glyph**: reuse **`gauge`** if present in the live catalog; otherwise **`server`**. Do not add a third category glyph just for this tab.
+- **Resources tab glyph**: reuse **`gauge`** if present in the live catalog; otherwise **`gauge`**. Do not add a third category glyph just for this tab.
 
 ## A5 mood → existing status key
 
@@ -130,3 +130,5 @@ Faces never manufacture runtime state. Typed owner status wins over a decorative
 Project badge priority (B5): waiting > blocked > working > change-modified > idle. Tray (A3) aggregates every Project; waiting wins; paused applies when remaining work is paused. Never replace a stale feed with a healthy zero.
 
 Part contract (lead adopted, 2026-10-29): `Plans/pip_parts.json`, 25 options, Full = 24 on (app-voice off). Binding rows = 464; Touch = 707 rows / 137 profiles; production wiring = 1269. All projects is local `ui.project_switcher.all_projects`, not the rail-only `cmd.panel.switch`.
+
+Review completion allocation: **G-031** owns the durable PM7 help-entry records (Pip, Project box, Processes, Question, Needs input, Completion delivery, Lost, ObservableWork, Operational Awareness, Backgrounded, Resources). Resources reuses the existing **gauge** glyph. A5 per-surface face tables and A3 complete tray precedence are now explicit in canon and the catalog; the original 22 status keys remain.

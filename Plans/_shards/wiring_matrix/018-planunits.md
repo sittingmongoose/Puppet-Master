@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L649-L2986
+Source lines: L649-L2997
 
-Source SHA256: `519632af48035fcf225f8301fcf4350110793624ba16f6808ff1499770c68af9`
+Source SHA256: `ef78db8e3de1f15d25043fd65523bd7e824ac341b31c19c034fbfdc6b1c50141`
 
 ---
 
@@ -1121,9 +1121,16 @@ plan_unit_id: WM-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch, and related shell/chat/history command wiring without losing canonical project/thread identity, including explicit Compact Now dispatch, result/receipt-backed visible degraded-state wiring with no unregistered context.compaction.* EventRecord, and command-result statuses for already_running, cancelled, no_op, unavailable, retry_scheduled, completed, and failed.'
+canonical_text: >-
+  Minimum required rows cover project switcher, thread details, compaction, restore branch, and related
+  shell/chat/history command wiring without losing canonical project/thread identity, including explicit
+  Compact Now dispatch, result/receipt-backed visible degraded-state wiring with no unregistered
+  context.compaction.* EventRecord, and command-result statuses for already_running, cancelled, no_op,
+  unavailable, retry_scheduled, completed, and failed. Amended 2026-10-29 (PM7): B1/B6: title-bar project
+  box adds producers for cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab, retaining
+  Projects view/palette as primary and the same project/workspace owner.
 gui_related: true
-gui_classification_reason: 'The unit defines user-visible project/thread command wiring rows.'
+gui_classification_reason: The unit defines user-visible project/thread command wiring rows.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -1134,8 +1141,10 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - WM-019 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1152,34 +1161,36 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
 - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
 preserved_exact_tokens:
-- 'Minimum required rows'
-- 'project switcher'
-- 'thread details'
-- 'compaction'
-- 'Compact Now'
-- 'context.compaction.failed'
-- 'already_running'
-- 'cancelled'
-- 'no_op'
-- 'retry_scheduled'
-- 'restore branch'
-- 'cmd.chat'
-- 'cmd.project'
-- 'cmd.history'
-- 'thread'
-- 'project'
-- 'shell'
-- 'history'
+- Minimum required rows
+- project switcher
+- thread details
+- compaction
+- Compact Now
+- context.compaction.failed
+- already_running
+- cancelled
+- no_op
+- retry_scheduled
+- restore branch
+- cmd.chat
+- cmd.project
+- cmd.history
+- thread
+- project
+- shell
+- history
 negative_constraints:
-- The preserved context.compaction.failed token is historical source lineage and must not be emitted or registered as an EventRecord family.
+- The preserved context.compaction.failed token is historical source lineage and must not be emitted or registered
+  as an EventRecord family.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions:
-- The former context.compaction.failed event wording is retired; the production row uses command result/receipt projection and an empty expected_event_types list.
+- The former context.compaction.failed event wording is retired; the production row uses command result/receipt
+  projection and an empty expected_event_types list.
 owner_hints:
-- 'Plans/Wiring_Matrix.md'
-- 'Plans/assistant-chat-design.md'
-- 'Plans/FinalGUISpec.md'
+- Plans/Wiring_Matrix.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 ```
 
 ### WM-020 - Browser Command Rows

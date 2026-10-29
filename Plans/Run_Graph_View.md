@@ -147,15 +147,28 @@ plan_unit_id: RGV-001
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
-canonical_text: Run Graph is the canonical graph and lineage inspection surface for orchestrated execution. Graph nodes are runtime nodes rather than tiers; lineage spans graph generations; blocked, recovery, promotion, and corroboration state appears in graph detail when it belongs to the selected node or related lineage object.
+canonical_text: |-
+  Run Graph is the canonical graph and lineage inspection surface for orchestrated execution. Graph nodes
+  are runtime nodes rather than tiers; lineage spans graph generations; blocked, recovery, promotion, and
+  corroboration state appears in graph detail when it belongs to the selected node or related lineage
+  object.
+  Amended 2026-10-29 (D7; PM7): The old Background Runs card is superseded by the shared agents/processes
+  projection and F3-664’s triage panel; run graph links retain exact run/node identity, no second
+  background-work runtime.
 gui_related: true
 gui_classification_reason: The unit defines the user-visible Run Graph inspection surface.
 depends_on: []
-unblocks: [RGV-002, RGV-003, RGV-004, RGV-005, RGV-006]
+unblocks:
+- RGV-002
+- RGV-003
+- RGV-004
+- RGV-005
+- RGV-006
 acceptance_criteria:
 - Graph nodes are modeled as runtime nodes, not tiers.
 - Graph lineage remains generation-aware when graph patching occurs.
-- Node detail can expose blocked, recovery, promotion, and corroboration state for selected or related lineage objects.
+- Node detail can expose blocked, recovery, promotion, and corroboration state for selected or related lineage
+  objects.
 validation_surfaces:
 - Manual review of Plans/Run_Graph_View.md section 1.
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -202,65 +215,84 @@ plan_unit_id: RGV-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
-canonical_text: >-
-  Run Graph may display containerized-host capability evidence, active host assignments, dynamic/canonical access URLs,
-  blocked/degraded states, and pivots to Docker/Hosts, Orchestrator/Executor run details, Runtime Artifacts, and test
-  receipts. Run Graph remains an inspection/projection surface: it does not own host mutation, does not silently auto-open
-  low-confidence URLs, and does not persist transient port discoveries as canonical state without source, confidence,
-  health, staleness, and override evidence from port_access_record. Open App and Open Container actions resolve through
-  UI_Command_Catalog and HostCapabilityCommand when authority permits them.
-  Amended 2026-10-29 (D7; PM7): The old Background Runs card is superseded by the shared agents/processes projection and F3-664’s triage panel; run graph links retain exact run/node identity, no second background-work runtime.
+canonical_text: |-
+  Run Graph may display containerized-host capability evidence, active host assignments, dynamic/canonical
+  access URLs, blocked/degraded states, and pivots to Docker/Hosts, Orchestrator/Executor run details,
+  Runtime Artifacts, and test receipts. Run Graph remains an inspection/projection surface: it does not own
+  host mutation, does not silently auto-open low-confidence URLs, and does not persist transient port
+  discoveries as canonical state without source, confidence, health, staleness, and override evidence from
+  port_access_record. Open App and Open Container actions resolve through UI_Command_Catalog and
+  HostCapabilityCommand when authority permits them.
 gui_related: true
-gui_classification_reason: This PlanUnit defines visible Run Graph evidence presentation, links, and access pivots.
-depends_on: [F3-410, UCC-105, OP-028, RAP-042, CV-303]
+gui_classification_reason: This PlanUnit defines visible Run Graph evidence presentation, links, and access
+  pivots.
+depends_on:
+- F3-410
+- UCC-105
+- OP-028
+- RAP-042
+- CV-303
 unblocks: []
 acceptance_criteria:
-  - Run Graph nodes can show host_capability_ref, host_assignment_id, runtime_family, capability_state, blocked_reason_code, and receipt/evidence refs where available.
-  - Dynamic URLs remain visible for running instances, while canonical URLs are marked as convenience bindings for the active selected or checked-out instance.
-  - Access pivots disclose confidence, health_state, stale_window_expires_at_utc, and source before Open App or Open Container actions.
-  - Run Graph links to Docker/Hosts, Runtime Artifacts, and Orchestrator/Executor details without becoming a mutation owner.
+- Run Graph nodes can show host_capability_ref, host_assignment_id, runtime_family, capability_state, blocked_reason_code,
+  and receipt/evidence refs where available.
+- Dynamic URLs remain visible for running instances, while canonical URLs are marked as convenience bindings
+  for the active selected or checked-out instance.
+- Access pivots disclose confidence, health_state, stale_window_expires_at_utc, and source before Open App
+  or Open Container actions.
+- Run Graph links to Docker/Hosts, Runtime Artifacts, and Orchestrator/Executor details without becoming a
+  mutation owner.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - future Run Graph host evidence/access pivot fixture
+- python3 scripts/pm-plan-index.py validate
+- future Run Graph host evidence/access pivot fixture
 risk_class: run_graph_host_projection_authority_drift
 reasoning_tier: standard
 context_scope: run_graph_containerized_host_evidence_access
 implementation_surfaces:
-  - Plans/Run_Graph_View.md
-  - future Run Graph host evidence and access pivots
+- Plans/Run_Graph_View.md
+- future Run Graph host evidence and access pivots
 node_compile_hint:
   mode: run_graph_host_evidence_access_projection
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0015
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0041
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0075
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0079
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0080
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#core_contracts.port_access_record
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-003-blocker-taxonomy-projection-boundary
-source_atom_ids: [atom-0015, atom-0040, atom-0041, atom-0073, atom-0075, atom-0079, atom-0080, atom-0081]
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0015
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0041
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0075
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0079
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0080
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#core_contracts.port_access_record
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-003-blocker-taxonomy-projection-boundary
+source_atom_ids:
+- atom-0015
+- atom-0040
+- atom-0041
+- atom-0073
+- atom-0075
+- atom-0079
+- atom-0080
+- atom-0081
 preserved_exact_tokens:
-  - "dynamic ports"
-  - "canonical ports"
-  - "dynamic URLs remain visible"
-  - "Open App"
-  - "Open Container"
-  - "Orchestrator/Executor run details"
-  - "Runtime Artifacts"
+- dynamic ports
+- canonical ports
+- dynamic URLs remain visible
+- Open App
+- Open Container
+- Orchestrator/Executor run details
+- Runtime Artifacts
 negative_constraints:
-  - Do not make Run Graph a host mutation owner.
-  - Do not silently auto-open low-confidence URLs.
-  - Do not persist transient port discoveries as canonical state without source, confidence, health, staleness, and override evidence.
+- Do not make Run Graph a host mutation owner.
+- Do not silently auto-open low-confidence URLs.
+- Do not persist transient port discoveries as canonical state without source, confidence, health, staleness,
+  and override evidence.
 owner_hints:
-  - Plans/Run_Graph_View.md
-  - Plans/Orchestrator_Page.md
-  - Plans/FinalGUISpec.md
-  - Plans/UI_Command_Catalog.md
+- Plans/Run_Graph_View.md
+- Plans/Orchestrator_Page.md
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
 ```
 
 ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Executor_Protocol.md

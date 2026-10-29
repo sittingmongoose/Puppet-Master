@@ -69884,7 +69884,7 @@
         "cmd.workspace_layout.resize_surface is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
         "home.resizer.chat reads state.home_workspace.home_resizer_chat.availability and shows state.home_workspace.home_resizer_chat.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.resizer.chat dispatches cmd.workspace_layout.resize_surface exactly once per activation and preserves command_id, correlation_id and the receipt.",
-        "The payload is { surface: chat, width }, one commit on release, between 400 and 760 px and never so wide that the centre drops below 600 px (F3-637); a width the user never set follows the window.",
+        "G3/DL-254: payload {surface: chat, width} commits once on release; message width is at least 400 px and grows to the current centre/page floor with no fixed maximum. Null follows the window default; History width remains separate.",
         "The concept token cmd.workspace_layout.size_surface normalizes to this command before dispatch and has no row (CS-068).",
         "A commit that moves nothing dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",

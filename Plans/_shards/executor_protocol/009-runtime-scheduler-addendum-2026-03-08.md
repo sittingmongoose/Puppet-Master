@@ -4,7 +4,7 @@ Source: `Plans/Executor_Protocol.md`
 
 Source lines: L267-L572
 
-Source SHA256: `704060fece43cad29d680fbe8e2318e81f61c6bb07e3c3f9f57e3667e0903a50`
+Source SHA256: `7e4e3739b1fc0d4f95518135b131f7846d2fa912e44d165e3fdfe3935a72f094`
 
 ---
 
@@ -236,7 +236,7 @@ PM entrypoints establish the canonical shutdown root with `signal.NotifyContext`
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-Provider processes receive `SIGTERM` / `SIGINT` with a 5-second grace window. MCP and LSP subprocesses receive a 3-second grace window. `SIGHUP` reloads config. All managed subprocesses run in isolated process groups.
+Provider processes receive `SIGTERM` / `SIGINT` with a 3-second grace window (D8). cmd.work.stop sends SIGTERM to the entire identity-bound process group, then SIGKILL after 3 seconds if it is still alive; Stopping remains until exit is observed. MCP and LSP subprocesses receive a 3-second grace window. `SIGHUP` reloads config. All managed subprocesses run in isolated process groups.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 

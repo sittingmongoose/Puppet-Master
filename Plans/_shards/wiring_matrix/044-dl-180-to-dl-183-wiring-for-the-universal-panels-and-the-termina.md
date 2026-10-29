@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5557-L6339
+Source lines: L5572-L6350
 
-Source SHA256: `519632af48035fcf225f8301fcf4350110793624ba16f6808ff1499770c68af9`
+Source SHA256: `ef78db8e3de1f15d25043fd65523bd7e824ac341b31c19c034fbfdc6b1c50141`
 
 ---
 
@@ -713,44 +713,43 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
-  Plans/pm7_control_bindings.json is this unit's enumerated companion table; UIW-043 owns its
-  completeness rule. This editor fields/reset/quick sets bind to production editor.appearance.field
-  and cmd.editor.appearance.set. This terminal binds to terminal.appearance.field; import to
+  Plans/pm7_control_bindings.json is this unit's enumerated companion table; UIW-043 owns its completeness
+  rule. This editor fields/reset/quick sets bind to production editor.appearance.field and
+  cmd.editor.appearance.set. This terminal binds to terminal.appearance.field; import to
   terminal.appearance.import_scheme. All scopes, every corresponding Settings row and
   general.visual.wallpaper bind to catalog.settings_transaction_preview then
-  catalog.settings_transaction_apply, over the exact ids named in each census row. Menu/Settings
-  entry, scope, search, sample trial, token-kind selection and noncommitted previews are CS-102
-  local actions with no production dispatch row. The notification inbox's dismiss/Delete binds
-  catalog.alert_dismiss; Clear all composes it per captured eligible item, while toast close/swipe
-  remains local and domain actions reuse catalog.alert_acknowledge, catalog.alert_snooze and their
-  existing owner commands. DnD commits reuse UCC-200's panel_tab.move/workspace_layout split or
-  move_surface according to target; cancel/hover commit nothing. Divider/chat/rail/history resize
-  controls keep their existing layout command/view-state ownership, with keyboard alternatives;
-  F3-657 adds presentation only. A rendered control disabled for no Project, stale state, locked
-  target or owner permission dispatches nothing and announces the projected reason. All new evidence
-  is planned production evidence, never inferred from a concept callback or screenshot.
-  Plans/appearance_quick_sets.json supplies the exact composite payloads consumed by the binding
-  rows; each scope names precisely those affected ids. The extended background/bezel/mask controls
-  have exact per-field bindings to those same writers. Saved-preset Apply uses their exact
-  whole-scope replacement adapter; Save/Rename/Delete/Undo are CS-102 local library actions,
-  excluded from production command rows but enumerated in the census. F3-632 picker Back is also
-  enumerated as local navigation, with its keyboard equivalents and no layout mutation. The NieR
-  background control consumes SSYS-054’s admitted two-setting patch through the existing Settings
-  preview/apply pair, not a second wallpaper command. The existing rail Chat producer remains
-  home.chat.activity_toggle; its selected state reflects visibility and the removed Dashboard button
-  has no replacement producer. The retired cmd.theme.preview producer is removed from production
-  wiring and its sole obsolete Touch Closure obligation/profile; its rejected packet token is
-  retained and explicitly excluded as lineage under UCC-204; this does not exclude either Settings
-  transaction command.
-  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
+  catalog.settings_transaction_apply, over the exact ids named in each census row. Menu/Settings entry,
+  scope, search, sample trial, token-kind selection and noncommitted previews are CS-102 local actions with
+  no production dispatch row. The notification inbox's dismiss/Delete binds catalog.alert_dismiss; Clear
+  all composes it per captured eligible item, while toast close/swipe remains local and domain actions
+  reuse catalog.alert_acknowledge, catalog.alert_snooze and their existing owner commands. DnD commits
+  reuse UCC-200's panel_tab.move/workspace_layout split or move_surface according to target; cancel/hover
+  commit nothing. Divider/chat/rail/history resize controls keep their existing layout command/view-state
+  ownership, with keyboard alternatives; F3-657 adds presentation only. A rendered control disabled for no
+  Project, stale state, locked target or owner permission dispatches nothing and announces the projected
+  reason. All new evidence is planned production evidence, never inferred from a concept callback or
+  screenshot. Plans/appearance_quick_sets.json supplies the exact composite payloads consumed by the
+  binding rows; each scope names precisely those affected ids. The extended background/bezel/mask controls
+  have exact per-field bindings to those same writers. Saved-preset Apply uses their exact whole-scope
+  replacement adapter; Save/Rename/Delete/Undo are CS-102 local library actions, excluded from production
+  command rows but enumerated in the census. F3-632 picker Back is also enumerated as local navigation,
+  with its keyboard equivalents and no layout mutation. The NieR background control consumes SSYS-054’s
+  admitted two-setting patch through the existing Settings preview/apply pair, not a second wallpaper
+  command. The existing rail Chat producer remains home.chat.activity_toggle; its selected state reflects
+  visibility and the removed Dashboard button has no replacement producer. The retired cmd.theme.preview
+  producer is removed from production wiring and its sole obsolete Touch Closure obligation/profile; its
+  rejected packet token is retained and explicitly excluded as lineage under UCC-204; this does not exclude
+  either Settings transaction command. PM7 B1/B2/B6, S5, D5/G4: extend the shell control census with the
+  project box/row-key paths, Settings/wand/titlebar Pip editor and two status work items; decorative
+  Pip/loader draw no controls. WM-097 lists the exact new bindings and owner routes.
 gui_related: true
 gui_classification_reason: Appearance controls and Settings bindings.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Each census command route resolves a production entry with typed payload, owner state, accessibility and effect
-  assertions.
+- Each census command route resolves a production entry with typed payload, owner state, accessibility and
+  effect assertions.
 - This/All, Clear all races, drop/cancel and no-Project paths have explicit planned fixtures.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
@@ -768,9 +767,8 @@ node_compile_hint:
 source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256
-  1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0 (approved campaign source lineage;
-  not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
+  (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-panel-dnd-resize/NOTES.md, SHA-256 03a80f0dea3235ea637149bbec63626c4a4be8521078f9dd601f2b691f03d2d6
@@ -778,12 +776,10 @@ source_lineage:
 - Plans/UI_Wiring_Rules.md#UIW-043
 - Plans/UI_Command_Catalog.md#UCC-204
 - Plans/Commands_System.md#CS-102
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
-  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
-  certification)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
-  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
-  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md, SHA-256
+  4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md, SHA-256
+  29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native certification)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

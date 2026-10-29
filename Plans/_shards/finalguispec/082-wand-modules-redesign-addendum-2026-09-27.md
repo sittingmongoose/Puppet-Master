@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40173-L41395
+Source lines: L40460-L41682
 
-Source SHA256: `b88dbed9579de911698b77f4dfe726a1e998ba12fef41e8d213e9f0a80ce979e`
+Source SHA256: `36c5ffd042fbd9ee31121beb4871b8342bbe239e4537318cd5a69678db2b29f7`
 
 ---
 
@@ -310,7 +310,7 @@ canonical_text: >-
   At every tier a card shows at most three lane rows (the rest summarised in one row that opens the
   full list), and every region has a fixed box and a line clamp, so a periodic tick changes only
   text; heights change only at state boundaries, with the reader's scroll anchor held. The S tier
-  is a card inside a narrow chat (for example beside a pinned Activity Detail) and is not a
+  is a card inside a narrow chat (for example beside a full-size Activity Detail) and is not a
   minimum chat width. Only the newest live run in a thread shows its live face; older live runs
   are collapsed, and a needs-you decision survives the collapse. A finished run keeps its result
   face until the user's next message and then becomes a receipt. The one-line receipt is one
@@ -1074,7 +1074,7 @@ canonical_text: >-
   Panel and Message. It never repeats the run card or the kind's board. A click on
   one of these four domains' chip in the Activity bar reveals the newest card of that kind in the
   thread and marks it once; the rows of those domains' hover cards keep APR-006's routing into
-  Activity Detail, pinned per APR-001, so Activity Detail stays reachable. Back Seat Driver's section
+  Activity Detail, full-size under APR-001/G1/G2, so Activity Detail stays reachable. Back Seat Driver's section
   of Context Details has a head (Back Seat Driver and Configure), three plain facts (the mode, the
   advisor model and Persona, and how watchful it is) and three native disclosures (Advisor notes,
   Session, Usage), with evidence as sentences and raw data behind Show raw data, and no metric-card

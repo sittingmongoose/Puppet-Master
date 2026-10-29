@@ -21530,7 +21530,6 @@ canonical_text: >-
   complete examined coverage before atomic filtered-checkpoint CAS and fenced
   historical reset disclosure. Preserve original owner effects and all existing
   source/index/checkpoint retention, recovery, deletion and withdrawal boundaries.
-  Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer width ≥400 or null for default and dynamically clamp rendering to current centre/page floors. Keep History pin/user width and narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the constrained fallback.
 gui_related: false
 gui_classification_reason: Defines backend persistence, replay and source authority.
 depends_on: [DL-046, SP-262, SP-278, SMPFS-168]
@@ -22009,7 +22008,6 @@ canonical_text: >-
   read by the 1.1.0 schema, which stays in place, and append admission takes 2.0.0 alone.
   Amended 2026-10-10 (DL-188): Event Authority admitted the 2.0.0 payload (D42); the registry names it at revision
   2026-10-09.1 and the earlier condition "once Event Authority admits it" is met.
-  Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer width ≥400 or null for default and dynamically clamp rendering to current centre/page floors. Keep History pin/user width and narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the constrained fallback.
 gui_related: true
 gui_classification_reason: Layout mutation, rollback, currentness and receipt publication govern visible
   Home placement and recovery.

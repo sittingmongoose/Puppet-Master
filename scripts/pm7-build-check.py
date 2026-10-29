@@ -77,6 +77,20 @@ def validate():
     require("loading" not in next(row for row in glyphs["status_marks"] if row["key"] == "working")["surface_words"]["panels"],
             "Working still conflates application loading with item state")
 
+    for surface, states in glyphs["surface_status_faces"].items():
+        require(all(pair[0] in keys for pair in states.values()), surface + ": unknown status-face key")
+    require(set(glyphs["surface_status_faces"]["memory"]) == {"Unverified", "Verified", "Discarded", "Out of date"},
+            "Memory face table invents or omits a verification/display state")
+    require(set(glyphs["surface_status_faces"]["scheduled"]) == {"Scheduled", "Held", "Sent", "Canceled", "Failed", "Expired"},
+            "Scheduled face table differs from its six owner states")
+    require(len(glyphs["surface_status_faces"]["agents"]) == 13, "Agent face table omits its run-state subset")
+    require(glyphs["tray_status_precedence"] == ["waiting", "failed", "blocked", "working", "paused", "complete", "idle"],
+            "A3 tray aggregation precedence differs from canon")
+    require(next(row for row in glyphs["object_control_mappings"] if row["semantic_name"] == "work-panel-resources")["glyph_id"] == "gauge",
+            "Resources does not reuse the existing gauge")
+    pip_owner = (PLANS / "Settings_System.md").read_text()
+    require(all(part_id in pip_owner for part_id in ids), "Accepted parts list is absent from SSYS-056 prose")
+
     bindings = read("pm7_control_bindings.json")["bindings"]
     by_control = {row["control_id"]: row for row in bindings}
     require(not any(row["control_id"].startswith("statusbar.") and

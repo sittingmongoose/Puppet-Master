@@ -1101,65 +1101,79 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Scheduling_and_Quota_Resume.md
 canonical_text: >-
-  A scheduled message has one card in its source thread whose form follows owner state. Scheduled is a future
-  bubble at its transcript position with a dateline that begins with Scheduled, gives the send time in the
-  schedule's own timezone and the time remaining, a clock ring over the real remaining time, and a fine line
-  naming destination, attachment count, requested model or route, and zone with IANA name. Held is a decision
-  bubble whose sentence begins with Held and names the exact reason, including a missed time under the hold
-  policy. Sent, Canceled, Failed and Expired are one-line receipts that begin with their state word; a Sent
-  receipt links to the dispatched message without repeating the text. States read as a glyph and the word,
-  never a badge. Under ACD-469's family map Scheduled and Held present in the Time family and the receipts as
-  Ledger lines; the card's internals are owned here and carry no ticket or stub. ACD-469's Time-family
-  ticket phrase does not describe those internals (DL-138). Scheduling contributes to the
-  shared dock only one needs-you line while a message in the thread is Held and one lowest-priority Coming up
-  line with the next send time, a preview and +N more; Show only reveals the card, and no second strip, quota
-  strip or checkbox is added.
-  Amended 2026-10-29 (D2/D9, PC3; PM7): Scheduled runs are also read-only consumers in thread Processes and platform panel. Cancel reuses Schedule Manager’s existing command, never a work-private schedule writer. Optional Pip list face maps to the same catalog status; scheduled pending, held waiting, dependency waiting-dep, sent complete, failed failed.
+  A scheduled message has one card in its source thread whose form follows owner state. Scheduled is a
+  future bubble at its transcript position with a dateline that begins with Scheduled, gives the send time
+  in the schedule's own timezone and the time remaining, a clock ring over the real remaining time, and a
+  fine line naming destination, attachment count, requested model or route, and zone with IANA name. Held
+  is a decision bubble whose sentence begins with Held and names the exact reason, including a missed time
+  under the hold policy. Sent, Canceled, Failed and Expired are one-line receipts that begin with their
+  state word; a Sent receipt links to the dispatched message without repeating the text. States read as a
+  glyph and the word, never a badge. Under ACD-469's family map Scheduled and Held present in the Time
+  family and the receipts as Ledger lines; the card's internals are owned here and carry no ticket or stub.
+  ACD-469's Time-family ticket phrase does not describe those internals (DL-138). Scheduling contributes to
+  the shared dock only one needs-you line while a message in the thread is Held and one lowest-priority
+  Coming up line with the next send time, a preview and +N more; Show only reveals the card, and no second
+  strip, quota strip or checkbox is added. PC3 (2026-10-29): the six Scheduled owner states map as follows:
+  Scheduled → pending/sleep; Held → waiting/wonder; Sent → complete/happy; Canceled → skipped/sleep; Failed
+  → failed/oops; Expired → skipped/sleep. Keep owner labels and cadence. Dependency-wait is a build/work
+  state, not a seventh Scheduled state. With Status faces off show the same key’s catalog mark; cancel
+  still uses the Schedule Manager’s existing command, and Processes reads the schedule snapshot without
+  owning dispatch.
 gui_related: true
 gui_classification_reason: Defines the in-chat forms of a scheduled message and the dock lines scheduling supplies.
-depends_on: [SQR-002, SQR-007, SQR-009, ACD-469]
-unblocks: [SQR-013, SQR-018]
+depends_on:
+- SQR-002
+- SQR-007
+- SQR-009
+- ACD-469
+unblocks:
+- SQR-013
+- SQR-018
 acceptance_criteria:
-  - "Each of the six owner states renders in its form, and every form's visible sentence begins with its state word."
-  - "A message missed under the hold policy renders as Held with its missed reason, never as a seventh state."
-  - "No form renders the state as a badge, and a Sent receipt does not repeat the message text."
-  - "The scheduled-message card uses its own-zone time and no separate ticket or stub inside the Time family."
-  - "The dock carries at most one needs-you line and one Coming up line from scheduling, and Show dispatches no command."
+- Each of the six owner states renders in its form, and every form's visible sentence begins with its state
+  word.
+- A message missed under the hold policy renders as Held with its missed reason, never as a seventh state.
+- No form renders the state as a badge, and a Sent receipt does not repeat the message text.
+- The scheduled-message card uses its own-zone time and no separate ticket or stub inside the Time family.
+- The dock carries at most one needs-you line and one Coming up line from scheduling, and Show dispatches no
+  command.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 risk_class: scheduled_message_state_misread
 reasoning_tier: standard
 context_scope: scheduled_message_card
 implementation_surfaces:
-  - Plans/Scheduling_and_Quota_Resume.md
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: owner_presentation_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.7 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-01, B-SQR-02 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
-  - "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 6"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.7 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-01, B-SQR-02
+  (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
+- Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md
+  sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 6
 preserved_exact_tokens:
-  - "Scheduled"
-  - "Held"
-  - "Sent"
-  - "Canceled"
-  - "Failed"
-  - "Expired"
-  - "future bubble"
-  - "decision bubble"
-  - "Coming up"
-  - "ticket"
+- Scheduled
+- Held
+- Sent
+- Canceled
+- Failed
+- Expired
+- future bubble
+- decision bubble
+- Coming up
+- ticket
 negative_constraints:
-  - Do not render a scheduled-message state as a badge or without its state word.
-  - Do not add a seventh visible state for a missed message.
-  - Do not add a second scheduling strip, quota strip or checkbox above the composer.
+- Do not render a scheduled-message state as a badge or without its state word.
+- Do not add a seventh visible state for a missed message.
+- Do not add a second scheduling strip, quota strip or checkbox above the composer.
 owner_hints:
-  - Plans/Scheduling_and_Quota_Resume.md
+- Plans/Scheduling_and_Quota_Resume.md
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
@@ -1278,54 +1292,63 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Scheduling_and_Quota_Resume.md
 canonical_text: >-
-  The Schedule Manager keeps its four canonical tabs. Scheduled Messages is an agenda grouped Needs you, Tonight,
-  Tomorrow, Later and Past by owner scheduled time in the viewer's timezone, with Held in Needs you, terminal
-  records in Past, and exactly one row per schedule identity. Scheduled Messages, Execution & Build Windows and
-  Events & Automation each have search, status filter and sort; Resume & Safety Policy is a policy tab, not a
-  list. The status filter keeps the stored values Active, Paused, Completed, Failed and Expired, adds Held and
-  Canceled, and keeps All for no filter; its labels Waiting, Paused, Needs you (held messages and invalidated
-  build schedules), Done or sent, Didn't send, Skipped and Canceled each name one stored value and map onto owner
-  states. Selecting a record opens a focused view in the same sheet with its full sentence, time track and actions.
-  Amended 2026-10-29 (D2/D9, PC3; PM7): Processes consumes scheduled snapshots without owning dispatch. Completion policy and holds_reply are distinct; Pip faces preserve typed catalog status and accessible words.
+  The Schedule Manager keeps its four canonical tabs. Scheduled Messages is an agenda grouped Needs you,
+  Tonight, Tomorrow, Later and Past by owner scheduled time in the viewer's timezone, with Held in Needs
+  you, terminal records in Past, and exactly one row per schedule identity. Scheduled Messages, Execution &
+  Build Windows and Events & Automation each have search, status filter and sort; Resume & Safety Policy is
+  a policy tab, not a list. The status filter keeps the stored values Active, Paused, Completed, Failed and
+  Expired, adds Held and Canceled, and keeps All for no filter; its labels Waiting, Paused, Needs you (held
+  messages and invalidated build schedules), Done or sent, Didn't send, Skipped and Canceled each name one
+  stored value and map onto owner states. Selecting a record opens a focused view in the same sheet with
+  its full sentence, time track and actions. PC3 (2026-10-29): the six Scheduled owner states map as
+  follows: Scheduled → pending/sleep; Held → waiting/wonder; Sent → complete/happy; Canceled →
+  skipped/sleep; Failed → failed/oops; Expired → skipped/sleep. Keep owner labels and cadence.
+  Dependency-wait is a build/work state, not a seventh Scheduled state. With Status faces off show the same
+  key’s catalog mark; cancel still uses the Schedule Manager’s existing command, and Processes reads the
+  schedule snapshot without owning dispatch.
 gui_related: true
 gui_classification_reason: Defines the Schedule Manager's grouping, filter labels and focused view.
-depends_on: [SQR-009]
-unblocks: [SQR-018]
+depends_on:
+- SQR-009
+unblocks:
+- SQR-018
 acceptance_criteria:
-  - "Every filter label names one stored value and maps to owner states as listed; Active, Paused, Completed, Failed and Expired keep their stored values, and Held and Canceled are the only values added."
-  - "Each schedule identity appears in exactly one row under any filter and query."
-  - "Resume & Safety Policy shows no search, status filter or sort."
+- Every filter label names one stored value and maps to owner states as listed; Active, Paused, Completed,
+  Failed and Expired keep their stored values, and Held and Canceled are the only values added.
+- Each schedule identity appears in exactly one row under any filter and query.
+- Resume & Safety Policy shows no search, status filter or sort.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 risk_class: schedule_manager_label_state_drift
 reasoning_tier: standard
 context_scope: schedule_manager_ui
 implementation_surfaces:
-  - Plans/Scheduling_and_Quota_Resume.md
-  - Plans/FinalGUISpec.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: owner_presentation_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.9 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-04 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.9 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-04 (SHA-256
+  71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
 preserved_exact_tokens:
-  - "Waiting"
-  - "Needs you"
-  - "Done or sent"
-  - "Didn't send"
-  - "Skipped"
-  - "Tonight"
-  - "Tomorrow"
-  - "Later"
-  - "Past"
+- Waiting
+- Needs you
+- Done or sent
+- Didn't send
+- Skipped
+- Tonight
+- Tomorrow
+- Later
+- Past
 negative_constraints:
-  - Do not change the stored status filter values to match the labels.
-  - Do not render Resume & Safety Policy as a filterable list.
+- Do not change the stored status filter values to match the labels.
+- Do not render Resume & Safety Policy as a filterable list.
 owner_hints:
-  - Plans/Scheduling_and_Quota_Resume.md
+- Plans/Scheduling_and_Quota_Resume.md
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md

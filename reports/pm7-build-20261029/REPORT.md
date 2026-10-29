@@ -32,3 +32,33 @@ Counts: 1011 settings; 22 status keys; 25 Pip parts (24 default); 464 control bi
 Focused checks: pm7-build-check.py PASS (schema, target identity and resource facts); pm7-canon-check.py PASS; Touch Closure PASS with all 707 rows still partial, no native proof promoted. Shards PASS 2957 / 99 sources; index PASS 7235 / 96 docs. Existing new-contracts suite also passed before the last added edge cases; the aggregate suite will check the final set.
 
 Names: Plans/pip_parts.json; Plans/pm7_build_contracts.schema.json and .fixtures.json; scripts/pm7-build-check.py; ProcessFacts, ServerResourceSample, InputRequest. New semantic checks reject missing subordinate fact joins and host memory beyond its total.
+
+
+## Workstream coverage
+
+| Work | Plans result |
+|---|---|
+| W1 | F3-660 brand/assets/tiers/tray/notification faces; title-bar and tray amendments; DL-235 and DR-076. |
+| W2 | F3-661 project box A, same-frame chip, real badge priority, B1/B2/B6 dispatch and rows; CS-105/UCC-209. |
+| W3 | F3-663 covers all routes/tips/errors/props/worlds, face/gaze/rig timing, six kits, sound metadata and non-gating Creating; existing onboarding owners and Planning Wizard amended, Tour deferred. |
+| W4 | F3-594 redraws the single agent primitive; ACD-507 owns sheet/list/Orbit handoff; SSYS-056 and the 25-part registry admit one Settings row/editor. |
+| W5 | F3-662 and DR-077 replace indeterminate spinners with one loader, retaining skeletons/bars and item status, NieR fallback and reduced-motion wait signal. |
+| W6 | F3-664/665 three-tab platform panel, two status items, quit; ACD-505 thread Processes; D1–D14 in DL-240–253; SIR-054 and runtime schemas/fixtures for process facts, safe prompts, identity and per-server Resources. |
+| W7 | ACD-506 and F3-637 remove small Activity Detail/Pin and fixed width cap; layout schema/fixtures permit wide preferences; shared Glass plates and clean ring requirements. |
+| W8 | F3-649/DL-256 specify one lab Demo Studio with Pip/sound/parts, full onboarding tips/errors, project states/widths and Activity/Resources/quit scenarios. GUI implementation belongs to demo lane. |
+| W9 | Shared IDs, 25 owner docs, DRY/glossary/index, command catalog, production-intent wiring, bindings, Touch, settings/part/glyph companions and count pins. Regeneration and focused checks pass; final aggregate attribution follows. |
+
+The report-only `reports/pm7-build-20261029/decision-map.json` maps all 62 packet/ruling IDs (including the lead's RM1 clarification) to canonical owner units, for applying later answers. The new main reseal/snapshot/baseline was inherited through integration, never edited by this lane. The obsolete pre-merge check attempt was stopped before completion; final verification runs on the merged base with 600 s subcheck bounds.
+
+
+## Review responses
+
+All 19 Astra findings and all 20 Muse findings are accepted and resolved in the consolidated prose pass, with per-finding details in `REVIEW-RESPONSES.md` beside this report and `reports/pm7-build-20261029/REVIEW-RESPONSES.md`. No finding is rejected. The original 44 units now have specific, falsifiable criteria; G-031 adds correctly formed durable help entries. Wrong-unit insertion audit reports zero misplaced original amendments. Current chat/Activity Bar requirements, History pin and original user literals were preserved while old Pin, primitive and width rules were retired.
+
+Fresh generation passes: 2956 shards / 99 sources; PlanUnit index 7236 / 96 docs. Post-fix focused PM7, canon and Touch checks pass. Complete generated-file staging and clean committed extraction verification precede the final aggregate rerun. Decision map now covers all 76 packet/ruling/source IDs (62 packet/ruling plus D1–D14).
+
+The completed pre-review aggregate returned 1. Two own new-contract fixture failures were missing `semantic_rule` harness labels, now corrected. Its three context-compaction GUI-fixture errors match the baseline's exact fingerprints; the remaining failures need the final dry check's staleness/pre-existing attribution. The preliminary dry run was stopped to apply the requested reviews; it is not claimed as a completed verification.
+
+## GUI reconciliation input received
+
+Activity lane report at 52b68952ad records no fixed chat maximum, current centre floor 480, Activity width reservation/drop order and one Glass plate, with concept names PM56_HOST.reserveActivity/activityWidth, PMW.chatCol.activityW, narrow.state.act/actDropped, --pmw-chat-act-w and activity-panel.cover/data-layout dock|cover. It reports no context-ring spec change. These are captured for Step 4 once the lead confirms the GUI integration merge; they are concept lineage, not new native APIs. PM7-C5-CONTEXT-RING remains integration/verification work rather than an invented drawing mechanism.

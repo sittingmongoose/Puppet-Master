@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27985-L28351
+Source lines: L28034-L28449
 
-Source SHA256: `661fcb19f8645b67e86ed67d20e930675a6f75b50b6e244bb41717c6cf1eada2`
+Source SHA256: `9d0fb1351e15ba5d2df7be742c0ef98139f1a36f90babf25ce5cca131da9bc40`
 
 ---
 
@@ -231,28 +231,38 @@ plan_unit_id: ACD-505
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: D1–D4/D7–D14, G4/G5/G7; F3-664. Processes is the tenth domain after Subagents; it covers this
-  thread/subagents’ processes, scripts, servers, watchers, browser sessions and scheduled runs. Subagents stay
-  separate and appear only as linked owners here. Presence requires running/input work, retained while card/detail
-  open; scheduled/finished alone never keep icon. By state orders Needs input, Running, Scheduled, Finished
-  this session; many subagents can use By owner. Hover uses existing dwell/compaction/tones; full detail has
-  Stop and thread Stop all and bounded output. Footer says composer Stop ends reply only. Prompt quick answers
-  are safe-first yes/no; other input opens exact terminal. Processes uses console glyph, agent category robot,
-  individual rows Pip; glyph colour/backlight use common domain tones. All consume SIR-054 and one needs-you
-  set, no duplicate runtime.
+canonical_text: >-
+  D1–D4/D7–D14, G4/G5/G7; F3-664. Processes is the tenth domain after Subagents; it covers this
+  thread/subagents’ processes, scripts, servers, watchers, browser sessions and scheduled runs. Subagents
+  stay separate and appear only as linked owners here. Presence requires running/input work, retained while
+  card/detail open; scheduled/finished alone never keep icon. By state orders Needs input, Running,
+  Scheduled, Finished this session; many subagents can use By owner. Hover uses existing
+  dwell/compaction/tones; full detail has Stop and thread Stop all and bounded output. Footer says composer
+  Stop ends reply only. Prompt quick answers are safe-first yes/no; other input opens exact terminal.
+  Processes uses console glyph, agent category robot, individual rows Pip; glyph colour/backlight use
+  common domain tones. All consume SIR-054 and one needs-you set, no duplicate runtime.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on:
 - DL-241
+- SIR-054
+- F3-533
+- ACD-471
+- ACD-476
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Only this thread/descendants’ eligible work appears, with subagents linked as owners rather than duplicated
+  as processes.
+- D4 presence/retention rules and By state/By owner ordering hold in hover and full detail.
+- Stop all is thread-scoped, composer Stop stays reply-only and input/terminal/delivery actions preserve exact
+  owner identity.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-plans-verify.py run-gates
+- Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)
+- 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
+- python3 scripts/pm7-build-check.py
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -273,7 +283,9 @@ owner_hints:
 - Plans/assistant-chat-design.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-241
+ContractRef: ContractName:Plans/Decision_Log.md#DL-241, ContractName:Plans/Shared_Integration_Runtime.md#SIR-054, ContractName:Plans/FinalGUISpec.md#F3-533, ContractName:Plans/assistant-chat-design.md#ACD-471, ContractName:Plans/assistant-chat-design.md#ACD-476
+
+
 
 
 ### ACD-506 - Full Activity Detail And Dynamic Chat Width
@@ -283,26 +295,41 @@ plan_unit_id: ACD-506
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: G1–G3/G9, DL-254. Activity-bar click directly opens full-size Activity Detail, never a small
-  transient view and never Pin/unpin. Keep it until ×, Esc or icon-again. If dock does not fit, widen chat
-  within centre/page floor; at window limit cover transcript at full column height. No fixed 760 px cap; preserve
+canonical_text: >-
+  G1–G3/G9, DL-254. Activity-bar click directly opens full-size Activity Detail, never a small transient
+  view and never Pin/unpin. Keep it until ×, Esc or icon-again. If dock does not fit, widen chat within
+  centre/page floor; at window limit cover transcript at full column height. No fixed 760 px cap; preserve
   400 px message minimum, current centre floor/narrow ladder and History’s user-sized pin. Popped-out chat
-  uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu plate.
-  Friendly/Glass context ring is continuous, antialiased and never segmented by broken transforms. All ten
-  looks, widths 860/1024/1280/~1390/1920, narrow/short, Reduced Motion and drag budgets are acceptance surfaces.
+  uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu
+  plate. Friendly/Glass context ring is continuous, antialiased and never segmented by broken transforms.
+  All ten looks, widths 860/1024/1280/~1390/1920, narrow/short, Reduced Motion and drag budgets are
+  acceptance surfaces. W7/C5 context-ring clause is an acceptance outcome, not an asserted diagnosis: open
+  investigation PM7-C5-CONTEXT-RING remains owned by the activity GUI lane until its report identifies the
+  renderer/token cause and resulting drawing rule. Do not invent a causal fix from this prose. Recheck
+  Friendly/Glass at actual widths/DPR/Reduced Motion after that implementation; Step 4 reconciles its
+  measured mechanism.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on:
 - DL-254
+- F3-637
+- F3-535
+- DR-067
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Every Activity domain opens full detail directly, widening then covering transcript at full height when constrained,
+  with no Pin/small view.
+- Chat drag has no fixed 760 cap and preserves the minimum, centre/page floor, user History width and narrow
+  ladder.
+- Glass Activity/History/attachment plates use the same menu token, and C5 remains an explicit measured acceptance/investigation
+  until the GUI report records its fix.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-plans-verify.py run-gates
+- Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)
+- 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
+- python3 scripts/pm7-build-check.py
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -322,7 +349,9 @@ owner_hints:
 - Plans/assistant-chat-design.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-254
+ContractRef: ContractName:Plans/Decision_Log.md#DL-254, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-535, ContractName:Plans/DRY_Rules.md#DR-067
+
+
 
 
 ### ACD-507 - Pip Hosts Faces And Orbit
@@ -332,28 +361,48 @@ plan_unit_id: ACD-507
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent primitive, reached through shared
-  mark/row/empty/sheet functions rather than innerHTML hooks, observers or layered legacy drawings. Cast/role
-  props, helper marks, Activity agent rows, sheet host by Close, Scheduled/Memory faces, Plans, wand and sleeping
-  empty lists share kit/parts. Host watches at 420 ms, wonders while typing, oops on unusable primary without
-  activation and cheers on success; blink changes, stable last-pointer gaze, no random wink, paused shared
-  sway. Lift-off is one overlay-owned copy released on finish. Pip in Orbit centre has current-tool badge and
-  hands off with thinking placeholder, one Pip per reply. No added chat capability/welcome-back message. Main-button
-  keyboard/pointer acknowledgement ≤100 ms, single commit; fix busy stall instead of delaying dispatch. Parts
-  use SSYS-056’s one transaction and app voice obeys master/chat mute.
+canonical_text: >-
+  PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent primitive, reached through shared
+  mark/row/empty/sheet functions rather than innerHTML hooks, observers or layered legacy drawings.
+  Cast/role props, helper marks, Activity agent rows, sheet host by Close, Scheduled/Memory faces, Plans,
+  wand and sleeping empty lists share kit/parts. Host watches at 420 ms, wonders while typing, oops on
+  unusable primary without activation and cheers on success; blink changes, stable last-pointer gaze, no
+  random wink, paused shared sway. Lift-off is one overlay-owned copy released on finish. Pip in Orbit
+  centre has current-tool badge and hands off with thinking placeholder, one Pip per reply. No added chat
+  capability/welcome-back message. Main-button keyboard/pointer acknowledgement ≤100 ms, single commit; fix
+  busy stall instead of delaying dispatch. Parts use SSYS-056’s one transaction and app voice obeys
+  master/chat mute. PC1/X3 sheet motion (2026-10-29): a host drops in when its sheet opens, using the
+  shared rig and installed parts. Dots, sleep and happy faces never follow the pointer; other gaze retains
+  the last known position. Retro entrance/face changes step; live NieR sheet changes cut with a bounded
+  flicker, no black frame. Effective Reduced Motion/Still snaps to the settled state without entrance,
+  sway, flicker or lift-off travel. Static NieR brand/tray/app marks remain static; acknowledgement stays
+  ≤100 ms with no dispatch deferral or double commit.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on:
 - DL-239
+- F3-594
+- F3-566
+- F3-586
+- SSYS-056
+- DR-072
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Sheets use a single shared Pip host with 420 ms watch, deterministic face/gaze exceptions and family-specific
+  entrance/change/rest behavior.
+- Pointer and keyboard main-button acknowledgement are ≤100 ms with exactly one commit; disabled oops never
+  activates.
+- Orbit/thinking handoff shows one Pip per reply, and casts/lists/Plans/wand/empty surfaces use shared primitives
+  and owner states.
+- All optional placements, sound/motion and exit copies obey SSYS-056, the common player/overlay and teardown
+  gates.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-plans-verify.py run-gates
+- Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)
+- 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
+- python3 scripts/pm7-build-check.py
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -374,4 +423,4 @@ owner_hints:
 - Plans/assistant-chat-design.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-239
+ContractRef: ContractName:Plans/Decision_Log.md#DL-239, ContractName:Plans/FinalGUISpec.md#F3-594, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-586, ContractName:Plans/Settings_System.md#SSYS-056, ContractName:Plans/DRY_Rules.md#DR-072

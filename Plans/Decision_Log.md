@@ -17231,25 +17231,29 @@ plan_unit_id: DL-235
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. X1, X3, A1–A5, S8: Pip is the brand and each individual
-  agent; robot is the small category mark. One static Basic Dark app tile ships in the signed bundle (ICO 16–256,
-  ICNS, PNG and SVG manifest); the title-bar mark is static, 24 px, state-free and non-interactive, with mark-only
-  density. Tray visibility retains minimize-to-tray. Across all Projects its face maps idle→idle, working→working,
-  done→complete for about 10 s, needs-you→waiting (wins), error→failed, paused→paused. Static NieR keeps the
-  plain band; live Pip has eyes. OS notifications and Friendly’s app tile use Pip; in-app kind marks stay.
-  No mood adds a status key. Recommendations follow the decision packet and remain addressable by their decision
-  IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. X1, X3, A1–A5, S8: Pip is the brand and each individual agent;
+  robot is the small category mark. One static Basic Dark app tile ships in the signed bundle (ICO 16–256,
+  ICNS, PNG and SVG manifest); the title-bar mark is static, 24 px, state-free and non-interactive, with
+  mark-only density. Tray visibility retains minimize-to-tray. Across all Projects its face maps idle→idle,
+  working→working, done→complete for about 10 s, needs-you→waiting (wins), error→failed, paused→paused.
+  Static NieR keeps the plain band; live Pip has eyes. OS notifications and Friendly’s app tile use Pip;
+  in-app kind marks stay. No mood adds a status key. Recommendations follow the decision packet and remain
+  addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Brand/title mark is static/non-interactive at 24 px with mark-only density; fixed app tile is Basic Dark.
+- Tray gate and full A3 precedence match one cross-Project projection, with complete lasting about 10 s and
+  asks winning.
+- Every mood maps to one of 22 existing keys and illustrative expressions never manufacture owner state.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17271,6 +17275,9 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-660, ContractName:Plans/DRY_Rules.md#DR-076
+
+
 
 
 ### DL-236 - Project Box A And Switching
@@ -17280,27 +17287,31 @@ plan_unit_id: DL-236
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. B1–B7: approved option A Tab, with 28 px tab-height
-  box inside the 40 px title bar (46 px Glass), folder and drawn chevron, hairline, bare project name and ellipsis.
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. B1–B7: approved option A Tab, with 28 px tab-height box inside the
+  40 px title bar (46 px Glass), folder and drawn chevron, hairline, bare project name and ellipsis.
   Path/branch are in the hover tag and two-line menu rows. Projects remains the primary switch shell; this
-  box is a secondary entry. A row dispatches cmd.project.switch_active_tab; Ctrl/Cmd+Enter dispatches cmd.project.open_in_new_workspace_tab.
-  Ctrl+Shift+P invokes ui.project_switcher.open; All projects opens Projects. Badge priority is needs-you >
-  blocked > working > unsaved > calm. The box may wear a second chosen chip while its menu is open. Lens and
-  tab ink follow layout before paint with zero exposed wrong frames. B7 fixes a cover guard that survives the
-  NieR reboot cover; any different cause is reported with evidence. Recommendations follow the decision packet
-  and remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+  box is a secondary entry. A row dispatches cmd.project.switch_active_tab; Ctrl/Cmd+Enter dispatches
+  cmd.project.open_in_new_workspace_tab. Ctrl+Shift+P invokes ui.project_switcher.open; All projects opens
+  Projects. Badge priority is needs-you > blocked > working > unsaved > calm. The box may wear a second
+  chosen chip while its menu is open. Lens and tab ink follow layout before paint with zero exposed wrong
+  frames. B7 fixes a cover guard that survives the NieR reboot cover; any different cause is reported with
+  evidence. Recommendations follow the decision packet and remain addressable by their decision IDs; X1,
+  L1, S9, O11 and G4 are Jared’s explicit rulings.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Box and project rows match option A and use shared family material with distinct blocked/needs-you states.
+- Ctrl+Shift+P opens the menu; pick and Ctrl/Cmd+Enter dispatch the two named project commands.
+- At ~1390 px and full width, 60 fps recordings show zero exposed frames with a displaced selected chip.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-plans-verify.py run-gates
+- 60 fps GPU recordings at 860/1024/1280/~1390/1920 px, all ten looks and Reduced Motion; count exposed wrong-chip
+  frames
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -17321,6 +17332,9 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-661, ContractName:Plans/Commands_System.md#CS-105, ContractName:Plans/UI_Command_Catalog.md#UCC-209
+
+
 
 
 ### DL-237 - One Universal Loading Indicator
@@ -17330,27 +17344,35 @@ plan_unit_id: DL-237
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. X2, RM1, L1–L8: Pip marks every indeterminate wait: page,
-  panel, splash, button, check, sign-in, thinking placeholder; st-working remains item state in rows and tabs.
-  Keep meaningful skeletons and determinate bars. Think is the thinking context, Swing the default, Hop a short
-  success wait; these are not preferences. Friendly 1.8 s, Glass 2.6 s, Basic 1.7 s, Retro eight frames/1.2
-  s share one clock and scale with Animation speed. Reduced Motion permits only the control opacity breath
-  and Pip blink as wait feedback, no travel; under 12 px is still. Needs-you stays the loudest loop. NieR routes
-  to Diamond loaders and retains its existing fallback when that part is off; static NieR Pip never animates.
-  All loops pause offscreen, hidden and during drags. L8 records duplicate menu-sprout implementations as deferred
-  DRY debt. Recommendations follow the decision packet and remain addressable by their decision IDs; X1, L1,
-  S9, O11 and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. X2, RM1, L1–L8: Pip marks every indeterminate wait: page, panel,
+  splash, button, check, sign-in, thinking placeholder; st-working remains item state in rows and tabs.
+  Keep meaningful skeletons and determinate bars. Think is the thinking context, Swing the default, Hop a
+  short success wait; these are not preferences. Friendly 1.8 s, Glass 2.6 s, Basic 1.7 s, Retro eight
+  frames/1.2 s share one clock and scale with Animation speed. Reduced Motion permits only the control
+  opacity breath and Pip blink as wait feedback, no travel; under 12 px is still. Needs-you stays the
+  loudest loop. NieR routes to Diamond loaders and retains its existing fallback when that part is off;
+  static NieR Pip never animates. All loops pause offscreen, hidden and during drags. L8 records duplicate
+  menu-sprout implementations as deferred DRY debt. Recommendations follow the decision packet and remain
+  addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings. RM1: Reduced
+  Motion stays stored per Project, app-wide in effect for the active Project and combined with the OS
+  preference. Global inventory applicability is not app-global persistence; the adopted ruling introduces
+  no new store or key.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Every indeterminate wait uses the shared loader while item state, skeletons and measured progress keep their
+  owners.
+- Family periods are 1.8/2.6/1.7/1.2 s, scaled by Animation speed; all clocks pause hidden/offscreen/during
+  drags.
+- Reduced Motion has only permitted wait breath/blink; NieR routes to Diamond/fallback and <12 px stays still.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17371,6 +17393,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-662, ContractName:Plans/DRY_Rules.md#DR-077, ContractName:Plans/Settings_System.md#SSYS-010
+
 
 
 
@@ -17381,28 +17406,35 @@ plan_unit_id: DL-238
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. O1–O12: replace the troupe and NieR unit with one Pip
-  across every look, preserving each family’s own world/material. Expand to every real onboarding route, screen,
-  choice and error, about 44 screens and 203 tips. Use bounded transform-only physics, shared gaze and solved
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. O1–O12: replace the troupe and NieR unit with one Pip across every
+  look, preserving each family’s own world/material. Expand to every real onboarding route, screen, choice
+  and error, about 44 screens and 203 tips. Use bounded transform-only physics, shared gaze and solved
   strings, paused hidden/offscreen/during drags. Retro Dark CRT and Retro Light paper have separate worlds
-  and sound kits; approved music is not re-keyed. Live synthesis uses the one sound player with recipe metadata,
-  setup-voice and music parts; Reduced Motion never mutes, look hover is silent. The question note is the one
-  pm7ob-explainer. Pip marks the current chapter. Ready hands strings to the first Tour callout, but O11 defers
-  Tour redesign; Pod 042 remains Tour/Chat narrator. Creating blocks follow completed owner phases and never
-  gate Continue/Ready. Recommendations follow the decision packet and remain addressable by their decision
-  IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+  and sound kits; approved music is not re-keyed. Live synthesis uses the one sound player with recipe
+  metadata, setup-voice and music parts; Reduced Motion never mutes, look hover is silent. The question
+  note is the one pm7ob-explainer. Pip marks the current chapter. Ready hands strings to the first Tour
+  callout, but O11 defers Tour redesign; Pod 042 remains Tour/Chat narrator. Creating blocks follow
+  completed owner phases and never gate Continue/Ready. Recommendations follow the decision packet and
+  remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- All real routes/screens/options/errors have Pip scenes and asked-for tips; no flow is replaced by a demo
+  shortcut.
+- The chapter rail, faces/gaze, world lifecycle and six recipe kits satisfy F3-663, including Retro split and
+  no re-key.
+- Creating owner phases determine progress; Reduced Motion is instant, and Tour redesign stays deferred.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-plans-verify.py run-gates
+- Concepts/onboarding/opus-5.5/tools/scenarios.mjs
+- Concepts/onboarding/opus-5.5-pip/tools/sound_levels.mjs
+- Concepts/onboarding/opus-5.5-pip/tools/sound_texture.mjs
+- 60 fps GPU recordings of rail, faces, world lifecycle and owner-phase Creating; no fabricated native evidence
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -17423,6 +17455,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-663, ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/FinalGUISpec.md#F3-599
+
 
 
 
@@ -17433,27 +17468,32 @@ plan_unit_id: DL-239
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. PC1–PC5, S1–S9: Pip redraws the existing single puppet
-  primitive, superseding DL-149 card 6’s still sheets, puppet-native state silhouette and magnifier. Sheets
-  may sway/blink/gaze and react; faces map to typed status, never new keys. Checker/Reviewer use glasses; crown
-  and hard hat may be gold as role material, not a status tone. Orbit centre has Pip and a tool badge, handed
-  over from the thinking placeholder so only one Pip represents a reply. Parts cover chat/onboarding only.
-  Full, Quiet, Still, Plain replace Classic; no second primitive. One per-Project general.visual.pip-parts
-  row, editor in Settings/wand/title-bar theme menu, never onboarding. Setup voice on, app chirps off, setup
-  music on, all under the master sound; NieR parts win overlapping placements. No Pip master switch and no
-  switchable brand/tray/app-icon/loader/notification faces. Recommendations follow the decision packet and
-  remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. PC1–PC5, S1–S9: Pip redraws the existing single puppet primitive,
+  superseding DL-149 card 6’s still sheets, puppet-native state silhouette and magnifier. Sheets may
+  sway/blink/gaze and react; faces map to typed status, never new keys. Checker/Reviewer use glasses; crown
+  and hard hat may be gold as role material, not a status tone. Orbit centre has Pip and a tool badge,
+  handed over from the thinking placeholder so only one Pip represents a reply. Parts cover chat/onboarding
+  only. Full, Quiet, Still, Plain replace Classic; no second primitive. One per-Project
+  general.visual.pip-parts row, editor in Settings/wand/title-bar theme menu, never onboarding. Setup voice
+  on, app chirps off, setup music on, all under the master sound; NieR parts win overlapping placements. No
+  Pip master switch and no switchable brand/tray/app-icon/loader/notification faces. Recommendations follow
+  the decision packet and remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s
+  explicit rulings.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Every individual agent uses one Pip primitive in all ten looks, with role/status semantics preserved.
+- The 25-part registry and exact four presets match SSYS-056; Full is 24 on, app voice off.
+- One Project transaction backs all editor hosts; no Classic/brand/loader switch, extra player or onboarding
+  editor exists.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17475,6 +17515,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-594, ContractName:Plans/assistant-chat-design.md#ACD-507, ContractName:Plans/Settings_System.md#SSYS-056
+
 
 
 
@@ -17485,21 +17528,24 @@ plan_unit_id: DL-240
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D1: Processes names the tenth chat Activity domain,
-  hover card, Activity Detail and status-bar item/tab. Running is only a row state. Tasks remains To-Dos, and
-  backgrounded remains an ObservableWork state. Recommendations follow the decision packet and remain addressable
-  by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D1: Processes names the tenth chat Activity domain, hover card,
+  Activity Detail and status-bar item/tab. Running is only a row state. Tasks remains To-Dos, and
+  backgrounded remains an ObservableWork state. Authority: Jared decided D1 on 2026-10-27; this is an
+  approved source-thread decision, not an unanswered packet recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Every domain/item/tab label is Processes, with Running only a row state.
+- Agents and subagents retain their own domain/owner vocabulary.
+- No process is relabelled as a To-Do task.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17520,6 +17566,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-505, ContractName:Plans/FinalGUISpec.md#F3-664
+
 
 
 
@@ -17530,22 +17579,26 @@ plan_unit_id: DL-241
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D2: the thread view lists processes, scripts, servers,
-  watchers, browser sessions and scheduled runs started by the thread or its subagents, including finished-this-session
-  rows. Subagents stay in Subagents and occur here only as linked owners. Platform scope includes Assistant,
-  Orchestrator, Planning Wizard, PRD Builder, Scout and all other owners. Recommendations follow the decision
-  packet and remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D2: the thread view lists processes, scripts, servers, watchers,
+  browser sessions and scheduled runs started by the thread or its subagents, including
+  finished-this-session rows. Subagents stay in Subagents and occur here only as linked owners. Platform
+  scope includes Assistant, Orchestrator, Planning Wizard, PRD Builder, Scout and all other owners.
+  Authority: Jared decided D2 on 2026-10-28; this is an approved source-thread decision, not an unanswered
+  packet recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Thread filters include only its work and descendants, preserving stable linked owner identities.
+- Subagents appear as process owners here and remain in Subagents as agents.
+- Platform scope includes Assistant, Orchestrator, Planning Wizard, PRD Builder, Scout and all registered owners.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17565,6 +17618,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-505, ContractName:Plans/Shared_Integration_Runtime.md#SIR-054
+
 
 
 
@@ -17575,22 +17631,25 @@ plan_unit_id: DL-242
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D3: default thread layout By state orders Needs input,
-  Running, Scheduled, Finished this session; By owner is the fallback with many subagents. Optional output
-  inspection is bounded head/tail with omitted-line count. Platform live processes sit under their owning agent.
-  Recommendations follow the decision packet and remain addressable by their decision IDs; X1, L1, S9, O11
-  and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D3: default thread layout By state orders Needs input, Running,
+  Scheduled, Finished this session; By owner is the fallback with many subagents. Optional output
+  inspection is bounded head/tail with omitted-line count. Platform live processes sit under their owning
+  agent. Authority: Jared decided D3 on 2026-10-28; this is an approved source-thread decision, not an
+  unanswered packet recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- By state orders Needs input, Running, Scheduled, Finished this session.
+- By owner remains usable with many subagents and preserves agent/process lineage.
+- Output inspection enforces head/tail caps and reports omitted lines.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17610,6 +17669,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-505, ContractName:Plans/FinalGUISpec.md#F3-664
+
 
 
 
@@ -17620,21 +17682,24 @@ plan_unit_id: DL-243
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D4: show the chat icon only while a process runs or
-  needs input; retain it while its hover card or Activity Detail is open, then remove it on close if no live/input
-  work remains. Scheduled or finished rows alone never keep the icon. Recommendations follow the decision packet
-  and remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D4: show the chat icon only while a process runs or needs input;
+  retain it while its hover card or Activity Detail is open, then remove it on close if no live/input work
+  remains. Scheduled or finished rows alone never keep the icon. Authority: Jared decided D4 on 2026-10-27;
+  this is an approved source-thread decision, not an unanswered packet recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- The icon appears for running/input work and not for scheduled/finished work alone.
+- An open card/detail retains the icon until close after the final live item ends.
+- Closing the retained view removes the icon only when no live/input item remains.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17654,6 +17719,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-533, ContractName:Plans/assistant-chat-design.md#ACD-505
+
 
 
 
@@ -17664,23 +17732,27 @@ plan_unit_id: DL-244
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D5: two separated status-bar items between project folder
-  and source control, agents/questions and processes/needs input. Numbers is default: glyph/number pairs with
-  words on hover; general.interaction.status-bar-words switches to Words. Zero says No agents / No processes;
-  stale data shows one stale strip, never a healthy zero. Fold the Orchestrator chip into Agents and its group;
-  no CPU/RAM bar item (G4). Recommendations follow the decision packet and remain addressable by their decision
-  IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D5: two separated status-bar items between project folder and
+  source control, agents/questions and processes/needs input. Numbers is default: glyph/number pairs with
+  words on hover; general.interaction.status-bar-words switches to Words. Zero says No agents / No
+  processes; stale data shows one stale strip, never a healthy zero. Fold the Orchestrator chip into Agents
+  and its group; no CPU/RAM bar item (G4). Authority: Jared decided D5 on 2026-10-27 (initial) and
+  2026-10-28 (final); this is an approved source-thread decision, not an unanswered packet recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Numbers is false/default in the admitted Words row and full labels remain accessible/on hover.
+- Agents/questions and processes/needs-input occupy two separated items, with no Orchestrator or CPU/RAM extra
+  item.
+- Zero reads No agents/No processes; stale data remains explicit rather than healthy zero.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17700,6 +17772,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-448, ContractName:Plans/Settings_System.md#SSYS-057
+
 
 
 
@@ -17710,23 +17785,27 @@ plan_unit_id: DL-245
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D6 amended by G4/G8: one platform panel has Agents,
-  Processes, Resources tabs and desktop Pop out. Agents leads with Questions; Processes leads with Needs input.
-  Side by side and the Task manager layout are retired from product; its resource table is in Resources. Home
-  panel-tab support stays deferred (G10), no new WorkNodes. One overlay root; desktop pop-out preserves scope
-  and selected tab; unsupported clients expose a reason. Recommendations follow the decision packet and remain
-  addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D6 amended by G4/G8: one platform panel has Agents, Processes,
+  Resources tabs and desktop Pop out. Agents leads with Questions; Processes leads with Needs input. Side
+  by side and the Task manager layout are retired from product; its resource table is in Resources. Home
+  panel-tab support stays deferred (G10), no new WorkNodes. One overlay root; desktop pop-out preserves
+  scope and selected tab; unsupported clients expose a reason. Authority: Jared decided D6 on 2026-10-28;
+  this is an approved source-thread decision, not an unanswered packet recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- The panel has exactly Agents, Processes, Resources tabs, leading with Questions/Needs input in their own
+  views.
+- Desktop Pop out preserves one view/state in a draggable window.
+- Side by side, old Task manager layout and Home work-panel tab are not offered.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17747,6 +17826,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-664
+
 
 
 
@@ -17757,22 +17839,25 @@ plan_unit_id: DL-246
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D7: status panel is glance/triage; Agents rail is deep
-  lanes, queue and lineage; Home Agents board is a filtered agent view. All share OperationalAwareness over
-  ObservableWork and registry lineage, one row anatomy, ordering and needs-you set. No surface owns a parallel
-  runtime list/count. Recommendations follow the decision packet and remain addressable by their decision IDs;
-  X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D7: status panel is glance/triage; Agents rail is deep lanes, queue
+  and lineage; Home Agents board is a filtered agent view. All share OperationalAwareness over
+  ObservableWork and registry lineage, one row anatomy, ordering and needs-you set. No surface owns a
+  parallel runtime list/count. Authority: Jared decided D7 on 2026-10-28; this is an approved source-thread
+  decision, not an unanswered packet recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Every named surface projects the same work identity, count and needs-you set.
+- Triage and the deep rail share row anatomy/ordering while keeping their distinct scope and controls.
+- A stale/reconciled item cannot become a duplicate healthy row in another surface.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17792,6 +17877,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-078, ContractName:Plans/FinalGUISpec.md#F3-452
+
 
 
 
@@ -17802,23 +17890,26 @@ plan_unit_id: DL-247
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D8: composer Stop ends only the reply and holds its
-  queue. cmd.work.stop stops one item, a thread or the reviewed platform target set. Stopping an agent includes
-  its subagents and their processes. Executor sends SIGTERM then SIGKILL after 3 s to the whole process group,
-  bound to pid plus start time. Stopping is pending with its word until exit is observed; already ended is
-  idempotent. System services are excluded. Recommendations follow the decision packet and remain addressable
-  by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D8: composer Stop ends only the reply and holds its queue.
+  cmd.work.stop stops one item, a thread or the reviewed platform target set. Stopping an agent includes
+  its subagents and their processes. Executor sends SIGTERM then SIGKILL after 3 s to the whole process
+  group, bound to pid plus start time. Stopping is pending with its word until exit is observed; already
+  ended is idempotent. System services are excluded. Authority: Jared decided D8 on 2026-10-28; this is an
+  approved source-thread decision, not an unanswered packet recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Stop checks pid plus start time/group/generation and targets descendants as one reviewed current set.
+- SIGTERM precedes SIGKILL by 3 s, using Windows equivalents, and Stopping remains until observed exit.
+- Composer Stop does not kill background processes and platform Stop all excludes system services.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17839,6 +17930,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-043, ContractName:Plans/Commands_System.md#CS-106
+
 
 
 
@@ -17849,23 +17943,26 @@ plan_unit_id: DL-248
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D9: per item agent | user | quiet. Scripts/tests/builds
-  default Tell the agent; servers/watchers/databases default Notify me. Tell the agent never wakes a user-stopped
-  thread. Notify me uses the alert owner, one deduplicated/coalesced notice per item; Quiet makes no completion
-  delivery. holds_reply is separate from delivery; completion/input candidates emit no unadmitted event. Recommendations
-  follow the decision packet and remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s
-  explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D9: per item agent | user | quiet. Scripts/tests/builds default
+  Tell the agent; servers/watchers/databases default Notify me. Tell the agent never wakes a user-stopped
+  thread. Notify me uses the alert owner, one deduplicated/coalesced notice per item; Quiet makes no
+  completion delivery. holds_reply is separate from delivery; completion/input candidates emit no
+  unadmitted event. Authority: Jared decided D9 on 2026-10-28; this is an approved source-thread decision,
+  not an unanswered packet recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Scripts/tests/builds default agent; servers/watchers/databases default user; quiet suppresses delivery.
+- A completion produces at most one deduplicated/coalesced notice or agent delivery per identity/generation.
+- No completion wakes a user-stopped thread, and holds_reply is independent.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17885,6 +17982,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-054, ContractName:Plans/FinalGUISpec.md#F3-461
+
 
 
 
@@ -17895,23 +17995,27 @@ plan_unit_id: DL-249
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D10: always ask while live work exists. Default Keep
-  everything running on the server; alternative Stop selected work has a target list the user may untick. The
-  window is a client, not the work owner. Confirmation is generation-bound; keep-running never terminates server
-  work; selected-stop waits for owner exit observations or reports truthful unresolved state. Recommendations
-  follow the decision packet and remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s
-  explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D10: always ask while live work exists. Default Keep everything
+  running on the server; alternative Stop selected work has a target list the user may untick. The window
+  is a client, not the work owner. Confirmation is generation-bound; keep-running never terminates server
+  work; selected-stop waits for owner exit observations or reports truthful unresolved state. Authority:
+  Jared decided D10 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet
+  recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Quit with live work defaults to keeping server work and shows an untickable stop target list for the alternative.
+- Cancel and keep-running make no work-stop mutation.
+- Stop-selected validates the reviewed generation, excludes services and observes exits or reports unresolved
+  work.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17931,6 +18035,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-665, ContractName:Plans/Commands_System.md#CS-106
+
 
 
 
@@ -17941,21 +18048,24 @@ plan_unit_id: DL-250
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D11: collapsed System services ends the Processes tab,
-  mirrors owner status and links System status. No Stop/Restart/Stop all in this feature may affect those services.
-  Recommendations follow the decision packet and remain addressable by their decision IDs; X1, L1, S9, O11
-  and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D11: collapsed System services ends the Processes tab, mirrors
+  owner status and links System status. No Stop/Restart/Stop all in this feature may affect those services.
+  Authority: Jared decided D11 on 2026-10-28; this is an approved source-thread decision, not an unanswered
+  packet recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- System services is collapsed/read-only at the end of Processes.
+- Its rows link to System status and expose no stop/restart here.
+- Stop all cannot include a system-service identity.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -17976,6 +18086,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-664
+
 
 
 
@@ -17986,23 +18099,28 @@ plan_unit_id: DL-251
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D12 amended by G4/G8: Resources is the third tab. Show
-  CPU, memory, ports, sortable rows and an inspector grouped by Project/server/environment, including every
-  environment/server of each represented Project. Samples are host-owner observations read only while the tab
-  is open; closed tabs do not sample. Missing/stale/partial/unavailable/conflicted is explicit. Never choose
-  one server implicitly for a CPU/RAM status-bar indicator. Recommendations follow the decision packet and
-  remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D12 amended by G4/G8: Resources is the third tab. Show CPU, memory,
+  ports, sortable rows and an inspector grouped by Project/server/environment, including every
+  environment/server of each represented Project. Samples are host-owner observations read only while the
+  tab is open; closed tabs do not sample. Missing/stale/partial/unavailable/conflicted is explicit. Never
+  choose one server implicitly for a CPU/RAM status-bar indicator. Authority: Jared decided D12 on
+  2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Resources attributes CPU/memory/ports to explicit Project/server/environment identities across at least two
+  environments.
+- Closing/hiding the tab stops its sampling subscription.
+- Unavailable readings are null with a reason; stale/partial/conflicted data never becomes a synthetic healthy
+  zero.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -18024,6 +18142,9 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-664, ContractName:Plans/Shared_Integration_Runtime.md#SIR-054
+
+
 
 
 ### DL-252 - D13 Safe Process Input
@@ -18033,22 +18154,25 @@ plan_unit_id: DL-252
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D13: only a plain yes/no prompt gets quick answers,
-  safe answer first. Other prompts use Answer in Terminal, preserving exact terminal/process identity and input
-  generation. No synthetic terminal input, secret echo or agent answer to protected prompts. Recommendations
-  follow the decision packet and remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s
-  explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D13: only a plain yes/no prompt gets quick answers, safe answer
+  first. Other prompts use Answer in Terminal, preserving exact terminal/process identity and input
+  generation. No synthetic terminal input, secret echo or agent answer to protected prompts. Authority:
+  Jared decided D13 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet
+  recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Only current plain yes/no requests offer quick answers and the detected safe answer is first.
+- Any other prompt reveals the exact owning terminal instead of accepting arbitrary text here.
+- Stale prompt generations and protected input refuse without sending input.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -18069,6 +18193,9 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-054, ContractName:Plans/Commands_System.md#CS-106
+
+
 
 
 ### DL-253 - D14 Category Glyphs And Pip Agents
@@ -18078,23 +18205,27 @@ plan_unit_id: DL-253
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. D14 with X1: processes is a console-framed >_ glyph;
-  robot is the existing redrawn antenna category glyph, not an individual agent figure. Live category glyphs
-  breathe on 2200 ms, cursor/antenna move below needs-you’s motion priority. Panel heads join; list marks stay
-  still. Reduced Motion shows the lit rest pose. Every individual agent is the one Pip primitive. Recommendations
-  follow the decision packet and remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s
-  explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. D14 with X1: processes is a console-framed >_ glyph; robot is the
+  existing redrawn antenna category glyph, not an individual agent figure. Live category glyphs breathe on
+  2200 ms, cursor/antenna move below needs-you’s motion priority. Panel heads join; list marks stay still.
+  Reduced Motion shows the lit rest pose. Every individual agent is the one Pip primitive. Authority: Jared
+  decided D14 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet
+  recommendation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Processes is the console-framed prompt and robot the category antenna, while each individual agent remains
+  Pip.
+- Live category heads breathe at 2200 ms below needs-you; list state marks stay still.
+- Reduced Motion and hidden/offscreen/drag state retain recognizable rest poses without live loops.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -18117,6 +18248,9 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-658
+
+
 
 
 ### DL-254 - Chat Detail, Width And Glass Repairs
@@ -18126,25 +18260,32 @@ plan_unit_id: DL-254
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. G1–G3/G9: remove Activity Detail Pin and the small transient
-  view. Click opens full-size docked detail and keeps it until ×, Esc or that icon closes it. Widen chat to
-  fit, then cover transcript at full column height when no more room remains. Message area has no fixed 760
-  cap, preserving centre/page floors and the narrow ladder. History pin remains a different control. Floating
-  Glass Activity/attachment/History plates use the persona/model menu plate; context rings must be continuous
-  and artifact-free in Friendly/Glass. NieR and narrow forms are designed in this build. Recommendations follow
-  the decision packet and remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit
-  rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. G1–G3/G9: remove Activity Detail Pin and the small transient view.
+  Click opens full-size docked detail and keeps it until ×, Esc or that icon closes it. Widen chat to fit,
+  then cover transcript at full column height when no more room remains. Message area has no fixed 760 cap,
+  preserving centre/page floors and the narrow ladder. History pin remains a different control. Floating
+  Glass Activity/attachment/History plates use the persona/model menu plate; context rings must be
+  continuous and artifact-free in Friendly/Glass. NieR and narrow forms are designed in this build.
+  Recommendations follow the decision packet and remain addressable by their decision IDs; X1, L1, S9, O11
+  and G4 are Jared’s explicit rulings. W7/C5 open investigation PM7-C5-CONTEXT-RING: the ring’s correct
+  continuous rendering is the requested acceptance outcome. The activity GUI lane must report the
+  investigated cause and actual drawing/token fix; no mechanism is claimed by this decision before that
+  report.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- No fixed 760 cap or Activity Pin/small transient fallback remains; History pin and centre/page floors survive.
+- Glass floating Activity/History/attachment surfaces share the persona/model menu plate.
+- Friendly/Glass ring acceptance is recorded with PM7-C5-CONTEXT-RING investigation and later GUI mechanism
+  evidence.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -18165,6 +18306,9 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-506, ContractName:Plans/FinalGUISpec.md#F3-637
+
 
 
 
@@ -18175,24 +18319,27 @@ plan_unit_id: DL-255
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. G5–G7/G10: stopping→pending, lost→warning, stopped→skipped;
-  keep 22 status keys. cmd.work.clear_finished hides finished rows in this view only and deletes no owner record.
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. G5–G7/G10: stopping→pending, lost→warning, stopped→skipped; keep 22
+  status keys. cmd.work.clear_finished hides finished rows in this view only and deletes no owner record.
   ProcessFacts is subordinate, referenced from subject_refs; it does not burden non-process work. Keyboard
   panel shortcuts, OS badge/notification flow implementation and Home panel-tab opening remain deferred; a
-  future OS badge consumes the same needs-you projection. D9 in-app notices and existing OS notification behavior
-  remain their owners. Recommendations follow the decision packet and remain addressable by their decision
-  IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.'
+  future OS badge consumes the same needs-you projection. D9 in-app notices and existing OS notification
+  behavior remain their owners. Recommendations follow the decision packet and remain addressable by their
+  decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Process facts are subordinate and stopping/lost/stopped use pending/warning/skipped without a new key.
+- Clear Finished hides only the invoking view and deletes no owner record.
+- Deferred Home tab, panel shortcuts and new OS badge rollout remain absent; new candidate events do not emit.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -18214,6 +18361,9 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-054, ContractName:Plans/Commands_System.md#CS-106
+
+
 
 
 ### DL-256 - Demo Studio And Evidence Boundary
@@ -18223,25 +18373,33 @@ plan_unit_id: DL-256
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Adopted 2026-10-29 for the PM7 build. W8/W9, SND1, LAND1: the one lab-only Demo Studio gains
-  Pip/loader/moods/parts/sound, full onboarding errors/tips, project-box widths/states and background Activity/Resources/quit
-  scenarios using public owner APIs. No concept toolbar, injected runtime, innerHTML hook or duplicate store
-  becomes product. Missing APIs are unavailable. Sound gets Jared’s listening review before the lead’s single
-  final landing approval; phase builds are review artifacts. Static checks and concept recordings supply no
-  native Rust/Slint, production-event or governance certification. No reseal in this task. Recommendations
-  follow the decision packet and remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s
-  explicit rulings.'
+canonical_text: >-
+  Adopted 2026-10-29 for the PM7 build. W8/W9, SND1, LAND1: the one lab-only Demo Studio gains
+  Pip/loader/moods/parts/sound, full onboarding errors/tips, project-box widths/states and background
+  Activity/Resources/quit scenarios using public owner APIs. No concept toolbar, injected runtime,
+  innerHTML hook or duplicate store becomes product. Missing APIs are unavailable. Sound gets Jared’s
+  listening review before the lead’s single final landing approval; phase builds are review artifacts.
+  Static checks and concept recordings supply no native Rust/Slint, production-event or governance
+  certification. No reseal in this task. Recommendations follow the decision packet and remain addressable
+  by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings. W8’s concrete lab-only matrix
+  is normative in F3-649: all named Pip/loader/sound controls, 42 events/5 loops,
+  antigravityOnce/tastebook/≤11-character key/Ask Pip/pipRoughDay, Adjust Pip/presets/recorded pip run,
+  five Project states and widths, Busy/No asks/Quiet/Many/Stale feed/After restart/Right-now, all three
+  tabs/multiple environments/Quit/Stop all/Numbers-Words and busy/quitWithWork. No generic topic-only demo
+  substitutes for that matrix; strings/contrast/OWNED reset and public API availability remain required.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Every named F3-649 case/recipe is exposed in the one lab through public APIs or explicitly unavailable.
+- Words come from the Studio copy owner, contrast is 4.5:1 and Reset Everything clears only OWNED keys.
+- No lab trigger becomes a product preference/command/runtime, and sound awaits Jared listening before landing.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -18264,4 +18422,7 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 ```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-649
+
 

@@ -215,7 +215,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "011c79e84c77ccae4f3f89f0407fa144f1ce9ad6a4af9664e641391721e0569a",
+      "sha256": "3fe28c367ffef1dfb2b68ca6b2ce57e131c603afdf9c28ca782cba1144852597",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -623,7 +623,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 28351,
+      "line_count": 28451,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 491,
       "plan_unit_ids": [
@@ -1473,7 +1473,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "661fcb19f8645b67e86ed67d20e930675a6f75b50b6e244bb41717c6cf1eada2",
+      "sha256": "9d0fb1351e15ba5d2df7be742c0ef98139f1a36f90babf25ce5cca131da9bc40",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 489,
@@ -1490,8 +1490,10 @@
         "validation_rule": 2
       },
       "validation_surfaces": [
+        "60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion",
         "Attachments carry source_session and draft_id",
         "Compact Now chat context circle acceptance fixture",
+        "Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)",
         "Crash/restart preserves isolation",
         "DRY Method chat disclosure fixtures",
         "Future Assistant Chat file mention ranking parity test.",
@@ -1562,6 +1564,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm-shared-runtime-contracts.py --self-test",
         "python3 scripts/pm-shared-runtime-storage-materialize.py check",
+        "python3 scripts/pm7-build-check.py",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-restore-pair-validation.md",
         "rg newfeatures.md Plans/assistant-chat-design.md",
@@ -1601,7 +1604,7 @@
         "Plans/rewrite-tie-in-memo.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 2951,
+      "line_count": 2995,
       "path": "Plans/assistant-memory-subsystem.md",
       "plan_unit_count": 53,
       "plan_unit_ids": [
@@ -1696,7 +1699,7 @@
         "storage_boundary",
         "storage_layout"
       ],
-      "sha256": "9fa7d17086b3348bd4ce47f0664e12bd56b4060be7493a82fa500f7138be6c59",
+      "sha256": "936b85610810e410df6782fc810cf5e5e2b8e888583370c467235deed287d4ff",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 53
@@ -3785,7 +3788,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 8248,
+      "line_count": 8296,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 98,
       "plan_unit_ids": [
@@ -3985,7 +3988,7 @@
         "view_state_command_inflation",
         "web_slash_family_drift"
       ],
-      "sha256": "72bd14aef5e2b5936e8837401f4bf5be6f3b57863dd29ba8ec9d9c4333b7b8fb",
+      "sha256": "7eb5248491c5c32964ec65eb764ad0ffd95dbe23d9fc9e1e9706034a5cae457f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 98
@@ -4071,6 +4074,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-touch-closure-verify.py --json",
+        "python3 scripts/pm7-build-check.py",
         "redaction",
         "restart",
         "scripts/pm-plans-verify.py",
@@ -5542,7 +5546,7 @@
         "usage_attention_acknowledged_semantics_drift",
         "wrapper_command_navigation_drift"
       ],
-      "sha256": "ac2de2788f202b57b9bd6d22b69a7406ed4d31a733f949b5dec11bd2cf041188",
+      "sha256": "cb2cf76956a56ead164c2f35a0d529e59e80ff5998be1c4d45bb74996fcff053",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -5788,7 +5792,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 18267,
+      "line_count": 18428,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 235,
       "plan_unit_ids": [
@@ -6189,7 +6193,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "72f2ee3232e5c5d212cd58d674f551c425705bd5fd973e9ca08353c50a735671",
+      "sha256": "127fae472b23113aea42e5e94ced1122bcb3c9a2ccbd07c933a17860679ae6d4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 235
@@ -6201,6 +6205,11 @@
         "requirement": 88
       },
       "validation_surfaces": [
+        "60 fps GPU recordings at 860/1024/1280/~1390/1920 px, all ten looks and Reduced Motion; count exposed wrong-chip frames",
+        "60 fps GPU recordings of rail, faces, world lifecycle and owner-phase Creating; no fabricated native evidence",
+        "Concepts/onboarding/opus-5.5-pip/tools/sound_levels.mjs",
+        "Concepts/onboarding/opus-5.5-pip/tools/sound_texture.mjs",
+        "Concepts/onboarding/opus-5.5/tools/scenarios.mjs",
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
         "Decision Log PlanUnit YAML parsing and exact canonical scope comparison to the pinned manifest",
         "Exact approval/card SHA-256 and response preservation",
@@ -6244,6 +6253,7 @@
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-shard-plans.py --check",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "python3 scripts/pm7-build-check.py",
         "python3 scripts/pm7-canon-check.py",
         "python3 scripts/pm_coordination_events.py",
         "reports/event-authority-20260911/decision-responses.jsonl",
@@ -6539,7 +6549,7 @@
         "scripts/pm-server-command-gap-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 4425,
+      "line_count": 4447,
       "path": "Plans/DRY_Rules.md",
       "plan_unit_count": 67,
       "plan_unit_ids": [
@@ -6630,7 +6640,7 @@
         "shared_runtime_parallel_owner_drift",
         "usage_role_parallel_owner_drift"
       ],
-      "sha256": "1f1167147159ee4aff768ceb2eb704ca12599a38f03e4e71224f7436c3fc2f70",
+      "sha256": "818a665c0e08e56adf62f1e93f5ff45d9239d1b0c1399f0c8e2ad14e4f6228b6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 67
@@ -6657,7 +6667,8 @@
         "python3 scripts/pm-shard-plans.py --check",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm-touch-closure-verify.py",
-        "python3 scripts/pm-touch-closure-verify.py --json"
+        "python3 scripts/pm-touch-closure-verify.py --json",
+        "python3 scripts/pm7-build-check.py"
       ]
     },
     {
@@ -6707,7 +6718,7 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 8967,
+      "line_count": 8990,
       "path": "Plans/Executor_Protocol.md",
       "plan_unit_count": 128,
       "plan_unit_ids": [
@@ -6877,7 +6888,7 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "704060fece43cad29d680fbe8e2318e81f61c6bb07e3c3f9f57e3667e0903a50",
+      "sha256": "7e4e3739b1fc0d4f95518135b131f7846d2fa912e44d165e3fdfe3935a72f094",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 128
@@ -7734,7 +7745,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 49573,
+      "line_count": 50388,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 653,
       "plan_unit_ids": [
@@ -8531,7 +8542,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "b88dbed9579de911698b77f4dfe726a1e998ba12fef41e8d213e9f0a80ce979e",
+      "sha256": "36c5ffd042fbd9ee31121beb4871b8342bbe239e4537318cd5a69678db2b29f7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 646,
@@ -8553,9 +8564,16 @@
       },
       "validation_surfaces": [
         "5MB+ projection cannot freeze main UI",
+        "60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion",
+        "60 fps GPU recordings at 860/1024/1280/~1390/1920 px, all ten looks and Reduced Motion; count exposed wrong-chip frames",
+        "60 fps GPU recordings of rail, faces, world lifecycle and owner-phase Creating; no fabricated native evidence",
         "An artifact cannot be delivered/marked complete until required visual/evidence gates settle.",
         "Bypass attempts become typed gate violations with blocked state and repair route.",
         "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076).",
+        "Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)",
+        "Concepts/onboarding/opus-5.5-pip/tools/sound_levels.mjs",
+        "Concepts/onboarding/opus-5.5-pip/tools/sound_texture.mjs",
+        "Concepts/onboarding/opus-5.5/tools/scenarios.mjs",
         "Copy from rendered view preserves source bytes where expected",
         "DRY Method settings and disclosure GUI fixtures",
         "Diagnostic bundle records hook health.",
@@ -8698,6 +8716,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm-shared-runtime-command-contracts.py validate",
         "python3 scripts/pm-validate-pm7-gui-fixtures.py validate",
+        "python3 scripts/pm7-build-check.py",
         "settings inventory schema validation",
         "settings lifecycle positive and negative fixtures",
         "tests/test_pm_onboarding_phases.py",
@@ -9189,7 +9208,7 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 11,
-        "True": 17
+        "True": 18
       },
       "heading_count": 65,
       "implementation_surfaces": [
@@ -9197,9 +9216,9 @@
         "future Help surfaces",
         "future context help"
       ],
-      "line_count": 2347,
+      "line_count": 2560,
       "path": "Plans/Glossary.md",
-      "plan_unit_count": 28,
+      "plan_unit_count": 29,
       "plan_unit_ids": [
         "G-002",
         "G-003",
@@ -9228,7 +9247,8 @@
         "G-001",
         "G-026",
         "G-027",
-        "G-030"
+        "G-030",
+        "G-031"
       ],
       "reasoning_tiers": [
         "high",
@@ -9239,23 +9259,25 @@
         "glossary_drift",
         "home_panels_terminal_redesign_drift",
         "migration_lineage",
-        "teach_help_content_gap"
+        "teach_help_content_gap",
+        "terminology_drift"
       ],
-      "sha256": "89708918bb16e498e7d3d4efbee1ba90464e2fa7ea1dbd4158c9771e9bea6a07",
+      "sha256": "759065755e25e4c3a1541f14b9ada24182b4a65041697437a6978416e870d624",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 28
+        "accepted": 29
       },
       "title": "Glossary (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 27
+        "requirement": 28
       },
       "validation_surfaces": [
         "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-shard-plans.py --check",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "targeted Case L terminology and ContractRef checks"
       ]
@@ -16035,7 +16057,7 @@
         "future Run Graph inspector",
         "future concern identity contract"
       ],
-      "line_count": 1341,
+      "line_count": 1373,
       "path": "Plans/Run_Graph_View.md",
       "plan_unit_count": 19,
       "plan_unit_ids": [
@@ -16084,7 +16106,7 @@
         "stale_tier_cleanup",
         "validation_coverage"
       ],
-      "sha256": "a79d6ebcf126b372314b28118934c716b0b8607db633b63bdbfe8beb8f42ea3e",
+      "sha256": "d990267317886e1a98ff1dffec5507cf2b542c4e7c64651b6afe1823848cb558",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 19
@@ -16260,7 +16282,7 @@
         "worktree_binding_drift",
         "worktree_gui_affordance_drift"
       ],
-      "sha256": "26ebf4d33979ed3a2316a7c6abda54208a533d0815c7d1a45e6dd15ae68af6e7",
+      "sha256": "10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 51,
@@ -16565,7 +16587,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 1745,
+      "line_count": 1768,
       "path": "Plans/Scheduling_and_Quota_Resume.md",
       "plan_unit_count": 18,
       "plan_unit_ids": [
@@ -16611,7 +16633,7 @@
         "unsafe_pause_or_dst_double_fire",
         "wrong_plan_version_built_or_duplicate_nightly_build"
       ],
-      "sha256": "b4c9aaf6b73e43fab82f4d6bedd3bbd1082c4e6aa74c461d5341d95968b473fc",
+      "sha256": "b3b445469256c2e43035f42d0142224bfd7ac3c62c738a9499b06033b021c34d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -16678,7 +16700,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm_browser_program_semantics.py"
       ],
-      "line_count": 13061,
+      "line_count": 13101,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit_count": 175,
       "plan_unit_ids": [
@@ -16997,7 +17019,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "7b1c4fe61d7c03c890e05f5356aa53b5541e8e385002311e908124480c462443",
+      "sha256": "fbe104442f4b47142069b479f9bb43d8660302a91b60c4a6f5f120d89f8d1033",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 171,
@@ -17300,7 +17322,7 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 4219,
+      "line_count": 4327,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 52,
       "plan_unit_ids": [
@@ -17411,7 +17433,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "6395ccf40262e1c2f902c9f00de66910a716b6a578bcfe25cff393dbd4596d16",
+      "sha256": "960c4397647e3319c21bcb1b92ab3f20893d2ced41e262785e88a13632f65dda",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -17506,6 +17528,7 @@
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-shard-plans.py --check",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "python3 scripts/pm7-build-check.py",
         "python3 scripts/pm7-canon-check.py",
         "tests/test_pm_installation_update_preferences.py",
         "tests/test_pm_onboarding_phases.py",
@@ -17571,7 +17594,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 3119,
+      "line_count": 3153,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 53,
       "plan_unit_ids": [
@@ -17687,7 +17710,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "6a648892da43ca0c5dfc0febd40273b930e5cc2cf1b4c6c56a3a2acc31d0e65d",
+      "sha256": "e32481983c4316fb99c01420bc39f771390026b637cb15c7bba4996b22a6fb54",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 53
@@ -17844,6 +17867,7 @@
         "python3 scripts/pm-shard-plans.py --check",
         "python3 scripts/pm-shared-runtime-contracts.py --self-test",
         "python3 scripts/pm-touch-closure-verify.py --json",
+        "python3 scripts/pm7-build-check.py",
         "rate-limit",
         "replay/live races",
         "reports/event-authority-20260911/step-06-contract-validation.md",
@@ -18259,7 +18283,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 28181,
+      "line_count": 28179,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 322,
       "plan_unit_ids": [
@@ -18693,7 +18717,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "c038001f7d4ca3934fb23f0c8c13aa0bc7d7b0cc15c5a2a7f591f796dd01da71",
+      "sha256": "5e5cfebb80a4e5471806e59242ad118b2eba7dd912a399a2d8d721b1d4b246ae",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 318,
@@ -19579,7 +19603,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 16582,
+      "line_count": 16663,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 189,
       "plan_unit_ids": [
@@ -19851,7 +19875,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "aa9ea296b29d7ed05b7d642efabac03869c2db0f2509d0850c3e3956a4f97dd0",
+      "sha256": "25a1861131d0a324e7980c383abe6234f482ed81f0a409f32c851240ef749abe",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 187,
@@ -19936,6 +19960,7 @@
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "python3 scripts/pm-validate-wiring-matrix.py",
+        "python3 scripts/pm7-build-check.py",
         "reports/event-authority-20260911/step-08-hold-validation.md",
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py",
@@ -19973,7 +19998,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 2657,
+      "line_count": 2684,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 34,
       "plan_unit_ids": [
@@ -20049,7 +20074,7 @@
         "version_exact_opener_drift",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "63cb316a393dea764ccead6eac199c4bcdfedda5c244af64e196df2c51a80a19",
+      "sha256": "8150e7ad82a5252741150810b10418c8990f9df98e4905c88bca144c19f0d584",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 34
@@ -20113,6 +20138,7 @@
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "python3 scripts/pm-validate-wiring-matrix.py",
+        "python3 scripts/pm7-build-check.py",
         "scripts/pm-touch-closure-verify.py",
         "shared-runtime command row census, alias exclusion, exact-handler, receipt/projection, accessibility, restart, race, and no-unregistered-event fixtures",
         "stale-return",
@@ -20534,7 +20560,7 @@
         "future UI command dispatcher fixtures",
         "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 6644,
+      "line_count": 6684,
       "path": "Plans/Wiring_Matrix.md",
       "plan_unit_count": 75,
       "plan_unit_ids": [
@@ -20655,7 +20681,7 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "519632af48035fcf225f8301fcf4350110793624ba16f6808ff1499770c68af9",
+      "sha256": "ef78db8e3de1f15d25043fd65523bd7e824ac341b31c19c034fbfdc6b1c50141",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 75
@@ -20707,6 +20733,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-touch-closure-verify.py --json",
+        "python3 scripts/pm7-build-check.py",
         "scripts/pm-assistant-contract-check.py",
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py",
@@ -20983,7 +21010,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-29T22:06:44Z",
+  "generated_at_utc": "2026-10-29T22:47:55Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20992,12 +21019,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3572,
-      "True": 3663
+      "True": 3664
     },
-    "plan_unit_count": 7235,
+    "plan_unit_count": 7236,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7030,
+      "accepted": 7031,
       "retired": 182,
       "superseded": 23
     },
@@ -21066,7 +21093,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5526,
+      "requirement": 5527,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

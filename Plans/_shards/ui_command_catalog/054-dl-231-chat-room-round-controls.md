@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16248-L16561
+Source lines: L16288-L16640
 
-Source SHA256: `aa9ea296b29d7ed05b7d642efabac03869c2db0f2509d0850c3e3956a4f97dd0`
+Source SHA256: `25a1861131d0a324e7980c383abe6234f482ed81f0a409f32c851240ef749abe`
 
 ---
 
@@ -96,85 +96,100 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  The chat port adds producers to existing commands and local actions, not new command identities
-  (DL-232). Plans open their exact version through cmd.chat.plan.open_version (UCC-176); files and
-  diffs through cmd.file.open; artifacts and documents through the subject routes of UCC-200; a child
-  transcript through cmd.agents.open_thread (UCC-188); browser addresses through
-  cmd.browser.open_workspace_preview; and existing terminal sessions through cmd.terminal.open. Every
-  domain route carries CV-360 placement and reaches the one opening module of F3-634, preserving
-  revision/identity and user-versus-agent focus. A direct cmd.panel_tab.open is used only where
-  UCC-200 already permits it, including read-only editor buffers for command output.
-  cmd.editor.close_tab remains alias metadata for cmd.panel_tab.close and owns no second handler. Host
-  close and activation notifications update the chat's card state without another command. Chat
-  show/hide is cmd.panel.switch with panel_id chat; a resize commits once through
-  cmd.workspace_layout.resize_surface with surface chat and width, including null for reset. History
-  pin is ui.chat_column.pin_history with history_pinned; Keep open is ui.chat_column.keep_open with
-  keep_open. These two are typed local layout view-state actions with no receipt or event and never
-  Settings writes. Menus, sheets, hover previews, disclosure, tab body repaint and focus return
-  dispatch no command. Wand setup opens its existing app modal and its committed action keeps its own
-  command. ELI5's per-chat override remains cmd.chat.eli5.set; the product's All chats and Project
-  default use Settings transactions over general.interaction.eli5-default. Working style, master sound and naming
-  use the same Settings preview/apply transaction as their Settings rows, including when changed from
-  chat; no chat-only mute, title-policy or take command is minted. The compact command card offers
-  only Open in Terminal for a live session, View output when no session remains, and Rerun in Terminal
-  under ACD-502. These retain UCC-201's identities and exact-session behavior. Show Terminal and Focus
-  remain their existing other-surface commands; the port adds no compact-card producers for them;
-  Insert command and retained-output candidates remain unavailable until their existing admission.
-  Thought Stream in Settings, New chat defaults and the composer capability menu uses the existing
-  Settings transaction over general.interaction.thought-stream (SSYS-055), with no new command
-  identity, and so does its Lines shown while thinking choice over
+  The chat port adds producers to existing commands and local actions, not new command identities (DL-232).
+  Plans open their exact version through cmd.chat.plan.open_version (UCC-176); files and diffs through
+  cmd.file.open; artifacts and documents through the subject routes of UCC-200; a child transcript through
+  cmd.agents.open_thread (UCC-188); browser addresses through cmd.browser.open_workspace_preview; and
+  existing terminal sessions through cmd.terminal.open. Every domain route carries CV-360 placement and
+  reaches the one opening module of F3-634, preserving revision/identity and user-versus-agent focus. A
+  direct cmd.panel_tab.open is used only where UCC-200 already permits it, including read-only editor
+  buffers for command output. cmd.editor.close_tab remains alias metadata for cmd.panel_tab.close and owns
+  no second handler. Host close and activation notifications update the chat's card state without another
+  command. Chat show/hide is cmd.panel.switch with panel_id chat; a resize commits once through
+  cmd.workspace_layout.resize_surface with surface chat and width, including null for reset. History pin is
+  ui.chat_column.pin_history with history_pinned; Keep open is ui.chat_column.keep_open with keep_open.
+  These two are typed local layout view-state actions with no receipt or event and never Settings writes.
+  Menus, sheets, hover previews, disclosure, tab body repaint and focus return dispatch no command. Wand
+  setup opens its existing app modal and its committed action keeps its own command. ELI5's per-chat
+  override remains cmd.chat.eli5.set; the product's All chats and Project default use Settings transactions
+  over general.interaction.eli5-default. Working style, master sound and naming use the same Settings
+  preview/apply transaction as their Settings rows, including when changed from chat; no chat-only mute,
+  title-policy or take command is minted. The compact command card offers only Open in Terminal for a live
+  session, View output when no session remains, and Rerun in Terminal under ACD-502. These retain UCC-201's
+  identities and exact-session behavior. Show Terminal and Focus remain their existing other-surface
+  commands; the port adds no compact-card producers for them; Insert command and retained-output candidates
+  remain unavailable until their existing admission. Thought Stream in Settings, New chat defaults and the
+  composer capability menu uses the existing Settings transaction over general.interaction.thought-stream
+  (SSYS-055), with no new command identity, and so does its Lines shown while thinking choice over
   general.interaction.thought-stream-lines from the same three places (DL-234); arbitrary Demo Studio
-  family takes receive no product command or production row. Candidate
-  exclusions for DL-218's Check It and Grill Me controls remain unchanged by this port; the concept
-  proving a click is not command admission. In integrated concept 59ca2d4382 the chat header's Keep
-  History open uses ui.chat_column.pin_history, its Keep open row uses ui.chat_column.keep_open and
-  Pop out / Dock back consumes UCC-203's existing route. Hosted opens use the Home bridge with D7 file
-  gestures, D8 background agent tabs and the centre's narrow rule. These JavaScript paths demonstrate
-  concept routing only, not native typed dispatch. The existing project-only Settings adapter
-  persists Project default ELI5; All chats ELI5 remains session-only and therefore does not prove the
-  application-scope Settings transaction above. In that snapshot Thought Stream changed only its
-  shared preference and preview; the live thinking display it drives followed on 2026-10-23
-  (ACD-221, DL-234).
-  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
+  family takes receive no product command or production row. Candidate exclusions for DL-218's Check It and
+  Grill Me controls remain unchanged by this port; the concept proving a click is not command admission. In
+  integrated concept 59ca2d4382 the chat header's Keep History open uses ui.chat_column.pin_history, its
+  Keep open row uses ui.chat_column.keep_open and Pop out / Dock back consumes UCC-203's existing route.
+  Hosted opens use the Home bridge with D7 file gestures, D8 background agent tabs and the centre's narrow
+  rule. These JavaScript paths demonstrate concept routing only, not native typed dispatch. The existing
+  project-only Settings adapter persists Project default ELI5; All chats ELI5 remains session-only and
+  therefore does not prove the application-scope Settings transaction above. In that snapshot Thought
+  Stream changed only its shared preference and preview; the live thinking display it drives followed on
+  2026-10-23 (ACD-221, DL-234). PM7 S5: hosted Pip parts use the same admitted inventory row and Settings
+  pair in every host. G1 retires Activity Pin while History pin remains; work actions use the UCC-210
+  owners instead of chat-private aliases.
 gui_related: true
-gui_classification_reason: Maps hosted chat controls to existing commands, Settings transactions and local actions.
+gui_classification_reason: Maps hosted chat controls to existing commands, Settings transactions and local
+  actions.
 split_recommended: false
-depends_on: [DL-232, UCC-175, UCC-176, UCC-188, UCC-200, UCC-201, UCC-203, UCC-205, UCC-206, DL-234]
+depends_on:
+- DL-232
+- UCC-175
+- UCC-176
+- UCC-188
+- UCC-200
+- UCC-201
+- UCC-203
+- UCC-205
+- UCC-206
+- DL-234
 unblocks: []
 acceptance_criteria:
-  - "Every port producer resolves to one existing command, its recorded alias, a Settings transaction or an explicit local disposition."
-  - "History pin and Keep open never issue a Settings transaction or workspace.layout_changed; resizing commits once."
-  - "No candidate is registered or enabled merely because its concept demonstration works."
+- Every port producer resolves to one existing command, its recorded alias, a Settings transaction or an explicit
+  local disposition.
+- History pin and Keep open never issue a Settings transaction or workspace.layout_changed; resizing commits
+  once.
+- No candidate is registered or enabled merely because its concept demonstration works.
 validation_surfaces:
-  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
-  - "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: hosted_chat_owner_drift
 reasoning_tier: high
 context_scope: chat56_pmconcept7_port
 implementation_surfaces:
-  - "Plans/UI_Command_Catalog.md"
+- Plans/UI_Command_Catalog.md
 node_compile_hint:
   mode: owner_presentation_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
+- Plans/Decision_Log.md#DL-185
+- /mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D3, D4, D7, D8, D9, D26, D27, D28)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b
+  (concept integration lineage, not native API authority)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md,
+  SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated
+  against concept source; not native or final visual verification)
 preserved_exact_tokens:
-  - "cmd.agents.open_thread"
-  - "cmd.editor.close_tab"
-  - "ui.chat_column.pin_history"
-  - "ui.chat_column.keep_open"
-  - "cmd.workspace_layout.resize_surface"
-  - "cmd.panel.switch"
+- cmd.agents.open_thread
+- cmd.editor.close_tab
+- ui.chat_column.pin_history
+- ui.chat_column.keep_open
+- cmd.workspace_layout.resize_surface
+- cmd.panel.switch
 negative_constraints:
-  - "Do not add a chat-private route, close handler, terminal command or Settings writer."
+- Do not add a chat-private route, close handler, terminal command or Settings writer.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-  - "Plans/UI_Command_Catalog.md"
+- Plans/UI_Command_Catalog.md
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md#CS-104, ContractName:Plans/Wiring_Matrix.md#WM-096, ContractName:Plans/UI_Wiring_Rules.md#UIW-044, ContractName:Plans/Settings_System.md#SSYS-055
@@ -187,24 +202,30 @@ plan_unit_id: UCC-209
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'B1/B2/B6; CS-105. The project box and row-key producer add cmd.project.switch_active_tab and
-  cmd.project.open_in_new_workspace_tab as canonical workspace-owner commands with stable project_id. ui.project_switcher.open/close
-  are typed local presentation actions, Ctrl+Shift+P opens and Ctrl/Cmd+Enter on a row dispatches the new-tab
-  command. All projects uses the existing Projects route. Binding census includes all six shell.project.* controls;
-  decorative mark/loader dispatch nothing. B2: All projects is ui.project_switcher.all_projects, a typed local
-  existing-page route with tab_id projects, never a cmd.panel.switch side-panel operation.'
+canonical_text: >-
+  B1/B2/B6; CS-105. The project box and row-key producer add cmd.project.switch_active_tab and
+  cmd.project.open_in_new_workspace_tab as canonical workspace-owner commands with stable project_id.
+  ui.project_switcher.open/close are typed local presentation actions, Ctrl+Shift+P opens and
+  Ctrl/Cmd+Enter on a row dispatches the new-tab command. All projects uses the existing Projects route.
+  Binding census includes all six shell.project.* controls; decorative mark/loader dispatch nothing. B2:
+  All projects is ui.project_switcher.all_projects, a typed local existing-page route with tab_id projects,
+  never a cmd.panel.switch side-panel operation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on:
 - DL-236
+- CS-105
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- The catalog has one canonical row for each of the two Project commands and no command merely to open the
+  menu.
+- Shortcut and alternate-row producers match CS-105 and six project-box binding families.
+- All projects focuses the existing Projects page, never a side-panel cmd.panel.switch.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -225,7 +246,9 @@ owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-236
+ContractRef: ContractName:Plans/Decision_Log.md#DL-236, ContractName:Plans/Commands_System.md#CS-105
+
+
 
 
 ### UCC-210 - Work Commands And Navigation
@@ -235,26 +258,34 @@ plan_unit_id: UCC-210
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: D2/D6/D8–D13, G4–G8/G10; CS-106. cmd.chat.processes.open is thread navigation; cmd.agents_and_processes.show
-  selects agents|processes|resources; cmd.agents_and_processes.pop_out moves the same desktop view. cmd.work.stop
-  is item|thread|platform owner mutation over current reviewed IDs, services excluded; cmd.work.restart restarts
-  eligible work; cmd.work.send_input answers current safe yes/no; cmd.work.set_completion_delivery writes agent|user|quiet;
-  cmd.work.clear_finished is view-local navigation_wrapper hiding only; cmd.work.quit confirms keep_running|stop_selected.
-  Each canonical row has one handler and identity. Reuse cmd.terminal.open, owner thread/node routes and schedule
-  cancel. New Home panel-tab route and keyboard shortcuts remain deferred. Typed local ui.work_panel.* and
-  ui.work_quit.* are no-write view state.
+canonical_text: >-
+  D2/D6/D8–D13, G4–G8/G10; CS-106. cmd.chat.processes.open is thread navigation;
+  cmd.agents_and_processes.show selects agents|processes|resources; cmd.agents_and_processes.pop_out moves
+  the same desktop view. cmd.work.stop is item|thread|platform owner mutation over current reviewed IDs,
+  services excluded; cmd.work.restart restarts eligible work; cmd.work.send_input answers current safe
+  yes/no; cmd.work.set_completion_delivery writes agent|user|quiet; cmd.work.clear_finished is view-local
+  navigation_wrapper hiding only; cmd.work.quit confirms keep_running|stop_selected. Each canonical row has
+  one handler and identity. Reuse cmd.terminal.open, owner thread/node routes and schedule cancel. New Home
+  panel-tab route and keyboard shortcuts remain deferred. Typed local ui.work_panel.* and ui.work_quit.*
+  are no-write view state.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on:
 - DL-255
+- CS-106
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- The nine work/navigation command IDs match the closed schema enum and each has exactly one canonical production-intent
+  handler.
+- Navigation/view-local clear are distinguished from runtime mutations; no stop_all alias or delete-record
+  Clear Finished appears.
+- Existing terminal/owner/schedule routes preserve exact identities, and deferred Home/shortcut/event producers
+  stay absent.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -275,7 +306,9 @@ owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-255
+ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/Commands_System.md#CS-106
+
+
 
 
 ### UCC-211 - Pip Editor And Settings Hosts
@@ -285,22 +318,28 @@ plan_unit_id: UCC-211
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: S1–S9. ui.settings.pip_editor.open/close/replay are typed local no-write actions; Settings
-  row, wand Pip… and title-bar Customize Pip… share one editor. Parts/presets and status-bar words use cmd.settings.transaction.preview/apply
-  over their two admitted IDs. Wand census grows 195→196 with Pip… as a Settings disposition, no new capability
-  or command. No editor inside onboarding, no Classic/master Pip/loader preference.
+canonical_text: >-
+  S1–S9. ui.settings.pip_editor.open/close/replay are typed local no-write actions; Settings row, wand Pip…
+  and title-bar Customize Pip… share one editor. Parts/presets and status-bar words use
+  cmd.settings.transaction.preview/apply over their two admitted IDs. Wand census grows 195→196 with Pip…
+  as a Settings disposition, no new capability or command. No editor inside onboarding, no Classic/master
+  Pip/loader preference.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on:
 - DL-239
+- SSYS-056
+- UCC-120
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Exactly three Pip editor local actions dispatch no mutation, while part/preset changes use the Settings pair.
+- Settings/wand/titlebar share one row/editor and the actual wand census contains Pip… as Settings, total 196.
+- No editor inside onboarding, extra sound/master/loader setting or new chat capability command is admitted.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -321,4 +360,4 @@ owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-239
+ContractRef: ContractName:Plans/Decision_Log.md#DL-239, ContractName:Plans/Settings_System.md#SSYS-056, ContractName:Plans/UI_Command_Catalog.md#UCC-120

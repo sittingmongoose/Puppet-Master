@@ -384,8 +384,8 @@ Amended 2026-10-09 (DL-180, DL-181): a terminal is one tab kind with one session
 
 | UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
 |---|---|---|---|---|
-| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
-| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette / title-bar project box (B1) | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette / title-bar row Ctrl/Cmd+Enter (B6) | shell state controller | Open target project in a new workspace tab |
 | Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
 | Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header Compact Now action | chat runtime controller | Dispatch only after explicit user choice; project the receipt/result as started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed; no `context.compaction.*` EventRecord family is currently registered |
 | Goal button/chip/icon or slash `/goal` | `cmd.chat.goal.start` | Assistant Chat composer / Goal chip / slash-command dispatcher | Goal Runtime controller | Start visible Goal Mode from the current thread using the Goal Runtime event envelope; concrete Goal event names and payload schemas remain owner-registered in Goal_Runtime_System, Contracts_V0, and storage-plan |
@@ -1759,9 +1759,16 @@ plan_unit_id: WM-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch, and related shell/chat/history command wiring without losing canonical project/thread identity, including explicit Compact Now dispatch, result/receipt-backed visible degraded-state wiring with no unregistered context.compaction.* EventRecord, and command-result statuses for already_running, cancelled, no_op, unavailable, retry_scheduled, completed, and failed.'
+canonical_text: >-
+  Minimum required rows cover project switcher, thread details, compaction, restore branch, and related
+  shell/chat/history command wiring without losing canonical project/thread identity, including explicit
+  Compact Now dispatch, result/receipt-backed visible degraded-state wiring with no unregistered
+  context.compaction.* EventRecord, and command-result statuses for already_running, cancelled, no_op,
+  unavailable, retry_scheduled, completed, and failed. Amended 2026-10-29 (PM7): B1/B6: title-bar project
+  box adds producers for cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab, retaining
+  Projects view/palette as primary and the same project/workspace owner.
 gui_related: true
-gui_classification_reason: 'The unit defines user-visible project/thread command wiring rows.'
+gui_classification_reason: The unit defines user-visible project/thread command wiring rows.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -1772,8 +1779,10 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - WM-019 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1790,34 +1799,36 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
 - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
 preserved_exact_tokens:
-- 'Minimum required rows'
-- 'project switcher'
-- 'thread details'
-- 'compaction'
-- 'Compact Now'
-- 'context.compaction.failed'
-- 'already_running'
-- 'cancelled'
-- 'no_op'
-- 'retry_scheduled'
-- 'restore branch'
-- 'cmd.chat'
-- 'cmd.project'
-- 'cmd.history'
-- 'thread'
-- 'project'
-- 'shell'
-- 'history'
+- Minimum required rows
+- project switcher
+- thread details
+- compaction
+- Compact Now
+- context.compaction.failed
+- already_running
+- cancelled
+- no_op
+- retry_scheduled
+- restore branch
+- cmd.chat
+- cmd.project
+- cmd.history
+- thread
+- project
+- shell
+- history
 negative_constraints:
-- The preserved context.compaction.failed token is historical source lineage and must not be emitted or registered as an EventRecord family.
+- The preserved context.compaction.failed token is historical source lineage and must not be emitted or registered
+  as an EventRecord family.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions:
-- The former context.compaction.failed event wording is retired; the production row uses command result/receipt projection and an empty expected_event_types list.
+- The former context.compaction.failed event wording is retired; the production row uses command result/receipt
+  projection and an empty expected_event_types list.
 owner_hints:
-- 'Plans/Wiring_Matrix.md'
-- 'Plans/assistant-chat-design.md'
-- 'Plans/FinalGUISpec.md'
+- Plans/Wiring_Matrix.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 ```
 
 ### WM-020 - Browser Command Rows
@@ -3011,96 +3022,100 @@ unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
-  Wiring_Matrix runtime recovery, blocked/unblocked, safe-point, remediation,
-  canonical event row, and recovery action-binding addenda are consolidated into
-  explicit producer/consumer/action wiring PlanUnits. Historical `Scheduler/Remediation/Event
-  Wiring Addendum (2026-03-08)`, `Canonical Runtime Event Wiring Canonical Alignment
-  (2026-03-09)`, and `Canonical Runtime Producer Consumer and Action Wiring Canonical
-  Alignment (2026-03-09)` headings remain source-lineage and compatibility search
-  targets; wiring implementers must follow the named PlanUnits and referenced
-  Contracts_V0 event identities instead of inferring precedence from adjacent
-  addendum order.
-  Amended 2026-10-29 (PM7): B1/B6: title-bar project box adds producers for cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab, retaining Projects view/palette as primary and the same project/workspace owner.
+  Wiring_Matrix runtime recovery, blocked/unblocked, safe-point, remediation, canonical event row, and
+  recovery action-binding addenda are consolidated into explicit producer/consumer/action wiring PlanUnits.
+  Historical `Scheduler/Remediation/Event Wiring Addendum (2026-03-08)`, `Canonical Runtime Event Wiring
+  Canonical Alignment (2026-03-09)`, and `Canonical Runtime Producer Consumer and Action Wiring Canonical
+  Alignment (2026-03-09)` headings remain source-lineage and compatibility search targets; wiring
+  implementers must follow the named PlanUnits and referenced Contracts_V0 event identities instead of
+  inferring precedence from adjacent addendum order.
 gui_related: false
-gui_classification_reason: This unit defines runtime producer/consumer/action wiring and precedence; GUI consumers are referenced, but the unit does not define visual presentation.
+gui_classification_reason: This unit defines runtime producer/consumer/action wiring and precedence; GUI consumers
+  are referenced, but the unit does not define visual presentation.
 depends_on:
-  - WM-012
-  - WM-013
-  - WM-014
-  - WM-015
-  - WM-016
-  - WM-017
+- WM-012
+- WM-013
+- WM-014
+- WM-015
+- WM-016
+- WM-017
 unblocks: []
 acceptance_criteria:
-  - Runtime wiring precedence is explicit through PlanUnits for blocked/unblocked, safe-point, remediation, packet wiring, canonical event rows, and recovery action binding.
-  - Legacy aliases and addendum headings/dates remain auditable without becoming competing wiring canon.
-  - Wiring_Matrix remains a wiring-row owner and does not replace Contracts_V0 event identity or Executor scheduler ownership.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
+- Runtime wiring precedence is explicit through PlanUnits for blocked/unblocked, safe-point, remediation, packet
+  wiring, canonical event rows, and recovery action binding.
+- Legacy aliases and addendum headings/dates remain auditable without becoming competing wiring canon.
+- Wiring_Matrix remains a wiring-row owner and does not replace Contracts_V0 event identity or Executor scheduler
+  ownership.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint
+  app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence
+  refreshes are recorded in the repair/seal artifacts.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
 risk_class: wiring_addenda_precedence_drift
 reasoning_tier: high
 context_scope: wiring_matrix_runtime_addenda_consolidation
 implementation_surfaces:
-  - Plans/Wiring_Matrix.md
-  - Plans/Contracts_V0.md
-  - Plans/Executor_Protocol.md
-  - Plans/storage-plan.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/Run_Graph_View.md
-  - Plans/Orchestrator_Page.md
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
-  - Plans/chain-wizard-flexibility.md
+- Plans/Wiring_Matrix.md
+- Plans/Contracts_V0.md
+- Plans/Executor_Protocol.md
+- Plans/storage-plan.md
+- Plans/UI_Command_Catalog.md
+- Plans/Run_Graph_View.md
+- Plans/Orchestrator_Page.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/chain-wizard-flexibility.md
 node_compile_hint:
   mode: runtime_wiring_addenda_consolidation
   create_worknodes: false
 source_lineage:
-  - pldg-20260615-001-part-4-fable-cleanup:atom-0013
-  - pldg-20260615-001-part-4-fable-cleanup:atom-0014
-  - pldg-20260615-001-part-4-fable-cleanup:atom-0015
-  - pldg-20260615-001-part-4-fable-cleanup:atom-0018
-  - local:Plans/Wiring_Matrix.md:207
-  - local:Plans/Wiring_Matrix.md:243
-  - local:Plans/Wiring_Matrix.md:255
-  - local:Plans/Wiring_Matrix.md:282
+- pldg-20260615-001-part-4-fable-cleanup:atom-0013
+- pldg-20260615-001-part-4-fable-cleanup:atom-0014
+- pldg-20260615-001-part-4-fable-cleanup:atom-0015
+- pldg-20260615-001-part-4-fable-cleanup:atom-0018
+- local:Plans/Wiring_Matrix.md:207
+- local:Plans/Wiring_Matrix.md:243
+- local:Plans/Wiring_Matrix.md:255
+- local:Plans/Wiring_Matrix.md:282
 preserved_exact_tokens:
-  - "Scheduler/Remediation/Event Wiring Addendum (2026-03-08)"
-  - "Runtime recovery wiring requirements (2026-03-09)"
-  - "Canonical Runtime Event Wiring Canonical Alignment (2026-03-09)"
-  - "Canonical Runtime Producer Consumer and Action Wiring Canonical Alignment (2026-03-09)"
-  - "node.blocked"
-  - "node.unblocked"
-  - "wizard.blocked"
-  - "wizard.unblocked"
-  - "attempt.started"
-  - "attempt.completed"
-  - "node.prerequisite_resolved"
-  - "run.graph_canonical_locked"
-  - "run.graph_integrity_failed"
-  - "safe_point.created"
-  - "safe_point.restored"
-  - "remediation.spawned"
-  - "remediation.resolved"
-  - "allowed_action_id"
+- Scheduler/Remediation/Event Wiring Addendum (2026-03-08)
+- Runtime recovery wiring requirements (2026-03-09)
+- Canonical Runtime Event Wiring Canonical Alignment (2026-03-09)
+- Canonical Runtime Producer Consumer and Action Wiring Canonical Alignment (2026-03-09)
+- node.blocked
+- node.unblocked
+- wizard.blocked
+- wizard.unblocked
+- attempt.started
+- attempt.completed
+- node.prerequisite_resolved
+- run.graph_canonical_locked
+- run.graph_integrity_failed
+- safe_point.created
+- safe_point.restored
+- remediation.spawned
+- remediation.resolved
+- allowed_action_id
 negative_constraints:
-  - Do not rely on adjacent addendum order as wiring precedence.
-  - Do not make Wiring_Matrix a general runtime schema owner.
+- Do not rely on adjacent addendum order as wiring precedence.
+- Do not make Wiring_Matrix a general runtime schema owner.
 compatibility_only_notes:
-  - Plans/chain-wizard-flexibility.md remains the wizard_status / wizard blocked lifecycle consumer/existing-coverage surface for wizard.blocked / wizard.unblocked; WM-036 only wires canonical event/action identities.
-  - Cited wiring addenda sections are compatibility/source-lineage sections; named wiring PlanUnits and Contracts_V0 event identities carry precedence.
+- Plans/chain-wizard-flexibility.md remains the wizard_status / wizard blocked lifecycle consumer/existing-coverage
+  surface for wizard.blocked / wizard.unblocked; WM-036 only wires canonical event/action identities.
+- Cited wiring addenda sections are compatibility/source-lineage sections; named wiring PlanUnits and Contracts_V0
+  event identities carry precedence.
 owner_hints:
-  - Plans/Wiring_Matrix.md
-  - Plans/Contracts_V0.md
-  - Plans/Executor_Protocol.md
-  - Plans/storage-plan.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/Run_Graph_View.md
-  - Plans/Orchestrator_Page.md
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
-  - Plans/chain-wizard-flexibility.md
+- Plans/Wiring_Matrix.md
+- Plans/Contracts_V0.md
+- Plans/Executor_Protocol.md
+- Plans/storage-plan.md
+- Plans/UI_Command_Catalog.md
+- Plans/Run_Graph_View.md
+- Plans/Orchestrator_Page.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/chain-wizard-flexibility.md
 ```
 
 ### WM-037 - Assistant Chat Goal Command Wiring
@@ -6259,44 +6274,43 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
-  Plans/pm7_control_bindings.json is this unit's enumerated companion table; UIW-043 owns its
-  completeness rule. This editor fields/reset/quick sets bind to production editor.appearance.field
-  and cmd.editor.appearance.set. This terminal binds to terminal.appearance.field; import to
+  Plans/pm7_control_bindings.json is this unit's enumerated companion table; UIW-043 owns its completeness
+  rule. This editor fields/reset/quick sets bind to production editor.appearance.field and
+  cmd.editor.appearance.set. This terminal binds to terminal.appearance.field; import to
   terminal.appearance.import_scheme. All scopes, every corresponding Settings row and
   general.visual.wallpaper bind to catalog.settings_transaction_preview then
-  catalog.settings_transaction_apply, over the exact ids named in each census row. Menu/Settings
-  entry, scope, search, sample trial, token-kind selection and noncommitted previews are CS-102
-  local actions with no production dispatch row. The notification inbox's dismiss/Delete binds
-  catalog.alert_dismiss; Clear all composes it per captured eligible item, while toast close/swipe
-  remains local and domain actions reuse catalog.alert_acknowledge, catalog.alert_snooze and their
-  existing owner commands. DnD commits reuse UCC-200's panel_tab.move/workspace_layout split or
-  move_surface according to target; cancel/hover commit nothing. Divider/chat/rail/history resize
-  controls keep their existing layout command/view-state ownership, with keyboard alternatives;
-  F3-657 adds presentation only. A rendered control disabled for no Project, stale state, locked
-  target or owner permission dispatches nothing and announces the projected reason. All new evidence
-  is planned production evidence, never inferred from a concept callback or screenshot.
-  Plans/appearance_quick_sets.json supplies the exact composite payloads consumed by the binding
-  rows; each scope names precisely those affected ids. The extended background/bezel/mask controls
-  have exact per-field bindings to those same writers. Saved-preset Apply uses their exact
-  whole-scope replacement adapter; Save/Rename/Delete/Undo are CS-102 local library actions,
-  excluded from production command rows but enumerated in the census. F3-632 picker Back is also
-  enumerated as local navigation, with its keyboard equivalents and no layout mutation. The NieR
-  background control consumes SSYS-054’s admitted two-setting patch through the existing Settings
-  preview/apply pair, not a second wallpaper command. The existing rail Chat producer remains
-  home.chat.activity_toggle; its selected state reflects visibility and the removed Dashboard button
-  has no replacement producer. The retired cmd.theme.preview producer is removed from production
-  wiring and its sole obsolete Touch Closure obligation/profile; its rejected packet token is
-  retained and explicitly excluded as lineage under UCC-204; this does not exclude either Settings
-  transaction command.
-  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
+  catalog.settings_transaction_apply, over the exact ids named in each census row. Menu/Settings entry,
+  scope, search, sample trial, token-kind selection and noncommitted previews are CS-102 local actions with
+  no production dispatch row. The notification inbox's dismiss/Delete binds catalog.alert_dismiss; Clear
+  all composes it per captured eligible item, while toast close/swipe remains local and domain actions
+  reuse catalog.alert_acknowledge, catalog.alert_snooze and their existing owner commands. DnD commits
+  reuse UCC-200's panel_tab.move/workspace_layout split or move_surface according to target; cancel/hover
+  commit nothing. Divider/chat/rail/history resize controls keep their existing layout command/view-state
+  ownership, with keyboard alternatives; F3-657 adds presentation only. A rendered control disabled for no
+  Project, stale state, locked target or owner permission dispatches nothing and announces the projected
+  reason. All new evidence is planned production evidence, never inferred from a concept callback or
+  screenshot. Plans/appearance_quick_sets.json supplies the exact composite payloads consumed by the
+  binding rows; each scope names precisely those affected ids. The extended background/bezel/mask controls
+  have exact per-field bindings to those same writers. Saved-preset Apply uses their exact whole-scope
+  replacement adapter; Save/Rename/Delete/Undo are CS-102 local library actions, excluded from production
+  command rows but enumerated in the census. F3-632 picker Back is also enumerated as local navigation,
+  with its keyboard equivalents and no layout mutation. The NieR background control consumes SSYS-054’s
+  admitted two-setting patch through the existing Settings preview/apply pair, not a second wallpaper
+  command. The existing rail Chat producer remains home.chat.activity_toggle; its selected state reflects
+  visibility and the removed Dashboard button has no replacement producer. The retired cmd.theme.preview
+  producer is removed from production wiring and its sole obsolete Touch Closure obligation/profile; its
+  rejected packet token is retained and explicitly excluded as lineage under UCC-204; this does not exclude
+  either Settings transaction command. PM7 B1/B2/B6, S5, D5/G4: extend the shell control census with the
+  project box/row-key paths, Settings/wand/titlebar Pip editor and two status work items; decorative
+  Pip/loader draw no controls. WM-097 lists the exact new bindings and owner routes.
 gui_related: true
 gui_classification_reason: Appearance controls and Settings bindings.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Each census command route resolves a production entry with typed payload, owner state, accessibility and effect
-  assertions.
+- Each census command route resolves a production entry with typed payload, owner state, accessibility and
+  effect assertions.
 - This/All, Clear all races, drop/cancel and no-Project paths have explicit planned fixtures.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
@@ -6314,9 +6328,8 @@ node_compile_hint:
 source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256
-  1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0 (approved campaign source lineage;
-  not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
+  (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-panel-dnd-resize/NOTES.md, SHA-256 03a80f0dea3235ea637149bbec63626c4a4be8521078f9dd601f2b691f03d2d6
@@ -6324,12 +6337,10 @@ source_lineage:
 - Plans/UI_Wiring_Rules.md#UIW-043
 - Plans/UI_Command_Catalog.md#UCC-204
 - Plans/Commands_System.md#CS-102
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
-  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
-  certification)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
-  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
-  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md, SHA-256
+  4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md, SHA-256
+  29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native certification)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
@@ -6522,74 +6533,90 @@ status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
   The hosted 5.6 Pro chat reuses the production-intent rows of its existing commands under UCC-208 and
-  UIW-044 (DL-232). catalog.agents_open_thread includes the chat's Activity Detail transcript action,
-  live child card and working-activity child openers; the preview row itself still opens Activity
-  Detail. catalog.terminal_open and catalog.terminal_rerun cover the compact card's Open in Terminal
-  and Rerun in Terminal under ACD-502, preserving exact-session behavior and candidate limits from
-  UCC-201. terminal.mark_menu.open_output also covers the compact card's View output and View output
-  log through the same kept read-only editor-buffer open; its location names both producers.
-  catalog.terminal_show and catalog.terminal_focus keep their existing other-surface producers;
-  neither gains a compact-card control. assistant.redesign.cmd.chat_plan_open_version retains
-  exact-version Plan opening; assistant.redesign.w_051.chat_eli5_set retains only the per-chat
-  override producers, with application/project defaults written by Settings. home.tab.close uses
-  cmd.panel_tab.close, with cmd.editor.close_tab as its alias; host close/activate updates the chat
-  without another dispatch. home.chat.activity_toggle and home.more_options.chat_visibility keep
-  cmd.panel.switch, and home.resizer.chat keeps cmd.workspace_layout.resize_surface. History pin and
-  Keep open stay their existing typed-local exclusions, never duplicate production rows. The port
-  changes producer locations and acceptance checks in Plans/Wiring_Matrix.production.json only; it
-  adds no command, handler, physical storage family, EventRecord or claim of native readiness. Every
-  row's planned-handler and unavailable-candidate boundary remains in force. Settings preferences use
-  the existing Settings transaction rows, not one synthetic row per preference. The hosted surface's
-  boot, body mounting and appearance projection are local presentation with no command or event. Demo
-  Studio is wholly outside production wiring (DR-070), not a wiring disposition. These rows remain
-  product wiring requirements. Integrated concept 59ca2d4382 supplies Home open/close/activate bridges,
-  not native handler evidence. Run-card controls move to the run view only while its tab is active
-  in a panel that is visible, including narrow-switcher and collapsed-panel state. Browser capture
-  must retain the original thread and composer destination; context-tab actions use that tab's thread;
-  attachment viewers retain thread/message/attachment identity. More Info now has the bounded-popover
-  producer required by ACD-500, so the earlier modal gap is closed in the concept. Project ELI5 is
-  persisted through the existing adapter; All chats ELI5 is session-only. The production-intent ELI5
-  acceptance row records that limitation without claiming its application-scope route is built.
-  Astra's round-2 concept check confirms isolated browser delivery retains its destination, but
-  composer attachment, list and insertion can lose that destination after the origin composer changes.
-  Those paths still require restoring the saved destination or refusing a mismatch before draft
-  mutation; the original thread alone is not sufficient reverse coverage.
-  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
+  UIW-044 (DL-232). catalog.agents_open_thread includes the chat's Activity Detail transcript action, live
+  child card and working-activity child openers; the preview row itself still opens Activity Detail.
+  catalog.terminal_open and catalog.terminal_rerun cover the compact card's Open in Terminal and Rerun in
+  Terminal under ACD-502, preserving exact-session behavior and candidate limits from UCC-201.
+  terminal.mark_menu.open_output also covers the compact card's View output and View output log through the
+  same kept read-only editor-buffer open; its location names both producers. catalog.terminal_show and
+  catalog.terminal_focus keep their existing other-surface producers; neither gains a compact-card control.
+  assistant.redesign.cmd.chat_plan_open_version retains exact-version Plan opening;
+  assistant.redesign.w_051.chat_eli5_set retains only the per-chat override producers, with
+  application/project defaults written by Settings. home.tab.close uses cmd.panel_tab.close, with
+  cmd.editor.close_tab as its alias; host close/activate updates the chat without another dispatch.
+  home.chat.activity_toggle and home.more_options.chat_visibility keep cmd.panel.switch, and
+  home.resizer.chat keeps cmd.workspace_layout.resize_surface. History pin and Keep open stay their
+  existing typed-local exclusions, never duplicate production rows. The port changes producer locations and
+  acceptance checks in Plans/Wiring_Matrix.production.json only; it adds no command, handler, physical
+  storage family, EventRecord or claim of native readiness. Every row's planned-handler and
+  unavailable-candidate boundary remains in force. Settings preferences use the existing Settings
+  transaction rows, not one synthetic row per preference. The hosted surface's boot, body mounting and
+  appearance projection are local presentation with no command or event. Demo Studio is wholly outside
+  production wiring (DR-070), not a wiring disposition. These rows remain product wiring requirements.
+  Integrated concept 59ca2d4382 supplies Home open/close/activate bridges, not native handler evidence.
+  Run-card controls move to the run view only while its tab is active in a panel that is visible, including
+  narrow-switcher and collapsed-panel state. Browser capture must retain the original thread and composer
+  destination; context-tab actions use that tab's thread; attachment viewers retain
+  thread/message/attachment identity. More Info now has the bounded-popover producer required by ACD-500,
+  so the earlier modal gap is closed in the concept. Project ELI5 is persisted through the existing
+  adapter; All chats ELI5 is session-only. The production-intent ELI5 acceptance row records that
+  limitation without claiming its application-scope route is built. Astra's round-2 concept check confirms
+  isolated browser delivery retains its destination, but composer attachment, list and insertion can lose
+  that destination after the origin composer changes. Those paths still require restoring the saved
+  destination or refusing a mismatch before draft mutation; the original thread alone is not sufficient
+  reverse coverage. PM7 W4/W6/W7: hosted chat adds Pip editor producers through the existing Settings pair
+  and the conditional Processes domain through UCC-210. Existing file/terminal/thread routes retain exact
+  identity; no private opener, small Activity Detail or Activity Pin returns.
 gui_related: true
 gui_classification_reason: Binds hosted chat producers to existing wiring rows and their reverse GUI consumers.
 split_recommended: false
-depends_on: [DL-232, UCC-208, UIW-044, WM-090, WM-091, WM-092, WM-094, WM-095]
+depends_on:
+- DL-232
+- UCC-208
+- UIW-044
+- WM-090
+- WM-091
+- WM-092
+- WM-094
+- WM-095
 unblocks: []
 acceptance_criteria:
-  - "The changed production-intent entries identify the hosted producers and retain their existing commands and handlers."
-  - "No duplicate rows are added for local History pin, Keep open, modal opening or concept demos."
+- The changed production-intent entries identify the hosted producers and retain their existing commands and
+  handlers.
+- No duplicate rows are added for local History pin, Keep open, modal opening or concept demos.
 validation_surfaces:
-  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
-  - "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: hosted_chat_owner_drift
 reasoning_tier: high
 context_scope: chat56_pmconcept7_port
 implementation_surfaces:
-  - "Plans/Wiring_Matrix.md"
+- Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: owner_presentation_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md, SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer destination gap; corrects the broad integrated capture claim)"
+- Plans/Decision_Log.md#DL-185
+- /mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D3, D4, D7, D8, D9, D26, D27, D28)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b
+  (concept integration lineage, not native API authority)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md,
+  SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated
+  against concept source; not native or final visual verification)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md,
+  SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer
+  destination gap; corrects the broad integrated capture claim)
 preserved_exact_tokens:
-  - "Demo Studio"
-  - "Keep open"
+- Demo Studio
+- Keep open
 negative_constraints:
-  - "Do not remove DL-218 exclusions or assert native proof from the port."
+- Do not remove DL-218 exclusions or assert native proof from the port.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-  - "Plans/Wiring_Matrix.md"
+- Plans/Wiring_Matrix.md
 ```
 
 ContractRef: ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/UI_Command_Catalog.md#UCC-208, ContractName:Plans/UI_Wiring_Rules.md#UIW-044
@@ -6602,25 +6629,36 @@ plan_unit_id: WM-097
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: B1/B2/B6, S1–S9, D1–D14, G1–G10. pm7_control_bindings.json enumerates project-box rows/keys,
-  statusbar.agents/processes, Agents/Processes/Resources tabs and view controls, thread Processes, stop/restart/input/delivery/clear/quit,
-  and the one Pip editor/entry hosts. Command rows resolve production-intent wiring and typed owner payload/availability/permission/error/receipt
-  contracts; local rows resolve declared no-write actions with focus return and teardown. Stop all shares cmd.work.stop.
+canonical_text: >-
+  B1/B2/B6, S1–S9, D1–D14, G1–G10. pm7_control_bindings.json enumerates project-box rows/keys,
+  statusbar.agents/processes, Agents/Processes/Resources tabs and view controls, thread Processes,
+  stop/restart/input/delivery/clear/quit, and the one Pip editor/entry hosts. Command rows resolve
+  production-intent wiring and typed owner payload/availability/permission/error/receipt contracts; local
+  rows resolve declared no-write actions with focus return and teardown. Stop all shares cmd.work.stop.
   Existing terminal/owner/schedule/Settings routes are reused. New event candidates do not emit. Counts are
-  derived/pinned together in companions; partial native evidence remains partial. Decorative brand/loader are
-  excluded because they are not controls.
+  derived/pinned together in companions; partial native evidence remains partial. Decorative brand/loader
+  are excluded because they are not controls.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on:
 - DL-255
+- UCC-209
+- UCC-210
+- UCC-211
+- UIW-045
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Every one of 464 binding families resolves its declared command/local disposition with unique control identity
+  and valid Settings IDs.
+- All eleven new production-intent rows have typed requests/results/availability/accessibility/effect evidence
+  requirements and one handler.
+- Touch covers each admitted action once; Stop all and all reused terminal/Settings routes retain their owner
+  identity without native-certification promotion.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -6641,4 +6679,6 @@ owner_hints:
 - Plans/Wiring_Matrix.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-255
+ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/UI_Command_Catalog.md#UCC-209, ContractName:Plans/UI_Command_Catalog.md#UCC-210, ContractName:Plans/UI_Command_Catalog.md#UCC-211, ContractName:Plans/UI_Wiring_Rules.md#UIW-045
+
+

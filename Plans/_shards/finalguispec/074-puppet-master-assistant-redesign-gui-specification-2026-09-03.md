@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37557-L37862
+Source lines: L37808-L38133
 
-Source SHA256: `b88dbed9579de911698b77f4dfe726a1e998ba12fef41e8d213e9f0a80ce979e`
+Source SHA256: `36c5ffd042fbd9ee31121beb4871b8342bbe239e4537318cd5a69678db2b29f7`
 
 ---
 
@@ -222,50 +222,70 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Plan is a transcript card with a title, a Plan Vn badge, and a Rich Text / Markdown toggle defaulting to Rich Text; its body renders full document content with no editable caret and its footer carries exactly one primary status control reading Build, Building…, Completed, or Canceled alongside Build With Crew, Build At, Revise, Send To Planning Wizard, Export, Cancel and Open To-Dos as applicable. A pause or quota wait appears as small support copy while the button still reads Building…. Historical Completed and Canceled cards stay in place and default compact, with no Plan picker and no Superseded label. Goal and To-Dos are Activity domains and have no transcript card: the Goal hover offers Pause, Cancel and an edit icon opening Activity Detail in edit mode, and Goal detail shows only the objective, Save and Cancel edit, lifecycle controls and a revision History (since 2026-10-08 one control row with Edit objective and Cancel Goal alone at the far edge, and an Objective history footer; DL-147, F3-593). The To-Do hover shows a completed-over-total count with several current rows allowed, and To-Do detail shows one hierarchical tree with completed items inline with a filled dot and strike-through and no Done heading, source chip, verification badge, Goal grouping, or cross-thread row; its rows are one line each, like the hover preview, with no buttons (DL-147, F3-593). Activity domains become Goal, To-Dos, Subagents, Crew, BrainStorm, Review, Chat Room, Changes and Artifacts, preserving per-thread presence, empty-domain omission, compaction tiers, hover dwell and detail routing, with Subagents distinct from Crew.
-  Amended 2026-10-29 (D1–D4, G1/G2; PM7): Activity domains are ten: Goal, To-Dos, Subagents, Processes, Crew, BrainStorm, Review, Chat Room, Changes, Artifacts. Processes is conditional on running/input work and retained while its card/detail is open; scheduled/finished alone never keep it. Full-size detail opens directly; no Pin or small transient fallback.
+  The Plan is a transcript card with a title, a Plan Vn badge, and a Rich Text / Markdown toggle defaulting
+  to Rich Text; its body renders full document content with no editable caret and its footer carries
+  exactly one primary status control reading Build, Building…, Completed, or Canceled alongside Build With
+  Crew, Build At, Revise, Send To Planning Wizard, Export, Cancel and Open To-Dos as applicable. A pause or
+  quota wait appears as small support copy while the button still reads Building…. Historical Completed and
+  Canceled cards stay in place and default compact, with no Plan picker and no Superseded label. Goal and
+  To-Dos are Activity domains and have no transcript card: the Goal hover offers Pause, Cancel and an edit
+  icon opening Activity Detail in edit mode, and Goal detail shows only the objective, Save and Cancel
+  edit, lifecycle controls and a revision History (since 2026-10-08 one control row with Edit objective and
+  Cancel Goal alone at the far edge, and an Objective history footer; DL-147, F3-593). The To-Do hover
+  shows a completed-over-total count with several current rows allowed, and To-Do detail shows one
+  hierarchical tree with completed items inline with a filled dot and strike-through and no Done heading,
+  source chip, verification badge, Goal grouping, or cross-thread row; its rows are one line each, like the
+  hover preview, with no buttons (DL-147, F3-593). Activity domains become Goal, To-Dos, Subagents,
+  Processes, Crew, BrainStorm, Review, Chat Room, Changes and Artifacts, preserving per-thread presence,
+  empty-domain omission, compaction tiers, hover dwell and detail routing, with Subagents distinct from
+  Crew. Amended 2026-10-29 (D1–D4, G1/G2; PM7): Activity domains are ten: Goal, To-Dos, Subagents,
+  Processes, Crew, BrainStorm, Review, Chat Room, Changes, Artifacts. Processes is conditional on
+  running/input work and retained while its card/detail is open; scheduled/finished alone never keep it.
+  Full-size detail opens directly; no Pin or small transient fallback.
 gui_related: true
 gui_classification_reason: This unit specifies the Plan card and every Activity surface in the redesign.
-depends_on: [F3-531]
+depends_on:
+- F3-531
 unblocks: []
 acceptance_criteria:
-  - The Plan card has exactly one primary status control with four possible labels and no editable caret.
-  - No Goal or To-Do transcript card exists.
-  - Completed To-Dos stay inline with a filled dot and strike-through and no Done heading.
-  - Activity exposes all nine domains with existing compaction and routing behavior.
+- The Plan card has exactly one primary status control with four possible labels and no editable caret.
+- No Goal or To-Do transcript card exists.
+- Completed To-Dos stay inline with a filled dot and strike-through and no Done heading.
+- Activity exposes all ten domains (Processes conditional on D4) with existing compaction and routing behavior.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - "Verify F3-533's card-family inventory, Plan actions, To-Do presentation and collapsed/expanded disclosures; concept fixtures do not prove native execution."
+- python3 scripts/pm-plan-index.py validate
+- Verify F3-533's card-family inventory, Plan actions, To-Do presentation and collapsed/expanded disclosures;
+  concept fixtures do not prove native execution.
 risk_class: goal_or_todo_transcript_card_or_done_section
 reasoning_tier: high
 context_scope: assistant_redesign_cards_and_activity
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - Plans/Assistant_Plan_Runtime.md
-  - Plans/ToDo_Runtime.md
-  - Plans/Goal_Runtime_System.md
+- Plans/FinalGUISpec.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/ToDo_Runtime.md
+- Plans/Goal_Runtime_System.md
 node_compile_hint:
   mode: assistant_card_and_activity_specification
   create_worknodes: false
 source_lineage:
-  - "Concepts/chat-assistant-concepts/5.6 Pro/plans.js (concept reference; source-lineage-only)"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/todos.js (concept reference; source-lineage-only)"
-  - pm-assistant-implementation-2026-09-02-recovered:GUI-003
-  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#7
-  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#8
-  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#9
-  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#10
+- Concepts/chat-assistant-concepts/5.6 Pro/plans.js (concept reference; source-lineage-only)
+- Concepts/chat-assistant-concepts/5.6 Pro/todos.js (concept reference; source-lineage-only)
+- pm-assistant-implementation-2026-09-02-recovered:GUI-003
+- pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#7
+- pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#8
+- pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#9
+- pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#10
 preserved_exact_tokens:
-  - "Building…"
-  - "Completed"
-  - "Canceled"
-  - "Plan · V5"
+- Building…
+- Completed
+- Canceled
+- Plan · V5
 negative_constraints:
-  - Do not render Goal or To-Dos as transcript cards.
-  - Do not add a Plan picker or a Superseded label.
-  - Do not replace the Build control with a separate status badge.
+- Do not render Goal or To-Dos as transcript cards.
+- Do not add a Plan picker or a Superseded label.
+- Do not replace the Build control with a separate status badge.
 owner_hints:
-  - Plans/FinalGUISpec.md
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-534 - Assistant Redesign Responsive Priority And Visual Prohibitions

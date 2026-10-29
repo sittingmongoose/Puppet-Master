@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L351-L709
 
-Source SHA256: `011c79e84c77ccae4f3f89f0407fa144f1ce9ad6a4af9664e641391721e0569a`
+Source SHA256: `3fe28c367ffef1dfb2b68ca6b2ce57e131c603afdf9c28ca782cba1144852597`
 
 ---
 
@@ -237,7 +237,7 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plan
 
 The owner split is strict:
 
-- `Plans/settings_inventory.json` and its schema retain the exact 828 ordinary setting IDs and row metadata. Manager, action, status, diagnostic, setup, and unavailable-capability destinations are outside that denominator.
+- `Plans/settings_inventory.json` and its schema retain the exact 1011 ordinary setting IDs and row metadata. Manager, action, status, diagnostic, setup, and unavailable-capability destinations are outside that denominator.
 - `Plans/FinalGUISpec.md` retains shared GUI/theme-token ownership and consumes Settings placement; its earlier Settings shell/global/inheritance clauses are superseded where SSYS-001..SSYS-023 adjudicate them.
 - Storage, Permissions/FileSafe/Multi-Account, Shared Integration Runtime, Commands/Catalog/Wiring, provider, Server, Project Sync, Browser, SCM, Docker Manager, Onboarding, Doctor, and testing docs retain their named domain contracts. Settings renders policy, compact projections, exact availability, owner commands, receipts, and routes without implementing peer runtimes.
 - K3 Tome Tabs and the PMConcept7 Settings illustration are geometry/concept lineage only, not production/runtime proof; later Server First Backbone, Egolite/Hermes/Origin/Browser/SCM, Full Thread Performance, Onboarding/Doctor Correction, and Settings Bakeoff decisions control content and behavior.
@@ -268,7 +268,7 @@ This table is an ownership router, not a peer product owner. Later accepted owne
 |---|---|
 | Project/Vault/app-content sync, move, source relocation, update, or Sync-bundle behavior attributed generically to “Project Sync/Backbone” | `Plans/Project_Sync_and_Backbone.md` PSB-001 through PSB-003. |
 | Runtime resource quotas/governor behavior in `storage-plan.md` SP-228/SP-229 | Retired as behavior authority; `Plans/Shared_Integration_Runtime.md` SIR-006 is sole governor owner and Storage persists values only. |
-| Settings inheritance-only, global-persistence, or no-import/export clauses | `Plans/Settings_System.md` SSYS-001, SSYS-002, SSYS-007, SSYS-008, and SSYS-009 own current behavior; `Plans/settings_inventory.json` remains the 828-ID machine inventory, with non-Project scope vocabulary deferred for normalization rather than treated as persistence authority. |
+| Settings inheritance-only, global-persistence, or no-import/export clauses | `Plans/Settings_System.md` SSYS-001, SSYS-002, SSYS-007, SSYS-008, and SSYS-009 own current behavior; `Plans/settings_inventory.json` remains the 1011-ID machine inventory, with non-Project scope vocabulary deferred for normalization rather than treated as persistence authority. |
 | One broad onboarding flow | Product Onboarding: `Plans/Planning_Wizard.md`/Final GUI; Installation/Deployment: SIR-003 plus Release Supply Chain/domain installer; Server Claim/Bootstrap: SIR-013. Project-content movement remains the separate downstream PSB service; visible routing is SMPFS-146. |
 | Doctor behavior spread across feature owners | `Plans/newtools.md` N2-151 owns the registry/router; domain owners retain probe truth and remediation. |
 | Workspace cleanup attributed to Storage or Worktree | `Plans/MiscPlan.md` M-084 is sole cleanup manager; Storage persists and Worktree supplies lifecycle facts. |
@@ -293,7 +293,7 @@ PROC-008 is closed only by the exact owner text and machine contracts cited abov
 | `assistant-chat-design.md` | Assistant/Chat UX and modes | Canonical for chat/thread/session navigation, PM-native Ask/Plan semantics, slash-command behavior, shared question flows, activity transparency, `/web`, `/skill`, and plan/TODO semantics. |
 | `assistant-memory-subsystem.md` | Assistant-only memory continuity subsystem | Canonical SSOT for Assistant memory boundary, per-project memory stores (`assistant_memory.redb` + lexical/semantic indexes), decay scoring, capsule/retrieval budgets, and maintenance operations. Explicitly separate from rules pipeline contracts. |
 | `FinalGUISpec.md` | Shared GUI contract (Slint desktop, Leptos web) and theme contract | Canonical UI source for application shell/layout/view placement, shared theme palettes/tokens (one design-token source generating Slint theme globals and CSS custom properties), the Skia renderer extensions (F3-582), the Leptos web client (F3-583), provider-neutral Actions & Pipelines, Backup/Recovery and PM-connector projections, chat widgets/activity cards/plan tracker, Agent Config placement, browser/terminal surfaces, and Expert/ELI5 presentation. Domain owners retain runtime truth; `Settings_System.md` owns the Settings shell and routing. |
-| `Settings_System.md` | Canonical Settings System | Sole owner for exact K3 Tome Tabs Settings geometry, project-bound ordinary-setting persistence, 828-ID inventory consumption, search/facets/virtualization, atomic mutation/default restore, detached Project transfer, manager grammar, and provider/backup/connector owner projections. Retained domain owners keep runtime truth. |
+| `Settings_System.md` | Canonical Settings System | Sole owner for exact K3 Tome Tabs Settings geometry, project-bound ordinary-setting persistence, 1011-ID inventory consumption, search/facets/virtualization, atomic mutation/default restore, detached Project transfer, manager grammar, and provider/backup/connector owner projections. Retained domain owners keep runtime truth. |
 | `Project_System.md` | Project identity and lifecycle | Owns Project registration, create/open/archive/remove/restore/delete-data boundaries, typed Project records, and Project-facing backup/history/restore-as-new consumption; it does not own source-control engines, Vault movement, or backup execution. |
 | `Server_System.md` | Server identity, catalog, trust, pairing, endpoints, and lifecycle | Sole Server identity and trust owner, including backup-continuity and remote-endpoint provenance consumption; discovery never implies consent or trust. |
 | `Remote_Access_System.md` | Remote route policy and continuity | Owns private/public route configuration, the PM-owned Go tsnet connector, durable connector authorization, availability, migration, testing, and exact-return continuity while Server System retains identity/trust. |

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38050-L38752
+Source lines: L38321-L39039
 
-Source SHA256: `b88dbed9579de911698b77f4dfe726a1e998ba12fef41e8d213e9f0a80ce979e`
+Source SHA256: `36c5ffd042fbd9ee31121beb4871b8342bbe239e4537318cd5a69678db2b29f7`
 
 ---
 
@@ -24,8 +24,8 @@ invariants.
   record always opens PINNED on the left, resetting the transient unpinned state. Prior floating or
   unpinned state is never persisted across explicit new item activations.
 - **History and Activity Detail Coexistence (APR-002):** Pinned Thread History (left rail) and
-  pinned Activity Detail share the available canvas width dynamically using a coordinated flex
-  split. Pinned History and pinned Activity Detail never reserve independent overlapping gutters or
+  full-size Activity Detail share the available canvas width dynamically using a coordinated flex
+  split. Pinned History and full-size Activity Detail never reserve independent overlapping gutters or
   cause canvas clipping. At narrow editor/chat splits, each view respects minimum readable bounds,
   and Activity Detail preserves full readability without obscuring History navigation.
 - **Floating Chat Activity Bar (APR-004):** The inner Chat Activity Bar is a styled floating pill
@@ -67,7 +67,7 @@ invariants.
   hover surface; nested floating subpanels, cascaded popovers, and duplicate list DOMs are prohibited.
 - **Direct Hover Navigation (APR-006):** Redundant "Open Activity" buttons are completely removed
   from all activity hover cards. Clicking directly on an item row, task title, participant card, or
-  artifact entry immediately opens that specific record in the pinned Activity Detail panel,
+  artifact entry immediately opens that specific record in the full-size Activity Detail panel,
   preserving domain identity and focus. Exception (DL-122, F3-580): a click on the Crew, BrainStorm,
   Review or Chat Room domain chip itself reveals the newest card of that kind in the thread; the rows
   of those domains' hover cards keep this routing, so Activity Detail stays reachable.
@@ -161,7 +161,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
 - **Uniform Native Card/Grid Grammar Across All 9 Activity Detail Families (APR-060, USER-REFERENCE-LAYOUT-ROLLBACK-20260908):**
   The reference-video-derived narrow-layout and forced flat-row grammar is selectively superseded under
   user correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908. Activity Detail restores prior native card,
-  section panel, and grid presentation across all nine Activity Detail families while preserving
+  section panel, and grid presentation across all ten Activity Detail families while preserving
   concise hierarchy, high contrast, clear progress and state grouping, quiet action rows, and canonical routing:
   1. *Goal Detail:* Objective headline, lifecycle status, inline edit/save, progress indicators, and revision history.
   2. *To-Dos Detail:* Hierarchical task tree, inline completion status (filled dot with strike-through), owner chips (the owner's mark or name, only for an explicit assignment), and Open work in the selected item's detail rather than action links on rows, without separate Done headers.
@@ -247,7 +247,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   38. `dry-method` (DRY enforcement and duplication guard policy)
   And across the three named visible-state projections: `teacher-help`, `project-search-index`,
   and `dry-method`, as well as the Assistant Settings projections (`settings.assistant`,
-  `settings.bsd`, `settings.schedule`). All 892 settings in the inventory remain preserved. Census (USER-SETTINGS-MANAGER-REFRESH-20260908): `Plans/settings_inventory.json` holds 887 ordinary setting ids and the concept's `PM12_REFERENCE` holds 892 (887 plus the five concept-proposed roster/stage rows); the 1011 figure in SSYS-004/SSYS-005 is a preserved historical denominator token.
+  `settings.bsd`, `settings.schedule`). All 892 settings in the inventory remain preserved. Census (USER-SETTINGS-MANAGER-REFRESH-20260908): `Plans/settings_inventory.json` holds 887 ordinary setting ids and the concept's `PM12_REFERENCE` holds 892 (887 plus the five concept-proposed roster/stage rows); the 828 figure in SSYS-004/SSYS-005 is a preserved historical denominator token.
 - **Context-Sensitive Manager Navigation (APR-065):** When opening a Settings manager from an
   in-canvas context link or dropdown picker, the picker retains and visually indicates the specific
   manager identity for which it was opened. Context is not dropped or reset during deep navigation.
@@ -267,48 +267,57 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Activity Detail defaults to a pinned side panel on the left of the chat canvas. An explicit Unpin
-  converts the current view to floating, but clicking any subsequent activity preview item opens its
-  record pinned, never persisting floating state across activations. Pinned History and pinned
-  Activity Detail share canvas width dynamically without overlapping gutters. The Chat Activity Bar
-  floats as a styled pill centered above the composer with transparent sides and bottom and pointer
-  pass-through around the pill, with transcript bottom padding ensuring the final child at settled
-  bottom scroll rests completely above the pill.
+  G1/G2 (2026-10-29): every Activity Detail opens directly as the full-size docked view and stays until ×,
+  Esc or its Activity icon closes it. No Activity Pin, Unpin or small transient form remains. Widen the
+  chat to fit within current centre/page floors, then cover transcript at full column height when the
+  window cannot fit the dock. History keeps its separate flyout/pin and actual-width contract in F3-637.
+  Hover previews remain one bounded, non-scrolling preview with existing dwell and direct detail routes.
+  F3-533/ACD-453/ACD-506 own content and layout; this unit adds no runtime state. The Chat Activity Bar
+  remains a floating bar centred above the composer, with transparent sides/bottom and pointer pass-through
+  around it; transcript bottom padding ensures the final child at settled bottom scroll clears the bar.
+  This is the Activity Bar, not a floating Activity Detail fallback. History and full-size detail divide
+  the available canvas without overlapping gutters; at the window limit detail uses G2’s full-height cover.
 gui_related: true
-gui_classification_reason: Governs the core layout geometry of Activity Detail, History rail coexistence, and the floating Chat Activity Bar.
-depends_on: [F3-531, F3-533]
-unblocks: [F3-537]
+gui_classification_reason: Governs the core layout geometry of Activity Detail, History rail coexistence, and
+  the floating Chat Activity Bar.
+depends_on:
+- F3-531
+- F3-533
+unblocks:
+- F3-537
 acceptance_criteria:
-  - Opening Activity Detail defaults to pinned left geometry.
-  - Clicking any activity preview item opens the record pinned, even if a previous record was unpinned.
-  - Pinned History and Activity Detail share width without overlapping gutters.
-  - Chat Activity Bar floats over transcript with transparent sides/bottom and pointer pass-through.
-  - Transcript settled bottom scroll completely clears the activity pill.
+- Clicking any of ten present domains opens full detail immediately; Processes follows D4 conditional presence.
+- When docking cannot fit, chat widens within available space and then detail covers transcript at full column
+  height, never a small popup.
+- Close/×/Esc/icon-again returns focus without a persisted Activity pin; History pin is unchanged.
+- The floating Chat Activity Bar keeps transparent pointer-pass-through surrounds and the settled transcript
+  bottom fully clears it.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: layout_geometry_or_floating_bar_regression
 reasoning_tier: high
 context_scope: assistant_layout_geometry
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
 node_compile_hint:
   mode: assistant_layout_specification
   create_worknodes: false
 source_lineage:
-  - APR-001
-  - APR-002
-  - APR-004
+- APR-001
+- APR-002
+- APR-004
 preserved_exact_tokens:
-  - "Activity Detail"
-  - "Chat Activity Bar"
-  - "unpin"
-  - "pointer pass-through"
+- Activity Detail
+- Chat Activity Bar
+- unpin
+- pointer pass-through
 negative_constraints:
-  - Do not persist unpinned state across explicit new item activations.
-  - Do not render an opaque in-flow footer for the activity bar.
+- Do not expose Activity Pin/Unpin or a small transient fallback.
+- Do not remove or conflate the independent History pin.
 owner_hints:
-  - Plans/FinalGUISpec.md
+- Plans/FinalGUISpec.md
+stale_retired_dispositions: []
 ```
 
 ```yaml
@@ -367,7 +376,7 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Activity hover previews provide a single bounded preview surface per domain without nested floating
   panels or internal scrollbars. Separate Open Activity buttons are removed from previews in favor
-  of direct item-click navigation into pinned Activity Detail. Previews present a curated subset with
+  of direct item-click navigation into full-size Activity Detail. Previews present a curated subset with
   an overflow counter row for navigation. Preview item selection strictly preserves domain and item
   identity during routing.
 gui_related: true
@@ -378,7 +387,7 @@ acceptance_criteria:
   - Previews use a single outer surface with no nested floating subpanels.
   - Separate Open Activity buttons are removed from all hover previews.
   - Previews do not scroll internally; overflow rows navigate to full detail.
-  - Clicking a preview item opens that exact record in pinned Activity Detail.
+  - Clicking a preview item opens that exact record in full-size Activity Detail.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: hover_preview_nesting_or_navigation_drift
@@ -461,44 +470,43 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The Assistant wand menu structures commands into compact, organized submenus rather than a single
-  unbounded command list. The chat composer strictly excludes internal-browser launch controls,
-  preserving independent URL and attachment capabilities. All concept demonstration fixtures, replay
-  commands, and sample loaders are isolated within a dedicated Demo Gallery and excluded from product
-  command menus.
-  Amended 2026-10-29 (PC1/PC4; PM7): Working Orbit centre is Pip with tool badge; the thinking placeholder hands off to it with exactly one Pip per reply. Existing activity choreography and owner work state stay authoritative.
+  unbounded command list. The chat composer strictly excludes internal-browser launch controls, preserving
+  independent URL and attachment capabilities. All concept demonstration fixtures, replay commands, and
+  sample loaders are isolated within a dedicated Demo Gallery and excluded from product command menus.
 gui_related: true
 gui_classification_reason: Governs wand menu grouping, composer browser boundary, and demo fixture isolation.
-depends_on: [F3-531]
+depends_on:
+- F3-531
 unblocks: []
 acceptance_criteria:
-  - Wand menu uses submenus for logical grouping within viewport bounds.
-  - No browser launch button appears in the chat composer.
-  - Demo fixtures and replays are located exclusively in the Demo Gallery.
+- Wand menu uses submenus for logical grouping within viewport bounds.
+- No browser launch button appears in the chat composer.
+- Demo fixtures and replays are located exclusively in the Demo Gallery.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: wand_overflow_or_demo_command_pollution
 reasoning_tier: standard
 context_scope: wand_menu_and_composer_boundaries
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - Plans/assistant-chat-design.md
-  - Plans/Commands_System.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/Commands_System.md
 node_compile_hint:
   mode: wand_and_boundaries_specification
   create_worknodes: false
 source_lineage:
-  - APR-010
-  - APR-013
-  - APR-014
+- APR-010
+- APR-013
+- APR-014
 preserved_exact_tokens:
-  - "wand"
-  - "submenus"
-  - "Demo Gallery"
+- wand
+- submenus
+- Demo Gallery
 negative_constraints:
-  - Do not render a browser launcher in the composer.
-  - Do not register demo fixtures as product commands.
+- Do not render a browser launcher in the composer.
+- Do not register demo fixtures as product commands.
 owner_hints:
-  - Plans/FinalGUISpec.md
+- Plans/FinalGUISpec.md
 ```
 
 ```yaml
@@ -605,50 +613,58 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Collaboration configuration popups enforce shared choice controls, plain-language labels with option
   descriptions, and consistent inset footers with 16 px padding and clear button hierarchy. Selecting
-  Single Agent Review immediately collapses the active reviewer roster to one. All nine Activity Detail
-  families adhere to the unified native card and grid presentation grammar per USER-REFERENCE-LAYOUT-ROLLBACK-20260908,
-  apart from the scoped exceptions of F3-580 (DL-122) and the To-Do rows of F3-593 (DL-147),
-  superseding the reference-video flat-row and forced single-column layout while preserving concise hierarchy,
-  clear progress/state grouping, and quiet action rows. Read-only inspection fixtures present findings
-  and code evidence without interactive mutation controls.
+  Single Agent Review immediately collapses the active reviewer roster to one. All ten Activity Detail
+  families adhere to the unified native card and grid presentation grammar per
+  USER-REFERENCE-LAYOUT-ROLLBACK-20260908, apart from the scoped exceptions of F3-580 (DL-122) and the
+  To-Do rows of F3-593 (DL-147), superseding the reference-video flat-row and forced single-column layout
+  while preserving concise hierarchy, clear progress/state grouping, and quiet action rows. Read-only
+  inspection fixtures present findings and code evidence without interactive mutation controls.
 gui_related: true
-gui_classification_reason: Governs collaboration configuration popups, footer styling, Single Agent Review invariant, and all nine Activity Detail families.
-depends_on: [F3-531, F3-533, F3-535]
+gui_classification_reason: Governs collaboration configuration popups, footer styling, Single Agent Review
+  invariant, and all ten Activity Detail families.
+depends_on:
+- F3-531
+- F3-533
+- F3-535
 unblocks: []
 acceptance_criteria:
-  - Popups use shared choice dropdowns, plain-language options, and 16 px inset footers.
-  - Switching to Single Agent Review reactively reduces draft reviewer count to exactly one.
-  - All nine Activity Detail families apply the native card and grid presentation grammar with concise hierarchy, superseding the reference-video flat-row prescription, apart from the scoped exceptions of F3-580 and F3-593.
-  - Read-only inspection demos render findings without interactive mutation controls.
+- Popups use shared choice dropdowns, plain-language options, and 16 px inset footers.
+- Switching to Single Agent Review reactively reduces draft reviewer count to exactly one.
+- All ten Activity Detail families apply the native card and grid presentation grammar with concise hierarchy,
+  superseding the reference-video flat-row prescription, apart from the scoped exceptions of F3-580 and F3-593.
+- Read-only inspection demos render findings without interactive mutation controls.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: collaboration_popup_or_activity_family_grammar_drift
 reasoning_tier: high
 context_scope: collaboration_and_activity_families
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - Plans/Collaborative_Workflows.md
-  - Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/Collaborative_Workflows.md
+- Plans/assistant-chat-design.md
 node_compile_hint:
   mode: collaboration_and_activity_specification
   create_worknodes: false
 source_lineage:
-  - APR-051
-  - APR-052
-  - APR-053
-  - APR-054
-  - APR-060
-  - APR-067
+- APR-051
+- APR-052
+- APR-053
+- APR-054
+- APR-060
+- APR-067
 preserved_exact_tokens:
-  - "Single Agent"
-  - "inset footers"
-  - "nine Activity Detail families"
+- Single Agent
+- inset footers
 negative_constraints:
-  - Do not retain multiple reviewers when Single Agent Review is active.
-  - Do not omit any of the nine Activity Detail families from the unified grammar.
-  - Do not reintroduce reference-video flat-row or forced single-column CSS into Activity Detail beyond the scoped exceptions of F3-580 and F3-593.
+- Do not retain multiple reviewers when Single Agent Review is active.
+- Do not omit any of the ten Activity Detail families from the unified grammar.
+- Do not reintroduce reference-video flat-row or forced single-column CSS into Activity Detail beyond the scoped
+  exceptions of F3-580 and F3-593.
 owner_hints:
-  - Plans/FinalGUISpec.md
+- Plans/FinalGUISpec.md
+stale_retired_dispositions:
+- 'PM7 2026-10-29: superseded source terms retained for lineage only: nine Activity Detail families. Current
+  geometry/state/primitive rules are in the dated canonical amendment.'
 ```
 
 ```yaml

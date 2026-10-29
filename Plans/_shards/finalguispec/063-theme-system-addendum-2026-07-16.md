@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L30378-L31495
 
-Source SHA256: `b88dbed9579de911698b77f4dfe726a1e998ba12fef41e8d213e9f0a80ce979e`
+Source SHA256: `36c5ffd042fbd9ee31121beb4871b8342bbe239e4537318cd5a69678db2b29f7`
 
 ---
 
@@ -734,7 +734,7 @@ Source since 2026-10-08 (DL-151): PMConcept7's retro-light, `Concepts/PMConcept7
 | Accents | `--accent-lime` | `#0B8043` |
 | Accents | `--accent-orange` | `#E65100` |
 | Accents | `--accent-warning` | `#E65100` |
-| Accents | `--accent-error` | `#C621011` |
+| Accents | `--accent-error` | `#C62828` |
 | Accents | `--accent-primary` | not defined (inherits root: `var(--accent-blue)`; resolves to `#0056B3` in this variant) |
 | Accents | `--accent-primary-rgb` | `0,86,179` |
 | Graph | `--graph-pending` | `#ADB5BD` |

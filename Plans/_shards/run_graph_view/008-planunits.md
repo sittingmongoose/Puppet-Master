@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Graph_View.md`
 
-Source lines: L141-L186
+Source lines: L141-L199
 
-Source SHA256: `a79d6ebcf126b372314b28118934c716b0b8607db633b63bdbfe8beb8f42ea3e`
+Source SHA256: `d990267317886e1a98ff1dffec5507cf2b542c4e7c64651b6afe1823848cb558`
 
 ---
 
@@ -17,15 +17,28 @@ plan_unit_id: RGV-001
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
-canonical_text: Run Graph is the canonical graph and lineage inspection surface for orchestrated execution. Graph nodes are runtime nodes rather than tiers; lineage spans graph generations; blocked, recovery, promotion, and corroboration state appears in graph detail when it belongs to the selected node or related lineage object.
+canonical_text: |-
+  Run Graph is the canonical graph and lineage inspection surface for orchestrated execution. Graph nodes
+  are runtime nodes rather than tiers; lineage spans graph generations; blocked, recovery, promotion, and
+  corroboration state appears in graph detail when it belongs to the selected node or related lineage
+  object.
+  Amended 2026-10-29 (D7; PM7): The old Background Runs card is superseded by the shared agents/processes
+  projection and F3-664’s triage panel; run graph links retain exact run/node identity, no second
+  background-work runtime.
 gui_related: true
 gui_classification_reason: The unit defines the user-visible Run Graph inspection surface.
 depends_on: []
-unblocks: [RGV-002, RGV-003, RGV-004, RGV-005, RGV-006]
+unblocks:
+- RGV-002
+- RGV-003
+- RGV-004
+- RGV-005
+- RGV-006
 acceptance_criteria:
 - Graph nodes are modeled as runtime nodes, not tiers.
 - Graph lineage remains generation-aware when graph patching occurs.
-- Node detail can expose blocked, recovery, promotion, and corroboration state for selected or related lineage objects.
+- Node detail can expose blocked, recovery, promotion, and corroboration state for selected or related lineage
+  objects.
 validation_surfaces:
 - Manual review of Plans/Run_Graph_View.md section 1.
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L2103-L2657
+Source lines: L2103-L2682
 
-Source SHA256: `63cb316a393dea764ccead6eac199c4bcdfedda5c244af64e196df2c51a80a19`
+Source SHA256: `8150e7ad82a5252741150810b10418c8990f9df98e4905c88bca144c19f0d584`
 
 ---
 
@@ -350,9 +350,9 @@ status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
   Plans/pm7_control_bindings.json is the finite appearance and shell producer census, extending UIW-040
-  through UIW-042. Each row names the visible control, owner unit, setting/field payload, exact command path
-  or typed local action/non-dispatch disposition, and the corresponding production entry or reason it has
-  none. Each admitted editor setting and every retained customizer field has its own row; aliases and
+  through UIW-042. Each row names the visible control, owner unit, setting/field payload, exact command
+  path or typed local action/non-dispatch disposition, and the corresponding production entry or reason it
+  has none. Each admitted editor setting and every retained customizer field has its own row; aliases and
   view-local affordances never become invented cmd.* ids. Plans/Wiring_Matrix.production.json remains the
   runtime command wiring inventory; a producer binding can reuse its canonical command entry only when the
   census names that entry and exact argument mapping. Its schema is not relaxed for local controls: local
@@ -364,29 +364,32 @@ canonical_text: >-
   notifications, DnD and each resize surface. Demo-only controls and preview harnesses are outside the
   product census. Composite quick-set rows reference the one exact field/value patch in
   Plans/appearance_quick_sets.json, list only its affected setting ids in either scope, and adapt it
-  atomically to the existing writer. Reset/restore-default operations have an explicit exact id set distinct
-  from value patches. A binding cannot substitute all editor or terminal fields for a smaller quick set. The
-  round-3 bezel/background/mask fields and saved terminal preset controls are now enumerated. Local library
-  actions explicitly declare their SP-331-only persistence; picker Back explicitly declares no persistence.
-  Terminal round 5 (DL-213) retires the Flicker Amount bindings and narrows Bell to Follow look and Off; the
-  consistency pass (DL-214) adds no binding, command or stored state. F6 (DL-222) adds no binding, command, production entry or stored state. The page-change hold and a Customize pick's acknowledgement order are ACD-475's; this census adds no row for them. The two bell Continue controls are separate local census rows forwarding the original prompt's
-  own typed action. Setup retains PWIZ-021/UCC-106's ui.onboarding.start and closed
-  pm.product_onboarding.action_request.v2 resume context; Guided Tour retains PWIZ-023's
-  ui.guided_tour.resume and pm.guided_tour.action_request.v3 session/checkpoint/currentness context. They
-  create no command, event or new action id.
-  Amended 2026-10-17 (DL-228): the census classifies every PM7 appearance and shell control and every Settings
-  control another surface hosts (SSYS-043, SSYS-044, the Usage-hosted rows included). Usage page controls that
-  host no Settings row are classified by UCC-147's PM7 producer census, as view_only or their existing
+  atomically to the existing writer. Reset/restore-default operations have an explicit exact id set
+  distinct from value patches. A binding cannot substitute all editor or terminal fields for a smaller
+  quick set. The round-3 bezel/background/mask fields and saved terminal preset controls are now
+  enumerated. Local library actions explicitly declare their SP-331-only persistence; picker Back
+  explicitly declares no persistence. Terminal round 5 (DL-213) retires the Flicker Amount bindings and
+  narrows Bell to Follow look and Off; the consistency pass (DL-214) adds no binding, command or stored
+  state. F6 (DL-222) adds no binding, command, production entry or stored state. The page-change hold and a
+  Customize pick's acknowledgement order are ACD-475's; this census adds no row for them. The two bell
+  Continue controls are separate local census rows forwarding the original prompt's own typed action. Setup
+  retains PWIZ-021/UCC-106's ui.onboarding.start and closed pm.product_onboarding.action_request.v2 resume
+  context; Guided Tour retains PWIZ-023's ui.guided_tour.resume and pm.guided_tour.action_request.v3
+  session/checkpoint/currentness context. They create no command, event or new action id. Amended
+  2026-10-17 (DL-228): the census classifies every PM7 appearance and shell control and every Settings
+  control another surface hosts (SSYS-043, SSYS-044, the Usage-hosted rows included). Usage page controls
+  that host no Settings row are classified by UCC-147's PM7 producer census, as view_only or their existing
   command, and the left rail's local controls (the Owner dropdown, the publish fold, the More tray, the
-  Jujutsu head buttons, strip keys) by F3-618 to F3-625, which add no command, action or wiring row; neither
-  needs a row here. The earlier "every PM7 control" reads with those two owners.
-  Amended 2026-10-17 (review r1): SSYS-043's hosted NieR controls now have rows: the NieR Mode checkbox in the
-  title-bar theme selector and the Guided Tour bar's Look menu (the Settings transaction pair), the same
-  checkbox inside the onboarding window (ui.onboarding.choose_look), the NieR Mode editor's parts edit (the
-  pair), the editor's Turn on NieR Mode button, offered while NieR Mode is off (nier.editor.turn_on, the pair
-  over general.visual.nier-mode; review r2), and the editor's open, close and Play reboot moment
-  (ui.settings.nier_editor.*).
-  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
+  Jujutsu head buttons, strip keys) by F3-618 to F3-625, which add no command, action or wiring row;
+  neither needs a row here. The earlier "every PM7 control" reads with those two owners. Amended 2026-10-17
+  (review r1): SSYS-043's hosted NieR controls now have rows: the NieR Mode checkbox in the title-bar theme
+  selector and the Guided Tour bar's Look menu (the Settings transaction pair), the same checkbox inside
+  the onboarding window (ui.onboarding.choose_look), the NieR Mode editor's parts edit (the pair), the
+  editor's Turn on NieR Mode button, offered while NieR Mode is off (nier.editor.turn_on, the pair over
+  general.visual.nier-mode; review r2), and the editor's open, close and Play reboot moment
+  (ui.settings.nier_editor.*). PM7 B1/B2/B6, S5, D5/G4: shell census includes each project row/shortcut,
+  Pip entry/editor control, work status item and all three panel tabs; WM-097 and pm7_control_bindings.json
+  bind every command/local disposition. Decorative mark/loader are not controls.
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false
@@ -394,8 +397,8 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - No new visible product control lacks a census row and exact owner/action route.
-- The census validates against its schema and references only existing inventory ids, catalog commands and production
-  rows.
+- The census validates against its schema and references only existing inventory ids, catalog commands and
+  production rows.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -412,9 +415,8 @@ node_compile_hint:
 source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256
-  1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0 (approved campaign source lineage;
-  not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
+  (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
@@ -424,12 +426,10 @@ source_lineage:
 - Plans/Wiring_Matrix.md#WM-093
 - Plans/UI_Command_Catalog.md#UCC-204
 - Plans/Commands_System.md#CS-102
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
-  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
-  certification)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
-  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
-  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md, SHA-256
+  4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md, SHA-256
+  29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native certification)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
@@ -447,70 +447,87 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  The port's control census follows UCC-208 and WM-096 (DL-232). Existing production-intent entries
-  carry the actual hosted producer locations; they are not duplicated per renderer. Required forward coverage
+  The port's control census follows UCC-208 and WM-096 (DL-232). Existing production-intent entries carry
+  the actual hosted producer locations; they are not duplicated per renderer. Required forward coverage
   checks the domain identity and revision, placement fields, one dispatch, availability and disabled
-  reason, exact-session terminal handoff, file click/double-click/modifiers and user-versus-agent
-  focus. Required reverse coverage checks host tab close and activation updating the corresponding chat card, a
-  stored preference updating both Settings and chat, a chat-sheet change updating its existing
-  Settings row, application/project/current-chat ELI5 separation, and switching chats without carrying
-  another chat's override. History default is checked on an unsaved workspace and a saved unpinned
-  workspace, preserving the saved false; changing that default never changes the current pin. History
-  pin and Keep open remain local no-event actions, resizing commits once, and
-  menus/hover/disclosure/redraw dispatch nothing. The guided-tour teaching surface remains isolated
-  from the hosted chat during the accepted tour. Demo Studio launches and concept fixture controls are
-  not product producers. Source-hashed native dispatcher, handler, scope/storage and accessibility
-  proof remain required before certification; HTML controls and browser checks satisfy only concept
-  review. For integrated concept 59ca2d4382 the reconciliation specifically includes run tabs active
-  in any visible panel, captures delivered to the original thread and composer destination after a
-  thread switch, context actions on their own tab's thread, and attachment identity plus bounded
-  More Info. The surfaces lane reports these concept checks; this unit is not a fresh browser or
-  native verification receipt. The project-only adapter leaves application ELI5 persistence pending,
-  and Thought Stream preference/preview checks do not establish a live reasoning renderer. The final
-  hover press regression, carry-over layout sweep and films remain pending the owning lanes. Astra's
-  round-2 negative check leaves capture composer attachment/list/insertion destination handling open:
-  after the origin composer changes, these paths must restore the saved destination or refuse before
-  draft mutation. Isolated direct delivery is fixed; retaining the originating thread alone does not
-  pass the composer-destination case. Shared editor-revealed state must also clear for collapsed or
-  hidden Home bodies and when another page is in front. Astra finds that shared state still stale in
-  this snapshot, even though the separate run-card visibility wrapper passes those cases.
-  Amended 2026-10-29 (PM7): W1–W9 (B1/B2/B6, S5, D5/D6/D8–D13, G4–G7): PM7 project box/shortcuts, Pip editor hosts, status work items, full Activity Detail, three-tab platform panel, work actions and quit join the exact command/local binding census. Only the two admitted Settings rows use preview/apply. F3-664/CS-106 govern owner scope; concept handlers/fixtures remain simulation, no native certification. Activity Pin is retired; History pin remains. Pip introduces a Settings editor, never a new chat capability.
+  reason, exact-session terminal handoff, file click/double-click/modifiers and user-versus-agent focus.
+  Required reverse coverage checks host tab close and activation updating the corresponding chat card, a
+  stored preference updating both Settings and chat, a chat-sheet change updating its existing Settings
+  row, application/project/current-chat ELI5 separation, and switching chats without carrying another
+  chat's override. History default is checked on an unsaved workspace and a saved unpinned workspace,
+  preserving the saved false; changing that default never changes the current pin. History pin and Keep
+  open remain local no-event actions, resizing commits once, and menus/hover/disclosure/redraw dispatch
+  nothing. The guided-tour teaching surface remains isolated from the hosted chat during the accepted tour.
+  Demo Studio launches and concept fixture controls are not product producers. Source-hashed native
+  dispatcher, handler, scope/storage and accessibility proof remain required before certification; HTML
+  controls and browser checks satisfy only concept review. For integrated concept 59ca2d4382 the
+  reconciliation specifically includes run tabs active in any visible panel, captures delivered to the
+  original thread and composer destination after a thread switch, context actions on their own tab's
+  thread, and attachment identity plus bounded More Info. The surfaces lane reports these concept checks;
+  this unit is not a fresh browser or native verification receipt. The project-only adapter leaves
+  application ELI5 persistence pending, and Thought Stream preference/preview checks do not establish a
+  live reasoning renderer. The final hover press regression, carry-over layout sweep and films remain
+  pending the owning lanes. Astra's round-2 negative check leaves capture composer
+  attachment/list/insertion destination handling open: after the origin composer changes, these paths must
+  restore the saved destination or refuse before draft mutation. Isolated direct delivery is fixed;
+  retaining the originating thread alone does not pass the composer-destination case. Shared
+  editor-revealed state must also clear for collapsed or hidden Home bodies and when another page is in
+  front. Astra finds that shared state still stale in this snapshot, even though the separate run-card
+  visibility wrapper passes those cases. PM7 PC1/S5/G1: hosted chat keeps exact command/local identities
+  and Settings ownership while adding the Pip editor and Processes domain. Shared hover/overlay/rig
+  teardown applies; redraw/cheer/preview never creates a second commit or runtime. Activity Pin is retired.
 gui_related: true
 gui_classification_reason: Defines forward and reverse verification for visible hosted chat controls.
 split_recommended: false
-depends_on: [DL-232, UCC-208, UIW-040, UIW-041, UIW-042, UIW-043]
+depends_on:
+- DL-232
+- UCC-208
+- UIW-040
+- UIW-041
+- UIW-042
+- UIW-043
 unblocks: []
 acceptance_criteria:
-  - "The producer census has one command or local disposition per control and a reverse consumer for each changed projection."
-  - "Unknown/stale targets, unavailable candidates, refused Settings saves and agent-opened tabs preserve state and focus."
+- The producer census has one command or local disposition per control and a reverse consumer for each changed
+  projection.
+- Unknown/stale targets, unavailable candidates, refused Settings saves and agent-opened tabs preserve state
+  and focus.
 validation_surfaces:
-  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
-  - "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: hosted_chat_owner_drift
 reasoning_tier: high
 context_scope: chat56_pmconcept7_port
 implementation_surfaces:
-  - "Plans/UI_Wiring_Rules.md"
+- Plans/UI_Wiring_Rules.md
 node_compile_hint:
   mode: owner_presentation_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md, SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer destination gap; corrects the broad integrated capture claim)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/astra-r2-verified-capture-visibility.md, SHA-256 00e29db6dca53bbaeb5f3414acd13be6b36ab5c7af2f61a4ccfdf45e9158bcd7 (frozen partial independent review: shared editor visibility and composer destination gaps; separate run-card visibility passes)"
+- Plans/Decision_Log.md#DL-185
+- /mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D3, D4, D7, D8, D9, D26, D27, D28)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b
+  (concept integration lineage, not native API authority)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md,
+  SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated
+  against concept source; not native or final visual verification)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md,
+  SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer
+  destination gap; corrects the broad integrated capture claim)
+- '/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/astra-r2-verified-capture-visibility.md,
+  SHA-256 00e29db6dca53bbaeb5f3414acd13be6b36ab5c7af2f61a4ccfdf45e9158bcd7 (frozen partial independent review:
+  shared editor visibility and composer destination gaps; separate run-card visibility passes)'
 preserved_exact_tokens:
-  - "Demo Studio"
-  - "Keep open"
+- Demo Studio
+- Keep open
 negative_constraints:
-  - "Do not turn concept checks into native handler or storage evidence."
+- Do not turn concept checks into native handler or storage evidence.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-  - "Plans/UI_Wiring_Rules.md"
+- Plans/UI_Wiring_Rules.md
 ```
 
 ContractRef: ContractName:Plans/Wiring_Matrix.md#WM-096, ContractName:Plans/UI_Command_Catalog.md#UCC-208, ContractName:Plans/Settings_System.md#SSYS-055
@@ -523,25 +540,33 @@ plan_unit_id: UIW-045
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: W1–W9, B1–B6, S5, G1–G10. Every visible control in WM-097 has an exact census row; repeated
-  rows use stable IDs, never array positions. Menu open and local view changes write nothing; work mutations
-  call owner handlers after permissions/currentness and match keyboard/pointer requests. Reduced Motion and
-  disabled states preserve meaningful feedback without activation; ack ≤100 ms and commit once. Full Activity
-  Detail replaces Pin/small view. Resources subscribes only while visible; stale requests cannot leak samples
-  across Project/server/environment. One overlay/hover/loader/Pip kit and one work projection; no injection
-  hooks, synthetic resize or replacement observers.
+canonical_text: >-
+  W1–W9, B1–B6, S5, G1–G10. Every visible control in WM-097 has an exact census row; repeated rows use
+  stable IDs, never array positions. Menu open and local view changes write nothing; work mutations call
+  owner handlers after permissions/currentness and match keyboard/pointer requests. Reduced Motion and
+  disabled states preserve meaningful feedback without activation; ack ≤100 ms and commit once. Full
+  Activity Detail replaces Pin/small view. Resources subscribes only while visible; stale requests cannot
+  leak samples across Project/server/environment. One overlay/hover/loader/Pip kit and one work projection;
+  no injection hooks, synthetic resize or replacement observers.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on:
 - DL-255
+- UIW-024
+- UIW-025
+- UIW-043
 unblocks: []
 acceptance_criteria:
-- The stated decision-tagged requirements are preserved by each named consumer; static checks do not certify
-  native implementation.
+- Keyboard/pointer controls submit identical scoped typed requests and acknowledge within the stated timing/one-commit
+  gate.
+- Stale/disabled/unsupported targets retain an accessible exact reason and make no prohibited effect.
+- Closing/replacing the view releases overlays, rig/loader subscriptions and resource sampling; no injection/synthetic-resize/private
+  owner remains.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
@@ -562,4 +587,4 @@ owner_hints:
 - Plans/UI_Wiring_Rules.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-255
+ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/UI_Wiring_Rules.md#UIW-024, ContractName:Plans/UI_Wiring_Rules.md#UIW-025, ContractName:Plans/UI_Wiring_Rules.md#UIW-043

@@ -285,7 +285,7 @@ Windows MCP subsystem shutdown uses `CREATE_NEW_PROCESS_GROUP`; graceful cancell
 This lifecycle section replaces over-summarized process-shutdown wording by naming the entrypoint signal root, process-group rule, platform-specific teardown sequence, and orphaned-process RAM leak prevention rationale.
 
 Grace periods:
-- provider processes: 5 seconds, then force terminate
+- provider processes: 3 seconds, then force terminate (D8; cmd.work.stop targets the whole current identity-bound group)
 - MCP and LSP subprocesses: 3 seconds, then force terminate
 - shutdown entrypoints MUST be guarded by an idempotent `Once`-style primitive; re-entrant shutdown is a safe no-op
 

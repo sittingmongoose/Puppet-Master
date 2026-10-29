@@ -2055,7 +2055,7 @@
     },
     {
       "semantic_name": "work-panel-resources",
-      "glyph_id": "server"
+      "glyph_id": "gauge"
     },
     {
       "semantic_name": "project-box-folder",
@@ -2092,5 +2092,114 @@
     "sleep": "paused",
     "watch": "idle",
     "wink": "complete"
-  }
+  },
+  "surface_status_faces": {
+    "memory": {
+      "Unverified": [
+        "pending",
+        "think"
+      ],
+      "Verified": [
+        "complete",
+        "happy"
+      ],
+      "Discarded": [
+        "skipped",
+        "sleep"
+      ],
+      "Out of date": [
+        "warning",
+        "oops"
+      ]
+    },
+    "scheduled": {
+      "Scheduled": [
+        "pending",
+        "sleep"
+      ],
+      "Held": [
+        "waiting",
+        "wonder"
+      ],
+      "Sent": [
+        "complete",
+        "happy"
+      ],
+      "Canceled": [
+        "skipped",
+        "sleep"
+      ],
+      "Failed": [
+        "failed",
+        "oops"
+      ],
+      "Expired": [
+        "skipped",
+        "sleep"
+      ]
+    },
+    "agents": {
+      "working": [
+        "working",
+        "think"
+      ],
+      "reviewing": [
+        "reviewing",
+        "think"
+      ],
+      "recovering": [
+        "recovering",
+        "think"
+      ],
+      "queued": [
+        "pending",
+        "sleep"
+      ],
+      "needs-you": [
+        "waiting",
+        "wonder"
+      ],
+      "dependency-wait": [
+        "waiting-dep",
+        "sleep"
+      ],
+      "idle": [
+        "idle",
+        "idle"
+      ],
+      "complete": [
+        "complete",
+        "happy"
+      ],
+      "blocked": [
+        "blocked",
+        "oops"
+      ],
+      "failed": [
+        "failed",
+        "oops"
+      ],
+      "paused": [
+        "paused",
+        "sleep"
+      ],
+      "skipped": [
+        "skipped",
+        "sleep"
+      ],
+      "mixed": [
+        "mixed",
+        "alert"
+      ]
+    }
+  },
+  "tray_status_precedence": [
+    "waiting",
+    "failed",
+    "blocked",
+    "working",
+    "paused",
+    "complete",
+    "idle"
+  ]
 }
