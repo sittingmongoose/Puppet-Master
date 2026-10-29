@@ -14,3 +14,26 @@
   min-height: 0;
   overflow: auto;
 }
+/* Its actions are an even grid inside the popover's own padding, two to a row, under a hairline. The dialog's footer is
+   a right-aligned wrapping row with no padding of its own: in the popover's 440 px its seven buttons broke into three
+   ragged rows, flush with the edges, the last one alone and, in a shorter popover, past the bottom (Jared, 2026-10-29:
+   "has buttons at the bottom that are going off the menu and look not intentionally laid out"). A label wraps inside
+   its button rather than being cut. The footer's Close goes: the header's x closes the popover, as Escape and a click
+   outside it do. A Retry (a failed attachment) leads, the width of the grid. */
+#pmOverlayRoot.pm56-host[data-pm56-attpop] > .dialog.att-details-dialog > .att-details-footer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0;
+  padding: 10px 12px 12px;
+  border-top: 1px solid var(--border);
+}
+#pmOverlayRoot.pm56-host[data-pm56-attpop] > .dialog.att-details-dialog > .att-details-footer > button {
+  width: 100%;
+  min-width: 0;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+}
+#pmOverlayRoot.pm56-host[data-pm56-attpop] > .dialog.att-details-dialog > .att-details-footer > [data-action="close-dialog"] { display: none; }
+#pmOverlayRoot.pm56-host[data-pm56-attpop] > .dialog.att-details-dialog > .att-details-footer > .is-warning { grid-column: 1 / -1; }

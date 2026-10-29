@@ -255,110 +255,69 @@ html[data-pmw-home="on"][data-theme^="basic"]:not([data-o55-nier="on"]) .pmw-gl-
 }
 html[data-pmw-home="on"][data-theme="basic-light"]:not([data-o55-nier="on"]) { --gl-hot: color-mix(in srgb, var(--gl-c) 92%, #FFFFFF); }
 
-/* ---- Friendly: DS, 3DS, Wii and Wii U. A glossy bead glides over a column of dots that swell as it passes (the dot
-   pattern under a lens), on a soft bouncy spring; the grab squashes it and the dots pop; a drag trails bubbles; the
-   settle reels the dots in and the bead bounces into place inside a Wii-style ring ---- */
+/* ---- Friendly: a soft rod (Jared, 2026-10-29: the bars' light "needs to be redesigned. it is ugly": it was a glossy
+   bead over a column of dots that swelled as it passed, rings at the grab and the seat, and a trail of bubbles). A short
+   mint rod with soft round ends on the bar where the pointer is, a little lighter down its middle, over a breath of
+   glow, on a soft, slightly bouncy spring; a pointer coming near wakes a faint one. The grab swells it with a small
+   squish and the bar shows as one soft mint line, lit from the grab point outward; a drag carries the rod and its glow,
+   with no trail; the release drains the line back into the rod, which settles with a small bounce. No dots, beads, rings
+   or bubbles. ---- */
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) {
   --gl-c: var(--accent-lime, #6fdabc);
-  --gl-hot: color-mix(in srgb, var(--accent-lime, #6fdabc) 30%, #FFFFFF);
+  --gl-hot: color-mix(in srgb, var(--accent-lime, #6fdabc) 45%, #FFFFFF);
   --gl-blend: normal;
-  --gl-k: 430;
-  --gl-z: .5;
-  --gl-dots: 1;
-  --gl-dot-sp: 10;
-  --gl-echo: 1;
-  --gl-core-w: 13px;
-  --gl-core-l: 13px;
-  --gl-core-r: 50%;
-  --gl-bloom-a: .34;
-  --gl-bloom-l: 120px;
-  --gl-pool-w: 64px;
-  --gl-pop-ease: cubic-bezier(.34, 1.56, .64, 1);
-  --gl-ignite: 420ms;
-  --gl-settle-ms: 980;
+  --gl-k: 520;
+  --gl-z: .62;
+  --gl-dots: 0;
+  --gl-echo: 0;
+  --gl-core-w: 5px;
+  --gl-core-l: 34px;
+  --gl-core-r: 3px;
+  --gl-bloom-a: .24;
+  --gl-bloom-l: 110px;
+  --gl-pool-w: 44px;
+  --gl-rail-w: 2px;
+  --gl-rail-a: 40%;
+  --gl-pop-ease: cubic-bezier(.34, 1.4, .64, 1);
+  --gl-ignite: 360ms;
+  --gl-settle-ms: 760;
 }
 html[data-pmw-home="on"][data-theme="friendly-light"]:not([data-o55-nier="on"]) {
   --gl-c: color-mix(in srgb, var(--accent-lime, #2fa183) 90%, #000);
-  --gl-hot: color-mix(in srgb, var(--accent-lime, #2fa183) 40%, #FFFFFF);
-  --gl-bloom-a: .22;
+  --gl-hot: color-mix(in srgb, var(--accent-lime, #2fa183) 55%, #FFFFFF);
+  --gl-bloom-a: .15;
+  --gl-rail-a: 48%;
 }
+/* the rod */
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-core {
-  background: radial-gradient(circle at 36% 30%, #FFFFFF 0 13%, var(--gl-hot) 30%, var(--gl-c) 64%, color-mix(in srgb, var(--gl-c) 70%, #000) 100%);
-  box-shadow: inset 0 -1.5px 2px color-mix(in srgb, var(--gl-c) 60%, #000), 0 0 0 2px color-mix(in srgb, var(--gl-c) 24%, transparent), 0 2px 12px 2px color-mix(in srgb, var(--gl-c) 46%, transparent);
-  transform: scale(calc((1 + var(--gl-strain, 0) * .7) * (1 + var(--gl-heat, 0) * .18)), calc(var(--gl-s, 1) * (1 - var(--gl-strain, 0) * .35) * (1 + var(--gl-heat, 0) * .18)));
+  background: linear-gradient(to right, var(--gl-c), var(--gl-hot) 50%, var(--gl-c));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gl-c) 15%, transparent), 0 1px 8px 1px color-mix(in srgb, var(--gl-c) 32%, transparent);
+  transform: scale(calc(1 + var(--gl-strain, 0) * .5), calc(var(--gl-s, 1) * (1 - var(--gl-strain, 0) * .3)));
 }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-core { scale: 1.3; animation: gl-squish 480ms cubic-bezier(.3, 1.4, .5, 1) both; }
-@keyframes gl-squish { 0% { scale: 1; } 22% { scale: 1.6 .7; } 55% { scale: 1.12 1.44; } 100% { scale: 1.3; } }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle .pmw-gl-core { animation: gl-boing 720ms linear calc(var(--gl-drain, 420ms) - 140ms) both; }
-@keyframes gl-boing {
-  0% { scale: 1.3; }
-  18% { scale: .76 1.2; }
-  40% { scale: 1.16 .9; }
-  62% { scale: .96 1.04; }
-  100% { scale: 1; }
-}
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-core { scale: 1.2 1.12; animation: gl-soft-catch 420ms cubic-bezier(.3, 1.3, .5, 1) both; }
+@keyframes gl-soft-catch { 0% { scale: 1; } 35% { scale: 1.45 .86; } 100% { scale: 1.2 1.12; } }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle .pmw-gl-core { animation: gl-soft-settle 520ms cubic-bezier(.3, 1.3, .5, 1) calc(var(--gl-drain, 420ms) - 120ms) both; }
+@keyframes gl-soft-settle { 0% { scale: 1.2 1.12; } 45% { scale: .9 1.06; } 100% { scale: 1; } }
+/* a breath of glow round it, no line of light along the bar until it is held */
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-pool::after { display: none; }
-/* the idle hint is the dot column itself, faint: the pattern wakes where the pointer comes near */
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-hint { display: none; }
-/* the dots: placed and sized by the script (--m, 0 to 1 by nearness to the bead) */
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-fx > .pmw-gl-dots {
-  display: block;
-  opacity: calc(var(--gl-near, 0) * .7);
-  transition: opacity 240ms linear;
+/* the idle hint: a faint rod where the pointer comes near */
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-hint {
+  width: var(--gl-core-w);
+  height: 24px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--gl-c) 70%, transparent);
+  opacity: calc(var(--gl-near, 0) * .55);
 }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl:is(.pmw-gl-hover, :focus-visible) .pmw-gl-dots { opacity: 1; transition: opacity 180ms linear; }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-dot {
-  width: 10px;
-  height: 10px;
-  opacity: calc(.45 + var(--m, 0) * .55);
-  border-radius: 50%;
-  scale: calc((.26 + var(--m, 0) * .5) * (1 + var(--gl-pop, 0) * var(--m, 0) * .6));
-  background: radial-gradient(circle at 38% 32%, #FFFFFF 0 12%, var(--gl-hot) 30%, var(--gl-c) 62%, color-mix(in srgb, var(--gl-c) 88%, #000) 100%);
-}
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-dots { animation: gl-pop 560ms linear both; }
-@keyframes gl-pop { 0% { --gl-pop: 0; } 22% { --gl-pop: 1; } 48% { --gl-pop: -.25; } 72% { --gl-pop: .12; } 100% { --gl-pop: 0; } }
-/* the held bar: the whole dot column lights, over a soft glow at the bead */
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-hint::before, html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-hint::after { display: none; }
+/* the held bar: one soft mint line, brighter round the rod */
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-rail {
-  width: 12px;
+  border-radius: 1px;
   background:
-    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gl-c) 85%, transparent) 0 1.7px, transparent 2.4px) 50% -5px / 12px 10px repeat-y,
-    radial-gradient(ellipse 50% 130px at 50% var(--gl-at, 0px), var(--gl-s-glow));
+    radial-gradient(ellipse 50% 120px at 50% var(--gl-at, 0px), var(--gl-s-glow)),
+    linear-gradient(color-mix(in srgb, var(--gl-c) var(--gl-rail-a), transparent), color-mix(in srgb, var(--gl-c) var(--gl-rail-a), transparent));
 }
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-rail::after { opacity: calc(var(--gl-heat, 0) * .5); }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-tip {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 38% 32%, #FFFFFF 0 14%, var(--gl-c) 60%, color-mix(in srgb, var(--gl-c) 75%, #000));
-  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--gl-c) 50%, transparent);
-}
-/* the catch: a round ring; the seat: a Wii-style ring that grows from the bead and fades */
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-ring { width: 18px; height: 18px; box-shadow: 0 0 0 2px color-mix(in srgb, var(--gl-c) 72%, transparent), 0 0 8px 1px color-mix(in srgb, var(--gl-c) 28%, transparent); }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-ring { animation: gl-ring-round 540ms cubic-bezier(.2, .8, .3, 1) both; }
-@keyframes gl-ring-round { from { opacity: .9; scale: .6; } to { opacity: 0; scale: 2.6; } }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-flash {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: none;
-  box-shadow: 0 0 0 2.5px color-mix(in srgb, var(--gl-c) 80%, transparent), 0 0 12px 2px color-mix(in srgb, var(--gl-c) 30%, transparent), inset 0 0 8px color-mix(in srgb, var(--gl-c) 30%, transparent);
-}
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-flash::after { display: none; }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle .pmw-gl-flash { animation: gl-seat-round 640ms cubic-bezier(.2, .8, .3, 1) calc(var(--gl-drain, 420ms) - 100ms) both; }
-@keyframes gl-seat-round { 0% { opacity: 0; scale: .4; } 22% { opacity: 1; scale: 1; } 100% { opacity: 0; scale: 2.5; } }
-/* bubbles: where the bead was 45, 90 and 135 ms ago, shrinking */
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-fx > .pmw-gl-echos { display: block; }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-echo {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  translate: calc(-50% + var(--gl-eo, 0) * 1px) calc(var(--gl-at, 0px) - 50%);
-  background: radial-gradient(circle at 38% 32%, #FFFFFF 0 12%, var(--gl-c) 60%, color-mix(in srgb, var(--gl-c) 75%, transparent));
-  opacity: calc(var(--gl-ea, 0) * .75);
-}
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-echo:nth-child(2) { width: 7px; height: 7px; opacity: calc(var(--gl-ea, 0) * .55); }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-echo:nth-child(3) { width: 5px; height: 5px; opacity: calc(var(--gl-ea, 0) * .38); }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-wake { display: none; }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) :is(.pmw-gl-tip, .pmw-gl-ring, .pmw-gl-flash, .pmw-gl-wake) { display: none; }
 
 /* ---- Glass: light caught in glass. Neutral white only, tinted by the plate (pm7-liquid-glass, 2026-10-14: the lens's
    catch light --lg-lens-glint and its blend, no colour splitting, no filter or backdrop here). A sliver of light in the

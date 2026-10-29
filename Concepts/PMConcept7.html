@@ -42700,110 +42700,72 @@ html[data-pmw-home="on"][data-theme^="basic"]:not([data-o55-nier="on"]) .pmw-gl-
 }
 html[data-pmw-home="on"][data-theme="basic-light"]:not([data-o55-nier="on"]) { --gl-hot: color-mix(in srgb, var(--gl-c) 92%, #FFFFFF); }
 
-/* ---- Friendly: DS, 3DS, Wii and Wii U. A glossy bead glides over a column of dots that swell as it passes (the dot
-   pattern under a lens), on a soft bouncy spring; the grab squashes it and the dots pop; a drag trails bubbles; the
-   settle reels the dots in and the bead bounces into place inside a Wii-style ring ---- */
+/* ---- Friendly: a soft rod (Jared, 2026-10-29: the bars' light "needs to be redesigned. it is ugly": it was a glossy
+   bead over a column of dots that swelled as it passed, rings at the grab and the seat, and a trail of bubbles). A short
+   mint rod with soft round ends on the bar where the pointer is, a little lighter down its middle, over a breath of
+   glow, on a soft, slightly bouncy spring; a pointer coming near wakes a faint one. The grab swells it with a small
+   squish and the bar shows as one soft mint line, lit from the grab point outward; a drag carries the rod and its glow,
+   with no trail; the release drains the line back into the rod, which settles with a small bounce. No dots, beads, rings
+   or bubbles. ---- */
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) {
   --gl-c: var(--accent-lime, #6fdabc);
-  --gl-hot: color-mix(in srgb, var(--accent-lime, #6fdabc) 30%, #FFFFFF);
+  --gl-hot: color-mix(in srgb, var(--accent-lime, #6fdabc) 45%, #FFFFFF);
   --gl-blend: normal;
-  --gl-k: 430;
-  --gl-z: .5;
-  --gl-dots: 1;
-  --gl-dot-sp: 10;
-  --gl-echo: 1;
-  --gl-core-w: 13px;
-  --gl-core-l: 13px;
-  --gl-core-r: 50%;
-  --gl-bloom-a: .34;
-  --gl-bloom-l: 120px;
-  --gl-pool-w: 64px;
-  --gl-pop-ease: cubic-bezier(.34, 1.56, .64, 1);
-  --gl-ignite: 420ms;
-  --gl-settle-ms: 980;
+  --gl-k: 520;
+  --gl-z: .62;
+  --gl-dots: 0;
+  --gl-echo: 0;
+  --gl-core-w: 5px;
+  --gl-core-l: 34px;
+  --gl-core-r: 3px;
+  --gl-bloom-a: .24;
+  --gl-bloom-l: 110px;
+  --gl-pool-w: 44px;
+  --gl-rail-w: 2px;
+  --gl-rail-a: 40%;
+  --gl-pop-ease: cubic-bezier(.34, 1.4, .64, 1);
+  --gl-ignite: 360ms;
+  --gl-settle-ms: 760;
 }
 html[data-pmw-home="on"][data-theme="friendly-light"]:not([data-o55-nier="on"]) {
   --gl-c: color-mix(in srgb, var(--accent-lime, #2fa183) 90%, #000);
-  --gl-hot: color-mix(in srgb, var(--accent-lime, #2fa183) 40%, #FFFFFF);
-  --gl-bloom-a: .22;
+  --gl-hot: color-mix(in srgb, var(--accent-lime, #2fa183) 55%, #FFFFFF);
+  --gl-bloom-a: .15;
+  --gl-rail-a: 48%;
 }
+/* the rod */
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-core {
-  background: radial-gradient(circle at 36% 30%, #FFFFFF 0 13%, var(--gl-hot) 30%, var(--gl-c) 64%, color-mix(in srgb, var(--gl-c) 70%, #000) 100%);
-  box-shadow: inset 0 -1.5px 2px color-mix(in srgb, var(--gl-c) 60%, #000), 0 0 0 2px color-mix(in srgb, var(--gl-c) 24%, transparent), 0 2px 12px 2px color-mix(in srgb, var(--gl-c) 46%, transparent);
-  transform: scale(calc((1 + var(--gl-strain, 0) * .7) * (1 + var(--gl-heat, 0) * .18)), calc(var(--gl-s, 1) * (1 - var(--gl-strain, 0) * .35) * (1 + var(--gl-heat, 0) * .18)));
+  background: linear-gradient(to right, var(--gl-c), var(--gl-hot) 50%, var(--gl-c));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gl-c) 15%, transparent), 0 1px 8px 1px color-mix(in srgb, var(--gl-c) 32%, transparent);
+  transform: scale(calc(1 + var(--gl-strain, 0) * .5), calc(var(--gl-s, 1) * (1 - var(--gl-strain, 0) * .3)));
 }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-core { scale: 1.3; animation: gl-squish 480ms cubic-bezier(.3, 1.4, .5, 1) both; }
-@keyframes gl-squish { 0% { scale: 1; } 22% { scale: 1.6 .7; } 55% { scale: 1.12 1.44; } 100% { scale: 1.3; } }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle .pmw-gl-core { animation: gl-boing 720ms linear calc(var(--gl-drain, 420ms) - 140ms) both; }
-@keyframes gl-boing {
-  0% { scale: 1.3; }
-  18% { scale: .76 1.2; }
-  40% { scale: 1.16 .9; }
-  62% { scale: .96 1.04; }
-  100% { scale: 1; }
-}
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-core { scale: 1.2 1.12; animation: gl-soft-catch 420ms cubic-bezier(.3, 1.3, .5, 1) both; }
+@keyframes gl-soft-catch { 0% { scale: 1; } 35% { scale: 1.45 .86; } 100% { scale: 1.2 1.12; } }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle .pmw-gl-core { animation: gl-soft-settle 520ms cubic-bezier(.3, 1.3, .5, 1) calc(var(--gl-drain, 420ms) - 120ms) both; }
+@keyframes gl-soft-settle { 0% { scale: 1.2 1.12; } 45% { scale: .9 1.06; } 100% { scale: 1; } }
+/* a breath of glow round it, no line of light along the bar until it is held */
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-pool::after { display: none; }
-/* the idle hint is the dot column itself, faint: the pattern wakes where the pointer comes near */
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-hint { display: none; }
-/* the dots: placed and sized by the script (--m, 0 to 1 by nearness to the bead) */
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-fx > .pmw-gl-dots {
-  display: block;
-  opacity: calc(var(--gl-near, 0) * .7);
-  transition: opacity 240ms linear;
+/* the idle hint: a faint rod where the pointer comes near */
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-hint {
+  width: var(--gl-core-w);
+  height: 24px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--gl-c) 70%, transparent);
+  opacity: calc(var(--gl-near, 0) * .55);
 }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl:is(.pmw-gl-hover, :focus-visible) .pmw-gl-dots { opacity: 1; transition: opacity 180ms linear; }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-dot {
-  width: 10px;
-  height: 10px;
-  opacity: calc(.45 + var(--m, 0) * .55);
-  border-radius: 50%;
-  scale: calc((.26 + var(--m, 0) * .5) * (1 + var(--gl-pop, 0) * var(--m, 0) * .6));
-  background: radial-gradient(circle at 38% 32%, #FFFFFF 0 12%, var(--gl-hot) 30%, var(--gl-c) 62%, color-mix(in srgb, var(--gl-c) 88%, #000) 100%);
-}
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-dots { animation: gl-pop 560ms linear both; }
-@keyframes gl-pop { 0% { --gl-pop: 0; } 22% { --gl-pop: 1; } 48% { --gl-pop: -.25; } 72% { --gl-pop: .12; } 100% { --gl-pop: 0; } }
-/* the held bar: the whole dot column lights, over a soft glow at the bead */
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-hint::before, html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-hint::after { display: none; }
+/* the held bar: one soft mint line, brighter round the rod */
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-rail {
-  width: 12px;
+  border-radius: 1px;
   background:
-    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gl-c) 85%, transparent) 0 1.7px, transparent 2.4px) 50% -5px / 12px 10px repeat-y,
-    radial-gradient(ellipse 50% 130px at 50% var(--gl-at, 0px), var(--gl-s-glow));
+    radial-gradient(ellipse 50% 120px at 50% var(--gl-at, 0px), var(--gl-s-glow)),
+    linear-gradient(color-mix(in srgb, var(--gl-c) var(--gl-rail-a), transparent), color-mix(in srgb, var(--gl-c) var(--gl-rail-a), transparent));
 }
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-rail::after { opacity: calc(var(--gl-heat, 0) * .5); }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-tip {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 38% 32%, #FFFFFF 0 14%, var(--gl-c) 60%, color-mix(in srgb, var(--gl-c) 75%, #000));
-  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--gl-c) 50%, transparent);
-}
-/* the catch: a round ring; the seat: a Wii-style ring that grows from the bead and fades */
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-ring { width: 18px; height: 18px; box-shadow: 0 0 0 2px color-mix(in srgb, var(--gl-c) 72%, transparent), 0 0 8px 1px color-mix(in srgb, var(--gl-c) 28%, transparent); }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-ring { animation: gl-ring-round 540ms cubic-bezier(.2, .8, .3, 1) both; }
-@keyframes gl-ring-round { from { opacity: .9; scale: .6; } to { opacity: 0; scale: 2.6; } }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-flash {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: none;
-  box-shadow: 0 0 0 2.5px color-mix(in srgb, var(--gl-c) 80%, transparent), 0 0 12px 2px color-mix(in srgb, var(--gl-c) 30%, transparent), inset 0 0 8px color-mix(in srgb, var(--gl-c) 30%, transparent);
-}
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-flash::after { display: none; }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle .pmw-gl-flash { animation: gl-seat-round 640ms cubic-bezier(.2, .8, .3, 1) calc(var(--gl-drain, 420ms) - 100ms) both; }
-@keyframes gl-seat-round { 0% { opacity: 0; scale: .4; } 22% { opacity: 1; scale: 1; } 100% { opacity: 0; scale: 2.5; } }
-/* bubbles: where the bead was 45, 90 and 135 ms ago, shrinking */
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-fx > .pmw-gl-echos { display: block; }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-echo {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  translate: calc(-50% + var(--gl-eo, 0) * 1px) calc(var(--gl-at, 0px) - 50%);
-  background: radial-gradient(circle at 38% 32%, #FFFFFF 0 12%, var(--gl-c) 60%, color-mix(in srgb, var(--gl-c) 75%, transparent));
-  opacity: calc(var(--gl-ea, 0) * .75);
-}
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-echo:nth-child(2) { width: 7px; height: 7px; opacity: calc(var(--gl-ea, 0) * .55); }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-echo:nth-child(3) { width: 5px; height: 5px; opacity: calc(var(--gl-ea, 0) * .38); }
-html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-wake { display: none; }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) :is(.pmw-gl-tip),
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) :is(.pmw-gl-ring),
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) :is(.pmw-gl-flash),
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) :is(.pmw-gl-wake) { display: none; }
 
 /* ---- Glass: light caught in glass. Neutral white only, tinted by the plate (pm7-liquid-glass, 2026-10-14: the lens's
    catch light --lg-lens-glint and its blend, no colour splitting, no filter or backdrop here). A sliver of light in the
@@ -66024,6 +65986,29 @@ html:not([data-o55-nier="on"]) div.pm56-host[data-theme="friendly-light"] {
   min-height: 0;
   overflow: auto;
 }
+/* Its actions are an even grid inside the popover's own padding, two to a row, under a hairline. The dialog's footer is
+   a right-aligned wrapping row with no padding of its own: in the popover's 440 px its seven buttons broke into three
+   ragged rows, flush with the edges, the last one alone and, in a shorter popover, past the bottom (Jared, 2026-10-29:
+   "has buttons at the bottom that are going off the menu and look not intentionally laid out"). A label wraps inside
+   its button rather than being cut. The footer's Close goes: the header's x closes the popover, as Escape and a click
+   outside it do. A Retry (a failed attachment) leads, the width of the grid. */
+#pmOverlayRoot.pm56-host[data-pm56-attpop] > .dialog.att-details-dialog > .att-details-footer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0;
+  padding: 10px 12px 12px;
+  border-top: 1px solid var(--border);
+}
+#pmOverlayRoot.pm56-host[data-pm56-attpop] > .dialog.att-details-dialog > .att-details-footer > button {
+  width: 100%;
+  min-width: 0;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+}
+#pmOverlayRoot.pm56-host[data-pm56-attpop] > .dialog.att-details-dialog > .att-details-footer > [data-action="close-dialog"] { display: none; }
+#pmOverlayRoot.pm56-host[data-pm56-attpop] > .dialog.att-details-dialog > .att-details-footer > .is-warning { grid-column: 1 / -1; }
 /* ---- pm7-port/css/40-nier-base.css ---- */
 /* pm7-port/css/40-nier-base.css: PMConcept7's NieR type, palette and world art inside the hosted chat (the port's nier
    lane, 2026-10-22). Written already scoped; nothing here applies while NieR Mode is off.
@@ -67314,8 +67299,8 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root aside.domain
    10. Friendly's dot field, spread (Jared, 2026-10-11: "I really like the dots pattern on the wallpapers for friendly,
        but its not used in a lot of places... Like in the settings/usage/left rail sections and the transcript area of
        the new chat system"). Friendly is the DS / 3DS / Wii / Wii U menus, Cocoon and iiSU: the same 18 px dot grid as
-       Friendly's ground, with its soft mint and lavender light, now behind Usage's cards, in the rail's panels and behind
-       Settings' sections. The dots ride with the content as it scrolls (local attachment), like a handheld's menu, and
+       Friendly's ground, with its soft mint and lavender light, now behind Usage's cards and behind Settings' sections
+       (the rail's panels had them too, until 2026-10-29: see below). The dots ride with the content as it scrolls (local attachment), like a handheld's menu, and
        never sit inside a card under text. The chat transcript's dots were the stand-in chat's (#pmw-chat), which was
        removed on 2026-10-23 (DL-233); the hosted 5.6 Pro chat never drew them.
    --------------------------------------------------------------------------------------------------------------- */
@@ -67326,23 +67311,22 @@ html[data-lg="on"][data-theme^="friendly"] {
 html[data-lg="on"][data-theme="friendly-light"] { --pm6-cozy-dot: rgba(122, 109, 140, .21); }
 html[data-lg="on"][data-theme="friendly-dark"] { --pm6-cozy-dot: rgba(200, 190, 225, .13); }
 html[data-lg="on"][data-theme^="friendly"] #pmuStage,
-html[data-lg="on"][data-theme^="friendly"] #pm-settings-root .document-main,
-html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.active > .sh-scroll {
+html[data-lg="on"][data-theme^="friendly"] #pm-settings-root .document-main {
   background: var(--lg-dots), var(--lg-dots-glow) !important;
   background-attachment: local, local, local !important;
 }
 html[data-lg="on"][data-theme^="friendly"] #pmuScroll { background: transparent !important; }
-/* the rail's panel is a lighter field, so its dots step back a little */
-html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.active > .sh-scroll { --pm6-cozy-glow-mint: transparent; }
-/* ...and its dots are the ground's own field, not a second one. The activity bar and the gutters beside the rail show
-   Friendly's ground (1 px dots on the window's 18 px grid); the panel drew a larger dot on a grid of its own that rode
-   with the scroll, so two fields met at the panel's edge out of step (Jared, 2026-10-28: "The dot pattern behind the left
-   rail seems a bit out of place and inconsistently applied"). The panel's dots are now the ground's dot, fixed to the
-   window like the ground, so the rail reads as one field and its rows scroll over it; the soft light still rides with
-   the content. */
-html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.active > .sh-scroll {
-  background: radial-gradient(var(--pm6-cozy-dot) 1px, transparent 1.5px) 0 0 / 18px 18px, var(--lg-dots-glow) !important;
-  background-attachment: fixed, local, local !important;
+/* ...but not in the left rail (Jared, 2026-10-29: "I dont think the friendly themes dot pattern should be in the left
+   rail"; it had the panel's dots from 2026-10-11, and the activity bar and its gutter showed the ground's). The rail's
+   panel is its plain surface, and the column around it (the activity bar and the gutter beside the panel) is the ground
+   without its dots: the paper and the ground's three soft lights, fixed to the window as the ground's are, so the rail's
+   edge meets the ground with no seam. A chosen wallpaper (data-lg-wall-any) keeps showing through the rail as before. */
+html[data-lg="on"][data-theme^="friendly"]:not([data-lg-wall-any]):not([data-o55-nier="on"]) .left-panel {
+  background:
+    radial-gradient(46% 38% at 16% 6%, var(--pm6-cozy-glow-mint), transparent 65%) fixed,
+    radial-gradient(50% 42% at 88% 12%, var(--pm6-cozy-glow-lav), transparent 65%) fixed,
+    radial-gradient(55% 40% at 55% 108%, var(--pm6-cozy-glow-sky), transparent 65%) fixed,
+    var(--background) !important;
 }
 
 /* ---------------------------------------------------------------------------------------------------------------
@@ -161744,7 +161728,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* when a rest ends (a page transition, the Usage room's entrance moment, a gesture), boxes may have moved and a look
        taken during the rest found nothing: re-measure and look again (a page switch slides the new page in while the
        outgoing page stays hit-testable, and the Usage room plays its entrance after it, both rests) */
-    function restEnded() { scopeDirty = rectsDirty = geomDirty = true; recheckSoon(); }
+    function restEnded() { scopeDirty = rectsDirty = geomDirty = true; recheckSoon(); setTimeout(afterFrameSoon, 400); }
 
     function gestureRest() {
       var b = document.body;
@@ -161892,6 +161876,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        its label some 300 ms after the press) or a target that grows on its own moves the marker with it, after the
        frame that resized it, without waiting for the pointer to move (2026-10-28 review, astra R3/R4) */
     var roEl = null, hoverRO = typeof ResizeObserver === 'function' ? new ResizeObserver(function () { if (hover) afterFrameSoon(); }) : null;
+    /* ...and so is the end of its own movement: a dropped home tab settles into its slot on a 160 ms transition after the
+       gesture's rest has ended, and the rects read at the rest's end (above) found it still where it was let go, so the
+       marker stayed there, beside the tab, until the pointer moved (Jared, 2026-10-29: "where you leave the mouse after a
+       drag the shadow stays"). A size change is the observer's; a move is this. The rest's end reads again 400 ms on too,
+       for a settle that is not a transition of the target itself. */
+    function moveEnded(e) { if (hover && e.target === hover && (e.type === 'animationend' || /^(transform|translate|left|top|right|bottom|margin|width|height|inset|all)/.test(e.propertyName || ''))) afterFrameSoon(); }
+    document.addEventListener('transitionend', moveEnded, { capture: true, passive: true });
+    document.addEventListener('animationend', moveEnded, { capture: true, passive: true });
     /* what the proxies need of a target, read once: its box, radius and clipping ancestors */
     /* A target may give its proxies a shape of its own (CSS, on the target): --pmh-radius replaces its border-radius and
        --pmh-inset (top right bottom left, px) shrinks the box they sit on (negative grows it), --pmh-variant names a

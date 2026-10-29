@@ -253,7 +253,7 @@
     /* when a rest ends (a page transition, the Usage room's entrance moment, a gesture), boxes may have moved and a look
        taken during the rest found nothing: re-measure and look again (a page switch slides the new page in while the
        outgoing page stays hit-testable, and the Usage room plays its entrance after it, both rests) */
-    function restEnded() { scopeDirty = rectsDirty = geomDirty = true; recheckSoon(); }
+    function restEnded() { scopeDirty = rectsDirty = geomDirty = true; recheckSoon(); setTimeout(afterFrameSoon, 400); }
 
     function gestureRest() {
       var b = document.body;
@@ -401,6 +401,14 @@
        its label some 300 ms after the press) or a target that grows on its own moves the marker with it, after the
        frame that resized it, without waiting for the pointer to move (2026-10-28 review, astra R3/R4) */
     var roEl = null, hoverRO = typeof ResizeObserver === 'function' ? new ResizeObserver(function () { if (hover) afterFrameSoon(); }) : null;
+    /* ...and so is the end of its own movement: a dropped home tab settles into its slot on a 160 ms transition after the
+       gesture's rest has ended, and the rects read at the rest's end (above) found it still where it was let go, so the
+       marker stayed there, beside the tab, until the pointer moved (Jared, 2026-10-29: "where you leave the mouse after a
+       drag the shadow stays"). A size change is the observer's; a move is this. The rest's end reads again 400 ms on too,
+       for a settle that is not a transition of the target itself. */
+    function moveEnded(e) { if (hover && e.target === hover && (e.type === 'animationend' || /^(transform|translate|left|top|right|bottom|margin|width|height|inset|all)/.test(e.propertyName || ''))) afterFrameSoon(); }
+    document.addEventListener('transitionend', moveEnded, { capture: true, passive: true });
+    document.addEventListener('animationend', moveEnded, { capture: true, passive: true });
     /* what the proxies need of a target, read once: its box, radius and clipping ancestors */
     /* A target may give its proxies a shape of its own (CSS, on the target): --pmh-radius replaces its border-radius and
        --pmh-inset (top right bottom left, px) shrinks the box they sit on (negative grows it), --pmh-variant names a
