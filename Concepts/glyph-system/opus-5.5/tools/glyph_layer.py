@@ -57,12 +57,20 @@ def html_theme(css: str) -> str:
 
 def css_parts():
     parts = [SRC / 'bridge' / 'pm7-glyph-inks.css', SRC / 'bridge' / 'pm7-bridge.css', NEON / 'neon-icons.css']
-    after = [SRC / 'bridge' / n for n in ('pm7-retro-phosphor.css', 'pm7-hover-bridge.css')]
-    return parts + [p for p in after if p.exists()]
+    after = [SRC / 'bridge' / n for n in ('pm7-retro-phosphor.css', 'pm7-hover-bridge.css', 'pm7-beat.css')]
+    return parts + [p for p in after if p.exists()] + LOGO_CSS
+
+
+# The Pip kit and the head modules built on it (PM7 build, lane found, 2026-10-29): Pip's drawing kit, the system
+# loader and the work projection. They ride in this head block, not in registry/families/ (Pip is not a glyph family),
+# so the title bar's mark and every body script find window.PMLogo, PM_PIP_LOADER and PM_WORK already there.
+LOGO_CSS = [SRC / 'logo' / 'pm-logo.css', SRC / 'logo' / 'pm-loader.css']
+LOGO_JS = [SRC / 'logo' / 'pm-logo.js', SRC / 'logo' / 'pm-loader.js']
 
 
 def js_parts():
-    return [NEON / 'neon-icons.js'] + sorted((SRC / 'registry').glob('*.js')) + sorted((SRC / 'registry' / 'families').glob('*.js'))
+    return ([NEON / 'neon-icons.js'] + sorted((SRC / 'registry').glob('*.js')) + sorted((SRC / 'registry' / 'families').glob('*.js'))
+            + LOGO_JS + sorted((SRC / 'work').glob('*.js')))
 
 
 def block() -> str:
@@ -186,7 +194,25 @@ def published_problems(built: str) -> list[str]:
     for label, probe in PATCH_PROBES.items():
         if built.count(probe) != 1:
             out.append(f'glyph layer: patch "{label}" probe appears {built.count(probe)} times')
+    out.extend(syntax_problems(built))
     return out
+
+
+def syntax_problems(built: str) -> list[str]:
+    """node --check the head script this layer writes (build.py's syntax_check names only the other scripts)."""
+    import subprocess
+    import tempfile
+    m = re.search(r'<script id="pm-glyph-js">\n(.*?)\n</script>', built, re.S)
+    if not m:
+        return ['glyph layer: script pm-glyph-js missing']
+    with tempfile.NamedTemporaryFile('w', suffix='.js', delete=False, encoding='utf-8') as fh:
+        fh.write(m.group(1))
+        path = fh.name
+    try:
+        r = subprocess.run(['node', '--check', path], capture_output=True, text=True)
+    finally:
+        Path(path).unlink(missing_ok=True)
+    return [f'glyph layer: syntax error in pm-glyph-js: ' + ' | '.join(r.stderr.strip().splitlines()[-4:])[:600]] if r.returncode else []
 
 
 if __name__ == '__main__':
