@@ -62,6 +62,10 @@
   const troupe = () => (O55.art && O55.art.troupe) || null;
   /* the stage acts in NieR's art (the units, You, the control unit) */
   const nierArt = () => O55.theme().art === 'nier';
+  /* Pip's stage is up (DL-238, O8): NieR's Pip replaces the unit marionettes and speaks in its own YoRHa box on the stage,
+     so Pod 042 does not narrate setup (it stays the narrator of the Guided Tour and the Chat, O11). Its per-screen lines,
+     alerts and reports are Pip's now (pip.say, pip.oops: 55-scenes.js), and the resident Pod is not drawn. */
+  const pipUp = () => !!(O55.pipStage && O55.pipStage.of && O55.pipStage.of(stageEl()));
 
   /* ------------------------------------------------------------------ the run and the screen's timers */
   /* What this run has shown already (chapters whose act card played, screens Pod spoke on, the furthest chapter
@@ -99,7 +103,7 @@
     L.className = 'o55nw-stage'; L.setAttribute('aria-hidden', 'true');
     L.innerHTML = '<i class="o55nw-sweep"></i>' + '<i class="o55nw-mote"></i>'.repeat(8)
       + '<i class="o55nw-ruler o55nw-ruler-y"></i><i class="o55nw-ruler o55nw-ruler-x"></i>'
-      + `<div class="o55nw-pod"${podAway ? ' data-away=""' : ''}><div class="o55nw-pod-shadow">${podSvg('shadow')}</div><div class="o55nw-pod-bob">${podSvg()}</div></div>`;
+      + (pipUp() ? '' : `<div class="o55nw-pod"${podAway ? ' data-away=""' : ''}><div class="o55nw-pod-shadow">${podSvg('shadow')}</div><div class="o55nw-pod-bob">${podSvg()}</div></div>`);
     body.appendChild(L);
     return L;
   }
@@ -215,6 +219,7 @@
   const readMs = (text) => Math.round(Math.min(3200, 1300 + String(text).length * 22));
   function say(text, o) {
     o = o || {};
+    if (pipUp()) return false;
     const F = fx(); if (!F || !text || !(F.enabled('pod') || F.enabled('voice'))) return false;
     const now = M.now();
     if (text === lastLine && now - lastAt < 2500) return false; /* the same words twice in a row is noise */

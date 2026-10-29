@@ -283,14 +283,11 @@
     cm.state = 'done'; cm.code = null; S.save();
     reveal(S, cm);
   }
-  /* The Project is made (hero spec H4a). Under NieR's art the stage performs the Created act in the same task as the
-     refresh that turns its scene to done: the units land and bow, the name sign the person lettered comes back down
-     and is stamped, and the run's one confetti bursts from it with the celebration (O55.art.createdAct plays its own
-     land and celebrate). In the looks the troupe celebrates once the scene has taken its bow beat, as before. */
+  /* The Project is made (DL-238): the last block is down (O12: each block landed as its owner phase completed, and none
+     of them held this moment), and Pip is pleased, in every look; the run's confetti waits for Ready's curtain call */
   function made(S) {
     const stage = S.root && S.root.querySelector('.o55-stage');
-    if (O55.theme().art === 'nier' && O55.art.createdAct) { if (stage && S.open && showing('creating')) O55.art.createdAct(stage, { name: md(S).project_name }); return; }
-    O55.motion.after(650, () => { if (O55.art.celebrate && S.open) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true }); });
+    if (stage && S.open && showing('creating') && O55.art.createdAct) O55.art.createdAct(stage, { name: md(S).project_name });
   }
   /* NieR's saved line under the meter (H4a): "Saved · 8 Oct 2026 · 10:42" in the person's own date and time format */
   function savedLine(S, cm) {
@@ -747,5 +744,5 @@
     onBack: () => false
   });
 
-  O55.review = { routeParams, beginsAs, filesAt, whereWork, shownDone };
+  O55.review = { routeParams, beginsAs, filesAt, whereWork, shownDone, phasesFor };
 })();

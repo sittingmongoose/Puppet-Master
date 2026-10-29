@@ -106,7 +106,7 @@
       let inner = plats.length > 1 ? C.segmented({ do: 'platform', value: plat, label: T('server.kind.installTitle'), options: plats.map((p) => ({ v: p, label: PLATFORM_NAMES[p] })) }) : '';
       inner += `<ol class="o55-steps" data-key="steps-${plat}">` + (Array.isArray(steps) ? steps : []).map((st) => `<li>${U.esc(st)}</li>`).join('') + '</ol>';
       if (plat === 'linux') inner += `<div class="o55-codeline" data-key="cmd"><code>${U.esc(T('server.install.command'))}</code>${F.copyBtn(T('server.install.command'), 'install')}</div>${F.copyNote('install')}`;
-      inner += `<div class="o55-sublinks" data-key="guide">${C.link(T('server.install.guide'), 'guide', plat)}</div>`;
+      inner += `<div class="o55-sublinks" data-key="guide">${C.link(T('server.install.guide'), 'guide', plat, { tip: 'group:guide' })}</div>`;
       let out = C.group(T('server.kind.installTitle'), inner, { cls: 'o55-install' });
       if (sv.manual) {
         const hit = String(sv.addr || '').trim().toLowerCase() === u.address;

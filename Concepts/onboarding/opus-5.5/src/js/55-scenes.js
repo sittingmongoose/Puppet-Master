@@ -1,209 +1,176 @@
-/* Scene compositions — shared across the four families, laid out for the portrait art pane (480 x 600; keep key content
-   inside x 60..420). Each returns placed props; beats move the same keyed props so a beat change glides (object
-   continuity) instead of cutting. Family metrics keep strings attached to the right points in every world.
-   `band` is the landscape crop used when the pane becomes a strip on narrow windows. */
+/* O55.pipScenes — what each screen puts on Pip's stage (DL-238; the concept's scene(h) functions in
+   Concepts/onboarding/opus-5.5-pip/wizard.js, carried to the real wizard's 44 screens). A screen's spec says which
+   props hang (each on its own string, in a slot of the layout or on Creating's stack), what Pip looks at and how it
+   feels, what it says, and what NieR's HUD and Retro's terminal print:
+     { chapter, props: [{ id, kind, slot | stack, params, preview, scale, ground }], pip: { mood, look, pose, work,
+       power }, say, target, label, cmd }
+   The words are the copy lane's: Pip's lines pip.say.<screen>[id] ('enter' on arrival, a choice's control id for its
+   preview, named states such as typing, checking, done), the HUD and terminal labels pip.stage.screens.<screen>. The
+   face of each line is the copy manifest's (FACES; idea 3: Pip's face matches what it says), watch while it rests
+   on a choice, happy when the choice is made (60-ui-core.js), wonder while the person types into a field, and the
+   oops face when the screen shows something gone wrong (O55.pipOops below), with its cheer once it is put right. */
 (function () {
   'use strict';
-  const O55 = window.O55, A = O55.art;
-  const L = (key, fallback) => { const v = O55.t('art.labels.' + key); return v === 'art.labels.' + key ? fallback : v; };
+  const O55 = window.O55;
+  const md = (S) => S.sess.drafts.main;
+  const FACES = {"welcome":{"asleep":"sleep","wake":"happy","wakeAgain":"happy","resumed":"happy","returning":"happy"},"look":{"enter":"idle","keep":"watch","pickFamily:basic":"watch","pickFamily:friendly":"happy","pickFamily:glass":"wonder","pickFamily:retro":"happy","pickNier":"watch","pickMode:light":"watch","pickMode:dark":"watch","nierOff":"happy"},"where":{"enter":"watch","pick:this":"happy","pick:connect":"watch","pick:server":"watch","checking":"think","checked":"happy","offline":"watch"},"c-route":{"enter":"think","found":"wonder","group:pickServer":"happy","route:local_or_vpn":"watch","route:tailscale":"watch","route:reverse_proxy":"wonder","route:remote_link":"watch","typing":"wonder"},"c-review":{"enter":"watch","pairing:approval":"watch","pairing:code":"happy","pairing:qr":"happy"},"c-pair":{"enter":"watch","waiting":"think","qr":"think","typing":"wonder","checking":"think","done":"happy"},"c-ready":{"enter":"happy","empty":"watch","createNew":"happy","group:pickProject":"watch"},"s-kind":{"enter":"watch","kind:nas":"happy","kind:cloud":"wonder","kind:pc":"watch"},"s-wait":{"enter":"think","found":"happy","typing":"wonder","copied":"happy"},"s-confirm":{"enter":"watch","typing":"wonder","group:suggest":"happy","working":"think","selfMatch":"watch","done":"happy"},"s-ready":{"enter":"happy","waiting":"watch","approved":"happy","denied":"watch","newCode":"happy"},"r-source":{"enter":"watch","source:kit":"happy","source:folder":"watch","source:nas":"watch","source:cloud":"watch","typing":"wonder"},"r-unlock":{"enter":"watch","typing":"wonder","unlocked":"happy"},"r-pick":{"enter":"watch","group:pick":"watch"},"r-preview":{"enter":"watch","working":"think","done":"happy"},"r-done":{"enter":"happy","group:pickProject":"watch","createNew":"happy"},"begin":{"enter":"watch","server":"watch","pick:new":"happy","pick:existing":"watch","pick:restore":"happy","sub:folder":"watch","sub:online":"watch","sub:device":"watch","later":"happy"},"ex-folder":{"enter":"watch","reading":"think","hasHistory":"happy","noHistory":"happy"},"name":{"empty":"watch","typing":"wonder","named":"happy","group:suggest":"happy","loc:auto":"watch","loc:custom":"watch","loc:network":"wonder","storage:with_server":"happy","storage:this_device":"watch","storage:network_location":"watch"},"like":{"enter":"watch","pick:fresh":"happy","group:pick":"watch"},"online-service":{"enter":"watch","enterSource":"watch","pick:github":"happy","pick:gitlab":"watch","pick:azure_devops":"watch","pick:bitbucket_cloud":"watch","pick:forgejo":"watch","pick:gitea":"watch","pick:github_enterprise":"watch","pick:cursor_origin":"wonder","typing":"wonder"},"online-signin":{"enter":"watch","known":"happy","waiting":"think","code":"watch","typing":"wonder","create":"watch","done":"happy"},"online-details":{"enter":"watch","typing":"wonder","available":"happy","vis:private":"watch","vis:public":"watch","vis:internal":"watch"},"ex-repos":{"enter":"watch","typing":"wonder","group:pick":"happy","empty":"watch"},"safe":{"enter":"idle","backend:git":"watch","backend:jujutsu":"wonder","install":"watch","keeps":"happy","filesafe":"watch","filesafeOn":"happy","filesafeOff":"watch","online":"watch","backup":"watch","bdest:nas":"watch","bdest:gdrive":"watch","bdest:onedrive":"watch","bdest:s3":"happy","bdest:sftp":"watch","bdest:none":"watch","sync":"happy"},"away":{"enter":"watch","pick:home":"happy","pick:anywhere":"happy","route:headscale":"watch","route:reverse_proxy":"wonder","route:remote_link":"watch","typing":"wonder"},"review":{"enter":"watch","checked":"happy","later":"watch","changed":"wonder","group:edit":"watch"},"creating":{"folder":"think","history":"think","historyInstall":"think","clone":"think","restore":"think","device":"think","online":"think","settings":"think","remote":"think","check":"think","last":"think","done":"happy","doneLater":"happy","closeOk":"watch"},"protect":{"enter":"watch","step:signin":"watch","step:test":"think","step:kit":"watch","step:kitTest":"watch","step:policy":"happy","working":"think","done":"happy"},"ai":{"checking":"watch","none":"sleep","one":"happy","many":"happy","installing":"think","signingIn":"think","typing":"wonder","testing":"watch","free":"watch"},"ai-all":{"enter":"watch","typing":"wonder"},"ai-none":{"enter":"watch","pick:sub":"watch","pick:api":"watch","pick:free":"happy"},"free":{"enter":"watch","working":"think","ready":"happy"},"ready":{"enter":"happy","later":"happy"},"nas-find":{"enter":"think","group:device":"watch","method:ssh":"watch","method:smb":"watch","method:nfs":"watch","method:mounted":"happy","sshOff":"watch","pm":"happy","typing":"wonder"},"nas-identity":{"enter":"watch","known":"happy","trusted":"happy"},"nas-key":{"enter":"watch","looking":"think","group:pick":"watch","works":"happy","locked":"watch","notAdded":"watch","pick:new":"happy","typing":"wonder","testing":"think"},"nas-signin":{"enter":"watch","typing":"wonder","self":"watch"},"nas-install":{"enter":"think","done":"happy"},"nas-pmpair":{"enter":"watch","waiting":"think","typing":"wonder","done":"happy"},"nas-folder":{"enter":"watch","storage":"watch","typing":"wonder"},"nas-smb":{"enter":"watch","typing":"wonder","checking":"think"},"nas-nfs":{"enter":"think","done":"happy"},"nas-mounted":{"enter":"watch","group:volume":"watch"}};
+  const lines = (scr) => { const m = O55.tx('pip.say.' + scr); return m && typeof m === 'object' ? m : {}; };
+  const fill = (s, v) => String(s || '').replace(/\{(\w+)\}/g, (m, k) => (v && v[k] != null ? v[k] : m));
+  const line = (scr, id, v) => { const t = lines(scr)[id]; return t ? fill(t, v) : ''; };
+  const has = (scr, id) => !!lines(scr)[id];
+  const stg = (scr, k, v) => { const t = O55.tx('pip.stage.screens.' + scr + '.' + k); return typeof t === 'string' ? fill(t, v) : ''; };
+  const P = (kind, slot, o) => Object.assign({ id: kind, kind, slot }, o || {});
+  const op = (S, key) => (O55.flow && key ? O55.flow.state(S, key) : null);
+  const forgeName = (S) => { const f = O55.fixtures.forge(md(S).forge); return f ? f.name : 'GitHub'; };
+  /* the phase Creating is on: the one under way, else the first not done (the operation keeps no 'current') */
+  const phaseNow = (S) => { const st = op(S, (S.sess.commit || {}).key), ph = (st && st.phases) || []; const a = ph.find((p) => p.status === 'active') || ph.find((p) => p.status !== 'done'); return a ? a.key : null; };
+  /* the review's clipboard: ticked off line by line as the recheck finds each part ready */
+  const ticks = (S) => { const st = op(S, 'recheck:' + md(S).project_draft_revision); return st && st.state === 'done' ? 4 : st ? Math.min(4, (st.phases || []).filter((p) => p.status === 'done').length) : 0; };
 
-  /* hook: where a string meets a helper's head (helper units, before its scale); barHooks: the bar's string points
-     (a0 left end, a1 the upright's foot, a2 right end; w0 / w2 part-way out, for a raised hand's string) */
-  const hooks = (a) => ({ a0: a[0], a1: a[1], a2: a[2], w0: [Math.round(a[0][0] * 0.56), a[0][1]], w2: [Math.round(a[2][0] * 0.56), a[2][1]] });
-  const METRICS = {
-    basic: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 470, helperScale: 1.75, barY: 136, hook: [0, -63] },
-    friendly: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 472, helperScale: 1.6, barY: 140, hook: [0, -73.5], edgeInset: 9 },
-    glass: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 478, helperScale: 1.7, barY: 136, hook: [0, -68.5], edgeInset: 9 },
-    retro: { anchors: [[-96, -4], [0, 36], [96, -4]], floor: 458, helperScale: 1, barY: 132, helperPx: 7, hook: [0, -100] },
-    /* NieR Mode's art (54-art-nier.js), the unit marionettes (design/puppets-final/spec.md): Basic's three bar studs (so
-       barHooks derive unchanged), hook = the unit's diamond knot on its head top (every variant and pose), edgeInset =
-       the props' 4-5 unit chamfer + 2, signY = the centre of the "ready" sign above the bar (Ready, Creating done),
-       between the kicker's rule (y 42) and the control unit's top (y 103); a family without signY keeps its own place
-       (64 on Ready, 72 on Creating). */
-    nier: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 470, helperScale: 1.75, barY: 136, hook: [0, -66], edgeInset: 7, signY: 68 }
+  /* Each screen: props(S, hover) -> props; state(S) -> the line for where the screen stands ('enter' otherwise);
+     look: the prop Pip watches; vars(S): the words its line and terminal fill in. A hover is a control id; a screen
+     with prev(h) previews that choice's props (dashed strings) while Pip says that choice's line. */
+  const one = (kind, slot) => () => [P(kind, slot || 'side')];
+  const two = (a, b) => () => [P(a, 'pairA'), P(b, 'pairB')];
+  const nasWith = (k) => () => [P('nas', 'pairA'), P(k, 'pairB')];
+  const ORBS = (S) => {
+    const ids = O55.ai ? O55.ai.shortlist(S).slice(0, 4).map((p) => p.id) : ['claude', 'codex', 'antigravity', 'cursor'];
+    const ready = O55.ai ? O55.ai.readyIds(S) : [];
+    return ids.map((id, i) => P('orb', 'o' + (i + 1), { id: 'o' + id, scale: 0.9, params: { lit: ready.includes(id), label: O55.ai && O55.ai.mono ? O55.ai.mono(O55.fixtures.provider(id) || { id, name: id }) : id.slice(0, 2).toUpperCase(), hue: ['e', 'b', 'c', 'd'][i] } }));
   };
-  Object.values(METRICS).forEach((m) => { m.barHooks = hooks(m.anchors); });
-  A.metrics = (family) => METRICS[family] || METRICS.basic;
-
-  /* Marionette ensemble: bar + three helpers on strings (hero, look tiles, creating, ready). The bar and the helpers
-     carry o55-ens-bar / o55-ens-h, the parts a held ensemble hides until O55.art.troupe.enter lowers them in (50-art-core
-     ctx.ensembleHold, 30-art.css .o55-ens-hold). NieR's helpers also carry `fly`, the height they are lowered from in
-     their own units (FLY scene units above their mark; the inner group's --o55-fly, read by the rig and the fly-in).
-     o.level hangs the three at one height (o.level units above the floor: NieR's Creating, while the work runs).
-     o.standing: the bar and the troupe are simply there, with no entrance of their own (NieR's Ready: the curtain
-     opens on them standing in a line). */
-  const FLY = 160;
-  A.FLY = FLY;
-  A.ensemble = function ensemble(ctx, o) {
-    o = o || {};
-    const m = A.metrics(ctx.family), cx = o.cx || 240, barY = o.barY || m.barY, floor = o.floor || m.floor;
-    const s = (o.scale || 1) * m.helperScale, spread = o.spread || 112, poses = o.poses || ['wave', 'carry', 'stand'], nier = ctx.family === 'nier';
-    const items = [{ key: 'bar', prop: 'bar', x: cx, y: barY, layer: 'front', anim: o.standing ? null : 'drop', delay: o.delay || 0, amb: 'sway', ambd: 5600, cls: 'o55-ens-bar' }];
-    [-1, 0, 1].forEach((side, i) => {
-      const a = side < 0 ? m.anchors[0] : side > 0 ? m.anchors[2] : m.anchors[1];
-      /* each helper hangs from its own point on the bar; a waving helper's hand hangs from a second point on its side */
-      items.push({ key: 'h' + i, prop: 'helper', x: cx + side * spread, y: o.level != null ? floor - o.level : floor - (side === 0 ? 14 : 0), s, layer: 'mid', anim: o.standing ? null : o.anim || 'drop',
-        delay: (o.delay || 0) + 260 + i * 90, amb: 'bob', ambd: 2400 + i * 380, cls: 'o55-ens-h', fly: nier ? -FLY / s : null,
-        opts: { variant: (o.variants || [0, 1, 2])[i], pose: poses[i], anchor: [cx + a[0], barY + a[1]], px: m.helperPx,
-          tie: ['a0', 'a1', 'a2'][side + 1], handTie: side < 0 ? 'w0' : 'w2', side } }); /* a raised right hand hangs from the bar's right side */
-    });
-    return items;
-  };
-  const sparks = (points, delay) => points.map(([x, y, tone], i) => ({ key: 'sp' + i, prop: 'spark', x, y, layer: 'front', anim: 'pop', delay: (delay || 900) + i * 110, amb: 'twinkle', ambd: 2200 + i * 500, opts: { tone } }));
-
-  A.defineScene('hero', {
-    label: 'art.hero',
-    band: [0, 190, 480, 320],
-    compose(ctx) {
-      const m = A.metrics(ctx.family);
-      if (ctx.family === 'nier' && ctx.beat !== 'ready') return heroNier(ctx, m);
-      /* (NieR's ready beat: its curtain opens on the troupe standing, so the set and the troupe have no entrance) */
-      const standing = ctx.family === 'nier' && ctx.beat === 'ready';
-      const items = [{ key: 'stage', prop: 'stage', x: 240, y: m.floor + (ctx.family === 'retro' ? 38 : 28), layer: 'back', anim: standing ? null : 'rise', delay: 80 }];
-      items.push(...A.ensemble(ctx, { standing }));
-      items.push(...sparks([[74, 262, 0], [410, 230, 1], [398, 352, 2], [88, 380, 3]]));
-      items.push({ key: 'dim', prop: 'dimv', x: 414, y: m.barY, layer: 'back', anim: 'fade', delay: 700, opts: { h: m.floor - m.barY, label: L('strings', 'strings') } });
-      items.push({ key: 'n-plan', prop: 'note', x: 252, y: m.floor - 62, layer: 'front', anim: 'fade', delay: 1300, opts: { text: L('plan', 'the plan'), dx: 64, dy: 116 } });
-      if (ctx.family === 'retro' && ctx.beat !== 'ready') items.push({ key: 'ready', prop: 'badge', x: 240, y: 574, layer: 'front', anim: 'type', delay: 1300, opts: { label: L('pressStart', 'press start'), accent: true, cursor: true } });
-      /* the pages that end Connect and restore ("… is ready", "… is back") open on the troupe too */
-      if (ctx.beat === 'ready') items.push({ key: 'curtain', prop: 'curtain', x: 240, y: standing && ctx.band ? 350 : 300, layer: 'front' });
-      return items;
-    }
-  });
-
-  /* NieR's welcome (hero intro / look; its Ready beat keeps the shared composition): the troupe as everywhere, plus You,
-     seated on a broken column at stage left and steering the floating control unit by a stepped signal (`link`, from
-     You's raised hand to the bar's left end cap; it is scenery, never a string, so the rig does not see it), and a small
-     machine lifeform watching from the stage's broken corner. Props a family does not draw are skipped (the link is
-     added only with You). Numbers: spec.md section 6. */
-  /* You sits 12 to the right of the design sheet's x 50 and the ruler 14 to the left of its x 440: the wide art pane
-     shows about x 34..446 of the scene, and there You's head and the ruler's label were cut off */
-  const YOU = { x: 62, y: 384, s: 1.32, hand: [16, -43.2] };
-  /* Asleep (beat 'asleep', or params.asleep: the window's first open, design/hero-spec.md H2): the same composition,
-     marked on the svg (o55-nier-asleep: 30-art.css slumps each unit at the foot of its string, rest dashes on the
-     visors, You bowed with its slit dark and its arm down, the link dark, the control unit's slit dark; the rig hangs the
-     control unit 14 low so the strings sag, and holds the wave arm down). The set decodes in (no drops: nothing falls
-     onto a sleeping stage). O55.art.troupe.wake raises it. */
-  function heroNier(ctx, m) {
-    /* (only where the wake can play: never under Reduced Motion or on a low-resource computer, and only with the Boot
-       sequence part, which the Still and Colors only presets leave out) */
-    const parts = ctx.tok && ctx.tok.nierParts, M = O55.motion;
-    const asleep = (ctx.beat === 'asleep' || !!(ctx.params || {}).asleep) && !M.reduced() && !M.lowResource && (!parts || parts.indexOf('boot') >= 0);
-    if (asleep) ctx.sceneCls = 'o55-nier-asleep';
-    const items = [{ key: 'stage', prop: 'stage', x: 240, y: m.floor + 28, layer: 'back', anim: 'rise', delay: 80 }];
-    items.push(...A.ensemble(ctx, asleep ? { anim: 'fade' } : {}));
-    if (asleep) items.forEach((it) => { if (it.key === 'bar') it.anim = 'fade'; });
-    items.push(...sparks([[78, 236, 0], [410, 226, 1], [400, 352, 2], [306, 250, 3]]).map((it) => Object.assign(it, { layer: 'back' })));
-    items.push({ key: 'dim', prop: 'dimv', x: 426, y: m.barY, layer: 'back', anim: 'fade', delay: 700, opts: { h: m.floor - m.barY, label: L('strings', 'strings') } });
-    items.push({ key: 'n-plan', prop: 'note', x: 252, y: m.floor - 62, layer: 'front', anim: 'fade', delay: 1300, opts: { text: L('plan', 'the plan'), dx: 62, dy: 118 } });
-    if (ctx.fam && ctx.fam.props.operator) {
-      items.push({ key: 'you', prop: 'operator', x: YOU.x, y: YOU.y, s: YOU.s, layer: 'back', anim: 'fade', delay: 200 });
-      const hand = [YOU.x + YOU.s * YOU.hand[0], YOU.y + YOU.s * YOU.hand[1]], cap = [240 - 114, m.barY + 8];
-      items.push({ key: 'link', prop: 'link', x: 0, y: 0, layer: 'mid', anim: 'fade', delay: 400, opts: { pts: [hand, cap] } });
-    }
-    items.push({ key: 'mach', prop: 'machine', x: 392, y: m.floor + 28, s: 1.15, layer: 'front', anim: 'fade', delay: 600 });
-    return items;
-  }
-
-  /* A curtain call on a small stage (the Guided Tour's results card, design/hero-spec.md H5c, optional): the look tile's
-     troupe standing in a line, framed as a landscape band, for O55.art.curtainCall (bows on the chord, then the rise).
-     The caller mounts it still (ctx.still) once the call is over, so it never idles on the app. */
-  A.defineScene('curtaincall', {
-    label: 'art.hero', band: [0, 92, 480, 408],
-    compose(ctx) {
-      const m = A.metrics(ctx.family);
-      return [{ key: 'stage', prop: 'stage', x: 240, y: m.floor + (ctx.family === 'retro' ? 38 : 28) - 40, layer: 'back', anim: 'rise', delay: 40 }]
-        .concat(A.ensemble(ctx, { floor: m.floor - 40, barY: m.barY + 20, poses: ['stand', 'wave', 'stand'] }));
-    }
-  });
-
-  /* Review route map: the user's own choices, assembled as a zigzag route down the pane.
-     params.nodes = [{icon,label,sub}], plus optional online / backup / inherit labels. */
-  A.defineScene('route', {
-    label: 'art.route',
-    band: [0, 150, 480, 300],
-    compose(ctx) {
-      const pr = ctx.params || {};
-      const nodes = pr.nodes || [{ icon: 'seed', label: L('start', 'Start'), sub: L('new', 'new') }, { icon: 'folder', label: L('files', 'Files'), sub: L('documents', 'documents') },
-        { icon: 'computer', label: L('worksHere', 'Works here'), sub: L('thisComputer', 'this computer') }, { icon: 'person', label: L('you', 'You'), sub: L('thisDevice', 'this device') }];
-      const n = nodes.length, top = 112, bottom = 476;
-      const pts = nodes.map((_, i) => [i % 2 ? 336 : 144, top + ((bottom - top) * i) / Math.max(1, n - 1)]);
-      const nodeItems = nodes.map((nd, i) => ({ key: 'n' + i + nd.icon, prop: 'node', x: pts[i][0], y: pts[i][1], s: 1.28, layer: 'mid', anim: 'pop', delay: 120 + i * 150, opts: Object.assign({ v: i }, nd) }));
-      /* the route is drawn node to node, each leg from one outline to the next (never through the see-through icons),
-         each leg drawing on after the node before it has arrived */
-      const items = nodeItems.slice(1).map((nd, i) => ({ key: 'path' + i, prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 260 + i * 150, opts: { pts: A.link(ctx, nodeItems[i], nd) } }));
-      items.push(...nodeItems);
-      const side = (i) => (i % 2 ? 150 : 332);
-      if (pr.inherit) items.push({ key: 'inherit', prop: 'badge', x: side(0), y: pts[0][1], layer: 'front', anim: 'rise', delay: 760, opts: { label: pr.inherit, glyph: 'stack' } });
-      if (pr.online && n > 1) items.push({ key: 'online', prop: 'cloud', x: side(1), y: pts[1][1] - 26, s: 0.8, layer: 'mid', anim: 'drop', delay: 820, amb: 'float', ambd: 3600 },
-        { key: 'online-l', prop: 'badge', x: side(1), y: pts[1][1] + 26, layer: 'front', anim: 'rise', delay: 900, opts: { label: pr.online, glyph: 'cloud' } });
-      if (pr.backup && n > 2) items.push({ key: 'backup', prop: 'badge', x: side(2), y: pts[2][1], layer: 'front', anim: 'rise', delay: 960, opts: { label: pr.backup, glyph: 'vault' } });
-      items.push(...sparks([[70, 560, 1], [420, 44, 2]], 1400));
-      return items;
-    }
-  });
-
-  /* NAS key exchange: find -> identity -> keys -> install -> verified -> folder. The chosen key keeps key `k0`, so it
-     glides from the key ring along the path into the lock on the NAS door instead of cutting between pictures. */
-  A.defineScene('nas', {
-    label: 'art.nas',
-    band: [0, 170, 480, 330],
-    compose(ctx) {
-      const beat = ctx.beat || 'find', pr = ctx.params || {}, retro = ctx.family === 'retro';
-      const cx = 150, cy = 540, nx = 336, ny = 392;
-      const done = beat === 'verified' || beat === 'folder' || beat === 'paired';
-      const pc = { key: 'pc', prop: 'computer', x: cx, y: cy, s: retro ? 1 : 1.45, layer: 'mid', anim: 'rise', delay: 60, opts: { label: pr.here || L('thisComputer', 'this computer'), screen: done ? 'check' : '' } };
-      const nas = { key: 'nas', prop: 'nas', x: nx, y: ny, s: retro ? 2 : 1.5, layer: 'mid', anim: 'rise', delay: 160, opts: { label: pr.device || L('homeNas', 'home nas'), busy: beat === 'install' || (beat === 'pair' && !!pr.waiting) } };
-      /* the lock sits on the NAS's left edge, a third of the way down; the path runs from the laptop's outline to it */
-      const tl = A.attach(ctx, nas, 'topLeft'), bl = A.attach(ctx, nas, 'bottomLeft'), lockX = tl[0], lockY = tl[1] + (bl[1] - tl[1]) * 0.34;
-      /* locked until the key is in and checked; then it opens: access granted (it used to snap shut, which reads
-         "locked out") */
-      const lock = { key: 'lock', prop: 'lock', x: lockX, y: lockY, s: retro ? 1 : 1.25, layer: 'front', anim: 'pop', delay: 420, opts: { open: done } };
-      if (beat === 'share') {
-        /* a shared folder on the NAS reached over the network (SMB, NFS, already connected): no key and no lock; SMB
-           signs in with a name and password, the others simply connect */
-        const ln = A.link(ctx, pc, nas), mid = [(ln[0][0] + ln[1][0]) / 2, (ln[0][1] + ln[1][1]) / 2], tr = A.attach(ctx, nas, 'topRight');
-        return [pc, nas, { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 320, opts: { pts: ln } },
-          { key: 'fold', prop: 'folder', x: tr[0] - 6, y: tr[1] - 6, s: retro ? 1 : 1.05, layer: 'front', anim: 'drop', delay: 380, opts: { label: L('sharedFolder', 'shared'), labelAt: 'above' } },
-          { key: 'how', prop: 'node', x: mid[0], y: mid[1], s: retro ? 1 : 0.95, layer: 'front', anim: 'pop', delay: 460, opts: { icon: pr.share === 'smb' ? 'person' : 'link', accent: true } },
-          ...sparks([[70, 150, 1], [410, 520, 2]], 800)];
-      }
-      const idCard = { key: 'id', prop: 'identity', x: nx, y: 122, s: retro ? 1 : 1.2, layer: 'front', anim: 'pop', delay: 120, opts: { seed: pr.seed || 'home-nas', words: pr.words || '' } };
-      if (beat === 'pair' || beat === 'paired' || (pr.paired && beat === 'folder')) {
-        /* paired with the Puppet Master on the device (PWIZ-029): no key and no lock. One string runs from this computer
-           to the device, the way of approving sits on it (a phone, a code, a QR) and becomes a check once paired */
-        const ln = A.link(ctx, pc, nas), mid = [(ln[0][0] + ln[1][0]) / 2, (ln[0][1] + ln[1][1]) / 2], ok = beat !== 'pair';
-        const out = [pc, nas, { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 320, opts: { pts: ln } },
-          { key: 'how', prop: 'node', x: mid[0], y: mid[1], s: retro ? 1 : 0.95, layer: 'front', anim: 'pop', delay: 460, amb: ok ? null : 'bob',
-            opts: { icon: ok ? 'check' : ({ approval: 'phone', code: 'key', qr: 'spark' }[pr.method] || 'phone'), accent: true } }];
-        if (beat === 'pair') { out.push(idCard); const e = A.attach(ctx, idCard, 'left'); out.push({ key: 'n-id', prop: 'note', x: e[0], y: e[1], layer: 'front', anim: 'fade', delay: 600, opts: { text: L('itsId', 'its id'), dx: -46, dy: -42 } }); }
-        if (beat === 'paired') out.push(...sparks([[mid[0] + 40, mid[1] - 56, 2], [mid[0] - 58, mid[1] - 40, 0], [nx + 70, ny - 150, 1]], 180));
-        if (beat === 'folder') out.push({ key: 'fold', prop: 'folder', x: nx, y: 150, s: retro ? 1 : 1.2, layer: 'front', anim: 'drop', delay: 120, opts: { label: pr.folder || L('projectsFolder', 'projects') } });
+  const WHERE = { this: 'laptop', connect: 'phone', server: 'server' };
+  const BEGIN = { new: 'page', existing: 'folder', restore: 'restore' };
+  const SUB = { folder: 'folder', online: 'forge', device: 'nas' };
+  const SCREENS = {
+    welcome: { props: () => [], state: (S) => (O55.S.resumed ? 'resumed' : S.env.here.projects.length ? 'returning' : 'wake'), look: [0, -2.4] },
+    look: { props: () => [P('palette', 'side')], state: (S) => (S.env.here.projects.length ? 'keep' : 'enter'), vars: () => ({ look: O55.theme().family }) },
+    where: {
+      props(S, h) {
+        const w = h && /^pick:/.test(h) ? h.slice(5) : S.sess.ui.where || 'this', pv = !!h && h !== 'pick:' + (S.sess.ui.where || 'this');
+        return w === 'connect' ? [P('laptop', 'pairA', { preview: pv }), P('phone', 'pairB', { preview: pv })] : [P(WHERE[w] || 'laptop', 'side', { preview: pv })];
+      },
+      state(S) { const st = op(S, 'check:here'); return st && st.state === 'running' ? 'checking' : st && st.state === 'done' ? (S.env.here.internet ? 'checked' : 'offline') : 'enter'; },
+      vars: (S) => ({ prop: WHERE[S.sess.ui.where || 'this'] })
+    },
+    'c-route': { props: (S, h) => [P('laptop', 'pairA'), P(h && /route:(tailscale|reverse_proxy|remote_link)/.test(h) ? 'globe' : 'house', 'pairB', { preview: !!h })], state: () => 'enter' },
+    'c-review': { props: (S, h) => [P('phone', 'pairA'), P(h === 'pairing:qr' ? 'qr' : h === 'pairing:code' ? 'key' : 'idcard', 'pairB', { preview: !!h })], vars: (S) => ({ method: md(S).connection_pairing || 'approval' }) },
+    'c-pair': { props: two('idcard', 'qr') },
+    'c-ready': { props: () => [P('laptop', 'pairA'), P('server', 'pairB')] },
+    's-kind': { props: (S, h) => [P(h === 'kind:cloud' ? 'cloud' : h === 'kind:pc' ? 'server' : 'nas', 'side', { preview: !!h })], vars: (S) => ({ kind: (S.sess.server && S.sess.server.kind) || 'nas' }) },
+    's-wait': { props: two('nas', 'key') },
+    's-confirm': { props: two('server', 'key'), vars: (S) => ({ name: (S.sess.server && S.sess.server.displayName) || '' }) },
+    's-ready': { props: () => [P('server', 'pairA'), P('qr', 'pairB'), P('phone', 'hi')] },
+    'r-source': { props: (S, h) => [P('restore', 'pairA'), P({ 'source:kit': 'kit', 'source:folder': 'folder', 'source:nas': 'nas', 'source:cloud': 'cloud' }[h] || 'kit', 'pairB', { preview: !!h })], vars: (S) => ({ source: (S.sess.restore && S.sess.restore.source) || 'kit' }) },
+    'r-unlock': { props: two('kit', 'lock') },
+    'r-pick': { props: two('restore', 'clipboard') },
+    'r-preview': { props: one('restore'), work: true },
+    'r-done': { props: () => [P('restore', 'pairA'), P('page', 'pairB')] },
+    begin: {
+      props(S, h) {
+        const ui = S.sess.ui, ch = ui.begin || 'new', b = h && /^pick:/.test(h) ? h.slice(5) : ch;
+        let kind = BEGIN[b] || 'page';
+        if (h && /^sub:/.test(h)) kind = SUB[h.slice(4)] || 'folder'; else if (!h && ch === 'existing' && ui.beginSub) kind = SUB[ui.beginSub] || 'folder';
+        return [P(kind, 'side', { preview: !!h && h !== 'pick:' + ch && h !== 'sub:' + ui.beginSub })];
+      },
+      vars: (S) => ({ begin: S.sess.ui.begin || 'new' })
+    },
+    'ex-folder': { props: one('folder'), state: (S) => (S.sess.folderInfo ? (S.sess.folderInfo.history ? 'hasHistory' : 'noHistory') : 'enter') },
+    name: { props: (S) => [P('sign', 'sign', { params: { text: (md(S).project_name || '').trim() } })], state: (S) => ((md(S).project_name || '').trim() ? 'named' : 'empty'), vars: (S) => ({ name: (md(S).project_name || '').trim().slice(0, 18) }) },
+    like: { props: (S, h) => [P(h === 'pick:fresh' || (!h && md(S).settings_transfer.mode !== 'copy_from_project') ? 'page' : 'settings', 'side', { preview: !!h })], vars: (S) => ({ from: md(S).settings_transfer.mode === 'copy_from_project' ? 'copy' : 'fresh' }) },
+    'online-service': { props: one('forge'), vars: (S) => ({ service: md(S).forge || 'github' }) },
+    'online-signin': { props: two('forge', 'key'), state: (S) => { const si = S.sess.signin || {}; return si.state === 'done' ? 'done' : si.state === 'waiting' ? 'waiting' : si.state === 'code' ? 'code' : si.state === 'create' ? 'create' : 'enter'; }, vars: (S) => ({ service: (S.sess.signin || {}).name || forgeName(S) }) },
+    'online-details': { props: (S) => [P('forge', 'pairA'), P('sign', 'pairB', { scale: 0.8, params: { text: md(S).repository_name || '' } })], vars: (S) => ({ name: md(S).repository_name || '' }) },
+    'ex-repos': { props: two('forge', 'folder'), vars: (S) => ({ name: md(S).repository_name || '' }) },
+    safe: {
+      props(S, h) {
+        const d = md(S), online = d.online_mode !== 'none' || h === 'online', backup = !!S.sess.backup.dest || h === 'backup' || (h && /^bdest:/.test(h) && h !== 'bdest:none');
+        const out = [P('vault', online || backup ? 'pairA' : 'side')];
+        if (online) out.push(P('cloud', 'hi', { preview: d.online_mode === 'none' }));
+        if (backup) out.push(P('backup', 'pairB', { preview: !S.sess.backup.dest }));
         return out;
+      },
+      vars: (S) => ({ kind: md(S).history_backend === 'jujutsu' ? 'jujutsu' : 'git' })
+    },
+    away: { props: (S, h) => { const any = h ? h !== 'pick:home' : !['local_or_vpn', 'none'].includes(md(S).remote_mode); return any ? [P('house', 'pairA', { preview: !!h }), P('globe', 'pairB', { preview: !!h })] : [P('house', 'side', { preview: !!h })]; },
+      vars: (S) => ({ mode: ['local_or_vpn', 'none'].includes(md(S).remote_mode) ? 'home' : 'anywhere' }) },
+    review: { props: (S) => [P('clipboard', 'side', { params: { ticks: ticks(S), rows: 4 } })], state: (S) => (md(S).project_mode === 'later' ? 'later' : ticks(S) >= 4 ? 'checked' : 'enter'), vars: (S) => ({ done: ticks(S), total: 4 }) },
+    creating: {
+      /* O12: a block for each owner phase that has completed, lowered onto the stack as it completes; Continue and
+         Ready never wait for a block to land (each lands in about half a second; Reduced Motion puts it there) */
+      props(S) {
+        const list = O55.review ? O55.review.phasesFor(S) : [], st = op(S, (S.sess.commit || {}).key);
+        const done = O55.review && O55.review.shownDone(S) ? list.length : st ? (st.phases || []).filter((p) => p.status === 'done').length : 0;
+        const ICON = { folder: 'folder', device: 'nas', clone: 'cloud', restore: 'restore', history: 'history', historyInstall: 'history', online: 'cloud', settings: 'stack', remote: 'globe', check: 'check' };
+        return list.slice(0, done).map((k, i) => ({ id: 'b' + i, kind: 'block', stack: i, ground: true, params: { icon: ICON[k] || 'check', hue: 'abcde'[i % 5] } }));
+      },
+      state(S) {
+        if (O55.review && O55.review.shownDone(S)) return md(S).project_mode === 'later' ? 'doneLater' : 'done';
+        const list = O55.review ? O55.review.phasesFor(S) : [], cur = phaseNow(S);
+        if (!cur) return list[0] || 'folder';
+        return list.indexOf(cur) === list.length - 1 && list.length > 1 ? 'last' : cur;
+      },
+      work: true,
+      vars(S) {
+        const list = O55.review ? O55.review.phasesFor(S) : [], st = op(S, (S.sess.commit || {}).key), done = st ? (st.phases || []).filter((p) => p.status === 'done').length : 0;
+        return { kind: md(S).history_backend === 'jujutsu' ? 'Jujutsu' : 'Git', service: forgeName(S), device: (S.sess.nas && S.sess.nas.folderLabel) || '', phase: phaseNow(S) || list[Math.min(done, list.length - 1)] || 'check', done, total: list.length };
       }
-      const items = [pc, nas, { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 320, opts: { pts: A.link(ctx, pc, lock) } }, lock];
-      if (beat === 'find') items.push({ key: 'rings', prop: 'rings', x: nx, y: A.attach(ctx, nas, 'top')[1] - 24, s: 1.3, layer: 'back', anim: 'fade', delay: 200, amb: 'pulse', ambd: 1800 },
-        { key: 'n-find', prop: 'note', x: nx, y: ny - 142, layer: 'front', anim: 'fade', delay: 700, opts: { text: L('lookingNearby', 'looking nearby'), dx: -60, dy: -64 } });
-      if (beat === 'identity' || beat === 'keys') items.push(idCard);
-      if (beat === 'identity') { const e = A.attach(ctx, idCard, 'left'); items.push({ key: 'n-id', prop: 'note', x: e[0], y: e[1], layer: 'front', anim: 'fade', delay: 600, opts: { text: L('itsId', 'its id'), dx: -46, dy: -42 } }); } /* up and to the left: the ID's words sit below the card */
-      if (beat === 'keys') {
-        /* the keys found on this computer (up to four), the chosen one lit; a new key made just for this, when chosen */
-        const n = Math.min(4, pr.keys == null ? 3 : pr.keys) + (pr.newKey ? 1 : 0), step = n > 3 ? 40 : 48, y0 = 352 - ((Math.max(1, n) - 1) * step) / 2;
-        const keys = Array.from({ length: n }, (_, i) => ({ key: 'k' + i, prop: 'key', x: 112, y: y0 + i * step, r: retro ? 0 : (i - (n - 1) / 2) * 7, s: retro ? 1 : 1.05, layer: 'front', anim: 'pop', delay: 80 + i * 100,
-          opts: { accent: pr.newKey ? i === n - 1 : i === Math.max(0, pr.pick) } }));
-        items.push(...keys);
-        if (keys.length) { const top = A.attach(ctx, keys[0], 'top'); items.push({ key: 'n-keys', prop: 'note', x: top[0], y: top[1], layer: 'front', anim: 'fade', delay: 600, opts: { text: L('yourKeys', 'your keys'), dx: 34, dy: -44 } }); }
-      } else if (beat === 'install') {
-        items.push({ key: 'k0', prop: 'key', x: 214, y: 372, r: retro ? 0 : -62, s: retro ? 1 : 1.05, layer: 'front', anim: 'pop', opts: { accent: true } });
-        items.push({ key: 'n-inst', prop: 'note', x: 206, y: 360, layer: 'front', anim: 'fade', delay: 400, opts: { text: L('addingKey', 'adding your key'), dx: -40, dy: -84 } });
-      } else if (done) {
-        items.push({ key: 'k0', prop: 'key', x: lockX - 40, y: lockY + 4, s: retro ? 1 : 1, layer: 'front', opts: { accent: true } });
-        items.push(...sparks([[lockX + 44, lockY - 40, 2], [lockX - 62, lockY - 52, 0], [nx + 70, ny - 150, 1]], 180));
-      }
-      if (beat === 'folder') items.push({ key: 'fold', prop: 'folder', x: nx, y: 150, s: retro ? 1 : 1.2, layer: 'front', anim: 'drop', delay: 120, opts: { label: pr.folder || L('projectsFolder', 'projects') } });
-      return items;
+    },
+    protect: { props: () => [P('lock', 'pairA'), P('kit', 'pairB'), P('backup', 'hi', { scale: 0.8 })], state: (S) => { const b = S.sess.backup || {}; return b.done && b.done.length >= 5 ? 'done' : 'enter'; },
+      vars: (S) => { const b = S.sess.backup || {}, done = b.done || []; return { step: ['signin', 'test', 'kit', 'kitTest', 'policy'].find((s) => !done.includes(s)) || 'done' }; } },
+    ai: { props: ORBS, state: (S) => { const n = O55.ai ? O55.ai.readyIds(S).length : 0; const det = op(S, 'detect:' + (md(S).server_mode !== 'this_device' ? 'server' : 'this computer')); return n > 1 ? 'many' : n === 1 ? 'one' : (S.sess.ai && S.sess.ai.skipped) ? 'none' : 'checking'; }, power: true, vars: (S) => ({ n: O55.ai ? O55.ai.readyIds(S).length : 0 }) },
+    'ai-all': { props: ORBS, power: true },
+    'ai-none': { props: () => [P('free', 'side')] },
+    free: { props: () => [P('free', 'pairA'), P('gift', 'pairB')] },
+    ready: {
+      props(S) {
+        const d = md(S), ch = [WHERE[S.sess.ui.where || 'this'] || 'laptop', d.project_mode === 'later' ? 'page' : BEGIN[S.sess.ui.begin || 'new'] || 'page', 'vault'];
+        const out = ch.map((k, i) => ({ id: 'm' + i, kind: k, slot: 'm' + (i + 1), scale: 0.42 }));
+        [['crown', 'c1'], ['hardhat', 'c2'], ['glasses', 'c3']].forEach(([hat, slot]) => out.push({ id: 'crew-' + hat, kind: 'crew', slot, params: { hat }, scale: 0.82 }));
+        return out;
+      },
+      state: (S) => (md(S).project_mode === 'later' ? 'later' : 'enter'), look: 'crew-hardhat'
+    },
+    'nas-find': { props: one('nas'), state: (S) => ((S.sess.nas || {}).sshOff ? 'sshOff' : 'enter'), vars: (S) => ({ method: (S.sess.nas || {}).method || 'ssh' }) },
+    'nas-identity': { props: nasWith('idcard'), state: (S) => ((S.sess.nas || {}).trusted ? 'trusted' : 'enter') },
+    'nas-key': { props: nasWith('key') },
+    'nas-signin': { props: () => [P('nas', 'pairA'), P('key', 'pairB'), P('lock', 'hi', { scale: 0.8 })] },
+    'nas-install': { props: nasWith('key'), work: true, state: (S) => { const st = op(S, 'install:' + ((S.sess.nas || {}).device || '')); return st && st.state === 'done' ? 'done' : 'enter'; } },
+    'nas-pmpair': { props: nasWith('qr') },
+    'nas-folder': { props: nasWith('folder'), state: (S) => ((S.sess.nas || {}).purpose === 'storage' ? 'storage' : 'enter'), vars: (S) => ({ path: String((S.sess.nas || {}).at || '').split('/').pop() }) },
+    'nas-smb': { props: nasWith('folder') },
+    'nas-nfs': { props: nasWith('folder') },
+    'nas-mounted': { props: nasWith('folder') }
+  };
+
+  /* The spec for the screen on show. hover: the control the pointer rests on (after the dwell) or keyboard focus;
+     typing: the field being typed into; oops: what O55.pipOops read off the screen. */
+  function spec(S, o) {
+    o = o || {};
+    const id = S.sess.screen, def = O55.screens.defs[id] || {}, sc = SCREENS[id] || { props: () => [] };
+    const chapter = (def.chapterFor ? def.chapterFor(S) : def.chapter) || 'welcome';
+    const v = Object.assign({ name: (md(S).project_name || '').trim(), look: O55.theme().family }, sc.vars ? sc.vars(S) : {});
+    const h = o.hover && has(id, o.hover) ? o.hover : o.hover && /:/.test(o.hover) && has(id, 'group:' + o.hover.split(':')[0]) ? 'group:' + o.hover.split(':')[0] : null;
+    let props = [];
+    try { props = sc.props(S, o.hover || null) || []; } catch (e) { props = []; }
+    let lid = h || (sc.state ? sc.state(S) : 'enter');
+    if (o.typing && has(id, 'typing')) lid = 'typing';
+    let mood = (FACES[id] && FACES[id][lid]) || (h ? 'watch' : 'idle');
+    if (o.typing) mood = 'wonder';
+    let say = line(id, lid, v), label = stg(id, 'label', v);
+    const tgt = props.length ? props[props.length - 1].id : null;
+    const out = { chapter, props, pip: { mood, look: sc.look || tgt, work: !!sc.work && !(O55.review && O55.review.shownDone && id === 'creating' && O55.review.shownDone(S)) },
+      say, target: tgt, label, cmd: stg(id, 'cmd', Object.assign({ prop: tgt || '' }, v)) + (h ? ' --preview' : ''), lineId: lid };
+    if (sc.power) out.pip.power = O55.ai ? O55.ai.readyIds(S).length : 0;
+    if (id === 'welcome') { out.pip.pose = 'asleep'; out.wakeSay = say; }
+    if (o.oops) {
+      out.pip.mood = o.oops.face;
+      out.say = O55.t('pip.oops.' + o.oops.key, v);
+      out.label = O55.t('pip.stage.labels.oops');
+      out.oops = o.oops.key;
     }
-  });
+    return out;
+  }
+  O55.pipScenes = { spec, SCREENS, FACES, line };
 })();
 
 /* O55.pipOops — what has gone wrong on the screen, for Pip (DL-238). Pip's face follows what the window shows: a
@@ -218,7 +185,9 @@
   const FACE = {
     'server.confirm.pendingHost': 'think', 'protect.pendingHost': 'think', 'creating.recovery.pending': 'think',
     'creating.recovery.reasons.waitingHost': 'think', 'creating.recovery.reasons.claimBusy': 'think', 'creating.recovery.reasons.pending': 'think',
-    'ai.skipNote': 'sleep'
+    'ai.skipNote': 'sleep',
+    /* an empty name is a prompt, not a fault: Pip watches the sign wait for its words */
+    'name.empty': 'watch'
   };
   /* states that show as information, not as a fault, are still read where they are written (a note, a row's line) */
   const WHERE = '.o55-err, .o55-note, .o55-banner, .o55-pill-fail, .o55-reason, .o55-rowmeta, .o55-tag, .o55-phdetail';

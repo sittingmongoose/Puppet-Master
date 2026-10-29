@@ -197,7 +197,7 @@
     group(title, content, o) { return `<section class="o55-group${o && o.cls ? ' ' + o.cls : ''}" data-key="grp-${esc(title)}">${title ? `<h2 class="o55-grouptitle">${esc(title)}</h2>` : ''}${content}</section>`; },
     /* a link with a tip of its own gets its ? beside it (o: { tip: false } for none) */
     link(label, action, arg, o) {
-      const id = o && o.tip === false ? null : exact(action, arg);
+      const id = o && o.tip === false ? null : o && o.tip ? (tipOf(o.tip) ? o.tip : null) : exact(action, arg);
       const html = `<button type="button" class="o55-link" data-o55-do="${esc(action)}"${arg != null ? ` data-arg="${esc(arg)}"` : ''}${id ? described(id) : ''}${U.attrs(X)}>${esc(label)}</button>`;
       return id ? opt(id, html, 'o55-opt-inline', 'span') : html;
     },

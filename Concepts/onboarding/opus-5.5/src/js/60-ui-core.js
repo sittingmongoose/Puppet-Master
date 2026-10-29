@@ -46,7 +46,7 @@
       + `<div class="o55-headctl"><span class="o55-lookslot"></span><span class="o55-soundslot"></span>`
       + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(T('chrome.closeHint'))}">`
       + `${U.nx('close', 18, 'control') || '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'}<span>${U.esc(T('chrome.close'))}</span></button></div></header>`
-      + `<div class="o55-body"><div class="o55-stage o55-scene-host" aria-hidden="true"></div><section class="o55-pane"></section></div>`
+      + `<div class="o55-body"><div class="o55-stage o55-scene-host"></div><section class="o55-pane"></section></div>`
       + `<div class="o55-live" aria-live="polite" role="status"></div></div>`;
     document.body.appendChild(root);
     S.root = root;
@@ -62,6 +62,22 @@
     root.addEventListener('keydown', snap, true);
     new MutationObserver(() => { if (S.open) syncTheme(true); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts'] });
     document.addEventListener('visibilitychange', () => { root.setAttribute('data-o55-ambient', document.hidden ? 'off' : 'on'); });
+    /* Pip watches what you point at (hover intent), wonders at what you type, and is happy at what you choose */
+    const pane = root.querySelector('.o55-pane');
+    pane.addEventListener('pointermove', (e) => { hv.x = e.clientX; hv.y = e.clientY; }, { passive: true });
+    pane.addEventListener('pointerover', (e) => { hv.x = e.clientX; hv.y = e.clientY; wantHover(hoverOf(e.target)); });
+    pane.addEventListener('pointerleave', () => wantHover(null));
+    pane.addEventListener('focusin', (e) => {
+      const b = e.target.closest && e.target.closest('[data-o55-bind]');
+      if (b) { const id = b.getAttribute('data-o55-bind'); if (S.pipTyping !== id) { S.pipTyping = id; renderScene(); } }
+      const h = hoverOf(e.target);
+      if (h && e.target.matches(':focus-visible')) { hv.byFocus = true; hv.want = h; setHover(h); }
+    });
+    pane.addEventListener('focusout', (e) => {
+      if (S.pipTyping && e.target.closest && e.target.closest('[data-o55-bind]')) { S.pipTyping = null; O55.motion.real.setTimeout(() => renderScene(), 0); }
+      const to = e.relatedTarget && e.relatedTarget.closest && hoverOf(e.relatedTarget);
+      if (hv.byFocus && !to) { hv.byFocus = false; wantHover(null); }
+    });
     window.addEventListener('resize', () => { if (S.open) layoutClass(); });
     return root;
   }
@@ -81,7 +97,7 @@
   function layoutClass() {
     if (!S.root.querySelector('.o55-win')) return;
     const r = winSize(), layout = r.width < 760 ? 'narrow' : r.height < 520 ? 'short' : 'wide';
-    if (S.root.getAttribute('data-o55-layout') !== layout) S.root.setAttribute('data-o55-layout', layout);
+    if (S.root.getAttribute('data-o55-layout') !== layout) { S.root.setAttribute('data-o55-layout', layout); if (S.open && S.sess) refresh(); }
     /* the concept demo pill folds into a slim tab beside a narrow window (12-components.css) */
     const demo = document.getElementById('o55-demo');
     if (demo && demo.hasAttribute('data-o55-narrow') !== (layout === 'narrow')) demo.toggleAttribute('data-o55-narrow', layout === 'narrow');
@@ -291,8 +307,11 @@
         + `<span class="o55-railstring" aria-hidden="true"></span><span class="o55-railnode" aria-hidden="true"></span>`
         + `<span class="o55-raillabel">${U.esc(T('chapters.' + ch))}</span></li>`;
     }).join('');
-    U.morph(nav, `<div class="o55-railbar o55-railbar-${fam}" aria-hidden="true"></div><ol class="o55-raillist" aria-label="${U.esc(pr.announce)}">${items}</ol>`);
+    const zip = O55.pipStage && O55.pipStage.h.kit() ? '<svg class="o55-railzip" aria-hidden="true" data-morph-skip></svg><span class="o55-railpip" aria-hidden="true" data-morph-skip></span>' : '';
+    U.morph(nav, `${zip}<div class="o55-railbar o55-railbar-${fam}" aria-hidden="true"></div><ol class="o55-raillist" aria-label="${U.esc(pr.announce)}">${items}</ol>`);
     nav.setAttribute('data-count', pr.chapters.length);
+    /* Pip rides the bar as the current chapter's marker (58-rig.js O55.pipStage.rail); the morph keeps its nodes */
+    if (O55.pipStage && O55.pipStage.rail && O55.pipStage.h.kit()) { nav.setAttribute('data-o55-pip', ''); O55.pipStage.rail.mount(nav, pr.index, O55.pipStage.h.theme()); }
   }
   /* A choice made: a helper in the scene cheers for it and the rail's marker for this chapter gives a small bump. The
      choice is still recorded per chapter. (Choices used to fly up and hang on the rail as small icons; people read
@@ -369,18 +388,108 @@
     if (!S.resumed || S.resumedShownOn !== def.id || def.id === 'welcome') return '';
     return `<div class="o55-banner" data-key="resumed">${O55.c.small('history', 18)}<span>${U.esc(T('welcome.resumed'))}</span>${O55.c.link(T('welcome.startOver'), 'startOver')}</div>`;
   }
+  /* ---------------------------------------------------------------- Pip's stage (DL-238)
+     The window keeps one stage (O55.pipStage, 58-rig.js) for its life and directs it on every render: the screen's
+     spec (O55.pipScenes, 55-scenes.js) from the session, what the pointer rests on, the field being typed into and
+     what has gone wrong (O55.pipOops). The stage follows the painted look (NieR Mode is its own world), the window's
+     layout (wide: the tall pane beside the screen; narrow: a strip above it; short: a short strip) and Reduced Motion. */
+  const LAYOUT = { wide: 'portrait', narrow: 'banner', short: 'compact' };
+  const stageLayout = () => LAYOUT[S.root.getAttribute('data-o55-layout')] || 'portrait';
+  let lastOops = null;
+  function stageOf() {
+    const host = S.root && S.root.querySelector('.o55-stage');
+    if (!host || !O55.pipStage || !O55.pipStage.h.kit()) return null; /* the kit is the glyph system's head module */
+    const H = O55.pipStage.h, st = O55.pipStage.ensure(host, { theme: H.theme(), layout: stageLayout(), reduced: O55.motion.reduced() });
+    st.setReduced(O55.motion.reduced()); st.setLayout(stageLayout()); st.setTheme(H.theme());
+    return st;
+  }
   function renderScene(force, hold, o) {
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
-    const sc = def.scene ? def.scene(S) : { id: 'hero' };
-    const host = S.root.querySelector('.o55-stage');
-    const th = O55.theme();
-    const band = S.root.getAttribute('data-o55-layout') === 'narrow';
-    const key = `${sc.id}|${th.family}|${th.mode}|${band}`;
-    if (force || host.getAttribute('data-scene-key') !== key || host.getAttribute('data-beat') !== (sc.beat || 'default') || JSON.stringify(sc.params || {}) !== host.getAttribute('data-params')) {
-      O55.art.mount(host, sc.id, { family: th.family, mode: th.mode, beat: sc.beat || 'default', params: sc.params || {}, band, instance: band ? 'band' : '', hold: !!hold, ensembleHold: !!(o && o.ensembleHold) });
-      host.setAttribute('data-scene-key', key); host.setAttribute('data-beat', sc.beat || 'default'); host.setAttribute('data-params', JSON.stringify(sc.params || {}));
+    const st = stageOf(); if (!st) return;
+    if (hold) st.hold(true);
+    st.setActive(!!S.open);
+    const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    /* what has gone wrong, read off the screen; once it is put right, Pip cheers (pip.cheer.<key>) */
+    const oops = layer && !(layer.classList.contains('o55-hold')) ? O55.pipOops.read(layer) : null;
+    const spec = O55.pipScenes.spec(S, { hover: S.pipHover, typing: S.pipTyping, oops, picked: o && o.picked });
+    spec.screen = S.sess.screen;
+    if (o && o.sayNow) spec.sayNow = true;
+    /* (the screen plays its own soft warning; Pip only says so, at once) */
+    if (oops && (!lastOops || lastOops.key !== oops.key || lastOops.screen !== S.sess.screen)) spec.sayNow = true;
+    const cheer = !oops && lastOops && lastOops.screen === S.sess.screen && lastOops.face === 'oops' ? lastOops.key : null;
+    lastOops = oops ? { key: oops.key, face: oops.face, screen: S.sess.screen } : null;
+    if (cheer) { spec.say = O55.t('pip.cheer.' + cheer); spec.sayNow = true; spec.pip.mood = 'happy'; }
+    /* Pick a look: hovering a look makes Pip try it on (silent, O6); the world follows once it is picked */
+    if (S.sess.screen === 'look') {
+      const h = S.pipHover || '', mode = O55.theme().mode;
+      st.tryOn(/^pickFamily:/.test(h) ? h.slice(11) + '-' + mode : h === 'pickNier' ? 'nier-' + mode : null);
     }
+    /* a fault shown now wins over a feeling still held from a moment before (a cheer, a pick) */
+    if (oops) st.moodOverride = null;
+    st.direct(spec);
+    if (cheer) st.cheer(spec.target, { mood: 'happy', hold: 1800 });
+    /* the ? note on the stage, when the stage can hold it (a wide window); otherwise it opens in the form */
+    const t = S.tip && holdsTip() ? O55.tips.of(S.tip.id) : null;
+    st.tip(t ? { id: S.tip.id, title: t.title, text: t.text } : null);
   }
+  function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit()); }
+  O55.pipStage.holdsTip = holdsTip;
+
+  /* Hover intent: a choice previews only once the pointer has rested on it for DWELL ms, so moving across the list to
+     find your way, or pausing on the way past, changes nothing (Jared asked twice for more delay). A preview stays at
+     least HOLD ms, and leaving a choice keeps it GRACE ms, so the gaps between rows never flicker. The keyboard is
+     deliberate: focus previews at once. The previewed choice is highlighted (o55-previewing). */
+  const STILL = 6, POLL = 60, DWELL = 420, HOLD = 900, GRACE = 600;
+  const hv = { want: null, x: 0, y: 0, px: 0, py: 0, poll: null, leaveT: null, shownAt: 0, rest: 0, byFocus: false };
+  /* a control's id, as its ? and its line know it: <data-o55-do>:<data-arg>, <data-o55-do>, or field:<bind> */
+  function hoverOf(t) {
+    const c = t && t.closest && t.closest('[data-o55-do], [data-o55-bind]');
+    if (!c || c.closest('.o55-foot') || c.classList.contains('o55-tipq') || c.classList.contains('o55-explainer-x')) return null;
+    if (c.hasAttribute('data-o55-bind')) return null; /* a field is typed into, not previewed */
+    const d = c.getAttribute('data-o55-do'), a = c.getAttribute('data-arg');
+    return a != null && a !== '' ? d + ':' + a : d;
+  }
+  function stopHover() { if (hv.poll) { hv.poll.cancel(); hv.poll = null; } if (hv.leaveT) { hv.leaveT.cancel(); hv.leaveT = null; } }
+  function setHover(h) {
+    stopHover();
+    if (h === S.pipHover) return;
+    S.pipHover = h; hv.shownAt = performance.now();
+    const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    if (layer) {
+      layer.querySelectorAll('.o55-previewing').forEach((n) => n.classList.remove('o55-previewing'));
+      const el = h && Array.from(layer.querySelectorAll('[data-o55-do]')).find((n) => hoverOf(n) === h);
+      if (el) el.classList.add('o55-previewing');
+    }
+    const st = stageOf(); if (st && h) st.busy();
+    renderScene();
+  }
+  function wantHover(h) {
+    if (h === hv.want) return;
+    hv.want = h;
+    stopHover();
+    if (!h) { hv.leaveT = O55.motion.after(GRACE, () => setHover(null)); return; }
+    if (h === S.pipHover) return;
+    hv.px = hv.x; hv.py = hv.y; hv.rest = 0;
+    const tick = () => {
+      const moved = Math.hypot(hv.x - hv.px, hv.y - hv.py);
+      hv.px = hv.x; hv.py = hv.y;
+      hv.rest = moved < STILL ? hv.rest + POLL : 0;
+      if (hv.rest >= DWELL && performance.now() - hv.shownAt > HOLD) { hv.poll = null; setHover(hv.want); return; }
+      hv.poll = O55.motion.after(POLL, tick);
+    };
+    hv.poll = O55.motion.after(POLL, tick);
+  }
+  /* a choice made: Pip says that choice's line at once, happy through it, and the chosen prop pops */
+  function picked(id) {
+    stopHover(); hv.want = null;
+    const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    if (layer) layer.querySelectorAll('.o55-previewing').forEach((n) => n.classList.remove('o55-previewing'));
+    S.pipHover = null;
+    const st = stageOf(); if (!st) return;
+    const spec = O55.pipScenes.spec(S, { hover: id, picked: true }); spec.screen = S.sess.screen; spec.sayNow = true; spec.pip.mood = 'happy';
+    st.busy(); st.direct(spec); st.cheer(spec.target, { mood: 'happy', hold: 2600 });
+  }
+
 
   /* Quiet in-screen update: morph the current layer; never replays the entrance. */
   function refresh() {
@@ -435,6 +544,8 @@
     /* the entrance classes leave once every entrance animation has finished (never cut short, even in slow motion) */
     O55.motion.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back', 'o55-in-open'));
     renderScene(false, hold); renderRail(); renderSound();
+    /* Welcome: Pip sleeps on slack strings until a real arrival (a key, or the pointer travelling) wakes it */
+    if (def.id === 'welcome') { const st0 = stageOf(); if (st0) st0.wake(); }
     /* the end of an act: the skin may keep the old scene a moment longer (its troupe bows) before the new one shows */
     const stageWait = old && hold ? Math.max(0, +skin('stageDelay', dir) || 0) : 0;
     const stageTok = S.stageTok = (S.stageTok || 0) + 1;
@@ -512,6 +623,7 @@
     if (!opts.replace && S.sess.screen !== id && !opts.noHistory) S.sess.history.push(S.sess.screen);
     S.resumedShownOn = null;
     if (S.tip) { S.tip = null; skin('tip', null); }
+    stopHover(); hv.want = null; S.pipHover = null; S.pipTyping = null;
     S.sess.screen = id; S.save();
     const def = SCREENS.defs[id];
     if (def.enter) def.enter(S, opts);
@@ -539,6 +651,8 @@
     const was = S.tip, open = !!(was && was.id === id && was.screen === S.sess.screen);
     const seg = !open && el && el.closest ? el.closest('[data-o55-seg]') : null;
     S.tip = open || !id ? null : { id, screen: S.sess.screen, seg: seg ? seg.getAttribute('data-o55-seg') : null };
+    /* asking about a choice is looking at it: Pip previews it while it writes the answer */
+    if (S.tip && !/^(field|group|copy|step|summary|provider):/.test(id)) { stopHover(); hv.want = id; S.pipHover = id; }
     refresh();
     skin('tip', S.tip, el);
     if (S.tip) {
@@ -591,6 +705,8 @@
        generic one answers by role. Controls whose handler always plays (a look tile) opt out with data-o55-sound. */
     const log = O55.sound.log, last = log[log.length - 1], checked = t.getAttribute('aria-checked'), open = t.getAttribute('aria-expanded');
     fn(S, arg, t, e);
+    const role0 = t.getAttribute('role');
+    if (S.open && (role0 === 'radio' || role0 === 'switch' || role0 === 'checkbox') && !t.closest('.o55-foot')) picked(hoverOf(t));
     if (t.classList.contains('o55-primary') || t.getAttribute('data-o55-sound') === 'self' || log[log.length - 1] !== last) return;
     const role = t.getAttribute('role');
     O55.sound.play(t.classList.contains('o55-card') || t.classList.contains('o55-tile') ? 'select'
@@ -816,7 +932,9 @@
     if (SOLID && !wasShown) setSolid(true);
     O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening', 'o55-scrim-lit'); if (SOLID) setSolid(true); } });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
-    const stage = r.querySelector('.o55-stage'); stage.innerHTML = ''; stage.removeAttribute('data-scene-key');
+    /* the stage lives with the window: reopening wakes it (Retro's tube powers on again) */
+    const stage = r.querySelector('.o55-stage'), st0 = O55.pipStage.of(stage);
+    if (st0) { st0.setActive(true); if (st0.tube) st0.powerOn(); } else { stage.innerHTML = ''; stage.removeAttribute('data-scene-key'); }
     /* a resumed run starts on its own chapter's chord */
     const cur = SCREENS.defs[S.sess.screen];
     /* (each onboarding run is a run of the score: its chapters sting once each, O55.sound) */
@@ -875,6 +993,7 @@
     S.save();
     S.open = false; S.tip = null;
     const r = S.root;
+    const st0 = O55.pipStage.of(r.querySelector('.o55-stage')); if (st0) { st0.powerOff(); st0.setActive(false); }
     r.classList.remove('o55-scrim-lit'); clearOpenScrim(); /* the close plays its own scrim */
     setSolid(false); /* the app is back under the scrim before the window leaves */
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');

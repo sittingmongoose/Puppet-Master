@@ -549,3 +549,8 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-opt > .o55-card { position: rel
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-explainer { border-radius: 0; border: 1px solid var(--o55-nier-ink); background: color-mix(in srgb, var(--o55-win-bg) 70%, #fff 6%);
   color: var(--text-primary); font-family: var(--mono-font, var(--display-font)); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-explainer-h { font-family: var(--mono-font, var(--display-font)); letter-spacing: .08em; text-transform: uppercase; font-size: 12px; }
+
+/* NieR's rail with Pip: a rigid track, a hairline in ink, square eyes (Pip glides along it; 58-rig.js) */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-railzip-str { stroke: rgba(var(--o55-nier-ink-rgb), .45); stroke-width: 1; stroke-linecap: butt; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-railzip-hi { stroke: var(--o55-nier-ink); stroke-width: 1.5; stroke-linecap: butt; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-railzip-eye { stroke: var(--o55-nier-ink); stroke-width: 1; }

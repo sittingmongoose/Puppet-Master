@@ -252,5 +252,5 @@
     }
   });
 
-  O55.ai = { readyIds, shortlist, pname };
+  O55.ai = { readyIds, shortlist, pname, mono };
 })();

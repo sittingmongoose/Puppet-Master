@@ -137,7 +137,7 @@
           out += `<div class="o55-devicecode" data-key="dc"><span class="o55-hint">${U.esc(T('online.signin.codeLead', { url }))}</span><span class="o55-paircode">${U.esc(si.code || 'WDJB-MJHT')}</span>`
             + `<span class="o55-hint">${U.esc(t.left ? T('chrome.expiresIn', { m: t.m, s: t.s }) : T('connect.pair.expired'))}</span>`
             + `<span class="o55-pairbtns">${F.copyBtn(si.code || 'WDJB-MJHT', 'dcode')}${O55.ui.btn({ label: T('chrome.newCode'), do: 'newCode', cls: 'o55-small', note: false }, 'o55-secondary')}</span></div>`
-            + O55.tips.explainer('newCode');
+            + F.copyNote('dcode') + O55.tips.explainer('newCode');
         }
       }
       if (si.state === 'create') {
