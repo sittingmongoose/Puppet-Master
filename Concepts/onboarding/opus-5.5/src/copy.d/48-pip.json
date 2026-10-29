@@ -1,0 +1,2055 @@
+{
+  "pip": {
+    "tips": {
+      "common": {
+        "provider:claude": {
+          "title": "Claude",
+          "text": "Uses the Claude plan you already pay for each month. Paying as you go with the Anthropic API is a separate choice."
+        },
+        "provider:codex": {
+          "title": "ChatGPT / Codex",
+          "text": "Signs in with your ChatGPT plan, the one you pay for each month. Pick it if you already use ChatGPT."
+        },
+        "provider:antigravity": {
+          "title": "Google Antigravity",
+          "text": "Uses your Antigravity plan. The Gemini API, billed by what you use, is a separate choice."
+        },
+        "provider:cursor": {
+          "title": "Cursor",
+          "text": "Connects with an API key from your Cursor account: paste it into API key for Cursor, then choose Check key. The key stays in your computer's password store, never shown again."
+        },
+        "provider:grok": {
+          "title": "Grok Build",
+          "text": "Uses the Grok Build plan you pay for each month. The xAI API, billed by what you use, is a separate choice."
+        },
+        "provider:muse": {
+          "title": "Muse Code",
+          "text": "Uses the Muse Code plan you pay for each month. The Meta Model API, billed by what you use, is a separate choice."
+        },
+        "provider:copilot": {
+          "title": "GitHub Copilot",
+          "text": "Signs in with the Copilot plan on your GitHub account. Pick it if you already pay for GitHub Copilot."
+        },
+        "provider:qwen-coding": {
+          "title": "Qwen Coding Plan",
+          "text": "Alibaba's monthly plan for coding with Qwen. It connects with a key from your Alibaba account."
+        },
+        "provider:qwen-token": {
+          "title": "Qwen Token Plan",
+          "text": "Alibaba's Qwen plan that is billed by what you use, not by the month. It connects with a key from your Alibaba account."
+        },
+        "provider:zai": {
+          "title": "Z.AI Coding Plan",
+          "text": "Z.AI's monthly plan for coding. It connects with a key from your Z.AI account."
+        },
+        "provider:kimi": {
+          "title": "Kimi Code",
+          "text": "Moonshot's monthly Kimi Code plan. It connects with a key from your Kimi account."
+        },
+        "provider:minimax": {
+          "title": "MiniMax Coding Plan",
+          "text": "MiniMax's monthly plan for coding. It connects with a key from your MiniMax account."
+        },
+        "provider:opencode-go": {
+          "title": "OpenCode Go",
+          "text": "OpenCode's monthly plan. It connects with a key from your OpenCode account."
+        },
+        "provider:opencode-zen": {
+          "title": "OpenCode Zen",
+          "text": "OpenCode's pay-as-you-go option, billed by what you use. It connects with a key from your OpenCode account."
+        },
+        "provider:opencode-runtime": {
+          "title": "OpenCode on your computer",
+          "text": "Uses the OpenCode you already installed and set up yourself, with the accounts it already has. Pick it if OpenCode is how you work today."
+        },
+        "provider:anthropic-api": {
+          "title": "Anthropic API",
+          "text": "Pay as you go with Anthropic, billed by what you use. It is separate from a Claude plan and connects with a key."
+        },
+        "provider:gemini-api": {
+          "title": "Gemini API",
+          "text": "Pay as you go with Google's Gemini, billed by what you use. It is separate from an Antigravity plan and connects with a key."
+        },
+        "provider:vertex": {
+          "title": "Vertex AI",
+          "text": "Google's AI through your Google Cloud account, billed by Google Cloud. Pick it if your work already pays for Google Cloud."
+        },
+        "provider:xai-api": {
+          "title": "xAI API",
+          "text": "Pay as you go with xAI, billed by what you use. It is separate from a Grok Build plan and connects with a key."
+        },
+        "provider:meta-api": {
+          "title": "Meta Model API",
+          "text": "Pay as you go with Meta's models, billed by what you use. It is separate from a Muse Code plan and connects with a key."
+        },
+        "pairing:approval": {
+          "title": "Approve from another device",
+          "text": "A device you already use with it shows a request, and you approve it there. The quickest way when that device is with you."
+        },
+        "pairing:code": {
+          "title": "Enter the code it shows",
+          "text": "Open your Puppet Master's page on the other computer, read the code it shows and type it here. Good when no other device is at hand."
+        },
+        "pairing:qr": {
+          "title": "Scan its QR code",
+          "text": "Point this device's camera at the square code on the other screen. Handy on a phone or tablet."
+        },
+        "field:headscale": {
+          "title": "Headscale address",
+          "text": "The web address of your own Headscale server, starting with https://. Only for people who run Headscale instead of using a Tailscale account."
+        },
+        "field:acc-bucket": {
+          "title": "Bucket",
+          "text": "The S3 or B2 bucket made for backups, like s3://my-backups. A bucket is storage space you rent from a cloud company."
+        },
+        "field:acc-keyId": {
+          "title": "Access key ID",
+          "text": "The name that identifies this storage key. Copy it from your storage account; the separate secret access key is its password."
+        },
+        "field:acc-secret": {
+          "title": "Secret access key",
+          "text": "The private half of the bucket's key. Kept in your computer's password store, never in Puppet Master's files."
+        },
+        "field:acc-address": {
+          "title": "Server address",
+          "text": "Where your backup server is. Start it with sftp:// for SFTP, or https:// for WebDAV."
+        },
+        "field:acc-user": {
+          "title": "Username",
+          "text": "The name you sign in with on that backup server."
+        },
+        "field:acc-password": {
+          "title": "Password",
+          "text": "The password for that backup server. Kept in your computer's password store, never in Puppet Master's files."
+        },
+        "field:key": {
+          "title": "API key",
+          "text": "A long secret code from the AI company that lets Puppet Master use your account. Paste it, then choose Check key. It stays in your computer's password store."
+        },
+        "tour": {
+          "title": "Take the Guided Tour",
+          "text": "A few minutes, with a practice example, so nothing real changes. Pick it if Puppet Master is new to you."
+        },
+        "enter": {
+          "title": "Enter Puppet Master",
+          "text": "Closes setup and opens Puppet Master now. You can start the Guided Tour any time from Settings."
+        },
+        "startOver": {
+          "title": "Start over",
+          "text": "Clears the choices from last time and begins setup again from the first page."
+        }
+      },
+      "chrome": {
+        "lookMenu": {
+          "title": "Change the look",
+          "text": "Opens the looks right here, without leaving setup. Your choices so far are kept."
+        },
+        "sound": {
+          "title": "Sound",
+          "text": "Turns setup's sounds and Pip's voice on or off. Nothing plays until you click or press a key."
+        },
+        "close": {
+          "title": "Close",
+          "text": "Your choices are saved. Finish setting up brings you back to where you left off."
+        },
+        "resume": {
+          "title": "Finish setting up",
+          "text": "Opens setup again where you left off. Every choice you made is still there."
+        },
+        "lookFamily:basic": {
+          "title": "Basic",
+          "text": "A clean diagram: plain shapes, calm and precise movement, quiet sounds. The calmest of the four."
+        },
+        "lookFamily:friendly": {
+          "title": "Friendly",
+          "text": "Warm colours, rounded shapes and playful movement, like a little paper theatre. The cosiest of the four."
+        },
+        "lookFamily:glass": {
+          "title": "Glass",
+          "text": "Frosted glass over soft, moving light. Settings choose how see-through the panels are; text always stays readable."
+        },
+        "lookFamily:retro": {
+          "title": "Retro",
+          "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light is printed on paper by a teletype."
+        },
+        "lookMode:light": {
+          "title": "Light or dark",
+          "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read."
+        },
+        "lookMode:dark": {
+          "title": "Light or dark",
+          "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read."
+        },
+        "lookNier:nier": {
+          "title": "NieR Mode",
+          "text": "An ink-and-parchment look inspired by NieR: Automata. It paints over the look you pick; turn it off any time."
+        },
+        "lookNierAdjust:nier-adjust": {
+          "title": "Adjust NieR look",
+          "text": "Choose which parts of NieR Mode you want, like its menu sounds, its motion and the picture behind it. Works with NieR Mode on or off."
+        }
+      },
+      "welcome": {
+        "skipAll": {
+          "title": "Skip",
+          "text": "Closes setup and opens Puppet Master as it is. Run Onboarding Again in Settings brings setup back any time."
+        }
+      },
+      "look": {
+        "pickFamily:basic": {
+          "title": "Basic",
+          "text": "A clean diagram: plain shapes, calm and precise movement, quiet sounds. The calmest of the four."
+        },
+        "pickFamily:friendly": {
+          "title": "Friendly",
+          "text": "Warm colours, rounded shapes and playful movement, like a little paper theatre. The cosiest of the four."
+        },
+        "pickFamily:glass": {
+          "title": "Glass",
+          "text": "Frosted glass over soft, moving light. Settings choose how see-through the panels are; text always stays readable."
+        },
+        "pickFamily:retro": {
+          "title": "Retro",
+          "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light is printed on paper by a teletype."
+        },
+        "group:pickMode": {
+          "title": "Light or dark",
+          "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read."
+        },
+        "pickNier": {
+          "title": "NieR Mode",
+          "text": "An ink-and-parchment look inspired by NieR: Automata. It paints over the look you pick; turn it off any time."
+        },
+        "adjustNier": {
+          "title": "Adjust NieR look",
+          "text": "Choose which parts of NieR Mode you want, like its menu sounds, its motion and the picture behind it. Works with NieR Mode on or off."
+        }
+      },
+      "where": {
+        "pick:this": {
+          "title": "This computer",
+          "text": "Puppet Master does the work on this computer. You choose where its files and backups go in the next steps, and can add a Server later."
+        },
+        "pick:connect": {
+          "title": "Connect this device",
+          "text": "Already use Puppet Master on another computer? This device joins it and uses its Projects and AI. You confirm it is really you, once."
+        },
+        "pick:server": {
+          "title": "Server",
+          "text": "The computer that does the work is called a Server. One that stays on, like a NAS, can keep working while your laptop sleeps."
+        },
+        "restoreAll": {
+          "title": "Restore everything",
+          "text": "For moving from an old computer: brings back your Projects, settings and look from a backup. Nothing here is replaced without asking."
+        }
+      },
+      "c-route": {
+        "group:pickServer": {
+          "title": "Found on your network",
+          "text": "Puppet Masters already running on your network. Pick the one this device should use; it shows how many Projects each one has."
+        },
+        "field:addr": {
+          "title": "Its address",
+          "text": "The name or number other devices use to reach it, like home-nas.local or 192.168.1.20. Use it when yours is not in the list."
+        },
+        "manualOn": {
+          "title": "Enter an address instead",
+          "text": "Type the address yourself when your Puppet Master does not show up on its own."
+        },
+        "route:local_or_vpn": {
+          "title": "On this network",
+          "text": "Finds it on the network you are on now. You can connect through a VPN too: Puppet Masters there show up as well."
+        },
+        "route:tailscale": {
+          "title": "Tailscale",
+          "text": "Reach it from anywhere with Tailscale, a private network for your own devices. Pick it when you are away from home."
+        },
+        "route:reverse_proxy": {
+          "title": "My own web address",
+          "text": "For a Server its owner already put on a web address, like pm.example.com. Pick it only if you were given one."
+        },
+        "route:remote_link": {
+          "title": "Puppet Master Remote Link",
+          "text": "A private link your Server can make for you. Paste the link it gave you; nothing else to set up."
+        },
+        "tsControl:hosted": {
+          "title": "Tailscale account",
+          "text": "Sign in with an ordinary Tailscale account. Right for nearly everyone."
+        },
+        "tsControl:headscale": {
+          "title": "My own Headscale server",
+          "text": "Headscale is a version of Tailscale you run yourself. Pick it only if you already have one."
+        },
+        "field:proxy": {
+          "title": "Web address",
+          "text": "The https:// address the Server owner set up, like https://pm.example.com."
+        },
+        "field:link": {
+          "title": "Remote Link",
+          "text": "The link your Server gave you, starting pm-remote-link:. Your Server shows it under Settings › Access."
+        }
+      },
+      "c-pair": {
+        "field:code": {
+          "title": "Code from your Puppet Master",
+          "text": "The 8 letters and numbers its page shows, like A7K9-M2Q4. It proves this device is with you."
+        },
+        "resend": {
+          "title": "Send it again",
+          "text": "Asks the other device to show the request again, if you missed it or it went away."
+        }
+      },
+      "c-ready": {
+        "createNew": {
+          "title": "Create a new Project",
+          "text": "Starts a new Project on your Puppet Master, so it lives next to the work."
+        },
+        "group:pickProject": {
+          "title": "Projects on your Puppet Master",
+          "text": "Projects it already has. Pick one to open first; every one of them is there for you later too."
+        }
+      },
+      "s-kind": {
+        "kind:nas": {
+          "title": "A NAS or home server",
+          "text": "A storage box or home server that stays on, like Synology, TrueNAS, Unraid or QNAP. A good home for a Server."
+        },
+        "kind:cloud": {
+          "title": "A cloud computer",
+          "text": "A computer you rent online. It is always on and reachable, and costs a monthly fee from the company you rent it from."
+        },
+        "kind:pc": {
+          "title": "Another computer",
+          "text": "A Windows, Mac or Linux computer you leave switched on. Fine if it does not sleep."
+        }
+      },
+      "s-wait": {
+        "group:platform": {
+          "title": "Install Puppet Master on it",
+          "text": "Pick what that computer runs, and follow its steps there. It shows up here by itself once it is running."
+        },
+        "copy:install": {
+          "title": "Copy the install line",
+          "text": "Copies the line to paste into a terminal on that computer. A terminal is the window where you type commands."
+        },
+        "group:guide": {
+          "title": "Open the install guide",
+          "text": "Opens the step-by-step guide for that system in your browser."
+        },
+        "group:pick": {
+          "title": "Waiting to be set up",
+          "text": "A computer on your network running Puppet Master that is not set up yet. Choose it to make it your Server."
+        },
+        "field:addr": {
+          "title": "Its address",
+          "text": "Where to reach it. A cloud computer does not show up on your home network, so enter the address its setup printed."
+        },
+        "manualOn": {
+          "title": "Enter its address instead",
+          "text": "Type its address yourself if it does not appear on its own."
+        }
+      },
+      "s-confirm": {
+        "field:name": {
+          "title": "Name",
+          "text": "What you'll call this Server everywhere in Puppet Master, like Home NAS. Pick a name you'll recognise."
+        },
+        "group:suggest": {
+          "title": "Suggested names",
+          "text": "A few names that fit this kind of computer. Pick one, or type your own."
+        },
+        "field:code": {
+          "title": "Setup code",
+          "text": "The number shown on the Server's own setup page, like 482 913. It proves the computer is yours."
+        },
+        "selfMatch": {
+          "title": "The words match",
+          "text": "Tick this only when the words here are the same as on this device. Nothing is paired until you approve."
+        }
+      },
+      "s-ready": {
+        "newCode": {
+          "title": "New code",
+          "text": "Makes a fresh code for adding a device. Devices already paired stay paired."
+        },
+        "copy:pairlink": {
+          "title": "Copy the link",
+          "text": "Copies a link another device on your network can open to join."
+        },
+        "group:approve": {
+          "title": "Approve",
+          "text": "Lets that device use your Server. Approve only once its words match what the device shows."
+        },
+        "group:deny": {
+          "title": "Deny",
+          "text": "Turns the request down. Nothing is shared with that device."
+        },
+        "group:match": {
+          "title": "The words match",
+          "text": "Compare the words with what the other device shows, then tick this. It unlocks Approve."
+        },
+        "restore": {
+          "title": "Bring back old data",
+          "text": "Replacing an old Server? Brings its Projects back from a Recovery Kit or an old backup."
+        }
+      },
+      "r-source": {
+        "source:kit": {
+          "title": "A Recovery Kit file",
+          "text": "The file you saved when you set up backups. It knows where your backup is and how to open it. The best place to start."
+        },
+        "source:folder": {
+          "title": "A folder on this computer",
+          "text": "A backup copied onto this computer, or on a drive you plugged in."
+        },
+        "source:nas": {
+          "title": "A NAS or another computer",
+          "text": "A backup kept on a NAS or another computer. Puppet Master reaches it over a secure connection (SSH)."
+        },
+        "source:cloud": {
+          "title": "A cloud account",
+          "text": "A backup kept in Google Drive, OneDrive, or an S3 or B2 bucket."
+        },
+        "group:device": {
+          "title": "Which device",
+          "text": "Devices on your network that can be reached securely. Pick the one that keeps the backup."
+        },
+        "cloud:gdrive": {
+          "title": "Google Drive",
+          "text": "You sign in to Google on its own page next. Puppet Master only reads the backup."
+        },
+        "cloud:onedrive": {
+          "title": "OneDrive",
+          "text": "You sign in to Microsoft on its own page next. Puppet Master only reads the backup."
+        },
+        "cloud:s3": {
+          "title": "S3 or B2",
+          "text": "A cloud storage bucket. Fill in its three access details below to reach it."
+        }
+      },
+      "r-unlock": {
+        "field:phrase": {
+          "title": "Recovery phrase",
+          "text": "The six words in your Recovery Kit, like river candle orbit maple quiet lantern. Used once and never saved."
+        }
+      },
+      "r-pick": {
+        "group:pick": {
+          "title": "Choose what to bring back",
+          "text": "Each copy is a moment the backup was taken. The newest is usually the right one."
+        }
+      },
+      "r-done": {
+        "group:pickProject": {
+          "title": "Your Projects",
+          "text": "Everything that came back. Pick the one to open first."
+        },
+        "createNew": {
+          "title": "Create a new Project",
+          "text": "Starts something new instead. Your restored Projects are all still there."
+        }
+      },
+      "begin": {
+        "pick:new": {
+          "title": "New Project",
+          "text": "Puppet Master makes an empty folder for it and saves every version from the very first file."
+        },
+        "pick:existing": {
+          "title": "Existing work",
+          "text": "A folder on this computer, a Project stored online like GitHub, or files on another device. Puppet Master reads it but changes nothing until you create the Project."
+        },
+        "pick:restore": {
+          "title": "Restore",
+          "text": "Brings a Project back from one of your backups."
+        },
+        "sub:folder": {
+          "title": "A folder on this computer",
+          "text": "Work already in a folder on the computer doing the work. Pick the folder next; it is only read until you create the Project."
+        },
+        "sub:online": {
+          "title": "A Project stored online",
+          "text": "Work kept on a website like GitHub or GitLab. Sign in and pick it; the next steps show where your working copy will live."
+        },
+        "sub:device": {
+          "title": "Files on another device",
+          "text": "Work on a NAS, a network drive or another computer. Puppet Master works on it right where it is."
+        },
+        "later": {
+          "title": "Set up a Project later",
+          "text": "No Project is created now; make one whenever you like. Setup finishes without one."
+        }
+      },
+      "ex-folder": {
+        "group:pick": {
+          "title": "Recent folders",
+          "text": "Folders you used lately. Puppet Master reads the one you pick but changes nothing until you create the Project."
+        },
+        "browse": {
+          "title": "Browse",
+          "text": "Look through your folders and choose any one, if it is not in the list."
+        },
+        "group:treeGo": {
+          "title": "Choose a folder",
+          "text": "Open folders to look inside. When you are in the right one, use Choose this folder."
+        }
+      },
+      "name": {
+        "field:name": {
+          "title": "Project name",
+          "text": "The name shown for this Project in Puppet Master. For a new Project it also names its folder. An existing folder keeps its own name and place."
+        },
+        "group:suggest": {
+          "title": "Suggestions",
+          "text": "A few example names to start from. Pick one, then change any word you like."
+        },
+        "change": {
+          "title": "Where its files live",
+          "text": "Shows where the folder will be kept. Change picks another folder here, or a network drive."
+        },
+        "loc:auto": {
+          "title": "On this computer",
+          "text": "In Puppet Master's own folder in Documents. Easy to find, and right for most people."
+        },
+        "loc:custom": {
+          "title": "Another folder on this computer",
+          "text": "Keep it in a folder you choose, like one you already use for this kind of work."
+        },
+        "loc:network": {
+          "title": "A network drive or NAS",
+          "text": "Keep the files on a storage device on your network. Uses a secure connection (SSH) by default."
+        },
+        "field:custom": {
+          "title": "Choose a folder",
+          "text": "The folder path to use, like ~/Documents/Clubs. The ~ means your own home folder."
+        },
+        "storage:with_server": {
+          "title": "On your Server",
+          "text": "Recommended. The Server keeps the files next to the work, so nothing waits on this device."
+        },
+        "storage:this_device": {
+          "title": "On this device",
+          "text": "Files stay on this device and the Server reaches them over the network. This device needs to be on while it works."
+        },
+        "storage:network_location": {
+          "title": "A network drive",
+          "text": "A NAS or shared folder on your network keeps the files, and the Server works on them there."
+        }
+      },
+      "like": {
+        "pick:fresh": {
+          "title": "Start fresh",
+          "text": "Puppet Master's standard settings. Right for a first Project, or when you want a clean start."
+        },
+        "group:pick": {
+          "title": "Like another Project",
+          "text": "Reuses the settings of a Project you already trust. Never copied: sign-ins and keys, files, history, Goals and Plans."
+        },
+        "choose": {
+          "title": "Choose settings",
+          "text": "Pick which groups of settings come along, like look, notifications or AI accounts."
+        },
+        "group:cat": {
+          "title": "Settings to copy",
+          "text": "Each group is a set of settings from that Project. Switch one off to keep the standard ones for it."
+        }
+      },
+      "online-service": {
+        "pick:github": {
+          "title": "GitHub",
+          "text": "GitHub is a free website that keeps an online copy of your work. The most popular, and free for private Projects."
+        },
+        "pick:gitlab": {
+          "title": "GitLab",
+          "text": "A website like GitHub. Pick it if you or your team already use GitLab, on gitlab.com or your own server."
+        },
+        "pick:azure_devops": {
+          "title": "Azure DevOps",
+          "text": "Microsoft's service for teams. Pick it if your work already keeps Projects in Azure DevOps."
+        },
+        "pick:bitbucket_cloud": {
+          "title": "Bitbucket",
+          "text": "Atlassian's website for keeping work online. Pick it if your team uses Bitbucket."
+        },
+        "pick:forgejo": {
+          "title": "Forgejo",
+          "text": "A free service you can run on your own server, or use on Codeberg. Pick it if you already have one."
+        },
+        "pick:gitea": {
+          "title": "Gitea",
+          "text": "A small service you can run on your own server, or use as Gitea Cloud. Pick it if you already have one."
+        },
+        "pick:github_enterprise": {
+          "title": "GitHub Enterprise",
+          "text": "GitHub run on your company's own server. Pick it if your company gave you its address."
+        },
+        "pick:cursor_origin": {
+          "title": "Cursor Origin",
+          "text": "Cursor's own service for keeping work online. It is still a preview, so expect changes."
+        },
+        "notNow": {
+          "title": "Not now",
+          "text": "Leaves out the online copy for now. Safe History still keeps your versions; add an online copy later."
+        },
+        "group:variant": {
+          "title": "Which edition",
+          "text": "The same service, run by the company itself or on your own server. Pick the one your account is on."
+        },
+        "field:address": {
+          "title": "Server address",
+          "text": "Where your own copy of the service lives, starting with https://, like https://git.example.com."
+        }
+      },
+      "online-signin": {
+        "group:useKnown": {
+          "title": "Use this account",
+          "text": "This computer is already signed in to it. Puppet Master only asks for access to the Project you choose."
+        },
+        "another": {
+          "title": "Use a different account",
+          "text": "Sign in with another account instead, like a work one."
+        },
+        "signIn": {
+          "title": "Sign in",
+          "text": "Opens its sign-in page in your browser. Sign in there, then come back; nothing else to type here."
+        },
+        "create": {
+          "title": "Create account",
+          "text": "No account yet? Opens its sign-up page. Make the account there, then sign in here."
+        },
+        "tokenOn": {
+          "title": "Use an access token instead",
+          "text": "A token is a long password made just for apps. Use it when your server does not offer browser sign-in."
+        },
+        "field:token": {
+          "title": "Access token",
+          "text": "Make one on your server under Settings › Applications. It stays in your computer's password store, never in Puppet Master's files."
+        },
+        "code": {
+          "title": "Browser didn't open?",
+          "text": "Shows a short code instead. Open the address it gives on any device and type the code there."
+        },
+        "copyLink": {
+          "title": "Browser didn't open?",
+          "text": "Copies the sign-in link, so you can paste it into your browser yourself."
+        },
+        "copy:dcode": {
+          "title": "Copy the code",
+          "text": "Copies this sign-in code. Paste it on the page named above."
+        },
+        "newCode": {
+          "title": "New code",
+          "text": "Makes a fresh code if this one ran out. Codes last 15 minutes."
+        },
+        "signupBack": {
+          "title": "Back to sign in",
+          "text": "Made your account on its page? Choose this, then sign in with it."
+        }
+      },
+      "online-details": {
+        "field:repo": {
+          "title": "Name on the service",
+          "text": "How the online copy appears there. The suggestion is fine; letters, numbers and dashes work best."
+        },
+        "group:owner": {
+          "title": "Whose account keeps it",
+          "text": "Your own account, or an organization you belong to. Pick an organization when the Project belongs to a team."
+        },
+        "group:azOrg": {
+          "title": "Organization",
+          "text": "The Azure DevOps organization the Project belongs to."
+        },
+        "group:azProject": {
+          "title": "Team project",
+          "text": "Azure DevOps groups work into team projects. Pick one marked Git, the kind used for code. This is separate from your Puppet Master Project."
+        },
+        "azRefresh": {
+          "title": "Refresh projects",
+          "text": "Looks again for team projects, like one you just made on Azure DevOps."
+        },
+        "azCreateTeamProject": {
+          "title": "Create a team project",
+          "text": "Opens Azure DevOps to make a new team project there. Come back and refresh to pick it."
+        },
+        "vis:private": {
+          "title": "Only you",
+          "text": "Only you, and people you invite, can see it. Right for most Projects."
+        },
+        "vis:public": {
+          "title": "Everyone",
+          "text": "Anyone on the internet can see it; only you and people you invite can change it. Pick it for work you want to share."
+        },
+        "vis:internal": {
+          "title": "Everyone in your organization",
+          "text": "People in your organization can see it; nobody outside can."
+        },
+        "field:desc": {
+          "title": "Description",
+          "text": "A sentence about the Project, shown on its online page. Optional."
+        },
+        "field:branch": {
+          "title": "Main branch name",
+          "text": "The name of the main line of your work, usually main. Leave it unless your team uses another name."
+        },
+        "readme": {
+          "title": "Add a README file",
+          "text": "A short page that says what the Project is. It is the first thing people see online."
+        },
+        "group:gitignore": {
+          "title": "Files to leave out",
+          "text": "Some files, like temporary ones, should never be copied online. Chosen for you works for nearly everyone."
+        },
+        "group:license": {
+          "title": "License",
+          "text": "Says what others may do with your work if you share it. No license keeps all rights with you."
+        }
+      },
+      "ex-repos": {
+        "field:q": {
+          "title": "Search your Projects",
+          "text": "Type part of a name to find it quickly."
+        },
+        "group:pick": {
+          "title": "Choose the Project",
+          "text": "Only the Project you pick is copied. The line below shows where the working copy will be kept."
+        }
+      },
+      "safe": {
+        "group:backend": {
+          "title": "Git or Jujutsu",
+          "text": "Both keep saved versions of your Project without an account. Git is the usual choice; Jujutsu works with Git and makes mistakes easier to undo."
+        },
+        "backend:git": {
+          "title": "Git",
+          "text": "Git is the most common way to keep versions. Recommended. Works with GitHub and every other online service."
+        },
+        "backend:jujutsu": {
+          "title": "Jujutsu",
+          "text": "A newer tool built on Git. Mistakes are easier to undo, and it still works with GitHub and the others."
+        },
+        "filesafe": {
+          "title": "FileSafe",
+          "text": "Keeps a safety copy of each file before big changes. An extra layer on top of Safe History."
+        },
+        "online": {
+          "title": "Online copy",
+          "text": "A copy on a website like GitHub. You choose who can see it. Puppet Master only asks for access to the Project you choose."
+        },
+        "backup": {
+          "title": "Backup",
+          "text": "A full copy you can restore from, kept somewhere else: a Home NAS over your home network, Google Drive, OneDrive, or another server."
+        },
+        "bdest:nas": {
+          "title": "Home NAS",
+          "text": "A storage box on your home network keeps the backup. Close by and quick."
+        },
+        "bdest:gdrive": {
+          "title": "Google Drive",
+          "text": "Keeps the backup in your Google account. You'll sign in right after your Project is created."
+        },
+        "bdest:onedrive": {
+          "title": "OneDrive",
+          "text": "Keeps the backup in your Microsoft account. You'll sign in right after your Project is created."
+        },
+        "bdest:s3": {
+          "title": "S3 or B2",
+          "text": "A cloud storage bucket you rent. Good if you already have one; you add its access details after your Project is created."
+        },
+        "bdest:sftp": {
+          "title": "Another server",
+          "text": "A server you can reach over SFTP or WebDAV keeps the backup, like one at work or a friend's."
+        },
+        "bdest:none": {
+          "title": "Not now",
+          "text": "No separate backup for now. Safe History still keeps versions with your Project; add a backup later in Settings."
+        }
+      },
+      "away": {
+        "pick:home": {
+          "title": "Only at home",
+          "text": "Your devices reach the Server on your home network, or on a private network you already use, called a VPN."
+        },
+        "pick:anywhere": {
+          "title": "Away from home",
+          "text": "Tailscale connects your devices through a private network. Sign in once to reach your Server while you are away from home."
+        },
+        "route:headscale": {
+          "title": "My own Headscale server",
+          "text": "Like Tailscale, but run on a server of your own. Pick it only if you already run Headscale."
+        },
+        "route:reverse_proxy": {
+          "title": "My own web address",
+          "text": "Puts it on a web address you own, like pm.example.com. Puppet Master sets up Caddy with a free certificate."
+        },
+        "route:remote_link": {
+          "title": "Puppet Master Remote Link",
+          "text": "Puppet Master carries the connection between your devices. Use its private link without changing your network settings."
+        },
+        "field:proxy": {
+          "title": "Web address",
+          "text": "The address you own and want to use, starting with https://, like https://pm.example.com."
+        },
+        "hosting:generate_for_server": {
+          "title": "Puppet Master sets it up",
+          "text": "Puppet Master sets up the proxy (the program that answers on that address) for you. The easiest way."
+        },
+        "hosting:generate_only": {
+          "title": "Only make the settings file",
+          "text": "You get the file to use with a proxy you set up yourself. For people who manage their own."
+        },
+        "hosting:existing_proxy": {
+          "title": "I already have one",
+          "text": "Your address already points at a proxy you run. Puppet Master just uses it."
+        },
+        "tls:lets_encrypt": {
+          "title": "A free certificate",
+          "text": "The certificate makes the address safe to use (the padlock in your browser). A free one renews by itself."
+        },
+        "tls:existing_certificate": {
+          "title": "My own certificate",
+          "text": "Use a certificate you already have for that address."
+        },
+        "group:kind": {
+          "title": "Which proxy",
+          "text": "Caddy is the default. NGINX, Traefik and Nginx Proxy Manager are also supported. Pick the one you already use."
+        },
+        "field:link": {
+          "title": "Remote Link",
+          "text": "Paste the Remote Link here. Your Server shows it under Settings › Access."
+        }
+      },
+      "review": {
+        "group:edit": {
+          "title": "Edit",
+          "text": "Goes back to change this choice. Your Project hasn't been created yet."
+        }
+      },
+      "creating": {
+        "retry": {
+          "title": "Try again",
+          "text": "Tries the unfinished step again. Work that already finished is kept."
+        },
+        "rename": {
+          "title": "Change the name",
+          "text": "Pick another name for the online copy, since that one is already used there."
+        },
+        "skipOnline": {
+          "title": "Skip the online copy",
+          "text": "Finish without the online copy. You can add one later from Settings."
+        },
+        "askSkip": {
+          "title": "Skip the online copy",
+          "text": "Finish without the online copy. You can add one later from Settings."
+        },
+        "confirmDelete": {
+          "title": "Delete the online copy",
+          "text": "Deletes only the online copy named here. This can't be undone; your files here are kept."
+        },
+        "cancelDelete": {
+          "title": "Keep it",
+          "text": "Keeps the online copy and returns to the recovery choices."
+        },
+        "continueSetup": {
+          "title": "Continue Setup",
+          "text": "Picks up the setup where it stopped, using the online copy that was already made."
+        },
+        "openRepo": {
+          "title": "Open the online copy",
+          "text": "Opens the online copy on its website, so you can see what was made."
+        },
+        "deleteRepo": {
+          "title": "Delete the online copy",
+          "text": "Deletes only the online copy, and can't be undone. Your files here are not touched."
+        },
+        "checkAgain": {
+          "title": "Check again",
+          "text": "Asks the service again how the setup went. Nothing is retried or deleted on its own."
+        },
+        "reviewAgain": {
+          "title": "Review setup again",
+          "text": "Goes back to the review to start a fresh attempt. The old one is never reused."
+        }
+      },
+      "protect": {
+        "step:signin": {
+          "title": "Sign in or connect",
+          "text": "Lets Puppet Master reach the place your backups go. You do it once."
+        },
+        "step:test": {
+          "title": "Run a quick test",
+          "text": "Makes a small backup and reads it back, to prove it works before you rely on it."
+        },
+        "step:kit": {
+          "title": "Save your Recovery Kit",
+          "text": "The Recovery Kit is the only way back in if this computer is lost. Keep it somewhere safe, like a password manager."
+        },
+        "step:kitTest": {
+          "title": "Check your Recovery Kit",
+          "text": "Opens the backup with the kit you saved, so you know it is the right one before you need it."
+        },
+        "step:policy": {
+          "title": "Turn on daily backups",
+          "text": "Turns on an automatic backup each night, while the computer doing the work and the backup place are available."
+        },
+        "stepUp": {
+          "title": "Confirm it's you",
+          "text": "The kit is shown only to you, once, on this device. This makes sure it is really you asking."
+        },
+        "later": {
+          "title": "Do this later",
+          "text": "Your Project is ready either way. Backups wait until you finish these steps."
+        }
+      },
+      "ai": {
+        "all": {
+          "title": "See all providers",
+          "text": "Every AI Puppet Master works with, in two groups: monthly plans and pay-as-you-go accounts."
+        },
+        "none": {
+          "title": "I don't have any of these",
+          "text": "No AI account yet? Shows the kinds there are, so you can pick one that suits you."
+        },
+        "skip": {
+          "title": "Skip for now",
+          "text": "Puppet Master can't plan or work until an AI is added. Add one any time from Settings."
+        },
+        "free": {
+          "title": "Set Up Free Models",
+          "text": "Add free options for suitable tasks. Availability and limits can vary, and your paid accounts are used first."
+        },
+        "group:install": {
+          "title": "Install",
+          "text": "This AI needs its own app on the computer that does the work. Puppet Master uses the maker's official installer."
+        }
+      },
+      "ai-all": {
+        "field:q": {
+          "title": "Search",
+          "text": "Type a name, like Claude, Gemini or OpenCode, to find it quickly."
+        }
+      },
+      "ai-none": {
+        "pick:sub": {
+          "title": "A monthly plan",
+          "text": "Like Claude or ChatGPT. One price each month, and the simplest place to start."
+        },
+        "pick:api": {
+          "title": "Pay as you go",
+          "text": "Like the Anthropic or Gemini API. You pay for what you use, which suits light or occasional use."
+        },
+        "pick:free": {
+          "title": "Free Models",
+          "text": "Free options with limits. Good for trying things out before you pay for anything."
+        },
+        "group:signup": {
+          "title": "Sign-up pages",
+          "text": "Opens that company's own sign-up page in your browser. Come back here once you have an account."
+        }
+      },
+      "free": {
+        "route:free-openrouter": {
+          "title": "OpenRouter free models",
+          "text": "A site that offers several AI models for free, with limits. You sign in on its page."
+        },
+        "route:free-github-models": {
+          "title": "GitHub Models",
+          "text": "Free AI from GitHub, with limits. Uses your GitHub account, so it is ready by itself once you sign in to GitHub here."
+        },
+        "route:free-cerebras": {
+          "title": "Cerebras free tier",
+          "text": "Cerebras's free option, known for quick answers. Limits apply."
+        },
+        "route:free-groq": {
+          "title": "Groq free tier",
+          "text": "Groq's free option. It is popular, so it can be busy for a while."
+        },
+        "route:free-hf": {
+          "title": "Hugging Face Inference",
+          "text": "Free AI from Hugging Face, a big library of models. Limits apply."
+        },
+        "attribution": {
+          "title": "Where this list comes from",
+          "text": "The free model list is based on a community list. Opens it in your browser."
+        }
+      },
+      "ready": {
+        "summary:free": {
+          "title": "Free Models",
+          "text": "Free options with limits, good for trying things out. Your paid accounts are always used first."
+        },
+        "summary:backup": {
+          "title": "Backup",
+          "text": "A full copy of your Project kept somewhere else. Not set up yet? Add one any time in Settings."
+        },
+        "createNow": {
+          "title": "Create a Project now",
+          "text": "Goes back to make your first Project now. What you already set up stays as it is."
+        }
+      },
+      "nas-find": {
+        "method:ssh": {
+          "title": "SSH",
+          "text": "Recommended. A secure way to reach the device. Puppet Master uses a key, so no password is kept."
+        },
+        "method:smb": {
+          "title": "SMB",
+          "text": "Windows and Mac file sharing. Pick it for a shared folder you already open from your computer."
+        },
+        "method:nfs": {
+          "title": "NFS",
+          "text": "File sharing many NAS devices and Linux computers use. Pick it if your device shares that way."
+        },
+        "method:mounted": {
+          "title": "Already connected",
+          "text": "A drive this computer already shows in its file browser. Nothing more to connect."
+        },
+        "group:device": {
+          "title": "Choose a device",
+          "text": "Devices Puppet Master found on your network. Nothing is changed by looking."
+        },
+        "field:addr": {
+          "title": "Address",
+          "text": "Where to reach the device, like 192.168.1.20 or nas.local."
+        },
+        "field:port": {
+          "title": "Port",
+          "text": "The door number SSH answers on. Leave it at 22 unless whoever set up the device changed it."
+        },
+        "manualOn": {
+          "title": "Type an address instead",
+          "text": "Enter its address yourself if the device does not show up."
+        },
+        "group:share": {
+          "title": "Shared folders found",
+          "text": "Folders the device shares on your network. Pick the one with the files."
+        },
+        "group:volume": {
+          "title": "Connected drives",
+          "text": "Drives this computer already shows in its file browser."
+        }
+      },
+      "nas-identity": {
+        "trust": {
+          "title": "Yes, this is my device",
+          "text": "Every device has its own picture. Choose this when it matches what your device shows in its settings."
+        },
+        "trustNew": {
+          "title": "Trust the new ID",
+          "text": "Only if you reset the device yourself. Otherwise something may be pretending to be it, so stop."
+        },
+        "stop": {
+          "title": "Stop",
+          "text": "Stops here and connects to nothing. The safe choice when you didn't reset the device."
+        }
+      },
+      "nas-key": {
+        "group:pick": {
+          "title": "Choose a key",
+          "text": "A key lets Puppet Master connect without a password. These are on the computer that will connect; only the part safe to share is read."
+        },
+        "pick:new": {
+          "title": "Make a new key",
+          "text": "A key just for Puppet Master. Easy to remove later, and it doesn't touch your other keys."
+        },
+        "field:pass": {
+          "title": "Passphrase",
+          "text": "The password that locks this key. It unlocks the key on this computer and isn't saved."
+        }
+      },
+      "nas-signin": {
+        "field:user": {
+          "title": "Username",
+          "text": "The name you use for the device's web page."
+        },
+        "field:pw": {
+          "title": "Password",
+          "text": "Used once to add your key. Never saved. After this, no password is needed."
+        },
+        "selfOn": {
+          "title": "I'll add the key myself",
+          "text": "Shows the line to add to the device yourself, so you never type your password here."
+        },
+        "selfOff": {
+          "title": "Add it for me",
+          "text": "Puppet Master adds the key for you with your password, used once and never saved."
+        },
+        "copy:pub": {
+          "title": "Copy the key line",
+          "text": "Copies the public half of your key, the part that is safe to share, to add on the device."
+        }
+      },
+      "nas-install": {
+        "fixPerms": {
+          "title": "Fix the folder permissions",
+          "text": "The device refused the key because its home folder is shared too widely. This tightens it so the key works."
+        }
+      },
+      "nas-pmpair": {
+        "useSsh": {
+          "title": "Use SSH instead",
+          "text": "Connect with a key instead of pairing. Only needed if you would rather not pair with its Puppet Master."
+        },
+        "another": {
+          "title": "Choose another way",
+          "text": "Pick a different way to approve this computer, like a code instead of a request."
+        },
+        "field:pmcode": {
+          "title": "Code from the device",
+          "text": "The 8 letters and numbers its Puppet Master shows, like A7K9-M2Q4."
+        },
+        "resend": {
+          "title": "Send it again",
+          "text": "Asks for the request to be shown again, if you missed it."
+        }
+      },
+      "nas-folder": {
+        "group:cd": {
+          "title": "Choose a folder",
+          "text": "Open folders to find the right one. Read-only folders cannot hold a Project."
+        },
+        "adding": {
+          "title": "New folder",
+          "text": "Makes a fresh folder for the Project. It is made when you create the Project."
+        },
+        "field:newName": {
+          "title": "Folder name",
+          "text": "A name for the new folder, like the Project name."
+        }
+      },
+      "nas-smb": {
+        "field:user": {
+          "title": "Username",
+          "text": "The name you use for the shared folder. Your sign-in stays in your computer's password store."
+        },
+        "field:pw": {
+          "title": "Password",
+          "text": "The password for the shared folder. It stays in your computer's password store, not in Puppet Master."
+        }
+      },
+      "nas-mounted": {
+        "group:volume": {
+          "title": "Choose the drive",
+          "text": "Drives this computer already shows in its file browser. Pick the one that holds the Project."
+        }
+      }
+    },
+    "say": {
+      "welcome": {
+        "wake": "Oh! Hi. I'm Pip.",
+        "wakeAgain": "Oh! Hello again.",
+        "resumed": "You're back! I kept your place.",
+        "returning": "Welcome back. I found your things."
+      },
+      "look": {
+        "enter": "Dress me up. It changes everything.",
+        "keep": "Your look's kept. Change it if you like.",
+        "pickFamily:basic": "Clean and calm. Very tidy.",
+        "pickFamily:friendly": "Soft and cosy. I like it.",
+        "pickFamily:glass": "Ooh, shiny. Am I glass now?",
+        "pickFamily:retro": "Retro! Straight out of an old computer.",
+        "pickNier": "NieR? I can do stoic.",
+        "pickMode:light": "Light it is. Bright and clear.",
+        "pickMode:dark": "Dark. Easy on the eyes.",
+        "nierOff": "Back to my usual self."
+      },
+      "where": {
+        "enter": "Where shall we do the work?",
+        "pick:this": "Right here works great.",
+        "pick:connect": "Let's tie your devices together.",
+        "pick:server": "A server never sleeps. Lucky thing.",
+        "checking": "Just checking this computer…",
+        "checked": "Plenty of room. All good!",
+        "offline": "No internet? Local work still works."
+      },
+      "c-route": {
+        "enter": "Looking for your Puppet Master…",
+        "found": "Found one! Is that yours?",
+        "group:pickServer": "That one? I'll string us together.",
+        "route:local_or_vpn": "Same network. Nice and close.",
+        "route:tailscale": "Tailscale reaches it from anywhere.",
+        "route:reverse_proxy": "Your own web address. Fancy.",
+        "route:remote_link": "A Remote Link? Paste it in.",
+        "typing": "Type it in. I'll go and knock."
+      },
+      "c-review": {
+        "enter": "It'll ask if it's really you.",
+        "pairing:approval": "Tap approve on your other device.",
+        "pairing:code": "A code! I love a secret.",
+        "pairing:qr": "Say cheese to the QR code!"
+      },
+      "c-pair": {
+        "enter": "Do our pictures match?",
+        "waiting": "Waiting for your OK over there…",
+        "qr": "Hold it steady…",
+        "typing": "Ooh, a code. Read it carefully.",
+        "checking": "Checking the code…",
+        "done": "Paired! We're tied together now."
+      },
+      "c-ready": {
+        "enter": "Connected! Open one, or start fresh.",
+        "empty": "No Projects there yet. Make the first!",
+        "createNew": "Something new? I'll fetch a page.",
+        "group:pickProject": "Ooh, that one. Shall we open it?"
+      },
+      "s-kind": {
+        "enter": "What kind of computer will it be?",
+        "kind:nas": "A NAS! It never takes a nap.",
+        "kind:cloud": "A computer in the clouds. Ooh.",
+        "kind:pc": "Another computer that stays on. Handy."
+      },
+      "s-wait": {
+        "enter": "Waiting for it to show up…",
+        "found": "There it is! Shall we set it up?",
+        "typing": "An address! I'll go and look.",
+        "copied": "Copied. Paste it over there."
+      },
+      "s-confirm": {
+        "enter": "Give it a name you'll know.",
+        "typing": "Ooh, what shall we call it?",
+        "group:suggest": "That name suits it.",
+        "working": "Making it yours…",
+        "selfMatch": "Same words? Then tick the box.",
+        "done": "It's yours now!"
+      },
+      "s-ready": {
+        "enter": "Your Server is ready! Bring friends.",
+        "waiting": "Someone wants in. Check the words.",
+        "approved": "Welcome aboard, new device!",
+        "denied": "Not that one. Door's shut.",
+        "newCode": "Fresh code, coming up."
+      },
+      "r-source": {
+        "enter": "Where's the backup kept?",
+        "source:kit": "The Recovery Kit! The very best key.",
+        "source:folder": "A folder, or a drive you plugged in.",
+        "source:nas": "On the NAS? I'll go and fetch it.",
+        "source:cloud": "Up in the cloud. I'll bring it down.",
+        "typing": "Ooh, bucket details. I'll be careful."
+      },
+      "r-unlock": {
+        "enter": "Read me the six words.",
+        "typing": "A secret phrase. I won't keep it.",
+        "unlocked": "Unlocked! Let's see what's inside."
+      },
+      "r-pick": {
+        "enter": "Which copy shall we bring back?",
+        "group:pick": "That one? Newest is usually best."
+      },
+      "r-preview": {
+        "enter": "Here's everything that comes back.",
+        "working": "Bringing it all back…",
+        "done": "All back, just as it was."
+      },
+      "r-done": {
+        "enter": "Everything's back! Welcome home.",
+        "group:pickProject": "Open that one first?",
+        "createNew": "Or start something new!"
+      },
+      "begin": {
+        "enter": "How shall we start?",
+        "server": "We'll keep it next to the work.",
+        "pick:new": "A blank page. My favourite.",
+        "pick:existing": "Bring it in. I'll learn my way round.",
+        "pick:restore": "Back from the archive, good as new.",
+        "sub:folder": "A folder you already have. Easy.",
+        "sub:online": "Online? I'll fetch a copy.",
+        "sub:device": "On another device? I'll go and look.",
+        "later": "Later's fine. I'll wait."
+      },
+      "ex-folder": {
+        "enter": "Which folder is it?",
+        "reading": "Peeking inside. Touching nothing…",
+        "hasHistory": "It keeps its own history. Neat!",
+        "noHistory": "No history yet. I'll start one."
+      },
+      "name": {
+        "empty": "What shall we call it?",
+        "named": "“{name}”. Lovely.",
+        "group:suggest": "Ooh, good one.",
+        "loc:auto": "In Documents. Easy to find.",
+        "loc:custom": "Somewhere else? Show me where.",
+        "loc:network": "On the network drive. Fancy.",
+        "storage:with_server": "Right next to the work. Smart.",
+        "storage:this_device": "Kept here, worked on there.",
+        "storage:network_location": "On a shared drive. Got it."
+      },
+      "like": {
+        "enter": "Copy a Project you already trust?",
+        "pick:fresh": "Fresh and new. Clean slate!",
+        "group:pick": "Same setup as that one? Smart."
+      },
+      "online-service": {
+        "enter": "Where should the copy live?",
+        "enterSource": "Where is it kept online?",
+        "pick:github": "GitHub. Free and very popular.",
+        "pick:gitlab": "GitLab. A good home for it.",
+        "pick:azure_devops": "Azure DevOps. Very proper.",
+        "pick:bitbucket_cloud": "Bitbucket. In it goes.",
+        "pick:forgejo": "Forgejo. Where shall we find yours?",
+        "pick:gitea": "Gitea. Small and tidy.",
+        "pick:github_enterprise": "Your company's GitHub. Got it.",
+        "pick:cursor_origin": "Cursor Origin. Still a preview!",
+        "typing": "Ooh, your own server's address."
+      },
+      "online-signin": {
+        "enter": "Sign in. I'll only ask for this one.",
+        "known": "You're signed in already. Use it?",
+        "waiting": "Over to your browser. I'll wait.",
+        "code": "Type this code over there.",
+        "typing": "Ooh, a token. Into the keychain.",
+        "create": "Make your account, then come back!",
+        "done": "Signed in! Thank you."
+      },
+      "online-details": {
+        "enter": "This is its name online.",
+        "typing": "Ooh, a name for the copy.",
+        "available": "That name's free. Lovely.",
+        "vis:private": "Just you, and who you invite.",
+        "vis:public": "Everyone can see this copy.",
+        "vis:internal": "Only your organization. Cosy."
+      },
+      "ex-repos": {
+        "enter": "Which Project shall I fetch?",
+        "typing": "Ooh, let's find it.",
+        "group:pick": "That one? I'll copy it over.",
+        "empty": "Hmm, I can't see any here."
+      },
+      "safe": {
+        "enter": "Every version goes in the vault.",
+        "backend:git": "Git keeps track of your changes.",
+        "backend:jujutsu": "Jujutsu. Mistakes undo easily.",
+        "install": "I'll install it while we build.",
+        "keeps": "It keeps its own history. Good.",
+        "filesafe": "An extra safety copy before big changes.",
+        "filesafeOn": "FileSafe on. Extra careful!",
+        "filesafeOff": "FileSafe off. History stays on.",
+        "online": "A copy in the cloud, just in case.",
+        "backup": "A backup box. Sensible.",
+        "bdest:nas": "On your home NAS. Close by.",
+        "bdest:gdrive": "Google Drive. Up it goes.",
+        "bdest:onedrive": "OneDrive. Safe in the cloud.",
+        "bdest:s3": "A bucket! I love a bucket.",
+        "bdest:sftp": "Another server. Very safe.",
+        "bdest:none": "Not now? Later's fine.",
+        "sync": "Your other devices will see it too."
+      },
+      "away": {
+        "enter": "Should it answer when you're out?",
+        "pick:home": "Home it is. I'll keep the lights on.",
+        "pick:anywhere": "I'll come with you. Anywhere.",
+        "route:headscale": "Your own Headscale. Very handy.",
+        "route:reverse_proxy": "Your own web address. Smart.",
+        "route:remote_link": "A private link through the relay.",
+        "typing": "Ooh, an address. Type away."
+      },
+      "review": {
+        "enter": "Let me check everything…",
+        "checked": "All checked. Ready when you are.",
+        "later": "Nothing gets made yet. That's fine.",
+        "changed": "Something changed. Take a peek.",
+        "group:edit": "Change that? Go on."
+      },
+      "creating": {
+        "folder": "Laying the first block…",
+        "history": "Saving the very first version…",
+        "historyInstall": "Fetching {kind} first…",
+        "clone": "Copying it down from {service}…",
+        "restore": "Unpacking the backup…",
+        "device": "Reaching over to {device}…",
+        "online": "Making the online copy…",
+        "settings": "Bringing your settings across…",
+        "remote": "Opening a door for later…",
+        "check": "Checking it all holds…",
+        "last": "And the last one…",
+        "done": "Built! Every block in place.",
+        "doneLater": "All set up. A Project can wait.",
+        "closeOk": "Close me if you like. I'll keep going."
+      },
+      "protect": {
+        "enter": "Let's finish setting up your backup.",
+        "step:signin": "First, let's reach your backup.",
+        "step:test": "A quick test run…",
+        "step:kit": "Save your kit somewhere safe.",
+        "step:kitTest": "Let's be sure the kit opens it.",
+        "step:policy": "Every night, all by itself.",
+        "working": "Working on it…",
+        "done": "Protected! Next backup tonight."
+      },
+      "ai": {
+        "checking": "Looking for power…",
+        "none": "No power yet. I'll nap.",
+        "one": "Power! I can think now.",
+        "many": "{n} power sources. I feel brilliant.",
+        "installing": "Installing it the official way…",
+        "signingIn": "Over to your browser. I'll wait.",
+        "typing": "Ooh, a key. I'll keep it secret.",
+        "testing": "Trying it…",
+        "free": "Free models? Good for a start."
+      },
+      "ai-all": {
+        "enter": "Every AI I can work with.",
+        "typing": "Ooh, who are we looking for?"
+      },
+      "ai-none": {
+        "enter": "No AI yet? That's fine.",
+        "pick:sub": "One price a month. Simple.",
+        "pick:api": "Pay for what you use. Fair.",
+        "pick:free": "Free! With a few limits."
+      },
+      "free": {
+        "enter": "Free models, for lighter jobs.",
+        "working": "Setting it up…",
+        "ready": "That one's ready!"
+      },
+      "ready": {
+        "enter": "We're ready. Let's make something!",
+        "later": "All set. Make a Project whenever!"
+      },
+      "nas-find": {
+        "enter": "Looking on your network…",
+        "group:device": "That one? I'll knock gently.",
+        "method:ssh": "SSH. The safe way in.",
+        "method:smb": "A shared folder. Easy.",
+        "method:nfs": "NFS. The classic way.",
+        "method:mounted": "Already plugged in? Even easier.",
+        "sshOff": "Flip SSH on, and I'll try again.",
+        "pm": "It runs Puppet Master too! No keys.",
+        "typing": "An address! I'll go and knock."
+      },
+      "nas-identity": {
+        "enter": "Is this your device? Check its picture.",
+        "known": "We've met before. Same picture!",
+        "trusted": "Trusted. Onward!"
+      },
+      "nas-key": {
+        "enter": "Which key shall we use?",
+        "looking": "Looking for your keys…",
+        "group:pick": "That key? Let's see what it needs.",
+        "works": "That key already works here!",
+        "locked": "That key needs unlocking first.",
+        "notAdded": "That key isn't on it yet. I'll add it.",
+        "pick:new": "A brand-new key, just for me!",
+        "typing": "A passphrase. I won't peek.",
+        "testing": "Testing the key…"
+      },
+      "nas-signin": {
+        "enter": "Just once, to add your key.",
+        "typing": "I won't keep the password.",
+        "self": "Add this line, then tell me."
+      },
+      "nas-install": {
+        "enter": "Tying the knot…",
+        "done": "Connected! No password kept."
+      },
+      "nas-pmpair": {
+        "enter": "Compare the pictures, then approve.",
+        "waiting": "Waiting for the OK over there…",
+        "typing": "Ooh, a code. Read it carefully.",
+        "done": "Paired! No keys needed."
+      },
+      "nas-folder": {
+        "enter": "Which folder holds the files?",
+        "storage": "Where should the files go?",
+        "typing": "Ooh, a new folder."
+      },
+      "nas-smb": {
+        "enter": "Sign in to the shared folder.",
+        "typing": "Into the keychain it goes.",
+        "checking": "Checking I can read it…"
+      },
+      "nas-nfs": {
+        "enter": "Opening the share…",
+        "done": "I can read it. Lovely."
+      },
+      "nas-mounted": {
+        "enter": "Which drive is it on?",
+        "group:volume": "That drive? Easy."
+      }
+    },
+    "oops": {
+      "name": {
+        "empty": "It needs a name first!",
+        "long": "That won't fit on my sign!",
+        "exists": "Oh! You already have one called that."
+      },
+      "missing": {
+        "name": "A name first, please!",
+        "folder": "Which folder? Pick one first.",
+        "repository": "Pick the online Project first.",
+        "backup": "Which backup? Pick one first.",
+        "storage": "Where should the files go?",
+        "signin": "Sign in first, then on we go.",
+        "server": "Pick your Puppet Master first.",
+        "azureProject": "Pick the Azure DevOps project first.",
+        "remoteLink": "I need the Remote Link first.",
+        "proxyAddress": "I need your web address first.",
+        "headscale": "I need the Headscale address."
+      },
+      "connect": {
+        "route": {
+          "none": "Hmm, I can't find it yet."
+        },
+        "pair": {
+          "codeWrong": "Hmm, that code doesn't match.",
+          "expired": "Oh, that request ran out of time."
+        }
+      },
+      "server": {
+        "confirm": {
+          "codeWrong": "That setup code doesn't match.",
+          "ownerFail": "The Server turned that step down.",
+          "evidenceMissing": "I couldn't confirm that step finished.",
+          "pendingHost": "No answer from the Server yet…"
+        },
+        "ready": {
+          "staleReq": "That request used the old code.",
+          "staleAdopt": "That answer was for an old code.",
+          "wrongTarget": "That answer was meant for someone else!",
+          "replayAdopt": "That answer was used already.",
+          "codeMissing": "We need a new code first.",
+          "wordsMissing": "I can't see its words. Ask again?"
+        }
+      },
+      "restore": {
+        "unlock": {
+          "wrong": "Hmm, those words don't unlock it."
+        }
+      },
+      "protect": {
+        "accessMissing": "I need all three to connect.",
+        "testFailed": "That kit didn't open the backup.",
+        "ownerFail": "That step didn't finish.",
+        "pendingHost": "Still waiting for an answer…"
+      },
+      "nas": {
+        "find": {
+          "noAnswer": "Nobody answered at that address.",
+          "stillOff": "SSH is still switched off there."
+        },
+        "identity": {
+          "changedTitle": "Wait! Its ID has changed."
+        },
+        "key": {
+          "passEmpty": "I need the passphrase first.",
+          "old": "That key is too old. Choose another."
+        },
+        "signin": {
+          "wrong": "It didn't take that sign-in.",
+          "lockout": "Careful, it may lock us out.",
+          "selfNot": "The key isn't there yet."
+        },
+        "install": {
+          "fail": {
+            "wrong_password": "It didn't accept the password.",
+            "refused": "It refused the key. Folder trouble.",
+            "not_allowed": "This account can't use SSH there.",
+            "cancelled": "The passphrase box was closed.",
+            "not_added": "The key isn't on it yet."
+          }
+        },
+        "folder": {
+          "readOnly": "I can't write in that folder."
+        }
+      },
+      "online": {
+        "signin": {
+          "tokenBad": "Hmm, that token didn't work.",
+          "admin": "Sign-ups are off on that server.",
+          "fail": "Oh no. That sign-in didn't finish."
+        },
+        "details": {
+          "taken": "That name's already taken there."
+        }
+      },
+      "safe": {
+        "backup": {
+          "nasSame": "A backup there wouldn't be safe."
+        }
+      },
+      "review": {
+        "backupDropped": "I took that backup off. Pick again?"
+      },
+      "creating": {
+        "failTitle": "Almost! One part didn't finish.",
+        "taken": "{service} already has that name.",
+        "network": "The connection dropped. Oh dear.",
+        "settingsPublishError": "The settings didn't finish. Nearly!",
+        "recovery": {
+          "notice": "It's half made. Let's finish it.",
+          "failedLead": "Nothing was made yet. Try again?",
+          "pending": "Waiting for its answer…",
+          "mismatch": "That answer doesn't match. Odd.",
+          "unknown": "I'm not sure how that went yet.",
+          "reasons": {
+            "waitingHost": "Waiting for the setup service…",
+            "claimBusy": "Another setup is still running. I'll wait.",
+            "pending": "Waiting for the setup answer…",
+            "deleteGated": "The service must confirm before deleting.",
+            "noBinding": "No confirmed online copy to open yet.",
+            "noRemote": "No online copy has been confirmed yet.",
+            "stale": "That answer was for the earlier setup.",
+            "mismatch": "That answer doesn't match this setup.",
+            "unknownOnly": "Still unclear. Let's check again.",
+            "confirmFirst": "Check which online copy to delete first.",
+            "openUnavailable": "I can't open that in this preview.",
+            "other": "That isn't available yet. Nothing changed."
+          }
+        }
+      },
+      "look": {
+        "nier": {
+          "missing": "Those choices aren't available here yet."
+        }
+      },
+      "ai": {
+        "keyBad": "Hmm, that key didn't work.",
+        "signinFail": "Oh no. That sign-in didn't go through.",
+        "skipNote": "No AI yet, so I'll nap. Add one later.",
+        "unavailable": "That account isn't here. Sign in again?"
+      },
+      "like": {
+        "unavailable": "That account isn't on this computer."
+      },
+      "free": {
+        "limited": "That one's busy right now. Too popular!"
+      }
+    },
+    "cheer": {
+      "name": {
+        "empty": "Ooh, a name. Lovely.",
+        "long": "Phew. That fits nicely.",
+        "exists": "A brand-new name. Perfect."
+      },
+      "missing": {
+        "name": "Named! On we go.",
+        "folder": "Got the folder!",
+        "repository": "That's the one!",
+        "backup": "Found the backup!",
+        "storage": "A good home for them.",
+        "signin": "Signed in. Onward!",
+        "server": "That's the one!",
+        "azureProject": "Project picked!",
+        "remoteLink": "Link in. Thank you!",
+        "proxyAddress": "Address in. Lovely.",
+        "headscale": "Got it. Thank you!"
+      },
+      "connect": {
+        "route": {
+          "none": "There it is!"
+        },
+        "pair": {
+          "codeWrong": "That's the one. Paired!",
+          "expired": "Fresh request. Try now!"
+        }
+      },
+      "server": {
+        "confirm": {
+          "codeWrong": "Code accepted!",
+          "ownerFail": "Accepted this time!",
+          "evidenceMissing": "Confirmed. All good.",
+          "pendingHost": "There it is. Answered!"
+        },
+        "ready": {
+          "staleReq": "New request. Much better.",
+          "staleAdopt": "Current code. All good.",
+          "wrongTarget": "Right device this time.",
+          "replayAdopt": "All sorted.",
+          "codeMissing": "Fresh code. Go!",
+          "wordsMissing": "There are the words."
+        }
+      },
+      "restore": {
+        "unlock": {
+          "wrong": "Unlocked! Well remembered."
+        }
+      },
+      "protect": {
+        "accessMissing": "All filled in. Thank you!",
+        "testFailed": "The kit works! Keep it safe.",
+        "ownerFail": "Done this time!",
+        "pendingHost": "Answered. On we go!"
+      },
+      "nas": {
+        "find": {
+          "noAnswer": "Someone's home!",
+          "stillOff": "SSH is on! Off we go."
+        },
+        "identity": {
+          "changedTitle": "New ID trusted. Carry on."
+        },
+        "key": {
+          "passEmpty": "Unlocked. Thank you!",
+          "old": "A newer key. Good."
+        },
+        "signin": {
+          "wrong": "In we go!",
+          "lockout": "Got in. Phew!",
+          "selfNot": "Found it! The key is in."
+        },
+        "install": {
+          "fail": {
+            "wrong_password": "Password worked!",
+            "refused": "Fixed! Key accepted.",
+            "not_allowed": "Allowed now. Lovely.",
+            "cancelled": "Unlocked this time!",
+            "not_added": "Key's in. Connected!"
+          }
+        },
+        "folder": {
+          "readOnly": "This one's writable. Good."
+        }
+      },
+      "online": {
+        "signin": {
+          "tokenBad": "Token accepted!",
+          "admin": "Signed in. Sorted!",
+          "fail": "Signed in! There we go."
+        },
+        "details": {
+          "taken": "That name's free. Lovely."
+        }
+      },
+      "safe": {
+        "backup": {
+          "nasSame": "A safer place. Good call."
+        }
+      },
+      "review": {
+        "backupDropped": "A new backup place. Lovely."
+      },
+      "creating": {
+        "failTitle": "All done after all!",
+        "taken": "New name. All made!",
+        "network": "Back online. All made!",
+        "settingsPublishError": "Settings in. All done!",
+        "recovery": {
+          "notice": "Recovered! Every block in.",
+          "failedLead": "Made it this time!",
+          "pending": "Answered. Good.",
+          "mismatch": "It matches now. Good.",
+          "unknown": "A clear answer. Phew.",
+          "reasons": {
+            "waitingHost": "It answered. On we go!",
+            "claimBusy": "My turn now!",
+            "pending": "Answered. Good.",
+            "deleteGated": "Confirmed. Go ahead.",
+            "noBinding": "Confirmed. You can open it.",
+            "noRemote": "Confirmed now.",
+            "stale": "The current answer. Good.",
+            "mismatch": "It matches now. Good.",
+            "unknownOnly": "A clear answer. Phew.",
+            "confirmFirst": "That's the one.",
+            "openUnavailable": "Ready to open.",
+            "other": "Available now."
+          }
+        }
+      },
+      "look": {
+        "nier": {
+          "missing": "All there now."
+        }
+      },
+      "ai": {
+        "keyBad": "That key works. Power!",
+        "signinFail": "Signed in! Second time lucky.",
+        "skipNote": "Power! I can think now.",
+        "unavailable": "Signed in here too. Good."
+      },
+      "like": {
+        "unavailable": "Signed in. All set!"
+      },
+      "free": {
+        "limited": "Reconnected. Ready!"
+      }
+    },
+    "oopsAny": {
+      "screen": "Oops. The note says what to do next.",
+      "field": "Oops. That entry needs another look.",
+      "cheer": "There we go!"
+    },
+    "stage": {
+      "q": {
+        "label": "About {name}",
+        "title": "What is this?"
+      },
+      "note": {
+        "close": "Close tip",
+        "kicker": {
+          "friendly": "Pip's tip",
+          "glass": "Tip",
+          "basic": "Note",
+          "retroDark": "HELP",
+          "retroLight": "NOTE",
+          "nier": "TIPS"
+        }
+      },
+      "bubble": {
+        "name": "PIP"
+      },
+      "nier": {
+        "unit": "PIP // UNIT P-01",
+        "scan": "SCAN",
+        "quest": "QUEST UPDATED",
+        "standby": "STANDBY",
+        "map": "MAP 1:1",
+        "confirmed": "// CONFIRMED"
+      },
+      "retroDark": {
+        "title": "PIP.SYS 1.0",
+        "prompt": "C:\\PIP>",
+        "ok": "[ OK ]",
+        "boot": [
+          "PUPPET MASTER BIOS v1.0",
+          "MEMORY TEST  640K OK",
+          "STRINGS      2 OK",
+          "LOADING PIP.SYS ......"
+        ]
+      },
+      "retroLight": {
+        "title": "PUPPET MASTER · SETUP LOG",
+        "page": "PAGE {n}",
+        "prompt": ">",
+        "ok": "DONE",
+        "boot": [
+          "PUPPET MASTER TELETYPE MODEL 33",
+          "PAPER ...... OK   RIBBON ...... OK",
+          "LOADING PIP ......"
+        ]
+      },
+      "labels": {
+        "working": "Working",
+        "done": "Complete",
+        "oops": "Check this",
+        "keyRefused": "Key refused",
+        "signinFailed": "Sign-in failed",
+        "nameTaken": "Name taken",
+        "awaitingName": "Awaiting name",
+        "noPower": "No power",
+        "connected": "{n} connected"
+      },
+      "screens": {
+        "welcome": {
+          "label": "Wake",
+          "cmd": "pip --wake"
+        },
+        "look": {
+          "label": "Select look",
+          "cmd": "pip dress {look}"
+        },
+        "where": {
+          "label": "The computer",
+          "cmd": "pip lower {prop}"
+        },
+        "c-route": {
+          "label": "Find",
+          "cmd": "pip find --network"
+        },
+        "c-review": {
+          "label": "Confirm",
+          "cmd": "pip pair --{method}"
+        },
+        "c-pair": {
+          "label": "Pairing",
+          "cmd": "pip pair --check"
+        },
+        "c-ready": {
+          "label": "Connected",
+          "cmd": "pip pair  done"
+        },
+        "s-kind": {
+          "label": "Server",
+          "cmd": "pip server --kind {kind}"
+        },
+        "s-wait": {
+          "label": "Waiting",
+          "cmd": "pip server --wait"
+        },
+        "s-confirm": {
+          "label": "Claim",
+          "cmd": "pip server --claim \"{name}\""
+        },
+        "s-ready": {
+          "label": "Server ready",
+          "cmd": "pip server  ready"
+        },
+        "r-source": {
+          "label": "Backup",
+          "cmd": "pip restore --from {source}"
+        },
+        "r-unlock": {
+          "label": "Unlock",
+          "cmd": "pip restore --unlock"
+        },
+        "r-pick": {
+          "label": "Pick a copy",
+          "cmd": "pip restore --pick"
+        },
+        "r-preview": {
+          "label": "Preview",
+          "cmd": "pip restore --preview"
+        },
+        "r-done": {
+          "label": "Restored",
+          "cmd": "pip restore  done"
+        },
+        "begin": {
+          "label": "Project",
+          "cmd": "pip project --{begin}"
+        },
+        "ex-folder": {
+          "label": "Folder",
+          "cmd": "pip open --read-only"
+        },
+        "name": {
+          "label": "Name",
+          "cmd": "pip sign \"{name}\""
+        },
+        "like": {
+          "label": "Settings",
+          "cmd": "pip like --{from}"
+        },
+        "online-service": {
+          "label": "Online copy",
+          "cmd": "pip online --{service}"
+        },
+        "online-signin": {
+          "label": "Sign in",
+          "cmd": "pip signin {service}"
+        },
+        "online-details": {
+          "label": "Online name",
+          "cmd": "pip online --name \"{name}\""
+        },
+        "ex-repos": {
+          "label": "Fetch",
+          "cmd": "pip fetch \"{name}\""
+        },
+        "safe": {
+          "label": "Safe History",
+          "cmd": "pip vault --{kind}"
+        },
+        "away": {
+          "label": "Access",
+          "cmd": "pip reach --{mode}"
+        },
+        "review": {
+          "label": "Review",
+          "cmd": "pip check --all  {done}/{total}"
+        },
+        "creating": {
+          "label": "Building",
+          "cmd": "pip build {phase}  {done}/{total}"
+        },
+        "protect": {
+          "label": "Protect",
+          "cmd": "pip protect --{step}"
+        },
+        "ai": {
+          "label": "Power",
+          "cmd": "pip power --scan"
+        },
+        "ai-all": {
+          "label": "All providers",
+          "cmd": "pip power --list"
+        },
+        "ai-none": {
+          "label": "No AI yet",
+          "cmd": "pip power --help"
+        },
+        "free": {
+          "label": "Free models",
+          "cmd": "pip power --free"
+        },
+        "ready": {
+          "label": "All systems go",
+          "cmd": "pip --go"
+        },
+        "nas-find": {
+          "label": "Find device",
+          "cmd": "pip find --{method}"
+        },
+        "nas-identity": {
+          "label": "Identity",
+          "cmd": "pip check --id"
+        },
+        "nas-key": {
+          "label": "Key",
+          "cmd": "pip key --pick"
+        },
+        "nas-signin": {
+          "label": "Sign in once",
+          "cmd": "pip key --add"
+        },
+        "nas-install": {
+          "label": "Connecting",
+          "cmd": "pip key --install"
+        },
+        "nas-pmpair": {
+          "label": "Pairing",
+          "cmd": "pip pair --device"
+        },
+        "nas-folder": {
+          "label": "Folder",
+          "cmd": "pip cd \"{path}\""
+        },
+        "nas-smb": {
+          "label": "Shared folder",
+          "cmd": "pip mount --smb"
+        },
+        "nas-nfs": {
+          "label": "NFS share",
+          "cmd": "pip mount --nfs"
+        },
+        "nas-mounted": {
+          "label": "Drive",
+          "cmd": "pip mount --drive"
+        }
+      }
+    }
+  },
+  "ai": {
+    "signinFail": {
+      "title": "Didn't sign in",
+      "body": "The sign-in on {vendor}'s page didn't finish, so nothing was connected. Try again, and finish signing in there.",
+      "retry": "Sign in again"
+    },
+    "searchPlaceholder": "Claude, Gemini, OpenCode…"
+  },
+  "online": {
+    "signin": {
+      "fail": {
+        "title": "Didn't sign in",
+        "body": "The sign-in on {name}'s page didn't finish, so nothing was shared. Try again, and finish signing in there.",
+        "retry": "Sign in again"
+      },
+      "createLead": "Finish making your account on {name}'s own page. Setup never asks for your sign-up details.",
+      "createBack": "Account made · Sign in"
+    },
+    "details": {
+      "azure": {
+        "refresh": "Refresh projects",
+        "advanced": "Advanced · Azure team project",
+        "create": "Create a team project on Azure DevOps",
+        "routeMissing": "A team project can't be made from here for this Server. Pick an existing Git project after Refresh projects, or skip the online copy.",
+        "createNote": "The team project is made on Azure DevOps itself. Come back and choose Refresh projects; only a finished Git project can be picked.",
+        "signinFirst": "Sign in to this Azure DevOps first, then refresh the projects.",
+        "pageName": "Azure DevOps team projects",
+        "gitSub": "Git · {id}"
+      }
+    }
+  },
+  "creating": {
+    "settingsPublishError": "Your Project is kept. Its settings still need to finish before it can open. Check again retries only that last step; nothing else is made again."
+  },
+  "welcome": {
+    "meetPip": {
+      "title": "Meet Pip.",
+      "body": "Pip is every agent Puppet Master directs, and you hold the strings. It will walk you through setup."
+    }
+  },
+  "ready": {
+    "meetCrew": {
+      "title": "Meet the crew.",
+      "body": "When Puppet Master runs a Plan, every agent is a Pip in its role's hat: the Coordinator's crown, the Builder's hard hat, the Reviewer's glasses."
+    }
+  }
+}

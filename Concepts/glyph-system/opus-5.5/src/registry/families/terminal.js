@@ -88,6 +88,31 @@
     parts: ['<rect x="8" y="3" width="8" height="18" rx="1.4" class="nx-f"/>']
   });
 
+  /* ---------------------------------------------------------------- new: processes (D14, DL-253) */
+  /* The background-activity domain (D1: "Processes" everywhere): the commands, servers, watchers, browser sessions and
+     scheduled runs agents started. The terminal's >_ in a console frame: the frame gives it the weight of Goal,
+     Subagents and Artifacts beside it in the chat's Activity bar, and keeps it apart from the bare >_ (terminal, below),
+     which means a terminal tab. Its verb: the prompt nudges and the cursor types in. Live, it moves on the 2200 ms beat
+     (pm7-beat.css, .pmg-beat); Reduced Motion shows this rest pose, lit and still. */
+  G.def('processes', {
+    family: F,
+    meaning: 'Processes: the commands, servers, watchers and scripts agents started, running in the background.',
+    role: 'concept',
+    act: 'seq',
+    replaces: ['background-activity concept rw-processes (the chat domain\'s pulse and the status bar\'s terminal mark, D14)'],
+    aliases: [],
+    surfaces: ['status bar processes item (12-14 px)', 'agents and processes panel: Processes tab head', 'chat Activity bar: Processes domain (D4: only while a process runs or needs input)', 'Activity Detail: Processes tab'],
+    note: 'Two moving parts on the beat: the chevron nudges back (1.6 units) as it dims, and 160 ms later the cursor line types ' +
+      'in by its clip. The frame is 18 x 16 with 3-unit corners, so at 12 px it reads as a console, never as the bare ' +
+      'terminal glyph. Colour comes from status, never from the glyph: the Activity bar\'s tone inks in the chat, the glyph ' +
+      'inks (--pmg-ink-*) in the status bar.',
+    parts: [
+      '<rect x="3" y="4" width="18" height="16" rx="3"/>',
+      { els: '<path d="m7 9 3 3-3 3"/>', move: { ax: -1.6, ao: .6, b: 1 } },
+      { els: '<path d="M12.5 15h4.5"/>', move: { ao: .6, ac: '0 9.7 0 11.5', ae: '0 6 0 11.5', ad: 160 } }
+    ]
+  });
+
   /* the panels tab strip's agent marks are these two (panels.js, tab marks); mapped here because this file loads after panels.js */
   G.map('agent-driving', { family: 'panels', replaces: ['panels 32-strip.js agent-driven square (.pmw-agentmark, 10-panels.css:156)'], surfaces: ['panels tab strip (mark slot)'] });
   G.map('agent-cursor', { family: 'panels', replaces: ['panels tab agent mark while the agent is paused (you took over)'], surfaces: ['panels tab strip (mark slot)'] });

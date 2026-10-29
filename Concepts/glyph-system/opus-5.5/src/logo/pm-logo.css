@@ -1,0 +1,124 @@
+/* src/logo/pm-logo.css: Pip's colour roles and shared motion rules (pm-logo.js). OWNER: pm7-found (PM7 build, 2026-10-29).
+ * A mark drawn by PMLogo.mark() paints every part with a role (style="fill:var(--pip-head)"), set here from the painted
+ * look's own tokens, so a look, a light/dark switch or Accent color repaints Pip without a redraw. The roles sit on the
+ * family class of the mark (.pml-f-<family>) and of that family's shared <defs> (#pm-logo-defs-<family>), whose
+ * gradients are painted in the same roles. A family's roles assume the page is painted in that family; a mark of
+ * another look is a file (PMLogo.svg) in its export palette. */
+.pml-defs { position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none; }
+.pml { overflow: visible; }
+
+.pml-f-friendly, .pml-f-glass, .pml-f-basic, .pml-f-retro, .pml-f-nier {
+  --pip-bg: var(--background);
+  --pip-accent: var(--accent-primary, var(--accent-blue));
+  --pip-back: color-mix(in srgb, var(--pip-ctl) 58%, var(--pip-bg));
+}
+/* Friendly: a soft vinyl toy. The control in Friendly's lilac, the head in its accent with a lighter top, peach cheeks. */
+.pml-f-friendly {
+  --pip-ctl: var(--accent-magenta);
+  --pip-pin: color-mix(in srgb, var(--accent-magenta) 80%, black);
+  --pip-str: color-mix(in srgb, var(--text-muted) 85%, var(--text-primary));
+  --pip-head: var(--pip-accent);
+  --pip-head0: color-mix(in srgb, var(--pip-accent) 80%, white);
+  --pip-head1: color-mix(in srgb, var(--pip-accent) 88%, black);
+  --pip-eye: var(--surface);
+  --pip-cheek: color-mix(in srgb, var(--accent-orange) 60%, white);
+}
+html[data-theme$="-light"] .pml-f-friendly {
+  --pip-str: color-mix(in srgb, var(--text-muted) 75%, var(--background));
+  --pip-head0: color-mix(in srgb, var(--pip-accent) 85%, white);
+  --pip-head1: color-mix(in srgb, var(--pip-accent) 92%, black);
+  --pip-eye: color-mix(in srgb, var(--text-primary) 70%, black);
+}
+/* Glass: a clear lens in the accent, a rim lit from above, a bright base, glass rods. No brow band. */
+.pml-f-glass {
+  --pip-rod: color-mix(in srgb, var(--text-primary) 95%, var(--background));
+  --pip-rodback: color-mix(in srgb, var(--pip-rod) 58%, var(--background));
+  --pip-ctl: var(--pip-rod);
+  --pip-pin: var(--pip-accent);
+  --pip-str: var(--text-muted);
+  --pip-head: var(--pip-accent);
+  --pip-tint0: color-mix(in srgb, var(--pip-accent) 30%, white);
+  --pip-tint1: color-mix(in srgb, var(--pip-accent) 80%, white);
+  --pip-tint2: color-mix(in srgb, var(--pip-accent) 85%, black);
+  --pip-frost: rgb(255 255 255 / .10);
+  --pip-rimtop: rgb(255 255 255 / .95);
+  --pip-rimbot: rgb(255 255 255 / .38);
+  --pip-edge: color-mix(in srgb, var(--background) 55%, transparent);
+  --pip-drop: rgb(0 0 0 / .55);
+  --pip-eye: color-mix(in srgb, var(--background) 90%, var(--pip-accent));
+  --pip-cheek: var(--accent-magenta);
+}
+html[data-theme$="-light"] .pml-f-glass {
+  --pip-rod: color-mix(in srgb, var(--text-primary) 85%, var(--background));
+  --pip-str: color-mix(in srgb, var(--text-muted) 80%, var(--background));
+  --pip-tint0: color-mix(in srgb, var(--pip-accent) 27%, white);
+  --pip-tint1: color-mix(in srgb, var(--pip-accent) 63%, white);
+  --pip-tint2: color-mix(in srgb, var(--pip-accent) 82%, white);
+  --pip-frost: rgb(255 255 255 / .18);
+  --pip-rimtop: rgb(255 255 255 / .98);
+  --pip-rimbot: rgb(255 255 255 / .6);
+  --pip-edge: color-mix(in srgb, var(--text-primary) 30%, transparent);
+  --pip-drop: color-mix(in srgb, var(--text-primary) 30%, transparent);
+  --pip-eye: var(--text-primary);
+  --pip-cheek: color-mix(in srgb, var(--accent-magenta) 50%, white);
+}
+/* Basic: flat, one accent, no cheeks. */
+.pml-f-basic {
+  --pip-ctl: var(--text-primary);
+  --pip-pin: color-mix(in srgb, var(--text-primary) 60%, var(--background));
+  --pip-str: color-mix(in srgb, var(--text-muted) 80%, var(--text-primary));
+  --pip-head: var(--pip-accent);
+  --pip-eye: var(--background);
+}
+html[data-theme$="-light"] .pml-f-basic {
+  --pip-ctl: color-mix(in srgb, var(--text-primary) 92%, var(--background));
+  --pip-str: color-mix(in srgb, var(--text-muted) 75%, var(--background));
+  --pip-eye: var(--surface-elevated);
+}
+/* Retro: phosphor on the terminal (dark) and ink on the printout (light). */
+.pml-f-retro {
+  --pip-ctl: var(--text-primary);
+  --pip-back: color-mix(in srgb, var(--text-primary) 58%, var(--surface-elevated));
+  --pip-str: color-mix(in srgb, var(--text-muted) 80%, var(--text-primary));
+  --pip-head: var(--accent-lime);
+  --pip-cheek: var(--accent-orange);
+  --pip-eye: var(--background);
+}
+html[data-theme$="-light"] .pml-f-retro {
+  --pip-back: color-mix(in srgb, var(--text-primary) 58%, var(--background));
+  --pip-str: color-mix(in srgb, var(--text-muted) 80%, var(--background));
+  --pip-cheek: var(--accent-magenta);
+}
+/* NieR: ink on parchment, the error red for a broken state. */
+.pml-f-nier {
+  --pip-ink: var(--o55-nier-ink, var(--text-primary));
+  --pip-paper: var(--o55-nier-raised, var(--surface-elevated));
+  --pip-red: var(--o55-nier-error, var(--accent-error));
+}
+html[data-theme$="-dark"] .pml-f-nier { --pip-paper: var(--surface); }
+
+/* ---- motion every animated mark shares (the per-family keyframes are made by pm-logo.js, one block per family x
+   motion x tier). Nothing moves without an armed host ([data-pml-run="on"]); a drag holds every mark where it is. */
+@keyframes pml-flip8 { 0% { opacity: 1; } 12.5%, 100% { opacity: 0; } }
+@keyframes pml-flip4 { 0% { opacity: 1; } 25%, 100% { opacity: 0; } }
+@keyframes pml-blink { 0%, 70%, 77%, 100% { transform: scaleY(1); } 73.5% { transform: scaleY(.1); } }
+@keyframes pml-hopdot { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-4.2px); } }
+@keyframes pml-breath { 0%, 100% { opacity: 1; } 50% { opacity: .42; } }
+@keyframes pml-rblink { 0%, 42%, 58%, 100% { opacity: 1; } 50% { opacity: .15; } }
+.pml-dot2, .pml-dot3, .pml-dot4 { transform-box: fill-box; }
+body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-pointer-op) [data-pml-run] { --pml-ps: paused; }
+/* Reduced Motion keeps the wait signal and nothing travels (L3, X2): the control breathes in opacity and Pip blinks;
+   a pixel Pip shows its rest frame breathing. Pip's own rules outrank the app's global freeze (animation-duration
+   .01ms !important); the play state stays in --pml-ps, so a drag or the onboarding window still holds them. */
+:root[data-motion="reduced"] [data-pml-run="on"] .pml-a :is(.pml-pup, .pml-str, .pml-eyes, .pml-dot2, .pml-dot3, .pml-dot4) { animation: none !important; }
+:root[data-motion="reduced"] [data-pml-run="on"] .pml-a .pml-ctl { animation: pml-breath var(--pml-rdur, 2.2s) ease-in-out var(--pml-rdelay, 0s) infinite var(--pml-ps, running) !important; }
+:root[data-motion="reduced"] [data-pml-run="on"] .pml-a .pml-blink { animation: pml-rblink var(--pml-bdur, 4.4s) ease-in-out var(--pml-bdelay, 0s) infinite var(--pml-ps, running) !important; }
+:root[data-motion="reduced"] [data-pml-run="on"] .pml-a .pml-fr { animation: none !important; opacity: 0; }
+:root[data-motion="reduced"] [data-pml-run="on"] .pml-a .pml-fr0 { opacity: 1; animation: pml-breath var(--pml-rdur, 2.2s) ease-in-out var(--pml-rdelay, 0s) infinite var(--pml-ps, running) !important; }
+@media (prefers-reduced-motion: reduce) {
+  :root [data-pml-run="on"] .pml-a :is(.pml-pup, .pml-str, .pml-eyes, .pml-dot2, .pml-dot3, .pml-dot4) { animation: none !important; }
+  :root [data-pml-run="on"] .pml-a .pml-ctl { animation: pml-breath var(--pml-rdur, 2.2s) ease-in-out var(--pml-rdelay, 0s) infinite var(--pml-ps, running) !important; }
+  :root [data-pml-run="on"] .pml-a .pml-blink { animation: pml-rblink var(--pml-bdur, 4.4s) ease-in-out var(--pml-bdelay, 0s) infinite var(--pml-ps, running) !important; }
+  :root [data-pml-run="on"] .pml-a .pml-fr { animation: none !important; opacity: 0; }
+  :root [data-pml-run="on"] .pml-a .pml-fr0 { opacity: 1; animation: pml-breath var(--pml-rdur, 2.2s) ease-in-out var(--pml-rdelay, 0s) infinite var(--pml-ps, running) !important; }
+}
