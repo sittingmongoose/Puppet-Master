@@ -32,6 +32,7 @@
  *            data-pml-run="on" (pm-loader.js arms it); NieR marks never animate.
  *   svg(o) -> a self-contained file (inline <style>, literal colours), the concept's API: { theme | look, form =
  *            'glyph' | 'tile' | 'tray', px, dpr, mood, motion, reduced, title, decorative, tier, prefix, tokens }.
+ *   dataUrl(o) -> a still mark as a data: URL; favicon(px = 32) -> the app icon's data: URL (A1: Basic Dark tile).
  *   look() -> the painted look id ('friendly-dark', ..., 'nier-light'); family(look), scheme(look); onLook(cb).
  *   tierFor(px) -> 'micro' | 'small' | 'full'; period({ look | family, motion, px }) -> ms at speed 1.
  *   MOODS, MOOD_STATUS (mood -> status key), STATUS_FACE (status key -> mood), trayFace(states) (A3), moodFor(key).
@@ -1042,6 +1043,8 @@
   }
   // a still mark as a data: URL (the favicon; a static file in the painted look's colours)
   function dataUrl(opts) { return 'data:image/svg+xml,' + encodeURIComponent(svg(Object.assign({ px: 32, decorative: false }, opts || {}, { motion: null }))); }
+  // The favicon is the app icon (A1: one fixed tile, Basic Dark, static); the title-bar lane writes the <link rel="icon">.
+  function favicon(px) { return dataUrl({ look: 'basic-dark', form: 'tile', px: px || 32, title: 'Puppet Master' }); }
 
   /* ------------------------------------------------------------ the clock */
   /* One clock for every Pip motion, so loaders on screen stay in phase and a live Pip can sway with them. It runs on
@@ -1108,15 +1111,17 @@
   // the face that shows a status key (tray, notifications, the chat's status faces); keys with no face show idle
   const STATUS_FACE = Object.freeze({
     idle: 'idle', working: 'working', reviewing: 'working', recovering: 'working', complete: 'happy', waiting: 'alert',
-    blocked: 'alert', failed: 'error', warning: 'oops', offline: 'oops', paused: 'sleep', 'waiting-dep': 'sleep',
+    blocked: 'oops', failed: 'error', warning: 'oops', offline: 'oops', paused: 'sleep', 'waiting-dep': 'sleep',
     pending: 'sleep', skipped: 'idle', off: 'sleep', info: 'idle', mixed: 'oops', 'change-modified': 'idle',
     'change-added': 'idle', 'change-deleted': 'idle', 'change-conflict': 'alert', 'change-renamed': 'idle'
   });
-  /* A3, the tray: one face for the whole app, summed over every Project. needs you (waiting) always wins; then failed,
-     working, complete (shown about 10 s after the work finished), paused (only when everything left is paused), idle.
-     states: [{ key, at? }] or { counts }: the work projection's needs-you set (pm-work.js trayStates()). */
-  const TRAY = Object.freeze({ order: ['waiting', 'failed', 'working', 'complete', 'paused', 'idle'], completeMs: 10000,
-    faces: { idle: 'idle', working: 'working', complete: 'happy', waiting: 'alert', failed: 'error', paused: 'sleep' } });
+  /* A3, the tray: one face for the whole app, summed over every Project, on existing keys only: waiting (needs you,
+     always wins) > failed > blocked > working > paused (only when everything left is paused) > complete (about 10 s
+     after the work finished) > idle. Blocked shows oops, never the needs-you face (B5 keeps them apart). The work
+     projection applies this table to live work (PM_WORK.tray()); trayFace(states) applies it to a plain list
+     [{ key, at? }]. */
+  const TRAY = Object.freeze({ order: Object.freeze(['waiting', 'failed', 'blocked', 'working', 'paused', 'complete', 'idle']), completeMs: 10000,
+    faces: Object.freeze({ waiting: 'alert', failed: 'error', blocked: 'oops', working: 'working', paused: 'sleep', complete: 'happy', idle: 'idle' }) });
   function trayFace(states, now) {
     const t = now == null ? Date.now() : now, list = Array.isArray(states) ? states : [];
     const has = (k) => list.some((s) => s && (s.key === k) && (k !== 'complete' || s.at == null || t - s.at < TRAY.completeMs));
@@ -1127,7 +1132,14 @@
   }
 
   /* ---------------------------------------------------------------- export */
-  const kit = { GEO, R, mix, solid, grad, sticks, anchors, barAttach, eyelets, stringEnds, headPath, headPathNier, faceShapes,
+  // THEMES keeps the concept's shape (label, family, scheme beside the colours) for the live rigs ported from it
+  // (onboarding's stage, the chat's sheet hosts); solidStr is the concept's opaque string colour.
+  const THEMES = Object.freeze(LOOKS.reduce((o, lk) => {
+    o[lk] = Object.assign({ label: lk.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' '), family: familyOf(lk), scheme: schemeOf(lk) }, EXPORT[lk]);
+    return o;
+  }, {}));
+  const solidStr = (th) => (String(th.str).indexOf('rgba') === 0 ? (th.scheme === 'dark' ? '#B9C2D2' : '#5B6476') : th.str);
+  const kit = { GEO, R, mix, solid, solidStr, grad, sticks, anchors, barAttach, eyelets, stringEnds, headPath, headPathNier, faceShapes,
     controlSvg, pipHead, eyeletRings, nierHud, pipNier, ribbonsSvg, RIBBONS, pose, wave, transformsAt, rigFrames, spriteRows,
     pixelRects, nier16, SPRITES, rolePalette, filePalette, roleStyles };
   const solver = {
@@ -1137,9 +1149,9 @@
   };
   G.PMLogo = {
     product: true, version: '1.0',
-    mark, svg, dataUrl, look, onLook, family: familyOf, scheme: schemeOf, tierFor,
+    mark, svg, dataUrl, favicon, look, onLook, family: familyOf, scheme: schemeOf, tierFor,
     period: (o) => { const f = o && o.family || familyOf(o && o.look || look()); return periodOf(f, o && o.motion || 'swing', tierFor(o && o.px || 24, f)); },
-    LOOKS, FAMILIES, MOTION, MOTIONS, THEME_ORDER: LOOKS, THEMES: EXPORT, EXPORT,
+    LOOKS, FAMILIES, MOTION, MOTIONS, THEME_ORDER: LOOKS, THEMES, EXPORT,
     MOODS, MOOD_STATUS, STATUS_FACE, TRAY, trayFace, moodFor: (key) => STATUS_FACE[key] || 'idle',
     clock, solver, kit
   };
