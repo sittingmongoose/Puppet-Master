@@ -29539,6 +29539,10 @@ html[data-theme="glass-light"] .o55-demo[data-o55-narrow] .o55-demopill > svg.nx
   transition: opacity 100ms steps(3, end);
 }
 #pmh-glow[data-pmh-family="retro"] > i:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]).pmh-glow-on { background: transparent; transition: none; }
+/* ...and on a switcher's item it dies in the chip's phosphor, as its rule was drawn: in Retro Light the ghost was the
+   shell's cobalt, a blue block left behind a green rule for 100 ms (2026-10-28 review, astra R7) */
+:root[data-theme="retro-dark"] #pmh-glow[data-pmh-family="retro"] > i[data-pmh-kind="ctl"][data-pmh-variant="chip"]:not(.pmh-glow-on) { background: color-mix(in srgb, var(--pm-switch-mark, var(--accent-primary)) 30%, transparent); }
+:root[data-theme="retro-light"] #pmh-glow[data-pmh-family="retro"] > i[data-pmh-kind="ctl"][data-pmh-variant="chip"]:not(.pmh-glow-on) { background: color-mix(in srgb, var(--pm-switch-mark, var(--accent-primary)) 24%, transparent); }
 /* Reduced Motion: the cursor shows and goes at once, in place (no raise, no step down; the cast and the bar carry the
    state), and leaves no afterimage */
 :root[data-motion="reduced"][data-theme^="retro"]:not(#pmhz):not(#pmhz):not(#pmhz) :where([data-pmh-kind="icon"]:not(.activity-bar .icon)):not(.t7.t7.t7.t7:not(*)):is(.pmh-on, .pmh-on:active, .pmh-on .symbol),
@@ -46557,8 +46561,10 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-chip { border-radius: 0
   75%, 100% { background: var(--accent-lime); color: var(--surface); }
 }
 /* the DOS dashed cut-out (T33): while a tab is carried in Retro the block lifts out and only its dashed outline and
-   phosphor label travel; the reverse-video block returns on drop with one inversion blink */
-.pmw-tab.pmw-rfx-drag { outline: 1px dashed var(--accent-lime); outline-offset: -1px; background: color-mix(in srgb, var(--surface) 35%, transparent); color: var(--accent-lime) !important; }
+   phosphor label travel; the reverse-video block returns on drop with one inversion blink. The cut-out shows the
+   strip's ground, not the tab under it: at 35 % the neighbour's words read through the carried label (2026-10-28
+   review, astra R2) */
+.pmw-tab.pmw-rfx-drag { outline: 1px dashed var(--accent-lime); outline-offset: -1px; background: var(--pmw-strip); color: var(--accent-lime) !important; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-strip.is-dragging .pmw-plate { opacity: 0; }
 .pmw-tab.pmw-rfx-drop { animation: pmw-rfx-drop 280ms steps(1, end); }
 @keyframes pmw-rfx-drop { 0% { background: var(--accent-lime); color: var(--surface); } 50%, 100% { background: transparent; } }
@@ -67088,6 +67094,10 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
   background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint)), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens)), var(--pm-switch-fill, var(--lg-tint-lens))), linear-gradient(var(--pm-switch-body, var(--lg-lens-body)), var(--pm-switch-body, var(--lg-lens-body)));
   box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), inset 0 -1px 1px var(--pm-switch-bottom, var(--lg-edge-bot)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), var(--pm-switch-shadow, var(--lg-lens-drop));
 }
+/* While a tab is carried its plate covers the tabs it crosses (rev 20, home-redesign 10-panels.css): the switcher's
+   material above is translucent, so during a drag it lies on the strip's own ground, and a neighbour's words no longer
+   read through the carried tab (2026-10-28 review, astra R2: both labels at once for the length of the hold) */
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmw-strip.is-dragging .pmw-plate::before { background-color: var(--pmw-strip); }
 /* (2026-10-28 review, muse A1) In Glass a hovered tab's fill is the lens's shape above: 3 px under the tab's top, 4 px
    over its foot, the switcher's corners. It was the tab's own folder crown down to the strip's foot, so the hover and
    the choice were two shapes, as they were in the other looks (whose hover marker takes the chip's shape,
@@ -161799,6 +161809,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (changed && (hover || lit.size)) { moved = true; start(); }
     }
     if (post) post.port1.onmessage = afterFrame;
+    /* the hovered target's own size is watched: an app that answers a click late (the left rail's segment grows to show
+       its label some 300 ms after the press) or a target that grows on its own moves the marker with it, after the
+       frame that resized it, without waiting for the pointer to move (2026-10-28 review, astra R3/R4) */
+    var roEl = null, hoverRO = typeof ResizeObserver === 'function' ? new ResizeObserver(function () { if (hover) afterFrameSoon(); }) : null;
     /* what the proxies need of a target, read once: its box, radius and clipping ancestors */
     /* A target may give its proxies a shape of its own (CSS, on the target): --pmh-radius replaces its border-radius and
        --pmh-inset (top right bottom left, px) shrinks the box they sit on (negative grows it), --pmh-variant names a
@@ -161981,6 +161995,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (kindQueue.length) flushKinds();
       if (enter) swapHover(hover, next, reduced);
       hover = next;
+      if (hoverRO && roEl !== hover) { if (roEl) hoverRO.unobserve(roEl); roEl = hover; if (hover) hoverRO.observe(hover); }
       if (hover && (wasMoved || enter) && !st(hover).nomag) springs.add(st(hover));
       if (calm && hover) springs.add(st(hover));
       if (rest) { if (lit.size) clearField(); }
@@ -162221,6 +162236,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         glowCur = GL[0].host === target ? 0 : GL[1].host === target ? 1 : 1 - glowLastOff;
         cur = GL[glowCur]; cur.host = target;
         if (cur.el.getAttribute('data-pmh-kind') !== s.kind) { cur.el.setAttribute('data-pmh-kind', s.kind); glowEl.setAttribute('data-pmh-kind', s.kind); }
+        /* the layer takes its host's variant too: Retro's afterimage on a switcher's item is the chip's phosphor */
+        if (cur.el.getAttribute('data-pmh-variant') !== (s.variant || null)) { if (s.variant) cur.el.setAttribute('data-pmh-variant', s.variant); else cur.el.removeAttribute('data-pmh-variant'); }
       }
       var b = boxFor(hc), clip = clipFor(b, vis, tok.glowReach);
       placeBox(cur.el, cur.memo, b, s.radius, clip === 'hide' ? '' : clip, tok.snap);
@@ -162324,7 +162341,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }, { capture: true, passive: true });
     document.addEventListener('pointerup', function (e) { pressFrame(false); buttons = e.buttons | 0; recheckSoon(); }, { capture: true, passive: true });
     document.addEventListener('pointercancel', function () { pressFrame(false); }, { capture: true, passive: true });
-    document.addEventListener('click', recheckSoon, { capture: true, passive: true });
+    /* A click's answer can move or resize the boxes under a resting pointer: a long home tab chosen grows to its whole
+       label and its neighbours give way, a rail tab chosen shows its label. The app draws that a frame or two after the
+       click, and some answers animate, so the scope's rects are read again the frame after next and once more when a
+       short transition has ended (afterFrame moves the marker only if a box changed). The marker stayed on the tab's old
+       box until the pointer moved (2026-10-28 review, astra). */
+    document.addEventListener('click', function () {
+      recheckSoon();
+      if (!hover && !proxyShown()) return;
+      requestAnimationFrame(function () { requestAnimationFrame(afterFrameSoon); });
+      setTimeout(afterFrameSoon, 450);
+    }, { capture: true, passive: true });
     /* a character typed into a text field (the terminal's input, a search box) cannot change what is under the pointer:
        no frame for it, so typing costs the engine nothing; Enter, Escape, Tab, shortcuts and keys on anything else
        look again */
@@ -190244,6 +190271,10 @@ var GL_REST_MS = 1400;    // a pointer resting near a bar this long lets the hin
 var GL_DOTS = 15;         // Friendly: the dots shown around the pointer (odd)
 var GL_ECHOES = 3;        // persistence copies (Retro phosphor, Friendly bubbles)
 var GL_POP = '[role="menu"], [role="dialog"], [role="listbox"], .pmw-pop, .pmw-menu';
+/* a pointer on another control is aimed at that control: no idle hint for a bar beside it. A panel's tabs sit within
+   reach of the divider above them, so hovering a terminal tab woke Friendly's dot lens on that divider (2026-10-28
+   review, astra R8). The bar's own hover is not the idle hint and is unaffected. */
+var GL_CTRL = '.pmw-strip, button, a[href], input, select, textarea, [role="tab"], [role="button"]';
 /* the class each drag owner puts on its bar while it is dragged: the shell's resizers and the chat column's
    (resizing), the panel dividers (pmw-active), the DevTools split (is-active) */
 var GL_ACTIVE = ['resizing', 'pmw-active', 'is-active'];
@@ -190518,7 +190549,7 @@ function glNearPass(now) {
   glPtr.dirty = false;
   var allow = glPtr.on && !glPtr.buttons && !glBusy() && !doc.hidden;
   var t = glPtr.target;
-  if (allow && t && t.closest && t.closest(GL_POP)) allow = false;
+  if (allow && t && t.closest && (t.closest(GL_POP) || t.closest(GL_CTRL))) allow = false;
   var fresh = now - glRectsAt > 150;
   if (fresh) glRectsAt = now;
   var best = null, bestD = GL_NEAR_PX;
@@ -194232,11 +194263,27 @@ function rfxRoll() {
   rfxLast = rfxBag.shift();
   return rfxLast;
 }
+/* each element's effect timers are kept by class, and a restarted effect cancels its own earlier end: two quick
+   selections pulsed the strip's pmw-rfx-live twice, and the first one's end brought the plate back under the second
+   effect's phosphor phase, phosphor words on the phosphor block (a blank tab for 80-150 ms in the films, 2026-10-28
+   review, astra R1) */
 function rfxPulse(el, cls, ms) {
+  var timers = el._pmwRfx || (el._pmwRfx = {});
+  clearTimeout(timers[cls]);
   el.classList.remove(cls);
   void el.offsetWidth;
   el.classList.add(cls);
-  setTimeout(function () { el.classList.remove(cls); }, ms);
+  timers[cls] = setTimeout(function () { timers[cls] = 0; el.classList.remove(cls); }, ms);
+}
+/* a selection's effect still drawing on a tab ends at once when the next selection starts: the tab it leaves would
+   otherwise finish its effect (a block filled in forwards) beside the newly chosen one */
+var RFX_TAB = ['pmw-rfx-phos', 'pmw-rfx-crt', 'pmw-rfx-dos'];
+function rfxStop(host) {
+  var drawing = host.querySelectorAll('.pmw-tab.pmw-rfx-phos, .pmw-tab.pmw-rfx-crt, .pmw-tab.pmw-rfx-dos');
+  for (var i = 0; i < drawing.length; i++) {
+    var el = drawing[i], timers = el._pmwRfx || {};
+    RFX_TAB.forEach(function (c) { clearTimeout(timers[c]); timers[c] = 0; el.classList.remove(c); });
+  }
 }
 retro.roll = rfxRoll;
 
@@ -194253,6 +194300,7 @@ bus.on('activate', function (e) {
     var old = strip.tabEl(prev);
     var mode = rfxRoll();
     var ms = RFX_MS[mode];
+    rfxStop(host);
     rfxPulse(host, 'pmw-rfx-live', ms);
     rfxPulse(tab, 'pmw-rfx-' + mode, ms);
     if (mode === 'phos' && old && old !== tab) rfxPulse(old, 'pmw-rfx-glow', RFX_MS.phosGlow);
@@ -302555,8 +302603,11 @@ try {
     var quiet = reduced();
     var still = A && (quiet ? A.x === R.x && A.y === R.y && A.w === R.w && A.h === R.h : Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5);
     if ((quiet && !L.reducedAnim) || !switchOn()) stopLensTravel(L);
-    /* a step's blocks wait for the app to choose their tab; the chip is already at rest on it underneath */
-    if (L.hopFrames && L.hopTarget === target) { hopSettle(L); return; }
+    /* a step's blocks wait for the app to choose their tab; the chip is already at rest on it underneath. Once they go,
+       the chip takes the chosen tab's box in the same sync: a tab that grows when chosen (the left rail's segments show
+       their label) kept the chip at its unchosen width for a lazy sync, its chosen words running off the chip onto bare
+       ground ("Curren", 2026-10-28 review, astra R4) */
+    if (L.hopFrames && L.hopTarget === target) { hopSettle(L); if (L.hopFrames) return; }
     if (still) return;
     if (!A || quiet || !switchOn()) {
       stopLensTravel(L);
@@ -302580,7 +302631,7 @@ try {
     /* the lens travels only when the chosen item changes. The same item seen somewhere else (its page or menu settled,
        the strip scrolled or reflowed) is followed at once (Jared #21: a lens measured mid-entrance slid 50 px into
        place after the page had landed) */
-    if (L.tgt === target && !L.dragging) { if (L.hopFrames) { hopSettle(L); return; } stopLensTravel(L); setLensBox(L, R); return; }
+    if (L.tgt === target && !L.dragging) { if (L.hopFrames) { hopSettle(L); if (L.hopFrames) return; } stopLensTravel(L); setLensBox(L, R); return; }
     L.tgt = target;
     var from = visualRect(L) || A, vertical = !!cfg.vertical || Math.abs(from.y - R.y) > Math.abs(from.x - R.x);
     if (switchMotion !== 'glide' && !isGlass()) { hop(L, from, R, strip, cfg, target, vertical); return; }
@@ -302624,12 +302675,25 @@ try {
     'text-transform', 'text-align', 'text-indent', 'white-space', 'display', 'flex-direction', 'flex-wrap', 'align-items', 'justify-content', 'gap',
     'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width',
     'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', 'box-sizing', 'overflow', 'text-overflow'];
+  var TWIN_KID = ['display', 'visibility', 'opacity', 'max-width', 'margin-left', 'margin-right'];
   function twinOf(item, box, weight) {
     var c = item.cloneNode(true), cs = getComputedStyle(item), css = [];
     TWIN_PROPS.forEach(function (p) { css.push(p + ':' + cs.getPropertyValue(p)); });
-    [c].concat(Array.prototype.slice.call(c.querySelectorAll('[id], [tabindex], [role], [aria-selected], [aria-current], [aria-checked], [aria-pressed], [data-lg-press]'))).forEach(function (n) {
-      ['id', 'tabindex', 'role', 'aria-selected', 'aria-current', 'aria-checked', 'aria-pressed', 'aria-controls', 'aria-label', 'data-lg-press'].forEach(function (a) { n.removeAttribute(a); });
+    [c].concat(Array.prototype.slice.call(c.querySelectorAll('[id], [tabindex], [role], [aria-selected], [aria-current], [aria-checked], [aria-pressed], [data-lg-press], [title], [aria-describedby], [data-pm-hover-key]'))).forEach(function (n) {
+      /* ...nor any hover tag's binding: the tag system bound every copy and unbound it again when the step ended */
+      ['id', 'tabindex', 'role', 'aria-selected', 'aria-current', 'aria-checked', 'aria-pressed', 'aria-controls', 'aria-label', 'data-lg-press',
+        'title', 'aria-describedby', 'data-pm-hover-key', 'data-pm-hover-bound', 'data-pm-hover-kind'].forEach(function (a) { n.removeAttribute(a); });
     });
+    /* what the item hides stays hidden in its copy: the copy has none of the item's classes, so a rule that hides a part
+       by them no longer matched (the rail's unchosen segments hide their label by max-width 0 and opacity 0), and an
+       icon-sized block held the whole label wrapped onto two lines (2026-10-28 review, astra R4). Each part keeps how
+       it is shown, as the item has it now. */
+    var src = item.querySelectorAll('*'), dst = c.querySelectorAll('*');
+    for (var i = 0; i < src.length && i < dst.length; i++) {
+      var ks = getComputedStyle(src[i]), kid = [];
+      TWIN_KID.forEach(function (p) { kid.push(p + ':' + ks.getPropertyValue(p)); });
+      dst[i].style.cssText += ';' + kid.join(';');
+    }
     c.setAttribute('class', 'lg-twin'); c.setAttribute('aria-hidden', 'true'); c.setAttribute('inert', '');
     c.style.cssText = css.join(';') + ';font-weight:' + weight + ';position:absolute;margin:0;left:' + box.x + 'px;top:' + box.y + 'px;width:' + box.w + 'px;height:' + box.h + 'px';
     return c;

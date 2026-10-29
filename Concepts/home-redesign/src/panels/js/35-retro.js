@@ -21,11 +21,27 @@ function rfxRoll() {
   rfxLast = rfxBag.shift();
   return rfxLast;
 }
+/* each element's effect timers are kept by class, and a restarted effect cancels its own earlier end: two quick
+   selections pulsed the strip's pmw-rfx-live twice, and the first one's end brought the plate back under the second
+   effect's phosphor phase, phosphor words on the phosphor block (a blank tab for 80-150 ms in the films, 2026-10-28
+   review, astra R1) */
 function rfxPulse(el, cls, ms) {
+  var timers = el._pmwRfx || (el._pmwRfx = {});
+  clearTimeout(timers[cls]);
   el.classList.remove(cls);
   void el.offsetWidth;
   el.classList.add(cls);
-  setTimeout(function () { el.classList.remove(cls); }, ms);
+  timers[cls] = setTimeout(function () { timers[cls] = 0; el.classList.remove(cls); }, ms);
+}
+/* a selection's effect still drawing on a tab ends at once when the next selection starts: the tab it leaves would
+   otherwise finish its effect (a block filled in forwards) beside the newly chosen one */
+var RFX_TAB = ['pmw-rfx-phos', 'pmw-rfx-crt', 'pmw-rfx-dos'];
+function rfxStop(host) {
+  var drawing = host.querySelectorAll('.pmw-tab.pmw-rfx-phos, .pmw-tab.pmw-rfx-crt, .pmw-tab.pmw-rfx-dos');
+  for (var i = 0; i < drawing.length; i++) {
+    var el = drawing[i], timers = el._pmwRfx || {};
+    RFX_TAB.forEach(function (c) { clearTimeout(timers[c]); timers[c] = 0; el.classList.remove(c); });
+  }
 }
 retro.roll = rfxRoll;
 
@@ -42,6 +58,7 @@ bus.on('activate', function (e) {
     var old = strip.tabEl(prev);
     var mode = rfxRoll();
     var ms = RFX_MS[mode];
+    rfxStop(host);
     rfxPulse(host, 'pmw-rfx-live', ms);
     rfxPulse(tab, 'pmw-rfx-' + mode, ms);
     if (mode === 'phos' && old && old !== tab) rfxPulse(old, 'pmw-rfx-glow', RFX_MS.phosGlow);

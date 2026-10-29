@@ -216,6 +216,10 @@
   transition: opacity 100ms steps(3, end);
 }
 #pmh-glow[data-pmh-family="retro"] > i:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]).pmh-glow-on { background: transparent; transition: none; }
+/* ...and on a switcher's item it dies in the chip's phosphor, as its rule was drawn: in Retro Light the ghost was the
+   shell's cobalt, a blue block left behind a green rule for 100 ms (2026-10-28 review, astra R7) */
+:root[data-theme="retro-dark"] #pmh-glow[data-pmh-family="retro"] > i[data-pmh-kind="ctl"][data-pmh-variant="chip"]:not(.pmh-glow-on) { background: color-mix(in srgb, var(--pm-switch-mark, var(--accent-primary)) 30%, transparent); }
+:root[data-theme="retro-light"] #pmh-glow[data-pmh-family="retro"] > i[data-pmh-kind="ctl"][data-pmh-variant="chip"]:not(.pmh-glow-on) { background: color-mix(in srgb, var(--pm-switch-mark, var(--accent-primary)) 24%, transparent); }
 /* Reduced Motion: the cursor shows and goes at once, in place (no raise, no step down; the cast and the bar carry the
    state), and leaves no afterimage */
 :root[data-motion="reduced"][data-theme^="retro"]:not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .activity-bar .icon[data-pmh-kind="icon"] .symbol):is(.pmh-on, .pmh-on:active, .pmh-on .symbol) { translate: none !important; }

@@ -397,6 +397,10 @@
       if (changed && (hover || lit.size)) { moved = true; start(); }
     }
     if (post) post.port1.onmessage = afterFrame;
+    /* the hovered target's own size is watched: an app that answers a click late (the left rail's segment grows to show
+       its label some 300 ms after the press) or a target that grows on its own moves the marker with it, after the
+       frame that resized it, without waiting for the pointer to move (2026-10-28 review, astra R3/R4) */
+    var roEl = null, hoverRO = typeof ResizeObserver === 'function' ? new ResizeObserver(function () { if (hover) afterFrameSoon(); }) : null;
     /* what the proxies need of a target, read once: its box, radius and clipping ancestors */
     /* A target may give its proxies a shape of its own (CSS, on the target): --pmh-radius replaces its border-radius and
        --pmh-inset (top right bottom left, px) shrinks the box they sit on (negative grows it), --pmh-variant names a
@@ -579,6 +583,7 @@
       if (kindQueue.length) flushKinds();
       if (enter) swapHover(hover, next, reduced);
       hover = next;
+      if (hoverRO && roEl !== hover) { if (roEl) hoverRO.unobserve(roEl); roEl = hover; if (hover) hoverRO.observe(hover); }
       if (hover && (wasMoved || enter) && !st(hover).nomag) springs.add(st(hover));
       if (calm && hover) springs.add(st(hover));
       if (rest) { if (lit.size) clearField(); }
@@ -819,6 +824,8 @@
         glowCur = GL[0].host === target ? 0 : GL[1].host === target ? 1 : 1 - glowLastOff;
         cur = GL[glowCur]; cur.host = target;
         if (cur.el.getAttribute('data-pmh-kind') !== s.kind) { cur.el.setAttribute('data-pmh-kind', s.kind); glowEl.setAttribute('data-pmh-kind', s.kind); }
+        /* the layer takes its host's variant too: Retro's afterimage on a switcher's item is the chip's phosphor */
+        if (cur.el.getAttribute('data-pmh-variant') !== (s.variant || null)) { if (s.variant) cur.el.setAttribute('data-pmh-variant', s.variant); else cur.el.removeAttribute('data-pmh-variant'); }
       }
       var b = boxFor(hc), clip = clipFor(b, vis, tok.glowReach);
       placeBox(cur.el, cur.memo, b, s.radius, clip === 'hide' ? '' : clip, tok.snap);
@@ -922,7 +929,17 @@
     }, { capture: true, passive: true });
     document.addEventListener('pointerup', function (e) { pressFrame(false); buttons = e.buttons | 0; recheckSoon(); }, { capture: true, passive: true });
     document.addEventListener('pointercancel', function () { pressFrame(false); }, { capture: true, passive: true });
-    document.addEventListener('click', recheckSoon, { capture: true, passive: true });
+    /* A click's answer can move or resize the boxes under a resting pointer: a long home tab chosen grows to its whole
+       label and its neighbours give way, a rail tab chosen shows its label. The app draws that a frame or two after the
+       click, and some answers animate, so the scope's rects are read again the frame after next and once more when a
+       short transition has ended (afterFrame moves the marker only if a box changed). The marker stayed on the tab's old
+       box until the pointer moved (2026-10-28 review, astra). */
+    document.addEventListener('click', function () {
+      recheckSoon();
+      if (!hover && !proxyShown()) return;
+      requestAnimationFrame(function () { requestAnimationFrame(afterFrameSoon); });
+      setTimeout(afterFrameSoon, 450);
+    }, { capture: true, passive: true });
     /* a character typed into a text field (the terminal's input, a search box) cannot change what is under the pointer:
        no frame for it, so typing costs the engine nothing; Enter, Escape, Tab, shortcuts and keys on anything else
        look again */

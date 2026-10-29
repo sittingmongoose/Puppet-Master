@@ -32,6 +32,10 @@ var GL_REST_MS = 1400;    // a pointer resting near a bar this long lets the hin
 var GL_DOTS = 15;         // Friendly: the dots shown around the pointer (odd)
 var GL_ECHOES = 3;        // persistence copies (Retro phosphor, Friendly bubbles)
 var GL_POP = '[role="menu"], [role="dialog"], [role="listbox"], .pmw-pop, .pmw-menu';
+/* a pointer on another control is aimed at that control: no idle hint for a bar beside it. A panel's tabs sit within
+   reach of the divider above them, so hovering a terminal tab woke Friendly's dot lens on that divider (2026-10-28
+   review, astra R8). The bar's own hover is not the idle hint and is unaffected. */
+var GL_CTRL = '.pmw-strip, button, a[href], input, select, textarea, [role="tab"], [role="button"]';
 /* the class each drag owner puts on its bar while it is dragged: the shell's resizers and the chat column's
    (resizing), the panel dividers (pmw-active), the DevTools split (is-active) */
 var GL_ACTIVE = ['resizing', 'pmw-active', 'is-active'];
@@ -306,7 +310,7 @@ function glNearPass(now) {
   glPtr.dirty = false;
   var allow = glPtr.on && !glPtr.buttons && !glBusy() && !doc.hidden;
   var t = glPtr.target;
-  if (allow && t && t.closest && t.closest(GL_POP)) allow = false;
+  if (allow && t && t.closest && (t.closest(GL_POP) || t.closest(GL_CTRL))) allow = false;
   var fresh = now - glRectsAt > 150;
   if (fresh) glRectsAt = now;
   var best = null, bestD = GL_NEAR_PX;

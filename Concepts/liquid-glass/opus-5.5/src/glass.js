@@ -2003,8 +2003,11 @@
     var quiet = reduced();
     var still = A && (quiet ? A.x === R.x && A.y === R.y && A.w === R.w && A.h === R.h : Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5);
     if ((quiet && !L.reducedAnim) || !switchOn()) stopLensTravel(L);
-    /* a step's blocks wait for the app to choose their tab; the chip is already at rest on it underneath */
-    if (L.hopFrames && L.hopTarget === target) { hopSettle(L); return; }
+    /* a step's blocks wait for the app to choose their tab; the chip is already at rest on it underneath. Once they go,
+       the chip takes the chosen tab's box in the same sync: a tab that grows when chosen (the left rail's segments show
+       their label) kept the chip at its unchosen width for a lazy sync, its chosen words running off the chip onto bare
+       ground ("Curren", 2026-10-28 review, astra R4) */
+    if (L.hopFrames && L.hopTarget === target) { hopSettle(L); if (L.hopFrames) return; }
     if (still) return;
     if (!A || quiet || !switchOn()) {
       stopLensTravel(L);
@@ -2028,7 +2031,7 @@
     /* the lens travels only when the chosen item changes. The same item seen somewhere else (its page or menu settled,
        the strip scrolled or reflowed) is followed at once (Jared #21: a lens measured mid-entrance slid 50 px into
        place after the page had landed) */
-    if (L.tgt === target && !L.dragging) { if (L.hopFrames) { hopSettle(L); return; } stopLensTravel(L); setLensBox(L, R); return; }
+    if (L.tgt === target && !L.dragging) { if (L.hopFrames) { hopSettle(L); if (L.hopFrames) return; } stopLensTravel(L); setLensBox(L, R); return; }
     L.tgt = target;
     var from = visualRect(L) || A, vertical = !!cfg.vertical || Math.abs(from.y - R.y) > Math.abs(from.x - R.x);
     if (switchMotion !== 'glide' && !isGlass()) { hop(L, from, R, strip, cfg, target, vertical); return; }
@@ -2072,12 +2075,25 @@
     'text-transform', 'text-align', 'text-indent', 'white-space', 'display', 'flex-direction', 'flex-wrap', 'align-items', 'justify-content', 'gap',
     'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width',
     'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', 'box-sizing', 'overflow', 'text-overflow'];
+  var TWIN_KID = ['display', 'visibility', 'opacity', 'max-width', 'margin-left', 'margin-right'];
   function twinOf(item, box, weight) {
     var c = item.cloneNode(true), cs = getComputedStyle(item), css = [];
     TWIN_PROPS.forEach(function (p) { css.push(p + ':' + cs.getPropertyValue(p)); });
-    [c].concat(Array.prototype.slice.call(c.querySelectorAll('[id], [tabindex], [role], [aria-selected], [aria-current], [aria-checked], [aria-pressed], [data-lg-press]'))).forEach(function (n) {
-      ['id', 'tabindex', 'role', 'aria-selected', 'aria-current', 'aria-checked', 'aria-pressed', 'aria-controls', 'aria-label', 'data-lg-press'].forEach(function (a) { n.removeAttribute(a); });
+    [c].concat(Array.prototype.slice.call(c.querySelectorAll('[id], [tabindex], [role], [aria-selected], [aria-current], [aria-checked], [aria-pressed], [data-lg-press], [title], [aria-describedby], [data-pm-hover-key]'))).forEach(function (n) {
+      /* ...nor any hover tag's binding: the tag system bound every copy and unbound it again when the step ended */
+      ['id', 'tabindex', 'role', 'aria-selected', 'aria-current', 'aria-checked', 'aria-pressed', 'aria-controls', 'aria-label', 'data-lg-press',
+        'title', 'aria-describedby', 'data-pm-hover-key', 'data-pm-hover-bound', 'data-pm-hover-kind'].forEach(function (a) { n.removeAttribute(a); });
     });
+    /* what the item hides stays hidden in its copy: the copy has none of the item's classes, so a rule that hides a part
+       by them no longer matched (the rail's unchosen segments hide their label by max-width 0 and opacity 0), and an
+       icon-sized block held the whole label wrapped onto two lines (2026-10-28 review, astra R4). Each part keeps how
+       it is shown, as the item has it now. */
+    var src = item.querySelectorAll('*'), dst = c.querySelectorAll('*');
+    for (var i = 0; i < src.length && i < dst.length; i++) {
+      var ks = getComputedStyle(src[i]), kid = [];
+      TWIN_KID.forEach(function (p) { kid.push(p + ':' + ks.getPropertyValue(p)); });
+      dst[i].style.cssText += ';' + kid.join(';');
+    }
     c.setAttribute('class', 'lg-twin'); c.setAttribute('aria-hidden', 'true'); c.setAttribute('inert', '');
     c.style.cssText = css.join(';') + ';font-weight:' + weight + ';position:absolute;margin:0;left:' + box.x + 'px;top:' + box.y + 'px;width:' + box.w + 'px;height:' + box.h + 'px';
     return c;

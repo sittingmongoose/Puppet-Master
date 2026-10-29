@@ -602,6 +602,10 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
   background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint)), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens)), var(--pm-switch-fill, var(--lg-tint-lens))), linear-gradient(var(--pm-switch-body, var(--lg-lens-body)), var(--pm-switch-body, var(--lg-lens-body)));
   box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), inset 0 -1px 1px var(--pm-switch-bottom, var(--lg-edge-bot)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), var(--pm-switch-shadow, var(--lg-lens-drop));
 }
+/* While a tab is carried its plate covers the tabs it crosses (rev 20, home-redesign 10-panels.css): the switcher's
+   material above is translucent, so during a drag it lies on the strip's own ground, and a neighbour's words no longer
+   read through the carried tab (2026-10-28 review, astra R2: both labels at once for the length of the hold) */
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmw-strip.is-dragging .pmw-plate::before { background-color: var(--pmw-strip); }
 /* (2026-10-28 review, muse A1) In Glass a hovered tab's fill is the lens's shape above: 3 px under the tab's top, 4 px
    over its foot, the switcher's corners. It was the tab's own folder crown down to the strip's foot, so the hover and
    the choice were two shapes, as they were in the other looks (whose hover marker takes the chip's shape,
