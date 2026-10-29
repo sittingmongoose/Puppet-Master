@@ -1175,13 +1175,67 @@
   }
 
 
-  /* ---------------------------------------------------------------- the player: Pip's bus on the one player */
-  /* A part of Pip (found's registry when it is there; on by default otherwise): voice and music in setup */
+  /* ---------------------------------------------------------------- the player
+     In PMConcept7 Pip's sound is the one player's (found's O55.sound.pip, 15-sound.js): the voice is its say() and
+     vocal(), each look's kit is registered with registerKit() under the kit's own id (friendly, glass, basic, phosphor,
+     teletype, nier: voiceOf(look)), and the music with registerMusic(); its switch, first-gesture rule, holds and the
+     parts setup-voice and setup-music gate them all. The sound board (tools/pip_sound_board.py), which has no one
+     player, falls back to a bus on the context it stands in. */
   const part = (id) => (O55.pipStage && O55.pipStage.h ? O55.pipStage.h.part(id) : true);
   const SND = () => O55.sound || null;
-  const P = { g: null, ctx: null, st: newState(), kit: 'basic', loops: {}, want: {}, sayH: null, pumpT: 0, muted: null };
+  const API = () => { const S = SND(); return S && S.pip && typeof S.pip.registerKit === 'function' ? S.pip : null; };
+  const P = { g: null, ctx: null, st: newState(), kit: 'basic', look: 'basic-dark', loops: {}, want: {}, sayH: null, pumpT: 0, muted: null, tune: null };
   const nier = () => document.documentElement.getAttribute('data-o55-nier') === 'on';
-  /* the one player's context and master, once a gesture has woken them and the switch is on */
+  const QUIET_UNLESS_NIER = new Set(['hover', 'ghost', 'tryOn']);
+  /* the window's own clicks, moves and chapter sting are O55.sound's; Pip only keeps the music's chord in step */
+  const WINDOW_OWNS = new Set(['chapter', 'open', 'close', 'next', 'back', 'tap', 'select', 'toggleOn', 'toggleOff', 'warn']);
+  const VOCALS = new Set(VOCAL);
+  /* the rooms' wet tails ride a bus of their own on the one player's master, so a tail outlives the short chain the
+     player gives each sound */
+  const TAILS = new WeakMap();
+  function tails(c) { let b = TAILS.get(c); if (!b) { const S = SND(); b = c.createGain(); b.connect((S && S.master) || c.destination); TAILS.set(c, b); } return b; }
+  /* one event of a kit, into the chain the player made for it (its trim and pan are the player's) */
+  function into(c, out, kitName, name, op, t) {
+    const K = KIT[kitName], fn = K && K.ev[name];
+    if (!fn) return false;
+    const prevR = R; R = P.st.r;
+    try {
+      const vg = c.createGain(); vg.gain.value = 0.38 + (op.intensity == null ? 0.7 : clamp(op.intensity, 0, 1)) * 0.885; vg.connect(out);
+      const send = c.createGain(); send.gain.value = DRY[name] != null ? DRY[name] : 1; vg.connect(send); send.connect(roomOf(c, kitName, tails(c)));
+      fn(c, vg, t, op, helper(kitName, op, P.st, variant(P.st, kitName, name)));
+    } finally { R = prevR; }
+    return true;
+  }
+  /* the music and the stage's beds (snore, work, power, swing) as one tune: the player plays one at a time */
+  function tune(kitName) {
+    return {
+      start(c, out, t0) {
+        const g = { bus: out }, insts = {}, h = { kit: kitName };
+        const inst = (name) => insts[name] || (insts[name] = loopInst(c, g, kitName, name, t0, P.st));
+        h.level = (name, level) => { const L = insts[name] || (level > 0.001 ? inst(name) : null); if (L) L.set(level, c.currentTime); };
+        h.level('bed', P.want.bed == null ? 1 : P.want.bed);
+        Object.keys(P.want).forEach((n) => { if (n !== 'bed' && P.want[n] > 0.001) h.level(n, P.want[n]); });
+        const pump = () => { const t = c.currentTime; Object.keys(insts).forEach((n) => { const L = insts[n]; if (L.next < t) L.next = t + 0.02; if (L.level > 0.001) L.pump(t + 0.5, false); }); };
+        const id = setInterval(pump, 120); pump();
+        h.stop = (t, fade) => { clearInterval(id); Object.keys(insts).forEach((n) => { try { insts[n].stop(t); } catch (_) {} }); if (P.tune === h) P.tune = null; };
+        P.tune = h;
+        return h;
+      }
+    };
+  }
+  let registered = false;
+  function register() {
+    const pip = API(); if (!pip || registered) return !!pip;
+    KITS.forEach((kn) => {
+      const events = {};
+      Object.keys(KIT[kn].ev).forEach((name) => { if (!WINDOW_OWNS.has(name)) events[name] = (ctx, out, t0, opts) => into(ctx, out, kn, name, opts || {}, t0); });
+      pip.registerKit(kn, { events, trim: Object.assign({}, TRIM[kn] || {}) });
+      pip.registerMusic('pip-' + kn, tune(kn));
+    });
+    registered = true;
+    return true;
+  }
+  /* (the board's stand-in: the context and master it made) */
   function attach() {
     const S = SND(); if (!S || S.muted) return false;
     if (!S.ctx && S.unlock) S.unlock();
@@ -1190,42 +1244,50 @@
     return true;
   }
   const tnow = () => (P.ctx ? P.ctx.currentTime + 0.006 : 0);
-  const QUIET_UNLESS_NIER = new Set(['hover', 'ghost', 'tryOn']);
-  /* the window's chapter sting is O55.sound's; Pip only keeps the music's chord in step */
-  const WINDOW_OWNS = new Set(['chapter', 'open', 'close', 'next', 'back', 'tap', 'select', 'toggleOn', 'toggleOff', 'warn']);
   function play(name, opts) {
-    const op = opts || {}, kn = op.kit ? kitOf(op.kit) : P.kit;
-    if (op.chapter != null) setCh(P.st, op.chapter, tnow());
+    const op = Object.assign({}, opts || {}), kn = op.kit ? kitOf(op.kit) : P.kit;
+    if (op.chapter != null) setCh(P.st, op.chapter, SND() && SND().ctx ? SND().ctx.currentTime : 0);
     if (EVENTS.indexOf(name) < 0 || WINDOW_OWNS.has(name)) return false;
     if (QUIET_UNLESS_NIER.has(name) && !nier()) return false;
+    const pip = API();
+    if (pip && register()) {
+      if (VOCALS.has(name) && !/^(cheer|crew)$/.test(name)) return pip.vocal(name, { look: P.look, pan: op.pan });
+      return pip.play(name, Object.assign(op, { kit: kn, priority: op.priority == null ? 35 : op.priority }));
+    }
     if (!attach()) return false;
     return dispatch(P.ctx, P.g, P.st, kn, name, op, tnow(), false);
   }
   function say(text, opts) {
-    const op = opts || {}, kn = op.kit ? kitOf(op.kit) : P.kit, timing = sayTiming(kn, text, op);
+    const op = opts || {}, pip = API();
+    if (pip) return pip.say(text, { mood: op.mood, look: P.look, where: 'setup', pan: op.pan });
+    const kn = op.kit ? kitOf(op.kit) : P.kit, timing = sayTiming(kn, text, op);
     hush();
     if (!text || !part('setup-voice') || !attach()) return timing;
     P.sayH = sayOn(P.ctx, P.g, P.st, kn, text, op, tnow(), false);
     pumpOn();
     return timing;
   }
-  function hush() { if (P.sayH && P.ctx) { try { P.sayH.stop(P.ctx.currentTime); } catch (_) {} P.sayH = null; } }
+  function hush() { const pip = API(); if (pip) { pip.hush(); return; } if (P.sayH && P.ctx) { try { P.sayH.stop(P.ctx.currentTime); } catch (_) {} P.sayH = null; } }
+  function loop(name, level) {
+    if (LOOPS.indexOf(name) < 0) return;
+    level = clamp(+level || 0, 0, 1);
+    if (name === 'bed' && !part('setup-music')) level = 0;
+    P.want[name] = level;
+    const pip = API();
+    if (pip && register()) {
+      if (name === 'bed') { if (level > 0.001) pip.music('pip-' + P.kit); else pip.stopMusic(0.6); return; }
+      if (P.tune) P.tune.level(name, level);
+      return;
+    }
+    applyLoop(name, level);
+    pumpOn();
+  }
   function applyLoop(name, level) {
     if (!attach()) return;
     let inst = P.loops[name];
     if (!inst && level > 0.001) { inst = P.loops[name] = loopInst(P.ctx, P.g, P.kit, name, P.ctx.currentTime, P.st); inst.next = P.ctx.currentTime + 0.05; }
     if (inst && Math.abs(inst.level - level) > 0.004) inst.set(level, P.ctx.currentTime);
   }
-  function loop(name, level) {
-    if (LOOPS.indexOf(name) < 0) return;
-    level = clamp(+level || 0, 0, 1);
-    if (name === 'bed' && !part('setup-music')) level = 0;
-    P.want[name] = level;
-    applyLoop(name, level);
-    pumpOn();
-  }
-  /* the pump schedules the loops a little ahead, follows the switch (off: every loop and the voice fade out at once;
-     on again: the loops come back where they were) and stops itself when nothing is wanted */
   function pumpOn() { if (!P.pumpT) P.pumpT = setInterval(pump, 120); }
   function pump() {
     const S = SND(), off = !S || S.muted;
@@ -1244,17 +1306,24 @@
     });
     if (!Object.keys(P.loops).length && !Object.values(P.want).some((v) => v > 0.001) && !P.sayH) { clearInterval(P.pumpT); P.pumpT = 0; }
   }
-  /* a new look: the loops cross into its kit, at the levels they had */
+  /* a new look: its kit, its voice, and its music in place of the last one's */
   function setTheme(t) {
+    P.look = String(t || P.look);
     const kn = kitOf(t); if (kn === P.kit) return;
     P.kit = kn;
+    const pip = API();
+    if (pip && register()) { if (P.want.bed > 0.001) pip.music('pip-' + kn); return; }
     if (P.ctx) { const t0 = tnow(); Object.keys(P.loops).forEach((n) => { P.loops[n].stop(t0); delete P.loops[n]; }); }
     Object.keys(P.want).forEach((n) => applyLoop(n, P.want[n]));
   }
+  register();
+  /* the music asked for before the first click or key (the window opens on its own) starts with that gesture */
+  const wake = () => { const pip = API(); if (!pip || !(P.want.bed > 0.001) || !part('setup-music')) return; const pl = pip.playing(); if (!pl || pl.music !== 'pip-' + P.kit) pip.music('pip-' + P.kit); };
+  ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, () => setTimeout(wake, 0), { capture: true, passive: true }));
   O55.pipVoice = {
     EVENTS, KITS, LOOPS, TARGET, SUBTLE, OFFSET, TRIM, kitOf,
     play, say, hush, loop, setTheme,
-    sayTiming: (text, opts) => sayTiming((opts && opts.kit) ? kitOf(opts.kit) : P.kit, text, opts || {}),
+    sayTiming: (text, opts) => { const pip = API(); return pip ? pip.timing(text, { mood: opts && opts.mood, look: P.look }) : sayTiming((opts && opts.kit) ? kitOf(opts.kit) : P.kit, text, opts || {}); },
     render: renderOne, stats, wav, chainGain, MAKEUP
   };
 })();

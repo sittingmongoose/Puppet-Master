@@ -660,7 +660,7 @@
       }
       if (!next) out += C.note(T('protect.done'), 'ok', 'check');
       const st = next && F.state(S, 'backup:' + next);
-      if (st && st.state === 'running') out += `<p class="o55-hint" data-key="work">${C.mark('working', 12, '<span class="o55-spin"></span>')} ${U.esc(T('chrome.working'))}</p>`;
+      if (st && st.state === 'running') out += `<p class="o55-hint" data-key="work">${C.loader(14)} ${U.esc(T('chrome.working'))}</p>`;
       return out;
     },
     foot(S) {

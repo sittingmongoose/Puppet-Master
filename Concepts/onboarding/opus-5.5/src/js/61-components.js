@@ -23,6 +23,11 @@
   const mark = (status, s, old) => U.mark(status, px(s), 'o55-sg o55-mk', status === 'working') || (old != null ? old : '');
   const spinOld = '<span class="o55-spin" aria-hidden="true"></span>';
   const spin = (s) => mark('working', s || 12, spinOld);
+  /* A wait (scanning a network, checking this computer, a sign-in in the browser, protect's working line) is the system
+     loader (L1, L6: PM_PIP_LOADER, Pip's swing; NieR's Diamond loaders under NieR Mode); an item's state in a row keeps
+     the working mark (spin above). */
+  /* (kept whole through the window's morph, so a refresh never restarts it; 60-ui-core.js arms it with PM_PIP_LOADER.mount) */
+  const loader = (s) => { const P = window.PM_PIP_LOADER; try { if (P && typeof P.html === 'function') return `<span class="o55-ldwrap" data-morph-skip>${P.html({ motion: 'swing', px: s || 16, className: 'o55-loader' })}</span>`; } catch (_) {} return spin(s); };
   const done = (s) => mark('complete', s, smallArt('check', s));
   const X = { 'data-pm-hover-exempt': 'true' };
   const PHASE = { waiting: 'pending', active: 'working', done: 'complete', failed: 'failed' };
@@ -123,7 +128,7 @@
   O55.tips = { of: tipOf, open: tipOpen, q, explainer, opt, exact, described, onStage, write };
 
   const C = O55.c = {
-    glyph, small, smallArt, mark, spin, done, stepmark,
+    glyph, small, smallArt, mark, spin, loader, done, stepmark,
     /* Choice cards (radio semantics). options: [{v, title, sub, glyph, tag, disabled, reason, key}]; each with its ? */
     cards(action, options, selected, o) {
       o = o || {};

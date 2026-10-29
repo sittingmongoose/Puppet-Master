@@ -527,3 +527,5 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 /* the brand's Pip: 22 px, on the text's line */
 .o55-logo-pip { display: inline-grid; place-items: center; width: 22px; height: 22px; flex: none; }
 .o55-logo-pip > svg { display: block; width: 22px; height: 22px; }
+/* a wait's loader (L6) sits on the line like the mark it replaced */
+.o55-ldwrap { display: inline-flex; align-items: center; flex: none; }

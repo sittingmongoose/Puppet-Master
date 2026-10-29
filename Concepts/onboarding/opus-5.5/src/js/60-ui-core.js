@@ -511,7 +511,7 @@
     if (!layer) return transition(null);
     const hadSheet = !!layer.querySelector('.o55-sheet[data-open="true"]');
     U.morph(layer, paneHtml(def));
-    O55.tips.write(layer);
+    O55.tips.write(layer); armLoaders(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
     const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
     if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() || skin('stepped') ? 'auto' : 'smooth' });
@@ -550,7 +550,7 @@
     layer.setAttribute('data-screen', def.id);
     layer.innerHTML = paneHtml(def);
     pane.appendChild(layer);
-    O55.tips.write(layer);
+    O55.tips.write(layer); armLoaders(layer);
     layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => n.style.setProperty('--ci', i));
     /* the entrance classes leave once every entrance animation has finished (never cut short, even in slow motion) */
     O55.motion.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back', 'o55-in-open'));
@@ -656,6 +656,9 @@
     if (!prev) return;
     go(prev, { dir: 'back', noHistory: true });
   }
+
+  /* the waits' loaders (L6) start once they are on the page (the loader owner, PM_PIP_LOADER) */
+  const armLoaders = (layer) => { const P = window.PM_PIP_LOADER; if (P && typeof P.mount === 'function' && layer.querySelector('[data-pip-loader]')) try { P.mount(layer); } catch (_) {} };
 
   /* ---------------------------------------------------------------- ? tips */
   function tip(id, el) {
