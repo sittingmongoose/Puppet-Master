@@ -180,7 +180,7 @@
   const stageOf = (host) => (PIP.of ? PIP.of(host) : null);
   A.release = (host) => { const s = stageOf(host); if (s && s.release) s.release(); };
   A.react = (host) => { const s = stageOf(host); if (s && s.picked) s.picked(); };
-  A.poke = (host) => { const s = stageOf(host); if (s && s.busy) s.busy(); };
+  A.poke = (host, id, o) => { const s = stageOf(host); if (s && s.poke) s.poke(id, o || {}); else if (s && s.busy) s.busy(); };
   A.celebrate = (host, o) => { const s = stageOf(host); if (s && s.celebrate) s.celebrate(o || {}); };
   A.createdAct = (host, o) => { const s = stageOf(host); if (s && s.created) s.created(o || {}); };
   A.curtainCall = (host, o) => { const s = stageOf(host); if (s && s.curtainCall) s.curtainCall(o || {}); return !!s; };

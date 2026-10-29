@@ -929,6 +929,8 @@
     // a screen change the window holds back a frame (60-ui-core.js transition): the scene waits with it
     hold(on) { this.held = !!on; if (!on) this.kick(); }
     release() { this.hold(false); }
+    // a letter lands on the sign (Name): it swings a little, alternately left and right (Reduced Motion: still)
+    poke(id, o) { this.busy(); const pr = id && this.props.get(id); if (!pr || this.reduced) return; pr.av += (o.dir || 1) * this.fam.kick * 0.35 * (o.amp || 1); this.kick(); }
     // a choice made (O55.ui.charm): Pip is happy through its line and the chosen prop pops
     picked() { const sp = this.spec || {}; this.busy(); this.cheer(sp.target, { mood: 'happy', hold: 2600 }); }
     celebrate(o) { o = o || {}; this.confetti(o.count || 46); this.cheer(null, { sound: o.sound || 'crew' }); }
