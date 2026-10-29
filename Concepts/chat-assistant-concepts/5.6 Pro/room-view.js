@@ -323,7 +323,7 @@
       if (!cur || cur.n !== n) { cur = { n: n, list: [] }; groups.push(cur); }
       cur.live = true;
     }
-    if (!groups.length) return '<p class="pmx-rv-empty">' + (vm.waiting ? COPY.emptyWaiting : COPY.emptyRoom) + '</p>' + queuedHtml(vm);
+    if (!groups.length) return (S.pmxEmpty ? S.pmxEmpty({ cls: 'pmx-rv-empty', text: vm.waiting ? COPY.emptyWaiting : COPY.emptyRoom }) : '<p class="pmx-rv-empty">' + (vm.waiting ? COPY.emptyWaiting : COPY.emptyRoom) + '</p>') + queuedHtml(vm);
     return groups.map(function (gr) {
       var ents = gr.list.map(function (m) { return entry(vm, m); });
       if (gr.live) ents.push(liveEntry(vm));

@@ -3755,6 +3755,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="menu-head"><strong>Mode</strong><span class="spacer"></span><span class="chat-meta">/${state.mode.toLowerCase().replace(' ','-')}</span></div>${items.map(x=>`<button class="menu-item ${state.mode===x[0]?'active':''}" data-action="set-mode" data-value="${esc(x[0])}" ${x[2]?`data-submenu="${x[2]}"`:''}><span class="menu-icon">${icon(modeIconName(x[0]),13)}</span><span class="menu-copy"><strong>${esc(x[0])}</strong><span>${esc(x[1])}</span></span>${x[2]?`<span class="chevron">${icon('chevron',11)}</span>`:state.mode===x[0]?`<span class="check">${icon('check',11)}</span>`:''}</button>`).join('')}`;
   }
 
+  function wandHead(wand){
+    const S=window.PM56_SHELL, pip=S&&S.pmxPip?S.pmxPip({mood:'watch',size:22,cls:'menu-head-pip'}):'';
+    return pip?`<span class="menu-head-wand" data-pip="1">${pip}${wand}</span>`:wand;
+  }
   function renderWandMenu(){
     const rows=[
       ['goal','Goal Mode','Create and manage a durable goal','goal-menu',state.capabilities.goal?'On':'Off','goal'],
@@ -3772,7 +3776,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
          build, and `set-eli5-cap` is still chained by assistant-features.js. */
       ['thought','Thought Stream','Control permitted reasoning visibility','thought-menu',state.capabilities.thought,'brain']
     ];
-    const wandHtml = `<div class="menu-head"><strong>Assistant capabilities</strong><span class="spacer"></span>${icon('wand',13)}</div>${rows.map(r=>`<button class="menu-item" data-submenu="${r[3]}"><span class="menu-icon">${icon(r[5],13)}</span><span class="menu-copy"><strong>${r[1]}</strong><span>${r[2]}</span></span><span class="shortcut">${esc(r[4])}</span><span class="chevron">${icon('chevron',11)}</span></button>`).join('')}${extRender('wandRows',{})}`;
+    /* W4 (PM7 build 2026-10-29): Pip holds the wand at the head of Assistant capabilities (PM56_SHELL.wandPip) */
+    const wandHtml = `<div class="menu-head"><strong>Assistant capabilities</strong><span class="spacer"></span>${wandHead(icon('wand',13))}</div>${rows.map(r=>`<button class="menu-item" data-submenu="${r[3]}"><span class="menu-icon">${icon(r[5],13)}</span><span class="menu-copy"><strong>${r[1]}</strong><span>${r[2]}</span></span><span class="shortcut">${esc(r[4])}</span><span class="chevron">${icon('chevron',11)}</span></button>`).join('')}${extRender('wandRows',{})}`;
     return window.PM56_POLISH ? window.PM56_POLISH.wand(wandHtml,EXT.ctx()) : wandHtml;
   }
 

@@ -49,6 +49,9 @@ MODULES=['neon-icons','nier-fonts','nier','nier-parts','nier-world','nier-scenes
          # Thought Stream (DL-234, 2026-10-23): the live thinking block. After turn-stream, whose reply and agent-turn
          # paths start it; thought-demo is its Demo Studio example (While it thinks, Always open).
          'turn-stage','turn-stream','thought-stream','thought-demo','chat-sound',
+         # Pip in the chat (W4, PM7 build 2026-10-29): module-shell draws Pip with the one kit (window.PMLogo); pip makes
+         # the sheet's Pip and the other Pips on screen live, and its sheet sets Pip's colour roles and places it.
+         'pip',
          # Send/Stop (step SS, 2026-10-02): the composer's Send / Stop control, "solid-living" (one button patched in
          # place, the plane-to-square morph). app.js sendButtonHtml asks it for the markup; its sheet sits in CSS_LAST.
          'send-stop']

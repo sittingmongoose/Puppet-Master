@@ -127,7 +127,10 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
     decision is needs-you, Unverified pending, Verified complete, Out of date skipped; Discarded keeps the trash glyph
     (an action's concept, not a state). GLYPH stays as the drawing used when the neon family is absent. */
  const STATE_MARK={decide:'needs',unverified:'unverified',verified:'verified',stale:'stale'};
- const mark=(k,size)=>STATE_MARK[k]&&S.pmxStatus?S.pmxStatus(STATE_MARK[k],size):S.pmxGlyph(GLYPH[k],size);
+ /* W4 (PC3, PM7 build 2026-10-29): the state is Pip's face (PM56_SHELL.pmxStatusFace, the catalog's Memory table:
+    Unverified thinks, Verified is happy, Out of date says oops, Discarded sleeps; Needs your decision wonders), in the
+    status's tone; the still status mark is what it falls back to without the Pip kit */
+ const mark=(k,size)=>{const old=STATE_MARK[k]&&S.pmxStatus?S.pmxStatus(STATE_MARK[k],size):S.pmxGlyph(GLYPH[k],size);return S.pmxStatusFace?S.pmxStatusFace(k,size,'',old):old;};
  const FILTER_HELP={All:'Everything, including forgotten notes.',Verified:'A test still backs it up, so it’s used.',Unverified:'Not proven yet. Kept for you to review; not used.'};
  const TAB_HELP={auto:'Saved by itself after a reply',taught:'Things you told it to always do'};
  function inFilter(g,f=filter){return f==='All'||(f==='Verified'?g.verification_state==='Verified':g.verification_state==='Unverified');}
@@ -281,7 +284,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
  function stepsHtml(any){
   const st=[['quote','A reply ends'],['notebook','a note is jotted down'],['check-circle','a passing test verifies it'],['bookmark','it joins your next message']];
   return '<div class="pmx-mem-empty" data-k="mem-steps"><ol class="pmx-mem-steps">'+st.map((s,i)=>'<li>'+(i?S.pmxGlyph('chevron-right',12,'pmx-mem-step-sep'):'')+S.pmxGlyph(s[0],15)+'<span>'+s[1]+'</span></li>').join('')+'</ol>'+
-   '<p class="pmx-help">'+(any?'This is how a note becomes part of your next message.':'No notes yet. Puppet Master saves one by itself after each reply; only notes a test backs up are used.')+'</p></div>';
+   (any||!S.pmxEmpty?'<p class="pmx-help">'+(any?'This is how a note becomes part of your next message.':'No notes yet. Puppet Master saves one by itself after each reply; only notes a test backs up are used.')+'</p>':S.pmxEmpty({cls:'pmx-help',text:'No notes yet. Puppet Master saves one by itself after each reply; only notes a test backs up are used.'}))+'</div>';
  }
  function paneState(c){
   const tid=c.thread.id,v=views.get(tid)||{},notes=visible().map(assess),shown=notes.filter(g=>inFilter(g)),selId=pickSel(v.id,shown);

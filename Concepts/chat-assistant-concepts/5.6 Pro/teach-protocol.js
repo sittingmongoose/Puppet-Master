@@ -428,7 +428,7 @@
     (Teach in correct mode) and Turn off, confirmed inline (G-33), never in a modal. */
  function memoryRows(c){const e=c.esc,tid=c.thread.id,v=views.get(tid)||{},td=' data-thread="'+e(tid)+'"';
   const rows=visibleRecords(context()).slice().reverse().map((r,i)=>{const on=active(r),id=e(r.id);
-   return '<div class="pmx-mem-rule" data-k="mrule:'+id+'" data-state="'+(on?'on':'off')+'" style="--i:'+Math.min(i,5)+'"><span class="pmx-mem-rglyph">'+S.pmxGlyph(on?(r.locked?'lock':'check-circle'):'slash-circle',15)+'</span>'+
+   return '<div class="pmx-mem-rule" data-k="mrule:'+id+'" data-state="'+(on?'on':'off')+'" style="--i:'+Math.min(i,5)+'"><span class="pmx-mem-rglyph">'+(r.locked&&on?S.pmxGlyph('lock',15):S.pmxStatusFace?S.pmxStatusFace(on?'on':'off',15,'',S.pmxGlyph(on?'check-circle':'slash-circle',15)):S.pmxGlyph(on?'check-circle':'slash-circle',15))+'</span>'+
     '<div class="pmx-mem-rcopy"><p class="pmx-mem-rule-text">'+e(r.text)+'</p><small>'+e(scopes[scope(r)]||r.scope)+' · version '+(r.version||1)+' · <b>'+e(ruleWord(r))+'</b></small></div>'+
     '<div class="pmx-mem-rule-acts">'+(on?'<button type="button" class="text-button" data-action="teach-correct"'+td+' data-id="'+id+'">Edit</button><button type="button" class="text-button" data-action="af-teach-revoke"'+td+' data-value="'+id+'">Turn off</button>':'')+'</div>'+
     (on&&v.revoke?.id===r.id?S.pmxInlineConfirm({key:'mrevoke:'+r.id,cls:'pmx-mem-confirm',sentence:'Stop using this rule? It stays in history, and older versions don’t come back.',

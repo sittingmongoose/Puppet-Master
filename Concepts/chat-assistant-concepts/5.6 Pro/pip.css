@@ -1,0 +1,194 @@
+/* pip.css: Pip in the chat (W4, PM7 build 2026-10-29; DL-239, F3-594 as amended, ACD-507). OWNER: pm7-chatpip.
+   module-shell.js draws Pip with the one kit (window.PMLogo.kit) and paints every part with a colour role
+   (style="fill:var(--pip-x)"); this sheet sets the roles from the chat's own tokens, look by look, after the brand kit's
+   own table (glyph-system src/logo/pm-logo.css: PMConcept7's token names come first, the chat's are the standalone's
+   fallback), places Pip where it stands in for a glyph, and boxes the sheet's Pip. The live moves are pip.js's: Web
+   Animations on Pip's own nodes, which the chat's reconcile never resets. Nothing here loops. */
+
+/* ---------------------------------------------------------------- the roles */
+.pmx-pip {
+  --pip-bg: var(--background, var(--canvas));
+  --pip-accent: var(--accent-primary, var(--accent));
+  --pip-head: var(--pip-accent);
+  /* an agent's head wears its seat (--pmx-seat), a status face its tone (--pmx-pip-tone), anything else Pip's own colour */
+  --pip-seat: var(--pmx-pip-tone, var(--pmx-seat, var(--pip-head)));
+  --pip-ctl: var(--text-primary, var(--text));
+  --pip-back: color-mix(in srgb, var(--pip-ctl) 58%, var(--pip-bg));
+  --pip-pin: color-mix(in srgb, var(--pip-ctl) 60%, var(--pip-bg));
+  --pip-str: color-mix(in srgb, var(--text-muted, var(--muted)) 80%, var(--pip-ctl));
+  --pip-eye: var(--pip-bg);
+  --pip-cheek: transparent;
+  /* props: the crown and the hard hat are gold in every look (PC5) */
+  --pip-pgold: #F6C552; --pip-pgold2: #D9A236; --pip-pline: #2A2233; --pip-pwood: #D39A68; --pip-ppaper: #F6F0E7; --pip-pcloth: #FF7F8A; --pip-pgrill: #3B3740;
+  --pip-pgrillhi: color-mix(in srgb, var(--pip-pgrill) 65%, white);
+  --pip-pgrilllo: color-mix(in srgb, var(--pip-pgrill) 80%, white);
+  /* the sheet's sign */
+  --pip-card: var(--surface-2, var(--surface));
+  --pip-cardedge: var(--border);
+  --pip-cardshadow: transparent;
+}
+body[data-theme$="-light"] .pmx-pip {
+  --pip-pgold: #E8AE2C; --pip-pgold2: #C98E1A; --pip-pline: #3B2F36; --pip-pwood: #B9814F; --pip-ppaper: #FFFFFF; --pip-pcloth: #D9475A; --pip-pgrill: #2D2A30;
+}
+/* Friendly: a soft vinyl toy; the control in Friendly's lilac, peach cheeks */
+body[data-theme^="friendly"] .pmx-pip {
+  --pip-ctl: var(--accent-magenta, var(--accent-2));
+  --pip-pin: color-mix(in srgb, var(--pip-ctl) 80%, black);
+  --pip-str: color-mix(in srgb, var(--text-muted, var(--muted)) 85%, var(--text-primary, var(--text)));
+  --pip-head0: color-mix(in srgb, var(--pip-accent) 80%, white);
+  --pip-head1: color-mix(in srgb, var(--pip-accent) 88%, black);
+  --pip-eye: var(--surface);
+  --pip-cheek: color-mix(in srgb, var(--accent-orange, #FF9A7A) 60%, white);
+  --pip-card: var(--surface-2, #2E2A38);
+  --pip-cardedge: rgb(255 255 255 / .14);
+}
+body[data-theme="friendly-light"] .pmx-pip {
+  --pip-str: color-mix(in srgb, var(--text-muted, var(--muted)) 75%, var(--pip-bg));
+  --pip-head0: color-mix(in srgb, var(--pip-accent) 85%, white);
+  --pip-head1: color-mix(in srgb, var(--pip-accent) 92%, black);
+  --pip-eye: color-mix(in srgb, var(--text-primary, var(--text)) 70%, black);
+  --pip-card: #FFFFFF;
+  --pip-cardedge: #E4DCEA;
+}
+/* Glass: a clear lens, a rim lit from above, a bright base, glass rods; no brow band */
+body[data-theme^="glass"] .pmx-pip {
+  --pip-rod: color-mix(in srgb, var(--text-primary, var(--text)) 95%, var(--pip-bg));
+  --pip-rodback: color-mix(in srgb, var(--pip-rod) 58%, var(--pip-bg));
+  --pip-ctl: var(--pip-rod);
+  --pip-pin: var(--pip-accent);
+  --pip-str: var(--text-muted, var(--muted));
+  --pip-tint0: color-mix(in srgb, var(--pip-accent) 30%, white);
+  --pip-tint1: color-mix(in srgb, var(--pip-accent) 80%, white);
+  --pip-tint2: color-mix(in srgb, var(--pip-accent) 85%, black);
+  --pip-frost: rgb(255 255 255 / .10);
+  --pip-rimtop: rgb(255 255 255 / .95);
+  --pip-rimbot: rgb(255 255 255 / .38);
+  --pip-edge: color-mix(in srgb, var(--pip-bg) 55%, transparent);
+  --pip-drop: rgb(0 0 0 / .55);
+  --pip-eye: color-mix(in srgb, var(--pip-bg) 90%, var(--pip-accent));
+  --pip-cheek: var(--accent-magenta, #FF86C2);
+  --pip-card: rgb(255 255 255 / .14);
+  --pip-cardedge: rgb(255 255 255 / .55);
+}
+body[data-theme="glass-light"] .pmx-pip {
+  --pip-rod: color-mix(in srgb, var(--text-primary, var(--text)) 85%, var(--pip-bg));
+  --pip-str: color-mix(in srgb, var(--text-muted, var(--muted)) 80%, var(--pip-bg));
+  --pip-tint0: color-mix(in srgb, var(--pip-accent) 27%, white);
+  --pip-tint1: color-mix(in srgb, var(--pip-accent) 63%, white);
+  --pip-tint2: color-mix(in srgb, var(--pip-accent) 82%, white);
+  --pip-frost: rgb(255 255 255 / .18);
+  --pip-rimtop: rgb(255 255 255 / .98);
+  --pip-rimbot: rgb(255 255 255 / .6);
+  --pip-edge: color-mix(in srgb, var(--text-primary, var(--text)) 30%, transparent);
+  --pip-drop: color-mix(in srgb, var(--text-primary, var(--text)) 30%, transparent);
+  --pip-eye: var(--text-primary, var(--text));
+  --pip-cheek: color-mix(in srgb, var(--accent-magenta, #FF86C2) 50%, white);
+  --pip-card: rgb(255 255 255 / .62);
+  --pip-cardedge: rgb(255 255 255 / .95);
+}
+/* Basic: flat, one accent, no cheeks; the crown and hat a plainer gold */
+body[data-theme^="basic"] .pmx-pip {
+  --pip-pin: color-mix(in srgb, var(--pip-ctl) 60%, var(--pip-bg));
+  --pip-pgold: #F5BD55; --pip-pgold2: #D69A35; --pip-pline: var(--pip-bg); --pip-pwood: var(--pip-ctl); --pip-ppaper: #F2F2F2; --pip-pcloth: var(--pip-accent); --pip-pgrill: #3A3A3A;
+}
+body[data-theme="basic-light"] .pmx-pip {
+  --pip-ctl: color-mix(in srgb, var(--text-primary, var(--text)) 92%, var(--pip-bg));
+  --pip-str: color-mix(in srgb, var(--text-muted, var(--muted)) 75%, var(--pip-bg));
+  --pip-eye: var(--surface-elevated, var(--surface));
+  --pip-pgold: #B57100; --pip-pgold2: #8F5900; --pip-ppaper: #FFFFFF; --pip-pgrill: #2B2B2B;
+}
+/* Retro: phosphor on the terminal (dark) and ink on the printout (light), square cells */
+body[data-theme^="retro"] .pmx-pip {
+  --pip-back: color-mix(in srgb, var(--pip-ctl) 58%, var(--surface-elevated, var(--surface)));
+  --pip-head: var(--accent-lime, var(--pip-accent));
+  --pip-cheek: var(--accent-orange, #E9853F);
+  --pip-pgold: #F2D35E; --pip-pgold2: #C9A93A; --pip-pcloth: #E9853F; --pip-pwood: #D08A3C; --pip-ppaper: #F3F0DC; --pip-pgrill: #3A3F33;
+  --pip-card: var(--surface-2, #1E2219);
+  --pip-cardedge: var(--border-strong, #4A533A);
+  --pip-cardshadow: color-mix(in srgb, var(--text) 55%, transparent);
+}
+body[data-theme="retro-light"] .pmx-pip {
+  --pip-back: color-mix(in srgb, var(--pip-ctl) 58%, var(--pip-bg));
+  --pip-str: color-mix(in srgb, var(--text-muted, var(--muted)) 80%, var(--pip-bg));
+  --pip-cheek: var(--accent-magenta, #FF1493);
+  --pip-pgold: #B88A12; --pip-pgold2: #8E6A0C; --pip-pcloth: #D32F2F; --pip-pwood: #9A5A22; --pip-ppaper: #FFFDF0; --pip-pgrill: #2B2B2B;
+  --pip-card: var(--surface, #FAF7F2);
+  --pip-cardedge: var(--text, #1A1A1A);
+  --pip-cardshadow: var(--text, #1A1A1A);
+}
+/* NieR (O8): ink on parchment; the error red for a broken state */
+html[data-o55-nier="on"] .pmx-pip {
+  --pip-ink: var(--o55-nier-ink, var(--text));
+  --pip-paper: var(--o55-nier-raised, var(--surface-2, var(--surface)));
+  --pip-red: var(--o55-nier-error, var(--danger));
+  --pip-card: var(--pip-paper);
+  --pip-cardedge: var(--pip-ink);
+}
+html[data-o55-nier="on"] body[data-theme$="-dark"] .pmx-pip { --pip-paper: var(--surface); }
+
+/* ---------------------------------------------------------------- the marks */
+.pmx-pip-px, .pmx-pip-px * { shape-rendering: crispEdges; }
+.pmx-pip :is(.pmx-pip-face, .pmx-pip-eyes, .pmx-pip-blink, .pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4) { transform-box: fill-box; transform-origin: center; }
+/* Pip hangs from its control: the mark's floor bar (a working puppet stood on it) is gone with the puppet */
+.pmx-pip-mk { display: block; overflow: visible; flex: none; }
+.pmx-pip-mk > .pmx-pip { overflow: visible; }
+
+/* a list row's status face (PC3): a touch larger than the glyph it replaces, so the row keeps its height */
+.pmx-pip-status { display: inline-grid; place-items: center; width: var(--pmx-pip-box, 15px); height: var(--pmx-pip-box, 15px); line-height: 0; overflow: visible; vertical-align: middle; }
+.pmx-pip-status > .pmx-pip-mk { margin: -4px; }
+
+/* the empty-list line: a sleeping Pip, then the words */
+.pmx-empty-line { display: flex; align-items: center; gap: 10px; }
+.pmx-empty-line > .pmx-empty-pip { margin: -6px 0 -4px; }
+
+/* ---------------------------------------------------------------- the sheet's Pip */
+/* by the close button, level with it (Jared, 2026-10-29: 10 px lower than the first cut), hanging over the sheet's head */
+.pmx-pip-host { flex: none; display: block; position: relative; width: 92px; height: 66px; margin: -10px 8px -28px 12px; align-self: flex-start; pointer-events: none; }
+.pmx-pip-host-svg { display: block; overflow: visible; }
+.pmx-pip-host .pmx-pip-rig { transform-box: view-box; transform-origin: 32px 8px; }
+.pmx-pip-host .pmx-pip-card { transform-box: view-box; transform-origin: 54px 21px; }
+.pmx-pip-host .pmx-pip-sign { color: var(--text); }
+/* PC1 (idle motion in sheets): it sways a little on its strings, as if a hand held it, and its sign swings against it.
+   Retro sways in steps; NieR holds still (it cuts). The rig's classes are in its markup, so a render never restarts it;
+   a drag pauses it (pm7-port 95-perf-scope.css), Reduced Motion stops it, Animation speed scales it. */
+.pmx-pip-host .pmx-pip-rig { animation-name: pmx-pip-sway; animation-duration: 4.4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate; }
+.pmx-pip-host .pmx-pip-card { animation-name: pmx-pip-card; animation-duration: 4.4s; animation-timing-function: ease-in-out; animation-delay: -.7s; animation-iteration-count: infinite; animation-direction: alternate; }
+.pmx-pip-host-svg[data-fam="retro"] :is(.pmx-pip-rig, .pmx-pip-card) { animation-timing-function: steps(4, end); }
+.pmx-pip-host-svg[data-fam="nier"] :is(.pmx-pip-rig, .pmx-pip-card) { animation: none; }
+@keyframes pmx-pip-sway { from { transform: rotate(-1.8deg); } to { transform: rotate(1.8deg); } }
+@keyframes pmx-pip-card { from { transform: rotate(2.4deg); } to { transform: rotate(-2.4deg); } }
+@media (prefers-reduced-motion: reduce) { .pmx-pip-host :is(.pmx-pip-rig, .pmx-pip-card) { animation: none; } }
+html[data-motion="reduced"] .pmx-pip-host :is(.pmx-pip-rig, .pmx-pip-card), body.pm56-reduced .pmx-pip-host :is(.pmx-pip-rig, .pmx-pip-card) { animation: none; }
+/* the copy that cheers and is lifted away when a press closes the sheet (pip.js), in the sheet's own layer */
+.pmx-pip-lift-copy { position: fixed; z-index: 2147483000; pointer-events: none; margin: 0; }
+
+/* ---------------------------------------------------------------- where Pip stands in for a glyph */
+/* the Orbit's centre (PC4): Pip, with the live subject's glyph as a badge at its foot; its thinking dots bob while the
+   run runs (the reply's one moving Pip: the thinking placeholder's loader hands over to it) */
+.orbit-core-face { position: relative; display: block; width: 40px; height: 40px; margin-top: -6px; flex: none; }
+.orbit-core-face > .pmx-pip-mk { width: 40px; height: 40px; }
+.orbit-core-face > .orbit-core-icon { position: absolute; right: -9px; bottom: -3px; width: 17px; height: 17px; border-radius: 50%; background: var(--nx-disc); box-shadow: 0 0 0 1px var(--pm-step, var(--accent)); }
+.orbit-core-face > .orbit-core-icon svg { width: 12px; height: 12px; }
+@container orbitdial (max-width: 150px) {
+  .orbit-core-face, .orbit-core-face > .pmx-pip-mk { width: 32px; height: 32px; }
+  .orbit-core-face > .orbit-core-icon svg { width: 11px; height: 11px; }
+}
+.orbit-core-face.is-live :is(.pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4) { animation-name: pmx-pip-dot; animation-duration: 1.15s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+.orbit-core-face.is-live .pmx-pip-dot3 { animation-delay: .16s; }
+.orbit-core-face.is-live .pmx-pip-dot4 { animation-delay: .32s; }
+.orbit-core-face.is-live .pmx-pip-px :is(.pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4) { animation-timing-function: steps(1, end); }
+@keyframes pmx-pip-dot { 0%, 58%, 100% { transform: none; } 28% { transform: translateY(-3px); } }
+@media (prefers-reduced-motion: reduce) { .orbit-core-face :is(.pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4) { animation: none; } }
+html[data-motion="reduced"] .orbit-core-face :is(.pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4), body.pm56-reduced .orbit-core-face :is(.pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4) { animation: none; }
+
+/* Plans: Pip holds up the page; the build window: Pip asleep in its hard hat */
+.qs-head-icon[data-pip] { width: 22px; height: 22px; margin: -4px 0; background: none; display: inline-grid; place-items: center; }
+.plan-sched-mark[data-pip] { width: 22px; height: 22px; margin: -3px 0 -3px -3px; padding-top: 0; }
+/* the wand: Pip holds it */
+.menu-head-wand { display: inline-flex; align-items: center; gap: 0; }
+.menu-head-wand > .pmx-pip-mk { margin: -5px -5px -5px 0; }
+/* an empty list that draws its glyph faint keeps Pip whole */
+.af-empty > .pmx-empty-pip { opacity: 1; }
+.af-empty.pmx-empty-line { flex-direction: column; }
+/* NieR parts win where both draw (S7): with Ink empty states on, NieR's own art stands in Pip's place */
+html[data-o55-nier-parts~="empty"] .pmx-empty-line > .pmx-empty-pip { display: none; }
