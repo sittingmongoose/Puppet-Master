@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25110-L25496
+Source lines: L25107-L25493
 
-Source SHA256: `9d0fb1351e15ba5d2df7be742c0ef98139f1a36f90babf25ce5cca131da9bc40`
+Source SHA256: `63c9c2df0d06e50d6f0e803255e1aedcde0319ecf34fae55f25c4b5a68a06159`
 
 ---
 
@@ -138,16 +138,16 @@ source_lineage:
 - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-002
 - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-006
 - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-007
-preserved_exact_tokens:
-- pinned by default
-- share available width
-- bounded previews
+preserved_exact_tokens: []
 negative_constraints:
 - Do not restore the small transient Activity Detail or an Activity Pin/Unpin control.
 - Do not remove History pin or keep separate Open Activity buttons in previews.
 stale_retired_dispositions:
 - 'Amended 2026-10-09 (DL-180): History is a flyout by default and its pin widens the chat column; the shared
   width is the column''s.'
+- G1/G2 (2026-10-29) supersede the original Activity geometry phrases pinned by default, share available width
+  and bounded previews. Full-size detail follows F3-535/ACD-506; hover previews keep their separately owned
+  dwell, bounds and no-internal-scroll behavior, and History pin remains separate.
 owner_hints:
 - Plans/assistant-chat-design.md
 - Plans/FinalGUISpec.md

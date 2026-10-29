@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42944-L43317
+Source lines: L42945-L43320
 
-Source SHA256: `fb7d5317d99e52640970e8e158e95bd9a416e1a04098fe6582be906af569a148`
+Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
 
 ---
 
@@ -45,7 +45,8 @@ canonical_text: >-
   a button to turn it off; inside the onboarding window the NieR row's own line says NieR Mode is painting
   over the chosen look and that look shows again when NieR Mode is turned off, and never claims anything
   was saved. While NieR Mode is painted, its preview included, onboarding and the Tour take a NieR
-  direction in place of Basic's. The illustration system becomes the NieR unit marionettes, original line
+  direction in place of Basic's. Superseded 2026-10-29 for onboarding by O8/X3/F3-663, retained as
+  Tour/source lineage only: the earlier illustration system used the NieR unit marionettes, original line
   art drawn for Puppet Master with no game asset and no character likeness: small android units whose
   shield-shaped head is crossed by a rigid ink visor band that overhangs it on both sides and is the unit's
   only face (a scan notch at rest, two chevrons for joy, two dashes in a bow), with a high collar, one coat
@@ -108,9 +109,10 @@ canonical_text: >-
   Amended 2026-10-16 (DL-217, the Settings lane): under Reduced Motion the NieR switch shows a calm cover
   in the outgoing look's colours, with no slats or travel, that names what is being applied, is announced
   politely, and lifts once the new look is drawn; the waiting reboot cover's movement is a compositor ink
-  sweep across its segmented meter. Amended 2026-10-29 (O8/O11, X3; PM7): F3-663’s NieR Pip replaces the
-  unit marionette for onboarding and chat agents. Static marks keep plain band, live stage/sheet Pip shows
-  blinking eyes. Retain NieR material/HUD/reboot and Pod 042 as Tour/Chat narrator; no Tour redesign now.
+  sweep across its segmented meter. Current PM7 replacement: Amended 2026-10-29 (O8/O11, X3; PM7): F3-663’s
+  NieR Pip replaces the unit marionette for onboarding and chat agents. Static marks keep plain band, live
+  stage/sheet Pip shows blinking eyes. Retain NieR material/HUD/reboot and Pod 042 as Tour/Chat narrator;
+  no Tour redesign now.
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look
   under it.

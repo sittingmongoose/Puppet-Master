@@ -65,3 +65,22 @@ All six accepted. These are the focused repairs; lead-owned recheck and final ag
 | R4 | Live native grammar heading/list now has ten families including Processes with D4 conditional presence and ACD-505 owner; old arithmetic replaced while per-domain exceptions remain. |
 | R5 | Restored 828 in the dated 2026-08-31 registration; current October entry/inventory retains 1011. |
 | R6 | Strict shared registry schema requires help and integer Size 1–6; all 25 entries populated from the approved source mapping and confirmed foundation sizes (61 total). No per-host list or setting was added. |
+
+## Muse first recheck — R-1–R-10
+
+All ten accepted. R-2/R-5 were already fixed in 58887ead09; remaining items are repaired in this follow-up. No finding is rejected or deferred.
+
+| Finding | Repair |
+|---|---|
+| R-1 | FinalGUISpec Cumulative §17 now opens full-size detail directly, widens then covers, closes via ×/Esc/own icon and keeps History pin separate; coexistence/floating-bar behavior remains. |
+| R-2 | 58887ead09 requires/populates shared help and Size1–6 for all 25 parts; no per-host table. |
+| R-3 | Removed misplaced PC4 Orbit amendment from notebook/debug eligibility ACD-451; correct ACD-473/507 ownership remains. |
+| R-4 | ACD-453’s three former geometry tokens are recorded as explicitly superseded G1/G2 source phrases rather than live preserved requirements. Hover bounds and History pin retain their separate owners. |
+| R-5 | 58887ead09 restores August’s historical 828; live/current 1011 remains. |
+| R-6 | SSYS-056 explicitly calls the enumerated admitted list canon and pip_parts.json its shared machine mirror; no future list/count deferral remains. |
+| R-7 | EP-043 has one D8/D13 stop/input paragraph, retaining subordinate ProcessFacts, identity/descendants, 3 s, observed exit, idempotence, Windows, service and protected-input rules. |
+| R-8 | F3-635’s 760 px limit is scoped to centre run-view transcript feeds; chat column uses F3-637 with no fixed maximum. |
+| R-9 | F3-598/600 lead their old art description with explicit onboarding supersession and mark the current PM7 replacement boundary. F3-172 directly specifies shared indeterminate loader and measured progress, with inline spinners explicitly retired. |
+| R-10 | Provider exclusion route wording now names the current D8 3 s grace; original exclusion scope remains. EP-043 also labels the retained 5-second token historical. |
+
+MN-5’s four lineage residues are also corrected: DL-240/245 use background-activity source, F3-663 uses onboarding Pip source, SSYS-057 includes the background-activity README/tracker. Final aggregate/dry attribution and the lead’s final focused Astra recheck remain pending.

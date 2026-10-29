@@ -3146,15 +3146,13 @@ canonical_text: >-
   PM entrypoints establish a canonical signal.NotifyContext or equivalent once-owned fan-out before
   subprocess start; provider, MCP, and LSP subprocesses receive bounded graceful termination, SIGHUP
   reloads config, and managed subprocesses run in isolated process groups. Amended 2026-10-29 (D8/D13,
-  G5/G7; PM7): ProcessFacts is subordinate to ObservableWork (SIR-054). cmd.work.stop validates pid plus
-  start time/process group/generation; SIGTERM then SIGKILL after 3 s to the whole group including
-  descendants; Stopping pending persists until observed exit; ended stop is idempotent. Detect current
-  stdin prompt with input generation, only plain yes/no quick answers safe-first; other input reveals the
-  exact terminal. D8/D13 (PM7, 2026-10-29): process-group stop binds pid, pid_start_time, group, owner and
-  generation; SIGTERM then SIGKILL after 3 s, pending/Stopping until observed exit; already-ended stop is
-  idempotent and excludes system services. Windows uses CREATE_NEW_PROCESS_GROUP, CTRL_BREAK_EVENT then the
-  existing forced-termination equivalent after 3 s. Input requests retain current prompt/generation and
-  safe yes/no order; other input reveals the exact Terminal. No protected input is answered here.
+  G5/G7; PM7): ProcessFacts is subordinate to ObservableWork (SIR-054). cmd.work.stop binds pid,
+  pid_start_time, process_group, owner and current generation, sending SIGTERM then SIGKILL after 3 s to
+  the whole group including descendants. Stopping/pending persists until observed exit; already-ended stop
+  is idempotent and system services are excluded. Windows uses CREATE_NEW_PROCESS_GROUP, CTRL_BREAK_EVENT
+  then the existing forced-termination equivalent after 3 s. Input requests bind the current detected
+  prompt and generation, with plain yes/no quick answers safe-first; all other input reveals the exact
+  Terminal. No protected input is answered here.
 gui_related: false
 gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
 split_recommended: false
@@ -3193,7 +3191,9 @@ preserved_exact_tokens:
 - ContractName:Plans/Architecture_Invariants.md
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'D8 (2026-10-29): 5-second grace window is retained source lineage only; the current provider/process-group
+  grace is 3 seconds across Unix and Windows equivalents.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/Executor_Protocol.md
@@ -7919,7 +7919,7 @@ Stop/acceptance races remain ordered under C's actual original handoff fence. If
 
 #### Original disposable local Unix MCP process shutdown
 
-This original custody contract is owned by Executor, Run Modes, MCP lifecycle and Storage and remains only one prerequisite of D05. The supported route is an original explicitly disposable PM-managed local Unix MCP diagnostic probe using stdio and the Run Modes MCP three-second grace. It must be genuinely admitted as that diagnostic before launch and must have no shared-session beneficiaries. MCP pooling remains the canonical default; no normal tool invocation becomes a disposable probe because cancellation would be convenient. Pooled MCP, remote MCP, external-managed MCP, CLI provider shim, provider five-second route, Windows and LSP/terminal sessions require their own original source profiles. Unsupported routes remain exact members of the C v2 all-generation dispatch census.
+This original custody contract is owned by Executor, Run Modes, MCP lifecycle and Storage and remains only one prerequisite of D05. The supported route is an original explicitly disposable PM-managed local Unix MCP diagnostic probe using stdio and the Run Modes MCP three-second grace. It must be genuinely admitted as that diagnostic before launch and must have no shared-session beneficiaries. MCP pooling remains the canonical default; no normal tool invocation becomes a disposable probe because cancellation would be convenient. Pooled MCP, remote MCP, external-managed MCP, CLI provider shim, provider route (current D8 grace: 3 s), Windows and LSP/terminal sessions require their own original source profiles. Unsupported routes remain exact members of the C v2 all-generation dispatch census.
 
 #### Original source and capability boundary
 

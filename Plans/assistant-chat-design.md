@@ -25054,7 +25054,7 @@ plan_unit_id: ACD-451
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: |-
+canonical_text: >-
   Chat integration is eligibility-aware across long research, editing, debugging, model changes,
   pause/resume, and thread recovery. The notebook and fresh-window affordances appear only where eligible;
   a trivial chat uses neither and produces no notebook or helper overhead. Debug flows keep Investigation
@@ -25063,9 +25063,6 @@ canonical_text: |-
   target/worktree/session drift before reuse; raw logs and media remain artifacts. Thread restore and model
   change never silently rebind a notebook to a different target; provider-hidden content is never shown as
   PM-authored notes (WNC-N17).
-  Amended 2026-10-29 (PC4; PM7): The protected working Orbit now has Pip at its centre and a current-tool
-  badge, with a single-Pip handoff from the thinking loader (ACD-507). Existing wand compact
-  submenu/working choreography remains.
 gui_related: true
 gui_classification_reason: This unit specifies chat eligibility and debug-note surface behavior.
 depends_on:
@@ -25237,16 +25234,16 @@ source_lineage:
 - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-002
 - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-006
 - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-007
-preserved_exact_tokens:
-- pinned by default
-- share available width
-- bounded previews
+preserved_exact_tokens: []
 negative_constraints:
 - Do not restore the small transient Activity Detail or an Activity Pin/Unpin control.
 - Do not remove History pin or keep separate Open Activity buttons in previews.
 stale_retired_dispositions:
 - 'Amended 2026-10-09 (DL-180): History is a flyout by default and its pin widens the chat column; the shared
   width is the column''s.'
+- G1/G2 (2026-10-29) supersede the original Activity geometry phrases pinned by default, share available width
+  and bounded previews. Full-size detail follows F3-535/ACD-506; hover previews keep their separately owned
+  dwell, bounds and no-internal-scroll behavior, and History pin remains separate.
 owner_hints:
 - Plans/assistant-chat-design.md
 - Plans/FinalGUISpec.md

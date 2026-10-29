@@ -15111,47 +15111,49 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Panel and page loads use skeleton screens, discrete actions use inline spinners or progress
-  indicators, and prior validated content remains visible during refresh with stale or
-  degraded labels.
-  Amended 2026-10-29 (L1/L2; PM7): Known-layout content retains skeletons; every other indeterminate application wait consumes F3-662’s one loader, determinate progress a measured bar. Inline custom spinners are retired.
+  Panel and page loads use skeleton screens; discrete actions use F3-662 Pip for indeterminate waits and
+  measured progress indicators for determinate work. Prior validated content remains visible during refresh
+  with stale/degraded labels. The source phrase inline spinners is retired by L1/L2, not an alternate
+  loader. Amended 2026-10-29 (L1/L2; PM7): Known-layout content retains skeletons; every other
+  indeterminate application wait consumes F3-662’s one loader, determinate progress a measured bar. Inline
+  custom spinners are retired.
 gui_related: true
-gui_classification_reason: >-
-  This unit defines visible loading indicators and stale/degraded display labels.
+gui_classification_reason: This unit defines visible loading indicators and stale/degraded display labels.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: loading_states_and_stale_labels
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0111"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0111
 preserved_exact_tokens:
-- "skeleton screens"
-- "inline spinners"
-- "progress indicators"
-- "prior validated content"
-- "stale/degraded labels"
+- skeleton screens
+- inline spinners
+- progress indicators
+- prior validated content
+- stale/degraded labels
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
-- "The `stale/degraded` labels are live loading-state vocabulary, not retired wording."
+- The `stale/degraded` labels are live loading-state vocabulary, not retired wording.
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-173 - Error Display Severity Surfaces
@@ -38327,12 +38329,11 @@ invariants.
 
 ### 17. Activity Detail Geometry, History Coexistence, and Floating Activity Bar
 
-- **Default Left Pinned Geometry (APR-001):** Opening Activity Detail from any entry point
-  defaults to a pinned side panel on the left of the chat canvas. An explicit user action on the
-  Unpin control converts the currently open panel into a floating surface. When a user subsequently
-  clicks an activity item or preview from another domain or record, the newly opened Activity Detail
-  record always opens PINNED on the left, resetting the transient unpinned state. Prior floating or
-  unpinned state is never persisted across explicit new item activations.
+- **Full-Size Activity Detail (G1/G2, 2026-10-29; supersedes APR-001):** Every entry opens the
+  full-size detail directly under F3-535/ACD-453/ACD-506, with no Activity Pin/Unpin or small transient
+  form. First widen the chat within its centre/page floor; at the window limit cover the transcript
+  at the full column height. The detail stays until ×, Esc or its own Activity icon closes it and
+  returns focus. Another domain/record replaces that full detail. History keeps its separate pin.
 - **History and Activity Detail Coexistence (APR-002):** Pinned Thread History (left rail) and
   full-size Activity Detail share the available canvas width dynamically using a coordinated flex
   split. Pinned History and full-size Activity Detail never reserve independent overlapping gutters or
@@ -42978,7 +42979,8 @@ canonical_text: >-
   a button to turn it off; inside the onboarding window the NieR row's own line says NieR Mode is painting
   over the chosen look and that look shows again when NieR Mode is turned off, and never claims anything
   was saved. While NieR Mode is painted, its preview included, onboarding and the Tour take a NieR
-  direction in place of Basic's. The illustration system becomes the NieR unit marionettes, original line
+  direction in place of Basic's. Superseded 2026-10-29 for onboarding by O8/X3/F3-663, retained as
+  Tour/source lineage only: the earlier illustration system used the NieR unit marionettes, original line
   art drawn for Puppet Master with no game asset and no character likeness: small android units whose
   shield-shaped head is crossed by a rigid ink visor band that overhangs it on both sides and is the unit's
   only face (a scan notch at rest, two chevrons for joy, two dashes in a bow), with a high collar, one coat
@@ -43041,9 +43043,10 @@ canonical_text: >-
   Amended 2026-10-16 (DL-217, the Settings lane): under Reduced Motion the NieR switch shows a calm cover
   in the outgoing look's colours, with no slats or travel, that names what is being applied, is announced
   politely, and lifts once the new look is drawn; the waiting reboot cover's movement is a compositor ink
-  sweep across its segmented meter. Amended 2026-10-29 (O8/O11, X3; PM7): F3-663’s NieR Pip replaces the
-  unit marionette for onboarding and chat agents. Static marks keep plain band, live stage/sheet Pip shows
-  blinking eyes. Retain NieR material/HUD/reboot and Pod 042 as Tour/Chat narrator; no Tour redesign now.
+  sweep across its segmented meter. Current PM7 replacement: Amended 2026-10-29 (O8/O11, X3; PM7): F3-663’s
+  NieR Pip replaces the unit marionette for onboarding and chat agents. Static marks keep plain band, live
+  stage/sheet Pip shows blinking eyes. Retain NieR material/HUD/reboot and Pod 042 as Tour/Chat narrator;
+  no Tour redesign now.
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look
   under it.
@@ -43812,11 +43815,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Product Onboarding's three hero moments, the wake as the window opens, the act card at a chapter's end
-  and the curtain call at Ready, take five styles, one per look family: Basic, Friendly, Glass, Retro and
-  NieR (DL-153). Whenever NieR Mode is painted, its onboarding preview included, NieR's moments play as
-  F3-598 sets them out, whatever family is chosen beneath it, and no family has a NieR variant. Otherwise
-  the painted family plays its own style, the same in its Light and its Dark variant and drawn only in that
+  Superseded 2026-10-29 for onboarding by O1–O12/F3-663; retained source description follows: Product
+  Onboarding's three hero moments, the wake as the window opens, the act card at a chapter's end and the
+  curtain call at Ready, take five styles, one per look family: Basic, Friendly, Glass, Retro and NieR
+  (DL-153). Whenever NieR Mode is painted, its onboarding preview included, NieR's moments play as F3-598
+  sets them out, whatever family is chosen beneath it, and no family has a NieR variant. Otherwise the
+  painted family plays its own style, the same in its Light and its Dark variant and drawn only in that
   family's own materials, never a recoloured NieR. Basic is one drafting job: as the window opens a
   parallel rule sweeps down the sheet drawing its construction lines before the strings are tensioned; at a
   chapter's end a title block is drafted over the stage, the rail draws a dimension line to the next
@@ -43841,10 +43845,10 @@ canonical_text: >-
   stamp, the roses, the spotlights, ALL CLEAR with its arrow). Ready still hands the window over to the
   Guided Tour's first callout in every family. The moments add no settings key, theme family, theme
   variant, NieR part, sound setting, `ui.onboarding.*` action or `ui.guided_tour.*` action; their one
-  trigger, end state, snap and sound path are shared by all five styles (DR-056). Amended 2026-10-29
-  (O1–O12; PM7): F3-663 replaces the troupe/one-shot-only hero art with one Pip, bounded living worlds and
-  Retro Light/Dark distinction. One trigger/end-state/sound path remains; Ready hands to first callout and
-  never waits on animation. O11 leaves the Tour untouched.
+  trigger, end state, snap and sound path are shared by all five styles (DR-056). Current PM7 replacement:
+  Amended 2026-10-29 (O1–O12; PM7): F3-663 replaces the troupe/one-shot-only hero art with one Pip, bounded
+  living worlds and Retro Light/Dark distinction. One trigger/end-state/sound path remains; Ready hands to
+  first callout and never waits on animation. O11 leaves the Tour untouched.
 gui_related: true
 gui_classification_reason: Defines the act card, the wake and the curtain call of onboarding in the four theme
   families.
@@ -45916,273 +45920,292 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every tab in the home centre is one of fifteen kinds (DL-180, D9), each registered once, with its
-  tab id prefixes: editor (`file:<path>`, `buffer:<n>`; a diff mode and preview tabs; F3-639);
-  terminal (`terminal:<session>`, one session per tab, the session id minted by the terminal kind;
-  F3-640, SMPFS-180); browser (`browser:<n>`, and `link:` for a page the chat fetched; DevTools
-  docked inside it and the capture toolbar); dashboard (`dashboard:<board_id>`, `dashboard:home` the
-  pinned Home dashboard; F3-638); plan (`plan:<id>`, the plan query form and `deep-discovery:<run>`;
-  the plan viewer with its sticky Build, Revise and More footer); document (`teach:`, `memory:`,
-  `revert:`, `debug:`, `lens-source:`, `lens-effective:`, `wonderer:`, `wonder-source:`,
-  `doc:<path>`: rules, memory, revert, debug investigation, lens source, wonderer); artifact
-  (`artifact:<artifact_id>`, `artifact:<artifact_id>@v<n>` and the chat's artifact ids; a subtype
-  per artifact kind, versioned; RAP-065); run (`collab-run:`, `crew-work:`, `review:`, `room:`,
-  `brainstorm:`, `review-evidence:`, `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and
-  their evidence); transcript (`thread-<agentId>`: an agent's read-only live feed); context
-  (`context:<threadId>`: thread-keyed context detail); record (`search:`, `mcp:`, `app:`,
-  `work-record:`: read-only records); output (`output`, one Output tab whose channel switches inside
-  it; `output:<channel>` only for a channel split off with "Open in new tab", showing only that
-  channel); problems (`problems`); ports (`ports`); and debug_console (`debug-console`, one Debug
-  Console tab with a sub-tab per debug session, the session shown being its view state; F3-490). The
-  document kinds are editor, plan, document, artifact, run, transcript, context and record;
-  terminal, browser, dashboard and the four tool kinds output, problems, ports and debug_console are
-  dedicated; a panel holding only tool kinds and terminals has the role tools. Problems, Ports and
-  the Debug Console are one tab each per workspace. Never a kind: the chat's Goal tab (DL-147),
-  Activity Detail (it stays inside the chat, F3-637), the chat's lab-only workspaces, and wand setup
-  sheets (they stay app modals). A tab id is opaque and stable, its prefix names its kind, and one
-  id is one tab in the whole workspace; an id with an unknown prefix opens nothing, and two kinds
-  claiming one prefix is a start-up error. Tab identity is separate from domain identity: the path,
-  terminal_session_id, board id or artifact id a tab shows is its domain reference, and moving,
-  collapsing, maximizing, hiding or restoring a tab never changes it. No internal id (tab, panel,
-  session, nonce) ever appears as text in the interface. Older canon that names one of these
-  surfaces by its former host means the kind here, placed by F3-634: the run view called an editor
-  document (ACD-480, F3-569, F3-576 and the 2026-09-03 redesign's section 10) is a run tab,
-  ACD-485's subagent transcript a transcript tab, the context-detail editor tab (section 7.16.1,
-  F3-132) a context tab, the Plan card's "normal artifact viewer" and an artifact opened from
-  section 7.12 an artifact tab (RAP-065), the Your rules document (F3-579) a document tab, and
-  F3-297's editor-tab Browser a browser tab. Each kind registers its label, its group name for the
-  "+N" list, its icon (a bundled SVG icon_id, never an emoji), its id prefixes, its content minimum,
-  whether it is dedicated, its "+" menu row and sub-row, how it makes a tab id for an open (the
-  terminal mints a new session), the older id forms it folds into one tab, the rows it adds to the
-  tab menu (F3-631), how it mounts, what it serializes and whether a tab may close now. Content
-  minimums: terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan,
-  document, artifact, transcript and context 280 x 160, and editor, record and tools 280 x 120. The
-  host mounts a tab's body only when the tab is first shown, so a restored background tab costs
-  nothing until it is opened. A kind's serialized state is at most 16 KB of plain data, with no
-  scrollback and no buffer text (Plans/storage-plan.md#SP-330); an untitled editor buffer's tab
-  state carries only the title, language and edit or read-only state of F3-639 (amended 2026-10-10).
-  Before a tab closes its kind may ask first: a dirty editor offers to save, and a running terminal
-  says what will stop (F3-640). A tab body is its own box, sized by its panel: it never sizes
-  against the window, only against its own width and height; it is told when they change, with a
-  last call once a divider drag or a layout animation has settled so costly work can wait for it; it
-  is told when it is shown, hidden, focused and blurred and when the look changes, and stops
-  animation while hidden. Every kind that needs a row of controls above its content uses the one
-  shared header row (D12): 30 px tall, 24 px targets, 12 px text and 11 px for secondary facts,
-  labels when the body is at least 520 px wide and icons with hover tags below that, and the row
-  hidden when the body is under 150 px tall; a kind draws a row of its own only when nothing in the
-  shared one fits, and its owner unit says why. Menus, the "+" menu, the "+N" list, panel menus,
-  drag ghosts and landing previews open in one overlay root (Plans/DRY_Rules.md#DR-067), one
-  stacking order: panel content, then strips and dividers, then the overlay root, which sits above
-  the status bar and below the Demo Studio's controls (F3-649), hover tags and the Guided Tour; no
-  kind appends an overlay of its own. Keys: the shell owns Ctrl+1..9 and Ctrl+K, so the panels use
-  neither and there are no Ctrl+K chords. In the desktop app: Ctrl+T a new tab of the panel's usual
-  kind, Ctrl+W close the tab, Ctrl+Shift+T reopen the last closed tab, Ctrl+Tab and Ctrl+Shift+Tab
-  step through recent tabs across panels and kinds (hold, step, release), Ctrl+Shift+Space the "+"
-  menu, Ctrl+Shift+` a new terminal, Ctrl+Shift+B a new browser, Ctrl+P open a file, Ctrl+Shift+A
-  every tab, Ctrl+PgDn and Ctrl+PgUp the next and previous tab in the panel, Alt+1..8 tab N and
-  Alt+9 the last tab, Ctrl+Shift+PgUp and Ctrl+Shift+PgDn move the tab left and right, Alt+arrows
-  focus the panel in that direction, Alt+Shift+1..9 focus panel N, Alt+Shift+arrows move the tab to
-  the panel in that direction (splitting that way when there is none and it fits), F6 and Shift+F6
-  cycle the rail, the panels and the chat composer, Ctrl+\ split right, Ctrl+Shift+\ split down,
-  Shift+Escape maximize or restore (Escape also restores while focus is in a strip), Tab to a
-  divider and then the divider keys (F3-630), the ARIA tab keys in a strip with Shift+F10 for the
-  tab menu (F3-631), and Enter on a panel grip for Move panel. Pinning is in the tab menu only; no
-  binding is a bare letter or digit; Escape closes only the innermost open thing (F3-568). The
-  panels hold these keys while focus is in the centre; while focus is inside a tab body the kind is
-  asked first, a terminal keeps the shell's keys and gives back the host keys F3-640 lists, and
-  ordinary text inputs keep their own keys. Web-client mapping rule: in a web browser the chords the
-  browser keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp, are answered as Alt+T,
-  Alt+W, Alt+Shift+T, Alt+` (Alt+Shift+` backwards) and Alt+PgDn/PgUp (panels NUMBERS 6026fa8432,
-  keyboard), and every label, menu shortcut and hover tag shows the key that works where the app
-  runs. This supersedes F3-HOME-001's typed surface kinds and F3-152's terminal-and-browser-only tab
-  identity, which now holds for every kind. The channel shown in `output` is view state, never part
-  of its id (D31). The Output tab is labelled Output and a split-off channel tab Output · <Channel>;
-  opening a channel from anywhere switches `output` to it (F3-634). The Debug Console is one tab,
-  `debug-console`, with a sub-tab for each debug session (D33, DL-187); which session it shows is
-  view state, with no command, saved with the tab (lead ruling F6), and an open that names a session
-  reveals the tab and switches it to that session. An id of the earlier one-tab-per-session form,
-  `debug-console:<session>`, folds into `debug-console` with that session shown wherever it appears:
-  in an open, in a saved layout or a named layout, and in the reopen list. A tab's typing field,
-  including the terminal input and the editor's IME field, passes the panels' navigation keys to the
-  host once the tab declines the key: Alt+1..9, Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows,
-  Alt+PgUp/PgDn in the web client (Ctrl+PgUp/PgDn in the desktop app), Ctrl+P, Ctrl+Shift+A and
-  Alt+W on Windows and Linux. On a Mac, Option+letter and Option+backtick type text in fields and
-  the editor, and never trigger the Alt stand-ins; a Dead key never triggers them on any platform.
-  Keys during IME composition are ignored. F6 is handled before the tab's key claim and reaches the
-  chat composer from every region. Browser and tool measurements: a browser body is at least 360 ×
-  200 px. DevTools docks right at body widths of 900 px or more, otherwise below. Its right width
-  defaults to 340 px, ranging from 240 px to min(60 % of body, body minus 200 px); below, its height
-  defaults to 42 % and ranges from 25-70 %. Keyboard resize moves 8 px, or 48 px with Shift. Capture
-  labels appear at 1100 px and session labels at 620 px; the shared icons-only step is below 520 px;
-  below 480 px Full, Region, Select unless armed, and Forward move into More. The address field is
-  at least 96 px. Load-line motion lasts 320 ms, 0 under Reduced Motion; shutter flash lasts 240 ms
-  and is off under Reduced Motion. History is capped at 30 entries, 20 saved; captures at 24, 12
-  saved; capture regions are at least 8 × 8 px. Browser saved view state includes URL,
-  ordinary/protected session choice, DevTools visibility, details/DevTools/captures rail choice,
-  elements/console/network/access tool choice, dock dimensions, history and index, ordinary URL,
-  captures, page title and policy differences only. The agent-access policy has 14 rows: Navigation,
-  Tabs and frames, Page structure and components, Styles, Console, Network, Source maps and files,
-  Performance, Storage and cookies, Screenshots and recording, Form input, Downloads, Viewport and
-  device sizes and Request simulation; rows cycle Off, Ask, On. Agent and browser introspection stay
-  explicit opt-in (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-092); this unit sets no row's
-  default, which is the browser owner's to set and an open question for the lead until it does
-  (amended 2026-10-10). Browser is the plus menu's order-20 kind, with Ctrl+Shift+B and
+  Every tab in the home centre is one of fifteen kinds (DL-180, D9), each registered once, with its tab id
+  prefixes: editor (`file:<path>`, `buffer:<n>`; a diff mode and preview tabs; F3-639); terminal
+  (`terminal:<session>`, one session per tab, the session id minted by the terminal kind; F3-640,
+  SMPFS-180); browser (`browser:<n>`, and `link:` for a page the chat fetched; DevTools docked inside it
+  and the capture toolbar); dashboard (`dashboard:<board_id>`, `dashboard:home` the pinned Home dashboard;
+  F3-638); plan (`plan:<id>`, the plan query form and `deep-discovery:<run>`; the plan viewer with its
+  sticky Build, Revise and More footer); document (`teach:`, `memory:`, `revert:`, `debug:`,
+  `lens-source:`, `lens-effective:`, `wonderer:`, `wonder-source:`, `doc:<path>`: rules, memory, revert,
+  debug investigation, lens source, wonderer); artifact (`artifact:<artifact_id>`,
+  `artifact:<artifact_id>@v<n>` and the chat's artifact ids; a subtype per artifact kind, versioned;
+  RAP-065); run (`collab-run:`, `crew-work:`, `review:`, `room:`, `brainstorm:`, `review-evidence:`,
+  `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and their evidence); transcript
+  (`thread-<agentId>`: an agent's read-only live feed); context (`context:<threadId>`: thread-keyed context
+  detail); record (`search:`, `mcp:`, `app:`, `work-record:`: read-only records); output (`output`, one
+  Output tab whose channel switches inside it; `output:<channel>` only for a channel split off with "Open
+  in new tab", showing only that channel); problems (`problems`); ports (`ports`); and debug_console
+  (`debug-console`, one Debug Console tab with a sub-tab per debug session, the session shown being its
+  view state; F3-490). The document kinds are editor, plan, document, artifact, run, transcript, context
+  and record; terminal, browser, dashboard and the four tool kinds output, problems, ports and
+  debug_console are dedicated; a panel holding only tool kinds and terminals has the role tools. Problems,
+  Ports and the Debug Console are one tab each per workspace. Never a kind: the chat's Goal tab (DL-147),
+  Activity Detail (it stays inside the chat, F3-637), the chat's lab-only workspaces, and wand setup sheets
+  (they stay app modals). A tab id is opaque and stable, its prefix names its kind, and one id is one tab
+  in the whole workspace; an id with an unknown prefix opens nothing, and two kinds claiming one prefix is
+  a start-up error. Tab identity is separate from domain identity: the path, terminal_session_id, board id
+  or artifact id a tab shows is its domain reference, and moving, collapsing, maximizing, hiding or
+  restoring a tab never changes it. No internal id (tab, panel, session, nonce) ever appears as text in the
+  interface. Older canon that names one of these surfaces by its former host means the kind here, placed by
+  F3-634: the run view called an editor document (ACD-480, F3-569, F3-576 and the 2026-09-03 redesign's
+  section 10) is a run tab, ACD-485's subagent transcript a transcript tab, the context-detail editor tab
+  (section 7.16.1, F3-132) a context tab, the Plan card's "normal artifact viewer" and an artifact opened
+  from section 7.12 an artifact tab (RAP-065), the Your rules document (F3-579) a document tab, and
+  F3-297's editor-tab Browser a browser tab. Each kind registers its label, its group name for the "+N"
+  list, its icon (a bundled SVG icon_id, never an emoji), its id prefixes, its content minimum, whether it
+  is dedicated, its "+" menu row and sub-row, how it makes a tab id for an open (the terminal mints a new
+  session), the older id forms it folds into one tab, the rows it adds to the tab menu (F3-631), how it
+  mounts, what it serializes and whether a tab may close now. Content minimums: terminal 320 x 120 px,
+  browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan, document, artifact, transcript and context
+  280 x 160, and editor, record and tools 280 x 120. The host mounts a tab's body only when the tab is
+  first shown, so a restored background tab costs nothing until it is opened. A kind's serialized state is
+  at most 16 KB of plain data, with no scrollback and no buffer text (Plans/storage-plan.md#SP-330); an
+  untitled editor buffer's tab state carries only the title, language and edit or read-only state of F3-639
+  (amended 2026-10-10). Before a tab closes its kind may ask first: a dirty editor offers to save, and a
+  running terminal says what will stop (F3-640). A tab body is its own box, sized by its panel: it never
+  sizes against the window, only against its own width and height; it is told when they change, with a last
+  call once a divider drag or a layout animation has settled so costly work can wait for it; it is told
+  when it is shown, hidden, focused and blurred and when the look changes, and stops animation while
+  hidden. Every kind that needs a row of controls above its content uses the one shared header row (D12):
+  30 px tall, 24 px targets, 12 px text and 11 px for secondary facts, labels when the body is at least 520
+  px wide and icons with hover tags below that, and the row hidden when the body is under 150 px tall; a
+  kind draws a row of its own only when nothing in the shared one fits, and its owner unit says why. Menus,
+  the "+" menu, the "+N" list, panel menus, drag ghosts and landing previews open in one overlay root
+  (Plans/DRY_Rules.md#DR-067), one stacking order: panel content, then strips and dividers, then the
+  overlay root, which sits above the status bar and below the Demo Studio's controls (F3-649), hover tags
+  and the Guided Tour; no kind appends an overlay of its own. Keys: the shell owns Ctrl+1..9 and Ctrl+K, so
+  the panels use neither and there are no Ctrl+K chords. In the desktop app: Ctrl+T a new tab of the
+  panel's usual kind, Ctrl+W close the tab, Ctrl+Shift+T reopen the last closed tab, Ctrl+Tab and
+  Ctrl+Shift+Tab step through recent tabs across panels and kinds (hold, step, release), Ctrl+Shift+Space
+  the "+" menu, Ctrl+Shift+` a new terminal, Ctrl+Shift+B a new browser, Ctrl+P open a file, Ctrl+Shift+A
+  every tab, Ctrl+PgDn and Ctrl+PgUp the next and previous tab in the panel, Alt+1..8 tab N and Alt+9 the
+  last tab, Ctrl+Shift+PgUp and Ctrl+Shift+PgDn move the tab left and right, Alt+arrows focus the panel in
+  that direction, Alt+Shift+1..9 focus panel N, Alt+Shift+arrows move the tab to the panel in that
+  direction (splitting that way when there is none and it fits), F6 and Shift+F6 cycle the rail, the panels
+  and the chat composer, Ctrl+\ split right, Ctrl+Shift+\ split down, Shift+Escape maximize or restore
+  (Escape also restores while focus is in a strip), Tab to a divider and then the divider keys (F3-630),
+  the ARIA tab keys in a strip with Shift+F10 for the tab menu (F3-631), and Enter on a panel grip for Move
+  panel. Pinning is in the tab menu only; no binding is a bare letter or digit; Escape closes only the
+  innermost open thing (F3-568). The panels hold these keys while focus is in the centre; while focus is
+  inside a tab body the kind is asked first, a terminal keeps the shell's keys and gives back the host keys
+  F3-640 lists, and ordinary text inputs keep their own keys. Web-client mapping rule: in a web browser the
+  chords the browser keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp, are answered as
+  Alt+T, Alt+W, Alt+Shift+T, Alt+` (Alt+Shift+` backwards) and Alt+PgDn/PgUp (panels NUMBERS 6026fa8432,
+  keyboard), and every label, menu shortcut and hover tag shows the key that works where the app runs. This
+  supersedes F3-HOME-001's typed surface kinds and F3-152's terminal-and-browser-only tab identity, which
+  now holds for every kind. The channel shown in `output` is view state, never part of its id (D31). The
+  Output tab is labelled Output and a split-off channel tab Output · <Channel>; opening a channel from
+  anywhere switches `output` to it (F3-634). The Debug Console is one tab, `debug-console`, with a sub-tab
+  for each debug session (D33, DL-187); which session it shows is view state, with no command, saved with
+  the tab (lead ruling F6), and an open that names a session reveals the tab and switches it to that
+  session. An id of the earlier one-tab-per-session form, `debug-console:<session>`, folds into
+  `debug-console` with that session shown wherever it appears: in an open, in a saved layout or a named
+  layout, and in the reopen list. A tab's typing field, including the terminal input and the editor's IME
+  field, passes the panels' navigation keys to the host once the tab declines the key: Alt+1..9,
+  Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows, Alt+PgUp/PgDn in the web client (Ctrl+PgUp/PgDn in the
+  desktop app), Ctrl+P, Ctrl+Shift+A and Alt+W on Windows and Linux. On a Mac, Option+letter and
+  Option+backtick type text in fields and the editor, and never trigger the Alt stand-ins; a Dead key never
+  triggers them on any platform. Keys during IME composition are ignored. F6 is handled before the tab's
+  key claim and reaches the chat composer from every region. Browser and tool measurements: a browser body
+  is at least 360 × 200 px. DevTools docks right at body widths of 900 px or more, otherwise below. Its
+  right width defaults to 340 px, ranging from 240 px to min(60 % of body, body minus 200 px); below, its
+  height defaults to 42 % and ranges from 25-70 %. Keyboard resize moves 8 px, or 48 px with Shift. Capture
+  labels appear at 1100 px and session labels at 620 px; the shared icons-only step is below 520 px; below
+  480 px Full, Region, Select unless armed, and Forward move into More. The address field is at least 96
+  px. Load-line motion lasts 320 ms, 0 under Reduced Motion; shutter flash lasts 240 ms and is off under
+  Reduced Motion. History is capped at 30 entries, 20 saved; captures at 24, 12 saved; capture regions are
+  at least 8 × 8 px. Browser saved view state includes URL, ordinary/protected session choice, DevTools
+  visibility, details/DevTools/captures rail choice, elements/console/network/access tool choice, dock
+  dimensions, history and index, ordinary URL, captures, page title and policy differences only. The
+  agent-access policy has 14 rows: Navigation, Tabs and frames, Page structure and components, Styles,
+  Console, Network, Source maps and files, Performance, Storage and cookies, Screenshots and recording,
+  Form input, Downloads, Viewport and device sizes and Request simulation; rows cycle Off, Ask, On. Agent
+  and browser introspection stay explicit opt-in (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-092);
+  this unit sets no row's default, which is the browser owner's to set and an open question for the lead
+  until it does (amended 2026-10-10). Browser is the plus menu's order-20 kind, with Ctrl+Shift+B and
   recent-address sub-rows. The four tools each have a 280 × 120 px minimum and follow in plus order
-  70/71/72/73. Output caps at 600 lines, turns Follow off beyond 24 px from the end, hides time
-  below 520 px, and saves channel, follow and wrap. Its channel picker is 300 px wide, with a
-  trailing Open in new tab cell; Alt+Enter opens the split-off tab and Alt+click a new panel. A
-  split-off tab has a plain channel fact and More's Show in the Output tab. Problems rows are 28 px;
-  source hides below 520 px and line/column and folder below 360 px; saved view state is
-  error/warning/info visibility and collapsed files. Ports columns are 96 px / 1fr / 1.3fr / 140 px
-  / 220 px; below 760 px Origin hides and actions become icon-only in 108 px; below 480 px rows
-  stack; actions are 32 px and rows at least 44 px. Ports saves added and removed port numbers. Each
-  Debug Console session keeps its own console, capped at 400 lines, its own state and its own frame;
-  input history keeps 30 entries, 20 of them saved, and stays per session as F3-490 says; the input
-  row is 34 px, and the tab saves the session shown and the history (amended 2026-10-10, DL-187,
-  D33). Browser and Debug Console fields have one focus ring drawn by the header row, with no second
-  field border, shadow or outline. The source's scripted Output preview begins after 700 ms, adds a
-  line every 260-680 ms and pauses 1.8-5 s; Debug Console preview Continue re-hits at 1.9 s and
-  Restart pauses at 1.7 s (60 ms under Reduced Motion). Those scripted timings describe preview
-  presentation, not actual process or debugger completion. Plans and documents have 280 × 160 px
-  content minima. The Plan or document... plus row is order 50. A plan's sticky footer uses 32 px
-  controls in one row with 10 px vertical padding, a maximum 960 px inner column, 28 px sides or 16
-  px below 720 px body width; Revise moves into More below 420 px and the footnote hides below 520
-  px. Document frames have a maximum 960 px column, 24 px vertical and 28 px horizontal padding at
-  720 px or wider, 16 px below; titles are 22 px, 18 px below 420 px; body text is 13/20 px,
-  metadata 12/18 px and fine print 11.5/17 px, never below 11 px. Step marks use a 20 px column and
-  16 px SVG marks; titles are 13/20 px at weight 600, body 12.5/19 px, metadata 12/18 px and code
-  ids 11.5 px; children indent 32 px. Step file rows use the final 32 px reference height and shift
-  left 6 px, with top margin 2 px, bottom margin -4 px and gaps 0 vertically/8 px horizontally;
-  Revert file marks and state use 8 px top padding. Tables have a 440 px minimum width, horizontal
-  scroll below it, and 7 × 12 px cell padding. Markdown uses 12 px code text at line height 1.65, a
-  14 px rail and 6 px state dots, with blank lines between blocks. Embed previews are 320 × about
-  116 px at natural size and scroll sideways below that, with 11 px tick text. Memory panes are side
-  by side from 720 px, with a 300 px list and 28 px gap, stacked with Back below that. Debug phases
-  are 4 columns from 640 px, 2 below and 1 below 340 px; debug arguments and Revert file state move
-  below their primary row below 520 px. Wonderer has an aside from 900 px and a top hairline below.
-  Document text actions are 32 px, 24 px inline; frame button radii cap at 8 px. View state saves
-  rich/markdown mode with separate scroll positions and optional older version, discovery choices
-  and disclosures, and each document's own view/model state, always within 16 KB. The source's
-  scripted Plan build advances a step every 2600 ms while visible and pauses while hidden; checking
-  previews take 1100-1200 ms, 300 ms under Reduced Motion. These scripted delays are preview
-  presentation, not actual workflow completion. Run bodies have a 360 × 200 px minimum. They place a
-  220 px aside beside the body from 900 px, otherwise below in an auto-fit grid of at least 180 px;
-  at 904 px the grid is 652 px + 32 px gap + 220 px aside, or 904 px without an aside. BrainStorm
-  options use 3 columns from 900 px, 2 from 600 px and 1 below; vote tables stack below 640 px. The
-  participant plate is one row from 720 px, or from 1200 px with 5 or more seats; below that the
-  input card has its own row, the plate wraps from 420-719 px and becomes a caption line below 420
-  px. Chat Room head actions get their own row below 900 px; team outcomes move under names and cost
-  lists hide the model column below 520 px. Puppets are 28 px in the plate, 26 px for the hub and
-  You, 22 px in team rows, 20 px in timelines and 34 px in participant views; state corner marks are
-  12 px. Five seat hues are blue, magenta, lime, orange and the page accent, all ink in NieR; hub
-  and You are neutral. Run view state saves overview/conversation/team/cost, person and filter;
+  70/71/72/73. Output caps at 600 lines, turns Follow off beyond 24 px from the end, hides time below 520
+  px, and saves channel, follow and wrap. Its channel picker is 300 px wide, with a trailing Open in new
+  tab cell; Alt+Enter opens the split-off tab and Alt+click a new panel. A split-off tab has a plain
+  channel fact and More's Show in the Output tab. Problems rows are 28 px; source hides below 520 px and
+  line/column and folder below 360 px; saved view state is error/warning/info visibility and collapsed
+  files. Ports columns are 96 px / 1fr / 1.3fr / 140 px / 220 px; below 760 px Origin hides and actions
+  become icon-only in 108 px; below 480 px rows stack; actions are 32 px and rows at least 44 px. Ports
+  saves added and removed port numbers. Each Debug Console session keeps its own console, capped at 400
+  lines, its own state and its own frame; input history keeps 30 entries, 20 of them saved, and stays per
+  session as F3-490 says; the input row is 34 px, and the tab saves the session shown and the history
+  (amended 2026-10-10, DL-187, D33). Browser and Debug Console fields have one focus ring drawn by the
+  header row, with no second field border, shadow or outline. The source's scripted Output preview begins
+  after 700 ms, adds a line every 260-680 ms and pauses 1.8-5 s; Debug Console preview Continue re-hits at
+  1.9 s and Restart pauses at 1.7 s (60 ms under Reduced Motion). Those scripted timings describe preview
+  presentation, not actual process or debugger completion. Plans and documents have 280 × 160 px content
+  minima. The Plan or document... plus row is order 50. A plan's sticky footer uses 32 px controls in one
+  row with 10 px vertical padding, a maximum 960 px inner column, 28 px sides or 16 px below 720 px body
+  width; Revise moves into More below 420 px and the footnote hides below 520 px. Document frames have a
+  maximum 960 px column, 24 px vertical and 28 px horizontal padding at 720 px or wider, 16 px below;
+  titles are 22 px, 18 px below 420 px; body text is 13/20 px, metadata 12/18 px and fine print 11.5/17 px,
+  never below 11 px. Step marks use a 20 px column and 16 px SVG marks; titles are 13/20 px at weight 600,
+  body 12.5/19 px, metadata 12/18 px and code ids 11.5 px; children indent 32 px. Step file rows use the
+  final 32 px reference height and shift left 6 px, with top margin 2 px, bottom margin -4 px and gaps 0
+  vertically/8 px horizontally; Revert file marks and state use 8 px top padding. Tables have a 440 px
+  minimum width, horizontal scroll below it, and 7 × 12 px cell padding. Markdown uses 12 px code text at
+  line height 1.65, a 14 px rail and 6 px state dots, with blank lines between blocks. Embed previews are
+  320 × about 116 px at natural size and scroll sideways below that, with 11 px tick text. Memory panes are
+  side by side from 720 px, with a 300 px list and 28 px gap, stacked with Back below that. Debug phases
+  are 4 columns from 640 px, 2 below and 1 below 340 px; debug arguments and Revert file state move below
+  their primary row below 520 px. Wonderer has an aside from 900 px and a top hairline below. Document text
+  actions are 32 px, 24 px inline; frame button radii cap at 8 px. View state saves rich/markdown mode with
+  separate scroll positions and optional older version, discovery choices and disclosures, and each
+  document's own view/model state, always within 16 KB. The source's scripted Plan build advances a step
+  every 2600 ms while visible and pauses while hidden; checking previews take 1100-1200 ms, 300 ms under
+  Reduced Motion. These scripted delays are preview presentation, not actual workflow completion. Run
+  bodies have a 360 × 200 px minimum. They place a 220 px aside beside the body from 900 px, otherwise
+  below in an auto-fit grid of at least 180 px; at 904 px the grid is 652 px + 32 px gap + 220 px aside, or
+  904 px without an aside. BrainStorm options use 3 columns from 900 px, 2 from 600 px and 1 below; vote
+  tables stack below 640 px. The participant plate is one row from 720 px, or from 1200 px with 5 or more
+  seats; below that the input card has its own row, the plate wraps from 420-719 px and becomes a caption
+  line below 420 px. Chat Room head actions get their own row below 900 px; team outcomes move under names
+  and cost lists hide the model column below 520 px. Puppets are 28 px in the plate, 26 px for the hub and
+  You, 22 px in team rows, 20 px in timelines and 34 px in participant views; state corner marks are 12 px.
+  Five seat hues are blue, magenta, lime, orange and the page accent, all ink in NieR; hub and You are
+  neutral. Run view state saves overview/conversation/team/cost, person and filter;
   paused/progress/rounds/ticks/promotions are session-only per run. Friendly controls and table-of-
-  contents/back/picker have 6 px radii; choice/seat/team rows cap at 8 px, sorting has 0 and run
-  links 3 px. File references are 24 px inline and appear only for files that exist; hover uses the
-  shared tile treatment for seats, row for team rows and quiz choices, and off for the hub. Source
-  preview timing runs only while visible and not paused: Crew ticks every 1 s; Review reader
-  previews finish at 3, 6 and 8 s and the report preview at 10 s; Chat Room reveals 2 words every 60
-  ms, arriving whole while hidden or under Reduced Motion; Write the plan preview lasts 1400 ms, 400
-  ms reduced. These scripted times do not set real agent or workflow completion deadlines.
-  Transcript and Context content minima are 280 × 160 px; records are 280 × 120 px. Transcript feed
-  columns cap at 760 px with padding 18/24/44 px, or 14/14/40 below 720 px; the spine is 1 px with 6
-  px dots and an 8 px live-dot ring. Stretch toggles are at least 30 px; step-rail discs are 16 px
-  with 10 px glyphs, fold after 10 discs into +N, and record-row glyphs are 13 px. Transcript prose
-  is 13/21 px, record title 12.5/19 px, detail 12/18 px and time 11.5 px. Follow-bottom threshold is
-  28 px, elapsed ticks every 1 s for Working, Retrying, Fallback route and Waiting, and live breathe
-  is 1.6 s or a 1-1.2 s stepped Retro/NieR blink. Step discs hide below 420 px, model below 700 px,
-  Parent below 560 px, Read-only · live words below 440 px (the lock stays), and agent name below
-  360 px. Transcript saves agent reference, follow, open stretches and scroll top. The source
-  preview streams at 3400 + ((delivered × 7) modulo 4) × 700 ms, 3.4-5.5 s, and reveals 2 words
-  every 55 ms; the new-item slide uses the shared slow motion. Context columns cap at 720 px, 960 px
-  from a 960 px body; Source composition and Context growth appear side by side and start open at
-  that width until the reader toggles them. Hero numbers are 32 px, bars 6 px, disclosures 34 px;
-  tiles use 3 columns from 360 px and 1 below; four-tile groups use 4 from 600 px, 2 below and 1
-  below 300 px. Plan-limit rows have name, bar and a 128 px figure, with the bar on its own line
-  below 460 px; the usage fact hides below 380 px. Growth charts are 168 px high; the source's
-  131,000-token-limit fixture uses an axis to 140,000, gridlines at 0/50K/100K, ceiling 131,000 and
-  turns 1/5/9. Limit tone is ok below 70 %, warn from 70 % and bad from 90 %. Context saves thread
-  reference, curated/raw view, open sections (null while width decides) and scroll top; sections are
-  tokens, sources, growth, route, limits, caps, cost and compaction. The six categorical colours are
-  dark #3987e5 #d95926 #199e70 #c98500 #d55181 #008300 and light #2a78d6 #eb6834 #1baf7a #eda100
-  #e87ba4 #008300; NieR's charts part uses ink at .92/.72/.56/.42/.30/.20 with hatching on even
-  segments. Record columns cap at 960 px; results have 10 px padding; tables scroll sideways with
-  nowrap cells and notes at least 160 px. A search query label longer than 28 characters is cut at
-  27 plus an ellipsis; MCP uses the tool label, or MCP; records save scroll top. Shared document
-  actions are 32 px and header targets 24 px, with no text below 11 px. Header labels appear at 1100
-  px for Transcript, 720 px for Context and 600 px for Record. Friendly stretch/disclosure rows use
-  the shared row radius, Parent links 6 px and Jump to latest/Source-thread buttons cap at 8 px.
-  Header-row labels default to a 520 px body threshold; kinds may set their own: Browser and
-  Transcript 1100 px, Context 720 px, Record 600 px. Icon-only buttons are 24 px wide. File
-  references are 32 px tall with a 6 px radius and 12 px code face, or 24 px inline with a 4 px
-  radius and 11.5 px code face. Their 240 ms double-click window delays preview so double click can
-  keep the file open; their hover tag says the path and line the reference names (amended 2026-10-17,
-  DL-228; it read: Open file) / Click previews it. Double-click keeps it open., or No file to open / This reference
-  names no file. without a path. In-tab view saves
-  coalesce at 250 ms. Document action radii are Friendly 8 px, Glass 8 px, Basic 6 px and Retro/NieR
-  square 0. Metadata separator slots are 16 px with 3 px wrapped-line clipping slack. The Debug
-  Console's chosen sub-tab and every segmented toggle are filled on their own box, never underlined,
-  with Friendly's, Glass's and Basic's neutral chosen-row surface, never an accent; Glass adds its 1
-  px top rim, Retro uses reverse video and NieR its ink block (F3-490). Nested Home menu and picker
-  keys consume F3-632: Escape returns one level then closes at the root; a fresh empty-query
-  Backspace returns one level, held erasure never also navigates; Left outside the field returns; Up
-  from the field reaches Back; + toggles the whole menu closed. Back/search/rows remain in that
-  arrow order, with Enter or Space activating Back. These are local navigation, with no structural
-  command or event.
-  Amended 2026-10-17 (DL-228): wherever a panel must be named (the panel menu's title, Move panel and Move to
-  panel rows, the every-tab list's sections, the narrow switcher, announcements), it is named in words by its
-  active tab and its place in the layout (left, right, top, bottom or middle, combined down the tree, or "the
-  only panel"), never by an id or a number other than the switcher's ordinal. Tool tabs' header rows: Output
-  has Follow, Clear ("Clear this channel") and More with Wrap long lines, Copy all, Open as a document (a
-  read-only editor tab titled with the channel, through cmd.panel_tab.open, the route of the terminal's Open
-  output) and Open <channel> in new tab, or Show in the Output tab on a split-off tab; Problems has Filter
-  (errors, warnings or notes) and Check again; Ports has Forward a port; the Debug Console has Continue or
-  Pause, Restart, Stop and Clear ("Clear this session's console"), disabled once its session has ended.
-  Follow, Clear, Wrap, Copy all and Filter are view-local; Check again, Forward a port and the Debug Console's
-  session controls dispatch their owners' existing Problems, Ports and Run & Debug commands. Document kinds: a
-  plan's More holds Export as Markdown, Export as PDF, Send to Planning Wizard, Copy plan link
-  (pm://plans/<id>@v<n>) and Cancel build, which confirms ("Cancel this build?", "Steps already done stay
-  done.", Cancel the build or Keep building), with Revise moving into More in a narrow tab; an artifact has
-  Versions, Open in new panel and More with Copy link to this version, Copy source, Export as image, Export
-  the data and Open the source file; a run's More holds Cancel <run> with a yes or no submenu, Change setup...
-  (on a Crew disabled until it is cancelled: "This Crew builds one plan version. Cancel it first.") or Run
-  again with changes... once finished, Run another review (Review only), Download transcript and Open in new
-  panel; a transcript has Follow, Copy transcript, Show the parent thread and Context of <thread>; a context
-  tab has Preview compact and Redacted JSON; a record has Show in chat, which reveals and marks the work row
-  in its thread or says the message is not available, and Copy. Each row dispatches its content owner's
-  existing command or is view-local; none adds a command id here.
-  Amended 2026-10-29 (PC5; PM7): Seat hues remain this one owner table. Pip reads them rather than owning another palette; gold crown/hat are role material and do not change the seat or status hue.
+  contents/back/picker have 6 px radii; choice/seat/team rows cap at 8 px, sorting has 0 and run links 3
+  px. File references are 24 px inline and appear only for files that exist; hover uses the shared tile
+  treatment for seats, row for team rows and quiz choices, and off for the hub. Source preview timing runs
+  only while visible and not paused: Crew ticks every 1 s; Review reader previews finish at 3, 6 and 8 s
+  and the report preview at 10 s; Chat Room reveals 2 words every 60 ms, arriving whole while hidden or
+  under Reduced Motion; Write the plan preview lasts 1400 ms, 400 ms reduced. These scripted times do not
+  set real agent or workflow completion deadlines. Transcript and Context content minima are 280 × 160 px;
+  records are 280 × 120 px. G3: Run-view transcript feeds in centre tabs cap at 760 px; the chat column
+  instead follows F3-637 with no fixed maximum. These centre-tab feeds have padding 18/24/44 px, or
+  14/14/40 below 720 px; the spine is 1 px with 6 px dots and an 8 px live-dot ring. Stretch toggles are at
+  least 30 px; step-rail discs are 16 px with 10 px glyphs, fold after 10 discs into +N, and record-row
+  glyphs are 13 px. Transcript prose is 13/21 px, record title 12.5/19 px, detail 12/18 px and time 11.5
+  px. Follow-bottom threshold is 28 px, elapsed ticks every 1 s for Working, Retrying, Fallback route and
+  Waiting, and live breathe is 1.6 s or a 1-1.2 s stepped Retro/NieR blink. Step discs hide below 420 px,
+  model below 700 px, Parent below 560 px, Read-only · live words below 440 px (the lock stays), and agent
+  name below 360 px. Transcript saves agent reference, follow, open stretches and scroll top. The source
+  preview streams at 3400 + ((delivered × 7) modulo 4) × 700 ms, 3.4-5.5 s, and reveals 2 words every 55
+  ms; the new-item slide uses the shared slow motion. Context columns cap at 720 px, 960 px from a 960 px
+  body; Source composition and Context growth appear side by side and start open at that width until the
+  reader toggles them. Hero numbers are 32 px, bars 6 px, disclosures 34 px; tiles use 3 columns from 360
+  px and 1 below; four-tile groups use 4 from 600 px, 2 below and 1 below 300 px. Plan-limit rows have
+  name, bar and a 128 px figure, with the bar on its own line below 460 px; the usage fact hides below 380
+  px. Growth charts are 168 px high; the source's 131,000-token-limit fixture uses an axis to 140,000,
+  gridlines at 0/50K/100K, ceiling 131,000 and turns 1/5/9. Limit tone is ok below 70 %, warn from 70 % and
+  bad from 90 %. Context saves thread reference, curated/raw view, open sections (null while width decides)
+  and scroll top; sections are tokens, sources, growth, route, limits, caps, cost and compaction. The six
+  categorical colours are dark #3987e5 #d95926 #199e70 #c98500 #d55181 #008300 and light #2a78d6 #eb6834
+  #1baf7a #eda100 #e87ba4 #008300; NieR's charts part uses ink at .92/.72/.56/.42/.30/.20 with hatching on
+  even segments. Record columns cap at 960 px; results have 10 px padding; tables scroll sideways with
+  nowrap cells and notes at least 160 px. A search query label longer than 28 characters is cut at 27 plus
+  an ellipsis; MCP uses the tool label, or MCP; records save scroll top. Shared document actions are 32 px
+  and header targets 24 px, with no text below 11 px. Header labels appear at 1100 px for Transcript, 720
+  px for Context and 600 px for Record. Friendly stretch/disclosure rows use the shared row radius, Parent
+  links 6 px and Jump to latest/Source-thread buttons cap at 8 px. Header-row labels default to a 520 px
+  body threshold; kinds may set their own: Browser and Transcript 1100 px, Context 720 px, Record 600 px.
+  Icon-only buttons are 24 px wide. File references are 32 px tall with a 6 px radius and 12 px code face,
+  or 24 px inline with a 4 px radius and 11.5 px code face. Their 240 ms double-click window delays preview
+  so double click can keep the file open; their hover tag says the path and line the reference names
+  (amended 2026-10-17, DL-228; it read: Open file) / Click previews it. Double-click keeps it open., or No
+  file to open / This reference names no file. without a path. In-tab view saves coalesce at 250 ms.
+  Document action radii are Friendly 8 px, Glass 8 px, Basic 6 px and Retro/NieR square 0. Metadata
+  separator slots are 16 px with 3 px wrapped-line clipping slack. The Debug Console's chosen sub-tab and
+  every segmented toggle are filled on their own box, never underlined, with Friendly's, Glass's and
+  Basic's neutral chosen-row surface, never an accent; Glass adds its 1 px top rim, Retro uses reverse
+  video and NieR its ink block (F3-490). Nested Home menu and picker keys consume F3-632: Escape returns
+  one level then closes at the root; a fresh empty-query Backspace returns one level, held erasure never
+  also navigates; Left outside the field returns; Up from the field reaches Back; + toggles the whole menu
+  closed. Back/search/rows remain in that arrow order, with Enter or Space activating Back. These are local
+  navigation, with no structural command or event. Amended 2026-10-17 (DL-228): wherever a panel must be
+  named (the panel menu's title, Move panel and Move to panel rows, the every-tab list's sections, the
+  narrow switcher, announcements), it is named in words by its active tab and its place in the layout
+  (left, right, top, bottom or middle, combined down the tree, or "the only panel"), never by an id or a
+  number other than the switcher's ordinal. Tool tabs' header rows: Output has Follow, Clear ("Clear this
+  channel") and More with Wrap long lines, Copy all, Open as a document (a read-only editor tab titled with
+  the channel, through cmd.panel_tab.open, the route of the terminal's Open output) and Open <channel> in
+  new tab, or Show in the Output tab on a split-off tab; Problems has Filter (errors, warnings or notes)
+  and Check again; Ports has Forward a port; the Debug Console has Continue or Pause, Restart, Stop and
+  Clear ("Clear this session's console"), disabled once its session has ended. Follow, Clear, Wrap, Copy
+  all and Filter are view-local; Check again, Forward a port and the Debug Console's session controls
+  dispatch their owners' existing Problems, Ports and Run & Debug commands. Document kinds: a plan's More
+  holds Export as Markdown, Export as PDF, Send to Planning Wizard, Copy plan link (pm://plans/<id>@v<n>)
+  and Cancel build, which confirms ("Cancel this build?", "Steps already done stay done.", Cancel the build
+  or Keep building), with Revise moving into More in a narrow tab; an artifact has Versions, Open in new
+  panel and More with Copy link to this version, Copy source, Export as image, Export the data and Open the
+  source file; a run's More holds Cancel <run> with a yes or no submenu, Change setup... (on a Crew
+  disabled until it is cancelled: "This Crew builds one plan version. Cancel it first.") or Run again with
+  changes... once finished, Run another review (Review only), Download transcript and Open in new panel; a
+  transcript has Follow, Copy transcript, Show the parent thread and Context of <thread>; a context tab has
+  Preview compact and Redacted JSON; a record has Show in chat, which reveals and marks the work row in its
+  thread or says the message is not available, and Copy. Each row dispatches its content owner's existing
+  command or is view-local; none adds a command id here. Amended 2026-10-29 (PC5; PM7): Seat hues remain
+  this one owner table. Pip reads them rather than owning another palette; gold crown/hat are role material
+  and do not change the seat or status hue.
 gui_related: true
-gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
+gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header
+  row, the overlay order and the panel keyboard.
 split_recommended: false
-depends_on: [DL-180, DL-181, DL-187, DL-147, F3-568, F3-630]
-unblocks: [F3-640, SP-330, UCC-200, CS-100, RAP-065, WS-030, DR-065, DR-067, G-030, ATS-075]
+depends_on:
+- DL-180
+- DL-181
+- DL-187
+- DL-147
+- F3-568
+- F3-630
+unblocks:
+- F3-640
+- SP-330
+- UCC-200
+- CS-100
+- RAP-065
+- WS-030
+- DR-065
+- DR-067
+- G-030
+- ATS-075
 acceptance_criteria:
-  - "Exactly the fifteen kinds listed here are registered, each with the id prefixes stated, and no Goal tab, Activity Detail, lab-only workspace or setup sheet is a kind."
-  - "Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming one prefix fail at start-up."
-  - "Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab, panel or session id appears as text."
-  - "Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums."
-  - "A restored background tab is mounted only when first shown; serialized state above 16 KB is refused."
-  - "No tab body reads the window's size; each responds to its own width and height and gets a final size call after a drag or animation settles."
-  - "Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label threshold and hide threshold."
-  - "Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own overlay."
-  - "Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned chords Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that channel."
-  - "The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab dispatches nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that session shown."
-  - "Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through its registration."
-  - "Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition respected; F6 reaches the chat composer from every region."
+- Exactly the fifteen kinds listed here are registered, each with the id prefixes stated, and no Goal tab,
+  Activity Detail, lab-only workspace or setup sheet is a kind.
+- Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming
+  one prefix fail at start-up.
+- Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab,
+  panel or session id appears as text.
+- Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums.
+- A restored background tab is mounted only when first shown; serialized state above 16 KB is refused.
+- No tab body reads the window's size; each responds to its own width and height and gets a final size call
+  after a drag or animation settles.
+- Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label
+  threshold and hide threshold.
+- Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends
+  its own overlay.
+- Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare
+  letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned
+  chords Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
+- Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing
+  only that channel.
+- The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab
+  dispatches nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that
+  session shown.
+- Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through
+  its registration.
+- Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition
+  respected; F6 reaches the chat composer from every region.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: home_panels_terminal_redesign_drift
 reasoning_tier: high
 context_scope: home_panels_terminal
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/Commands_System.md
-  - Plans/home_workspace_layout_v2.schema.json
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/home_workspace_layout_v2.schema.json
 node_compile_hint:
   mode: gui_promotion_contract
   create_worknodes: false
@@ -46210,71 +46233,87 @@ source_lineage:
   SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (Debug Console, Output; concept
   lineage only)
 - '/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md,
-  SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 2 and 3: the kinds
-  and fold; concept lineage only)'
+  SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 2 and 3: the kinds and
+  fold; concept lineage only)'
 - 'Concepts/home-redesign/CONTRACT.md at c4e32ec0b7 on branch concept/home-panels-20261009, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9
   (section 3, `tabMenu`: the tab-menu rows a kind adds; concept lineage only)'
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
-  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage
-  only)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
-  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
-  certification)
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md, SHA-256
+  29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native certification)
 preserved_exact_tokens:
-  - "Open in new tab"
-  - "output:<channel>"
-  - "editor"
-  - "terminal"
-  - "browser"
-  - "dashboard"
-  - "plan"
-  - "document"
-  - "artifact"
-  - "run"
-  - "transcript"
-  - "context"
-  - "record"
-  - "output"
-  - "problems"
-  - "ports"
-  - "debug_console"
-  - "debug-console"
-  - "dashboard:home"
-  - "16 KB"
-  - "30 px"
-  - "520 px"
-  - "150 px"
-  - "Alt+T"
-  - "Alt+W"
-  - "Alt+Shift+T"
-  - "Alt+`"
+- Open in new tab
+- output:<channel>
+- editor
+- terminal
+- browser
+- dashboard
+- plan
+- document
+- artifact
+- run
+- transcript
+- context
+- record
+- output
+- problems
+- ports
+- debug_console
+- debug-console
+- dashboard:home
+- 16 KB
+- 30 px
+- 520 px
+- 150 px
+- Alt+T
+- Alt+W
+- Alt+Shift+T
+- Alt+`
 negative_constraints:
-  - "Do not make the chat, Activity Detail, the Goal tab or a setup sheet a tab kind."
-  - "Do not size a tab body against the window."
-  - "Do not show a tab, panel or session id in the interface."
-  - "Do not bind a panel action to Ctrl+K, a Ctrl+K chord, Ctrl+1..9 or a bare letter or digit."
-  - "Do not let a tab kind append its own overlay outside the one overlay root."
+- Do not make the chat, Activity Detail, the Goal tab or a setup sheet a tab kind.
+- Do not size a tab body against the window.
+- Do not show a tab, panel or session id in the interface.
+- Do not bind a panel action to Ctrl+K, a Ctrl+K chord, Ctrl+1..9 or a bare letter or digit.
+- Do not let a tab kind append its own overlay outside the one overlay root.
 compatibility_only_notes:
-  - "The concept's registration call, host API names, container name and z-index values are concept lineage; the stacking order is canon, its numbers are not."
-  - "The concept spells the tool kind debug-console in its id prefix; the kind's schema name is debug_console."
-  - "The panels concept (339203bd76) shares one Debug Console input history across its sessions; canon keeps the history per session, as F3-490 already said, and the concept's demo sessions are demo data."
-  - "The concept browser's demo agent-access defaults (panels NUMBERS 6026fa8432, browser): Navigation, Tabs and frames, Page structure and components, Styles, Console, Source maps and files, Screenshots and recording and Viewport and device sizes On; Network, Performance, Storage and cookies, Form input and Downloads Ask; Request simulation Off. They are concept lineage only, not product defaults (SMPFS-092)."
+- The concept's registration call, host API names, container name and z-index values are concept lineage; the
+  stacking order is canon, its numbers are not.
+- The concept spells the tool kind debug-console in its id prefix; the kind's schema name is debug_console.
+- The panels concept (339203bd76) shares one Debug Console input history across its sessions; canon keeps the
+  history per session, as F3-490 already said, and the concept's demo sessions are demo data.
+- 'The concept browser''s demo agent-access defaults (panels NUMBERS 6026fa8432, browser): Navigation, Tabs
+  and frames, Page structure and components, Styles, Console, Source maps and files, Screenshots and recording
+  and Viewport and device sizes On; Network, Performance, Storage and cookies, Form input and Downloads Ask;
+  Request simulation Off. They are concept lineage only, not product defaults (SMPFS-092).'
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R35 review, panels NUMBERS 6026fa8432 keyboard): The web-client mapping rule also answers Ctrl+PgDn/PgUp as Alt+PgDn/PgUp."
-  - "Amended 2026-10-10 (R35 review, SMPFS-092): The agent-access policy keeps its 14 rows and the Off, Ask, On cycle; the concept's per-row defaults move to compatibility_only_notes as lineage, and the product defaults are left to the browser owner as an open question for the lead."
-  - "Amended 2026-10-10 (R35 review, SP-330): Restores the no-buffer-text exclusion; the bounded editor-buffer text state the R35 line below permits is concept lineage; lead ruling L25 (2026-10-10): SP-330 does not admit buffer text."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses the per-kind document minima and permits the bounded editor-buffer state."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds settled browser, tool, document, run, transcript, context, record and shared-helper dimensions and timings."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Passes host navigation keys from tab typing fields and cycles F6 to the chat composer."
-  - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
-  - "Amended 2026-10-10 (DL-187, D33): The Debug Console is one tab, debug-console, with a sub-tab per session as view state; debug-console:<session> ids fold into it; each session keeps its console, state and frame, and its input history stays per session (F3-490)."
-  - "Amended 2026-10-10 (DL-180, D31 as built, panels NUMBERS 339203bd76; DL-187, D33 and D38): The Output tabs are labelled Output and Output · <Channel>; a kind may fold older ids and add tab-menu rows through its registration."
-  - "Amended 2026-10-11 (lead ruling 2026-10-11, D29): The Debug Console sub-tab passage uses the shared neutral chosen fill."
+- 'Amended 2026-10-10 (R35 review, panels NUMBERS 6026fa8432 keyboard): The web-client mapping rule also answers
+  Ctrl+PgDn/PgUp as Alt+PgDn/PgUp.'
+- 'Amended 2026-10-10 (R35 review, SMPFS-092): The agent-access policy keeps its 14 rows and the Off, Ask,
+  On cycle; the concept''s per-row defaults move to compatibility_only_notes as lineage, and the product defaults
+  are left to the browser owner as an open question for the lead.'
+- 'Amended 2026-10-10 (R35 review, SP-330): Restores the no-buffer-text exclusion; the bounded editor-buffer
+  text state the R35 line below permits is concept lineage; lead ruling L25 (2026-10-10): SP-330 does not admit
+  buffer text.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses the per-kind document minima and permits the bounded
+  editor-buffer state.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds settled browser, tool, document, run, transcript,
+  context, record and shared-helper dimensions and timings.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Passes host navigation keys from tab typing fields
+  and cycles F6 to the chat composer.'
+- 'Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel
+  split-off uses output:<channel>.'
+- 'Amended 2026-10-10 (DL-187, D33): The Debug Console is one tab, debug-console, with a sub-tab per session
+  as view state; debug-console:<session> ids fold into it; each session keeps its console, state and frame,
+  and its input history stays per session (F3-490).'
+- 'Amended 2026-10-10 (DL-180, D31 as built, panels NUMBERS 339203bd76; DL-187, D33 and D38): The Output tabs
+  are labelled Output and Output · <Channel>; a kind may fold older ids and add tab-menu rows through its registration.'
+- 'Amended 2026-10-11 (lead ruling 2026-10-11, D29): The Debug Console sub-tab passage uses the shared neutral
+  chosen fill.'
 owner_hints:
-  - Plans/FinalGUISpec.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/DRY_Rules.md
-  - Plans/Glossary.md
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/DRY_Rules.md
+- Plans/Glossary.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Commands_System.md#CS-100, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-490
@@ -50235,7 +50274,6 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
-- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 preserved_exact_tokens:
 - pm7ob-explainer
 - ui.onboarding.open_details

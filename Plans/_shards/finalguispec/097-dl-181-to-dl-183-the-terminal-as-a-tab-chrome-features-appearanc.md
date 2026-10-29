@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L47392-L50408
+Source lines: L47431-L50446
 
-Source SHA256: `fb7d5317d99e52640970e8e158e95bd9a416e1a04098fe6582be906af569a148`
+Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
 
 ---
 
@@ -2854,7 +2854,6 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
-- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 preserved_exact_tokens:
 - pm7ob-explainer
 - ui.onboarding.open_details

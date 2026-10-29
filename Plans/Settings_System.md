@@ -4190,28 +4190,28 @@ canonical_text: >-
   ui.settings.pip_editor.close and ui.settings.pip_editor.replay are typed local actions that write
   nothing; replay is Play: the team works. Parts and preset edits use cmd.settings.transaction.preview then
   apply with the same value in all hosts, never pip-chat:v1. Editor focus is contained and returns to
-  opener; preview/exit timers/copies are released on close. Option IDs/count are companion-registry data,
-  not a second hard-coded GUI list. S1–S5 editor presentation: five groups titled Where Pip appears, Faces,
-  Motion, Look and Sound. Every part shows the one registry’s label, one-line help, displayed Size and
-  On/Off state; On N / total is derived from the admitted registry (25 parts in this wave), never a second
-  hard-coded count. A live small-team preview shows the Project’s current parts/look; Play: the team works
-  runs that same team from queued to working to done, obeying Reduced Motion and sound parts.
-  Preview/replay writes nothing; preset/part picks still use the transaction pair. Help/size are
-  presentation metadata from the shared Pip registry, not new settings or real resource quotas. S1–S9
-  admitted registry: Plans/pip_parts.json is the machine mirror of this accepted list. Where Pip appears:
-  sheet-hosts, status-faces, working-orbit, plans, wand-menu, empty-lists; Faces: state-faces, watches,
-  wonders-while-typing, cheers, oops, gaze; Motion: blinks, sway-and-physics, face-transitions,
-  thinking-dots, idle-life; Look: seat-colours, role-props, strings, cheeks-and-shine, setup-world-life;
-  Sound: setup-voice, app-voice, setup-music. All parts default on except app-voice; the default meter is
-  On 24 / 25. Full = [sheet-hosts, status-faces, working-orbit, plans, wand-menu, empty-lists, state-faces,
-  watches, wonders-while-typing, cheers, oops, gaze, blinks, sway-and-physics, face-transitions,
-  thinking-dots, idle-life, seat-colours, role-props, strings, cheeks-and-shine, setup-world-life,
-  setup-voice, setup-music]. Quiet = [status-faces, working-orbit, plans, empty-lists, state-faces,
-  seat-colours, role-props, strings]. Still = [sheet-hosts, status-faces, working-orbit, plans, wand-menu,
-  empty-lists, state-faces, watches, wonders-while-typing, cheers, oops, gaze, seat-colours, role-props,
-  strings, cheeks-and-shine, setup-voice, setup-music]. Plain = []. Presets are exact values of the one
-  multiselect; the meter always reads On N / 25. No Classic, brand/tray/icon/loader/notification part or
-  second primitive exists.
+  opener; preview/exit timers/copies are released on close. The admitted option IDs/count are enumerated
+  below; Plans/pip_parts.json mirrors this contract and every GUI host reads the shared registry. S1–S5
+  editor presentation: five groups titled Where Pip appears, Faces, Motion, Look and Sound. Every part
+  shows the one registry’s label, one-line help, displayed Size and On/Off state; On N / total is derived
+  from the admitted 25-part list below, mirrored in Plans/pip_parts.json. A live small-team preview shows
+  the Project’s current parts/look; Play: the team works runs that same team from queued to working to
+  done, obeying Reduced Motion and sound parts. Preview/replay writes nothing; preset/part picks still use
+  the transaction pair. Help/size are presentation metadata from the shared Pip registry, not new settings
+  or real resource quotas. S1–S9 admitted registry: Plans/pip_parts.json is the machine mirror of this
+  accepted list. Where Pip appears: sheet-hosts, status-faces, working-orbit, plans, wand-menu,
+  empty-lists; Faces: state-faces, watches, wonders-while-typing, cheers, oops, gaze; Motion: blinks,
+  sway-and-physics, face-transitions, thinking-dots, idle-life; Look: seat-colours, role-props, strings,
+  cheeks-and-shine, setup-world-life; Sound: setup-voice, app-voice, setup-music. All parts default on
+  except app-voice; the default meter is On 24 / 25. Full = [sheet-hosts, status-faces, working-orbit,
+  plans, wand-menu, empty-lists, state-faces, watches, wonders-while-typing, cheers, oops, gaze, blinks,
+  sway-and-physics, face-transitions, thinking-dots, idle-life, seat-colours, role-props, strings,
+  cheeks-and-shine, setup-world-life, setup-voice, setup-music]. Quiet = [status-faces, working-orbit,
+  plans, empty-lists, state-faces, seat-colours, role-props, strings]. Still = [sheet-hosts, status-faces,
+  working-orbit, plans, wand-menu, empty-lists, state-faces, watches, wonders-while-typing, cheers, oops,
+  gaze, seat-colours, role-props, strings, cheeks-and-shine, setup-voice, setup-music]. Plain = []. Presets
+  are exact values of the one multiselect; the meter always reads On N / 25. No Classic,
+  brand/tray/icon/loader/notification part or second primitive exists.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -4314,6 +4314,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
+- Concepts/background-activity/opus-5.5/README.md
+- Concepts/background-activity/opus-5.5/IMPACT_TRACKER.md
 preserved_exact_tokens:
 - general.interaction.status-bar-words
 negative_constraints:

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L18426
+Source lines: L14505-L18424
 
-Source SHA256: `127fae472b23113aea42e5e94ced1122bcb3c9a2ccbd07c933a17860679ae6d4`
+Source SHA256: `4795856f3cb254b17be521ae5389046577c7c8378c1d909710125dc9cd6ba4d9`
 
 ---
 
@@ -3065,7 +3065,6 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/background-activity/opus-5.5/README.md
-- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3325,7 +3324,6 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/background-activity/opus-5.5/README.md
-- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

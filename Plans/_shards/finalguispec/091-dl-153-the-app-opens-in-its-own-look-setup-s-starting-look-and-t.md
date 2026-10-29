@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43796-L43913
+Source lines: L43799-L43917
 
-Source SHA256: `fb7d5317d99e52640970e8e158e95bd9a416e1a04098fe6582be906af569a148`
+Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
 
 ---
 
@@ -27,11 +27,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Product Onboarding's three hero moments, the wake as the window opens, the act card at a chapter's end
-  and the curtain call at Ready, take five styles, one per look family: Basic, Friendly, Glass, Retro and
-  NieR (DL-153). Whenever NieR Mode is painted, its onboarding preview included, NieR's moments play as
-  F3-598 sets them out, whatever family is chosen beneath it, and no family has a NieR variant. Otherwise
-  the painted family plays its own style, the same in its Light and its Dark variant and drawn only in that
+  Superseded 2026-10-29 for onboarding by O1–O12/F3-663; retained source description follows: Product
+  Onboarding's three hero moments, the wake as the window opens, the act card at a chapter's end and the
+  curtain call at Ready, take five styles, one per look family: Basic, Friendly, Glass, Retro and NieR
+  (DL-153). Whenever NieR Mode is painted, its onboarding preview included, NieR's moments play as F3-598
+  sets them out, whatever family is chosen beneath it, and no family has a NieR variant. Otherwise the
+  painted family plays its own style, the same in its Light and its Dark variant and drawn only in that
   family's own materials, never a recoloured NieR. Basic is one drafting job: as the window opens a
   parallel rule sweeps down the sheet drawing its construction lines before the strings are tensioned; at a
   chapter's end a title block is drafted over the stage, the rail draws a dimension line to the next
@@ -56,10 +57,10 @@ canonical_text: >-
   stamp, the roses, the spotlights, ALL CLEAR with its arrow). Ready still hands the window over to the
   Guided Tour's first callout in every family. The moments add no settings key, theme family, theme
   variant, NieR part, sound setting, `ui.onboarding.*` action or `ui.guided_tour.*` action; their one
-  trigger, end state, snap and sound path are shared by all five styles (DR-056). Amended 2026-10-29
-  (O1–O12; PM7): F3-663 replaces the troupe/one-shot-only hero art with one Pip, bounded living worlds and
-  Retro Light/Dark distinction. One trigger/end-state/sound path remains; Ready hands to first callout and
-  never waits on animation. O11 leaves the Tour untouched.
+  trigger, end state, snap and sound path are shared by all five styles (DR-056). Current PM7 replacement:
+  Amended 2026-10-29 (O1–O12; PM7): F3-663 replaces the troupe/one-shot-only hero art with one Pip, bounded
+  living worlds and Retro Light/Dark distinction. One trigger/end-state/sound path remains; Ready hands to
+  first callout and never waits on animation. O11 leaves the Tour untouched.
 gui_related: true
 gui_classification_reason: Defines the act card, the wake and the curtain call of onboarding in the four theme
   families.

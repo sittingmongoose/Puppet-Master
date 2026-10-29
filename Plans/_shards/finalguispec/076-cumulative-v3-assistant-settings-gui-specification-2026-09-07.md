@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38321-L39040
+Source lines: L38323-L39041
 
-Source SHA256: `fb7d5317d99e52640970e8e158e95bd9a416e1a04098fe6582be906af569a148`
+Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
 
 ---
 
@@ -17,12 +17,11 @@ invariants.
 
 ### 17. Activity Detail Geometry, History Coexistence, and Floating Activity Bar
 
-- **Default Left Pinned Geometry (APR-001):** Opening Activity Detail from any entry point
-  defaults to a pinned side panel on the left of the chat canvas. An explicit user action on the
-  Unpin control converts the currently open panel into a floating surface. When a user subsequently
-  clicks an activity item or preview from another domain or record, the newly opened Activity Detail
-  record always opens PINNED on the left, resetting the transient unpinned state. Prior floating or
-  unpinned state is never persisted across explicit new item activations.
+- **Full-Size Activity Detail (G1/G2, 2026-10-29; supersedes APR-001):** Every entry opens the
+  full-size detail directly under F3-535/ACD-453/ACD-506, with no Activity Pin/Unpin or small transient
+  form. First widen the chat within its centre/page floor; at the window limit cover the transcript
+  at the full column height. The detail stays until ×, Esc or its own Activity icon closes it and
+  returns focus. Another domain/record replaces that full detail. History keeps its separate pin.
 - **History and Activity Detail Coexistence (APR-002):** Pinned Thread History (left rail) and
   full-size Activity Detail share the available canvas width dynamically using a coordinated flex
   split. Pinned History and full-size Activity Detail never reserve independent overlapping gutters or
