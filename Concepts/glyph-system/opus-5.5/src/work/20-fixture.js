@@ -3,8 +3,9 @@
  * this file). It is fixture data, never runtime truth: in the product the projection reads OperationalAwareness over
  * ObservableWork (SIR §8.2, §9.2; DR-078). Ported from the approved background-activity concept
  * (Concepts/background-activity/opus-5.5/src/rw-data.js: busy(), many(), the output tails), with what the build adds:
- * a project on every item, delivery for report ('me' became 'user', cmd.work.set_completion_delivery), and the
- * servers and environments the Resources tab groups by (G4: one Project can run many).
+ * a project on every item, delivery for report ('me' became 'user', cmd.work.set_completion_delivery), the servers
+ * and environments the Resources tab groups by (G4: one Project can run many), and the hosted chat's own thread ids
+ * (query, plain, questions, debug) and subagent ids, so the chat's Processes domain and Open thread land on real ones.
  *
  * Scenarios (PM_WORK.fixture.define, the Demo Studio's Activity section switches them):
  *   busy     three things wait on you: 16 agents · 2 questions, 10 processes · 1 needs input (the concept's numbers)
@@ -58,7 +59,7 @@
   }
 
   function busy() {
-    var t = 'thr-qp', tt = 'Query performance', P = 'tastebook';
+    var t = 'query', tt = 'Query Performance', P = 'tastebook';
     return [
       /* ---------------- Assistant · Query performance (the open thread) */
       { id: 'a-qp', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: t, where: tt, title: tt, detail: 'Web search: checking primary documentation for composite indexes', model: 'Claude Sonnet 4.6', state: 'working', startedAt: ago(406) },
@@ -77,11 +78,11 @@
       { id: 'p-test', kind: 'process', role: 'test', project: P, surface: 'assistant', thread: t, where: tt, owner: 'agent-migration', title: 'Analytics tests', command: 'cargo test -p analytics', cwd: '~/tastebook/api', pid: 47930, server: 'local', environment: 'test', state: 'complete', exit: 0, startedAt: ago(470), endedAt: ago(362), delivery: 'agent', tail: OUT.test.slice() },
 
       /* ---------------- other Assistant threads */
-      { id: 'a-rn', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'thr-rn', where: 'Release notes draft', title: 'Release notes draft', detail: 'Reply finished; its docs preview is still running', model: 'Claude Opus 5', state: 'idle', word: 'Idle', startedAt: ago(4300) },
-      { id: 'p-docs', kind: 'process', role: 'server', project: P, surface: 'assistant', thread: 'thr-rn', where: 'Release notes draft', owner: null, title: 'Docs preview', command: 'pnpm docs:dev', cwd: '~/tastebook/docs', pid: 46120, ports: [4321], server: 'local', environment: 'dev', state: 'working', startedAt: ago(4320), delivery: 'user', waits: false, tail: OUT.docs.slice(), gen: 'docs', cpu: 2, mem: 168 },
-      { id: 'a-onb', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'thr-onb', where: 'Onboarding copy', title: 'Onboarding copy', ask: 'Which tone should the welcome screen use: Friendly or Plain?', model: 'GPT-5.6', state: 'waiting', startedAt: ago(600), askedAt: ago(182) },
-      { id: 'a-imp', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'thr-imp', where: 'Import fixes', title: 'Import fixes', detail: 'Building the API to check the unit fixes', model: 'Claude Sonnet 4.6', state: 'working', startedAt: ago(940) },
-      { id: 'p-build', kind: 'process', role: 'build', project: P, surface: 'assistant', thread: 'thr-imp', where: 'Import fixes', owner: null, title: 'Release build', command: 'cargo build --release', cwd: '~/tastebook/api', pid: 48302, server: 'local', environment: 'dev', state: 'working', startedAt: ago(96), delivery: 'agent', waits: true, tail: OUT.build.slice(0, 2), gen: 'build', cpu: 88, mem: 1410 },
+      { id: 'a-rn', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'plain', where: 'Product Design Discussion', title: 'Product Design Discussion', detail: 'Reply finished; its docs preview is still running', model: 'Claude Opus 5', state: 'idle', word: 'Idle', startedAt: ago(4300) },
+      { id: 'p-docs', kind: 'process', role: 'server', project: P, surface: 'assistant', thread: 'plain', where: 'Product Design Discussion', owner: null, title: 'Docs preview', command: 'pnpm docs:dev', cwd: '~/tastebook/docs', pid: 46120, ports: [4321], server: 'local', environment: 'dev', state: 'working', startedAt: ago(4320), delivery: 'user', waits: false, tail: OUT.docs.slice(), gen: 'docs', cpu: 2, mem: 168 },
+      { id: 'a-onb', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'questions', where: 'Deployment Questionnaire', title: 'Deployment Questionnaire', ask: 'Should the first deploy go to staging, or straight to production?', model: 'GPT-5.6', state: 'waiting', startedAt: ago(600), askedAt: ago(182) },
+      { id: 'a-imp', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'debug', where: 'Browser Debug Session', title: 'Browser Debug Session', detail: 'Building the API to reproduce the slow page', model: 'Claude Sonnet 4.6', state: 'working', startedAt: ago(940) },
+      { id: 'p-build', kind: 'process', role: 'build', project: P, surface: 'assistant', thread: 'debug', where: 'Browser Debug Session', owner: null, title: 'Release build', command: 'cargo build --release', cwd: '~/tastebook/api', pid: 48302, server: 'local', environment: 'dev', state: 'working', startedAt: ago(96), delivery: 'agent', waits: true, tail: OUT.build.slice(0, 2), gen: 'build', cpu: 88, mem: 1410 },
 
       /* ---------------- Orchestrator · Run #47 */
       { id: 'o-run', kind: 'agent', role: 'main', project: P, surface: 'orchestrator', where: 'Run #47', title: 'Run #47', detail: 'Tenant analytics and import fixes · 3 lanes', model: 'Overseer', state: 'working', startedAt: ago(2280) },
@@ -121,8 +122,8 @@
     for (var i = 0; i < 34; i++) {
       var c = cmds[i % cmds.length], mine = i < 22, failed = i % 9 === 4, done = i % 11 === 6;
       list.push({
-        id: 'm-' + i, kind: 'process', role: c[1], project: 'tastebook', surface: mine ? 'assistant' : (i % 2 ? 'orchestrator' : 'scout'), thread: mine ? 'thr-qp' : null,
-        where: mine ? 'Query performance' : (i % 2 ? 'Run #47' : 'Recipe apps survey'), owner: mine ? (i % 3 ? null : 'agent-query') : (i % 2 ? 'o-laned' : 'sc-web1'),
+        id: 'm-' + i, kind: 'process', role: c[1], project: 'tastebook', surface: mine ? 'assistant' : (i % 2 ? 'orchestrator' : 'scout'), thread: mine ? 'query' : null,
+        where: mine ? 'Query Performance' : (i % 2 ? 'Run #47' : 'Recipe apps survey'), owner: mine ? (i % 3 ? null : 'agent-query') : (i % 2 ? 'o-laned' : 'sc-web1'),
         title: c[0].split(' ')[0] + ' job ' + (i + 1), command: c[0] + ' ' + (i + 1), cwd: '~/tastebook', pid: 49000 + i, ports: c[1] === 'server' ? [6006 + i] : [],
         server: 'local', environment: c[1] === 'test' ? 'test' : 'dev',
         state: failed ? 'failed' : (done ? 'complete' : 'working'), exit: failed ? 2 : (done ? 0 : null),
@@ -138,7 +139,7 @@
     var P = 'tastebook';
     list.push(
       { id: 'p-preview', kind: 'process', role: 'server', project: P, surface: 'orchestrator', where: 'Run #47', owner: 'o-laned', title: 'Preview deploy', command: 'pm deploy preview --tag 0.9.0-rc.2', cwd: '~/tastebook', pid: 3121, ports: [8080], server: 'staging', environment: 'preview', state: 'working', startedAt: ago(640), delivery: 'user', waits: false, tail: OUT.preview.slice(), gen: 'preview', cpu: 9, mem: 380 },
-      { id: 'p-evals', kind: 'process', role: 'script', project: P, surface: 'assistant', thread: 'thr-imp', where: 'Import fixes', owner: null, title: 'Unit normalizer evals', command: 'python evals/run.py --suite unit-normalizer', cwd: '~/tastebook/evals', pid: 7714, server: 'gpu', environment: 'ml', state: 'working', progress: { done: 6, total: 12, unit: 'batches', source: 'provider_reported' }, startedAt: ago(1180), delivery: 'agent', waits: false, tail: OUT.evals.slice(), gen: 'evals', cpu: 22, mem: 6200 },
+      { id: 'p-evals', kind: 'process', role: 'script', project: P, surface: 'assistant', thread: 'debug', where: 'Browser Debug Session', owner: null, title: 'Unit normalizer evals', command: 'python evals/run.py --suite unit-normalizer', cwd: '~/tastebook/evals', pid: 7714, server: 'gpu', environment: 'ml', state: 'working', progress: { done: 6, total: 12, unit: 'batches', source: 'provider_reported' }, startedAt: ago(1180), delivery: 'agent', waits: false, tail: OUT.evals.slice(), gen: 'evals', cpu: 22, mem: 6200 },
       { id: 'p-ci', kind: 'process', role: 'build', project: P, surface: 'orchestrator', where: 'Run #47', owner: 'o-laneb', title: 'CI pipeline 318', command: 'pm ci run --pipeline 318', cwd: '/workspace/tastebook', pid: 211, server: 'ci', environment: 'ci', state: 'working', progress: { done: 4, total: 7, unit: 'steps', source: 'provider_reported' }, startedAt: ago(410), delivery: 'agent', waits: true, tail: OUT.ci.slice(), gen: 'ci', cpu: 64, mem: 2100 }
     );
     return list;
@@ -153,7 +154,7 @@
   W.fixture.define('quiet', function () {
     var keep = { 'p-test': 1, 'o-sleuth': 1, 'o-docs': 1, 'agent-migration': 1 };
     var list = busy().filter(function (x) { return x.kind === 'service' || keep[x.id]; });
-    list.push({ id: 'a-qp', kind: 'agent', role: 'main', project: 'tastebook', surface: 'assistant', thread: 'thr-qp', where: 'Query performance', title: 'Query performance', detail: 'Reply finished', model: 'Claude Sonnet 4.6', state: 'idle', word: 'Idle', startedAt: ago(800) });
+    list.push({ id: 'a-qp', kind: 'agent', role: 'main', project: 'tastebook', surface: 'assistant', thread: 'query', where: 'Query Performance', title: 'Query Performance', detail: 'Reply finished', model: 'Claude Sonnet 4.6', state: 'idle', word: 'Idle', startedAt: ago(800) });
     return { items: list, servers: serversBusy() };
   });
   W.fixture.define('many', function () { return { items: many(busy()), servers: serversBusy() }; });
