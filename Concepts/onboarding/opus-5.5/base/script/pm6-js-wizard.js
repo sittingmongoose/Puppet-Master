@@ -1027,6 +1027,10 @@
     var bar = byId('pm6WizScanBar');
     var deriveHost = byId('pm6WizDeriveRows');
     var foot = byId('pm6WizDiscFoot');
+    /* the wait: the system loader and aria-busy on the card, until the foot shows (W5) */
+    var discCard = byId('pm6WizDiscCard'), discLd = byId('pm6WizDiscLd');
+    if (discCard) discCard.setAttribute('aria-busy', 'true');
+    if (discLd) discLd.hidden = false;
     if (rowsHost) rowsHost.innerHTML = '';
     if (deriveHost) deriveHost.innerHTML = '';
     if (foot) { foot.hidden = true; foot.style.display = 'none'; }
@@ -1072,6 +1076,8 @@
       W.discovering = false;
       bump(total);
       if (foot) { foot.hidden = false; foot.style.display = ''; }
+      if (discCard) discCard.removeAttribute('aria-busy');
+      if (discLd) discLd.hidden = true;
       say('Discovery complete — 8 topics proposed from the Approved PRD Pack and repo evidence.');
     }
     if (reduced()) {
