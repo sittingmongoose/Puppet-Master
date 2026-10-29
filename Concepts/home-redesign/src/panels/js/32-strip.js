@@ -276,11 +276,28 @@ strip.prepare = function (panelEl, p, l, opts) {
 function middleEllipsis(el, rec, size) {
   var lab = el.querySelector('.pmw-tlabel');
   var full = tabLabel(rec);
-  if (lab.textContent !== full) lab.textContent = full;
-  if (size === 'icon' || size === 'pinned' || !(rec.state && rec.state.path)) return;
+  if (size === 'icon' || size === 'pinned' || !(rec.state && rec.state.path)) {
+    if (lab.textContent !== full) lab.textContent = full;
+    return;
+  }
   var room = lab.clientWidth;
-  if (!room || lab.scrollWidth <= room) return;
-  function fits(t) { lab.textContent = t; return lab.scrollWidth <= lab.clientWidth; }
+  if (!room) { if (lab.textContent !== full) lab.textContent = full; return; }
+  /* The search below writes a candidate then reads scrollWidth per try: a forced layout each. During a
+     resize drag every frame refitted every truncated label at a new width. Cache the fitted text per
+     label; while resizing, fit against the room rounded down to 24px buckets (a text fitted for the
+     bucket always fits the room), so a label refits at most once per 24px travelled and reuses its fit
+     while the room only grows. The first non-resizing paint refits at the exact room again. */
+  var resizing = !!(typeof state !== 'undefined' && state && state.resizing);
+  var fitRoom = resizing ? Math.max(24, Math.floor(room / 24) * 24) : room;
+  var theme = doc.documentElement.getAttribute('data-theme') + '|' + size + '|' + (doc.fonts ? doc.fonts.status : '');
+  var cache = lab._pmwEll;
+  if (cache && cache.full === full && cache.theme === theme && (cache.room === fitRoom || (resizing && fitRoom > cache.room))) {
+    if (lab.textContent !== cache.out) lab.textContent = cache.out;
+    return;
+  }
+  if (lab.textContent !== full) lab.textContent = full;
+  if (lab.scrollWidth <= room) { lab._pmwEll = { full: full, theme: theme, room: fitRoom, out: full }; return; }
+  function fits(t) { lab.textContent = t; return lab.scrollWidth <= fitRoom; }
   var dot = full.lastIndexOf('.');
   var ext = dot > 0 && full.length - dot <= 6 ? full.length - dot : 0;
   var tails = [], seen = {};
@@ -293,9 +310,10 @@ function middleEllipsis(el, rec, size) {
       var cand = full.slice(0, mid) + '\u2026' + tail;
       if (fits(cand)) { best = cand; lo = mid + 1; } else hi = mid - 1;
     }
-    if (best) { lab.textContent = best; return; }
+    if (best) { lab.textContent = best; lab._pmwEll = { full: full, theme: theme, room: fitRoom, out: best }; return; }
   }
   lab.textContent = full.slice(0, 1) + '\u2026';
+  lab._pmwEll = { full: full, theme: theme, room: fitRoom, out: lab.textContent };
 }
 
 function placeTab(s, container, tid, index, l, p) {

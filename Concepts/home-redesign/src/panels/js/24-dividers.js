@@ -135,6 +135,8 @@ dividers.bind = function (el) {
     el.classList.add('pmw-active');
     doc.body.classList.add('pm-resizing', 'pmw-resizing');
     state.resizing = true;
+    function noSelect(e) { e.preventDefault(); }
+    doc.addEventListener('selectstart', noSelect, true);
     function move(e) {
       var pos = info.axis === 'w' ? e.clientX : e.clientY;
       var delta = pos - start;
@@ -151,6 +153,7 @@ dividers.bind = function (el) {
     function end(e, cancel) {
       if (ended) return;
       ended = true;
+      doc.removeEventListener('selectstart', noSelect, true);
       el.removeEventListener('pointermove', move);
       el.removeEventListener('pointerup', up);
       el.removeEventListener('pointercancel', cancelFn);
@@ -161,6 +164,9 @@ dividers.bind = function (el) {
       var previewed = !!state.sizePreview;
       state.sizePreview = null;
       state.resizing = false;
+      /* Shell observers idle behind body.pm-resizing and catch up on the shell's drag-end bus; this
+         gesture sets that class too, so it owes them the same single flush (the chat drag already pays it). */
+      try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {}
       if (cancel || !moved || !last) {
         if (previewed) render.now({ animate: !!cancel });
         render.flushResizes(true);

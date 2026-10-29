@@ -195,6 +195,9 @@ html[data-o55-nier="on"] .pmw-ed {
 }
 /* @pm7-lg-slot home-redesign/src/panels/css/60-kind-editor/G0842.css */
 .pmw-ed-head .pmw-hrow { background: transparent; }
+/* While a resize drag runs, the header's live backdrop blur re-filters its whole width every frame in every
+   non-Glass look (Glass already resolves it to none). The plate colour stays; only the blur pauses. */
+body.pm-resizing .pmw-ed-head { -webkit-backdrop-filter: none; backdrop-filter: none; }
 .pmw-ed-crumbs { display: flex; align-items: center; min-width: 0; gap: 1px; overflow: hidden; white-space: nowrap; font-size: 12px; color: var(--pmw-text-2); }
 .pmw-ed-seg { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .pmw-ed-seg.is-file { flex: none; color: var(--pmw-text); font-weight: 600; }

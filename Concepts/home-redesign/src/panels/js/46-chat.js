@@ -111,14 +111,15 @@ chatCol.beginDrag = function (e, handle) {
   if (!c) return;
   var startX = e.clientX, startW = c.getBoundingClientRect().width;
   var hist = narrow.state.hist || 0;
-  // one rule with the ladder: the chat widens only while the centre stays at or above the step where the ladder starts
-  // easing the chat (C 960); past it the ladder would ease the width straight back on release
-  // On the Usage page the board keeps its 400 px floor (narrow.usageFloor); another page (the centre is hidden there and
-  // measured 0, which froze the drag) takes the whole range
+  // A width the person drags to is saved (width_px) and the ladder respects saved widths (44-narrow.js:
+  // user-sized columns are never eased back), so on Home the drag takes the whole 400-760 range and the
+  // centre gives — rail and chat can both be wide at once.
+  // On the Usage page the board still keeps its 400 px floor (narrow.usageFloor eases the column there
+  // regardless of the saved width, planner 2026-10-10), so the drag keeps that page's room rule; another
+  // page (the centre is hidden there and measured 0, which froze the drag) takes the whole range
   var C = homeIsPage() && state.centre && state.centre.getClientRects().length ? state.centre.clientWidth : 0;
   var ub = qs('#panel-usage #pmuBoard'), room = Infinity;
-  if (C) room = C - LADDER.chatEase;
-  else if (ub && ub.offsetParent !== null) room = ub.getBoundingClientRect().width - LADDER.usageBoardMin;
+  if (!C && ub && ub.offsetParent !== null) room = ub.getBoundingClientRect().width - LADDER.usageBoardMin;
   var lo = LADDER.chatMin + hist, hi = clamp(startW + Math.max(0, room), lo, LADDER.chatMax + hist);
   var last = startW, moved = false;
   try { handle.setPointerCapture(e.pointerId); } catch (_) {}
@@ -126,6 +127,8 @@ chatCol.beginDrag = function (e, handle) {
   doc.body.classList.add('pm-resizing', 'pmw-resizing');
   narrow.frozen = true;
   state.resizing = true;
+  function noSelect(ev) { ev.preventDefault(); }
+  doc.addEventListener('selectstart', noSelect, true);
   function move(ev) {
     var w = clamp(startW - (ev.clientX - startX), lo, hi);
     if (Math.abs(w - last) < 0.5) return;
@@ -134,9 +137,12 @@ chatCol.beginDrag = function (e, handle) {
     c.style.setProperty('--pmw-chat-w', Math.round(w) + 'px');
   }
   function end(ev, cancel) {
+    doc.removeEventListener('selectstart', noSelect, true);
     handle.removeEventListener('pointermove', move);
     handle.removeEventListener('pointerup', up);
     handle.removeEventListener('pointercancel', cxl);
+    handle.removeEventListener('lostpointercapture', cxl);
+    window.removeEventListener('blur', cxl);
     doc.removeEventListener('keydown', esc, true);
     handle.classList.remove('resizing');
     doc.body.classList.remove('pm-resizing', 'pmw-resizing');
@@ -161,6 +167,8 @@ chatCol.beginDrag = function (e, handle) {
   handle.addEventListener('pointermove', move);
   handle.addEventListener('pointerup', up);
   handle.addEventListener('pointercancel', cxl);
+  handle.addEventListener('lostpointercapture', cxl);
+  window.addEventListener('blur', cxl);
   doc.addEventListener('keydown', esc, true);
 };
 /* the resizer's double-click: back to the default for the window, one commit with width null */

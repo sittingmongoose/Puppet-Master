@@ -42,6 +42,12 @@ html[data-pmw-home="on"] body #chatPanel.chat-panel {
   transition: flex-basis var(--pmw-t-med, 180ms) cubic-bezier(.22, 1, .36, 1), width var(--pmw-t-med, 180ms) cubic-bezier(.22, 1, .36, 1);
 }
 html[data-pmw-home="on"] body.pm-resizing #chatPanel.chat-panel { transition: none; }
+/* While a resize drag runs, the rail chrome's live backdrop blur (concept D's frosted plates) re-filters
+   full-width strips every frame the slot changes width. Glass already resolves these to none; the other
+   looks keep their plate colour and only pause the blur for the gesture. */
+html[data-pmw-home="on"] body.pm-resizing #sidePanelSlot :is(.sh-banner, .pm-segtab, .fm-toolbar-wrap, .fm-selbar, .fm-filter, .pm7-scm-context, .pm7-scm-git-footer, .d-jj-foot) {
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
 html[data-pmw-home="on"] #chatResizer:not(.hidden) { cursor: col-resize; }
 
 /* the rail side panel eases to 240, then folds to its icon bar (D4); the user's own width is never overwritten */

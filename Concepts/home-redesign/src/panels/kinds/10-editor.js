@@ -1317,6 +1317,7 @@ function mountEditor(host, st, api) {
   var caret = { r: 0, c: 0 }, anchor = null, side = 'r', goalCol = -1;
   var focused = !!preview, visible = true, alive = true, dimmed = false;
   var pageHost = preview ? null : host.closest('#panel-dashboard'), pendingLayout = false;
+  var resizeFullAt = 0, resizeTrailT = 0;   // non-final resize deliveries: full row rebuild at most every 120ms
   function isShown() { return visible && (!pageHost || pageHost.classList.contains('active')); }
   function paintDeferred() { return !!(preview && preview.paintDeferred && preview.paintDeferred()); }
   var pendingLook = null, lookQueued = false, lookGeneration = 0;
@@ -3729,6 +3730,19 @@ function mountEditor(host, st, api) {
     applyPendingLook(true);
     if (!firstDone) { pendingLayout = false; firstPaint(); return; }
     if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
+    /* During a drag (final:false) the full path below rebuilds every rendered row per frame (and rescans
+       the whole file when wrapping). Cap that rebuild at the terminal's 120ms cadence: between rebuilds
+       only geometry, thumbs and the canvas follow the new size; a trailing pass and the host's final
+       delivery restore exact rows. Wrap columns can lag by up to one cadence mid-drag. */
+    if (sz && sz.final === false) {
+      var nowMs = performance.now();
+      if (nowMs - resizeFullAt < 120) {
+        layout(); updateThumb(); updateHbar(); queueDraw();
+        if (!resizeTrailT) resizeTrailT = setTimeout(function () { resizeTrailT = 0; onResize({ final: false }); }, 120);
+        return;
+      }
+      resizeFullAt = nowMs;
+    }
     if (sz && sz.final === false && mode === 'diff') { layout(); renderRows(true); renderOverlays(); updateThumb(); return; }
     var changed = resolveLayout(false);
     if (!changed) { layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar(); sticky._key = null; updateSticky(); }

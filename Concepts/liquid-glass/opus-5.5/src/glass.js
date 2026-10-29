@@ -329,16 +329,42 @@
     ancestors.forEach(function (a) { var set = index.get(a); if (!set) index.set(a, set = new Set()); set.add(e); });
   }
   /* every glass element's optics are sized to it: when the board or a panel resizes one, it is measured again */
+  /* During a shell/Home resize drag the rims would be re-measured and re-baked for geometry that is obsolete
+     a frame later; the baked rim simply stretches with the sheet until release. Held targets (and the scopes
+     they dirty) flush once the drag ends: the ResizeObserver does not refire for a size that has settled. */
+  var heldTargets = new Map(), heldScopes = [], heldTimer = 0;
+  function dragHeld() { return !!(document.body && document.body.classList.contains('pm-resizing')); }
+  function flushHeldSoon() {
+    if (heldTimer) return;
+    heldTimer = setTimeout(function () {
+      heldTimer = 0;
+      if (dragHeld()) { flushHeldSoon(); return; }
+      var targets = heldTargets, scopes = heldScopes;
+      heldTargets = new Map(); heldScopes = [];
+      scopes.forEach(function (s) { dirtyScope(s); });
+      if (targets.size) mountMeasured(targets);
+      if (targets.size || scopes.length) lazySync(false);
+    }, 160);
+  }
   var sizeWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
     if (!isGlass()) return;
+    var held = dragHeld();
     var targets = new Map(); entries.forEach(function (en) {
       var e = en.target, k = e.getAttribute('data-lg-kind');
       if (!k || !e.isConnected) return;
       targets.set(e, k);
       /* Size changes can move siblings without resizing them. Their positions belong to the same settle scope. */
       var box = en.borderBoxSize && en.borderBoxSize[0];
-      if (KINDS[k] && KINDS[k].bake && e.__lgSize && (!box || e.__lgSize !== Math.round(box.inlineSize) + 'x' + Math.round(box.blockSize))) { dirtyScope(e.parentElement); lazySync(false); }
+      if (KINDS[k] && KINDS[k].bake && e.__lgSize && (!box || e.__lgSize !== Math.round(box.inlineSize) + 'x' + Math.round(box.blockSize))) {
+        if (held) heldScopes.push(e.parentElement);
+        else { dirtyScope(e.parentElement); lazySync(false); }
+      }
     });
+    if (held) {
+      targets.forEach(function (k, e) { heldTargets.set(e, k); });
+      flushHeldSoon();
+      return;
+    }
     mountMeasured(targets);
   }) : null;
   function radiusOf(e, W, H) { var r = parseFloat(getComputedStyle(e).borderTopLeftRadius) || 0; return Math.max(0, Math.min(r, W / 2 - 0.5, H / 2 - 0.5)); }
@@ -2662,7 +2688,13 @@
   }
   function lazySync(scope) {
     if (scope !== false) { if (scope && scope.nodeType === 1) dirtyScope(scope); else dirtyAll = true; }
-    if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140);
+    if (!lazyT) lazyT = setTimeout(function () {
+      lazyT = 0;
+      /* A resize drag dirties scopes continuously; syncing mid-gesture measures and bakes geometry that is
+         obsolete a frame later. Re-arm instead and sync once the drag has ended (see sizeWatch above). */
+      if (dragHeld()) { lazySync(false); return; }
+      queueSync();
+    }, 140);
   }
   var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, #pm-settings-root .segmented > button, .o55-win, .o55t-callout, .o55t-bar';
   var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, .lg-hops, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown, lg-warm';

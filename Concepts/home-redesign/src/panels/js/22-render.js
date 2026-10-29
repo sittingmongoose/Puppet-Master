@@ -121,7 +121,7 @@ render.paint = function (opts) {
     setAttr(el, 'data-empty', !p.tabs.length);
     setAttr(el, 'data-role', PMW.panelRole(l, p));
     setAttr(el, 'data-maximized', l.view.maximized === p.id && rects.mode === 'maximized');
-    el.setAttribute('aria-label', panelLabel(l, p));
+    setAttr(el, 'aria-label', panelLabel(l, p));
     if (r) placeEl(el, r, animate, placedWithoutMotion);
     setAttr(el, 'data-dv-leaving', dv && dv.leaving && dv.leaving[p.id] ? true : null);
     panels.push({ panel: p, el: el, hidden: hidden });
@@ -155,12 +155,35 @@ render.paint = function (opts) {
 
   // Place all panels and dividers before any strip reads layout. Fit every strip before updating tab bodies: a
   // reparented editor or terminal otherwise makes the following strip pay for a full layout of the changed body.
-  var strips = panels.map(function (p) { return PMW.strip.prepare(p.el, p.panel, l, { narrow: narrow, rects: shown }); });
+  // While a resize gesture runs, only the panels whose geometry or tab set actually changed need their strip
+  // refitted and bodies re-synced; the rest were re-measured every pointermove for an identical result.
+  var resizingNow = !!(state.resizing || (doc.body && doc.body.classList.contains('pm-resizing')));
+  function paintSig(p) {
+    var r = shown.panels[p.panel.id];
+    return (r ? r.w + 'x' + r.h : '-') + '|' + (p.hidden ? 1 : 0) + '|' + (p.panel.collapsed ? 1 : 0) + '|' +
+      (p.panel.locked ? 1 : 0) + '|' + (narrow ? 1 : 0) + '|' + p.panel.active + '|' + p.panel.tabs.join(',');
+  }
+  /* Tab bodies follow the tab set, visibility and focus only — never the panel's size. While the centre is
+     being resized (rail/chat drags) every rect changes every frame, but bodies need no re-sync for that. */
+  function bodySig(p) {
+    return (p.hidden ? 1 : 0) + '|' + (p.panel.collapsed ? 1 : 0) + '|' + p.panel.active + '|' +
+      (l.view.focus === p.panel.id ? 1 : 0) + '|' + p.panel.tabs.join(',');
+  }
+  var strips = [];
+  panels.forEach(function (p) {
+    var sig = paintSig(p);
+    p._skipFit = resizingNow && p.el._pmwPaintSig === sig;
+    p.el._pmwPaintSig = sig;
+    var bsig = bodySig(p);
+    p._skipBodies = resizingNow && p.el._pmwBodySig === bsig;
+    p.el._pmwBodySig = bsig;
+    if (!p._skipFit) strips.push(PMW.strip.prepare(p.el, p.panel, l, { narrow: narrow, rects: shown }));
+  });
   strips.forEach(function (s) { s.measure(); });
   strips.forEach(function (s) { s.place(); });
   strips.forEach(function (s) { s.finish(); });
   if (opts.afterStrips) opts.afterStrips();
-  panels.forEach(function (p) { syncBodies(p.el, p.panel, l, p.hidden); PMW.renderEmpty(p.el, p.panel); });
+  panels.forEach(function (p) { if (!p._skipBodies) { syncBodies(p.el, p.panel, l, p.hidden); PMW.renderEmpty(p.el, p.panel); } });
 
   if (dv && PMW.dropView) PMW.dropView.place(shown, animate);
   if (animate) {
@@ -341,11 +364,18 @@ function queueResize(tid) {
 }
 render.flushResizesSoon = function () { resizeAll = true; queueResize(); };
 function flushResizes(forceFinal) {
+  /* Shell resizer drags (rail, chat on other pages) set body.pm-resizing but never PMW's state flags, so
+     their frames used to arrive here as final: every kind did its release-grade work per frame (terminal
+     PTY resize, editor row rebuild, dashboard onWidth). One final flush runs on the shell's drag-end hook. */
+  if (!flushResizes._dragHook && typeof window.PM_ON_DRAGEND === 'function') {
+    flushResizes._dragHook = true;
+    window.PM_ON_DRAGEND(function () { flushResizes(true); });
+  }
   var ids = forceFinal ? Object.keys(instances) : Object.keys(resizePending);
   resizePending = {};
   /* Home hidden: its hosts measure 0 and are passed over, so nothing is read for them (homeHidden) */
   if (homeHidden()) return;
-  var final = !state.moving && !state.dragging && !state.resizing;
+  var final = !state.moving && !state.dragging && !state.resizing && !(doc.body && doc.body.classList.contains('pm-resizing'));
   var sized = [];
   for (var i = 0; i < ids.length; i++) {
     var e = instances[ids[i]];

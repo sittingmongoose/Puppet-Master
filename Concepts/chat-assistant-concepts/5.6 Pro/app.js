@@ -2285,7 +2285,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       return;
     }
     const avail=tools.clientWidth||box.clientWidth;
-    const signature=[box.clientWidth,tools.clientWidth,tools.textContent,state.theme,document.fonts?.status].join('|');
+    // The measured value is the tools' intrinsic labeled width (content, font, theme): it does not
+    // depend on the available width. Keying the cache on clientWidth re-measured (class toggles plus
+    // rect reads, i.e. forced layouts) on every step of a chat resize drag.
+    const signature=[tools.textContent,state.theme,document.fonts?.status].join('|');
     if(!composerMeasureCache||composerMeasureCache.node!==tools||composerMeasureCache.key!==signature)
       composerMeasureCache={node:tools,key:signature,value:measureLabeledTools(box,tools)};
     const need=composerMeasureCache.value;
@@ -2350,7 +2353,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const cs=getComputedStyle(wrap);
     const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
     const slack=8;
-    const signature=[wrap.clientWidth,bar.textContent,bar.dataset.variant,state.theme,document.fonts?.status].join('|');
+    // Tier widths are intrinsic to the bar's content/font/theme, not to the available width (see
+    // syncComposerCompact): keep the container width out of the cache key.
+    const signature=[bar.textContent,bar.dataset.variant,state.theme,document.fonts?.status].join('|');
     if(!activityMeasureCache||activityMeasureCache.node!==bar||activityMeasureCache.key!==signature)
       activityMeasureCache={node:bar,key:signature,labeled:measureActivityTier(wrap,bar,0),compact:measureActivityTier(wrap,bar,1)};
     const {labeled,compact}=activityMeasureCache;
@@ -2372,13 +2377,25 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     syncActivityCompact();
     syncJumpBottom();
   }
-  let chromeSyncFrame=null, chromeObserved=new Set();
+  let chromeSyncFrame=null, chromeObserved=new Set(), chromeLastSync=0, chromeTrailT=null;
+  function runChromeSync(){
+    chromeSyncFrame=null;
+    // Hosted resize drags resize the chat column every frame; the chrome syncs below read rects and
+    // scroll metrics after each width write. Compact tiers and dock heights may lag one cadence
+    // mid-drag (the editor/terminal kinds use the same 120ms rule); a trailing sync lands on release.
+    if(document.body && document.body.classList.contains('pm-resizing') && performance.now()-chromeLastSync<100){
+      if(!chromeTrailT) chromeTrailT=setTimeout(()=>{chromeTrailT=null;chromeLastSync=performance.now();syncChatChrome();},100);
+      return;
+    }
+    chromeLastSync=performance.now();
+    syncChatChrome();
+  }
   function armComposerObserver(){
     // The keyed shell retains these nodes. Recreating the observer every render
     // delivered another initial resize callback and repeated both forced-layout probes.
     if(!composerRO) composerRO=new ResizeObserver(()=>{
       if(chromeSyncFrame!==null)return;
-      chromeSyncFrame=requestAnimationFrame(()=>{chromeSyncFrame=null;syncChatChrome();});
+      chromeSyncFrame=requestAnimationFrame(runChromeSync);
     });
     const next=new Set(document.querySelectorAll('.composer-box,.composer-tools,.chat-stage>.composer,.decision-host,.activity-wrap,.chat-float,.lens-inline'));
     for(const n of chromeObserved)if(!next.has(n))composerRO.unobserve(n);
@@ -4183,6 +4200,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
   }
   window.addEventListener('pm56-clock-scale',()=>{ if(workTimer) armWorkTimer(); });
   function workTick(){
+    // Hosted: a shell/Home resize drag owns the frame budget. The demo clock advances a fixed step
+    // per tick, so skipping ticks while body.pm-resizing simply pauses the timeline mid-drag; the
+    // next tick after release resumes it (no jump, no catch-up render storm).
+    if(document.body && document.body.classList.contains('pm-resizing')) return;
     const live=runningRecs();
     if(!live.length){ stopWorkTimer(); return; }
     let transition=false;
@@ -5229,10 +5250,19 @@ suggested path                    migration 0043, reversible</div></div></sectio
   }
   /* the column resizes without a window resize (its divider, the narrow ladder, a pop out): the same re-render rules */
   if(HOSTED&&typeof ResizeObserver==='function'&&HOST.frame()){
-    let lastNarrow=isNarrow(), lastPin=activityPinnedInLayout(), queued=false;
+    let lastNarrow=isNarrow(), lastPin=activityPinnedInLayout(), queued=false, frameTrailT=null;
     new ResizeObserver(()=>{ if(queued) return; queued=true; requestAnimationFrame(()=>{ queued=false;
       const n=isNarrow(), p=activityPinnedInLayout();
       if(n!==lastNarrow||p!==lastPin){ lastNarrow=n; lastPin=p; activityPinLayout=p; renderApp(); }
+      else if(document.body && document.body.classList.contains('pm-resizing')){
+        // Mid-drag the frame resizes every frame; fitActivityTabs toggles a class and reads rects each
+        // time (forced layouts). Tab fit and the jump pill may lag one cadence; a trailing pass lands
+        // on release. Narrow/pin flips above still re-render immediately.
+        if(!frameTrailT) frameTrailT=setTimeout(function tick(){ frameTrailT=null;
+          if(document.body && document.body.classList.contains('pm-resizing')){ frameTrailT=setTimeout(tick,100); return; }
+          syncJumpBottom(); fitActivityTabs();
+        },100);
+      }
       else { syncJumpBottom(); fitActivityTabs(); }
       if(state.menu||state.hover) renderOverlays();
     }); }).observe(HOST.frame());

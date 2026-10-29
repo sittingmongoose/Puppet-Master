@@ -1491,8 +1491,10 @@
               },
               onMove: function(e) {
                 if (!prev.parentNode) return;
-                var pr = prev.getBoundingClientRect();
-                var nr = next.getBoundingClientRect();
+                /* The rects only seed dragTotal/startPrev on the first move; reading them on every
+                   move after the previous move's writes forced a fresh layout for values never used. */
+                var pr = null, nr = null;
+                if (!dragTotal) { pr = prev.getBoundingClientRect(); nr = next.getBoundingClientRect(); }
                 if (isCol) {
                   if (!dragTotal) { dragTotal = pr.width + nr.width; startPrev = pr.width; }
                   var pw = Math.max(80, Math.min(startPrev + (e.clientX - startX), dragTotal - 80));
@@ -2117,6 +2119,11 @@
            left/width. Plain hover keeps measuring live (infrequent, and the
            layout may genuinely have moved since). */
         function trackGlow(resizerEl, e) {
+            /* Bars the Home grab light has adopted (.pmw-gl) paint no legacy pseudo glow at all
+               (56-light.css retires ::before/::after on them), so the rect read and the variable
+               write were pure per-move waste, including during the Home chat drag, whose pointerdown
+               this controller never sees: glowRect stayed null and every move forced a fresh rect. */
+            if (resizerEl.classList.contains('pmw-gl')) return;
             const r = glowRect || resizerEl.getBoundingClientRect();
             const vertical = resizerEl.classList.contains('resizer-col');
             const len = (vertical ? r.height : r.width) || 1;
@@ -2163,49 +2170,67 @@
         const getPrev = () => document.getElementById(prevElementId) || (prevElementId && document.querySelector('.' + prevElementId));
         const getNext = () => document.getElementById(nextElementId) || (nextElementId && document.querySelector('.' + nextElementId));
         let startX = 0, startY = 0, startW = 0, startH = 0;
+        /* Clamp inputs are measured once at drag start. They used to be re-read on every move —
+           a parent rect plus two getComputedStyle calls after the previous move's width write,
+           i.e. a forced style+layout per pointermove. None of them can change during one gesture
+           (the window does not resize mid-drag, and the elements' own min/max are stylesheet-fixed). */
+        let dragCache = null, lastWritten = null;
         window.registerResizer(resizer, {
             isHorizontal,
             onStart(e) {
                 const prev = getPrev();
+                const next = getNext();
                 if (prev) prev.classList.add('pm6-noanim');
                 startX = e.clientX; startY = e.clientY;
-                if (isHorizontal && prev) startW = prev.getBoundingClientRect().width;
-                if (!isHorizontal) { const next = getNext(); if (next) startH = next.getBoundingClientRect().height; }
+                dragCache = null; lastWritten = null;
+                if (isHorizontal && prev) {
+                    startW = prev.getBoundingClientRect().width;
+                    const prevCS = getComputedStyle(prev);
+                    dragCache = {
+                        containerW: resizer.parentNode ? resizer.parentNode.getBoundingClientRect().width : 0,
+                        minW: parseFloat(prevCS.minWidth) || 200,
+                        /* Honour the element's own max-width. .side-panel-slot caps at
+                           min(480px, 50vw); without this the drag kept writing widths
+                           past the cap that CSS then threw away, so the panel froze
+                           while the handle ran on — and dragging back did nothing until
+                           the written value fell under the cap again. That decoupling
+                           was the "jerky" left panel. */
+                        cssMaxW: parseFloat(prevCS.maxWidth),
+                        nextMinW: next ? (parseFloat(getComputedStyle(next).minWidth) || 0) : 0
+                    };
+                }
+                if (!isHorizontal && next) {
+                    startH = next.getBoundingClientRect().height;
+                    dragCache = { containerH: resizer.parentNode ? resizer.parentNode.getBoundingClientRect().height : 0 };
+                }
             },
             onEnd() {
                 const prev = getPrev();
                 if (prev) prev.classList.remove('pm6-noanim');
+                dragCache = null;
             },
             onMove(e) {
                 const prev = getPrev();
                 const next = getNext();
-                if (isHorizontal && prev && resizer.parentNode) {
-                    const containerRect = resizer.parentNode.getBoundingClientRect();
+                if (isHorizontal && prev && dragCache) {
                     let newWidth = startW + (e.clientX - startX);
-                    const prevCS = getComputedStyle(prev);
-                    const minW = parseFloat(prevCS.minWidth) || 200;
-                    const nextMinW = next ? (parseFloat(getComputedStyle(next).minWidth) || 0) : 0;
-                    let maxW = Math.max(320, containerRect.width - (nextMinW || 240));
-                    /* Honour the element's own max-width. .side-panel-slot caps at
-                       min(480px, 50vw); without this the drag kept writing widths
-                       past the cap that CSS then threw away, so the panel froze
-                       while the handle ran on — and dragging back did nothing until
-                       the written value fell under the cap again. That decoupling
-                       was the "jerky" left panel. */
-                    const cssMaxW = parseFloat(prevCS.maxWidth);
-                    if (!isNaN(cssMaxW) && cssMaxW > 0) maxW = Math.min(maxW, cssMaxW);
-                    if (maxW < minW) maxW = minW;
-                    newWidth = Math.max(minW, Math.min(newWidth, maxW));
+                    let maxW = Math.max(320, dragCache.containerW - (dragCache.nextMinW || 240));
+                    if (!isNaN(dragCache.cssMaxW) && dragCache.cssMaxW > 0) maxW = Math.min(maxW, dragCache.cssMaxW);
+                    if (maxW < dragCache.minW) maxW = dragCache.minW;
+                    newWidth = Math.max(dragCache.minW, Math.min(newWidth, maxW));
+                    if (lastWritten !== null && Math.abs(newWidth - lastWritten) < 0.5) return;
+                    lastWritten = newWidth;
                     prev.style.setProperty('width', newWidth + 'px', 'important');
                     prev.style.setProperty('flex', 'none', 'important');
                     /* remember what the user actually asked for: refits clamp
                        DOWN against this and restore back UP to it when the
                        space returns (see refitEditorDashSplit) */
                     prev.dataset.pmUserW = newWidth;
-                } else if (!isHorizontal && next && resizer.parentNode) {
-                    const containerRect = resizer.parentNode.getBoundingClientRect();
-                    const maxH = Math.max(50, containerRect.height - 100);
+                } else if (!isHorizontal && next && dragCache) {
+                    const maxH = Math.max(50, dragCache.containerH - 100);
                     const newHeight = Math.max(50, Math.min(startH + (startY - e.clientY), maxH));
+                    if (lastWritten !== null && Math.abs(newHeight - lastWritten) < 0.5) return;
+                    lastWritten = newHeight;
                     next.style.setProperty('height', newHeight + 'px', 'important');
                     next.style.setProperty('flex', 'none', 'important');
                 }

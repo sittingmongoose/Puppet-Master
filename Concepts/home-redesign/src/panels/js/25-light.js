@@ -361,6 +361,16 @@ function glEase(cur, target, dt, tauUp, tauDown) {
 
 function glStep(s, now, dt) {
   var busy = false;
+  /* Measure the held bar before any glSet write, and at most every 50 ms: measuring after writes forced a
+     full style+layout inside every light tick, and during a resize drag the drag's own writes make every
+     tick's measure force another one (seconds of forced layout over one rail drag). The wake's history
+     interpolates between samples (glPast) and the strain is eased, so a 20 Hz measure cadence changes
+     nothing visible; between measures the last rect stands. */
+  var heldRect = null;
+  if (s.held && !s.rm) {
+    if (!s.rect || !s._measAt || now - s._measAt >= 50) { heldRect = glMeasure(s); s._measAt = now; }
+    else heldRect = s.rect;
+  }
   // along the bar: a spring (or a step, or straight to the pointer under Reduced Motion)
   if (s.rm || !(s.k > 0)) { s.at = s.tAt; s.va = 0; }
   else {
@@ -382,7 +392,7 @@ function glStep(s, now, dt) {
   // across the bar while held: its speed (heat and the wake) and a limit it is held at (strain)
   var trail = 0, strainT = 0, push = 0;
   if (s.held && !s.rm) {
-    var r = glMeasure(s);
+    var r = heldRect || glMeasure(s);
     var cpos = s.v ? r.left + r.width / 2 : r.top + r.height / 2;
     glHist(s, now, cpos);
     var moved = cpos - glPast(s, now, GL_TRAIL_MS);

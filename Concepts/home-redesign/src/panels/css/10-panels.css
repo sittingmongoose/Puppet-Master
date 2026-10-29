@@ -76,9 +76,9 @@
 }
 .pmw-divider[data-dir="row"] .pmw-divider-line { top: 6px; bottom: 6px; left: 3.5px; width: 1px; }
 .pmw-divider[data-dir="col"] .pmw-divider-line { left: 6px; right: 6px; top: 3.5px; height: 1px; }
-body.pmw-resizing, body.pmw-resizing * { user-select: none !important; -webkit-user-select: none !important; }
-/* Panel drags prevent selectstart in 30-gesture.js. A body-wide selection rule would restyle the entire app on
-   pickup and release, although the captured pointer cannot start a selection anywhere. */
+/* Resize gestures prevent selectstart in JS (24-dividers.js, 46-chat.js), like panel drags do in
+   30-gesture.js. The body-wide `body.pmw-resizing *` user-select rule that used to live here restyled the
+   entire app on pickup and release, although the captured pointer cannot start a selection anywhere. */
 
 /* ---- the strip ---- */
 .pmw-strip {
@@ -128,8 +128,7 @@ body.pmw-resizing, body.pmw-resizing * { user-select: none !important; -webkit-u
 /* hover tags never open during a drag or a resize */
 /* The legacy tag root also holds hundreds of screen-reader descriptions. A panel drag hides its paint without
    detaching and rebuilding that entire layout tree; the gesture pairs this with aria-hidden for the same rest. */
-body.pmw-dragging #pm-hover-tag-root { opacity: 0 !important; }
-body.pm-resizing:not(.pmw-dragging) #pm-hover-tag-root { display: none !important; }
+body.pmw-dragging #pm-hover-tag-root, body.pm-resizing:not(.pmw-dragging) #pm-hover-tag-root { opacity: 0 !important; }
 .pmw-tab[data-active] { color: var(--pmw-tab-active, var(--pmw-text)); font-weight: var(--pmw-tab-weight, 600); z-index: 2; }
 .pmw-tab:not([data-active]) { background: var(--pmw-tab-idle-fill, transparent); }
 /* one ring, on the tab's own top and sides: the bottom stays open, so a focused active tab is still one surface with its

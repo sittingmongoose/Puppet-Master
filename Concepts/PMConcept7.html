@@ -40610,9 +40610,9 @@ html[data-theme$="-light"] #pm-home-centre, html[data-theme$="-light"] #pmw-over
 }
 .pmw-divider[data-dir="row"] .pmw-divider-line { top: 6px; bottom: 6px; left: 3.5px; width: 1px; }
 .pmw-divider[data-dir="col"] .pmw-divider-line { left: 6px; right: 6px; top: 3.5px; height: 1px; }
-body.pmw-resizing, body.pmw-resizing * { user-select: none !important; -webkit-user-select: none !important; }
-/* Panel drags prevent selectstart in 30-gesture.js. A body-wide selection rule would restyle the entire app on
-   pickup and release, although the captured pointer cannot start a selection anywhere. */
+/* Resize gestures prevent selectstart in JS (24-dividers.js, 46-chat.js), like panel drags do in
+   30-gesture.js. The body-wide `body.pmw-resizing *` user-select rule that used to live here restyled the
+   entire app on pickup and release, although the captured pointer cannot start a selection anywhere. */
 
 /* ---- the strip ---- */
 .pmw-strip {
@@ -40662,8 +40662,7 @@ body.pmw-resizing, body.pmw-resizing * { user-select: none !important; -webkit-u
 /* hover tags never open during a drag or a resize */
 /* The legacy tag root also holds hundreds of screen-reader descriptions. A panel drag hides its paint without
    detaching and rebuilding that entire layout tree; the gesture pairs this with aria-hidden for the same rest. */
-body.pmw-dragging #pm-hover-tag-root { opacity: 0 !important; }
-body.pm-resizing:not(.pmw-dragging) #pm-hover-tag-root { display: none !important; }
+body.pmw-dragging #pm-hover-tag-root, body.pm-resizing:not(.pmw-dragging) #pm-hover-tag-root { opacity: 0 !important; }
 .pmw-tab[data-active] { color: var(--pmw-tab-active, var(--pmw-text)); font-weight: var(--pmw-tab-weight, 600); z-index: 2; }
 .pmw-tab:not([data-active]) { background: var(--pmw-tab-idle-fill, transparent); }
 /* one ring, on the tab's own top and sides: the bottom stays open, so a focused active tab is still one surface with its
@@ -40952,6 +40951,19 @@ html[data-pmw-home="on"] body #chatPanel.chat-panel {
   transition: flex-basis var(--pmw-t-med, 180ms) cubic-bezier(.22, 1, .36, 1), width var(--pmw-t-med, 180ms) cubic-bezier(.22, 1, .36, 1);
 }
 html[data-pmw-home="on"] body.pm-resizing #chatPanel.chat-panel { transition: none; }
+/* While a resize drag runs, the rail chrome's live backdrop blur (concept D's frosted plates) re-filters
+   full-width strips every frame the slot changes width. Glass already resolves these to none; the other
+   looks keep their plate colour and only pause the blur for the gesture. */
+html[data-pmw-home="on"] body.pm-resizing #sidePanelSlot :is(.sh-banner),
+html[data-pmw-home="on"] body.pm-resizing #sidePanelSlot :is(.pm-segtab),
+html[data-pmw-home="on"] body.pm-resizing #sidePanelSlot :is(.fm-toolbar-wrap),
+html[data-pmw-home="on"] body.pm-resizing #sidePanelSlot :is(.fm-selbar),
+html[data-pmw-home="on"] body.pm-resizing #sidePanelSlot :is(.fm-filter),
+html[data-pmw-home="on"] body.pm-resizing #sidePanelSlot :is(.pm7-scm-context),
+html[data-pmw-home="on"] body.pm-resizing #sidePanelSlot :is(.pm7-scm-git-footer),
+html[data-pmw-home="on"] body.pm-resizing #sidePanelSlot :is(.d-jj-foot) {
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
 html[data-pmw-home="on"] #chatResizer:not(.hidden) { cursor: col-resize; }
 
 /* the rail side panel eases to 240, then folds to its icon bar (D4); the user's own width is never overwritten */
@@ -43328,6 +43340,9 @@ html[data-o55-nier="on"] .pmw-ed {
 }
 html[data-theme^="glass"] .pmw-ed-head, html[data-o55-nier="on"] .pmw-ed-head { -webkit-backdrop-filter: none; backdrop-filter: none; }
 .pmw-ed-head .pmw-hrow { background: transparent; }
+/* While a resize drag runs, the header's live backdrop blur re-filters its whole width every frame in every
+   non-Glass look (Glass already resolves it to none). The plate colour stays; only the blur pauses. */
+body.pm-resizing .pmw-ed-head { -webkit-backdrop-filter: none; backdrop-filter: none; }
 .pmw-ed-crumbs { display: flex; align-items: center; min-width: 0; gap: 1px; overflow: hidden; white-space: nowrap; font-size: 12px; color: var(--pmw-text-2); }
 .pmw-ed-seg { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .pmw-ed-seg.is-file { flex: none; color: var(--pmw-text); font-weight: 600; }
@@ -101165,8 +101180,10 @@ status: completed with warnings</pre>
               },
               onMove: function(e) {
                 if (!prev.parentNode) return;
-                var pr = prev.getBoundingClientRect();
-                var nr = next.getBoundingClientRect();
+                /* The rects only seed dragTotal/startPrev on the first move; reading them on every
+                   move after the previous move's writes forced a fresh layout for values never used. */
+                var pr = null, nr = null;
+                if (!dragTotal) { pr = prev.getBoundingClientRect(); nr = next.getBoundingClientRect(); }
                 if (isCol) {
                   if (!dragTotal) { dragTotal = pr.width + nr.width; startPrev = pr.width; }
                   var pw = Math.max(80, Math.min(startPrev + (e.clientX - startX), dragTotal - 80));
@@ -101791,6 +101808,11 @@ status: completed with warnings</pre>
            left/width. Plain hover keeps measuring live (infrequent, and the
            layout may genuinely have moved since). */
         function trackGlow(resizerEl, e) {
+            /* Bars the Home grab light has adopted (.pmw-gl) paint no legacy pseudo glow at all
+               (56-light.css retires ::before/::after on them), so the rect read and the variable
+               write were pure per-move waste, including during the Home chat drag, whose pointerdown
+               this controller never sees: glowRect stayed null and every move forced a fresh rect. */
+            if (resizerEl.classList.contains('pmw-gl')) return;
             const r = glowRect || resizerEl.getBoundingClientRect();
             const vertical = resizerEl.classList.contains('resizer-col');
             const len = (vertical ? r.height : r.width) || 1;
@@ -101837,49 +101859,67 @@ status: completed with warnings</pre>
         const getPrev = () => document.getElementById(prevElementId) || (prevElementId && document.querySelector('.' + prevElementId));
         const getNext = () => document.getElementById(nextElementId) || (nextElementId && document.querySelector('.' + nextElementId));
         let startX = 0, startY = 0, startW = 0, startH = 0;
+        /* Clamp inputs are measured once at drag start. They used to be re-read on every move —
+           a parent rect plus two getComputedStyle calls after the previous move's width write,
+           i.e. a forced style+layout per pointermove. None of them can change during one gesture
+           (the window does not resize mid-drag, and the elements' own min/max are stylesheet-fixed). */
+        let dragCache = null, lastWritten = null;
         window.registerResizer(resizer, {
             isHorizontal,
             onStart(e) {
                 const prev = getPrev();
+                const next = getNext();
                 if (prev) prev.classList.add('pm6-noanim');
                 startX = e.clientX; startY = e.clientY;
-                if (isHorizontal && prev) startW = prev.getBoundingClientRect().width;
-                if (!isHorizontal) { const next = getNext(); if (next) startH = next.getBoundingClientRect().height; }
+                dragCache = null; lastWritten = null;
+                if (isHorizontal && prev) {
+                    startW = prev.getBoundingClientRect().width;
+                    const prevCS = getComputedStyle(prev);
+                    dragCache = {
+                        containerW: resizer.parentNode ? resizer.parentNode.getBoundingClientRect().width : 0,
+                        minW: parseFloat(prevCS.minWidth) || 200,
+                        /* Honour the element's own max-width. .side-panel-slot caps at
+                           min(480px, 50vw); without this the drag kept writing widths
+                           past the cap that CSS then threw away, so the panel froze
+                           while the handle ran on — and dragging back did nothing until
+                           the written value fell under the cap again. That decoupling
+                           was the "jerky" left panel. */
+                        cssMaxW: parseFloat(prevCS.maxWidth),
+                        nextMinW: next ? (parseFloat(getComputedStyle(next).minWidth) || 0) : 0
+                    };
+                }
+                if (!isHorizontal && next) {
+                    startH = next.getBoundingClientRect().height;
+                    dragCache = { containerH: resizer.parentNode ? resizer.parentNode.getBoundingClientRect().height : 0 };
+                }
             },
             onEnd() {
                 const prev = getPrev();
                 if (prev) prev.classList.remove('pm6-noanim');
+                dragCache = null;
             },
             onMove(e) {
                 const prev = getPrev();
                 const next = getNext();
-                if (isHorizontal && prev && resizer.parentNode) {
-                    const containerRect = resizer.parentNode.getBoundingClientRect();
+                if (isHorizontal && prev && dragCache) {
                     let newWidth = startW + (e.clientX - startX);
-                    const prevCS = getComputedStyle(prev);
-                    const minW = parseFloat(prevCS.minWidth) || 200;
-                    const nextMinW = next ? (parseFloat(getComputedStyle(next).minWidth) || 0) : 0;
-                    let maxW = Math.max(320, containerRect.width - (nextMinW || 240));
-                    /* Honour the element's own max-width. .side-panel-slot caps at
-                       min(480px, 50vw); without this the drag kept writing widths
-                       past the cap that CSS then threw away, so the panel froze
-                       while the handle ran on — and dragging back did nothing until
-                       the written value fell under the cap again. That decoupling
-                       was the "jerky" left panel. */
-                    const cssMaxW = parseFloat(prevCS.maxWidth);
-                    if (!isNaN(cssMaxW) && cssMaxW > 0) maxW = Math.min(maxW, cssMaxW);
-                    if (maxW < minW) maxW = minW;
-                    newWidth = Math.max(minW, Math.min(newWidth, maxW));
+                    let maxW = Math.max(320, dragCache.containerW - (dragCache.nextMinW || 240));
+                    if (!isNaN(dragCache.cssMaxW) && dragCache.cssMaxW > 0) maxW = Math.min(maxW, dragCache.cssMaxW);
+                    if (maxW < dragCache.minW) maxW = dragCache.minW;
+                    newWidth = Math.max(dragCache.minW, Math.min(newWidth, maxW));
+                    if (lastWritten !== null && Math.abs(newWidth - lastWritten) < 0.5) return;
+                    lastWritten = newWidth;
                     prev.style.setProperty('width', newWidth + 'px', 'important');
                     prev.style.setProperty('flex', 'none', 'important');
                     /* remember what the user actually asked for: refits clamp
                        DOWN against this and restore back UP to it when the
                        space returns (see refitEditorDashSplit) */
                     prev.dataset.pmUserW = newWidth;
-                } else if (!isHorizontal && next && resizer.parentNode) {
-                    const containerRect = resizer.parentNode.getBoundingClientRect();
-                    const maxH = Math.max(50, containerRect.height - 100);
+                } else if (!isHorizontal && next && dragCache) {
+                    const maxH = Math.max(50, dragCache.containerH - 100);
                     const newHeight = Math.max(50, Math.min(startH + (startY - e.clientY), maxH));
+                    if (lastWritten !== null && Math.abs(newHeight - lastWritten) < 0.5) return;
+                    lastWritten = newHeight;
                     next.style.setProperty('height', newHeight + 'px', 'important');
                     next.style.setProperty('flex', 'none', 'important');
                 }
@@ -189316,7 +189356,7 @@ render.paint = function (opts) {
     setAttr(el, 'data-empty', !p.tabs.length);
     setAttr(el, 'data-role', PMW.panelRole(l, p));
     setAttr(el, 'data-maximized', l.view.maximized === p.id && rects.mode === 'maximized');
-    el.setAttribute('aria-label', panelLabel(l, p));
+    setAttr(el, 'aria-label', panelLabel(l, p));
     if (r) placeEl(el, r, animate, placedWithoutMotion);
     setAttr(el, 'data-dv-leaving', dv && dv.leaving && dv.leaving[p.id] ? true : null);
     panels.push({ panel: p, el: el, hidden: hidden });
@@ -189350,12 +189390,35 @@ render.paint = function (opts) {
 
   // Place all panels and dividers before any strip reads layout. Fit every strip before updating tab bodies: a
   // reparented editor or terminal otherwise makes the following strip pay for a full layout of the changed body.
-  var strips = panels.map(function (p) { return PMW.strip.prepare(p.el, p.panel, l, { narrow: narrow, rects: shown }); });
+  // While a resize gesture runs, only the panels whose geometry or tab set actually changed need their strip
+  // refitted and bodies re-synced; the rest were re-measured every pointermove for an identical result.
+  var resizingNow = !!(state.resizing || (doc.body && doc.body.classList.contains('pm-resizing')));
+  function paintSig(p) {
+    var r = shown.panels[p.panel.id];
+    return (r ? r.w + 'x' + r.h : '-') + '|' + (p.hidden ? 1 : 0) + '|' + (p.panel.collapsed ? 1 : 0) + '|' +
+      (p.panel.locked ? 1 : 0) + '|' + (narrow ? 1 : 0) + '|' + p.panel.active + '|' + p.panel.tabs.join(',');
+  }
+  /* Tab bodies follow the tab set, visibility and focus only — never the panel's size. While the centre is
+     being resized (rail/chat drags) every rect changes every frame, but bodies need no re-sync for that. */
+  function bodySig(p) {
+    return (p.hidden ? 1 : 0) + '|' + (p.panel.collapsed ? 1 : 0) + '|' + p.panel.active + '|' +
+      (l.view.focus === p.panel.id ? 1 : 0) + '|' + p.panel.tabs.join(',');
+  }
+  var strips = [];
+  panels.forEach(function (p) {
+    var sig = paintSig(p);
+    p._skipFit = resizingNow && p.el._pmwPaintSig === sig;
+    p.el._pmwPaintSig = sig;
+    var bsig = bodySig(p);
+    p._skipBodies = resizingNow && p.el._pmwBodySig === bsig;
+    p.el._pmwBodySig = bsig;
+    if (!p._skipFit) strips.push(PMW.strip.prepare(p.el, p.panel, l, { narrow: narrow, rects: shown }));
+  });
   strips.forEach(function (s) { s.measure(); });
   strips.forEach(function (s) { s.place(); });
   strips.forEach(function (s) { s.finish(); });
   if (opts.afterStrips) opts.afterStrips();
-  panels.forEach(function (p) { syncBodies(p.el, p.panel, l, p.hidden); PMW.renderEmpty(p.el, p.panel); });
+  panels.forEach(function (p) { if (!p._skipBodies) { syncBodies(p.el, p.panel, l, p.hidden); PMW.renderEmpty(p.el, p.panel); } });
 
   if (dv && PMW.dropView) PMW.dropView.place(shown, animate);
   if (animate) {
@@ -189536,11 +189599,18 @@ function queueResize(tid) {
 }
 render.flushResizesSoon = function () { resizeAll = true; queueResize(); };
 function flushResizes(forceFinal) {
+  /* Shell resizer drags (rail, chat on other pages) set body.pm-resizing but never PMW's state flags, so
+     their frames used to arrive here as final: every kind did its release-grade work per frame (terminal
+     PTY resize, editor row rebuild, dashboard onWidth). One final flush runs on the shell's drag-end hook. */
+  if (!flushResizes._dragHook && typeof window.PM_ON_DRAGEND === 'function') {
+    flushResizes._dragHook = true;
+    window.PM_ON_DRAGEND(function () { flushResizes(true); });
+  }
   var ids = forceFinal ? Object.keys(instances) : Object.keys(resizePending);
   resizePending = {};
   /* Home hidden: its hosts measure 0 and are passed over, so nothing is read for them (homeHidden) */
   if (homeHidden()) return;
-  var final = !state.moving && !state.dragging && !state.resizing;
+  var final = !state.moving && !state.dragging && !state.resizing && !(doc.body && doc.body.classList.contains('pm-resizing'));
   var sized = [];
   for (var i = 0; i < ids.length; i++) {
     var e = instances[ids[i]];
@@ -189912,6 +189982,8 @@ dividers.bind = function (el) {
     el.classList.add('pmw-active');
     doc.body.classList.add('pm-resizing', 'pmw-resizing');
     state.resizing = true;
+    function noSelect(e) { e.preventDefault(); }
+    doc.addEventListener('selectstart', noSelect, true);
     function move(e) {
       var pos = info.axis === 'w' ? e.clientX : e.clientY;
       var delta = pos - start;
@@ -189928,6 +190000,7 @@ dividers.bind = function (el) {
     function end(e, cancel) {
       if (ended) return;
       ended = true;
+      doc.removeEventListener('selectstart', noSelect, true);
       el.removeEventListener('pointermove', move);
       el.removeEventListener('pointerup', up);
       el.removeEventListener('pointercancel', cancelFn);
@@ -189938,6 +190011,9 @@ dividers.bind = function (el) {
       var previewed = !!state.sizePreview;
       state.sizePreview = null;
       state.resizing = false;
+      /* Shell observers idle behind body.pm-resizing and catch up on the shell's drag-end bus; this
+         gesture sets that class too, so it owes them the same single flush (the chat drag already pays it). */
+      try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {}
       if (cancel || !moved || !last) {
         if (previewed) render.now({ animate: !!cancel });
         render.flushResizes(true);
@@ -190359,6 +190435,16 @@ function glEase(cur, target, dt, tauUp, tauDown) {
 
 function glStep(s, now, dt) {
   var busy = false;
+  /* Measure the held bar before any glSet write, and at most every 50 ms: measuring after writes forced a
+     full style+layout inside every light tick, and during a resize drag the drag's own writes make every
+     tick's measure force another one (seconds of forced layout over one rail drag). The wake's history
+     interpolates between samples (glPast) and the strain is eased, so a 20 Hz measure cadence changes
+     nothing visible; between measures the last rect stands. */
+  var heldRect = null;
+  if (s.held && !s.rm) {
+    if (!s.rect || !s._measAt || now - s._measAt >= 50) { heldRect = glMeasure(s); s._measAt = now; }
+    else heldRect = s.rect;
+  }
   // along the bar: a spring (or a step, or straight to the pointer under Reduced Motion)
   if (s.rm || !(s.k > 0)) { s.at = s.tAt; s.va = 0; }
   else {
@@ -190380,7 +190466,7 @@ function glStep(s, now, dt) {
   // across the bar while held: its speed (heat and the wake) and a limit it is held at (strain)
   var trail = 0, strainT = 0, push = 0;
   if (s.held && !s.rm) {
-    var r = glMeasure(s);
+    var r = heldRect || glMeasure(s);
     var cpos = s.v ? r.left + r.width / 2 : r.top + r.height / 2;
     glHist(s, now, cpos);
     var moved = cpos - glPast(s, now, GL_TRAIL_MS);
@@ -192962,11 +193048,28 @@ strip.prepare = function (panelEl, p, l, opts) {
 function middleEllipsis(el, rec, size) {
   var lab = el.querySelector('.pmw-tlabel');
   var full = tabLabel(rec);
-  if (lab.textContent !== full) lab.textContent = full;
-  if (size === 'icon' || size === 'pinned' || !(rec.state && rec.state.path)) return;
+  if (size === 'icon' || size === 'pinned' || !(rec.state && rec.state.path)) {
+    if (lab.textContent !== full) lab.textContent = full;
+    return;
+  }
   var room = lab.clientWidth;
-  if (!room || lab.scrollWidth <= room) return;
-  function fits(t) { lab.textContent = t; return lab.scrollWidth <= lab.clientWidth; }
+  if (!room) { if (lab.textContent !== full) lab.textContent = full; return; }
+  /* The search below writes a candidate then reads scrollWidth per try: a forced layout each. During a
+     resize drag every frame refitted every truncated label at a new width. Cache the fitted text per
+     label; while resizing, fit against the room rounded down to 24px buckets (a text fitted for the
+     bucket always fits the room), so a label refits at most once per 24px travelled and reuses its fit
+     while the room only grows. The first non-resizing paint refits at the exact room again. */
+  var resizing = !!(typeof state !== 'undefined' && state && state.resizing);
+  var fitRoom = resizing ? Math.max(24, Math.floor(room / 24) * 24) : room;
+  var theme = doc.documentElement.getAttribute('data-theme') + '|' + size + '|' + (doc.fonts ? doc.fonts.status : '');
+  var cache = lab._pmwEll;
+  if (cache && cache.full === full && cache.theme === theme && (cache.room === fitRoom || (resizing && fitRoom > cache.room))) {
+    if (lab.textContent !== cache.out) lab.textContent = cache.out;
+    return;
+  }
+  if (lab.textContent !== full) lab.textContent = full;
+  if (lab.scrollWidth <= room) { lab._pmwEll = { full: full, theme: theme, room: fitRoom, out: full }; return; }
+  function fits(t) { lab.textContent = t; return lab.scrollWidth <= fitRoom; }
   var dot = full.lastIndexOf('.');
   var ext = dot > 0 && full.length - dot <= 6 ? full.length - dot : 0;
   var tails = [], seen = {};
@@ -192979,9 +193082,10 @@ function middleEllipsis(el, rec, size) {
       var cand = full.slice(0, mid) + '\u2026' + tail;
       if (fits(cand)) { best = cand; lo = mid + 1; } else hi = mid - 1;
     }
-    if (best) { lab.textContent = best; return; }
+    if (best) { lab.textContent = best; lab._pmwEll = { full: full, theme: theme, room: fitRoom, out: best }; return; }
   }
   lab.textContent = full.slice(0, 1) + '\u2026';
+  lab._pmwEll = { full: full, theme: theme, room: fitRoom, out: lab.textContent };
 }
 
 function placeTab(s, container, tid, index, l, p) {
@@ -195710,7 +195814,12 @@ mru.cancel = function () {
    area (46-chat.js chatCol.historyW; the chat draws it at chatHistoryWNarrow while its whole column is under
    chatHistoryAt, which only a capped column reaches: the narrow peek or a popped-out chat). The widening is part of the
    chat width the ladder solves, so it counts in the centre budget and eases like the rest of the column; the widening
-   itself is never saved. */
+   itself is never saved.
+   A column the person sized themselves is pinned against the ladder (Jared, 2026-10-28: chat and rail wide at the
+   same time must be possible): the rail's inline width from its resizer and the chat's saved width_px are never
+   eased or folded back — the other column eases first, then the centre gives (one-column, then the chat strip at
+   the usability floor). The ladder still owns columns nobody sized, and window narrowing still eases those.
+   Double-clicking either resizer clears the saved size and hands the column back to the ladder. */
 
 var LADDER = PMW.LADDER = { railEase: 960, railFold: 760, chatEase: 960, oneColumn: 600, chatStrip: 480, hyst: 48, railEased: 240, chatMin: 400, chatMax: 760, chatStripW: 32,
   chatHistoryW: 240, chatHistoryWNarrow: 200, chatHistoryAt: 540, usageBoardMin: 400 };
@@ -195753,15 +195862,15 @@ function on(prev, value, threshold) { return prev ? value < threshold + LADDER.h
 function easeChat(base, s, c, hist) {
   return base - s - c < LADDER.chatEase ? Math.max(LADDER.chatMin + hist, Math.min(c, c - (LADDER.chatEase - (base - s - c)))) : c;
 }
-narrow.solve = function (base, railUser, chatW, chatShown, pinned, prev, hist) {
+narrow.solve = function (base, railUser, chatW, chatShown, pinned, prev, hist, railPinned, chatPinned) {
   prev = prev || {};
   hist = hist || 0;
   var s = railUser, c = chatShown ? chatW : 0, rail = 'open', strip = false, dropped = false;
-  var eased = s > LADDER.railEased && on(prev.rail === 'ease' || prev.rail === 'fold', base - s - c, LADDER.railEase);
+  var eased = !railPinned && s > LADDER.railEased && on(prev.rail === 'ease' || prev.rail === 'fold', base - s - c, LADDER.railEase);
   if (eased) { s = LADDER.railEased; rail = 'ease'; }
-  if (railUser > 0 && on(prev.rail === 'fold', base - s - c, LADDER.railFold)) { s = 0; rail = 'fold'; }
-  if (chatShown) c = easeChat(base, s, c, hist);
-  if (chatShown && hist > 0 && on(prev.histDropped, base - s - c, LADDER.chatStrip)) { dropped = true; c = easeChat(base, s, chatW - hist, 0); }
+  if (!railPinned && railUser > 0 && on(prev.rail === 'fold', base - s - c, LADDER.railFold)) { s = 0; rail = 'fold'; }
+  if (chatShown && !chatPinned) c = easeChat(base, s, c, hist);
+  if (chatShown && hist > 0 && on(prev.histDropped, base - s - c, LADDER.chatStrip)) { dropped = true; c = chatPinned ? chatW - hist : easeChat(base, s, chatW - hist, 0); }
   if (chatShown && !pinned && on(prev.chatStrip, base - s - c, LADDER.chatStrip)) { c = LADDER.chatStripW; strip = true; dropped = hist > 0; }
   var C = base - s - c;
   var one = on(prev.oneColumn, C, LADDER.oneColumn);
@@ -195793,7 +195902,10 @@ narrow.measure = function () {
   var base = centre.clientWidth + railApplied + chatApplied;
   // pinned History is measured even for a popped-out chat: the floating window grows by it too (20-shell.css)
   var hist = chat && !chat.classList.contains('hidden') ? historyW() : 0;
-  return { base: base, railUser: railUserWidth(), chatW: chatUser() + hist, chatShown: chatShown, hist: hist };
+  // user-sized columns: the rail resizer leaves an inline width, the chat drag saves width_px (see the header)
+  var railPinned = !!(s && !s.classList.contains('hidden') && parseFloat(s.style.width) > 0);
+  var chatPinned = !!(PMW.chatCol && PMW.chatCol.widthPx && PMW.chatCol.widthPx());
+  return { base: base, railUser: railUserWidth(), chatW: chatUser() + hist, chatShown: chatShown, hist: hist, railPinned: railPinned, chatPinned: chatPinned };
 };
 
 /* The Usage page's board floor (the planner, 2026-10-10): the chat column never squeezes the Usage board (#pmuBoard)
@@ -195847,10 +195959,15 @@ narrow.plainChat = function () {
 
 narrow.update = function () {
   if (narrow.frozen) return;
+  /* A shell resizer drag (the left rail) does not freeze the ladder the way the chat drag does, so solving
+     mid-drag capped the rail back to its eased 240px while the person was still widening it: the rendered
+     width oscillated between the drag's width and the cap. The drag is one gesture; solve once it ends
+     (the shell's PM_ON_DRAGEND hook registered in install, plus the style observer's next schedule). */
+  if (doc.body && doc.body.classList.contains('pm-resizing')) return;
   var m = narrow.measure();
   if (!m) { if (!narrow.usageFloor()) narrow.plainChat(); return; }
   var prev = narrow.state;
-  var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!(PMW.chatCol && PMW.chatCol.keepOpen()), prev, m.hist);
+  var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!(PMW.chatCol && PMW.chatCol.keepOpen()), prev, m.hist, m.railPinned, m.chatPinned);
   narrow.apply(next, prev);
 };
 /* the hook agreed with the left rail lead: data-pm-rail-fold on #sidePanelSlot (never on <html>) and the document event
@@ -195942,6 +196059,7 @@ narrow.install = function () {
   // the chat column (width_px, history_pinned, keep_open) lives in the layout record: a project switch or a restored
   // layout can change it (the width's commit emits layout too; the two pins' actions schedule the ladder themselves)
   bus.on('layout', narrow.schedule);
+  if (typeof window.PM_ON_DRAGEND === 'function') window.PM_ON_DRAGEND(narrow.schedule);
   narrow.installRailPeek();
   narrow.update();
 };
@@ -196059,14 +196177,15 @@ chatCol.beginDrag = function (e, handle) {
   if (!c) return;
   var startX = e.clientX, startW = c.getBoundingClientRect().width;
   var hist = narrow.state.hist || 0;
-  // one rule with the ladder: the chat widens only while the centre stays at or above the step where the ladder starts
-  // easing the chat (C 960); past it the ladder would ease the width straight back on release
-  // On the Usage page the board keeps its 400 px floor (narrow.usageFloor); another page (the centre is hidden there and
-  // measured 0, which froze the drag) takes the whole range
+  // A width the person drags to is saved (width_px) and the ladder respects saved widths (44-narrow.js:
+  // user-sized columns are never eased back), so on Home the drag takes the whole 400-760 range and the
+  // centre gives — rail and chat can both be wide at once.
+  // On the Usage page the board still keeps its 400 px floor (narrow.usageFloor eases the column there
+  // regardless of the saved width, planner 2026-10-10), so the drag keeps that page's room rule; another
+  // page (the centre is hidden there and measured 0, which froze the drag) takes the whole range
   var C = homeIsPage() && state.centre && state.centre.getClientRects().length ? state.centre.clientWidth : 0;
   var ub = qs('#panel-usage #pmuBoard'), room = Infinity;
-  if (C) room = C - LADDER.chatEase;
-  else if (ub && ub.offsetParent !== null) room = ub.getBoundingClientRect().width - LADDER.usageBoardMin;
+  if (!C && ub && ub.offsetParent !== null) room = ub.getBoundingClientRect().width - LADDER.usageBoardMin;
   var lo = LADDER.chatMin + hist, hi = clamp(startW + Math.max(0, room), lo, LADDER.chatMax + hist);
   var last = startW, moved = false;
   try { handle.setPointerCapture(e.pointerId); } catch (_) {}
@@ -196074,6 +196193,8 @@ chatCol.beginDrag = function (e, handle) {
   doc.body.classList.add('pm-resizing', 'pmw-resizing');
   narrow.frozen = true;
   state.resizing = true;
+  function noSelect(ev) { ev.preventDefault(); }
+  doc.addEventListener('selectstart', noSelect, true);
   function move(ev) {
     var w = clamp(startW - (ev.clientX - startX), lo, hi);
     if (Math.abs(w - last) < 0.5) return;
@@ -196082,9 +196203,12 @@ chatCol.beginDrag = function (e, handle) {
     c.style.setProperty('--pmw-chat-w', Math.round(w) + 'px');
   }
   function end(ev, cancel) {
+    doc.removeEventListener('selectstart', noSelect, true);
     handle.removeEventListener('pointermove', move);
     handle.removeEventListener('pointerup', up);
     handle.removeEventListener('pointercancel', cxl);
+    handle.removeEventListener('lostpointercapture', cxl);
+    window.removeEventListener('blur', cxl);
     doc.removeEventListener('keydown', esc, true);
     handle.classList.remove('resizing');
     doc.body.classList.remove('pm-resizing', 'pmw-resizing');
@@ -196109,6 +196233,8 @@ chatCol.beginDrag = function (e, handle) {
   handle.addEventListener('pointermove', move);
   handle.addEventListener('pointerup', up);
   handle.addEventListener('pointercancel', cxl);
+  handle.addEventListener('lostpointercapture', cxl);
+  window.addEventListener('blur', cxl);
   doc.addEventListener('keydown', esc, true);
 };
 /* the resizer's double-click: back to the default for the window, one commit with width null */
@@ -199266,6 +199392,7 @@ function mountEditor(host, st, api) {
   var caret = { r: 0, c: 0 }, anchor = null, side = 'r', goalCol = -1;
   var focused = !!preview, visible = true, alive = true, dimmed = false;
   var pageHost = preview ? null : host.closest('#panel-dashboard'), pendingLayout = false;
+  var resizeFullAt = 0, resizeTrailT = 0;   // non-final resize deliveries: full row rebuild at most every 120ms
   function isShown() { return visible && (!pageHost || pageHost.classList.contains('active')); }
   function paintDeferred() { return !!(preview && preview.paintDeferred && preview.paintDeferred()); }
   var pendingLook = null, lookQueued = false, lookGeneration = 0;
@@ -201678,6 +201805,19 @@ function mountEditor(host, st, api) {
     applyPendingLook(true);
     if (!firstDone) { pendingLayout = false; firstPaint(); return; }
     if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
+    /* During a drag (final:false) the full path below rebuilds every rendered row per frame (and rescans
+       the whole file when wrapping). Cap that rebuild at the terminal's 120ms cadence: between rebuilds
+       only geometry, thumbs and the canvas follow the new size; a trailing pass and the host's final
+       delivery restore exact rows. Wrap columns can lag by up to one cadence mid-drag. */
+    if (sz && sz.final === false) {
+      var nowMs = performance.now();
+      if (nowMs - resizeFullAt < 120) {
+        layout(); updateThumb(); updateHbar(); queueDraw();
+        if (!resizeTrailT) resizeTrailT = setTimeout(function () { resizeTrailT = 0; onResize({ final: false }); }, 120);
+        return;
+      }
+      resizeFullAt = nowMs;
+    }
     if (sz && sz.final === false && mode === 'diff') { layout(); renderRows(true); renderOverlays(); updateThumb(); return; }
     var changed = resolveLayout(false);
     if (!changed) { layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar(); sticky._key = null; updateSticky(); }
@@ -295114,7 +295254,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       return;
     }
     const avail=tools.clientWidth||box.clientWidth;
-    const signature=[box.clientWidth,tools.clientWidth,tools.textContent,state.theme,document.fonts?.status].join('|');
+    // The measured value is the tools' intrinsic labeled width (content, font, theme): it does not
+    // depend on the available width. Keying the cache on clientWidth re-measured (class toggles plus
+    // rect reads, i.e. forced layouts) on every step of a chat resize drag.
+    const signature=[tools.textContent,state.theme,document.fonts?.status].join('|');
     if(!composerMeasureCache||composerMeasureCache.node!==tools||composerMeasureCache.key!==signature)
       composerMeasureCache={node:tools,key:signature,value:measureLabeledTools(box,tools)};
     const need=composerMeasureCache.value;
@@ -295180,7 +295323,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const cs=getComputedStyle(wrap);
     const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
     const slack=8;
-    const signature=[wrap.clientWidth,bar.textContent,bar.dataset.variant,state.theme,document.fonts?.status].join('|');
+    // Tier widths are intrinsic to the bar's content/font/theme, not to the available width (see
+    // syncComposerCompact): keep the container width out of the cache key.
+    const signature=[bar.textContent,bar.dataset.variant,state.theme,document.fonts?.status].join('|');
     if(!activityMeasureCache||activityMeasureCache.node!==bar||activityMeasureCache.key!==signature)
       activityMeasureCache={node:bar,key:signature,labeled:measureActivityTier(wrap,bar,0),compact:measureActivityTier(wrap,bar,1)};
     const {labeled,compact}=activityMeasureCache;
@@ -295202,13 +295347,25 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     syncActivityCompact();
     syncJumpBottom();
   }
-  let chromeSyncFrame=null, chromeObserved=new Set();
+  let chromeSyncFrame=null, chromeObserved=new Set(), chromeLastSync=0, chromeTrailT=null;
+  function runChromeSync(){
+    chromeSyncFrame=null;
+    // Hosted resize drags resize the chat column every frame; the chrome syncs below read rects and
+    // scroll metrics after each width write. Compact tiers and dock heights may lag one cadence
+    // mid-drag (the editor/terminal kinds use the same 120ms rule); a trailing sync lands on release.
+    if(document.body && document.body.classList.contains('pm-resizing') && performance.now()-chromeLastSync<100){
+      if(!chromeTrailT) chromeTrailT=setTimeout(()=>{chromeTrailT=null;chromeLastSync=performance.now();syncChatChrome();},100);
+      return;
+    }
+    chromeLastSync=performance.now();
+    syncChatChrome();
+  }
   function armComposerObserver(){
     // The keyed shell retains these nodes. Recreating the observer every render
     // delivered another initial resize callback and repeated both forced-layout probes.
     if(!composerRO) composerRO=new ResizeObserver(()=>{
       if(chromeSyncFrame!==null)return;
-      chromeSyncFrame=requestAnimationFrame(()=>{chromeSyncFrame=null;syncChatChrome();});
+      chromeSyncFrame=requestAnimationFrame(runChromeSync);
     });
     const next=new Set(document.querySelectorAll('.composer-box,.composer-tools,.chat-stage>.composer,.decision-host,.activity-wrap,.chat-float,.lens-inline'));
     for(const n of chromeObserved)if(!next.has(n))composerRO.unobserve(n);
@@ -297013,6 +297170,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
   }
   window.addEventListener('pm56-clock-scale',()=>{ if(workTimer) armWorkTimer(); });
   function workTick(){
+    // Hosted: a shell/Home resize drag owns the frame budget. The demo clock advances a fixed step
+    // per tick, so skipping ticks while body.pm-resizing simply pauses the timeline mid-drag; the
+    // next tick after release resumes it (no jump, no catch-up render storm).
+    if(document.body && document.body.classList.contains('pm-resizing')) return;
     const live=runningRecs();
     if(!live.length){ stopWorkTimer(); return; }
     let transition=false;
@@ -298059,10 +298220,19 @@ suggested path                    migration 0043, reversible</div></div></sectio
   }
   /* the column resizes without a window resize (its divider, the narrow ladder, a pop out): the same re-render rules */
   if(HOSTED&&typeof ResizeObserver==='function'&&HOST.frame()){
-    let lastNarrow=isNarrow(), lastPin=activityPinnedInLayout(), queued=false;
+    let lastNarrow=isNarrow(), lastPin=activityPinnedInLayout(), queued=false, frameTrailT=null;
     new ResizeObserver(()=>{ if(queued) return; queued=true; requestAnimationFrame(()=>{ queued=false;
       const n=isNarrow(), p=activityPinnedInLayout();
       if(n!==lastNarrow||p!==lastPin){ lastNarrow=n; lastPin=p; activityPinLayout=p; renderApp(); }
+      else if(document.body && document.body.classList.contains('pm-resizing')){
+        // Mid-drag the frame resizes every frame; fitActivityTabs toggles a class and reads rects each
+        // time (forced layouts). Tab fit and the jump pill may lag one cadence; a trailing pass lands
+        // on release. Narrow/pin flips above still re-render immediately.
+        if(!frameTrailT) frameTrailT=setTimeout(function tick(){ frameTrailT=null;
+          if(document.body && document.body.classList.contains('pm-resizing')){ frameTrailT=setTimeout(tick,100); return; }
+          syncJumpBottom(); fitActivityTabs();
+        },100);
+      }
       else { syncJumpBottom(); fitActivityTabs(); }
       if(state.menu||state.hover) renderOverlays();
     }); }).observe(HOST.frame());
@@ -300562,16 +300732,42 @@ try {
     ancestors.forEach(function (a) { var set = index.get(a); if (!set) index.set(a, set = new Set()); set.add(e); });
   }
   /* every glass element's optics are sized to it: when the board or a panel resizes one, it is measured again */
+  /* During a shell/Home resize drag the rims would be re-measured and re-baked for geometry that is obsolete
+     a frame later; the baked rim simply stretches with the sheet until release. Held targets (and the scopes
+     they dirty) flush once the drag ends: the ResizeObserver does not refire for a size that has settled. */
+  var heldTargets = new Map(), heldScopes = [], heldTimer = 0;
+  function dragHeld() { return !!(document.body && document.body.classList.contains('pm-resizing')); }
+  function flushHeldSoon() {
+    if (heldTimer) return;
+    heldTimer = setTimeout(function () {
+      heldTimer = 0;
+      if (dragHeld()) { flushHeldSoon(); return; }
+      var targets = heldTargets, scopes = heldScopes;
+      heldTargets = new Map(); heldScopes = [];
+      scopes.forEach(function (s) { dirtyScope(s); });
+      if (targets.size) mountMeasured(targets);
+      if (targets.size || scopes.length) lazySync(false);
+    }, 160);
+  }
   var sizeWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
     if (!isGlass()) return;
+    var held = dragHeld();
     var targets = new Map(); entries.forEach(function (en) {
       var e = en.target, k = e.getAttribute('data-lg-kind');
       if (!k || !e.isConnected) return;
       targets.set(e, k);
       /* Size changes can move siblings without resizing them. Their positions belong to the same settle scope. */
       var box = en.borderBoxSize && en.borderBoxSize[0];
-      if (KINDS[k] && KINDS[k].bake && e.__lgSize && (!box || e.__lgSize !== Math.round(box.inlineSize) + 'x' + Math.round(box.blockSize))) { dirtyScope(e.parentElement); lazySync(false); }
+      if (KINDS[k] && KINDS[k].bake && e.__lgSize && (!box || e.__lgSize !== Math.round(box.inlineSize) + 'x' + Math.round(box.blockSize))) {
+        if (held) heldScopes.push(e.parentElement);
+        else { dirtyScope(e.parentElement); lazySync(false); }
+      }
     });
+    if (held) {
+      targets.forEach(function (k, e) { heldTargets.set(e, k); });
+      flushHeldSoon();
+      return;
+    }
     mountMeasured(targets);
   }) : null;
   function radiusOf(e, W, H) { var r = parseFloat(getComputedStyle(e).borderTopLeftRadius) || 0; return Math.max(0, Math.min(r, W / 2 - 0.5, H / 2 - 0.5)); }
@@ -302895,7 +303091,13 @@ try {
   }
   function lazySync(scope) {
     if (scope !== false) { if (scope && scope.nodeType === 1) dirtyScope(scope); else dirtyAll = true; }
-    if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140);
+    if (!lazyT) lazyT = setTimeout(function () {
+      lazyT = 0;
+      /* A resize drag dirties scopes continuously; syncing mid-gesture measures and bakes geometry that is
+         obsolete a frame later. Re-arm instead and sync once the drag has ended (see sizeWatch above). */
+      if (dragHeld()) { lazySync(false); return; }
+      queueSync();
+    }, 140);
   }
   var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, #pm-settings-root .segmented > button, .o55-win, .o55t-callout, .o55t-bar';
   var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, .lg-hops, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown, lg-warm';

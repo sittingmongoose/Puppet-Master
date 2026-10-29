@@ -12,7 +12,12 @@
    area (46-chat.js chatCol.historyW; the chat draws it at chatHistoryWNarrow while its whole column is under
    chatHistoryAt, which only a capped column reaches: the narrow peek or a popped-out chat). The widening is part of the
    chat width the ladder solves, so it counts in the centre budget and eases like the rest of the column; the widening
-   itself is never saved. */
+   itself is never saved.
+   A column the person sized themselves is pinned against the ladder (Jared, 2026-10-28: chat and rail wide at the
+   same time must be possible): the rail's inline width from its resizer and the chat's saved width_px are never
+   eased or folded back — the other column eases first, then the centre gives (one-column, then the chat strip at
+   the usability floor). The ladder still owns columns nobody sized, and window narrowing still eases those.
+   Double-clicking either resizer clears the saved size and hands the column back to the ladder. */
 
 var LADDER = PMW.LADDER = { railEase: 960, railFold: 760, chatEase: 960, oneColumn: 600, chatStrip: 480, hyst: 48, railEased: 240, chatMin: 400, chatMax: 760, chatStripW: 32,
   chatHistoryW: 240, chatHistoryWNarrow: 200, chatHistoryAt: 540, usageBoardMin: 400 };
@@ -55,15 +60,15 @@ function on(prev, value, threshold) { return prev ? value < threshold + LADDER.h
 function easeChat(base, s, c, hist) {
   return base - s - c < LADDER.chatEase ? Math.max(LADDER.chatMin + hist, Math.min(c, c - (LADDER.chatEase - (base - s - c)))) : c;
 }
-narrow.solve = function (base, railUser, chatW, chatShown, pinned, prev, hist) {
+narrow.solve = function (base, railUser, chatW, chatShown, pinned, prev, hist, railPinned, chatPinned) {
   prev = prev || {};
   hist = hist || 0;
   var s = railUser, c = chatShown ? chatW : 0, rail = 'open', strip = false, dropped = false;
-  var eased = s > LADDER.railEased && on(prev.rail === 'ease' || prev.rail === 'fold', base - s - c, LADDER.railEase);
+  var eased = !railPinned && s > LADDER.railEased && on(prev.rail === 'ease' || prev.rail === 'fold', base - s - c, LADDER.railEase);
   if (eased) { s = LADDER.railEased; rail = 'ease'; }
-  if (railUser > 0 && on(prev.rail === 'fold', base - s - c, LADDER.railFold)) { s = 0; rail = 'fold'; }
-  if (chatShown) c = easeChat(base, s, c, hist);
-  if (chatShown && hist > 0 && on(prev.histDropped, base - s - c, LADDER.chatStrip)) { dropped = true; c = easeChat(base, s, chatW - hist, 0); }
+  if (!railPinned && railUser > 0 && on(prev.rail === 'fold', base - s - c, LADDER.railFold)) { s = 0; rail = 'fold'; }
+  if (chatShown && !chatPinned) c = easeChat(base, s, c, hist);
+  if (chatShown && hist > 0 && on(prev.histDropped, base - s - c, LADDER.chatStrip)) { dropped = true; c = chatPinned ? chatW - hist : easeChat(base, s, chatW - hist, 0); }
   if (chatShown && !pinned && on(prev.chatStrip, base - s - c, LADDER.chatStrip)) { c = LADDER.chatStripW; strip = true; dropped = hist > 0; }
   var C = base - s - c;
   var one = on(prev.oneColumn, C, LADDER.oneColumn);
@@ -95,7 +100,10 @@ narrow.measure = function () {
   var base = centre.clientWidth + railApplied + chatApplied;
   // pinned History is measured even for a popped-out chat: the floating window grows by it too (20-shell.css)
   var hist = chat && !chat.classList.contains('hidden') ? historyW() : 0;
-  return { base: base, railUser: railUserWidth(), chatW: chatUser() + hist, chatShown: chatShown, hist: hist };
+  // user-sized columns: the rail resizer leaves an inline width, the chat drag saves width_px (see the header)
+  var railPinned = !!(s && !s.classList.contains('hidden') && parseFloat(s.style.width) > 0);
+  var chatPinned = !!(PMW.chatCol && PMW.chatCol.widthPx && PMW.chatCol.widthPx());
+  return { base: base, railUser: railUserWidth(), chatW: chatUser() + hist, chatShown: chatShown, hist: hist, railPinned: railPinned, chatPinned: chatPinned };
 };
 
 /* The Usage page's board floor (the planner, 2026-10-10): the chat column never squeezes the Usage board (#pmuBoard)
@@ -149,10 +157,15 @@ narrow.plainChat = function () {
 
 narrow.update = function () {
   if (narrow.frozen) return;
+  /* A shell resizer drag (the left rail) does not freeze the ladder the way the chat drag does, so solving
+     mid-drag capped the rail back to its eased 240px while the person was still widening it: the rendered
+     width oscillated between the drag's width and the cap. The drag is one gesture; solve once it ends
+     (the shell's PM_ON_DRAGEND hook registered in install, plus the style observer's next schedule). */
+  if (doc.body && doc.body.classList.contains('pm-resizing')) return;
   var m = narrow.measure();
   if (!m) { if (!narrow.usageFloor()) narrow.plainChat(); return; }
   var prev = narrow.state;
-  var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!(PMW.chatCol && PMW.chatCol.keepOpen()), prev, m.hist);
+  var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!(PMW.chatCol && PMW.chatCol.keepOpen()), prev, m.hist, m.railPinned, m.chatPinned);
   narrow.apply(next, prev);
 };
 /* the hook agreed with the left rail lead: data-pm-rail-fold on #sidePanelSlot (never on <html>) and the document event
@@ -244,6 +257,7 @@ narrow.install = function () {
   // the chat column (width_px, history_pinned, keep_open) lives in the layout record: a project switch or a restored
   // layout can change it (the width's commit emits layout too; the two pins' actions schedule the ladder themselves)
   bus.on('layout', narrow.schedule);
+  if (typeof window.PM_ON_DRAGEND === 'function') window.PM_ON_DRAGEND(narrow.schedule);
   narrow.installRailPeek();
   narrow.update();
 };
