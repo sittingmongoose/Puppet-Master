@@ -397,6 +397,31 @@ class RawCaptureSymlinkTests(unittest.TestCase):
         self.assertNotIn(self.link / "unlisted.json", pm_plans_verify.iter_repo_files())
         self.assert_capture_census()
 
+    def test_raw_evidence_root_candidates_cover_vm_and_mac_mounts(self) -> None:
+        self.assertEqual(
+            pm_plans_verify.RAW_EVIDENCE_ROOT_CANDIDATES,
+            (
+                Path("/mnt/Cursor/PuppetMaster-Evidence"),
+                Path("/Volumes/Cursor/PuppetMaster-Evidence"),
+            ),
+        )
+        # RAW_EVIDENCE_DIRECTORY itself is patched to a temp root in this class;
+        # the import-time default must still be one of the named mounts.
+        self.assertIn(
+            pm_plans_verify._default_raw_evidence_directory(),
+            pm_plans_verify.RAW_EVIDENCE_ROOT_CANDIDATES,
+        )
+
+    def test_default_raw_evidence_directory_picks_first_existing_candidate(self) -> None:
+        base = Path(self.temp.name)
+        missing = base / "not-mounted"
+        present = base / "mounted"
+        present.mkdir()
+        pick = pm_plans_verify._default_raw_evidence_directory
+        self.assertEqual(pick((missing, present)), present)
+        self.assertEqual(pick((present, missing)), present)
+        self.assertEqual(pick((missing, base / "also-missing")), missing)
+
     def test_manifest_referent_cannot_follow_nested_symlink(self) -> None:
         capture = self.captures / "case-0/capture.json"
         outside = self.allowed.parent / "outside"

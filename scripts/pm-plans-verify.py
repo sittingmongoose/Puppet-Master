@@ -36,7 +36,25 @@ DEFAULT_PLAN_MIGRATION_RUN = PLANS / ".plan_migration/pds-20260611-002-atomize-p
 RAW_EVIDENCE_CAPTURE_MANIFEST = ROOT / "tests/fixtures/governance/raw_evidence_capture_modes.json"
 RAW_EVIDENCE_CAPTURE_MANIFEST_SCHEMA = ROOT / "tests/fixtures/governance/raw_evidence_capture_modes.schema.json"
 RAW_EVIDENCE_CAPTURE_ROOT = "tests/agent_packet_restrictions/"
-RAW_EVIDENCE_DIRECTORY = Path("/mnt/Cursor/PuppetMaster-Evidence")
+# The same Cursor share at its per-OS mount point: the Linux VM/Nas1 mount and the
+# macOS mount. Admission still requires the exact manifest path under the resolved
+# root plus its recorded SHA-256, so naming both mounts admits no other directory.
+RAW_EVIDENCE_ROOT_CANDIDATES = (
+    Path("/mnt/Cursor/PuppetMaster-Evidence"),
+    Path("/Volumes/Cursor/PuppetMaster-Evidence"),
+)
+
+
+def _default_raw_evidence_directory(
+    candidates: tuple[Path, ...] = RAW_EVIDENCE_ROOT_CANDIDATES,
+) -> Path:
+    for candidate in candidates:
+        if candidate.is_dir():
+            return candidate
+    return candidates[0]
+
+
+RAW_EVIDENCE_DIRECTORY = _default_raw_evidence_directory()
 EVIDENCE_ARTIFACT_BINDING_MANIFEST = PLANS / "evidence_artifact_binding_modes.json"
 EVIDENCE_ARTIFACT_BINDING_MANIFEST_SCHEMA = PLANS / "evidence_artifact_binding_modes.schema.json"
 FORBIDDEN_LIVE_CURRENT_EVIDENCE_TOKENS = (
