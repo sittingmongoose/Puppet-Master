@@ -284,11 +284,11 @@
 
   // the crew: little Pips on their own controls, each in its role's headwear
   PROPS.crew = function (p, o) {
-    const theme = p.theme || 'friendly-dark', hat = (o && o.hat) || 'crown';
+    const theme = p.theme || 'friendly-dark', hat = o && 'hat' in o ? o.hat : 'crown';
     const K = Hp.kit(); if (!K) return { svg: '', ties: [[0, -25.5]], foot: 20 };
     const mark = K.svg({ theme, px: 64, tier: 'full', decorative: true }).replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '');
     // the glyph's head top sits at y 31.5; the hat rides on it
-    const s = `<g transform="translate(-32 -40)">${mark}</g><g transform="translate(${hat === 'glasses' ? 0 : 0} ${hat === 'glasses' ? 3.5 : -9})">${HATS[hat](p)}</g>`;
+    const s = `<g transform="translate(-32 -40)">${mark}</g><g transform="translate(${hat === 'glasses' ? 0 : 0} ${hat === 'glasses' ? 3.5 : -9})">${HATS[hat] ? HATS[hat](p) : ''}</g>`;
     return { svg: s, ties: [[0, -25.5]], foot: 20 };
   };
   Object.assign(PW.PROPS, PROPS);

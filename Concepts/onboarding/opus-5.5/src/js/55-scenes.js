@@ -125,7 +125,8 @@
       props(S) {
         const d = md(S), ch = [WHERE[S.sess.ui.where || 'this'] || 'laptop', d.project_mode === 'later' ? 'page' : BEGIN[S.sess.ui.begin || 'new'] || 'page', 'vault'];
         const out = ch.map((k, i) => ({ id: 'm' + i, kind: k, slot: 'm' + (i + 1), scale: 0.42 }));
-        [['crown', 'c1'], ['hardhat', 'c2'], ['glasses', 'c3']].forEach(([hat, slot]) => out.push({ id: 'crew-' + hat, kind: 'crew', slot, params: { hat }, scale: 0.82 }));
+        const props = O55.pipStage.h.part('role-props');
+        [['crown', 'c1'], ['hardhat', 'c2'], ['glasses', 'c3']].forEach(([hat, slot]) => out.push({ id: 'crew-' + hat, kind: 'crew', slot, params: { hat: props ? hat : null }, scale: 0.82 }));
         return out;
       },
       state: (S) => (md(S).project_mode === 'later' ? 'later' : 'enter'), look: 'crew-hardhat'
@@ -155,7 +156,10 @@
     let lid = h || (sc.state ? sc.state(S) : 'enter');
     if (o.typing && has(id, 'typing')) lid = 'typing';
     let mood = (FACES[id] && FACES[id][lid]) || (h ? 'watch' : 'idle');
-    if (o.typing) mood = 'wonder';
+    /* Pip parts (S9, onboarding and the chat only): watches, wonders-while-typing, oops, role-props */
+    const part = O55.pipStage.h.part;
+    if (h && !part('watches') && mood === 'watch') mood = 'idle';
+    if (o.typing && part('wonders-while-typing')) mood = 'wonder';
     let say = line(id, lid, v), label = stg(id, 'label', v);
     const tgt = props.length ? props[props.length - 1].id : null;
     const out = { chapter, props, pip: { mood, look: sc.look || tgt, work: !!sc.work && !(O55.review && O55.review.shownDone && id === 'creating' && O55.review.shownDone(S)) },
@@ -163,7 +167,7 @@
     if (sc.power) out.pip.power = O55.ai ? O55.ai.readyIds(S).length : 0;
     if (id === 'welcome') { out.pip.pose = 'asleep'; out.wakeSay = say; }
     if (o.oops) {
-      out.pip.mood = o.oops.face;
+      out.pip.mood = o.oops.face === 'oops' && !part('oops') ? 'idle' : o.oops.face;
       out.say = O55.t('pip.oops.' + o.oops.key, v);
       out.label = O55.t('pip.stage.labels.oops');
       out.oops = o.oops.key;

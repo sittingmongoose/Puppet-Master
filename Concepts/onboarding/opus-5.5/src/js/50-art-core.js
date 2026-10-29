@@ -146,6 +146,9 @@
     T: (k, v) => O55.t('pip.stage.' + k, v),
     /* the stage's look: the painted family and mode, NieR Mode as its own world */
     theme() { const th = O55.theme(); return (th.nier ? 'nier' : th.family) + '-' + (th.mode === 'light' ? 'light' : 'dark'); },
+    /* a Pip part (Settings > Pip parts, general.visual.pip-parts, S9: onboarding and the chat only): the parts registry
+       (PM_PIP_PARTS.get) when it is there, on otherwise */
+    part(id) { const reg = window.PM_PIP_PARTS; try { if (reg && typeof reg.get === 'function') return reg.get(id) !== false; } catch (_) {} return true; },
     /* a mixin: methods a look's file adds to the stage (54-art-retro.js, 54-art-nier.js, 59-cheer.js) */
     mix(obj) { PIP.mixins.push(obj); if (PIP.Stage) Object.assign(PIP.Stage.prototype, obj); }
   };

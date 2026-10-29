@@ -290,3 +290,7 @@
 #pm-o55-onboarding .pst-ntip .pst-tip-h { padding: 6px 8px 0; font-size: 10px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
 #pm-o55-onboarding .pst-ntip .pst-tip-t { padding: 3px 8px 7px; font-size: 11.5px; line-height: 1.45; }
 #pm-o55-onboarding .pst[data-fam="nier"]:not([data-layout="portrait"]) .pst-ntip { display: none; }
+
+/* Pip parts (Settings > Pip parts): the world's own life held, the strings hidden */
+#pm-o55-onboarding .pst[data-no-world-life] :is(.st-drift, .st-led, .st-glow, .st-cloud, .st-fly, .st-butterfly, .st-wing, .st-bubble, .st-radar, .st-mote, .st-data, .pst-caustic, .pst-roll, .pst-noise, .pst-nscan) { animation-play-state: paused !important; }
+#pm-o55-onboarding .pst[data-no-strings] :is(.pst-str, .pst-power, .pst-pstrl) { visibility: hidden; }

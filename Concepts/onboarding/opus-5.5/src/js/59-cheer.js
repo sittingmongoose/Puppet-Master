@@ -30,7 +30,8 @@
       if (this.famName === 'nier') { this.ps.tiltv -= 1.2; } else this.hop(.8);
       if (pr && !this.reduced && !pr.spec.ground) { pr.sv -= 2.2; pr.av += this.fam.kick * .8; }
       if (this.tube) this.ok();
-      if (this.reduced) { if (this.famName === 'nier') this.lockOn(pr); return; }
+      /* (Pip parts: cheers off keeps the face and the sound, without the flourish) */
+      if (this.reduced || !H.part('cheers')) { if (this.famName === 'nier') this.lockOn(pr); return; }
       const f = this.famName;
       if (f === 'friendly') this.burst(at, ['star', 'heart', 'dot'], 12);
       else if (f === 'glass') this.burst(at, ['glint', 'bubble'], 10);
@@ -109,7 +110,7 @@
       [[ring, 'ring', .8], [chk, 'check', 1.5]].forEach(([e, kind, max]) => this.fx.push({ e, kind, x: at[0] + off[0], y: at[1] + off[1], vx: 0, vy: 0, r: 0, vr: 0, life: 0, max, g: 0, follow: pr || null, off }));
     },
     confetti(n) {
-      if (this.reduced || this.famName === 'nier') return;
+      if (this.reduced || this.famName === 'nier' || !H.part('cheers')) return;
       this.sfx('confetti');
       const w = this.w, Lay = this.L, f = this.famName, hues = f === 'basic' ? [w.accent, w.line] : Object.values(w.hues);
       for (let i = 0; i < n; i++) {

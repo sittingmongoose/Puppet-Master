@@ -102,6 +102,8 @@
       this.build();
       this.loop = this.loop.bind(this);
       this.raf = 0; this.active = true; this.dirty = true;
+      this.parts();
+      const reg = window.PM_PIP_PARTS; if (reg && typeof reg.on === 'function') try { this.offParts = reg.on('change', () => this.parts()); } catch (_) {}
       this.kick();
       this.ro = new ResizeObserver(() => this.measure());
       this.ro.observe(root);
@@ -110,6 +112,8 @@
     build() {
       const root = this.root, w = PW.WORLDS[this.theme] || PW.WORLDS['basic-dark'], Lay = this.L = LAYOUTS[this.layoutName];
       this.dirty = true;
+      /* Pip's voice and music follow the look's kit (15-sound-pip.js) */
+      const vo = snd(); if (vo && vo.setTheme) vo.setTheme(this.theme);
       this.w = w; this.fam = FAM[w.fam]; this.famName = w.fam; this.tube = w.tube || null;
       root.innerHTML = '';
       root.classList.add('pst');
@@ -254,7 +258,8 @@
     renderHead(mood, force) {
       if (!force && mood === this.curMood) return;
       // the face being left closes as the new one opens (animFace), unless the whole head is being rebuilt
-      const leaving = !force && !this.reduced && this.faceEl && this.faceEl.isConnected ? this.faceEl : null;
+      /* (Pip parts: face-transitions off swaps the face at once) */
+      const leaving = !force && !this.reduced && H.part('face-transitions') && this.faceEl && this.faceEl.isConnected ? this.faceEl : null;
       if (this.faceOut) { this.faceOut.remove(); this.faceOut = null; }
       this.curMood = mood;
       const K = KIT().kit, g = K.GEO.full, th = this.pipTh(this.pipTheme);
@@ -331,7 +336,15 @@
       const s = this.L.s, bx = 32, by = 59.5, q2 = [bx + (q[0] - bx) * sx, by + (q[1] - by) * sy];
       const v = rot([(q2[0] - 32) * s, (q2[1] - 31.5) * s], ang); return [H[0] + v[0], H[1] + v[1]];
     }
+    /* both strings' ends for a pose: the logo's one solver (PMLogo.solver.strings: screw eye under the stick, 5 units in,
+       eye on Pip's head, each string leaving its eye on the side facing the other); NieR's square nodes join directly */
     solveStrings(P) {
+      const sv = KIT().solver;
+      /* (asked in the kit's own units, the stage's divided by its scale, so the eyes' radius keeps its proportion) */
+      if (sv && sv.strings && this.ringR) {
+        const s = this.L.s, k = (p) => [p[0] / s, p[1] / s];
+        return sv.strings('full', (q) => k(this.ctlXf(q, P.C, P.phi)), (q) => k(this.headXf(q, P.H, P.ang, P.sx, P.sy)), 'eye').map((e) => ({ T: [e.T[0] * s, e.T[1] * s], E: [e.E[0] * s, e.E[1] * s] }));
+      }
       const r = this.ringR * this.L.s;
       return [0, 1].map((i) => {
         const C = this.ctlXf(this.barPts[i], P.C, P.phi), Hh = this.headXf(this.headPts[i], P.H, P.ang, P.sx, P.sy);
@@ -617,7 +630,7 @@
     frameRate() { return this.reduced ? 0 : this.tube === 'teletype' ? 10 : this.fam.fps || 0; }
     // Pip's idle life: now and then it looks up at the bar, kicks its feet, wiggles or glances round
     life(dt) {
-      if (this.reduced || this.sleepZ) return;
+      if (this.reduced || this.sleepZ || !H.part('idle-life')) return;
       const quiet = this.t - (this.busyT || 0) > 3.5;
       if (this.t > this.idleNext && quiet) {
         this.idleNext = this.t + 7 + Math.random() * 6;
@@ -634,7 +647,8 @@
       if (this.idleLook && this.t > this.idleUntil) this.idleLook = null;
     }
     step(dt) {
-      const ps = this.ps, F = this.fam, Lay = this.L, red = this.reduced;
+      /* (Pip parts: sway-and-physics off holds the rig and the props still, as Reduced Motion does) */
+      const ps = this.ps, F = this.fam, Lay = this.L, red = this.reduced || !H.part('sway-and-physics');
       // the hand: springs to its spot, with a slow idle drift that keeps Pip alive
       const swayX = red ? 0 : F.sway * Math.sin(this.t * F.swayW) * (ps.asleep ? .2 : 1);
       const swayY = red || !F.bob ? 0 : F.bob * .6 * Math.sin(this.t * F.swayW * 1.7);
@@ -714,7 +728,7 @@
       if (H[1] + headH > Lay.ground - 2) { H = [H[0], Lay.ground - 2 - headH]; }
       this.H = H; this.ang = ang;
       // breathing: Pip's head swells a touch, slower when it sleeps
-      const br = this.reduced ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
+      const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
       const sx = ps.sx * (1 - br * .4), sy = ps.sy * (1 + br), s = Lay.s;
       this.gCtl.setAttribute('transform', `translate(${R(ps.C.x)} ${R(ps.C.y)}) rotate(${R(ps.phi * 57.3)}) scale(${s}) translate(-32 -14.5)`);
       this.gHead.setAttribute('transform', `translate(${R(H[0])} ${R(H[1])}) rotate(${R(ang * 57.3)}) scale(${s}) translate(-32 -31.5) translate(32 59.5) scale(${R(sx)} ${R(sy)}) translate(-32 -59.5)`);
@@ -736,7 +750,7 @@
       else if (Array.isArray(pip.look)) look = pip.look;
       else if (tgt && tgt.pos && this.t - (this.busyT || -9) < 2.5) look = atTarget(tgt.pos);
       // the pointer, or where it was last seen (a pointer that leaves the window is not forgotten)
-      else if (!this.reduced && this.box && pointer.t > 0) {
+      else if (!this.reduced && PIP.h.part('gaze') && this.box && pointer.t > 0) {
         // the pointer, in stage units
         const m = this.map || { k: 1, ox: 0, oy: 0 }, px = (pointer.x - this.box.left - m.ox) / m.k, py = (pointer.y - this.box.top - m.oy) / m.k;
         const vx = px - hc[0], vy = py - hc[1], l = Math.hypot(vx, vy) || 1, k = Math.min(1, l / 120);
@@ -745,7 +759,7 @@
       ps.lookT = look;
       if (this.eyesEl) this.eyesEl.setAttribute('transform', `translate(${R(ps.look[0])} ${R(ps.look[1])})`);
       // blink
-      if (this.blinkEl && !this.reduced) {
+      if (this.blinkEl && !this.reduced && PIP.h.part('blinks')) {
         if (this.t > ps.nextBlink) { ps.blinkAt = this.t; ps.nextBlink = this.t + 2.2 + Math.random() * 3.4; }
         const b = ps.blinkAt != null ? this.t - ps.blinkAt : 9, k = b < .16 ? Math.max(.1, Math.abs(1 - b / .08)) : 1;
         this.blinkEl.setAttribute('transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
@@ -879,6 +893,13 @@
     destroy() { if (this.off) this.off(); clearTimeout(this.questT); clearInterval(this.tipW); cancelAnimationFrame(this.raf); clearTimeout(this.parkT); this.dead = true; this.ro.disconnect(); clearTimeout(this.wakeT); clearInterval(this.typeT); clearInterval(this.decT); clearInterval(this.cmdT); clearInterval(this.bootT); this.root.innerHTML = ''; }
 
     /* ------------------------------------------------------------- the product's own */
+    /* Pip parts the stage's CSS reads: setup-world-life off holds the world's own loops (clouds, caustics, motes, the
+       tube's roll), strings off hides Pip's and the props' strings */
+    parts() {
+      const set = (a, on) => { if (this.root.hasAttribute(a) === !on) return; if (on) this.root.removeAttribute(a); else this.root.setAttribute(a, ''); };
+      set('data-no-world-life', H.part('setup-world-life')); set('data-no-strings', H.part('strings'));
+      this.dirty = true; this.kick();
+    }
     // whether the loop runs: the window open and shown, the page visible, no drag under way, the stage on the page
     live() { return !this.dead && this.active && !this.held && !document.hidden && this.root.isConnected && !document.body.classList.contains('pm-resizing'); }
     // a stage that draws only what changed: Reduced Motion (nothing swings, travels, flickers or trails) and a computer

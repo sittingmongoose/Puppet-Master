@@ -661,7 +661,8 @@
     skin('tip', S.tip, el);
     if (S.tip) {
       const t = O55.tips.of(id);
-      O55.sound.play('reveal');
+      /* Pip writes the answer with its small idea chime (its own kit; the window's reveal where Pip's sound is not) */
+      if (!(O55.pipVoice && O55.pipVoice.play('tip'))) O55.sound.play('reveal');
       if (t) U.announce(t.title + '. ' + t.text, S.root.querySelector('.o55-win'));
       return;
     }
