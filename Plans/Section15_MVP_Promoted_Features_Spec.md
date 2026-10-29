@@ -1119,13 +1119,12 @@ plan_unit_id: SMPFS-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: |-
+canonical_text: >-
   The app shell is workspace-tab based: each workspace tab owns one active project, project switching is a
   workspace-tab concern rather than a title-bar project bar, and background, blocked, or failed activity
-  remains visible through persistent shell regions.
-  Amended 2026-10-29 (B1–B6; PM7): Project box A is an admitted secondary project switch entry; Projects
-  view remains primary. Ctrl+Shift+P opens the box menu without dispatch; ordinary pick switches active
-  workspace, Ctrl/Cmd+Enter opens new workspace tab.
+  remains visible through persistent shell regions. Amended 2026-10-29 (B1–B6; PM7): Project box A is an
+  admitted secondary project switch entry; Projects view remains primary. Ctrl+Shift+P opens the box menu
+  without dispatch; ordinary pick switches active workspace, Ctrl/Cmd+Enter opens new workspace tab.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation
   requirements.
@@ -1144,6 +1143,10 @@ acceptance_criteria:
   dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
   files, or source code are created by this PlanUnit.
+- 'B1/B2: Projects view remains primary and Project box A secondary; Ctrl+Shift+P opens its menu without switching
+  or creating a workspace tab.'
+- 'B1/B6: ordinary pick dispatches cmd.project.switch_active_tab; Ctrl/Cmd+Enter dispatches cmd.project.open_in_new_workspace_tab
+  for the stable target Project and correct source workspace.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -6041,15 +6044,13 @@ plan_unit_id: SMPFS-083
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: |-
+canonical_text: >-
   Instant project switch defaults to switching the active workspace tab, while an alternate command opens
-  the target project in a new workspace tab.
-  Amended 2026-10-29 (B1/B6; PM7): Promote cmd.project.switch_active_tab and
-  cmd.project.open_in_new_workspace_tab into UCC-209/CS-105; the title-bar menu is an additional producer
-  using stable project_id and the same workspace owner.
-gui_related: false
-gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
-  rather than visual presentation.
+  the target project in a new workspace tab. Amended 2026-10-29 (B1/B6; PM7): Promote
+  cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab into UCC-209/CS-105; the
+  title-bar menu is an additional producer using stable project_id and the same workspace owner.
+gui_related: true
+gui_classification_reason: Defines visible Project box entry and keyboard command selection.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -6065,6 +6066,10 @@ acceptance_criteria:
   dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
   files, or source code are created by this PlanUnit.
+- 'B1/B6: cmd.project.switch_active_tab changes the named current workspace only; cmd.project.open_in_new_workspace_tab
+  creates one target workspace using the same owner and stable project/workspace identity.'
+- 'B2: Ctrl+Shift+P opens the menu and dispatches neither project command until a row is committed; stale/unknown
+  Project or workspace identity refuses before effects.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate

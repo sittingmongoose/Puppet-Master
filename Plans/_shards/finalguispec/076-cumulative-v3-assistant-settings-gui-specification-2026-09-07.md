@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38321-L39039
+Source lines: L38321-L39040
 
-Source SHA256: `36c5ffd042fbd9ee31121beb4871b8342bbe239e4537318cd5a69678db2b29f7`
+Source SHA256: `fb7d5317d99e52640970e8e158e95bd9a416e1a04098fe6582be906af569a148`
 
 ---
 
@@ -158,7 +158,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
 - **Single Agent Review Invariant (APR-054):** Selecting the "Single Agent" strategy in the Review
   configuration modal immediately and reactively reduces the active draft reviewer roster to exactly
   one reviewer. Switching back to Multi-Pass restores the multi-reviewer configuration without loss of choices.
-- **Uniform Native Card/Grid Grammar Across All 9 Activity Detail Families (APR-060, USER-REFERENCE-LAYOUT-ROLLBACK-20260908):**
+- **Uniform Native Card/Grid Grammar Across All 10 Activity Detail Families (APR-060, USER-REFERENCE-LAYOUT-ROLLBACK-20260908):**
   The reference-video-derived narrow-layout and forced flat-row grammar is selectively superseded under
   user correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908. Activity Detail restores prior native card,
   section panel, and grid presentation across all ten Activity Detail families while preserving
@@ -172,10 +172,11 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   7. *Chat Room Detail:* Multi-agent participant list, room topic, round counter, and conversation timeline.
   8. *Changes Detail:* Aggregated file modifications, colored additions/deletions, path links, and diff inspection triggers.
   9. *Artifacts Detail:* Generated documents, diagrams, code outputs, export options, and lineage metadata.
+  10. *Processes Detail (D2/D4, ACD-505):* Thread-owned process work, input requests, lifecycle and owner/Terminal routes; present only while a process runs or needs input in that thread.
 
   Scoped exception (2026-09-27, DL-122): for Crew, BrainStorm, Review and Chat Room (items 4 to 7) the
   Activity Detail body is the short team list of F3-580, and the kind content listed above lives in
-  the run view (ACD-480). The other five families keep the native presentation above.
+  the run view (ACD-480). The remaining families keep the native presentation above, with Processes governed by ACD-505.
   Second scoped exception (2026-10-08, DL-147): the To-Dos rows of item 2 are one-line checklist rows like the
   To-Do hover preview, inside the native panel (F3-593).
 - **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demo cards

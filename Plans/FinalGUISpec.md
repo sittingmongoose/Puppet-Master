@@ -38468,7 +38468,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
 - **Single Agent Review Invariant (APR-054):** Selecting the "Single Agent" strategy in the Review
   configuration modal immediately and reactively reduces the active draft reviewer roster to exactly
   one reviewer. Switching back to Multi-Pass restores the multi-reviewer configuration without loss of choices.
-- **Uniform Native Card/Grid Grammar Across All 9 Activity Detail Families (APR-060, USER-REFERENCE-LAYOUT-ROLLBACK-20260908):**
+- **Uniform Native Card/Grid Grammar Across All 10 Activity Detail Families (APR-060, USER-REFERENCE-LAYOUT-ROLLBACK-20260908):**
   The reference-video-derived narrow-layout and forced flat-row grammar is selectively superseded under
   user correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908. Activity Detail restores prior native card,
   section panel, and grid presentation across all ten Activity Detail families while preserving
@@ -38482,10 +38482,11 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   7. *Chat Room Detail:* Multi-agent participant list, room topic, round counter, and conversation timeline.
   8. *Changes Detail:* Aggregated file modifications, colored additions/deletions, path links, and diff inspection triggers.
   9. *Artifacts Detail:* Generated documents, diagrams, code outputs, export options, and lineage metadata.
+  10. *Processes Detail (D2/D4, ACD-505):* Thread-owned process work, input requests, lifecycle and owner/Terminal routes; present only while a process runs or needs input in that thread.
 
   Scoped exception (2026-09-27, DL-122): for Crew, BrainStorm, Review and Chat Room (items 4 to 7) the
   Activity Detail body is the short team list of F3-580, and the kind content listed above lives in
-  the run view (ACD-480). The other five families keep the native presentation above.
+  the run view (ACD-480). The remaining families keep the native presentation above, with Processes governed by ACD-505.
   Second scoped exception (2026-10-08, DL-147): the To-Dos rows of item 2 are one-line checklist rows like the
   To-Do hover preview, inside the native panel (F3-593).
 - **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demo cards
@@ -41862,69 +41863,90 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every icon in the assistant chat (transcript, composer, thread history, activity bar and Activity Detail, working
-  activity, menus, wand sheets and module cards) is drawn from one icon registry with one drawing per concept, reused
-  everywhere; provider marks, agent puppets (F3-594), charts and illustrations are not icons (DL-140, DL-149). Anatomy: a lit tube with round
-  caps and joins over a core halo stroke of the same ink, plus a soft radial glow on the host element for the glow's
-  tail; the icon glow is never an element blur or filter, so it draws the same on the Skia CPU raster (F3-582). Roles:
-  controls draw unlit in the host ink and ignite on hover or keyboard focus (the glyph lights to the text colour, the
-  halo comes up on dark themes, and the glyph's act plays once); status icons are always lit in their tone and move by
-  status like the activity bar; concept icons (kind marks, mode glyphs) are lit steady; a pressed toggle sits on a
-  raised neutral tile with its glyph lit, never an accent tile. One control is the exception (DL-146): the composer's
-  capabilities wand, and the wand in its menu head, wears its own fixed colours at rest and on hover (F3-588), never
-  unlit grey and never a status tone, and turns to ink under NieR Mode. Acts: each glyph moves part by part in its own way,
-  the activity bar included (the goal arrow strikes the target, the To-Do ticks check in sequence, the artifact lines
-  write in, the wand's sparkles twinkle after its flick, Grill Me's kettle grill swings its lid open while smoke
-  rises); acts animate transform and opacity, a draw-on is a clip reveal with both endpoints stated, looping motion
-  returns along its path, and below 12 px no part moves. Tones are the activity bar's status tones: blocked danger,
-  attention warning, working accent, changed accent-2, done positive, idle subtle and paused muted. Colour is reserved
-  for status, apart from the capabilities wand, so menu, event-card and card-head icons sit on neutral tiles. Module
-  cards and sheets draw their marks, agent puppets included (F3-594), lit and still, with one-shot acts only, inside the live card's two-loop budget. Per-family motion voices change
-  easing only: Friendly overshoots, Glass glides, Retro steps, NieR steps. Reduced motion stops every act and loop
-  while the lit ink, the halo and the silhouette still carry each state. On light themes the halo stays faint and
-  never forms a smudge or a plate.
-  Amended 2026-10-29 (X1/X2, PC5, D14; PM7): robot and processes are category glyphs; individual agents are Pip. Needs-you outranks all loader/idle/category loops. Crown/hat gold is an explicit role-material exception, not status ink; reduced-motion categories keep a lit still pose.
+  Every icon in the assistant chat (transcript, composer, thread history, activity bar and Activity Detail,
+  working activity, menus, wand sheets and module cards) is drawn from one icon registry with one drawing
+  per concept, reused everywhere; provider marks, agent puppets (F3-594), charts and illustrations are not
+  icons (DL-140, DL-149). Anatomy: a lit tube with round caps and joins over a core halo stroke of the same
+  ink, plus a soft radial glow on the host element for the glow's tail; the icon glow is never an element
+  blur or filter, so it draws the same on the Skia CPU raster (F3-582). Roles: controls draw unlit in the
+  host ink and ignite on hover or keyboard focus (the glyph lights to the text colour, the halo comes up on
+  dark themes, and the glyph's act plays once); status icons are always lit in their tone and move by
+  status like the activity bar; concept icons (kind marks, mode glyphs) are lit steady; a pressed toggle
+  sits on a raised neutral tile with its glyph lit, never an accent tile. One control is the exception
+  (DL-146): the composer's capabilities wand, and the wand in its menu head, wears its own fixed colours at
+  rest and on hover (F3-588), never unlit grey and never a status tone, and turns to ink under NieR Mode.
+  Acts: each glyph moves part by part in its own way, the activity bar included (the goal arrow strikes the
+  target, the To-Do ticks check in sequence, the artifact lines write in, the wand's sparkles twinkle after
+  its flick, Grill Me's kettle grill swings its lid open while smoke rises); acts animate transform and
+  opacity, a draw-on is a clip reveal with both endpoints stated, looping motion returns along its path,
+  and below 12 px no part moves. Tones are the activity bar's status tones: blocked danger, attention
+  warning, working accent, changed accent-2, done positive, idle subtle and paused muted. Colour is
+  reserved for status, apart from the capabilities wand, so menu, event-card and card-head icons sit on
+  neutral tiles. Module cards and sheets draw ordinary icon marks lit and still, with one-shot acts only
+  inside the live card's two-loop budget. PC1/S1–S9: optional sheet Pip under F3-594/ACD-507 is the bounded
+  exception: its drop-in, sway, blink and gaze come only from the shared rig/parts owner and obey
+  visibility, hidden-tab, drag, reduced-motion and needs-you priority gates; no host owns an extra loop.
+  Per-family motion voices change easing only: Friendly overshoots, Glass glides, Retro steps, NieR steps.
+  Reduced motion stops every act and loop while the lit ink, the halo and the silhouette still carry each
+  state. On light themes the halo stays faint and never forms a smudge or a plate. Amended 2026-10-29
+  (X1/X2, PC5, D14; PM7): robot and processes are category glyphs; individual agents are Pip. Needs-you
+  outranks all loader/idle/category loops. Crown/hat gold is an explicit role-material exception, not
+  status ink; reduced-motion categories keep a lit still pose.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
-depends_on: [DL-140, DL-146, DL-149, F3-425, F3-426, F3-582, ACD-469]
+depends_on:
+- DL-140
+- DL-146
+- DL-149
+- F3-425
+- F3-426
+- F3-582
+- ACD-469
 unblocks: []
 acceptance_criteria:
-  - "An icon census of the chat finds every icon drawn from the registry, one drawing per concept."
-  - "Controls are unlit at rest and lit on hover and keyboard focus in every theme; status icons in the chat's placements are lit and moving (F3-585), while elsewhere F3-658's still-status rule applies (amended 2026-10-17, DL-228); concept icons are lit and still."
-  - "No icon glow uses an element blur or filter."
-  - "Under reduced motion no icon act or loop runs, and every state still reads."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- An icon census of the chat finds every icon drawn from the registry, one drawing per concept.
+- Controls are unlit at rest and lit on hover and keyboard focus in every theme; status icons in the chat's
+  placements are lit and moving (F3-585), while elsewhere F3-658's still-status rule applies (amended 2026-10-17,
+  DL-228); concept icons are lit and still.
+- No icon glow uses an element blur or filter.
+- Under reduced motion no icon act or loop runs, and every state still reads.
+- PC1 sheet Pip uses only the F3-594/ACD-507 optional shared rig and parts gates; ordinary card/sheet icons
+  remain still with one-shot acts, hidden/drag consumers run no decorative loop, and Reduced Motion follows
+  the bounded F3-594/X2 behavior.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: chat_icon_family_drift
 reasoning_tier: high
 context_scope: chat_neon_icons
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: gui_promotion_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-140"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256 1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)"
+- Plans/Decision_Log.md#DL-140
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256
+  1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf
+- Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)
 preserved_exact_tokens:
-  - "one drawing per concept"
-  - "ignite on hover"
-  - "part by part"
+- one drawing per concept
+- ignite on hover
+- part by part
 negative_constraints:
-  - "Do not give a non-status glyph status colour outside a status host."
-  - "Do not draw the icon glow with an element blur or filter."
-  - "Do not give any glyph other than the capabilities wand its own colours."
+- Do not give a non-status glyph status colour outside a status host.
+- Do not draw the icon glow with an element blur or filter.
+- Do not give any glyph other than the capabilities wand its own colours.
 compatibility_only_notes: []
 stale_retired_dispositions:
-  - "DL-140's rule that colour is reserved for status admits one exception from DL-146: the capabilities wand."
-  - "Avatars are no longer named among the non-icons; agents are drawn as puppets (F3-594, DL-149)."
+- 'DL-140''s rule that colour is reserved for status admits one exception from DL-146: the capabilities wand.'
+- Avatars are no longer named among the non-icons; agents are drawn as puppets (F3-594, DL-149).
 owner_hints:
-  - Plans/FinalGUISpec.md
+- Plans/FinalGUISpec.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-140, ContractName:Plans/FinalGUISpec.md#F3-582, ContractName:Plans/assistant-chat-design.md#ACD-469

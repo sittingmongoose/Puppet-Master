@@ -905,7 +905,7 @@ APR-059.
 - **Single Outer Hover Surface (APR-005):** The To-Do hover preview renders within exactly one
   bounded, non-scrolling outer surface. Nested floating panels, secondary popovers, and duplicated
   DOM trees are strictly eliminated. Previews display a compact snapshot of active and upcoming
-  tasks with an overflow counter row that directly navigates to the pinned Activity Detail on click.
+  tasks with an overflow counter row that directly navigates to the full-size Activity Detail (G1/G2; F3-535, ACD-453/ACD-506) on click.
 - **Concise Information Hierarchy (APR-008):** To-Do Activity Detail prioritizes immediate
   actionability:
   1. *Primary Visibility:* Task title, state glyph (pending, in-progress, completed with strike-through,
@@ -937,7 +937,7 @@ status: accepted
 owner_doc: Plans/ToDo_Runtime.md
 canonical_text: >-
   To-Dos project a single bounded hover preview without nested panels or internal scrolling, routing
-  overflow clicks directly to pinned Activity Detail. To-Do Activity Detail prioritizes task title,
+  overflow clicks directly to full-size Activity Detail (G1/G2; F3-535, ACD-453/ACD-506). To-Do Activity Detail prioritizes task title,
   state, assigned ownership, and next action, placing secondary technical metadata behind deliberate
   disclosures. Completed items remain inline with a filled dot and strike-through with no separate Done
   heading or decorative left-edge accent stripes.

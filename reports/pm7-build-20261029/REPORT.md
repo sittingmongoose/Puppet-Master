@@ -3,7 +3,7 @@
 Branch: `t3/plans/pm7-plans-canon`. Lead: `pm7-build`.
 
 - **Step 1 done:** checked allocation against live owner documents; published shared `IDS.md` and committed its mirror at `reports/pm7-build-20261029/IDS.md`. DL-235–256, F3-660–665, DR-076–078, SSYS-056–057 reserved with all command, binding and glyph identities and the 22-key mood map.
-- **Step 2 done:** 26 owner docs amended across W1–W9 with decision IDs, including D1–D14 and G4 amendments, stale counts/title geometry, one Pip/loader/projection, full onboarding, chat, ProcessFacts and per-server Resources. Shards and PlanUnit index regenerated. Ledger compilation not used.
+- **Step 2 done:** 27 owner docs amended across W1–W9 with decision IDs, including D1–D14 and G4 amendments, stale counts/title geometry, one Pip/loader/projection, full onboarding, chat, ProcessFacts and per-server Resources. Shards and PlanUnit index regenerated. Ledger compilation not used.
 - **Step 3 implemented; aggregate verification running:** command/request/result/local schemas, ProcessFacts and per-server resource records, closed input requests, positive/negative and identity fixtures, 45 new bindings, 11 new production-intent rows, 26 Touch obligations / 3 profiles, two Settings rows and 25-part registry. Derived files regenerated; focused companion checks pass.
 - **Step 4 pending:** GUI lanes' merged implementation names, then reconciliation.
 
@@ -46,14 +46,14 @@ Names: Plans/pip_parts.json; Plans/pm7_build_contracts.schema.json and .fixtures
 | W6 | F3-664/665 three-tab platform panel, two status items, quit; ACD-505 thread Processes; D1–D14 in DL-240–253; SIR-054 and runtime schemas/fixtures for process facts, safe prompts, identity and per-server Resources. |
 | W7 | ACD-506 and F3-637 remove small Activity Detail/Pin and fixed width cap; layout schema/fixtures permit wide preferences; shared Glass plates and clean ring requirements. |
 | W8 | F3-649/DL-256 specify one lab Demo Studio with Pip/sound/parts, full onboarding tips/errors, project states/widths and Activity/Resources/quit scenarios. GUI implementation belongs to demo lane. |
-| W9 | Shared IDs, 26 owner docs, DRY/glossary/index, command catalog, production-intent wiring, bindings, Touch, settings/part/glyph companions and count pins. Regeneration and focused checks pass; final aggregate attribution follows. |
+| W9 | Shared IDs, 27 owner docs, DRY/glossary/index, command catalog, production-intent wiring, bindings, Touch, settings/part/glyph companions and count pins. Regeneration and focused checks pass; final aggregate attribution follows. |
 
 The report-only `reports/pm7-build-20261029/decision-map.json` maps all 62 packet/ruling IDs (including the lead's RM1 clarification) to canonical owner units, for applying later answers. The new main reseal/snapshot/baseline was inherited through integration, never edited by this lane. The obsolete pre-merge check attempt was stopped before completion; final verification runs on the merged base with 600 s subcheck bounds.
 
 
 ## Review responses
 
-All 19 Astra findings and all 20 Muse findings are accepted and resolved in the consolidated prose pass, with per-finding details in `REVIEW-RESPONSES.md` beside this report and `reports/pm7-build-20261029/REVIEW-RESPONSES.md`. No finding is rejected. The original 44 units now have specific, falsifiable criteria; G-031 adds correctly formed durable help entries. Wrong-unit insertion audit reports zero misplaced original amendments. Current chat/Activity Bar requirements, History pin and original user literals were preserved while old Pin, primitive and width rules were retired.
+All 19 Astra findings and all 20 Muse findings are accepted and addressed in the consolidated prose pass; the first Astra recheck found six residual/new gaps, now accepted for correction, with per-finding details in `REVIEW-RESPONSES.md` beside this report and `reports/pm7-build-20261029/REVIEW-RESPONSES.md`. No finding is rejected. The original 44 units now have specific, falsifiable criteria; G-031 adds correctly formed durable help entries. Wrong-unit insertion audit reports zero misplaced original amendments. Current chat/Activity Bar requirements, History pin and original user literals were preserved while old Pin, primitive and width rules were retired.
 
 Fresh generation passes: 2956 shards / 99 sources; PlanUnit index 7236 / 96 docs. Post-fix focused PM7, canon and Touch checks pass. Complete generated-file staging and clean committed extraction verification precede the final aggregate rerun. Decision map now covers all 76 packet/ruling/source IDs (62 packet/ruling plus D1–D14).
 
@@ -68,3 +68,13 @@ Activity lane report at 52b68952ad records no fixed chat maximum, current centre
 D2/D10/D13/G4: companion requests now carry explicit application/project scope. Quit, platform controls, editor/navigation and service facts work without inventing a Project. Source/owner scope and every target’s real Project/server/environment permission remain required. CS-106, SIR-054 and WM-097 state this existing-policy boundary. Production rows now carry command-specific locations and effect checks. Focused PM7 checks pass: 13 request cases, 4 identity cases, 11 runtime fact cases; all counts unchanged. Final aggregate and dry attribution will run on the frozen follow-up head.
 
 Foundation names received at 46e222c5c9: PMLogo, PM_PIP_LOADER, PM_WORK, PM_PIP_PARTS; exact 25 parts agree. Exported preset IDs are lowercase full|quiet|still|plain with display names Full/Quiet/Still/Plain, and projection field delivery maps the owner contract completion_delivery. Step 4 reconciles these after the lead confirms GUI integration.
+
+## First recheck follow-up
+
+Astra recheck at 78b06ddc00: 14 fixed / 5 partial original findings, with six distinct open items (one major, five minor). Accepted R1–R6: shared sheet-motion exemption; three moved owners’ behavioral acceptance; To-Do full-size route; live ten-domain enumeration; historical August index denominator; shared part help/size schema/data. Focused fixes are prepared outside the checkout while d934851c07 aggregate runs. Muse recheck remains lead-owned and pending. No final prose approval is claimed yet.
+
+## Astra recheck repairs
+
+R1–R6 applied after the completed d934851c07 gate run: F3-584 now exempts only F3-594/ACD-507’s optional shared sheet rig; SMPFS-003/083 and WM-019 have falsifiable Project-box/keyboard/identity/producer criteria; To-Do routes target full-size detail; live presentation enumerates all ten domains; the dated August index keeps 828; and every Pip part admits/provides help and Size (1–6) from the single registry. The foundation lane confirmed all 25 sizes (total 61). Presets/defaults/counts are unchanged. Regeneration and the final aggregate/dry rerun follow. Muse recheck remains pending; no final review approval is claimed.
+
+The completed d934851c07 aggregate returned 1: validate_new_contracts now PASS, as do wiring, Touch and shard checks. Its failing groups are Spec Lock, plan graph, evidence, PRD runtime contracts, readiness, migration, three baseline context-compaction GUI fixtures, and audit closure. The automatically started pre-fix dry check was stopped when these requested repairs became applicable; final dry attribution runs on the repaired head.

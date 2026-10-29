@@ -52,3 +52,16 @@ Both blind reviews examined `b5be9252d1`. Every finding is accepted. Several pac
 | MN-11 | Context ring is an acceptance outcome with named open investigation `PM7-C5-CONTEXT-RING`; the GUI lane must supply its actual mechanism before Step 4 closes it. |
 
 The complete post-fix validation and any remaining baseline/staleness findings are recorded in REPORT.md. There are no rejected findings.
+
+## Astra first recheck — R1–R6
+
+All six accepted. These are the focused repairs; lead-owned recheck and final aggregate attribution remain required.
+
+| Finding | Repair |
+|---|---|
+| R1 | F3-584 scopes the still/one-shot rule to ordinary marks and admits only the optional F3-594/ACD-507 shared sheet rig under parts/visibility/drag/RM/priority gates. |
+| R2 | SMPFS-003/083 and WM-019 retain lineage criteria and add behavioral acceptance for primary/secondary entries, Ctrl+Shift+P no dispatch, ordinary/Ctrl+Enter selection, stable identities and both producer rows. SMPFS-083 GUI classification now reflects those visible entry contracts. |
+| R3 | ToDo_Runtime source and TDR-011 point to full-size detail under G1/G2 and F3-535/ACD-453/506; bounded previews and owner identity stay. |
+| R4 | Live native grammar heading/list now has ten families including Processes with D4 conditional presence and ACD-505 owner; old arithmetic replaced while per-domain exceptions remain. |
+| R5 | Restored 828 in the dated 2026-08-31 registration; current October entry/inventory retains 1011. |
+| R6 | Strict shared registry schema requires help and integer Size 1–6; all 25 entries populated from the approved source mapping and confirmed foundation sizes (61 total). No per-host list or setting was added. |

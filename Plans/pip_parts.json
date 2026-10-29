@@ -19,151 +19,201 @@
       "id": "sheet-hosts",
       "label": "Sheet hosts",
       "group": "Where Pip appears",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Each sheet has a Pip by its close button, holding up that sheet’s sign.",
+      "size": 5
     },
     {
       "id": "status-faces",
       "label": "Status faces in lists",
       "group": "Where Pip appears",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Pip faces in Scheduled and Memory lists follow each owner’s exact status-key table.",
+      "size": 3
     },
     {
       "id": "working-orbit",
       "label": "Working orbit",
       "group": "Where Pip appears",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Pip sits in the middle of the Orbit while work runs.",
+      "size": 3
     },
     {
       "id": "plans",
       "label": "Plans",
       "group": "Where Pip appears",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Pip holds up a plan that is ready for review, and naps beside a build that waits for its window.",
+      "size": 3
     },
     {
       "id": "wand-menu",
       "label": "Wand menu",
       "group": "Where Pip appears",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Pip holds the wand at the top of Assistant capabilities.",
+      "size": 2
     },
     {
       "id": "empty-lists",
       "label": "Empty lists",
       "group": "Where Pip appears",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "A resting Pip where there is nothing yet.",
+      "size": 2
     },
     {
       "id": "state-faces",
       "label": "State faces",
       "group": "Faces",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Working shows thinking dots, done is happy, needs you wonders, failed says oops, waiting sleeps.",
+      "size": 4
     },
     {
       "id": "watches",
       "label": "Watches",
       "group": "Faces",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Rest the pointer on a control and the sheet’s Pip watches it.",
+      "size": 3
     },
     {
       "id": "wonders-while-typing",
       "label": "Wonders while typing",
       "group": "Faces",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Big eyes while you write in a sheet’s fields.",
+      "size": 2
     },
     {
       "id": "cheers",
       "label": "Cheers",
       "group": "Faces",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Happy, and a hop, when you press a sheet’s main button.",
+      "size": 2
     },
     {
       "id": "oops",
       "label": "Oops",
       "group": "Faces",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "A worried face when a button can’t be used yet.",
+      "size": 2
     },
     {
       "id": "gaze",
       "label": "Gaze",
       "group": "Faces",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "The sheet’s Pip looks where the pointer is, and keeps looking there when it stops.",
+      "size": 2
     },
     {
       "id": "blinks",
       "label": "Blinks",
       "group": "Motion",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Now and then, never two Pips at once.",
+      "size": 1
     },
     {
       "id": "sway-and-physics",
       "label": "Sway and physics",
       "group": "Motion",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "The sheet’s Pip swings a little, as if a hand held it, and drops in when a sheet opens.",
+      "size": 2
     },
     {
       "id": "face-transitions",
       "label": "Blinks between faces",
       "group": "Motion",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "A face changes behind a quick blink, the way it does in onboarding.",
+      "size": 2
     },
     {
       "id": "thinking-dots",
       "label": "Thinking dots",
       "group": "Motion",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "The working face’s three dots bob in turn.",
+      "size": 1
     },
     {
       "id": "idle-life",
       "label": "Idle life",
       "group": "Motion",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Small resting acts while Pip is visible and the interface is idle.",
+      "size": 2
     },
     {
       "id": "seat-colours",
       "label": "Seat colours",
       "group": "Look",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Each helper wears its seat’s colour. Off: every Pip is the theme’s Pip.",
+      "size": 2
     },
     {
       "id": "role-props",
       "label": "Role props",
       "group": "Look",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Crown, hard hat, glasses, gavel, jester cap, page, pennant and the rest.",
+      "size": 3
     },
     {
       "id": "strings",
       "label": "Strings",
       "group": "Look",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Off: Pip floats without its strings.",
+      "size": 2
     },
     {
       "id": "cheeks-and-shine",
       "label": "Cheeks and shine",
       "group": "Look",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Friendly and Glass only.",
+      "size": 1
     },
     {
       "id": "setup-world-life",
       "label": "Setup world life",
       "group": "Look",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Look-specific chapter worlds and their bounded ambient life during setup.",
+      "size": 3
     },
     {
       "id": "setup-voice",
       "label": "Pip talks in setup",
       "group": "Sound",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "Pip speaks in the current look’s short setup voice, under the master mute.",
+      "size": 3
     },
     {
       "id": "app-voice",
       "label": "Pip chirps in the app",
       "group": "Sound",
-      "default_enabled": false
+      "default_enabled": false,
+      "help": "A small chirp with each face a sheet’s Pip makes, in the theme’s voice. Starts off.",
+      "size": 3
     },
     {
       "id": "setup-music",
       "label": "Setup music",
       "group": "Sound",
-      "default_enabled": true
+      "default_enabled": true,
+      "help": "The current setup chapter’s quiet, gesture-gated background music.",
+      "size": 3
     }
   ],
   "presets": {

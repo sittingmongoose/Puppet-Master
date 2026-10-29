@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L649-L2997
+Source lines: L649-L3002
 
-Source SHA256: `d2e9660b1e4846a5b4cde014d35107ec777ac4e5aca88ac77456e1c4c33b0d80`
+Source SHA256: `ffdfb4e7786d3b56f787c3fa10ae10a48da8b35d7b7259f52eb5e5eeede37e59`
 
 ---
 
@@ -1145,6 +1145,11 @@ acceptance_criteria:
   dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
   files, or source code are created by this PlanUnit.
+- 'B1/B6: minimum Project switcher result row and Project switcher alternate action include the title-bar Project
+  box ordinary-pick and Ctrl/Cmd+Enter producers routed through UCC-209/CS-105 to their sole project/workspace
+  owner.'
+- 'B1/B2/B6: project-box ordinary and Ctrl/Cmd+Enter activations select the switch/new-tab commands respectively;
+  Ctrl+Shift+P opens only, retaining stable project/workspace identity and Projects view/palette as primary.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
