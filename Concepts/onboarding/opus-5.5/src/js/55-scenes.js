@@ -211,18 +211,23 @@
       .sort((a, b) => b.rx.source.length - a.rx.source.length);
     return table;
   }
-  function match(text) {
+  /* words two states share (an AI row's and a service's "Didn't sign in") are the screen's own: its namespace first */
+  const NS = (id) => (/^ai/.test(id) ? 'ai' : /^online-|^ex-repos/.test(id) ? 'online' : /^nas-/.test(id) ? 'nas' : /^c-/.test(id) ? 'connect' : /^s-/.test(id) ? 'server' : /^r-/.test(id) ? 'restore' : id);
+  function match(text, screen) {
     text = String(text || '').replace(/\s+/g, ' ').trim();
     if (!text) return null;
-    const hit = build().find((r) => r.rx.test(text));
-    return hit ? hit.key : null;
+    const hits = build().filter((r) => r.rx.test(text));
+    if (!hits.length) return null;
+    const ns = screen ? NS(screen) + '.' : null, own = ns && hits.find((r) => r.key.indexOf(ns) === 0);
+    return (own || hits[0]).key;
   }
   /* the first state the current screen shows, in reading order: { key, face, el } or null */
   function read(scope) {
     if (!scope) return null;
+    const screen = scope.getAttribute('data-screen') || (O55.S && O55.S.sess && O55.S.sess.screen);
     for (const el of scope.querySelectorAll(WHERE)) {
       if (el.closest('.o55-out, [hidden], .o55-explainer')) continue;
-      const key = match(el.textContent);
+      const key = match(el.textContent, screen);
       if (key) return { key, face: FACE[key] || 'oops', el };
     }
     return null;

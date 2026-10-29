@@ -395,7 +395,7 @@
      layout (wide: the tall pane beside the screen; narrow: a strip above it; short: a short strip) and Reduced Motion. */
   const LAYOUT = { wide: 'portrait', narrow: 'banner', short: 'compact' };
   const stageLayout = () => LAYOUT[S.root.getAttribute('data-o55-layout')] || 'portrait';
-  let lastOops = null;
+  let lastOops = null, cheering = null;
   function stageOf() {
     const host = S.root && S.root.querySelector('.o55-stage');
     if (!host || !O55.pipStage || !O55.pipStage.h.kit()) return null; /* the kit is the glyph system's head module */
@@ -418,7 +418,11 @@
     if (oops && (!lastOops || lastOops.key !== oops.key || lastOops.screen !== S.sess.screen)) spec.sayNow = true;
     const cheer = !oops && lastOops && lastOops.screen === S.sess.screen && lastOops.face === 'oops' ? lastOops.key : null;
     lastOops = oops ? { key: oops.key, face: oops.face, screen: S.sess.screen } : null;
-    if (cheer) { spec.say = O55.t('pip.cheer.' + cheer); spec.sayNow = true; spec.pip.mood = 'happy'; }
+    /* the cheer is said through, even while the screen settles around it (its line would otherwise be replaced by the
+       next refresh's ordinary one) */
+    if (cheer) { cheering = { text: O55.t('pip.cheer.' + cheer), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; }
+    if (cheering && (oops || cheering.screen !== S.sess.screen || performance.now() > cheering.until)) cheering = null;
+    if (cheering) { spec.say = cheering.text; spec.pip.mood = 'happy'; }
     /* Pick a look: hovering a look makes Pip try it on (silent, O6); the world follows once it is picked */
     if (S.sess.screen === 'look') {
       const h = S.pipHover || '', mode = O55.theme().mode;
