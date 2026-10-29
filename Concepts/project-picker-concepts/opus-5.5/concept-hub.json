@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "project-picker-concepts:opus-5.5",
+  "topic": "project-picker-concepts",
+  "model": "Opus 5.5",
+  "presentation": "entries",
+  "order": 40,
+  "widthControl": {
+    "enabled": false,
+    "label": "Workspace width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "entries": [
+    {
+      "id": "project-box",
+      "title": "Title-bar project box: four options beside the Pip logo",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["title bar", "project", "pmconcept7", "pip", "logo"],
+      "order": 10
+    }
+  ]
+}
