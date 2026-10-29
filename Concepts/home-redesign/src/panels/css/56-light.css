@@ -285,7 +285,7 @@ html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) {
 }
 html[data-pmw-home="on"][data-theme="friendly-light"]:not([data-o55-nier="on"]) {
   --gl-c: color-mix(in srgb, var(--accent-lime, #2fa183) 90%, #000);
-  --gl-hot: color-mix(in srgb, var(--accent-lime, #2fa183) 55%, #FFFFFF);
+  --gl-hot: color-mix(in srgb, var(--accent-lime, #2fa183) 82%, #FFFFFF);
   --gl-bloom-a: .15;
   --gl-rail-a: 48%;
 }
@@ -294,6 +294,11 @@ html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-
   background: linear-gradient(to right, var(--gl-c), var(--gl-hot) 50%, var(--gl-c));
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--gl-c) 15%, transparent), 0 1px 8px 1px color-mix(in srgb, var(--gl-c) 32%, transparent);
   transform: scale(calc(1 + var(--gl-strain, 0) * .5), calc(var(--gl-s, 1) * (1 - var(--gl-strain, 0) * .3)));
+}
+/* on Friendly Light's pale ground the rod keeps its colour down the middle and a firmer halo: lighter there, it washed
+   out at full size (2026-10-29 review, muse N1) */
+html[data-pmw-home="on"][data-theme="friendly-light"]:not([data-o55-nier="on"]) .pmw-gl-core {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gl-c) 22%, transparent), 0 1px 7px 1px color-mix(in srgb, var(--gl-c) 42%, transparent);
 }
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-core { scale: 1.2 1.12; animation: gl-soft-catch 420ms cubic-bezier(.3, 1.3, .5, 1) both; }
 @keyframes gl-soft-catch { 0% { scale: 1; } 35% { scale: 1.45 .86; } 100% { scale: 1.2 1.12; } }
