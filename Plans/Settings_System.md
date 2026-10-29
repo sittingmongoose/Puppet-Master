@@ -4151,6 +4151,8 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
+- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 preserved_exact_tokens:
 - general.visual.pip-parts
 - ui.settings.pip_editor.open
@@ -4206,7 +4208,6 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
 preserved_exact_tokens:
 - general.interaction.status-bar-words
 negative_constraints:

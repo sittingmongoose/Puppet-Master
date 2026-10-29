@@ -65,7 +65,7 @@ Pip parts affect chat and onboarding only (S9). Brand, app icon, tray, loader an
 |---|---|
 | `cmd.project.switch_active_tab` | Row pick; stable `project_id`; existing workspace tab is switched. |
 | `cmd.project.open_in_new_workspace_tab` | Alternate row pick; stable `project_id`; Ctrl/Cmd+Enter on a row. |
-| `ui.project_switcher.open` / `.close` | Local menu visibility; Ctrl+Shift+P opens; Esc closes. No command dispatch merely to open. |
+| `ui.project_switcher.open` / `.close` / `.all_projects` | Local menu visibility; Ctrl+Shift+P opens; Esc closes. No command dispatch merely to open; .all_projects focuses existing route tab_id projects. |
 | `cmd.chat.processes.open` | Open this thread's Processes Activity Detail. |
 | `cmd.agents_and_processes.show` | `tab: agents | processes | resources`; status bar opens the matching tab. |
 | `cmd.agents_and_processes.pop_out` | Move the same panel view into a window. |
@@ -128,3 +128,5 @@ Repeated rows carry stable work/project IDs; these binding IDs identify control 
 Faces never manufacture runtime state. Typed owner status wins over a decorative expression. Keep all **22** catalog keys: waiting, blocked, failed, warning, offline, recovering, reviewing, working, waiting-dep, pending, mixed, complete, paused, skipped, off, idle, info, change-added, change-modified, change-deleted, change-conflict, change-renamed. The existing `pip-done` tour word is unrelated to the mascot.
 
 Project badge priority (B5): waiting > blocked > working > change-modified > idle. Tray (A3) aggregates every Project; waiting wins; paused applies when remaining work is paused. Never replace a stale feed with a healthy zero.
+
+Part contract (lead adopted, 2026-10-29): `Plans/pip_parts.json`, 25 options, Full = 24 on (app-voice off). Binding rows = 464; Touch = 707 rows / 137 profiles; production wiring = 1269. All projects is local `ui.project_switcher.all_projects`, not the rail-only `cmd.panel.switch`.

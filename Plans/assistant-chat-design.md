@@ -28238,6 +28238,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
+- Concepts/background-activity/opus-5.5/README.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 preserved_exact_tokens: []
 negative_constraints:
@@ -28287,7 +28288,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/background-activity/opus-5.5/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -28339,6 +28340,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

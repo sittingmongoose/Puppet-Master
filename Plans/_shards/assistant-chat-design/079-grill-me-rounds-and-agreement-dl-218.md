@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27985-L28349
+Source lines: L27985-L28351
 
-Source SHA256: `355a20416a8470efa1330c645472dc1c460f56f4e4535386ee62cba4a25805b1`
+Source SHA256: `661fcb19f8645b67e86ed67d20e930675a6f75b50b6e244bb41717c6cf1eada2`
 
 ---
 
@@ -264,6 +264,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
+- Concepts/background-activity/opus-5.5/README.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 preserved_exact_tokens: []
 negative_constraints:
@@ -313,7 +314,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/background-activity/opus-5.5/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -365,6 +366,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

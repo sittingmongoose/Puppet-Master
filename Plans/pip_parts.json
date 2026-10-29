@@ -1,0 +1,240 @@
+{
+  "$schema": "pm7_build_contracts.schema.json#/$defs/PipPartsRegistry",
+  "schema_id": "pm.pip_parts.v1",
+  "owner_ref": "Plans/Settings_System.md#SSYS-056",
+  "decision_ids": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8",
+    "S9"
+  ],
+  "setting_id": "general.visual.pip-parts",
+  "parts": [
+    {
+      "id": "sheet-hosts",
+      "label": "Sheet hosts",
+      "group": "Where Pip appears",
+      "default_enabled": true
+    },
+    {
+      "id": "status-faces",
+      "label": "Status faces in lists",
+      "group": "Where Pip appears",
+      "default_enabled": true
+    },
+    {
+      "id": "working-orbit",
+      "label": "Working orbit",
+      "group": "Where Pip appears",
+      "default_enabled": true
+    },
+    {
+      "id": "plans",
+      "label": "Plans",
+      "group": "Where Pip appears",
+      "default_enabled": true
+    },
+    {
+      "id": "wand-menu",
+      "label": "Wand menu",
+      "group": "Where Pip appears",
+      "default_enabled": true
+    },
+    {
+      "id": "empty-lists",
+      "label": "Empty lists",
+      "group": "Where Pip appears",
+      "default_enabled": true
+    },
+    {
+      "id": "state-faces",
+      "label": "State faces",
+      "group": "Faces",
+      "default_enabled": true
+    },
+    {
+      "id": "watches",
+      "label": "Watches",
+      "group": "Faces",
+      "default_enabled": true
+    },
+    {
+      "id": "wonders-while-typing",
+      "label": "Wonders while typing",
+      "group": "Faces",
+      "default_enabled": true
+    },
+    {
+      "id": "cheers",
+      "label": "Cheers",
+      "group": "Faces",
+      "default_enabled": true
+    },
+    {
+      "id": "oops",
+      "label": "Oops",
+      "group": "Faces",
+      "default_enabled": true
+    },
+    {
+      "id": "gaze",
+      "label": "Gaze",
+      "group": "Faces",
+      "default_enabled": true
+    },
+    {
+      "id": "blinks",
+      "label": "Blinks",
+      "group": "Motion",
+      "default_enabled": true
+    },
+    {
+      "id": "sway-and-physics",
+      "label": "Sway and physics",
+      "group": "Motion",
+      "default_enabled": true
+    },
+    {
+      "id": "face-transitions",
+      "label": "Blinks between faces",
+      "group": "Motion",
+      "default_enabled": true
+    },
+    {
+      "id": "thinking-dots",
+      "label": "Thinking dots",
+      "group": "Motion",
+      "default_enabled": true
+    },
+    {
+      "id": "idle-life",
+      "label": "Idle life",
+      "group": "Motion",
+      "default_enabled": true
+    },
+    {
+      "id": "seat-colours",
+      "label": "Seat colours",
+      "group": "Look",
+      "default_enabled": true
+    },
+    {
+      "id": "role-props",
+      "label": "Role props",
+      "group": "Look",
+      "default_enabled": true
+    },
+    {
+      "id": "strings",
+      "label": "Strings",
+      "group": "Look",
+      "default_enabled": true
+    },
+    {
+      "id": "cheeks-and-shine",
+      "label": "Cheeks and shine",
+      "group": "Look",
+      "default_enabled": true
+    },
+    {
+      "id": "setup-world-life",
+      "label": "Setup world life",
+      "group": "Look",
+      "default_enabled": true
+    },
+    {
+      "id": "setup-voice",
+      "label": "Pip talks in setup",
+      "group": "Sound",
+      "default_enabled": true
+    },
+    {
+      "id": "app-voice",
+      "label": "Pip chirps in the app",
+      "group": "Sound",
+      "default_enabled": false
+    },
+    {
+      "id": "setup-music",
+      "label": "Setup music",
+      "group": "Sound",
+      "default_enabled": true
+    }
+  ],
+  "presets": {
+    "Full": [
+      "sheet-hosts",
+      "status-faces",
+      "working-orbit",
+      "plans",
+      "wand-menu",
+      "empty-lists",
+      "state-faces",
+      "watches",
+      "wonders-while-typing",
+      "cheers",
+      "oops",
+      "gaze",
+      "blinks",
+      "sway-and-physics",
+      "face-transitions",
+      "thinking-dots",
+      "idle-life",
+      "seat-colours",
+      "role-props",
+      "strings",
+      "cheeks-and-shine",
+      "setup-world-life",
+      "setup-voice",
+      "setup-music"
+    ],
+    "Quiet": [
+      "status-faces",
+      "working-orbit",
+      "plans",
+      "empty-lists",
+      "state-faces",
+      "seat-colours",
+      "role-props",
+      "strings"
+    ],
+    "Still": [
+      "sheet-hosts",
+      "status-faces",
+      "working-orbit",
+      "plans",
+      "wand-menu",
+      "empty-lists",
+      "state-faces",
+      "watches",
+      "wonders-while-typing",
+      "cheers",
+      "oops",
+      "gaze",
+      "seat-colours",
+      "role-props",
+      "strings",
+      "cheeks-and-shine",
+      "setup-voice",
+      "setup-music"
+    ],
+    "Plain": []
+  },
+  "mandatory_consumers": [
+    "brand",
+    "app_icon",
+    "tray",
+    "loader",
+    "notification_faces",
+    "agent_primitive",
+    "helper_marks",
+    "activity_agent_rows"
+  ],
+  "scope": "per_project",
+  "claim_boundary": "Static admitted parts contract. JavaScript registry/API reconciliation and native Settings evidence are separate."
+}

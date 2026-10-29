@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44523-L46920
+Source lines: L44523-L46817
 
-Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
+Source SHA256: `fe296617d9797bc6c00a3a6b28ca54478326d192ff64bda5a3d283629579c14e`
 
 ---
 
@@ -1400,113 +1400,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The chat is a fixed column on the right of the window (DL-180, D3). It runs from the title bar to
-  the status bar, which both stay full width (Jared, 2026-08-13, PMConcept7 revision 15: "The chat
-  assistant window should be full vertical height, unless it pops out, then the user can adjust
-  it."). It is never a tab and never in the split tree, and it is never moved, docked, grabbed or
-  floated inside the window: it carries no grip and no surface menu of the home centre. Its default
-  width follows the window: clamp(400, 0.26667 x window width + 88, 640) px, so 480 px on a 1470 px
-  window, 600 px at 1920 px and 640 px from 2070 px. The user drags the column's inner edge between
-  400 and 760 px, never so wide that the centre drops below 960 px, and on the Usage page never so
-  wide that the Usage board drops below 400 px (below); the drag previews locally and commits once
-  on release as cmd.workspace_layout.resize_surface with the surface chat and its width, kept in the
-  v2 layout record (SP-330), and a width the user never set follows the window. Showing and hiding
-  the chat stay cmd.panel.switch with chat, and the left rail's Chat entry shows or hides the column
-  on every page without changing the page in front (F3-042, D40). The narrow ladder (F3-636) eases
-  it toward 400 px and, below a centre width of 480 px, folds it to a 32 px edge strip that opens it
-  again; "Keep the chat open in narrow windows" keeps it open instead. That toggle is the chat's own
-  preference, not a Settings row: it sits in the chat header's menu (ACD-442) and in the title bar's
-  Home options menu (the planning thread's ruling of 2026-10-10 under D4). Amended 2026-10-10 (lead
-  ruling): it is a check in the chat header's menu, and the concept also offers it in the Home
-  options menu; both dispatch the same typed local action, ui.chat_column.keep_open with its
-  argument keep_open, whose value is saved in the v2 record's chat column as keep_open
-  (Plans/storage-plan.md#SP-330), never a Settings row. Pop out is the only way to move it (D3: the
-  desktop app). In the desktop app Pop out opens the same chat, with its History and Activity
-  Detail, in its own window that the user sizes and places (cmd.panel.undock with chat;
-  panel.undocked, F3-527), and Dock back returns it to its column (cmd.panel.redock;
-  panel.redocked); exactly one chat exists at a time. The web client offers no Pop out; the chat
-  stays in its column. The title bar's Home options menu carries Show the chat or Hide the chat, and
-  in the desktop app Pop out the chat or Dock the chat back, and Keep the chat open in narrow
-  windows (F3-502). The 5.6 Pro chat's History list is a flyout over the chat by default; pinning it
-  widens the chat by the list's own width instead of squeezing the messages. Activity Detail stays
-  inside the chat as the 5.6 Pro chat designs it (APR-001), never a panel tab. One thread-history
-  list survives, the 5.6 Pro one. The chat sizes itself by its own column, never by the window
-  (ACD-501). Everything the chat opens lands in the centre through F3-634 (ACD-500). This supersedes
-  chat docking to any host, the chat's grip, its grab and keyboard move, floating it inside the
-  window and its Dock back to a host (F3-HOME-001, F3-HOME-002 and F3-HOME-003 as they apply to the
-  chat; F3-516's saved dock), and the four different chat minimums: F3-HOME-002's 260 px nominal
-  minimum, F3-423's floating floor (it now holds only for the desktop app's popped-out chat window),
-  F3-565's narrowest chat (its resilience rules now hold for a popped-out window narrower than 400
-  px), and the 360 px chat beside an open document of APR-038 and F3-569. After a restart the chat
-  starts in its column, also when it was popped out as the app closed (Jared, D32; F3-504): the
-  pop-out is never saved, while the column's visibility and width are (SP-330). A Chat Layout value
-  saved before this redesign, Overlay or Detached, never pops the chat out at start:
-  general.visual.chat-layout-mode retires, and a stored value is ignored and cleared on first read,
-  with no pop-out and no notice (SSYS-050). On the Usage page the chat never squeezes the Usage
-  board below 400 px, the narrowest board every Usage widget's smallest preset is checked at
-  (Plans/Widget_System.md#WS-017; the planning thread's ruling of 2026-10-10): a pinned History
-  drops back to its flyout first, then the column gives way down to its 400 px minimum, and it grows
-  back toward the person's width as the board gets room again; a width drag there stops where the
-  board would drop below 400 px. None of this is saved beyond the width the person dragged to. The
-  narrow ladder of F3-636 runs only while Home is the page shown; on any other page the column is
-  the person's width, plus a pinned History. ui.chat_column.pin_history is a typed local action
-  (view state); its value is saved in the v2 record's chat column as history_pinned, with no
-  workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize.
-  The saved width and the 400-760 px drag range describe the message area. Pinning History adds 240
-  px to the column, or 200 px while the whole column is under 540 px; the messages keep their width.
-  Amended 2026-10-23 (DL-233): the column adds the width History is drawn at, 240 px, 200 px only in
-  a capped column under 540 px (the popped-out chat or the narrow peek), or the width the person
-  dragged History's edge to within the chat's own 170-360 px and 42 percent of its pane. While that
-  drag lasts only History moves, so its edge stays under the pointer; on release the column takes the
-  new width and the messages theirs. While the narrow ladder takes pinned History's width back,
-  History shows as its flyout and the person's pin is kept; it is pinned again when the room returns.
-  The pinned column's minimum is 640 px; its drag range is 640 to 760 + 240 px, capped by the 960 px
-  centre budget. A folded chat always has History dropped to a flyout, so its peek opens at 400 px;
-  with History pinned in the peek it is 640 px, capped at the row width minus 48 px. Measured
-  History cases: at 1920 px in Friendly dark, the flyout column is 600 px, the pinned column 666 px
-  (History 240 px, messages 425 px) and C 960 px; at 1920 px in NieR, flyout is 600 px and pinned
-  681 px (History 240 px, messages 440 px), with C 960 px. At 1470 px in Glass light with the rail
-  folded, flyout is 446 px with C 960 px, and pinned is 640 px (History 240 px, messages 400 px),
-  with C 766 px (re-measured 2026-10-23, DL-233; the 2026-10-10 reading was 434 px, 399 px and C 754
-  px). At 900 px in Retro dark the chat folds to 32 px, with a 400 px flyout peek or 640 px pinned
-  peek; as built, a folded chat keeps History dropped, so its peek opens at 400 px with History as
-  its flyout either way. These measurements include centre-budget clamping, while the saved width
-  remains the message-area preference. The hosted 5.6 Pro chat and the panel redesign's scripted
-  stand-in, measured on the same page on 2026-10-23, give the same numbers in each case (DL-233).
-  The v2 layout record's chat_column keeps width_px, history_pinned and
-  keep_open (defaults null, false and false), in addition to its shown state; none is a Settings
-  value. width_px is the message area's width, rounded to an integer in 400-760 px, with an
-  out-of-range finite number stored at the nearer bound and null following the window's default;
-  other values are refused. The resize command is cmd.workspace_layout.resize_surface { surface:
-  'chat', width }: a changed release commits once with one receipt, one workspace.layout_changed and
-  a new revision; Escape or release with no movement commits nothing. Double-clicking the resizer
-  commits once with width null. The two pin actions accept their named boolean or toggle when it is
-  absent, and save like view state with no receipt, event or revision; the pin in History's list
-  header, History's close while it is pinned and Keep History open in the chat's header menu
-  dispatch ui.chat_column.pin_history. A named layout
-  and Restore home layout keep all three fields; a project switch shows that project's own record,
-  or the defaults if none exists. Once at boot, the former stored chat.width (finite, rounded and
-  clamped to 400-760), chat.history value pinned and chat.pinOpen true copy into this project's
-  layout and every other project's saved layout only where the target field still holds its default;
-  existing non-default fields stay. The three old keys are dropped only after this project's layout
-  is written, never while an unreadable record waits to be set aside; stored defaults (null, flyout
-  and false) are just dropped. The chat's header menu rows, in order, are Keep History open (checked,
-  ui.chat_column.pin_history), Keep the chat open in narrow windows (checked,
-  ui.chat_column.keep_open), and Pop out or Dock back where supported (amended 2026-10-23, DL-233: the
-  stand-in chat's Show the current chat and Clear what you sent left with it). Keep open's second
-  line says Instead of folding to a strip at the edge. At 1920 px with width_px 500,
-  History pinning grows the column from 500 to 681 px (History 240 px, centre 960 px) and unpinning
-  returns it to 500; dragging the 600 px column's inner edge 100 px right stores width_px 500, and
-  double-click resets it to 600 with width_px null. At 900 x 700, keep_open on keeps the chat at 400
-  px with centre 443 px; off it folds to the strip with centre 811 px. Jared’s 2026-10-14
-  shell-spacing direction reduces excess space between the left rail and page content and between
-  content and the chat column on all pages. Glass needs the larger reduction; other looks retain
-  their grammar with smaller adjustments where needed. The Glass landing fixes the shell row gap at
-  2 px, giving about 8 px between the painted columns. Settings ends 10 px from the chat in Glass
-  and 20 px in other looks. The Orchestrator Glass header and board are inset 6 px instead of 16 px;
-  F3-655 consumes that shell placement. This changes no chat or panel minimum, collapse threshold or
-  persistence boundary.
-  Amended 2026-10-29 (G1–G3; PM7): No fixed 760 px message-area cap remains; the chat drag runs until the centre/page floor, with the existing narrow ladder and user-sized History preserved. Full Activity Detail opens docked directly, first widens chat, then covers transcript at full column height if it cannot fit. Remove Activity Pin/unpin/small fallback, not History pin. Stored finite widths are integer ≥400 and dynamically clamped to available space, no saved 760 upper bound.
+  Amended 2026-10-29 (G1–G3; DL-254, retaining DL-180/DL-233). Chat is one fixed right-hand column from title bar to status bar, never a tab or split-tree panel and never moved/floated inside the window. Only desktop Pop out moves it to a separate window via cmd.panel.undock with chat; cmd.panel.redock returns the same chat. Web has no Pop out. Pop-out is never saved: restart opens the column, ignoring/clearing the retired chat-layout-mode without notice. Default message width remains clamp(400, 0.26667 × window width + 88, 640) px until the user sizes it.
+  The message-area width is a finite integer ≥400 or null following the default, with no fixed 760 maximum. Drag goes until the active centre/page’s own floor; Usage’s board stays ≥400. Available-space clamping changes rendering, not the saved preference. F3-636’s narrow ladder and Keep open rule remain; no drag animation folds the person’s sized chat back. Release commits once through cmd.workspace_layout.resize_surface {surface: chat, width}, one receipt/revision/workspace.layout_changed; Escape/no-movement commits nothing; double-click sets null. Legacy finite saved widths clamp only to the minimum and current available space, never to a retired maximum. Storage owner SP-330 keeps shown, width_px, history_pinned and keep_open, no Settings row and no pop-out.
+  History is the one chat-owned history list, flyout by default. Pin widens the column by the width History is actually drawn at rather than squeezing messages: 240 px, or 200 only in a capped column under 540, or the person’s dragged width bounded to 170–360 and 42 percent of its pane (DL-233). During that drag only History moves; on release the column takes its width. The narrow ladder temporarily returns History to flyout while preserving the pin and restores it when space returns. A folded chat peeks at 400 with History as flyout; a pinned peek starts at 640 capped by available row width minus 48. ui.chat_column.pin_history(history_pinned) and ui.chat_column.keep_open(keep_open) are local saved layout state without receipt/event/revision, never Settings; absent booleans toggle. Home options and chat header share these controls. The earlier measured 760-cap/960-budget examples are superseded historical measurements, not current width limits.
+  Activity Detail opens full size directly, without Pin/unpin or a small transient view. It first asks the column for room, then covers the transcript at full column height if the window cannot fit it; ×, Esc or the same icon closes it. History pin is unaffected. Hosted chat sizes by its container and sends content opens through F3-634; one right chat and one history survive. This supersedes old movable chat, grips, bottom workspace mirroring and any fixed maximum-width Settings preference while keeping the narrow/popped-out resilience of F3-565/F3-423.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
 split_recommended: false
@@ -1515,7 +1412,7 @@ unblocks: [ACD-500, ACD-501, SSYS-050, UCC-203, PWIZ-035, ATS-075]
 acceptance_criteria:
   - "The chat column spans from the title bar to the status bar at full width of both bars, and no gesture, menu or key moves it inside the window."
   - "The default width equals clamp(400, 0.26667 x window width + 88, 640) px (480 at 1470, 600 at 1920, 640 from 2070) until the user drags it."
-  - "A width drag stays within 400-760 px and never leaves the centre below 960 px, and commits once on release as cmd.workspace_layout.resize_surface with the surface chat."
+  - "A width drag stays within at least 400 px, bounded by current centre/page space and never leaves the centre below its current minimum, and commits once on release as cmd.workspace_layout.resize_surface with the surface chat."
   - "Pop out in the desktop app opens the one chat in its own window and Dock back returns it to its column; no second chat surface ever exists."
   - "History opens as a flyout by default and pinning it widens the column by the list's width without narrowing the messages; Activity Detail stays in the chat."
   - "Below a centre width of 480 px the chat folds to a 32 px strip unless Keep the chat open in narrow windows is on."
@@ -1526,7 +1423,7 @@ acceptance_criteria:
   - "On the Usage page no chat width, drag or pinned History leaves the Usage board below 400 px: a pinned History drops to its flyout first, then the column gives way down to 400 px, and a drag stops there."
   - "The narrow ladder acts only while Home is the page shown; on another page the column is the person's width plus a pinned History."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "History adds 240 px, or 200 px below a 540 px whole-column width, without changing the message area's width or its 400-760 px drag range; the pinned column and peek obey the stated minima and centre budget."
+  - "History adds 240 px, or 200 px below a 540 px whole-column width, without changing the message area's width or its at least 400 px, bounded by current centre/page space drag range; the pinned column and peek obey the stated minima and centre budget."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

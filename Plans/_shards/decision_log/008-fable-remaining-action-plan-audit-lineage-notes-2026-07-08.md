@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L18270
+Source lines: L14505-L18266
 
-Source SHA256: `18dbca4ef5259d135ce70268e2dd8820fde6bbf07b1e9eb6fbf0d4580601c301`
+Source SHA256: `c0a38ead8236047c5372cba5fe2fbb0ea1bbce5114067ee4d25c7f726ac6a18d`
 
 ---
 
@@ -2769,6 +2769,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2776,7 +2777,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-235
 
 
 ### DL-236 - Project Box A And Switching
@@ -2818,7 +2818,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
+- Concepts/project-picker-concepts/opus-5.5/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2826,7 +2827,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-236
 
 
 ### DL-237 - One Universal Loading Indicator
@@ -2870,6 +2870,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2877,7 +2878,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-237
 
 
 ### DL-238 - Onboarding With Pip
@@ -2921,6 +2921,8 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
+- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2928,7 +2930,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-238
 
 
 ### DL-239 - Pip Chat Primitive And Parts
@@ -2972,6 +2973,8 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
+- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2979,7 +2982,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-239
 
 
 ### DL-240 - D1 Processes Naming
@@ -3016,7 +3018,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/background-activity/opus-5.5/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3024,7 +3027,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-240
 
 
 ### DL-241 - D2 Process Membership
@@ -3062,7 +3064,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3070,7 +3072,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-241
 
 
 ### DL-242 - D3 Process Grouping
@@ -3108,7 +3109,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3116,7 +3117,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-242
 
 
 ### DL-243 - D4 Conditional Processes Domain
@@ -3153,7 +3153,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3161,7 +3161,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-243
 
 
 ### DL-244 - D5 Status Bar Work Group
@@ -3200,7 +3199,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3208,7 +3207,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-244
 
 
 ### DL-245 - D6 Three Panel Tabs And Pop Out
@@ -3247,7 +3245,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/background-activity/opus-5.5/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3255,7 +3254,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-245
 
 
 ### DL-246 - D7 One Work Projection
@@ -3293,7 +3291,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3301,7 +3299,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-246
 
 
 ### DL-247 - D8 Process Group Stop
@@ -3340,7 +3337,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/background-activity/opus-5.5/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3348,7 +3346,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-247
 
 
 ### DL-248 - D9 Completion Delivery
@@ -3387,7 +3384,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3395,7 +3392,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-248
 
 
 ### DL-249 - D10 Quit With Work
@@ -3434,7 +3430,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3442,7 +3438,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-249
 
 
 ### DL-250 - D11 Read Only System Services
@@ -3479,7 +3474,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/background-activity/opus-5.5/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3487,7 +3483,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-250
 
 
 ### DL-251 - D12 Resource Samples For All Servers
@@ -3526,7 +3521,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/background-activity/opus-5.5/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3534,7 +3530,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-251
 
 
 ### DL-252 - D13 Safe Process Input
@@ -3572,7 +3567,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3580,7 +3575,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-252
 
 
 ### DL-253 - D14 Category Glyphs And Pip Agents
@@ -3619,7 +3613,9 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
+- Concepts/background-activity/opus-5.5/README.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3627,7 +3623,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-253
 
 
 ### DL-254 - Chat Detail, Width And Glass Repairs
@@ -3668,7 +3663,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/background-activity/opus-5.5/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3676,7 +3672,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-254
 
 
 ### DL-255 - Work Contracts And Deferred Surfaces
@@ -3716,7 +3711,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/background-activity/opus-5.5/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3724,7 +3720,6 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-255
 
 
 ### DL-256 - Demo Studio And Evidence Boundary
@@ -3765,12 +3760,13 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
+- Concepts/background-activity/opus-5.5/README.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
+- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
 owner_hints:
 - Plans/Decision_Log.md
 ```
-
-ContractRef: ContractName:Plans/Decision_Log.md#DL-256

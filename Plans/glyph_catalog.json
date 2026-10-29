@@ -28,6 +28,11 @@
           "secret",
           "secret prompt",
           "waiting"
+        ],
+        "work": [
+          "Needs you",
+          "Needs input",
+          "question"
         ]
       }
     },
@@ -112,6 +117,9 @@
         "usage": [
           "exhausted",
           "failed"
+        ],
+        "work": [
+          "Failed (exit N)"
         ]
       }
     },
@@ -161,6 +169,9 @@
         ],
         "rail": [
           "warn"
+        ],
+        "work": [
+          "Lost"
         ]
       }
     },
@@ -243,7 +254,6 @@
         "panels": [
           "agent-driven",
           "busy",
-          "loading",
           "reading",
           "rendering",
           "running",
@@ -281,6 +291,9 @@
           "active",
           "interviewing",
           "ledger_syncing"
+        ],
+        "work": [
+          "Running"
         ]
       }
     },
@@ -326,6 +339,10 @@
         ],
         "usage": [
           "unknown"
+        ],
+        "work": [
+          "Stopping",
+          "Scheduled"
         ]
       }
     },
@@ -404,6 +421,9 @@
         ],
         "usage": [
           "healthy"
+        ],
+        "work": [
+          "Done"
         ]
       }
     },
@@ -469,6 +489,9 @@
         "usage": [
           "not exposed",
           "not published"
+        ],
+        "work": [
+          "Stopped"
         ]
       }
     },
@@ -2017,6 +2040,30 @@
     {
       "semantic_name": "home-add-selection",
       "glyph_id": "select-area"
+    },
+    {
+      "semantic_name": "processes",
+      "glyph_id": "processes"
+    },
+    {
+      "semantic_name": "work-panel-agents",
+      "glyph_id": "robot"
+    },
+    {
+      "semantic_name": "work-panel-processes",
+      "glyph_id": "processes"
+    },
+    {
+      "semantic_name": "work-panel-resources",
+      "glyph_id": "server"
+    },
+    {
+      "semantic_name": "project-box-folder",
+      "glyph_id": "folder"
+    },
+    {
+      "semantic_name": "project-box-all",
+      "glyph_id": "grid"
     }
   ],
   "source_refs": [
@@ -2029,6 +2076,21 @@
       "path": "Concepts/glyph-system/opus-5.5/src/data/map.json",
       "sha256": "538a339c907b18cad08cdeed35bcd7cdb8af18d936fdf65574a8b26d77a3066d",
       "revision": "81617137658b89ace8af7eeac2baf8c5918364f8"
-    }
-  ]
+    },
+    "Plans/FinalGUISpec.md#F3-660",
+    "Plans/FinalGUISpec.md#F3-664",
+    "Plans/Decision_Log.md#DL-253"
+  ],
+  "pip_mood_status_mappings": {
+    "idle": "idle",
+    "think": "working",
+    "happy": "complete",
+    "alert": "waiting",
+    "wonder": "waiting",
+    "error": "failed",
+    "oops": "failed",
+    "sleep": "paused",
+    "watch": "idle",
+    "wink": "complete"
+  }
 }

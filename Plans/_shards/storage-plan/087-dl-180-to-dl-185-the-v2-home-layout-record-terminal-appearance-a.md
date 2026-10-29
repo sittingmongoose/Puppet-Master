@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L27472-L28103
 
-Source SHA256: `34c30a5a6f63c6676679e807302bec56f6f025b9975b701433d5edc4d61e5ee6`
+Source SHA256: `c038001f7d4ca3934fb23f0c8c13aa0bc7d7b0cc15c5a2a7f591f796dd01da71`
 
 ---
 
@@ -109,7 +109,7 @@ canonical_text: >-
   keep_open, the narrow-window pin ui.chat_column.keep_open sets (UCC-203), off while absent; it is the person's
   choice, not a narrow-window state, and is written like view state.
   The chat_column fields width_px, history_pinned and keep_open default to null, false and false; width_px
-  is the message area's width, rounded into 400-760 px, an out-of-range finite value stored at the nearer
+  is the message area's width, rounded to an integer of at least 400 px without a fixed upper cap (G3), an undersized finite value stored at the minimum
   bound and null the window's default. They are layout values, never Settings values. A changed width is one
   cmd.workspace_layout.resize_surface { surface: 'chat', width } structural commit, with one receipt, one
   layout event and a new revision; a changed drag commits once on release, Escape or no movement commits

@@ -610,6 +610,81 @@
    ]
   },
   {
+    "id": "general.visual.pip-parts",
+    "label": "Customize Pip",
+    "desc": "Choose Pip’s optional chat and setup appearances, faces, motion, look and sound. Presets Full, Quiet, Still and Plain edit the same list; brand and loaders stay available. Labels and presets: Plans/pip_parts.json (S1–S9).",
+    "type": "multiselect",
+    "options": [
+      "sheet-hosts",
+      "status-faces",
+      "working-orbit",
+      "plans",
+      "wand-menu",
+      "empty-lists",
+      "state-faces",
+      "watches",
+      "wonders-while-typing",
+      "cheers",
+      "oops",
+      "gaze",
+      "blinks",
+      "sway-and-physics",
+      "face-transitions",
+      "thinking-dots",
+      "idle-life",
+      "seat-colours",
+      "role-props",
+      "strings",
+      "cheeks-and-shine",
+      "setup-world-life",
+      "setup-voice",
+      "app-voice",
+      "setup-music"
+    ],
+    "default": [
+      "sheet-hosts",
+      "status-faces",
+      "working-orbit",
+      "plans",
+      "wand-menu",
+      "empty-lists",
+      "state-faces",
+      "watches",
+      "wonders-while-typing",
+      "cheers",
+      "oops",
+      "gaze",
+      "blinks",
+      "sway-and-physics",
+      "face-transitions",
+      "thinking-dots",
+      "idle-life",
+      "seat-colours",
+      "role-props",
+      "strings",
+      "cheeks-and-shine",
+      "setup-world-life",
+      "setup-voice",
+      "setup-music"
+    ],
+    "scope": [
+      "global"
+    ],
+    "tier": "simple",
+    "search": [
+      "Pip",
+      "mascot",
+      "puppet",
+      "setup voice",
+      "setup music",
+      "app chirps",
+      "Full",
+      "Quiet",
+      "Still",
+      "Plain"
+    ]
+  },
+  {
    "id": "general.visual.glass-background-mode",
    "label": "Glass Background",
    "desc": "Compatibility lineage only; never rendered or written. Wallpaper replaces Mesh/Depth/Minimal; SP-333 owns migration. (Superseded by SSYS-054 at the 2026-10-15 Liquid Glass/wallpaper publication.)",
@@ -1697,6 +1772,26 @@
     "icon labels",
     "Show Names Next to the Icons on the Left"
    ]
+  },
+  {
+    "id": "general.interaction.status-bar-words",
+    "label": "Show words in the status bar’s agent and process counts",
+    "desc": "Numbers shows glyph and number pairs with full words on hover. Turn this on for words beside the counts. Questions and process input stay separate (D5).",
+    "type": "toggle",
+    "default": false,
+    "scope": [
+      "global"
+    ],
+    "tier": "simple",
+    "search": [
+      "status bar",
+      "agents",
+      "questions",
+      "processes",
+      "needs input",
+      "Numbers",
+      "Words"
+    ]
   },
   {
    "id": "general.interaction.spellcheck",

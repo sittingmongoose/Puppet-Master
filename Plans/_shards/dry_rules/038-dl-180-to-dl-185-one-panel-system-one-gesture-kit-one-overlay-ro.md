@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3458-L4423
+Source lines: L3458-L4425
 
-Source SHA256: `eec3cf961f928e51b457c9122057aa10b422732a24fae68c7e9c68e99d0e552d`
+Source SHA256: `1f1167147159ee4aff768ceb2eb704ca12599a38f03e4e71224f7436c3fc2f70`
 
 ---
 
@@ -872,6 +872,8 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
+- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -965,7 +967,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/background-activity/opus-5.5/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

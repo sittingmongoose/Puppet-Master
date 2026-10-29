@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46922-L49670
+Source lines: L46819-L49573
 
-Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
+Source SHA256: `fe296617d9797bc6c00a3a6b28ca54478326d192ff64bda5a3d283629579c14e`
 
 ---
 
@@ -2503,6 +2503,8 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
+- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2548,7 +2550,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
+- Concepts/project-picker-concepts/opus-5.5/README.md
 preserved_exact_tokens:
 - cmd.project.switch_active_tab
 - cmd.project.open_in_new_workspace_tab
@@ -2599,6 +2602,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2648,6 +2652,8 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
+- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 preserved_exact_tokens:
 - pm7ob-explainer
 - ui.onboarding.open_details
@@ -2699,6 +2705,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
+- Concepts/background-activity/opus-5.5/README.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 preserved_exact_tokens: []
 negative_constraints:
@@ -2748,7 +2755,6 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

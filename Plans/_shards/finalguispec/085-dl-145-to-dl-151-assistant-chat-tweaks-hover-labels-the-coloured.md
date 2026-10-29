@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L41988-L42582
 
-Source SHA256: `e68576392b489392606146f2e8a48f310565fd85917e1bcfe43a97599080547d`
+Source SHA256: `fe296617d9797bc6c00a3a6b28ca54478326d192ff64bda5a3d283629579c14e`
 
 ---
 
@@ -370,7 +370,7 @@ negative_constraints:
   - "Do not draw an agent with initials, letters or an avatar."
   - "Do not draw a second puppet primitive for any surface."
   - "Do not give the puppet a hue or a glow under NieR Mode."
-  - "Do not run a looping puppet motion in a setup sheet, run card or run view."
+  - "Do not add a surface-owned puppet loop; shared optional sheet motion follows PC1/O2 and F3-594/F3-663."
 compatibility_only_notes: []
 stale_retired_dispositions:
   - "F3-566's cast mark drawn from silhouette, spike and hue with its state as a ring, and ACD-469's avatar stack, are replaced by the puppet (DL-149)."

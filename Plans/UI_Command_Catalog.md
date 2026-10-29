@@ -16424,11 +16424,12 @@ plan_unit_id: UCC-209
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: B1/B2/B6; CS-105. The project box and row-key producer add cmd.project.switch_active_tab and
+canonical_text: 'B1/B2/B6; CS-105. The project box and row-key producer add cmd.project.switch_active_tab and
   cmd.project.open_in_new_workspace_tab as canonical workspace-owner commands with stable project_id. ui.project_switcher.open/close
   are typed local presentation actions, Ctrl+Shift+P opens and Ctrl/Cmd+Enter on a row dispatches the new-tab
   command. All projects uses the existing Projects route. Binding census includes all six shell.project.* controls;
-  decorative mark/loader dispatch nothing.
+  decorative mark/loader dispatch nothing. B2: All projects is ui.project_switcher.all_projects, a typed local
+  existing-page route with tab_id projects, never a cmd.panel.switch side-panel operation.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -16558,3 +16559,24 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-239
+
+
+## PM7 project and work command entries (2026-10-29; B1/B6, D2/D6/D8–D13, G4–G7)
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|---|---|---|---|---|
+| `cmd.project.switch_active_tab` | Switch active workspace Project | One typed owner route; Plans/FinalGUISpec.md#F3-661; request/result contract CS-105/CS-106. | Current scope/target, available owner, permission and storage posture; runtime effects require writer | `navigation_wrapper` |
+| `cmd.project.open_in_new_workspace_tab` | Open Project in new workspace tab | One typed owner route; Plans/FinalGUISpec.md#F3-661; request/result contract CS-105/CS-106. | Current scope/target, available owner, permission and storage posture; runtime effects require writer | `navigation_wrapper` |
+| `cmd.chat.processes.open` | Open Processes | One typed owner route; Plans/assistant-chat-design.md#ACD-505; request/result contract CS-105/CS-106. | Current scope/target, available owner, permission and storage posture; runtime effects require writer | `navigation_wrapper` |
+| `cmd.agents_and_processes.show` | Show agents and processes | One typed owner route; Plans/FinalGUISpec.md#F3-664; request/result contract CS-105/CS-106. | Current scope/target, available owner, permission and storage posture; runtime effects require writer | `navigation_wrapper` |
+| `cmd.agents_and_processes.pop_out` | Pop out agents and processes | One typed owner route; Plans/FinalGUISpec.md#F3-664; request/result contract CS-105/CS-106. | Current scope/target, available owner, permission and storage posture; runtime effects require writer | `navigation_wrapper` |
+| `cmd.work.stop` | Stop work | One typed owner route; Plans/Shared_Integration_Runtime.md#SIR-054; request/result contract CS-105/CS-106. | Current scope/target, available owner, permission and storage posture; runtime effects require writer | `domain_action` |
+| `cmd.work.restart` | Restart work | One typed owner route; Plans/Shared_Integration_Runtime.md#SIR-054; request/result contract CS-105/CS-106. | Current scope/target, available owner, permission and storage posture; runtime effects require writer | `domain_action` |
+| `cmd.work.send_input` | Answer process prompt | One typed owner route; Plans/Shared_Integration_Runtime.md#SIR-054; request/result contract CS-105/CS-106. | Current scope/target, available owner, permission and storage posture; runtime effects require writer | `domain_action` |
+| `cmd.work.set_completion_delivery` | When it ends | One typed owner route; Plans/Shared_Integration_Runtime.md#SIR-054; request/result contract CS-105/CS-106. | Current scope/target, available owner, permission and storage posture; runtime effects require writer | `domain_action` |
+| `cmd.work.clear_finished` | Clear finished | View-local hiding, no record deletion; UCC-210/CS-106. | Current scope/target, available owner, permission and storage posture; runtime effects require writer | `navigation_wrapper` |
+| `cmd.work.quit` | Quit with running work | One typed owner route; Plans/FinalGUISpec.md#F3-665; request/result contract CS-105/CS-106. | Current scope/target, available owner, permission and storage posture; runtime effects require writer | `domain_action` |
+
+All eleven entries have normalization.kind = canonical, alias_of_command_id = null and normalizes_to_contract = Plans/pm7_build_contracts.schema.json at the matching *_request definition. Handlers and exact request/result refs are in production wiring; semantic owner checks precede effects.
+
+Typed local actions: `ui.project_switcher.open`, `ui.project_switcher.close`, `ui.work_panel.close`, `ui.work_panel.select_tab`, `ui.work_panel.filter`, `ui.work_panel.sort`, `ui.work_panel.expand`, `ui.work_panel.select`, `ui.work_quit.open`, `ui.work_quit.select`, `ui.work_quit.cancel`, `ui.settings.pip_editor.open`, `ui.settings.pip_editor.close`, `ui.settings.pip_editor.replay`. They write no durable/runtime value; Settings part edits use the existing transaction pair.

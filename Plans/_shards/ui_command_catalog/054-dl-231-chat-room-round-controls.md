@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16248-L16560
+Source lines: L16248-L16561
 
-Source SHA256: `9d9436c110ebbf9752035d098f87aa5e30ed4b7769070f57278d83a3b36934ee`
+Source SHA256: `aa9ea296b29d7ed05b7d642efabac03869c2db0f2509d0850c3e3956a4f97dd0`
 
 ---
 
@@ -187,11 +187,12 @@ plan_unit_id: UCC-209
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: B1/B2/B6; CS-105. The project box and row-key producer add cmd.project.switch_active_tab and
+canonical_text: 'B1/B2/B6; CS-105. The project box and row-key producer add cmd.project.switch_active_tab and
   cmd.project.open_in_new_workspace_tab as canonical workspace-owner commands with stable project_id. ui.project_switcher.open/close
   are typed local presentation actions, Ctrl+Shift+P opens and Ctrl/Cmd+Enter on a row dispatches the new-tab
   command. All projects uses the existing Projects route. Binding census includes all six shell.project.* controls;
-  decorative mark/loader dispatch nothing.
+  decorative mark/loader dispatch nothing. B2: All projects is ui.project_switcher.all_projects, a typed local
+  existing-page route with tab_id projects, never a cmd.panel.switch side-panel operation.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
