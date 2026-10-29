@@ -40779,6 +40779,9 @@ body.pmw-dragging #pm-hover-tag-root, body.pm-resizing:not(.pmw-dragging) #pm-ho
 .pmw-tab[data-attention] .pmw-tattn { display: block; }
 .pmw-tab[data-size="icon"] .pmw-tattn, .pmw-tab[data-size="pinned"] .pmw-tattn { left: auto; right: 6px; }
 .pmw-tab.pmw-dragging { z-index: 40; cursor: grabbing; will-change: transform; }
+/* a carried tab has no use for its close button: its label takes the 24 px back while it is carried, so the tab chosen
+   at the grab (its label in the chosen weight, in its frozen width) is not cut to its first letter (2026-10-29 review) */
+.pmw-tab.pmw-dragging .pmw-tclose { display: none; }
 .pmw-tab.pmw-torn { visibility: hidden; }
 
 /* the silhouette plate: one clip-path per frame (34-shape.js); overlaps the body by 1 px so the two are one surface */
@@ -185607,8 +185610,12 @@ function moveTabs(st, from, dir, anims) {
     if (n > 0) {
       add(ink.animate(path.map((b, k) => Object.assign({ offset: k / n, easing: 'steps(1, end)' }, inkFrame(b))), { duration: n * TICK, fill: 'backwards' }));
       /* the chosen tab keeps the colour it had (its icon and its new label) until the ink lands on it, so only one tab
-         ever looks chosen: the one under the ink. --d-tab-fg is what the active colours read (22-tabs) */
-      if (from.fg) add(items[at].animate([{ '--d-tab-fg': from.fg }, { '--d-tab-fg': from.fg }], { duration: n * TICK }));
+         ever looks chosen: the one under the ink. --d-tab-fg is what the active colours read (22-tabs). Not when the
+         page's switcher draws the chip instead of this ink (data-pm-switch: the ink is kept at opacity 0, glass.css):
+         that chip is on the chosen tab at once, and the held colour left its icon in the old ink on the chip for the
+         length of the hops, 11 frames for two (2026-10-29 review, astra N2) */
+      const inkCs = getComputedStyle(ink);
+      if (from.fg && inkCs.display !== 'none' && parseFloat(inkCs.opacity) > 0) add(items[at].animate([{ '--d-tab-fg': from.fg }, { '--d-tab-fg': from.fg }], { duration: n * TICK }));
     }
     /* landed: the chosen tab in inverse video for one tick */
     const inv = add(st.animate([{ '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }, { '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }], { duration: TICK, delay: n * TICK, fill: 'forwards' }));
@@ -193093,7 +193100,10 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
       var fw = frozen[t];
       if (fw === -1 || fw == null) { res.hidden.push(t); return; }
       res.widths[t] = fw || TAB.shrunk;
-      res.size[t] = fw && fw <= TAB.icon ? 'icon' : 'full';
+      /* ...and the same presentation: a tab narrower than its own label keeps 'shrunk' (its close slot stays hidden,
+         10-panels.css), so picking a tab up does not take 24 px from the labels and cut them shorter (2026-10-29
+         review, astra: "recipes.rs" became "r…rs" at the grab and grew back at the drop) */
+      res.size[t] = fw && fw <= TAB.icon ? 'icon' : fw < naturalWidth(recs[t], font, host, t === activeId) ? 'shrunk' : 'full';
     });
     return res;
   }
@@ -193310,7 +193320,10 @@ function middleEllipsis(el, rec, size) {
      label; while resizing, fit against the room rounded down to 24px buckets (a text fitted for the
      bucket always fits the room), so a label refits at most once per 24px travelled and reuses its fit
      while the room only grows. The first non-resizing paint refits at the exact room again. */
-  var resizing = !!((typeof state !== 'undefined' && state && state.resizing) || (doc.body && doc.body.classList.contains('pm-resizing')));
+  /* a tab carried along its strip is not a resize: its widths are frozen, and fitting against the 24 px bucket cut the
+     carried label to its first letter at the grab (2026-10-29 review) */
+  var resizing = !!((typeof state !== 'undefined' && state && state.resizing) ||
+    (doc.body && doc.body.classList.contains('pm-resizing') && !doc.body.classList.contains('pmw-dragging')));
   var fitRoom = resizing ? Math.max(24, Math.floor(room / 24) * 24) : room;
   var theme = doc.documentElement.getAttribute('data-theme') + '|' + size + '|' + (doc.fonts ? doc.fonts.status : '');
   var cache = lab._pmwEll;
@@ -197724,8 +197737,11 @@ PM_HOME.boot = function () {
       narrow.schedule();
       /* During a resize drag the scheduled paint lands a frame after the rail/chat edge that caused it
          (panels visibly trail the edge). The observer's own box is already the post-layout size, so paint
-         from it in this frame; the observer remains the source of truth — any later size paints again. */
-      if (doc.body && doc.body.classList.contains('pm-resizing') && entries && entries[0] && entries[0].contentRect) {
+         from it in this frame; the observer remains the source of truth — any later size paints again.
+         The same for every other change of the centre's size: closing or opening the rail's panel moved the
+         panels to the centre's new origin at their old widths for a long frame (a blank column before the
+         chat), then widened them (2026-10-29 review, astra N1). */
+      if (entries && entries[0] && entries[0].contentRect) {
         var cr = entries[0].contentRect, pad = PMW.CENTRE_PAD || 6;
         try {
           render.now({ animate: false, centreRect: { x: pad, y: pad, w: Math.max(0, cr.width - 2 * pad), h: Math.max(0, cr.height - 2 * pad) } });

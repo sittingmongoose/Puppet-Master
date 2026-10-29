@@ -235,8 +235,12 @@ function moveTabs(st, from, dir, anims) {
     if (n > 0) {
       add(ink.animate(path.map((b, k) => Object.assign({ offset: k / n, easing: 'steps(1, end)' }, inkFrame(b))), { duration: n * TICK, fill: 'backwards' }));
       /* the chosen tab keeps the colour it had (its icon and its new label) until the ink lands on it, so only one tab
-         ever looks chosen: the one under the ink. --d-tab-fg is what the active colours read (22-tabs) */
-      if (from.fg) add(items[at].animate([{ '--d-tab-fg': from.fg }, { '--d-tab-fg': from.fg }], { duration: n * TICK }));
+         ever looks chosen: the one under the ink. --d-tab-fg is what the active colours read (22-tabs). Not when the
+         page's switcher draws the chip instead of this ink (data-pm-switch: the ink is kept at opacity 0, glass.css):
+         that chip is on the chosen tab at once, and the held colour left its icon in the old ink on the chip for the
+         length of the hops, 11 frames for two (2026-10-29 review, astra N2) */
+      const inkCs = getComputedStyle(ink);
+      if (from.fg && inkCs.display !== 'none' && parseFloat(inkCs.opacity) > 0) add(items[at].animate([{ '--d-tab-fg': from.fg }, { '--d-tab-fg': from.fg }], { duration: n * TICK }));
     }
     /* landed: the chosen tab in inverse video for one tick */
     const inv = add(st.animate([{ '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }, { '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }], { duration: TICK, delay: n * TICK, fill: 'forwards' }));

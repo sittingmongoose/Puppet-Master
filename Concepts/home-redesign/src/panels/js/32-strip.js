@@ -81,7 +81,10 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
       var fw = frozen[t];
       if (fw === -1 || fw == null) { res.hidden.push(t); return; }
       res.widths[t] = fw || TAB.shrunk;
-      res.size[t] = fw && fw <= TAB.icon ? 'icon' : 'full';
+      /* ...and the same presentation: a tab narrower than its own label keeps 'shrunk' (its close slot stays hidden,
+         10-panels.css), so picking a tab up does not take 24 px from the labels and cut them shorter (2026-10-29
+         review, astra: "recipes.rs" became "r…rs" at the grab and grew back at the drop) */
+      res.size[t] = fw && fw <= TAB.icon ? 'icon' : fw < naturalWidth(recs[t], font, host, t === activeId) ? 'shrunk' : 'full';
     });
     return res;
   }
@@ -298,7 +301,10 @@ function middleEllipsis(el, rec, size) {
      label; while resizing, fit against the room rounded down to 24px buckets (a text fitted for the
      bucket always fits the room), so a label refits at most once per 24px travelled and reuses its fit
      while the room only grows. The first non-resizing paint refits at the exact room again. */
-  var resizing = !!((typeof state !== 'undefined' && state && state.resizing) || (doc.body && doc.body.classList.contains('pm-resizing')));
+  /* a tab carried along its strip is not a resize: its widths are frozen, and fitting against the 24 px bucket cut the
+     carried label to its first letter at the grab (2026-10-29 review) */
+  var resizing = !!((typeof state !== 'undefined' && state && state.resizing) ||
+    (doc.body && doc.body.classList.contains('pm-resizing') && !doc.body.classList.contains('pmw-dragging')));
   var fitRoom = resizing ? Math.max(24, Math.floor(room / 24) * 24) : room;
   var theme = doc.documentElement.getAttribute('data-theme') + '|' + size + '|' + (doc.fonts ? doc.fonts.status : '');
   var cache = lab._pmwEll;

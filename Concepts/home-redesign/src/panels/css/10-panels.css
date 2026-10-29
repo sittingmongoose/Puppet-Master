@@ -177,6 +177,9 @@ body.pmw-dragging #pm-hover-tag-root, body.pm-resizing:not(.pmw-dragging) #pm-ho
 .pmw-tab[data-attention] .pmw-tattn { display: block; }
 .pmw-tab[data-size="icon"] .pmw-tattn, .pmw-tab[data-size="pinned"] .pmw-tattn { left: auto; right: 6px; }
 .pmw-tab.pmw-dragging { z-index: 40; cursor: grabbing; will-change: transform; }
+/* a carried tab has no use for its close button: its label takes the 24 px back while it is carried, so the tab chosen
+   at the grab (its label in the chosen weight, in its frozen width) is not cut to its first letter (2026-10-29 review) */
+.pmw-tab.pmw-dragging .pmw-tclose { display: none; }
 .pmw-tab.pmw-torn { visibility: hidden; }
 
 /* the silhouette plate: one clip-path per frame (34-shape.js); overlaps the body by 1 px so the two are one surface */

@@ -76,8 +76,11 @@ PM_HOME.boot = function () {
       narrow.schedule();
       /* During a resize drag the scheduled paint lands a frame after the rail/chat edge that caused it
          (panels visibly trail the edge). The observer's own box is already the post-layout size, so paint
-         from it in this frame; the observer remains the source of truth — any later size paints again. */
-      if (doc.body && doc.body.classList.contains('pm-resizing') && entries && entries[0] && entries[0].contentRect) {
+         from it in this frame; the observer remains the source of truth — any later size paints again.
+         The same for every other change of the centre's size: closing or opening the rail's panel moved the
+         panels to the centre's new origin at their old widths for a long frame (a blank column before the
+         chat), then widened them (2026-10-29 review, astra N1). */
+      if (entries && entries[0] && entries[0].contentRect) {
         var cr = entries[0].contentRect, pad = PMW.CENTRE_PAD || 6;
         try {
           render.now({ animate: false, centreRect: { x: pad, y: pad, w: Math.max(0, cr.width - 2 * pad), h: Math.max(0, cr.height - 2 * pad) } });
