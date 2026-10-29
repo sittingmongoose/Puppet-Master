@@ -105,7 +105,7 @@
       const steps = O55.tx('server.install.' + plat);
       let inner = plats.length > 1 ? C.segmented({ do: 'platform', value: plat, label: T('server.kind.installTitle'), options: plats.map((p) => ({ v: p, label: PLATFORM_NAMES[p] })) }) : '';
       inner += `<ol class="o55-steps" data-key="steps-${plat}">` + (Array.isArray(steps) ? steps : []).map((st) => `<li>${U.esc(st)}</li>`).join('') + '</ol>';
-      if (plat === 'linux') inner += `<div class="o55-codeline" data-key="cmd"><code>${U.esc(T('server.install.command'))}</code>${F.copyBtn(T('server.install.command'), 'install')}</div>`;
+      if (plat === 'linux') inner += `<div class="o55-codeline" data-key="cmd"><code>${U.esc(T('server.install.command'))}</code>${F.copyBtn(T('server.install.command'), 'install')}</div>${F.copyNote('install')}`;
       inner += `<div class="o55-sublinks" data-key="guide">${C.link(T('server.install.guide'), 'guide', plat)}</div>`;
       let out = C.group(T('server.kind.installTitle'), inner, { cls: 'o55-install' });
       if (sv.manual) {
@@ -238,7 +238,7 @@
           + `<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.confirm.selfTitle'))}</span>`
           + `<span class="o55-rowmeta">${U.esc(w || T('server.ready.wordsMissing'))}</span></span></div>`;
         out += `<p class="o55-hint" data-key="selfhint">${U.esc(T('server.confirm.selfHint'))}</p>`;
-        out += `<div class="o55-checkline" data-key="selfmatch"><button type="button" role="checkbox" aria-checked="${sv.selfConfirmed ? 'true' : 'false'}" class="o55-check${sv.selfConfirmed ? ' is-on' : ''}" data-o55-do="selfMatch" data-pm-hover-exempt="true">${sv.selfConfirmed ? C.small('check', 13) : ''}</button><span>${U.esc(T('server.confirm.matchWords'))}</span></div>`;
+        out += `<div class="o55-checkline" data-key="selfmatch"><button type="button" role="checkbox" aria-checked="${sv.selfConfirmed ? 'true' : 'false'}" class="o55-check${sv.selfConfirmed ? ' is-on' : ''}" data-o55-do="selfMatch" data-pm-hover-exempt="true">${sv.selfConfirmed ? C.small('check', 13) : ''}</button><span>${U.esc(T('server.confirm.matchWords'))}</span>${O55.tips.q('selfMatch')}</div>${O55.tips.explainer('selfMatch')}`;
       }
       return out;
     },
@@ -389,7 +389,8 @@
         + `<span class="o55-pairtitle">${U.esc(T('server.ready.pairTitle'))}</span><span class="o55-paircode">${U.esc(code || T('server.ready.codeMissing'))}</span>`
         + `<span class="o55-hint">${U.esc(t.left ? T('chrome.expiresIn', { m: t.m, s: t.s }) : T('connect.pair.expired'))}</span>`
         + `<span class="o55-hint">${U.esc(T('server.ready.link'))}: ${U.esc(link)}</span>`
-        + `<span class="o55-pairbtns">${O55.ui.btn({ label: T('chrome.newCode'), do: 'newCode', cls: 'o55-small' }, 'o55-secondary')}${F.copyBtn(link, 'pairlink')}</span></div></div>`;
+        + `<span class="o55-pairbtns">${O55.ui.btn({ label: T('chrome.newCode'), do: 'newCode', cls: 'o55-small', note: false }, 'o55-secondary')}${F.copyBtn(link, 'pairlink')}</span></div></div>`
+          + O55.tips.explainer('newCode') + F.copyNote('pairlink');
       card += `<p class="o55-note o55-note-info" data-key="pairsub">${C.small('phone', 14)}<span>${U.esc(T('server.ready.pairSub'))}</span></p>`;
       let shownWaiting = false;
       (sv.candidates || []).forEach((c) => {
@@ -403,9 +404,10 @@
           card += `<div class="o55-row" data-key="cand-${U.esc(U.slug(c.id))}">${C.small('phone', 18)}`
             + `<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.ready.waiting', { name: c.name }))}</span>`
             + `<span class="o55-rowmeta">${U.esc(w || T('server.ready.wordsMissing'))}</span></span>`
-            + `<span class="o55-pairbtns">${O55.ui.btn({ label: T('server.ready.approve'), do: 'approve', arg: c.id, cls: 'o55-small', disabled: !canApprove, reason: c.confirmed ? T('chrome.working') : T('server.ready.confirmWords') }, 'o55-primary')}${O55.ui.btn({ label: T('server.ready.deny'), do: 'deny', arg: c.id, cls: 'o55-small' }, 'o55-secondary')}</span></div>`;
+            + `<span class="o55-pairbtns">${O55.ui.btn({ label: T('server.ready.approve'), do: 'approve', arg: c.id, cls: 'o55-small', disabled: !canApprove, reason: c.confirmed ? T('chrome.working') : T('server.ready.confirmWords'), tip: 'group:approve', note: false }, 'o55-primary')}${O55.ui.btn({ label: T('server.ready.deny'), do: 'deny', arg: c.id, cls: 'o55-small', tip: 'group:deny', note: false }, 'o55-secondary')}</span></div>`
+            + O55.tips.explainer('group:approve') + O55.tips.explainer('group:deny');
           card += `<p class="o55-hint" data-key="candhint-${U.esc(U.slug(c.id))}">${U.esc(T('server.ready.waitingHint', { name: c.name }))}</p>`;
-          card += `<div class="o55-checkline" data-key="match-${U.esc(U.slug(c.id))}"><button type="button" role="checkbox" aria-checked="${c.confirmed ? 'true' : 'false'}" class="o55-check${c.confirmed ? ' is-on' : ''}" data-o55-do="match" data-o55-arg="${U.esc(c.id)}" data-pm-hover-exempt="true">${c.confirmed ? C.small('check', 13) : ''}</button><span>${U.esc(T('server.ready.confirmWords'))}</span></div>`;
+          card += `<div class="o55-checkline" data-key="match-${U.esc(U.slug(c.id))}"><button type="button" role="checkbox" aria-checked="${c.confirmed ? 'true' : 'false'}" class="o55-check${c.confirmed ? ' is-on' : ''}" data-o55-do="match" data-o55-arg="${U.esc(c.id)}" data-pm-hover-exempt="true">${c.confirmed ? C.small('check', 13) : ''}</button><span>${U.esc(T('server.ready.confirmWords'))}</span>${O55.tips.q('group:match')}</div>${O55.tips.explainer('group:match')}`;
           if (running) card += F.phases(S, 'approve:' + c.id, ['approve'], { approve: T('chrome.working') });
           if (sv.approveErr) card += C.note(pendingCopy(sv.approveErr), 'warn', 'phone');
         } else if (c.state === 'waiting') {
@@ -644,7 +646,7 @@
     body(S) {
       const r = R(S), b = S.env.fullBackups.find((x) => x.id === r.pick) || S.env.fullBackups[0], projects = b.projectList.map((name) => ({ id: U.slug(name), name }));
       let out = C.group(T('ready.project'), C.cards('pickProject', projects.map((p) => ({ v: p.id, glyph: 'folder', title: p.name })), r.open || projects[0].id));
-      out += `<button type="button" class="o55-card o55-card-link" data-o55-do="createNew" data-o55-sound="self" data-pm-hover-exempt="true" data-key="create">${C.glyph('seed')}<span class="o55-cardtext"><span class="o55-cardtitle">${U.esc(T('restore.done.create'))}</span></span><span class="o55-cardarrow" aria-hidden="true">›</span></button>`;
+      out += O55.tips.opt('createNew', `<button type="button" class="o55-card o55-card-link" data-o55-do="createNew" data-o55-sound="self" data-pm-hover-exempt="true" data-key="create">${C.glyph('seed')}<span class="o55-cardtext"><span class="o55-cardtitle">${U.esc(T('restore.done.create'))}</span></span><span class="o55-cardarrow" aria-hidden="true">›</span></button>`);
       return out;
     },
     foot(S) {

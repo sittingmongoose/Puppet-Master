@@ -315,11 +315,15 @@
 
   /* ---------------------------------------------------------------- render */
   const val = (v) => (typeof v === 'function' ? v(S) : v);
+  /* the footer's controls that have a ? of their own (Ready's Tour and Enter, Welcome's Skip): their explainer opens at
+     the end of the screen's content, never inside the footer's row */
+  let footTips = [];
   function footHtml(foot, def, choose) {
     foot = foot || {};
+    footTips = [];
     const back = foot.back === false ? '' : `<button type="button" class="o55-btn o55-ghost o55-back" data-o55-do="back" data-pm-hover-exempt="true">${backIcon()}<span>${U.esc(T('chrome.back'))}</span></button>`;
-    const secs = (foot.secondary || []).filter(Boolean), sec = secs.map((b) => btn(b, 'o55-secondary')).join('');
-    const pri = foot.primary ? btn(foot.primary, 'o55-primary') : '';
+    const secs = (foot.secondary || []).filter(Boolean), sec = secs.map((b) => btn(b, 'o55-secondary', true)).join('');
+    const pri = foot.primary ? btn(foot.primary, 'o55-primary', true) : '';
     const note = foot.note ? `<span class="o55-footnote">${U.esc(foot.note)}</span>` : '';
     return `<footer class="o55-foot o55-st" style="--i:4">${back}${note}<span class="o55-footgrow">${secs.length || note ? '' : keysHtml(foot, choose)}</span>${sec}${pri}</footer>`;
   }
@@ -333,20 +337,30 @@
       + `${k(T('nierWindow.keys.escCap'), T('nierWindow.keys.esc'))}${choose ? k('\u2190 \u2192', T('nierWindow.keys.choose')) : ''}</span>`;
   }
   const backIcon = () => U.nx('chevron-left', 16, 'control') || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
-  function btn(b, cls) {
+  /* An action button with a tip of its own (Try again, Check again, Trust this device) has its ? beside it (b.tip: false
+     for none, or another id); in the footer the ? stays beside the button and its explainer opens in the content */
+  function btn(b, cls, inFoot) {
     const dis = b.disabled ? ` aria-disabled="true" data-disabled-reason="${U.esc(b.reason || '')}"` : '';
-    return `<button type="button" class="o55-btn ${cls}${b.cls ? ' ' + b.cls : ''}" data-o55-do="${U.esc(b.do)}"${b.arg != null ? ` data-arg="${U.esc(b.arg)}"` : ''}${dis} data-pm-hover-exempt="true"${b.id ? ` data-key="${U.esc(b.id)}"` : ''}>`
+    const tid = b.tip === false || !O55.tips ? null : b.tip || O55.tips.exact(b.do, b.arg);
+    const html = `<button type="button" class="o55-btn ${cls}${b.cls ? ' ' + b.cls : ''}" data-o55-do="${U.esc(b.do)}"${b.arg != null ? ` data-arg="${U.esc(b.arg)}"` : ''}${dis}${tid ? O55.tips.described(tid) : ''} data-pm-hover-exempt="true"${b.id ? ` data-key="${U.esc(b.id)}"` : ''}>`
       + (b.icon ? U.icon(b.icon) : '') + `<span>${U.esc(b.label)}</span></button>`;
+    if (!tid) return html;
+    if (!inFoot) return O55.tips.opt(tid, html, 'o55-opt-inline', 'span', { note: b.note });
+    const qh = O55.tips.q(tid); if (!qh) return html;
+    footTips.push(tid);
+    return `<span class="o55-opt o55-opt-inline o55-opt-foot" data-key="opt-${U.esc(tid)}">${html}${qh}</span>`;
   }
   O55.ui = { btn };
 
   function paneHtml(def) {
     const eyebrow = val(def.eyebrow), title = val(def.title), lead = val(def.lead), body = def.body ? def.body(S) : '';
+    const foot = footHtml(def.foot ? def.foot(S) : {}, def, /o55-choices|o55-tiles/.test(body));
+    const footNote = S.tip && footTips.includes(S.tip.id) ? O55.tips.explainer(S.tip.id) : '';
     return `<div class="o55-scroll" data-key="scroll"><div class="o55-content">`
       + (eyebrow ? `<p class="o55-eyebrow o55-st" style="--i:0">${U.esc(eyebrow)}</p>` : '')
       + `<h1 class="o55-title o55-st" style="--i:1" id="o55-h" tabindex="-1">${U.esc(title || '')}</h1>`
       + (lead ? `<p class="o55-lead o55-st" style="--i:2">${U.esc(lead)}</p>` : '')
-      + `<div class="o55-main o55-st" style="--i:3" data-key="main">${resumedBanner(def)}${body}</div></div></div>` + footHtml(def.foot ? def.foot(S) : {}, def, /o55-choices|o55-tiles/.test(body));
+      + `<div class="o55-main o55-st" style="--i:3" data-key="main">${resumedBanner(def)}${body}${footNote}</div></div></div>` + foot;
   }
 
   /* Reopening lands on the exact saved screen with a quiet "Picking up where you left off" and Start over; the banner
@@ -377,6 +391,7 @@
     if (!layer) return transition(null);
     const hadSheet = !!layer.querySelector('.o55-sheet[data-open="true"]');
     U.morph(layer, paneHtml(def));
+    O55.tips.write(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
     const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
     if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() || skin('stepped') ? 'auto' : 'smooth' });
@@ -415,6 +430,7 @@
     layer.setAttribute('data-screen', def.id);
     layer.innerHTML = paneHtml(def);
     pane.appendChild(layer);
+    O55.tips.write(layer);
     layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => n.style.setProperty('--ci', i));
     /* the entrance classes leave once every entrance animation has finished (never cut short, even in slow motion) */
     O55.motion.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back', 'o55-in-open'));
@@ -495,6 +511,7 @@
     if (from && from.leave) from.leave(S);
     if (!opts.replace && S.sess.screen !== id && !opts.noHistory) S.sess.history.push(S.sess.screen);
     S.resumedShownOn = null;
+    if (S.tip) { S.tip = null; skin('tip', null); }
     S.sess.screen = id; S.save();
     const def = SCREENS.defs[id];
     if (def.enter) def.enter(S, opts);
@@ -516,6 +533,30 @@
     if (!prev) return;
     go(prev, { dir: 'back', noHistory: true });
   }
+
+  /* ---------------------------------------------------------------- ? tips */
+  function tip(id, el) {
+    const was = S.tip, open = !!(was && was.id === id && was.screen === S.sess.screen);
+    const seg = !open && el && el.closest ? el.closest('[data-o55-seg]') : null;
+    S.tip = open || !id ? null : { id, screen: S.sess.screen, seg: seg ? seg.getAttribute('data-o55-seg') : null };
+    refresh();
+    skin('tip', S.tip, el);
+    if (S.tip) {
+      const t = O55.tips.of(id);
+      O55.sound.play('reveal');
+      if (t) U.announce(t.title + '. ' + t.text, S.root.querySelector('.o55-win'));
+      return;
+    }
+    O55.sound.play('unsheet');
+    tipFocus(id);
+  }
+  /* focus back to the ? a closed note belonged to (the note's close button has gone with it) */
+  function tipFocus(id) {
+    const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    const qb = layer && Array.from(layer.querySelectorAll('.o55-tipq')).find((n) => n.getAttribute('data-arg') === id);
+    if (qb) qb.focus({ preventScroll: true });
+  }
+  function closeTip(focus) { if (!S.tip) return false; const id = S.tip.id; S.tip = null; refresh(); skin('tip', null); if (focus) tipFocus(id); return true; }
 
   /* ---------------------------------------------------------------- events */
   function onClick(e) {
@@ -582,6 +623,8 @@
     if (e.type !== 'keydown') return;
     if (e.key === 'Escape') {
       if (S.lookOpen) { S.lookOpen = false; renderLook(); O55.sound.play('unsheet'); e.preventDefault(); const b = S.root.querySelector('.o55-lookbtn'); if (b) b.focus(); return; }
+      /* an open ? note goes first, and focus returns to its ? */
+      if (S.tip) { e.preventDefault(); O55.sound.play('unsheet'); closeTip(true); return; }
       const pop = S.root.querySelector('.o55-sheet[data-open="true"], .o55-popover[data-open="true"]');
       if (pop) { const c = pop.querySelector('[data-o55-do="sheet-close"]'); if (c) c.click(); e.preventDefault(); return; }
       e.preventDefault(); close('escape'); return;
@@ -830,7 +873,7 @@
     if (O55.nierLook && O55.nierLook.closed) O55.nierLook.closed(reason); /* an unsaved NieR preview lingers like the look's */
     S.sess.status = reason === 'skip' ? 'skipped' : reason === 'done' ? 'done' : 'closed';
     S.save();
-    S.open = false;
+    S.open = false; S.tip = null;
     const r = S.root;
     r.classList.remove('o55-scrim-lit'); clearOpenScrim(); /* the close plays its own scrim */
     setSolid(false); /* the app is back under the scrim before the window leaves */
@@ -876,8 +919,12 @@
     skip() { close('skip'); },
     'sheet-close'(S2, arg, el) { const sh = el.closest('.o55-sheet'); if (sh) { sh.setAttribute('data-open', 'false'); S.sess.ui.sheet = null; S.save(); refresh(); O55.sound.play('unsheet'); } },
     details(S2, arg, el) { const k = 'details:' + (arg || S.sess.screen); S.sess.ui[k] = !S.sess.ui[k]; S.save(); refresh(); O55.sound.play(S.sess.ui[k] ? 'reveal' : 'unsheet'); },
+    /* A ? (ui.onboarding.open_details, toggle_choice_explanation; O55.tips): one explainer at a time, for this screen
+       only (S.tip is never saved: it is a look at a choice, not a choice). Opening it asks Pip about that choice; closing
+       it, from the ? or the note's own close button, gives focus back to the ?. */
+    tip(S2, id, el) { tip(id, el); },
     startOver() { open({ fresh: true }); }
   };
 
-  Object.assign(O55.ui, { S, build, open, close, go, back, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin });
+  Object.assign(O55.ui, { S, build, open, close, go, back, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip });
 })();

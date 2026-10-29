@@ -107,7 +107,10 @@
     /* a backup to the NAS the Project's files now live on is no backup: it is dropped here, with the reason */
     enter(S) { S.sess.ui.returnTo = null; if (S.sess.backup.dest === 'nas' && O55.backup.filesOnNas(S)) { S.sess.backup.dest = null; S.sess.ui.backupDropped = true; } else S.sess.ui.backupDropped = false; },
     body(S) {
-      const d = md(S), row = (k, v, edit) => `<div class="o55-revrow" data-key="rv-${k}"><span class="o55-revk">${U.esc(T('review.rows.' + k))}</span><span class="o55-revv">${U.esc(v)}</span>${edit ? C.link(T('review.edit'), 'edit', edit) : ''}</div>`;
+      /* the first Edit carries the one ? for every Edit (group:edit): they all do the same thing */
+      let asked = false;
+      const editLink = (edit) => { const l = C.link(T('review.edit'), 'edit', edit); if (asked) return l; asked = true; return `<span class="o55-opt o55-opt-inline" data-key="opt-group:edit">${l}${O55.tips.q('group:edit')}</span>`; };
+      const d = md(S), row = (k, v, edit) => `<div class="o55-revrow" data-key="rv-${k}"><span class="o55-revk">${U.esc(T('review.rows.' + k))}</span><span class="o55-revv">${U.esc(v)}</span>${edit ? editLink(edit) : ''}</div>${edit && asked && !row.noted ? (row.noted = true, O55.tips.explainer('group:edit')) : ''}`;
       const st = F.state(S, 'recheck:' + d.project_draft_revision);
       let out = st && st.state === 'done' ? `<p class="o55-hint" data-key="checked">${C.done(12)}${U.esc(T('review.checked'))}</p>` : F.phases(S, 'recheck:' + d.project_draft_revision, ['check'], { check: T('chrome.working') });
       if (d.project_mode === 'later') {
@@ -429,7 +432,7 @@
       const r = cm.recovery, repo = repoDisplay(S);
       const gC = PR().effectiveContinue(O55.ownerResults, cm, d), gO = PR().effectiveOpen(cm), gD = PR().effectiveDelete(cm);
       let out = `<div class="o55-banner o55-banner-warn" data-key="recovery">${C.small('cloud', 18)}<span>${U.esc(T(R + 'notice', { repo, service: svc }))}</span></div>`;
-      if (cm.settingsPublishError) out += C.note('Your project result is kept. Settings must finish before the project can open. Check again retries only that final handoff; it does not create another repository or repeat completed work.', 'warn', 'stack');
+      if (cm.settingsPublishError) out += C.note(T('creating.settingsPublishError'), 'warn', 'stack');
       out += `<div class="o55-actions" data-key="routes">${btn(T(R + 'continue'), 'continueSetup', !gC.available, reasonCopy(gC.reason))}`
         + `${btn(T(R + 'open'), 'openRepo', !gO.available, reasonCopy(gO.reason))}${btn(T(R + 'delete'), 'deleteRepo', !gD.available, reasonCopy(gD.reason))}</div>`;
       out += `<p class="o55-hint" data-key="routereasons">${U.esc(reasonCopy(gC.reason))} · ${U.esc(reasonCopy(gD.reason))}</p>`;
@@ -635,8 +638,9 @@
       const next = STEPS.find((s) => !done.includes(s));
       let out = `<ol class="o55-steplist" data-key="steps">` + STEPS.map((s) => {
         const state = done.includes(s) ? 'done' : s === next ? 'active' : 'waiting';
-        return `<li class="o55-step o55-step-${state}" data-key="st-${s}">${C.stepmark(state, state === 'done' ? C.smallArt('check', 13) : '')}<span>${U.esc(T('protect.steps.' + (s === 'signin' ? signinStep(b.dest) : s), { where }))}</span></li>`;
-      }).join('') + '</ol>';
+        /* each step has its ? (step:<step>); the note opens under the list */
+        return `<li class="o55-step o55-step-${state}" data-key="st-${s}"${O55.tips.described('step:' + s)}>${C.stepmark(state, state === 'done' ? C.smallArt('check', 13) : '')}<span>${U.esc(T('protect.steps.' + (s === 'signin' ? signinStep(b.dest) : s), { where }))}</span>${O55.tips.q('step:' + s)}</li>`;
+      }).join('') + '</ol>' + STEPS.map((s) => O55.tips.explainer('step:' + s)).join('');
       /* connecting, by kind of place: the NAS over SSH with a key, a bucket or a server with its access details, a
          cloud drive through its own sign-in page */
       if (next === 'signin' && b.dest === 'nas') {

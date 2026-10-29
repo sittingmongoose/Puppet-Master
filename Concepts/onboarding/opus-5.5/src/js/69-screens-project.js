@@ -144,7 +144,7 @@
         const at = S.sess.ui.treeAt || root, kids = tree[at] || [];
         const crumbs = at.split('/').map((part, i, arr) => ({ part, path: arr.slice(0, i + 1).join('/') })).filter((c) => c.path && (c.path === root || c.path.startsWith(root)))
           .map((c) => C.link(c.path === root ? (root === '~' ? T('folder.tree.home') : serverName(S)) : c.part, 'treeGo', c.path)).join(' <span aria-hidden="true">›</span> ');
-        const body = `<div class="o55-crumbs" data-key="crumbs">${crumbs}</div><div class="o55-treelist" role="listbox" aria-label="${U.esc(T('folder.picker'))}">`
+        const body = `<div class="o55-crumbs" data-key="crumbs">${crumbs}${O55.tips.q('group:treeGo')}</div>${O55.tips.explainer('group:treeGo')}<div class="o55-treelist" role="listbox" aria-label="${U.esc(T('folder.picker'))}">`
           + kids.map((k) => `<button type="button" class="o55-treeitem" role="option" data-o55-do="treeGo" data-arg="${U.esc(at + '/' + k)}" data-pm-hover-exempt="true" data-key="ti-${U.esc(U.slug(k))}">${C.small('folder', 16)}<span>${U.esc(k)}</span></button>`).join('') + '</div>';
         out += C.sheet(S, 'tree', T('folder.picker'), body, O55.ui.btn({ label: T('folder.open'), do: 'treePick', disabled: at === root, reason: T('missing.folder') }, 'o55-primary'));
       }

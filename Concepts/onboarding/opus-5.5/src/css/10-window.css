@@ -436,3 +436,69 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 .o55-keep { display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); }
 .o55-keep .o55-sg { color: var(--accent-lime); }
 #pm-o55-onboarding[data-family="retro"] .o55-tileart { height: 86px; }
+
+/* ====================================================================================================== Ask Pip: ?
+   Every choice's ? (61-components.js, O55.tips): at a card's right edge, past its radio circle, in a look tile's corner,
+   beside a field's label, after a segmented control or a link. An open ? is filled and ringed. Its explainer
+   (#pm7ob-explainer) opens on Pip's stage on a wide window (30-art.css) and in the form under its choice otherwise
+   (these rules), in the look's own material: Friendly's stitched paper, Glass's frost, Basic's dashed annotation,
+   Retro Dark's terminal box, Retro Light's printed NOTE, NieR's TIPS box. */
+.o55-opt { position: relative; }
+.o55-opt > .o55-card, .o55-opt > .o55-toggle { width: 100%; }
+.o55-opt > .o55-card { padding-right: 52px; }
+.o55-opt > .o55-toggle { padding-right: 46px; }
+.o55-tipq { position: relative; flex: none; display: inline-grid; place-items: center; width: 22px; height: 22px; padding: 0; margin: 0; box-sizing: border-box;
+  border-radius: 50%; border: 1.5px solid var(--o55-line); background: transparent; color: var(--text-secondary); font: 700 12px/1 var(--body-font); cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease; }
+.o55-tipq::before { content: ''; position: absolute; inset: -6px; } /* a 34 px target round a 22 px mark */
+.o55-tipq:hover { color: var(--o55-accent); border-color: var(--o55-accent); }
+.o55-tipq[aria-expanded="true"] { color: var(--o55-on-accent); background: var(--o55-accent); border-color: var(--o55-accent); outline: 1.5px solid var(--o55-accent); outline-offset: 2px; }
+.o55-tipq:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 2px; }
+.o55-opt > .o55-card + .o55-tipq, .o55-opt > .o55-toggle + .o55-tipq { position: absolute; top: 50%; right: 16px; margin-top: -11px; }
+.o55-opt-inline { display: inline-flex; align-items: center; gap: 7px; }
+.o55-opt-inline > .o55-tipq, .o55-labq > .o55-tipq, .o55-row-q > .o55-tipq { width: 19px; height: 19px; font-size: 10.5px; }
+.o55-opt-seg { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.o55-labq { display: inline-flex; align-items: center; gap: 8px; }
+#pm-o55-onboarding .o55-row.o55-row-q { grid-template-columns: auto minmax(0, 1fr) auto auto auto; }
+.o55-row-q > .o55-tipq { grid-column: 5; }
+/* a chosen card's ? stays readable on the chosen material (Retro's reverse video, NieR's ink stops short of it) */
+#pm-o55-onboarding[data-family="retro"] .o55-tipq { border-radius: 0; border-width: 2px; font-family: var(--display-font); }
+#pm-o55-onboarding[data-family="retro"] .o55-opt-on > .o55-card + .o55-tipq:not([aria-expanded="true"]) { color: var(--o55-on-accent); border-color: var(--o55-on-accent); }
+#pm-o55-onboarding[data-family="retro"] .o55-opt-on > .o55-card + .o55-tipq[aria-expanded="true"] { color: var(--o55-accent); background: var(--o55-on-accent); border-color: var(--o55-on-accent); outline-color: var(--o55-on-accent); }
+#pm-o55-onboarding[data-family="friendly"] .o55-tipq { border-width: 2px; border-color: color-mix(in srgb, var(--o55-ink) 55%, transparent); color: var(--o55-ink); }
+#pm-o55-onboarding[data-family="glass"] .o55-tipq { border-color: rgba(255, 255, 255, 0.34); background: rgba(255, 255, 255, 0.08); }
+#pm-o55-onboarding[data-family="glass"][data-mode="light"] .o55-tipq { border-color: rgba(40, 36, 80, 0.26); background: rgba(255, 255, 255, 0.55); }
+#pm-o55-onboarding[data-family="glass"] .o55-tipq[aria-expanded="true"] { background: var(--o55-accent); }
+
+/* the explainer in the form */
+.o55-explainer { display: flex; gap: 10px; align-items: flex-start; margin: 2px 0 0; padding: 10px 8px 10px 12px; border-radius: var(--o55-card-r);
+  border: 1.5px dashed color-mix(in srgb, var(--o55-accent) 48%, var(--o55-line)); background: color-mix(in srgb, var(--o55-accent) 7%, var(--o55-card-bg));
+  color: var(--text-secondary); font: 400 13.5px/1.5 var(--body-font); }
+.o55-explainer-pip { flex: none; width: 26px; height: 26px; }
+.o55-explainer-pip svg { display: block; width: 26px; height: 26px; }
+.o55-explainer-t { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.o55-explainer-h { color: var(--text-primary); font: 650 13.5px/1.35 var(--body-font); }
+.o55-explainer-x { flex: none; height: 26px; min-width: 26px; padding: 0; margin: -4px 0 0; border: 0; }
+.o55-tw-off { visibility: hidden; }
+.o55-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.o55-opt + .o55-explainer, .o55-row + .o55-explainer, .o55-field + .o55-explainer { margin-top: -4px; }
+#pm-o55-onboarding[data-family="friendly"] .o55-explainer { border: 2px solid color-mix(in srgb, var(--o55-ink) 40%, transparent); outline: 1.5px dashed color-mix(in srgb, var(--o55-ink) 34%, transparent);
+  outline-offset: -6px; background: color-mix(in srgb, #fff8e8 74%, var(--o55-card-bg)); box-shadow: 2px 3px 0 color-mix(in srgb, var(--text-primary) 10%, transparent); padding: 12px 10px 12px 14px; }
+#pm-o55-onboarding[data-family="friendly"][data-mode="dark"] .o55-explainer { background: color-mix(in srgb, var(--o55-accent) 10%, var(--o55-card-bg)); }
+#pm-o55-onboarding[data-family="glass"] .o55-explainer { border: 1px solid rgba(255, 255, 255, 0.22); background: color-mix(in srgb, #fff 9%, var(--o55-card-bg)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24); }
+#pm-o55-onboarding[data-family="glass"][data-mode="light"] .o55-explainer { border-color: rgba(70, 60, 120, 0.18); background: rgba(255, 255, 255, 0.72); }
+#pm-o55-onboarding[data-family="retro"] .o55-explainer { border-radius: 0; border: 2px solid color-mix(in srgb, var(--text-primary) 70%, transparent); box-shadow: 3px 3px 0 color-mix(in srgb, var(--text-primary) 30%, transparent);
+  font-family: var(--display-font); }
+#pm-o55-onboarding[data-family="retro"] .o55-explainer-h { font-family: var(--display-font); text-transform: uppercase; letter-spacing: 0.04em; }
+.o55-opt-tile { display: grid; }
+.o55-opt-tile > .o55-tile { height: 100%; }
+.o55-opt-tile > .o55-tile + .o55-tipq { position: absolute; right: 11px; bottom: 11px; }
+.o55-opt-tile > .o55-tile .o55-tilesub { padding-right: 26px; }
+.o55-step > .o55-tipq, .o55-crumbs > .o55-tipq, .o55-suggest > .o55-tipq, .o55-sublinks > .o55-tipq, .o55-checkline > .o55-tipq { width: 19px; height: 19px; font-size: 10.5px; margin-left: 4px; align-self: center; }
+.o55-explainer + .o55-explainer { margin-top: 0; }
+/* NieR Mode's row on Pick a look: its ? in the card's top corner, Adjust's beside Adjust at the bottom */
+#pm-o55-onboarding .o55-nierlook > .o55-tipq { position: absolute; right: 8px; z-index: 1; width: 19px; height: 19px; font-size: 10.5px; }
+#pm-o55-onboarding .o55-nierlook > .o55-tipq-nier { top: 8px; }
+#pm-o55-onboarding .o55-nierlook > .o55-tipq:not(.o55-tipq-nier) { bottom: 8px; }
+#pm-o55-onboarding .o55-nierlook[data-key] { padding-right: 36px; }
+#pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-lookgrid > .o55-nierlook[data-key] { padding-right: 36px; }

@@ -205,3 +205,58 @@
     }
   });
 })();
+
+/* O55.pipOops — what has gone wrong on the screen, for Pip (DL-238). Pip's face follows what the window shows: a
+   field's error, a warning note or banner, a failed row, the reason a refused press gives. Each of those shows a copy
+   key's words, and Pip's oops and cheer lines are keyed by the same key (pip.oops.<key>, pip.cheer.<key>, the copy
+   lane's scheme), so the reader matches the words on screen against those keys' templates. It reads the screen and
+   changes nothing. A few states are waits or a choice, not failures: Pip thinks through those, or naps (ai.skipNote).
+   Under NieR Mode the same states light Pip's band (its oops face). */
+(function () {
+  'use strict';
+  const O55 = window.O55;
+  const FACE = {
+    'server.confirm.pendingHost': 'think', 'protect.pendingHost': 'think', 'creating.recovery.pending': 'think',
+    'creating.recovery.reasons.waitingHost': 'think', 'creating.recovery.reasons.claimBusy': 'think', 'creating.recovery.reasons.pending': 'think',
+    'ai.skipNote': 'sleep'
+  };
+  /* states that show as information, not as a fault, are still read where they are written (a note, a row's line) */
+  const WHERE = '.o55-err, .o55-note, .o55-banner, .o55-pill-fail, .o55-reason, .o55-rowmeta, .o55-tag, .o55-phdetail';
+  let table = null;
+  const flat = (node, pre, out) => {
+    Object.keys(node || {}).forEach((k) => { const v = node[k], key = pre ? pre + '.' + k : k; if (typeof v === 'string') out.push(key); else if (v && typeof v === 'object') flat(v, key, out); });
+    return out;
+  };
+  const esc = (s) => s.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
+  function build() {
+    if (table) return table;
+    table = flat(O55.tx('pip.oops'), '', []).map((key) => {
+      let tpl = O55.tx(key);
+      if (tpl && typeof tpl === 'object') tpl = tpl.title || null;
+      if (typeof tpl !== 'string') return null;
+      const parts = tpl.split(/\{[A-Za-z]+\}/), fixed = parts.join('').trim();
+      if (fixed.length < 6) return null;
+      return { key, rx: new RegExp(parts.map((p) => esc(p.replace(/\s+/g, ' ').trim())).filter(Boolean).join('[\\s\\S]{0,80}?')) };
+    }).filter(Boolean)
+      /* longer templates first, so a state whose words contain a shorter state's are found as themselves */
+      .sort((a, b) => b.rx.source.length - a.rx.source.length);
+    return table;
+  }
+  function match(text) {
+    text = String(text || '').replace(/\s+/g, ' ').trim();
+    if (!text) return null;
+    const hit = build().find((r) => r.rx.test(text));
+    return hit ? hit.key : null;
+  }
+  /* the first state the current screen shows, in reading order: { key, face, el } or null */
+  function read(scope) {
+    if (!scope) return null;
+    for (const el of scope.querySelectorAll(WHERE)) {
+      if (el.closest('.o55-out, [hidden], .o55-explainer')) continue;
+      const key = match(el.textContent);
+      if (key) return { key, face: FACE[key] || 'oops', el };
+    }
+    return null;
+  }
+  O55.pipOops = { read, match, face: (key) => FACE[key] || 'oops', line: (key) => O55.t('pip.oops.' + key), cheer: (key) => O55.t('pip.cheer.' + key) };
+})();
