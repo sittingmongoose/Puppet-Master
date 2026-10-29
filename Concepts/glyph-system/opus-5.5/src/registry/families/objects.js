@@ -223,11 +223,20 @@
   });
 
   /* people, agents and safekeeping */
+  /* robot, redrawn for background activity (D14, Jared 2026-10-28; DL-253): the antenna's light is lit (a filled bead
+     on a shorter stem) and blinks, and the eyes glance across. X1 (Jared 2026-10-29): this is the CATEGORY mark for
+     agents at 16 px and below (the Activity bar, the status bar's agents item, the panel's tab heads, the rail); each
+     individual agent is drawn as Pip (Concepts/glyph-system/opus-5.5/src/logo/pm-logo.js), and the brand is Pip.
+     Live, it moves on the 2200 ms beat (pm7-beat.css, .pmg-beat); Reduced Motion shows this rest pose: lit and still. */
   def('robot', {
-    meaning: 'An agent: an AI worker acting for you (the noun; the terminal\'s spark and cursor cell mark an agent at the keyboard).', act: 'seq', aliases: ['agent', 'agents', 'bot'],
-    replaces: ['T-core robot', 'T-bridge agents'], note: 'Its eyes glance across, as the chat\'s eye pupil does. user and users (the chat) stay for people.',
-    parts: ['<rect x="5" y="8" width="14" height="11.5" rx="3"/>', '<path d="M12 8V5.2M3 12.5v3M21 12.5v3"/>', '<circle cx="12" cy="4.2" r="1"/>',
-      { els: ['<circle cx="9.5" cy="13.4" r="1.15" class="nx-f"/>', '<circle cx="14.5" cy="13.4" r="1.15" class="nx-f"/>'], move: { ax: 2.4, b: 1 } }]
+    meaning: 'Agents: AI workers acting for you, as a category (each agent itself is drawn as Pip; the terminal\'s spark and cursor cell mark an agent at the keyboard).', act: 'seq', aliases: ['agent', 'agents', 'bot'],
+    replaces: ['T-core robot', 'T-bridge agents', 'background-activity concept rw-agents (the status bar\'s agents mark, D14)'],
+    surfaces: ['status bar agents item (12-14 px)', 'agents and processes panel: Agents tab head', 'chat Activity bar (Subagents domain)', 'left rail'],
+    note: 'The antenna light blinks (it dims to .6 and back, 260 ms after the beat) and the eyes glance across. Category mark only (X1): ' +
+      'never a stand-in for one agent. user and users (the chat) stay for people.',
+    parts: ['<rect x="5" y="8" width="14" height="11.5" rx="3"/>', '<path d="M12 8V5.7M3 12.5v3M21 12.5v3"/>',
+      { els: '<circle cx="12" cy="4" r="1.35" class="nx-f"/>', move: { ao: .6, ad: 260 } },
+      { els: ['<circle cx="9.5" cy="13.4" r="1.2" class="nx-f"/>', '<circle cx="14.5" cy="13.4" r="1.2" class="nx-f"/>'], move: { ax: 2.4, b: 1 } }]
   });
   def('telescope', {
     meaning: 'Explore or discover (looking far, not searching a list).', act: 'wave', aliases: ['explore', 'discover'],

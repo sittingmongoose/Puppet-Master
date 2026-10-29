@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="pmg-build" content="35349993b7e1">
+<meta name="pmg-build" content="5f0510895ce3">
 <title>Puppet Master glyphs: the neon set for every surface</title>
 <script>
 /* first paint: the look, mode and motion come from the URL (frames) or the last choice, before any CSS paints */
@@ -213,7 +213,7 @@ svg:where(.nx) .nx-f { fill: var(--nx-ink, currentColor); stroke: none; }
 /* The quieter half of a two-level drawing (working's ring under the bright bead that orbits on it). */
 svg:where(.nx) .nx-dim { opacity: .65; }
 /* module-shell's picker chevron (CHEVRON) keeps the 2-unit weight it was drawn with. */
-svg.pmx-chevron { --nx-stroke-base: 2; }
+
 
 /* ------------------------------------------------------------------ 3. halos */
 /* The core band, one merged path. Strength is stroke-opacity on the halo path, never group opacity or color-mix().
@@ -328,7 +328,7 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 }
 /* Filled chips (primary buttons) already carry their own fill: the act plays, the halo stays off. (Send/Stop is
    send-stop.css's solid chip, its glyph inside .ss-face with its own lighting; the .send-button arm went with it.) */
-.primary-button > svg.nx, .soft-button.primary > svg.nx { --nx-hiv: hidden; --nx-fl: none; }
+
 
 /* ------------------------------------------------------------------ 8b. Fast mode (Jared, G1 item 15; the strike, 3D) */
 /* OWNER of this block: Neon icons, surface step 3D (2026-10-02); the strike redrawn 2026-10-07. The Fast bolt is drawn
@@ -371,7 +371,7 @@ body[data-theme$="-light"] .nx-bolt { --nxb-bl: nx-bolt-bl-l; --nxb-blh: nx-bolt
   background: radial-gradient(closest-side, var(--warning), transparent);
   opacity: var(--nxb-rest);
 }
-svg.fast-bolt, svg.meta-fast, svg.fast-row-bolt { --nx-ink: var(--warning); --nx-hiv: visible; --nx-hi-a: var(--nx-h-bolt-i); animation: none; opacity: 1; }
+
 .nx-bolt > svg .nx-h { opacity: .32; }
 /* The strike overlays (neon-icons.js lightning: .nx-bk0-4 the leader bands, .nx-bkf the flash fill) are act overlays
    (nx-ov, section 6): hidden and still everywhere until a strike lights them, so the Fast row's unlit glyph (no
@@ -519,11 +519,7 @@ svg:where([data-nx="grill"]) .nx-gsm { stroke-width: calc(var(--nx-stroke-base, 
    row is a label and a shelf item a plain row, not the hover rule's hosts, so they are named here: hovering the row or
    focusing its box or its Add swells the halo and plays the act once, exactly like a concept glyph in a button. At
    rest the grill stands still (a sheet's marks hold still, the pmx loop budget is the sheen's). */
-.pmx-check:where(:hover, :focus-within) > .pmx-check-glyph > svg:where(.nx),
-.pmx-spec:where(:hover, :focus-within) > .pmx-spec-glyph > svg:where(.nx) {
-  --nx-hi-a: var(--nx-h-swell-i);
-  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
-}
+
 @keyframes nx-grill-lid {
   0% { transform: translate(0px, 0px) rotate(0deg); } 24%, 50% { transform: translate(0px, -1.2px) rotate(-20deg); }
   58% { transform: translate(0px, -.96px) rotate(-16deg); } 63% { transform: translate(0px, -.54px) rotate(-9deg); }
@@ -619,7 +615,7 @@ body[data-theme$="-light"] .ph-status .nx-st-waiting:not(.nx-still)::before { an
 @media (prefers-reduced-motion: reduce) {
   svg.nx, svg.nx .nx-p, svg.nx .nx-h, svg.nx .nx-ov, .nx-st, .nx-st::before, .nx-bolt::before { animation: none !important; transition: none !important; }
 }
-body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced svg.nx .nx-ov, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before, body.pm56-reduced .nx-bolt::before { animation: none !important; transition: none !important; }
+
 html[data-motion="reduced"] svg.nx, html[data-motion="reduced"] svg.nx .nx-p, html[data-motion="reduced"] svg.nx .nx-h, html[data-motion="reduced"] svg.nx .nx-ov, html[data-motion="reduced"] .nx-st, html[data-motion="reduced"] .nx-st::before, html[data-motion="reduced"] .nx-bolt::before { animation: none !important; transition: none !important; }
 
 /* ------------------------------------------------------------------ 11. NieR Mode (PMConcept7 contract) */
@@ -637,7 +633,7 @@ html[data-o55-nier="on"] body {
 }
 html[data-o55-nier="on"] svg.nx .nx-h { display: none; }
 html[data-o55-nier="on"] .nx-st::before { display: none; }
-html[data-o55-nier="on"] .activity-item[data-hover-domain]::after { display: none; }
+
 html[data-o55-nier="on"] svg:where(.nx-a-spin) { --nx-le: steps(12, end); }
 html[data-o55-nier="on"] svg:where(.nx-t-idle) { --nx-ink: rgba(var(--o55-nier-ink-rgb), var(--nx-idle-a, .45)); }
 /* NieR Light: idle ink at .545 reads 3.06:1 on the row field (3:1 floor; the rust of blocked is 3.14) (3E2). A token,
@@ -686,7 +682,7 @@ html[data-o55-nier="on"] .nx-st-waiting { background: var(--nx-bk, var(--o55-nie
 html[data-o55-nier="on"] .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-on-ink); }
 /* a pmx decision row ("Your move.") inks its mark in --accent (module-shell.css, 0,5,1), and NieR's --accent is the
    block's own ink, so the "?" vanished into the block (final review, 2026-10-03): the block's strokes stay paper there */
-html[data-o55-nier="on"] .pmx-decision[data-tone] .pmx-decision-mark > .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-on-ink); }
+
 /* on an ink cursor bar the block turns over: paper with ink strokes */
 html[data-o55-nier-parts~="cursor"] .thread-row:hover .nx-st-waiting,
 html[data-o55-nier-parts~="cursor"] .thread-row.active .nx-st-waiting { --nx-bk: var(--o55-nier-on-ink); }
@@ -743,24 +739,13 @@ html[data-o55-nier-parts~="cursor"][data-o55-nier-parts~="square"] .thread-row:h
 html[data-o55-nier-parts~="cursor"][data-o55-nier-parts~="square"] .thread-row.active .nx-st-pending::after { border-color: var(--o55-nier-on-ink); }
 /* The bar: ink glyphs with stepped acts (the tokens above); a working domain carries an ink underline under its
    glyph, drawn by the item's anchored ::after (the backlight's slot, unused in NieR). */
-html[data-o55-nier="on"][data-ab-goal="working"] .activity-item[data-hover-domain="goal"]::after,
-html[data-o55-nier="on"][data-ab-todo="working"] .activity-item[data-hover-domain="todo"]::after,
-html[data-o55-nier="on"][data-ab-subagents="working"] .activity-item[data-hover-domain="subagents"]::after,
-html[data-o55-nier="on"][data-ab-crew="working"] .activity-item[data-hover-domain="crew"]::after,
-html[data-o55-nier="on"][data-ab-brainstorm="working"] .activity-item[data-hover-domain="brainstorm"]::after,
-html[data-o55-nier="on"][data-ab-review="working"] .activity-item[data-hover-domain="review"]::after,
-html[data-o55-nier="on"][data-ab-chat_room="working"] .activity-item[data-hover-domain="chat_room"]::after,
-html[data-o55-nier="on"][data-ab-changes="working"] .activity-item[data-hover-domain="changes"]::after,
-html[data-o55-nier="on"][data-ab-artifacts="working"] .activity-item[data-hover-domain="artifacts"]::after {
-  display: block; top: anchor(bottom); width: 12px; height: 2px; translate: -50% 3px; border-radius: 0; z-index: 0;
-  background: var(--o55-nier-ink); opacity: 1;
-}
+
 /* Reduced motion (the media query, html[data-motion], body.pm56-reduced): every NieR act and loop stops; the inverted
    needs-you block, the diamond and the underline still carry the state. */
 @media (prefers-reduced-motion: reduce) {
   html[data-o55-nier="on"] svg.nx .nx-c, html[data-o55-nier="on"] .nx-st::after { animation: none !important; }
 }
-html[data-o55-nier="on"] body.pm56-reduced svg.nx .nx-c, html[data-o55-nier="on"] body.pm56-reduced .nx-st::after { animation: none !important; }
+
 html[data-o55-nier="on"][data-motion="reduced"] svg.nx, html[data-o55-nier="on"][data-motion="reduced"] svg.nx .nx-p,
 html[data-o55-nier="on"][data-motion="reduced"] svg.nx .nx-c, html[data-o55-nier="on"][data-motion="reduced"] .nx-st,
 html[data-o55-nier="on"][data-motion="reduced"] .nx-st::after { animation: none !important; transition: none !important; }
@@ -778,52 +763,52 @@ html[data-o55-nier="on"][data-motion="reduced"] .nx-st::after { animation: none 
 :where(.event-card.warning) > .event-icon { color: var(--warning); }
 :where(.event-card.danger) > .event-icon { color: var(--danger); }
 /* a menu row's glyph takes the row's ink: muted at rest, the text ink on hover, where it ignites (section 8) */
-.menu-item .menu-icon { color: inherit; }
+
 /* a toggled icon button reads as on by its lit glyph on the raised neutral tile (the pins' idiom, composer.css), not
    by an accent tile, and never by the hover tile (--surface-3) */
-.icon-button.active { color: var(--text); border-color: var(--border-strong); background: var(--surface-4); }
-.icon-button.active > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
+
+
 /* Activity lines name their tone (data-tone), never an inline colour. */
-.activity-line [data-tone="blocked"] { color: var(--danger); }
-.activity-line [data-tone="attention"] { color: var(--warning); }
-.activity-line [data-tone="working"] { color: var(--accent); }
-.activity-line [data-tone="changed"] { color: var(--accent-2); }
-.activity-line [data-tone="done"] { color: var(--positive); }
-.activity-line [data-tone="idle"] { color: var(--subtle); }
-.activity-line [data-tone="paused"] { color: var(--muted); }
+
+
+
+
+
+
+
 /* Capability dots (the composer): a neutral tile; a dot is drawn only while its capability is on, so its glyph is
    concept-lit (the text ink with its bloom) and plays its act when hovered. Back Seat Driver On (the open eye) is
    lit; Auto (the lowered lid) is dim: bsd.css's muted ink and no bloom. */
-.capability-dot, .capability-dot.goal { color: var(--text); background: var(--surface-3); }
-.composer-infield .capability-dot, .composer-infield .capability-dot.goal { color: var(--text); background: var(--surface-3); border-color: var(--border); }
-.composer-infield .capability-dot.bsd > svg.nx[data-nx="eye"] { color: var(--text); }
-.capability-dot.bsd > svg.nx[data-nx="kind-bsd-auto"] { --nx-hi-a: 0; }
-.capability-dot:hover > svg.nx { --nx-hi-a: var(--nx-h-swell-i); --nx-1: var(--nx-d1) var(--nx-ease) backwards; }
+
+
+
+
+
 /* The working card's head: while the run runs, the step's glyph is a live status mark (working tone and bloom) that
    breathes like the bar's working domain. It is keyed by step (wpi:<step.id>), so it remounts at every handover and
    plays the step glyph's act once. The tile is neutral; a paused or finished run shows the glyph at rest. */
-.working-head .work-phase-icon { background: var(--surface-3); color: var(--muted); box-shadow: none; }
-.working-head .work-phase-icon > svg.nx-r-status { --nx-1: var(--nx-d1) var(--nx-ease) backwards; animation: ab-breathe 2200ms ease-in-out infinite; }
-html[data-o55-nier="on"] .working-head .work-phase-icon > svg.nx-r-status { animation-timing-function: steps(3, end); }
+
+
+
 /* The chat header's status: the thread's live mark beside the word, and the word in the mark's tone (app.js
    headerStatusTone; styles.css gave every word the warning amber, so Ready, Paused and Complete read lit beside their
    quiet marks and Waiting matched Working: final review, 2026-10-03). The quiet tones read muted. */
-.chat-state > .nx-st { margin-right: 1px; }
-.chat-state[data-tone="blocked"] { color: var(--danger); }
-.chat-state[data-tone="attention"] { color: var(--warning); }
-.chat-state[data-tone="working"] { color: var(--accent); }
-.chat-state[data-tone="changed"] { color: var(--accent-2); }
-.chat-state[data-tone="done"] { color: var(--positive); }
-.chat-state[data-tone="idle"], .chat-state[data-tone="paused"] { color: var(--muted); }
+
+
+
+
+
+
+
 /* the decision panel is needs-you: its head glyph keeps the canon accent (ACD-469) on the neutral tile */
-.decision-top > .event-icon { color: var(--accent); }
+
 
 /* ------------------------------------------------------------------ 13. 3D surfaces (step 3D) */
 /* OWNER of this section: Neon icons, surface step 3D (2026-10-02). The 3D surfaces keep their rules in their owner
    sheets (composer.css, composer-state.css, lens.css, turn-stage.css, transcript.css, history.css) and the Fast
    bolt's strike is block 8b; only the NieR restatement of an owner sheet's rhythm lives here, under the contract. */
 /* the Context Lens trigger's breathe (Mute, Focus) is stepped like every NieR rhythm */
-html[data-o55-nier="on"] .pm-lens-trigger.is-on svg.nx { animation-timing-function: steps(3, end); }
+
 
 /* ------------------------------------------------------------------ 14. still status marks (step 3E) */
 /* OWNER of this section: Neon icons, surface step 3E (2026-10-02). A status mark whose wrapper carries nx-still is
@@ -1030,6 +1015,23 @@ html[data-o55-nier="on"] [data-pmh-kind].pmh-out > :not(button, summary, [role="
   animation: pmg-nier-decay var(--pmh-out-ms, 220ms) steps(2, end) both;
 }
 @keyframes pmg-nier-decay { from { stroke: var(--text); } to { stroke: var(--nx-ink, currentColor); } }
+
+/* ==== glyph-system/opus-5.5/src/bridge/pm7-beat.css ==== */
+/* pm7-beat.css: the 2200 ms beat of a live category glyph (D14 second review, 2026-10-28; DL-253). OWNER: pm7-found
+ * (PM7 build, 2026-10-29).
+ * "The icons are not animated in the status bar": while anything runs, the agents (robot) and processes glyphs move
+ * exactly as the chat's Activity bar icon does: the tube breathes on the bar's 2200 ms beat (ab-breathe's curve) and
+ * the glyph's parts loop on the same beat (the cursor types in, the antenna blinks). A host that stands for live work
+ * wears .pmg-beat around the glyph it draws (PMG.icon('robot' | 'processes', size, 'nx-r-concept nx-lit')): the status
+ * bar's two items and the panel's tab and column heads. Row marks never wear it (lists keep their marks still, the
+ * loop budget). Drags hold it; Reduced Motion shows the lit rest pose, still. */
+@keyframes pmg-breathe { 0%, 100% { opacity: 1; } 50% { opacity: .48; } }
+.pmg-beat > svg.nx { animation: pmg-breathe 2200ms ease-in-out infinite; }
+.pmg-beat > svg.nx .nx-p { animation: var(--kl) 2200ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.2ms - 2200ms); }
+body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-pointer-op) .pmg-beat > svg.nx,
+body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-pointer-op) .pmg-beat > svg.nx .nx-p { animation-play-state: paused; }
+html[data-motion="reduced"] .pmg-beat > svg.nx, html[data-motion="reduced"] .pmg-beat > svg.nx .nx-p { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .pmg-beat > svg.nx, .pmg-beat > svg.nx .nx-p { animation: none !important; } }
 
 /* ==== glyph-system/opus-5.5/src/catalog/10-catalog.css ==== */
 /* 10-catalog.css: the catalog's own chrome. Quiet on purpose: the glyphs are the subject. PM7 tokens only.
@@ -2594,11 +2596,20 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-0","title":"Make this the Pu
   });
 
   /* people, agents and safekeeping */
+  /* robot, redrawn for background activity (D14, Jared 2026-10-28; DL-253): the antenna's light is lit (a filled bead
+     on a shorter stem) and blinks, and the eyes glance across. X1 (Jared 2026-10-29): this is the CATEGORY mark for
+     agents at 16 px and below (the Activity bar, the status bar's agents item, the panel's tab heads, the rail); each
+     individual agent is drawn as Pip (Concepts/glyph-system/opus-5.5/src/logo/pm-logo.js), and the brand is Pip.
+     Live, it moves on the 2200 ms beat (pm7-beat.css, .pmg-beat); Reduced Motion shows this rest pose: lit and still. */
   def('robot', {
-    meaning: 'An agent: an AI worker acting for you (the noun; the terminal\'s spark and cursor cell mark an agent at the keyboard).', act: 'seq', aliases: ['agent', 'agents', 'bot'],
-    replaces: ['T-core robot', 'T-bridge agents'], note: 'Its eyes glance across, as the chat\'s eye pupil does. user and users (the chat) stay for people.',
-    parts: ['<rect x="5" y="8" width="14" height="11.5" rx="3"/>', '<path d="M12 8V5.2M3 12.5v3M21 12.5v3"/>', '<circle cx="12" cy="4.2" r="1"/>',
-      { els: ['<circle cx="9.5" cy="13.4" r="1.15" class="nx-f"/>', '<circle cx="14.5" cy="13.4" r="1.15" class="nx-f"/>'], move: { ax: 2.4, b: 1 } }]
+    meaning: 'Agents: AI workers acting for you, as a category (each agent itself is drawn as Pip; the terminal\'s spark and cursor cell mark an agent at the keyboard).', act: 'seq', aliases: ['agent', 'agents', 'bot'],
+    replaces: ['T-core robot', 'T-bridge agents', 'background-activity concept rw-agents (the status bar\'s agents mark, D14)'],
+    surfaces: ['status bar agents item (12-14 px)', 'agents and processes panel: Agents tab head', 'chat Activity bar (Subagents domain)', 'left rail'],
+    note: 'The antenna light blinks (it dims to .6 and back, 260 ms after the beat) and the eyes glance across. Category mark only (X1): ' +
+      'never a stand-in for one agent. user and users (the chat) stay for people.',
+    parts: ['<rect x="5" y="8" width="14" height="11.5" rx="3"/>', '<path d="M12 8V5.7M3 12.5v3M21 12.5v3"/>',
+      { els: '<circle cx="12" cy="4" r="1.35" class="nx-f"/>', move: { ao: .6, ad: 260 } },
+      { els: ['<circle cx="9.5" cy="13.4" r="1.2" class="nx-f"/>', '<circle cx="14.5" cy="13.4" r="1.2" class="nx-f"/>'], move: { ax: 2.4, b: 1 } }]
   });
   def('telescope', {
     meaning: 'Explore or discover (looking far, not searching a list).', act: 'wave', aliases: ['explore', 'discover'],
@@ -3084,6 +3095,31 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-0","title":"Make this the Pu
       'a state: the state mark keeps its 12 px slot and the seat sits in the gutter\'s free 6 px to its left, in the ' +
       'concept ink (authorship is not a status). Still in every look.',
     parts: ['<rect x="8" y="3" width="8" height="18" rx="1.4" class="nx-f"/>']
+  });
+
+  /* ---------------------------------------------------------------- new: processes (D14, DL-253) */
+  /* The background-activity domain (D1: "Processes" everywhere): the commands, servers, watchers, browser sessions and
+     scheduled runs agents started. The terminal's >_ in a console frame: the frame gives it the weight of Goal,
+     Subagents and Artifacts beside it in the chat's Activity bar, and keeps it apart from the bare >_ (terminal, below),
+     which means a terminal tab. Its verb: the prompt nudges and the cursor types in. Live, it moves on the 2200 ms beat
+     (pm7-beat.css, .pmg-beat); Reduced Motion shows this rest pose, lit and still. */
+  G.def('processes', {
+    family: F,
+    meaning: 'Processes: the commands, servers, watchers and scripts agents started, running in the background.',
+    role: 'concept',
+    act: 'seq',
+    replaces: ['background-activity concept rw-processes (the chat domain\'s pulse and the status bar\'s terminal mark, D14)'],
+    aliases: [],
+    surfaces: ['status bar processes item (12-14 px)', 'agents and processes panel: Processes tab head', 'chat Activity bar: Processes domain (D4: only while a process runs or needs input)', 'Activity Detail: Processes tab'],
+    note: 'Two moving parts on the beat: the chevron nudges back (1.6 units) as it dims, and 160 ms later the cursor line types ' +
+      'in by its clip. The frame is 18 x 16 with 3-unit corners, so at 12 px it reads as a console, never as the bare ' +
+      'terminal glyph. Colour comes from status, never from the glyph: the Activity bar\'s tone inks in the chat, the glyph ' +
+      'inks (--pmg-ink-*) in the status bar.',
+    parts: [
+      '<rect x="3" y="4" width="18" height="16" rx="3"/>',
+      { els: '<path d="m7 9 3 3-3 3"/>', move: { ax: -1.6, ao: .6, b: 1 } },
+      { els: '<path d="M12.5 15h4.5"/>', move: { ao: .6, ac: '0 9.7 0 11.5', ae: '0 6 0 11.5', ad: 160 } }
+    ]
   });
 
   /* the panels tab strip's agent marks are these two (panels.js, tab marks); mapped here because this file loads after panels.js */
