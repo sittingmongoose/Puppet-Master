@@ -304,7 +304,9 @@ async function censusOf(p) {
   return p.evaluate(exc => {
     const bad = [];
     for (const s of document.querySelectorAll(PM56_TEST.kind === 'pm7' ? '.pm56-host svg, #pmds-page-chat svg' : 'svg')) {
-      if (s.closest(exc)) continue;
+      /* Pip (the mascot kit: .pmx-pip-mk, the sheet's .pmx-pip-host, the loader) is outside the census, but the kind
+         glyph on the sheet Pip's sign is a glyph like any other */
+      if (s.closest(exc) && !(s.parentElement && s.parentElement.closest('.pmx-pip-sign'))) continue;
       if (s.classList.contains('nx') || s.classList.contains('nx-brand')) continue;
       const chain = [];
       for (let n = s.parentElement, k = 0; n && k < 3; n = n.parentElement, k++)
