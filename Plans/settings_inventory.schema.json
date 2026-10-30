@@ -222,6 +222,15 @@
         },
         "additionalProperties": false
       }
+    },
+    "retired_input_ids": {
+      "description": "SSYS-043/004: migration-only input IDs, disjoint from active settings rows and excluded from row counts. Placement may name them only to retire their presentation; this is not a Settings value or writer admission.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+      },
+      "uniqueItems": true
     }
   },
   "additionalProperties": false
