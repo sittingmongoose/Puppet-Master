@@ -165,6 +165,8 @@ html[data-o55-nier="on"] body[data-theme$="-dark"] { --pip-paper: var(--surface)
 @keyframes pmx-pip-card { from { transform: rotate(2.4deg); } to { transform: rotate(-2.4deg); } }
 @media (prefers-reduced-motion: reduce) { .pmx-pip-host :is(.pmx-pip-rig, .pmx-pip-card) { animation: none; } }
 html[data-motion="reduced"] .pmx-pip-host :is(.pmx-pip-rig, .pmx-pip-card), body.pm56-reduced .pmx-pip-host :is(.pmx-pip-rig, .pmx-pip-card) { animation: none; }
+/* offscreen and in a hidden tab (pip.js sets data-pip-run) the sway holds where it is, as in a drag */
+.pmx-pip-host[data-pip-run="off"] :is(.pmx-pip-rig, .pmx-pip-card) { animation-play-state: paused; }
 /* the copy that cheers and is lifted away when a press closes the sheet (pip.js), in the sheet's own layer */
 .pmx-pip-lift-copy { position: fixed; z-index: 2147483000; pointer-events: none; margin: 0; }
 
@@ -196,6 +198,7 @@ body[data-theme^="retro"] .orbit-core-face > .orbit-core-icon { border-radius: 0
 @keyframes pmx-pip-dot { 0%, 58%, 100% { transform: none; } 28% { transform: translateY(-3px); } }
 @media (prefers-reduced-motion: reduce) { .orbit-core-face :is(.pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4) { animation: none; } }
 html[data-motion="reduced"] .orbit-core-face :is(.pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4), body.pm56-reduced .orbit-core-face :is(.pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4) { animation: none; }
+.orbit-core-face[data-pip-run="off"] :is(.pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4) { animation-play-state: paused; }
 
 /* Plans: Pip holds up the page; the build window: Pip asleep in its hard hat */
 .qs-head-icon[data-pip] { width: 22px; height: 22px; margin: -4px 0; background: none; display: inline-grid; place-items: center; }
