@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L7265-L8447
+Source lines: L7282-L8468
 
-Source SHA256: `7a1eafa8989ffd2cab6c9a85bb29f93b001a791de71b6eaa6f0986a301fdf601`
+Source SHA256: `3fd4b170772eafe0d813cf29d7e5407613a7bad1baddbb2a7d5c9f8fa649f92a`
 
 ---
 
@@ -648,7 +648,7 @@ Stop/acceptance races remain ordered under C's actual original handoff fence. If
 
 #### Original disposable local Unix MCP process shutdown
 
-This original custody contract is owned by Executor, Run Modes, MCP lifecycle and Storage and remains only one prerequisite of D05. The supported route is an original explicitly disposable PM-managed local Unix MCP diagnostic probe using stdio and the Run Modes MCP three-second grace. It must be genuinely admitted as that diagnostic before launch and must have no shared-session beneficiaries. MCP pooling remains the canonical default; no normal tool invocation becomes a disposable probe because cancellation would be convenient. Pooled MCP, remote MCP, external-managed MCP, CLI provider shim, provider five-second route, Windows and LSP/terminal sessions require their own original source profiles. Unsupported routes remain exact members of the C v2 all-generation dispatch census.
+This original custody contract is owned by Executor, Run Modes, MCP lifecycle and Storage and remains only one prerequisite of D05. The supported route is an original explicitly disposable PM-managed local Unix MCP diagnostic probe using stdio and the Run Modes MCP three-second grace. It must be genuinely admitted as that diagnostic before launch and must have no shared-session beneficiaries. MCP pooling remains the canonical default; no normal tool invocation becomes a disposable probe because cancellation would be convenient. Pooled MCP, remote MCP, external-managed MCP, CLI provider shim, provider route (current D8 grace: 3 s), Windows and LSP/terminal sessions require their own original source profiles. Unsupported routes remain exact members of the C v2 all-generation dispatch census.
 
 #### Original source and capability boundary
 
@@ -1014,12 +1014,15 @@ plan_unit_id: EP-119
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: Original bounded safe-stop, FileSafe and disposable Process sources. Native allocation enrollment
-  precedes every reserved-run capability; the whole original census includes every generation, pre-attempt effect,
-  unknown member and actual obligation.
+canonical_text: |-
+  Original bounded safe-stop, FileSafe and disposable Process sources. Native allocation enrollment
+  precedes every reserved-run capability; the whole original census includes every generation, pre-attempt
+  effect, unknown member and actual obligation.
+  Amended 2026-10-29 (D8; PM7): Recovery reconciles observed process identity before any stop; PID reuse
+  cannot target a different process, cancellation never silently unloads live owner work.
 gui_related: false
-gui_classification_reason: Defines original runtime source, owner, storage and verification semantics without a
-  visual surface.
+gui_classification_reason: Defines original runtime source, owner, storage and verification semantics without
+  a visual surface.
 split_recommended: false
 depends_on:
 - EP-118
@@ -1031,12 +1034,12 @@ unblocks: []
 acceptance_criteria:
 - Native allocation enrollment precedes every reserved-run capability; the whole original census includes every
   generation, pre-attempt effect, unknown member and actual obligation.
-- Only genuine zero invocations or fully owned FileSafe and disposable unshared Unix MCP Process dispositions can
-  enter the bounded positive partition; unsupported effects and checkpoints remain unresolved.
-- All required flush attempts remain in authentic original history; any required flush failure remains sticky and
-  an empty event set still performs its required original barrier.
-- Every original upper/lower method, helper and reader independently enforces complete source and final native predicates;
-  sealed work queues cannot be reopened by terminal publication.
+- Only genuine zero invocations or fully owned FileSafe and disposable unshared Unix MCP Process dispositions
+  can enter the bounded positive partition; unsupported effects and checkpoints remain unresolved.
+- All required flush attempts remain in authentic original history; any required flush failure remains sticky
+  and an empty event set still performs its required original barrier.
+- Every original upper/lower method, helper and reader independently enforces complete source and final native
+  predicates; sealed work queues cannot be reopened by terminal publication.
 validation_surfaces:
 - Plans/executor_cancellation_contracts/methods.json
 - Plans/executor_cancellation_contracts/realm-entry-boundaries.json
@@ -1063,7 +1066,8 @@ source_lineage:
 source_atom_ids: []
 negative_constraints:
 - No public command, event-membership, Goal lifecycle or retention-policy expansion.
-- No fabricated source, absence, origin, receipt, current body, native authority or retrospective original enrollment.
+- No fabricated source, absence, origin, receipt, current body, native authority or retrospective original
+  enrollment.
 - No numeric coercion, lossy codec, hidden effect/census member or required-flush failure removal.
 - No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
 ```

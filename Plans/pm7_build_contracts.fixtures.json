@@ -1,0 +1,476 @@
+{
+  "schema_id": "pm.pm7_build.fixtures.v1",
+  "owner_ref": "Plans/Wiring_Matrix.md#WM-097",
+  "claim_boundary": "Static contract and semantic fixtures only. No native signal, terminal input, event emission, audio or rendering is executed.",
+  "schema_cases": [
+    {
+      "name": "stop_binds_pid_start_time",
+      "definition": "work_stop_request",
+      "instance": {
+        "command_id": "cmd.work.stop",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "scope": "item",
+        "thread_id": "thread-1",
+        "targets": [
+          {
+            "work_id": "w-1",
+            "work_kind": "process",
+            "project_id": "p-1",
+            "server_id": "srv-1",
+            "environment_id": "env-1",
+            "owner_thread_id": "thread-1",
+            "generation": 4,
+            "pid": 123,
+            "pid_start_time": "2026-10-29T22:00:00Z",
+            "process_group": 123
+          }
+        ],
+        "reviewed_generation": 4,
+        "scope_kind": "project"
+      },
+      "valid": true
+    },
+    {
+      "name": "stop_without_start_time_refused",
+      "definition": "work_stop_request",
+      "instance": {
+        "command_id": "cmd.work.stop",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "scope": "item",
+        "thread_id": "thread-1",
+        "targets": [
+          {
+            "work_id": "w-1",
+            "work_kind": "process",
+            "project_id": "p-1",
+            "server_id": "srv-1",
+            "environment_id": "env-1",
+            "owner_thread_id": "thread-1",
+            "generation": 4,
+            "pid": 123,
+            "pid_start_time": null,
+            "process_group": 123
+          }
+        ],
+        "reviewed_generation": 4,
+        "scope_kind": "project"
+      },
+      "valid": false
+    },
+    {
+      "name": "quit_keep_running_has_no_stop_targets",
+      "definition": "work_quit_request",
+      "instance": {
+        "command_id": "cmd.work.quit",
+        "project_id": null,
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "choice": "keep_running",
+        "targets": [],
+        "reviewed_generation": 4,
+        "scope_kind": "application"
+      },
+      "valid": true
+    },
+    {
+      "name": "quit_keep_running_cannot_smuggle_stop_targets",
+      "definition": "work_quit_request",
+      "instance": {
+        "command_id": "cmd.work.quit",
+        "project_id": null,
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "choice": "keep_running",
+        "targets": [
+          {
+            "work_id": "w-1",
+            "work_kind": "process",
+            "project_id": "p-1",
+            "server_id": "srv-1",
+            "environment_id": "env-1",
+            "owner_thread_id": "thread-1",
+            "generation": 4,
+            "pid": 123,
+            "pid_start_time": "2026-10-29T22:00:00Z",
+            "process_group": 123
+          }
+        ],
+        "reviewed_generation": 4,
+        "scope_kind": "application"
+      },
+      "valid": false
+    },
+    {
+      "name": "resources_is_a_real_tab",
+      "definition": "work_panel_show_request",
+      "instance": {
+        "command_id": "cmd.agents_and_processes.show",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "tab": "resources",
+        "view_id": "view-1",
+        "scope_kind": "project"
+      },
+      "valid": true
+    },
+    {
+      "name": "old_task_manager_layout_refused",
+      "definition": "work_panel_show_request",
+      "instance": {
+        "command_id": "cmd.agents_and_processes.show",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "tab": "task_manager",
+        "view_id": "view-1",
+        "scope_kind": "project"
+      },
+      "valid": false
+    },
+    {
+      "name": "free_text_input_requires_terminal",
+      "definition": "work_send_input_request",
+      "instance": {
+        "command_id": "cmd.work.send_input",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "target": {
+          "work_id": "w-1",
+          "work_kind": "process",
+          "project_id": "p-1",
+          "server_id": "srv-1",
+          "environment_id": "env-1",
+          "owner_thread_id": "thread-1",
+          "generation": 4,
+          "pid": 123,
+          "pid_start_time": "2026-10-29T22:00:00Z",
+          "process_group": 123
+        },
+        "input_generation": 3,
+        "answer": "rm -rf /",
+        "scope_kind": "project"
+      },
+      "valid": false
+    },
+    {
+      "name": "application_quit_without_invented_project",
+      "definition": "work_quit_request",
+      "instance": {
+        "command_id": "cmd.work.quit",
+        "project_id": null,
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "choice": "keep_running",
+        "targets": [],
+        "reviewed_generation": 4,
+        "scope_kind": "application"
+      },
+      "valid": true
+    },
+    {
+      "name": "application_cannot_smuggle_project",
+      "definition": "work_quit_request",
+      "instance": {
+        "command_id": "cmd.work.quit",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "choice": "keep_running",
+        "targets": [],
+        "reviewed_generation": 4,
+        "scope_kind": "application"
+      },
+      "valid": false
+    },
+    {
+      "name": "missing_scope_fails_closed",
+      "definition": "work_quit_request",
+      "instance": {
+        "command_id": "cmd.work.quit",
+        "project_id": null,
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "choice": "keep_running",
+        "targets": [],
+        "reviewed_generation": 4
+      },
+      "valid": false
+    },
+    {
+      "name": "platform_panel_without_active_project",
+      "definition": "work_panel_show_request",
+      "instance": {
+        "command_id": "cmd.agents_and_processes.show",
+        "project_id": null,
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "keyboard",
+        "tab": "resources",
+        "view_id": "view-1",
+        "scope_kind": "application"
+      },
+      "valid": true
+    },
+    {
+      "name": "local_editor_without_active_project",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.settings.pip_editor.open",
+        "scope_kind": "application",
+        "project_id": null,
+        "view_id": "settings",
+        "return_focus_id": "pip-row"
+      },
+      "valid": true
+    },
+    {
+      "name": "project_scope_cannot_omit_project",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.close",
+        "scope_kind": "project",
+        "project_id": null,
+        "view_id": "panel",
+        "return_focus_id": "statusbar"
+      },
+      "valid": false
+    },
+    {
+      "name": "pip_setting_writes_registry_labels",
+      "definition": "PipPartsSettingValue",
+      "instance": [
+        "Sheet hosts",
+        "Status faces in lists",
+        "Working orbit",
+        "Plans",
+        "Wand menu",
+        "Empty lists",
+        "State faces",
+        "Watches",
+        "Wonders while typing",
+        "Cheers",
+        "Oops",
+        "Gaze",
+        "Blinks",
+        "Sway and physics",
+        "Blinks between faces",
+        "Thinking dots",
+        "Idle life",
+        "Seat colours",
+        "Role props",
+        "Strings",
+        "Cheeks and shine",
+        "Setup world life",
+        "Pip talks in setup",
+        "Setup music"
+      ],
+      "valid": true
+    },
+    {
+      "name": "pip_setting_ids_are_read_compatibility_not_writes",
+      "definition": "PipPartsSettingValue",
+      "instance": [
+        "sheet-hosts",
+        "status-faces",
+        "working-orbit",
+        "plans",
+        "wand-menu",
+        "empty-lists",
+        "state-faces",
+        "watches",
+        "wonders-while-typing",
+        "cheers",
+        "oops",
+        "gaze",
+        "blinks",
+        "sway-and-physics",
+        "face-transitions",
+        "thinking-dots",
+        "idle-life",
+        "seat-colours",
+        "role-props",
+        "strings",
+        "cheeks-and-shine",
+        "setup-world-life",
+        "setup-voice",
+        "setup-music"
+      ],
+      "valid": false
+    }
+  ],
+  "semantic_cases": [
+    {
+      "name": "pid_reused",
+      "request": {
+        "work_id": "w-1",
+        "work_kind": "process",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "owner_thread_id": "thread-1",
+        "generation": 4,
+        "pid": 123,
+        "pid_start_time": "2026-10-29T22:00:00Z",
+        "process_group": 123
+      },
+      "observed": {
+        "work_id": "w-1",
+        "work_kind": "process",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "owner_thread_id": "thread-1",
+        "generation": 4,
+        "pid": 123,
+        "pid_start_time": "2026-10-29T22:00:01Z",
+        "process_group": 123
+      },
+      "expected": "pid_reused"
+    },
+    {
+      "name": "stale_generation",
+      "request": {
+        "work_id": "w-1",
+        "work_kind": "process",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "owner_thread_id": "thread-1",
+        "generation": 4,
+        "pid": 123,
+        "pid_start_time": "2026-10-29T22:00:00Z",
+        "process_group": 123
+      },
+      "observed": {
+        "work_id": "w-1",
+        "work_kind": "process",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "owner_thread_id": "thread-1",
+        "generation": 5,
+        "pid": 123,
+        "pid_start_time": "2026-10-29T22:00:00Z",
+        "process_group": 123
+      },
+      "expected": "stale_target"
+    },
+    {
+      "name": "cross_server_target",
+      "request": {
+        "work_id": "w-1",
+        "work_kind": "process",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "owner_thread_id": "thread-1",
+        "generation": 4,
+        "pid": 123,
+        "pid_start_time": "2026-10-29T22:00:00Z",
+        "process_group": 123
+      },
+      "observed": {
+        "work_id": "w-1",
+        "work_kind": "process",
+        "project_id": "p-1",
+        "server_id": "srv-2",
+        "environment_id": "env-1",
+        "owner_thread_id": "thread-1",
+        "generation": 4,
+        "pid": 123,
+        "pid_start_time": "2026-10-29T22:00:00Z",
+        "process_group": 123
+      },
+      "expected": "stale_target"
+    },
+    {
+      "name": "current_identity",
+      "request": {
+        "work_id": "w-1",
+        "work_kind": "process",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "owner_thread_id": "thread-1",
+        "generation": 4,
+        "pid": 123,
+        "pid_start_time": "2026-10-29T22:00:00Z",
+        "process_group": 123
+      },
+      "observed": {
+        "work_id": "w-1",
+        "work_kind": "process",
+        "project_id": "p-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "owner_thread_id": "thread-1",
+        "generation": 4,
+        "pid": 123,
+        "pid_start_time": "2026-10-29T22:00:00Z",
+        "process_group": 123
+      },
+      "expected": "current"
+    }
+  ],
+  "counts": {
+    "settings": 1011,
+    "status_keys": 22,
+    "pip_parts": 25,
+    "default_parts": 24,
+    "pm7_bindings": 464,
+    "touch_rows": 707,
+    "touch_profiles": 137,
+    "production_wiring_entries": 1269,
+    "new_production_rows": 11,
+    "new_bindings": 45
+  }
+}

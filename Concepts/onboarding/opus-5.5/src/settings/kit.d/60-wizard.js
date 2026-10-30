@@ -140,7 +140,10 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
   win.setAttribute('data-pm-hover-exempt', 'true');
   win.setAttribute('aria-label', title);
   const rail = steps.map((s, i) => `<li class="o55g-railitem" data-i="${i}" data-state="next"><span class="o55g-railnode" aria-hidden="true"></span><span class="o55g-raillabel">${h(s.label)}</span></li>`).join('');
-  win.innerHTML = `<header class="o55g-head"><div class="o55g-brand"><span class="o55g-brandicon" aria-hidden="true">${icon(ic || 'spark')}</span><span class="o55g-brandname">${h(title)}</span></div>`
+  /* the header's brand is Pip, Puppet Master's static mark (W1, F3-660; NieR's plain band, X3), redrawn on a look change
+     while the window is open; the stage's emblem keeps the flow's own icon */
+  const pip = () => (window.PMLogo ? window.PMLogo.mark({ px: 19, decorative: true }) : icon(ic || 'spark'));
+  win.innerHTML = `<header class="o55g-head"><div class="o55g-brand"><span class="o55g-brandicon" aria-hidden="true">${pip()}</span><span class="o55g-brandname">${h(title)}</span></div>`
     + `<nav class="o55g-railwrap" aria-label="Steps">${steps.length > 1 ? `<ol class="o55g-rail">${rail}</ol>` : ''}</nav>`
     + `<button type="button" class="o55g-close" data-action="close-overlay" aria-label="${a('Close ' + title)}">${icon('close')}<span>Close</span></button></header>`
     + `<div class="o55g-body"><div class="o55g-stage" aria-hidden="true"><div class="o55g-art">${o55gArt(steps.length)}<span class="o55g-emblem"></span></div><div class="o55g-recap"></div></div>`
@@ -149,6 +152,10 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
     + `<span class="o55g-footnote"></span><span class="o55g-grow"></span>`
     + `<button type="button" class="btn primary o55g-primary" data-callback="${registerAction(() => move(1))}"><span>Continue</span>${icon('arrowRight')}</button></footer>`
     + `<div class="o55g-live" aria-live="polite" role="status"></div>`;
+  if (window.PMLogo) {
+    const brandIcon = win.querySelector('.o55g-brandicon');
+    const offLook = window.PMLogo.onLook(() => { if (!brandIcon.isConnected) { offLook(); return; } brandIcon.innerHTML = pip(); });
+  }
   /* a click on the dimmed page nudges the window rather than closing it with the answers inside */
   wrap.addEventListener('mousedown', e => {
     if (e.target !== wrap) return;

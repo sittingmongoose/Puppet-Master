@@ -7975,6 +7975,645 @@
       ],
       "payload": "Writes the scope the value comes from: the tab override through cmd.editor.appearance.set when the tab keeps its own value, otherwise the Project row through preview then apply; never creates or overwrites a tab override silently (DL-228)",
       "no_production_reason": ""
+    },
+    {
+      "control_id": "shell.project.open",
+      "surface": "Title bar > Project box > open",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-661",
+      "disposition": "local",
+      "action_ids": [
+        "ui.project_switcher.open"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable project_id and workspace_tab_id; Ctrl+Shift+P opens; Ctrl/Cmd+Enter picks a new workspace tab (B1/B2/B6).",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "shell.project.close",
+      "surface": "Title bar > Project box > close",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-661",
+      "disposition": "local",
+      "action_ids": [
+        "ui.project_switcher.close"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable project_id and workspace_tab_id; Ctrl+Shift+P opens; Ctrl/Cmd+Enter picks a new workspace tab (B1/B2/B6).",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "shell.project.pick",
+      "surface": "Title bar > Project box > pick",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-661",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.project.switch_active_tab"
+      ],
+      "production_entries": [
+        "pm7.project_switch"
+      ],
+      "setting_ids": [],
+      "payload": "Stable project_id and workspace_tab_id; Ctrl+Shift+P opens; Ctrl/Cmd+Enter picks a new workspace tab (B1/B2/B6).",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "shell.project.open_new_workspace_tab",
+      "surface": "Title bar > Project box > open_new_workspace_tab",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-661",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.project.open_in_new_workspace_tab"
+      ],
+      "production_entries": [
+        "pm7.project_open_new"
+      ],
+      "setting_ids": [],
+      "payload": "Stable project_id and workspace_tab_id; Ctrl+Shift+P opens; Ctrl/Cmd+Enter picks a new workspace tab (B1/B2/B6).",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "shell.project.shortcut",
+      "surface": "Title bar > Project box > shortcut",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-661",
+      "disposition": "local",
+      "action_ids": [
+        "ui.project_switcher.open"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable project_id and workspace_tab_id; Ctrl+Shift+P opens; Ctrl/Cmd+Enter picks a new workspace tab (B1/B2/B6).",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "shell.project.all",
+      "surface": "Title bar > All projects",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-661",
+      "disposition": "local",
+      "action_ids": [
+        "ui.project_switcher.all_projects"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Existing Projects page route; tab_id projects. No work owner mutation.",
+      "no_production_reason": "Existing Projects page focus (route tab_id projects); typed local navigation, no side-panel cmd.panel.switch and no runtime mutation."
+    },
+    {
+      "control_id": "statusbar.agents",
+      "surface": "Status bar > agents",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.agents_and_processes.show"
+      ],
+      "production_entries": [
+        "pm7.work_panel_show"
+      ],
+      "setting_ids": [],
+      "payload": "tab=agents; same view toggles on second press, no CPU/RAM bar item.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "statusbar.processes",
+      "surface": "Status bar > processes",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.agents_and_processes.show"
+      ],
+      "production_entries": [
+        "pm7.work_panel_show"
+      ],
+      "setting_ids": [],
+      "payload": "tab=processes; same view toggles on second press, no CPU/RAM bar item.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.panel.agents",
+      "surface": "Work panel > agents",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_panel.select_tab"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "tab=agents; Resources sampling only while this selected tab is visible.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "work.panel.processes",
+      "surface": "Work panel > processes",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_panel.select_tab"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "tab=processes; Resources sampling only while this selected tab is visible.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "work.panel.resources",
+      "surface": "Work panel > resources",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_panel.select_tab"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "tab=resources; Resources sampling only while this selected tab is visible.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "work.panel.close",
+      "surface": "Work panel > close",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_panel.close"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "work.panel.filter",
+      "surface": "Work panel > filter",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_panel.filter"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "work.panel.sort",
+      "surface": "Work panel > sort",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_panel.sort"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "work.panel.expand",
+      "surface": "Work panel > expand",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_panel.expand"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "work.panel.select",
+      "surface": "Work panel > select",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_panel.select"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "work.panel.pop_out",
+      "surface": "Work panel > Pop out",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.agents_and_processes.pop_out"
+      ],
+      "production_entries": [
+        "pm7.work_panel_pop_out"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.stop",
+      "surface": "Work panel / thread Processes > stop",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.work.stop"
+      ],
+      "production_entries": [
+        "pm7.work_stop"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.stop_all.thread",
+      "surface": "Work panel / thread Processes > stop_all.thread",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.work.stop"
+      ],
+      "production_entries": [
+        "pm7.work_stop"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.stop_all.platform",
+      "surface": "Work panel / thread Processes > stop_all.platform",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.work.stop"
+      ],
+      "production_entries": [
+        "pm7.work_stop"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.restart",
+      "surface": "Work panel / thread Processes > restart",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.work.restart"
+      ],
+      "production_entries": [
+        "pm7.work_restart"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.send_input",
+      "surface": "Work panel / thread Processes > send_input",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.work.send_input"
+      ],
+      "production_entries": [
+        "pm7.work_send_input"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.completion_delivery",
+      "surface": "Work panel / thread Processes > completion_delivery",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.work.set_completion_delivery"
+      ],
+      "production_entries": [
+        "pm7.work_completion_delivery"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.clear_finished",
+      "surface": "Work panel / thread Processes > clear_finished",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.work.clear_finished"
+      ],
+      "production_entries": [
+        "pm7.work_clear_finished"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.open_terminal",
+      "surface": "Work panel / thread Processes > open_terminal",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.open"
+      ],
+      "production_entries": [
+        "catalog.terminal_open"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.answer_terminal",
+      "surface": "Work panel / thread Processes > answer_terminal",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.open"
+      ],
+      "production_entries": [
+        "catalog.terminal_open"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.open_owner",
+      "surface": "Work panel / thread Processes > open_owner",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.agents.open_thread"
+      ],
+      "production_entries": [
+        "catalog.agents_open_thread"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.open_system_status",
+      "surface": "Work panel > System services > System status",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_panel.select"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Reveal existing System status route in shell, no service action.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "chat.activity.processes",
+      "surface": "Chat > Activity bar > Processes",
+      "owner_ref": "Plans/assistant-chat-design.md#ACD-505",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.chat.processes.open"
+      ],
+      "production_entries": [
+        "pm7.processes_open"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "chat.activity.processes.stop_all",
+      "surface": "Chat > Activity Detail > Processes > Stop all",
+      "owner_ref": "Plans/assistant-chat-design.md#ACD-505",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.work.stop"
+      ],
+      "production_entries": [
+        "pm7.work_stop"
+      ],
+      "setting_ids": [],
+      "payload": "scope=thread and current thread identity; reviewed current descendant process targets, no system services.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.quit.open",
+      "surface": "Quit with running work > open",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-665",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_quit.open"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "work.quit.keep_running",
+      "surface": "Quit with running work > keep_running",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-665",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_quit.select"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "work.quit.stop_selected",
+      "surface": "Quit with running work > stop_selected",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-665",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_quit.select"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "work.quit.select_target",
+      "surface": "Quit with running work > select_target",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-665",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_quit.select"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "work.quit.confirm",
+      "surface": "Quit with running work > confirm",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-665",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.work.quit"
+      ],
+      "production_entries": [
+        "pm7.work_quit"
+      ],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "work.quit.cancel",
+      "surface": "Quit with running work > cancel",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-665",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_quit.cancel"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "pip.editor.parts",
+      "surface": "Pip editor > parts",
+      "owner_ref": "Plans/Settings_System.md#SSYS-056",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "general.visual.pip-parts"
+      ],
+      "payload": "One pip-parts row patch; preset is a value of that row, never a separate setting.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "pip.editor.preset",
+      "surface": "Pip editor > preset",
+      "owner_ref": "Plans/Settings_System.md#SSYS-056",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "general.visual.pip-parts"
+      ],
+      "payload": "One pip-parts row patch; preset is a value of that row, never a separate setting.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "pip.editor.open",
+      "surface": "Pip editor > open",
+      "owner_ref": "Plans/Settings_System.md#SSYS-056",
+      "disposition": "local",
+      "action_ids": [
+        "ui.settings.pip_editor.open"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "pip.editor.close",
+      "surface": "Pip editor > close",
+      "owner_ref": "Plans/Settings_System.md#SSYS-056",
+      "disposition": "local",
+      "action_ids": [
+        "ui.settings.pip_editor.close"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "pip.editor.replay",
+      "surface": "Pip editor > replay",
+      "owner_ref": "Plans/Settings_System.md#SSYS-056",
+      "disposition": "local",
+      "action_ids": [
+        "ui.settings.pip_editor.replay"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "pip.entry.settings",
+      "surface": "Pip editor entry > settings",
+      "owner_ref": "Plans/Settings_System.md#SSYS-056",
+      "disposition": "local",
+      "action_ids": [
+        "ui.settings.pip_editor.open"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "pip.entry.wand",
+      "surface": "Pip editor entry > wand",
+      "owner_ref": "Plans/Settings_System.md#SSYS-056",
+      "disposition": "local",
+      "action_ids": [
+        "ui.settings.pip_editor.open"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "pip.entry.titlebar",
+      "surface": "Pip editor entry > titlebar",
+      "owner_ref": "Plans/Settings_System.md#SSYS-056",
+      "disposition": "local",
+      "action_ids": [
+        "ui.settings.pip_editor.open"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+    },
+    {
+      "control_id": "statusbar.words",
+      "surface": "Settings > Window & panels > Numbers/Words",
+      "owner_ref": "Plans/Settings_System.md#SSYS-057",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "general.interaction.status-bar-words"
+      ],
+      "payload": "Set boolean status-bar-words; Numbers false by default.",
+      "no_production_reason": ""
     }
   ],
   "held_controls": []

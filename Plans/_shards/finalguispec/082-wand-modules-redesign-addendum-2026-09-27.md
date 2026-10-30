@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40151-L41371
+Source lines: L40462-L41684
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
 
 ---
 
@@ -85,6 +85,7 @@ canonical_text: >-
   DL-138 confirms this scope: theme durations govern sheets and a card's own changes; transcript
   entrances retain ACD-475's shared timing and order. Wand cards that opt out of the family entrance
   do not acquire a second entrance animation.
+  Amended 2026-10-29 (PC1/PC2; PM7): The common sheet header may add Pip holding the kind sign on a third string, 10 px lower than the first concept and level with Close. Existing title/kind/lead/close/focus/commit grammar remains; presentation adds no feature or dispatch. Optional host follows SSYS-056.
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
@@ -309,7 +310,7 @@ canonical_text: >-
   At every tier a card shows at most three lane rows (the rest summarised in one row that opens the
   full list), and every region has a fixed box and a line clamp, so a periodic tick changes only
   text; heights change only at state boundaries, with the reader's scroll anchor held. The S tier
-  is a card inside a narrow chat (for example beside a pinned Activity Detail) and is not a
+  is a card inside a narrow chat (for example beside a full-size Activity Detail) and is not a
   minimum chat width. Only the newest live run in a thread shows its live face; older live runs
   are collapsed, and a needs-you decision survives the collapse. A finished run keeps its result
   face until the user's next message and then becomes a receipt. The one-line receipt is one
@@ -1073,13 +1074,14 @@ canonical_text: >-
   Panel and Message. It never repeats the run card or the kind's board. A click on
   one of these four domains' chip in the Activity bar reveals the newest card of that kind in the
   thread and marks it once; the rows of those domains' hover cards keep APR-006's routing into
-  Activity Detail, pinned per APR-001, so Activity Detail stays reachable. Back Seat Driver's section
+  Activity Detail, full-size under APR-001/G1/G2, so Activity Detail stays reachable. Back Seat Driver's section
   of Context Details has a head (Back Seat Driver and Configure), three plain facts (the mode, the
   advisor model and Persona, and how watchful it is) and three native disclosures (Advisor notes,
   Session, Usage), with evidence as sentences and raw data behind Show raw data, and no metric-card
   grid and no pills. Every other Activity Detail family (Goal, To-Dos, Subagents, Changes, Artifacts)
   and every other Context Details section keeps the restored native card, panel and grid
   presentation, apart from the To-Do rows, which are DL-147's second scoped exception (F3-593).
+  Amended 2026-10-29 (PC1–PC5; PM7): Agent and helper appearances consume F3-594’s single Pip primitive and SSYS-056’s optional extras, never a second drawing or runtime identity.
 gui_related: true
 gui_classification_reason: "Defines the compact Activity Detail and Back Seat Driver Context Details surfaces."
 split_recommended: false

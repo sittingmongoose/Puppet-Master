@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26754-L27466
+Source lines: L26807-L27520
 
-Source SHA256: `c0c6409fa65d05d98a600d5145ecae0efae9602af2b85f17b5f91023a204798c`
+Source SHA256: `63c9c2df0d06e50d6f0e803255e1aedcde0319ecf34fae55f25c4b5a68a06159`
 
 ---
 
@@ -45,6 +45,7 @@ canonical_text: >-
   taken only in its transcript item or the approval owner's host. The families of the records the
   dock mirrors are ACD-469's map. The dock's live-run lines and the per-reply files row replace
   the stream footer pill's helpers and files chips (ACD-482, DL-129).
+  Amended 2026-10-29 (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes to live runs; both are views of the same owner identity, not duplicate attention. Process stop differs from reply Stop; delivery never wakes a stopped thread.
 gui_related: true
 gui_classification_reason: "Defines the dock above the composer and the attention items it shows."
 split_recommended: false

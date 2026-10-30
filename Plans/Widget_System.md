@@ -1932,6 +1932,7 @@ canonical_text: >-
   envelope only to the project it was saved for, skips another project's envelope and leaves a custom board
   not held by that layout unchanged. F3-638 owns the header facts, Live mark, Board and Start from menu
   rows, empty-board invitation, focus return and measured sizes.
+  Amended 2026-10-29 (D7; PM7): Home Agents board remains the agent-filtered OperationalAwareness/ObservableWork projection with shared row anatomy and counts. Process ownership links reveal F3-664; no new process board or private list is added.
 gui_related: true
 gui_classification_reason: Defines which boards a person can open, make, rename and delete as dashboard tabs, what each can show, and how each board's widget layout, view and presets are kept and restored.
 split_recommended: false

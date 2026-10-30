@@ -55985,7 +55985,7 @@
     },
     "catalog.settings_transaction_apply": {
       "ui_element_id": "catalog.settings_transaction_apply",
-      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073); Usage page > Accounts room > each account's switch-level button and menu on its account card (its Follow choice sends inherit) and the Switch at N% used action in that account's Details, at scope account with the account id (SSYS-044, D43 2026-10-10); both Customize screens All scope and all exact Settings ids in Plans/pm7_control_bindings.json, including Wallpaper",
+      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073); Usage page > Accounts room > each account's switch-level button and menu on its account card (its Follow choice sends inherit) and the Switch at N% used action in that account's Details, at scope account with the account id (SSYS-044, D43 2026-10-10); both Customize screens All scope and all exact Settings ids in Plans/pm7_control_bindings.json, including Wallpaper / Pip parts editor (Settings, wand, title bar) / status bar Numbers or Words",
       "ui_command_id": "cmd.settings.transaction.apply",
       "handler_location": "handlers::settings::transaction_apply",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request",
@@ -56000,7 +56000,8 @@
         "WM-093/pm7_control_bindings.json enumerates every PM7 Settings producer and exact id; preview/apply is the only Project writer, rejects no_project_context, validates catalog wallpaper ids, and keeps the reader anchored under SSYS-053.",
         "Project reset/look own uses restore_defaults for the exact affected ids; tab overrides remain above the Project result and are disclosed.",
         "All-scope quick sets use only their exact registered ids/values. SSYS-054’s NieR background change binds both nier-background and wallpaper=look in one preview/apply; both selection orders preserve most-recent accepted choice with no second writer.",
-        "All-terminal saved-preset Apply is one exact set patch over appearance_quick_sets.json terminal reset_ids, with saved values and inventory defaults for omissions; it never performs reset then apply as two commits. MA-073 remains the sole validator for switch/warn writes and refused default restoration."
+        "All-terminal saved-preset Apply is one exact set patch over appearance_quick_sets.json terminal reset_ids, with saved values and inventory defaults for omissions; it never performs reset then apply as two commits. MA-073 remains the sole validator for switch/warn writes and refused default restoration.",
+        "PM7 S1–S9/D5: parts, presets and status-bar-words write the same admitted inventory row across all hosts; no shadow store, no switchable brand/loader and no extra sound key."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, sole-owner routing, CAS/race, idempotent replay, restart, readback, partial-failure, and rollback fixtures are required before certification.",
       "state_selector": "state.commands.settings_transaction_apply.availability",
@@ -56056,7 +56057,7 @@
     },
     "catalog.settings_transaction_preview": {
       "ui_element_id": "catalog.settings_transaction_preview",
-      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073); Usage page > Accounts room > each account's switch-level button and menu on its account card (its Follow choice sends inherit) and the Switch at N% used action in that account's Details, at scope account with the account id (SSYS-044, D43 2026-10-10); both Customize screens All scope and all exact Settings ids in Plans/pm7_control_bindings.json, including Wallpaper",
+      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073); Usage page > Accounts room > each account's switch-level button and menu on its account card (its Follow choice sends inherit) and the Switch at N% used action in that account's Details, at scope account with the account id (SSYS-044, D43 2026-10-10); both Customize screens All scope and all exact Settings ids in Plans/pm7_control_bindings.json, including Wallpaper / Pip parts editor (Settings, wand, title bar) / status bar Numbers or Words",
       "ui_command_id": "cmd.settings.transaction.preview",
       "handler_location": "handlers::settings::transaction_preview",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request",
@@ -56071,7 +56072,8 @@
         "WM-093/pm7_control_bindings.json enumerates every PM7 Settings producer and exact id; preview/apply is the only Project writer, rejects no_project_context, validates catalog wallpaper ids, and keeps the reader anchored under SSYS-053.",
         "Project reset/look own uses restore_defaults for the exact affected ids; tab overrides remain above the Project result and are disclosed.",
         "All-scope quick sets use only their exact registered ids/values. SSYS-054’s NieR background change binds both nier-background and wallpaper=look in one preview/apply; both selection orders preserve most-recent accepted choice with no second writer.",
-        "All-terminal saved-preset Apply is one exact set patch over appearance_quick_sets.json terminal reset_ids, with saved values and inventory defaults for omissions; it never performs reset then apply as two commits. MA-073 remains the sole validator for switch/warn writes and refused default restoration."
+        "All-terminal saved-preset Apply is one exact set patch over appearance_quick_sets.json terminal reset_ids, with saved values and inventory defaults for omissions; it never performs reset then apply as two commits. MA-073 remains the sole validator for switch/warn writes and refused default restoration.",
+        "PM7 S1–S9/D5: parts, presets and status-bar-words write the same admitted inventory row across all hosts; no shadow store, no switchable brand/loader and no extra sound key."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, owner-resolution, permission, stale-CAS, and no-write fixtures are required before production certification.",
       "state_selector": "state.commands.settings_transaction_preview.availability",
@@ -69882,7 +69884,7 @@
         "cmd.workspace_layout.resize_surface is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
         "home.resizer.chat reads state.home_workspace.home_resizer_chat.availability and shows state.home_workspace.home_resizer_chat.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.resizer.chat dispatches cmd.workspace_layout.resize_surface exactly once per activation and preserves command_id, correlation_id and the receipt.",
-        "The payload is { surface: chat, width }, one commit on release, between 400 and 760 px and never so wide that the centre drops below 600 px (F3-637); a width the user never set follows the window.",
+        "G3/DL-254: payload {surface: chat, width} commits once on release; message width is at least 400 px and grows to the current centre/page floor with no fixed maximum. Null follows the window default; History width remains separate.",
         "The concept token cmd.workspace_layout.size_surface normalizes to this command before dispatch and has no row (CS-068).",
         "A commit that moves nothing dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
@@ -75976,6 +75978,622 @@
       ],
       "request_schema_ref": "Plans/editor_appearance.schema.json#/$defs/request",
       "result_schema_ref": "Plans/editor_appearance.schema.json#/$defs/result"
+    },
+    "pm7.project_switch": {
+      "ui_element_id": "pm7.project_switch",
+      "ui_location": "Title bar > Project box > Project row; Projects view / command palette",
+      "ui_command_id": "cmd.project.switch_active_tab",
+      "handler_location": "handlers::project::switch_active_tab",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Switch only the named current workspace tab to target_project_id after currentness/permission checks; a stale target changes nothing.",
+        "Do not create a new workspace tab or dispatch merely to open the menu."
+      ],
+      "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-661",
+      "state_selector": "state.pm7.project_switch.availability",
+      "disabled_reason_projection": "state.pm7.project_switch.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "View-local route/hiding only, no runtime or durable write.",
+        "receipt_or_event_refs": [
+          "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Switch active workspace Project with exact owner scope in accessible description.",
+        "keyboard_access": "Keyboard and pointer activate the same typed request; unavailable items retain a reason.",
+        "focus_management": "Contain modal focus and restore the invoking control, or reveal the exact routed target.",
+        "disabled_announcement": "Announce state.pm7.project_switch.disabled_reason; no disabled action commits."
+      },
+      "test_evidence": [
+        {
+          "test_id": "pm7.project_switch.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Future native dispatch reaches the sole owner target with typed request."
+        },
+        {
+          "test_id": "pm7.project_switch.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Currentness and unavailable reason are owner-derived."
+        },
+        {
+          "test_id": "pm7.project_switch.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Refusal/idempotent replay cannot duplicate effects; no new event emits."
+        },
+        {
+          "test_id": "pm7.project_switch.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove visible control, keyboard/focus and disabled parity."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
+      ],
+      "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/project_switch_request",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+    },
+    "pm7.project_open_new": {
+      "ui_element_id": "pm7.project_open_new",
+      "ui_location": "Title bar > Project row Ctrl/Cmd+Enter; Projects view / command palette",
+      "ui_command_id": "cmd.project.open_in_new_workspace_tab",
+      "handler_location": "handlers::project::open_in_new_workspace_tab",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Open exactly one new workspace tab for target_project_id; retain the source workspace identity and existing route normalization.",
+        "Replay the same request without a duplicate tab; ordinary row pick remains switch_active_tab."
+      ],
+      "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-661",
+      "state_selector": "state.pm7.project_open_new.availability",
+      "disabled_reason_projection": "state.pm7.project_open_new.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "View-local route/hiding only, no runtime or durable write.",
+        "receipt_or_event_refs": [
+          "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Open Project in new workspace tab with exact owner scope in accessible description.",
+        "keyboard_access": "Keyboard and pointer activate the same typed request; unavailable items retain a reason.",
+        "focus_management": "Contain modal focus and restore the invoking control, or reveal the exact routed target.",
+        "disabled_announcement": "Announce state.pm7.project_open_new.disabled_reason; no disabled action commits."
+      },
+      "test_evidence": [
+        {
+          "test_id": "pm7.project_open_new.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Future native dispatch reaches the sole owner target with typed request."
+        },
+        {
+          "test_id": "pm7.project_open_new.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Currentness and unavailable reason are owner-derived."
+        },
+        {
+          "test_id": "pm7.project_open_new.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Refusal/idempotent replay cannot duplicate effects; no new event emits."
+        },
+        {
+          "test_id": "pm7.project_open_new.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove visible control, keyboard/focus and disabled parity."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
+      ],
+      "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/project_open_new_request",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+    },
+    "pm7.processes_open": {
+      "ui_element_id": "pm7.processes_open",
+      "ui_location": "Assistant Chat > Activity bar / Activity Detail > Processes",
+      "ui_command_id": "cmd.chat.processes.open",
+      "handler_location": "handlers::chat::open_processes",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Reveal only this Project/thread’s Processes detail with D4 presence and full-size G1/G2 geometry.",
+        "Opening this view starts/stops no process and does not duplicate a subagent as process work."
+      ],
+      "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/assistant-chat-design.md#ACD-505",
+      "state_selector": "state.pm7.processes_open.availability",
+      "disabled_reason_projection": "state.pm7.processes_open.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "View-local route/hiding only, no runtime or durable write.",
+        "receipt_or_event_refs": [
+          "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Open Processes with exact owner scope in accessible description.",
+        "keyboard_access": "Keyboard and pointer activate the same typed request; unavailable items retain a reason.",
+        "focus_management": "Contain modal focus and restore the invoking control, or reveal the exact routed target.",
+        "disabled_announcement": "Announce state.pm7.processes_open.disabled_reason; no disabled action commits."
+      },
+      "test_evidence": [
+        {
+          "test_id": "pm7.processes_open.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Future native dispatch reaches the sole owner target with typed request."
+        },
+        {
+          "test_id": "pm7.processes_open.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Currentness and unavailable reason are owner-derived."
+        },
+        {
+          "test_id": "pm7.processes_open.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Refusal/idempotent replay cannot duplicate effects; no new event emits."
+        },
+        {
+          "test_id": "pm7.processes_open.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove visible control, keyboard/focus and disabled parity."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
+      ],
+      "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/processes_open_request",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+    },
+    "pm7.work_panel_show": {
+      "ui_element_id": "pm7.work_panel_show",
+      "ui_location": "Status bar > Agents or Processes > platform panel",
+      "ui_command_id": "cmd.agents_and_processes.show",
+      "handler_location": "handlers::work_panel::show",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Select agents/processes/resources in the one shared panel; repeat activation of the already-open status item closes it.",
+        "Application scope permits project_id null, never invents a Project; no CPU/RAM status item is added."
+      ],
+      "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-664",
+      "state_selector": "state.pm7.work_panel_show.availability",
+      "disabled_reason_projection": "state.pm7.work_panel_show.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "View-local route/hiding only, no runtime or durable write.",
+        "receipt_or_event_refs": [
+          "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Show agents and processes with exact owner scope in accessible description.",
+        "keyboard_access": "Keyboard and pointer activate the same typed request; unavailable items retain a reason.",
+        "focus_management": "Contain modal focus and restore the invoking control, or reveal the exact routed target.",
+        "disabled_announcement": "Announce state.pm7.work_panel_show.disabled_reason; no disabled action commits."
+      },
+      "test_evidence": [
+        {
+          "test_id": "pm7.work_panel_show.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Future native dispatch reaches the sole owner target with typed request."
+        },
+        {
+          "test_id": "pm7.work_panel_show.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Currentness and unavailable reason are owner-derived."
+        },
+        {
+          "test_id": "pm7.work_panel_show.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Refusal/idempotent replay cannot duplicate effects; no new event emits."
+        },
+        {
+          "test_id": "pm7.work_panel_show.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove visible control, keyboard/focus and disabled parity."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
+      ],
+      "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_panel_show_request",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+    },
+    "pm7.work_panel_pop_out": {
+      "ui_element_id": "pm7.work_panel_pop_out",
+      "ui_location": "Agents / Processes / Resources panel > Pop out",
+      "ui_command_id": "cmd.agents_and_processes.pop_out",
+      "handler_location": "handlers::work_panel::pop_out",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Move the same selected view/filter into one draggable desktop window, preserving its owner projection and focus route.",
+        "Unsupported clients expose a reason and never create a second runtime or hidden duplicate panel."
+      ],
+      "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-664",
+      "state_selector": "state.pm7.work_panel_pop_out.availability",
+      "disabled_reason_projection": "state.pm7.work_panel_pop_out.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "View-local route/hiding only, no runtime or durable write.",
+        "receipt_or_event_refs": [
+          "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Pop out agents and processes with exact owner scope in accessible description.",
+        "keyboard_access": "Keyboard and pointer activate the same typed request; unavailable items retain a reason.",
+        "focus_management": "Contain modal focus and restore the invoking control, or reveal the exact routed target.",
+        "disabled_announcement": "Announce state.pm7.work_panel_pop_out.disabled_reason; no disabled action commits."
+      },
+      "test_evidence": [
+        {
+          "test_id": "pm7.work_panel_pop_out.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Future native dispatch reaches the sole owner target with typed request."
+        },
+        {
+          "test_id": "pm7.work_panel_pop_out.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Currentness and unavailable reason are owner-derived."
+        },
+        {
+          "test_id": "pm7.work_panel_pop_out.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Refusal/idempotent replay cannot duplicate effects; no new event emits."
+        },
+        {
+          "test_id": "pm7.work_panel_pop_out.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove visible control, keyboard/focus and disabled parity."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
+      ],
+      "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_panel_pop_out_request",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+    },
+    "pm7.work_stop": {
+      "ui_element_id": "pm7.work_stop",
+      "ui_location": "Work panel > Stop / Stop all; thread Processes > Stop all",
+      "ui_command_id": "cmd.work.stop",
+      "handler_location": "handlers::work::stop",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Bind every reviewed target’s work/project/server/environment/pid/start/group/generation before stop; platform scope is application, per-target permission stays required.",
+        "SIGTERM the whole group, SIGKILL after 3 s if still live, exclude services, and stay Stopping until observed exit; ended replay is idempotent."
+      ],
+      "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/Shared_Integration_Runtime.md#SIR-054",
+      "state_selector": "state.pm7.work_stop.availability",
+      "disabled_reason_projection": "state.pm7.work_stop.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner result/receipt; no new PM7 semantic event is admitted. Existing owner lifecycle events retain their authority.",
+        "receipt_or_event_refs": [
+          "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Stop work with exact owner scope in accessible description.",
+        "keyboard_access": "Keyboard and pointer activate the same typed request; unavailable items retain a reason.",
+        "focus_management": "Contain modal focus and restore the invoking control, or reveal the exact routed target.",
+        "disabled_announcement": "Announce state.pm7.work_stop.disabled_reason; no disabled action commits."
+      },
+      "test_evidence": [
+        {
+          "test_id": "pm7.work_stop.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Future native dispatch reaches the sole owner target with typed request."
+        },
+        {
+          "test_id": "pm7.work_stop.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Currentness and unavailable reason are owner-derived."
+        },
+        {
+          "test_id": "pm7.work_stop.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Refusal/idempotent replay cannot duplicate effects; no new event emits."
+        },
+        {
+          "test_id": "pm7.work_stop.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove visible control, keyboard/focus and disabled parity."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
+      ],
+      "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_stop_request",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+    },
+    "pm7.work_restart": {
+      "ui_element_id": "pm7.work_restart",
+      "ui_location": "Work panel / thread Processes > eligible process Restart",
+      "ui_command_id": "cmd.work.restart",
+      "handler_location": "handlers::work::restart",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Restart only an owner-declared restartable current process, as a new invocation with preserved lineage and fresh process identity.",
+        "Refuse a stale/non-restartable/service target without replaying its command or silently starting another shell."
+      ],
+      "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/Shared_Integration_Runtime.md#SIR-054",
+      "state_selector": "state.pm7.work_restart.availability",
+      "disabled_reason_projection": "state.pm7.work_restart.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner result/receipt; no new PM7 semantic event is admitted. Existing owner lifecycle events retain their authority.",
+        "receipt_or_event_refs": [
+          "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Restart work with exact owner scope in accessible description.",
+        "keyboard_access": "Keyboard and pointer activate the same typed request; unavailable items retain a reason.",
+        "focus_management": "Contain modal focus and restore the invoking control, or reveal the exact routed target.",
+        "disabled_announcement": "Announce state.pm7.work_restart.disabled_reason; no disabled action commits."
+      },
+      "test_evidence": [
+        {
+          "test_id": "pm7.work_restart.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Future native dispatch reaches the sole owner target with typed request."
+        },
+        {
+          "test_id": "pm7.work_restart.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Currentness and unavailable reason are owner-derived."
+        },
+        {
+          "test_id": "pm7.work_restart.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Refusal/idempotent replay cannot duplicate effects; no new event emits."
+        },
+        {
+          "test_id": "pm7.work_restart.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove visible control, keyboard/focus and disabled parity."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
+      ],
+      "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_restart_request",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+    },
+    "pm7.work_send_input": {
+      "ui_element_id": "pm7.work_send_input",
+      "ui_location": "Work panel / thread Processes > current yes/no prompt",
+      "ui_command_id": "cmd.work.send_input",
+      "handler_location": "handlers::work::send_input",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Bind current input generation and exact process identity; offer only detected plain yes/no with safe answer first.",
+        "Free-text/secret/protected/stale prompts go to the owning Terminal or refuse; never synthesize unauthorized stdin."
+      ],
+      "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/Shared_Integration_Runtime.md#SIR-054",
+      "state_selector": "state.pm7.work_send_input.availability",
+      "disabled_reason_projection": "state.pm7.work_send_input.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner result/receipt; no new PM7 semantic event is admitted. Existing owner lifecycle events retain their authority.",
+        "receipt_or_event_refs": [
+          "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Answer process prompt with exact owner scope in accessible description.",
+        "keyboard_access": "Keyboard and pointer activate the same typed request; unavailable items retain a reason.",
+        "focus_management": "Contain modal focus and restore the invoking control, or reveal the exact routed target.",
+        "disabled_announcement": "Announce state.pm7.work_send_input.disabled_reason; no disabled action commits."
+      },
+      "test_evidence": [
+        {
+          "test_id": "pm7.work_send_input.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Future native dispatch reaches the sole owner target with typed request."
+        },
+        {
+          "test_id": "pm7.work_send_input.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Currentness and unavailable reason are owner-derived."
+        },
+        {
+          "test_id": "pm7.work_send_input.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Refusal/idempotent replay cannot duplicate effects; no new event emits."
+        },
+        {
+          "test_id": "pm7.work_send_input.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove visible control, keyboard/focus and disabled parity."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
+      ],
+      "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_send_input_request",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+    },
+    "pm7.work_completion_delivery": {
+      "ui_element_id": "pm7.work_completion_delivery",
+      "ui_location": "Work panel / thread Processes > When it ends",
+      "ui_command_id": "cmd.work.set_completion_delivery",
+      "handler_location": "handlers::work::set_completion_delivery",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Write only the selected current work item’s agent/user/quiet policy, independent of holds_reply.",
+        "Default routing/coalescing follows D9 and never wakes a user-stopped thread or duplicates a completion notice."
+      ],
+      "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/Shared_Integration_Runtime.md#SIR-054",
+      "state_selector": "state.pm7.work_completion_delivery.availability",
+      "disabled_reason_projection": "state.pm7.work_completion_delivery.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner result/receipt; no new PM7 semantic event is admitted. Existing owner lifecycle events retain their authority.",
+        "receipt_or_event_refs": [
+          "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "When it ends with exact owner scope in accessible description.",
+        "keyboard_access": "Keyboard and pointer activate the same typed request; unavailable items retain a reason.",
+        "focus_management": "Contain modal focus and restore the invoking control, or reveal the exact routed target.",
+        "disabled_announcement": "Announce state.pm7.work_completion_delivery.disabled_reason; no disabled action commits."
+      },
+      "test_evidence": [
+        {
+          "test_id": "pm7.work_completion_delivery.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Future native dispatch reaches the sole owner target with typed request."
+        },
+        {
+          "test_id": "pm7.work_completion_delivery.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Currentness and unavailable reason are owner-derived."
+        },
+        {
+          "test_id": "pm7.work_completion_delivery.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Refusal/idempotent replay cannot duplicate effects; no new event emits."
+        },
+        {
+          "test_id": "pm7.work_completion_delivery.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove visible control, keyboard/focus and disabled parity."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
+      ],
+      "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_completion_delivery_request",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+    },
+    "pm7.work_clear_finished": {
+      "ui_element_id": "pm7.work_clear_finished",
+      "ui_location": "Work panel / thread Processes > Clear finished",
+      "ui_command_id": "cmd.work.clear_finished",
+      "handler_location": "handlers::work_panel::clear_finished",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Hide only finished rows in the invoking view_id, retaining all owner records and other views.",
+        "Record a no-persist view-local disposition; do not delete history, change retention or emit a work lifecycle event."
+      ],
+      "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-664",
+      "state_selector": "state.pm7.work_clear_finished.availability",
+      "disabled_reason_projection": "state.pm7.work_clear_finished.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "View-local route/hiding only, no runtime or durable write.",
+        "receipt_or_event_refs": [
+          "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Clear finished with exact owner scope in accessible description.",
+        "keyboard_access": "Keyboard and pointer activate the same typed request; unavailable items retain a reason.",
+        "focus_management": "Contain modal focus and restore the invoking control, or reveal the exact routed target.",
+        "disabled_announcement": "Announce state.pm7.work_clear_finished.disabled_reason; no disabled action commits."
+      },
+      "test_evidence": [
+        {
+          "test_id": "pm7.work_clear_finished.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Future native dispatch reaches the sole owner target with typed request."
+        },
+        {
+          "test_id": "pm7.work_clear_finished.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Currentness and unavailable reason are owner-derived."
+        },
+        {
+          "test_id": "pm7.work_clear_finished.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Refusal/idempotent replay cannot duplicate effects; no new event emits."
+        },
+        {
+          "test_id": "pm7.work_clear_finished.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove visible control, keyboard/focus and disabled parity."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
+      ],
+      "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_clear_finished_request",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+    },
+    "pm7.work_quit": {
+      "ui_element_id": "pm7.work_quit",
+      "ui_location": "Quit with running work dialog > Confirm",
+      "ui_command_id": "cmd.work.quit",
+      "handler_location": "handlers::work::quit",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
+        "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
+        "Use application scope with project_id null; keep_running has no stop targets and closes only the client.",
+        "Stop_selected uses the reviewed target generation and per-target owner permission; excludes services, observes exit/failure and never silently kills server work."
+      ],
+      "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-665",
+      "state_selector": "state.pm7.work_quit.availability",
+      "disabled_reason_projection": "state.pm7.work_quit.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner result/receipt; no new PM7 semantic event is admitted. Existing owner lifecycle events retain their authority.",
+        "receipt_or_event_refs": [
+          "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Quit with running work with exact owner scope in accessible description.",
+        "keyboard_access": "Keyboard and pointer activate the same typed request; unavailable items retain a reason.",
+        "focus_management": "Contain modal focus and restore the invoking control, or reveal the exact routed target.",
+        "disabled_announcement": "Announce state.pm7.work_quit.disabled_reason; no disabled action commits."
+      },
+      "test_evidence": [
+        {
+          "test_id": "pm7.work_quit.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Future native dispatch reaches the sole owner target with typed request."
+        },
+        {
+          "test_id": "pm7.work_quit.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Currentness and unavailable reason are owner-derived."
+        },
+        {
+          "test_id": "pm7.work_quit.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Refusal/idempotent replay cannot duplicate effects; no new event emits."
+        },
+        {
+          "test_id": "pm7.work_quit.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove visible control, keyboard/focus and disabled parity."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert this command’s declared receipt/view-local or existing-owner effect exactly once; refusal/replay emits no duplicate or unadmitted PM7 event."
+      ],
+      "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_quit_request",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
     }
   }
 }

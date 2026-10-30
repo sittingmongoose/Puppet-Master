@@ -37,6 +37,9 @@ def full_thread_semantic_failures(definition_name: str, value: Any) -> list[str]
             if same_frame != zero_offset or value.get("same_frame_acknowledged") != same_frame:
                 failures.append("command_acknowledgement_frame_parity")
     elif definition_name == "ObservableWorkRecord":
+        facts_ref = value.get("process_facts_ref")
+        if facts_ref is not None and facts_ref not in value.get("subject_refs", []):
+            failures.append("process_facts_subject_ref_missing")
         completed, total = value.get("completed_units"), value.get("total_units")
         if isinstance(completed, (int, float)) and isinstance(total, (int, float)) and completed > total:
             failures.append("work_progress_exceeds_denominator")
@@ -91,6 +94,10 @@ def full_thread_semantic_failures(definition_name: str, value: Any) -> list[str]
             stale = generation != expected
             if stale != (value.get("disposition") == "stale_generation_rejected"):
                 failures.append("continuity_generation_disposition")
+    if value.get("record_kind") == "server_resource_sample":
+        used, total = value.get("memory_used_bytes"), value.get("memory_total_bytes")
+        if isinstance(used, int) and isinstance(total, int) and used > total:
+            failures.append("resource_memory_exceeds_host_total")
     return sorted(set(failures))
 
 

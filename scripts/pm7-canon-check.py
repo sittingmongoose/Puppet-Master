@@ -3,6 +3,7 @@
 from pathlib import Path
 from copy import deepcopy
 import json
+import runpy
 import sys
 
 import jsonschema
@@ -230,6 +231,9 @@ def check():
             require(after[key] == settings[key].get('default'), f"{case['name']}: omitted Project field did not use its default")
         require(all(after.get(key) == value for key, value in case['saved_fields'].items()), f"{case['name']}: saved choice lost")
         require(all(after.get(key) == value for key, value in case['unchanged'].items()), f"{case['name']}: unrelated setting changed")
+
+    pm7_build = runpy.run_path(str(ROOT / "scripts/pm7-build-check.py"))["validate"]()
+    failures.extend(pm7_build["failures"])
 
     glyphs = read("glyph_catalog.json")['status_marks']
     require(len({row['key'] for row in glyphs}) == 22, 'Shared status vocabulary differs')

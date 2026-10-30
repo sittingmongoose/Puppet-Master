@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25087-L25456
+Source lines: L25107-L25493
 
-Source SHA256: `c0c6409fa65d05d98a600d5145ecae0efae9602af2b85f17b5f91023a204798c`
+Source SHA256: `63c9c2df0d06e50d6f0e803255e1aedcde0319ecf34fae55f25c4b5a68a06159`
 
 ---
 
@@ -13,8 +13,8 @@ Source SHA256: `c0c6409fa65d05d98a600d5145ecae0efae9602af2b85f17b5f91023a204798c
 This section incorporates the cumulative v3 repairs and supersessions from the Assistant/Settings Plans Repair Packet (`APR-001` through `APR-070`), as selectively amended by the reference-layout supersession under `USER-REFERENCE-LAYOUT-ROLLBACK-20260908`. It supersedes contradictory earlier v1/v2 text and reference-video flat-row prescriptions while preserving all retained v2/correction-v4 contracts:
 
 1. **Floating Chat Activity Bar (`APR-004`)**: The styled inner Chat Activity Bar pill is restored and floats over the transcript with transparent side flanks and a transparent bottom area. Pointer pass-through (`pointer-events: none` on the transparent host container with `pointer-events: auto` on the interactive pill itself) ensures transcript items beneath the flanks remain clickable. The transcript maintains sufficient positive bottom scroll padding such that at settled bottom scroll (`scrollTop === scrollHeight - clientHeight`), the actual last child element (whether message text, rich card, decision host, or status receipt) clears the top of the floating bar completely with zero occlusion. The bar is never replaced by plain text or placed in an opaque in-flow footer strip.
-2. **Activity Detail Default Pinned Geometry (`APR-001`)**: Opening Activity Detail defaults to a pinned panel on the left. An explicit Unpin action transitions the currently open panel to a floating modal/popover. When the user subsequently clicks any activity-preview item in the Activity Bar, it opens its record PINNED by default on the left, superseding any prior unpinned/floating state. Prior unpinned state is ephemeral and never persists over the default entry rule.
-3. **History and Activity Coexistence (`APR-002`)**: Pinned History (left rail) and pinned Activity Detail must share the available viewport width dynamically rather than reserving overlapping or competing gutters. When both are open, the layout uses contiguous non-overlapping columns, preserving readable minimum widths or cleanly transitioning to occlusion with a prominent Return to chat navigation under extreme width pressure.
+2. **Activity Detail Full-Size Geometry (`APR-001`, G1/G2)**: Opening any present Activity domain opens its full-size detail on the left directly. No Activity Pin/Unpin, small transient panel or persisted pin state exists. Widen the chat inside the current centre/page floor, then cover the transcript at full column height if the dock cannot fit; close by ×, Esc or the same icon and return focus. History keeps its separate flyout/pin and actual-width rules. Hover previews remain bounded and do not scroll internally.
+3. **History and Activity Coexistence (`APR-002`)**: Pinned History (left rail) and full-size Activity Detail must share the available viewport width dynamically rather than reserving overlapping or competing gutters. When both are open, the layout uses contiguous non-overlapping columns, preserving readable minimum widths or cleanly transitioning to occlusion with a prominent Return to chat navigation under extreme width pressure.
 4. **Transcript Zero Horizontal Overflow (`APR-003`)**: The chat transcript container strictly enforces `scrollWidth <= clientWidth` (within rounding tolerance). Intrinsic-width content—including attachment chips, folder manifests, hidden preview containers, rich-plan tables, code blocks, diff hunks, and structured cards—must wrap, ellipsize, or reflow. Inaccessible content must never be concealed by horizontal clipping alone.
 5. **Activity Previews and Navigation (`APR-005`, `APR-006`, `APR-007`)**: All Activity Bar hover panels are bounded previews with zero internal scrolling (`overflow: hidden`). Each preview presents a concise, high-value summary (e.g. To-Dos show completed-over-total count and several current tasks; Goal shows objective snippet and immediate lifecycle controls). Separate "Open Activity" launch buttons are removed from every preview; clicking any preview item or row directly navigates to its corresponding Activity Detail record using canonical routing. A count or overflow summary row may navigate to the full list, but must not masquerade as a duplicate launch button.
 6. **Concise Detail and Accent Stripe Elimination (`APR-008`, `APR-009`, `APR-034`)**: Decorative left-edge accent bars, inset box accent lines, and pseudo-element colored stripes are prohibited across all Assistant surfaces—including transcript records, BSD, To-Dos, schedules, decisions, activity panels, and popup menus. Subtle gray recoloring does not satisfy this prohibition. Clean uniform perimeter borders, genuine diff indicators (+/- gutters), and functional tree-hierarchy connectors are permitted. To-Do detail prioritizes task title, state, ownership when relevant, and next action, placing secondary technical metadata behind intentional disclosure. Context More Details provides a compact first view with deeper BSD metrics behind deliberate disclosure.
@@ -31,7 +31,7 @@ This section incorporates the cumulative v3 repairs and supersessions from the A
 17. **Internal Work-Note Boundary (`APR-056`)**: Internal work notes (scratch notes, reasoning fragments, diagnostic traces) are behind-the-scenes diagnostic state. They must never appear as ordinary transcript message cards or standalone user artifacts. Concise user-facing progress summaries are distinct, typed projections.
 18. **History Thread Currentness and Normal Workflows (`APR-057`, `APR-058`, `APR-067`)**: All 30 fixture threads in History are inventoried and aligned to current specifications. Everyday threads predominantly show running, completed, or successful work. Failure, blocked, or recovery states are segregated into an intentional, clearly labeled recovery minority (`recovery-scheduling`, `recovery-attachments`, `recovery-collaboration`). Unfinished work is not labeled "Needs attention" unless explicitly blocked or faulted. Read-only review fixtures demonstrate inspection and findings without mutating workspace files.
 19. **Responsive Editor/Chat Split (`APR-066`)**: Opening a plan or document and resizing the split container enforces explicit grid placement and min-size rules (`min-width: 360px` for chat, DL-138; Assistant_Plan_Runtime APR-014), preventing the transcript from being squeezed into the resize handle track.
-20. **Reference-Layout Supersession (`USER-REFERENCE-LAYOUT-ROLLBACK-20260908`)**: The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`) mandating flattened row layouts and forced single-column presentations across Activity Detail (Goal, To-Dos, and all Activity families) and Context More Details is selectively superseded. Assistant surfaces restore prior native card, panel, and grid presentation by removing reference-derived CSS overrides (`narrow-review.css`). Independent requirements—including pinned Activity Detail defaults, floating Chat Activity Bar with pointer pass-through, transcript zero horizontal scrolling (`scrollWidth <= clientWidth`), in-flow Context Lens, single bounded hover previews, concise disclosures, elimination of decorative left stripes, and separate Simple Goal vs To-Do semantics—remain strictly preserved. Scoped exception (2026-09-27, DL-122): the Activity Detail body of the four collaboration kinds (Crew, Chat Room, BrainStorm, Review) is a short team list, and Back Seat Driver's section of Context Details is three plain facts and three native disclosures, because each run's full detail lives in its run view (ACD-480); FinalGUISpec F3-580 states both. Second scoped exception (2026-10-08, DL-147): the To-Do rows of Activity Detail are one-line checklist rows like the To-Do hover preview, inside the native panel (FinalGUISpec F3-593). Every other Activity Detail family and Context Details section keeps the restored native card, panel and grid presentation.
+20. **Reference-Layout Supersession (`USER-REFERENCE-LAYOUT-ROLLBACK-20260908`)**: The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`) mandating flattened row layouts and forced single-column presentations across Activity Detail (Goal, To-Dos, and all Activity families) and Context More Details is selectively superseded. Assistant surfaces restore prior native card, panel, and grid presentation by removing reference-derived CSS overrides (`narrow-review.css`). Independent requirements—including full-size Activity Detail until closed (G1/G2), floating Chat Activity Bar with pointer pass-through, transcript zero horizontal scrolling (`scrollWidth <= clientWidth`), in-flow Context Lens, single bounded hover previews, concise disclosures, elimination of decorative left stripes, and separate Simple Goal vs To-Do semantics—remain strictly preserved. Scoped exception (2026-09-27, DL-122): the Activity Detail body of the four collaboration kinds (Crew, Chat Room, BrainStorm, Review) is a short team list, and Back Seat Driver's section of Context Details is three plain facts and three native disclosures, because each run's full detail lives in its run view (ACD-480); FinalGUISpec F3-580 states both. Second scoped exception (2026-10-08, DL-147): the To-Do rows of Activity Detail are one-line checklist rows like the To-Do hover preview, inside the native panel (FinalGUISpec F3-593). Every other Activity Detail family and Context Details section keeps the restored native card, panel and grid presentation.
 
 Amended 2026-10-09 (DL-180): for Home, item 15's left editor/document tab system is the home centre's panels, where a plan or run view opens as its tab through the one opening module, and its Return to chat retires because no tab covers the chat (ACD-455, ACD-480, ACD-500); item 19's editor/chat split and its 360 px chat minimum give way to the fixed chat column of `Plans/FinalGUISpec.md#F3-637` (ACD-458). Amended 2026-10-09 (DL-184): item 1's Activity Bar keeps its floating, pass-through and clearance rules but is no longer a pill in any look (`Plans/DRY_Rules.md#DR-069`, `Plans/FinalGUISpec.md#F3-648`, ACD-452).
 
@@ -40,47 +40,56 @@ plan_unit_id: ACD-452
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The styled inner Chat Activity Bar floats over the transcript with transparent side flanks and transparent bottom spacing, using pointer pass-through around the central pill so underlying transcript content remains clickable. The chat transcript maintains positive bottom padding ensuring that at settled bottom scroll (scrollTop === scrollHeight - clientHeight), the final transcript child element is completely visible above the pill. The chat transcript strictly enforces scrollWidth <= clientWidth with zero horizontal scrolling; rich cards, attachments, tables, and hidden previews wrap or reflow.
-  Amended 2026-10-09 (DL-184): the Activity Bar keeps its floating, pass-through and clearance rules but is no longer
-  a pill in any look; read "pill" in this unit as the bar's centred interactive body (Plans/DRY_Rules.md#DR-069,
-  Plans/FinalGUISpec.md#F3-648).
+canonical_text: |-
+  The styled inner Chat Activity Bar floats over the transcript with transparent side flanks and
+  transparent bottom spacing, using pointer pass-through around the central pill so underlying transcript
+  content remains clickable. The chat transcript maintains positive bottom padding ensuring that at settled
+  bottom scroll (scrollTop === scrollHeight - clientHeight), the final transcript child element is
+  completely visible above the pill. The chat transcript strictly enforces scrollWidth <= clientWidth with
+  zero horizontal scrolling; rich cards, attachments, tables, and hidden previews wrap or reflow. Amended
+  2026-10-09 (DL-184): the Activity Bar keeps its floating, pass-through and clearance rules but is no
+  longer a pill in any look; read "pill" in this unit as the bar's centred interactive body
+  (Plans/DRY_Rules.md#DR-069, Plans/FinalGUISpec.md#F3-648).
 gui_related: true
-gui_classification_reason: Floating activity bar geometry, pointer pass-through, and transcript horizontal extent.
-depends_on: [ACD-448]
-unblocks: [ACD-453, ACD-454]
+gui_classification_reason: Floating activity bar geometry, pointer pass-through, and transcript horizontal
+  extent.
+depends_on:
+- ACD-448
+unblocks:
+- ACD-453
+- ACD-454
 acceptance_criteria:
-  - The Activity Bar pill floats over the transcript with transparent surrounding area and pointer pass-through.
-  - The last transcript child is fully visible above the pill at settled bottom scroll.
-  - The transcript has zero horizontal scrolling across all cards, tables, and attachments.
+- The Activity Bar pill floats over the transcript with transparent surrounding area and pointer pass-through.
+- The last transcript child is fully visible above the pill at settled bottom scroll.
+- The transcript has zero horizontal scrolling across all cards, tables, and attachments.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
-  - python3 scripts/pm-plans-verify.py lint-contractrefs
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plans-verify.py lint-contractrefs
 risk_class: visual_occlusion_and_scroll_defect
 reasoning_tier: high
 context_scope: assistant_chat_chrome
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: gui_surface_spec
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/chat-assistant-concepts/5.6 Pro/app.js (5.6 Pro prototype; behaviour reference only)"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/styles.css (5.6 Pro prototype; behaviour reference only)"
-  - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-003
-  - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-004
+- Concepts/chat-assistant-concepts/5.6 Pro/app.js (5.6 Pro prototype; behaviour reference only)
+- Concepts/chat-assistant-concepts/5.6 Pro/styles.css (5.6 Pro prototype; behaviour reference only)
+- source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-003
+- source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-004
 preserved_exact_tokens:
-  - "Chat Activity Bar"
-  - "scrollWidth <= clientWidth"
-  - "settled bottom scroll"
+- Chat Activity Bar
+- scrollWidth <= clientWidth
+- settled bottom scroll
 negative_constraints:
-  - Do not replace the floating activity bar with plain text or an opaque in-flow footer strip.
-  - Do not allow horizontal scrollbars in the transcript.
+- Do not replace the floating activity bar with plain text or an opaque in-flow footer strip.
+- Do not allow horizontal scrollbars in the transcript.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
@@ -91,49 +100,57 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Opening Activity Detail defaults to a pinned left panel. An explicit Unpin action converts the active panel to floating, but clicking any activity-preview item opens its record PINNED by default, superseding earlier unpinned state. Pinned History and pinned Activity Detail share the available width without overlapping gutters. Activity previews are bounded non-scrolling previews; separate Open Activity buttons are removed and clicking a preview item navigates directly to its corresponding detail view.
-  Amended 2026-10-09 (DL-180): History opens as a flyout over the chat by default, and pinning it widens the chat
-  column by the list's own width instead of narrowing the messages (Plans/FinalGUISpec.md#F3-637, ACD-500). The width
-  that pinned History and pinned Activity Detail share is the chat column's, never the window's (ACD-501), and
-  Activity Detail stays inside the chat.
+  Amended 2026-10-29 (G1/G2): Activity Detail opens directly as the full-size docked view, never a small
+  transient view and never Pin/unpin. First widen the chat inside its current centre/page floor; at the
+  window limit cover the transcript at the full column height. Keep detail until ×, Esc or its own Activity
+  icon closes it, returning focus to the opener. Switching an Activity domain selects its full detail
+  without a pin state. Hover previews keep their existing dwell, route and no-internal-scroll rule. History
+  is separately a flyout by default; its pin widens the column by its actual/user-sized width under F3-637
+  and DL-233, without narrowing messages.
 gui_related: true
 gui_classification_reason: Activity Detail panel docking, preview navigation, and sidebar coexistence.
-depends_on: [ACD-452, DL-180, ACD-500]
-unblocks: [ACD-454]
+depends_on:
+- ACD-452
+- DL-180
+- ACD-500
+unblocks:
+- ACD-454
 acceptance_criteria:
-  - Activity Detail opens pinned on the left by default; unpin makes it float; subsequent preview clicks open pinned.
-  - "History is a flyout by default and pinning it widens the chat column by its own width; pinned History and pinned Activity share the column's width cleanly (DL-180)."
-  - Hover previews do not scroll internally; clicking preview rows opens corresponding detail.
+- Every domain click opens full-size detail directly; the constrained fallback covers transcript at full column
+  height.
+- Close/×/Esc/icon-again restores focus; no Activity Pin, Unpin or persisted pin state exists.
+- History pin and its own width rule remain independent; hover previews do not scroll internally.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: panel_docking_and_navigation_defect
 reasoning_tier: high
 context_scope: assistant_chat_activity
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: gui_surface_spec
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/chat-assistant-concepts/5.6 Pro/app.js (5.6 Pro prototype; behaviour reference only)"
-  - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-001
-  - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-002
-  - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-006
-  - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-007
-preserved_exact_tokens:
-  - "pinned by default"
-  - "share available width"
-  - "bounded previews"
+- Concepts/chat-assistant-concepts/5.6 Pro/app.js (5.6 Pro prototype; behaviour reference only)
+- source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-001
+- source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-002
+- source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-006
+- source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-007
+preserved_exact_tokens: []
 negative_constraints:
-  - Do not persist prior unpinned state over the default pinned navigation rule.
-  - Do not keep separate Open Activity buttons in activity previews.
+- Do not restore the small transient Activity Detail or an Activity Pin/Unpin control.
+- Do not remove History pin or keep separate Open Activity buttons in previews.
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-180): History is a flyout by default and its pin widens the chat column; the shared width is the column's."
+- 'Amended 2026-10-09 (DL-180): History is a flyout by default and its pin widens the chat column; the shared
+  width is the column''s.'
+- G1/G2 (2026-10-29) supersede the original Activity geometry phrases pinned by default, share available width
+  and bounded previews. Full-size detail follows F3-535/ACD-506; hover previews keep their separately owned
+  dwell, bounds and no-internal-scroll behavior, and History pin remains separate.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
