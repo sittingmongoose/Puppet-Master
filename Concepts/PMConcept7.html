@@ -150935,6 +150935,12 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
      aim(el, anchor, origin)            pins the corner again (a flyout whose row moved)
      resize(el, mutate)                 runs mutate and springs the height from the old box to the new one, with the
                                         size bounce (the search filter, an option count, a drill-in, a list that grew)
+     morph(el, from, to, opts)          for a surface that places itself (Home's plate): the box moves from one geometry
+                                        to another ({ left, top, width, height }, px). A height-only change is the
+                                        contract's height spring with the size bounce (resize's motion, and none where a
+                                        look has no height spring); a change of width or place (a level drilled into)
+                                        takes opts.shape { duration, easing }, the surface's own level timing. Returns
+                                        the Animation, or null when nothing moves
      bounce(el)                         the size bounce alone, for a surface that sets its new height itself
      keep(el)                           for a renderer that rewrites class and style (the 5.6 Pro chat's patch): call
                                         it before the rewrite; the function it returns puts the sprout's state back
@@ -151174,6 +151180,23 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     setTimeout(clearH, endOf(el, { height: 1 }) + 120);
   }
 
+  function morph(el, a, b, opts) {
+    if (!el || !a || !b || reduced() || held() || !isOpen(el) || typeof el.animate !== 'function') return null;
+    opts = opts || {};
+    var k0 = {}, k1 = {}, moved = false, shape = false, props = ['height', 'width', 'left', 'top'];
+    for (var i = 0; i < props.length; i++) {
+      var p = props[i];
+      if (Math.abs(a[p] - b[p]) > 2) { k0[p] = a[p] + 'px'; k1[p] = b[p] + 'px'; moved = true; if (p !== 'height' && p !== 'top') shape = true; }
+    }
+    if (!moved) return null;
+    if (shape && opts.shape) return el.animate([k0, k1], { duration: opts.shape.duration || 220, easing: opts.shape.easing || 'ease' });
+    /* the height spring, as resize's: where the look's contract has none (NieR's Slice part) the box just takes its size */
+    if (!endOf(el, { height: 1 })) return null;
+    var anim = el.animate([k0, k1], { duration: 340, easing: 'cubic-bezier(0.22, 1.72, 0.36, 1)' });
+    bounce(el);
+    return anim;
+  }
+
   function bounce(el) {
     if (!el || !isOpen(el) || reduced() || held()) return;
     var s = state(el);
@@ -151203,6 +151226,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     isOpen: isOpen,
     aim: aim,
     resize: resize,
+    morph: morph,
     bounce: bounce,
     keep: keep,
     reduced: reduced
@@ -199820,11 +199844,10 @@ menu.open = function (anchor, spec) {
     }
     lastH = b.height;
     if (beforeMove) beforeMove(a, b);
-    var k0 = {}, k1 = {}, moved = false;
-    ['height', 'width', 'left', 'top'].forEach(function (p) {
-      if (Math.abs(a[p] - b[p]) > 2) { k0[p] = a[p] + 'px'; k1[p] = b[p] + 'px'; moved = true; }
-    });
-    if (moved) morphAnim = motion.animate(el, [k0, k1], { dur: 220, easing: motion.ease('slide') });
+    /* the plate moves through the menu sprout (PM6_SPROUT.morph): a height-only change (a filter, a kept-open pick, an
+       update) is its height spring with the size bounce; a level's change of width and place keeps this file's level
+       timing */
+    morphAnim = window.PM6_SPROUT.morph(el, a, b, { shape: { duration: 220, easing: motion.ease('slide') } });
   }
   function onOutside(e) {
     if (el.contains(e.target) || (anchor && anchor.contains && anchor.contains(e.target))) return;
