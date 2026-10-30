@@ -89,3 +89,9 @@ The generated-page inventory guard is resolved at synced integration 543a85e5ff:
 - **Source question corrections:** apply later Jared answers by their decision IDs; all other current recommendations are already canon.
 
 No browsers, servers or media were created. Owned scratch archives/helpers and superseded logs were removed; retained checks/reviews are enumerated above.
+
+## T3 restart checkpoint — 2026-10-30 01:15 UTC
+
+Steps 1–3 and the verification bundle are committed/pushed through 1be9eb53f4; the tree had no uncommitted work when the restart warning arrived. No recording, browser or server is active; owned scratch is already removed. Current branch is t3/plans/pm7-plans-canon. No validation job or review is in progress.
+
+Next: check pm-mail as pm7-plans and wait for pm7-build’s explicit full GUI-merge signal. Step4 is still pending. Then fetch/merge current integration, align companions with actual lane names/controls/APIs/assets, apply the deferred B5 dirty-buffer / Unsaved changes wording, verify the already-done Plans L1 word drop against joined code, and run affected checks. Pip label storage is already final/merged; do not switch it back to IDs. Independent companion review follows Step4 under the lead. No landing/reseal is authorized.
