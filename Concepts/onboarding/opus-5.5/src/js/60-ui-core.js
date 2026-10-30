@@ -243,6 +243,12 @@
         if (wrap) { wrap.style.animation = 'none'; wrap.setAttribute('data-o55-entered', ''); }
       }
       renderRail(); refresh(); renderLook();
+      /* into or out of NieR the window has no view transition (Q22): the colours its parts ease in from the old look
+         (NieR's ink tile and menu row fading out over Glass for up to half a second, film q22-switch) end at once, as
+         the page's look cover ends them (js/12-theme-transition.js finishColourTransitions) */
+      if (lastLook.endsWith('-nier') !== look.endsWith('-nier') && !S.vt) {
+        try { S.root.getAnimations({ subtree: true }).forEach((a) => { if (a.transitionProperty && /color|background|border|shadow|fill|stroke|outline/.test(a.transitionProperty)) a.finish(); }); } catch (_) { /* decoration only */ }
+      }
     }
     lastLook = look;
   }
