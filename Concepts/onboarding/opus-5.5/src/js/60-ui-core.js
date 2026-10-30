@@ -438,6 +438,8 @@
     if (!host || !O55.pipStage || !O55.pipStage.h.kit()) return null; /* the kit is the glyph system's head module */
     const H = O55.pipStage.h, st = O55.pipStage.ensure(host, { theme: H.theme(), layout: stageLayout(), reduced: O55.motion.reduced() });
     st.setReduced(O55.motion.reduced()); st.setLayout(stageLayout()); st.setTheme(H.theme());
+    /* a block down on Creating's stack: Continue may now go on (O12 B, 72-screens-review.js landing) */
+    if (!st.onLanded) st.onLanded = () => { if (S.open && S.sess.screen === 'creating' && (S.sess.commit || {}).state === 'done') refresh(); };
     return st;
   }
   function renderScene(force, hold, o) {
@@ -470,11 +472,10 @@
     if (cheer) { cheering = { text: O55.t('pip.cheer.' + cheer), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; }
     if (cheering && (oops || cheering.screen !== S.sess.screen || performance.now() > cheering.until)) cheering = null;
     if (cheering) { spec.say = cheering.text; spec.pip.mood = 'happy'; }
-    /* Pick a look: hovering a look makes Pip try it on (silent, O6); the world follows once it is picked */
-    if (S.sess.screen === 'look') {
-      const h = S.pipHover || '', mode = O55.theme().mode;
-      st.tryOn(/^pickFamily:/.test(h) ? h.slice(11) + '-' + mode : h === 'pickNier' ? 'nier-' + mode : null);
-    } else st.tryOn(null); /* (a look only tried on is put back once the screen is left) */
+    /* Pick a look: hovering a look has Pip watch it and say its line, silently; the look itself (the window and Pip's
+       world) changes only when it is picked (Jared, O6, 2026-10-30: "it shouldnt change the themes on hover, it should
+       change on click. It is a little too busy with it changing on hover") */
+    st.tryOn(null);
     /* a fault shown now wins over a feeling still held from a moment before (a cheer, a pick) */
     if (oops) st.moodOverride = null;
     st.direct(spec);

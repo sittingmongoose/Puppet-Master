@@ -566,6 +566,34 @@ def('pr12', 'antigravityOnce', 'Opened at a post-commit screen, the run has its 
   await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 'ready', committed: false }); }); await d.settle();
   A.ok(await d.state(() => window.O55.S.sess.commit.state !== 'done'), 'committed: false opts out');
 });
+def('pr13', 'fresh', "Jared's O6: hovering a look tile changes neither the window's look nor Pip's world; a click does", async (d, A) => {
+  await d.openOnboarding(); await d.primary();
+  A.eq(await d.screen(), 'look', 'Pick a look');
+  const look = () => d.state(() => { const s = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')); return { theme: document.documentElement.getAttribute('data-theme'), world: s.theme, pip: s.pipTheme, mood: s.curMood }; });
+  const before = await look();
+  await rest(d, '#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-tile[data-arg="glass"]', 1200);
+  const hover = await look();
+  A.ok(hover.theme === before.theme && hover.world === before.world && hover.pip === before.pip, 'hovering Glass: the look stays (' + JSON.stringify(hover) + ')');
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-previewing')), 'the hovered tile is marked and Pip watches it');
+  await d.act('pickFamily', 'glass'); await sleep(1500);
+  const picked = await look();
+  A.ok(/^glass/.test(picked.theme) && /^glass/.test(picked.world), 'a click changes the look (' + picked.theme + ', ' + picked.world + ')');
+});
+def('pr14', 'fresh', "Jared's O12 B: Creating's Continue waits for the last block to land on Pip's stack", async (d, A) => {
+  await d.openOnboarding(); await toName(d); await d.type('name', 'Blocks');
+  for (let i = 0; i < 6 && (await d.screen()) !== 'review'; i++) await d.primary();
+  await readyPrimary(d);
+  await d.page.evaluate(() => { const w = window.__o12 = { done: null, enabled: null, landed: [] }; const st = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage'));
+    const tick = () => { const cm = window.O55.S.sess.commit || {}, b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-primary'), t = performance.now();
+      if (cm.state === 'done' && w.done == null) w.done = t; if (w.done != null && b && b.getAttribute('aria-disabled') !== 'true' && w.enabled == null) { w.enabled = t; w.at = st.blocksLanded(); w.want = window.O55.review.phasesFor(window.O55.S).length; }
+      if (w.enabled == null) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick); });
+  await d.primary();
+  await until(d, '!!(window.__o12 && window.__o12.enabled)', 'Continue enabled', 25000);
+  const w = await d.state(() => window.__o12);
+  A.ok(w.at >= w.want, 'Continue came on with every block down (' + w.at + ' of ' + w.want + ')');
+  A.ok(w.enabled - w.done < 2600, 'and within the cap (' + Math.round(w.enabled - w.done) + ' ms after the Project was made)');
+});
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();

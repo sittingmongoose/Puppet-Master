@@ -454,6 +454,19 @@
     }
     return note;
   }
+  /* O12 B (Jared, 2026-10-30: "as the concept"): once the Project is made, Continue waits for the last block to come
+     down onto Pip's stack. Each block lands in about half a second; Reduced Motion puts it there at once; and it never
+     waits longer than LAND_CAP, so a paused or missing stage cannot hold the run. The stage says when a block lands
+     (60-ui-core.js redraws Creating then). */
+  const LAND_CAP = 2500;
+  let landWait = null;
+  function landing(S) {
+    const cm = S.sess.commit || {}, host = S.root && S.root.querySelector('.o55-stage'), st = host && O55.pipStage && O55.pipStage.of ? O55.pipStage.of(host) : null;
+    if (!st || !st.blocksLanded || O55.motion.reduced() || !S.open || S.sess.screen !== 'creating') return false;
+    if (!landWait || landWait.key !== cm.key) { landWait = { key: cm.key, t: performance.now() }; O55.motion.after(LAND_CAP + 50, () => { if (S.open && S.sess.screen === 'creating') O55.ui.refresh(); }); }
+    if (performance.now() - landWait.t > LAND_CAP) return false;
+    return st.blocksLanded() < phasesFor(S).length;
+  }
   def('creating', {
     chapter: 'project', stage: 'automatic_preparation',
     /* (under NieR's art the scene carries the Project's name: its sign comes back with it, stamped) */
@@ -490,8 +503,8 @@
     },
     foot(S) {
       const cm = S.sess.commit || {};
-      /* (done is enough: while the made moment waits for the app to settle, Continue already goes on and skips it) */
-      if (cm.state === 'done') return { back: false, primary: { label: T('creating.continue'), do: 'next' } };
+      /* (done, and the last block down: while the made moment waits for the app to settle, Continue already goes on) */
+      if (cm.state === 'done') { const wait = landing(S); return { back: false, primary: { label: T('creating.continue'), do: 'next', disabled: wait, reason: wait ? T('chrome.working') : '' } }; }
       const reason = cm.state === 'failed' ? T('creating.failTitle') : cm.state === 'running' || cm.state === 'done' ? T('chrome.working') : T('creating.recovery.waiting');
       return { back: false, primary: { label: T('creating.continue'), do: 'next', disabled: true, reason } };
     },

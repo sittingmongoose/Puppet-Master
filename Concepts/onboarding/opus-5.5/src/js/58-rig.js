@@ -699,7 +699,7 @@
           pr.op += (tg.op - pr.op) * Math.min(1, dt * 8);
         }
         if (!pr.settled && pr.state !== 'out' && Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30) this.settle(pr);
-        if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); }
+        if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); if (this.onLanded) this.onLanded(pr); }
         if (pr.state === 'out' && pr.len < 0 && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(id); }
       });
       // particles
@@ -918,6 +918,8 @@
       if (!this.root.hasAttribute('data-paused')) this.root.setAttribute('data-paused', '');
       if (!this.dead && this.active) this.parkT = setTimeout(() => this.kick(), 250);
     }
+    // how many blocks rest on the stack (Creating's Continue waits for the last one, O12 B)
+    blocksLanded() { let n = 0; this.props.forEach((pr) => { if (pr.spec.ground && pr.state !== 'out' && pr.landed) n++; }); return n; }
     // a screen change the window holds back a frame (60-ui-core.js transition): the scene waits with it
     hold(on) { this.held = !!on; if (!on) this.kick(); }
     release() { this.hold(false); }
