@@ -446,7 +446,8 @@
       hist += '</div>';
       if (existing) hist += C.note(T('safe.history.keeps', { kind }), 'info', 'history');
       else if (missing) hist += C.note(T('safe.history.install', { kind }), 'info', 'history');
-      hist += C.details(S, 'hist', T('safe.history.detailsLabel'), `<p>${U.esc(T('safe.history.detail'))}</p>`
+      /* (its explanation has a Plain English and an Expert version: 21-talk.js) */
+      hist += C.details(S, 'hist', T('safe.history.detailsLabel'), `<p>${U.esc(O55.talk.t('safe.history.detail'))}</p>`
         + C.toggle({ do: 'filesafe', on: d.filesafe, label: T('safe.history.filesafe'), sub: T('safe.history.filesafeSub') }));
       /* 2. online copy */
       let onlineState, onlineBtn = '';

@@ -576,47 +576,63 @@
       "online-service": {
         "pick:github": {
           "title": "GitHub",
-          "text": "GitHub is a free website that keeps an online copy of your work. The most popular, and free for private Projects."
+          "text": "The most used website for keeping projects online, free for private Projects. Pick it if you're not sure.",
+          "expert": "GitHub.com: hosted Git remote, private repositories on free plans, browser sign-in. The default service."
         },
         "pick:gitlab": {
           "title": "GitLab",
-          "text": "A website like GitHub. Pick it if you or your team already use GitLab, on gitlab.com or your own server."
+          "text": "A website like GitHub. Pick it if you or your team already use GitLab, on gitlab.com or on your own server.",
+          "expert": "GitLab.com or a self-managed GitLab: a Git remote with projects in groups; a self-managed instance needs its https address."
         },
         "pick:azure_devops": {
           "title": "Azure DevOps",
-          "text": "Microsoft's service for teams. Pick it if your work already keeps Projects in Azure DevOps."
+          "text": "Microsoft's service for teams at work. Pick it if your workplace keeps its projects there.",
+          "expert": "Azure DevOps Services (dev.azure.com) or Azure DevOps Server: Git repositories (Azure Repos) inside an organisation and a team project, chosen on the next screen."
         },
         "pick:bitbucket_cloud": {
           "title": "Bitbucket",
-          "text": "Atlassian's website for keeping work online. Pick it if your team uses Bitbucket."
+          "text": "Atlassian's website for keeping projects online, often used alongside Jira. Pick it if your team uses Bitbucket.",
+          "expert": "Bitbucket Cloud (workspaces) or Bitbucket Data Center (self-hosted, needs its address): a Git remote."
         },
         "pick:forgejo": {
           "title": "Forgejo",
-          "text": "A free service you can run on your own server, or use on Codeberg. Pick it if you already have one."
+          "text": "A free service people run on their own server, or use at Codeberg. Pick it if you already have an account on one.",
+          "expert": "Forgejo, self-hosted or Codeberg: a Git remote. Sign-in uses a personal access token made on that server."
         },
         "pick:gitea": {
           "title": "Gitea",
-          "text": "A small service you can run on your own server, or use as Gitea Cloud. Pick it if you already have one."
+          "text": "A small service people run on their own server, or use as Gitea Cloud. Pick it if you already have one.",
+          "expert": "Gitea, self-hosted or Gitea Cloud: a Git remote. Sign-in uses a personal access token made on that server."
         },
         "pick:github_enterprise": {
           "title": "GitHub Enterprise",
-          "text": "GitHub run on your company's own server. Pick it if your company gave you its address."
+          "text": "GitHub run by your company on its own server. Pick it if your company gave you its address.",
+          "expert": "GitHub Enterprise Server (self-managed): needs its https address; you sign in on that server."
         },
         "pick:cursor_origin": {
           "title": "Cursor Origin",
-          "text": "Cursor's own service for keeping work online. It is still a preview, so expect changes."
+          "text": "Cursor's own service for keeping projects online. It is still a preview, so it may change.",
+          "expert": "Cursor Origin (preview): a Git remote hosted by Cursor. Expect changes while it is a preview."
         },
         "notNow": {
           "title": "Not now",
-          "text": "Leaves out the online copy for now. Safe History still keeps your versions; add an online copy later."
+          "text": "No online copy for now. Earlier versions stay on this computer with Safe History, and you can add an online copy later in Settings.",
+          "expert": "No remote: the repository stays local. Add a remote later in Settings."
         },
         "group:variant": {
           "title": "Which edition",
-          "text": "The same service, run by the company itself or on your own server. Pick the one your account is on."
+          "text": "The same service, run either by the company itself or by your organisation on its own server. Pick the one your account is on.",
+          "expert": "Hosted (the vendor runs it) or self-managed / data center (your organisation runs it at its own https address)."
         },
         "field:address": {
           "title": "Server address",
-          "text": "Where your own copy of the service lives, starting with https://, like https://git.example.com."
+          "text": "Where your organisation's own copy of the service lives, starting with https://, like https://git.example.com.",
+          "expert": "The instance's base URL (https only), used for its sign-in and API."
+        },
+        "group:pick": {
+          "title": "Which online service",
+          "text": "These websites keep an online copy of your Project. They all keep it the same way, so the choice is about where you or your team already have an account. If you don't have one, pick GitHub: it's free for private Projects.",
+          "expert": "The forge that hosts the remote repository and its access. Local history (Git or Jujutsu) is separate; every forge here takes a Git push. Sign-in is per service: a browser sign-in on most, a personal access token on Forgejo and Gitea."
         }
       },
       "online-signin": {
@@ -736,27 +752,33 @@
       "safe": {
         "group:backend": {
           "title": "Git or Jujutsu",
-          "text": "Both keep saved versions of your Project without an account. Git is the usual choice; Jujutsu works with Git and makes mistakes easier to undo."
+          "text": "Both keep earlier versions of your Project on this computer, with no account. Git saves a version each time a piece of work is marked done, and almost every service expects it. Jujutsu also records each change as it happens and can undo any step. If you're not sure, pick Git.",
+          "expert": "The local version-control backend. Git: commits, branches and the staging index; the default everywhere. Jujutsu (jj): the working copy is itself a commit, changes keep stable change IDs, and every operation is logged and reversible (jj undo, jj op restore). Puppet Master runs Jujutsu colocated with a Git repository, so any Git remote works with either."
         },
         "backend:git": {
           "title": "Git",
-          "text": "Git is the most common way to keep versions. Recommended. Works with GitHub and every other online service."
+          "text": "The usual way to keep versions. Every online service and most tools work with it. Pick it if you're not sure.",
+          "expert": "Git: commits, branches and the staging index. Pushes to every supported service. The default backend."
         },
         "backend:jujutsu": {
           "title": "Jujutsu",
-          "text": "A newer tool built on Git. Mistakes are easier to undo, and it still works with GitHub and the others."
+          "text": "Records every change as you go and can undo any step, even an undo. It saves in Git's format, so GitHub and the other services still work. Pick it if you like trying things and stepping back.",
+          "expert": "Jujutsu (jj): working-copy-as-a-commit, stable change IDs, bookmarks for branches, and an operation log with jj undo and jj op restore. Colocated with .git, so Git remotes and tools keep working."
         },
         "filesafe": {
           "title": "FileSafe",
-          "text": "Keeps a safety copy of each file before big changes. An extra layer on top of Safe History."
+          "text": "A safety guard for when the AI works on your Project. It stops commands that could wipe or damage files, keeps the AI's changes inside this Project, keeps passwords and keys out of what it reads, and keeps a copy of a file before changing it. Leave it on unless you know you need it off.",
+          "expert": "FileSafe is the guard layer for agent runs: a command blocklist that stops destructive shell commands before they run, a write scope that keeps writes to the run's allowed files, a security filter that keeps secrets and sensitive files out of tool access and the compiled prompt, and a recoverable pre-write safe point before an existing file is overwritten. Every block and override is logged. On by default."
         },
         "online": {
           "title": "Online copy",
-          "text": "A copy on a website like GitHub. You choose who can see it. Puppet Master only asks for access to the Project you choose."
+          "text": "A copy of your Project on a website such as GitHub: a second copy, a way to work from another computer, and a way to share it if you choose. Only you can see it unless you share it. Puppet Master only asks for access to the Project you pick.",
+          "expert": "A remote repository on the service you choose, pushed from your local history. Visibility (private, internal, public) is set when it is created. Access is scoped to that repository where the service allows it."
         },
         "backup": {
           "title": "Backup",
-          "text": "A full copy you can restore from, kept somewhere else: a Home NAS over your home network, Google Drive, OneDrive, or another server."
+          "text": "A separate full copy of your Project kept somewhere else, so you can bring it back if this computer is lost or broken. Your Recovery Kit file opens it, so keep that file somewhere other than this computer.",
+          "expert": "An independent, encrypted backup repository at the destination you pick (a NAS over SSH, Google Drive, OneDrive, an S3 or B2 bucket, SFTP or WebDAV), restorable with the Recovery Kit. It is separate from the online copy and from local history."
         },
         "bdest:nas": {
           "title": "Home NAS",
@@ -780,7 +802,8 @@
         },
         "bdest:none": {
           "title": "Not now",
-          "text": "No separate backup for now. Safe History still keeps versions with your Project; add a backup later in Settings."
+          "text": "No separate backup for now. Earlier versions stay on this computer with Safe History, so if this computer is lost, the Project is lost too unless it has an online copy. You can add a backup later in Settings.",
+          "expert": "No backup destination. Local history and any remote stay as they are; nothing protects against losing this computer except a remote. Add a destination later in Settings."
         }
       },
       "away": {

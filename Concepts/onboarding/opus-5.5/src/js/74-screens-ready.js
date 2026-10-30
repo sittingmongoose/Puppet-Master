@@ -73,6 +73,8 @@
 
   /* finish(S, {tour, project}) — close onboarding as done and land in the app. */
   O55.finish = function finish(S, o) {
+    /* how the app talks to me goes with the person into the app (general.interaction.mode, 21-talk.js) */
+    if (O55.talk) O55.talk.carry();
     o = o || {};
     /* Enter answers on the click's own frame (final motion QA A1: the click's task, which selects the Project, reloads
        its settings and puts the Wizard in place, held the first frame 0.5-1.2 s on the P1000): the window settles a

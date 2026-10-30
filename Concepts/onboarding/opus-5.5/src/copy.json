@@ -9,6 +9,14 @@
     "continue": "Continue",
     "recommended": "Recommended",
     "done": "Done",
+    "talk": {
+      "group": "How the app talks to me",
+      "aria": "How the app talks to me: {mode}",
+      "eli5": "Plain English",
+      "expert": "Expert",
+      "toExpert": "Click for Expert: tips use the technical names",
+      "toEli5": "Click for Plain English: tips in everyday words"
+    },
     "soundOn": "Sound on — click to mute",
     "soundOff": "Sound off — click to turn on",
     "resume": "Finish setting up",
@@ -723,19 +731,20 @@
     "lead": "Every version is saved on this computer. Online copies and backups are optional.",
     "history": {
       "title": "Every version saved on this computer",
-      "sub": "Safe History — undo any change, any time",
+      "sub": "Safe History — go back to an earlier saved version",
       "subExisting": "Keeps the folder's own history",
       "git": "Git",
-      "gitSub": "Git is the most common way to keep versions. Recommended. Works with GitHub and every other online service.",
+      "gitSub": "Git is the usual way to keep versions, and every online service works with it. Recommended.",
       "jj": "Jujutsu",
-      "jjSub": "Jujutsu is a newer tool built on Git. Mistakes are easier to undo, and it still works with GitHub and the others. It is not a website or an account.",
+      "jjSub": "Jujutsu records every change as you go and can undo any step. It saves in Git's format, so online services still work. No account needed.",
       "filesafe": "FileSafe",
-      "filesafeSub": "Keeps a safety copy of each file before big changes",
+      "filesafeSub": "Guards your files while the AI works on them",
       "detailsLabel": "More about keeping versions",
       "howLabel": "Kept with",
       "install": "{kind} isn't on this computer yet. Puppet Master installs it while your Project is created.",
       "keeps": "This folder already keeps its versions with {kind}, so Puppet Master keeps using it.",
-      "detail": "Git and Jujutsu both save every version of your Project on this computer. Neither needs an account, and an online copy works with either, because Jujutsu keeps its history in Git's format."
+      "detail": "Four things keep your work safe, and each has its own job. Safe History keeps earlier versions of your Project on this computer, so you can go back to one. FileSafe guards your files while the AI works. An online copy keeps your Project on a website such as GitHub. A backup is a separate copy somewhere else, for when this computer is lost. Without an online copy or a backup, your Project is only on this computer.",
+      "detailExpert": "Safe History is local version control, Git or Jujutsu, in the Project folder: no account, no remote. Jujutsu runs colocated with a Git repository, so any Git remote works with either. FileSafe is the agent guard layer: command blocklist, write scope, security filter, pre-write safe points. The online copy is a remote repository on the service you choose. The backup is an encrypted, independent repository at a destination you choose, restored with the Recovery Kit. Without a remote or a backup, the only copy is local."
     },
     "online": {
       "title": "Online copy",

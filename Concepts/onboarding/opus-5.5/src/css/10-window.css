@@ -394,6 +394,15 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-stage { border-right: 0; border-bottom: 1px solid var(--o55-line); }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-raillabel:not(.o55-railjump) { display: none; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-brand span, #pm-o55-onboarding[data-o55-layout="narrow"] .o55-close span { display: none; }
+/* how the app talks to me (21-talk.js): the mode's mark and name, the name folding away with Close's where the bar is
+   narrow; its hover and focus are the header's other buttons' */
+.o55-talk .o55-talkglyph { display: inline-grid; place-items: center; }
+.o55-talk .o55-talkglyph svg { display: block; width: 18px; height: 18px; }
+.o55-talk .o55-talkname { font: 600 12.5px/1 var(--body-font); white-space: nowrap; }
+#pm-o55-onboarding[data-family="retro"] .o55-talk .o55-talkname { font-family: var(--display-font); text-transform: uppercase; font-size: 11px; letter-spacing: 0.04em; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkname { font: 500 10px/1 var(--mono-font); letter-spacing: .22em; text-transform: uppercase; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph svg { width: 13px; height: 13px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-talk .o55-talkname { display: none; }
 #pm-o55-onboarding[data-o55-layout="narrow"] { --o55-pad: 22px; }
 /* at phone width Back is its chevron alone (its name stays for screen readers), so the primary keeps one line */
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-foot { padding-inline: 14px; gap: 8px; }
