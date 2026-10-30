@@ -7878,7 +7878,8 @@
       "requirement_refs": [
         "Plans/UI_Wiring_Rules.md#UIW-045",
         "Plans/Commands_System.md#CS-106",
-        "Plans/Wiring_Matrix.md#WM-097"
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-506"
       ],
       "owner_plan": "Plans/UI_Wiring_Rules.md",
       "plan_unit": "UIW-045",
@@ -7897,14 +7898,16 @@
         "PM7 project box",
         "thread Processes",
         "status work panel",
-        "quit dialog"
+        "quit dialog",
+        "Activity Detail Pin / Unpin"
       ],
       "return_route": "Stable invoking view, Project/thread and focus; no active-tab retargeting.",
       "reverse_consumers": [
         "Plans/UI_Command_Catalog.md#UCC-209",
         "Plans/UI_Command_Catalog.md#UCC-210",
         "Plans/Wiring_Matrix.production.json",
-        "Plans/pm7_control_bindings.json"
+        "Plans/pm7_control_bindings.json",
+        "Plans/UI_Command_Catalog.md#UCC-208"
       ],
       "event_refs": [
         "none_pending_event_authority"
@@ -7916,7 +7919,8 @@
         "Owner operation ID if asynchronous; acceptance is never terminal effect proof."
       ],
       "persistence_refs": [
-        "Existing owner work/Settings/workspace families only; clear_finished is view-local."
+        "Existing owner work/Settings/workspace families only; clear_finished is view-local.",
+        "G1 B: Activity Detail Pin is session-only view state, with no Settings or saved Home layout field."
       ],
       "migration_refs": [
         "No schema migration or Event Authority admission claimed by static PM7 companions."
@@ -13595,6 +13599,14 @@
       "ui.project_switcher.all_projects",
       "partial",
       "Typed local focus of existing Projects route, not a side-panel command; native route/focus evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-013",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.activity_detail.pin",
+      "partial",
+      "G1 B, Jared 2026-10-30: session-only Pin; pinned follows new-thread data across switches, unpinned closes. Static fixtures only; native focus/subscription/currentness evidence absent."
     ]
   ],
   "excluded_tokens": [

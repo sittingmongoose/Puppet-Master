@@ -453,7 +453,12 @@
   function tbCloseAllMenus(except) {
     document.querySelectorAll('.pm6-tb-menu').forEach(function (m) {
       if (except && m === except) return;
-      if (tbMenuIsOpen(m)) tbMenuClose(m);
+      if (tbMenuIsOpen(m)) {
+        tbMenuClose(m);
+        /* the project menu's close is a declared local action on every path (outside click, page Esc, another menu
+           opening), not only its own keys and picks (Muse review m2) */
+        if (m.id === 'projectMenu') projectNote('ui', 'ui.project_switcher.close');
+      }
       var wrap = m.closest('.pm6-tb-menu-wrap');
       var btn = wrap && wrap.querySelector('.pm6-tb-menu-trigger');
       if (btn && btn.getAttribute('aria-expanded') !== 'false') btn.setAttribute('aria-expanded', 'false');   /* O55: only a change (T8) */
@@ -605,11 +610,14 @@
   /* the one row renderer: a monogram tile, the name, the path and branch, and the state in words beside its mark */
   function renderProjectRow(item) {
     var info = projectInfo(item), st = projectState(info.id), where = projectWhere(info, false), G = window.PMG;
-    var word = st.key ? PROJECT_STATES[st.key].word : '', sig = [info.name, where, st.key, !!G].join('|');
+    var cur = item.classList.contains('is-selected');
+    var word = st.key ? PROJECT_STATES[st.key].word : '', sig = [info.name, where, st.key, !!G, cur].join('|');
     if (item.__pmProjectRow === sig) return item;
     item.__pmProjectRow = sig;
+    /* the chosen row tells assistive tech it is the current project (Muse review m1), not only by its material */
+    if (cur) item.setAttribute('aria-current', 'true'); else item.removeAttribute('aria-current');
     item.setAttribute('data-state', st.key || 'idle');
-    item.setAttribute('aria-label', info.name + (where ? ', ' + projectWhere(info, true) : '') + (word ? ', ' + word : ''));
+    item.setAttribute('aria-label', info.name + (cur ? ', current project' : '') + (where ? ', ' + projectWhere(info, true) : '') + (word ? ', ' + word : ''));
     item.innerHTML = '<span class="pm6-tb-project-tile" aria-hidden="true">' + projectEsc(projectMonogram(info.name)) + '</span>' +
       '<span class="pm6-tb-project-text"><b class="pm6-tb-project-name">' + projectEsc(info.name) + '</b>' +
       (where ? '<small class="pm6-tb-project-path">' + projectEsc(where) + '</small>' : '') + '</span>' +
@@ -670,7 +678,7 @@
        row (pm4-settings-js.js projectRecord): a pick keeps it in step, before the label changes, so the reload they run on
        that change reads the picked project (Astra W2 review, integration note) */
     if (typeof window.PM_ACTIVE_PROJECT_ID === 'string' && window.PM_ACTIVE_PROJECT_ID !== info.id) window.PM_ACTIVE_PROJECT_ID = info.id;
-    projectRows().forEach(function (el) { if (el.classList.contains('is-selected') !== (el === item)) el.classList.toggle('is-selected', el === item); });
+    projectRows().forEach(function (el) { if (el.classList.contains('is-selected') !== (el === item)) { el.classList.toggle('is-selected', el === item); renderProjectRow(el); } });
     if (label && label.textContent !== info.name) label.textContent = info.name;
     paintProjectButton();
     return true;
@@ -748,6 +756,11 @@
         ev.preventDefault();
         pickProject(row, true, true);
       } else if (ev.key === 'Escape') {
+        projectMenuClose(true);
+      } else if (ev.key === 'Tab') {
+        /* Tab and Shift+Tab close the menu and hand focus back to the box, as the theme menu does; walking out of an
+           open menu left it open with focus on the page tabs (Muse review M1) */
+        ev.preventDefault();
         projectMenuClose(true);
       }
     });

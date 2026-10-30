@@ -1760,9 +1760,9 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, Co
 
 ### 3.3 System Tray
 
-When "minimize to tray" is enabled in Settings/General:
-- **Close button** minimizes to tray instead of quitting (Quit via tray menu or File > Quit)
-- **Tray icon:** Pip faces aggregate every Project (A3): idle, working, complete (~10 s), waiting (wins), failed, paused; no accent-colour Orchestrator state
+The tray is always on while Puppet Master runs (A2 B, Jared 2026-10-30). "Minimize to tray" in Settings/General controls Close behavior only:
+- **Close button:** with "minimize to tray" enabled, minimizes instead of quitting (Quit via tray menu or File > Quit); otherwise follows normal Close/Quit behavior.
+- **Tray icon:** Pip faces aggregate every Project (A3): idle, working, complete (~10 s), waiting (wins), failed, blocked, paused; no accent-colour Orchestrator state
 - **Left-click tray icon:** Restore/focus the main window
 - **Right-click tray menu:** Show/Hide | Pause/Resume Orchestrator | Quit
 - **Tray notifications:** HITL approval required, run complete, rate limit hit (respects system notification settings)
@@ -7600,10 +7600,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  When minimize to tray is enabled, close minimizes instead of quitting, the tray icon reflects
-  orchestrator state, click restores focus, the tray menu offers Show/Hide, Pause/Resume
-  Orchestrator, and Quit, and notifications respect system settings.
-  Amended 2026-10-29 (A2–A5, S8; PM7): Keep minimize-to-tray gate, restore/menu and notifications. Tray state is the aggregate Pip face of F3-660/DL-235, never accent-on-Orchestrator; waiting wins and done lasts about 10 s.
+  The tray is always present while Puppet Master runs (A2 B, Jared 2026-10-30), independently of
+  minimize-to-tray. With minimize-to-tray enabled, Close minimizes instead of quitting; with it disabled,
+  normal Close/Quit behavior applies. Tray click restores focus, its menu offers Show/Hide, Pause/Resume
+  Orchestrator and Quit, and notifications respect system settings.
+  A3–A5/S8: tray state is the aggregate Pip face of F3-660/DL-235, never accent-on-Orchestrator; waiting wins
+  and complete lasts about 10 s.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -7611,10 +7613,11 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The tray remains present while Puppet Master runs with minimize-to-tray both enabled and disabled.
+- Close minimizes only when minimize-to-tray is enabled; otherwise normal Close/Quit behavior applies, and
+  the existing tray restore/menu and notification settings remain.
+- The tray uses F3-660 aggregate Pip faces, typed accessible state and complete A3 precedence instead of an
+  Orchestrator accent-colour state.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -7628,6 +7631,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0031"
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - "minimize to tray"
 - "Close button"
@@ -36695,13 +36699,18 @@ canonical_text: >-
   F3-598 consumes this rule. The Home options menu row is named Run Onboarding Again everywhere (DL-153,
   UCC-200); Run setup wizard is its earlier name, and it sits directly below Restore home layout, the
   former Reset Layout. Amended 2026-10-29 (O1–O12; PM7): F3-663 supersedes the troupe, no-physics/no-loop
-  prohibition and separately drawn spinner. One Pip in distinct family worlds, bounded transform-only life
-  and shared solver, six kits including Retro split, live voice/music through one player. One
+  prohibition and separately drawn spinner. One Pip in distinct family worlds, bounded shared life
+  and solved strings, with implementation technique open under Jared’s O2 A ruling of 2026-10-30, six kits
+  including Retro split, live voice/music through one player. One
   option-anchored ? note is pm7ob-explainer. All real routes/errors/203 tips expand beyond the small
-  concept. Owner phases gate progress, animation never does; real flow and 14 onboarding actions remain.
+  concept. O12 B (Jared 2026-10-30) amends the former animation-never-gates rule: Creating Continue and Ready
+  wait for owner completion and the last block to land; Reduced Motion settles instantly. Real flow and 14
+  onboarding actions remain.
   O11 defers the Tour. O7 (2026-10-29): preserving the settled scene during Details/? permits F3-663’s
   same-stage choice preview, note-directed Pip and typed answer/idea cue; no choice commit or entrance
-  replay. The older settled-scene acceptance is read with this specific interaction.
+  replay. The older settled-scene acceptance is read with this specific interaction. O6, Jared 2026-10-30:
+  hovering a look tile changes neither the theme nor sound. Click or keyboard activation requests
+  ui.onboarding.choose_look; this keeps the existing ephemeral/current-Project persistence boundary.
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -36935,6 +36944,7 @@ source_lineage:
 - Concepts/pm7-tools/onboarding_cinematic_source.py
 - Concepts/pm7-tools/home_workspace_source.py
 - Concepts/pm7-tools/home_workspace_refresh_source.py
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - welcome
 - simple_path
@@ -37008,7 +37018,7 @@ negative_constraints:
   or an inert Set up access later action.
 - Do not expose `shell`, command/schema/route IDs, owner names, host/environment terminology, or unexplained
   developer/source-control vocabulary in user-visible onboarding copy.
-- Do not make animation block input or delay navigation; continuous Pip/world life is allowed only through
+- Do not make animation block input or delay navigation except O12 B’s Creating Continue/Ready wait for the last block landing; continuous Pip/world life is allowed only through
   F3-663’s bounded shared clock, paused hidden/offscreen/during drags, or become required to understand state.
 - Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world
   effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving
@@ -38040,7 +38050,7 @@ canonical_text: >-
   Crew. Amended 2026-10-29 (D1–D4, G1/G2; PM7): Activity domains are ten: Goal, To-Dos, Subagents,
   Processes, Crew, BrainStorm, Review, Chat Room, Changes, Artifacts. Processes is conditional on
   running/input work and retained while its card/detail is open; scheduled/finished alone never keep it.
-  Full-size detail opens directly; no Pin or small transient fallback.
+  Full-size detail opens directly with G1 B’s view-local Pin; no small transient fallback.
 gui_related: true
 gui_classification_reason: This unit specifies the Plan card and every Activity surface in the redesign.
 depends_on:
@@ -38330,10 +38340,9 @@ invariants.
 ### 17. Activity Detail Geometry, History Coexistence, and Floating Activity Bar
 
 - **Full-Size Activity Detail (G1/G2, 2026-10-29; supersedes APR-001):** Every entry opens the
-  full-size detail directly under F3-535/ACD-453/ACD-506, with no Activity Pin/Unpin or small transient
-  form. First widen the chat within its centre/page floor; at the window limit cover the transcript
-  at the full column height. The detail stays until ×, Esc or its own Activity icon closes it and
-  returns focus. Another domain/record replaces that full detail. History keeps its separate pin.
+  full-size detail directly under F3-535/ACD-453/ACD-506, with G1 B’s view-local Pin/unpin and no small transient form. First widen the chat within its centre/page floor; at the window limit cover the transcript
+  at the full column height. Within the current thread, the detail stays until ×, Esc or its own Activity icon closes it and
+  returns focus. G1 B (Jared 2026-10-30): pinned detail stays open across thread switches and follows the new thread; unpinned detail closes on a switch. Another domain/record replaces that full detail. History keeps its separate pin.
 - **History and Activity Detail Coexistence (APR-002):** Pinned Thread History (left rail) and
   full-size Activity Detail share the available canvas width dynamically using a coordinated flex
   split. Pinned History and full-size Activity Detail never reserve independent overlapping gutters or
@@ -38579,8 +38588,9 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  G1/G2 (2026-10-29): every Activity Detail opens directly as the full-size docked view and stays until ×,
-  Esc or its Activity icon closes it. No Activity Pin, Unpin or small transient form remains. Widen the
+  G1 B/G2 (Jared 2026-10-30): every Activity Detail opens directly as the full-size docked view and, within the current thread, stays
+  until ×,
+  Esc or its Activity icon closes it. Pin is available; no small transient form remains. Widen the
   chat to fit within current centre/page floors, then cover transcript at full column height when the
   window cannot fit the dock. History keeps its separate flyout/pin and actual-width contract in F3-637.
   Hover previews remain one bounded, non-scrolling preview with existing dwell and direct detail routes.
@@ -38588,7 +38598,13 @@ canonical_text: >-
   remains a floating bar centred above the composer, with transparent sides/bottom and pointer pass-through
   around it; transcript bottom padding ensures the final child at settled bottom scroll clears the bar.
   This is the Activity Bar, not a floating Activity Detail fallback. History and full-size detail divide
-  the available canvas without overlapping gutters; at the window limit detail uses G2’s full-height cover.
+  the available canvas without overlapping gutters; at the window limit detail uses G2’s full-height cover. G1
+  B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action (binding chat.activity.pin),
+  default false. Pinned Activity Detail stays open across thread switches and reprojects the selected thread’s
+  data; unpinned detail closes on a thread switch. Pin changes lifetime only: one full-size
+  docked-or-full-height-cover view, no small form. A switch cancels stale subscriptions and never leaves the
+  previous thread’s rows/actions in the new thread. A missing domain shows its truthful empty/unavailable
+  state. Pin is session view state, not a Settings row, durable layout field or runtime mutation.
 gui_related: true
 gui_classification_reason: Governs the core layout geometry of Activity Detail, History rail coexistence, and
   the floating Chat Activity Bar.
@@ -38599,9 +38615,10 @@ unblocks:
 - F3-537
 acceptance_criteria:
 - Clicking any of ten present domains opens full detail immediately; Processes follows D4 conditional presence.
-- When docking cannot fit, chat widens within available space and then detail covers transcript at full column
-  height, never a small popup.
-- Close/×/Esc/icon-again returns focus without a persisted Activity pin; History pin is unchanged.
+- When docking cannot fit, chat widens within available space then detail covers transcript at full column
+  height, never a small popup; Pin never changes the size.
+- Pin survives thread switches while data follows the selected thread; unpinned detail closes on a switch.
+  Explicit close/×/Esc/icon-again returns focus; History pin remains separate.
 - The floating Chat Activity Bar keeps transparent pointer-pass-through surrounds and the settled transcript
   bottom fully clears it.
 validation_surfaces:
@@ -38619,13 +38636,14 @@ source_lineage:
 - APR-001
 - APR-002
 - APR-004
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - Activity Detail
 - Chat Activity Bar
 - unpin
 - pointer pass-through
 negative_constraints:
-- Do not expose Activity Pin/Unpin or a small transient fallback.
+- Do not restore a small transient Activity Detail or let Pin freeze the previous thread’s data.
 - Do not remove or conflate the independent History pin.
 owner_hints:
 - Plans/FinalGUISpec.md
@@ -42624,7 +42642,8 @@ canonical_text: >-
   from F3-635. Grill Me is a switch, not a participant: the existing speaker peeks over its kettle grill.
   You hold strings, never an agent puppet. Family materials are Friendly vinyl, Glass clear blue lens
   without brow band, Basic flat accent without cheeks, Retro pixel sprites, NieR ink with visor/square
-  nodes/diamond. Live NieR shows eyes; static brand/tray keeps plain band. Strings use the kit’s shared
+  nodes/diamond. NieR Pip shows eyes through the band on live and static marks, including title bar, app icon
+  and tray, at every size (X3 B, Jared 2026-10-30). Strings use the kit’s shared
   eye-to-eye solver and may be hidden by the chat’s optional Strings part without restoring old art. Markup
   is a pure theme/identity/state function, no random or per-render IDs; exit copies survive ID stripping.
   Shared styles avoid per-instance style blocks. Faces carry typed state: working think, queued
@@ -43044,8 +43063,9 @@ canonical_text: >-
   in the outgoing look's colours, with no slats or travel, that names what is being applied, is announced
   politely, and lifts once the new look is drawn; the waiting reboot cover's movement is a compositor ink
   sweep across its segmented meter. Current PM7 replacement: Amended 2026-10-29 (O8/O11, X3; PM7): F3-663’s
-  NieR Pip replaces the unit marionette for onboarding and chat agents. Static marks keep plain band, live
-  stage/sheet Pip shows blinking eyes. Retain NieR material/HUD/reboot and Pod 042 as Tour/Chat narrator;
+  NieR Pip replaces the unit marionette for onboarding and chat agents. NieR Pip shows eyes through the band
+  on live and static marks, including title bar, app icon and tray, at every size (X3 B, Jared 2026-10-30).
+  Retain NieR material/HUD/reboot and Pod 042 as Tour/Chat narrator;
   no Tour redesign now.
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look
@@ -43077,7 +43097,7 @@ acceptance_criteria:
   families keep their own directions, with the hero moments of F3-600; with it on NieR's moments play whatever
   family is chosen beneath it (DL-153).
 - NieR agents and onboarding use Pip’s brace head, blindfold, square string nodes and shared size tiers; live
-  Pips show eyes, static marks the plain band. The retired unit’s collar/body and 1.21 head-to-torso ratio
+  Pips show eyes through the band on live and static marks at every size (X3 B, Jared 2026-10-30). The retired unit’s collar/body and 1.21 head-to-torso ratio
   do not constrain Pip.
 - Every NieR beat is gated by an existing installed part, and Animation speed still scales the motion.
 - Words longer than 8 characters type on with their final layout reserved from the first frame, and a label
@@ -43235,7 +43255,9 @@ canonical_text: >-
   [0,4,7,12] (C E G C); Retro Light root 79, [0,2,4,7] (G A B D); NieR root 69 minor, [12,15,19,22] (A C E
   G). Preserve approved pitch/chapter transposition and synthesis recipes with source/licence/version
   metadata through the one player; no re-key to the old canon. Six setup kits coexist with the unchanged
-  Tour’s existing cue mappings, not another player, switch or local registry.
+  Tour’s existing cue mappings, not another player, switch or local registry. O6, Jared 2026-10-30: look-tile
+  hover has no sound or theme change in any look, NieR included. Only click/keyboard activation selects the
+  look; this does not silence deliberate Ask Pip or other owner-routed cues.
 gui_related: true
 gui_classification_reason: Places onboarding and Guided Tour sound cues, their kits and the NieR kit in the
   sound settings model.
@@ -43297,6 +43319,7 @@ source_lineage:
 - Plans/Decision_Log.md#DL-152
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-REQUEST-20261007.md, SHA-256 416638453431ef6bac2b4a8066560214c4fa3bcd8e0663cf778fba89bc63e652
 - Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/polish-nier-onboarding-sounds)
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - general.interaction.sound-effects
 - general.interaction.sound-mapping
@@ -43848,7 +43871,8 @@ canonical_text: >-
   trigger, end state, snap and sound path are shared by all five styles (DR-056). Current PM7 replacement:
   Amended 2026-10-29 (O1–O12; PM7): F3-663 replaces the troupe/one-shot-only hero art with one Pip, bounded
   living worlds and Retro Light/Dark distinction. One trigger/end-state/sound path remains; Ready hands to
-  first callout and never waits on animation. O11 leaves the Tour untouched.
+  the first callout after O12 B’s required Creating last-block landing; Reduced Motion places that block
+  instantly (Jared 2026-10-30). O11 leaves the Tour untouched.
 gui_related: true
 gui_classification_reason: Defines the act card, the wake and the curtain call of onboarding in the four theme
   families.
@@ -43898,6 +43922,7 @@ source_lineage:
 - Plans/Decision_Log.md#DL-153
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/JARED-REQUEST-20261009.md, SHA-256 5d4f5b2aa55364c55fb022e4624657b5185e5ea5b316b6108b880dde51a98e48
 - Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/nier-showpiece-next)
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - NieR Mode
 - APPROVED
@@ -46444,8 +46469,10 @@ canonical_text: >-
   ui.chat_column.pin_history(history_pinned) and ui.chat_column.keep_open(keep_open) are local saved layout
   state without receipt/event/revision, never Settings; absent booleans toggle. Home options and chat
   header share these controls. The earlier measured 760-cap/960-budget examples are superseded historical
-  measurements, not current width limits. Activity Detail opens full size directly, without Pin/unpin or a
-  small transient view. It first asks the column for room, then covers the transcript at full column height
+  measurements, not current width limits. Activity Detail opens full size directly with view-local Pin/unpin
+  and no
+  small transient view (G1 B, Jared 2026-10-30). It first asks the column for room, then covers the transcript
+  at full column height
   if the window cannot fit it; ×, Esc or the same icon closes it. History pin is unaffected. Hosted chat
   sizes by its container and sends content opens through F3-634; one right chat and one history survive.
   This supersedes old movable chat, grips, bottom workspace mirroring and any fixed maximum-width Settings
@@ -46456,7 +46483,10 @@ canonical_text: >-
   desktop Pop out/Dock back and Keep the chat open in narrow windows, all routed to their existing
   command/local identities. general.visual.chat-layout-mode is retired and ignored/cleared on first read,
   never another layout store. Preserve Jared’s full-height requirement: The chat assistant window should be
-  full vertical height, unless it pops out, then the user can adjust it.
+  full vertical height, unless it pops out, then the user can adjust it. Pinned Activity Detail stays open
+  across thread switches while its contents follow the new thread; unpinned detail closes on a switch. This
+  pin is session presentation state and does not add a saved layout field or change the independent History
+  width/pin rule.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout
   and Activity Detail.
@@ -46559,6 +46589,7 @@ source_lineage:
   (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/SPACING-dc743c7320.patch, SHA-256 d88a28be144814a3c486e810afcf8c3dd348b06ebef611bbbf44fd4d5095a20b
   (source lineage; not native certification)
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - clamp(400, 0.26667 x window width + 88, 640)
 - '400'
@@ -47360,12 +47391,14 @@ canonical_text: >-
   This supersedes the concept practice of a demo panel per surface and changes no product unit. Amended
   2026-10-29 (W8, SND1; PM7): One lab Demo Studio covers Pip/loader/sound/parts, project box states/widths,
   expanded onboarding tips/errors and Activity/Resources/quit. Owner APIs only, missing owners unavailable;
-  no lab toolbar or magic demo errors in product. Jared listens to the sound board before landing. W8
+  no lab toolbar or magic demo errors in product. SND1 B (Jared 2026-10-30): land on the sound tools’ measured
+  level/texture numbers; Jared listens later in the product. W8
   normative Demo Studio matrix (2026-10-29; DL-256): one lab only, strings in 75-demo-studio.json, public
   owner APIs with unavailable controls when absent, 4.5:1 contrast in every look, Reset Everything clears
   only OWNED keys. Pip section: marks/tiles/tray in all ten looks, mood stay-row firing on every live Pip,
   Mark only, Swing/Think/Hop take, Every loader moment and Hold loaders. Sound board exposes
-  kit-by-look/choice, 42 events, 5 loops and Pip says input; Jared listens before landing (SND1).
+  kit-by-look/choice, 42 events, 5 loops and Pip says input; SND1 B uses the sound tools’ numbers for landing,
+  with Jared’s listening deferred to the product.
   Onboarding: pip twist antigravityOnce, Oops cases returning-name tastebook, Cursor refused key ≤11
   characters and first Antigravity sign-in failure with real retry state; Ask Pip opens a screen with its
   chosen ? note; pipRoughDay recipe. Chat: Adjust Pip beside Adjust NieR look, Full/Quiet/Still/Plain,
@@ -47414,6 +47447,7 @@ source_lineage:
 - Plans/Decision_Log.md#DL-185
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
   (D26)
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - Demo Studio
 negative_constraints:
@@ -49903,8 +49937,10 @@ canonical_text: >-
   static; one Basic Dark app tile, ICO/ICNS/PNG/SVG assets with manifest. Logical micro ≤18, small 19–40
   and full >40 tiers remain consistent across DPR. Each look reads its tokens: Friendly vinyl, Glass clear
   blue lens/rim/base without brow band, Basic flat single accent without cheeks, Retro pixel grids, NieR
-  ink/visor/diamond. Static NieR keeps the plain band; live Pip shows its eyes. Every animated asset has a
-  complete still base. The gated tray uses A3’s aggregate status faces across Projects; waiting always wins
+  ink/visor/diamond. NieR Pip shows eyes through the band on live and static marks, including title bar, app
+  icon and tray, at every size (X3 B, Jared 2026-10-30). Every animated asset has a
+  complete still base. The always-on tray (A2 B, Jared 2026-10-30) uses A3’s aggregate status faces across
+  Projects; waiting always wins
   and complete lasts about 10 s. Its accessible name carries the typed status, no colored badge. OS
   notifications and Friendly’s app tile use Pip while in-app cards keep their kind marks and the
   notification stack remains the only in-app notification entry. Individual agents consume F3-594’s Pip
@@ -49931,7 +49967,8 @@ canonical_text: >-
   lower-priority facts and freshness in the accessible summary. Never replace a stale projection with a
   healthy zero. W1: Retro draws hand-placed 16, 24 and 32 px sprite grids, with consistent logical tier
   selection across DPR. The PM monogram and gallery Direction switch are retired lineage, never a product
-  brand variant.
+  brand variant. X3 B changes visibility of the eyes, never the static/non-interactive nature of title, app
+  and tray rest marks.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -49945,7 +49982,7 @@ acceptance_criteria:
 - Title mark is static and non-interactive at every density and DPR; no bell displacement.
 - All assets and live consumers share geometry/tokens and connected strings; static base remains visible without
   CSS.
-- Tray gating and priority agree with the shared work projection and existing settings.
+- Always-on tray visibility and A3 priority agree with the shared work projection; minimize-to-tray affects Close only.
 - The ≤24 px app mark and macOS-template/Windows-colour tray exports match the kit; four-frame Working becomes
   still under Reduced Motion/NieR.
 - Full A5 defaults and surface-specific overrides preserve all 22 typed keys and complete A3 tray precedence.
@@ -49967,6 +50004,7 @@ source_lineage:
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
 - Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -50084,7 +50122,9 @@ canonical_text: >-
   meaningful accessible wait label, announced once rather than by every Pip. No loader preference or
   switch. The first-paint owner reads the Project look without another theme copy. All 35 inventoried sites
   and the missing Settings/tab busy states consume this owner; the loader rollout report records each site.
-  L8’s menu-sprout duplicates are recorded debt outside this change. L1 reference host sizes: splash 128
+  L8 B (Jared 2026-10-30): this build removes menu-sprout duplication. DR-079 is the one sprout owner for
+  every menu; chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it with no private animation
+  implementation. L1 reference host sizes: splash 128
   px, chat Working/thinking row 18 px, busy button 16 px, content-wait tab 14 px, panel 40 px. The shared
   em/baseline contract fits each host; the <12 px still gate and item-state st-working distinction continue
   to apply.
@@ -50124,6 +50164,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -50151,14 +50192,17 @@ canonical_text: >-
   journey-specific chapter counts; narrow <760 px and short <520 px use the real layout. Basic is first,
   first run Basic Dark. Away is new-Server only and recommended; Later skips AI; Creating goes to Protect
   with backup; AI has no Back and Continue needs a Ready account or explicit skip. Ready’s Tour/help work.
-  The Tour itself is unchanged (O11); Pod 042 remains its NieR narrator. One bounded transform solver makes
+  The Tour itself is unchanged (O11); Pod 042 remains its NieR narrator. One bounded shared solver makes
   Pip/props pendulums and joins strings eye-to-eye; world/idle life pauses offscreen, hidden, in
   low-resource mode and during drags. Theme tokens supply materials. Friendly is a felt world with vinyl
   Pip; Glass uses Ribbons, glass floor/reflection, ripples; Basic has dot grid/ruler/protractor/plumb;
   Retro Dark is the existing CRT with grain, persistence, rolling bar and <3 percent flicker at 20 fps;
   Retro Light is green-bar printer paper without bezel at 10 fps, rail included; NieR is a HUD with
-  hovering eyed/visored Pip, QUEST UPDATED and two slipping bands, never black frames. Filters are changed
-  only after frame-by-frame A/B preserves the look (O2). No per-page physics clock. Welcome sleeps until
+  hovering eyed/visored Pip, QUEST UPDATED and two slipping bands, never black frames. O2 A (Jared
+  2026-10-30): match the approved concept; implementation technique is the implementer’s choice. Preserve
+  solved strings, world materials, bounded shared life and hidden/offscreen/drag pause behavior; an
+  optimization must preserve the concept in recorded frame-by-frame A/B. No per-page physics clock. Welcome
+  sleeps until
   real pointer travel or key arrival. Watch follows 420 ms stable dwell, stays ≥900 ms and holds 600 ms
   after leave; preview highlights the choice without committing. Choosing is happy through the whole line;
   field typing is wonder; work think; owner errors oops with warning and a recovery cheer. Wink occurs once
@@ -50177,8 +50221,9 @@ canonical_text: >-
   (one large line then 2–3 lines then ellipsis), vault/cloud/backup, house/globe, review clipboard,
   Creating blocks, AI orbs, Ready charms/crew; expanded routes add NAS, key, identity card, QR/code,
   Recovery Kit, lock, settings copy, forge services and free models. Blocks slow into place level, squash
-  on touchdown, give below, unhook strings and rest on floor; each follows its owner phase and never delays
-  Continue/Ready, instant under Reduced Motion (O12). Name empty/long/taken, wrong/expired pairing, NAS,
+  on touchdown, give below, unhook strings and rest on floor; each follows its owner phase. O12 B (Jared
+  2026-10-30): Continue and Ready wait for the last block to land as well as the owner phases to finish;
+  Reduced Motion places every block instantly. Name empty/long/taken, wrong/expired pairing, NAS,
   token/key/sign-in and Creating failures use real errors, including retryable sign-in failure, not
   demo-only magic names. Cursor accepts ≥12; rejected demo is ≤11, label API key for Cursor / Check key; no
   unsupported OpenAI API key claim and Family recipes remains valid. Six original sound kits (Retro split)
@@ -50187,7 +50232,8 @@ canonical_text: >-
   live synthesis passes the one Notifications & Sounds player/gesture gate/master
   general.interaction.sound-effects and header speaker, with recipe/source/licence/version metadata in the
   existing sound tools/library. Setup voice/music are Pip parts, app chirps default off; Reduced Motion
-  never mutes and look hover is silent. Preserve Sound on — click to mute and Sound off — click to turn on.
+  never mutes. O6 (Jared 2026-10-30): look-tile hover changes neither sound nor theme; click or keyboard
+  activation changes the theme. Preserve Sound on — click to mute and Sound off — click to turn on.
   No local mute store; first run is factory parts plus session sound preview, rerun reads the Project.
   Reduced Motion stops all swing/travel/flicker/trails and places props instantly; state faces remain
   meaningful. Ready hands strings to the existing first Tour callout without a Tour redesign. O9 chapter
@@ -50230,7 +50276,8 @@ canonical_text: >-
   the answer, with the idea cue through the one gesture-gated/master-controlled player. It does not
   choose/commit the option or replay the stage entrance. This is distinct from O6’s silent look hover;
   reserve the full note/bubble layout first, preserve the existing heading/choice semantics and focus
-  return.
+  return. O12’s landing wait is presentation completion only: it neither dispatches owner work nor
+  manufactures a completed phase. Other choices and recovery controls remain responsive during Creating.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -50252,8 +50299,7 @@ acceptance_criteria:
   states.
 - Ask Pip previews without commit/entrance replay, types one anchored answer, uses the idea cue and returns
   focus with correct accessible targeting.
-- Creating never delays owner Continue/Ready; six original recipe kits pass level/texture checks with no re-key,
-  no pre-gesture sound and no reduced-motion mute.
+- Creating Continue/Ready wait for owner completion and the last block landing, instantly settled under Reduced Motion; six original kits pass level/texture checks with no re-key, no pre-gesture sound and no reduced-motion mute.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -50274,6 +50320,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - pm7ob-explainer
 - ui.onboarding.open_details

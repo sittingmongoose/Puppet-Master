@@ -74,6 +74,7 @@
       + `<span class="pipe-chip-name">${esc(p.label)}</span><span class="pipe-chip-help">${esc(p.help)}</span>`
       + `<span class="pipe-chip-foot"><span>${esc(say('size', 'Size {n}', { n: p.size }))}</span><span class="pipe-chip-state">${esc(say('off', 'Off'))}</span></span></button>`;
   }
+  let bodyN = 0;
   function body() {
     const R = REG(); if (!R) return '';
     const groups = R.GROUPS.map(g => {
@@ -84,12 +85,14 @@
         + `<div class="pipe-chips">${ps.map(chip).join('')}</div></section>`;
     }).join('');
     const presets = (R.PRESET_INFO || []).map(p => `<button type="button" class="pipe-preset" aria-pressed="false" data-pipe-preset="${esc(p.id)}"><span>${esc(say('preset.' + p.id + '.label', p.label))}</span><small>${esc(say('preset.' + p.id + '.help', p.help))}</small></button>`).join('');
+    /* the stage is a labelled group, so each seat's caption (its role and state) reads; Play names why it can't run */
+    const why = 'pipe-play-why-' + (++bodyN);
     return '<div class="pipe">'
-      + `<div class="pipe-top"><div class="pipe-stage pm56-host" data-theme="${esc(chatTheme())}" aria-label="${esc(say('stageLabel', 'Preview: a small team in the chat'))}" role="img">${team(-1)}</div>`
+      + `<div class="pipe-top"><div class="pipe-stage pm56-host" data-theme="${esc(chatTheme())}" aria-label="${esc(say('stageLabel', 'Preview: a small team in the chat'))}" role="group">${team(-1)}</div>`
       + '<div class="pipe-side">'
       + `<div class="pipe-meter"><div class="pipe-meter-head"><span>${esc(say('meterLabel', 'Pip parts'))}</span><b class="pipe-meter-n"></b></div><div class="pipe-meter-cells">${R.PARTS.map(() => '<i></i>').join('')}</div></div>`
       + `<div class="pipe-presets" role="group" aria-label="${esc(say('presets', 'Presets'))}">${presets}</div>`
-      + `<button type="button" class="btn small pipe-play" data-pipe-replay data-pip-local="ui.settings.pip_editor.replay"><span>${esc(say('play', 'Play: the team works'))}</span></button><p class="pipe-play-why"></p>`
+      + `<button type="button" class="btn small pipe-play" data-pipe-replay data-pip-local="ui.settings.pip_editor.replay" aria-describedby="${why}"><span>${esc(say('play', 'Play: the team works'))}</span></button><p class="pipe-play-why" id="${why}"></p>`
       + '</div></div>'
       + `<p class="pipe-reach">${esc(say('reach', 'Parts change Pip in the chat and in setup. Pip’s mark, the app icon, the tray and loading signs stay as they are, and every helper is still a Pip.'))}</p>`
       + groups + '</div>';

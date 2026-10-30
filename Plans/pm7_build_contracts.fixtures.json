@@ -345,6 +345,105 @@
         "setup-music"
       ],
       "valid": false
+    },
+    {
+      "name": "activity_pin_is_view_local",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.activity_detail.pin",
+        "scope_kind": "project",
+        "project_id": "p-1",
+        "view_id": "detail-1",
+        "thread_id": "thread-1",
+        "pinned": true,
+        "return_focus_id": "chat.activity.processes"
+      },
+      "valid": true
+    },
+    {
+      "name": "activity_unpin_is_view_local",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.activity_detail.pin",
+        "scope_kind": "project",
+        "project_id": "p-1",
+        "view_id": "detail-1",
+        "thread_id": "thread-1",
+        "pinned": false,
+        "return_focus_id": "chat.activity.processes"
+      },
+      "valid": true
+    },
+    {
+      "name": "activity_pin_missing_thread_refused",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.activity_detail.pin",
+        "scope_kind": "project",
+        "project_id": "p-1",
+        "view_id": "detail-1",
+        "pinned": true,
+        "return_focus_id": "chat.activity.processes"
+      },
+      "valid": false
+    },
+    {
+      "name": "activity_pin_missing_boolean_refused",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.activity_detail.pin",
+        "scope_kind": "project",
+        "project_id": "p-1",
+        "view_id": "detail-1",
+        "thread_id": "thread-1",
+        "return_focus_id": "chat.activity.processes"
+      },
+      "valid": false
+    },
+    {
+      "name": "activity_pin_string_boolean_refused",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.activity_detail.pin",
+        "scope_kind": "project",
+        "project_id": "p-1",
+        "view_id": "detail-1",
+        "thread_id": "thread-1",
+        "pinned": "true",
+        "return_focus_id": "chat.activity.processes"
+      },
+      "valid": false
+    },
+    {
+      "name": "activity_pin_cannot_smuggle_settings_value",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.activity_detail.pin",
+        "scope_kind": "project",
+        "project_id": "p-1",
+        "view_id": "detail-1",
+        "thread_id": "thread-1",
+        "pinned": true,
+        "return_focus_id": "chat.activity.processes",
+        "value": {
+          "general.visual.pip-parts": []
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "activity_pin_cannot_become_settings_action",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.settings.pip_editor.open",
+        "scope_kind": "project",
+        "project_id": "p-1",
+        "view_id": "detail-1",
+        "thread_id": "thread-1",
+        "pinned": true,
+        "return_focus_id": "chat.activity.processes"
+      },
+      "valid": false
     }
   ],
   "semantic_cases": [
@@ -466,11 +565,115 @@
     "status_keys": 22,
     "pip_parts": 25,
     "default_parts": 24,
-    "pm7_bindings": 464,
-    "touch_rows": 707,
+    "pm7_bindings": 465,
+    "touch_rows": 708,
     "touch_profiles": 137,
     "production_wiring_entries": 1269,
     "new_production_rows": 11,
-    "new_bindings": 45
-  }
+    "new_bindings": 46
+  },
+  "activity_detail_thread_switch_cases": [
+    {
+      "name": "pinned_follows_new_thread_and_discards_old_rows",
+      "decision_id": "G1",
+      "before": {
+        "view_id": "detail-1",
+        "thread_id": "thread-1",
+        "open": true,
+        "pinned": true,
+        "row_ids": [
+          "old-thread-work"
+        ]
+      },
+      "selected_thread": {
+        "thread_id": "thread-2",
+        "row_ids": [
+          "new-thread-work"
+        ]
+      },
+      "expected": {
+        "view_id": "detail-1",
+        "thread_id": "thread-2",
+        "open": true,
+        "pinned": true,
+        "row_ids": [
+          "new-thread-work"
+        ]
+      }
+    },
+    {
+      "name": "unpinned_closes_on_thread_switch",
+      "decision_id": "G1",
+      "before": {
+        "view_id": "detail-1",
+        "thread_id": "thread-1",
+        "open": true,
+        "pinned": false,
+        "row_ids": [
+          "old-thread-work"
+        ]
+      },
+      "selected_thread": {
+        "thread_id": "thread-2",
+        "row_ids": [
+          "new-thread-work"
+        ]
+      },
+      "expected": {
+        "view_id": "detail-1",
+        "thread_id": "thread-2",
+        "open": false,
+        "pinned": false,
+        "row_ids": []
+      }
+    },
+    {
+      "name": "closed_pinned_view_does_not_reopen_on_thread_switch",
+      "decision_id": "G1",
+      "before": {
+        "view_id": "detail-1",
+        "thread_id": "thread-1",
+        "open": false,
+        "pinned": true,
+        "row_ids": []
+      },
+      "selected_thread": {
+        "thread_id": "thread-2",
+        "row_ids": [
+          "new-thread-work"
+        ]
+      },
+      "expected": {
+        "view_id": "detail-1",
+        "thread_id": "thread-2",
+        "open": false,
+        "pinned": true,
+        "row_ids": []
+      }
+    },
+    {
+      "name": "pinned_missing_domain_is_empty_not_previous_thread",
+      "decision_id": "G1",
+      "before": {
+        "view_id": "detail-1",
+        "thread_id": "thread-1",
+        "open": true,
+        "pinned": true,
+        "row_ids": [
+          "old-thread-work"
+        ]
+      },
+      "selected_thread": {
+        "thread_id": "thread-2",
+        "row_ids": []
+      },
+      "expected": {
+        "view_id": "detail-1",
+        "thread_id": "thread-2",
+        "open": true,
+        "pinned": true,
+        "row_ids": []
+      }
+    }
+  ]
 }

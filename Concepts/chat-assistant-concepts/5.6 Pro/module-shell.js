@@ -409,10 +409,11 @@
     }
     return head + '<g class="' + PIP_CLS.face + '">' + K.faceShapes(g, mood, '@eye', { cls: PIP_CLS, shine: detail && shine }) + '</g>';
   }
-  /* ---- NieR Pip (O8): the kit's YoRHa unit in ink and paper; a still mark keeps the plain band (X3) */
-  function pipNierMark(K, th, prop, mood, detail, bust, kettle, eyes, look2) {
+  /* ---- NieR Pip (O8): the kit's YoRHa unit in ink and paper; its eyes show through the band on every mark, still or
+     live (X3 B) */
+  function pipNierMark(K, th, prop, mood, detail, bust, kettle, look2) {
     var g = K.GEO[detail ? 'full' : 'small'];
-    var r = K.pipNier(g, th, mood === 'dots' ? 'think' : mood, PIP_CLS, { face: 'x' }, { parts: true, eyes: !!eyes });
+    var r = K.pipNier(g, th, mood === 'dots' ? 'think' : mood, PIP_CLS, { face: 'x' }, { parts: true, eyes: true });
     var pr = pipProp(K, prop, g, 'nier', detail), kt = kettle ? pipProp(K, 'grill', g, 'nier', detail) : { back: '', front: '' };
     var head = '<g class="' + PIP_CLS.pup + '">' + r.headInner + '</g>';
     if (bust || (look2 && !look2.strings)) return pr.back + head + pr.front + kt.front;
@@ -461,8 +462,9 @@
     return K.pixelRects(rows.map(function (r) { return r.join(''); }), look2.seat ? PIP_PX_COL : PIP_PX_COL_PLAIN);
   }
   /* pipInner(prop, mood, size, o) - Pip on the 28 grid (the inside of a mark's svg). size: the mark's px (none = a
-     plate seat, the richest detail). o.kettle: the lead behind the kettle grill (DL-218); o.eyes: a live NieR Pip's
-     eyes through its band (X3). Memoized by everything that changes the markup. */
+     plate seat, the richest detail). o.kettle: the lead behind the kettle grill (DL-218). A NieR Pip shows its eyes
+     through the band at every size, still or live (X3 B, Jared 2026-10-30). Memoized by everything that changes the
+     markup. */
   function pipInner(prop, mood, size, o) {
     var P = pipKit(); if (!P) return '';
     o = o || {};
@@ -471,7 +473,7 @@
     if (mood === 'working') mood = 'dots';
     pipPartsNow();
     if (!pipOn('role-props')) { prop = null; kettle = false; }
-    var key = look + '|' + prop + '|' + mood + '|' + (bust ? 'b' : detail ? 'f' : 's') + (kettle ? 'k' : '') + (o.eyes ? 'e' : '') + '|' + pipPartsSig;
+    var key = look + '|' + prop + '|' + mood + '|' + (bust ? 'b' : detail ? 'f' : 's') + (kettle ? 'k' : '') + '|' + pipPartsSig;
     var v = pipMemo[key];
     if (v) return v;
     var K = P.kit, fam = P.family(look), scheme = P.scheme(look), th = K.rolePalette(look), body;
@@ -480,7 +482,7 @@
       body = pipPixel(K, prop, mood, bust, kettle, look2);
       v = bust ? '<g class="pmx-pip-px" transform="translate(-3 -9.5) scale(1.42)">' + body + '</g>' : '<g class="pmx-pip-px" transform="translate(2 2)">' + body + '</g>';
     } else {
-      body = fam === 'nier' ? pipNierMark(K, th, prop, mood, detail, bust, kettle, o.eyes, look2) : pipVector(K, th, fam, scheme, prop, mood, detail, bust, kettle, look2);
+      body = fam === 'nier' ? pipNierMark(K, th, prop, mood, detail, bust, kettle, look2) : pipVector(K, th, fam, scheme, prop, mood, detail, bust, kettle, look2);
       v = bust ? '<g class="pmx-pip-v" transform="translate(-6.2 -14.6) scale(.63)">' + body + '</g>' : '<g class="pmx-pip-v" transform="scale(.4375)">' + body + '</g>';
     }
     v = K.roleStyles(v);
@@ -655,7 +657,7 @@
   function pmxPip(o) {
     o = o || {};
     if (o.part && !pipOn(o.part)) return '';
-    var inner = pipInner(o.prop || null, o.mood || 'idle', num(o.size, 22), { eyes: !!o.eyes, kettle: !!o.kettle, bust: o.bust, detail: o.detail });
+    var inner = pipInner(o.prop || null, o.mood || 'idle', num(o.size, 22), { kettle: !!o.kettle, bust: o.bust, detail: o.detail });
     if (!inner) return '';
     var size = num(o.size, 22), look = pipLook(), tone = PIP_TONES[o.tone] ? ' style="--pmx-pip-tone:var(--' + o.tone + ')"' : '';
     return '<svg class="' + cls('pmx-pip-mk', o.cls) + '"' + k(o.key) + ' viewBox="0 0 28 28" width="' + size + '" height="' + size + '"' + (look.indexOf('retro') === 0 ? ' shape-rendering="crispEdges"' : '') +
@@ -714,7 +716,7 @@
       pup = '<g class="pmx-pip-pup pmx-pip-px" transform="translate(2 2) scale(2.5)" shape-rendering="crispEdges">' + cells + '</g>';
       strings = '<path d="M58 9H78V32" stroke="@str" stroke-width="2.5" fill="none" shape-rendering="crispEdges"/>';
     } else if (fam === 'nier') {
-      /* NieR Pip with its eyes through the band at rest (X3: a live Pip) */
+      /* NieR Pip with its eyes through the band (X3 B: every NieR Pip) */
       var r = K.pipNier(g, th, mood === 'dots' ? 'think' : mood, PIP_CLS, { face: 'x' }, { parts: true, eyes: true });
       strings = r.barNodes.map(function (q, i) { return pipLine(K, q, r.headNodes[i], 1, '@ink'); }).join('');
       pup = '<g class="pmx-pip-pup">' + r.headInner + '</g>';

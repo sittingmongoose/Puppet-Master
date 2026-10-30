@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5596-L27168
+Source lines: L5596-L27172
 
-Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
+Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
 
 ---
 
@@ -2015,10 +2015,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  When minimize to tray is enabled, close minimizes instead of quitting, the tray icon reflects
-  orchestrator state, click restores focus, the tray menu offers Show/Hide, Pause/Resume
-  Orchestrator, and Quit, and notifications respect system settings.
-  Amended 2026-10-29 (A2–A5, S8; PM7): Keep minimize-to-tray gate, restore/menu and notifications. Tray state is the aggregate Pip face of F3-660/DL-235, never accent-on-Orchestrator; waiting wins and done lasts about 10 s.
+  The tray is always present while Puppet Master runs (A2 B, Jared 2026-10-30), independently of
+  minimize-to-tray. With minimize-to-tray enabled, Close minimizes instead of quitting; with it disabled,
+  normal Close/Quit behavior applies. Tray click restores focus, its menu offers Show/Hide, Pause/Resume
+  Orchestrator and Quit, and notifications respect system settings.
+  A3–A5/S8: tray state is the aggregate Pip face of F3-660/DL-235, never accent-on-Orchestrator; waiting wins
+  and complete lasts about 10 s.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2026,10 +2028,11 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The tray remains present while Puppet Master runs with minimize-to-tray both enabled and disabled.
+- Close minimizes only when minimize-to-tray is enabled; otherwise normal Close/Quit behavior applies, and
+  the existing tray restore/menu and notification settings remain.
+- The tray uses F3-660 aggregate Pip faces, typed accessible state and complete A3 precedence instead of an
+  Orchestrator accent-colour state.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -2043,6 +2046,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0031"
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - "minimize to tray"
 - "Close button"

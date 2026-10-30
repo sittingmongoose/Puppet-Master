@@ -152,6 +152,9 @@ body.pmw-dragging #pm-hover-tag-root, body.pm-resizing:not(.pmw-dragging) #pm-ho
 .pmw-tmark[hidden] { display: none; }
 .pmw-exit { color: var(--pmw-bad); font-family: var(--pm-font-code); }
 .pmw-agentmark { width: 7px; height: 7px; background: var(--pmw-warn); display: block; }
+/* a busy tab off screen: the shared working mark, 12 px, lit and still (32-strip.js updateTab) */
+.pmw-tbusy { display: inline-flex; width: 12px; height: 12px; }
+.pmw-tbusy .nx-st, .pmw-tbusy svg { display: block; width: 12px; height: 12px; }
 /* close target 24 x 24; the dirty dot sits in it until hover */
 .pmw-tclose {
   flex: none;

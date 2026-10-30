@@ -4242,7 +4242,10 @@ canonical_text: >-
   the chat's first-paint reader, theme picker and NieR scripts and follows the host's existing look
   and NieR controllers. SSYS-055 records the project-only adapter and session-only ELI5 limit rather
   than treating every concept control as a persistent application setting.
-  Amended 2026-10-29 (G1–G3, S1–S9; PM7): Activity Detail now opens full size until closed; its Pin/unpin contract is retired. History pin remains local layout state. Pip parts read the same Project row/transaction in every host, never pip-chat:v1 or a second option registry.
+  Amended 2026-10-29 (G1–G3, S1–S9; PM7): Jared G1 B (2026-10-30) restores the view-local Pin/unpin lifetime
+  contract: pinned detail stays open and follows the new thread across switches, while unpinned detail closes
+  on a switch; only the small view is retired. History pin remains local layout state. Pip parts read the same
+  Project row/transaction in every host, never pip-chat:v1 or a second option registry.
 gui_related: true
 gui_classification_reason: Keeps shared host presentation and Settings control ownership single.
 split_recommended: false
@@ -4294,7 +4297,9 @@ canonical_text: >-
   colours and shared styles for static brand/release assets/tray/notifications, loader, onboarding and the
   single chat-agent primitive. Robot is only category art. No per-surface renderer/palette, legacy puppet
   fallback, random drawing IDs or switchable brand/loader. Pip parts is one registry/editor/Settings row,
-  not a shadow store. Declarative static base remains meaningful without animation.
+  not a shadow store. Declarative static base remains meaningful without animation. NieR Pip shows eyes
+  through the band on live and static marks, including title bar, app icon and tray, at every size (X3 B,
+  Jared 2026-10-30).
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -4327,6 +4332,7 @@ source_lineage:
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
 - Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -4350,9 +4356,9 @@ canonical_text: >-
   L1–L8, X2: one F3-662 loader owner/opt-in/class contract and clock supplies every indeterminate wait with
   contextual Swing/Think/Hop, per-family timing, size/accessibility and pause gates. Preserve layout
   skeletons and determinate bars; working status remains st-working. NieR routes to its Diamond
-  owner/fallback. No surface spinner, loader-setting or duplicate thinking/Orbit Pip. Deferred debt L8:
-  chat menus.js, Usage PMU.menu and Home PMW.menu still duplicate sprout; do not silently claim DRY closure
-  for them.
+  owner/fallback. No surface spinner, loader-setting or duplicate thinking/Orbit Pip. L8 B (Jared 2026-10-30):
+  this build removes menu-sprout duplication. DR-079 is the one sprout owner for every menu;
+  chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it with no private animation implementation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -4382,6 +4388,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -4444,4 +4451,59 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-246, ContractName:Plans/Shared_Integration_Runtime.md#SIR-054
 
+### DR-079 - One Menu Sprout Owner
 
+```yaml
+plan_unit_id: DR-079
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  L8 B, Jared 2026-10-30: one shared menu sprout owner supplies every menu’s origin, open/close
+  lifecycle, family motion tokens, Reduced Motion settle, drag/hidden pause and teardown. Chat menus.js,
+  Usage PMU.menu and Home PMW.menu delegate to that owner instead of carrying duplicate sprout
+  implementations. This build closes the former L8 DRY debt. Menus retain their existing items, routing,
+  focus and availability contracts; sharing motion dispatches no command or runtime write.
+gui_related: true
+gui_classification_reason: Defines one visible menu motion and lifecycle owner.
+split_recommended: false
+depends_on:
+- DL-237
+- DR-043
+- ACD-439
+unblocks: []
+acceptance_criteria:
+- All menu consumers use one sprout implementation; chat menus.js, Usage PMU.menu and Home PMW.menu have no
+  private copies.
+- Every consumer preserves its family tokens, origin, focus return, Reduced Motion and teardown behavior.
+- The shared sprout is presentation only and creates no command, Settings row, event or runtime write.
+validation_surfaces:
+- python3 scripts/pm7-build-check.py
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- GUI source audit and 60 fps menu recordings across all ten looks and Reduced Motion
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/DRY_Rules.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
+- reports/pm7-build-20261029/IDS.md
+preserved_exact_tokens:
+- menus.js
+- PMU.menu
+- PMW.menu
+negative_constraints:
+- Do not keep a per-surface sprout implementation or mark the L8 duplication deferred.
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-237, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/assistant-chat-design.md#ACD-439

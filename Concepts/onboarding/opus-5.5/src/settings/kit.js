@@ -86,6 +86,10 @@ PM51.mark = (key, tone) => `<span class="pm-status-mark" data-status="${a(key)}"
    PM51.pill keeps its name so every manager converts without edits. */
 PM51.status = (label, tone) => { const t = tone || PM51.tone(label); return `<span class="pm51-status tone-${a(t)}">${PM51.mark(PM51.statusKey(label, t), t)}<span>${h(label)}</span></span>`; };
 PM51.pill = PM51.status;
+/* A state that is a wait the person watches, in a single subject's header (a server's detail while it connects): the
+   status token with the system loader in its slot instead of a mark (W5, DR-077; window.PM_PIP_LOADER), aria-busy on the
+   token. The same word in a list row stays a status mark (PM51.status): an item's state there is not a loader (L1). */
+PM51.waiting = (label, motion) => { const LD = window.PM_PIP_LOADER; if (!LD) return PM51.status(label, 'info'); return `<span class="pm51-status tone-info pm51-waiting" aria-busy="true">${LD.html({ motion: motion || 'swing', px: 14 })}<span>${h(label)}</span></span>`; };
 PM51.statusPill = status => PM51.status(PM51.plain(status));
 PM51.tag = (label, { icon: ic } = {}) => `<span class="pm51-tag">${ic ? icon(ic) : ''}${h(label)}</span>`;
 PM51.kbd = key => `<kbd class="pm51-kbd">${h(key)}</kbd>`;
@@ -94,10 +98,16 @@ PM51.dot = (tone, label) => { const t = String(tone || ''); const cls = { ready:
 /* ---------- primitives -------------------------------------------------- */
 const dataAttrs = data => Object.entries(data || {}).map(([k, v]) => `data-${a(k)}="${a(v == null ? '' : v)}"`).join(' ');
 
-PM51.btn = ({ label, action, data, icon: ic, primary, small, ghost, danger, disabled, reason, ui, cls, title, callback }) => {
-  const dis = disabled ? `aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(reason || 'Not available in this concept preview.')}" data-pm-hover-label="${a(label || '')}" data-pm-hover-detail="${a(reason || 'Not available in this concept preview.')}"` : '';
+/* busy (true, or a motion name): the button is waiting on what it started. It holds the system loader in its icon's
+   place at the icon's size (W5, DR-077; window.PM_PIP_LOADER), says aria-busy, and stays unavailable with its reason
+   until the wait ends, without the disabled dimming; the manager draws it again un-busy when the result is in. */
+PM51.btn = ({ label, action, data, icon: ic, primary, small, ghost, danger, disabled, reason, ui, cls, title, callback, busy }) => {
+  const LD = busy ? window.PM_PIP_LOADER : null;
+  if (busy) { disabled = true; reason = reason || 'Still working on it.'; }
+  const dis = disabled ? `aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(reason || 'Not available in this concept preview.')}" data-pm-hover-label="${a(label || '')}" data-pm-hover-detail="${a(reason || 'Not available in this concept preview.')}"${busy ? ' aria-busy="true" data-pm51-busy="1"' : ''}` : '';
   const act = disabled ? 'data-action="pm51-disabled"' : (callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`);
-  return `<button type="button" class="btn pm51-btn${primary ? ' primary' : ''}${small ? ' small' : ''}${ghost ? ' ghost' : ''}${danger ? ' danger' : ''}${cls ? ' ' + cls : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} ${dis} ${title ? `title="${a(title)}"` : ''}>${ic ? icon(ic) : ''}${label ? `<span>${h(label)}</span>` : ''}</button>`;
+  const lead = LD ? LD.html({ motion: typeof busy === 'string' ? busy : 'swing', px: 14 }) : (ic ? icon(ic) : '');
+  return `<button type="button" class="btn pm51-btn${primary ? ' primary' : ''}${small ? ' small' : ''}${ghost ? ' ghost' : ''}${danger ? ' danger' : ''}${cls ? ' ' + cls : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} ${dis} ${title ? `title="${a(title)}"` : ''}>${lead}${label ? `<span>${h(label)}</span>` : ''}</button>`;
 };
 PM51.iconBtn = ({ action, data, icon: ic, label, cls, callback, ui, disabled, reason }) => {
   const act = disabled ? 'data-action="pm51-disabled"' : (callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`);
@@ -556,6 +566,24 @@ openDrawer = function ({ title, subtitle = '', pill = '', status = null, eyebrow
   return wrap;
 };
 PM51.panel = opts => openDrawer(opts);
+/* A button already on screen that now waits on what it started (a drawer's primary while a sign-in finishes): the
+   system loader at its start (W5; window.PM_PIP_LOADER.busy), aria-busy, unavailable until it ends, optional words
+   for the wait; off puts its words back. */
+PM51.waitOn = (btn, on, label) => {
+  if (!btn) return;
+  const LD = window.PM_PIP_LOADER;
+  if (on) {
+    if (btn.dataset.pm51Busy === '1') return;
+    btn._pm51Words = btn.innerHTML;
+    if (label) btn.textContent = label;
+    btn.setAttribute('aria-disabled', 'true'); btn.dataset.pm51Busy = '1'; btn.dataset.pm51Disabled = '1'; btn.dataset.disabledReason = 'Still waiting.';
+    if (LD) LD.busy(btn, true, { motion: 'swing', px: 14 }); else btn.setAttribute('aria-busy', 'true');
+    return;
+  }
+  if (LD) LD.busy(btn, false); else btn.removeAttribute('aria-busy');
+  if (btn._pm51Words != null) { btn.innerHTML = btn._pm51Words; btn._pm51Words = null; }
+  btn.removeAttribute('aria-disabled'); delete btn.dataset.pm51Busy; delete btn.dataset.pm51Disabled; delete btn.dataset.disabledReason;
+};
 PM51.panelSection = (title, body, help, { icon: ic, tone } = {}) => `<section class="pm51-panel-card pm51-panel-section${tone ? ' tone-' + a(tone) : ''}"><div class="pm51-pc-head">${ic ? `<span class="pm51-pc-icon">${icon(ic)}</span>` : ''}<div class="pm51-ps-title">${h(title)}</div></div>${help ? `<p class="pm51-ps-help">${h(help)}</p>` : ''}<div class="pm51-pc-body">${body}</div></section>`;
 PM51.menu = (anchor, items, title) => openMenu(anchor, items, title || '');
 PM51.confirm = (title, message, label, onConfirm, danger) => confirmDialog(title, message, label, onConfirm, !!danger);

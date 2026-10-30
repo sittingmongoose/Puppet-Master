@@ -236,6 +236,119 @@ try {
     return { ok: f0.floating && f1 > f0.x + 60 && sa.choices.length === 2 && sa.agentsOn === 0 && sa2 > sa.before && q.checked === 'keep_running' && q.go === 'Quit' && q.enabled === 0 && /^Quit and stop \d+$/.test(q2),
       note: JSON.stringify({ moved: f1 - f0.x, stopList: [sa.before, sa2], quit: q, quitStop: q2 }) };
   });
+
+  /* ------------------------------------------------- Astra's M2 review (A5-A13) and Jared's G1 B Pin, as checks */
+  const openP = async (tab) => { await ev((t) => window.PM7_WORK_UI.open(t), tab); await sleep(450); };
+  const expandP = async (id) => { await ev((id) => { const x = document.querySelector('#pm7-work [data-work-x="' + id + '"]'); x.scrollIntoView({ block: 'center' }); if (x.getAttribute('aria-expanded') !== 'true') x.click(); }, id); await sleep(350); };
+  const layoutNow = () => ev(() => { const l = window.PMW.state.layout, f = l.view && l.view.focus, p = window.PMW.model.panel(l, f); return { page: window.PM_PAGES.current, active: p ? p.active : null, terminals: Object.keys(l.tabs).filter((t) => l.tabs[t].kind === 'terminal').length, browsers: Object.keys(l.tabs).filter((t) => l.tabs[t].kind === 'browser').map((t) => l.tabs[t].state && l.tabs[t].state.url) }; });
+  await check(23, 'Answer in Terminal opens that process\'s terminal with the focus in it; again reveals the same tab; a port opens its Browser tab (A5)', async () => {
+    await scenario('busy'); await openP('processes'); await expandP('p-migrate');
+    const t0 = await layoutNow();
+    await ev(() => document.querySelector('#pm7-work [data-work-detail="p-migrate"] [data-work-act="terminal"]').click()); await sleep(1000);
+    const t1 = await layoutNow(), f1 = await ev(() => !!(document.activeElement && document.activeElement.closest('.pmt-host, [class*="pmt"]')) || /pmt/.test(String(document.activeElement && document.activeElement.className)));
+    await openP('processes'); await expandP('p-migrate');
+    await ev(() => document.querySelector('#pm7-work [data-work-detail="p-migrate"] [data-work-act="terminal"]').click()); await sleep(900);
+    const t2 = await layoutNow();
+    await openP('processes'); await expandP('p-dev');
+    await ev(() => document.querySelector('#pm7-work [data-work-detail="p-dev"] [data-work-act="port"]').click()); await sleep(900);
+    const t3 = await layoutNow();
+    return { ok: t1.page === 'dashboard' && /^terminal:/.test(t1.active || '') && t1.terminals === t0.terminals + 1 && f1 && t2.terminals === t1.terminals && t2.active === t1.active && t3.browsers.includes('http://localhost:5173'),
+      note: JSON.stringify({ t0: t0.terminals, t1: [t1.active, t1.terminals, f1], again: [t2.active, t2.terminals], browsers: t3.browsers }) };
+  });
+  await check(24, 'A process\'s owner link opens that subagent: the panel\'s Agents tab at its row, the chat\'s Subagents with it selected (A5)', async () => {
+    await openP('processes'); await expandP('p-migrate');
+    await ev(() => document.querySelector('#pm7-work [data-work-detail="p-migrate"] [data-work-act="owner"]').click()); await sleep(700);
+    const p = await ev(() => { const r = document.querySelector('#pm7-work [data-work-x="agent-rollback"]'); return { tab: window.PM7_WORK_UI.tab(), row: !!r, open: r && r.getAttribute('aria-expanded'), focused: document.activeElement === r }; });
+    await ev(() => window.PM7_WORK_UI.close()); await sleep(250);
+    await ev(() => window.PM56_DEMO.openActivity('processes', 'p-migrate')); await sleep(700);
+    await ev(() => document.querySelector('#pmRoot [data-work-detail="p-migrate"] [data-work-act="owner"]').click()); await sleep(700);
+    const c = await ev(() => { const a = window.PM56_DEMO.getState().activity; return { domain: a.domain, selected: a.selected && a.selected.id }; });
+    await closeActivity(); await sleep(300);
+    return { ok: p.tab === 'agents' && p.row && p.open === 'true' && p.focused && c.domain === 'subagents' && c.selected === 'agent-rollback', note: JSON.stringify({ panel: p, chat: c }) };
+  });
+  await check(25, 'System status: D11\'s link and the status bar item open it with the services; Escape returns focus; a service opens its owner in Settings (A5)', async () => {
+    await openP('processes');
+    await ev(() => { const g = document.querySelector('#pm7-work [data-work-g="system"]'); if (g && g.getAttribute('aria-expanded') === 'false') g.click(); }); await sleep(250);
+    await ev(() => document.querySelector('#pm7-work [data-work-goto="system"]').click()); await sleep(450);
+    const a = await ev(() => { const s = document.getElementById('pm7-work-system'); return s && { n: s.querySelectorAll('.wk-sys-list > li').length, links: s.querySelectorAll('[data-sys-open]').length, focus: s.contains(document.activeElement), panel: window.PM7_WORK_UI.isOpen() }; });
+    await page.keyboard.press('Escape'); await sleep(250);
+    const b = await ev(() => ({ gone: !document.getElementById('pm7-work-system'), focus: document.activeElement && document.activeElement.getAttribute('data-status-action') }));
+    await clickAt('[data-status-action="system"]'); await sleep(450);
+    await ev(() => document.querySelector('#pm7-work-system [data-sys-open="web.index.enable"]').click()); await sleep(1600);
+    const c = await ev(() => { const r = document.querySelector('[data-setting="web.index.enable"]'); const q = r && r.getBoundingClientRect(); return { page: window.PM_PAGES.current, row: !!(q && q.width > 0 && q.top >= 0 && q.bottom <= innerHeight) }; });
+    await ev(() => window.PM_PAGES.go('dashboard')); await sleep(700);
+    return { ok: !!a && a.n === 4 && a.links === 4 && a.focus && !a.panel && b.gone && b.focus === 'system' && c.page === 'settings' && c.row, note: JSON.stringify({ a, b, c }) };
+  });
+  await check(26, 'An open panel follows work as it ends: Done, no Stop, moved to Finished, counts down; progress moves meanwhile (A6)', async () => {
+    await scenario('busy'); await openP('processes'); await expandP('p-bench');
+    const p0 = await ev(() => (document.querySelector('#pm7-work [data-work-row="p-bench"] [data-work-prog]') || {}).textContent);
+    await sleep(2200);
+    const p1 = await ev(() => (document.querySelector('#pm7-work [data-work-row="p-bench"] [data-work-prog]') || {}).textContent);
+    await ev(() => { window.PM_WORK.item('p-bench').startedAt = Date.now() - 1000 * 1000; }); await sleep(2400);
+    const r = await ev(() => { const row = document.querySelector('#pm7-work [data-work-row="p-bench"]'); const sec = row && row.closest('[data-sec]'); return { word: row && row.querySelector('.wk-right b').textContent, stop: !!(row && row.querySelector('[data-work-act="stop"]')), open: row && row.querySelector('.wk-row-btn').getAttribute('aria-expanded'), sec: sec && sec.getAttribute('data-sec'), n: document.querySelector('#pm7-work [data-work-tab="processes"] .wk-n').textContent }; });
+    await ev(() => window.PM7_WORK_UI.close()); await scenario('busy');
+    return { ok: p0 && p1 && p0 !== p1 && r.word === 'Done' && !r.stop && r.open === 'true' && r.sec === 'finished' && r.n === '9', note: JSON.stringify({ p0, p1, r }) };
+  });
+  await check(27, 'A popped-out panel stays whole on screen when the window shrinks, its controls reachable (A7)', async () => {
+    await openP('agents'); await ev(() => document.querySelector('#pm7-work [data-work-p="float"]').click()); await sleep(350);
+    await page.setViewportSize({ width: 860, height: 500 }); await sleep(700);
+    const r = await ev(() => { const p = document.getElementById('pm7-work'), bt = document.getElementById('pm7GlobalStatusBar').getBoundingClientRect().top; const inside = (el) => { const q = el.getBoundingClientRect(); return q.left >= 0 && q.right <= innerWidth && q.top >= 0 && q.bottom <= bt; }; return { panel: inside(p), close: inside(p.querySelector('[data-work-p="close"]')), dock: inside(p.querySelector('[data-work-p="float"]')), tabs: [...p.querySelectorAll('[data-work-tab]')].every(inside), stopAll: inside(p.querySelector('[data-work-p="stopall"]')) }; });
+    await ev(() => { document.querySelector('#pm7-work [data-work-p="float"]').click(); window.PM7_WORK_UI.close(); });
+    await page.setViewportSize({ width: W, height: H }); await sleep(700);
+    return { ok: r.panel && r.close && r.dock && r.tabs && r.stopAll, note: JSON.stringify(r) };
+  });
+  await check(28, 'Clear finished is the Processes tab\'s, says what it hid; the Agents tab offers none; an expanded run lists an asking agent once (A8, A10)', async () => {
+    await ev(() => { window.__workSaid = []; const N = window.PM_TITLEBAR_NOTIFY, push = N.push.bind(N); if (!N.__wrapped) { N.push = (o) => { (window.__workSaid = window.__workSaid || []).push(o.title); return push(o); }; N.__wrapped = 1; } });
+    await scenario('busy'); await openP('agents');
+    const ag = await ev(() => ({ clear: !!document.querySelector('#pm7-work [data-work-p="clear"]') }));
+    await ev(() => { const s = document.querySelector('#pm7-work [data-work-subs="o-run"]'); if (s && s.getAttribute('aria-expanded') !== 'true') { s.scrollIntoView({ block: 'center' }); s.click(); } }); await sleep(350);
+    const omig = await ev(() => document.querySelectorAll('#pm7-work [data-work-row="o-mig"]').length);
+    await openP('processes');
+    await ev(() => document.querySelector('#pm7-work [data-work-p="clear"]').click()); await sleep(300);
+    await ev(() => document.querySelector('#pm7-work [data-work-p="clear"]').click()); await sleep(300);
+    const said = await ev(() => window.__workSaid.slice(-2));
+    await ev(() => { window.PM_WORK.showFinished('platform'); window.PM7_WORK_UI.close(); }); await sleep(250);
+    return { ok: !ag.clear && omig === 1 && /^Hid \d+ finished/.test(said[0] || '') && /^Nothing finished/.test(said[1] || ''), note: JSON.stringify({ agentsClear: ag.clear, omig, said }) };
+  });
+  await check(29, 'The Processes view stays itself when Clear empties it, and the icon leaves once its card or view closes in a quiet thread (A9, A13)', async () => {
+    await scenario('busy'); await ev(() => window.PM56_DEMO.openActivity('processes')); await sleep(500);
+    await scenario('quiet'); await sleep(300);
+    await ev(() => { const c = document.querySelector('#pmRoot .activity-panel [data-action="proc-clear"]'); if (c) c.click(); }); await sleep(700);
+    const v = await ev(() => ({ domain: window.PM56_DEMO.getState().activity.domain, icon: !!document.querySelector('#pmRoot .activity-item[data-domain="processes"]') }));
+    await closeActivity(); await sleep(400);
+    const gone1 = await ev(() => !document.querySelector('#pmRoot .activity-item[data-domain="processes"]'));
+    await scenario('busy'); await sleep(300);
+    await hoverAt('#pmRoot .activity-item[data-domain="processes"]'); await sleep(1100);
+    const card = await ev(() => !!document.querySelector('#pmOverlayRoot [data-overlay="hover"]'));
+    await scenario('quiet'); await page.mouse.move(Math.round(W / 3), 500, { steps: 4 }); await sleep(2300);
+    const gone2 = await ev(() => !document.querySelector('#pmRoot .activity-item[data-domain="processes"]') && !document.querySelector('#pmOverlayRoot [data-overlay="hover"]'));
+    await scenario('busy');
+    return { ok: v.domain === 'processes' && v.icon && gone1 && card && gone2, note: JSON.stringify({ v, gone1, card, gone2 }) };
+  });
+  await check(30, 'The Subagents category is the robot; Resources\' gauge beats while it samples and rests when it stops (A11, A12)', async () => {
+    const nx = await ev(() => { const s = document.querySelector('#pmRoot .activity-item[data-domain="subagents"] svg'); return s && s.getAttribute('data-nx'); });
+    await openP('resources'); await sleep(1100);
+    const on = await ev(() => { const g = document.querySelector('#pm7-work [data-work-tab="resources"] .wk-g'); return g.classList.contains('pmg-beat') && g.getAttribute('data-tone') === 'working'; });
+    await ev(() => document.querySelector('#pm7-work [data-work-tab="agents"]').click()); await sleep(300);
+    const off = await ev(() => { const g = document.querySelector('#pm7-work [data-work-tab="resources"] .wk-g'); return !g.classList.contains('pmg-beat'); });
+    await ev(() => window.PM7_WORK_UI.close());
+    return { ok: nx === 'robot' && on && off, note: JSON.stringify({ nx, on, off }) };
+  });
+  await check(31, 'Pin (G1 B): pinned, Activity Detail stays open across a thread switch and shows the new thread; unpinned, a switch closes it', async () => {
+    await ev(() => window.PM56_DEMO.selectThread('query')); await sleep(400);
+    await ev(() => window.PM56_DEMO.openActivity('goal')); await sleep(500);
+    await ev(() => window.PM56_DEMO.selectThread('plain')); await sleep(600);
+    const un = await ev(() => ({ open: window.PM56_DEMO.getState().activity.open, panel: !!document.querySelector('#pmRoot .activity-panel') }));
+    await ev(() => window.PM56_DEMO.selectThread('query')); await sleep(400);
+    await ev(() => window.PM56_DEMO.openActivity('goal')); await sleep(400);
+    await clickAt('#pmRoot .activity-panel [data-action="toggle-activity-pin"]'); await sleep(400);
+    const pin = await ev(() => { const b = document.querySelector('#pmRoot .activity-panel [data-action="toggle-activity-pin"]'); return { pressed: b && b.getAttribute('aria-pressed'), ui: b && b.getAttribute('data-ui-action-id'), bind: b && b.getAttribute('data-binding-id') }; });
+    await ev(() => window.PM56_DEMO.selectThread('subagents')); await sleep(600);
+    const pinned = await ev(() => { const p = document.querySelector('#pmRoot .activity-panel'); return { thread: window.PM56_DEMO.getState().selectedThread, open: !!p, domain: p && p.getAttribute('data-domain'), domains: [...document.querySelectorAll('#pmRoot .activity-item[data-action="open-activity"]')].map((e) => e.getAttribute('data-domain')).join(',') }; });
+    await ev(() => window.PM56_DEMO.pinActivity(false)); await closeActivity(); await ev(() => window.PM56_DEMO.selectThread('query')); await sleep(500);
+    return { ok: !un.open && !un.panel && pin.pressed === 'true' && pin.ui === 'ui.activity_detail.pin' && pin.bind === 'chat.activity.pin' && pinned.thread === 'subagents' && pinned.open && pinned.domains.split(',').includes(pinned.domain),
+      note: JSON.stringify({ unpinned: un, pin, pinned }) };
+  });
 } finally {
   const failed = results.filter((r) => !r.ok).length;
   writeFileSync(join(out, 'work-checks.json'), JSON.stringify({ page: url, look: fam + '-' + mode, width: W, results, errors }, null, 1));

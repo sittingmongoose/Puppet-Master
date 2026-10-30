@@ -8109,7 +8109,8 @@ canonical_text: >-
   folding a thinking block is local presentation with no command, receipt or event. Demo Studio launches,
   lab-only document ids and unknown-id document fallback add no product command. PM7 S5/G1–G3: hosted chat
   adds the one Pip editor’s typed no-write open/close/replay; admitted parts edit the existing Settings
-  pair. Activity Pin is retired; History pin/Keep open remain local, and resizing uses the existing layout
+  pair. G1 B (Jared 2026-10-30) restores ui.activity_detail.pin as a typed view-local boolean action; History
+  pin/Keep open remain local, and resizing uses the existing layout
   command. CS-105/106 own the newly admitted project/work commands.
 gui_related: true
 gui_classification_reason: Defines shared dispatch, alias normalization and local actions for the hosted chat
@@ -8256,7 +8257,13 @@ canonical_text: >-
   project-scoped with a real Project. A global panel or local editor/navigation action works without an
   active Project. Every reviewed target still carries its actual Project/server/environment and current
   owner permission. Dispatch verifies source/target scope rather than inferring a default Project; a
-  mismatch refuses before effects. This adds no Settings store or event family.
+  mismatch refuses before effects. This adds no Settings store or event family. G1 B (Jared 2026-10-30):
+  Pin/unpin is the view-local ui.activity_detail.pin action (binding chat.activity.pin), default false. Pinned
+  Activity Detail stays open across thread switches and reprojects the selected thread’s data; unpinned detail
+  closes on a thread switch. Pin changes lifetime only: one full-size docked-or-full-height-cover view, no
+  small form. A switch cancels stale subscriptions and never leaves the previous thread’s rows/actions in the
+  new thread. A missing domain shows its truthful empty/unavailable state. Pin is session view state, not a
+  Settings row, durable layout field or runtime mutation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -8289,6 +8296,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

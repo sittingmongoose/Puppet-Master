@@ -156,15 +156,16 @@ html[data-o55-nier="on"] body[data-theme$="-dark"] { --pip-paper: var(--surface)
 .pmx-pip-host .pmx-pip-sign { color: var(--text); }
 /* PC1 (idle motion in sheets): it sways a little on its strings, as if a hand held it, and its sign swings against it.
    Retro sways in steps; NieR holds still (it cuts). The rig's classes are in its markup, so a render never restarts it;
-   a drag pauses it (pm7-port 95-perf-scope.css), Reduced Motion stops it, Animation speed scales it. */
-.pmx-pip-host .pmx-pip-rig { animation-name: pmx-pip-sway; animation-duration: 4.4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate; }
-.pmx-pip-host .pmx-pip-card { animation-name: pmx-pip-card; animation-duration: 4.4s; animation-timing-function: ease-in-out; animation-delay: -.7s; animation-iteration-count: infinite; animation-direction: alternate; }
+   a drag pauses it (pm7-port 95-perf-scope.css), Reduced Motion stops it, Animation speed scales it. Only while the
+   Sway and physics part is on (module-shell writes data-sway on the drawing). */
+.pmx-pip-host-svg[data-sway="1"] .pmx-pip-rig { animation-name: pmx-pip-sway; animation-duration: 4.4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate; }
+.pmx-pip-host-svg[data-sway="1"] .pmx-pip-card { animation-name: pmx-pip-card; animation-duration: 4.4s; animation-timing-function: ease-in-out; animation-delay: -.7s; animation-iteration-count: infinite; animation-direction: alternate; }
 .pmx-pip-host-svg[data-fam="retro"] :is(.pmx-pip-rig, .pmx-pip-card) { animation-timing-function: steps(4, end); }
 .pmx-pip-host-svg[data-fam="nier"] :is(.pmx-pip-rig, .pmx-pip-card) { animation: none; }
 @keyframes pmx-pip-sway { from { transform: rotate(-1.8deg); } to { transform: rotate(1.8deg); } }
 @keyframes pmx-pip-card { from { transform: rotate(2.4deg); } to { transform: rotate(-2.4deg); } }
-@media (prefers-reduced-motion: reduce) { .pmx-pip-host :is(.pmx-pip-rig, .pmx-pip-card) { animation: none; } }
-html[data-motion="reduced"] .pmx-pip-host :is(.pmx-pip-rig, .pmx-pip-card), body.pm56-reduced .pmx-pip-host :is(.pmx-pip-rig, .pmx-pip-card) { animation: none; }
+@media (prefers-reduced-motion: reduce) { .pmx-pip-host .pmx-pip-host-svg :is(.pmx-pip-rig, .pmx-pip-card) { animation: none; } }
+html[data-motion="reduced"] .pmx-pip-host .pmx-pip-host-svg :is(.pmx-pip-rig, .pmx-pip-card), body.pm56-reduced .pmx-pip-host .pmx-pip-host-svg :is(.pmx-pip-rig, .pmx-pip-card) { animation: none; }
 /* offscreen and in a hidden tab (pip.js sets data-pip-run) the sway holds where it is, as in a drag */
 .pmx-pip-host[data-pip-run="off"] :is(.pmx-pip-rig, .pmx-pip-card) { animation-play-state: paused; }
 /* the copy that cheers and is lifted away when a press closes the sheet (pip.js), in the sheet's own layer */

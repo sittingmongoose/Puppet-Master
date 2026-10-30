@@ -297,7 +297,8 @@
             "ui.settings.pip_editor.open",
             "ui.settings.pip_editor.close",
             "ui.settings.pip_editor.replay",
-            "ui.project_switcher.all_projects"
+            "ui.project_switcher.all_projects",
+            "ui.activity_detail.pin"
           ]
         },
         "project_id": {
@@ -324,6 +325,14 @@
             "application",
             "project"
           ]
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "pinned": {
+          "type": "boolean"
         }
       },
       "allOf": [
@@ -349,6 +358,30 @@
                 "minLength": 1,
                 "maxLength": 256
               }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.activity_detail.pin"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "thread_id",
+              "pinned"
+            ],
+            "properties": {
+              "value": false
+            }
+          },
+          "else": {
+            "properties": {
+              "thread_id": false,
+              "pinned": false
             }
           }
         }
@@ -1879,6 +1912,67 @@
         ]
       },
       "description": "S2: canonical Project Settings writes use registry labels. Stable part IDs remain registry/API identity; compatibility reads may map IDs to labels."
+    },
+    "activity_local_action_id": {
+      "enum": [
+        "ui.activity_detail.pin"
+      ]
+    },
+    "ActivityDetailViewState": {
+      "description": "G1 B, Jared 2026-10-30: session-only presentation state. Pin preserves the open full-size view across thread switches while its data follows the selected thread; no durable layout/Settings/runtime write.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "view_id",
+        "thread_id",
+        "open",
+        "pinned",
+        "row_ids"
+      ],
+      "properties": {
+        "view_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "open": {
+          "type": "boolean"
+        },
+        "pinned": {
+          "type": "boolean"
+        },
+        "row_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "open": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "row_ids": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

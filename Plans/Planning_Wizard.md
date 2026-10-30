@@ -1911,7 +1911,14 @@ canonical_text: >-
   (cmd.ssh_connection.keys.discover, cmd.ssh_connection.key.install) and enabling a free-model route
   (cmd.free_models.route.enable) have no owner command yet, so onboarding offers those steps as their owners'
   own screens, reached through cmd.settings.open, until the SSH and Models owners admit them.
-  Amended 2026-10-29 (O1–O12; PM7): Onboarding presentation is F3-663’s one Pip with family worlds, bounded transform-only physics/shared strings and optional live voice/music; its former no-physics/no-loop presentation prohibition is superseded. Preserve every stage graph, commit/recovery boundary and the fourteen ui.onboarding actions. Bubble is decorative aria-hidden; option question note is the one pm7ob-explainer. Creating’s owner phases gate progress, not animation.
+  Amended 2026-10-29 (O1–O12; PM7): Onboarding presentation is F3-663’s one Pip with family worlds, bounded
+  shared physics/solved strings with implementation technique open (O2 A, Jared 2026-10-30) and optional live
+  voice/music; its former no-physics/no-loop presentation prohibition is superseded. Preserve every stage
+  graph, commit/recovery boundary and the fourteen ui.onboarding actions. Bubble is decorative aria-hidden;
+  option question note is the one pm7ob-explainer. O12 B (Jared 2026-10-30): Creating Continue/Ready require
+  both completed owner phases and the last block landing; Reduced Motion settles instantly, and no landing
+  claims owner work completed. O6, Jared 2026-10-30: look-tile hover is silent and changes no theme; click or
+  keyboard activation changes the look through the existing typed local action and persistence boundary.
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -2006,6 +2013,7 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/README.md, SHA-256 ce5e5e90df41f180e54b89e4fb3fe0087164039728a902aa481cbcc3adacb088
   (approved campaign source lineage; not native implementation evidence)
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - Continue Setup
 - Open Repository
@@ -2023,7 +2031,6 @@ negative_constraints:
 - Do not claim native/runtime, recovery, security, visual or motion proof from static fixtures.
 stale_retired_dispositions:
   - "Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed Product Onboarding repaints its stored look choice, including NieR Mode."
-
 ```
 
 ### PWIZ-022 - Product Onboarding motion, accessibility, and migration

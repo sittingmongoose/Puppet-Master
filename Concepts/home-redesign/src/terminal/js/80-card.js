@@ -20,7 +20,7 @@
      and scroll sideways; a line cut off at the right fades out at the edge, and the left edge fades once scrolled. A
      carriage return keeps only the text after it (what the terminal shows); C0 controls are dropped; a line is cut at
      1000 characters. A finished command with no output says "No output".
-   - Status: a glyph plus words: Running, Needs input, Done, Failed, Interrupted. A stopped command with an exit code
+   - Status: a glyph plus words: Running (the system loader, glyphFor), Needs input, Done, Failed, Interrupted. A stopped command with an exit code
      says it in words after the status: "exited 101" (Done and Interrupted too: "exited 0", "exited 130"). No stripes,
      no capsule badges.
    - Running: the elapsed time is text in tabular figures that updates once a second from startedAt (one shared timer
@@ -82,6 +82,16 @@
     return s;
   }
   function glyphSvg(status) { return svg(GLYPH[status], 'pmt-card-g'); }
+  /* a running command is a wait the person watches: its slot holds the system loader (W5, DR-077; window.PM_PIP_LOADER,
+     Swing), sized to the slot, which the owner draws, pauses and hands to NieR's Diamond loaders; the other states keep
+     their marks. Without the owner the old running mark stands in. */
+  function glyphFor(status) {
+    var LD = window.PM_PIP_LOADER;
+    if (status !== 'running' || !LD) return glyphSvg(status);
+    var t = document.createElement('template');
+    t.innerHTML = LD.html({ motion: 'swing', px: 14, className: 'pmt-card-ld' });
+    return t.content.firstElementChild;
+  }
   function el(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -452,7 +462,7 @@
     if (glyphChanged) {
       st.glyph = status;
       p.gi.textContent = '';
-      p.gi.appendChild(glyphSvg(status));
+      p.gi.appendChild(glyphFor(status));
     }
 
     p.cmd.textContent = command;

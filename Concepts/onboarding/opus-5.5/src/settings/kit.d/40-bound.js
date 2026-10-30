@@ -32,9 +32,12 @@ PM51.bound = {
     const s = PM51.setting(id); if (!s) return '';
     return `<label class="o55-bound o55-bound-search" data-setting-id="${a(id)}">${icon('search')}<input type="search" value="${a(settingValue(s) || '')}" placeholder="${a(placeholder || 'Search')}" aria-label="${a(label || PM51.rowLabel(s))}" data-action="input-setting" data-setting="${a(id)}"/></label>`;
   },
-  action(id, { label, icon: ic, small = true, primary, ghost } = {}) {
+  /* busy: the action is running; the button holds the system loader and stays unavailable, as PM51.btn's busy does */
+  action(id, { label, icon: ic, small = true, primary, ghost, busy, reason } = {}) {
     const s = PM51.setting(id); if (!s) return '';
-    return `<button type="button" class="btn${small ? ' small' : ''}${primary ? ' primary' : ''}${ghost ? ' ghost' : ''} pm51-btn o55-bound" data-setting-id="${a(id)}" data-action="run-setting-action" data-setting="${a(id)}">${ic ? icon(ic) : ''}<span>${h(label || (PM51.rowMeta(id).actionLabel) || PM51.rowLabel(s))}</span></button>`;
+    const LD = busy ? window.PM_PIP_LOADER : null;
+    const wait = busy ? ` aria-disabled="true" aria-busy="true" data-pm51-busy="1" data-pm51-disabled="1" data-disabled-reason="${a(reason || 'Still working on it.')}"` : '';
+    return `<button type="button" class="btn${small ? ' small' : ''}${primary ? ' primary' : ''}${ghost ? ' ghost' : ''} pm51-btn o55-bound" data-setting-id="${a(id)}" data-action="${busy ? 'pm51-disabled' : 'run-setting-action'}" data-setting="${a(id)}"${wait}>${LD ? LD.html({ motion: typeof busy === 'string' ? busy : 'swing', px: 14 }) : ic ? icon(ic) : ''}<span>${h(label || (PM51.rowMeta(id).actionLabel) || PM51.rowLabel(s))}</span></button>`;
   },
   /* an ordinary row, drawn inside a manager card (e.g. inside an account or a skill) */
   row(id, { label, help } = {}) {

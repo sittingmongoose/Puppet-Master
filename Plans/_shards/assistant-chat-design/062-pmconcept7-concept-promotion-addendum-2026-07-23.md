@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24437-L24821
+Source lines: L24437-L24824
 
-Source SHA256: `63c9c2df0d06e50d6f0e803255e1aedcde0319ecf34fae55f25c4b5a68a06159`
+Source SHA256: `18361d7f7e137b4d8f41ee4d70e0b9c8e3f59db1e80ae3ff091b5e1c7d7d87ea`
 
 ---
 
@@ -29,7 +29,9 @@ canonical_text: >-
   overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent,
   Debug, Plan, and Deep Plan options with no search field, while model and persona popouts
   keep search. Under reduced motion, open and close render as instant show/hide. The
-  single-overlay invariant of ACD-438 is preserved.
+  single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single sprout
+  implementation for every menu; chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it. This build
+  removes their former duplicates while retaining this unit’s visible motion/focus contract.
 gui_related: true
 gui_classification_reason: Defines visible open/close motion and search behavior for chat popouts.
 split_recommended: false
@@ -55,6 +57,7 @@ node_compile_hint:
 source_lineage:
   - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
   - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
   - "corner-origin"
   - "sprout"
