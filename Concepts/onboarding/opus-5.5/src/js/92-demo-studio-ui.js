@@ -289,7 +289,7 @@
      row), so the rail keeps one Chat entry and search still finds every item. Every item carries the chat's own action
      and dataset as data-chat-* (the port's tests click the same control a person does). ---- */
   const CHAT_ICON = { plan: 'plan', goal: 'goal', todo: 'todo', deepplan: 'deep', schedule: 'calendar', crew: 'crew', room: 'room', brainstorm: 'brain', review: 'review',
-    wonderer: 'wonder', lens: 'lens', teach: 'teach', memory: 'memory', eli5: 'eli5', bsd: 'bsd', debug: 'debug', revert: 'revert', attach: 'attach', more: 'spark' };
+    wonderer: 'wonder', lens: 'lens', teach: 'teach', memory: 'memory', eli5: 'eli5', bsd: 'bsd', debug: 'debug', revert: 'revert', attach: 'attach', pip: 'pip', more: 'spark' };
   const CHAT_VIEWS = ['guided', 'moments', 'takes'];
   const chatAttrs = (it) => { const o = { 'data-chat-action': it.action }; Object.keys(it.data || {}).forEach((k) => { o[`data-chat-${k}`] = it.data[k]; }); return o; };
   R.chat = () => {

@@ -624,6 +624,10 @@
           "more": {
             "title": "More examples",
             "lead": "Examples the chat has that this Studio has no words for yet, in the chat’s own words."
+          },
+          "pip": {
+            "title": "Pip",
+            "lead": "The chat's assistants drawn as Pip, from waiting to done."
           }
         },
         "items": {
@@ -854,12 +858,20 @@
           "attach-folder": {
             "title": "Folders stay bounded",
             "sub": "A folder is read as a fixed list of files, with its own receipt."
+          },
+          "pip-delegation": {
+            "title": "A Crew of Pips",
+            "sub": "A Crew run from queued to done, every member drawn as Pip with its role's prop."
           }
         }
       },
       "moments": {
         "lead": "One click puts the chat in that moment. The Studio stays open beside the chat, so you can step through them.",
         "groups": {
+          "pip": {
+            "title": "Pip in the chat",
+            "lead": "The sheet's Pip changing face, Scheduled's status faces, Activity's agents and the Orbit's Pip."
+          },
           "live": {
             "title": "Live turns",
             "lead": "Real sends: the message flies, the reply streams, work appears."
@@ -1044,7 +1056,9 @@
           "cs-quota-demo": "Waiting for a usage limit",
           "cs-quota-source": "Where the reset time comes from",
           "af-eli5-demo": "Two ELI5 explanations",
-          "bc-open": "Browser capture"
+          "bc-open": "Browser capture",
+          "pip-demo-faces": "Crew sheet: Pip watches, wonders, oops, then cheers and hops",
+          "pip-demo-activity": "Activity Detail: the thread's agents, each a Pip"
         }
       },
       "takes": {

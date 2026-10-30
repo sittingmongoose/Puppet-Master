@@ -74,6 +74,9 @@
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-tab { border-radius: 16px; min-height: 50px; }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-tablabel { font-weight: 800; font-size: 13.5px; }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-tab .pmds-ico { color: var(--pmds-ink2); }
+/* the rail stands on Friendly's ground, not its white card: in light the mint glow and the dot grid under it sit near
+   (206, 211, 214), where the muted tier read 3.7:1 (PM7 build contrast pass, 2026-10-30); the secondary tier holds */
+#o55-demo.pmds[data-pmds-look="friendly"]:not([data-pmds-mode="dark"]) .pmds-tabmeta { color: var(--pmds-ink2); }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-main { margin: 0 0 12px; border: 3px solid var(--pmds-bezel); border-radius: 22px; background: var(--pmds-bg); box-shadow: inset 0 2px 8px rgba(80, 100, 140, .08); }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-kicker { color: var(--pmds-acc-text); }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-ptitle { font-size: 25px; font-weight: 700; letter-spacing: -.01em; }
