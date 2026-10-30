@@ -666,6 +666,10 @@
     var label = byId('projectMenuLabel');
     if (!item) return false;
     var info = projectInfo(item);
+    /* onboarding names its project in PM_ACTIVE_PROJECT_ID, which Settings and the sound binding read before the chosen
+       row (pm4-settings-js.js projectRecord): a pick keeps it in step, before the label changes, so the reload they run on
+       that change reads the picked project (Astra W2 review, integration note) */
+    if (typeof window.PM_ACTIVE_PROJECT_ID === 'string' && window.PM_ACTIVE_PROJECT_ID !== info.id) window.PM_ACTIVE_PROJECT_ID = info.id;
     projectRows().forEach(function (el) { if (el.classList.contains('is-selected') !== (el === item)) el.classList.toggle('is-selected', el === item); });
     if (label && label.textContent !== info.name) label.textContent = info.name;
     paintProjectButton();
