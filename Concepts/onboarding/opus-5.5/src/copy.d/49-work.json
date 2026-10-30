@@ -162,18 +162,18 @@
       "sent": "Sent “{reply}” to {title}",
       "answered": "Answered {title}",
       "copied": "Copied: {command}",
-      "terminal": "Shows {title} in its terminal tab",
-      "port": "Opens http://localhost:{port} in the Browser tab",
-      "owner": "Opens {name} in the Subagents domain",
+      "terminal": "Opened the terminal for {title}",
+      "port": "Opened http://localhost:{port} in a Browser tab",
+      "owner": "Showing {name}",
       "thread": "Opens the thread “{where}”",
       "surface": "Opens {surface} at {title}",
       "restart": "Restarting {title}",
       "rerun": "Running {command} again",
-      "systemStatus": "Opens System status, which owns these services",
-      "cleared": "Finished rows are hidden from this list. Nothing was deleted.",
       "stopped": "Stopping {n}",
       "quitKeep": "Quit: everything keeps running on the server",
-      "quitStop": "Quit: stopping {n}"
+      "quitStop": "Quit: stopping {n}",
+      "clearedN": "Hid {n} finished from this list. Nothing was deleted.",
+      "clearedNone": "Nothing finished to hide in this list."
     },
     "notice": {
       "done": "{title} finished",
@@ -246,6 +246,13 @@
       "summaryNone": "No processes in this thread.",
       "more": "+{n} more",
       "aria": "Processes activity, {n} running{needs}"
+    },
+    "sys": {
+      "title": "System status",
+      "sum": "{n} services",
+      "open": "Settings",
+      "openLabel": "Open {where} in Settings",
+      "note": "Puppet Master runs these for you. They are started and stopped in Settings, never from here."
     }
   }
 }

@@ -156,7 +156,7 @@
     threads:clone(D.threads), editorTabs:['plan-query'], activeEditor:'plan-query',
     historyMode:'pinned', historySearch:'', historyWidth:224, editorWidth:54, activityWidth:280,
     historySections:{pinned:true, recent:true, archived:false},
-    activity:{open:false,domain:'goal',scope:'all',filterVisible:true,expanded:['goal','todo','subagents','crew','changes','artifacts']},
+    activity:{open:false,pinned:false,domain:'goal',scope:'all',filterVisible:true,expanded:['goal','todo','subagents','crew','changes','artifacts']},
     context:{
       compact:false,details:false,compacted:false,drawerView:'curated',dispatchSeq:0,
       projections:clone(D.contextByThread||{})
@@ -1898,7 +1898,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const work=window.PM_WORK;
     const processes=work?work.items({thread:tid,kind:['process','scheduled'],view:'thread:'+tid}):[];
     const workThread=work&&work.thread?work.thread(tid):null;
-    const procShown=!!(workThread&&workThread.processes)||(processes.length>0&&((state.activity.open&&state.activity.domain==='processes')||(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes')));
+    /* D4: shown while a process runs or needs input, and held while its view or card is open whatever its rows are (a
+       Clear that empties the view leaves an empty Processes view, never another domain; A9) */
+    const procShown=!!(workThread&&workThread.processes)||!!(work&&((state.activity.open&&state.activity.domain==='processes')||(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes')));
     return {
       tid, hasAttachedGoal, hasGoalReceipt:false, hasGoalHistory, capGoal:false, hasGoal,
       todos, subagents, hasSubagents, hasCrewEvent, hasCrew, crew, changes, artifacts,
@@ -1937,7 +1939,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function syncActivityDomain(){
     const live=liveDomainIds();
     if(!live.length){
-      if(state.activity.open) state.activity.open=false;
+      /* pinned, it stays open in a thread with no activity yet (G1 B) and shows that, rather than closing for good */
+      if(state.activity.open&&!state.activity.pinned) state.activity.open=false;
       return live;
     }
     if(!live.includes(state.activity.domain)){
@@ -1995,7 +1998,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const aWorking=agents.filter(a=>a.status==='working').length;
       const aBlocked=agents.filter(a=>a.status==='blocked').length;
       const aWaiting=agents.filter(a=>a.status==='waiting').length;
-      out.subagents={icon:'users',label:'Subagents',
+      out.subagents={icon:window.PM56_NEON&&PM56_NEON.has&&PM56_NEON.has('robot')?'robot':'users',label:'Subagents',
         count:String(agents.length),
         state:aWorking?'live':'changed',
         tone:aBlocked?'blocked':aWorking?'working':aWaiting?'idle':'done',
@@ -2125,15 +2128,24 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const cover=layout==='cover';
     const defs=activityDefs();
     const live=ACTIVITY_ORDER.filter(id=>defs[id]);
-    if(!live.length) return '';
+    if(!live.length&&!state.activity.pinned) return '';
     const d=defs[state.activity.domain]?state.activity.domain:live[0];
     const allScope=state.activity.scope!=='focus';
     const sections=allScope?live:[d];
     const n=live.length;
     const headDef=defs[d]||defs[live[0]];
+    /* Pin (G1 B, 2026-10-30): pinned, Activity Detail stays open across thread switches and shows the new thread;
+       unpinned, a thread switch closes it like the other per-thread surfaces. One size either way. */
+    const pinned=!!state.activity.pinned;
+    const pinButton=`<button class="icon-button activity-head-pin${pinned?' is-pinned':''}" data-action="toggle-activity-pin" data-ui-action-id="ui.activity_detail.pin" data-binding-id="chat.activity.pin" aria-pressed="${pinned}"${hoverAttrs('act-pin',pinned?'Unpin — close Activity Detail when you switch threads':'Pin — keep Activity Detail open when you switch threads')}>${icon(pinned?'unpin':'pin',13)}</button>`;
+    if(!live.length){
+      const S=window.PM56_SHELL, text='No activity in this thread yet. It shows here as soon as there is some.';
+      const empty=S&&S.pmxEmpty&&window.PMLogo?S.pmxEmpty({tag:'div',cls:'pmap-empty',key:'pmap-empty',text:`<span>${esc(text)}</span>`}):`<div class="pmap-empty" data-k="pmap-empty">${icon('info',12)}<span>${esc(text)}</span></div>`;
+      return `<aside class="activity-panel${cover?' cover':''}" data-k="activity-panel-${layout}" data-variant="${state.variants[4]}" data-scope="all" data-domain="" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon('info',13,'nx-t-idle')}</span><strong>Activity Detail</strong><span class="spacer"></span>${pinButton}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-scroll" data-scroll-key="activity">${empty}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    }
     const filterButton=`<button class="icon-button activity-head-filter" data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}"${hoverAttrs('act-filter','Show or hide category filter')}>${icon('filter',13)}</button>`;
     const overflow=`<details class="activity-head-overflow"><summary class="icon-button" aria-label="More Activity Detail actions">${icon('more',13)}</summary><div class="activity-head-menu"><button data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}">${icon('filter',12)} ${state.activity.filterVisible?'Hide':'Show'} domains</button></div></details>`;
-    return `<aside class="activity-panel${cover?' cover':''}" data-k="activity-panel-${layout}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    return `<aside class="activity-panel${cover?' cover':''}" data-k="activity-panel-${layout}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}${pinButton}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
   }
 
   function renderActivitySection(id){
@@ -3562,7 +3574,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(state.hover.type==='activity') return !state.menu;
     return false;
   }
+  /* D4 holds the Processes icon while its card is open; every way a card closes (pointer, focus, Escape, a click)
+     ends here, so a card on Processes that gives way repaints the bar once, and a quiet thread's icon goes (A13) */
+  let procHover=false;
   function syncHoverCard(){
+    const nowProc=!!(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes');
+    if(procHover&&!nowProc&&!(state.activity.open&&state.activity.domain==='processes')) requestAnimationFrame(()=>renderApp());
+    procHover=nowProc;
     const root=document.getElementById('pmOverlayRoot');
     if(!root) return;
     let el=root.querySelector(':scope > [data-overlay="hover"]');
@@ -4175,6 +4193,9 @@ suggested path                    migration 0043, reversible</div></div></sectio
        background: owners land their end state now, so returning shows it done. */
     if(prev&&prev.id!==id) notifyTurnOwners('cancel',prev.id);
     state.selectedThread=id;t.unread=0;state.composer=state.drafts[id]||'';state.menu=null;state.hover=null;state.decision=null;decisionExit=null;
+    /* Activity Detail is per thread unless pinned (G1 B): pinned it stays and shows the new thread (a row picked in the
+       old thread does not carry over); unpinned it closes, and the column gives its width back in the same render */
+    if(state.activity.open&&prev&&prev.id!==id){ if(state.activity.pinned) state.activity.selected=null; else state.activity.open=false; }
     /* Leaving the thread abandons its work sequence; abandoning it without
        stopping the clock is the leak described above. state.work.running is
        cleared with it so the two never disagree -- a card that says "running"
@@ -4804,6 +4825,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(a==='focus-activity'){if(!activityDefs()[btn.dataset.domain])return;state.activity.domain=btn.dataset.domain;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);renderApp();return;}
     if(a==='toggle-activity-section'){const id=btn.dataset.domain;state.activity.expanded=state.activity.expanded.includes(id)?state.activity.expanded.filter(x=>x!==id):[...state.activity.expanded,id];renderApp();return;}
     if(a==='toggle-activity-filter'){state.activity.filterVisible=!state.activity.filterVisible;renderApp();return;}
+    if(a==='toggle-activity-pin'){state.activity.pinned=!state.activity.pinned;renderApp();focusActivityControl('.activity-panel [data-action="toggle-activity-pin"]');return;}
     if(a==='close-activity'){const domain=state.activity.domain;state.activity.open=false;renderApp();focusActivityBarDomain(domain);return;}
     if(a==='context-details'){state.context.details=true;state.menu=null;renderApp();return;}
     if(a==='close-context-details'){state.context.details=false;renderOverlays();return;}
@@ -5151,7 +5173,13 @@ suggested path                    migration 0043, reversible</div></div></sectio
     setRecipe:(i)=>applyRecipe(i),
     setVariant:(family,option)=>{const f=Number(family);state.variants[f]=clamp(Number(option),0,familyMax(f));state.recipe=-1;renderApp();},
     selectThread:switchThread,
-    openActivity:(domain)=>{if(activityDefs()[domain]){state.activity.open=true;state.activity.domain=domain;state.activity.scope='focus';renderApp();}},
+    pinActivity:(on=true)=>{state.activity.pinned=!!on;renderApp();},
+    /* pick (optional): a row to open with it, by id or by { title } (the work panel's owner link names a subagent by
+       its title; A5) */
+    openActivity:(domain,pick)=>{if(!activityDefs()[domain])return false;state.activity.open=true;state.activity.domain=domain;state.activity.scope='focus';
+      if(pick){const sc=activityScope(state.selectedThread),list=(domain==='subagents'?sc.subagents:domain==='processes'?sc.processes:null)||[];
+        const hit=typeof pick==='string'?list.find(x=>x.id===pick):list.find(x=>(x.name||x.title)===pick.title);if(hit)state.activity.selected={domain,id:hit.id};}
+      renderApp();return true;},
     openContext:()=>{state.context.details=true;renderOverlays();},
     openQuestionnaire:()=>{decisionExit=null;state.decision={type:'question'};renderApp();},
     openPlan:()=>{decisionExit=null;state.decision={type:'plan',mode:'review'};renderApp();},
@@ -5362,7 +5390,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
      those in place instead of rendering the chat each second; the core rests while hidden or dragging. */
   if(HOSTED&&window.PM_WORK&&typeof window.PM_WORK.on==='function'){
     let workQueued=false, workSig='';
-    const sig=()=>{ const t=window.PM_WORK.thread?window.PM_WORK.thread(state.selectedThread):null; return t?JSON.stringify(t.counts)+'|'+(t.processes?1:0)+'|'+t.key:''; };
+    /* while the Processes view or card shows, a progress step is a change too: its rows draw progress (A6) */
+    const showingProcs=()=>(state.activity.open&&state.activity.domain==='processes')||!!(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes');
+    const progSig=()=>{ const W=window.PM_WORK; return W.items({thread:state.selectedThread,kind:['process','scheduled']}).map(p=>p.progress&&W.isLive(p)?p.id+':'+p.progress.done:'').join(','); };
+    const sig=()=>{ const t=window.PM_WORK.thread?window.PM_WORK.thread(state.selectedThread):null; return t?JSON.stringify(t.counts)+'|'+(t.processes?1:0)+'|'+t.key+(showingProcs()?'|'+progSig():''):''; };
     window.PM_WORK.on('change',why=>{
       const now=sig();
       if(why==='tick'&&now===workSig){ patchWorkTicks(); return; }
@@ -5372,15 +5403,12 @@ suggested path                    migration 0043, reversible</div></div></sectio
       requestAnimationFrame(()=>{ workQueued=false; renderApp(); });
     });
   }
+  /* time, progress and output tails in place: the platform panel's one patcher, over the chat and its overlays */
   function patchWorkTicks(){
-    const W=window.PM_WORK, UI=window.PM7_WORK_UI;
-    document.querySelectorAll('#pmRoot [data-work-time], #pmOverlayRoot [data-work-time]').forEach(el=>{ const it=W.item(el.getAttribute('data-work-time')); if(it){ const v=W.time(it); if(el.textContent!==v) el.textContent=v; } });
-    if(!UI||!UI.tail) return;
-    document.querySelectorAll('#pmRoot [data-work-tail]').forEach(el=>{
-      const it=W.item(el.getAttribute('data-work-tail')), pre=el.querySelector('pre');
-      if(!it||!it.tail||!pre||pre.textContent===it.tail.slice(-6).join('\n')) return;
-      const tmp=document.createElement('div'); tmp.innerHTML=UI.tail(it,6); el.replaceWith(tmp.firstChild);
-    });
+    const UI=window.PM7_WORK_UI;
+    if(!UI||!UI.patchTicks) return;
+    UI.patchTicks(document.getElementById('pmRoot'));
+    UI.patchTicks(document.getElementById('pmOverlayRoot'));
   }
   /* the column resizes without a window resize (its divider, the narrow ladder, a pop out): the same re-render rules */
   if(HOSTED&&typeof ResizeObserver==='function'&&HOST.frame()){

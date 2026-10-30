@@ -46,6 +46,12 @@
      glyph in a head, chip, rail, branch or section is lit in its domain's tone (lit(), below): the tone ink with its
      core halo, steady. Nothing here loops; a glyph inside a button plays its act once on hover, like every lit glyph. */
   var ICONS = { goal: 'goal', todo: 'todo', subagents: 'users', processes: 'processes', crew: 'kind-crew', brainstorm: 'kind-brainstorm', review: 'kind-review', chat_room: 'kind-chat_room', changes: 'changes', artifacts: 'artifact' };
+  /* X1: the lit robot is the Subagents category mark at this size (A11); each agent is still Pip. The robot comes
+     from the shared glyph registry when it is loaded (PMConcept7); the standalone chat keeps its people glyph */
+  function iconOf(d) {
+    if (d === 'subagents' && window.PM56_NEON && window.PM56_NEON.has && window.PM56_NEON.has('robot')) return 'robot';
+    return ICONS[d];
+  }
   /* a tone (this panel's or the shared vocabulary's) -> the neon tone class that lights a glyph */
   var NX_TONE = { blocked: 'blocked', attention: 'attention', waiting: 'attention', working: 'working', changed: 'changed', done: 'done', idle: 'idle', pending: 'idle', muted: 'paused', paused: 'paused' };
   function lit(tone) { return 'nx-t-' + (NX_TONE[tone] || 'idle'); }
@@ -458,7 +464,7 @@
       var on = scopeOf(ctx) === 'focus' && id === f;
       return '<button class="pmap-chip' + (on ? ' is-on' : '') + '" data-action="focus-activity" data-domain="' + id +
         '" aria-pressed="' + (on ? 'true' : 'false') + '" aria-label="Focus ' + esc(ctx, LABELS[id]) + '">' +
-        ctx.icon(ICONS[id], 11, lit(domainTone(ctx, id))) + '<span>' + esc(ctx, LABELS[id]) + '</span><b>' + esc(ctx, countOf(ctx, id)) + '</b></button>';
+        ctx.icon(iconOf(id), 11, lit(domainTone(ctx, id))) + '<span>' + esc(ctx, LABELS[id]) + '</span><b>' + esc(ctx, countOf(ctx, id)) + '</b></button>';
     }).join('') + '</div>';
   }
   function emptyNote(ctx, text) {
@@ -575,7 +581,7 @@
         body = '<div class="activity-section-body">' + (id === 'goal' ? goalBody(ctx) : items(ctx, id).map(function (it) {
           var on = isSelected(ctx, id, it.id);
           return '<button class="activity-line pmap-row' + (on ? ' is-selected' : '') + '" data-k="pmap-a:' + esc(ctx, id + ':' + it.id) + '" data-action="' + it.action + '" data-domain="' + id + '"' + it.attrs + '>' +
-            '<span class="pmap-row-mark">' + toneDot(it.tone, it.tone === 'working') + '</span>' +
+            '<span class="pmap-row-mark">' + (it.mark || toneDot(it.tone, it.tone === 'working')) + '</span>' +
             '<span class="copy"><strong>' + esc(ctx, it.title) + '</strong><span>' + esc(ctx, it.sub) + '</span></span>' +
             '<span class="right">' + esc(ctx, it.right) + '</span></button>' +
             (on ? detailCard(ctx, id, it.id) : '');
@@ -599,7 +605,9 @@
     return '<button class="pmap-row' + (on ? ' is-selected' : '') + (extraCls ? ' ' + extraCls : '') +
       '" data-k="pmap-r:' + esc(ctx, it.domain + ':' + it.id) + '" data-action="' + it.action +
       '" data-domain="' + it.domain + '"' + it.attrs + '>' +
-      '<span class="pmap-row-mark">' + toneDot(it.tone, it.tone === 'working') + '</span>' +
+      /* an agent row (Crew's members, and Subagents in the all-domains list) draws its Pip like every agent row
+         (SSYS-056, Muse M3); other rows keep their dot */
+      '<span class="pmap-row-mark">' + (it.mark || toneDot(it.tone, it.tone === 'working')) + '</span>' +
       '<span class="copy"><strong>' + esc(ctx, it.title) + '</strong><span>' + esc(ctx, it.sub) + '</span></span>' +
       '<span class="right">' + right + '</span></button>' +
       (on ? detailCard(ctx, it.domain, it.id) : '');
@@ -730,7 +738,7 @@
       : domainList(ctx, f);
     var summary = '';
     if (f !== 'goal') {
-      var head = '<div class="pmap-focus-head"><span class="pmap-focus-ident">' + ctx.icon(ICONS[f], 15, lit(state.tone)) + '<strong>' +
+      var head = '<div class="pmap-focus-head"><span class="pmap-focus-ident">' + ctx.icon(iconOf(f), 15, lit(state.tone)) + '<strong>' +
         esc(ctx, LABELS[f]) + '</strong></span><span class="pmap-focus-count">' + esc(ctx, d.count || countOf(ctx, f)) + '</span></div>';
       if (f === 'artifacts') {
         summary = '<section class="pmap-focus-summary" data-k="pmap-focus-summary:' + f + '" data-tone="' + state.tone + '">' +
@@ -866,7 +874,7 @@
   function boardCard(ctx, it) {
     var on = isSelected(ctx, it.domain, it.id);
     var face = it.mark ? '<span class="pmap-av pmap-av-glyph">' + it.mark + '</span>'
-      : '<span class="pmap-av pmap-av-glyph">' + ctx.icon(ICONS[it.domain], 12) + '</span>';
+      : '<span class="pmap-av pmap-av-glyph">' + ctx.icon(iconOf(it.domain), 12) + '</span>';
     return '<button class="pmap-card' + (on ? ' is-selected' : '') + '" data-k="pmap-c:' + esc(ctx, it.domain + ':' + it.id) +
       '" data-action="' + it.action + '" data-domain="' + it.domain + '"' + it.attrs + '>' + face +
       '<strong>' + esc(ctx, it.title) + '</strong>' +
@@ -1030,7 +1038,7 @@
       '<div class="activity-dashboard">' + cells + '</div>' +
       '<div class="pmap-metrics" data-k="pmap-metrics">' + metrics + '</div>' +
       '<div class="pmap-dash-focus" data-k="pmap-dashfocus">' +
-      '<div class="pmap-sub-head">' + ctx.icon(ICONS[f], 11, lit(domainTone(ctx, f))) + '<strong>' + esc(ctx, LABELS[f]) +
+      '<div class="pmap-sub-head">' + ctx.icon(iconOf(f), 11, lit(domainTone(ctx, f))) + '<strong>' + esc(ctx, LABELS[f]) +
       '</strong><span class="spacer"></span><span class="meta-pill">' + esc(ctx, countOf(ctx, f)) + '</span></div>' +
       domainList(ctx, f) + '</div></div>';
   }

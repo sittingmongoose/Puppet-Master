@@ -192,12 +192,12 @@
     const sub = needsYou(it) && it.ask ? '<b class="wk-askline">' + esc(it.ask) + '</b>' :
       esc(it.lost ? it.lost : (it.kind === 'agent' ? (it.detail || '') : (it.kind === 'scheduled' ? it.detail : it.command))) +
       (it.ports && it.ports.length && isLive(it) ? ' · <span class="wk-mono">:' + it.ports.join(', :') + '</span>' : '') +
-      (it.progress && isLive(it) ? ' · ' + T('detail.progressOf', { done: it.progress.done, total: it.progress.total, unit: esc(it.progress.unit) }) : '');
+      (it.progress && isLive(it) ? ' · <span data-work-prog="' + esc(it.id) + '">' + progText(it) + '</span>' : '');
     const meta = [];
     if (o.where) meta.push(esc(surfaceName(it.surface)) + (it.where && it.where !== it.title ? ' · ' + esc(it.where) : ''));
     if (it.model && it.kind === 'agent') meta.push(esc(it.model));
     if (it.owner && o.owner !== false) meta.push(esc(ownerName(it)));
-    return '<div class="wk-row' + (open ? ' is-open' : '') + '" style="--d:' + (depth || 0) + '" data-kind="' + esc(it.kind) + '" data-work-row="' + esc(it.id) + '">' +
+    return '<div class="wk-row' + (open ? ' is-open' : '') + '" style="--d:' + (depth || 0) + '" data-kind="' + esc(it.kind) + '" data-work-row="' + esc(it.id) + '"' + (ui.jump === it.id ? ' data-jump="1"' : '') + '>' +
       '<button type="button" class="wk-row-btn" data-work-x="' + esc(it.id) + '" aria-expanded="' + open + '">' +
       '<span class="wk-lead">' + st(W().key(it), 12) + '</span>' +
       '<span class="wk-kind">' + kindMark(it) + '</span>' +
@@ -216,7 +216,7 @@
   function ghead(id, ico, title, sumHtml, gotoKey, col) {
     return '<div class="wk-ghead-row"><button type="button" class="wk-ghead" data-work-g="' + esc(id) + '" aria-expanded="' + !col + '">' +
       icon(col ? 'arrow-right' : 'chevron-down', 10) + icon(ico, 13) + '<strong>' + esc(title) + '</strong><span class="wk-gsum">' + sumHtml + '</span></button>' +
-      (gotoKey ? '<button type="button" class="wk-link wk-gopen" data-work-goto="' + esc(gotoKey) + '">' + T(gotoKey === 'system' ? 'sec.systemStatus' : 'sec.open') + '</button>' : '') + '</div>';
+      (gotoKey ? '<button type="button" class="wk-link wk-gopen" data-work-goto="' + esc(gotoKey) + '"' + (gotoKey === 'system' ? ' data-ui-action-id="ui.system_status.open" data-binding-id="work.open_system_status"' : '') + '>' + T(gotoKey === 'system' ? 'sec.systemStatus' : 'sec.open') + '</button>' : '') + '</div>';
   }
   function agentsBody() {
     const all = items();
@@ -246,11 +246,12 @@
         if (np) h += '<button type="button" class="wk-plink" data-work-procs="' + esc(a.id) + '" title="' + esc(T('processesOfTitle', { name: a.title })) + '">' +
           cat('processes', 11, false) + (np === 1 ? T('processOf') : T('processesOf', { n: np })) + '</button>';
         h += '</div>';
-        if (open) subs.forEach((s) => { h += row(s, 1, { owner: false }); });
+        /* an asking subagent is already under Questions; the parent's counts still include it (A10) */
+        if (open) subs.filter((s) => !W().isQuestion(s)).forEach((s) => { h += row(s, 1, { owner: false }); });
       });
       h += '</section>';
     });
-    h += sec('finished', T('sec.finished'), sort(all.filter((x) => x.kind === 'agent' && isDone(x))), { clear: true });
+    h += sec('finished', T('sec.finished'), sort(all.filter((x) => x.kind === 'agent' && isDone(x))));
     return h || '<div class="wk-empty">' + T('emptyAgents') + '</div>';
   }
   function procsBody() {
@@ -337,7 +338,9 @@
   function headLabel(kind, c) {
     const n = kind === 'agents' ? c.agents : kind === 'processes' ? c.processes : null;
     const ask = kind === 'agents' ? c.questions : kind === 'processes' ? c.needsInput : 0;
-    return cat(kind, 13, !!n) + '<span>' + T('tabs.' + kind) + '</span>' + (n != null ? '<span class="wk-n">' + n + '</span>' : '') +
+    /* Resources' gauge beats while its sampler runs, which is exactly while that tab is on screen (D12, A12) */
+    const live = kind === 'resources' ? ui.open && ui.tab === 'resources' : !!n;
+    return cat(kind, 13, live) + '<span>' + T('tabs.' + kind) + '</span>' + (n != null ? '<span class="wk-n">' + n + '</span>' : '') +
       (ask ? '<span class="wk-ask-n" data-tone="attention">' + st('waiting', 10) + (kind === 'agents' ? plural(ask, T('bar.question'), T('bar.questions')) : ask + ' ' + T(ask === 1 ? 'bar.needsInputOne' : 'bar.needsInputMany')) + '</span>' : '');
   }
   function render(keep) {
@@ -358,13 +361,14 @@
       strips +
       '<div class="wk-tabs" role="tablist" aria-label="' + esc(T('panelLabel')) + '">' + tabs.map((k) => '<button type="button" role="tab" id="pm7-work-tab-' + k + '" data-work-tab="' + k + '" aria-selected="' + (ui.tab === k) + '" tabindex="' + (ui.tab === k ? '0' : '-1') + '" aria-controls="pm7-work-body">' + headLabel(k, c) + '</button>').join('') + '</div>' +
       '<div class="wk-body" id="pm7-work-body" role="tabpanel" aria-labelledby="pm7-work-tab-' + ui.tab + '" tabindex="-1">' + body + '</div>' +
-      '<footer class="wk-foot">' + (ui.tab !== 'resources' ? '<button type="button" class="wk-link" data-work-p="clear">' + T('clearFinished') + '</button>' : '<span class="wk-dim wk-res-note">' + T(ui.snap ? 'res.sampled' : 'res.notSampled') + '</span>') +
+      '<footer class="wk-foot">' + (ui.tab === 'processes' ? '<button type="button" class="wk-link" data-work-p="clear">' + T('clearFinished') + '</button>' : ui.tab === 'agents' ? '' : '<span class="wk-dim wk-res-note">' + T(ui.snap ? 'res.sampled' : 'res.notSampled') + '</span>') +
       '<span class="wk-grow"></span><button type="button" class="wk-btn danger" data-work-p="stopall"' + (c.agents + c.processes + c.scheduled ? '' : ' disabled') + '>' + T('stopAll') + '</button></footer>';
     if (keep) { const s2 = p.querySelector('.wk-body'); if (s2) s2.scrollTop = top; }
     if (focused) { const f = p.querySelector(focused); if (f) f.focus({ preventScroll: true }); }
     const j = ui.jump && p.querySelector('[data-jump="1"]');
     if (j) { j.scrollIntoView({ block: 'nearest' }); setTimeout(() => { ui.jump = null; const g = p.querySelector('[data-jump="1"]'); if (g) g.removeAttribute('data-jump'); }, 1600); }
     sampling();
+    lastShape = shape();
   }
   /* focus survives a repaint: the same control by its data key */
   function focusKey(el) {
@@ -393,11 +397,21 @@
     });
     const note = pop.querySelector('.wk-res-note'); if (note) note.textContent = T('res.sampled');
   }
+  /* the popped-out window stays whole on screen (A7): its head, tabs and footer inside the window, above the status bar,
+     whatever the window did since it was placed; measured from its own size, not a fixed handle */
+  function clampFloat(p) {
+    const b = bar(), floor = b ? b.getBoundingClientRect().top : innerHeight;
+    const w = p.offsetWidth || 620, h = p.offsetHeight || 400;
+    ui.fx = Math.max(8, Math.min(ui.fx, innerWidth - w - 8));
+    ui.fy = Math.max(8, Math.min(ui.fy, floor - h - 8));
+  }
   function place() {
     const p = ensure();
     if (ui.floating) {
       if (ui.fx == null) { ui.fx = Math.max(8, Math.round(innerWidth / 2 - 320)); ui.fy = 90; }
-      p.style.left = ui.fx + 'px'; p.style.top = ui.fy + 'px'; p.style.bottom = 'auto'; p.style.right = 'auto';
+      p.style.bottom = 'auto'; p.style.right = 'auto';
+      clampFloat(p);
+      p.style.left = ui.fx + 'px'; p.style.top = ui.fy + 'px';
       return;
     }
     const b = bar(), br = b ? b.getBoundingClientRect() : { top: innerHeight - 26 };
@@ -446,7 +460,7 @@
     if (it.kind === 'scheduled' && it.at) f.push([T('detail.runs'), T('detail.runsAt', { clock: clock(it.at), in: time(it) }) + ' · ' + esc(it.detail || '')]);
     else if (it.startedAt) f.push([T('detail.started'), T('detail.startedBy', { clock: clock(it.startedAt), who: it.owner ? '<button type="button" class="wk-link" data-work-act="owner" data-owner="' + esc(it.owner) + '">' + esc(ownerName(it)) + '</button>' : esc(ownerName(it) || it.where || '') })]);
     if (o.where) f.push([T('detail.where'), esc(it.where || '') + (it.surface ? ' · ' + esc(surfaceName(it.surface)) : '')]);
-    if (it.progress && isLive(it)) f.push([T('detail.progress'), T('detail.progressOf', { done: it.progress.done, total: it.progress.total, unit: esc(it.progress.unit) }) + ' <span class="wk-dim">(' + T(it.progress.source === 'measured' ? 'detail.measured' : 'detail.reported') + ')</span>']);
+    if (it.progress && isLive(it)) f.push([T('detail.progress'), '<span data-work-prog="' + esc(it.id) + '">' + progText(it) + '</span> <span class="wk-dim">(' + T(it.progress.source === 'measured' ? 'detail.measured' : 'detail.reported') + ')</span>']);
     if (isDone(it)) f.push([T('detail.ended'), (it.exit != null ? T('detail.exit', { n: it.exit }) + ' · ' : (it.state === 'warning' ? T('detail.noExit') + ' · ' : '')) + T('time.ago', { t: short(now - (it.endedAt || now)) }) + (it.stoppedBy ? ' · ' + T('detail.stoppedBy', { who: esc(it.stoppedBy) }) : '')]);
     if (it.kind === 'process' || it.kind === 'scheduled') {
       f.push([T('detail.whenEnds'), '<span class="wk-seg" role="group" aria-label="' + esc(T('detail.whenEnds')) + '">' + [['agent', 'deliveryAgent'], ['user', 'deliveryUser'], ['quiet', 'deliveryQuiet']].map((d) =>
@@ -500,6 +514,36 @@
     } catch (_) { /* fall through */ }
     return false;
   }
+  /* A5: each goes to its owner, carrying the item; the notice only says where focus went. A process's terminal is the
+     terminal owner's tab (PMT / PM_HOME, kind terminal) in the process's folder, made once and revealed after that. */
+  const terms = {};
+  function onHome() { if (window.PM_PAGES && window.PM_PAGES.current && window.PM_PAGES.current !== 'dashboard') goPage('dashboard'); }
+  function openTerminal(it) {
+    const H = window.PM_HOME; if (!H || typeof H.open !== 'function') return false;
+    onHome();
+    let r = terms[it.id] && typeof H.reveal === 'function' ? H.reveal(terms[it.id]) : null;
+    if (!r || !r.ok) { r = H.open({ kind: 'terminal', profile: 'zsh', cwd: it.cwd || undefined, by: 'user', where: 'auto' }); if (r && r.ok) terms[it.id] = r.tabId; }
+    return !!(r && r.ok);
+  }
+  /* a port is its page: the Browser owner's tab at localhost */
+  function openPort(port) {
+    const H = window.PM_HOME; if (!H || typeof H.open !== 'function' || !port) return false;
+    onHome();
+    const r = H.open({ kind: 'browser', url: 'http://localhost:' + port, by: 'user', where: 'auto' });
+    return !!(r && r.ok);
+  }
+  /* a process's owner: in the chat, its Subagents domain with that subagent open; in the panel, the Agents tab at it */
+  function showOwner(o, el) {
+    if (el.closest('#pmRoot, #pmOverlayRoot') && window.PM56_DEMO && typeof window.PM56_DEMO.openActivity === 'function') {
+      if (window.PM56_DEMO.openActivity('subagents', { title: o.title })) { say(T('say.owner', { name: o.title })); return; }
+    }
+    ui.expanded[o.id] = true; ui.jump = o.id;
+    if (o.parent) ui.subOpen[o.parent] = true;
+    if (!ui.open) open('agents'); else if (ui.tab !== 'agents') setTab('agents'); else { render(true); place(); }
+    const row = pop && pop.querySelector('[data-work-x="' + CSS.escape(o.id) + '"]');
+    if (row) row.focus({ preventScroll: true });
+    say(T('say.owner', { name: o.title }));
+  }
   function act(a, el, id) {
     const w = W(), it = id ? byId(id) : null;
     if (!w) return;
@@ -510,9 +554,9 @@
     if (a === 'restart' && it) { w.restart(id); say(T('say.restart', { title: it.title }), true); return; }
     if (a === 'rerun' && it) { w.restart(id); say(T('say.rerun', { command: it.command }), true); return; }
     if (a === 'copy' && it) { try { navigator.clipboard.writeText(it.command); } catch (_) { /* sandboxed */ } say(T('say.copied', { command: it.command }), true); return; }
-    if (a === 'terminal' && it) { say(T('say.terminal', { title: it.title })); return; }
-    if (a === 'port') { say(T('say.port', { port: el.getAttribute('data-port') })); return; }
-    if (a === 'owner') { const o = byId(el.getAttribute('data-owner')); say(T('say.owner', { name: o ? o.title : '' })); return; }
+    if (a === 'terminal' && it) { if (openTerminal(it)) { close(); say(T('say.terminal', { title: it.title })); } return; }
+    if (a === 'port') { if (openPort(el.getAttribute('data-port'))) { close(); say(T('say.port', { port: el.getAttribute('data-port') })); } return; }
+    if (a === 'owner') { const o = byId(el.getAttribute('data-owner')); if (o) showOwner(o, el); return; }
     if (a === 'goto' && it) {
       if (it.surface === 'assistant' && openThread(it)) { close(); return; }
       if (PAGE_OF[it.surface] && goPage(PAGE_OF[it.surface])) { close(); return; }
@@ -539,14 +583,21 @@
     if (t.hasAttribute('data-work-sel')) { ui.selected = t.getAttribute('data-work-sel'); render(true); return; }
     if (t.hasAttribute('data-work-goto')) {
       const g = t.getAttribute('data-work-goto');
-      if (g === 'system') { say(T('say.systemStatus')); return; }
+      /* D11: System status owns the services; the panel gives way to it (A5) */
+      if (g === 'system') { close(); systemStatus(); return; }
       if (PAGE_OF[g] && goPage(PAGE_OF[g])) { close(); return; }
       return;
     }
     const p = t.getAttribute('data-work-p');
     if (p === 'close') close();
     else if (p === 'float') { ui.floating = !ui.floating; render(true); place(); }
-    else if (p === 'clear') { W().clearFinished(VIEW); say(T('say.cleared'), true); }
+    else if (p === 'clear') {
+      /* G6: the Processes tab's own action; finished agents are threads and stay (the projection never clears them).
+         The notice says what it did (A8) */
+      const finished = () => items({ view: VIEW }).filter((x) => x.kind !== 'agent' && isDone(x)).length;
+      const before = finished(); W().clearFinished(VIEW); const n = before - finished();
+      say(n ? T('say.clearedN', { n: n }) : T('say.clearedNone'), true);
+    }
     else if (p === 'stopall') confirmPlatform();
   }
   function setTab(k) { if (ui.tab === k) return; ui.tab = k; ui.selected = null; render(); place(); paintBar(); const t = pop.querySelector('[data-work-tab="' + k + '"]'); if (t) t.focus({ preventScroll: true }); }
@@ -562,7 +613,7 @@
   function onPanelDrag(e) {
     if (!ui.floating || !e.target.closest('[data-work-drag]') || e.target.closest('button')) return;
     const sx = e.clientX, sy = e.clientY, ox = pop.offsetLeft, oy = pop.offsetTop;
-    const mv = (ev) => { ui.fx = Math.max(0, Math.min(innerWidth - 80, ox + ev.clientX - sx)); ui.fy = Math.max(0, Math.min(innerHeight - 40, oy + ev.clientY - sy)); pop.style.left = ui.fx + 'px'; pop.style.top = ui.fy + 'px'; };
+    const mv = (ev) => { ui.fx = ox + ev.clientX - sx; ui.fy = oy + ev.clientY - sy; clampFloat(pop); pop.style.left = ui.fx + 'px'; pop.style.top = ui.fy + 'px'; };
     const up = () => { removeEventListener('pointermove', mv); removeEventListener('pointerup', up); };
     addEventListener('pointermove', mv); addEventListener('pointerup', up);
   }
@@ -686,19 +737,29 @@
   }
 
   /* --------------------------------------------------------------------------------------- staying current */
+  const progText = (it) => T('detail.progressOf', { done: it.progress.done, total: it.progress.total, unit: esc(it.progress.unit) });
+  /* what a row is: a tick that changes any of it (work ends, fails, starts waiting, stops) repaints the panel; a tick
+     that only moves time, output or progress patches those in place (A6) */
+  const shape = () => items().map((x) => x.id + ':' + x.state + ':' + (x.stopping ? 1 : 0) + ':' + (needsYou(x) ? 1 : 0) + ':' + (x.lost ? 1 : 0) + ':' + (x.progress && isLive(x) ? 1 : 0)).join('|');
+  let lastShape = '';
+  /* time, output tail and progress in place, for the panel and for the chat's Processes view */
+  function patchTicks(root) {
+    if (!root) return;
+    root.querySelectorAll('[data-work-time]').forEach((el) => { const it = byId(el.getAttribute('data-work-time')); if (it) { const v = time(it); if (el.textContent !== v) el.textContent = v; } });
+    root.querySelectorAll('[data-work-prog]').forEach((el) => { const it = byId(el.getAttribute('data-work-prog')); if (it && it.progress) { const v = progText(it); if (el.innerHTML !== v) el.innerHTML = v; } });
+    root.querySelectorAll('[data-work-tail]').forEach((el) => {
+      const it = byId(el.getAttribute('data-work-tail')); if (!it || !it.tail) return;
+      const pre = el.querySelector('pre'), txt = it.tail.slice(-6).join('\n');
+      if (pre && pre.textContent !== txt) { const tmp = doc.createElement('div'); tmp.innerHTML = tail(it, 6); el.replaceWith(tmp.firstChild); }
+    });
+  }
   function onChange(why) {
     paintBar(why);
     notices();
     if (!ui.open || !pop) return;
-    if (why === 'tick') {
-      pop.querySelectorAll('[data-work-time]').forEach((el) => { const it = byId(el.getAttribute('data-work-time')); if (it) { const v = time(it); if (el.textContent !== v) el.textContent = v; } });
-      pop.querySelectorAll('[data-work-tail]').forEach((el) => {
-        const it = byId(el.getAttribute('data-work-tail')); if (!it || !it.tail) return;
-        const pre = el.querySelector('pre'), txt = it.tail.slice(-6).join('\n');
-        if (pre && pre.textContent !== txt) { const tmp = doc.createElement('div'); tmp.innerHTML = tail(it, 6); el.replaceWith(tmp.firstChild); }
-      });
-      return;
-    }
+    const now = shape();
+    if (why === 'tick' && now === lastShape) { patchTicks(pop); return; }
+    lastShape = now;
     render(true); place();
   }
   function boot() {
@@ -709,10 +770,55 @@
     new MutationObserver(() => paintBar('look')).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-pm-status-words', 'data-theme', 'data-o55-nier', 'data-o55-nier-parts'] });
     let fitFrame = 0;
     const refit = () => { if (!fitFrame && wantWords()) fitFrame = requestAnimationFrame(() => { fitFrame = 0; paintBar('fit'); }); };
-    window.addEventListener('resize', () => { refit(); if (ui.open && !ui.floating) place(); });
+    window.addEventListener('resize', () => { refit(); if (ui.open) place(); });
     if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', refit);
     paintBar();
   }
-  window.PM7_WORK_UI = { open, close, toggle, isOpen: () => ui.open, tab: () => ui.tab, detail, tail, confirmThread, confirmPlatform, quit, paintBar, ui };
+  /* ------------------------------------------------------------------- System status (D11's owner, A5) */
+  /* The status bar's System status item and D11's link open it: a small popover in the overlay root listing the
+     services Puppet Master runs, each with its state and its owner in Settings (pm7-build, 2026-10-30). Read only. */
+  const SERVICE_SETTING = { lsp: 'code.editing.lsp-server-catalog', mcp: 'system.mcp.server-list', index: 'web.index.enable' };
+  let sys = null, sysBack = null;
+  const sysItem = () => { const b = bar(); return b && b.querySelector('[data-status-action="system"]'); };
+  function closeSystem(refocus) {
+    if (!sys) return;
+    sys.remove(); sys = null;
+    const it = sysItem(); if (it) it.setAttribute('aria-expanded', 'false');
+    if (refocus !== false && sysBack && sysBack.isConnected) sysBack.focus({ preventScroll: true });
+  }
+  function systemStatus() {
+    if (sys) { closeSystem(); return; }
+    const w = W(); if (!w) return;
+    const list = sort(items({ kind: 'service' })), anchor = sysItem();
+    sysBack = anchor || doc.activeElement;
+    sys = doc.createElement('div');
+    sys.id = 'pm7-work-system'; sys.setAttribute('role', 'dialog'); sys.setAttribute('aria-labelledby', 'pm7-work-system-title');
+    sys.innerHTML = '<header class="wk-head"><strong id="pm7-work-system-title">' + T('sys.title') + '</strong><span class="wk-head-sum">' + esc(T('sys.sum', { n: list.length })) + '</span><span class="wk-grow"></span>' +
+      '<button type="button" class="wk-ib" data-sys-x data-ui-action-id="ui.system_status.close" aria-label="' + esc(T('close')) + '" data-pm-hover-label="' + esc(T('close')) + '">' + icon('close', 13) + '</button></header>' +
+      '<ul class="wk-sys-list">' + list.map((it) => '<li data-tone="' + tone(it) + '">' + st(w.key(it), 12) +
+        '<span class="wk-copy"><strong>' + esc(it.title) + '</strong><span class="wk-sub">' + esc(it.where || '') + '</span></span><b data-tone="' + tone(it) + '">' + esc(word(it)) + '</b>' +
+        (SERVICE_SETTING[it.role] ? '<button type="button" class="wk-link" data-sys-open="' + esc(SERVICE_SETTING[it.role]) + '" data-binding-id="system_status.service.open_settings" aria-label="' + esc(T('sys.openLabel', { where: it.where || it.title })) + '">' + T('sys.open') + '</button>' : '') +
+        '</li>').join('') + '</ul><p class="wk-dim wk-sys-note">' + T('sys.note') + '</p>';
+    root().appendChild(sys);
+    if (anchor) anchor.setAttribute('aria-expanded', 'true');
+    const b = bar(), floor = b ? b.getBoundingClientRect().top : innerHeight, ar = anchor ? anchor.getBoundingClientRect() : { left: innerWidth - 340 };
+    sys.style.left = Math.max(8, Math.min(ar.left - 6, innerWidth - sys.offsetWidth - 8)) + 'px';
+    sys.style.bottom = Math.round(innerHeight - floor + 6) + 'px';
+    sys.addEventListener('click', (e) => {
+      const x = e.target.closest('[data-sys-x]'), o = e.target.closest('[data-sys-open]');
+      if (x) { closeSystem(); return; }
+      if (o) {
+        const id = o.getAttribute('data-sys-open'); closeSystem(false);
+        goPage('settings');
+        /* Settings paints the page it lands on first; reveal after that, as its own overlay links do */
+        setTimeout(() => { try { if (window.PM51 && typeof window.PM51.revealSetting === 'function') window.PM51.revealSetting(id); } catch (_) { /* Settings not ready */ } }, 60);
+      }
+    });
+    sys.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeSystem(); } });
+    requestAnimationFrame(() => { const f = sys && sys.querySelector('[data-sys-open], [data-sys-x]'); if (f) f.focus({ preventScroll: true }); });
+  }
+  doc.addEventListener('pointerdown', (e) => { if (sys && !sys.contains(e.target) && !(sysItem() && sysItem().contains(e.target))) closeSystem(false); }, true);
+
+  window.PM7_WORK_UI = { open, close, toggle, systemStatus, isOpen: () => ui.open, tab: () => ui.tab, detail, tail, patchTicks, confirmThread, confirmPlatform, quit, paintBar, ui };
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', boot); else boot();
 })();

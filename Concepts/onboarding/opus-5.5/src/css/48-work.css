@@ -4,7 +4,7 @@
    menu radius. States are a registry mark and a word, counts are plain numbers, strips have full borders (DR-069: no
    side stripes, no emoji, no pills). The status bar items' own rules are in pm7-t32-final.css. */
 
-#pm7-work, .wk-dialog-scrim, [data-work-detail], .pm7-work-group {
+#pm7-work, #pm7-work-system, .wk-dialog-scrim, [data-work-detail], .pm7-work-group {
   --wk-attn: var(--pmg-ink-attention, var(--pmw-warn, #ffb74d));
   --wk-work: var(--pmg-ink-working, var(--pmw-accent, #64b5f6));
   --wk-bad: var(--pmg-ink-blocked, var(--pmw-bad, #ef5350));
@@ -64,8 +64,25 @@ html[data-o55-nier="on"] .pm7-work-item.is-open :is(strong, .wk-g > svg, .wk-sb-
   box-shadow: var(--pmw-pop-shadow); font: 12.5px/1.35 var(--body-font, Inter, system-ui, sans-serif);
 }
 #pm7-work[hidden] { display: none; }
+/* System status (A5, D11's owner): the panel's plate, one short list */
+#pm7-work-system {
+  position: fixed; z-index: 31; box-sizing: border-box; width: 340px; max-width: calc(100vw - 16px);
+  background: var(--pmw-pop); color: var(--wk-ink); border: 1px solid var(--wk-line); border-radius: var(--pmw-menu-radius, 13px);
+  box-shadow: var(--pmw-pop-shadow); font: 12.5px/1.35 var(--body-font, Inter, system-ui, sans-serif);
+}
+#pm7-work-system .wk-head { cursor: default; }
+#pm7-work-system [data-tone="working"] { --wk-t: var(--wk-work); }
+#pm7-work-system [data-tone="attention"] { --wk-t: var(--wk-attn); }
+#pm7-work-system :is([data-tone="idle"], [data-tone="paused"]) { --wk-t: var(--wk-idle); }
+.wk-sys-list { list-style: none; margin: 0; padding: 4px 6px; }
+.wk-sys-list > li { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; padding: 6px 6px; border-radius: 7px; }
+.wk-sys-list > li + li { border-top: 1px solid var(--wk-line2); border-radius: 0; }
+.wk-sys-list .wk-copy { display: grid; min-width: 0; }
+.wk-sys-list .wk-copy strong, .wk-sys-list .wk-sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wk-sys-list > li > b { font-weight: 600; color: var(--wk-t, var(--wk-ink2)); }
+.wk-sys-note { margin: 0; padding: 6px 12px 10px; }
 #pm7-work[data-tab="resources"] { width: 820px; }
-#pm7-work.is-floating { max-height: 80vh; }
+#pm7-work.is-floating { max-height: min(80vh, calc(100vh - 48px)); max-width: calc(100vw - 16px); }
 #pm7-work.is-floating .wk-head { cursor: move; }
 .wk-head, #pm7-work > .wk-strip, .wk-tabs, .wk-foot { flex: none; }
 .wk-head { display: flex; align-items: center; gap: 8px; padding: 9px 8px 8px 14px; border-bottom: 1px solid var(--wk-line2); }
@@ -143,35 +160,35 @@ html[data-o55-nier="on"] .pm7-work-item.is-open :is(strong, .wk-g > svg, .wk-sb-
    the panel, the Stop list (#pm7-work-dialog) and the chat's detail blocks share one set of rules. */
 .wk-detail { padding: 4px 10px 10px 46px; font-size: 12px; color: var(--wk-ink2); }
 .wk-what { margin: 2px 0 6px; color: var(--wk-ink); }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 12px; margin: 4px 0 8px; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-facts dt { color: var(--wk-idle); }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-facts dd { margin: 0; color: var(--wk-ink); min-width: 0; overflow-wrap: anywhere; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-facts code { font-family: var(--wk-mono); font-size: 11.5px; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-link { all: unset; cursor: pointer; color: var(--wk-work); text-decoration: underline; text-underline-offset: 2px; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-link:hover { color: var(--wk-ink); }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-link:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: 2px; border-radius: 2px; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-ask { display: grid; gap: 7px; margin: 2px 0 10px; padding: 9px 10px; border: 1px solid color-mix(in srgb, var(--wk-attn) 55%, var(--wk-line)); border-radius: 8px;
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 12px; margin: 4px 0 8px; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-facts dt { color: var(--wk-idle); }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-facts dd { margin: 0; color: var(--wk-ink); min-width: 0; overflow-wrap: anywhere; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-facts code { font-family: var(--wk-mono); font-size: 11.5px; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-link { all: unset; cursor: pointer; color: var(--wk-work); text-decoration: underline; text-underline-offset: 2px; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-link:hover { color: var(--wk-ink); }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-link:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: 2px; border-radius: 2px; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-ask { display: grid; gap: 7px; margin: 2px 0 10px; padding: 9px 10px; border: 1px solid color-mix(in srgb, var(--wk-attn) 55%, var(--wk-line)); border-radius: 8px;
   background: color-mix(in srgb, var(--wk-attn) 8%, transparent); }
 .wk-ask-q { display: flex; align-items: flex-start; gap: 7px; color: var(--wk-ink); line-height: 1.4; }
 .wk-ask-q b { font-weight: 600; font-family: var(--wk-mono); font-size: 11.5px; }
 .wk-ask-a, .wk-actions { display: flex; flex-wrap: wrap; gap: 6px; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--wk-line); border-radius: 6px; overflow: hidden; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg > button { all: unset; box-sizing: border-box; cursor: pointer; padding: 3px 9px; font-size: 11.5px; color: var(--wk-ink2); white-space: nowrap; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg > button + button { border-left: 1px solid var(--wk-line); }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg > button:is([aria-pressed="true"], [aria-checked="true"]) { background: var(--pmw-press); color: var(--wk-ink); }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg > button:hover { color: var(--wk-ink); }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg > button:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: -2px; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-tail { margin: 2px 0 8px; border: 1px solid var(--wk-line2); border-radius: 7px; background: var(--pmw-gutter, rgba(0, 0, 0, .25)); overflow: hidden; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-tail pre { margin: 0; padding: 7px 9px; font: 11px/1.45 var(--wk-mono); color: var(--wk-ink2); white-space: pre-wrap; overflow-wrap: anywhere; max-height: 9.5em; overflow: auto; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--wk-line); border-radius: 6px; overflow: hidden; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-seg > button { all: unset; box-sizing: border-box; cursor: pointer; padding: 3px 9px; font-size: 11.5px; color: var(--wk-ink2); white-space: nowrap; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-seg > button + button { border-left: 1px solid var(--wk-line); }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-seg > button:is([aria-pressed="true"], [aria-checked="true"]) { background: var(--pmw-press); color: var(--wk-ink); }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-seg > button:hover { color: var(--wk-ink); }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-seg > button:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: -2px; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-tail { margin: 2px 0 8px; border: 1px solid var(--wk-line2); border-radius: 7px; background: var(--pmw-gutter, rgba(0, 0, 0, .25)); overflow: hidden; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-tail pre { margin: 0; padding: 7px 9px; font: 11px/1.45 var(--wk-mono); color: var(--wk-ink2); white-space: pre-wrap; overflow-wrap: anywhere; max-height: 9.5em; overflow: auto; }
 .wk-tail-more { padding: 4px 9px; font-size: 10.5px; color: var(--wk-idle); border-bottom: 1px dashed var(--wk-line2); }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; gap: 5px; height: 24px; padding: 0 9px; border: 1px solid var(--wk-line);
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-btn { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; gap: 5px; height: 24px; padding: 0 9px; border: 1px solid var(--wk-line);
   border-radius: 6px; background: var(--pmw-hover); color: var(--wk-ink); font: 500 11.5px/1 var(--body-font, Inter, system-ui, sans-serif); white-space: nowrap; cursor: pointer; flex: none; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn:hover { background: var(--pmw-press); }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: 1px; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn[disabled] { opacity: .5; cursor: default; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn.wk-primary { background: var(--pmw-accent, var(--wk-work)); border-color: transparent; color: var(--pmw-on-accent, #0b1220); font-weight: 600; }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn.danger { color: var(--wk-bad); border-color: color-mix(in srgb, var(--wk-bad) 45%, var(--wk-line)); }
-:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn.danger:hover { background: color-mix(in srgb, var(--wk-bad) 12%, transparent); }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-btn:hover { background: var(--pmw-press); }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-btn:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: 1px; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-btn[disabled] { opacity: .5; cursor: default; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-btn.wk-primary { background: var(--pmw-accent, var(--wk-work)); border-color: transparent; color: var(--pmw-on-accent, #0b1220); font-weight: 600; }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-btn.danger { color: var(--wk-bad); border-color: color-mix(in srgb, var(--wk-bad) 45%, var(--wk-line)); }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-btn.danger:hover { background: color-mix(in srgb, var(--wk-bad) 12%, transparent); }
 
 /* ---- Resources (G4): a table per environment under its server, an inspector below ---- */
 .wk-server .wk-ghead > svg:last-of-type { color: var(--wk-ink2); }
@@ -216,17 +233,17 @@ html[data-theme$="-light"] .wk-dialog-scrim { background: rgba(20, 24, 32, .28);
 .wk-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
 
 /* ---- looks: Home's tokens carry each look's plate; these add each grammar ---- */
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(#pm7-work, .wk-dialog) { border-radius: 0; font-family: var(--wk-mono); font-size: 12px; box-shadow: 4px 4px 0 rgba(0, 0, 0, .55); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) :is(.wk-row-btn, .wk-tr, .wk-ghead, .wk-seg, .wk-ask, .wk-strip, .wk-tail, .wk-btn, .wk-ib, .wk-subs, .wk-plink, .wk-dialog-list) { border-radius: 0; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) :is(.wk-seg > button[aria-pressed="true"], .wk-seg > button[aria-checked="true"], .wk-tr.is-sel, .wk-row.is-open > .wk-row-btn) { background: var(--wk-ink); color: var(--pmw-surface, #000); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(#pm7-work, .wk-dialog, #pm7-work-system) { border-radius: 0; font-family: var(--wk-mono); font-size: 12px; box-shadow: 4px 4px 0 rgba(0, 0, 0, .55); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) :is(.wk-row-btn, .wk-tr, .wk-ghead, .wk-seg, .wk-ask, .wk-strip, .wk-tail, .wk-btn, .wk-ib, .wk-subs, .wk-plink, .wk-dialog-list) { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) :is(.wk-seg > button[aria-pressed="true"], .wk-seg > button[aria-checked="true"], .wk-tr.is-sel, .wk-row.is-open > .wk-row-btn) { background: var(--wk-ink); color: var(--pmw-surface, #000); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.wk-tr.is-sel, .wk-row.is-open > .wk-row-btn) :is(span, b, i, strong) { color: var(--pmw-surface, #000) !important; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .wk-tabs > button[aria-selected="true"] { background: var(--wk-ink); color: var(--pmw-surface, #000); border-bottom-color: transparent; }
-html[data-theme^="friendly"]:not([data-o55-nier="on"]) :is(#pm7-work, .wk-dialog) { border-radius: 16px; }
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) :is(#pm7-work, .wk-dialog, #pm7-work-system) { border-radius: 16px; }
 html[data-theme^="friendly"]:not([data-o55-nier="on"]) :is(.wk-row-btn, .wk-ghead, .wk-tr) { border-radius: 10px; }
-html[data-theme^="friendly"]:not([data-o55-nier="on"]) :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn { border-radius: 9px; padding: 0 11px; }
-html[data-theme^="glass"]:not([data-o55-nier="on"]) :is(#pm7-work, .wk-dialog) { box-shadow: var(--pmw-pop-shadow), inset 0 1px 0 rgba(255, 255, 255, .10); }
-html[data-o55-nier="on"] :is(#pm7-work, .wk-dialog) { border-radius: 0; letter-spacing: .02em; border-color: var(--o55-nier-ink, var(--wk-line)); box-shadow: none; }
-html[data-o55-nier="on"] :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) :is(.wk-row-btn, .wk-tr, .wk-ghead, .wk-seg, .wk-ask, .wk-strip, .wk-tail, .wk-btn, .wk-ib, .wk-subs, .wk-plink, .wk-dialog-list) { border-radius: 0; }
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-btn { border-radius: 9px; padding: 0 11px; }
+html[data-theme^="glass"]:not([data-o55-nier="on"]) :is(#pm7-work, .wk-dialog, #pm7-work-system) { box-shadow: var(--pmw-pop-shadow), inset 0 1px 0 rgba(255, 255, 255, .10); }
+html[data-o55-nier="on"] :is(#pm7-work, .wk-dialog, #pm7-work-system) { border-radius: 0; letter-spacing: .02em; border-color: var(--o55-nier-ink, var(--wk-line)); box-shadow: none; }
+html[data-o55-nier="on"] :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) :is(.wk-row-btn, .wk-tr, .wk-ghead, .wk-seg, .wk-ask, .wk-strip, .wk-tail, .wk-btn, .wk-ib, .wk-subs, .wk-plink, .wk-dialog-list) { border-radius: 0; }
 html[data-o55-nier="on"] .wk-tabs > button[aria-selected="true"] { background: var(--o55-nier-ink, var(--wk-ink)); color: var(--o55-nier-on-ink, #fff); border-bottom-color: transparent; }
 html[data-o55-nier="on"] .wk-tabs > button[aria-selected="true"] :is(.wk-ask-n, .wk-g > svg) { color: var(--o55-nier-on-ink, #fff); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .wk-tabs > button[aria-selected="true"] :is(.wk-ask-n, .wk-g > svg) { color: var(--pmw-surface, #000); }
@@ -258,7 +275,7 @@ html[data-o55-nier="on"] :is(.wk-tr.is-sel, .wk-row.is-open > .wk-row-btn) :is(s
 
 /* the chat's docked Activity Detail is narrow: facts stack, the When it ends choices stay one row */
 @container activityPanel (max-width: 380px) {
-  :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-facts { grid-template-columns: minmax(0, 1fr); gap: 1px; }
-  :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-facts dt { margin-top: 5px; }
-  :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg > button { padding-inline: 6px; }
+  :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-facts { grid-template-columns: minmax(0, 1fr); gap: 1px; }
+  :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-facts dt { margin-top: 5px; }
+  :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-seg > button { padding-inline: 6px; }
 }
