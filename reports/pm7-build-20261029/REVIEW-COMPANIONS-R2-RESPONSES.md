@@ -1,0 +1,16 @@
+# PM7 companion recheck — direct N1/N2 corrections, 2026-10-30
+
+Astra r2 closes all 11 prior findings. Its two new Minor findings are directly corrected with focused proof; the review cycle is complete and no third review is requested.
+
+| Finding | Correction and proof |
+| --- | --- |
+| **N1: reused owner schema mismatch** | Three explicit profiles replace the PM7 Work profile: `TCP-PM7-BROWSER-OPEN`, `TCP-PM7-TERMINAL-RERUN`, `TCP-PM7-SCHEDULE-CANCEL`. The Scheduling request/result/error refs point directly to its existing executable owner schema; the existing card cancellation and retained-snapshot result fixtures are unchanged. Browser/Terminal payload refs point to UCC-063/UCC-201, with an explicitly identity-only schema fence; no executable request body schema exists for these catalog commands, so owner body validation remains uncompiled. Their existing CV-333 UICommandResponse v2 projection/error/receipt handles local projection or pending acknowledgement, without fabricating a successful Terminal owner body. Per-profile command fences reject wrong-owner input. **19 cases pass: 9 accepted / 10 rejected**, with exact fixture provenance. The original `WorkTarget`, `work_command_id` and `command_result` definitions are unchanged. |
+| **N2: Teacher-only Work navigation** | `TCP-TEACHER-HELP` retains one `cmd.chat.open_thread` owner/Touch row and now selects availability and return by consumer. `settings_teacher_help` keeps the Teacher requirement and exact prior Settings manager/focus. `work_detail` accepts an ordinary bound Assistant thread and preserves exact invoking Work view/focus. Unknown consumer, missing thread or a non-Teacher Settings target is unavailable. **Five cases pass**, including non-Teacher Work and Work-origin return. |
+
+Owner prose preceded companions: CS-106, WM-097, UCC-135. No existing PlanUnit or registered exact token was removed. No native effect, permission, dispatch, receipt custody or rendered focus is certified by these static cases. Original native partial residuals remain partial.
+
+The final GUI `f99ad183d2dba7ffd272043d242ca57c977d0c70` is merged through `1d960c9a9d1aedcd629862cf428a94c9359df724`. ACD-475 names the shared `PM_BUSY.drag()` / `PM_BUSY.idle(fn, timeout)` drag admission and existing `pm-idle`, preserving caller visibility/busy/interaction gates. F3-665 names the shared Stop/Quit checkbox state fix. Onboarding F1-2/F1-3/F2-2 introduces no new command/binding name. G2 squeeze and F3-1 toast placement remain pending Jared; no ruling is inferred.
+
+Current inventory: **477 bindings / 58 PM7 source families; 715 Touch rows / 140 profiles; 1269 production rows; 1011 settings; 22 status keys**. Only three Touch profiles and optional profile metadata are added; no command, action, setting, binding or event family is added.
+
+Focused proof: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/r2-final-direct-fix-proof.json`, SHA-256 `c23be7f5dabacc17a5588a2c1c6c717b01dac74ee86a7d8eb6970c5b847e0322`. PM7 checker and Touch verifier pass. Final generated/focused and full-gate/dry results are recorded in REPORT.md and verification.json when complete. Compile witness is not applicable: no ledger was compiled. No landing, lock or reseal.

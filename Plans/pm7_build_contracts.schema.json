@@ -2629,6 +2629,37 @@
         "cmd.chat.schedule_message.cancel",
         "cmd.terminal.rerun"
       ]
+    },
+    "ReusedCatalogRequestIdentity": {
+      "description": "Identity-only fence from the existing UI catalog dispatch minimum. Additional fields belong to the catalog owner contract and are NOT validated or admitted here. No native payload, effect or terminal-success proof.",
+      "type": "object",
+      "required": [
+        "dispatch_id",
+        "command_id",
+        "source_surface",
+        "actor_ref"
+      ],
+      "properties": {
+        "dispatch_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command_id": {
+          "enum": [
+            "cmd.browser.open_workspace_preview",
+            "cmd.terminal.rerun"
+          ]
+        },
+        "source_surface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": true
     }
   }
 }

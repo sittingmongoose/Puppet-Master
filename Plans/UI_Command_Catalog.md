@@ -10522,6 +10522,11 @@ canonical_text: >-
   cmd.chat.open_at retires into; it opens the chat panel when closed and does not duplicate the panel-local
   cmd.chat.switch_thread row. cmd.chat.add_file_reference keeps its existing row and signature lock unchanged.
   Amended 2026-10-09 (DL-180): cmd.file.open places its tab through CV-360's placement fields and the one opening module, not Panel 1 to 4, and cmd.editor.close_tab is an alias of cmd.panel_tab.close (UCC-200).
+  D7, PM7 final-review direct correction, 2026-10-30 (Astra r2 N2): Teacher/help target requirements and
+  Settings-manager return apply only to this Settings consumer of cmd.chat.open_thread. Work detail’s
+  separate producer opens its exact ordinary Assistant thread without a Teacher predicate and preserves its
+  invoking Work view/focus. Consumer-specific availability/return rules never create a second thread owner
+  or default an unrelated caller to Settings.
 gui_related: true
 gui_classification_reason: Registers user-visible file open, refresh, reveal, row-cap, editor tab, and chat thread controls.
 depends_on: [UCC-108, UCC-014, DL-180]

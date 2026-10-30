@@ -1,3 +1,17 @@
+# PM7 Plans lane — final direct fixes and GUI alignment, 2026-10-30
+
+Branch: `t3/plans/pm7-plans-canon`. GUI input: `f99ad183d2dba7ffd272043d242ca57c977d0c70`, merged through `1d960c9a9d1aedcd629862cf428a94c9359df724`. Lead: `pm7-build`.
+
+**Astra r2 closed all 11 previous findings. N1/N2 are directly repaired; no third review.** N1 has three owner-specific Touch profiles with **19 passing cases (9 accepted / 10 rejected)**. Browser/Terminal retain catalog payload authority and disclose uncompiled body validation; their identity fence and existing CV-333 response are not native effect proof. Scheduling consumes its actual request/result/error contracts without changing them. N2 scopes Teacher/Settings versus ordinary Work-thread availability and exact return/focus, with **five passing cases**. Original WorkTarget, nine Work command IDs and PM7 result definitions remain unchanged.
+
+Prose first: CS-106, WM-097, UCC-135; final GUI names/state clarifications: ACD-475 and F3-665. ACD-475 now names `PM_BUSY.drag()` and `PM_BUSY.idle(fn, timeout)`; existing `pm-idle` and all caller gates remain. Stop/Quit checkboxes keep their existing controls and semantics. Onboarding geometry/cleanup adds no command name. **G2 squeeze and F3-1 toast placement remain pending Jared; current canon is preserved.**
+
+Current totals: **477 bindings / 58 PM7 source families; 715 Touch rows / 140 profiles; 1269 production entries; 1011 settings; 22 status keys**. Three profiles are added; no command, action, binding, setting or event family is added. Direct responses and proof are in `REVIEW-COMPANIONS-R2-RESPONSES.md`.
+
+All 10 focused/generation/builder checks pass. Shards remain 2956 / 99 sources; index remains 7237 units / 96 documents. Regeneration changes only the six edited owner/index shard groups. Protected governance is unchanged. All 17 full-checkout support paths and the currentness symlink exist. The one shared-vs-local test-file difference is a tracked source difference, retained as checked source rather than overwritten with another checkout. The lead authorized the final full gates and dry landing; they are queued to run sequentially from the frozen pushed source in a durable detached runner. The older full/dry evidence below is historical and does not verify this delta. Mailbox waiter is armed indefinitely (`--timeout 0`).
+
+## Historical checkpoint — companion fix pass 1
+
 # PM7 Plans lane — companion fix pass 1, 2026-10-30
 
 Branch: `t3/plans/pm7-plans-canon`. Verified fix source: `4a91fa1335374263faef1cc575c2cf32aa4b3955`. GUI input: `ff9476a5c8`, merged through `2c2ae604d3`. Lead: `pm7-build`.

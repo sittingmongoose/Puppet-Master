@@ -12,6 +12,9 @@
 
 ## Change Summary
 
+- 2026-10-30: PM7 final-review N1/N2 corrections keep reused Browser/Terminal/Scheduling Touch contracts with their actual owners and scope Teacher versus Work thread availability/return by consumer. Final GUI f99ad183d2 names PM_BUSY.drag/idle admission and gives shared Stop/Quit checkboxes distinct states. G2 squeeze and F3-1 toast placement retain current canon pending Jared. No third review, new command, native-proof promotion or reseal.
+  ContractRef: ContractName:Plans/Commands_System.md#CS-106, ContractName:Plans/Wiring_Matrix.md#WM-097, ContractName:Plans/UI_Command_Catalog.md#UCC-135, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/FinalGUISpec.md#F3-665
+
 - 2026-10-30: PM7 companion review fix1 (D7/D8/D13, G4/D10, S1/S2/S6, A5/PC2) separates local owner selection from thread/page opening, closes Copy/port/schedule-cancel/Rerun dispositions, adds reverse control and preset parity guards, closes local payload branches, and names the chat Working dots face. Exact Project/System visibility tokens and the title lane’s final 1.95 s Working export manifest are reconciled; no GUI edit or native-proof promotion.
   ContractRef: ContractName:Plans/Commands_System.md#CS-105, ContractName:Plans/Commands_System.md#CS-106, ContractName:Plans/Wiring_Matrix.md#WM-097, ContractName:Plans/FinalGUISpec.md#F3-660
 

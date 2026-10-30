@@ -79,6 +79,16 @@
       ],
       "properties": {
         "profile_id": {"type": "string", "pattern": "^TCP-[A-Z0-9-]+$"},
+        "command_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^cmd\\.[a-z0-9_.]+$"}},
+        "request_identity_schema_ref": {"$ref": "#/$defs/non_empty_string"},
+        "consumer_rules": {
+          "type": "object", "additionalProperties": false,
+          "required": ["settings_teacher_help", "work_detail"],
+          "properties": {
+            "settings_teacher_help": {"type": "object", "additionalProperties": false, "required": ["requires_teacher_thread", "return_target"], "properties": {"requires_teacher_thread": {"type": "boolean"}, "return_target": {"enum": ["settings_manager", "invoking_work_view"]}}},
+            "work_detail": {"type": "object", "additionalProperties": false, "required": ["requires_teacher_thread", "return_target"], "properties": {"requires_teacher_thread": {"type": "boolean"}, "return_target": {"enum": ["settings_manager", "invoking_work_view"]}}}
+          }
+        },
         "requirement_refs": {"$ref": "#/$defs/string_array", "minItems": 1},
         "owner_plan": {"type": "string", "pattern": "^Plans/[^/].*\\.md$"},
         "plan_unit": {"type": "string", "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*-[0-9]{3}$"},

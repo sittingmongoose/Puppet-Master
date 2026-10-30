@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L6453-L6723
+Source lines: L6453-L6732
 
-Source SHA256: `fb3b58e7bbbe98acccd4bb1969037a993398e2326f64283c58d85da85411ac91`
+Source SHA256: `e0f98066247f08c7657e7a332de37789c3f2ba6dbbeb4ad483c17b38da559aec`
 
 ---
 
@@ -236,6 +236,15 @@ canonical_text: >-
   process Stop, and requires their binding/owner dispositions. It covers Copy command, Open port, Rerun,
   actual Open thread/Open surface and local owner selection; forward token counts alone are not closure.
   Existing owner commands receive producer/Touch coverage, never a new native handler or evidence promotion.
+  D7/D8/D13, PM7 final-review direct correction, 2026-10-30 (Astra r2 N1/N2): TCP-PM7-BROWSER-OPEN,
+  TCP-PM7-SCHEDULE-CANCEL and TCP-PM7-TERMINAL-RERUN replace the incorrect reused-command assignment to
+  TCP-PM7-WORK. Their request/result/error/receipt refs stay with the actual owners, with command-identity
+  fences and explicit catalog-only request-body limits. All 715 Touch rows now use 140 profiles;
+  command/binding counts are unchanged. cmd.chat.open_thread retains one owner and one row: consumer rules
+  require a Teacher/help target and Settings return only for its Teacher Settings producer; Work accepts its
+  ordinary bound Assistant thread and returns to the exact invoking Work view/focus. Wrong-owner
+  request/result, non-Teacher Work and per-consumer return cases are focused requirements, not native
+  dispatch evidence.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

@@ -1365,7 +1365,7 @@
     "default_parts": 24,
     "pm7_bindings": 477,
     "touch_rows": 715,
-    "touch_profiles": 137,
+    "touch_profiles": 140,
     "production_wiring_entries": 1269,
     "new_production_rows": 11,
     "new_bindings": 58
@@ -1784,6 +1784,535 @@
         "Full": "Quiet"
       },
       "valid": false
+    }
+  ],
+  "reused_owner_touch_cases": [
+    {
+      "name": "TCP-PM7-BROWSER-OPEN_payload",
+      "profile_id": "TCP-PM7-BROWSER-OPEN",
+      "part": "payload",
+      "instance": {
+        "dispatch_id": "dispatch:owner-fixture",
+        "command_id": "cmd.browser.open_workspace_preview",
+        "source_surface": "work_detail",
+        "actor_ref": "actor:user:fixture",
+        "raw_payload_ref": "owner-request:fixture:body"
+      },
+      "valid": true,
+      "source": {
+        "owner_contract": "Plans/UI_Command_Catalog.md#UCC-063",
+        "boundary": "Common identity envelope with unresolved owner body ref; not full owner payload validation."
+      }
+    },
+    {
+      "name": "TCP-PM7-BROWSER-OPEN_payload_wrong_owner",
+      "profile_id": "TCP-PM7-BROWSER-OPEN",
+      "part": "payload",
+      "instance": {
+        "dispatch_id": "dispatch:owner-fixture",
+        "command_id": "cmd.chat.schedule_message.cancel",
+        "source_surface": "work_detail",
+        "actor_ref": "actor:user:fixture",
+        "raw_payload_ref": "owner-request:fixture:body"
+      },
+      "valid": false
+    },
+    {
+      "name": "TCP-PM7-BROWSER-OPEN_payload_wrong_catalog_owner",
+      "profile_id": "TCP-PM7-BROWSER-OPEN",
+      "part": "payload",
+      "instance": {
+        "dispatch_id": "dispatch:owner-fixture",
+        "command_id": "cmd.terminal.rerun",
+        "source_surface": "work_detail",
+        "actor_ref": "actor:user:fixture",
+        "raw_payload_ref": "owner-request:fixture:body"
+      },
+      "valid": false
+    },
+    {
+      "name": "TCP-PM7-BROWSER-OPEN_result",
+      "profile_id": "TCP-PM7-BROWSER-OPEN",
+      "part": "result",
+      "instance": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:local_projection_success",
+        "request_ref": "request:local_projection_success",
+        "command_id": "cmd.browser.open_workspace_preview",
+        "command_instance_id": "command-instance:local_projection_success",
+        "response_kind": "local_projection",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:local_projection_success",
+        "operation_id": null,
+        "owner_identity": null,
+        "command_outcome_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "valid": true,
+      "source": {
+        "fixture": "Plans/ui_command_response_fixtures.json",
+        "case": "local_projection_success",
+        "adaptation": "command_id only; no new successful Terminal body"
+      }
+    },
+    {
+      "name": "TCP-PM7-BROWSER-OPEN_result_wrong_owner",
+      "profile_id": "TCP-PM7-BROWSER-OPEN",
+      "part": "result",
+      "instance": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:local_projection_success",
+        "request_ref": "request:local_projection_success",
+        "command_id": "cmd.chat.schedule_message.cancel",
+        "command_instance_id": "command-instance:local_projection_success",
+        "response_kind": "local_projection",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:local_projection_success",
+        "operation_id": null,
+        "owner_identity": null,
+        "command_outcome_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "valid": false
+    },
+    {
+      "name": "TCP-PM7-BROWSER-OPEN_result_wrong_catalog_owner",
+      "profile_id": "TCP-PM7-BROWSER-OPEN",
+      "part": "result",
+      "instance": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:local_projection_success",
+        "request_ref": "request:local_projection_success",
+        "command_id": "cmd.terminal.rerun",
+        "command_instance_id": "command-instance:local_projection_success",
+        "response_kind": "local_projection",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:local_projection_success",
+        "operation_id": null,
+        "owner_identity": null,
+        "command_outcome_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "valid": false
+    },
+    {
+      "name": "TCP-PM7-BROWSER-OPEN_error",
+      "profile_id": "TCP-PM7-BROWSER-OPEN",
+      "part": "error",
+      "instance": {
+        "code": "handler_unavailable",
+        "reason": "No domain handler was invoked.",
+        "offending_field": null
+      },
+      "valid": true,
+      "source": {
+        "fixture": "Plans/ui_command_response_fixtures.json",
+        "case": "predispatch_handler_unavailable"
+      }
+    },
+    {
+      "name": "TCP-PM7-TERMINAL-RERUN_payload",
+      "profile_id": "TCP-PM7-TERMINAL-RERUN",
+      "part": "payload",
+      "instance": {
+        "dispatch_id": "dispatch:owner-fixture",
+        "command_id": "cmd.terminal.rerun",
+        "source_surface": "work_detail",
+        "actor_ref": "actor:user:fixture",
+        "raw_payload_ref": "owner-request:fixture:body"
+      },
+      "valid": true,
+      "source": {
+        "owner_contract": "Plans/UI_Command_Catalog.md#UCC-201",
+        "boundary": "Common identity envelope with unresolved owner body ref; not full owner payload validation."
+      }
+    },
+    {
+      "name": "TCP-PM7-TERMINAL-RERUN_payload_wrong_owner",
+      "profile_id": "TCP-PM7-TERMINAL-RERUN",
+      "part": "payload",
+      "instance": {
+        "dispatch_id": "dispatch:owner-fixture",
+        "command_id": "cmd.chat.schedule_message.cancel",
+        "source_surface": "work_detail",
+        "actor_ref": "actor:user:fixture",
+        "raw_payload_ref": "owner-request:fixture:body"
+      },
+      "valid": false
+    },
+    {
+      "name": "TCP-PM7-TERMINAL-RERUN_payload_wrong_catalog_owner",
+      "profile_id": "TCP-PM7-TERMINAL-RERUN",
+      "part": "payload",
+      "instance": {
+        "dispatch_id": "dispatch:owner-fixture",
+        "command_id": "cmd.browser.open_workspace_preview",
+        "source_surface": "work_detail",
+        "actor_ref": "actor:user:fixture",
+        "raw_payload_ref": "owner-request:fixture:body"
+      },
+      "valid": false
+    },
+    {
+      "name": "TCP-PM7-TERMINAL-RERUN_result",
+      "profile_id": "TCP-PM7-TERMINAL-RERUN",
+      "part": "result",
+      "instance": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_acknowledged",
+        "request_ref": "request:shared_acknowledged",
+        "command_id": "cmd.terminal.rerun",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "pending",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "ack:shared_acknowledged",
+        "operation_id": "operation:shared_acknowledged",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_acknowledged",
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "valid": true,
+      "source": {
+        "fixture": "Plans/ui_command_response_fixtures.json",
+        "case": "ack_before_owner_result",
+        "adaptation": "command_id only; no new successful Terminal body"
+      }
+    },
+    {
+      "name": "TCP-PM7-TERMINAL-RERUN_result_wrong_owner",
+      "profile_id": "TCP-PM7-TERMINAL-RERUN",
+      "part": "result",
+      "instance": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_acknowledged",
+        "request_ref": "request:shared_acknowledged",
+        "command_id": "cmd.chat.schedule_message.cancel",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "pending",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "ack:shared_acknowledged",
+        "operation_id": "operation:shared_acknowledged",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_acknowledged",
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "valid": false
+    },
+    {
+      "name": "TCP-PM7-TERMINAL-RERUN_result_wrong_catalog_owner",
+      "profile_id": "TCP-PM7-TERMINAL-RERUN",
+      "part": "result",
+      "instance": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_acknowledged",
+        "request_ref": "request:shared_acknowledged",
+        "command_id": "cmd.browser.open_workspace_preview",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "pending",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "ack:shared_acknowledged",
+        "operation_id": "operation:shared_acknowledged",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_acknowledged",
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "valid": false
+    },
+    {
+      "name": "TCP-PM7-TERMINAL-RERUN_error",
+      "profile_id": "TCP-PM7-TERMINAL-RERUN",
+      "part": "error",
+      "instance": {
+        "code": "handler_unavailable",
+        "reason": "No domain handler was invoked.",
+        "offending_field": null
+      },
+      "valid": true,
+      "source": {
+        "fixture": "Plans/ui_command_response_fixtures.json",
+        "case": "predispatch_handler_unavailable"
+      }
+    },
+    {
+      "name": "scheduling_payload",
+      "profile_id": "TCP-PM7-SCHEDULE-CANCEL",
+      "part": "payload",
+      "instance": {
+        "schema_id": "pm.chat.scheduled_message_cancel_request.v1",
+        "request_type": "ScheduledMessageCancelRequest",
+        "command_id": "cmd.chat.schedule_message.cancel",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-cancel:1",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-cancel:1",
+        "source_surface": "scheduled_message_card",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 2,
+        "scheduled_dispatch_id": "sched-dispatch:fixture:2",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r14"
+      },
+      "valid": true,
+      "source": {
+        "fixture": "Plans/scheduling_and_quota_resume_contract_fixtures.json",
+        "case": "cancel_from_card"
+      }
+    },
+    {
+      "name": "scheduling_payload_wrong_owner",
+      "profile_id": "TCP-PM7-SCHEDULE-CANCEL",
+      "part": "payload",
+      "instance": {
+        "schema_id": "pm.chat.scheduled_message_cancel_request.v1",
+        "request_type": "ScheduledMessageCancelRequest",
+        "command_id": "cmd.terminal.rerun",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-cancel:1",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-cancel:1",
+        "source_surface": "scheduled_message_card",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 2,
+        "scheduled_dispatch_id": "sched-dispatch:fixture:2",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r14"
+      },
+      "valid": false
+    },
+    {
+      "name": "scheduling_result",
+      "profile_id": "TCP-PM7-SCHEDULE-CANCEL",
+      "part": "result",
+      "instance": {
+        "schema_id": "pm.chat.scheduled_message_cancel_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageCancelResult",
+        "command_id": "cmd.chat.schedule_message.cancel",
+        "command_instance_id": "cmdi:sched-cancel:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:scheduled-message:fixture:2",
+        "scheduled_dispatch_id": "sched-dispatch:fixture:2",
+        "resulting_revision": 3,
+        "state": "cancelled",
+        "snapshot_retained": true
+      },
+      "valid": true,
+      "source": {
+        "fixture": "Plans/scheduling_and_quota_resume_contract_fixtures.json",
+        "case": "cancel_accepted_retains_snapshot"
+      }
+    },
+    {
+      "name": "scheduling_result_wrong_owner",
+      "profile_id": "TCP-PM7-SCHEDULE-CANCEL",
+      "part": "result",
+      "instance": {
+        "schema_id": "pm.chat.scheduled_message_cancel_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageCancelResult",
+        "command_id": "cmd.terminal.rerun",
+        "command_instance_id": "cmdi:sched-cancel:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:scheduled-message:fixture:2",
+        "scheduled_dispatch_id": "sched-dispatch:fixture:2",
+        "resulting_revision": 3,
+        "state": "cancelled",
+        "snapshot_retained": true
+      },
+      "valid": false
+    },
+    {
+      "name": "scheduling_error",
+      "profile_id": "TCP-PM7-SCHEDULE-CANCEL",
+      "part": "error",
+      "instance": "invalid_request",
+      "valid": true
+    }
+  ],
+  "thread_consumer_cases": [
+    {
+      "name": "ordinary_work_thread",
+      "context": {
+        "project_id": "p1",
+        "thread_id": "ordinary-thread",
+        "current": true,
+        "is_teacher_thread": false,
+        "view_id": "work:platform",
+        "focus_id": "work-row-open",
+        "settings_manager": "settings:teacher",
+        "consumer": "work_detail"
+      },
+      "expected": {
+        "allowed": true,
+        "view_id": "work:platform",
+        "focus_id": "work-row-open"
+      }
+    },
+    {
+      "name": "work_missing_thread",
+      "context": {
+        "project_id": "p1",
+        "thread_id": "",
+        "current": true,
+        "is_teacher_thread": false,
+        "view_id": "work:platform",
+        "focus_id": "work-row-open",
+        "settings_manager": "settings:teacher",
+        "consumer": "work_detail"
+      },
+      "expected": {
+        "allowed": false
+      }
+    },
+    {
+      "name": "teacher_requires_teacher",
+      "context": {
+        "project_id": "p1",
+        "thread_id": "ordinary-thread",
+        "current": true,
+        "is_teacher_thread": false,
+        "view_id": "work:platform",
+        "focus_id": "work-row-open",
+        "settings_manager": "settings:teacher",
+        "consumer": "settings_teacher_help"
+      },
+      "expected": {
+        "allowed": false
+      }
+    },
+    {
+      "name": "teacher_returns_settings",
+      "context": {
+        "project_id": "p1",
+        "thread_id": "ordinary-thread",
+        "current": true,
+        "is_teacher_thread": true,
+        "view_id": "work:platform",
+        "focus_id": "teacher-help",
+        "settings_manager": "settings:teacher",
+        "consumer": "settings_teacher_help"
+      },
+      "expected": {
+        "allowed": true,
+        "view_id": "settings:teacher",
+        "focus_id": "teacher-help"
+      }
+    },
+    {
+      "name": "unknown_consumer_no_settings_fallback",
+      "context": {
+        "project_id": "p1",
+        "thread_id": "ordinary-thread",
+        "current": true,
+        "is_teacher_thread": false,
+        "view_id": "work:platform",
+        "focus_id": "work-row-open",
+        "settings_manager": "settings:teacher",
+        "consumer": "unrelated"
+      },
+      "expected": {
+        "allowed": false
+      }
     }
   ]
 }

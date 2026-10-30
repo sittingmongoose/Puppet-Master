@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26158-L26828
+Source lines: L26158-L26834
 
-Source SHA256: `93df03df23ee496b364d012a444a935d05eaceaddb177b6e2206527378189dfe`
+Source SHA256: `da1ab39e4b166c9dbb2cf09b37c3d5cadbff53944c74f8fba720003e6d870c77`
 
 ---
 
@@ -565,6 +565,12 @@ canonical_text: >-
   reduced-motion breath/blink exception of F3-662, no travel. App chirps use the one master player and
   existing chat mute, default off as a Pip part. Main-button pointer/keyboard acknowledgement is within 100
   ms with no busy stall/deferral workaround and no double commit; disabled oops never activates.
+  X2/L8, PM7 final GUI alignment f99ad183d2, 2026-10-30 (F3-3): the shared PM_BUSY signal also names drag,
+  after cover reasons so a cover retains priority. PM_BUSY.drag() reads the five shared body drag classes;
+  PM_BUSY.idle(fn, timeout) defers a request made during a drag and rechecks a callback that lands in one,
+  resubmitting after pm-idle. No idle job runs inside a held drag. This helper does not make a hidden tab
+  busy by itself or waive caller visibility, other busy/cover, interaction and animation gates. No new
+  command, binding, setting or event family is introduced.
 gui_related: true
 gui_classification_reason: Defines per-theme motion and the chat's sound cues.
 split_recommended: false

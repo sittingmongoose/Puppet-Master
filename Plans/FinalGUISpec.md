@@ -50599,6 +50599,12 @@ canonical_text: >-
   identities to cmd.work.stop and observes exit before claiming completion, exposing failures/stale
   targets. Cancel/Esc restores the opener without work mutation. Closing a window under minimize-to-tray
   retains its existing tray behavior. No silent kill, quit preference row or duplicated work owner.
+  D8/D10/G8, PM7 final GUI alignment f99ad183d2, 2026-10-30 (F3-4): the shared Stop/Quit list checkbox
+  distinguishes checked fill/tick from an empty unchecked box in every look, including Glass’s translucent
+  input skin. Keyboard focus and disabled state remain clear; Retro/NieR keep square geometry. These are the
+  existing work.quit.select_target and ui.work_quit.select draft controls, with unchanged target identity
+  and owner confirmation semantics. No toast-placement or G2 width decision is inferred from this visual
+  fix.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

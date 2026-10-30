@@ -8307,6 +8307,15 @@ canonical_text: >-
   fields, arbitrary enums and cross-branch fields refuse before view or owner effects. Pin and System status
   retain their separate restrictions. None of these draft/view changes creates a runtime mutation or saved
   setting.
+  D7/D8/D13, PM7 final-review direct correction, 2026-10-30 (Astra r2 N1): reused-owner Touch routes retain
+  separate contracts, never PM7 command_result. Browser open and Terminal rerun retain UCC-063/UCC-201
+  catalog payload contracts and the existing CV-333 UICommandResponse v2 projection/error/receipt; their
+  per-command identity fence checks common dispatch identity only, not an uncompiled owner request body or
+  terminal effect. Scheduling Cancel directly consumes ScheduledMessageCancelRequest and
+  ScheduledMessageCancelResult plus the scheduling owner’s closed error code. Its admitted source_surface
+  vocabulary is unchanged; Work delegates to the scheduling-owned cancellation context rather than inventing
+  a source or PID target. Precise per-command profiles and fixtures bind these distinctions; no owner adopts
+  a new PM7 result.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

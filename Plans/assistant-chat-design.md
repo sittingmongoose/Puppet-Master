@@ -26712,6 +26712,12 @@ canonical_text: >-
   reduced-motion breath/blink exception of F3-662, no travel. App chirps use the one master player and
   existing chat mute, default off as a Pip part. Main-button pointer/keyboard acknowledgement is within 100
   ms with no busy stall/deferral workaround and no double commit; disabled oops never activates.
+  X2/L8, PM7 final GUI alignment f99ad183d2, 2026-10-30 (F3-3): the shared PM_BUSY signal also names drag,
+  after cover reasons so a cover retains priority. PM_BUSY.drag() reads the five shared body drag classes;
+  PM_BUSY.idle(fn, timeout) defers a request made during a drag and rechecks a callback that lands in one,
+  resubmitting after pm-idle. No idle job runs inside a held drag. This helper does not make a hidden tab
+  busy by itself or waive caller visibility, other busy/cover, interaction and animation gates. No new
+  command, binding, setting or event family is introduced.
 gui_related: true
 gui_classification_reason: Defines per-theme motion and the chat's sound cues.
 split_recommended: false

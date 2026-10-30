@@ -13,6 +13,8 @@ import sys
 import yaml
 
 import jsonschema
+from referencing import Resource
+from pm_ui_command_response import registry as command_response_registry
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
@@ -81,6 +83,18 @@ def work_detail_census_errors(source, bindings, cases):
     return errors
 
 
+def thread_consumer_route(profile, context):
+    """Static consumer rule oracle; no thread navigation or focus is executed."""
+    rule = profile.get("consumer_rules", {}).get(context.get("consumer"))
+    if (not rule or not context.get("project_id") or not context.get("thread_id")
+            or not context.get("current") or not context.get("focus_id")
+            or (rule["requires_teacher_thread"] and not context.get("is_teacher_thread"))):
+        return {"allowed": False}
+    target = context.get("settings_manager") if rule["return_target"] == "settings_manager" else context.get("view_id")
+    return ({"allowed": True, "view_id": target, "focus_id": context["focus_id"]}
+            if target else {"allowed": False})
+
+
 def validate():
     failures = []
 
@@ -91,6 +105,47 @@ def validate():
     schema = read("pm7_build_contracts.schema.json")
     jsonschema.Draft202012Validator.check_schema(schema)
     fixtures = read("pm7_build_contracts.fixtures.json")
+    touch_profiles = {p["profile_id"]: p for p in read("touch_closure.json")["profiles"]}
+    schema_documents = [schema, read("ui_command_response.schema.json"),
+                        read("full_thread_runtime_contracts.schema.json"),
+                        read("scheduling_and_quota_resume_contracts.schema.json")]
+    registry = command_response_registry().with_resources(
+        (doc["$id"], Resource.from_contents(doc)) for doc in schema_documents)
+
+    def validate_ref(ref, value):
+        path, _, fragment = ref.partition("#")
+        doc = schema if path == "Plans/pm7_build_contracts.schema.json" else json.loads((ROOT / path).read_text())
+        selected = {"$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "$ref": doc["$id"] + ("#" + fragment if fragment else "")}
+        return jsonschema.Draft202012Validator(selected, registry=registry,
+                                              format_checker=jsonschema.FormatChecker()).is_valid(value)
+
+    for case in fixtures["reused_owner_touch_cases"]:
+        profile = touch_profiles[case["profile_id"]]
+        part, value = case["part"], case["instance"]
+        ref = profile[{"payload": "payload_schema_ref", "result": "result_schema_ref", "error": "error_schema_ref"}[part]]
+        if part == "payload" and ".json" not in ref.partition("#")[0]:
+            # Catalog refs stay the payload authority. This fence checks common identity only.
+            ref = profile["request_identity_schema_ref"]
+            require("body validation remains uncompiled" in profile["production_or_simulation"],
+                    case["profile_id"] + ": catalog identity fence promoted to body validation")
+        owns = part == "error" or (isinstance(value, dict) and value.get("command_id") in profile["command_ids"])
+        require((owns and validate_ref(ref, value)) == case["valid"], "Reused-owner Touch case differs: " + case["name"])
+    expected_contracts = {
+        "TCP-PM7-BROWSER-OPEN": ("Plans/UI_Command_Catalog.md#UCC-063", "Plans/ui_command_response.schema.json"),
+        "TCP-PM7-TERMINAL-RERUN": ("Plans/UI_Command_Catalog.md#UCC-201", "Plans/ui_command_response.schema.json"),
+        "TCP-PM7-SCHEDULE-CANCEL": (
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelRequest",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelResult")}
+    for profile_id, (request, result) in expected_contracts.items():
+        profile = touch_profiles[profile_id]
+        require((profile["payload_schema_ref"], profile["result_schema_ref"]) == (request, result),
+                profile_id + ": wrong owner contract references")
+        require(profile["receipt_refs"] and "pm7_build_contracts.schema.json" not in profile["error_schema_ref"],
+                profile_id + ": wrong owner error/receipt contract")
+    for case in fixtures["thread_consumer_cases"]:
+        require(thread_consumer_route(touch_profiles["TCP-TEACHER-HELP"], case["context"]) == case["expected"],
+                "Thread consumer availability/return differs: " + case["name"])
     for case in fixtures["schema_cases"]:
         scoped = {**schema, "$ref": "#/$defs/" + case["definition"]}
         # Test a definition directly, without the top-level record union.
@@ -358,6 +413,8 @@ process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
             "work_detail_controls": len(census),
             "work_detail_omission_cases": len(fixtures["work_detail_census_cases"]),
             "pip_preset_parity_cases": len(fixtures["pip_preset_parity_cases"]),
+            "reused_owner_touch_cases": len(fixtures["reused_owner_touch_cases"]),
+            "thread_consumer_cases": len(fixtures["thread_consumer_cases"]),
             "concept_source_anchors": source_anchors, "failures": failures}
 
 
