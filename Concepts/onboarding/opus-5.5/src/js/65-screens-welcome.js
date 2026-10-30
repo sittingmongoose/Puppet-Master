@@ -34,12 +34,14 @@
     if (!O55.nierLook || !window.PM_NIER) return '';
     const on = O55.nierLook.state().on, name = T('look.families.' + th.chosen + '.name'), sub = on ? T('look.nier.subOn', { name }) : T('look.nier.sub');
     return `<div class="o55-nierlook" data-key="nier" data-on="${on}">`
-      + `<button type="button" class="o55-niercheck${on ? ' o55-on' : ''}" role="checkbox" aria-checked="${on}" aria-labelledby="o55-niername" aria-describedby="o55-niersub" title="${U.esc(sub)}" data-o55-do="pickNier" data-o55-sound="self" data-o55-nier-check data-key="nier-check" data-pm-hover-exempt="true">`
+      + `<button type="button" class="o55-niercheck${on ? ' o55-on' : ''}" role="checkbox" aria-checked="${on}" aria-labelledby="o55-niername" aria-describedby="o55-niersub${O55.tips.open('pickNier') ? ' pm7ob-explainer' : ''}" title="${U.esc(sub)}" data-o55-do="pickNier" data-o55-sound="self" data-o55-nier-check data-key="nier-check" data-pm-hover-exempt="true">`
       + `<span class="o55-nierthumb o55-scene-host" data-nier-thumb aria-hidden="true" data-morph-skip></span>`
       + `<span class="o55-niertext"><span class="o55-niertitle"><span class="o55-nierbox" aria-hidden="true"></span><span class="o55-niername" id="o55-niername">${U.esc(T('look.nier.label'))}</span>`
       + `<span class="o55-tag o55-niertag">${U.esc(T('look.nier.tag'))}</span></span>`
       + `<span class="o55-niersub" id="o55-niersub">${U.esc(sub)}</span></span></button>`
-      + `<button type="button" class="o55-btn o55-secondary o55-small o55-nieradjust" data-o55-do="adjustNier" data-o55-sound="self" data-key="nier-adjust" data-pm-hover-exempt="true">${O55.nierLook.icon()}<span>${U.esc(T('look.nier.adjust'))}</span></button></div>`;
+      + O55.tips.q('pickNier', { cls: 'o55-tipq-nier' })
+      + `<button type="button" class="o55-btn o55-secondary o55-small o55-nieradjust" data-o55-do="adjustNier" data-o55-sound="self" data-key="nier-adjust"${O55.tips.described('adjustNier')} data-pm-hover-exempt="true">${O55.nierLook.icon()}<span>${U.esc(T('look.nier.adjust'))}</span></button>${O55.tips.q('adjustNier')}</div>`
+      + O55.tips.explainer('pickNier') + O55.tips.explainer('adjustNier');
   }
   let nierSub = null;
   /* The troupe in the wings (hero spec H6): hovering or focusing the NieR row, its thumbnail's control bar dips, the
@@ -63,8 +65,9 @@
     row.addEventListener('focusin', (e) => { if (!row.contains(e.relatedTarget)) go(e); });
   }
   function ack(el, sel) {
-    const group = el.parentElement;
-    group.querySelectorAll(':scope > ' + sel).forEach((n) => { const on = n === el; n.classList.toggle('o55-on', on); n.setAttribute('aria-checked', String(on)); });
+    /* (a tile sits in its option beside its ?, so its siblings are found through the radiogroup) */
+    const group = el.closest('[role="radiogroup"]') || el.parentElement;
+    group.querySelectorAll(sel).forEach((n) => { const on = n === el; n.classList.toggle('o55-on', on); n.setAttribute('aria-checked', String(on)); });
   }
   def('look', {
     chapter: 'welcome', stage: 'welcome', charmSlot: 'look',
@@ -78,16 +81,17 @@
       const th = O55.theme();
       const tiles = FAMS.map((f, i) => {
         const on = th.chosen === f;
-        return `<button type="button" class="o55-tile${on ? ' o55-on' : ''}" role="radio" aria-checked="${on}" data-o55-do="pickFamily" data-o55-sound="self" data-arg="${f}" data-theme="${f}-${th.mode}" data-key="tile-${f}" data-pm-hover-exempt="true" style="--ci:${i}">`
+        return `<button type="button" class="o55-tile${on ? ' o55-on' : ''}" role="radio" aria-checked="${on}" data-o55-do="pickFamily" data-o55-sound="self" data-arg="${f}" data-theme="${f}-${th.mode}" data-key="tile-${f}"${O55.tips.described('pickFamily:' + f)} data-pm-hover-exempt="true" style="--ci:${i}">`
           + `<span class="o55-tileart o55-scene-host" data-family="${f}" data-tile="${f}" aria-hidden="true" data-morph-skip></span>`
           + `<span class="o55-tilename">${U.esc(T('look.families.' + f + '.name'))}</span><span class="o55-tilesub">${U.esc(T('look.families.' + f + '.sub'))}</span>`
           + `<span class="o55-check" aria-hidden="true"></span></button>`;
-      }).join('');
+      }).map((html, i) => O55.tips.opt('pickFamily:' + FAMS[i], html, 'o55-opt-tile', 'div', { note: false })).join('');
       /* Light / Dark sits above the tiles. NieR Mode follows the tiles in reading order; on a wide window it is drawn
          as a compact card on Light / Dark's line (13-nier-look.css), so the checkbox and Adjust are in the first view
          with the four looks; the narrow window keeps it as a row under them */
       return `<div class="o55-lookgrid" data-key="lookgrid"><div class="o55-lookmode" data-key="mode">${C.segmented({ do: 'pickMode', value: th.mode, label: T('look.modeLabel'), options: [{ v: 'light', label: T('look.light'), glyph: 'spark' }, { v: 'dark', label: T('look.dark'), glyph: 'history' }] })}</div>`
-        + `<div class="o55-tiles" role="radiogroup" aria-label="${U.esc(T('look.title'))}" data-key="tiles">${tiles}</div>` + nierRow(th) + '</div>';
+        + `<div class="o55-tiles" role="radiogroup" aria-label="${U.esc(T('look.title'))}" data-key="tiles">${tiles}</div>`
+        + FAMS.map((f) => O55.tips.explainer('pickFamily:' + f)).join('') + nierRow(th) + '</div>';
     },
     mounted(S, layer, first) {
       /* each tile is a small living scene drawn with that family's own tokens */

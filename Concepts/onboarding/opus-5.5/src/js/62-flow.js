@@ -102,8 +102,10 @@
   F.plural = (n, one, many) => T(n === 1 ? one : many, { n });
   F.nonEmpty = (v) => String(v == null ? '' : v).trim().length > 0;
   F.isHttps = (v) => /^https:\/\/[^\s/?#]+(?:[/?#][^\s]*)?$/.test(String(v || '').trim());
+  /* suggestion chips, with one ? for them all (group:<action>) after the last */
   F.chips = function chips(action, values, current) {
-    return `<div class="o55-suggest" role="group">` + values.map((v) => `<button type="button" class="o55-suggestchip${v === current ? ' o55-on' : ''}" data-o55-do="${U.esc(action)}" data-arg="${U.esc(v)}" data-pm-hover-exempt="true" data-key="sg-${U.esc(U.slug(v))}">${U.esc(v)}</button>`).join('') + '</div>';
+    const gid = 'group:' + action;
+    return `<div class="o55-suggest" role="group">` + values.map((v) => `<button type="button" class="o55-suggestchip${v === current ? ' o55-on' : ''}" data-o55-do="${U.esc(action)}" data-arg="${U.esc(v)}"${O55.tips.described(gid)} data-pm-hover-exempt="true" data-key="sg-${U.esc(U.slug(v))}">${U.esc(v)}</button>`).join('') + O55.tips.q(gid) + '</div>' + O55.tips.explainer(gid);
   };
   /* A disclosure row that reveals more choices in place (source_more / remote_more); never a nested dialog. */
   F.more = function more(open, label, action, body, key) {
@@ -112,7 +114,9 @@
       + (open ? `<div class="o55-morebody">${body}</div>` : '') + '</div>';
   };
   /* Copy-to-clipboard button with a transient "Copied" state (no fake success: it reports the clipboard result). */
-  F.copyBtn = (text, key) => `<button type="button" class="o55-btn o55-secondary o55-small" data-o55-do="copyText" data-arg="${U.esc(text)}" data-pm-hover-exempt="true" data-key="copy-${U.esc(key || U.slug(text))}">${U.esc(T('chrome.copy'))}</button>`;
+  /* (its ? is copy:<key>; the explainer opens after the line the button sits in: F.copyNote(key)) */
+  F.copyNote = (key) => O55.tips.explainer('copy:' + (key || ''));
+  F.copyBtn = (text, key) => O55.tips.opt('copy:' + (key || ''), `<button type="button" class="o55-btn o55-secondary o55-small" data-o55-do="copyText" data-arg="${U.esc(text)}" data-pm-hover-exempt="true" data-key="copy-${U.esc(key || U.slug(text))}">${U.esc(T('chrome.copy'))}</button>`, 'o55-opt-inline', 'span', { note: false });
   O55.actions.copyText = function (S, text, el) {
     U.copyText(text).then((ok) => { if (!ok || !el || !document.contains(el)) return; el.textContent = T('chrome.copied'); O55.sound.play('copy'); O55.motion.after(1400, () => { if (document.contains(el)) el.textContent = T('chrome.copy'); }); });
   };

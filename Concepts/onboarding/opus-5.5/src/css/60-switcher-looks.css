@@ -263,6 +263,9 @@ html:not([data-theme^="glass"]):not(#lgz) .pmw-tab { --pmh-radius: var(--pm-swit
    the marker on a switcher's item as an echo of its chip (25-hover-controls.css) */
 html:not([data-theme^="glass"]):not(#lgz) .title-bar .page-tab { --pmh-radius: var(--pm-switch-r); --pmh-inset: -2px -2px -2px -2px; --pmh-variant: chip; }
 html:not([data-theme^="glass"]):not(#lgz) #sidePanelSlot .pm-segtab-item { --pmh-variant: chip; }
+/* the project box is one of the title bar's tabs (F3-661): its chip is its own box (it wears the chip while its menu is
+   open), so the marker takes that box and the chip's inner corners */
+html:not([data-theme^="glass"]):not(#lgz) .title-bar #projectMenuBtn { --pmh-radius: var(--pm-switch-r-in); --pmh-inset: 0px 0px 0px 0px; --pmh-variant: chip; }
 /* the chosen tab's words are the switcher's chosen ink, as on every other chip of the look */
 html:not([data-theme^="glass"]):not(#lgz) :is(#pm-home-centre, .pmw-scope) { --pmw-tab-active: var(--pm-switch-ink-on); }
 /* and its close x (and the unsaved dot in it) is part of the chip too: the chip's ink, with a square of that ink under the

@@ -116,6 +116,8 @@ PMW.updateTab = function (tabId, fields) {
     var p = model.panelOf(L(), tabId);
     if (p) stripSoon(p.id);
     PMW.persist.saveSoon();
+    /* the title bar's project box shows the project's unsaved shell state (FinalGUISpec 3.4) */
+    if (Object.prototype.hasOwnProperty.call(fields, 'dirty')) window.dispatchEvent(new CustomEvent('pm7.home.unsaved', { detail: { tab: tabId, dirty: !!rec.dirty } }));
   }
 };
 /* a kind's push-updates (a terminal's label and exit code at each command's start and end, a dirty mark) repaint the

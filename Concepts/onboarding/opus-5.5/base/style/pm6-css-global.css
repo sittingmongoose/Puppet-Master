@@ -404,8 +404,10 @@
       background: var(--pm6-cozy-field);
       border: 1px solid var(--pm6-cozy-chrome-border);
     }
-    [data-theme^="friendly"] .title-bar .project-dropdown {
-      gap: var(--sm);
+    /* the project box is one of the tabs here too (style-002.css): the tabs' tracking and padding, not a field */
+    [data-theme^="friendly"] .title-bar #projectMenuBtn {
+      padding: 0 10px 0 9px;
+      letter-spacing: 0.08em;
     }
     [data-theme^="friendly"] :where(input[type="text"], input[type="search"], textarea, select) {
       border-radius: var(--radius-md);
