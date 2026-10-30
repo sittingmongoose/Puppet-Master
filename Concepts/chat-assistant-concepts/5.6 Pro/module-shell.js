@@ -493,21 +493,17 @@
   /* The blink phase a Pip keeps (pip.js blinks one Pip at a time; this only orders them), from what it shows: never random */
   function pipPhase(s) { var h = 0x811c9dc5; s = str(s); for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0; } return h % 997; }
 
-  /* ---- "You": the person holding the strings (unchanged from item 14a: the user mark raising the cross-shaped
-     control, its two strings hanging free). Its face table, figure and sprites: */
+  /* ---- "You": the person, on their own (QA round 2, Q16; Jared 2026-10-30: "the You icon can just drop the marionette
+     cross"): head and shoulders in the look's own drawing, beside the team of Pips. Its face table and figure: */
   var PUP = {
     eyes: [[12.5, 11.7], [15.5, 11.7]], cheeks: [[11.3, 13.2], [16.7, 13.2]], smile: 'M13.2 13.7Q14 14.4 14.8 13.7',
     hair: 'M9.85 10.6A4.2 4.2 0 0 1 18.15 10.6Q16.4 9.2 14 9.8Q11.6 9.2 9.85 10.6Z', shine: 'M11.2 10.2A3 3 0 0 1 13.2 8'
   };
-  var YOU = {
-    head: [10.4, 12.2, 4.4], body: 'M3.4 26.6C3.4 21.2 6.4 18.2 10.4 18.2S17.4 21.2 17.4 26.6Z',
-    arms: 'M15.4 20.6 20.2 9.7', bar: 'M16.2 10.6 24.2 8.2', grip: 'M20.2 9.4V7.2', strs: 'M16.2 10.6V16M24.2 8.2V14.6'
-  };
+  var YOU = { head: [14, 10.2, 5.4], body: 'M4.6 27C4.6 21.1 8.8 17.8 14 17.8S23.4 21.1 23.4 27Z' };
   var SIL_PROP = { lead: 'crown', square: 'hardhat', circle: 'lens', triangle: 'square', diamond: 'pennant', hexagon: 'jester', orbit: 'orbit', bowl: 'grill', grill: 'grill', you: 'you' };
-  /* Retro's You: a 13 x 13 sprite on 2-unit cells (crisp edges). b bar, s string (a dotted half cell), h hair, k skin,
-     e eye, c tunic (seat hue), l legs. */
-  var PX_YOU = ['.............', '.......bbbbb.', '.......s.k.s.', '.......s.c.s.', '.hhhhh..c..s.', '.hkkkh..c....', '.kekek.c.....', '.kkkkk.c.....',
-    '..kkk.c......', '.ccccc.......', 'kccccc.......', '.ccccc.......', '..l.l........'];
+  /* Retro's You: a 13 x 13 sprite on 2-unit cells (crisp edges): h hair, k skin, e eye, c the tunic (seat hue). */
+  var PX_YOU = ['.............', '....hhhhh....', '...hhhhhhh...', '...hkkkkkh...', '...kekkkek...', '...kkkkkkk...',
+    '....kkkkk....', '.....kkk.....', '...ccccccc...', '..ccccccccc..', '.ccccccccccc.', '.ccccccccccc.', '.ccccccccccc.'];
   function pxSprite(rows) {
     var out = '';
     for (var r = 0; r < rows.length; r++) {
@@ -585,15 +581,15 @@
   }
   function headD(h) { return dCirc(h[0], h[1], h[2]); }
   function ppYou(M) {
-    var Y = YOU, fig = pp('body', Y.body) + pp('limb', Y.arms) + ppHead(Y.head, 'you', M);
-    return { rig: '<g class="pmx-pp-fig">' + fig + pp('str', Y.strs) + pp('bar', Y.bar) + pp('grip', Y.grip) + '</g>', halo: Y.arms + Y.body + headD(Y.head) + Y.bar + Y.grip };
+    var Y = YOU;
+    return { rig: '<g class="pmx-pp-fig">' + pp('body', Y.body) + ppHead(Y.head, 'you', M) + '</g>', halo: Y.body + headD(Y.head) };
   }
-  /* NieR's You (html[data-o55-nier="on"]): ink on parchment, the user's head under its visor slit raising the control
-     (paint in nier-parts.css); 16 px and under the 14-cell pixel map */
-  var PN_YOU = { bar: [16.6, 2.6, 9.6, 1.4], studs: [[17.2, 3.3], [25.6, 3.3]], arm: 'M16 16.6L19.6 10.6L21.4 4.8', hand: [21.4, 4.6, 1.9],
-    body: 'M8.4 24.8L9.4 17.4L11.2 15.6H15L16.8 17.4L17.8 24.8Z', head: 'M11.1 6.6H14.9L16.8 8.5V11.7L14.7 14.2H11.3L9.2 11.7V8.5Z', slit: [10.2, 9.3, 6.6, 1.9],
-    tiny: ['..............', '........#####.', '..........#...', '...###....#...', '..#####..#....', '..#oooo..#....', '..#####.#.....', '...###.#......',
-      '..######......', '.#######......', '.#######......', '.#######......', '.#######......', '..............'] };
+  /* NieR's You (html[data-o55-nier="on"]): ink on parchment, the user's head under its visor slit over the shoulders;
+     16 px and under the 14-cell pixel map */
+  var PN_YOU = { body: 'M6.4 26.6L7.6 19.2L10.4 16.8H17.6L20.4 19.2L21.6 26.6Z', head: 'M11.6 4.6H16.4L18.8 7V11L16.2 14.2H11.8L9.2 11V7Z',
+    slit: [10.2, 8.1, 7.6, 2.2],
+    tiny: ['..............', '.....####.....', '....######....', '....#oooo#....', '....######....', '.....####.....', '..............',
+      '...########...', '..##########..', '..##########..', '..##########..', '..##########..', '..##########..', '..............'] };
   function pnc(c) { return String(c).split(' ').map(function (x) { return 'pmx-pn-' + x; }).join(' '); }
   function pnP(c, d) { return '<path class="' + pnc(c) + '" d="' + d + '"/>'; }
   function pnR(c, x, y, w, h) { return '<rect class="' + pnc(c) + '" x="' + n2(x) + '" y="' + n2(y) + '" width="' + n2(w) + '" height="' + n2(h) + '"/>'; }
@@ -612,8 +608,7 @@
       }
       return '<g class="pmx-pn-px">' + out + '</g>';
     }
-    var s = pnR('i', Y.bar[0], Y.bar[1], Y.bar[2], Y.bar[3]) + (M.g3 ? pnSQ('i', Y.studs[0][0], Y.studs[0][1], 1.8) + pnSQ('i', Y.studs[1][0], Y.studs[1][1], 1.8) : '');
-    return s + pnP('sl', Y.arm) + pnSQ('i', Y.hand[0], Y.hand[1], Y.hand[2]) + pnP('i', Y.body) + pnP('i', Y.head) + pnR('slit', Y.slit[0], Y.slit[1], Y.slit[2], Y.slit[3]);
+    return pnP('i', Y.body) + pnP('i', Y.head) + pnR('slit', Y.slit[0], Y.slit[1], Y.slit[2], Y.slit[3]);
   }
   /* markInner(sil, seat, state, standin, role, size, grill) - the inside of a mark (28 grid). role, when given, picks the
      exact prop (moderator's gavel, teacher's page); without it the prop follows the silhouette. size: the mark's

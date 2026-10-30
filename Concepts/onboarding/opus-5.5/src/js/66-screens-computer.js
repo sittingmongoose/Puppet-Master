@@ -47,13 +47,13 @@
       const sel = S.sess.ui.where || 'this';
       const here = S.env.here;
       let out = C.cards('pick', [
-        { v: 'this', glyph: 'computer', title: T('where.this.title'), sub: T('where.this.sub'), tag: T('chrome.recommended') },
+        /* this computer's checks are about this computer: under its card, not under the whole list (QA round 2, Q7) */
+        { v: 'this', glyph: 'computer', title: T('where.this.title'), sub: T('where.this.sub'), tag: T('chrome.recommended'), under: sel === 'this' ? checkChips(S) : '' },
         { v: 'connect', glyph: 'link', title: T('where.connect.title'), sub: T('where.connect.sub') },
         { v: 'server', glyph: 'server', title: T('where.server.title'), sub: T('where.server.sub') }
       ], sel, { label: T('where.title') });
-      if (sel === 'this') out += checkChips(S);
       out += `<div class="o55-sublinks" data-key="links">${C.link(T('where.restoreAll'), 'restoreAll')}</div>`;
-      out += C.details(S, 'where', T('where.detailsLabel'), `<p>${U.esc(T('where.details'))}</p>`);
+      /* ("What is a Server?" was an old-style explainer; the Server card's ? says the same: QA round 2, Q8) */
       return out;
     },
     mounted(S) { if ((S.sess.ui.where || 'this') === 'this') runCheck(S); },

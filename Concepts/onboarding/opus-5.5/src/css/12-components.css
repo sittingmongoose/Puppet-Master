@@ -8,7 +8,48 @@
 .o55-card.o55-card-quiet .o55-glyph svg { width: 18px; height: 18px; }
 .o55-card.o55-card-quiet .o55-cardtitle { font-size: 14px; }
 .o55-card.o55-card-quiet .o55-cardsub { font-size: 12.5px; }
-.o55-subchoices { margin: -4px 0 2px; padding: 8px; border-radius: var(--o55-card-r); background: color-mix(in srgb, var(--o55-accent) 6%, transparent); }
+/* A choice's own next question (which device, which folder, which service) hangs from its card as one piece with it:
+   the chosen card's lower corners open into a tray drawn in the card's own edge, indented to the card's words, with a
+   line down from the card's mark. It never sits below the whole list, where the nearest card reads as its parent
+   (Jared, QA round 2, Q7). The card keeps still under the pointer, so the seam never opens. */
+.o55-card.o55-card-parent { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.o55-card.o55-card-parent:hover { transform: none; }
+.o55-card.o55-card-parent.o55-on { border-bottom-color: color-mix(in srgb, var(--o55-accent) 30%, var(--o55-line));
+  box-shadow: inset 1px 0 0 var(--o55-accent), inset -1px 0 0 var(--o55-accent), inset 0 1px 0 var(--o55-accent); }
+.o55-under { position: relative; display: grid; gap: 10px; margin-top: -11px; padding: 14px 14px 14px 72px; min-width: 0;
+  border: 1px solid var(--o55-accent); border-top: 0; border-radius: 0 0 var(--o55-card-r) var(--o55-card-r);
+  background: color-mix(in srgb, var(--o55-accent) 5%, var(--o55-card-bg));
+  box-shadow: inset 1px 0 0 var(--o55-accent), inset -1px 0 0 var(--o55-accent), inset 0 -1px 0 var(--o55-accent); }
+.o55-under::before { content: ''; position: absolute; left: 36px; top: 0; bottom: 16px; width: 2px; border-radius: 1px; background: color-mix(in srgb, var(--o55-accent) 42%, transparent); pointer-events: none; }
+/* (under a quiet card: its smaller mark and tighter list) */
+.o55-choices-quiet > .o55-under { margin-top: -7px; padding-left: 56px; }
+.o55-choices-quiet > .o55-under::before { left: 28px; }
+.o55-under > .o55-choices { gap: 7px; }
+.o55-under > .o55-sublinks, .o55-under > .o55-note { margin: 0; }
+/* words between two kinds of choice in one list */
+.o55-choicesep { margin: 6px 0 -3px; color: var(--text-secondary); font: 600 13px/1.4 var(--body-font); }
+#pm-o55-onboarding[data-family="retro"] .o55-choicesep { font-family: var(--display-font); text-transform: uppercase; font-size: 12px; letter-spacing: 0.03em; }
+/* (a block that draws its own panel elsewhere is the tray's content here, not a panel in a panel) */
+.o55-under > .o55-preview { padding: 0; background: none; }
+#pm-o55-onboarding[data-family="friendly"] .o55-card.o55-card-parent.o55-on { border-bottom: 2px dashed color-mix(in srgb, var(--o55-ink) 32%, transparent); box-shadow: 4px 0 0 color-mix(in srgb, var(--o55-accent) 70%, transparent); }
+#pm-o55-onboarding[data-family="friendly"] .o55-under { border: 2px solid var(--o55-ink); border-top: 0; background: var(--o55-card-bg);
+  box-shadow: 4px 0 0 color-mix(in srgb, var(--o55-accent) 70%, transparent), 4px 5px 0 color-mix(in srgb, var(--o55-accent) 70%, transparent); }
+#pm-o55-onboarding[data-family="friendly"] .o55-under::before { background: color-mix(in srgb, var(--o55-ink) 45%, transparent); }
+/* Glass rounds every card to 12 px with a ring all round (45-glass-controls.css, and the Glass layer's own !important
+   rule): a parent card opens at the bottom into its tray, its ring on three sides, the tray rounded to match */
+#pm-o55-onboarding[data-family="glass"] .o55-card.o55-card-parent { border-radius: 12px 12px 0 0; }
+#pm-o55-onboarding[data-family="glass"] .o55-card.o55-card-parent.o55-on { box-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 1.5px 0 0 color-mix(in srgb, var(--accent-blue) 85%, transparent),
+  inset -1.5px 0 0 color-mix(in srgb, var(--accent-blue) 85%, transparent), inset 0 1.5px 0 color-mix(in srgb, var(--accent-blue) 85%, transparent); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-card.o55-card-parent { border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-card.o55-card-parent.o55-on { box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 1.5px 0 0 rgba(var(--accent-primary-rgb), .85),
+  inset -1.5px 0 0 rgba(var(--accent-primary-rgb), .85), inset 0 1.5px 0 rgba(var(--accent-primary-rgb), .85) !important; }
+#pm-o55-onboarding[data-family="glass"] .o55-under { border-radius: 0 0 12px 12px; border-color: color-mix(in srgb, var(--accent-blue) 85%, transparent);
+  background: color-mix(in srgb, var(--accent-blue) 9%, var(--o55-card-bg));
+  box-shadow: inset 0.5px 0 0 color-mix(in srgb, var(--accent-blue) 85%, transparent), inset -0.5px 0 0 color-mix(in srgb, var(--accent-blue) 85%, transparent), inset 0 -0.5px 0 color-mix(in srgb, var(--accent-blue) 85%, transparent); }
+html[data-lg="on"][data-theme^="glass"] #pm-o55-onboarding .o55-under { border-color: rgba(var(--accent-primary-rgb), .85); box-shadow: inset 0.5px 0 0 rgba(var(--accent-primary-rgb), .85), inset -0.5px 0 0 rgba(var(--accent-primary-rgb), .85), inset 0 -0.5px 0 rgba(var(--accent-primary-rgb), .85); }
+#pm-o55-onboarding[data-family="retro"] .o55-card.o55-card-parent.o55-on { border-bottom-color: var(--text-primary); box-shadow: 4px 0 0 color-mix(in srgb, var(--text-primary) 40%, transparent); }
+#pm-o55-onboarding[data-family="retro"] .o55-under { border: 2px solid var(--text-primary); border-top: 0; background: var(--o55-win-bg); box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 40%, transparent); }
+#pm-o55-onboarding[data-family="retro"] .o55-under::before { border-radius: 0; background: var(--text-primary); }
 .o55-card-link { grid-template-columns: auto minmax(0, 1fr) auto; border-style: dashed; }
 .o55-cardarrow { font-size: 22px; line-height: 1; color: var(--o55-ink-accent); padding-right: 4px; }
 .o55-row-wait { color: var(--text-secondary); }
@@ -195,13 +236,18 @@ html .o55-demo[data-o55-narrow] .o55-demopill { width: 20px; height: 44px; paddi
 /* the look menu beside the sound button (onboarding header; the tour bar opens it upward) */
 .o55-lookslot, .o55t-lookslot { position: relative; display: inline-flex; }
 .o55-lookbtn.o55-on { color: var(--o55-accent, var(--accent-blue)); background: color-mix(in srgb, var(--o55-accent, var(--accent-blue)) 14%, transparent); }
-.o55-lookmenu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 30; width: 244px; padding: 8px; display: grid; gap: 8px; border-radius: 14px; border: 1px solid var(--border);
+.o55-lookmenu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 30; width: 236px; max-width: calc(100vw - 24px); box-sizing: border-box; padding: 8px; display: grid; gap: 8px; border-radius: 14px; border: 1px solid var(--border);
   background: linear-gradient(var(--surface), var(--surface)), var(--background); color: var(--text-primary); box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.5); animation: o55-lookin 180ms cubic-bezier(0.2, 0, 0, 1) both; }
 .o55t-lookslot .o55-lookmenu { top: auto; bottom: calc(100% + 12px); }
 @keyframes o55-lookin { from { opacity: 0; transform: translateY(-6px) scale(0.98); } }
 .o55t-lookslot .o55-lookmenu { animation-name: o55-lookup; }
 @keyframes o55-lookup { from { opacity: 0; transform: translateY(6px) scale(0.98); } }
-.o55-lookopts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+/* one column (Q5: the two columns of a look and its ? did not fit the menu, and the ?s sat past its edge); the five looks,
+   then Light / Dark with its ?, then Adjust NieR with its ? while NieR is the look (63-look-menu.js) */
+.o55-lookopts { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; }
+.o55-lookmoderow > .o55-lookmodes { flex: 1; min-width: 0; }
+.o55-lookadjust { padding-top: 6px; border-top: 1px solid var(--border); }
+.o55-lookadjust-ico { flex: none; display: inline-grid; place-items: center; width: 31px; color: var(--text-secondary); }
 .o55-lookopt { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: 10px; border: 1px solid transparent; background: transparent; color: var(--text-primary); font: 600 13px/1.1 var(--body-font); cursor: pointer; text-align: left; }
 .o55-lookopt:hover { background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
 .o55-lookopt.o55-on { border-color: var(--o55-accent, var(--accent-blue)); background: color-mix(in srgb, var(--o55-accent, var(--accent-blue)) 12%, transparent); }

@@ -172,6 +172,10 @@
           "title": "Retro",
           "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light is printed on paper by a teletype."
         },
+        "lookFamily:nier": {
+          "title": "NieR",
+          "text": "Ink and parchment inspired by NieR: Automata, with square lines, its own sounds and a scene behind the app. Adjust NieR chooses which of its pieces you want."
+        },
         "lookMode:light": {
           "title": "Light or dark",
           "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read."
@@ -181,12 +185,12 @@
           "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read."
         },
         "lookNier:nier": {
-          "title": "NieR Mode",
-          "text": "An ink-and-parchment look inspired by NieR: Automata. It paints over the look you pick; turn it off any time."
+          "title": "NieR",
+          "text": "An ink-and-parchment look inspired by NieR: Automata, in light and dark like every look. Adjust NieR chooses its pieces."
         },
         "lookNierAdjust:nier-adjust": {
-          "title": "Adjust NieR look",
-          "text": "Choose which parts of NieR Mode you want, like its menu sounds, its motion and the picture behind it. Works with NieR Mode on or off."
+          "title": "Adjust NieR",
+          "text": "Choose which pieces of NieR you want, like its menu sounds, its motion and the picture behind it."
         }
       },
       "welcome": {
@@ -212,17 +216,21 @@
           "title": "Retro",
           "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light is printed on paper by a teletype."
         },
+        "pickFamily:nier": {
+          "title": "NieR",
+          "text": "Ink and parchment inspired by NieR: Automata, with square lines, its own sounds and a scene behind the app. Adjust NieR chooses which of its pieces you want."
+        },
         "group:pickMode": {
           "title": "Light or dark",
           "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read."
         },
         "pickNier": {
-          "title": "NieR Mode",
-          "text": "An ink-and-parchment look inspired by NieR: Automata. It paints over the look you pick; turn it off any time."
+          "title": "NieR",
+          "text": "An ink-and-parchment look inspired by NieR: Automata, in light and dark like every look. Adjust NieR chooses its pieces."
         },
         "adjustNier": {
-          "title": "Adjust NieR look",
-          "text": "Choose which parts of NieR Mode you want, like its menu sounds, its motion and the picture behind it. Works with NieR Mode on or off."
+          "title": "Adjust NieR",
+          "text": "Choose which pieces of NieR you want, like its menu sounds, its motion and the picture behind it."
         }
       },
       "where": {
@@ -396,11 +404,23 @@
       "r-source": {
         "source:kit": {
           "title": "A Recovery Kit file",
-          "text": "The file you saved when you set up backups. It knows where your backup is and how to open it. The best place to start."
+          "text": "The file you saved when you set up backups. It is not a place: it says where your backup is kept and holds the key that unlocks it, so there is no phrase to type. It never holds a NAS or cloud sign-in. The best place to start."
+        },
+        "group:kit": {
+          "title": "Which Recovery Kit",
+          "text": "Recovery Kit files found on this computer. Pick the one for the backup you want back."
+        },
+        "group:bfolder": {
+          "title": "Which folder",
+          "text": "Folders on this computer or a plugged-in drive that hold a Puppet Master backup."
+        },
+        "field:bpath": {
+          "title": "Where the backup folder is",
+          "text": "The folder's full location, as your file browser shows it."
         },
         "source:folder": {
           "title": "A folder on this computer",
-          "text": "A backup copied onto this computer, or on a drive you plugged in."
+          "text": "A backup kept on this computer, or on a drive you plugged in. You point to the folder next; the recovery phrase from your Recovery Kit unlocks it."
         },
         "source:nas": {
           "title": "A NAS or another computer",
@@ -1044,7 +1064,7 @@
       "nas-key": {
         "group:pick": {
           "title": "Choose a key",
-          "text": "A key lets Puppet Master connect without a password. These are on the computer that will connect; only the part safe to share is read."
+          "text": "A key lets Puppet Master connect without a password. These are on the computer that will connect. Only the public half of each key is read: a private key is never read, copied or stored, and stays where it is."
         },
         "pick:new": {
           "title": "Make a new key",

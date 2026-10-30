@@ -120,9 +120,10 @@ def('s06b', 'fresh', 'Bring in a Project stored online (just-in-time sign-in)', 
 def('s06c', 'fresh', 'Restore a Project from a backup', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary();
-  A.eq(await d.screen(), 'r-source', 'backup source'); await d.act('source', 'kit'); await d.primary();
-  await d.type('phrase', 'river candle orbit maple quiet lantern'); await d.primary();
-  A.eq(await d.screen(), 'r-pick', 'pick snapshot'); await d.act('pick', 'bk-recipe#0'); await d.primary();
+  A.eq(await d.screen(), 'r-source', 'backup source'); await d.act('source', 'kit');
+  A.ok((await d.primaryInfo()).disabled, 'Continue waits for the kit file to be chosen (QA round 2, Q6)');
+  await d.act('kit', 'kit-loom'); await d.primary();
+  A.eq(await d.screen(), 'r-pick', 'the kit says where the backup is and unlocks it: no phrase'); await d.act('pick', 'bk-loom#0'); await d.primary();
   A.eq(await d.screen(), 'name', 'name'); await d.primary(); await d.primary();
   A.ok(/Restore Project/.test((await d.primaryInfo()).label), 'button says Restore Project'); await reviewAndCreate(d);
   A.capture('s06c restore', await d.draft('main'));
@@ -410,16 +411,16 @@ const ST = () => window.O55.pipStage.of(document.querySelector('#pm-o55-onboardi
 const pip = (d) => d.page.evaluate(() => { const s = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')); return s ? { mood: s.curMood, sleep: !!s.sleepZ, asleep: !!s.ps.asleep, say: s.saying || '', lineId: s.spec && s.spec.lineId, oops: s.spec && s.spec.oops, work: !!(s.spec && s.spec.pip && s.spec.pip.work), props: [...s.props.values()].filter((p) => p.state !== 'out').map((p) => ({ kind: p.spec.kind, preview: !!p.spec.preview })) } : null; });
 const rest = async (d, sel, ms) => { const r = await d.page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; }, sel); for (let i = 0; i < 6; i++) { await d.page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: r.x - 30 + i * 5, y: r.y }); await sleep(30); } await sleep(ms); };
 const away = async (d) => { const r = await d.page.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) #o55-h').getBoundingClientRect(); return { x: b.left + 10, y: b.top + b.height / 2 }; }); await d.page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: r.x, y: r.y }); };
-def('pr1', 'fresh', 'NieR Mode: the checkbox is uncovered and a click turns it on and off (Muse B1)', async (d, A) => {
+def('pr1', 'fresh', 'NieR, the fifth look (Q22): its tile is uncovered, a press picks it and another look leaves it (Muse B1)', async (d, A) => {
   await d.openOnboarding(); await d.primary();
   A.eq(await d.screen(), 'look', 'Pick a look');
-  const hit = await d.state(() => { const c = document.querySelector('#pm-o55-onboarding .o55-niercheck'), r = c.getBoundingClientRect(), t = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return !!t && (t === c || c.contains(t)); });
-  A.ok(hit, 'the checkbox is what a press at its middle reaches');
-  await d.act('pickNier'); await d.settle();
-  A.ok(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-niercheck').getAttribute('aria-checked') === 'true'), 'NieR Mode on');
-  await d.act('pickNier'); await d.settle();
-  A.ok(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-niercheck').getAttribute('aria-checked') === 'false'), 'NieR Mode off again');
-  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding [data-nier-thumb] .o55-tilepip svg')), 'its picture drawn again after the toggles');
+  const hit = await d.state(() => { const c = document.querySelector('#pm-o55-onboarding .o55-tile[data-arg="nier"]'); c.scrollIntoView({ block: 'center' }); const r = c.getBoundingClientRect(), t = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return !!t && (t === c || c.contains(t)); });
+  A.ok(hit, 'the NieR tile is what a press at its middle reaches');
+  await d.act('pickFamily', 'nier'); await d.settle(); await sleep(2500);
+  A.ok(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-tile[data-arg="nier"]').getAttribute('aria-checked') === 'true' && window.PM_THEME.getFamily() === 'nier' && document.documentElement.getAttribute('data-o55-nier') === 'on'), 'NieR picked and painted');
+  await d.act('pickFamily', 'basic'); await d.settle(); await sleep(1000);
+  A.ok(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-tile[data-arg="nier"]').getAttribute('aria-checked') === 'false' && !document.documentElement.hasAttribute('data-o55-nier')), 'Basic again: NieR left');
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding [data-nier-thumb] .o55-tilepip svg')), 'its picture drawn again after the switches');
 });
 def('pr2', 'fresh', 'Welcome: Pip sleeps until a real arrival, then is lifted (Astra M04, Muse m1)', async (d, A) => {
   await d.openOnboarding(); await sleep(4500);
@@ -602,7 +603,7 @@ const spySound = (d) => d.page.evaluate(() => {
   const wrap = (o, k, list) => { const f = o[k]; o[k] = function (...a) { const r = f.apply(this, a); list.push({ a: a[0], r: r && typeof r === 'object' ? (r.played !== undefined ? !!r.played : true) : r, t: performance.now() }); return r; }; };
   wrap(V, 'say', w.say); wrap(V, 'sayTiming', w.timed); wrap(S, 'play', w.play); wrap(V, 'play', w.pip);
 });
-def('pr15', 'fresh', "Audit O6-b: hovering a look tile is silent, NieR Mode too; a click speaks", async (d, A) => {
+def('pr15', 'fresh', "Audit O6-b: hovering a look tile is silent, in NieR too; a click speaks", async (d, A) => {
   await d.openOnboarding(); await d.primary();
   await d.click('#pm-o55-onboarding .o55-layer:not(.o55-out) #o55-h', 'the title'); /* a real press: sound may play from here on */
   await sleep(2500); /* (the screen's own arrival, its palette lowered and landed, is over) */
@@ -611,12 +612,11 @@ def('pr15', 'fresh', "Audit O6-b: hovering a look tile is silent, NieR Mode too;
   let w = await d.state(() => window.__snd);
   A.ok(!w.say.length && w.timed.length > 0 && !w.play.some((x) => x.a === 'hover') && !w.pip.length, 'no voice, tick or kit sound on hover, the lines only timed (' + JSON.stringify({ voiced: w.say.length, timed: w.timed.length, hover: w.play.filter((x) => x.a === 'hover').length, pip: w.pip.map((x) => x.a) }) + ')');
   A.ok(await d.state(() => /\S/.test(document.querySelector('#pm-o55-onboarding .pst-bubble').textContent)), 'the bubble still types the line');
-  await d.act('pickNier'); await d.settle(); await sleep(5000); /* (NieR's switch-over and its line have played out) */
+  await d.act('pickFamily', 'nier'); await d.settle(); await sleep(5000); /* (NieR's switch-over and its line have played out) */
   await d.page.evaluate(() => { const w = window.__snd; w.say.length = 0; w.timed.length = 0; w.play.length = 0; w.pip.length = 0; });
   for (const f of ['friendly', 'glass']) await rest(d, `#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-tile[data-arg="${f}"]`, 1300);
   w = await d.state(() => window.__snd);
   A.ok(!w.say.length && !w.play.some((x) => x.a === 'hover') && !w.pip.some((x) => /hover|ghost|tryOn/.test(x.a)), 'NieR Mode: silent too (' + JSON.stringify({ voiced: w.say.length, hover: w.play.filter((x) => x.a === 'hover').length, pip: w.pip.map((x) => x.a) }) + ')');
-  await d.act('pickNier'); await d.settle(); await sleep(800);
   await d.page.evaluate(() => { window.__snd.say.length = 0; });
   await d.act('pickFamily', 'glass'); await sleep(700);
   w = await d.state(() => window.__snd);
@@ -707,7 +707,7 @@ def('pr21', 'fresh', 'Final check: after 720x900 -> 1390x480 the rail Pip sits o
    spans the rail in every frame (final check F1-3's residual: up to 15 frames at the old spot) */
 for (const look of ['basic-dark', 'glass-dark', 'nier-dark']) def('pr21f-' + look, 'fresh', `Final check F1-3: in ${look}, every frame of a layout change has Pip on its bead and the rope the rail's width`, async (d, A) => {
   await d.openOnboarding();
-  await d.page.evaluate((l) => { const [f, m] = l.split('-'); if (f === 'nier') { window.O55.ui.applyLook('basic', m); if (!window.O55.nierLook.state().on) window.O55.nierLook.toggle('look', null); } else window.O55.ui.applyLook(f, m); }, look);
+  await d.page.evaluate((l) => { const [f, m] = l.split('-'); window.O55.ui.applyLook(f, m); /* NieR is a look since Q22 */ }, look);
   await sleep(f0(look));
   await d.primary(); await d.primary();
   A.eq(await d.screen(), 'where', 'on Computer');
@@ -751,6 +751,64 @@ def('pr23', 'fresh', 'Final check F2-2: an expired toast is gone, and never play
   await d.until(() => !!document.querySelector('#pm-o55-onboarding .o55-layer[data-screen="name"]'), { what: 'Name' }); await sleep(400);
   const t = await d.state(() => { const el = document.querySelector('#pm-o55-onboarding .o55-toast'); return el ? { text: el.textContent, running: el.getAnimations().length } : null; });
   A.ok(!t, 'nothing replays when the window opens again (' + JSON.stringify(t) + ')');
+});
+def('pr24', 'fresh', 'QA round 2, Q6: the backup is pointed to before any phrase, and the phrase names it', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('restoreAll');
+  A.eq(await d.screen(), 'r-source', 'Where is the backup?');
+  await d.act('source', 'folder');
+  A.ok((await d.primaryInfo()).disabled, 'Continue waits until the folder is pointed to');
+  const tray = await d.state(() => { const card = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="source"][data-arg="folder"]'); const opt = card && (card.closest('.o55-opt') || card); const next = opt && opt.nextElementSibling; return next && next.classList.contains('o55-under') ? next.querySelectorAll('[data-o55-do="bfolder"]').length : -1; });
+  A.ok(tray > 0, 'the folders sit in a tray directly under A folder on this computer (' + tray + ')');
+  await d.act('bfolder', '/Volumes/Backup Drive/Puppet Master'); await d.primary();
+  A.eq(await d.screen(), 'r-unlock', 'then the phrase');
+  A.ok(await d.state(() => /Backup Drive/.test(document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-lead').textContent)), 'the phrase is asked for the backup pointed to');
+  await d.type('phrase', 'river candle orbit maple quiet lantern'); await d.primary();
+  A.eq(await d.screen(), 'r-pick', 'then the copy');
+});
+def('pr25', 'fresh', 'QA2 hunter H5: an open while the window is open, then a close, leaves the app awake', async (d, A) => {
+  await d.openOnboarding();
+  await d.page.evaluate(() => window.O55.ui.open({ screen: 'ready' }));
+  await d.until(() => !!document.querySelector('#pm-o55-onboarding .o55-layer[data-screen="ready"]'), { what: 'Ready' }); await sleep(400);
+  await d.page.evaluate(() => window.O55.ui.close('close'));
+  await d.until(() => document.getElementById('pm-o55-onboarding').hidden, { what: 'the window gone', timeout: 8000 }); await sleep(300);
+  const left = await d.state(() => Array.from(document.body.children).filter((n) => n.hasAttribute('inert') || n.hasAttribute('data-o55-held')).map((n) => n.id || n.className || n.tagName));
+  A.ok(!left.length, 'nothing of the app is left inert or held (' + left.join(', ') + ')');
+});
+def('pr26', 'fresh', 'QA round 2, Q7 and hunter H2: a choice\'s own choices sit directly under it, never under the next card', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'begin', 'How should your Project begin?');
+  await d.act('pick', 'existing');
+  const r = await d.state(() => { const L = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)'); const card = L.querySelector('[data-o55-do="pick"][data-arg="existing"]'); const opt = card.closest('.o55-opt') || card; const next = opt.nextElementSibling;
+    const tray = next && next.classList.contains('o55-under') ? next : null, restore = L.querySelector('[data-o55-do="pick"][data-arg="restore"]');
+    return { tray: !!tray, subs: tray ? tray.querySelectorAll('[data-o55-do="sub"]').length : 0, above: !!(tray && restore && (tray.compareDocumentPosition(restore) & Node.DOCUMENT_POSITION_FOLLOWING)), joined: tray ? (() => { const a = card.getBoundingClientRect(), t = tray.getBoundingClientRect(), cs = getComputedStyle(card); return { gap: +(t.top - a.bottom).toFixed(2), dl: +(t.left - a.left).toFixed(2), dr: +(t.right - a.right).toFixed(2), radius: cs.borderBottomLeftRadius + ' ' + cs.borderBottomRightRadius }; })() : null }; });
+  A.ok(r.tray && r.subs === 3, 'the three places sit in a tray right after Use work that already exists (' + JSON.stringify(r) + ')');
+  A.ok(r.above, 'above Restore a Project');
+  const j = r.joined || {};
+  A.ok(r.joined !== null && Math.abs(j.gap) <= 0.5 && Math.abs(j.dl) <= 0.5 && Math.abs(j.dr) <= 0.5 && j.radius === '0px 0px', 'joined to its card: no gap, the same edges, square lower corners (' + JSON.stringify(j) + ')');
+});
+def('pr27', 'fresh', 'QA2 hunter H8: work on an NFS share says where it is kept on Name your Project', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
+  A.eq(await d.screen(), 'nas-find', 'Where are the files?');
+  await d.act('method', 'nfs'); await d.act('share', 'nfs-media'); await d.primary();
+  A.eq(await d.screen(), 'nas-nfs', 'the share opens'); await until(d, "(window.O55.S.sess.ops['nfs:nfs-media']||{}).state === 'done'", 'share read', 8000); await d.primary();
+  A.eq(await d.screen(), 'name', 'Name your Project');
+  const loc = await d.state(() => { const n = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-locline'); return n ? n.textContent.trim() : null; });
+  A.ok(!!loc && /mnt\/tank\/share/.test(loc), 'the line names the share (' + loc + ')');
+});
+def('pr28', 'fresh', 'QA2 hunter H1: a screen opened straight has what the screens before it would have left', async (d, A) => {
+  await d.openOnboarding();
+  /* every screen Demo Studio can open at (all of them) */
+  const ids = await d.page.evaluate(() => Object.keys(window.O55.screens.defs));
+  A.ok(ids.length >= 40, ids.length + ' screens');
+  for (const id of ids) {
+    await d.page.evaluate((s) => window.O55.ui.open({ fresh: true, screen: s }), id);
+    await d.until(new Function(`return !!document.querySelector('#pm-o55-onboarding .o55-layer[data-screen="${id}"]:not(.o55-out)')`), { what: id, timeout: 12000 }); await sleep(700);
+    const r = await d.page.evaluate((s) => { const L = document.querySelector(`#pm-o55-onboarding .o55-layer[data-screen="${s}"]:not(.o55-out)`); const t = L.innerText;
+      const main = L.querySelector('.o55-main') || L; return { bad: (t.match(/undefined|\{[a-zA-Z]+\}|\b(?:on|from|in|to) none\b|\bNaN\b|\[object Object\]/g) || []).join(', '), body: (main.textContent || '').trim().length }; }, id);
+    A.ok(!r.bad, id + ': no placeholder or undefined (' + r.bad + ')');
+    A.ok(r.body > 10, id + ': the screen is not empty (' + r.body + ' characters)');
+  }
 });
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
@@ -835,7 +893,8 @@ def('d1', 'fresh', 'The Demo Studio switches the world while the window is open'
 });
 def('r1', 'fresh', 'Moving from an old computer: restore everything', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('restoreAll');
-  A.eq(await d.screen(), 'r-source', 'backup source'); await d.act('source', 'kit'); await d.primary(); await d.type('phrase', 'river candle orbit maple quiet lantern'); await d.primary();
+  A.eq(await d.screen(), 'r-source', 'backup source'); await d.act('source', 'kit'); await d.act('kit', 'kit-laptop'); await d.primary();
+  A.eq(await d.screen(), 'r-pick', 'the kit opened the backup: no phrase');
   await d.act('pick', 'full-1'); await d.primary(); A.eq(await d.screen(), 'r-preview', 'preview'); await d.primary();
   await d.untilScreen('r-done', 12000); A.ok(true, 'restored');
 });
@@ -1075,7 +1134,7 @@ def('x5', 'fresh', 'The look can be changed at any point from beside the sound b
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   A.eq(await d.screen(), 'begin', 'mid-flow');
   await d.click('#pm-o55-onboarding .o55-lookbtn', 'look menu button'); await d.untilElement('#pm-o55-onboarding .o55-lookmenu', 'look menu');
-  A.ok(await d.state(() => document.querySelectorAll('#pm-o55-onboarding .o55-lookopt').length === 4), 'four looks offered');
+  A.ok(await d.state(() => document.querySelectorAll('#pm-o55-onboarding .o55-lookopt[data-o55-do="lookFamily"]').length === 5), 'five looks offered (NieR the fifth, Q22)');
   if (process.env.O55_SNAP) await d.snap(process.env.O55_SNAP);
   await d.click('#pm-o55-onboarding .o55-lookopt[data-arg="retro"]', 'Retro look');
   await until(d, "document.documentElement.getAttribute('data-theme').split('-')[0] === 'retro'", 'Retro look applied'); await d.settle();
@@ -1138,7 +1197,7 @@ def('lc5', 'fresh', 'A new Server is not offered a name already used on the netw
 });
 def('lc6', 'fresh', 'Bringing old data onto a new Server asks how to reach it away from home, and sets that up', async (d, A) => {
   await toNewServer(d, A); await d.back(); A.eq(await d.screen(), 's-ready', 'the Server is ready');
-  await d.act('restore'); await d.act('source', 'kit'); await d.primary(); await d.type('phrase', 'river candle orbit maple quiet lantern'); await d.primary();
+  await d.act('restore'); await d.act('source', 'kit'); await d.act('kit', 'kit-laptop'); await d.primary();
   await d.act('pick'); await d.primary();
   A.eq(await d.screen(), 'away', 'asked about away from home first');
   await d.act('pick', 'anywhere'); await d.primary(); A.eq(await d.screen(), 'r-preview', 'then the preview');

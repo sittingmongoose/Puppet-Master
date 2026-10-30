@@ -437,7 +437,7 @@ body.pm56-reduced .pmx-sched-marker{transition:none;}
 .pmx-sched-evsay{min-width:0;font:var(--pmx-fs-help);color:var(--text);overflow-wrap:anywhere;}
 /* the plate: messages are marks on the line, build slots bands under it; a row and its mark light each other */
 .pmx-sched-mark{transition:opacity var(--pmx-t-light) var(--pmx-ease-linear);}
-.pmx-sched-mgr:has(.pmx-sched-row:hover, .pmx-sched-brow:hover, .pmx-sched-mark:hover) .pmx-sched-mark{opacity:.35;}
+/* the dimming is the pair's own (scheduling.js linkStyle): only a row or mark with a partner on the plate dims the rest */
 .pmx-sched-slotmark .pmx-sched-band{fill:var(--pmx-sched-mark-ink,var(--muted));}
 .pmx-sched-windbar{fill:var(--pmx-hatch);}
 .pmx-sched-mark .pmx-sched-dot{fill:var(--pmx-sched-mark-ink,var(--accent));}

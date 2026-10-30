@@ -53,3 +53,9 @@
 #panel-settings .pm51-panel-foot > .btn[data-action="close-overlay"] { background: none; border-color: transparent; color: var(--k3-text-2); }
 #panel-settings .pm51-panel-foot > .btn[data-action="close-overlay"]:hover { background: var(--k3-bg-2); color: var(--k3-text-1); }
 html[data-theme^="glass"] #panel-settings .pm51-hero-facts { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .6)); }
+
+/* Glass (H9, QA round 2): a dialog or side panel is a plate over the page, not a pane of it. It takes Glass's menu plate
+   (--rg-menu: the theme menu's own fill) laid on the look's own ground, so it is opaque (Settings paints no backdrop
+   blur, and at the plate's 93-94% the page's labels still showed through the form's own cards); the head and foot
+   keep their own tint on top of it. The setup window (45-setup.css) has its own. */
+html[data-theme^="glass"] #panel-settings :is(.dialog, .drawer:not(.o55g-win)) { background: linear-gradient(var(--rg-menu, var(--k3-surface-1)), var(--rg-menu, var(--k3-surface-1))), var(--background); }

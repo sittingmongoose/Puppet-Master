@@ -1,9 +1,10 @@
 {
- "_about": "app-input: sections from the plain-pages audit (2026-09-27). Theme first, then size and readability, three chat groups, help, window and panels, startup, spelling; custom themes and fine-tuning under More options. Duplicate hand rows are dropped: font-size (Text size), motion (Reduce motion), contrast (Keyboard focus outline), restore-window and panel-restore (Remember window size and layout), help-level (How the app talks to me), working-activity-style (the inventory row of the same name). Out: first-run tips to Readiness & Doctor, debug re-check to Testing & Debug, tabs remembered to Editor & Terminal. In: the big-task checklist from Planning. Retired: Chat Layout (general.visual.chat-layout-mode; the chat stays in its column and moves only by its own Pop out, the planner's ruling on D3 and D32). Retired: Glass background (general.visual.glass-background-mode); the hand row and its transfer selection are removed, with compatibility input migrated through SP-333 to the Project Wallpaper value. Glass always uses Liquid Glass with a wallpaper.",
+ "_about": "app-input: sections from the plain-pages audit (2026-09-27). Theme first, then size and readability, three chat groups, help, window and panels, startup, spelling; custom themes and fine-tuning under More options. Duplicate hand rows are dropped: font-size (Text size), motion (Reduce motion), contrast (Keyboard focus outline), restore-window and panel-restore (Remember window size and layout), help-level (How the app talks to me), working-activity-style (the inventory row of the same name). Out: first-run tips to Readiness & Doctor, debug re-check to Testing & Debug, tabs remembered to Editor & Terminal. In: the big-task checklist from Planning. Retired: Chat Layout (general.visual.chat-layout-mode; the chat stays in its column and moves only by its own Pop out, the planner's ruling on D3 and D32). Retired: Glass background (general.visual.glass-background-mode); the hand row and its transfer selection are removed, with compatibility input migrated through SP-333 to the Project Wallpaper value. Glass always uses Liquid Glass with a wallpaper. Retired: NieR Mode (general.visual.nier-mode); NieR is the fifth theme (Q22, 2026-10-30), an old save with it on loads as the NieR theme, and its Adjust rows show while the theme is NieR.",
  "retire_ids": [
   "general.visual.chat-layout-mode",
   "general.visual.theme-preview",
-  "general.visual.glass-background-mode"
+  "general.visual.glass-background-mode",
+  "general.visual.nier-mode"
  ],
  "pages": {
   "app-input": {
@@ -106,7 +107,6 @@
    "ids": [
     "general.visual.theme",
     "general.visual.theme-mode",
-    "general.visual.nier-mode",
     "general.visual.nier-parts",
     "general.visual.nier-background",
     "general.visual.pip-parts",

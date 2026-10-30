@@ -1,68 +1,29 @@
-/* O55 · Title-bar NieR row (kit.d/23-nier-theme-menu.js) and the Plug-in Chips popup frame.
-   The row reuses .pm6-tb-menu-item so font, height, padding, hover and focus match the family rows in every theme.
+/* O55 · Title-bar theme menu rows (kit.d/23-nier-theme-menu.js: Adjust NieR..., Customize Pip...) and the Plug-in Chips
+   popup frame. The rows reuse .pm6-tb-menu-item so font, height, padding, hover and focus match the family rows in
+   every theme.
    The popup sits at 2147482050: above the tour root (#pm-o55-tour, 2147481500) and the title bar, below the NieR
    reboot cover (#o55np-reboot, 2147483600 in styles.d/14-nier-parts.css). No side bars, no blur, no colour literals. */
 
-/* ---------- theme menu row ---------- */
-/* Two lines (the menu keeps its own width, about 210 px): the toggle is laid out exactly like a family row (name at the left, the swatch where the families' two
-   chips sit), and Adjust NieR look sits under it, aligned with the label (12px padding + the 13px box + the 8px gap),
-   so the menu cursor beside it never lands on the label above. */
-#themeMenu .o55-nier-tt-row {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  width: 100%;
-  min-width: 0;
-}
-/* the row never widens the menu: the toggle shrinks like a family row, Adjust says "Adjust" */
-#themeMenu .o55-nier-tt-toggle.pm6-tb-menu-item { flex: 1 1 auto; width: 100%; min-width: 0; }
-#themeMenu .o55-nier-tt-toggle .pm6-tt-name { flex: 1 1 auto; min-width: 0; }
-#themeMenu .o55-nier-tt-box { flex: 0 0 auto; display: block; }
-#themeMenu .o55-nier-tt-mark { opacity: 0; }
-/* on reads as on: the label at full strength (the unchosen families stay secondary) and the mark solid */
-#themeMenu .o55-nier-tt-toggle[aria-checked="true"] { color: var(--text-primary); }
-#themeMenu .o55-nier-tt-toggle[aria-checked="true"] .o55-nier-tt-mark { opacity: 1; }
-/* NieR's swatch: parchment in an ink hairline, the kicker's three squares and its rule; the tokens come from the
-   preview scope on the element (data-o55-nier-preview, styles.d/13-nier.css), so it is the same in every look */
-#themeMenu .o55-nier-tt-swatch {
-  position: relative;
-  flex: 0 0 auto;
-  width: 32px;
-  height: 14px;
-  box-sizing: border-box;
-  border: 1px solid var(--o55-nier-ink);
-  border-radius: 0;
-  background: var(--o55-nier-on-ink);
-}
-#themeMenu .o55-nier-tt-swatch > i { position: absolute; top: 4px; width: 4px; height: 4px; background: var(--o55-nier-ink); }
-#themeMenu .o55-nier-tt-swatch > i:nth-child(1) { left: 3px; }
-#themeMenu .o55-nier-tt-swatch > i:nth-child(2) { left: 9px; }
-#themeMenu .o55-nier-tt-swatch > i:nth-child(3) { left: 15px; }
-#themeMenu .o55-nier-tt-swatch > b { position: absolute; left: 21px; right: 3px; top: 5px; height: 1px; background: var(--o55-nier-ink); }
-#themeMenu .o55-nier-tt-adjust {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  flex: 0 0 auto;
-  align-self: flex-start;
-  margin: -2px 12px 7px 33px;
-  padding: 3px 8px;
-  min-height: 24px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm, 4px);
-  background: transparent;
-  color: var(--text-secondary);
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  cursor: pointer;
-}
-#themeMenu .o55-nier-tt-adjust:hover { background: var(--surface); color: var(--text-primary); }
-#themeMenu .o55-nier-tt-sliders { flex: 0 0 auto; display: block; }
-html[data-o55-nier] #themeMenu .o55-nier-tt-adjust { border-radius: 0; }
+/* ---------- theme menu rows ---------- */
+/* NieR is a family row of the base menu since Q22 (shell.html): its two chips are NieR Dark and NieR Light in NieR's own
+   ink and ground (the preview scope on each chip, styles.d/13-nier.css), square like every NieR line */
+#themeMenu .pm6-tt-chip[data-o55-nier-preview] { background: var(--o55-nier-on-ink); border: 1px solid var(--o55-nier-ink); border-radius: 0; box-shadow: none; }
+/* Adjust NieR... and Customize Pip... are menu rows (.pm6-tb-menu-item: the family rows' font, height, padding, hover and
+   focus), so their highlight is the family rows' box (Q21). A 16 px icon column leads them: sliders for Adjust, which
+   sits under NieR's name, and Pip's mark for Customize Pip, after the divider. */
+#themeMenu .o55-nier-tt-adjust, #themeMenu .o55-pip-tt { display: flex; align-items: center; gap: 8px; width: 100%; box-sizing: border-box; text-align: left; }
+/* hidden outside NieR, over every look's own row display (Glass sets the menu rows' display with an id-weight selector) */
+#themeMenu .o55-nier-tt-adjust[hidden] { display: none !important; }
+#themeMenu .o55-nier-tt-adjust .pm6-tt-name, #themeMenu .o55-pip-tt .pm6-tt-name { flex: 1 1 auto; min-width: 0; }
+#themeMenu .o55-tt-ico { flex: none; display: inline-grid; place-items: center; width: 16px; height: 16px; color: var(--text-secondary); }
+#themeMenu .o55-tt-ico > svg { display: block; width: 16px; height: 16px; }
+#themeMenu .o55-nier-tt-sliders { width: 14px; height: 14px; }
+/* Under NieR the hovered or chosen row is an ink bar the size of the row (14-nier-parts.css, menu cursor): the rows sit
+   inside the menu's padding like Light / Dark above them, so the bar never runs over the menu's frame (Q21), and the
+   menu keeps a 14 px gutter at its left for NieR's square cursor, which sits 12 px left of the item it marks
+   (kit.d/19-nier-parts.js curPlace), so it never lands on the frame either */
+html[data-o55-nier="on"]:not(#lgz) #themeMenu { padding-inline-start: 14px; }
+html[data-o55-nier="on"] #themeMenu :is(.pm6-tt-family, .o55-nier-tt-adjust, .o55-pip-tt) { margin-inline: 8px; width: calc(100% - 16px); }
 
 /* ---------- popup (body-level; the editor rules live in 17-nier-chips.css under .o55nc-host) ---------- */
 .o55nc-pop {

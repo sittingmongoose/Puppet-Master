@@ -67,18 +67,17 @@
       const sel = choiceOf(S), sub = S.sess.ui.beginSub;
       let out = '';
       if (onServer(S)) out += `<div class="o55-banner o55-banner-soft" data-key="server">${C.small('server', 18)}<span>${U.esc(T('begin.server', { name: serverName(S) }))}</span></div>`;
+      /* where the existing work is: under its own card, above Restore (QA round 2, Q7; QA2 hunter H2) */
+      const where = sel === 'existing' ? C.cards('sub', [
+        { v: 'folder', glyph: 'folder', title: onServer(S) ? T('begin.folderOn.title', { name: serverName(S) }) : T('begin.folder.title'), sub: onServer(S) ? T('begin.folderOn.sub', { name: serverName(S) }) : T('begin.folder.sub'), quiet: true },
+        { v: 'online', glyph: 'cloud', title: T('begin.online.title'), sub: T('begin.online.sub'), quiet: true },
+        { v: 'device', glyph: 'server', title: T('begin.device.title'), sub: T('begin.device.sub'), quiet: true }
+      ], sub, { cls: 'o55-choices-quiet', label: T('begin.existing.title') }) : '';
       out += C.cards('pick', [
         { v: 'new', glyph: 'seed', title: T('begin.new.title'), sub: T('begin.new.sub'), tag: T('chrome.recommended') },
-        { v: 'existing', glyph: 'folder', title: T('begin.existing.title'), sub: T('begin.existing.sub') },
+        { v: 'existing', glyph: 'folder', title: T('begin.existing.title'), sub: T('begin.existing.sub'), under: where },
         { v: 'restore', glyph: 'rewind', title: T('begin.restore.title'), sub: T('begin.restore.sub') }
       ], sel, { label: T('begin.title') });
-      if (sel === 'existing') {
-        out += `<div class="o55-subchoices" data-key="sub">` + C.cards('sub', [
-          { v: 'folder', glyph: 'folder', title: onServer(S) ? T('begin.folderOn.title', { name: serverName(S) }) : T('begin.folder.title'), sub: onServer(S) ? T('begin.folderOn.sub', { name: serverName(S) }) : T('begin.folder.sub'), quiet: true },
-          { v: 'online', glyph: 'cloud', title: T('begin.online.title'), sub: T('begin.online.sub'), quiet: true },
-          { v: 'device', glyph: 'server', title: T('begin.device.title'), sub: T('begin.device.sub'), quiet: true }
-        ], sub, { cls: 'o55-choices-quiet', label: T('begin.existing.title') }) + '</div>';
-      }
       out += `<div class="o55-sublinks" data-key="later">${C.link(T('begin.later'), 'later')}</div>`;
       return out;
     },
@@ -213,7 +212,10 @@
       /* where its files live: an existing folder stays where it is (also on a Server); a new or copied Project on a
          Server offers the Server, this device or a network drive */
       if (d.project_mode === 'existing_local') {
-        const path = d.project_transport === 'ssh' || d.project_transport === 'puppet_master' ? (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref : d.local_location;
+        /* (work on a shared folder, an NFS share or a mounted drive is where it was found, as on another device: it
+           read only "Kept in" with no path, QA2 hunter H8) */
+        const away = d.project_transport === 'ssh' || d.project_transport === 'puppet_master' || d.project_transport === 'mounted';
+        const path = away ? (S.sess.nas && S.sess.nas.folderLabel) || String(d.project_source_ref || '').replace(/^[a-z]+:/, '') : d.local_location;
         out += `<p class="o55-locline" data-key="loc">${C.small('folder', 16)}<span>${U.esc(onServer(S) && d.project_transport === 'local' ? T('name.keptOn', { path, name: serverName(S) }) : T('name.kept', { path }))}</span></p>`;
       } else if (onServer(S)) {
         const nm = serverName(S);
@@ -326,7 +328,8 @@
     body(S) {
       const d = md(S), sel = d.settings_transfer.mode === 'copy_from_project' ? d.settings_transfer.source_project_id : 'fresh';
       const sources = O55.like.sources(S);
-      let out = C.cards('pick', [{ v: 'fresh', glyph: 'seed', title: T('like.fresh'), sub: T('like.freshSub') }].concat(sources.map((p) => ({ v: p.id, glyph: 'stack', title: p.name, sub: T('like.updated', { when: p.updated || '' }) }))), sel, { label: T('like.title') });
+      /* what would be copied from the chosen Project: under that Project's card (QA round 2, Q7) */
+      let under = '', sheet = '';
       if (sel !== 'fresh') {
         const pv = O55.like.preview(S, sel), p = sources.find((x) => x.id === sel) || { name: sel };
         if (pv && pv.ok) {
@@ -336,13 +339,14 @@
           const unavailable = (p.providers || []).filter((pid) => { const pr = S.env.here.providers[pid]; return !(pr && pr.signedIn); });
           if (unavailable.length) inner += C.note(T('like.unavailable', { project: p.name }), 'warn', 'spark');
           inner += `<div class="o55-sublinks" data-key="choose">${C.link(T('like.choose'), 'choose')}</div>`;
-          out += C.group(T('like.previewTitle'), inner, { cls: 'o55-preview' });
+          under = C.group(T('like.previewTitle'), inner, { cls: 'o55-preview' });
           if (S.sess.ui.sheet === 'cats') {
             const all = ST().categories(), on = new Set((S.sess.like && S.sess.like.categories) || all);
-            out += C.sheet(S, 'cats', T('like.chooseTitle'), all.map((cat) => C.toggle({ do: 'cat', arg: cat, on: on.has(cat), label: cat, sub: T('like.count', { n: (pv.groups[cat] || []).length }) })).join(''), O55.ui.btn({ label: T('chrome.done'), do: 'sheet-close' }, 'o55-primary'));
+            sheet = C.sheet(S, 'cats', T('like.chooseTitle'), all.map((cat) => C.toggle({ do: 'cat', arg: cat, on: on.has(cat), label: cat, sub: T('like.count', { n: (pv.groups[cat] || []).length }) })).join(''), O55.ui.btn({ label: T('chrome.done'), do: 'sheet-close' }, 'o55-primary'));
           }
-        } else if (pv) out += C.note(pv.reason || '', 'warn');
+        } else if (pv) under = C.note(pv.reason || '', 'warn');
       }
+      const out = C.cards('pick', [{ v: 'fresh', glyph: 'seed', title: T('like.fresh'), sub: T('like.freshSub') }].concat(sources.map((p) => ({ v: p.id, glyph: 'stack', title: p.name, sub: T('like.updated', { when: p.updated || '' }), under: p.id === sel ? under : '' }))), sel, { label: T('like.title') }) + sheet;
       return out;
     },
     foot: () => ({ primary: { label: T('chrome.continue'), do: 'next' } }),

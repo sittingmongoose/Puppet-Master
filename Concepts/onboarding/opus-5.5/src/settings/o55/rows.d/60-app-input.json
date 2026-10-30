@@ -442,17 +442,16 @@
    "label": "Reset the layout",
    "help": "Puts panels back; open files, terminals and chats stay."
   },
-  "general.visual.nier-mode": {
-   "label": "NieR Mode",
-   "help": "Paints the whole app in NieR: Automata's ink and parchment, in light or dark. Your theme comes back when you turn it off."
-  },
   "general.visual.nier-parts": {
-   "label": "Customize NieR Mode",
-   "help": "Choose which pieces of the look, motion, sound and world are installed.",
+   "label": "Adjust NieR",
+   "help": "Choose which pieces of NieR's look, motion, sound and world are installed.",
    "editor": "pm51-o55-nier-chips",
    "when": {
-    "id": "general.visual.nier-mode",
-    "is": true
+    "id": "general.visual.theme",
+    "in": [
+     "NieR Dark",
+     "NieR Light"
+    ]
    }
   },
   "general.visual.nier-background": {
@@ -462,8 +461,11 @@
     "Follow the page": "A scene for each page"
    },
    "when": {
-    "id": "general.visual.nier-mode",
-    "is": true
+    "id": "general.visual.theme",
+    "in": [
+     "NieR Dark",
+     "NieR Light"
+    ]
    }
   },
   "general.visual.pip-parts": {

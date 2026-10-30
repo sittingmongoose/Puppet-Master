@@ -62,6 +62,19 @@
     S.save();
   }
 
+  /* Opened straight at a later connect screen (Demo Studio's Open at one screen): what the earlier screens would have
+     left, the first Puppet Master found on this network chosen (step 0), the review confirmed (1), the pairing done (2)
+     (QA2 hunter H1: the picture check read "undefined · undefined" and Ready "{name} has 0 Projects") */
+  function seedConnect(S, step) {
+    S.sess.active = 'connect';
+    const d = cd(S), c = S.sess.connect;
+    if (!server(S) && S.env.pmServers[0]) choose(S, S.env.pmServers[0], { remote_mode: d.remote_mode || 'local_or_vpn', server_connection_mode: 'discover' });
+    if (!d.connection_pairing) O55.draft.set(d, { connection_pairing: 'approval' });
+    if (step >= 1 && !c.confirmed) { c.confirmed = true; O55.draft.set(d, { review_confirmed: true }); }
+    if (step >= 2 && !c.paired) { c.paired = true; O55.draft.set(d, { server_trust_confirmed: true }); }
+    S.save();
+  }
+
   /* ------------------------------------------------------------------ C1: which Puppet Master, and how to reach it */
   def('c-route', {
     chapter: 'computer', stage: 'remote_access_setup', charmSlot: 'server',
@@ -86,25 +99,30 @@
           out += C.note(T('connect.route.vpnLine'), 'info', 'link');
           out += `<div class="o55-sublinks" data-key="l-addr">${C.link(T('connect.route.address'), 'manualOn')}</div>`;
         }
-      } else if (mode === 'tailscale') {
-        out += C.segmented({ do: 'tsControl', value: d.tailscale_control || 'hosted', label: T('connect.route.tailscale.title'), options: [{ v: 'hosted', label: T('connect.route.tailscale.hosted') }, { v: 'headscale', label: T('connect.route.tailscale.headscale') }] });
-        if (d.tailscale_control === 'headscale') out += C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: F.isHttps(d.headscale_url) ? '' : 'https://…', valid: F.isHttps(d.headscale_url) });
-        out += C.cards('pickServer', S.env.pmServers.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: 'Tailscale · ' + nProjects(s.projects.length) })), d.server_ref, { label: T('connect.route.found') });
+      }
+      /* another route's own questions sit under its card in Other ways to connect (QA round 2, Q7 and Q9: the web
+         address field was above the list, far from My own web address) */
+      let under = '';
+      if (mode === 'tailscale') {
+        under += C.segmented({ do: 'tsControl', value: d.tailscale_control || 'hosted', label: T('connect.route.tailscale.title'), options: [{ v: 'hosted', label: T('connect.route.tailscale.hosted') }, { v: 'headscale', label: T('connect.route.tailscale.headscale') }] });
+        if (d.tailscale_control === 'headscale') under += C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: F.isHttps(d.headscale_url) ? '' : 'https://…', valid: F.isHttps(d.headscale_url) });
+        under += C.cards('pickServer', S.env.pmServers.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: 'Tailscale · ' + nProjects(s.projects.length), quiet: true })), d.server_ref, { cls: 'o55-choices-quiet', label: T('connect.route.found') });
       } else if (mode === 'reverse_proxy') {
         const hit = resolveAddress(S, d.proxy_hostname, 'proxy');
-        out += C.field({ bind: 'proxy', label: T('connect.route.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: hit ? hit.name : 'https://…', valid: !!hit });
-        out += C.details(S, 'proxy', T('connect.route.proxy.title'), `<p>${U.esc(T('connect.route.proxy.detail'))}</p>`);
+        under += C.field({ bind: 'proxy', label: T('connect.route.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: hit ? hit.name : 'https://…', valid: !!hit });
+        /* (its old-style explainer went: the route's ? says the same, QA round 2, Q8) */
       } else if (mode === 'remote_link') {
         const hit = resolveAddress(S, d.remote_endpoint, 'link');
-        out += C.field({ bind: 'link', label: T('connect.route.link.label'), value: d.remote_endpoint, placeholder: 'pm-remote-link:home-nas/7Q2K', hint: hit ? hit.name : '', valid: !!hit });
+        under += C.field({ bind: 'link', label: T('connect.route.link.label'), value: d.remote_endpoint, placeholder: 'pm-remote-link:home-nas/7Q2K', hint: hit ? hit.name : '', valid: !!hit });
       }
       const opts = [
         { v: 'local_or_vpn', glyph: 'link', title: T('connect.route.local'), quiet: true },
-        { v: 'tailscale', glyph: 'globe', title: T('connect.route.tailscale.title'), sub: T('connect.route.tailscale.sub'), quiet: true },
-        { v: 'reverse_proxy', glyph: 'globe', title: T('connect.route.proxy.title'), sub: T('connect.route.proxy.sub'), quiet: true },
-        { v: 'remote_link', glyph: 'link', title: T('connect.route.link.title'), sub: T('connect.route.link.sub'), quiet: true }
+        { v: 'tailscale', glyph: 'globe', title: T('connect.route.tailscale.title'), sub: T('connect.route.tailscale.sub'), quiet: true, under: mode === 'tailscale' ? under : '' },
+        { v: 'reverse_proxy', glyph: 'globe', title: T('connect.route.proxy.title'), sub: T('connect.route.proxy.sub'), quiet: true, under: mode === 'reverse_proxy' ? under : '' },
+        { v: 'remote_link', glyph: 'link', title: T('connect.route.link.title'), sub: T('connect.route.link.sub'), quiet: true, under: mode === 'remote_link' ? under : '' }
       ];
-      out += F.more(d.remote_more, T('connect.route.more'), 'more', C.cards('route', opts, mode, { cls: 'o55-choices-quiet', label: T('connect.route.more') }), 'route');
+      /* (open whenever another route is chosen: its questions are in there) */
+      out += F.more(d.remote_more || (!!mode && mode !== 'local_or_vpn'), T('connect.route.more'), 'more', C.cards('route', opts, mode, { cls: 'o55-choices-quiet', label: T('connect.route.more') }), 'route');
       return out;
     },
     mounted(S) { if (cd(S).remote_mode === 'local_or_vpn' && !S.sess.connect.manual) scan(S); },
@@ -143,6 +161,7 @@
   /* ------------------------------------------------------------------ C2: review and confirm */
   const routeLabel = (d) => ({ local_or_vpn: T('connect.route.local'), tailscale: T('connect.route.tailscale.title'), reverse_proxy: T('connect.route.proxy.title'), remote_link: T('connect.route.link.title') })[d.remote_mode] || '';
   def('c-review', {
+    seed: (S) => seedConnect(S, 0),
     chapter: 'computer', stage: 'review_setup_plan',
     scene: () => ({ id: 'where', beat: 'connect' }),
     eyebrow: () => T('connect.review.eyebrow'),
@@ -189,6 +208,7 @@
     F.op(S, 'pair:' + s.id, 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload: { server: s.id, method: d.connection_pairing }, sound: PAIR_SOUND, onDone: done });
   }
   def('c-pair', {
+    seed: (S) => seedConnect(S, 1),
     chapter: 'computer', stage: 'automatic_preparation',
     scene: () => ({ id: 'where', beat: 'connect' }),
     eyebrow: () => T('connect.pair.eyebrow'),
@@ -238,6 +258,7 @@
 
   /* ------------------------------------------------------------------ C4: ready to meet your Puppet Master (Ready) */
   def('c-ready', {
+    seed: (S) => seedConnect(S, 2),
     chapter: 'ready', stage: 'ready',
     scene: () => ({ id: 'hero', beat: 'ready' }),
     eyebrow: () => T('connect.ready.eyebrow'),

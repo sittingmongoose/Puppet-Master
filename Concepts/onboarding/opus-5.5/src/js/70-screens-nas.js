@@ -40,6 +40,25 @@
       keys: ks.length, pick: ks.findIndex((k) => k.id === sel), newKey: sel === 'new', paired: !!N(S).viaPm }, extra || {});
   };
 
+  /* Opened straight at a later step (Demo Studio's Open at one screen): what the earlier steps would have left (QA2
+     hunter H1: these screens opened with nothing on them). A Project's files on the Home NAS over SSH; its identity
+     trusted from the key step on, a key chosen from the sign-in on, the key added for the folder; a NAS running Puppet
+     Master for the pairing (or the first one with SSH where none does); a share for SMB and NFS. */
+  const SEED_STEP = { 'nas-identity': 0, 'nas-pmpair': 0, 'nas-key': 1, 'nas-signin': 2, 'nas-install': 2, 'nas-folder': 3 };
+  function seedNas(S, id) {
+    const n = N(S), d0 = md(S);
+    if (n.purpose === 'source' && d0.project_mode !== 'existing_local') O55.draft.set(d0, { project_mode: 'existing_local', project_transport: 'ssh', source_more: true });
+    if (id === 'nas-smb' || id === 'nas-nfs') { n.method = id.slice(4); if (!n.share) n.share = (S.env.shares.find((x) => x.proto === n.method) || {}).id; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
+    if (id === 'nas-mounted') { n.method = 'mounted'; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
+    n.method = 'ssh';
+    if (!dev(S)) { const pick = (id === 'nas-pmpair' && S.env.devices.find((x) => x.pm)) || S.env.devices.find((x) => x.ssh); if (pick) n.device = pick.id; }
+    const d = dev(S), step = SEED_STEP[id] || 0;
+    if (d && step >= 1 && !n.trusted) { n.trusted = true; S.env.here.knownHosts[d.address] = d.hostKey; }
+    if (d && step >= 2 && !n.key) n.key = defaultKey(S);
+    if (d && step >= 3 && !n.installed) { if (n.key === 'new') makeNewKey(S); if (!d.authorized.includes(n.key)) d.authorized.push(n.key); n.installed = true; }
+    S.save();
+  }
+
   /* ------------------------------------------------------------------ find the device */
   def('nas-find', {
     chapter: 'project', stage: 'server_storage_client',
@@ -52,6 +71,18 @@
       let out = C.segmented({ do: 'method', value: m, label: T('nas.find.method'), options: [{ v: 'ssh', label: T('nas.find.ssh') }, { v: 'smb', label: T('nas.find.smb') }, { v: 'nfs', label: T('nas.find.nfs') }, { v: 'mounted', label: T('nas.find.mounted') }] });
       if (m === 'ssh') {
         const st = F.state(S, 'discover:ssh');
+        /* what the chosen device needs (it runs Puppet Master; its SSH is off): under its own card, or under the typed
+           address (QA round 2, Q7) */
+        const d = dev(S);
+        let about = '';
+        if (d && d.pm) about += C.note(T('nas.find.pmNote', { name: d.name }), 'ok', 'link');
+        if (d && !d.ssh && !d.pm) {
+          const cs = F.state(S, 'sshcheck:' + d.id);
+          about += C.group(T('nas.find.offTitle', { name: d.name }), `<p class="o55-note o55-note-info">${C.mark('off', 14, C.smallArt('power', 14))}<span>${U.esc(T('nas.find.offLead', { brand: d.brand }))}</span></p>`
+            + `<p class="o55-path" data-key="path">${U.esc(O55.tx('nas.find.steps')[d.brand] || '')}</p>`
+            + (cs && cs.state === 'failed' ? C.note(T('nas.find.stillOff', { name: d.name }), 'warn') : '')
+            + `<div class="o55-inline" data-key="again">${O55.ui.btn({ label: T('nas.find.checkAgain'), do: 'checkAgain', cls: 'o55-small' }, 'o55-secondary')}</div>`, { cls: 'o55-sshoff' });
+        }
         if (n.manual) {
           out += `<div class="o55-fieldrow" data-key="manual">${C.field({ bind: 'addr', label: T('nas.find.addressLabel'), value: n.addr || '', placeholder: '192.168.1.20', hint: T('nas.find.addressHint') })}${C.field({ bind: 'port', label: T('nas.find.portLabel'), value: n.port || '22', cls: 'o55-field-port' })}</div>`;
         } else if (!st || st.state !== 'done') {
@@ -59,17 +90,11 @@
         } else {
           const cards = S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
             .concat(S.env.devices.map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
-          out += C.cards('device', cards, n.device ? n.device + (n.fromConfig ? '|cfg' : '') : null, { label: T('nas.find.titleSource') });
+          const chosen = n.device ? n.device + (n.fromConfig ? '|cfg' : '') : null;
+          out += C.cards('device', cards.map((c) => (c.v === chosen && about ? Object.assign(c, { under: about }) : c)), chosen, { label: T('nas.find.titleSource') });
+          about = '';
         }
-        const d = dev(S);
-        if (d && d.pm) out += C.note(T('nas.find.pmNote', { name: d.name }), 'ok', 'link');
-        if (d && !d.ssh && !d.pm) {
-          const cs = F.state(S, 'sshcheck:' + d.id);
-          out += C.group(T('nas.find.offTitle', { name: d.name }), `<p class="o55-note o55-note-info">${C.mark('off', 14, C.smallArt('power', 14))}<span>${U.esc(T('nas.find.offLead', { brand: d.brand }))}</span></p>`
-            + `<p class="o55-path" data-key="path">${U.esc(O55.tx('nas.find.steps')[d.brand] || '')}</p>`
-            + (cs && cs.state === 'failed' ? C.note(T('nas.find.stillOff', { name: d.name }), 'warn') : '')
-            + `<div class="o55-inline" data-key="again">${O55.ui.btn({ label: T('nas.find.checkAgain'), do: 'checkAgain', cls: 'o55-small' }, 'o55-secondary')}</div>`, { cls: 'o55-sshoff' });
-        }
+        out += about;
         if (!n.manual) out += `<div class="o55-sublinks" data-key="addr">${C.link(T('nas.find.address'), 'manualOn')}</div>`;
       } else if (m === 'smb' || m === 'nfs') {
         out += C.group(T(m === 'smb' ? 'nas.find.shares' : 'nas.find.exports'), C.cards('share', S.env.shares.filter((s) => s.proto === m).map((s) => ({ v: s.id, glyph: 'folder', title: s.path, sub: (S.env.devices.find((d) => d.id === s.device) || {}).name })), n.share));
@@ -130,6 +155,7 @@
     return known === d.hostKey ? 'known' : 'changed';
   }
   def('nas-identity', {
+    seed: (S) => seedNas(S, 'nas-identity'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'identity', params: sceneParams(S) }),
     eyebrow: () => T('nas.identity.eyebrow'),
@@ -191,6 +217,7 @@
   const keyWhere = (k) => (k.where === 'file' && k.configHost ? T('nas.key.where.config', { host: k.configHost }) : T('nas.key.where.' + k.where));
   function defaultKey(S) { const works = keyring(S).find((k) => keyStatus(S, k) === 'works'); return works ? works.id : 'new'; }
   def('nas-key', {
+    seed: (S) => seedNas(S, 'nas-key'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'keys', params: sceneParams(S) }),
     eyebrow: () => T('nas.key.eyebrow'),
@@ -208,7 +235,7 @@
       let out = '';
       if (!keyring(S).length) out += C.note(T('nas.key.none', { where: machine(S) }), 'info', 'key');
       out += C.cards('pick', keys.concat([{ v: 'new', glyph: 'spark', title: T('nas.key.new'), sub: T('nas.key.newSub'), tag: defaultKey(S) === 'new' ? T('chrome.recommended') : '' }]), sel, { label: T('nas.key.title'), cls: 'o55-keys' });
-      out += C.details(S, 'keys', T('nas.key.detailsLabel'), `<p>${U.esc(T('nas.key.details'))}</p>`);
+      /* ("What does Puppet Master read?" was an old-style explainer; the key list's ? now says it whole: QA round 2, Q8) */
       if (S.sess.ui.sheet === 'passphrase') {
         const k = keyring(S).find((x) => x.id === sel);
         out += C.sheet(S, 'passphrase', T('nas.key.passTitle', { key: k.file.split('/').pop() }),
@@ -240,6 +267,7 @@
 
   /* ------------------------------------------------------------------ sign in once (only when the key isn't there yet) */
   def('nas-signin', {
+    seed: (S) => seedNas(S, 'nas-signin'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'keys', params: sceneParams(S) }),
     eyebrow: () => T('nas.signin.eyebrow'),
@@ -306,6 +334,7 @@
 
   /* ------------------------------------------------------------------ automatic phases (selected-source auth) */
   def('nas-install', {
+    seed: (S) => seedNas(S, 'nas-install'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => { const st = F.state(S, installKey(S)); return { id: 'nas', beat: st && st.state === 'done' ? 'verified' : 'install', params: sceneParams(S) }; },
     eyebrow: () => T('nas.install.eyebrow'),
@@ -386,7 +415,7 @@
   /* connected either way: a backup source goes back to the restore (its backups are listed there), a backup
      destination back to Finish protecting your work, everything else picks a folder */
   function connected(S) {
-    if (N(S).purpose === 'backup') { const r = S.sess.restore || {}; r.nasReady = true; S.save(); return O55.ui.go(r.scope !== 'project' ? 'r-unlock' : 'r-pick'); }
+    if (N(S).purpose === 'backup') { const r = S.sess.restore || {}; r.nasReady = true; S.save(); return O55.ui.go(O55.restore.afterReach(S)); } /* (the phrase only if no kit unlocked it) */
     if (N(S).purpose === 'dest') return O55.ui.go('protect');
     O55.ui.go('nas-folder');
   }
@@ -419,6 +448,7 @@
     F.op(S, pairKey(S), 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload, ctx, sound: { phase: { approve: 'found', qr: 'found' }, intensity: 0.8 }, onDone: () => pairDone(S) });
   }
   def('nas-pmpair', {
+    seed: (S) => seedNas(S, 'nas-pmpair'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => { const n = N(S), st = F.state(S, pairKey(S)); return { id: 'nas', beat: n.paired ? 'paired' : 'pair', params: sceneParams(S, { seed: (pmOf(S) || {}).seed, words: words((pmOf(S) || {}).seed || ''), method: n.pairing || 'approval', waiting: !!(st && st.state === 'running') }) }; },
     eyebrow: () => T('nas.pmpair.eyebrow'),
@@ -499,6 +529,7 @@
   /* ------------------------------------------------------------------ choose a folder (SFTP browser) */
   function readOnlyAt(S, path) { const d = dev(S); return (d.readOnly || []).some((p) => path === p || path.startsWith(p + '/')); }
   def('nas-folder', {
+    seed: (S) => seedNas(S, 'nas-folder'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'folder', params: sceneParams(S, { folder: (N(S).at || '').split('/').pop() || undefined }) }),
     eyebrow: () => T('nas.folder.eyebrow'),
@@ -543,6 +574,7 @@
     S.save(); O55.ui.go('name');
   }
   def('nas-smb', {
+    seed: (S) => seedNas(S, 'nas-smb'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'smb' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.smb.eyebrow'), title: () => T('nas.smb.title'), lead: () => T('nas.smb.lead'),
@@ -550,7 +582,7 @@
       const n = N(S), sh = S.env.shares.find((s) => s.id === n.share) || {};
       let out = `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>`;
       out += C.field({ bind: 'user', label: T('nas.smb.user'), value: n.user || '', autocomplete: 'username' });
-      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: T('nas.signin.passwordHint') });
+      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: T('nas.smb.passwordHint') }); /* (the OS keeps a shared folder's sign-in: not the SSH key's one-time password; QA2 hunter H3) */
       const st = F.state(S, 'smb:' + n.share);
       if (st) out += F.phases(S, 'smb:' + n.share, ['mount', 'read'], { mount: T('nas.smb.phases.mount'), read: T('nas.smb.phases.read') });
       return out;
@@ -563,6 +595,7 @@
     bind: { user(S, v) { N(S).user = v; S.save(); O55.ui.refresh(); }, pw(S, v) { const had = !!N(S).pwTyped; N(S).pwTyped = v.length > 0; if (had !== N(S).pwTyped) { S.save(); O55.ui.refresh(); } } }
   });
   def('nas-nfs', {
+    seed: (S) => seedNas(S, 'nas-nfs'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'nfs' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.nfs.eyebrow'), title: () => T('nas.nfs.title'), lead: () => T('nas.nfs.lead'),
@@ -572,6 +605,7 @@
     do: { use(S) { const sh = S.env.shares.find((s) => s.id === N(S).share); finishMounted(S, sh.path, 'nfs:' + sh.path, 'nfs'); } }
   });
   def('nas-mounted', {
+    seed: (S) => seedNas(S, 'nas-mounted'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'mounted' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.mounted.eyebrow'), title: () => T('nas.mounted.title'), lead: () => T('nas.mounted.lead'),

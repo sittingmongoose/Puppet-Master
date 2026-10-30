@@ -56,13 +56,16 @@
     const S = look && look.S; look = null;
     if (lookTimer) { lookTimer.cancel(); lookTimer = null; }
     if (!S || !S.sess) return false;
-    if (O55.nierLook && O55.nierLook.commit) O55.nierLook.commit(S);
+    /* the theme first (NieR is a theme since Q22: its preview follows this write), then NieR's Adjust rows, so dropping
+       the preview finds the stored theme already matching what is painted */
     const d = md(S), tome = window.PM7_SETTINGS_TOME, key = [window.PM_ACTIVE_PROJECT_ID || '', d.theme_family, d.theme_mode].join('|');
-    if (key === lookWritten) return true;
-    lookWritten = key;
-    let ok = false;
-    try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(d.theme_family); tome.setChromeThemeMode(d.theme_mode); ok = true; } } catch (_) {}
-    if (!ok) try { window.PM_THEME.setFamily(d.theme_family); window.PM_THEME.setMode(d.theme_mode); } catch (_) {}
+    let ok = key === lookWritten;
+    if (!ok) {
+      lookWritten = key;
+      try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(d.theme_family); tome.setChromeThemeMode(d.theme_mode); ok = true; } } catch (_) {}
+      if (!ok) try { window.PM_THEME.setFamily(d.theme_family); window.PM_THEME.setMode(d.theme_mode); } catch (_) {}
+    }
+    if (O55.nierLook && O55.nierLook.commit) O55.nierLook.commit(S);
     return ok;
   }
   /* a page that goes away still saves the look it was given */

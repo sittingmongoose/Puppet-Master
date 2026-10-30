@@ -747,9 +747,16 @@
       return false;
     }).join(' ');
   }
+  /* Only a control lights the plate ("while a control carrying data-pmx-affects is hovered"): a section or wrapper that
+     carries data-pmx-affects lights when the pointer or focus is on one of its controls, never for its words, its empty
+     space or the plate's picture (QA round 2, Q17: moving the mouse over Who's in the Crew dimmed the team to 35 %). A
+     control the plate holds (ELI5's voice switch) still lights. */
+  var LIGHT_CONTROL = 'button, input, select, textarea, label, a[href], [role="switch"], [role="radio"], [role="checkbox"], [role="tab"], [role="slider"], [role="spinbutton"], [role="combobox"], [contenteditable="true"]';
   function affectsOf(el) {
     var a = el && el.closest ? el.closest('[data-pmx-affects]') : null;
     if (!a || !a.closest('#pmOverlayRoot > .pmx-sheet')) return '';
+    var c = el.closest(LIGHT_CONTROL);
+    if (!c || !a.contains(c)) return '';
     return partsOf(a.getAttribute('data-pmx-affects'));
   }
   /* closing (COLLAB FR 8): only the parts the sheet actually draws in its visible mode light; a hover whose parts

@@ -205,8 +205,9 @@ html[data-motion="reduced"] .orbit-core-face :is(.pmx-pip-dot2, .pmx-pip-dot3, .
 .qs-head-icon[data-pip] { width: 22px; height: 22px; margin: -4px 0; background: none; display: inline-grid; place-items: center; }
 .plan-sched-mark[data-pip] { width: 22px; height: 22px; margin: -3px 0 -3px -3px; padding-top: 0; }
 /* the wand: Pip holds it */
-.menu-head-wand { display: inline-flex; align-items: center; gap: 0; }
-.menu-head-wand > .pmx-pip-mk { margin: -5px -5px -5px 0; }
+/* Pip beside the wand in the head, both the head's own children (the wand keeps its inks: neon-icons.css scopes them to
+   .menu-head > svg[data-nx="wand"]); Pip tucks up to it across the head's 7 px gap */
+.menu-head > .pmx-pip-mk.menu-head-pip { margin: -5px -12px -5px 0; }
 /* an empty list that draws its glyph faint keeps Pip whole */
 .af-empty > .pmx-empty-pip { opacity: 1; }
 .af-empty.pmx-empty-line { flex-direction: column; }

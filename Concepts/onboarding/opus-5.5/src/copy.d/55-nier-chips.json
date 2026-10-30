@@ -1,19 +1,19 @@
 {
  "nierSettings": {
   "reboot": {
-   "kicker": "NieR Mode",
+   "kicker": "NieR",
    "allClear": "All clear",
    "syncing": "Synchronising",
    "ok": "OK",
    "online": "Online",
-   "keepLook": "Keeping {family} for later",
+   "keepLook": "Changing the theme",
    "inkParchment": "Ink and parchment",
    "puppets": "NieR puppets",
    "pod": "Pod 042",
    "menuSounds": "Menu sounds",
    "ready": "Ready",
-   "saveNier": "Saving NieR Mode for later",
-   "restoreLook": "Restoring {family}",
+   "saveNier": "Leaving NieR",
+   "restoreLook": "Loading {family}",
    "pageOn": "Rebooting the interface",
    "pageOnDone": "Ink and parchment loaded",
    "pageOff": "Shutting down the unit",
@@ -29,7 +29,7 @@
    "project": "Opening your Project",
    "look": "Look",
    "ok": "OK",
-   "lookValue": "NieR Mode"
+   "lookValue": "NieR"
   },
   "quest": {
    "planKicker": "Planning Wizard",
@@ -58,14 +58,14 @@
   "chips": {
    "kicker": "Plug-in Chips",
    "title": "Adjust NieR look",
-   "drawerTitle": "NieR Mode",
+   "drawerTitle": "Adjust NieR",
    "leadLive": "Install or remove each part. A change applies at once and is saved.",
    "leadPreview": "Install or remove each part. You see each change now; it is kept with your look when setup finishes.",
    "close": "Close"
   },
   "themeMenu": {
-   "toggle": "NieR Mode",
-   "adjust": "Adjust NieR look",
+      "adjust": "Adjust NieR…",
+      "adjustLabel": "Adjust NieR: its pieces and the scene behind the app",
    "swatch": "Ink and parchment",
    "adjustShort": "Adjust"
   }

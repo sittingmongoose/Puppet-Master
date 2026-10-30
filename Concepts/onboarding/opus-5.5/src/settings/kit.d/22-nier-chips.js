@@ -12,7 +12,7 @@
        diamond, a block bar and the Pod, in the current look's colours
      - the NieR background (general.visual.nier-background) as thumbnails of PM_NIER_SCENES, and Play reboot moment
        (PM_NIER.replay)
-     - a note on the Motion group while Reduce motion is on; a note and a switch while NieR Mode is off (the list can
+     - a note on the Motion group while Reduce motion is on; a note and a NieR theme pick while NieR is not the theme (the list can
        be edited for later)
    Styles: styles.d/17-nier-chips.css. The sheet follows the store's onChange while it is open and writes only what changed.
    The same markup renders in the Settings drawer (open), in a body-level dialog (popup) and inside any host (mount).
@@ -29,7 +29,7 @@
     square: ['Square corners and fine ink lines everywhere.', 4], cursor: ['The item under the pointer becomes an ink bar with a small cursor.', 5],
     headers: ['Section titles in wide capitals over a ruled line.', 4], ground: ['A faint grid behind the whole app.', 3],
     brackets: ['Four corner brackets mark what has keyboard focus.', 5], diamonds: ['Spinners become a slowly turning diamond.', 3],
-    reboot: ['A check list covers the screen while NieR Mode turns on or off.', 8], slice: ['Menus and dialogs open from a thin line.', 4],
+    reboot: ['A check list covers the screen as the NieR theme starts.', 8], slice: ['Menus and dialogs open from a thin line.', 4],
     decode: ['Titles and labels unscramble; longer text types on.', 5], wipe: ['A quick band crosses the page when you switch pages.', 4],
     particles: ['A few small ink squares drift behind the app.', 3], sweep: ['A faint line crosses the screen every few seconds.', 2],
     glitch: ['Warnings and errors arrive with a short jitter.', 4], sounds: ['Soft ticks and tones when you move and choose.', 5],
@@ -75,7 +75,7 @@
     const have = new Set((Array.isArray(value) ? value : []).map(String)), list = PARTS(), n = list.filter(p => have.has(p.label)).length;
     const cells = list.map(p => `<i${have.has(p.label) ? ' class="on"' : ''}></i>`).join('');
     const text = `${n} of ${list.length} parts installed`;
-    return `<button type="button" class="o55-struct o55nc-open" data-action="open-structured-setting" data-setting="${esc(ID)}" aria-label="${esc(`Customize NieR Mode: ${text}. Open Plug-in Chips`)}">`
+    return `<button type="button" class="o55-struct o55nc-open" data-action="open-structured-setting" data-setting="${esc(ID)}" aria-label="${esc(`Adjust NieR: ${text}. Open Plug-in Chips`)}">`
       + `<span class="o55-struct-copy"><span class="o55-struct-count">${esc(text)}</span><span class="o55nc-rowcells" aria-hidden="true">${cells}</span></span>${icon('edit')}</button>`;
   };
 
@@ -119,9 +119,9 @@
       + `<div class="o55nc-presets" role="group" aria-label="Presets">${PRESETS.map(p => `<button type="button" class="o55nc-preset" aria-pressed="false" data-o55nc-preset="${p.id}"><span>${esc(p.label)}</span><small>${esc(p.help)}</small></button>`).join('')}</div>`
       + '<button type="button" class="btn small o55nc-replay" data-o55nc-replay><span>Play reboot moment</span></button><p class="o55nc-replay-why"></p>'
       + '</div></div>'
-      + '<div class="o55nc-off"><p>NieR Mode is off. The parts you install here show when you turn it on.</p><button type="button" class="btn small primary" data-o55nc-on>Turn on NieR Mode</button></div>'
+      + '<div class="o55nc-off"><p>NieR is not your theme right now. The parts you install here show when you pick it.</p><button type="button" class="btn small primary" data-o55nc-on>Use the NieR theme</button></div>'
       + groups
-      + `<section class="o55nc-group o55nc-bg"><header class="o55nc-ghead"><h4>Background</h4><span>Behind the app while NieR Mode is on</span></header><div class="o55nc-scenes" role="radiogroup" aria-label="NieR background">${tiles}</div></section>`
+      + `<section class="o55nc-group o55nc-bg"><header class="o55nc-ghead"><h4>Background</h4><span>Behind the app while NieR is your theme</span></header><div class="o55nc-scenes" role="radiogroup" aria-label="NieR background">${tiles}</div></section>`
       + '</div>';
   }
 
@@ -207,7 +207,7 @@
   }
   function open() {
     const store = NIER() ? storeFor('live') : null; if (!store) return false;
-    const wrap = PM51.panel({ title: say('drawerTitle', 'NieR Mode'), eyebrow: say('kicker', 'Plug-in Chips'), icon: 'sliders', size: 'wide', cls: 'o55nc-panel', closeLabel: say('done', 'Done'),
+    const wrap = PM51.panel({ title: say('drawerTitle', 'Adjust NieR'), eyebrow: say('kicker', 'Plug-in Chips'), icon: 'sliders', size: 'wide', cls: 'o55nc-panel', closeLabel: say('done', 'Done'),
       summary: leadFor(store), body: body(store) });
     if (!wrap) return false;
     bind(wrap, store);

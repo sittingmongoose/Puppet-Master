@@ -198,13 +198,14 @@
     title: () => T('aiNone.title'),
     lead: () => T('aiNone.lead'),
     body(S) {
+      /* where to sign up for the chosen kind: under its own card (QA round 2, Q7) */
+      const links = (names) => `<div class="o55-sublinks" data-key="su">${names.map((n) => C.link(T('aiNone.signup', { name: n }), 'signup', n)).join('')}${O55.tips.q('group:signup')}</div>${O55.tips.explainer('group:signup')}`;
+      const sel = S.sess.ui.aiNone;
       return C.cards('pick', [
-        { v: 'sub', glyph: 'spark', title: T('aiNone.sub.title'), sub: T('aiNone.sub.sub') },
-        { v: 'api', glyph: 'key', title: T('aiNone.api.title'), sub: T('aiNone.api.sub') },
+        { v: 'sub', glyph: 'spark', title: T('aiNone.sub.title'), sub: T('aiNone.sub.sub'), under: sel === 'sub' ? links(['Claude', 'ChatGPT']) : '' },
+        { v: 'api', glyph: 'key', title: T('aiNone.api.title'), sub: T('aiNone.api.sub'), under: sel === 'api' ? links(['Anthropic', 'Google AI Studio']) : '' },
         { v: 'free', glyph: 'stack', title: T('aiNone.free.title'), sub: T('aiNone.free.sub') }
-      ], S.sess.ui.aiNone, { label: T('aiNone.title') })
-        + (S.sess.ui.aiNone === 'sub' ? `<div class="o55-sublinks" data-key="su">${['Claude', 'ChatGPT'].map((n) => C.link(T('aiNone.signup', { name: n }), 'signup', n)).join('')}${O55.tips.q('group:signup')}</div>${O55.tips.explainer('group:signup')}` : '')
-        + (S.sess.ui.aiNone === 'api' ? `<div class="o55-sublinks" data-key="su">${['Anthropic', 'Google AI Studio'].map((n) => C.link(T('aiNone.signup', { name: n }), 'signup', n)).join('')}${O55.tips.q('group:signup')}</div>${O55.tips.explainer('group:signup')}` : '');
+      ], sel, { label: T('aiNone.title') });
     },
     foot: (S) => ({ primary: { label: S.sess.ui.aiNone === 'free' ? T('ai.free.title') : T('chrome.continue'), do: 'next' } }),
     do: {
