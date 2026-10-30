@@ -91,6 +91,17 @@
           { path: '~/Desktop/garden notes', name: 'garden notes', history: null, online: null },
           { path: '~/Code/budget-tracker', name: 'budget-tracker', history: 'jujutsu', online: null }
         ],
+        /* what a restore can point to here (QA round 2, Q6): Recovery Kit files where people keep them (each knows where
+           its backup is and holds the key that unlocks it, never a NAS or cloud sign-in), and backup folders on this
+           computer or a drive plugged into it */
+        recoveryKits: [
+          { id: 'kit-laptop', file: 'Recovery Kit – Jared’s old laptop.pdf', folder: 'Downloads', scope: 'full', source: 'folder', where: 'Backup Drive', folderPath: '/Volumes/Backup Drive/Puppet Master' },
+          { id: 'kit-loom', file: 'Recovery Kit – Loom.pdf', folder: 'Documents', scope: 'project', source: 'folder', where: 'Backup Drive', folderPath: '/Volumes/Backup Drive/Puppet Master' }
+        ],
+        backupFolders: [
+          { path: '/Volumes/Backup Drive/Puppet Master', name: 'Backup Drive', drive: true },
+          { path: '~/Backups/Puppet Master', name: 'Backups', drive: false }
+        ],
         providers: {}
       },
       devices: [
@@ -143,7 +154,8 @@
       },
       backups: [
         { id: 'bk-recipe', project: 'Recipe App', where: 'Home NAS', source: 'nas', snapshots: ['Yesterday · 9:14 PM', 'Sep 20 · 9:10 PM', 'Sep 13 · 9:02 PM'] },
-        { id: 'bk-garden', project: 'Garden Planner', where: 'Google Drive', source: 'cloud', snapshots: ['Sep 22 · 7:40 AM', 'Sep 15 · 7:38 AM'] }
+        { id: 'bk-garden', project: 'Garden Planner', where: 'Google Drive', source: 'cloud', snapshots: ['Sep 22 · 7:40 AM', 'Sep 15 · 7:38 AM'] },
+        { id: 'bk-loom', project: 'Loom', where: 'Backup Drive', source: 'folder', snapshots: ['Sep 18 · 6:00 PM', 'Sep 11 · 6:00 PM'] }
       ],
       fullBackups: [{ id: 'full-1', label: 'Everything from "Jared’s old laptop"', when: 'Sep 21 · 11:02 PM', projects: 3, accounts: 2, projectList: ['Tastebook', 'Harbor', 'Loom'] }],
       failures: {}, /* e.g. { online_copy: 'name_taken' | 'network' } — one-shot owner failures for the recovery scenarios;

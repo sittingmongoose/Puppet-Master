@@ -953,7 +953,7 @@
   }
 
   /* ---------------------------------------------------------------- the chapter rail (O9)
-     The header's bar is a string pulled taut between two screw eyes, with a string down to each chapter, and Pip rides
+     The header's bar is a string pulled taut between two screw eyes, each chapter's bead threaded on it, and Pip rides
      it like a zip line as the current-chapter marker: the string dips under Pip's weight, Pip slides to the current
      chapter on each look's own spring and swings when it stops, and the walked part of the string is in the accent.
      Retro steps the slide (Retro Light at ten frames a second, like its paper); NieR glides on a rigid track. Reduced
@@ -985,7 +985,8 @@
     const nav = rail.nav; if (!nav) return;
     const nr = nav.getBoundingClientRect(), w = nav.offsetWidth || nr.width, k = nr.width && w ? nr.width / w : 1;
     rail.W = w;
-    rail.xs = Array.from(nav.querySelectorAll('.o55-railitem .o55-railnode')).map((n) => { const r = n.getBoundingClientRect(); return (r.left + r.width / 2 - nr.left) / k; });
+    rail.nodes = Array.from(nav.querySelectorAll('.o55-railitem .o55-railnode'));
+    rail.xs = rail.nodes.map((n) => { const r = n.getBoundingClientRect(); return (r.left + r.width / 2 - nr.left) / k; });
   };
   /* measured again after a size change; a new window layout (wide, narrow, short) puts Pip at its bead at once, where a
      chapter change lets it travel */
@@ -1033,6 +1034,9 @@
       const eyes = svg.querySelectorAll('.o55-railzip-eye');
       eyes[0].setAttribute('cx', x0); eyes[0].setAttribute('cy', y0); eyes[1].setAttribute('cx', R(x1)); eyes[1].setAttribute('cy', y0);
     }
+    /* each bead is threaded on the string, so it sits where the string sags (QA round 2, Q4; set every frame drawn: a
+       re-render of the rail drops the inline offset, and the mount that follows draws again) */
+    (rail.nodes || []).forEach((n, i) => { const dy = R(yAt(rail.xs[i]) - y0); n.style.translate = dy ? `0 ${dy}px` : ''; });
     /* the mark's pin (32, 14.5 of 64) rides the string; at 24 px that is (12, 5.4) */
     const pip = nav.querySelector(':scope > .o55-railpip');
     if (pip) pip.style.transform = `translate(${R(px - 12)}px, ${R(y0 + dip - 5.4)}px) rotate(${R(rail.ang * 57.3)}deg)`;

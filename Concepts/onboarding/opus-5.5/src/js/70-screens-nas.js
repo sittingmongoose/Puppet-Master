@@ -52,6 +52,18 @@
       let out = C.segmented({ do: 'method', value: m, label: T('nas.find.method'), options: [{ v: 'ssh', label: T('nas.find.ssh') }, { v: 'smb', label: T('nas.find.smb') }, { v: 'nfs', label: T('nas.find.nfs') }, { v: 'mounted', label: T('nas.find.mounted') }] });
       if (m === 'ssh') {
         const st = F.state(S, 'discover:ssh');
+        /* what the chosen device needs (it runs Puppet Master; its SSH is off): under its own card, or under the typed
+           address (QA round 2, Q7) */
+        const d = dev(S);
+        let about = '';
+        if (d && d.pm) about += C.note(T('nas.find.pmNote', { name: d.name }), 'ok', 'link');
+        if (d && !d.ssh && !d.pm) {
+          const cs = F.state(S, 'sshcheck:' + d.id);
+          about += C.group(T('nas.find.offTitle', { name: d.name }), `<p class="o55-note o55-note-info">${C.mark('off', 14, C.smallArt('power', 14))}<span>${U.esc(T('nas.find.offLead', { brand: d.brand }))}</span></p>`
+            + `<p class="o55-path" data-key="path">${U.esc(O55.tx('nas.find.steps')[d.brand] || '')}</p>`
+            + (cs && cs.state === 'failed' ? C.note(T('nas.find.stillOff', { name: d.name }), 'warn') : '')
+            + `<div class="o55-inline" data-key="again">${O55.ui.btn({ label: T('nas.find.checkAgain'), do: 'checkAgain', cls: 'o55-small' }, 'o55-secondary')}</div>`, { cls: 'o55-sshoff' });
+        }
         if (n.manual) {
           out += `<div class="o55-fieldrow" data-key="manual">${C.field({ bind: 'addr', label: T('nas.find.addressLabel'), value: n.addr || '', placeholder: '192.168.1.20', hint: T('nas.find.addressHint') })}${C.field({ bind: 'port', label: T('nas.find.portLabel'), value: n.port || '22', cls: 'o55-field-port' })}</div>`;
         } else if (!st || st.state !== 'done') {
@@ -59,17 +71,11 @@
         } else {
           const cards = S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
             .concat(S.env.devices.map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
-          out += C.cards('device', cards, n.device ? n.device + (n.fromConfig ? '|cfg' : '') : null, { label: T('nas.find.titleSource') });
+          const chosen = n.device ? n.device + (n.fromConfig ? '|cfg' : '') : null;
+          out += C.cards('device', cards.map((c) => (c.v === chosen && about ? Object.assign(c, { under: about }) : c)), chosen, { label: T('nas.find.titleSource') });
+          about = '';
         }
-        const d = dev(S);
-        if (d && d.pm) out += C.note(T('nas.find.pmNote', { name: d.name }), 'ok', 'link');
-        if (d && !d.ssh && !d.pm) {
-          const cs = F.state(S, 'sshcheck:' + d.id);
-          out += C.group(T('nas.find.offTitle', { name: d.name }), `<p class="o55-note o55-note-info">${C.mark('off', 14, C.smallArt('power', 14))}<span>${U.esc(T('nas.find.offLead', { brand: d.brand }))}</span></p>`
-            + `<p class="o55-path" data-key="path">${U.esc(O55.tx('nas.find.steps')[d.brand] || '')}</p>`
-            + (cs && cs.state === 'failed' ? C.note(T('nas.find.stillOff', { name: d.name }), 'warn') : '')
-            + `<div class="o55-inline" data-key="again">${O55.ui.btn({ label: T('nas.find.checkAgain'), do: 'checkAgain', cls: 'o55-small' }, 'o55-secondary')}</div>`, { cls: 'o55-sshoff' });
-        }
+        out += about;
         if (!n.manual) out += `<div class="o55-sublinks" data-key="addr">${C.link(T('nas.find.address'), 'manualOn')}</div>`;
       } else if (m === 'smb' || m === 'nfs') {
         out += C.group(T(m === 'smb' ? 'nas.find.shares' : 'nas.find.exports'), C.cards('share', S.env.shares.filter((s) => s.proto === m).map((s) => ({ v: s.id, glyph: 'folder', title: s.path, sub: (S.env.devices.find((d) => d.id === s.device) || {}).name })), n.share));
@@ -208,7 +214,7 @@
       let out = '';
       if (!keyring(S).length) out += C.note(T('nas.key.none', { where: machine(S) }), 'info', 'key');
       out += C.cards('pick', keys.concat([{ v: 'new', glyph: 'spark', title: T('nas.key.new'), sub: T('nas.key.newSub'), tag: defaultKey(S) === 'new' ? T('chrome.recommended') : '' }]), sel, { label: T('nas.key.title'), cls: 'o55-keys' });
-      out += C.details(S, 'keys', T('nas.key.detailsLabel'), `<p>${U.esc(T('nas.key.details'))}</p>`);
+      /* ("What does Puppet Master read?" was an old-style explainer; the key list's ? now says it whole: QA round 2, Q8) */
       if (S.sess.ui.sheet === 'passphrase') {
         const k = keyring(S).find((x) => x.id === sel);
         out += C.sheet(S, 'passphrase', T('nas.key.passTitle', { key: k.file.split('/').pop() }),
@@ -386,7 +392,7 @@
   /* connected either way: a backup source goes back to the restore (its backups are listed there), a backup
      destination back to Finish protecting your work, everything else picks a folder */
   function connected(S) {
-    if (N(S).purpose === 'backup') { const r = S.sess.restore || {}; r.nasReady = true; S.save(); return O55.ui.go(r.scope !== 'project' ? 'r-unlock' : 'r-pick'); }
+    if (N(S).purpose === 'backup') { const r = S.sess.restore || {}; r.nasReady = true; S.save(); return O55.ui.go(O55.restore.afterReach(S)); } /* (the phrase only if no kit unlocked it) */
     if (N(S).purpose === 'dest') return O55.ui.go('protect');
     O55.ui.go('nas-folder');
   }
@@ -550,7 +556,7 @@
       const n = N(S), sh = S.env.shares.find((s) => s.id === n.share) || {};
       let out = `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>`;
       out += C.field({ bind: 'user', label: T('nas.smb.user'), value: n.user || '', autocomplete: 'username' });
-      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: T('nas.signin.passwordHint') });
+      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: T('nas.smb.passwordHint') }); /* (the OS keeps a shared folder's sign-in: not the SSH key's one-time password; QA2 hunter H3) */
       const st = F.state(S, 'smb:' + n.share);
       if (st) out += F.phases(S, 'smb:' + n.share, ['mount', 'read'], { mount: T('nas.smb.phases.mount'), read: T('nas.smb.phases.read') });
       return out;

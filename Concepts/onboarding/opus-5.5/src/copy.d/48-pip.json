@@ -396,11 +396,23 @@
       "r-source": {
         "source:kit": {
           "title": "A Recovery Kit file",
-          "text": "The file you saved when you set up backups. It knows where your backup is and how to open it. The best place to start."
+          "text": "The file you saved when you set up backups. It is not a place: it says where your backup is kept and holds the key that unlocks it, so there is no phrase to type. It never holds a NAS or cloud sign-in. The best place to start."
+        },
+        "group:kit": {
+          "title": "Which Recovery Kit",
+          "text": "Recovery Kit files found on this computer. Pick the one for the backup you want back."
+        },
+        "group:bfolder": {
+          "title": "Which folder",
+          "text": "Folders on this computer or a plugged-in drive that hold a Puppet Master backup."
+        },
+        "field:bpath": {
+          "title": "Where the backup folder is",
+          "text": "The folder's full location, as your file browser shows it."
         },
         "source:folder": {
           "title": "A folder on this computer",
-          "text": "A backup copied onto this computer, or on a drive you plugged in."
+          "text": "A backup kept on this computer, or on a drive you plugged in. You point to the folder next; the recovery phrase from your Recovery Kit unlocks it."
         },
         "source:nas": {
           "title": "A NAS or another computer",
@@ -1044,7 +1056,7 @@
       "nas-key": {
         "group:pick": {
           "title": "Choose a key",
-          "text": "A key lets Puppet Master connect without a password. These are on the computer that will connect; only the part safe to share is read."
+          "text": "A key lets Puppet Master connect without a password. These are on the computer that will connect. Only the public half of each key is read: a private key is never read, copied or stored, and stays where it is."
         },
         "pick:new": {
           "title": "Make a new key",

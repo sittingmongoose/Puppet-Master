@@ -86,25 +86,30 @@
           out += C.note(T('connect.route.vpnLine'), 'info', 'link');
           out += `<div class="o55-sublinks" data-key="l-addr">${C.link(T('connect.route.address'), 'manualOn')}</div>`;
         }
-      } else if (mode === 'tailscale') {
-        out += C.segmented({ do: 'tsControl', value: d.tailscale_control || 'hosted', label: T('connect.route.tailscale.title'), options: [{ v: 'hosted', label: T('connect.route.tailscale.hosted') }, { v: 'headscale', label: T('connect.route.tailscale.headscale') }] });
-        if (d.tailscale_control === 'headscale') out += C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: F.isHttps(d.headscale_url) ? '' : 'https://…', valid: F.isHttps(d.headscale_url) });
-        out += C.cards('pickServer', S.env.pmServers.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: 'Tailscale · ' + nProjects(s.projects.length) })), d.server_ref, { label: T('connect.route.found') });
+      }
+      /* another route's own questions sit under its card in Other ways to connect (QA round 2, Q7 and Q9: the web
+         address field was above the list, far from My own web address) */
+      let under = '';
+      if (mode === 'tailscale') {
+        under += C.segmented({ do: 'tsControl', value: d.tailscale_control || 'hosted', label: T('connect.route.tailscale.title'), options: [{ v: 'hosted', label: T('connect.route.tailscale.hosted') }, { v: 'headscale', label: T('connect.route.tailscale.headscale') }] });
+        if (d.tailscale_control === 'headscale') under += C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: F.isHttps(d.headscale_url) ? '' : 'https://…', valid: F.isHttps(d.headscale_url) });
+        under += C.cards('pickServer', S.env.pmServers.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: 'Tailscale · ' + nProjects(s.projects.length), quiet: true })), d.server_ref, { cls: 'o55-choices-quiet', label: T('connect.route.found') });
       } else if (mode === 'reverse_proxy') {
         const hit = resolveAddress(S, d.proxy_hostname, 'proxy');
-        out += C.field({ bind: 'proxy', label: T('connect.route.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: hit ? hit.name : 'https://…', valid: !!hit });
-        out += C.details(S, 'proxy', T('connect.route.proxy.title'), `<p>${U.esc(T('connect.route.proxy.detail'))}</p>`);
+        under += C.field({ bind: 'proxy', label: T('connect.route.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: hit ? hit.name : 'https://…', valid: !!hit });
+        /* (its old-style explainer went: the route's ? says the same, QA round 2, Q8) */
       } else if (mode === 'remote_link') {
         const hit = resolveAddress(S, d.remote_endpoint, 'link');
-        out += C.field({ bind: 'link', label: T('connect.route.link.label'), value: d.remote_endpoint, placeholder: 'pm-remote-link:home-nas/7Q2K', hint: hit ? hit.name : '', valid: !!hit });
+        under += C.field({ bind: 'link', label: T('connect.route.link.label'), value: d.remote_endpoint, placeholder: 'pm-remote-link:home-nas/7Q2K', hint: hit ? hit.name : '', valid: !!hit });
       }
       const opts = [
         { v: 'local_or_vpn', glyph: 'link', title: T('connect.route.local'), quiet: true },
-        { v: 'tailscale', glyph: 'globe', title: T('connect.route.tailscale.title'), sub: T('connect.route.tailscale.sub'), quiet: true },
-        { v: 'reverse_proxy', glyph: 'globe', title: T('connect.route.proxy.title'), sub: T('connect.route.proxy.sub'), quiet: true },
-        { v: 'remote_link', glyph: 'link', title: T('connect.route.link.title'), sub: T('connect.route.link.sub'), quiet: true }
+        { v: 'tailscale', glyph: 'globe', title: T('connect.route.tailscale.title'), sub: T('connect.route.tailscale.sub'), quiet: true, under: mode === 'tailscale' ? under : '' },
+        { v: 'reverse_proxy', glyph: 'globe', title: T('connect.route.proxy.title'), sub: T('connect.route.proxy.sub'), quiet: true, under: mode === 'reverse_proxy' ? under : '' },
+        { v: 'remote_link', glyph: 'link', title: T('connect.route.link.title'), sub: T('connect.route.link.sub'), quiet: true, under: mode === 'remote_link' ? under : '' }
       ];
-      out += F.more(d.remote_more, T('connect.route.more'), 'more', C.cards('route', opts, mode, { cls: 'o55-choices-quiet', label: T('connect.route.more') }), 'route');
+      /* (open whenever another route is chosen: its questions are in there) */
+      out += F.more(d.remote_more || (!!mode && mode !== 'local_or_vpn'), T('connect.route.more'), 'more', C.cards('route', opts, mode, { cls: 'o55-choices-quiet', label: T('connect.route.more') }), 'route');
       return out;
     },
     mounted(S) { if (cd(S).remote_mode === 'local_or_vpn' && !S.sess.connect.manual) scan(S); },

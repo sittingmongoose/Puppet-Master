@@ -834,7 +834,8 @@
     }
     if (['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
       const group = e.target.closest('.o55-choices, .o55-tiles'); if (!group) return;
-      const items = Array.from(group.querySelectorAll('.o55-card:not([aria-disabled="true"]), .o55-tile'));
+      /* (only this list's own choices: a choice's sub-choices, under it, are a list of their own) */
+      const items = Array.from(group.querySelectorAll('.o55-card:not([aria-disabled="true"]), .o55-tile')).filter((n) => n.closest('.o55-choices, .o55-tiles') === group);
       const i = items.indexOf(e.target.closest('.o55-card, .o55-tile')); if (i < 0) return;
       const n = items[(i + (e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : -1) + items.length) % items.length];
       if (n) { e.preventDefault(); n.focus(); O55.sound.play('move', { step: items.indexOf(n) }); }
@@ -866,12 +867,14 @@
      editor's sheet included, restyle that whole subtree, 86.8 ms on an editor open, B6 trace), and the parts not inert
      already are made inert, as before. */
   let returnFocus = null, inerted = [], held = [];
+  /* An open while the window is already open (the demo's Open at one screen, Run Onboarding Again, an open before a
+     close has finished) holds only what is new: it once read the app it had itself made inert as "inert already",
+     recorded nothing, and the close then woke nothing, so the app stayed dead to clicks (QA2 hunter H5). */
   function setInert(on) {
     if (on) {
-      held = Array.from(document.body.children).filter((n) => n !== S.root && n.id !== 'pm-hover-tag-root' && n.id !== 'o55-demo' && n.tagName !== 'SCRIPT');
-      inerted = held.filter((n) => !n.hasAttribute('inert'));
-      held.forEach((n) => n.setAttribute('data-o55-held', ''));
-      inerted.forEach((n) => n.setAttribute('inert', ''));
+      const add = Array.from(document.body.children).filter((n) => n !== S.root && n.id !== 'pm-hover-tag-root' && n.id !== 'o55-demo' && n.tagName !== 'SCRIPT' && !held.includes(n));
+      add.forEach((n) => { n.setAttribute('data-o55-held', ''); if (!n.hasAttribute('inert')) { n.setAttribute('inert', ''); inerted.push(n); } });
+      held = held.concat(add);
     } else {
       inerted.forEach((n) => n.removeAttribute('inert'));
       held.forEach((n) => n.removeAttribute('data-o55-held'));

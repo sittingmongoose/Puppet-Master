@@ -129,17 +129,22 @@
 
   const C = O55.c = {
     glyph, small, smallArt, mark, spin, loader, done, stepmark,
-    /* Choice cards (radio semantics). options: [{v, title, sub, glyph, tag, disabled, reason, key}]; each with its ? */
+    /* Choice cards (radio semantics). options: [{v, title, sub, glyph, tag, disabled, reason, key, under}]; each with its ? */
     cards(action, options, selected, o) {
       o = o || {};
       return `<div class="o55-choices${o.cls ? ' ' + o.cls : ''}" role="radiogroup"${o.label ? ` aria-label="${esc(o.label)}"` : ''}>`
         + options.filter(Boolean).map((opt1) => {
+          /* {sep}: a line of words between two kinds of choice in one list (a Recovery Kit file, then the places) */
+          if (opt1.sep) return `<p class="o55-choicesep" data-key="sep-${esc(opt1.key || 'sep')}">${esc(opt1.sep)}</p>`;
           const on = opt1.v === selected, id = action + ':' + opt1.v;
           const dis = opt1.disabled ? ` aria-disabled="true" data-disabled-reason="${esc(opt1.reason || '')}"` : '';
-          return opt(id, `<button type="button" class="o55-card${on ? ' o55-on' : ''}${opt1.quiet ? ' o55-card-quiet' : ''}" role="radio" aria-checked="${on}" data-o55-do="${esc(action)}" data-arg="${esc(opt1.v)}"${dis}${described(id)}${U.attrs(X)} data-key="card-${esc(opt1.key || opt1.v)}">`
+          return opt(id, `<button type="button" class="o55-card${on ? ' o55-on' : ''}${opt1.quiet ? ' o55-card-quiet' : ''}${opt1.under ? ' o55-card-parent' : ''}" role="radio" aria-checked="${on}" data-o55-do="${esc(action)}" data-arg="${esc(opt1.v)}"${dis}${described(id)}${U.attrs(X)} data-key="card-${esc(opt1.key || opt1.v)}">`
             + (opt1.glyph ? glyph(opt1.glyph) : '') + `<span class="o55-cardtext"><span class="o55-cardtitle">${esc(opt1.title)}</span>`
             + (opt1.sub ? `<span class="o55-cardsub">${esc(opt1.sub)}</span>` : '') + `</span>`
-            + (opt1.tag ? `<span class="o55-tag">${esc(opt1.tag)}</span>` : '') + `<span class="o55-check" aria-hidden="true"></span></button>`, on ? 'o55-opt-on' : '');
+            + (opt1.tag ? `<span class="o55-tag">${esc(opt1.tag)}</span>` : '') + `<span class="o55-check" aria-hidden="true"></span></button>`, on ? 'o55-opt-on' : '')
+            /* opt1.under: what this choice asks next (which device, which folder, which service), directly under it and
+               part of it, never below the whole list (Jared, QA round 2, Q7) */
+            + (opt1.under ? `<div class="o55-under" role="group" aria-label="${esc(opt1.title)}" data-key="under-${esc(opt1.key || opt1.v)}">${opt1.under}</div>` : '');
         }).join('') + '</div>';
     },
     /* A row with state and exactly one action. */
