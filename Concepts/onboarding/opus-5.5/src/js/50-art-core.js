@@ -149,6 +149,25 @@
     /* a Pip part (Settings > Pip parts, general.visual.pip-parts, S9: onboarding and the chat only): the parts registry
        (PM_PIP_PARTS.get) when it is there, on otherwise */
     part(id) { const reg = window.PM_PIP_PARTS; try { if (reg && typeof reg.get === 'function') return reg.get(id) !== false; } catch (_) {} return true; },
+    /* Words written out (Pip's bubble and ? note, the form's note, Retro's command line and boot text, NieR's decode):
+       step(k) draws the k-th of n steps, rate steps a second on the motion clock. Like the stage's own loop it holds
+       while the window is dragged (body.pm-resizing), the page is hidden or o.paused() says so (a held or closed
+       stage), and goes on from the step it reached, never catching up in a burst (Astra M03). */
+    typer(n, rate, step, o) {
+      o = o || {};
+      let k = 0, t = 0, last = O55.motion.now(), id = 0;
+      const halt = () => document.hidden || document.body.classList.contains('pm-resizing') || !!(o.paused && o.paused());
+      const stop = () => { if (id) clearInterval(id); id = 0; };
+      id = setInterval(() => {
+        const now = O55.motion.now(), dt = Math.min(64, Math.max(0, now - last)); last = now;
+        if (halt()) return;
+        t += dt;
+        const j = Math.min(n, Math.floor(t / 1000 * rate) + 1);
+        if (j !== k) { k = j; step(k); }
+        if (k >= n) { stop(); if (o.done) o.done(); }
+      }, 16);
+      return { cancel: stop, at: () => k };
+    },
     /* a mixin: methods a look's file adds to the stage (54-art-retro.js, 54-art-nier.js, 59-cheer.js) */
     mix(obj) { PIP.mixins.push(obj); if (PIP.Stage) Object.assign(PIP.Stage.prototype, obj); }
   };
@@ -172,7 +191,9 @@
     ctx = ctx || {};
     const nier = ctx.instance === 'nier', theme = (nier ? 'nier' : ctx.family || 'basic') + '-' + (ctx.mode === 'light' ? 'light' : 'dark');
     const key = theme + '|' + (K ? 'k' : '-');
-    if (host.getAttribute('data-o55-pip') === key) return host.firstElementChild;
+    /* (drawn already, unless its owner has emptied the host since: the NieR row's thumbnail is redrawn on a toggle) */
+    const drawn = host.querySelector(':scope > .o55-tilepip');
+    if (host.getAttribute('data-o55-pip') === key && (drawn || !K)) return drawn;
     host.setAttribute('data-o55-pip', key);
     host.innerHTML = K ? `<span class="o55-tilepip" data-pip-theme="${theme}" aria-hidden="true">${K.svg({ theme, px: 64, form: 'tile', decorative: true })}</span>` : '';
     return host.firstElementChild;

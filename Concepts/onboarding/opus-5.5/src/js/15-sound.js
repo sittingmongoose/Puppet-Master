@@ -115,7 +115,7 @@
     document.querySelectorAll('button.o55-sound').forEach((b) => {
       const on = !S.muted, label = on ? O55.t('chrome.soundOn') : O55.t('chrome.soundOff');
       b.setAttribute('aria-pressed', String(on));
-      b.setAttribute('aria-label', label); b.setAttribute('title', label);
+      b.setAttribute('aria-label', label); b.setAttribute('title', label + (b.getAttribute('data-o55-hint') ? '\n' + b.getAttribute('data-o55-hint') : ''));
       const svg = b.querySelector('svg');
       if (svg && svg.classList.contains('nx')) { const nx = neonSvg(on); if (nx && svg.outerHTML !== nx) svg.outerHTML = nx; return; }
       const paths = b.querySelectorAll('svg path');
@@ -1998,13 +1998,14 @@
   };
   /* the markup is written the way the browser serialises it (paths closed with </path>), so a host that compares its
      slot's innerHTML with this string finds it unchanged after syncButtons() and leaves the focused button in place */
-  S.buttonHtml = function buttonHtml(cls) {
+  /* (hint: a line more for its hover tag, the onboarding window's tip for the button, which has no room for a ?) */
+  S.buttonHtml = function buttonHtml(cls, hint) {
     S.refresh('render');
     const on = !S.muted;
     const label = on ? O55.t('chrome.soundOn') : O55.t('chrome.soundOff');
     const path = (d) => `<path d="${d}"></path>`;
     const wave = WAVE[on ? 'on' : 'off'].map(path).join('');
-    return `<button type="button" class="o55-sound ${cls || ''}" data-o55-do="sound" data-pm-hover-exempt="true" aria-pressed="${on}" aria-label="${O55.util.esc(label)}" title="${O55.util.esc(label)}">`
+    return `<button type="button" class="o55-sound ${cls || ''}" data-o55-do="sound" data-pm-hover-exempt="true" aria-pressed="${on}" aria-label="${O55.util.esc(label)}" title="${O55.util.esc(label + (hint ? '\n' + hint : ''))}"${hint ? ` data-o55-hint="${O55.util.esc(hint)}"` : ''}>`
       + (neonSvg(on) || `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path('M4 9.5h3.5L12 5.5v13l-4.5-4H4z')}${wave}</svg>`) + '</button>';
   };
 

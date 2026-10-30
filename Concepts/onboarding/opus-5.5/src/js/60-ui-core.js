@@ -44,7 +44,7 @@
       + `<header class="o55-head"><div class="o55-brand" aria-hidden="true">${logo()}<span>${U.esc(T('chrome.brand'))}</span></div>`
       + `<nav class="o55-rail" aria-label="${U.esc(T('chrome.progressLabel'))}"></nav>`
       + `<div class="o55-headctl"><span class="o55-lookslot"></span><span class="o55-soundslot"></span>`
-      + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(T('chrome.closeHint'))}">`
+      + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(T('chrome.closeHint') + (O55.tips && O55.tips.of('close', 'chrome') ? '\n' + O55.tips.of('close', 'chrome').text : ''))}">`
       + `${U.nx('close', 18, 'control') || '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'}<span>${U.esc(T('chrome.close'))}</span></button></div></header>`
       + `<div class="o55-body"><div class="o55-stage o55-scene-host"></div><section class="o55-pane"></section></div>`
       + `<div class="o55-live" aria-live="polite" role="status"></div></div>`;
@@ -307,18 +307,46 @@
     /* S.railHold: the skin holds the rail in its old state until its own beat moves it (NieR's rail walk on the act
        card's landing, the opening's header assembly) */
     const pr = S.railHold || O55.stages.progress(S, def);
-    const fam = O55.theme().family;
+    const fam = O55.theme().family, live = !S.railHold && canBack();
     const items = pr.chapters.map((ch, i) => {
-      const state = i < pr.index ? 'done' : i === pr.index ? 'current' : 'next';
-      return `<li class="o55-railitem" data-state="${state}" data-chapter="${ch}" data-key="rail-${ch}">`
-        + `<span class="o55-railstring" aria-hidden="true"></span><span class="o55-railnode" aria-hidden="true"></span>`
-        + `<span class="o55-raillabel">${U.esc(T('chapters.' + ch))}</span></li>`;
+      const state = i < pr.index ? 'done' : i === pr.index ? 'current' : 'next', name = T('chapters.' + ch);
+      /* a finished chapter's bead and name take you back to its first screen (railJump) */
+      const back = state === 'done' && live && backTo(ch) >= 0;
+      return `<li class="o55-railitem" data-state="${state}" data-chapter="${ch}" data-key="rail-${ch}"${state === 'current' ? ' aria-current="step"' : ''}>`
+        + `<span class="o55-railstring" aria-hidden="true"></span><span class="o55-railnode" aria-hidden="true"${back ? ` data-o55-do="railJump" data-arg="${ch}"` : ''}></span>`
+        + (back ? `<button type="button" class="o55-raillabel o55-railjump" data-o55-do="railJump" data-arg="${ch}" aria-label="${U.esc(T('pip.stage.rail.back', { name }))}" data-pm-hover-exempt="true">${U.esc(name)}</button>`
+          : `<span class="o55-raillabel">${U.esc(name)}</span>`) + '</li>';
     }).join('');
     const zip = O55.pipStage && O55.pipStage.h.kit() ? '<svg class="o55-railzip" aria-hidden="true" data-morph-skip></svg><span class="o55-railpip" aria-hidden="true" data-morph-skip></span>' : '';
     U.morph(nav, `${zip}<div class="o55-railbar o55-railbar-${fam}" aria-hidden="true"></div><ol class="o55-raillist" aria-label="${U.esc(pr.announce)}">${items}</ol>`);
     nav.setAttribute('data-count', pr.chapters.length);
     /* Pip rides the bar as the current chapter's marker (58-rig.js O55.pipStage.rail); the morph keeps its nodes */
     if (O55.pipStage && O55.pipStage.rail && O55.pipStage.h.kit()) { nav.setAttribute('data-o55-pip', ''); O55.pipStage.rail.mount(nav, pr.index, O55.pipStage.h.theme()); }
+  }
+  /* Back to a finished chapter from the rail (HANDOFF W3: "filled beads that jump back on a click"; the concept's rail):
+     to the first screen of that chapter this run went through, as Back would walk there, and only while Back is
+     allowed where you are (never across the commit: Creating, Protect, AI and Ready have no Back). */
+  const chapterOf = (id) => { const d = SCREENS.defs[id]; return d ? (d.chapterFor ? d.chapterFor(S) : d.chapter) || 'welcome' : null; };
+  function canBack() {
+    const def = SCREENS.defs[S.sess.screen];
+    if (!def || (def.onBack && def.onBack(S) === false) || S.ctx().committed) return false;
+    const f = def.foot ? def.foot(S) : null;
+    return !(f && f.back === false);
+  }
+  function backTo(ch) {
+    const h = S.sess.history || [];
+    let at = -1;
+    for (let i = h.length - 1; i >= 0; i--) { const c = chapterOf(h[i]); if (c === ch) at = i; else if (at >= 0) break; }
+    while (at >= 0 && at < h.length && chapterOf(h[at]) === ch && SCREENS.defs[h[at]].skipOnBack && SCREENS.defs[h[at]].skipOnBack(S)) at++;
+    return at >= 0 && at < h.length && chapterOf(h[at]) === ch ? at : -1;
+  }
+  function railJump(ch) {
+    flushOpen();
+    if (!canBack()) return;
+    const at = backTo(ch); if (at < 0) return;
+    const id = S.sess.history[at];
+    S.sess.history = S.sess.history.slice(0, at);
+    go(id, { dir: 'back', noHistory: true });
   }
   /* A choice made: a helper in the scene cheers for it and the rail's marker for this chapter gives a small bump. The
      choice is still recorded per chapter. (Choices used to fly up and hang on the rail as small icons; people read
@@ -368,7 +396,9 @@
   function btn(b, cls, inFoot) {
     const dis = b.disabled ? ` aria-disabled="true" data-disabled-reason="${U.esc(b.reason || '')}"` : '';
     const tid = b.tip === false || !O55.tips ? null : b.tip || O55.tips.exact(b.do, b.arg);
-    const html = `<button type="button" class="o55-btn ${cls}${b.cls ? ' ' + b.cls : ''}" data-o55-do="${U.esc(b.do)}"${b.arg != null ? ` data-arg="${U.esc(b.arg)}"` : ''}${dis}${tid ? O55.tips.described(tid) : ''} data-pm-hover-exempt="true"${b.id ? ` data-key="${U.esc(b.id)}"` : ''}>`
+    /* (b.by: a group's note that describes this button, its ? drawn beside the question it answers) */
+    const by = tid || (b.by && O55.tips ? b.by : null);
+    const html = `<button type="button" class="o55-btn ${cls}${b.cls ? ' ' + b.cls : ''}" data-o55-do="${U.esc(b.do)}"${b.arg != null ? ` data-arg="${U.esc(b.arg)}"` : ''}${dis}${by ? O55.tips.described(by) : ''} data-pm-hover-exempt="true"${b.id ? ` data-key="${U.esc(b.id)}"` : ''}>`
       + (b.icon ? U.icon(b.icon) : '') + `<span>${U.esc(b.label)}</span></button>`;
     if (!tid) return html;
     if (!inFoot) return O55.tips.opt(tid, html, 'o55-opt-inline', 'span', { note: b.note });
@@ -417,14 +447,24 @@
     st.setActive(!!S.open);
     const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
     /* what has gone wrong, read off the screen; once it is put right, Pip cheers (pip.cheer.<key>) */
-    const oops = layer && !(layer.classList.contains('o55-hold')) ? O55.pipOops.read(layer) : null;
+    let oops = layer && !(layer.classList.contains('o55-hold')) ? O55.pipOops.read(layer) : null;
+    /* a press refused with its reason (Continue on an empty name): Pip says what is missing, and keeps saying so until
+       the press would go through (Astra m02) */
+    if (!oops && o && o.refused) oops = o.refused;
+    const still = (r) => !!(r && layer && Array.from(layer.querySelectorAll('[aria-disabled="true"][data-o55-do]')).some((n) => n.getAttribute('data-o55-do') === r.do && (n.getAttribute('data-arg') || '') === r.arg));
+    if (!oops && lastOops && lastOops.refused && lastOops.screen === S.sess.screen && still(lastOops.refused)) oops = { key: lastOops.key, face: lastOops.face, refused: lastOops.refused };
     const spec = O55.pipScenes.spec(S, { hover: S.pipHover, typing: S.pipTyping, oops, picked: o && o.picked });
     spec.screen = S.sess.screen;
     if (o && o.sayNow) spec.sayNow = true;
     /* (the screen plays its own soft warning; Pip only says so, at once) */
     if (oops && (!lastOops || lastOops.key !== oops.key || lastOops.screen !== S.sess.screen)) spec.sayNow = true;
-    const cheer = !oops && lastOops && lastOops.screen === S.sess.screen && lastOops.face === 'oops' ? lastOops.key : null;
-    lastOops = oops ? { key: oops.key, face: oops.face, screen: S.sess.screen } : null;
+    /* The cheer is for the owner's result, not for the error leaving the screen: while a retry is under way (an
+       operation running, a wait's loader showing) Pip thinks with the screen, and cheers once it has succeeded; a
+       second failure brings the oops back (Astra M01) */
+    const pending = !oops && lastOops && (/^(signingIn|installing|testing|checking|working|waiting|looking|reading)$/.test(spec.lineId) || spec.pip.mood === 'think'
+      || Object.values(S.sess.ops || {}).some((x) => x && x.state === 'running') || !!(layer && layer.querySelector('.o55-ldwrap, [data-pip-loader]')));
+    const cheer = !oops && !pending && lastOops && lastOops.screen === S.sess.screen && lastOops.face === 'oops' ? lastOops.key : null;
+    if (oops) lastOops = { key: oops.key, face: oops.face, screen: S.sess.screen, refused: oops.refused || null }; else if (!pending) lastOops = null;
     /* the cheer is said through, even while the screen settles around it (its line would otherwise be replaced by the
        next refresh's ordinary one) */
     if (cheer) { cheering = { text: O55.t('pip.cheer.' + cheer), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; }
@@ -455,7 +495,7 @@
   /* a control's id, as its ? and its line know it: <data-o55-do>:<data-arg>, <data-o55-do>, or field:<bind> */
   function hoverOf(t) {
     const c = t && t.closest && t.closest('[data-o55-do], [data-o55-bind]');
-    if (!c || c.closest('.o55-foot') || c.classList.contains('o55-tipq') || c.classList.contains('o55-explainer-x')) return null;
+    if (!c || c.closest('.o55-foot, .o55-rail') || c.classList.contains('o55-tipq') || c.classList.contains('o55-explainer-x')) return null;
     if (c.hasAttribute('data-o55-bind')) return null; /* a field is typed into, not previewed */
     const d = c.getAttribute('data-o55-do'), a = c.getAttribute('data-arg');
     return a != null && a !== '' ? d + ':' + a : d;
@@ -478,7 +518,8 @@
     if (h === hv.want) return;
     hv.want = h;
     stopHover();
-    if (!h) { hv.leaveT = O55.motion.after(GRACE, () => setHover(null)); return; }
+    /* (leaving keeps the preview GRACE ms, and never shows it for less than HOLD ms in all: Astra m01) */
+    if (!h) { hv.leaveT = O55.motion.after(Math.max(GRACE, S.pipHover ? HOLD - (performance.now() - hv.shownAt) : 0), () => setHover(null)); return; }
     if (h === S.pipHover) return;
     hv.px = hv.x; hv.py = hv.y; hv.rest = 0;
     const tick = () => {
@@ -584,6 +625,9 @@
         if (gate) releaseStage(); /* a gate shown early (a key, a press, the cap) shows the stage with it */
         if (!layer.isConnected || layer.classList.contains('o55-out')) return;
         layer.classList.remove('o55-hold');
+        /* the screen arrives showing an error (a refused password on the way back): Pip says so as it shows, the oops
+           read off the screen that was held until now (Astra M08) */
+        if (O55.pipOops && O55.pipOops.read(layer)) renderScene();
         /* The pack read is one style pass. Doing it in the same frames as this release made that
            paint the long one (about a third of a second, and the cold open's tap played at the
            start of it, over the frozen line). This screen already has its colours from the art's
@@ -620,7 +664,8 @@
   function renderSound() {
     renderLook();
     const slot = S.root.querySelector('.o55-soundslot');
-    const html = O55.sound.buttonHtml('o55-iconbtn');
+    /* (the header's buttons have no room for a ?: their tips are their hover tags, Muse m3) */
+    const tip = O55.tips && O55.tips.of('sound'), html = O55.sound.buttonHtml('o55-iconbtn', tip ? tip.text : '');
     if (slot.innerHTML !== html) slot.innerHTML = html;
   }
 
@@ -693,17 +738,23 @@
     /* a click outside the look menu closes it; when nothing else answers the click, the menu's own close sound does */
     if (S.lookOpen && !e.target.closest('.o55-lookslot')) { S.lookOpen = false; renderLook(); if (!acts) O55.sound.play('unsheet'); }
     if (!acts) return;
+    press(t, e);
+  }
+  /* a control pressed (a click, or O55.ui.act): e is the click, or null */
+  function press(t, e) {
     const action = t.getAttribute('data-o55-do'), arg = t.getAttribute('data-arg');
     if (t.getAttribute('aria-disabled') === 'true') {
-      e.preventDefault();
+      if (e) e.preventDefault();
       const reason = t.getAttribute('data-disabled-reason');
       if (reason) U.announce(reason, S.root.querySelector('.o55-win'));
       O55.sound.play('warn'); /* a refusal with its reason is a soft warning, not a failure */
       if (!skin('refused', t)) O55.motion.play(t, [{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }], { duration: 260, easing: 'ease-out' });
       showReason(t, reason);
+      const said = reason && O55.pipOops && O55.pipOops.match(reason, S.sess.screen);
+      if (said) renderScene(false, false, { refused: { key: said, face: O55.pipOops.face(said), refused: { do: t.getAttribute('data-o55-do'), arg: t.getAttribute('data-arg') || '' } } });
       return;
     }
-    e.preventDefault();
+    if (e) e.preventDefault();
     if (action === 'close') return close('close');
     if (action === 'back') return back();
     if (action === 'sound') { O55.sound.toggle('onboarding'); renderSound(); return; }
@@ -738,13 +789,14 @@
   /* typing ticks at most one per 120 ms, the chat's rate (ACD-475; O55.sound's RATE.type matches it) */
   const TYPE_MS = 120;
   let lastType = -1e9;
-  function onInput(e) {
-    const t = e.target.closest('[data-o55-bind]'); if (!t) return;
+  function onInput(e) { const t = e.target.closest('[data-o55-bind]'); if (t) typed(t, e.type, e); }
+  /* a bound field changed (typing, or O55.ui.fill): type is 'input' or 'change', e the event or null */
+  function typed(t, type, e) {
     const def = SCREENS.defs[S.sess.screen];
     const key = t.getAttribute('data-o55-bind');
     /* typing ticks quietly in the family's material (never for a protected field); a screen whose stage answers each
        letter with a sound of its own says so (def.typing: the Name screen's sign sings the name) */
-    if (e.type === 'input' && t.type !== 'password' && !t.hasAttribute('data-o55-protected') && !(def && def.typing && def.typing(S, key)) && performance.now() - lastType >= TYPE_MS) { lastType = performance.now(); O55.sound.play('type'); }
+    if (type === 'input' && t.type !== 'password' && !t.hasAttribute('data-o55-protected') && !(def && def.typing && def.typing(S, key)) && performance.now() - lastType >= TYPE_MS) { lastType = performance.now(); O55.sound.play('type'); }
     const fn = def && def.bind && def.bind[key];
     const v = t.type === 'checkbox' ? t.checked : t.value;
     if (fn) fn(S, v, t, e);
@@ -1057,8 +1109,38 @@
        only (S.tip is never saved: it is a look at a choice, not a choice). Opening it asks Pip about that choice; closing
        it, from the ? or the note's own close button, gives focus back to the ?. */
     tip(S2, id, el) { tip(id, el); },
+    railJump(S2, ch) { railJump(ch); },
     startOver() { open({ fresh: true }); }
   };
 
-  Object.assign(O55.ui, { S, build, open, close, go, back, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip });
+  /* For Demo Studio (W8) and the tools: a screen's own action and a bound field, through the same owners a click and
+     typing reach (no events are made up). act(do, arg) presses the control on screen that does it (its sounds, Pip's
+     answer, a refusal with its reason), or runs the action itself when no such control is showing; fill(bind, value)
+     puts the value in the field on screen and hands it to the screen's binding as typing does, with Pip watching the
+     field in wonder (it keeps focus, as a typed field does). Each says whether it found something to do. */
+  function act(action, arg) {
+    if (!S.open) return false;
+    const want = arg == null ? null : String(arg);
+    const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    const el = Array.from(S.root.querySelectorAll('[data-o55-do]')).find((n) => n.getAttribute('data-o55-do') === action && (want == null || n.getAttribute('data-arg') === want)
+      && !n.closest('[inert], .o55-out') && (!layer || layer.contains(n) || !n.closest('.o55-pane')));
+    if (el) { press(el, null); return true; }
+    const def = SCREENS.defs[S.sess.screen], fn = (def && def.do && def.do[action]) || O55.actions[action];
+    if (!fn) return false;
+    fn(S, want, null, null);
+    return true;
+  }
+  function fill(bind, value) {
+    if (!S.open) return false;
+    const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    const el = layer && Array.from(layer.querySelectorAll('[data-o55-bind]')).find((n) => n.getAttribute('data-o55-bind') === bind);
+    if (!el) return false;
+    if (document.activeElement !== el) el.focus({ preventScroll: true });
+    if (el.type === 'checkbox') { el.checked = !!value; typed(el, 'change', null); return true; }
+    el.value = value == null ? '' : String(value);
+    typed(el, 'input', null);
+    return true;
+  }
+
+  Object.assign(O55.ui, { S, build, open, close, go, back, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill });
 })();

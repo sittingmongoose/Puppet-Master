@@ -92,10 +92,14 @@
   }
   /* a control with its ?: the control and the ? side by side in one option (the ? is never inside the control) */
   /* (o.note false: the caller draws the explainer itself, after the block the control sits in) */
+  /* (while its note is open the control is described by it: the control's own tag gets the note's id, beside any
+     description it already has) */
+  const describe = (id, html) => (!tipOpen(id) ? html : String(html).replace(/^(\s*<[a-z]+\b)([^>]*)>/i, (m, a, at) => (/\saria-describedby="/.test(at)
+    ? a + at.replace(/\saria-describedby="([^"]*)"/, (x, v) => (v.split(' ').includes('pm7ob-explainer') ? x : ` aria-describedby="${v} pm7ob-explainer"`)) : a + at + ' aria-describedby="pm7ob-explainer"') + '>'));
   const opt = (id, control, cls, tag, o) => {
     const qh = q(id); if (!qh) return control;
     tag = tag || 'div';
-    return `<${tag} class="o55-opt${cls ? ' ' + cls : ''}" data-key="opt-${esc(id)}">${control}${qh}</${tag}>${o && o.note === false ? '' : explainer(id)}`;
+    return `<${tag} class="o55-opt${cls ? ' ' + cls : ''}" data-key="opt-${esc(id)}">${describe(id, control)}${qh}</${tag}>${o && o.note === false ? '' : explainer(id)}`;
   };
   /* a control that names its own tip only (a link, a button): an arg-free tip of its action counts, a group's does not */
   const exact = (action, arg) => { const id = arg != null && arg !== '' ? action + ':' + arg : action, t = tipOf(id); return t && (t.key === id || t.key === action) ? id : null; };
@@ -111,21 +115,17 @@
     w.setAttribute('data-written', id);
     if (writing) { writing.cancel(); writing = null; }
     if (O55.motion.reduced()) { w.textContent = t.text; return; }
-    const th = O55.theme(), cps = th.nier ? 55 : th.family === 'retro' ? 60 : 44, t0 = O55.motion.now();
+    const th = O55.theme(), cps = th.nier ? 55 : th.family === 'retro' ? 60 : 44;
     w.innerHTML = '<span class="o55-tw-on"></span><span class="o55-tw-off"></span>';
     const on = w.firstChild, off = w.lastChild;
     off.textContent = t.text; host.classList.add('o55-writing');
-    let n = 0;
-    const step = () => {
-      if (!w.isConnected) { writing = null; return; }
-      const k = Math.min(t.text.length, Math.floor((O55.motion.now() - t0) / 1000 * cps) + 1);
-      if (k !== n) { n = k; on.textContent = t.text.slice(0, n); off.textContent = t.text.slice(n); }
-      if (n >= t.text.length) { host.classList.remove('o55-writing'); writing = null; return; }
-      writing = O55.motion.after(16, step);
-    };
-    step();
+    /* (on the stage's typer: it holds while the window is dragged, hidden or closed, and goes on where it was) */
+    const job = writing = O55.pipStage.h.typer(t.text.length, cps, (n) => { on.textContent = t.text.slice(0, n); off.textContent = t.text.slice(n); }, {
+      paused: () => { if (!w.isConnected) { job.cancel(); if (writing === job) writing = null; return true; } return !(O55.S && O55.S.open); },
+      done: () => { host.classList.remove('o55-writing'); if (writing === job) writing = null; }
+    });
   }
-  O55.tips = { of: tipOf, open: tipOpen, q, explainer, opt, exact, described, onStage, write };
+  O55.tips = { of: tipOf, open: tipOpen, q, explainer, opt, exact, described, describe, onStage, write };
 
   const C = O55.c = {
     glyph, small, smallArt, mark, spin, loader, done, stepmark,
@@ -203,7 +203,9 @@
     /* a link with a tip of its own gets its ? beside it (o: { tip: false } for none) */
     link(label, action, arg, o) {
       const id = o && o.tip === false ? null : o && o.tip ? (tipOf(o.tip) ? o.tip : null) : exact(action, arg);
-      const html = `<button type="button" class="o55-link" data-o55-do="${esc(action)}"${arg != null ? ` data-arg="${esc(arg)}"` : ''}${id ? described(id) : ''}${U.attrs(X)}>${esc(label)}</button>`;
+      /* (a link of a group whose one ? is drawn elsewhere, review's Edits, a path's crumbs: described by its note too) */
+      const by = id || (tipOpen('group:' + action) ? 'group:' + action : null);
+      const html = `<button type="button" class="o55-link" data-o55-do="${esc(action)}"${arg != null ? ` data-arg="${esc(arg)}"` : ''}${by ? described(by) : ''}${U.attrs(X)}>${esc(label)}</button>`;
       return id ? opt(id, html, 'o55-opt-inline', 'span') : html;
     },
     /* Interior sheet: replaces part of the window's interior (never a nested dialog). */
