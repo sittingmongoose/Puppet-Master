@@ -1,18 +1,20 @@
 {
   "schema_id": "pm.pm7_plans_verification.v1",
-  "source_commit": "543a85e5ffd2da233ac4f7a55ed35afa31a6248a",
+  "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
   "aggregate_attribution_commit": "b22d48bec8",
   "label_plan_commit": "7b706684d8",
-  "late_label_correction_checks": "focused PM7/canon/Touch at current integration; committed shards at 7b label head",
+  "late_label_correction_checks": "Historical focused label checks at 7b706684d8/543a85e5ff; current decision-amendment checks also preserve the final label-storage contract.",
   "integration_guard": {
     "raw_dry_exit": 2,
-    "current_exact_guard_exit": 0,
-    "current_exact_guard_artifact": "integration-inventory-guard.log",
     "resolution": "lead republished merged integration; local probe restored without commit",
-    "private_regeneration_probe_restored": true
+    "private_regeneration_probe_restored": true,
+    "historical_exact_guard_exit": 0,
+    "historical_exact_guard_artifact": "integration-inventory-guard.log",
+    "historical_tested_commit": "543a85e5ffd2da233ac4f7a55ed35afa31a6248a",
+    "after_decision_amendment": "Not rerun: A2 updates the inventory help text, so the lead must republish PM7 at integration before claiming the inventory-page guard current."
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-10-30T00:57:33.763561+00:00",
+  "recorded_at_utc": "2026-10-30T02:25:43.391002Z",
   "native_runtime_certification": false,
   "step4": "pending_lead_merged_GUI_signal_and_companion_review",
   "counts": {
@@ -21,11 +23,11 @@
     "pip_parts": 25,
     "default_parts": 24,
     "pip_size_sum": 61,
-    "control_bindings": 464,
-    "touch_rows": 707,
+    "control_bindings": 465,
+    "touch_rows": 708,
     "touch_profiles": 137,
     "production_wiring_entries": 1269,
-    "plan_units": 7236,
+    "plan_units": 7237,
     "indexed_docs": 96,
     "shards": 2956,
     "sharded_sources": 99
@@ -52,6 +54,75 @@
       ],
       "exit": 2,
       "artifact": "closed-dry-landing.json"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "artifact": "decisions-20261030-shards-generate.log",
+      "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit": 0,
+      "artifact": "decisions-20261030-index-generate.log",
+      "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check"
+      ],
+      "exit": 0,
+      "artifact": "decisions-20261030-shards-check.log",
+      "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/pm7-build-check.py"
+      ],
+      "exit": 0,
+      "artifact": "decisions-20261030-pm7-build.log",
+      "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/pm7-canon-check.py"
+      ],
+      "exit": 0,
+      "artifact": "decisions-20261030-pm7-canon.log",
+      "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "exit": 0,
+      "artifact": "decisions-20261030-touch.log",
+      "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit": 0,
+      "artifact": "decisions-20261030-index-validate.log",
+      "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2"
     }
   ],
   "dry": {
@@ -207,7 +278,8 @@
     "prior_rows_closed": 21,
     "final_N1_N3_directly_repaired": true,
     "further_prose_cycle_requested": false,
-    "companion_review": "after_step4"
+    "companion_review": "after_step4",
+    "decision_amendment": "No new prose review cycle requested; new rulings/Pin companions covered by focused checks, independent companion review follows Step4."
   },
   "artifacts": [
     {
@@ -379,6 +451,70 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-run-gates.stderr",
       "sha256": "6e6891131044cb110e7d9fe809e3e968fa2051c4cfdca2f7967a5e694c4beb09",
       "bytes": 4712
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-focused.json",
+      "sha256": "f893a5b4e90b44b8742c39b618aacea2d81be7b92af6a0dff038a71d87141399"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-index-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-index-generate.log",
+      "sha256": "87b2aa5e03c7d6900feeaf02baf487dbf18d2414a34b10d6536ffd67c7844117"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-index-validate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-index-validate.log",
+      "sha256": "f020afe1c160a74025da1db3dc4e1ce4f93f5b2916cb90edc3f89f5d1d159d3b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-pm7-build.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-pm7-build.log",
+      "sha256": "0251f3528842063e4f92ea9564f3e45fd57cd4ca2d5bb3c43091692de80f8659"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-pm7-canon.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-pm7-canon.log",
+      "sha256": "4c09e0365e2ca34f188445d3a6a89807f583e66a951a978b9fa9369aa32d9130"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-prose-proof.json",
+      "sha256": "3d4ff67fa1c43761a035f93d350300177f8a54bab75e4723a191d493dd5f992e"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-shards-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-shards-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-shards-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-touch.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-touch.log",
+      "sha256": "03d0ace681d7f55672a106a6004232422960546c15469e32a4ddc7c46520369e"
     }
   ],
   "reviews": [
@@ -413,6 +549,42 @@
     "servers_started": 0,
     "landed": false,
     "landing_lock_taken": false,
-    "resealed": false
+    "resealed": false,
+    "decision_amendment_scratch_path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-plans-decisions-20261030",
+    "decision_amendment_scratch_removed": true
+  },
+  "latest_amendment": "Jared PM7 decision answers, 2026-10-30; Step4 remains pending",
+  "jared_decisions": {
+    "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
+    "source_parent_commit": "3349c39dbe6fa95c5b85e1de6c9004887073c52f",
+    "cards_answered": 57,
+    "unchanged_recommendations_confirmed": 49,
+    "changed_or_clarified": [
+      "X3",
+      "A2",
+      "L8",
+      "O2",
+      "O6",
+      "O12",
+      "G1",
+      "SND1"
+    ],
+    "decision_map": "reports/pm7-build-20261029/decision-map.json",
+    "owner_units_changed": 39,
+    "new_plan_units": [
+      "DR-079"
+    ],
+    "owner_references_resolved": 138,
+    "focused_checks": "pass",
+    "pm7_schema_cases": 22,
+    "activity_thread_switch_cases": 4,
+    "identity_cases": 4,
+    "runtime_shape_cases": 11,
+    "prose_first_then_companions": true,
+    "compile_witness": "not_applicable_no_ledger_compiled",
+    "full_aggregate_rerun": false,
+    "native_certification": false,
+    "independent_companion_review": "after_Step4_under_the_lead",
+    "system_status_names": "Activity 1030022012-4c7a popover names received; ui.system_status.open/.close, statusbar.system_status, existing work.open_system_status and system_status.service.open_settings queued for Step4. No new popover closure claimed here."
   }
 }
