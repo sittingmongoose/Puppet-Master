@@ -82496,9 +82496,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     n.inert=true;
     n.style.width=`${w}px`; n.style.height=`${h}px`;
     n.classList.add('pm56-menu-leaving');
+    /* its open state is computed where it now stands, at rest, so the collapse runs from it: a move restarts animations,
+       and NieR's slice would otherwise start again from its 1px line and leave nothing to fold */
+    n.style.animation='none';
     document.body.appendChild(n);
-    void n.offsetWidth;   /* its open state is computed where it now stands, so the collapse runs from it */
+    void n.offsetWidth;
     SPROUT.close(n,()=>n.remove());
+    n.style.animation='';
     return true;
   }
   /* hosted: PMConcept7's hover controller adds data-pm-hover-* and aria-describedby, and moves title into its label */
