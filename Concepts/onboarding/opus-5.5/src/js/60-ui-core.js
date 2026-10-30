@@ -936,7 +936,7 @@
     S.sess.commit = { state: 'done', key: 'commit:' + d.project_draft_ref + ':r' + d.project_draft_revision, attempt: 1, revision: d.project_draft_revision,
       projectId: id, publishedVia: 'fixture', receipts: { project: 'fixture:project:' + id }, doneAt: Date.now(), seeded: true };
     if (S.sess.screen === 'protect' && !S.sess.backup.dest) S.sess.backup.dest = 'gdrive';
-    if (O55.shell && O55.shell.selectProject) try { O55.shell.selectProject(id, name); } catch (_) {}
+    if (O55.shell && O55.shell.selectProject) try { O55.shell.selectProject(id, name, { path: O55.review && O55.review.filesAt ? O55.review.filesAt(S) : '', branch: '' }); } catch (_) {}
   }
   function open(opts) {
     opts = opts || {};
