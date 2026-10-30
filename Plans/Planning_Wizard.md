@@ -1899,36 +1899,44 @@ canonical_text: >-
   included, and null fields fall back to F3-520's start rule; this session choice performs no Settings write
   before commit. The 2026-10-14 presentation updates consume FinalGUISpec F3-655 (Planning Wizard theme
   matching) and F3-656 (onboarding art and the chosen look through Create Project), with no new local action or
-  commit authority.
-  Amended 2026-10-17 (DL-228): the onboarding concept's owner table marks eight command ids as not canonical;
-  none is catalogued, and onboarding ships none of them. Each routes as follows until its owner admits an id:
-  restoring a backup (cmd.restore.apply in the concept) dispatches the Backup owner's existing
+  commit authority. Amended 2026-10-17 (DL-228): the onboarding concept's owner table marks eight command ids as
+  not canonical; none is catalogued, and onboarding ships none of them. Each routes as follows until its owner
+  admits an id: restoring a backup (cmd.restore.apply in the concept) dispatches the Backup owner's existing
   cmd.restore.server_full or cmd.restore.project_as_new by the chosen scope, after cmd.restore.preview;
   installing a tool product (cmd.tool_product.install) is the Installer owner's cmd.installation.install;
-  detecting installed provider tools (cmd.integration.connection.detect) is cmd.tool.discover; probing a
-  device (cmd.ssh_connection.device.probe) and checking a network share (cmd.storage.share.mount_check) are
-  the selected source's cmd.project.source_location.test; and discovering or installing an SSH key
+  detecting installed provider tools (cmd.integration.connection.detect) is cmd.tool.discover; probing a device
+  (cmd.ssh_connection.device.probe) and checking a network share (cmd.storage.share.mount_check) are the
+  selected source's cmd.project.source_location.test; and discovering or installing an SSH key
   (cmd.ssh_connection.keys.discover, cmd.ssh_connection.key.install) and enabling a free-model route
   (cmd.free_models.route.enable) have no owner command yet, so onboarding offers those steps as their owners'
-  own screens, reached through cmd.settings.open, until the SSH and Models owners admit them.
-  Amended 2026-10-29 (O1–O12; PM7): Onboarding presentation is F3-663’s one Pip with family worlds, bounded
-  shared physics/solved strings with implementation technique open (O2 A, Jared 2026-10-30) and optional live
-  voice/music; its former no-physics/no-loop presentation prohibition is superseded. Preserve every stage
-  graph, commit/recovery boundary and the fourteen ui.onboarding actions. Bubble is decorative aria-hidden;
-  option question note is the one pm7ob-explainer. O12 B (Jared 2026-10-30): Creating Continue/Ready require
-  both completed owner phases and the last block landing; Reduced Motion settles instantly, and no landing
-  claims owner work completed. O6, Jared 2026-10-30: look-tile hover is silent and changes no theme; click or
-  keyboard activation changes the look through the existing typed local action and persistence boundary.
-  O1–O12/O7, PM7 Step4, 2026-10-30: joined presentation modules O55.pipStage/pipWorlds/pipScenes/pipVoice,
-  O55.tips and O55.pipOops consume the one Pip/sound/option-note owners. O55.ui.act/fill/tip/open are the
-  lab-facing adapters to the same real wizard actions and drafts; they confer no new product action or owner
-  permission. Choice explanations keep pm7ob-explainer and the existing typed action; post-commit examples
-  require the actual committed Project. Fixture twists/signinFailed are lab/source data, never alternate
-  validation or persisted event names. O10/O12, PM7 Step4 final-source alignment, 2026-10-30 (integration
-  e9b15abc64): Ready’s tour action lets the shared Pip stage’s handOff() visibly lift before calling
-  O55.finish for the unchanged Tour; its handingOff guard prevents a second press. Reduced Motion finishes the
-  handoff instantly. Creating remains gated by current owner completion and the last block landing; touchdown
-  audio is F3-599’s shared cue and is never completion evidence.
+  own screens, reached through cmd.settings.open, until the SSH and Models owners admit them. Amended 2026-10-29
+  (O1–O12; PM7): Onboarding presentation is F3-663’s one Pip with family worlds, bounded shared physics/solved
+  strings with implementation technique open (O2 A, Jared 2026-10-30) and optional live voice/music; its former
+  no-physics/no-loop presentation prohibition is superseded. Preserve every stage graph, commit/recovery
+  boundary and the fourteen ui.onboarding actions. Bubble is decorative aria-hidden; option question note is the
+  one pm7ob-explainer. O12 B (Jared 2026-10-30): Creating Continue/Ready require both completed owner phases and
+  the last block landing; Reduced Motion settles instantly, and no landing claims owner work completed. O6,
+  Jared 2026-10-30: look-tile hover is silent and changes no theme; click or keyboard activation changes the
+  look through the existing typed local action and persistence boundary. O1–O12/O7, PM7 Step4, 2026-10-30:
+  joined presentation modules O55.pipStage/pipWorlds/pipScenes/pipVoice, O55.tips and O55.pipOops consume the
+  one Pip/sound/option-note owners. O55.ui.act/fill/tip/open are the lab-facing adapters to the same real wizard
+  actions and drafts; they confer no new product action or owner permission. Choice explanations keep
+  pm7ob-explainer and the existing typed action; post-commit examples require the actual committed Project.
+  Fixture twists/signinFailed are lab/source data, never alternate validation or persisted event names. O10/O12,
+  PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): Ready’s tour action lets the shared Pip
+  stage’s handOff() visibly lift before calling O55.finish for the unchanged Tour; its handingOff guard prevents
+  a second press. Reduced Motion finishes the handoff instantly. Creating remains gated by current owner
+  completion and the last block landing; touchdown audio is F3-599’s shared cue and is never completion
+  evidence. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before
+  asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage
+  place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a
+  folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and
+  required fields. Validate the locator/trust and reach/authenticate the selected place through its existing
+  owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the
+  backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy,
+  coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner
+  recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries
+  remain mandatory; a concept Kit or seed never proves native unlock or restore.
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -1949,50 +1957,25 @@ depends_on:
 - MS-122
 unblocks: []
 acceptance_criteria:
-- The eleven exact ordered stage IDs consume product_onboarding_contracts.schema.json main_stage_order; Final GUI
-  uses the same definitions. These are dependencies, not eleven forced equally complex screens.
-- After a verified remote create with later local failure, automatic_preparation observes the retained Project
-  recovery result under the PJCT-007 generic composition — the exact GitHub case via PJCT-008, other provider
-  routes open — and presents Continue Setup, Open Repository, and Delete Repository as owner-route projections;
-  no new local action mutates, and no silent re-create or silent delete occurs.
-- Continue Setup is enabled only with the explicit Project-owned recovery/resume transition and owner-resolved typed
-  join, contracted as cmd.project.resume_creation with a creation_recovery_resume_binding with client booleans never
-  granting authority, and is otherwise visible but unavailable until current draft, permission, recovery claim, central
-  registration, wiring, and handler availability all hold for the resume command, or while another attempt holds the
-  one-active-resume claim; owner resume eligibility stays distinct from effective dispatch availability and a verified
-  created remote alone never forces available=true; replaying the original idempotency key never resumes; Open
-  Repository uses the verified binding through the real Forge open-in-browser command; Delete Repository is separate
-  explicit destructive intent consumed from the Forge FGI-021 delete admission with its exact currentness and
-  target-bound confirmation, never automatic, never Project-local, and unavailable while the remote effect is unknown.
-- Connect-existing retains the exact six-stage shortcut, omits hidden Project/provider work, and claims Ready only
-  from its reviewed usable owner route.
-- The guided deferred-project path is explicit and has no Project identity/commit binding or provider-readiness
-  claim.
-- Before commit, selections, Project metadata/folder/source browsing, bounded read-only checks, and Settings draft
-  previews leave no Project, destination files, history, repository, clone, sync or Settings mutation.
-- Selected-source authentication is just-in-time, separately permission/consent/currentness/Client fenced, owner
-  verified, and unrelated to broad AI-provider setup.
-- Review shows source, destination, work computer, name, copy summary, privacy, skips and stale checks; Edit retains
-  later still-valid choices.
-- Create Project, Add Project or Restore Project commits the exact reviewed draft/hash through Project System 3.1,
-  never cmd.project.create or cmd.source_control.repository.init.
-- Project registration is listed/persisted only after required child-owner results and Settings readback; acknowledgement,
-  provisional identity, partial work and cancelled/failed work are not completion.
-- Idempotent replay returns the same committed Project and owner results; provider_setup requires the exact real
-  Project binding.
-- Detected usable accounts and copied routes appear first and become Ready after current owner verification without
-  Connect/Use This Installation/Use This Provider/Open Installer.
-- Only selected external vendor CLI paths offer explicit official-source Install on the selected Host; API/SDK/shipped
-  dependency paths never invent a provider-CLI Install.
-- Free Models is optional inside Onboarding after the paid-provider prompt, including after Skip; underlying account
-  records and saved explicit model order remain canonical.
-- Every local action preserves exact revision/generation/return context and never claims a production receipt or
-  native owner success.
-- Back is reversible before commit and cannot uncreate a committed Project; Close/resume preserves draft or unfinished
-  provider phase, and optional skip differs from whole-session Skip.
-- Help/disclosures are bounded ephemeral typed local actions; source and provider owner commands remain separately
-  typed and permission bound.
-- Ready starts no Goals, Plans, agents, builds or provider requests; optional Guided Tour follows PWIZ-023.
+  - "The eleven exact ordered stage IDs consume product_onboarding_contracts.schema.json main_stage_order; Final GUI uses the same definitions. These are dependencies, not eleven forced equally complex screens."
+  - "After a verified remote create with later local failure, automatic_preparation observes the retained Project recovery result under the PJCT-007 generic composition — the exact GitHub case via PJCT-008, other provider routes open — and presents Continue Setup, Open Repository, and Delete Repository as owner-route projections; no new local action mutates, and no silent re-create or silent delete occurs."
+  - "Continue Setup is enabled only with the explicit Project-owned recovery/resume transition and owner-resolved typed join, contracted as cmd.project.resume_creation with a creation_recovery_resume_binding with client booleans never granting authority, and is otherwise visible but unavailable until current draft, permission, recovery claim, central registration, wiring, and handler availability all hold for the resume command, or while another attempt holds the one-active-resume claim; owner resume eligibility stays distinct from effective dispatch availability and a verified created remote alone never forces available=true; replaying the original idempotency key never resumes; Open Repository uses the verified binding through the real Forge open-in-browser command; Delete Repository is separate explicit destructive intent consumed from the Forge FGI-021 delete admission with its exact currentness and target-bound confirmation, never automatic, never Project-local, and unavailable while the remote effect is unknown."
+  - "Connect-existing retains the exact six-stage shortcut, omits hidden Project/provider work, and claims Ready only from its reviewed usable owner route."
+  - "The guided deferred-project path is explicit and has no Project identity/commit binding or provider-readiness claim."
+  - "Before commit, selections, Project metadata/folder/source browsing, bounded read-only checks, and Settings draft previews leave no Project, destination files, history, repository, clone, sync or Settings mutation."
+  - "Selected-source authentication is just-in-time, separately permission/consent/currentness/Client fenced, owner verified, and unrelated to broad AI-provider setup."
+  - "Review shows source, destination, work computer, name, copy summary, privacy, skips and stale checks; Edit retains later still-valid choices."
+  - "Create Project, Add Project or Restore Project commits the exact reviewed draft/hash through Project System 3.1, never cmd.project.create or cmd.source_control.repository.init."
+  - "Project registration is listed/persisted only after required child-owner results and Settings readback; acknowledgement, provisional identity, partial work and cancelled/failed work are not completion."
+  - "Idempotent replay returns the same committed Project and owner results; provider_setup requires the exact real Project binding."
+  - "Detected usable accounts and copied routes appear first and become Ready after current owner verification without Connect/Use This Installation/Use This Provider/Open Installer."
+  - "Only selected external vendor CLI paths offer explicit official-source Install on the selected Host; API/SDK/shipped dependency paths never invent a provider-CLI Install."
+  - "Free Models is optional inside Onboarding after the paid-provider prompt, including after Skip; underlying account records and saved explicit model order remain canonical."
+  - "Every local action preserves exact revision/generation/return context and never claims a production receipt or native owner success."
+  - "Back is reversible before commit and cannot uncreate a committed Project; Close/resume preserves draft or unfinished provider phase, and optional skip differs from whole-session Skip."
+  - "Help/disclosures are bounded ephemeral typed local actions; source and provider owner commands remain separately typed and permission bound."
+  - "Ready starts no Goals, Plans, agents, builds or provider requests; optional Guided Tour follows PWIZ-023."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore."
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -2063,7 +2046,38 @@ canonical_text: >-
   state, snap and sound path and never holding input. FinalGUISpec F3-656 owns connected onboarding art and
   F3-652 the shared Glass material; F3-654 supplies the settled contrast interpretation. These consume the same
   semantic stages and Reduced Motion boundary. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family
-  supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+  supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round 2,
+  Jared 2026-10-30; DL-258; GUI 7d586bad18: Q7/H2/H8: a selected choice’s follow-up belongs immediately in a
+  tray joined to that card, before sibling alternatives. One C.cards under slot owns the join, indentation and
+  line from the parent mark across all twelve affected screens. The parent opens into the tray in every look,
+  with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question note
+  first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question
+  control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links,
+  Settings copy, remote routes/hosting/certificate fields, online service kind/address, device notes and
+  connection routes. Naming and Review display the same selected mounted/network source, rather than an empty
+  local-location field. Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in the current look.
+  Remove duplicate explanation-only disclosures (What is a Server?, the Connect proxy explanation, and What does
+  Puppet Master read? on Choose a key); put their information in the shared option tips. Keep functional
+  sections: More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik
+  selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the
+  operating system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains
+  a separate one-use protected flow; never reuse its never-saved hint for SMB. Q4/Q10: there is one progress
+  string. Chapter beads sit on and follow that string’s sag, with chapter names below Pip’s feet; Pip replaces
+  the current bead and the current bead occupies no extra width. A highlight surrounds the name without covering
+  Pip. The speech tail is cut from the bubble’s own fill/border as one silhouette, never a separate visible
+  diamond; NieR keeps its no-tail treatment. H5: the onboarding owner holds one original inert-state basis for
+  the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes;
+  it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path
+  removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit
+  lab open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false
+  opts out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and
+  seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is
+  inferred, no selected live input is overwritten, and no new product action/DTO field is admitted. Q1/Q2:
+  onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and
+  trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain the factory-on
+  choice or the person’s current visit choice rather than muting it on each refresh. An explicit readable
+  Project value wins when it binds; a genuinely refused bound write remains refused. No Project value,
+  credential, second mute key or durable sound preference is fabricated from an unreadable preview.
 gui_related: true
 gui_classification_reason: Defines user-visible motion, responsive layout, focus, copy, error, resume, and migration
   behavior.
@@ -2081,6 +2095,7 @@ acceptance_criteria:
   - "The one-time domain migration receipt references the canonical storage migration receipt and reports exact accepted, stale, dropped, quarantined, per-stage, and per-path counts without storing secret bytes."
   - "A first_run window paints Basic Dark from its first frame with Basic Dark preselected; a settings_rerun window keeps the look on screen preselected; neither dispatches cmd.theme.* or writes a setting (F3-520, DL-153)."
   - "With NieR Mode painted the hero moments are NieR's; otherwise each family plays its own wake, act card and curtain call in both its variants; Reduced Motion and low resource show each moment's end state, and a key or a press snaps a running moment to it (F3-600, DL-153)."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Backup is located/reached before required protected unlock; follow-ups are joined to their parent; explanation-only duplicates are removed while functional sections remain; one inert-state basis survives replacement; lab-only seeds confer no owner authority; unreadable Project state does not repeatedly mute the preview."
 validation_surfaces:
 - future native six-width visual fixtures
 - Reduced Motion traces
@@ -2295,15 +2310,27 @@ plan_unit_id: PWIZ-025
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: After safe local Server claim, Bootstrap may offer one `restore_existing_pm_data` branch that invokes
-  the Backup/Restore owner's protected fresh-recovery flow before Product Onboarding begins. Product Onboarding
-  keeps its current eleven-stage dependency graph and six-stage connect-existing shortcut and its `Restore a backup`
-  First Project route as Project restore; after a confirmed plan creates or opens the first Project, it may project
-  optional backup-destination setup and Recovery Kit confirmation. Remote Access setup consumes one Server-owned
-  PM connector operation with typed connector, IPC, identity, control, authorization, private-endpoint, and route-test
-  phases instead of package/component install state. Online-copy choices consume distinct Forgejo and Gitea provider/instance
-  profiles and independent repository-hosting versus automation bindings with only the selected-source read-only/auth
-  exception before commit; repository mutation and binding remain commit-fenced.
+canonical_text: >-
+  After safe local Server claim, Bootstrap may offer one `restore_existing_pm_data` branch that invokes the
+  Backup/Restore owner's protected fresh-recovery flow before Product Onboarding begins. Product Onboarding
+  keeps its current eleven-stage dependency graph and six-stage connect-existing shortcut and its `Restore a
+  backup` First Project route as Project restore; after a confirmed plan creates or opens the first Project, it
+  may project optional backup-destination setup and Recovery Kit confirmation. Remote Access setup consumes one
+  Server-owned PM connector operation with typed connector, IPC, identity, control, authorization,
+  private-endpoint, and route-test phases instead of package/component install state. Online-copy choices
+  consume distinct Forgejo and Gitea provider/instance profiles and independent repository-hosting versus
+  automation bindings with only the selected-source read-only/auth exception before commit; repository mutation
+  and binding remain commit-fenced. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the
+  actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery
+  credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the
+  explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected
+  file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected
+  place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage
+  authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its
+  selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock
+  and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual
+  restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or
+  restore.
 gui_related: true
 gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
   choices, protected handoffs, progress, exact return, and disabled/error states.
@@ -2320,40 +2347,19 @@ depends_on:
 - SCS-013
 unblocks: []
 acceptance_criteria:
-- The canonical Product Onboarding graphs remain the current eleven-stage dependency graph and exact six-stage connect-existing
-  shortcut. `restore_existing_pm_data` is represented outside those enums as a Bootstrap handoff after safe local
-  claim and before Product Onboarding.
-- Bootstrap fresh recovery does not require an old Server Catalog, a prior Project, model/provider authentication,
-  or a new onboarding command family; it uses Backup-owned destination, protected sign-in, Recovery Kit/unlock,
-  immutable snapshot inspection, preview, apply, and recovery receipts.
-- Full Server recovery begins recovery-safe, never auto-runs hooks, push, Goals, schedules, public ingress, or duplicate
-  Server/connector identity, and reaches Product Onboarding only after truthful completion or explicit decline/defer.
-- '`Restore a backup` in `first_project` remains a Project restore intent. It writes only the local draft before
-  Review, dispatches only after confirmation, and never aliases the Bootstrap full-recovery branch.'
-- Optional destination setup and Recovery Kit confirmation appear only after the confirmed owner work has established
-  the first Project. They route Backup-owned protected operations and never expose key bytes, claim PM escrow, or
-  mark acknowledgement as recovery proof.
-- The visible Tailscale card uses exact copy `Tailscale` / `Built into Puppet Master`, with normal `Not connected`
-  and `Set Up`; no install, package, daemon, sidecar, Serve-toggle, WSL, or already-authenticated-host-profile prerequisite
-  appears.
-- Hosted connector work projects the durable Server-owned phases Starting Puppet Master connection, Opening Tailscale
-  sign-in, Waiting for authorization, Waiting for device approval, Creating private address, Testing web UI, API,
-  and live connection, and Ready; cancel, denial, expiry, device approval, reauth, crash, corruption, mismatch,
-  and route failure remain distinct.
-- Self-hosted Headscale collects the owner-approved control URL and protected enrollment method, never offers Funnel,
-  and reports certificate/version/reachability/registration capability truth independently.
-- The Server-owned connector authorization/setup operation survives refresh, Client loss, and Client change. Protected
-  browser contents, cookies, codes, and credentials remain bound to an authorized current Client handoff and are
-  never inherited by another Client merely because the durable operation continues.
-- Connect-existing remains route-first and pre-Review activity remains cached or explicitly bounded read-only discovery.
-  Connector authorization, endpoint mutation/test, Server identity verification, and pairing happen only after Review
-  confirmation and return to the exact originating row/focus/generation.
-- '`Bring one from online` and optional online copy expose Forgejo and Gitea as separate forge provider/instance
-  choices with exact custom endpoint/trust/account identity. Repository hosting and automation binding may differ;
-  Git-ready/API-unavailable stays a valid truthful plan and never fabricates Actions.'
-- No command or EventRecord family is created here. Consumed packet commands remain handler_unavailable and event-silent
-  with expected_event_types=[] until owner and central integration exist; concept/static state never proves owner
-  work, native Slint execution, provider readiness, recovery, or security.
+  - "The canonical Product Onboarding graphs remain the current eleven-stage dependency graph and exact six-stage connect-existing shortcut. `restore_existing_pm_data` is represented outside those enums as a Bootstrap handoff after safe local claim and before Product Onboarding."
+  - "Bootstrap fresh recovery does not require an old Server Catalog, a prior Project, model/provider authentication, or a new onboarding command family; it uses Backup-owned destination, protected sign-in, Recovery Kit/unlock, immutable snapshot inspection, preview, apply, and recovery receipts."
+  - "Full Server recovery begins recovery-safe, never auto-runs hooks, push, Goals, schedules, public ingress, or duplicate Server/connector identity, and reaches Product Onboarding only after truthful completion or explicit decline/defer."
+  - "`Restore a backup` in `first_project` remains a Project restore intent. It writes only the local draft before Review, dispatches only after confirmation, and never aliases the Bootstrap full-recovery branch."
+  - "Optional destination setup and Recovery Kit confirmation appear only after the confirmed owner work has established the first Project. They route Backup-owned protected operations and never expose key bytes, claim PM escrow, or mark acknowledgement as recovery proof."
+  - "The visible Tailscale card uses exact copy `Tailscale` / `Built into Puppet Master`, with normal `Not connected` and `Set Up`; no install, package, daemon, sidecar, Serve-toggle, WSL, or already-authenticated-host-profile prerequisite appears."
+  - "Hosted connector work projects the durable Server-owned phases Starting Puppet Master connection, Opening Tailscale sign-in, Waiting for authorization, Waiting for device approval, Creating private address, Testing web UI, API, and live connection, and Ready; cancel, denial, expiry, device approval, reauth, crash, corruption, mismatch, and route failure remain distinct."
+  - "Self-hosted Headscale collects the owner-approved control URL and protected enrollment method, never offers Funnel, and reports certificate/version/reachability/registration capability truth independently."
+  - "The Server-owned connector authorization/setup operation survives refresh, Client loss, and Client change. Protected browser contents, cookies, codes, and credentials remain bound to an authorized current Client handoff and are never inherited by another Client merely because the durable operation continues."
+  - "Connect-existing remains route-first and pre-Review activity remains cached or explicitly bounded read-only discovery. Connector authorization, endpoint mutation/test, Server identity verification, and pairing happen only after Review confirmation and return to the exact originating row/focus/generation."
+  - "`Bring one from online` and optional online copy expose Forgejo and Gitea as separate forge provider/instance choices with exact custom endpoint/trust/account identity. Repository hosting and automation binding may differ; Git-ready/API-unavailable stays a valid truthful plan and never fabricates Actions."
+  - "No command or EventRecord family is created here. Consumed packet commands remain handler_unavailable and event-silent with expected_event_types=[] until owner and central integration exist; concept/static state never proves owner work, native Slint execution, provider readiness, recovery, or security."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore."
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -3000,3 +3006,6 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/assis
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+
+QA2 owner amendment (2026-10-30; DL-258; integration 7d586bad18): current requirements in this document’s amended units take precedence over earlier presentation descriptions. Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately in a tray joined to that card, before sibling alternatives. One C.cards under slot owns the join, indentation and line from the parent mark across all twelve affected screens. The parent opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links, Settings copy, remote routes/hosting/certificate fields, online service kind/address, device notes and connection routes. Naming and Review display the same selected mounted/network source, rather than an empty local-location field. Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in the current look. Remove duplicate explanation-only disclosures (What is a Server?, the Connect proxy explanation, and What does Puppet Master read? on Choose a key); put their information in the shared option tips. Keep functional sections: More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use protected flow; never reuse its never-saved hint for SMB. Q4/Q10: there is one progress string. Chapter beads sit on and follow that string’s sag, with chapter names below Pip’s feet; Pip replaces the current bead and the current bead occupies no extra width. A highlight surrounds the name without covering Pip. The speech tail is cut from the bubble’s own fill/border as one silhouette, never a separate visible diamond; NieR keeps its no-tail treatment. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is inferred, no selected live input is overwritten, and no new product action/DTO field is admitted. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused. No Project value, credential, second mute key or durable sound preference is fabricated from an unreadable preview.

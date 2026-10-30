@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40373-L41593
+Source lines: L40400-L41642
 
-Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
+Source SHA256: `dfa6948b8277aef445496a2361b7c866b7cb0a73981c3f358ee080e627c59e4b`
 
 ---
 
@@ -83,7 +83,16 @@ canonical_text: >-
   kind sign on a third string, 10 px lower than the first concept and level with Close. Existing
   title/kind/lead/close/focus/commit grammar remains; presentation adds no feature or dispatch. Optional host
   follows SSYS-056. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
-  independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round 2, Jared
+  2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its
+  affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words,
+  empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same
+  feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner
+  on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no
+  per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
+  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the
+  glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or
+  fallback icon.
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
@@ -99,6 +108,7 @@ acceptance_criteria:
   - "A sheet uses a backdrop blur only on the Skia GPU path and is a solid surface on the Skia CPU raster; no scrim uses a backdrop blur in any theme."
   - "Each theme family's sheets and in-chat cards move with that family's motion personality, and a card's transcript beats keep ACD-475's shared timing and order."
   - "With Reduce Motion on, every sheet and card change lands at its end state instantly in every family."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -165,25 +175,36 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The composer stack, from the transcript down, is the floating Activity bar pill, the follow-up
-  queue, the provider quota-wait strip, the dock (ACD-476), then the composer. The dock is at most
-  three 34 px one-line items plus one overflow line; each line has the source's mark, its kind word
-  and the owner's sentence, a clock when the owner gives one, and one action. It is transient: it
-  shows only while it has items and takes no space otherwise. It reserves its own height in flow,
-  never floats over the transcript, and never collides with the floating Activity bar pill or the
-  decision host. The transcript's bottom padding (APR-004) is measured with the dock present, so the
-  last transcript item is never under the pill. Under width pressure a dock line ellipsizes its
-  sentence and keeps its action; the F3-534 priority order is unchanged. Among the active capability
-  glyphs inside the text field, Back Seat Driver shows an ambient eye that reads the owner
-  projection and is absent when Back Seat Driver is off, and the Crew glyph is the Crew kind mark.
-  The ELI5 quick dot is the ELI5 kind mark among these glyphs, present lit or muted (F3-581, DL-126).
-  The dock and the per-reply files row replace the stream footer pill's helpers and files chips
-  (ACD-482, DL-129); no summary of helpers or file changes stacks above the composer beside the dock.
-  Amended 2026-10-17 (DL-228): while a decision host (a Plan or questionnaire host) is open it sits above the
-  dock and the quota-wait strip (amended 2026-10-17, review r1) and lifts the floating Activity bar pill and the follow-up queue, which float together as
-  one stack, with the scroll-to-bottom control; the transcript keeps its bottom padding for that floating
-  stack. The quota-wait strip and the dock stay in flow beneath the decision host, so bottom to top the order
-  is composer, dock, quota-wait strip, decision host, then the floating pill and queue.
+  The composer stack, from the transcript down, is the floating Activity bar pill, the follow-up queue, the
+  provider quota-wait strip, the dock (ACD-476), then the composer. The dock is at most three 34 px one-line
+  items plus one overflow line; each line has the source's mark, its kind word and the owner's sentence, a clock
+  when the owner gives one, and one action. It is transient: it shows only while it has items and takes no space
+  otherwise. It reserves its own height in flow, never floats over the transcript, and never collides with the
+  floating Activity bar pill or the decision host. The transcript's bottom padding (APR-004) is measured with
+  the dock present, so the last transcript item is never under the pill. Under width pressure a dock line
+  ellipsizes its sentence and keeps its action; the F3-534 priority order is unchanged. Among the active
+  capability glyphs inside the text field, Back Seat Driver shows an ambient eye that reads the owner projection
+  and is absent when Back Seat Driver is off, and the Crew glyph is the Crew kind mark. The ELI5 quick dot is
+  the ELI5 kind mark among these glyphs, present lit or muted (F3-581, DL-126). The dock and the per-reply files
+  row replace the stream footer pill's helpers and files chips (ACD-482, DL-129); no summary of helpers or file
+  changes stacks above the composer beside the dock. Amended 2026-10-17 (DL-228): while a decision host (a Plan
+  or questionnaire host) is open it sits above the dock and the quota-wait strip (amended 2026-10-17, review r1)
+  and lifts the floating Activity bar pill and the follow-up queue, which float together as one stack, with the
+  scroll-to-bottom control; the transcript keeps its bottom padding for that floating stack. The quota-wait
+  strip and the dock stay in flow beneath the decision host, so bottom to top the order is composer, dock,
+  quota-wait strip, decision host, then the floating pill and queue. QA round 2, Jared 2026-10-30; DL-258; GUI
+  7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000
+  ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work
+  identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a
+  restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines
+  bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw;
+  it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock
+  priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through
+  Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel,
+  System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque
+  plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu
+  tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing
+  material. This is consumer treatment, no global Glass token change or extra backdrop-filter.
 gui_related: true
 gui_classification_reason: "Places the dock and the new capability glyphs in the composer stack."
 split_recommended: false
@@ -194,6 +215,7 @@ acceptance_criteria:
   - "The dock sits between the quota-wait strip and the composer and never overlaps the transcript, the Activity bar pill or the decision host."
   - "With the dock showing, the last transcript item clears the Activity bar pill at settled bottom scroll."
   - "The Back Seat Driver eye reflects the owner projection and is absent when Back Seat Driver is off."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

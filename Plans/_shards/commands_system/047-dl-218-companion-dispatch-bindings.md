@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L8006-L8371
+Source lines: L8010-L8406
 
-Source SHA256: `03dc3f3ce961d47a7f00084c6f86f6f47277d92beb4798bd0d28693aefa5b209`
+Source SHA256: `d2db2056f525c4fdfc78402cacb9e201097260f5dc23724973f2f598d6e6c9b2`
 
 ---
 
@@ -102,28 +102,39 @@ status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
   Hosted chat producers use UCC-208's closed mapping (DL-232). Dispatch normalizes cmd.editor.close_tab to
-  cmd.panel_tab.close before gates and receipts; the alias has no handler. Domain openers use CV-360
-  placement and F3-634's one opening module; a child transcript remains cmd.agents.open_thread, not a
-  chat-private open. Existing command identity, authorization, idempotency, typed results and effect rules
-  do not change with the renderer. Pin History and Keep open are the existing ui.chat_column.pin_history
-  and ui.chat_column.keep_open local actions, with no receipt or event; resize is the existing
-  cmd.workspace_layout.resize_surface, committed once on release. An app-modal open, hover preview,
-  disclosure or body redraw is local presentation. An admitted preference changed in chat uses the same
-  cmd.settings.transaction.preview then cmd.settings.transaction.apply over its inventory id as Settings;
-  application/project defaults never masquerade as the per-chat ELI5 command. A mirrored renderer value
-  does not write a second store or echo the Settings save into a loop. No new event, command, alias or
-  future handler is added by the port, and existing DL-218 command candidates retain their exact exclusions
-  until separately admitted. The integrated concept at 59ca2d4382 realizes the Home opening and
-  local-column controls through JavaScript bridges; it does not implement the native dispatcher or typed
-  receipts specified here. Its existing Settings adapter persists Project default ELI5, while All chats
-  remains session-only (SSYS-055); that session choice is not evidence of an application-scope transaction.
-  Thought Stream's shared preference drives the chat's live thinking display (ACD-221, DL-234); opening or
-  folding a thinking block is local presentation with no command, receipt or event. Demo Studio launches,
-  lab-only document ids and unknown-id document fallback add no product command. PM7 S5/G1–G3: hosted chat
-  adds the one Pip editor’s typed no-write open/close/replay; admitted parts edit the existing Settings
-  pair. G1 B (Jared 2026-10-30) restores ui.activity_detail.pin as a typed view-local boolean action; History
-  pin/Keep open remain local, and resizing uses the existing layout
-  command. CS-105/106 own the newly admitted project/work commands.
+  cmd.panel_tab.close before gates and receipts; the alias has no handler. Domain openers use CV-360 placement
+  and F3-634's one opening module; a child transcript remains cmd.agents.open_thread, not a chat-private open.
+  Existing command identity, authorization, idempotency, typed results and effect rules do not change with the
+  renderer. Pin History and Keep open are the existing ui.chat_column.pin_history and ui.chat_column.keep_open
+  local actions, with no receipt or event; resize is the existing cmd.workspace_layout.resize_surface, committed
+  once on release. An app-modal open, hover preview, disclosure or body redraw is local presentation. An
+  admitted preference changed in chat uses the same cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply over its inventory id as Settings; application/project defaults never
+  masquerade as the per-chat ELI5 command. A mirrored renderer value does not write a second store or echo the
+  Settings save into a loop. No new event, command, alias or future handler is added by the port, and existing
+  DL-218 command candidates retain their exact exclusions until separately admitted. The integrated concept at
+  59ca2d4382 realizes the Home opening and local-column controls through JavaScript bridges; it does not
+  implement the native dispatcher or typed receipts specified here. Its existing Settings adapter persists
+  Project default ELI5, while All chats remains session-only (SSYS-055); that session choice is not evidence of
+  an application-scope transaction. Thought Stream's shared preference drives the chat's live thinking display
+  (ACD-221, DL-234); opening or folding a thinking block is local presentation with no command, receipt or
+  event. Demo Studio launches, lab-only document ids and unknown-id document fallback add no product command.
+  PM7 S5/G1–G3: hosted chat adds the one Pip editor’s typed no-write open/close/replay; admitted parts edit the
+  existing Settings pair. G1 B (Jared 2026-10-30) restores ui.activity_detail.pin as a typed view-local boolean
+  action; History pin/Keep open remain local, and resizing uses the existing layout command. CS-105/106 own the
+  newly admitted project/work commands. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17:
+  hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select,
+  textarea, label or switch/radio/tab/slider semantics). Plain words, empty section space and the plate picture
+  do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains
+  eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing.
+  One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and
+  trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the
+  head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph
+  matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and
+  shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding
+  arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s
+  result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run
+  cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning.
 gui_related: true
 gui_classification_reason: Defines shared dispatch, alias normalization and local actions for the hosted chat
   controls.
@@ -137,8 +148,9 @@ depends_on:
 - DL-234
 unblocks: []
 acceptance_criteria:
-- Hosted producers preserve the existing handler, alias normalization and effect contract.
-- Reverse preference projection emits no second command or Settings write.
+  - "Hosted producers preserve the existing handler, alias normalization and effect contract."
+  - "Reverse preference projection emits no second command or Settings write."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -251,83 +263,100 @@ canonical_text: >-
   cmd.work.set_completion_delivery, cmd.work.clear_finished, cmd.work.quit, cmd.chat.processes.open,
   cmd.agents_and_processes.show and cmd.agents_and_processes.pop_out. Runtime commands bind
   project/server/environment, stable work/owner and process identity, expected projection/input generation,
-  actor/permission and idempotency key, return an owner receipt or typed rejection, and never
-  optimistically manufacture success. Unknown/stale/unavailable owner refuses. Navigation and view-local
-  clear do not write runtime state or emit events. Stop all is cmd.work.stop with scope thread/platform and
-  the reviewed target list, never a second handler; process-group semantics are EP-043/SIR-054. Input is
-  current safe yes/no only; other input reveals terminal. Restart is eligible owner-controlled new
-  invocation, no PID-only replay. Completion policy writes one owner value; delivery does not wake stopped
-  threads. Quit defaults keep_running; stop_selected excludes services and binds the reviewed current
-  target set. Registered local prefixes: ui.work_panel.* (close/select_tab/filter/sort/expand/select),
-  ui.work_quit.* (select/cancel), ui.project_switcher.* (open/close), ui.settings.pip_editor.*
-  (open/close/replay), plus ui.work_quit.open to draft the quit dialog. They write no durable/runtime
-  state, carry return focus/scope and release timers/subscriptions/copies. cmd.work.clear_finished is a
-  navigation_wrapper with view-local hiding, not record deletion. All settings hosts use preview/apply. No
-  Home panel-tab command or panel shortcut in this build. ProcessFacts and command request/result/error
-  fixtures are static contracts; new input/completion event candidates remain non-emitting until Event
-  Authority. B2: ui.project_switcher.all_projects is the typed local action that focuses the existing
-  Projects page route tab_id projects. It never misuses cmd.panel.switch, which is only a rail side-panel
-  shell action. D10/D13/G4: Requests carry explicit scope_kind under the existing application/project
-  policy. Quit and platform Stop all are application-scoped with project_id null; thread Processes is
-  project-scoped with a real Project. A global panel or local editor/navigation action works without an
-  active Project. Every reviewed target still carries its actual Project/server/environment and current
-  owner permission. Dispatch verifies source/target scope rather than inferring a default Project; a
+  actor/permission and idempotency key, return an owner receipt or typed rejection, and never optimistically
+  manufacture success. Unknown/stale/unavailable owner refuses. Navigation and view-local clear do not write
+  runtime state or emit events. Stop all is cmd.work.stop with scope thread/platform and the reviewed target
+  list, never a second handler; process-group semantics are EP-043/SIR-054. Input is current safe yes/no only;
+  other input reveals terminal. Restart is eligible owner-controlled new invocation, no PID-only replay.
+  Completion policy writes one owner value; delivery does not wake stopped threads. Quit defaults keep_running;
+  stop_selected excludes services and binds the reviewed current target set. Registered local prefixes:
+  ui.work_panel.* (close/select_tab/filter/sort/expand/select), ui.work_quit.* (select/cancel),
+  ui.project_switcher.* (open/close), ui.settings.pip_editor.* (open/close/replay), plus ui.work_quit.open to
+  draft the quit dialog. They write no durable/runtime state, carry return focus/scope and release
+  timers/subscriptions/copies. cmd.work.clear_finished is a navigation_wrapper with view-local hiding, not
+  record deletion. All settings hosts use preview/apply. No Home panel-tab command or panel shortcut in this
+  build. ProcessFacts and command request/result/error fixtures are static contracts; new input/completion event
+  candidates remain non-emitting until Event Authority. B2: ui.project_switcher.all_projects is the typed local
+  action that focuses the existing Projects page route tab_id projects. It never misuses cmd.panel.switch, which
+  is only a rail side-panel shell action. D10/D13/G4: Requests carry explicit scope_kind under the existing
+  application/project policy. Quit and platform Stop all are application-scoped with project_id null; thread
+  Processes is project-scoped with a real Project. A global panel or local editor/navigation action works
+  without an active Project. Every reviewed target still carries its actual Project/server/environment and
+  current owner permission. Dispatch verifies source/target scope rather than inferring a default Project; a
   mismatch refuses before effects. This adds no Settings store or event family. G1 B (Jared 2026-10-30):
   Pin/unpin is the view-local ui.activity_detail.pin action (binding chat.activity.pin), default false. Pinned
   Activity Detail stays open across thread switches and reprojects the selected thread’s data; unpinned detail
-  closes on a thread switch. Pin changes lifetime only: one full-size docked-or-full-height-cover view, no
-  small form. A switch cancels stale subscriptions and never leaves the previous thread’s rows/actions in the
-  new thread. A missing domain shows its truthful empty/unavailable state. Pin is session view state, not a
-  Settings row, durable layout field or runtime mutation. D11/G4, PM7 Step4, 2026-10-30: System status is a
-  small read-only overlay popover, reached from the existing status-bar System status item and the Processes
-  System services link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with
-  statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner
-  links use the existing ui.settings.route.open action and system_status.service.open_settings binding,
-  selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
-  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value
-  or controlling a service. The popover has close/Escape/outside closure, return focus and the common
-  overlay/Glass plate; unavailable owner navigation says why. System status open/close and owner-Settings
-  navigation carry the same explicit source scope, view and return-focus identity as other no-write local
-  actions. G6 Clear finished is a Processes-view action; it never clears finished agents. Concept thread Stop
-  all reviews processes/scheduled runs, while platform Stop all may include agents after review; the canonical
-  cmd.work.stop identity and per-owner permission/identity checks remain. D2/D7, PM7 Step4 final-source
-  alignment, 2026-10-30: cmd.chat.processes.open accepts optional work_id for a dock Review/Show route
-  selecting one process or scheduled row. A bar open may omit it. Resolve that ID only within the signed
-  Project/thread scope and current expected generation; missing, stale or foreign selection cannot retarget to
-  a title match or another thread. This remains navigation with no process effect. Agent dock Review selects
-  its existing Subagents detail locally and never opens a child transcript by this route.
-  D7/D8/D13, PM7 companion review fix1, 2026-10-30 (Astra A2/A3): work.open_owner is ui.work_panel.select
-  with an owner-row value, owner_id, destination agents|subagents, invoking view and focus; Subagents also
-  binds its exact thread_id. It never opens a transcript. Actual Open thread uses cmd.chat.open_thread for
-  the item’s bound Assistant thread; actual Open surface is ui.work_panel.open_surface, a local navigation
-  request to the resolved owner surface with work identity and focus, unavailable if that owner cannot be
-  reached. Copy command is ui.work_panel.copy_command, a local clipboard request over the selected current
-  command; clipboard refusal cannot report success. Open port reuses cmd.browser.open_workspace_preview with
-  a server/environment-authoritative URL and CV-360 placement, never an assumed client localhost. A
-  scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the exact schedule identity/revision and
-  owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new
-  invocation through the terminal owner, with an explicit new-session request when needed; Restart keeps
-  cmd.work.restart for restartable live server/db/watcher work. Concept W.restart/W.stop adapters do not
-  replace those native owner routes.
-  G4/D7/D10, PM7 companion review fix1, 2026-10-30 (Astra A4): local_action_request requires a closed
-  action-specific value. select_tab is agents|processes|resources. sort is {column:
-  title|rank|time|cpu|mem|ports|where, direction: -1|1}. filter distinguishes owner, agent_group and
-  process_grouping; expand distinguishes item, subagents and group plus boolean expanded. select
-  distinguishes an item work_id from owner_id with destination agents|subagents; exact thread_id is required
-  for Subagents. Quit draft selection is one closed choice keep_running|stop_selected, one
+  closes on a thread switch. Pin changes lifetime only: one full-size docked-or-full-height-cover view, no small
+  form. A switch cancels stale subscriptions and never leaves the previous thread’s rows/actions in the new
+  thread. A missing domain shows its truthful empty/unavailable state. Pin is session view state, not a Settings
+  row, durable layout field or runtime mutation. D11/G4, PM7 Step4, 2026-10-30: System status is a small
+  read-only overlay popover, reached from the existing status-bar System status item and the Processes System
+  services link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with
+  statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner links
+  use the existing ui.settings.route.open action and system_status.service.open_settings binding, selecting
+  code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
+  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or
+  controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass
+  plate; unavailable owner navigation says why. System status open/close and owner-Settings navigation carry the
+  same explicit source scope, view and return-focus identity as other no-write local actions. G6 Clear finished
+  is a Processes-view action; it never clears finished agents. Concept thread Stop all reviews
+  processes/scheduled runs, while platform Stop all may include agents after review; the canonical cmd.work.stop
+  identity and per-owner permission/identity checks remain. D2/D7, PM7 Step4 final-source alignment, 2026-10-30:
+  cmd.chat.processes.open accepts optional work_id for a dock Review/Show route selecting one process or
+  scheduled row. A bar open may omit it. Resolve that ID only within the signed Project/thread scope and current
+  expected generation; missing, stale or foreign selection cannot retarget to a title match or another thread.
+  This remains navigation with no process effect. Agent dock Review selects its existing Subagents detail
+  locally and never opens a child transcript by this route. D7/D8/D13, PM7 companion review fix1, 2026-10-30
+  (Astra A2/A3): work.open_owner is ui.work_panel.select with an owner-row value, owner_id, destination
+  agents|subagents, invoking view and focus; Subagents also binds its exact thread_id. It never opens a
+  transcript. Actual Open thread uses cmd.chat.open_thread for the item’s bound Assistant thread; actual Open
+  surface is ui.work_panel.open_surface, a local navigation request to the resolved owner surface with work
+  identity and focus, unavailable if that owner cannot be reached. Copy command is ui.work_panel.copy_command, a
+  local clipboard request over the selected current command; clipboard refusal cannot report success. Open port
+  reuses cmd.browser.open_workspace_preview with a server/environment-authoritative URL and CV-360 placement,
+  never an assumed client localhost. A scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the
+  exact schedule identity/revision and owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses
+  cmd.terminal.rerun for a new invocation through the terminal owner, with an explicit new-session request when
+  needed; Restart keeps cmd.work.restart for restartable live server/db/watcher work. Concept W.restart/W.stop
+  adapters do not replace those native owner routes. G4/D7/D10, PM7 companion review fix1, 2026-10-30 (Astra
+  A4): local_action_request requires a closed action-specific value. select_tab is agents|processes|resources.
+  sort is {column: title|rank|time|cpu|mem|ports|where, direction: -1|1}. filter distinguishes owner,
+  agent_group and process_grouping; expand distinguishes item, subagents and group plus boolean expanded. select
+  distinguishes an item work_id from owner_id with destination agents|subagents; exact thread_id is required for
+  Subagents. Quit draft selection is one closed choice keep_running|stop_selected, one
   work_id/expected_generation/selected checkbox, or the Stop-list scope procs|all. Missing values, unknown
   fields, arbitrary enums and cross-branch fields refuse before view or owner effects. Pin and System status
   retain their separate restrictions. None of these draft/view changes creates a runtime mutation or saved
-  setting.
-  D7/D8/D13, PM7 final-review direct correction, 2026-10-30 (Astra r2 N1): reused-owner Touch routes retain
-  separate contracts, never PM7 command_result. Browser open and Terminal rerun retain UCC-063/UCC-201
+  setting. D7/D8/D13, PM7 final-review direct correction, 2026-10-30 (Astra r2 N1): reused-owner Touch routes
+  retain separate contracts, never PM7 command_result. Browser open and Terminal rerun retain UCC-063/UCC-201
   catalog payload contracts and the existing CV-333 UICommandResponse v2 projection/error/receipt; their
   per-command identity fence checks common dispatch identity only, not an uncompiled owner request body or
   terminal effect. Scheduling Cancel directly consumes ScheduledMessageCancelRequest and
   ScheduledMessageCancelResult plus the scheduling owner’s closed error code. Its admitted source_surface
-  vocabulary is unchanged; Work delegates to the scheduling-owned cancellation context rather than inventing
-  a source or PID target. Precise per-command profiles and fixtures bind these distinctions; no owner adopts
-  a new PM7 result.
+  vocabulary is unchanged; Work delegates to the scheduling-owned cancellation context rather than inventing a
+  source or PID target. Precise per-command profiles and fixtures bind these distinctions; no owner adopts a new
+  PM7 result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a
+  live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that
+  thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or
+  returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At
+  elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning
+  question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted
+  state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript
+  visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every
+  Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no
+  individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project
+  is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared
+  machines show only environments with running work. Metadata/freshness is available on tab entry; the existing
+  visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure
+  remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q18:
+  when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner
+  store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home
+  PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit
+  loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner
+  admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never
+  silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative
+  and never native durability, a verified restore/credential or a native owner receipt; production
+  Storage/Settings CAS/readback/rollback rules are unchanged.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -337,12 +366,11 @@ depends_on:
 - EP-043
 unblocks: []
 acceptance_criteria:
-- Every command has one sole handler and closed typed request/result; explicit source scope, target owner/permission/storage/currentness
-  reject before effects, including application controls with no active Project.
-- Stop all reuses cmd.work.stop; pid/start/group/descendant targeting and 3 s grace are enforced by the owner.
-- Prompt input is current safe yes/no only, quit defaults keep-running, clear is view-local and candidate events
-  remain non-emitting.
-- All declared local prefixes write no runtime state and release focus/subscriptions/copies on close.
+  - "Every command has one sole handler and closed typed request/result; explicit source scope, target owner/permission/storage/currentness reject before effects, including application controls with no active Project."
+  - "Stop all reuses cmd.work.stop; pid/start/group/descendant targeting and 3 s grace are enforced by the owner."
+  - "Prompt input is current safe yes/no only, quit defaults keep-running, clear is view-local and candidate events remain non-emitting."
+  - "All declared local prefixes write no runtime state and release focus/subscriptions/copies on close."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -374,3 +402,6 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/Share
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+
+QA2 owner amendment (2026-10-30; DL-258; integration 7d586bad18): current requirements in this document’s amended units take precedence over earlier presentation descriptions. Q6/Q7/H1/H5: backup location/Kit/unlock presentation and joined choices reuse the existing fourteen onboarding local actions and selected owner routes. Lab screen seeding is not product routing, authentication or Project commit. No new restore wrapper or onboarding command. Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning. Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a restored backup, verified credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged.

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7760-L7927
+Source lines: L7760-L7929
 
-Source SHA256: `6f74a055720f9dd8558fa6c3e7eaa41c71e64497697a78b190d98cafa20476dc`
+Source SHA256: `bc0161780c1a321ca6c9db2cecbf8f13ecc2e1a53e6ab47c2e5c95aa5e56f479`
 
 ---
 
@@ -20,49 +20,51 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  UCC-106 retains eleven historical cmd.onboarding.* identifiers as searchable command-era source lineage
-  only; none is a current command, alias, primary handler, or production-wiring row. Current Product
-  Onboarding uses exactly fourteen typed owner-local actions ui.onboarding.start, ui.onboarding.next,
-  ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer,
-  ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path,
-  ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation,
-  ui.onboarding.choose_first_project, ui.onboarding.finish, and ui.onboarding.choose_look. These are local
-  UI actions, not semantic commands or catalog registrations, and use the closed
-  pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2 contracts.
-  ui.onboarding.choose_look (DL-153) is a local look preview, and so is the look ui.onboarding.start opens
-  in (Basic Dark for first_run, the look on screen for settings_rerun): neither dispatches cmd.theme.* or a
-  Settings transaction, and the look is written with the Project at commit. Every request consumes
-  PWIZ-021's closed, normalized, secret-free local_context, including phase-specific draft/preflight/commit
-  bindings as defined by the owner schema; arbitrary/raw payload fields and secret-bearing values are
-  rejected. An action that launches owner work carries a typed owner route or intent and maps to that
-  owner's existing canonical command and sole handler. The command-era reference to
-  cmd.health.provider_setup.open does not give Product Onboarding a Health/Doctor handler. Teacher links
-  continue to use the existing Teacher/Teach command routes from UCC-102 and CS-053. The packet candidates
-  cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer,
-  cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are
-  source-lineage candidate tokens only; each is rejected as a command, alias, and handler because its
-  semantics are owned by typed local ui.onboarding.* actions. The bell's setup Continue entry forwards the
-  original prompt's own typed action, ui.onboarding.start with admitted resume intent and the same closed
-  owner context; it adds no fifteenth onboarding action and never revives cmd.onboarding.resume. The
-  separate Guided Tour Continue entry belongs to PWIZ-023 and forwards ui.guided_tour.resume under
-  pm.guided_tour.action_request.v3; it is not an onboarding action.
+  UCC-106 retains eleven historical cmd.onboarding.* identifiers as searchable command-era source lineage only;
+  none is a current command, alias, primary handler, or production-wiring row. Current Product Onboarding uses
+  exactly fourteen typed owner-local actions ui.onboarding.start, ui.onboarding.next, ui.onboarding.back,
+  ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details,
+  ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow,
+  ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, and
+  ui.onboarding.choose_look. These are local UI actions, not semantic commands or catalog registrations, and use
+  the closed pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2 contracts.
+  ui.onboarding.choose_look (DL-153) is a local look preview, and so is the look ui.onboarding.start opens in
+  (Basic Dark for first_run, the look on screen for settings_rerun): neither dispatches cmd.theme.* or a
+  Settings transaction, and the look is written with the Project at commit. Every request consumes PWIZ-021's
+  closed, normalized, secret-free local_context, including phase-specific draft/preflight/commit bindings as
+  defined by the owner schema; arbitrary/raw payload fields and secret-bearing values are rejected. An action
+  that launches owner work carries a typed owner route or intent and maps to that owner's existing canonical
+  command and sole handler. The command-era reference to cmd.health.provider_setup.open does not give Product
+  Onboarding a Health/Doctor handler. Teacher links continue to use the existing Teacher/Teach command routes
+  from UCC-102 and CS-053. The packet candidates cmd.onboarding.back, cmd.onboarding.cancel,
+  cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details,
+  cmd.onboarding.resume, and cmd.onboarding.skip are source-lineage candidate tokens only; each is rejected as a
+  command, alias, and handler because its semantics are owned by typed local ui.onboarding.* actions. The bell's
+  setup Continue entry forwards the original prompt's own typed action, ui.onboarding.start with admitted resume
+  intent and the same closed owner context; it adds no fifteenth onboarding action and never revives
+  cmd.onboarding.resume. The separate Guided Tour Continue entry belongs to PWIZ-023 and forwards
+  ui.guided_tour.resume under pm.guided_tour.action_request.v3; it is not an onboarding action. QA round 2,
+  Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: the unchanged fourteen typed onboarding actions route
+  the selected source and protected owner unlock. A Kit is not a destination/authentication command. Screen
+  seeds/under trays add no action or payload field.
 gui_related: true
 gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed owner-local Product Onboarding actions.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, UCC-102, CS-053]
 unblocks: []
 acceptance_criteria:
-  - The eleven retained cmd.onboarding.* tokens are searchable source lineage only and receive no command registration, alias, primary handler, or production-wiring row.
-  - Every current Product Onboarding control emits exactly one of the fourteen ui.onboarding.* typed local action IDs owned by PWIZ-021 through PWIZ-023.
-  - The onboarding look choice, its NieR Mode controls and its start look are local previews through ui.onboarding.choose_look and ui.onboarding.start; neither dispatches cmd.theme.* or a Settings transaction (DL-153).
-  - The eight packet candidate cmd.onboarding.* tokens are durably rejected as commands, aliases, primary handlers, and production-wiring rows; they do not normalize to the typed local action set.
-  - Defer durably preserves exact stage, path, active branch, bounded history, revision/continuation, initiating Client, and focus return; Close is a non-completion dismissal; Skip records an explicit skipped session; Details is ephemeral, same-stage, non-persistent, and owner-command-free.
-  - OnboardingActionRequest/OnboardingActionResult close the request/result vocabulary. Applied, disabled, and rejected results are distinct; disabled/rejected results have no local effect, session write, continuation, owner route, or production receipt and expose exact reasons.
-  - Required local_context consumes the exact closed v2 owner schema rather than a catalog-owned field list; nullable owner_phase/owner_command_id/precommit_authorization_ref/project_commit_ref/setup_commit_binding have phase-gated requirements, and additional/raw/free-form/secret-bearing values are rejected.
-  - Uncreated Project drafts and Settings copy previews consume PWIZ-021/SSYS-036. Only owner-authorized read-only preflight or selected-source authentication may run before commit; first-time sign-in consumes MACS-005 with no fabricated identities. Review carries PJCT-007's exact Project-owned commit binding, and paid/free-provider owner routes require that real committed Project. Neither phase adds a command or handler.
+  - "The eleven retained cmd.onboarding.* tokens are searchable source lineage only and receive no command registration, alias, primary handler, or production-wiring row."
+  - "Every current Product Onboarding control emits exactly one of the fourteen ui.onboarding.* typed local action IDs owned by PWIZ-021 through PWIZ-023."
+  - "The onboarding look choice, its NieR Mode controls and its start look are local previews through ui.onboarding.choose_look and ui.onboarding.start; neither dispatches cmd.theme.* or a Settings transaction (DL-153)."
+  - "The eight packet candidate cmd.onboarding.* tokens are durably rejected as commands, aliases, primary handlers, and production-wiring rows; they do not normalize to the typed local action set."
+  - "Defer durably preserves exact stage, path, active branch, bounded history, revision/continuation, initiating Client, and focus return; Close is a non-completion dismissal; Skip records an explicit skipped session; Details is ephemeral, same-stage, non-persistent, and owner-command-free."
+  - "OnboardingActionRequest/OnboardingActionResult close the request/result vocabulary. Applied, disabled, and rejected results are distinct; disabled/rejected results have no local effect, session write, continuation, owner route, or production receipt and expose exact reasons."
+  - "Required local_context consumes the exact closed v2 owner schema rather than a catalog-owned field list; nullable owner_phase/owner_command_id/precommit_authorization_ref/project_commit_ref/setup_commit_binding have phase-gated requirements, and additional/raw/free-form/secret-bearing values are rejected."
+  - "Uncreated Project drafts and Settings copy previews consume PWIZ-021/SSYS-036. Only owner-authorized read-only preflight or selected-source authentication may run before commit; first-time sign-in consumes MACS-005 with no fabricated identities. Review carries PJCT-007's exact Project-owned commit binding, and paid/free-provider owner routes require that real committed Project. Neither phase adds a command or handler."
   - "more_ways setup/project disclosure and branch-local state updates have distinct intent/scope/choice/branch combinations; Skip whole-session and optional Project/Remote-Access variants have distinct intent/scope/choice/branch plus session_skipped versus optional_scope_skipped results."
-  - Skip and Close never mark Health, Doctor, provider, Server, Project, backup, or any other owner Ready.
-  - Owner-flow actions carry typed owner route or intent and map to the target owner's existing canonical command and sole handler without replaying owner work.
-  - Teacher actions reuse existing Teacher/Teach command contracts and preserve current-surface context.
+  - "Skip and Close never mark Health, Doctor, provider, Server, Project, backup, or any other owner Ready."
+  - "Owner-flow actions carry typed owner route or intent and map to the target owner's existing canonical command and sole handler without replaying owner work."
+  - "Teacher actions reuse existing Teacher/Teach command contracts and preserve current-surface context."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: the unchanged fourteen typed onboarding actions route the selected source and protected owner unlock. A Kit is not a destination/authentication command. Screen seeds/under trays add no action or payload field."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json

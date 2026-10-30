@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3496-L3878
+Source lines: L3496-L3901
 
-Source SHA256: `d1db4bc86c13919e8792a9db11b5bebdb91bb80656138e1bc6ea96aa76051688`
+Source SHA256: `a1bcd353fe2e9b33c3f364ff4e8b31ff8e1e401304c1816b7df50b0a2831ffde`
 
 ---
 
@@ -112,7 +112,29 @@ canonical_text: >-
   records wiring obligations only and does not generate wiring JSON. Amended Q22, Jared 2026-10-30 (DL-257): the
   fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust
   controls. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source
-  confirmation 1030182542-5544).
+  confirmation 1030182542-5544). QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the
+  actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery
+  credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the
+  explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected
+  file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected
+  place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage
+  authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its
+  selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock
+  and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual
+  restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or
+  restore. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing
+  an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already
+  held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds,
+  preserves pre-existing inert nodes and restores focus/input. H1: explicit lab open({screen}) invokes the
+  screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts out. Connect/NAS/online
+  fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no
+  native Project receipt, authentication, permission or completed owner work is inferred, no selected live input
+  is overwritten, and no new product action/DTO field is admitted. Q1/Q2: onboarding sound defaults on under
+  general.interaction.sound-effects, through the existing one player and trusted-gesture gate. No verified
+  readable Project snapshot means an unbound preview: retain the factory-on choice or the person’s current visit
+  choice rather than muting it on each refresh. An explicit readable Project value wins when it binds; a
+  genuinely refused bound write remains refused. No Project value, credential, second mute key or durable sound
+  preference is fabricated from an unreadable preview.
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
@@ -156,6 +178,7 @@ acceptance_criteria:
   - "The eleven listed `cmd.onboarding.*` spellings remain source-lineage-only and appear as neither production wiring rows nor compatibility aliases."
   - "The eight packet candidate `cmd.onboarding.*` tokens remain source-lineage-only and are rejected as commands, aliases, handlers, and production rows."
   - "The provider-first, paid-provider-before-Free-Models, direct limited-Planning-Wizard, and Teacher-copy proposal is predecessor lineage rather than current stage, route, or command authority."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is inferred, no selected live input is overwritten, and no new product action/DTO field is admitted. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused. No Project value, credential, second mute key or durable sound preference is fabricated from an unreadable preview."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json

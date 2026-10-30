@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3382-L3459
+Source lines: L3408-L3489
 
-Source SHA256: `f8293556f35dfc8682aab0d523f18537246977b9ead49c64eede243e878288d6`
+Source SHA256: `ab462d8dfe2c0862859d57604e3853b18856b465034217045db575b261f78b39`
 
 ---
 
@@ -33,22 +33,26 @@ canonical_text: >-
   a token for its kind and never forks a layer. The boundary is part of the grammar: editor and terminal text
   surfaces never receive card effects; small controls use F3-465's shared marker without card magnet, Glass uses
   F3-652's optical marker, and dividers use F3-657's one resize grammar. Tab silhouettes stay with their tab
-  owners (F3-505, F3-466), and parallax stays with F3-446.
-  Amended 2026-10-29 (O2, PC1; PM7): Pip gaze/watch dwell subscribe to the shared pointer/hover owner, with one bounded kit rig clock for illustration, not a per-surface pointer listener or hover effect. It pauses hidden/offscreen/during drags and keeps the last pointer position.
+  owners (F3-505, F3-466), and parallax stays with F3-446. Amended 2026-10-29 (O2, PC1; PM7): Pip gaze/watch
+  dwell subscribe to the shared pointer/hover owner, with one bounded kit rig clock for illustration, not a
+  per-surface pointer listener or hover effect. It pauses hidden/offscreen/during drags and keeps the last
+  pointer position. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465/PMH
+  shared hover light on registered edge-glow objects, including Usage/Home widgets, cards, tiles and rows.
+  Remove the independent sheet-wide lg-shine/light, pointer listener and stale data-lg-lit. Its central sheen is
+  at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5 percent); edge glow is unchanged. Plain
+  panels, bars and dialog ground do not light merely because the pointer crosses them. Retro and NieR retain
+  their non-soft-light forms and existing Reduced Motion, software and gesture holds.
 gui_related: true
 gui_classification_reason: "Fixes one owner for PMConcept7's hover grammar."
 split_recommended: false
 depends_on: [F3-465, F3-446, DL-171]
 unblocks: []
 acceptance_criteria:
-- Exactly one hover engine and one hover token set exist in PMConcept7; no surface keeps a second engine, its own
-  pointer-move listener or its own hover animation loop.
-- Every hover target is a card, row, tile, icon or small control, opted in by class or `data-pmh` and opted out by
-  `data-pmh="off"` or `[data-pm-hover-exempt]`.
-- No surface owner restates the hover lift, glow, pointer light or magnet; a different strength is a kind token, not
-  a forked layer.
-- Tab/header controls use F3-465's small-control marker; editor/terminal text never gets a card magnet, and resize
-  bars consume F3-657.
+  - "Exactly one hover engine and one hover token set exist in PMConcept7; no surface keeps a second engine, its own pointer-move listener or its own hover animation loop."
+  - "Every hover target is a card, row, tile, icon or small control, opted in by class or `data-pmh` and opted out by `data-pmh=\"off\"` or `[data-pm-hover-exempt]`."
+  - "No surface owner restates the hover lift, glow, pointer light or magnet; a different strength is a kind token, not a forked layer."
+  - "Tab/header controls use F3-465's small-control marker; editor/terminal text never gets a card magnet, and resize bars consume F3-657."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465/PMH shared hover light on registered edge-glow objects, including Usage/Home widgets, cards, tiles and rows. Remove the independent sheet-wide lg-shine/light, pointer listener and stale data-lg-lit. Its central sheen is at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5 percent); edge glow is unchanged. Plain panels, bars and dialog ground do not light merely because the pointer crosses them. Retro and NieR retain their non-soft-light forms and existing Reduced Motion, software and gesture holds."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

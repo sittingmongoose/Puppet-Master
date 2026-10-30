@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26836-L27565
+Source lines: L26822-L27561
 
-Source SHA256: `7f36bba1b2ee8a701239d6b0ad57a4921dbdeae2edd3f2fcfb5e9a8d75f9a587`
+Source SHA256: `6855b370360f50769b772c371539239be9d72a3abae4c0b51831a1d2eabcaecc`
 
 ---
 
@@ -20,48 +20,57 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The dock is a composer-adjacent surface of at most three one-line items that carries only what
-  needs to be seen while its own transcript item is off-screen. FinalGUISpec F3-567 places it in the
-  composer stack directly after the provider quota-wait strip; it reserves its own height there and
-  never floats over the transcript. Items come in this order: needs you (an approval, a question,
-  a failure, a tie or a held scheduled message that waits on the user), your move (a turn that is
-  the user's but is not a problem, such as a Chat Room that waits on the user: after its last round,
-  while paused, between rounds while Pause between rounds is on, or while any Grill Me session
-  waits for its current Confirm, before round 1 or after mid-run activation before the round that
-  needs its answers, CWR-044, DL-231), live runs (newest first), and the next coming-up scheduled
-  item. Questions, approvals and failures remain needs, including between numbered rounds. A room
-  between two automatic rounds reads as live only when no existing user gate or manual pause
-  requires attention. A needs-you item also shows while its transcript item is only partly
-  visible. A fourth and later item collapses into one overflow line that opens Activity. Each item
-  is an AttentionItem projection {source_kind, source_id, tone, sentence, primary_action_route,
-  since} published by the owner of the source record, with tone needs | yourmove | live | comingup;
-  the chat shell only merges and orders them. The dock owns no run, schedule or advice state and
-  writes no words of its own: an item's sentence is the owner's current sentence. An item appears
-  once its transcript item has been out of view for 400 ms and leaves as soon as it is visible again;
-  a needs-you item skips the wait, and a visibility change inside the quiet window is re-evaluated
-  when the window ends, never dropped. An item's action follows its primary_action_route: it reveals
-  the transcript item (scrolls to it and marks it once), or, for an owner-admitted question, opens
-  the existing questionnaire (Answer now). A permission decision is never taken from the dock; it is
-  taken only in its transcript item or the approval owner's host. The families of the records the
-  dock mirrors are ACD-469's map. The dock's live-run lines and the per-reply files row replace
-  the stream footer pill's helpers and files chips (ACD-482, DL-129).
-  Amended 2026-10-29 (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes
-  to live runs; both are views of the same owner identity, not duplicate attention. Process stop differs from
-  reply Stop; delivery never wakes a stopped thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30
-  (integration e9b15abc64): activity-panel.js registers one PM56_PMX.dock.provide(workDock) provider over the
-  selected thread’s PM_WORK process/agent/scheduled items. needsYou items are needs lines with Review, live
-  processes are live lines with current time, and the next pending scheduled run is comingup. These items have
-  no transcript card to wait offscreen for; existing transcript-backed providers retain their visibility
-  rules. [data-work-time] is patched by the same tick owner. Review/Show for a process or scheduled item
-  reuses cmd.chat.processes.open with that exact item selected; an agent Review selects its existing Subagents
-  Activity Detail row as local view state, not cmd.agents.open_thread and not a direct permission/answer/stop
-  action. The concept work-dock-review adapter uses PM56_DEMO.openActivity only to demonstrate those existing
-  view routes; it admits no demo command to the product.
-  D7, PM7 companion review fix1, 2026-10-30 (Muse3): the concept’s agent work-dock-review adapter finds the
-  Subagents row by title through PM56_DEMO.openActivity. This title lookup is a concept limitation and can
-  be ambiguous for equal/renamed titles. Native owner-row selection must bind signed owner identity, thread
-  and generation as CS-106 requires; the concept is not evidence that this stronger guard exists.
-  Process/scheduled Review already passes the item ID.
+  The dock is a composer-adjacent surface of at most three one-line items that carries owner attention while a
+  source’s transcript card is off-screen, or its admitted cardless Work projection is eligible. FinalGUISpec
+  F3-567 places it in the composer stack directly after the provider quota-wait strip; it reserves its own
+  height there and never floats over the transcript. Items come in this order: needs you (an approval, a
+  question, a failure, a tie or a held scheduled message that waits on the user), your move (a turn that is the
+  user's but is not a problem, such as a Chat Room that waits on the user: after its last round, while paused,
+  between rounds while Pause between rounds is on, or while any Grill Me session waits for its current Confirm,
+  before round 1 or after mid-run activation before the round that needs its answers, CWR-044, DL-231), live
+  runs (newest first), and the next coming-up scheduled item. Questions, approvals and failures remain needs,
+  including between numbered rounds. A room between two automatic rounds reads as live only when no existing
+  user gate or manual pause requires attention. A needs-you item also shows while its transcript item is only
+  partly visible. A fourth and later item collapses into one overflow line that opens Activity. Each item is an
+  AttentionItem projection {source_kind, source_id, tone, sentence, primary_action_route, since} published by
+  the owner of the source record, with tone needs | yourmove | live | comingup; the chat shell only merges and
+  orders them. The dock owns no run, schedule or advice state and writes no words of its own: an item's sentence
+  is the owner's current sentence. A transcript-backed item appears once its transcript item has been out of
+  view for 400 ms and leaves as soon as it is visible again; a needs-you item skips the wait, and a visibility
+  change inside the quiet window is re-evaluated when the window ends, never dropped. An item's action follows
+  its primary_action_route: it reveals the transcript item (scrolls to it and marks it once), or, for an
+  owner-admitted question, opens the existing questionnaire (Answer now). A permission decision is never taken
+  from the dock; it is taken only in its transcript item or the approval owner's host. The families of the
+  records the dock mirrors are ACD-469's map. The dock's live-run lines and the per-reply files row replace the
+  stream footer pill's helpers and files chips (ACD-482, DL-129). Amended 2026-10-29 (D2/D8/D9; PM7): A process
+  prompt is a needs-you dock item, live process work contributes to live runs; both are views of the same owner
+  identity, not duplicate attention. Process stop differs from reply Stop; delivery never wakes a stopped
+  thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): activity-panel.js
+  registers one PM56_PMX.dock.provide(workDock) provider over the selected thread’s PM_WORK
+  process/agent/scheduled items. needsYou items are needs lines with Review, live processes are live lines with
+  current time, and the next pending scheduled run is comingup. These items have no transcript card to wait
+  offscreen for; existing transcript-backed providers retain their visibility rules. [data-work-time] is patched
+  by the same tick owner. Review/Show for a process or scheduled item reuses cmd.chat.processes.open with that
+  exact item selected; an agent Review selects its existing Subagents Activity Detail row as local view state,
+  not cmd.agents.open_thread and not a direct permission/answer/stop action. The concept work-dock-review
+  adapter uses PM56_DEMO.openActivity only to demonstrate those existing view routes; it admits no demo command
+  to the product. D7, PM7 companion review fix1, 2026-10-30 (Muse3): the concept’s agent work-dock-review
+  adapter finds the Subagents row by title through PM56_DEMO.openActivity. This title lookup is a concept
+  limitation and can be ambiguous for equal/renamed titles. Native owner-row selection must bind signed owner
+  identity, thread and generation as CS-106 requires; the concept is not evidence that this stronger guard
+  exists. Process/scheduled Review already passes the item ID. QA round 2, Jared 2026-10-30; DL-258; GUI
+  7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000
+  ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work
+  identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a
+  restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines
+  bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw;
+  it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock
+  priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through
+  Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel,
+  System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque
+  plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu
+  tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing
+  material. This is consumer treatment, no global Glass token change or extra backdrop-filter.
 gui_related: true
 gui_classification_reason: "Defines the dock above the composer and the attention items it shows."
 split_recommended: false
@@ -69,11 +78,12 @@ depends_on: [ACD-469, F3-532]
 unblocks: [F3-567]
 acceptance_criteria:
   - "The dock shows at most three item lines plus one overflow line, needs-you first."
-  - "An item shows only while its transcript item is off-screen (a needs-you item also while partly visible) and leaves when the item becomes visible."
+  - "A transcript-backed item shows only while its card is off-screen (needs also while partly visible) and leaves when the card becomes visible; cardless Work items use their provider eligibility and Q13 lifetime."
   - "No dock action approves or declines a permission request."
   - "Every dock sentence is the producing owner's sentence; the dock holds no copy of owner state."
   - "The dock reserves its own space and never covers transcript content."
   - "A Chat Room's pacing, exhaustion or stop-condition wait, manual pause and every Grill Me session's current Confirm use yourmove (CWR-044); questions, approvals and failures use needs. Between automatic rounds it shows as live only when no existing user gate or manual pause requires attention."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

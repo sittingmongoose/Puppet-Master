@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L27477-L28115
+Source lines: L27481-L28128
 
-Source SHA256: `752494bd60d41b95cbf969aa2d30d8e6f57d34c655cd070cc9ad9698f1aeabeb`
+Source SHA256: `c836901e05afcb382d84b0d0377ab9e918d474d1df14a4484dafbb81a64713bc`
 
 ---
 
@@ -71,64 +71,72 @@ canonical_text: >-
   The Home layout of a project and workspace tab is one record, pm.home_workspace_layout.v2 2.0.0
   (Plans/home_workspace_layout_v2.schema.json), under home_workspace_layout.v2:{project_id}:{workspace_tab_id}
   in family home_workspace_layout_v2 with RP-CONFIG-CURRENT; it is the only Home layout authority (DL-180). It
-  holds the panel split tree, the tab records, a view-state block, the chat column, the user's saved named layouts,
-  a closed-tab stack of at most 20, revision, updated_at and a migration stamp, and never buffers, sessions,
-  scrollback, browser history, chat messages, credentials or a dashboard's widget layout, which each board
-  keeps per project under widget_layout:v1:<project_id>:<board_id> (WS-030, SP-249). Narrow, overlay, menu, hover and drag state is
-  never written. Every committed structural change validates, writes, reads back, then advances revision by one,
-  publishes one result and receipt and appends one workspace.layout_changed (CV-361); failure rolls back with
-  rolled_back=true and no event; a reveal-only open is no_change, and a reveal into a collapsed panel is one
-  panel_expanded. View state, the chat column's shown and history_pinned, and a terminal tab's ref moving to a new
-  session are written with the record without a revision advance, receipt or event. The first read without a v2 record converts the v1 record, else the Home part
-  of layout:v1, through the StorageMigrationCoordinator by the conversion table of this section: editor panels
-  become panels holding their editor tabs, the dashboard a panel with dashboard:home, each terminal section a
-  bottom-row panel whose workgroup panes become terminal tabs bound to their existing sessions, a docked or
-  floating chat returns to the fixed column (a popped-out chat starts in its column after restart), floating surfaces dock, an editor
-  panel's inactive browser session becomes a background browser tab there, and a hidden surface that holds anything
-  becomes a collapsed panel. The
-  source stays read-only and is never reset; an unreadable source yields the default Home layout, the old record
-  kept and a notice. The concept's pm.home.panels keys are lineage only.
-  The chat column's popped_out is current-run state; after a restart the chat starts in its column (F3-504, F3-637).
-  Amended 2026-10-17 (DL-230, Jared): the user's saved named layouts belong to the person across projects and
-  live in one per-person record, home_named_layouts:v1 in family home_named_layouts, not in this record; the
-  dashboard boards inside a layout stay per project: each saved layout records the project it was saved in, and
-  outside that project its boards, a null board included, are skipped. The
-  first read copies every project's v2 named_layouts in once, two layouts with one name both kept and the later
-  one numbered, and named_layouts becomes a read-only legacy field. cmd.workspace_layout.save_named writes the
-  layout to the per-person record and, as before, advances this record's revision by one with its receipt and
-  its one workspace.layout_changed (named_layout_saved, CV-361); this record keeps no copy of the layout.
-  Amended 2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width_px, history_pinned, shown and keep_open (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id to the
-  board's envelope or null), capped at 64 KB (65,536 bytes) of canonical JSON; a bigger save keeps the layout,
-  writes boards_skipped_bytes instead and says so; applying it writes each included board back to its key only when the saved envelope belongs to
-  the current project (null removes), skips another project's envelope, and leaves a custom board not held by
-  the applied layout unchanged with no event of its own; a layout saved before applies as it did (D10 P6, lead ruling
-  F3). The old Dashboard layout widget_layout:v1:dashboard is converted into no board (P1). The Debug Console is
-  one tab, debug-console, whose chosen session sub-tab is view state in its state (D33, lead ruling F6), and a
-  terminal tab's notification mute is that tab's state (D38, lead ruling F5); both are written like view state.
-  A named layout's boards never name agents, which stores nothing (lead ruling F7). The chat column also keeps
-  keep_open, the narrow-window pin ui.chat_column.keep_open sets (UCC-203), off while absent; it is the person's
-  choice, not a narrow-window state, and is written like view state.
-  The chat_column fields width_px, history_pinned and keep_open default to null, false and false; width_px
-  is the message area's width, rounded to an integer of at least 400 px without a fixed upper cap (G3), an undersized finite value stored at the minimum
-  bound and null the window's default. They are layout values, never Settings values. A changed width is one
-  cmd.workspace_layout.resize_surface { surface: 'chat', width } structural commit, with one receipt, one
-  layout event and a new revision; a changed drag commits once on release, Escape or no movement commits
-  nothing, and double-click resets with width null. Both pins are view state with no receipt, event or
-  revision; their typed actions ui.chat_column.pin_history and ui.chat_column.keep_open accept the named
-  boolean and toggle when it is absent. A named layout and Restore home layout keep all three; a project
-  switch loads that project's own chat column, or the defaults. Once at boot, the former chat.width (finite,
-  rounded and clamped), chat.history value pinned and chat.pinOpen true are carried into this project's
-  layout and every other project's saved layout only where the corresponding field is still at its default.
-  Existing non-default values survive. The old keys are dropped only after this project's layout is written,
-  never while an unreadable record waits to be set aside; old defaults null, flyout and false are just
-  dropped.
-  Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer
-  width ≥400 or null for default and dynamically clamp rendering to current centre/page floors. Keep History
-  pin/user width and narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the
-  constrained fallback. G1 B, Jared 2026-10-30: Activity Detail’s restored Pin/unpin is session-only view
-  state. It survives thread switches while the data follows the selected thread; unpinned detail closes on a
-  switch. It adds no persisted field, Settings row, receipt or event; history_pinned remains solely History’s
-  saved pin.
+  holds the panel split tree, the tab records, a view-state block, the chat column, the user's saved named
+  layouts, a closed-tab stack of at most 20, revision, updated_at and a migration stamp, and never buffers,
+  sessions, scrollback, browser history, chat messages, credentials or a dashboard's widget layout, which each
+  board keeps per project under widget_layout:v1:<project_id>:<board_id> (WS-030, SP-249). Narrow, overlay,
+  menu, hover and drag state is never written. Every committed structural change validates, writes, reads back,
+  then advances revision by one, publishes one result and receipt and appends one workspace.layout_changed
+  (CV-361); failure rolls back with rolled_back=true and no event; a reveal-only open is no_change, and a reveal
+  into a collapsed panel is one panel_expanded. View state, the chat column's shown and history_pinned, and a
+  terminal tab's ref moving to a new session are written with the record without a revision advance, receipt or
+  event. The first read without a v2 record converts the v1 record, else the Home part of layout:v1, through the
+  StorageMigrationCoordinator by the conversion table of this section: editor panels become panels holding their
+  editor tabs, the dashboard a panel with dashboard:home, each terminal section a bottom-row panel whose
+  workgroup panes become terminal tabs bound to their existing sessions, a docked or floating chat returns to
+  the fixed column (a popped-out chat starts in its column after restart), floating surfaces dock, an editor
+  panel's inactive browser session becomes a background browser tab there, and a hidden surface that holds
+  anything becomes a collapsed panel. The source stays read-only and is never reset; an unreadable source yields
+  the default Home layout, the old record kept and a notice. The concept's pm.home.panels keys are lineage only.
+  The chat column's popped_out is current-run state; after a restart the chat starts in its column (F3-504,
+  F3-637). Amended 2026-10-17 (DL-230, Jared): the user's saved named layouts belong to the person across
+  projects and live in one per-person record, home_named_layouts:v1 in family home_named_layouts, not in this
+  record; the dashboard boards inside a layout stay per project: each saved layout records the project it was
+  saved in, and outside that project its boards, a null board included, are skipped. The first read copies every
+  project's v2 named_layouts in once, two layouts with one name both kept and the later one numbered, and
+  named_layouts becomes a read-only legacy field. cmd.workspace_layout.save_named writes the layout to the
+  per-person record and, as before, advances this record's revision by one with its receipt and its one
+  workspace.layout_changed (named_layout_saved, CV-361); this record keeps no copy of the layout. Amended
+  2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width_px, history_pinned,
+  shown and keep_open (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id
+  to the board's envelope or null), capped at 64 KB (65,536 bytes) of canonical JSON; a bigger save keeps the
+  layout, writes boards_skipped_bytes instead and says so; applying it writes each included board back to its
+  key only when the saved envelope belongs to the current project (null removes), skips another project's
+  envelope, and leaves a custom board not held by the applied layout unchanged with no event of its own; a
+  layout saved before applies as it did (D10 P6, lead ruling F3). The old Dashboard layout
+  widget_layout:v1:dashboard is converted into no board (P1). The Debug Console is one tab, debug-console, whose
+  chosen session sub-tab is view state in its state (D33, lead ruling F6), and a terminal tab's notification
+  mute is that tab's state (D38, lead ruling F5); both are written like view state. A named layout's boards
+  never name agents, which stores nothing (lead ruling F7). The chat column also keeps keep_open, the
+  narrow-window pin ui.chat_column.keep_open sets (UCC-203), off while absent; it is the person's choice, not a
+  narrow-window state, and is written like view state. The chat_column fields width_px, history_pinned and
+  keep_open default to null, false and false; width_px is the message area's width, rounded to an integer of at
+  least 400 px without a fixed upper cap (G3), an undersized finite value stored at the minimum bound and null
+  the window's default. They are layout values, never Settings values. A changed width is one
+  cmd.workspace_layout.resize_surface { surface: 'chat', width } structural commit, with one receipt, one layout
+  event and a new revision; a changed drag commits once on release, Escape or no movement commits nothing, and
+  double-click resets with width null. Both pins are view state with no receipt, event or revision; their typed
+  actions ui.chat_column.pin_history and ui.chat_column.keep_open accept the named boolean and toggle when it is
+  absent. A named layout and Restore home layout keep all three; a project switch loads that project's own chat
+  column, or the defaults. Once at boot, the former chat.width (finite, rounded and clamped), chat.history value
+  pinned and chat.pinOpen true are carried into this project's layout and every other project's saved layout
+  only where the corresponding field is still at its default. Existing non-default values survive. The old keys
+  are dropped only after this project's layout is written, never while an unreadable record waits to be set
+  aside; old defaults null, flyout and false are just dropped. Amended 2026-10-29 (G1–G3; DL-254): chat message
+  width has no fixed 760 px maximum; store finite integer width ≥400 or null for default and dynamically clamp
+  rendering to current centre/page floors. Keep History pin/user width and narrow ladder. Activity Detail has no
+  saved Pin/unpin state; full-height overlay is the constrained fallback. G1 B, Jared 2026-10-30: Activity
+  Detail’s restored Pin/unpin is session-only view state. It survives thread switches while the data follows the
+  selected thread; unpinned detail closes on a switch. It adds no persisted field, Settings row, receipt or
+  event; history_pinned remains solely History’s saved pin. QA round 2, Jared 2026-10-30; DL-258; GUI
+  7d586bad18: Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each
+  existing owner store retains a secret-free, key-isolated memory record for that visit and exposes
+  persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole
+  adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project
+  isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports
+  failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is
+  fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner
+  receipt; production Storage/Settings CAS/readback/rollback rules are unchanged.
 gui_related: true
 gui_classification_reason: The persisted record decides the visible panels, tabs, chat column and what survives an upgrade.
 split_recommended: false
@@ -151,6 +159,7 @@ acceptance_criteria:
   - "A Debug Console tab is the one tab debug-console with an empty domain reference, its chosen session sub-tab in its state; an older debug-console:<session> id folds into it and is never written; a terminal tab's notification mute is in its state; neither write advances revision, takes a receipt or appends an event."
   - "The old Dashboard layout widget_layout:v1:dashboard converts into no board and is never written."
   - "A named layout's boards never name agents (fixture named_layout_boards_names_agents), and the chat column's keep_open, set by ui.chat_column.keep_open, is written like view state with no revision advance, receipt or event."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

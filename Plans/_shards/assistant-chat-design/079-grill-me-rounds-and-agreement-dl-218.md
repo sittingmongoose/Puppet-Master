@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L28082-L28523
+Source lines: L28094-L28544
 
-Source SHA256: `7f36bba1b2ee8a701239d6b0ad57a4921dbdeae2edd3f2fcfb5e9a8d75f9a587`
+Source SHA256: `6855b370360f50769b772c371539239be9d72a3abae4c0b51831a1d2eabcaecc`
 
 ---
 
@@ -113,70 +113,70 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The 5.6 Pro chat is the Home column's conversation surface (DL-232), replacing the scripted stand-in
-  under F3-637 and bound by ACD-500, ACD-501 and ACD-502. One History list serves it; History pin is
-  the column's ui.chat_column.pin_history and its header menu carries the column's Keep open choice.
-  Activity Detail and its bounded hover previews remain inside the chat. The lab header, lab editor
-  pane, lab status bar and chat-local Demo Studio launcher are absent from hosted mode. Booting the
-  chat opens no plan or other panel tab. Every opened body uses the correct host kind and domain
-  identity from ACD-500: exact plan revision and Deep Plan discovery as plan, versioned artifact as
-  artifact, file or diff as editor, child transcript as transcript, collaboration and evidence as run
-  or its owner document, thread detail as context, rules/memory/revert/debug/Lens/Wonderer as
-  document, tool calls as record, addresses as browser, command sessions as terminal. The host owns
-  each body, its strip, deduplication and focus, and reports close and activation so the chat's run
-  card relinquishes or restores its controls. A user open takes focus, an unsolicited agent open stays
-  in the background, and modifier file opens keep F3-634's rules. Wand setup and thread dialogs remain
-  app modals; attachments open their artifact/file owner while More Info remains a popover; Plan
-  Export/PDF remains a print/download and Send to Planning Wizard remains page navigation. The stale
-  Goal document never returns: Goal remains in Activity Detail. The compact command card hands off to
-  the existing terminal and retained-output routes, never draws an interactive shell or adds Explain.
-  Presentation follows the app's Basic, Friendly, Glass and Retro light/dark looks, its fonts, NieR
-  Mode parts and Reduced Motion; container width drives the chat and hosted tab bodies, while app
-  modals use the window. The app's hover controller owns tags and the sheet's keyboard trap exists
-  only while that sheet is open; unmodified chat shortcuts require focus in chat and Escape stops at
-  the innermost surface. Settings preferences follow SSYS-055; a concept adapter exposes renderer
-  projections without making those global names product APIs. DL-218's Wonderer and Grill Me behavior
-  and DL-231's automatic Chat Room rounds remain intact. All demonstration launches and family mixers
-  are sections of F3-649's one Demo Studio. The port's screenshots, fixtures and browser checks remain
-  concept evidence; unmet native requirements stay owed. Amended 2026-10-23 (DL-233): the concept's
-  scripted stand-in chat and its Demo Studio swap are removed; the hosted assistant is the column's
-  only conversation surface, and its own controls open the panels. Demo fixture
-  workspaces may use ordinary Home tabs under the concept-only disposition of ACD-500, never native
-  kinds or product routes. Integrated concept 59ca2d4382 implements the id-to-kind table in
-  pm7-port/js/60-surfaces.js: plan aliases converge on one plan tab; deep-discovery is plan; bare and
-  revision artifacts are artifact; thread-<agent> is read-only transcript; collab-run, crew-work,
-  review, room, brainstorm and their evidence are run; teach, memory, revert, debug, lens and wonderer
-  sources are document; search, mcp, app and work-record are record; link is Home Browser; file is
-  the Home editor, with a change opening diff view. goal-artifact opens Activity Detail without a tab.
-  Lab workspace ids are marked lab and open concept-only document bodies; an unknown id falls back
-  to document, not a newly admitted product kind. D7 file gestures and D8 background agent opens use
-  Home's opener and narrow rule. A run card says Deciding in the panel beside the chat while its run
-  tab is active in any visible panel; closing, collapsing or hiding that panel restores the card's
-  controls. Browser capture must keep its originating thread and composer destination even after a
-  thread switch; the concept retains the thread and isolated direct delivery preserves the saved
-  destination, but Astra's round-2 check finds that composer attachment/list/insertion paths still
-  lose it when the origin composer's destination changes. Those paths need destination restoration
-  or mismatch refusal before draft mutation. context:<thread> actions target that tab's own thread.
-  Attachment Open uses D7 for a known
-  project file, its existing exact artifact route, or an artifact-kind
-  attachment:<tid>|<mid>|<aid> viewer. More Info is now a bounded popover. Images have a preview; other
-  attachment kinds disclose that the concept has no preview, and browser captures are labelled
-  fixture drawings rather than real screenshots. The Shell slot is the terminal's PMT.card with Open
-  in Terminal, View output for a gone session and Rerun in Terminal, without a separate Show Terminal
-  button; the simulated shell does not implement every real command. Wand sheets remain window-centred
-  app modals. Demo Studio's Chat section follows Workspace and contains Guided examples, Moments,
-  and Takes (family takes, recipes and motion voice), plus Show the chat and Reset the chat demo.
-  Start offers chat recipes; Workspace offers layouts and agents opening things, with no stand-in row
-  (DL-233). Snapshot inventory and demo-lane reconciliation remain concept-only lineage in
-  demo-inventory-20261022.md, cited in source_lineage, never product counts or native evidence.
-  Final acceptance remains pending for the hover press defect, Persona clipping, shelf-header and
-  plate-spacing sweep, and films. The window-based isPhone helper and scoped body-level overlay
-  wrapper do not prove ACD-501's full container and single-root requirements. SSYS-055 separately
-  records the Thought Stream preference, whose live display streams the concept's recorded reasoning
-  (ACD-221, DL-234), and session-only All chats ELI5; neither is native completion.
-  Astra also finds that the shared activeEditor/editorRevealed projection still counts a hidden Home
-  panel after collapse or leaving Home. The separate run-card visibility wrapper passes; fixing that
-  shared editor state remains pending and is not implied by the run-card result.
+  The 5.6 Pro chat is the Home column's conversation surface (DL-232), replacing the scripted stand-in under
+  F3-637 and bound by ACD-500, ACD-501 and ACD-502. One History list serves it; History pin is the column's
+  ui.chat_column.pin_history and its header menu carries the column's Keep open choice. Activity Detail and its
+  bounded hover previews remain inside the chat. The lab header, lab editor pane, lab status bar and chat-local
+  Demo Studio launcher are absent from hosted mode. Booting the chat opens no plan or other panel tab. Every
+  opened body uses the correct host kind and domain identity from ACD-500: exact plan revision and Deep Plan
+  discovery as plan, versioned artifact as artifact, file or diff as editor, child transcript as transcript,
+  collaboration and evidence as run or its owner document, thread detail as context,
+  rules/memory/revert/debug/Lens/Wonderer as document, tool calls as record, addresses as browser, command
+  sessions as terminal. The host owns each body, its strip, deduplication and focus, and reports close and
+  activation so the chat's run card relinquishes or restores its controls. A user open takes focus, an
+  unsolicited agent open stays in the background, and modifier file opens keep F3-634's rules. Wand setup and
+  thread dialogs remain app modals; attachments open their artifact/file owner while More Info remains a
+  popover; Plan Export/PDF remains a print/download and Send to Planning Wizard remains page navigation. The
+  stale Goal document never returns: Goal remains in Activity Detail. The compact command card hands off to the
+  existing terminal and retained-output routes, never draws an interactive shell or adds Explain. Presentation
+  follows the app's Basic, Friendly, Glass and Retro light/dark looks, its fonts, NieR Mode parts and Reduced
+  Motion; container width drives the chat and hosted tab bodies, while app modals use the window. The app's
+  hover controller owns tags and the sheet's keyboard trap exists only while that sheet is open; unmodified chat
+  shortcuts require focus in chat and Escape stops at the innermost surface. Settings preferences follow
+  SSYS-055; a concept adapter exposes renderer projections without making those global names product APIs.
+  DL-218's Wonderer and Grill Me behavior and DL-231's automatic Chat Room rounds remain intact. All
+  demonstration launches and family mixers are sections of F3-649's one Demo Studio. The port's screenshots,
+  fixtures and browser checks remain concept evidence; unmet native requirements stay owed. Amended 2026-10-23
+  (DL-233): the concept's scripted stand-in chat and its Demo Studio swap are removed; the hosted assistant is
+  the column's only conversation surface, and its own controls open the panels. Demo fixture workspaces may use
+  ordinary Home tabs under the concept-only disposition of ACD-500, never native kinds or product routes.
+  Integrated concept 59ca2d4382 implements the id-to-kind table in pm7-port/js/60-surfaces.js: plan aliases
+  converge on one plan tab; deep-discovery is plan; bare and revision artifacts are artifact; thread-<agent> is
+  read-only transcript; collab-run, crew-work, review, room, brainstorm and their evidence are run; teach,
+  memory, revert, debug, lens and wonderer sources are document; search, mcp, app and work-record are record;
+  link is Home Browser; file is the Home editor, with a change opening diff view. goal-artifact opens Activity
+  Detail without a tab. Lab workspace ids are marked lab and open concept-only document bodies; an unknown id
+  falls back to document, not a newly admitted product kind. D7 file gestures and D8 background agent opens use
+  Home's opener and narrow rule. A run card says Deciding in the panel beside the chat while its run tab is
+  active in any visible panel; closing, collapsing or hiding that panel restores the card's controls. Browser
+  capture must keep its originating thread and composer destination even after a thread switch; the concept
+  retains the thread and isolated direct delivery preserves the saved destination, but Astra's round-2 check
+  finds that composer attachment/list/insertion paths still lose it when the origin composer's destination
+  changes. Those paths need destination restoration or mismatch refusal before draft mutation. context:<thread>
+  actions target that tab's own thread. Attachment Open uses D7 for a known project file, its existing exact
+  artifact route, or an artifact-kind attachment:<tid>|<mid>|<aid> viewer. More Info is now a bounded popover.
+  Images have a preview; other attachment kinds disclose that the concept has no preview, and browser captures
+  are labelled fixture drawings rather than real screenshots. The Shell slot is the terminal's PMT.card with
+  Open in Terminal, View output for a gone session and Rerun in Terminal, without a separate Show Terminal
+  button; the simulated shell does not implement every real command. Wand sheets remain window-centred app
+  modals. Demo Studio's Chat section follows Workspace and contains Guided examples, Moments, and Takes (family
+  takes, recipes and motion voice), plus Show the chat and Reset the chat demo. Start offers chat recipes;
+  Workspace offers layouts and agents opening things, with no stand-in row (DL-233). Snapshot inventory and
+  demo-lane reconciliation remain concept-only lineage in demo-inventory-20261022.md, cited in source_lineage,
+  never product counts or native evidence. Final acceptance remains pending for the hover press defect, Persona
+  clipping, shelf-header and plate-spacing sweep, and films. The window-based isPhone helper and scoped
+  body-level overlay wrapper do not prove ACD-501's full container and single-root requirements. SSYS-055
+  separately records the Thought Stream preference, whose live display streams the concept's recorded reasoning
+  (ACD-221, DL-234), and session-only All chats ELI5; neither is native completion. Astra also finds that the
+  shared activeEditor/editorRevealed projection still counts a hidden Home panel after collapse or leaving Home.
+  The separate run-card visibility wrapper passes; fixing that shared editor state remains pending and is not
+  implied by the run-card result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default
+  narrow layout, 900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder
+  (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s
+  painting/layout interaction while folded; a descendant visibility:visible must not expose a squeezed
+  transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than a new
+  chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail
+  rules remain.
 gui_related: true
 gui_classification_reason: Defines hosted conversation presentation, opened surface kinds, shared preferences and focus behavior.
 split_recommended: false
@@ -187,6 +187,7 @@ acceptance_criteria:
   - "Each surface opens through the existing owner and kind; closing or activating a run tab updates its card."
   - "All admitted preferences use SSYS-055, and concept-only choices remain in the Demo Studio."
   - "Wonderer leads, Grill Me agreement confirmation and Chat Room automatic rounds preserve DL-218 and DL-231."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout, 900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible must not expose a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail rules remain."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -378,26 +379,34 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent primitive, reached through shared
-  mark/row/empty/sheet functions rather than innerHTML hooks, observers or layered legacy drawings.
-  Cast/role props, helper marks, Activity agent rows, sheet host by Close, Scheduled/Memory faces, Plans,
-  wand and sleeping empty lists share kit/parts. Host watches at 420 ms, wonders while typing, oops on
-  unusable primary without activation and cheers on success; blink changes, stable last-pointer gaze, no
-  random wink, paused shared sway. Lift-off is one overlay-owned copy released on finish. Pip in Orbit
-  centre has current-tool badge and hands off with thinking placeholder, one Pip per reply. No added chat
-  capability/welcome-back message. Main-button keyboard/pointer acknowledgement ≤100 ms, single commit; fix
-  busy stall instead of delaying dispatch. Parts use SSYS-056’s one transaction and app voice obeys
-  master/chat mute. PC1/X3 sheet motion (2026-10-29): a host drops in when its sheet opens, using the
-  shared rig and installed parts. Dots, sleep and happy faces never follow the pointer; other gaze retains
-  the last known position. Retro entrance/face changes step; live NieR sheet changes cut with a bounded
-  flicker, no black frame. Effective Reduced Motion/Still snaps to the settled state without entrance,
-  sway, flicker or lift-off travel. Static NieR brand/tray/app marks remain static; acknowledgement stays
-  ≤100 ms with no dispatch deferral or double commit. PC1–PC5/S5, PM7 Step4, 2026-10-30: the joined adapters
-  are PM56_PIP and PM56_SHELL.pmxPip/pmxStatusFace/pmxEmpty/pmxPipHost/pmxPipLook/pmxPipMood/pmxPipOn. Sheet
-  hosts, face lists and Orbit use the shared kit rather than a second renderer. O55.sound.pip.chatMute binds
-  hosted chat mute to the same sound owner. The concept’s press helper acknowledges in the first painted frame
-  and runs the existing action in the next task without replaying a click; native ≤100 ms acknowledgment and
-  one-commit acceptance are unchanged. PMX kept-subtree slots preserve loader owner attributes while the
-  transcript reconciles; they do not admit a replacement observer or private loader.
+  mark/row/empty/sheet functions rather than innerHTML hooks, observers or layered legacy drawings. Cast/role
+  props, helper marks, Activity agent rows, sheet host by Close, Scheduled/Memory faces, Plans, wand and
+  sleeping empty lists share kit/parts. Host watches at 420 ms, wonders while typing, oops on unusable primary
+  without activation and cheers on success; blink changes, stable last-pointer gaze, no random wink, paused
+  shared sway. Lift-off is one overlay-owned copy released on finish. Pip in Orbit centre has current-tool badge
+  and hands off with thinking placeholder, one Pip per reply. No added chat capability/welcome-back message.
+  Main-button keyboard/pointer acknowledgement ≤100 ms, single commit; fix busy stall instead of delaying
+  dispatch. Parts use SSYS-056’s one transaction and app voice obeys master/chat mute. PC1/X3 sheet motion
+  (2026-10-29): a host drops in when its sheet opens, using the shared rig and installed parts. Dots, sleep and
+  happy faces never follow the pointer; other gaze retains the last known position. Retro entrance/face changes
+  step; live NieR sheet changes cut with a bounded flicker, no black frame. Effective Reduced Motion/Still snaps
+  to the settled state without entrance, sway, flicker or lift-off travel. Static NieR brand/tray/app marks
+  remain static; acknowledgement stays ≤100 ms with no dispatch deferral or double commit. PC1–PC5/S5, PM7
+  Step4, 2026-10-30: the joined adapters are PM56_PIP and
+  PM56_SHELL.pmxPip/pmxStatusFace/pmxEmpty/pmxPipHost/pmxPipLook/pmxPipMood/pmxPipOn. Sheet hosts, face lists
+  and Orbit use the shared kit rather than a second renderer. O55.sound.pip.chatMute binds hosted chat mute to
+  the same sound owner. The concept’s press helper acknowledges in the first painted frame and runs the existing
+  action in the next task without replaying a click; native ≤100 ms acknowledgment and one-commit acceptance are
+  unchanged. PMX kept-subtree slots preserve loader owner attributes while the transcript reconciles; they do
+  not admit a replacement observer or private loader. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16:
+  You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no
+  marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram
+  edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves
+  crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain
+  their existing meaning. Q15: the menu head and trigger use the same registry wand with the same
+  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the
+  glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or
+  fallback icon.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -410,14 +419,11 @@ depends_on:
 - DR-072
 unblocks: []
 acceptance_criteria:
-- Sheets use a single shared Pip host with 420 ms watch, deterministic face/gaze exceptions and family-specific
-  entrance/change/rest behavior.
-- Pointer and keyboard main-button acknowledgement are ≤100 ms with exactly one commit; disabled oops never
-  activates.
-- Orbit/thinking handoff shows one Pip per reply, and casts/lists/Plans/wand/empty surfaces use shared primitives
-  and owner states.
-- All optional placements, sound/motion and exit copies obey SSYS-056, the common player/overlay and teardown
-  gates.
+  - "Sheets use a single shared Pip host with 420 ms watch, deterministic face/gaze exceptions and family-specific entrance/change/rest behavior."
+  - "Pointer and keyboard main-button acknowledgement are ≤100 ms with exactly one commit; disabled oops never activates."
+  - "Orbit/thinking handoff shows one Pip per reply, and casts/lists/Plans/wand/empty surfaces use shared primitives and owner states."
+  - "All optional placements, sound/motion and exit copies obey SSYS-056, the common player/overlay and teardown gates."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -450,3 +456,6 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-239, ContractName:Plans/Final
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+
+QA2 owner amendment (2026-10-30; DL-258; integration 7d586bad18): current requirements in this document’s amended units take precedence over earlier presentation descriptions. Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter. Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. H1/H5/H7/Q19: one lab Studio opens seeded owner screens and steps aside when launching a panel, chat view, Stop all or Quit. Recorded guides name the actual current control, including Schedule for …, and advance only after that control’s real example boundary. The teach-missed example owns its intended Send and finishes its recorded correction through the normal reply boundary; it does not simulate a native model promise. Natural user choices may remain waiting, and finished examples need not be forced into an artificial Done label. Keep DR-070’s existing named hidden-bridge debt unchanged; no additional synthetic click, demo product command, preference, persisted field or production wiring is authorized. H6: at the default narrow layout, 900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible must not expose a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail rules remain. Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused. No Project value, credential, second mute key or durable sound preference is fabricated from an unreadable preview.

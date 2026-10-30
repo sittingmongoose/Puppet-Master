@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L1-L16
+Source lines: L1-L19
 
-Source SHA256: `29e06d592bcb9a421e405b8383ac243c864919adf3ddb9b9c30d4a3b76f8cff1`
+Source SHA256: `9933a0d3e0886ce5e9199260db5b5b0bb776fc39541bcb9b9825037b6947dceb`
 
 ---
 
 # Plans Index (authoritative map)
+
+- 2026-10-30: **QA2 GUI 7d586bad18 + foundations e2de4bb871 alignment (DL-258 / DR-080).** Q6/Q7 locate a backup before required unlock, treating the Recovery Kit as locator/key; one joined-choice tray and shared tips cover twelve screens. Q1/Q2 keep factory/visit sound until a readable Project binds. Q12 includes shared computer/services; Q13 expires non-needs Work dock lines after 60 s per thread/run; Q14/H9 use readable Glass plates. Q15/Q16/Q17/Q20 keep one wand, person-only You, control-only feedback and one shared Glass hover light. H1/H5/H6/H7 cover lab seeding, inert restoration, clean narrow strip and launch visibility. Q18 permits only non-authoritative visit memory when storage is absent, retaining real write/readback refusal and native owner boundaries. Focused verification only.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-258, ContractName:Plans/DRY_Rules.md#DR-080, ContractName:Plans/Planning_Wizard.md#PWIZ-022, ContractName:Plans/assistant-chat-design.md#ACD-476
 
 - 2026-10-30: **Q11 B, Jared — live Work rows move.** DL-253, DL-237, F3-658/662/664 and DR-077/078 replace blanket row stillness. Working/checking/retrying agents use the one Think loader; running process marks use their shared rhythm. Waiting/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold. The panel, rail and Home share the policy. Lead clarification: all ten looks, NieR’s own Diamond/fallback loader for working agents, never animated NieR Pip. No command, event, setting or new clock.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-253, ContractName:Plans/FinalGUISpec.md#F3-664, ContractName:Plans/DRY_Rules.md#DR-077

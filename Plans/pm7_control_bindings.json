@@ -6363,7 +6363,18 @@
         "general.visual.theme-mode"
       ],
       "payload": "Preview and apply the SSYS-009 atomic theme-family/mode pair. The Glass lens consumes F3-652 without changing command, value, scope or transaction; no timed app-theme trial. Q22, Jared 2026-10-30 (DL-257): family order basic, friendly, glass, retro, nier; ten variants, with family nier using the existing atomic theme/mode pair and the direction-sensitive cover.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/base/script/pm6-js-panels.js",
+          "tokens": [
+            "PM_THEME_FAMILIES",
+            "nier: 'NieR'",
+            "'nier-dark': 'NieR Dark'"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "shell.theme.mode",
@@ -8205,7 +8216,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "tab=resources; Resources sampling only while this selected tab is visible.",
+      "payload": "tab=resources; Resources sampling only while this selected tab is visible. QA2 Q12: current Project servers plus shared This computer/Puppet Master services, empty-Project disclosure and populated shared environments only; read-only scope creates no service stop authority.",
       "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
       "concept_sources": [
         {
@@ -8786,7 +8797,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "payload": "Stable target/view identity and expected generation; CS-106. QA2 sandbox sweep: document-level Escape works when focus did not enter the dialog; the parent yields Escape first and invoking focus is restored.",
       "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
       "concept_sources": [
         {
@@ -9073,7 +9084,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Application/project source scope, view and return focus; close and release the overlay, no write.",
+      "payload": "Application/project source scope, view and return focus; close and release the overlay, no write. QA2 sandbox sweep: document-level Escape works when focus did not enter the dialog; the parent yields Escape first and invoking focus is restored.",
       "no_production_reason": "Typed local presentation/navigation only; no Settings/runtime write, service control, domain event or receipt. Native proof remains partial.",
       "concept_sources": [
         {
@@ -9122,7 +9133,7 @@
         "pm7.processes_open"
       ],
       "setting_ids": [],
-      "payload": "D2/D7 Review/Show: signed Project/thread, optional exact work_id plus expected_generation and focus; process/scheduled item only, never a title match. CS-106 processes_open_request.",
+      "payload": "D2/D7 Review/Show: signed Project/thread, optional exact work_id plus expected_generation and focus; process/scheduled item only, never a title match. CS-106 processes_open_request. QA2 Q13/CC5: non-needs live/scheduled projection expires after 60000 ms per thread/run; Review/Show routes remain available in Activity/panel, and expiry never stops or deletes work.",
       "no_production_reason": "",
       "concept_sources": [
         {
@@ -9144,7 +9155,7 @@
       "action_ids": [],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Concept work-dock-review selects Subagents by {title: it.title}, which can be ambiguous. Native selection uses signed Project/thread/owner_id and generation per CS-106, not title. Ordinary local view selection, no command or runtime effect.",
+      "payload": "Concept work-dock-review selects Subagents by {title: it.title}, which can be ambiguous. Native selection uses signed Project/thread/owner_id and generation per CS-106, not title. Ordinary local view selection, no command or runtime effect. QA2 Q13: needs-you agent lines remain until answered; no age-based dispatch or owner mutation.",
       "no_production_reason": "Ordinary Activity Detail domain/row selection is view state per UCC-210/ACD-476; no product command, new action ID, receipt, runtime or Settings write.",
       "concept_sources": [
         {
@@ -9344,7 +9355,19 @@
         "general.visual.theme-mode"
       ],
       "payload": "Q22, Jared 2026-10-30 (DL-257): choose basic, friendly, glass, retro or nier with the current Light/Dark/Auto mode under the verified Project binding; same atomic owner as the shell selector.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/63-look-menu.js",
+          "tokens": [
+            "data-o55t",
+            "lookFamily",
+            "FAMILIES",
+            "lookNierAdjust"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "onboarding.theme.family",
@@ -9357,7 +9380,18 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Q22, Jared 2026-10-30 (DL-257): choose_look previews basic, friendly, glass, retro or nier, mode or retained nier_parts/nier_background in the closed look_choice; disclosure toggles write no look; persistence follows the existing exact Project commit/finish boundary.",
-      "no_production_reason": "Onboarding-owned local preview, not a Settings transaction or native command producer."
+      "no_production_reason": "Onboarding-owned local preview, not a Settings transaction or native command producer.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/65-screens-welcome.js",
+          "tokens": [
+            "pickFamily",
+            "'nier'",
+            "adjustNier"
+          ],
+          "concept_only": true
+        }
+      ]
     }
   ],
   "held_controls": []

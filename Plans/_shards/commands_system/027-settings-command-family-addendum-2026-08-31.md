@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4979-L5037
+Source lines: L4979-L5041
 
-Source SHA256: `03dc3f3ce961d47a7f00084c6f86f6f47277d92beb4798bd0d28693aefa5b209`
+Source SHA256: `d2db2056f525c4fdfc78402cacb9e201097260f5dc23724973f2f598d6e6c9b2`
 
 ---
 
@@ -37,18 +37,22 @@ canonical_text: >-
   Exactly five canonical cmd.settings commands are centrally registered with the Settings-owned request/result,
   availability, disabled-reason, idempotency/currentness, receipt, and no-unregistered-event boundaries. The six
   Onboarding, Guided Tour, and Doctor UI actions remain route-only cmd.settings.open consumers. Declared handler
-  destinations are contract targets and do not prove that a dispatcher or runtime handler exists.
+  destinations are contract targets and do not prove that a dispatcher or runtime handler exists. QA round 2,
+  Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: backup location/Kit/unlock presentation and joined
+  choices reuse the existing fourteen onboarding local actions and selected owner routes. Lab screen seeding is
+  not product routing, authentication or Project commit. No new restore wrapper or onboarding command.
 gui_related: true
 gui_classification_reason: The family governs Settings route, preview, apply, rollback, and export activation, disabled state, outcome, and exact return.
 depends_on: [CS-066, SSYS-018, SSYS-019]
 unblocks: [UIW-014]
 acceptance_criteria:
-  - The registered set is exactly cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, and cmd.settings.export.
-  - Every command preserves the exact request_schema_ref and result_schema_ref owned by Plans/settings_system_contracts.schema.json; cmd.settings.open returns pm.settings_route_return.v1.
-  - Preview and open write no setting value; apply and rollback settle only through pm.settings_transaction_result.v1 with owner readback; export returns a non-secret pm.settings_export_manifest.v1.
-  - The six route-only UI actions dispatch cmd.settings.open and authorize no Onboarding, Guided Tour, Doctor probe, or remediation operation.
-  - Registration, a declared handler location, static wiring, schema validation, or a concept simulation is not runtime-handler evidence; handler_unavailable remains truthful until executable proof exists.
-  - No unregistered EventRecord is emitted or inferred.
+  - "The registered set is exactly cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, and cmd.settings.export."
+  - "Every command preserves the exact request_schema_ref and result_schema_ref owned by Plans/settings_system_contracts.schema.json; cmd.settings.open returns pm.settings_route_return.v1."
+  - "Preview and open write no setting value; apply and rollback settle only through pm.settings_transaction_result.v1 with owner readback; export returns a non-secret pm.settings_export_manifest.v1."
+  - "The six route-only UI actions dispatch cmd.settings.open and authorize no Onboarding, Guided Tour, Doctor probe, or remediation operation."
+  - "Registration, a declared handler location, static wiring, schema validation, or a concept simulation is not runtime-handler evidence; handler_unavailable remains truthful until executable proof exists."
+  - "No unregistered EventRecord is emitted or inferred."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: backup location/Kit/unlock presentation and joined choices reuse the existing fourteen onboarding local actions and selected owner routes. Lab screen seeding is not product routing, authentication or Project commit. No new restore wrapper or onboarding command."
 validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings dispatcher, handler-absence, CAS, idempotency, restart, redaction, accessibility, and no-unregistered-event fixtures]
 risk_class: settings_command_family_or_handler_claim_drift
 reasoning_tier: high

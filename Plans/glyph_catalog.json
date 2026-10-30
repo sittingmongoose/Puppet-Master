@@ -2206,5 +2206,25 @@
   "surface_status_face_scopes": {
     "agents": "Chat agent rows (PIP_STATE_MOOD). Public working renders as internal dots; reviewing/recovering remain think.",
     "platform": "Platform rows use PMLogo.STATUS_FACE; working/reviewing/recovering use working/dots, mixed oops, skipped idle. Same status keys, deliberate decorative surface differences."
+  },
+  "qa2_actor_presentation": {
+    "owner_ref": "Plans/FinalGUISpec.md#F3-594",
+    "you": {
+      "primitive_names": [
+        "ppYou",
+        "PX_YOU",
+        "pnYou"
+      ],
+      "silhouette": "person_alone",
+      "marionette_cross": false,
+      "puppet_strings": false,
+      "new_glyph_id": false
+    },
+    "wand": {
+      "glyph_id": "wand",
+      "owner": "one_registry",
+      "menu_and_trigger_ink_roles_equal": true,
+      "head_wrapper_discards_roles": false
+    }
   }
 }

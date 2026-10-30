@@ -1101,7 +1101,32 @@ canonical_text: >-
   ui.onboarding.start opens a first_run window in a Basic Dark preview and a settings_rerun window in the look
   on screen. No cmd.onboarding.* command, alias, handler, EventRecord, production row, full-page route, or
   breadcrumb chrome is created. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
-  independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round 2, Jared
+  2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery
+  Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS
+  password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS,
+  or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate
+  the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may
+  unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked
+  backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only
+  afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites,
+  approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept
+  Kit or seed never proves native unlock or restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately
+  in a tray joined to that card, before sibling alternatives. One C.cards under slot owns the join, indentation
+  and line from the parent mark across all twelve affected screens. The parent opens into the tray in every
+  look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question
+  note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question
+  control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links,
+  Settings copy, remote routes/hosting/certificate fields, online service kind/address, device notes and
+  connection routes. Naming and Review display the same selected mounted/network source, rather than an empty
+  local-location field. H5: the onboarding owner holds one original inert-state basis for the entire open
+  lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never
+  re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only
+  the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit lab
+  open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts
+  out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and
+  seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is
+  inferred, no selected live input is overwritten, and no new product action/DTO field is admitted.
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
@@ -1119,6 +1144,7 @@ acceptance_criteria:
   - "Defer persists exact stage/path/branch/history/revision/continuation/initiating-Client/focus return before dismissal; Close does not complete; Skip is explicitly skipped; Details remains same-stage and ephemeral."
   - "The eight named packet candidate cmd.onboarding.* tokens are source-lineage only and receive no command, alias, handler, or production row; UCC-106's eleven retired command-era tokens retain their separate lineage count."
   - "The flow stays a bounded modal with no route-history or breadcrumb chrome, and no static/browser evidence is treated as native or runtime proof."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately in a tray joined to that card, before sibling alternatives. One C.cards under slot owns the join, indentation and line from the parent mark across all twelve affected screens. The parent opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links, Settings copy, remote routes/hosting/certificate fields, online service kind/address, device notes and connection routes. Naming and Review display the same selected mounted/network source, rather than an empty local-location field. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is inferred, no selected live input is overwritten, and no new product action/DTO field is admitted."
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
@@ -2482,16 +2508,29 @@ canonical_text: >-
   includes each project row/shortcut, Pip entry/editor control, work status item and all three panel tabs;
   WM-097 and pm7_control_bindings.json bind every command/local disposition. Decorative mark/loader are not
   controls. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override
-  wording; SSYS-043 owns migration and retained Adjust controls.
+  wording; SSYS-043 owns migration and retained Adjust controls. QA round 2, Jared 2026-10-30; DL-258; GUI
+  7d586bad18: Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing
+  one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain
+  the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An explicit
+  readable Project value wins when it binds; a genuinely refused bound write remains refused. No Project value,
+  credential, second mute key or durable sound preference is fabricated from an unreadable preview. Q18: when a
+  concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store
+  retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home
+  PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit
+  loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner
+  admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never
+  silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative
+  and never native durability, a verified restore/credential or a native owner receipt; production
+  Storage/Settings CAS/readback/rollback rules are unchanged.
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- No new visible product control lacks a census row and exact owner/action route.
-- The census validates against its schema and references only existing inventory ids, catalog commands and
-  production rows.
+  - "No new visible product control lacks a census row and exact owner/action route."
+  - "The census validates against its schema and references only existing inventory ids, catalog commands and production rows."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused. No Project value, credential, second mute key or durable sound preference is fabricated from an unreadable preview. Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -2636,44 +2675,61 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  W1–W9, B1–B6, S5, G1–G10. Every visible control in WM-097 has an exact census row; repeated rows use
-  stable IDs, never array positions. Menu open and local view changes write nothing; work mutations call
-  owner handlers after permissions/currentness and match keyboard/pointer requests. Reduced Motion and
-  disabled states preserve meaningful feedback without activation; ack ≤100 ms and commit once. Full
-  Activity Detail replaces only the small view; G1 B (Jared 2026-10-30) restores ui.activity_detail.pin /
-  chat.activity.pin. Pin keeps detail open across switches while data follows the new thread; unpinned detail
-  closes on a switch, without a runtime or Settings write. Resources subscribes only while visible; stale
-  requests cannot
-  leak samples across Project/server/environment. One overlay/hover/loader/Pip kit and one work projection;
-  no injection hooks, synthetic resize or replacement observers. D11/G4, PM7 Step4, 2026-10-30: System status
-  is a small read-only overlay popover, reached from the existing status-bar System status item and the
-  Processes System services link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with
-  statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner
-  links use the existing ui.settings.route.open action and system_status.service.open_settings binding,
-  selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
-  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value
-  or controlling a service. The popover has close/Escape/outside closure, return focus and the common
-  overlay/Glass plate; unavailable owner navigation says why. WM-097’s optional concept_sources records pair
-  stable control families with the joined source paths and exact tokens. They witness source alignment only;
-  native dispatcher, owner, focus, storage and effect evidence stays partial until implemented. Pin/Processes,
-  work-panel tabs and quit actions keep their stable IDs even when a concept data-action spelling differs.
-  D7/D8/D13, PM7 companion review fix1, 2026-10-30: WM-097’s reverse source-control census and
-  action-specific local payload validation close the visible work-detail controls. Local owner selection
-  never dispatches cmd.agents.open_thread; actual Assistant thread open, browser port open, scheduled Cancel
-  and terminal Rerun use UCC-210’s existing owner routes. Clipboard and owner-surface navigation are
-  declared local actions. Missing control dispositions or invalid local payloads fail focused checks; source
-  anchors still certify no native signal or effect.
-  G2/F3-1, Jared follow-ups 2026-10-30: Activity Detail widens first, then at the column limit docks and
-  squeezes messages if at least 360 px remain, otherwise covers the transcript at full height. Notice stage
-  placement uses the one bell anchor and the theme menu’s resting top on every page with the inbox closed
-  (selector wrapper bottom plus its gap, not title-bar bottom; negative stage drop is allowed);
-  while the inbox is open the lead’s 2026-10-30 exception keeps the stage under that inbox via --pmn-push.
-  Other controls and the chat head do not trigger clearance. F3-5: body/action/dismiss clicks on entering
-  or leaving cards dispatch nothing on every page, Usage included; pointer routing passes through, with no
-  queued dispatch or late reactivation. Reduced Motion settles placement/removal instantly. F3-6: read the
-  authoritative inbox push after its sprout owner opens it, using resting/destination height, and refresh
-  it on content/height changes or resize; close clears it. Bindings retain their existing owner routes and count; no geometry
-  or entry-state field becomes a persisted preference or runtime mutation.
+  W1–W9, B1–B6, S5, G1–G10. Every visible control in WM-097 has an exact census row; repeated rows use stable
+  IDs, never array positions. Menu open and local view changes write nothing; work mutations call owner handlers
+  after permissions/currentness and match keyboard/pointer requests. Reduced Motion and disabled states preserve
+  meaningful feedback without activation; ack ≤100 ms and commit once. Full Activity Detail replaces only the
+  small view; G1 B (Jared 2026-10-30) restores ui.activity_detail.pin / chat.activity.pin. Pin keeps detail open
+  across switches while data follows the new thread; unpinned detail closes on a switch, without a runtime or
+  Settings write. Resources subscribes only while visible; stale requests cannot leak samples across
+  Project/server/environment. One overlay/hover/loader/Pip kit and one work projection; no injection hooks,
+  synthetic resize or replacement observers. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only
+  overlay popover, reached from the existing status-bar System status item and the Processes System services
+  link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with
+  statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner links
+  use the existing ui.settings.route.open action and system_status.service.open_settings binding, selecting
+  code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
+  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or
+  controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass
+  plate; unavailable owner navigation says why. WM-097’s optional concept_sources records pair stable control
+  families with the joined source paths and exact tokens. They witness source alignment only; native dispatcher,
+  owner, focus, storage and effect evidence stays partial until implemented. Pin/Processes, work-panel tabs and
+  quit actions keep their stable IDs even when a concept data-action spelling differs. D7/D8/D13, PM7 companion
+  review fix1, 2026-10-30: WM-097’s reverse source-control census and action-specific local payload validation
+  close the visible work-detail controls. Local owner selection never dispatches cmd.agents.open_thread; actual
+  Assistant thread open, browser port open, scheduled Cancel and terminal Rerun use UCC-210’s existing owner
+  routes. Clipboard and owner-surface navigation are declared local actions. Missing control dispositions or
+  invalid local payloads fail focused checks; source anchors still certify no native signal or effect. G2/F3-1,
+  Jared follow-ups 2026-10-30: Activity Detail widens first, then at the column limit docks and squeezes
+  messages if at least 360 px remain, otherwise covers the transcript at full height. Notice stage placement
+  uses the one bell anchor and the theme menu’s resting top on every page with the inbox closed (selector
+  wrapper bottom plus its gap, not title-bar bottom; negative stage drop is allowed); while the inbox is open
+  the lead’s 2026-10-30 exception keeps the stage under that inbox via --pmn-push. Other controls and the chat
+  head do not trigger clearance. F3-5: body/action/dismiss clicks on entering or leaving cards dispatch nothing
+  on every page, Usage included; pointer routing passes through, with no queued dispatch or late reactivation.
+  Reduced Motion settles placement/removal instantly. F3-6: read the authoritative inbox push after its sprout
+  owner opens it, using resting/destination height, and refresh it on content/height changes or resize; close
+  clears it. Bindings retain their existing owner routes and count; no geometry or entry-state field becomes a
+  persisted preference or runtime mutation. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the
+  PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime
+  from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run
+  start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new
+  occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry
+  and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no
+  work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority,
+  at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and
+  the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services,
+  which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project
+  says that nothing in this Project is running, above the shared rows; it does not look empty or report another
+  Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is
+  available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact
+  host/environment identity and stale disclosure remain authoritative; shared read scope creates no
+  Stop/Restart/Stop all or service-control authority. Q17: hover-to-light/dimming starts only from an actual
+  control inside its affects region (button, input, select, textarea, label or switch/radio/tab/slider
+  semantics). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a
+  control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only
+  rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies
+  this behavior, with no per-sheet hover engine.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2684,11 +2740,10 @@ depends_on:
 - UIW-043
 unblocks: []
 acceptance_criteria:
-- Keyboard/pointer controls submit identical scoped typed requests and acknowledge within the stated timing/one-commit
-  gate.
-- Stale/disabled/unsupported targets retain an accessible exact reason and make no prohibited effect.
-- Closing/replacing the view releases overlays, rig/loader subscriptions and resource sampling; no injection/synthetic-resize/private
-  owner remains.
+  - "Keyboard/pointer controls submit identical scoped typed requests and acknowledge within the stated timing/one-commit gate."
+  - "Stale/disabled/unsupported targets retain an accessible exact reason and make no prohibited effect."
+  - "Closing/replacing the view releases overlays, rig/loader subscriptions and resource sampling; no injection/synthetic-resize/private owner remains."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -2720,3 +2775,6 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/UI_Wi
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+
+QA2 owner amendment (2026-10-30; DL-258; integration 7d586bad18): current requirements in this document’s amended units take precedence over earlier presentation descriptions. Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately in a tray joined to that card, before sibling alternatives. One C.cards under slot owns the join, indentation and line from the parent mark across all twelve affected screens. The parent opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links, Settings copy, remote routes/hosting/certificate fields, online service kind/address, device notes and connection routes. Naming and Review display the same selected mounted/network source, rather than an empty local-location field. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is inferred, no selected live input is overwritten, and no new product action/DTO field is admitted. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused. No Project value, credential, second mute key or durable sound preference is fabricated from an unreadable preview. Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a restored backup, verified credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged. Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine.

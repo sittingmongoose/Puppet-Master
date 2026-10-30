@@ -48,12 +48,17 @@ def check():
     require(contract["decision_id"] == "Q22" and contract["family_order"] == families,
             "Q22 family authority/order differs")
     require(contract["variant_ids"] == variants, "Q22 variant identity/order differs")
-    inventory = read("settings_inventory.json")["settings"]
+    inventory_document = read("settings_inventory.json")
+    inventory = inventory_document["settings"]
     settings = {row["id"]: row for row in inventory}
     require(len(inventory) == len(settings) == 1010, "Q22 inventory is not 1010 unique rows")
     require(settings["general.visual.theme"]["options"] == labels, "Theme is not the ten ordered variants")
     require(settings["general.visual.theme"]["default"] == "Basic Dark", "Q22 changed the factory seed")
     require("general.visual.nier-mode" not in settings, "Retired override remains an active row")
+    require(inventory_document.get("retired_input_ids") == ["general.visual.nier-mode"],
+            "Q22 retired migration input catalog differs")
+    require(not set(inventory_document.get("retired_input_ids", [])) & set(settings),
+            "Retired migration metadata revives an active row")
     require(all(key in settings for key in contract["retained_adjust_setting_ids"]), "NieR Adjust row was removed")
     require(len(settings["general.visual.nier-parts"]["options"]) == 29, "NieR Adjust parts changed")
     require(len(settings["general.visual.nier-background"]["options"]) == 8, "NieR backgrounds changed")

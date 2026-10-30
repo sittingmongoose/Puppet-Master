@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1024-L1141
+Source lines: L1024-L1167
 
-Source SHA256: `87b76a83dd44be420699a3771514fc4050e0eea1d0b9af0e9f37eec3d107b1e2`
+Source SHA256: `8eda93ad8a87d47b45dae0eb108aff9ba27fc1dade915c07ac881b0d23849187`
 
 ---
 
@@ -88,7 +88,32 @@ canonical_text: >-
   ui.onboarding.start opens a first_run window in a Basic Dark preview and a settings_rerun window in the look
   on screen. No cmd.onboarding.* command, alias, handler, EventRecord, production row, full-page route, or
   breadcrumb chrome is created. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
-  independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round 2, Jared
+  2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery
+  Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS
+  password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS,
+  or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate
+  the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may
+  unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked
+  backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only
+  afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites,
+  approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept
+  Kit or seed never proves native unlock or restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately
+  in a tray joined to that card, before sibling alternatives. One C.cards under slot owns the join, indentation
+  and line from the parent mark across all twelve affected screens. The parent opens into the tray in every
+  look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question
+  note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question
+  control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links,
+  Settings copy, remote routes/hosting/certificate fields, online service kind/address, device notes and
+  connection routes. Naming and Review display the same selected mounted/network source, rather than an empty
+  local-location field. H5: the onboarding owner holds one original inert-state basis for the entire open
+  lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never
+  re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only
+  the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit lab
+  open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts
+  out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and
+  seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is
+  inferred, no selected live input is overwritten, and no new product action/DTO field is admitted.
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
@@ -106,6 +131,7 @@ acceptance_criteria:
   - "Defer persists exact stage/path/branch/history/revision/continuation/initiating-Client/focus return before dismissal; Close does not complete; Skip is explicitly skipped; Details remains same-stage and ephemeral."
   - "The eight named packet candidate cmd.onboarding.* tokens are source-lineage only and receive no command, alias, handler, or production row; UCC-106's eleven retired command-era tokens retain their separate lineage count."
   - "The flow stays a bounded modal with no route-history or breadcrumb chrome, and no static/browser evidence is treated as native or runtime proof."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately in a tray joined to that card, before sibling alternatives. One C.cards under slot owns the join, indentation and line from the parent mark across all twelve affected screens. The parent opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links, Settings copy, remote routes/hosting/certificate fields, online service kind/address, device notes and connection routes. Naming and Review display the same selected mounted/network source, rather than an empty local-location field. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is inferred, no selected live input is overwritten, and no new product action/DTO field is admitted."
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high

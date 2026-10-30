@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27645-L28080
+Source lines: L27641-L28092
 
-Source SHA256: `7f36bba1b2ee8a701239d6b0ad57a4921dbdeae2edd3f2fcfb5e9a8d75f9a587`
+Source SHA256: `6855b370360f50769b772c371539239be9d72a3abae4c0b51831a1d2eabcaecc`
 
 ---
 
@@ -283,7 +283,22 @@ canonical_text: >-
   remain, otherwise cover at full column height. G1 B (Jared 2026-10-30): Pin preserves the full-size view
   across thread switches while its contents follow the new thread; unpinned detail closes on a switch. History
   and detail floating plates use one Glass menu token. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR
-  family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+  family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round
+  2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control
+  inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain
+  words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the
+  same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real
+  partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no
+  per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
+  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the
+  glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or
+  fallback icon. H1/H5/H7/Q19: one lab Studio opens seeded owner screens and steps aside when launching a panel,
+  chat view, Stop all or Quit. Recorded guides name the actual current control, including Schedule for …, and
+  advance only after that control’s real example boundary. The teach-missed example owns its intended Send and
+  finishes its recorded correction through the normal reply boundary; it does not simulate a native model
+  promise. Natural user choices may remain waiting, and finished examples need not be forced into an artificial
+  Done label. Keep DR-070’s existing named hidden-bridge debt unchanged; no additional synthetic click, demo
+  product command, preference, persisted field or production wiring is authorized.
 gui_related: true
 gui_classification_reason: Lists what the 5.6 Pro chat's colours, names, sizing, layers, hover tags, bans, demo controls and keys must meet when it moves into PMConcept7.
 split_recommended: false
@@ -297,6 +312,7 @@ acceptance_criteria:
   - "No pill and no coloured side stripe remains in the chat in any look."
   - "Every demo control of the chat is a section of the one Demo Studio and none is a product control."
   - "Under NieR Mode the page draws one scene and one ground layer, and the chat adds none."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. H1/H5/H7/Q19: one lab Studio opens seeded owner screens and steps aside when launching a panel, chat view, Stop all or Quit. Recorded guides name the actual current control, including Schedule for …, and advance only after that control’s real example boundary. The teach-missed example owns its intended Send and finishes its recorded correction through the normal reply boundary; it does not simulate a native model promise. Natural user choices may remain waiting, and finished examples need not be forced into an artificial Done label. Keep DR-070’s existing named hidden-bridge debt unchanged; no additional synthetic click, demo product command, preference, persisted field or production wiring is authorized."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

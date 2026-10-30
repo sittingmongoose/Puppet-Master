@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-10-17T21:41:15Z",
+  "generated_at_utc": "2026-10-30T23:33:26Z",
   "index_path": "Plans/_shards/settings_inventory.schema/00-index.md",
-  "index_sha256": "c1e5ebe5c597f1a0f3014b2257a5582769b067780920c5ef1ae90eb23f9a0b7b",
+  "index_sha256": "03cdcc7ae4f4a3016557e2a491aed87a843c192e7c67a4c598299d754aab0d13",
   "manifest_path": "Plans/_shards/settings_inventory.schema/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Lines 1-200",
       "path": "Plans/_shards/settings_inventory.schema/001-lines-1-200.md",
-      "sha256": "311ed146eb2c784f1a3fbd71b23dae3629b08f8888f8254ce15d91dc3698eb21",
+      "sha256": "7b6bc6dc7249af1eef820242a01e08aa407f01e0c0befa7ce85e8ef9cf16c886",
       "shard_id": "001",
       "source_line_end": 200,
       "source_line_start": 1,
@@ -17,25 +17,25 @@
     {
       "heading": "Lines 201-221",
       "path": "Plans/_shards/settings_inventory.schema/002-lines-201-221.md",
-      "sha256": "ef42b258081ad13785c5e2045710c9d22fbfeb596c71d0c2d9de4e50115995d0",
+      "sha256": "e0b62e42f0eb200a1bdb6fef7733d99f38f19f0c782d04eaded9d025c08042b8",
       "shard_id": "002",
       "source_line_end": 221,
       "source_line_start": 201,
       "split_rule": "line-count-200"
     },
     {
-      "heading": "Lines 222-228",
-      "path": "Plans/_shards/settings_inventory.schema/003-lines-222-228.md",
-      "sha256": "d1b20718e0c5dbea9a9108d38a5ba63dfb90c0e39fe2a772562f0428c16da0c0",
+      "heading": "Lines 222-237",
+      "path": "Plans/_shards/settings_inventory.schema/003-lines-222-237.md",
+      "sha256": "8efb48a1721024fc6d1daa4c9bce2cb55d55f518fc94a219d96aab5db57bc147",
       "shard_id": "003",
-      "source_line_end": 228,
+      "source_line_end": 237,
       "source_line_start": 222,
       "split_rule": "line-count-200"
     }
   ],
   "source": {
-    "line_count": 228,
+    "line_count": 237,
     "path": "Plans/settings_inventory.schema.json",
-    "sha256": "27d70b47df9dec4cec2a00a495bf89947bb4563d7d9f5a2d738140a32c45cad7"
+    "sha256": "ab42664ca6e15f866e4e574c7d9cc1c4562e32ad263d3881b5dfeef6485de89f"
   }
 }

@@ -3073,36 +3073,39 @@ status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
 canonical_text: >-
   D2/D7–D13, G4/G5/G7; DL-255. OperationalAwareness consumes ObservableWork across all platform owners; add
-  thread Processes, two status items, Agents/Processes/Resources, tray/project badge and composer attention
-  as filtered consumers. Agent registry/lineage is the owner link, no view-private list or status. Extend
-  process work with owner_thread_id, completion_delivery agent|user|quiet, holds_reply, current
-  input_request(prompt, detected_at, generation, quick_answers), stopped_by, and process_facts_ref present
-  in subject_refs. Keep non-process work free of process payloads. Executor/terminal owns subordinate
-  ProcessFacts: stable process_facts_id, observable_work_id, Project/server/environment identity, pid,
-  pid_start_time, process_group, command, cwd, ports, exit_code, ended_reason
-  exited|stopped_by_user|stopped_by_agent|stopped_with_owner|lost, output_ref with bounded head/tail and
-  omitted_line_count, stoppable and restartable. Bind stop/input/restart to current identity/generation;
-  whole-group SIGTERM then SIGKILL after 3 s, Stopping until observed exit, ended stop idempotent. Input
-  only safe-first plain yes/no, other prompts to Terminal; protect secret/permission ownership. Host
-  monitor owns ServerResourceSample: stable sample_id, project_id/server_id/environment_id, sampled_at,
-  freshness current|partial|stale|unavailable|conflicted, cpu_percent,
-  memory_used_bytes/memory_total_bytes, per-process CPU/memory and ports. Unknown values are null with
-  reason, never synthetic zero; process identity includes pid_start_time. Resources alone subscribes while
-  open and visible; close/hidden cancels sampling and stale generations never repaint a newer Project/tab.
-  No CPU/RAM status-bar indicator. D9 defaults scripts/tests/builds to agent, servers/watchers/databases to
-  user; quiet suppresses delivery. Delivery is idempotent per work completion generation, coalesces
-  notices, never wakes a user-stopped thread; holds_reply is independent. Detect/reconcile restart before
-  Lost, tell owning agent once, no silent kill on idle unload. System services are read-only and excluded
-  from stop sets. New completion/input semantic events remain non-emitting candidates pending Event
-  Authority; existing owner state/receipt families are reused without changing admitted event schemas.
-  Static companion records are specifications, not native handlers or evidence admission. G6: Clear
-  Finished hides finished records in the invoking view only and deletes no owner record, retention state or
-  other view. Runtime record ownership and completion delivery are unaffected. D2/D10/G4: ProcessFacts and
-  ServerResourceSample inherit the authoritative parent/source scope_kind and identity. Project scope
-  requires a nonempty project_id; application scope uses project_id null, including platform services and
-  host samples with no active Project. A mismatched scope or owner join refuses before display/control;
-  never invent a default Project. Application-wide views do not grant permission over their target
-  Projects, servers or environments.
+  thread Processes, two status items, Agents/Processes/Resources, tray/project badge and composer attention as
+  filtered consumers. Agent registry/lineage is the owner link, no view-private list or status. Extend process
+  work with owner_thread_id, completion_delivery agent|user|quiet, holds_reply, current input_request(prompt,
+  detected_at, generation, quick_answers), stopped_by, and process_facts_ref present in subject_refs. Keep
+  non-process work free of process payloads. Executor/terminal owns subordinate ProcessFacts: stable
+  process_facts_id, observable_work_id, Project/server/environment identity, pid, pid_start_time, process_group,
+  command, cwd, ports, exit_code, ended_reason exited|stopped_by_user|stopped_by_agent|stopped_with_owner|lost,
+  output_ref with bounded head/tail and omitted_line_count, stoppable and restartable. Bind stop/input/restart
+  to current identity/generation; whole-group SIGTERM then SIGKILL after 3 s, Stopping until observed exit,
+  ended stop idempotent. Input only safe-first plain yes/no, other prompts to Terminal; protect
+  secret/permission ownership. Host monitor owns ServerResourceSample: stable sample_id,
+  project_id/server_id/environment_id, sampled_at, freshness current|partial|stale|unavailable|conflicted,
+  cpu_percent, memory_used_bytes/memory_total_bytes, per-process CPU/memory and ports. Unknown values are null
+  with reason, never synthetic zero; process identity includes pid_start_time. Resources alone subscribes while
+  open and visible; close/hidden cancels sampling and stale generations never repaint a newer Project/tab. No
+  CPU/RAM status-bar indicator. D9 defaults scripts/tests/builds to agent, servers/watchers/databases to user;
+  quiet suppresses delivery. Delivery is idempotent per work completion generation, coalesces notices, never
+  wakes a user-stopped thread; holds_reply is independent. Detect/reconcile restart before Lost, tell owning
+  agent once, no silent kill on idle unload. System services are read-only and excluded from stop sets. New
+  completion/input semantic events remain non-emitting candidates pending Event Authority; existing owner
+  state/receipt families are reused without changing admitted event schemas. Static companion records are
+  specifications, not native handlers or evidence admission. G6: Clear Finished hides finished records in the
+  invoking view only and deletes no owner record, retention state or other view. Runtime record ownership and
+  completion delivery are unaffected. D2/D10/G4: ProcessFacts and ServerResourceSample inherit the authoritative
+  parent/source scope_kind and identity. Project scope requires a nonempty project_id; application scope uses
+  project_id null, including platform services and host samples with no active Project. A mismatched scope or
+  owner join refuses before display/control; never invent a default Project. Application-wide views do not grant
+  permission over their target Projects, servers or environments. QA2 Q12/Q13 (DL-258; GUI 7d586bad18):
+  read-only Resources projects shared This computer/Puppet Master service rows plus the current Project’s own
+  server/environment work. This does not infer a Project owner for shared services, expose another Project’s
+  private rows or widen WorkTarget mutations. Q13 expires only the dock projection’s non-needs process/scheduled
+  line after 60000 ms per thread/run; the work, source facts, availability and native commands remain owned
+  here. Source sampling is still Resources-visible-only and stale/currentness-fenced.
 gui_related: false
 gui_classification_reason: Defines owner authority, record semantics or lifecycle.
 split_recommended: false

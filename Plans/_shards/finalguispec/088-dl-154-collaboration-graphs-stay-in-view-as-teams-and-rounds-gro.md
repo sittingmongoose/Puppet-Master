@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43297-L43425
+Source lines: L43362-L43498
 
-Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
+Source SHA256: `dfa6948b8277aef445496a2361b7c866b7cb0a73981c3f358ee080e627c59e4b`
 
 ---
 
@@ -20,23 +20,30 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  A collaboration setup sheet's cast plate (F3-595) stays a drawing at every team size its kind allows, up to eight
-  helpers with both specialists, in every theme and at every supported window size (DL-154). Its slot still shows the
-  richest mode that fits, never scaled, but it never yields past its floor: the leanest drawing that fits the slot's
-  width. The slot keeps that drawing's height, and a roster whose rows no longer fit beside it drops its column
-  helpers, then its rows' fine lines, and then scrolls in its own region with the fade, Add a helper kept visible. The
-  caption sentence is the last resort only for a slot that no drawing fits the width of. A team too wide for one strip
-  row at the strip's minimum pitch is drawn as the wrap: the strip's seats, names under the marks, on two rows, or
-  three when two would sit closer than that pitch. The Coordinator or Moderator and You stand at the rows' middle
-  height; a fork carries the lead's string to each row's first seat and a join brings each row's last seat to the
-  accent edge to You, so the plate still reads left to right with straight strings only. Review and BrainStorm keep
-  their screens between neighbouring seats in a row. The specialists stand in one column after the dotted rule, one
-  per row. The wrap is drawn at a width for the narrowest two-column sheet and at the full plate width, and the slot
-  shows the wider one that fits; a team whose one-row strip fits the narrow width gets no wrap. Below a 900 px sheet
-  width, where the sheet body is one scrolling column, the plate stays at the top of that column while its question
-  is on screen, on the sheet's own surface colour, and the roster's rows pass under it. A run view's plate (F3-569)
-  uses the same wrap when the run's team is too wide for one row at the view's width, so it never drops its plate.
-  Amended 2026-10-29 (PC5, S1/S9; PM7): One Pip cast primitive and optional solved straight strings replace the old figure. Turning strings off hides presentation only; no Classic fallback and no alternate agent primitive.
+  A collaboration setup sheet's cast plate (F3-595) stays a drawing at every team size its kind allows, up to
+  eight helpers with both specialists, in every theme and at every supported window size (DL-154). Its slot
+  still shows the richest mode that fits, never scaled, but it never yields past its floor: the leanest drawing
+  that fits the slot's width. The slot keeps that drawing's height, and a roster whose rows no longer fit beside
+  it drops its column helpers, then its rows' fine lines, and then scrolls in its own region with the fade, Add
+  a helper kept visible. The caption sentence is the last resort only for a slot that no drawing fits the width
+  of. A team too wide for one strip row at the strip's minimum pitch is drawn as the wrap: the strip's seats,
+  names under the marks, on two rows, or three when two would sit closer than that pitch. The Coordinator or
+  Moderator and You stand at the rows' middle height; a fork carries the lead's string to each row's first seat
+  and a join brings each row's last seat to the accent edge to You, so the plate still reads left to right with
+  straight strings only. Review and BrainStorm keep their screens between neighbouring seats in a row. The
+  specialists stand in one column after the dotted rule, one per row. The wrap is drawn at a width for the
+  narrowest two-column sheet and at the full plate width, and the slot shows the wider one that fits; a team
+  whose one-row strip fits the narrow width gets no wrap. Below a 900 px sheet width, where the sheet body is
+  one scrolling column, the plate stays at the top of that column while its question is on screen, on the
+  sheet's own surface colour, and the roster's rows pass under it. A run view's plate (F3-569) uses the same
+  wrap when the run's team is too wide for one row at the view's width, so it never drops its plate. Amended
+  2026-10-29 (PC5, S1/S9; PM7): One Pip cast primitive and optional solved straight strings replace the old
+  figure. Turning strings off hides presentation only; no Classic fallback and no alternate agent primitive. QA
+  round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each
+  family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or
+  connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology,
+  not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and
+  rosters. Optional agent strings and the single Pip primitive retain their existing meaning.
 gui_related: true
 gui_classification_reason: Defines how the collaboration cast plates stay visible as rosters grow in setup sheets and run views.
 split_recommended: false
@@ -47,6 +54,7 @@ acceptance_criteria:
   - "A roster scrolls in its own region only while its slot shows its floor drawing."
   - "The wrap's strings are straight, and its fork and join connect every row to the lead and to You."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

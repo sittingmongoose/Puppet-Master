@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2287-L2418
+Source lines: L2302-L2424
 
-Source SHA256: `77a3c4be6e36c5046b019a45c36d460be65bc8371ed9a01d5a9228a98ef3a2ec`
+Source SHA256: `267c68a08cd068658426fd0118e3386623e4041a8281d059e15edc4e89337634`
 
 ---
 
@@ -19,15 +19,27 @@ plan_unit_id: PWIZ-025
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: After safe local Server claim, Bootstrap may offer one `restore_existing_pm_data` branch that invokes
-  the Backup/Restore owner's protected fresh-recovery flow before Product Onboarding begins. Product Onboarding
-  keeps its current eleven-stage dependency graph and six-stage connect-existing shortcut and its `Restore a backup`
-  First Project route as Project restore; after a confirmed plan creates or opens the first Project, it may project
-  optional backup-destination setup and Recovery Kit confirmation. Remote Access setup consumes one Server-owned
-  PM connector operation with typed connector, IPC, identity, control, authorization, private-endpoint, and route-test
-  phases instead of package/component install state. Online-copy choices consume distinct Forgejo and Gitea provider/instance
-  profiles and independent repository-hosting versus automation bindings with only the selected-source read-only/auth
-  exception before commit; repository mutation and binding remain commit-fenced.
+canonical_text: >-
+  After safe local Server claim, Bootstrap may offer one `restore_existing_pm_data` branch that invokes the
+  Backup/Restore owner's protected fresh-recovery flow before Product Onboarding begins. Product Onboarding
+  keeps its current eleven-stage dependency graph and six-stage connect-existing shortcut and its `Restore a
+  backup` First Project route as Project restore; after a confirmed plan creates or opens the first Project, it
+  may project optional backup-destination setup and Recovery Kit confirmation. Remote Access setup consumes one
+  Server-owned PM connector operation with typed connector, IPC, identity, control, authorization,
+  private-endpoint, and route-test phases instead of package/component install state. Online-copy choices
+  consume distinct Forgejo and Gitea provider/instance profiles and independent repository-hosting versus
+  automation bindings with only the selected-source read-only/auth exception before commit; repository mutation
+  and binding remain commit-fenced. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the
+  actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery
+  credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the
+  explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected
+  file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected
+  place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage
+  authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its
+  selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock
+  and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual
+  restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or
+  restore.
 gui_related: true
 gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
   choices, protected handoffs, progress, exact return, and disabled/error states.
@@ -44,40 +56,19 @@ depends_on:
 - SCS-013
 unblocks: []
 acceptance_criteria:
-- The canonical Product Onboarding graphs remain the current eleven-stage dependency graph and exact six-stage connect-existing
-  shortcut. `restore_existing_pm_data` is represented outside those enums as a Bootstrap handoff after safe local
-  claim and before Product Onboarding.
-- Bootstrap fresh recovery does not require an old Server Catalog, a prior Project, model/provider authentication,
-  or a new onboarding command family; it uses Backup-owned destination, protected sign-in, Recovery Kit/unlock,
-  immutable snapshot inspection, preview, apply, and recovery receipts.
-- Full Server recovery begins recovery-safe, never auto-runs hooks, push, Goals, schedules, public ingress, or duplicate
-  Server/connector identity, and reaches Product Onboarding only after truthful completion or explicit decline/defer.
-- '`Restore a backup` in `first_project` remains a Project restore intent. It writes only the local draft before
-  Review, dispatches only after confirmation, and never aliases the Bootstrap full-recovery branch.'
-- Optional destination setup and Recovery Kit confirmation appear only after the confirmed owner work has established
-  the first Project. They route Backup-owned protected operations and never expose key bytes, claim PM escrow, or
-  mark acknowledgement as recovery proof.
-- The visible Tailscale card uses exact copy `Tailscale` / `Built into Puppet Master`, with normal `Not connected`
-  and `Set Up`; no install, package, daemon, sidecar, Serve-toggle, WSL, or already-authenticated-host-profile prerequisite
-  appears.
-- Hosted connector work projects the durable Server-owned phases Starting Puppet Master connection, Opening Tailscale
-  sign-in, Waiting for authorization, Waiting for device approval, Creating private address, Testing web UI, API,
-  and live connection, and Ready; cancel, denial, expiry, device approval, reauth, crash, corruption, mismatch,
-  and route failure remain distinct.
-- Self-hosted Headscale collects the owner-approved control URL and protected enrollment method, never offers Funnel,
-  and reports certificate/version/reachability/registration capability truth independently.
-- The Server-owned connector authorization/setup operation survives refresh, Client loss, and Client change. Protected
-  browser contents, cookies, codes, and credentials remain bound to an authorized current Client handoff and are
-  never inherited by another Client merely because the durable operation continues.
-- Connect-existing remains route-first and pre-Review activity remains cached or explicitly bounded read-only discovery.
-  Connector authorization, endpoint mutation/test, Server identity verification, and pairing happen only after Review
-  confirmation and return to the exact originating row/focus/generation.
-- '`Bring one from online` and optional online copy expose Forgejo and Gitea as separate forge provider/instance
-  choices with exact custom endpoint/trust/account identity. Repository hosting and automation binding may differ;
-  Git-ready/API-unavailable stays a valid truthful plan and never fabricates Actions.'
-- No command or EventRecord family is created here. Consumed packet commands remain handler_unavailable and event-silent
-  with expected_event_types=[] until owner and central integration exist; concept/static state never proves owner
-  work, native Slint execution, provider readiness, recovery, or security.
+  - "The canonical Product Onboarding graphs remain the current eleven-stage dependency graph and exact six-stage connect-existing shortcut. `restore_existing_pm_data` is represented outside those enums as a Bootstrap handoff after safe local claim and before Product Onboarding."
+  - "Bootstrap fresh recovery does not require an old Server Catalog, a prior Project, model/provider authentication, or a new onboarding command family; it uses Backup-owned destination, protected sign-in, Recovery Kit/unlock, immutable snapshot inspection, preview, apply, and recovery receipts."
+  - "Full Server recovery begins recovery-safe, never auto-runs hooks, push, Goals, schedules, public ingress, or duplicate Server/connector identity, and reaches Product Onboarding only after truthful completion or explicit decline/defer."
+  - "`Restore a backup` in `first_project` remains a Project restore intent. It writes only the local draft before Review, dispatches only after confirmation, and never aliases the Bootstrap full-recovery branch."
+  - "Optional destination setup and Recovery Kit confirmation appear only after the confirmed owner work has established the first Project. They route Backup-owned protected operations and never expose key bytes, claim PM escrow, or mark acknowledgement as recovery proof."
+  - "The visible Tailscale card uses exact copy `Tailscale` / `Built into Puppet Master`, with normal `Not connected` and `Set Up`; no install, package, daemon, sidecar, Serve-toggle, WSL, or already-authenticated-host-profile prerequisite appears."
+  - "Hosted connector work projects the durable Server-owned phases Starting Puppet Master connection, Opening Tailscale sign-in, Waiting for authorization, Waiting for device approval, Creating private address, Testing web UI, API, and live connection, and Ready; cancel, denial, expiry, device approval, reauth, crash, corruption, mismatch, and route failure remain distinct."
+  - "Self-hosted Headscale collects the owner-approved control URL and protected enrollment method, never offers Funnel, and reports certificate/version/reachability/registration capability truth independently."
+  - "The Server-owned connector authorization/setup operation survives refresh, Client loss, and Client change. Protected browser contents, cookies, codes, and credentials remain bound to an authorized current Client handoff and are never inherited by another Client merely because the durable operation continues."
+  - "Connect-existing remains route-first and pre-Review activity remains cached or explicitly bounded read-only discovery. Connector authorization, endpoint mutation/test, Server identity verification, and pairing happen only after Review confirmation and return to the exact originating row/focus/generation."
+  - "`Bring one from online` and optional online copy expose Forgejo and Gitea as separate forge provider/instance choices with exact custom endpoint/trust/account identity. Repository hosting and automation binding may differ; Git-ready/API-unavailable stays a valid truthful plan and never fabricates Actions."
+  - "No command or EventRecord family is created here. Consumed packet commands remain handler_unavailable and event-silent with expected_event_types=[] until owner and central integration exist; concept/static state never proves owner work, native Slint execution, provider readiness, recovery, or security."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore."
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json

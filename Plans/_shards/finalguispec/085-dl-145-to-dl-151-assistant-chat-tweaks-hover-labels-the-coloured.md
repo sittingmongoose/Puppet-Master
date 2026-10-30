@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42211-L42860
+Source lines: L42260-L42925
 
-Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
+Source SHA256: `dfa6948b8277aef445496a2361b7c866b7cb0a73981c3f358ee080e627c59e4b`
 
 ---
 
@@ -327,48 +327,51 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Amended 2026-10-29 (X1/X3, PC1–PC5, O8, S1–S9; DL-239): every individual agent is Pip, drawn by the one
-  PMLogo.kit-backed puppet primitive, never a second legacy figure or an avatar/initials. This supersedes
-  DL-149 card 6’s still setup sheets, old body/limb geometry and puppet-native status silhouettes. Teams,
-  specialists, plates, run cards/views, Activity rows and live agent cards share the primitive; category
-  marks at ≤16 px remain robot (X1). Roles match full Persona name then last word, unknown hard hat:
-  Coordinator/chat assistant crown, Builder/implementer/helper hard hat, Checker/Reviewer/tester glasses,
-  Moderator gavel, Critic jester cap, Wonderer orbit ring, Teacher/writer page, Architect set square,
-  Product pennant. Gold crown/hat are role material exceptions, not status colours; seat hue comes only
-  from F3-635. Grill Me is a switch, not a participant: the existing speaker peeks over its kettle grill.
-  You hold strings, never an agent puppet. Family materials are Friendly vinyl, Glass clear blue lens
-  without brow band, Basic flat accent without cheeks, Retro pixel sprites, NieR ink with visor/square
-  nodes/diamond. NieR Pip shows eyes through the band on live and static marks, including title bar, app icon
-  and tray, at every size (X3 B, Jared 2026-10-30). Strings use the kit’s shared
-  eye-to-eye solver and may be hidden by the chat’s optional Strings part without restoring old art. Markup
-  is a pure theme/identity/state function, no random or per-render IDs; exit copies survive ID stripping.
-  Shared styles avoid per-instance style blocks. Faces carry typed state: working think, queued
-  sleep/pending, needs-you wonder/waiting, complete happy, failed oops, blocked remains blocked despite
-  worried face; dependency wait and paused keep their own keys. Sheet host watches after 420 ms, wonders on
-  typing, oops on refused action and happy/hop on success, preserving disabled-button refusal. It hangs 10
-  px lower than the original concept, level with Close, holding the sign on a third string. Face change is
-  a blink not crossfade; gaze keeps the last pointer and dots/sleep do not track; blinks are not
-  synchronized between Pips. Optional sheet sway and lift-off consume the shared rig/overlay owners, pause
-  hidden/offscreen/during drags and obey Animation speed and parts. Reduced Motion stops nonessential
-  motion, keeping immediate state feedback; smallest figures stay still. Full/Quiet/Still/Plain never
-  introduce a second primitive. PC1/X3 sheet motion (2026-10-29): a host drops in when its sheet opens,
-  using the shared rig and installed parts. Dots, sleep and happy faces never follow the pointer; other
-  gaze retains the last known position. Retro entrance/face changes step; live NieR sheet changes cut with
-  a bounded flicker, no black frame. Effective Reduced Motion/Still snaps to the settled state without
-  entrance, sway, flicker or lift-off travel. Static NieR brand/tray/app marks remain static;
-  acknowledgement stays ≤100 ms with no dispatch deferral or double commit. PC2/PC3 complete agent mapping:
-  working/reviewing/recovering use think with working/reviewing/recovering keys respectively;
-  pending/queued sleep, waiting/needs-you wonder, waiting-dep sleep, idle idle, complete happy,
-  blocked/failed oops with their distinct keys, paused/skipped sleep with their distinct keys, mixed alert
-  with mixed. The expression does not remap the owner key. Preserve abstained as dimmed/skipped when the
-  owner says abstained, optional as a dashed role/participation treatment and stand-in as the existing swap
-  notch; neither optional nor stand-in adds a runtime state. Parts-off state faces keep the same accessible
-  owner words and catalog-state fallback, never restore a second puppet. Pip is the shared marionette
-  puppet, and the live/static NieR visor band follows X3. These retained terms describe Pip’s strings and
-  blindfold, not the retired torso/collar geometry. PC1/PC5 rendering boundary: agent/sheet Pip SVG
-  contains no ids at all, uses flat drawing or plain fallbacks for gradients and survives the exit copy
-  that strips IDs. Static exported brand assets may retain their own self-contained definitions; they are
-  not the chat primitive. No innerHTML setter hook, re-insertion observer or data-pm-keep replacement
-  island is a product implementation.
+  PMLogo.kit-backed puppet primitive, never a second legacy figure or an avatar/initials. This supersedes DL-149
+  card 6’s still setup sheets, old body/limb geometry and puppet-native status silhouettes. Teams, specialists,
+  plates, run cards/views, Activity rows and live agent cards share the primitive; category marks at ≤16 px
+  remain robot (X1). Roles match full Persona name then last word, unknown hard hat: Coordinator/chat assistant
+  crown, Builder/implementer/helper hard hat, Checker/Reviewer/tester glasses, Moderator gavel, Critic jester
+  cap, Wonderer orbit ring, Teacher/writer page, Architect set square, Product pennant. Gold crown/hat are role
+  material exceptions, not status colours; seat hue comes only from F3-635. Grill Me is a switch, not a
+  participant: the existing speaker peeks over its kettle grill. You is the person alone, without strings or a
+  marionette control; agents use Pip (Q16). Family materials are Friendly vinyl, Glass clear blue lens without
+  brow band, Basic flat accent without cheeks, Retro pixel sprites, NieR ink with visor/square nodes/diamond.
+  NieR Pip shows eyes through the band on live and static marks, including title bar, app icon and tray, at
+  every size (X3 B, Jared 2026-10-30). Strings use the kit’s shared eye-to-eye solver and may be hidden by the
+  chat’s optional Strings part without restoring old art. Markup is a pure theme/identity/state function, no
+  random or per-render IDs; exit copies survive ID stripping. Shared styles avoid per-instance style blocks.
+  Faces carry typed state: working think, queued sleep/pending, needs-you wonder/waiting, complete happy, failed
+  oops, blocked remains blocked despite worried face; dependency wait and paused keep their own keys. Sheet host
+  watches after 420 ms, wonders on typing, oops on refused action and happy/hop on success, preserving
+  disabled-button refusal. It hangs 10 px lower than the original concept, level with Close, holding the sign on
+  a third string. Face change is a blink not crossfade; gaze keeps the last pointer and dots/sleep do not track;
+  blinks are not synchronized between Pips. Optional sheet sway and lift-off consume the shared rig/overlay
+  owners, pause hidden/offscreen/during drags and obey Animation speed and parts. Reduced Motion stops
+  nonessential motion, keeping immediate state feedback; smallest figures stay still. Full/Quiet/Still/Plain
+  never introduce a second primitive. PC1/X3 sheet motion (2026-10-29): a host drops in when its sheet opens,
+  using the shared rig and installed parts. Dots, sleep and happy faces never follow the pointer; other gaze
+  retains the last known position. Retro entrance/face changes step; live NieR sheet changes cut with a bounded
+  flicker, no black frame. Effective Reduced Motion/Still snaps to the settled state without entrance, sway,
+  flicker or lift-off travel. Static NieR brand/tray/app marks remain static; acknowledgement stays ≤100 ms with
+  no dispatch deferral or double commit. PC2/PC3 complete agent mapping: working/reviewing/recovering use think
+  with working/reviewing/recovering keys respectively; pending/queued sleep, waiting/needs-you wonder,
+  waiting-dep sleep, idle idle, complete happy, blocked/failed oops with their distinct keys, paused/skipped
+  sleep with their distinct keys, mixed alert with mixed. The expression does not remap the owner key. Preserve
+  abstained as dimmed/skipped when the owner says abstained, optional as a dashed role/participation treatment
+  and stand-in as the existing swap notch; neither optional nor stand-in adds a runtime state. Parts-off state
+  faces keep the same accessible owner words and catalog-state fallback, never restore a second puppet. Pip is
+  the shared marionette puppet, and the live/static NieR visor band follows X3. These retained terms describe
+  Pip’s strings and blindfold, not the retired torso/collar geometry. PC1/PC5 rendering boundary: agent/sheet
+  Pip SVG contains no ids at all, uses flat drawing or plain fallbacks for gradients and survives the exit copy
+  that strips IDs. Static exported brand assets may retain their own self-contained definitions; they are not
+  the chat primitive. No innerHTML setter hook, re-insertion observer or data-pm-keep replacement island is a
+  product implementation. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone,
+  head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings,
+  holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the
+  plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast
+  plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing
+  meaning.
 gui_related: true
 gui_classification_reason: Defines how every agent is drawn in the assistant chat and the wand module sheets.
 split_recommended: false
@@ -384,13 +387,11 @@ depends_on:
 unblocks:
 - F3-595
 acceptance_criteria:
-- One puppet primitive renders every agent in sheets, run cards, run views, Activity and the live agents card
-  in every theme, NieR Mode included, and no agent is drawn as initials.
-- Every role prop is distinguishable in grayscale at the sizes the surfaces use.
-- Optional sheet Pip motion uses the shared bounded rig and parts; run cards/views retain their scoped one-shot/live-work
-  budget, and Reduced Motion keeps state feedback with no nonessential travel.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
-  are created by this unit.
+  - "One puppet primitive renders every agent in sheets, run cards, run views, Activity and the live agents card in every theme, NieR Mode included, and no agent is drawn as initials."
+  - "Every role prop is distinguishable in grayscale at the sizes the surfaces use."
+  - "Optional sheet Pip motion uses the shared bounded rig and parts; run cards/views retain their scoped one-shot/live-work budget, and Reduced Motion keeps state feedback with no nonessential travel."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -440,31 +441,45 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  One cast plate grammar draws every collaboration graph, in the four kinds' setup sheets and at the head of each run
-  view (DL-149); each kind only describes its cast. A bar across the top reads from what goes in (the job, the topic,
-  or Review's snapshot locked at Start) to who runs it: the Coordinator's or the Moderator's puppet on the bar, or
-  Review's junction, where the snapshot goes down to the reviewers and their notes come back up to be compared. It
-  ends in one accent edge to You (one checked result, one report, one plan, or pick what to keep). BrainStorm's bar is
-  its seven chapters ending at You, and its team hangs from a bar of its own under the chapter names. The cast hangs
-  under the bar on straight vertical and horizontal strings only, never diagonals or curves; every seat stands on one
-  baseline at one pitch and is always named, and the full mode adds the model on a second line. A queued helper hangs
-  on a slack string, and "waits its turn" is written once under the group. Review and BrainStorm stand a short screen
-  between seats, because the helpers cannot see each other, said once in a note line. The Wonderer stands in a wing
-  on the right after a dotted rule in every kind that has it, and nothing routes under or through the wing; Grill Me
-  has no seat and shows only as the kettle grill at the Coordinator's or Moderator's seat (DL-218). Chat Room's turn policy and rounds are one note line built from its settings, never arcs or a
-  table. State shows on the seats only. The plate shows its richest mode that fits: full, then compact (names only),
-  then a one-row strip, then the wrap (the strip's seats on two or three rows, F3-601), then one caption sentence, with
-  BrainStorm adding a lean mode between compact and strip that keeps its chapters and Chat Room, whose slot is the
-  shortest, adding a lean line between its strip and the caption that keeps every name whole. It skips any mode whose
-  seats would sit closer than its minimum pitch, is never scaled to fit a sheet, never yields past the leanest drawing
-  that fits its width (the caption is only for a slot no drawing fits; F3-601, DL-154), and grows into spare height. Hovering or focusing a sheet control lights the plate parts it affects
-  (F3-566). Every run view heads with the run's plate, its seats in their live states (working, waits, needs you, done
-  or failed); a run that has not started shows everyone idle, never "waits its turn", and the Coordinator is done when
-  the run is. The Crew view hangs a short after arrow from the helper a seat waits for, the BrainStorm view lights the
-  chapter it is on, and the Chat Room's room document and a recorded Review report have a plate too. Run cards and run
-  views show no Technical details, neither as a control nor as fine print; a collaboration setup sheet keeps its
-  Technical details as the last row of its Advanced page (DL-149, decision card 8).
-  Amended 2026-10-29 (PC5, S1/S9; PM7): Cast agents are the single Pip primitive. Strings remain solved/straight when enabled; the optional chat strings part may hide them without restoring a second puppet. Role props use F3-594, including glasses and gold crown/hat.
+  One cast plate grammar draws every collaboration graph, in the four kinds' setup sheets and at the head of
+  each run view (DL-149); each kind only describes its cast. A bar across the top reads from what goes in (the
+  job, the topic, or Review's snapshot locked at Start) to who runs it: the Coordinator's or the Moderator's
+  puppet on the bar, or Review's junction, where the snapshot goes down to the reviewers and their notes come
+  back up to be compared. It ends in one accent edge to You (one checked result, one report, one plan, or pick
+  what to keep). BrainStorm's bar is its seven chapters ending at You, and its team hangs from a bar of its own
+  under the chapter names. The cast hangs under the bar on straight vertical and horizontal strings only, never
+  diagonals or curves; every seat stands on one baseline at one pitch and is always named, and the full mode
+  adds the model on a second line. A queued helper hangs on a slack string, and "waits its turn" is written once
+  under the group. Review and BrainStorm stand a short screen between seats, because the helpers cannot see each
+  other, said once in a note line. The Wonderer stands in a wing on the right after a dotted rule in every kind
+  that has it, and nothing routes under or through the wing; Grill Me has no seat and shows only as the kettle
+  grill at the Coordinator's or Moderator's seat (DL-218). Chat Room's turn policy and rounds are one note line
+  built from its settings, never arcs or a table. State shows on the seats only. The plate shows its richest
+  mode that fits: full, then compact (names only), then a one-row strip, then the wrap (the strip's seats on two
+  or three rows, F3-601), then one caption sentence, with BrainStorm adding a lean mode between compact and
+  strip that keeps its chapters and Chat Room, whose slot is the shortest, adding a lean line between its strip
+  and the caption that keeps every name whole. It skips any mode whose seats would sit closer than its minimum
+  pitch, is never scaled to fit a sheet, never yields past the leanest drawing that fits its width (the caption
+  is only for a slot no drawing fits; F3-601, DL-154), and grows into spare height. Hovering or focusing a sheet
+  control lights the plate parts it affects (F3-566). Every run view heads with the run's plate, its seats in
+  their live states (working, waits, needs you, done or failed); a run that has not started shows everyone idle,
+  never "waits its turn", and the Coordinator is done when the run is. The Crew view hangs a short after arrow
+  from the helper a seat waits for, the BrainStorm view lights the chapter it is on, and the Chat Room's room
+  document and a recorded Review report have a plate too. Run cards and run views show no Technical details,
+  neither as a control nor as fine print; a collaboration setup sheet keeps its Technical details as the last
+  row of its Advanced page (DL-149, decision card 8). Amended 2026-10-29 (PC5, S1/S9; PM7): Cast agents are the
+  single Pip primitive. Strings remain solved/straight when enabled; the optional chat strings part may hide
+  them without restoring a second puppet. Role props use F3-594, including glasses and gold crown/hat. QA round
+  2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
+  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a
+  cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet
+  strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional
+  agent strings and the single Pip primitive retain their existing meaning. Q17: hover-to-light/dimming starts
+  only from an actual control inside its affects region (button, input, select, textarea, label or
+  switch/radio/tab/slider semantics). Plain words, empty section space and the plate picture do not dim the
+  cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible.
+  Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One
+  affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine.
 gui_related: true
 gui_classification_reason: Defines the collaboration graphs in sheets and run views and the removal of Technical details from run surfaces.
 split_recommended: false
@@ -475,6 +490,7 @@ acceptance_criteria:
   - "In a sheet the plate is never scaled to fit; it changes mode instead."
   - "No run card or run view renders Technical details as a control or as fine print."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning. Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

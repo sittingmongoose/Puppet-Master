@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2721-L2790
+Source lines: L2729-L2806
 
-Source SHA256: `f8293556f35dfc8682aab0d523f18537246977b9ead49c64eede243e878288d6`
+Source SHA256: `ab462d8dfe2c0862859d57604e3853b18856b465034217045db575b261f78b39`
 
 ---
 
@@ -20,20 +20,27 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  The wand modules' presentation grammar has exactly one GUI owner, FinalGUISpec F3-566 with
-  F3-567 through F3-577, F3-592, F3-594, F3-595, F3-601 and F3-602: the configuration sheet anatomy, sizes and yield
-  rules, the plate and the cast plate (its floor and wrap, with the shared parts DR-045 names), kind marks and the agent puppets (one puppet primitive draws
-  every agent everywhere, DL-149), run card budgets and width tiers, the one-line receipt, the dock, the one-line
-  reply traces and the run view as a run tab in a home panel (ACD-480, F3-635). Every implementation builds these
-  from one shared set of primitives; a module owner supplies content only and never forks or
-  restyles a primitive. Every module's finished trace uses the one receipt grammar, and time,
-  cost and token phrases each come from one shared formatter (there is no stand-in phrase, DL-121), with one time-zone
-  implementation for the app. Behaviour stays with the module owners (Collaborative_Workflows,
-  Back_Seat_Driver, Scheduling_and_Quota_Resume, assistant-memory-subsystem, assistant-chat-design).
-  DR-043's owners stand: the transcript family map is ACD-469's and the accent budget is a
-  theme-token role rule, and the assistant-turn vocabulary is EP-128's. The wand grammar consumes
-  them and never restates them, and DR-043's owners do not restate this grammar.
-  Amended 2026-10-29 (X1, PC1–PC5; PM7): Pip redraws the one agent primitive (F3-594), no second legacy puppet or Classic preset. Small robot denotes the agent category only, never an alternate figure. Sheet hosts and empty marks use this kit rather than layered replacements.
+  The wand modules' presentation grammar has exactly one GUI owner, FinalGUISpec F3-566 with F3-567 through
+  F3-577, F3-592, F3-594, F3-595, F3-601 and F3-602: the configuration sheet anatomy, sizes and yield rules, the
+  plate and the cast plate (its floor and wrap, with the shared parts DR-045 names), kind marks and the agent
+  puppets (one puppet primitive draws every agent everywhere, DL-149), run card budgets and width tiers, the
+  one-line receipt, the dock, the one-line reply traces and the run view as a run tab in a home panel (ACD-480,
+  F3-635). Every implementation builds these from one shared set of primitives; a module owner supplies content
+  only and never forks or restyles a primitive. Every module's finished trace uses the one receipt grammar, and
+  time, cost and token phrases each come from one shared formatter (there is no stand-in phrase, DL-121), with
+  one time-zone implementation for the app. Behaviour stays with the module owners (Collaborative_Workflows,
+  Back_Seat_Driver, Scheduling_and_Quota_Resume, assistant-memory-subsystem, assistant-chat-design). DR-043's
+  owners stand: the transcript family map is ACD-469's and the accent budget is a theme-token role rule, and the
+  assistant-turn vocabulary is EP-128's. The wand grammar consumes them and never restates them, and DR-043's
+  owners do not restate this grammar. Amended 2026-10-29 (X1, PC1–PC5; PM7): Pip redraws the one agent primitive
+  (F3-594), no second legacy puppet or Classic preset. Small robot denotes the agent category only, never an
+  alternate figure. Sheet hosts and empty marks use this kit rather than layered replacements. QA round 2, Jared
+  2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its
+  affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words,
+  empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same
+  feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner
+  on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no
+  per-sheet hover engine.
 gui_related: true
 gui_classification_reason: "Fixes one owner for the wand modules' presentation grammar."
 split_recommended: false
@@ -43,6 +50,7 @@ acceptance_criteria:
   - "No second sheet grammar, receipt grammar, dock or time formatter exists for a wand module."
   - "No wand-module owner restates the family map, the accent rule or EP-128's vocabulary."
   - "The run view opens as a run tab in a home panel through the one opening module (F3-635, DR-071), with the grammar above unchanged."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

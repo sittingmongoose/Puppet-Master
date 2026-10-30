@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36543-L37439
+Source lines: L36532-L37466
 
-Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
+Source SHA256: `dfa6948b8277aef445496a2361b7c866b7cb0a73981c3f358ee080e627c59e4b`
 
 ---
 
@@ -199,7 +199,44 @@ canonical_text: >-
   Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns
   migration and retained Adjust controls. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu
   (foundations source confirmation 1030182542-5544). The earlier label Adjust NieR look is retained as
-  historical source text only.
+  historical source text only. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual
+  backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential,
+  not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit
+  no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected
+  file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected
+  place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage
+  authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its
+  selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock
+  and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual
+  restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or
+  restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately in a tray joined to that card, before
+  sibling alternatives. One C.cards under slot owns the join, indentation and line from the parent mark across
+  all twelve affected screens. The parent opens into the tray in every look, with matching edges, no gap or
+  overlapping lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys
+  stay in their own choice list, and the option, its radio and question control never overlap. Apply to backup
+  places/Kit, existing-work origins, work computer checks, sign-up links, Settings copy, remote
+  routes/hosting/certificate fields, online service kind/address, device notes and connection routes. Naming and
+  Review display the same selected mounted/network source, rather than an empty local-location field. Q3/Q8/Q9:
+  question controls answer pointer hover and keyboard focus in the current look. Remove duplicate
+  explanation-only disclosures (What is a Server?, the Connect proxy explanation, and What does Puppet Master
+  read? on Choose a key); put their information in the shared option tips. Keep functional sections: More about
+  keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik selector; identity
+  fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating system’s
+  shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use
+  protected flow; never reuse its never-saved hint for SMB. H5: the onboarding owner holds one original
+  inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly
+  encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert.
+  Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and
+  restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only missing
+  fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities,
+  trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt,
+  authentication, permission or completed owner work is inferred, no selected live input is overwritten, and no
+  new product action/DTO field is admitted. Q1/Q2: onboarding sound defaults on under
+  general.interaction.sound-effects, through the existing one player and trusted-gesture gate. No verified
+  readable Project snapshot means an unbound preview: retain the factory-on choice or the person’s current visit
+  choice rather than muting it on each refresh. An explicit readable Project value wins when it binds; a
+  genuinely refused bound write remains refused. No Project value, credential, second mute key or durable sound
+  preference is fabricated from an unreadable preview.
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -262,6 +299,7 @@ acceptance_criteria:
   - "Every stage has a distinct visual scene and meaningful continuity of focus; the five theme families, and the selected NieR family (rendered with Basic CSS), use different directing systems rather than paint-only variants, all motion uses Slint-portable opacity, translation, scale, clipping/masking, vector shapes, and theme tokens, and essential storytelling does not require browser-only effects."
   - "A new install's onboarding starts in Basic Dark from its first frame with Basic Dark preselected, whatever look was shown before and without changing stored values; Run Onboarding Again starts in the look then shown, NieR Mode included, preselected, and never switches look as it opens (DL-153)."
   - "The wake at the window's opening, the act card at a chapter's end and the curtain call at Ready take five styles, one per look family, as F3-600 sets out."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Backup is located/reached before required protected unlock; follow-ups are joined to their parent; explanation-only duplicates are removed while functional sections remain; one inert-state basis survives replacement; lab-only seeds confer no owner authority; unreadable Project state does not repeatedly mute the preview."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"

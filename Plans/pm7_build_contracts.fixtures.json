@@ -1677,6 +1677,1356 @@
         }
       },
       "valid": false
+    },
+    {
+      "name": "qa2_presentation_policy",
+      "definition": "QA2PresentationPolicy",
+      "valid": true,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_restore_kit_is_place",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": true,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_restore_locate_before_unlock",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": false,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_dock_needs_you_expires",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": true,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_dock_lifetime_ms",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 61000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_resources_empty_Project_shows_shared",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": false,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_resources_service_control_added",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": true
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_feedback_you_has_cross_or_strings",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": true,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_feedback_plate_requires_control",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": false,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_glass_independent_sheet_light",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": true,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_preview_storage_available_failed_write",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "silent_memory_fallback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_preview_storage_native_durability_claim",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": true,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_modal_demo_seed_is_product_request_field",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": true,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_modal_demo_replace_reacquires_existing_holds",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": true,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": false,
+          "peek_restores_same_subtree": true
+        }
+      }
+    },
+    {
+      "name": "qa2_reject_narrow_chat_descendant_paint_while_folded",
+      "definition": "QA2PresentationPolicy",
+      "valid": false,
+      "instance": {
+        "contract_scope": "static_QA2_presentation_only",
+        "owner_ref": "Plans/Decision_Log.md#DL-258",
+        "restore": {
+          "locate_before_unlock": true,
+          "kit_is_place": false,
+          "kit_carries_storage_signin": false,
+          "accepted_kit_can_unlock": true,
+          "reach_place_before_manifest": true,
+          "repoint_invalidates_unlock": true
+        },
+        "choices": {
+          "owner": "C.cards",
+          "slot": "under",
+          "tray_class": "o55-under",
+          "parent_class": "o55-card-parent",
+          "affected_screens": 12,
+          "joined_all_looks": true,
+          "question_control_overlaps": false
+        },
+        "dock": {
+          "lifetime_ms": 60000,
+          "key_fields": [
+            "thread_id",
+            "work_id",
+            "started_at_or_occurrence"
+          ],
+          "needs_you_expires": false,
+          "expiry_mutates_owner": false,
+          "timer": "one_next_expiry"
+        },
+        "resources": {
+          "scope": "current_Project_plus_shared_computer_services",
+          "empty_Project_shows_shared": true,
+          "shared_empty_environment_shown": false,
+          "sampling_period_ms": 2000,
+          "sampling_visible_only": true,
+          "service_control_added": false
+        },
+        "feedback": {
+          "you": "person_alone",
+          "you_has_cross_or_strings": false,
+          "wand_owner": "one_registry_wand",
+          "plate_requires_control": true,
+          "schedule_requires_partner": true
+        },
+        "glass": {
+          "hover_owner": "PMH",
+          "independent_sheet_light": false,
+          "dark_sheen_alpha": 0.045,
+          "light_sheen_alpha": 0.045,
+          "edge_glow_changed": false,
+          "bar_and_dock_plate": "menu_plate",
+          "Settings_modal_fill": "menu_tint_over_look_ground"
+        },
+        "sound": {
+          "factory_enabled": true,
+          "unreadable_snapshot": "retain_visit_choice",
+          "readable_Project_wins": true,
+          "trusted_gesture_required": true,
+          "new_preference": false
+        },
+        "preview_storage": {
+          "unavailable": "visit_memory",
+          "persistent_flag": false,
+          "available_failed_write": "refuse_or_rollback",
+          "native_durability_claim": false,
+          "Project_key_isolation": true
+        },
+        "modal_demo": {
+          "inert_basis": "first_open_lifetime",
+          "replace_reacquires_existing_holds": false,
+          "screen_seed": "owner_missing_fixture_inputs_only",
+          "seed_false_optout": true,
+          "seed_is_product_request_field": false,
+          "launch_steps_Studio_aside": true
+        },
+        "narrow_chat": {
+          "default_900_and_below": "clean_32px_strip",
+          "centre_threshold_px": 480,
+          "hysteresis_px": 48,
+          "descendant_paint_while_folded": true,
+          "peek_restores_same_subtree": true
+        }
+      }
     }
   ],
   "semantic_cases": [
@@ -1803,7 +3153,7 @@
     "touch_profiles": 140,
     "production_wiring_entries": 1269,
     "new_production_rows": 11,
-    "new_bindings": 58
+    "new_bindings": 61
   },
   "activity_detail_thread_switch_cases": [
     {
@@ -4633,5 +5983,90 @@
       },
       "expected": "still"
     }
-  ]
+  ],
+  "qa2_presentation_policy": {
+    "contract_scope": "static_QA2_presentation_only",
+    "owner_ref": "Plans/Decision_Log.md#DL-258",
+    "restore": {
+      "locate_before_unlock": true,
+      "kit_is_place": false,
+      "kit_carries_storage_signin": false,
+      "accepted_kit_can_unlock": true,
+      "reach_place_before_manifest": true,
+      "repoint_invalidates_unlock": true
+    },
+    "choices": {
+      "owner": "C.cards",
+      "slot": "under",
+      "tray_class": "o55-under",
+      "parent_class": "o55-card-parent",
+      "affected_screens": 12,
+      "joined_all_looks": true,
+      "question_control_overlaps": false
+    },
+    "dock": {
+      "lifetime_ms": 60000,
+      "key_fields": [
+        "thread_id",
+        "work_id",
+        "started_at_or_occurrence"
+      ],
+      "needs_you_expires": false,
+      "expiry_mutates_owner": false,
+      "timer": "one_next_expiry"
+    },
+    "resources": {
+      "scope": "current_Project_plus_shared_computer_services",
+      "empty_Project_shows_shared": true,
+      "shared_empty_environment_shown": false,
+      "sampling_period_ms": 2000,
+      "sampling_visible_only": true,
+      "service_control_added": false
+    },
+    "feedback": {
+      "you": "person_alone",
+      "you_has_cross_or_strings": false,
+      "wand_owner": "one_registry_wand",
+      "plate_requires_control": true,
+      "schedule_requires_partner": true
+    },
+    "glass": {
+      "hover_owner": "PMH",
+      "independent_sheet_light": false,
+      "dark_sheen_alpha": 0.045,
+      "light_sheen_alpha": 0.045,
+      "edge_glow_changed": false,
+      "bar_and_dock_plate": "menu_plate",
+      "Settings_modal_fill": "menu_tint_over_look_ground"
+    },
+    "sound": {
+      "factory_enabled": true,
+      "unreadable_snapshot": "retain_visit_choice",
+      "readable_Project_wins": true,
+      "trusted_gesture_required": true,
+      "new_preference": false
+    },
+    "preview_storage": {
+      "unavailable": "visit_memory",
+      "persistent_flag": false,
+      "available_failed_write": "refuse_or_rollback",
+      "native_durability_claim": false,
+      "Project_key_isolation": true
+    },
+    "modal_demo": {
+      "inert_basis": "first_open_lifetime",
+      "replace_reacquires_existing_holds": false,
+      "screen_seed": "owner_missing_fixture_inputs_only",
+      "seed_false_optout": true,
+      "seed_is_product_request_field": false,
+      "launch_steps_Studio_aside": true
+    },
+    "narrow_chat": {
+      "default_900_and_below": "clean_32px_strip",
+      "centre_threshold_px": 480,
+      "hysteresis_px": 48,
+      "descendant_paint_while_folded": false,
+      "peek_restores_same_subtree": true
+    }
+  }
 }

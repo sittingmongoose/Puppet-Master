@@ -2759,6 +2759,345 @@
           }
         }
       }
+    },
+    "QA2PresentationPolicy": {
+      "description": "DL-258/DR-080 static presentation descriptor. Not a native request, event, stored value or new product authority.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_scope",
+        "owner_ref",
+        "restore",
+        "choices",
+        "dock",
+        "resources",
+        "feedback",
+        "glass",
+        "sound",
+        "preview_storage",
+        "modal_demo",
+        "narrow_chat"
+      ],
+      "properties": {
+        "contract_scope": {
+          "const": "static_QA2_presentation_only"
+        },
+        "owner_ref": {
+          "const": "Plans/Decision_Log.md#DL-258"
+        },
+        "restore": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "locate_before_unlock",
+            "kit_is_place",
+            "kit_carries_storage_signin",
+            "accepted_kit_can_unlock",
+            "reach_place_before_manifest",
+            "repoint_invalidates_unlock"
+          ],
+          "properties": {
+            "locate_before_unlock": {
+              "const": true
+            },
+            "kit_is_place": {
+              "const": false
+            },
+            "kit_carries_storage_signin": {
+              "const": false
+            },
+            "accepted_kit_can_unlock": {
+              "const": true
+            },
+            "reach_place_before_manifest": {
+              "const": true
+            },
+            "repoint_invalidates_unlock": {
+              "const": true
+            }
+          }
+        },
+        "choices": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "owner",
+            "slot",
+            "tray_class",
+            "parent_class",
+            "affected_screens",
+            "joined_all_looks",
+            "question_control_overlaps"
+          ],
+          "properties": {
+            "owner": {
+              "const": "C.cards"
+            },
+            "slot": {
+              "const": "under"
+            },
+            "tray_class": {
+              "const": "o55-under"
+            },
+            "parent_class": {
+              "const": "o55-card-parent"
+            },
+            "affected_screens": {
+              "const": 12
+            },
+            "joined_all_looks": {
+              "const": true
+            },
+            "question_control_overlaps": {
+              "const": false
+            }
+          }
+        },
+        "dock": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "lifetime_ms",
+            "key_fields",
+            "needs_you_expires",
+            "expiry_mutates_owner",
+            "timer"
+          ],
+          "properties": {
+            "lifetime_ms": {
+              "const": 60000
+            },
+            "key_fields": {
+              "const": [
+                "thread_id",
+                "work_id",
+                "started_at_or_occurrence"
+              ]
+            },
+            "needs_you_expires": {
+              "const": false
+            },
+            "expiry_mutates_owner": {
+              "const": false
+            },
+            "timer": {
+              "const": "one_next_expiry"
+            }
+          }
+        },
+        "resources": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope",
+            "empty_Project_shows_shared",
+            "shared_empty_environment_shown",
+            "sampling_period_ms",
+            "sampling_visible_only",
+            "service_control_added"
+          ],
+          "properties": {
+            "scope": {
+              "const": "current_Project_plus_shared_computer_services"
+            },
+            "empty_Project_shows_shared": {
+              "const": true
+            },
+            "shared_empty_environment_shown": {
+              "const": false
+            },
+            "sampling_period_ms": {
+              "const": 2000
+            },
+            "sampling_visible_only": {
+              "const": true
+            },
+            "service_control_added": {
+              "const": false
+            }
+          }
+        },
+        "feedback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "you",
+            "you_has_cross_or_strings",
+            "wand_owner",
+            "plate_requires_control",
+            "schedule_requires_partner"
+          ],
+          "properties": {
+            "you": {
+              "const": "person_alone"
+            },
+            "you_has_cross_or_strings": {
+              "const": false
+            },
+            "wand_owner": {
+              "const": "one_registry_wand"
+            },
+            "plate_requires_control": {
+              "const": true
+            },
+            "schedule_requires_partner": {
+              "const": true
+            }
+          }
+        },
+        "glass": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "hover_owner",
+            "independent_sheet_light",
+            "dark_sheen_alpha",
+            "light_sheen_alpha",
+            "edge_glow_changed",
+            "bar_and_dock_plate",
+            "Settings_modal_fill"
+          ],
+          "properties": {
+            "hover_owner": {
+              "const": "PMH"
+            },
+            "independent_sheet_light": {
+              "const": false
+            },
+            "dark_sheen_alpha": {
+              "const": 0.045
+            },
+            "light_sheen_alpha": {
+              "const": 0.045
+            },
+            "edge_glow_changed": {
+              "const": false
+            },
+            "bar_and_dock_plate": {
+              "const": "menu_plate"
+            },
+            "Settings_modal_fill": {
+              "const": "menu_tint_over_look_ground"
+            }
+          }
+        },
+        "sound": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "factory_enabled",
+            "unreadable_snapshot",
+            "readable_Project_wins",
+            "trusted_gesture_required",
+            "new_preference"
+          ],
+          "properties": {
+            "factory_enabled": {
+              "const": true
+            },
+            "unreadable_snapshot": {
+              "const": "retain_visit_choice"
+            },
+            "readable_Project_wins": {
+              "const": true
+            },
+            "trusted_gesture_required": {
+              "const": true
+            },
+            "new_preference": {
+              "const": false
+            }
+          }
+        },
+        "preview_storage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "unavailable",
+            "persistent_flag",
+            "available_failed_write",
+            "native_durability_claim",
+            "Project_key_isolation"
+          ],
+          "properties": {
+            "unavailable": {
+              "const": "visit_memory"
+            },
+            "persistent_flag": {
+              "const": false
+            },
+            "available_failed_write": {
+              "const": "refuse_or_rollback"
+            },
+            "native_durability_claim": {
+              "const": false
+            },
+            "Project_key_isolation": {
+              "const": true
+            }
+          }
+        },
+        "modal_demo": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "inert_basis",
+            "replace_reacquires_existing_holds",
+            "screen_seed",
+            "seed_false_optout",
+            "seed_is_product_request_field",
+            "launch_steps_Studio_aside"
+          ],
+          "properties": {
+            "inert_basis": {
+              "const": "first_open_lifetime"
+            },
+            "replace_reacquires_existing_holds": {
+              "const": false
+            },
+            "screen_seed": {
+              "const": "owner_missing_fixture_inputs_only"
+            },
+            "seed_false_optout": {
+              "const": true
+            },
+            "seed_is_product_request_field": {
+              "const": false
+            },
+            "launch_steps_Studio_aside": {
+              "const": true
+            }
+          }
+        },
+        "narrow_chat": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "default_900_and_below",
+            "centre_threshold_px",
+            "hysteresis_px",
+            "descendant_paint_while_folded",
+            "peek_restores_same_subtree"
+          ],
+          "properties": {
+            "default_900_and_below": {
+              "const": "clean_32px_strip"
+            },
+            "centre_threshold_px": {
+              "const": 480
+            },
+            "hysteresis_px": {
+              "const": 48
+            },
+            "descendant_paint_while_folded": {
+              "const": false
+            },
+            "peek_restores_same_subtree": {
+              "const": true
+            }
+          }
+        }
+      }
     }
   }
 }

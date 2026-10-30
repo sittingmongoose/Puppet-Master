@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18728-L18987
+Source lines: L18728-L18991
 
-Source SHA256: `752494bd60d41b95cbf969aa2d30d8e6f57d34c655cd070cc9ad9698f1aeabeb`
+Source SHA256: `c836901e05afcb382d84b0d0377ab9e918d474d1df14a4484dafbb81a64713bc`
 
 ---
 
@@ -116,7 +116,23 @@ canonical_text: >-
   removes that legacy field and preserves parts/background; false/null leaves the selected family unchanged.
   Conversion precedes validation of the current shape and is idempotent. Settings performs the separate retired
   general.visual.nier-mode load migration under SSYS-043, including Auto resolution. No physical family, key,
-  policy or new migration writer is added.
+  policy or new migration writer is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q18: when a
+  concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store
+  retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home
+  PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit
+  loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner
+  admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never
+  silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative
+  and never native durability, a verified restore/credential or a native owner receipt; production
+  Storage/Settings CAS/readback/rollback rules are unchanged. H5: the onboarding owner holds one original
+  inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly
+  encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert.
+  Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and
+  restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only missing
+  fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities,
+  trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt,
+  authentication, permission or completed owner work is inferred, no selected live input is overwritten, and no
+  new product action/DTO field is admitted.
 gui_related: true
 gui_classification_reason: The migrated stage/session determines the simple Product Onboarding screen and safe resume
   point shown to the user.
@@ -126,30 +142,18 @@ depends_on:
 - PWIZ-022
 unblocks: []
 acceptance_criteria:
-- The exact owner v2 session schema and required/nullable fields are deterministically bundled into the existing
-  onboarding_state family; the registry contains the same 88 families and 24 retention policies.
-- New writes use only onboarding_state.v3:{onboarding_session_id}; onboarding_state.v2:{onboarding_session_id},
-  onboarding_state.v1:{project_id} and onboarding:v1 are read-once coordinator copy-forward inputs, never dual-read
-  or current writes.
-- Missing state begins at welcome. A current queued draft has the closed bounded setup_draft choices with matching
-  draft identity/revision; the confirmed plan hash matches its canonical bytes.
-- A typed setup_draft is not an arbitrary plan/transcript body or a new physical family. Return contexts and continuation
-  snapshots preserve only the exact references and phases.
-- Bounded selected-source preflight/auth has its own current permission/consent/Client/revision fence and does not
-  authorize Project/destination/history/repository/Settings/sync or broad provider mutation.
-- Actual committed Project identity, listed/persisted owner result and receipt refs survive Close/resume and provider
-  failure; navigation never uncreates or recommits the Project.
-- The eleven-stage semantic graph, explicit Project-deferred path and six-stage connect-existing shortcut remain
-  owner-defined; backend/forge/Server/Storage/Client axes are not conflated.
-- Migration covers four/five/seven/nine-stage inputs, forces unresolved draft review unconfirmed, and separately
-  validates every committed resume in the disposition manifest without synthesizing review or owner work.
-- The domain reconciliation value references the sole terminal Storage migration receipt and remains physical-family-registration-pending,
-  never peer commit authority.
-- Redaction admits only bounded typed selections and non-secret owner refs; raw credentials/auth URLs/codes/profile
-  roots, unbounded path discovery, protected browser content, raw plan/transcript and Guided Tour live/checkpoint
-  content are excluded.
-- Standalone precommit authorizations, draft previews/rebinds and Project commit bindings are transport/read models;
-  actual underlying owner result/receipt authority remains separate and no new physical family is admitted.
+  - "The exact owner v2 session schema and required/nullable fields are deterministically bundled into the existing onboarding_state family; the registry contains the same 88 families and 24 retention policies."
+  - "New writes use only onboarding_state.v3:{onboarding_session_id}; onboarding_state.v2:{onboarding_session_id}, onboarding_state.v1:{project_id} and onboarding:v1 are read-once coordinator copy-forward inputs, never dual-read or current writes."
+  - "Missing state begins at welcome. A current queued draft has the closed bounded setup_draft choices with matching draft identity/revision; the confirmed plan hash matches its canonical bytes."
+  - "A typed setup_draft is not an arbitrary plan/transcript body or a new physical family. Return contexts and continuation snapshots preserve only the exact references and phases."
+  - "Bounded selected-source preflight/auth has its own current permission/consent/Client/revision fence and does not authorize Project/destination/history/repository/Settings/sync or broad provider mutation."
+  - "Actual committed Project identity, listed/persisted owner result and receipt refs survive Close/resume and provider failure; navigation never uncreates or recommits the Project."
+  - "The eleven-stage semantic graph, explicit Project-deferred path and six-stage connect-existing shortcut remain owner-defined; backend/forge/Server/Storage/Client axes are not conflated."
+  - "Migration covers four/five/seven/nine-stage inputs, forces unresolved draft review unconfirmed, and separately validates every committed resume in the disposition manifest without synthesizing review or owner work."
+  - "The domain reconciliation value references the sole terminal Storage migration receipt and remains physical-family-registration-pending, never peer commit authority."
+  - "Redaction admits only bounded typed selections and non-secret owner refs; raw credentials/auth URLs/codes/profile roots, unbounded path discovery, protected browser content, raw plan/transcript and Guided Tour live/checkpoint content are excluded."
+  - "Standalone precommit authorizations, draft previews/rebinds and Project commit bindings are transport/read models; actual underlying owner result/receipt authority remains separate and no new physical family is admitted."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is inferred, no selected live input is overwritten, and no new product action/DTO field is admitted."
 validation_surfaces:
 - python3 scripts/pm-onboarding-contracts.py --check
 - tests/test_pm_onboarding_phases.py
