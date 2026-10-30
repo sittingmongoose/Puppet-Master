@@ -23,12 +23,12 @@
     const raw = JSON.stringify(out);
     if (raw === last) return;
     last = raw;
-    try { localStorage.setItem(k, raw); } catch (e) { /* storage full or blocked: the flags last this session */ }
+    try { (window.PM7_SETTINGS_STORE || localStorage).setItem(k, raw); } catch (e) { /* storage full or blocked: the flags last this session */ }
   }
   function restore() {
     const k = keyOf(); if (!k) return false;
     let kept = null;
-    try { kept = JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { kept = null; }
+    try { kept = JSON.parse((window.PM7_SETTINGS_STORE || localStorage).getItem(k) || 'null'); } catch (e) { kept = null; }
     if (!kept || typeof kept !== 'object') { last = ''; return false; }
     let changed = false;
     formatters().forEach(f => {
