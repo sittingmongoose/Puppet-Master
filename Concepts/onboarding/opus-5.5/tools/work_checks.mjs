@@ -451,7 +451,7 @@ try {
     return { ok: n >= 3 && n <= 4 && bad.length === 0 && d.length > 0, note: JSON.stringify({ samplesIn6s: n, checked: d.length + m.length, bad: bad.slice(0, 5) }) };
   });
   /* --------------------------------------------------------------- final check F3-2 (audit cycle 2) */
-  await check(40, 'The chat\'s Subagents is a filter of PM_WORK in every scenario: bar count, rows, words and the Live subagents card agree in Query Performance, Runtime Architecture Review and Browser Debug Session (F3-2, D7)', async () => {
+  await check(40, 'The chat\'s Subagents is a filter of PM_WORK in every scenario: bar count, rows, words and the Live subagents card agree in Query performance, Architecture review and Investigate a browser issue (F3-2, D7)', async () => {
     const bad = [], seen = [];
     for (const s of ['busy', 'no-asks', 'quiet', 'many', 'stale', 'restart', 'servers']) {
       await scenario(s);
@@ -479,6 +479,30 @@ try {
     }
     await scenario('busy'); await ev(() => window.PM56_DEMO.selectThread('query')); await sleep(400);
     return { ok: bad.length === 0 && seen.length === 21, note: bad.length ? JSON.stringify(bad.slice(0, 2)) : seen.join(' ') };
+  });
+  await check(41, 'Every agent surface names a chat thread as the chat does: PM_WORK\'s places and its main agents\' titles are the chat\'s thread titles in every scenario, and the rail and the chat header agree (F3-2 follow-up)', async () => {
+    const bad = [];
+    for (const s of ['busy', 'no-asks', 'quiet', 'many', 'stale', 'restart', 'servers']) {
+      await scenario(s);
+      const r = await ev(() => {
+        const W = window.PM_WORK, st = window.PM56_DEMO.getState(), D = window.PM56_DATA;
+        const title = (id) => { const t = (st.threads || []).find((x) => x.id === id) || (D.threads || []).find((x) => x.id === id); return t ? t.title : null; };
+        return W.items({}).filter((x) => x.thread).map((x) => ({ id: x.id, where: x.where, title: x.role === 'main' ? x.title : null, chat: title(x.thread) }))
+          .filter((x) => x.chat == null || x.where !== x.chat || (x.title != null && x.title !== x.chat));
+      });
+      r.forEach((x) => bad.push(s + ' ' + JSON.stringify(x)));
+    }
+    await scenario('busy');
+    await clickAt('.icon[data-ab-id="agents"]'); await sleep(700);
+    const dom = [];
+    for (const [tid, aid] of [['query', 'a-qp'], ['questions', 'a-onb'], ['subagents', 'a-rar'], ['debug', 'a-imp']]) {
+      await ev((t) => window.PM56_DEMO.selectThread(t), tid); await sleep(500);
+      dom.push(await ev(([aid]) => ({ head: ((document.querySelector('#pmRoot .chat-title .pmx-chat-title') || {}).textContent || '').trim(),
+        rail: ((document.querySelector('#panel-agents [data-work-row="' + aid + '"] .wk-copy strong') || {}).textContent || '').trim() }), [aid]));
+    }
+    await ev(() => window.PM56_DEMO.selectThread('query')); await sleep(300);
+    const domOk = dom.every((d) => d.head && d.head === d.rail);
+    return { ok: bad.length === 0 && domOk, note: (bad.length ? bad.slice(0, 3).join(' | ') + ' ' : '') + JSON.stringify(dom) };
   });
 } finally {
   const failed = results.filter((r) => !r.ok).length;

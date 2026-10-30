@@ -9,7 +9,7 @@
  *
  * Scenarios (PM_WORK.fixture.define, the Demo Studio's Activity section switches them):
  *   busy     three things wait on you: 22 agents · 2 questions, 10 processes · 1 needs input (the concept's 16 agents, plus
- *            the hosted chat's Runtime Architecture Review and Browser Debug Session subagents, F3-2)
+ *            the hosted chat's Architecture review and Investigate a browser issue subagents, F3-2)
  *   no-asks  the same work with nothing waiting on you and no failures
  *   quiet    nothing running: the chat's Processes icon is gone, the status bar reads No agents / No processes
  *   many     busy plus 34 more processes across four of the thread's agents, for long lists, the narrow layouts and
@@ -24,6 +24,9 @@
   var W = window.PM_WORK;
   if (!W || !W.fixture || typeof W.fixture.define !== 'function') return;
   function ago(sec) { return Date.now() - sec * 1000; }
+  /* the hosted chat's thread titles as its header and history show them (5.6 Pro narrow-review.js's story titles), so the
+     rail, Home's Agents board and the status bar's panel name a thread the way the chat does */
+  var TITLE = { query: 'Query performance', plain: 'Product design discussion', questions: 'Deployment questions', subagents: 'Architecture review', debug: 'Investigate a browser issue' };
 
   var OUT = {
     dev: ['VITE v7.1.4  ready in 412 ms', 'Local:   http://localhost:5173/', 'Network: use --host to expose', '21:02:14 [vite] page reload src/routes/+page.svelte', '21:09:51 [vite] hmr update /src/lib/QuantityStepper.svelte', '21:12:03 [vite] hmr update /src/routes/recipe/[id]/+page.svelte'],
@@ -61,7 +64,7 @@
   }
 
   function busy() {
-    var t = 'query', tt = 'Query Performance', P = 'tastebook';
+    var t = 'query', tt = TITLE.query, P = 'tastebook';
     return [
       /* ---------------- Assistant · Query performance (the open thread) */
       { id: 'a-qp', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: t, where: tt, title: tt, detail: 'Web search: checking primary documentation for composite indexes', model: 'Claude Sonnet 4.6', state: 'working', startedAt: ago(406) },
@@ -80,24 +83,24 @@
       { id: 'p-test', kind: 'process', role: 'test', project: P, surface: 'assistant', thread: t, where: tt, owner: 'agent-migration', title: 'Analytics tests', command: 'cargo test -p analytics', cwd: '~/tastebook/api', pid: 47930, server: 'local', environment: 'test', state: 'complete', exit: 0, startedAt: ago(470), endedAt: ago(362), delivery: 'agent', tail: OUT.test.slice() },
 
       /* ---------------- other Assistant threads */
-      { id: 'a-rn', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'plain', where: 'Product Design Discussion', title: 'Product Design Discussion', detail: 'Reply finished; its docs preview is still running', model: 'Claude Opus 5', state: 'idle', word: 'Idle', startedAt: ago(4300) },
-      { id: 'p-docs', kind: 'process', role: 'server', project: P, surface: 'assistant', thread: 'plain', where: 'Product Design Discussion', owner: null, title: 'Docs preview', command: 'pnpm docs:dev', cwd: '~/tastebook/docs', pid: 46120, ports: [4321], server: 'local', environment: 'dev', state: 'working', startedAt: ago(4320), delivery: 'user', waits: false, tail: OUT.docs.slice(), gen: 'docs', cpu: 2, mem: 168 },
-      { id: 'a-onb', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'questions', where: 'Deployment Questionnaire', title: 'Deployment Questionnaire', ask: 'Should the first deploy go to staging, or straight to production?', model: 'GPT-5.6', state: 'waiting', startedAt: ago(600), askedAt: ago(182) },
-      /* Runtime Architecture Review: the hosted chat's subagent showcase. Its child agents are the chat's own records
+      { id: 'a-rn', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'plain', where: TITLE.plain, title: TITLE.plain, detail: 'Reply finished; its docs preview is still running', model: 'Claude Opus 5', state: 'idle', word: 'Idle', startedAt: ago(4300) },
+      { id: 'p-docs', kind: 'process', role: 'server', project: P, surface: 'assistant', thread: 'plain', where: TITLE.plain, owner: null, title: 'Docs preview', command: 'pnpm docs:dev', cwd: '~/tastebook/docs', pid: 46120, ports: [4321], server: 'local', environment: 'dev', state: 'working', startedAt: ago(4320), delivery: 'user', waits: false, tail: OUT.docs.slice(), gen: 'docs', cpu: 2, mem: 168 },
+      { id: 'a-onb', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'questions', where: TITLE.questions, title: TITLE.questions, ask: 'Should the first deploy go to staging, or straight to production?', model: 'GPT-5.6', state: 'waiting', startedAt: ago(600), askedAt: ago(182) },
+      /* Architecture review: the hosted chat's subagent showcase. Its child agents are the chat's own records
          (data.js subagents, the same ids), so its Subagents domain is a filter of this projection like every agent surface (F3-2) */
-      { id: 'a-rar', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'subagents', where: 'Runtime Architecture Review', title: 'Runtime Architecture Review', detail: 'Coordinating five reviewers on motion, tokens and themes', model: 'Claude Opus 5', state: 'working', startedAt: ago(1440) },
-      { id: 'agent-motion', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'subagents', where: 'Runtime Architecture Review', parent: 'a-rar', title: 'Motion Reviewer', detail: 'Reviewing popup spring timing and transform origins', model: 'Claude Opus 5', state: 'working', startedAt: ago(48) },
-      { id: 'agent-test', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'subagents', where: 'Runtime Architecture Review', parent: 'a-rar', title: 'Browser Auditor', detail: 'Waiting for the current render pass to settle', model: 'Kimi K3', state: 'waiting-dep', startedAt: ago(36) },
-      { id: 'agent-theme', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'subagents', where: 'Runtime Architecture Review', parent: 'a-rar', title: 'Theme Sweeper', detail: 'Sweeping eight themes for overflow and contrast', model: 'Claude Sonnet 4.6', state: 'working', startedAt: ago(64) },
-      { id: 'agent-tokens', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'subagents', where: 'Runtime Architecture Review', parent: 'a-rar', title: 'Token Harvester', detail: 'Completed the emitted-class harvest', model: 'Qwen 3.8', state: 'complete', startedAt: ago(3228), endedAt: ago(3060) },
-      { id: 'agent-orphan', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'subagents', where: 'Runtime Architecture Review', parent: 'a-rar', title: 'Orphan Gate', detail: 'Failed: the gate ran before the harvest was published', model: 'GLM 5.2', state: 'failed', startedAt: ago(262), endedAt: ago(240) },
-      { id: 'a-imp', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'debug', where: 'Browser Debug Session', title: 'Browser Debug Session', detail: 'Building the API to reproduce the slow page', model: 'Claude Sonnet 4.6', state: 'working', startedAt: ago(940) },
-      /* Browser Debug Session's child agents, the chat's records of the same ids */
-      { id: 'agent-probe', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'debug', where: 'Browser Debug Session', parent: 'a-imp', title: 'Probe Runner', detail: 'Replacing bounding-box assertions with painted-pixel ones', model: 'Kimi K3', state: 'working', startedAt: ago(55) },
-      { id: 'agent-fallback', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'debug', where: 'Browser Debug Session', parent: 'a-imp', title: 'Fallback Router', detail: 'Running on the fallback account after the primary hit its quota', model: 'Qwen 3.8', state: 'working', word: 'Fallback route', startedAt: ago(151) },
-      { id: 'agent-evidence', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'debug', where: 'Browser Debug Session', parent: 'a-imp', title: 'Evidence Collator', detail: 'Queued until the probe conversion lands', model: 'GLM 5.2', state: 'pending', startedAt: ago(0) },
-      { id: 'agent-plan', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'debug', where: 'Browser Debug Session', parent: 'a-imp', title: 'Plan Critic', detail: 'Completed with three revision notes', model: 'Claude Opus 5', state: 'complete', startedAt: ago(4212), endedAt: ago(4020) },
-      { id: 'p-build', kind: 'process', role: 'build', project: P, surface: 'assistant', thread: 'debug', where: 'Browser Debug Session', owner: null, title: 'Release build', command: 'cargo build --release', cwd: '~/tastebook/api', pid: 48302, server: 'local', environment: 'dev', state: 'working', startedAt: ago(96), delivery: 'agent', waits: true, tail: OUT.build.slice(0, 2), gen: 'build', cpu: 88, mem: 1410 },
+      { id: 'a-rar', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'subagents', where: TITLE.subagents, title: TITLE.subagents, detail: 'Coordinating five reviewers on motion, tokens and themes', model: 'Claude Opus 5', state: 'working', startedAt: ago(1440) },
+      { id: 'agent-motion', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'subagents', where: TITLE.subagents, parent: 'a-rar', title: 'Motion Reviewer', detail: 'Reviewing popup spring timing and transform origins', model: 'Claude Opus 5', state: 'working', startedAt: ago(48) },
+      { id: 'agent-test', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'subagents', where: TITLE.subagents, parent: 'a-rar', title: 'Browser Auditor', detail: 'Waiting for the current render pass to settle', model: 'Kimi K3', state: 'waiting-dep', startedAt: ago(36) },
+      { id: 'agent-theme', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'subagents', where: TITLE.subagents, parent: 'a-rar', title: 'Theme Sweeper', detail: 'Sweeping eight themes for overflow and contrast', model: 'Claude Sonnet 4.6', state: 'working', startedAt: ago(64) },
+      { id: 'agent-tokens', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'subagents', where: TITLE.subagents, parent: 'a-rar', title: 'Token Harvester', detail: 'Completed the emitted-class harvest', model: 'Qwen 3.8', state: 'complete', startedAt: ago(3228), endedAt: ago(3060) },
+      { id: 'agent-orphan', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'subagents', where: TITLE.subagents, parent: 'a-rar', title: 'Orphan Gate', detail: 'Failed: the gate ran before the harvest was published', model: 'GLM 5.2', state: 'failed', startedAt: ago(262), endedAt: ago(240) },
+      { id: 'a-imp', kind: 'agent', role: 'main', project: P, surface: 'assistant', thread: 'debug', where: TITLE.debug, title: TITLE.debug, detail: 'Building the API to reproduce the slow page', model: 'Claude Sonnet 4.6', state: 'working', startedAt: ago(940) },
+      /* Investigate a browser issue: its child agents, the chat's records of the same ids */
+      { id: 'agent-probe', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'debug', where: TITLE.debug, parent: 'a-imp', title: 'Probe Runner', detail: 'Replacing bounding-box assertions with painted-pixel ones', model: 'Kimi K3', state: 'working', startedAt: ago(55) },
+      { id: 'agent-fallback', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'debug', where: TITLE.debug, parent: 'a-imp', title: 'Fallback Router', detail: 'Running on the fallback account after the primary hit its quota', model: 'Qwen 3.8', state: 'working', word: 'Fallback route', startedAt: ago(151) },
+      { id: 'agent-evidence', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'debug', where: TITLE.debug, parent: 'a-imp', title: 'Evidence Collator', detail: 'Queued until the probe conversion lands', model: 'GLM 5.2', state: 'pending', startedAt: ago(0) },
+      { id: 'agent-plan', kind: 'agent', role: 'subagent', project: P, surface: 'assistant', thread: 'debug', where: TITLE.debug, parent: 'a-imp', title: 'Plan Critic', detail: 'Completed with three revision notes', model: 'Claude Opus 5', state: 'complete', startedAt: ago(4212), endedAt: ago(4020) },
+      { id: 'p-build', kind: 'process', role: 'build', project: P, surface: 'assistant', thread: 'debug', where: TITLE.debug, owner: null, title: 'Release build', command: 'cargo build --release', cwd: '~/tastebook/api', pid: 48302, server: 'local', environment: 'dev', state: 'working', startedAt: ago(96), delivery: 'agent', waits: true, tail: OUT.build.slice(0, 2), gen: 'build', cpu: 88, mem: 1410 },
 
       /* ---------------- Orchestrator · Run #47 */
       { id: 'o-run', kind: 'agent', role: 'main', project: P, surface: 'orchestrator', where: 'Run #47', title: 'Run #47', detail: 'Tenant analytics and import fixes · 3 lanes', model: 'Overseer', state: 'working', startedAt: ago(2280) },
@@ -138,7 +141,7 @@
       var c = cmds[i % cmds.length], mine = i < 22, failed = i % 9 === 4, done = i % 11 === 6;
       list.push({
         id: 'm-' + i, kind: 'process', role: c[1], project: 'tastebook', surface: mine ? 'assistant' : (i % 2 ? 'orchestrator' : 'scout'), thread: mine ? 'query' : null,
-        where: mine ? 'Query Performance' : (i % 2 ? 'Run #47' : 'Recipe apps survey'), owner: mine ? [null, 'agent-query', 'agent-rollback', 'agent-schema'][i % 4] : (i % 2 ? 'o-laned' : 'sc-web1'),
+        where: mine ? TITLE.query : (i % 2 ? 'Run #47' : 'Recipe apps survey'), owner: mine ? [null, 'agent-query', 'agent-rollback', 'agent-schema'][i % 4] : (i % 2 ? 'o-laned' : 'sc-web1'),
         title: c[0].split(' ')[0] + ' job ' + (i + 1), command: c[0] + ' ' + (i + 1), cwd: '~/tastebook', pid: 49000 + i, ports: c[1] === 'server' ? [6006 + i] : [],
         server: 'local', environment: c[1] === 'test' ? 'test' : 'dev',
         state: failed ? 'failed' : (done ? 'complete' : 'working'), exit: failed ? 2 : (done ? 0 : null),
@@ -154,7 +157,7 @@
     var P = 'tastebook';
     list.push(
       { id: 'p-preview', kind: 'process', role: 'server', project: P, surface: 'orchestrator', where: 'Run #47', owner: 'o-laned', title: 'Preview deploy', command: 'pm deploy preview --tag 0.9.0-rc.2', cwd: '~/tastebook', pid: 3121, ports: [8080], server: 'staging', environment: 'preview', state: 'working', startedAt: ago(640), delivery: 'user', waits: false, tail: OUT.preview.slice(), gen: 'preview', cpu: 9, mem: 380 },
-      { id: 'p-evals', kind: 'process', role: 'script', project: P, surface: 'assistant', thread: 'debug', where: 'Browser Debug Session', owner: null, title: 'Unit normalizer evals', command: 'python evals/run.py --suite unit-normalizer', cwd: '~/tastebook/evals', pid: 7714, server: 'gpu', environment: 'ml', state: 'working', progress: { done: 6, total: 12, unit: 'batches', source: 'provider_reported' }, startedAt: ago(1180), delivery: 'agent', waits: false, tail: OUT.evals.slice(), gen: 'evals', cpu: 22, mem: 6200 },
+      { id: 'p-evals', kind: 'process', role: 'script', project: P, surface: 'assistant', thread: 'debug', where: TITLE.debug, owner: null, title: 'Unit normalizer evals', command: 'python evals/run.py --suite unit-normalizer', cwd: '~/tastebook/evals', pid: 7714, server: 'gpu', environment: 'ml', state: 'working', progress: { done: 6, total: 12, unit: 'batches', source: 'provider_reported' }, startedAt: ago(1180), delivery: 'agent', waits: false, tail: OUT.evals.slice(), gen: 'evals', cpu: 22, mem: 6200 },
       { id: 'p-ci', kind: 'process', role: 'build', project: P, surface: 'orchestrator', where: 'Run #47', owner: 'o-laneb', title: 'CI pipeline 318', command: 'pm ci run --pipeline 318', cwd: '/workspace/tastebook', pid: 211, server: 'ci', environment: 'ci', state: 'working', progress: { done: 4, total: 7, unit: 'steps', source: 'provider_reported' }, startedAt: ago(410), delivery: 'agent', waits: true, tail: OUT.ci.slice(), gen: 'ci', cpu: 64, mem: 2100 }
     );
     return list;
@@ -169,7 +172,7 @@
   W.fixture.define('quiet', function () {
     var keep = { 'p-test': 1, 'o-sleuth': 1, 'o-docs': 1, 'agent-migration': 1 };
     var list = busy().filter(function (x) { return x.kind === 'service' || keep[x.id]; });
-    list.push({ id: 'a-qp', kind: 'agent', role: 'main', project: 'tastebook', surface: 'assistant', thread: 'query', where: 'Query Performance', title: 'Query Performance', detail: 'Reply finished', model: 'Claude Sonnet 4.6', state: 'idle', word: 'Idle', startedAt: ago(800) });
+    list.push({ id: 'a-qp', kind: 'agent', role: 'main', project: 'tastebook', surface: 'assistant', thread: 'query', where: TITLE.query, title: TITLE.query, detail: 'Reply finished', model: 'Claude Sonnet 4.6', state: 'idle', word: 'Idle', startedAt: ago(800) });
     return { items: list, servers: serversBusy() };
   });
   W.fixture.define('many', function () { return { items: many(busy()), servers: serversBusy() }; });
