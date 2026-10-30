@@ -39,6 +39,7 @@ html[data-ab-ready] .activity-item .state-mark { display: none; }
 html[data-ab-ready] .activity-item[data-hover-domain="goal"]       { --ab-ink: var(--ab-ink-goal);       --ab-anim: var(--ab-anim-goal);       --ab-hi: var(--ab-hi-goal);       --ab-bl: var(--ab-bl-goal);       --ab-stroke: var(--ab-stroke-goal); }
 html[data-ab-ready] .activity-item[data-hover-domain="todo"]       { --ab-ink: var(--ab-ink-todo);       --ab-anim: var(--ab-anim-todo);       --ab-hi: var(--ab-hi-todo);       --ab-bl: var(--ab-bl-todo);       --ab-stroke: var(--ab-stroke-todo); }
 html[data-ab-ready] .activity-item[data-hover-domain="subagents"]  { --ab-ink: var(--ab-ink-subagents);  --ab-anim: var(--ab-anim-subagents);  --ab-hi: var(--ab-hi-subagents);  --ab-bl: var(--ab-bl-subagents);  --ab-stroke: var(--ab-stroke-subagents); }
+html[data-ab-ready] .activity-item[data-hover-domain="processes"]  { --ab-ink: var(--ab-ink-processes);  --ab-anim: var(--ab-anim-processes);  --ab-hi: var(--ab-hi-processes);  --ab-bl: var(--ab-bl-processes);  --ab-stroke: var(--ab-stroke-processes); }
 html[data-ab-ready] .activity-item[data-hover-domain="crew"]       { --ab-ink: var(--ab-ink-crew);       --ab-anim: var(--ab-anim-crew);       --ab-hi: var(--ab-hi-crew);       --ab-bl: var(--ab-bl-crew);       --ab-stroke: var(--ab-stroke-crew); }
 html[data-ab-ready] .activity-item[data-hover-domain="brainstorm"] { --ab-ink: var(--ab-ink-brainstorm); --ab-anim: var(--ab-anim-brainstorm); --ab-hi: var(--ab-hi-brainstorm); --ab-bl: var(--ab-bl-brainstorm); --ab-stroke: var(--ab-stroke-brainstorm); }
 html[data-ab-ready] .activity-item[data-hover-domain="review"]     { --ab-ink: var(--ab-ink-review);     --ab-anim: var(--ab-anim-review);     --ab-hi: var(--ab-hi-review);     --ab-bl: var(--ab-bl-review);     --ab-stroke: var(--ab-stroke-review); }
@@ -89,6 +90,7 @@ html[data-ab-ready] .activity-item > svg {
 html[data-ab-goal="working"] .activity-item[data-hover-domain="goal"] > svg .nx-p,
 html[data-ab-todo="working"] .activity-item[data-hover-domain="todo"] > svg .nx-p,
 html[data-ab-subagents="working"] .activity-item[data-hover-domain="subagents"] > svg .nx-p,
+html[data-ab-processes="working"] .activity-item[data-hover-domain="processes"] > svg .nx-p,
 html[data-ab-crew="working"] .activity-item[data-hover-domain="crew"] > svg .nx-p,
 html[data-ab-brainstorm="working"] .activity-item[data-hover-domain="brainstorm"] > svg .nx-p,
 html[data-ab-review="working"] .activity-item[data-hover-domain="review"] > svg .nx-p,
@@ -101,6 +103,7 @@ html[data-ab-artifacts="working"] .activity-item[data-hover-domain="artifacts"] 
 html[data-ab-goal="attention"] .activity-item[data-hover-domain="goal"] > svg .nx-p,
 html[data-ab-todo="attention"] .activity-item[data-hover-domain="todo"] > svg .nx-p,
 html[data-ab-subagents="attention"] .activity-item[data-hover-domain="subagents"] > svg .nx-p,
+html[data-ab-processes="attention"] .activity-item[data-hover-domain="processes"] > svg .nx-p,
 html[data-ab-crew="attention"] .activity-item[data-hover-domain="crew"] > svg .nx-p,
 html[data-ab-brainstorm="attention"] .activity-item[data-hover-domain="brainstorm"] > svg .nx-p,
 html[data-ab-review="attention"] .activity-item[data-hover-domain="review"] > svg .nx-p,
@@ -642,3 +645,9 @@ body.pm56-reduced .hover-card.ab-card, html[data-motion="reduced"] .hover-card.a
 .shared-picker-copy strong { font-size:11px; font-weight:550; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .shared-picker-copy small { font-size:9px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .shared-picker-button > svg { flex:none; }
+
+/* Processes' hover card (W6): a stale feed says so above the rows; what needs input is the foot, in the attention ink */
+.ab-card .ab-proc-strip,
+.ab-card .ab-proc-foot { display: flex; align-items: center; gap: 6px; padding: 7px 12px; font-size: 11.5px; line-height: 1.35; }
+.ab-card .ab-proc-strip { margin: 6px 10px 0; border: 1px solid color-mix(in srgb, var(--warning) 45%, var(--border)); border-radius: 7px; color: var(--text); }
+.ab-card .ab-proc-foot { border-top: 1px solid var(--border); color: var(--warning); }
