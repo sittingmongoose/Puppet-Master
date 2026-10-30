@@ -1,14 +1,42 @@
-# PM7 Plans lane — final direct fixes and GUI alignment, 2026-10-30
+# PM7 Plans lane — final GUI and companion close-out, 2026-10-30
 
-Branch: `t3/plans/pm7-plans-canon`. GUI input: `f99ad183d2dba7ffd272043d242ca57c977d0c70`, merged through `1d960c9a9d1aedcd629862cf428a94c9359df724`. Lead: `pm7-build`.
+Branch: `t3/plans/pm7-plans-canon`. Verified source: `d0f9a0e28ceaeb380c5a462df95e5429e0ee7331`. Final GUI: `f99ad183d2dba7ffd272043d242ca57c977d0c70`, merged through `1d960c9a9d1aedcd629862cf428a94c9359df724`. Lead: `pm7-build`.
 
-**Astra r2 closed all 11 previous findings. N1/N2 are directly repaired; no third review.** N1 has three owner-specific Touch profiles with **19 passing cases (9 accepted / 10 rejected)**. Browser/Terminal retain catalog payload authority and disclose uncompiled body validation; their identity fence and existing CV-333 response are not native effect proof. Scheduling consumes its actual request/result/error contracts without changing them. N2 scopes Teacher/Settings versus ordinary Work-thread availability and exact return/focus, with **five passing cases**. Original WorkTarget, nine Work command IDs and PM7 result definitions remain unchanged.
+**Astra r2 closed all 11 prior findings; its two new minors are directly repaired and proved. No third review. All 10 focused/generation/builder checks pass. Final full gates exit 1; dry landing exit 1 with 0 blockers and 0 infrastructure findings.** The detached runner completed one standalone gates pass followed by one dry pass (whose internal gate copy is inherent). Source and base stayed frozen throughout. No lane defect remains to repair.
 
-Prose first: CS-106, WM-097, UCC-135; final GUI names/state clarifications: ACD-475 and F3-665. ACD-475 now names `PM_BUSY.drag()` and `PM_BUSY.idle(fn, timeout)`; existing `pm-idle` and all caller gates remain. Stop/Quit checkboxes keep their existing controls and semantics. Onboarding geometry/cleanup adds no command name. **G2 squeeze and F3-1 toast placement remain pending Jared; current canon is preserved.**
+| Correction | Result |
+| --- | --- |
+| **N1: reused-owner Touch** | Three precise Browser/Terminal/Scheduling profiles; **19 cases pass (9 accepted / 10 rejected)**, including wrong-owner commands. Scheduling request/result/error fixtures use its unchanged owner schema. Browser/Terminal retain UCC-063/UCC-201 catalog payload authority; their common identity fence and existing CV-333 response projection/error/receipt do not certify uncompiled owner request bodies or native effects. WorkTarget, the nine Work command IDs and PM7 result definitions are unchanged. |
+| **N2: thread consumer** | One `cmd.chat.open_thread` owner/row. Settings Teacher/help keeps its Teacher predicate and exact Settings return/focus. Work accepts its ordinary bound Assistant thread and returns to the exact invoking Work view/focus. **Five cases pass**, including non-Teacher Work and unknown-consumer refusal. |
+| **Final GUI names** | ACD-475 names `PM_BUSY.drag()` / `PM_BUSY.idle(fn, timeout)` and existing `pm-idle`, preserving caller visibility/busy/interaction gates. F3-665 records the Stop/Quit checkbox state fix with the existing controls. Onboarding geometry/cleanup adds no command or binding name. |
 
-Current totals: **477 bindings / 58 PM7 source families; 715 Touch rows / 140 profiles; 1269 production entries; 1011 settings; 22 status keys**. Three profiles are added; no command, action, binding, setting or event family is added. Direct responses and proof are in `REVIEW-COMPANIONS-R2-RESPONSES.md`.
+Prose preceded companions in **five existing owner units**: CS-106, WM-097, UCC-135, ACD-475, F3-665, plus the dated index line. No unit or exact token was removed; only canonical_text changed. Derived changes belong only to the six edited owner/index shard groups. No ledger was compiled; compile witness is not applicable.
 
-All 10 focused/generation/builder checks pass. Shards remain 2956 / 99 sources; index remains 7237 units / 96 documents. Regeneration changes only the six edited owner/index shard groups. Protected governance is unchanged. All 17 full-checkout support paths and the currentness symlink exist. The one shared-vs-local test-file difference is a tracked source difference, retained as checked source rather than overwritten with another checkout. The lead authorized the final full gates and dry landing; they are queued to run sequentially from the frozen pushed source in a durable detached runner. The older full/dry evidence below is historical and does not verify this delta. Mailbox waiter is armed indefinitely (`--timeout 0`).
+Current totals: **477 bindings / 58 PM7 source families; 715 Touch rows / 140 profiles; 1269 production entries; 1011 settings; 22 status keys; 2956 shards / 99 sources; 7237 units / 96 indexed docs**. Three Touch profiles and optional profile metadata are added. No command, local action, binding, setting or event family is added in this final direct fix. Native partial residuals remain partial.
+
+## Final aggregate attribution
+
+All **15428 on-branch findings are governance staleness**; on-branch nonstale rows: 0. New nonstale rows outside edited paths: **8**. All eight new nonstale rows name protected `Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json`: it still references retired `Plans/_shards/storage_value_registry/579-lines-115418-115511.md` and `Plans/_shards/settings_inventory/127-lines-25128-25234.md`, repeated across graph/evidence checks. They are the same outside-path references disclosed in the prior full pass. Protected evidence was left unchanged and these rows are forwarded to the lead. The complete raw results and classification are retained. Baseline `6d9a072b48b3d532593ec5f996e1d7fdd2ab5270` is current against base `6b88cf36dee05cf38fd8871ad2e510bec4a5a580`. Expected governance staleness requests a future reseal under its assigned thread; this lane did not reseal, refresh baseline or migration snapshots, land or take the landing lock.
+
+Failing full groups: `verify_spec_lock`, `validate_plan_graph`, `validate_evidence`, `validate_prd_planning_runtime_contracts`, `validate_implementation_readiness`, `validate_plan_migration`, `validate_pm7_gui_fixtures`, `validate_audit_closure`. These are classified by the dry landing, not waived by a passing focused count check. The final new-outside-path details are recorded in `r2-final-attribution.json`.
+
+All 17 full-checkout support paths and the currentness symlink exist. The one shared-vs-local test-file difference is tracked source and was retained as checked source. The dry runner binds the readiness audit edition and reports no input-identity infrastructure failure.
+
+**Open follow-up decisions:** G2 squeeze canon and F3-1 toast placement remain pending Jared. Current canon is preserved; this pass pre-empts neither. Full direct responses are in `REVIEW-COMPANIONS-R2-RESPONSES.md`. Prior companion and prose closure evidence remains below.
+
+## Evidence and cleanup
+
+Raw root: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/`.
+
+| Artifact | SHA-256 |
+| --- | --- |
+| r2-final-direct-fix-proof.json | `c23be7f5dabacc17a5588a2c1c6c717b01dac74ee86a7d8eb6970c5b847e0322` |
+| r2-final-run-gates.json | `906fb08bef88b4296f40c40ff34bafa07ff5f6952c4e09a7088865e817b0e398` |
+| r2-final-dry-landing.json | `307a29f6516ee4192b192fc4fa610a42ecfc3faf23102716e09ee8635bb83100` |
+| r2-final-attribution.json | `20cb14e0563df8e7999574ef156bab81a20e9f5c394eadb9e04c03a390555bcf` |
+| r2-final-source-snapshot.json | `6818e562fe89bda02a5b17d1218e3f0a7286a8515493d8a8980c56a4bebf4326` |
+
+`verification.json` records exact commands, source identity, all retained raw artifacts and their hashes, including complete dry check reports/exports. Owned scratch/helpers and runner markers are removed; no validation jobs remain. Verification manifest SHA-256: `693a0d55650bd1b030fb4d5bd348dcd65500af5810bc172aed7e097b51b46029`. No browser, server, recording, temporary worktree, landing, lock or reseal was created. Mailbox stays armed indefinitely (`--timeout 0`).
 
 ## Historical checkpoint — companion fix pass 1
 
