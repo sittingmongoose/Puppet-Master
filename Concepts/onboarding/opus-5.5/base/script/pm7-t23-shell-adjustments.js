@@ -896,7 +896,7 @@
       bar.setAttribute('aria-label','Workspace status');
       bar.innerHTML =
         '<div class="pm7-statusbar-group">' +
-          '<button type="button" class="pm7-statusitem" data-status-action="system" aria-haspopup="dialog" aria-expanded="false" aria-controls="pm7-work-system" title="Open system status" data-pm-hover-label="System status" data-pm-hover-detail="Everything Puppet Master needs is running. Click to see each service."><span class="pm7-status-dot"></span><strong>Ready</strong></button>' +
+          '<button type="button" class="pm7-statusitem" data-status-action="system" data-ui-action-id="ui.system_status.open" data-binding-id="statusbar.system_status" aria-haspopup="dialog" aria-expanded="false" aria-controls="pm7-work-system" title="Open system status" data-pm-hover-label="System status" data-pm-hover-detail="Everything Puppet Master needs is running. Click to see each service."><span class="pm7-status-dot"></span><strong>Ready</strong></button>' +
           '<span class="pm7-statusitem" title="Project root" data-pm-hover-label="Project folder" data-pm-hover-detail="Where this Project\'s files are kept on this computer."><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 5.5h5l1.6 1.8h8.4v8.2h-15z"/></svg>~/Puppet-Master</span>' +
         '</div>' +
         /* agents and processes across Puppet Master (W6, D5): their own group, framed by the bar's dividers, between the

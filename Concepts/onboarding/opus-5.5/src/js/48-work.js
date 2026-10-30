@@ -216,7 +216,7 @@
   function ghead(id, ico, title, sumHtml, gotoKey, col) {
     return '<div class="wk-ghead-row"><button type="button" class="wk-ghead" data-work-g="' + esc(id) + '" aria-expanded="' + !col + '">' +
       icon(col ? 'arrow-right' : 'chevron-down', 10) + icon(ico, 13) + '<strong>' + esc(title) + '</strong><span class="wk-gsum">' + sumHtml + '</span></button>' +
-      (gotoKey ? '<button type="button" class="wk-link wk-gopen" data-work-goto="' + esc(gotoKey) + '">' + T(gotoKey === 'system' ? 'sec.systemStatus' : 'sec.open') + '</button>' : '') + '</div>';
+      (gotoKey ? '<button type="button" class="wk-link wk-gopen" data-work-goto="' + esc(gotoKey) + '"' + (gotoKey === 'system' ? ' data-ui-action-id="ui.system_status.open" data-binding-id="work.open_system_status"' : '') + '>' + T(gotoKey === 'system' ? 'sec.systemStatus' : 'sec.open') + '</button>' : '') + '</div>';
   }
   function agentsBody() {
     const all = items();
@@ -794,10 +794,10 @@
     sys = doc.createElement('div');
     sys.id = 'pm7-work-system'; sys.setAttribute('role', 'dialog'); sys.setAttribute('aria-labelledby', 'pm7-work-system-title');
     sys.innerHTML = '<header class="wk-head"><strong id="pm7-work-system-title">' + T('sys.title') + '</strong><span class="wk-head-sum">' + esc(T('sys.sum', { n: list.length })) + '</span><span class="wk-grow"></span>' +
-      '<button type="button" class="wk-ib" data-sys-x aria-label="' + esc(T('close')) + '" data-pm-hover-label="' + esc(T('close')) + '">' + icon('close', 13) + '</button></header>' +
+      '<button type="button" class="wk-ib" data-sys-x data-ui-action-id="ui.system_status.close" aria-label="' + esc(T('close')) + '" data-pm-hover-label="' + esc(T('close')) + '">' + icon('close', 13) + '</button></header>' +
       '<ul class="wk-sys-list">' + list.map((it) => '<li data-tone="' + tone(it) + '">' + st(w.key(it), 12) +
         '<span class="wk-copy"><strong>' + esc(it.title) + '</strong><span class="wk-sub">' + esc(it.where || '') + '</span></span><b data-tone="' + tone(it) + '">' + esc(word(it)) + '</b>' +
-        (SERVICE_SETTING[it.role] ? '<button type="button" class="wk-link" data-sys-open="' + esc(SERVICE_SETTING[it.role]) + '" aria-label="' + esc(T('sys.openLabel', { where: it.where || it.title })) + '">' + T('sys.open') + '</button>' : '') +
+        (SERVICE_SETTING[it.role] ? '<button type="button" class="wk-link" data-sys-open="' + esc(SERVICE_SETTING[it.role]) + '" data-binding-id="system_status.service.open_settings" aria-label="' + esc(T('sys.openLabel', { where: it.where || it.title })) + '">' + T('sys.open') + '</button>' : '') +
         '</li>').join('') + '</ul><p class="wk-dim wk-sys-note">' + T('sys.note') + '</p>';
     root().appendChild(sys);
     if (anchor) anchor.setAttribute('aria-expanded', 'true');

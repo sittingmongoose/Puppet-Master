@@ -581,7 +581,7 @@
         body = '<div class="activity-section-body">' + (id === 'goal' ? goalBody(ctx) : items(ctx, id).map(function (it) {
           var on = isSelected(ctx, id, it.id);
           return '<button class="activity-line pmap-row' + (on ? ' is-selected' : '') + '" data-k="pmap-a:' + esc(ctx, id + ':' + it.id) + '" data-action="' + it.action + '" data-domain="' + id + '"' + it.attrs + '>' +
-            '<span class="pmap-row-mark">' + toneDot(it.tone, it.tone === 'working') + '</span>' +
+            '<span class="pmap-row-mark">' + (it.mark || toneDot(it.tone, it.tone === 'working')) + '</span>' +
             '<span class="copy"><strong>' + esc(ctx, it.title) + '</strong><span>' + esc(ctx, it.sub) + '</span></span>' +
             '<span class="right">' + esc(ctx, it.right) + '</span></button>' +
             (on ? detailCard(ctx, id, it.id) : '');
@@ -605,7 +605,9 @@
     return '<button class="pmap-row' + (on ? ' is-selected' : '') + (extraCls ? ' ' + extraCls : '') +
       '" data-k="pmap-r:' + esc(ctx, it.domain + ':' + it.id) + '" data-action="' + it.action +
       '" data-domain="' + it.domain + '"' + it.attrs + '>' +
-      '<span class="pmap-row-mark">' + toneDot(it.tone, it.tone === 'working') + '</span>' +
+      /* an agent row (Crew's members, and Subagents in the all-domains list) draws its Pip like every agent row
+         (SSYS-056, Muse M3); other rows keep their dot */
+      '<span class="pmap-row-mark">' + (it.mark || toneDot(it.tone, it.tone === 'working')) + '</span>' +
       '<span class="copy"><strong>' + esc(ctx, it.title) + '</strong><span>' + esc(ctx, it.sub) + '</span></span>' +
       '<span class="right">' + right + '</span></button>' +
       (on ? detailCard(ctx, it.domain, it.id) : '');

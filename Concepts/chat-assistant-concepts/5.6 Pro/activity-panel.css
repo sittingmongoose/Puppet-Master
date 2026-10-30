@@ -330,6 +330,9 @@
 }
 .pmap-row:hover { background: var(--surface-3); }
 .pmap-row .pmap-row-mark { display: grid; place-items: center; width: 14px; }
+/* a row whose mark is an agent's Pip gets the agent rows' 20 px column */
+.pmap-row:has(> .pmap-row-mark .pmx-mark) { grid-template-columns: 20px minmax(0,1fr) minmax(56px,auto); }
+.pmap-row .pmap-row-mark:has(.pmx-mark) { width: 20px; line-height: 0; }
 .pmap-row .copy { min-width: 0; flex: 1; }
 .pmap-row .copy strong {
   display: block; overflow: hidden; color: var(--text); font-size: 13px; font-weight: 600;
