@@ -835,6 +835,9 @@
     var NOTIFY_MIN = 120;
     var THEME_ICON = 32;
     var PROJECT_ICON = 32;
+    var BRAND_MARK = 24;   /* the brand folded to Pip's mark (W1) */
+    var brand = bar.querySelector('.app-name');
+    var fullBrandW = 0;
     var popOpen = false;
     var closeTimer = null;
     var raf = null;
@@ -1056,6 +1059,12 @@
       return fullProjectW;
     }
 
+    /* the brand: Pip's mark and the wordmark, or the mark only (W1: "mark only when the bar is squeezed") */
+    function setBrandMode(mode) {
+      if (!brand || brand.getAttribute('data-mode') === mode) return;
+      brand.setAttribute('data-mode', mode);
+    }
+
     function naturalOverflow() {
       var gap = 0;
       var pad = 0;
@@ -1096,6 +1105,8 @@
         } else if (el === themeWrap) {
           if (themeWrap.getAttribute('data-mode') === 'icon') w = THEME_ICON;
           else w = fullThemeW || Math.max(el.offsetWidth || 0, el.scrollWidth || 0);
+        } else if (el === brand) {
+          w = brand.getAttribute('data-mode') === 'mark' ? BRAND_MARK : (fullBrandW || Math.max(el.offsetWidth || 0, el.scrollWidth || 0));
         } else if (el === projectWrap) {
           if (projectWrap.getAttribute('data-mode') === 'icon') w = PROJECT_ICON;
           else w = fullProjectW || Math.max(el.offsetWidth || 0, el.scrollWidth || 0);
@@ -1127,12 +1138,14 @@
       var SEARCH_MAX = searchMaxPx();
       setSearchMode('full');
       setThemeMode('icon');
+      setBrandMode('full');
       setProjectMode('full');
       setSearchW(SEARCH_MAX);
       setNotifyW(NOTIFY_MAX);
       resetPageTabsOverflow();
       void bar.offsetWidth;
       measureProjectFull();
+      if (brand) fullBrandW = brand.offsetWidth || fullBrandW;
 
       var over = naturalOverflow();
       if (over <= 0) return;
@@ -1164,13 +1177,20 @@
       }
       if (need <= 0) return;
 
-      /* 4) Project label → folder icon */
+      /* 4) The brand → Pip's mark only: the wordmark goes before the project's name, which says where you are */
+      if (brand) {
+        setBrandMode('mark');
+        need -= Math.max(0, fullBrandW - BRAND_MARK);
+        if (need <= 0) return;
+      }
+
+      /* 5) Project label → folder icon */
       var pw = fullProjectW || measureProjectFull();
       setProjectMode('icon');
       need -= Math.max(0, pw - PROJECT_ICON);
       if (need <= 0) return;
 
-      /* 5) Progressive page-tab overflow → ▼ sprout (last resort) */
+      /* 6) Progressive page-tab overflow → ▼ sprout (last resort) */
       if (naturalOverflow() > 0) fitPageTabsOverflow();
     }
 

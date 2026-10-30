@@ -1363,6 +1363,23 @@
       white-space: nowrap;
       flex: 0 0 auto;
       margin-inline-start: 0; /* inset comes only from title-bar padding */
+      /* the brand (W1, F3-660): Pip's static 24 px mark, then the look's wordmark (each look styles the word through its
+         title-bar fonts and the rules below) */
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    /* the mark's slot keeps its size before pm7-brand-mark.js draws into it, so the bar never moves when it arrives */
+    .title-bar .app-name .pm-brand-mark { display: inline-flex; flex: none; width: 24px; height: 24px; }
+    .title-bar .app-name .pm-brand-mark > svg { display: block; width: 24px; height: 24px; }
+    /* a squeezed bar shows the mark only (pm6-js-panels.js applyDensity); the word stays in the accessibility tree */
+    .title-bar .app-name[data-mode="mark"] .pm-brand-word {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
     }
     /* The project box (option A "Tab"; F3-661, DL-236): one of the title bar's tabs. It has the page tabs' 28 px height,
        type and resting ink, a folder and a drawn chevron from PMG, the project's badge from the shared status marks, and
