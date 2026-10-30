@@ -23,8 +23,11 @@
   'use strict';
   const O55 = window.O55, U = O55.util, esc = U.esc, T = (k, v) => O55.t(k, v), M = O55.studio;
   const real = O55.motion.real;
-  const SECTIONS = ['start', 'onboarding', 'tour', 'story', 'workspace', 'chat', 'usage', 'notices', 'looks', 'reset', 'switches'];
-  const ST = { el: null, entry: null, sheet: null, open: false, section: 'start', q: '', pick: null, sw: null, confirm: null, timer: 0, tick: 0, anims: [], busy: false, focusKey: null, pos: null, home: null, drag: null, chatView: 'guided' };
+  const SECTIONS = ['start', 'onboarding', 'tour', 'story', 'workspace', 'chat', 'usage', 'notices', 'looks', 'pip', 'reset', 'switches'];
+  /* pip*: the Pip section's lab picks (the face last worn, the loader take, the sound kit and the line Pip says); never
+     saved, like the chat's takes */
+  const ST = { el: null, entry: null, sheet: null, open: false, section: 'start', q: '', pick: null, sw: null, confirm: null, timer: 0, tick: 0, anims: [], busy: false, focusKey: null, pos: null, home: null, drag: null, chatView: 'guided',
+    pipMood: null, pipMotion: 'swing', pipEvery: false, pipKit: 'look', pipSay: null, pipSayMood: 'happy' };
   const POS_KEY = 'pm.o55.demo-studio.v1';
   const SNAP = 28;   /* px from its corner within which a dropped sheet goes home */
 
@@ -97,7 +100,14 @@
     revert: '<path d="M9 14.5L4.5 10 9 5.5"/><path d="M4.5 10H15a4.5 4.5 0 0 1 0 9h-3"/>',
     attach: '<path d="M19.5 11.5l-7.6 7.6a4.5 4.5 0 0 1-6.4-6.4l7.9-7.9a3 3 0 0 1 4.2 4.2l-7.9 7.9a1.5 1.5 0 0 1-2.1-2.1l7.3-7.3"/>',
     moment: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12h4"/><path d="M12 3.5v1.5"/>',
-    takes: '<rect x="3.5" y="4.5" width="7.5" height="7" rx="1"/><rect x="13" y="4.5" width="7.5" height="7" rx="1"/><rect x="3.5" y="13.5" width="7.5" height="7" rx="1"/><path d="M13.5 17h6.5M16.75 13.75v6.5"/>'
+    takes: '<rect x="3.5" y="4.5" width="7.5" height="7" rx="1"/><rect x="13" y="4.5" width="7.5" height="7" rx="1"/><rect x="3.5" y="13.5" width="7.5" height="7" rx="1"/><path d="M13.5 17h6.5M16.75 13.75v6.5"/>',
+    /* Pip in the Studio's own stroke grammar: the control bar, two strings and the head (the real mark is drawn by
+       PMLogo in the Pip section itself) */
+    pip: '<path d="M5 4h14"/><path d="M8.5 4v6.2M15.5 4v6.2"/><circle cx="12" cy="14.5" r="5.5"/><path d="M10 14v.6M14 14v.6"/>',
+    titlebar: '<rect x="3.5" y="4.5" width="17" height="15" rx="1.5"/><path d="M3.5 9h17"/><path d="M6.5 6.8h3M12 6.8h5"/>',
+    loader: '<path d="M12 3.5a8.5 8.5 0 1 1-8.5 8.5"/><path d="M12 7.5v4.5l3 2"/>',
+    oops: '<circle cx="12" cy="12" r="8.5"/><path d="M8.5 10h.01M15.5 10h.01"/><path d="M8.8 16c1-1 2-1.4 3.2-1.4s2.2.4 3.2 1.4"/><path d="M17.5 6.5c.8.7 1.1 1.5 1 2.4"/>',
+    ask: '<circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.5a2.5 2.5 0 1 1 3.4 2.3c-.7.3-1 .8-1 1.5v.4"/><path d="M12 16.5v.01"/>'
   };
   const ico = (n, s) => `<svg class="pmds-ico pmds-ico-${n}" viewBox="0 0 24 24" width="${s || 16}" height="${s || 16}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${PATHS[n] || PATHS.spark}</svg>`;
   M.icon = ico;
@@ -128,11 +138,11 @@
   /* a keyed switch row (the Settings switch grammar: the look's rectangle, a lit layer, a square key) */
   function sw(o) {
     return `<div class="pmds-swrow${o.off ? ' pmds-unavail' : ''}"><span class="pmds-swart" aria-hidden="true">${ico(o.icon, 18)}</span><span class="pmds-swtext"><span class="pmds-swtitle" id="pmds-sw-${esc(o.id)}">${esc(o.title)}</span>${o.sub ? `<span class="pmds-swsub">${esc(o.sub)}</span>` : ''}</span>`
-      + `<button type="button" role="switch"${at({ class: 'pmds-switch', 'aria-checked': String(!!o.on), 'aria-labelledby': `pmds-sw-${o.id}`, 'data-pmds-do': o.do, 'data-key': `sw:${o.id}`, 'data-pmh': o.off ? null : 'ctl', 'aria-disabled': o.off ? 'true' : null, title: o.off ? T('studio.toast.unavailable') : null })}><span class="pmds-switch-key"></span></button></div>`;
+      + `<button type="button" role="switch"${at({ class: 'pmds-switch', 'aria-checked': String(!!o.on), 'aria-labelledby': `pmds-sw-${o.id}`, 'data-pmds-do': o.do, 'data-arg': o.arg, 'data-key': `sw:${o.id}`, 'data-pmh': o.off ? null : 'ctl', 'aria-disabled': o.off ? 'true' : null, title: o.off ? T('studio.toast.unavailable') : null })}><span class="pmds-switch-key"></span></button></div>`;
   }
   /* a joined choice row (NP-CHOICE): one rectangle, thin dividers, the chosen cell filled */
   function seg(o) {
-    return `<div class="pmds-seg" role="radiogroup"${at({ 'aria-label': o.label })}>` + o.items.map((it) => `<button type="button" role="radio"${at({ class: `pmds-segcell${it.v === o.value ? ' pmds-on' : ''}`, 'aria-checked': String(it.v === o.value), 'data-pmds-do': o.do, 'data-arg': it.v, 'data-key': `${o.do}:${it.v}`, 'data-pmh': o.off ? null : 'ctl', 'aria-disabled': o.off ? 'true' : null })}>${it.icon ? ico(it.icon, 14) : ''}<span>${esc(it.label)}</span></button>`).join('') + '</div>';
+    return `<div class="pmds-seg${o.cls ? ' ' + o.cls : ''}" role="radiogroup"${at({ 'aria-label': o.label })}>` + o.items.map((it) => `<button type="button" role="radio"${at({ class: `pmds-segcell${it.v === o.value ? ' pmds-on' : ''}`, 'aria-checked': String(it.v === o.value), 'data-pmds-do': o.do, 'data-arg': it.v, 'data-key': `${o.do}:${it.v}`, 'data-pmh': o.off ? null : 'ctl', 'aria-disabled': o.off ? 'true' : null })}>${it.icon ? ico(it.icon, 14) : ''}<span>${esc(it.label)}</span></button>`).join('') + '</div>';
   }
   function head(sec, extra) {
     return `<header class="pmds-phead"><p class="pmds-kicker">${esc(T(`studio.${sec}.kicker`))}</p><h3 class="pmds-ptitle" data-pmds-decode>${esc(T(`studio.${sec}.title`))}</h3><p class="pmds-lead">${esc(T(`studio.${sec}.lead`))}</p>${extra || ''}</header>`;
@@ -161,13 +171,22 @@
     const runs = `<div class="pmds-runbar"><div class="pmds-runtext"><span class="pmds-runkicker">${esc(T('studio.onboarding.will'))}</span><span class="pmds-runsit" data-pmds-live="pick">${esc(M.situationLong(M.joinSituation(p)))}</span><span class="pmds-runstate">${esc(stateLine)}</span></div>`
       + `<div class="pmds-runacts">${st.kind === 'closed' ? btn(T('studio.onboarding.continue'), { do: 'onboarding-continue', icon: 'back' }) : ''}${btn(T('studio.onboarding.run'), { do: 'run-pick', kind: 'primary', icon: 'play', off: !M.onboarding.avail() })}</div></div>`;
     const base = `<div class="pmds-choices pmds-choices-base" role="radiogroup" aria-label="${esc(T('studio.onboarding.startAs'))}">` + M.BASES.map((b) => choice(b, p.base === b, 'radio', 'pick-base')).join('') + '</div>';
-    const twists = M.GROUPS.map((g) => `<div class="pmds-twistgroup"><h5 class="pmds-gtitle">${ico(g.id === 'computer' ? 'computer' : g.id === 'nas' ? 'nas' : g.id === 'online' ? 'cloud' : 'spark', 14)}<span>${esc(T(`studio.onboarding.groups.${g.id}`))}</span></h5><div class="pmds-choices">`
+    const twists = M.GROUPS.map((g) => `<div class="pmds-twistgroup"><h5 class="pmds-gtitle">${ico({ computer: 'computer', nas: 'nas', online: 'cloud', pip: 'pip' }[g.id] || 'spark', 14)}<span>${esc(T(`studio.onboarding.groups.${g.id}`))}</span></h5><div class="pmds-choices">`
       + g.ids.map((id) => choice(id, p.twists.includes(id), 'checkbox', 'pick-twist')).join('') + '</div></div>').join('');
     const screens = '<div class="pmds-screens">' + M.SCREEN_CHAPTERS.map(([ch, ids]) => `<div class="pmds-scgroup"><h5 class="pmds-gtitle"><span>${esc(T(`studio.onboarding.chapters.${ch}`))}</span><span class="pmds-count">${ids.length}</span></h5><div class="pmds-sclist">`
       + ids.map((id) => `<button type="button"${at({ class: 'pmds-scrow', 'data-pmds-do': 'open-screen', 'data-arg': id, 'data-key': `open-screen:${id}`, 'data-pmh': M.hasScreen(id) && M.onboarding.avail() ? 'row' : null, 'aria-disabled': M.hasScreen(id) && M.onboarding.avail() ? null : 'true' })}><span>${esc(T(`studio.onboarding.screens.${id}`))}</span>${ico('chevron', 13)}</button>`).join('') + '</div></div>').join('') + '</div>';
+    /* Pip's moments (W3): the oops states and a ? note open; each opens its screen and does what a person would, and the
+       Studio stays open beside the window */
+    const P = M.pipOnboarding;
+    const prow = (action, id, ok, icon) => `<button type="button"${at({ class: 'pmds-scrow pmds-pmrow', 'data-pmds-do': action, 'data-arg': id, 'data-key': `${action}:${id}`, 'data-pmh': ok ? 'row' : null, 'aria-disabled': ok ? null : 'true' })}>`
+      + `<span class="pmds-pmtext"><span>${esc(T(`studio.onboarding.${action === 'onb-oops' ? 'oops' : 'ask'}.items.${id}.title`))}</span><span class="pmds-pmsub">${esc(T(`studio.onboarding.${action === 'onb-oops' ? 'oops' : 'ask'}.items.${id}.sub`))}</span></span>${ico(icon, 13)}</button>`;
+    const pipBlock = `<div class="pmds-screens pmds-pmgroups"><div class="pmds-scgroup"><h5 class="pmds-gtitle">${ico('oops', 14)}<span>${esc(T('studio.onboarding.oops.title'))}</span><span class="pmds-count">${P.OOPS.length}</span></h5><div class="pmds-sclist">`
+      + P.OOPS.map((o) => prow('onb-oops', o.id, P.oopsAvail(o.id), 'chevron')).join('') + `</div></div><div class="pmds-scgroup"><h5 class="pmds-gtitle">${ico('ask', 14)}<span>${esc(T('studio.onboarding.ask.title'))}</span><span class="pmds-count">${P.ASKS.length}</span></h5><div class="pmds-sclist">`
+      + P.ASKS.map((a) => prow('onb-ask', a.id, P.askAvail(a.id), 'chevron')).join('') + '</div></div></div>';
     return head('onboarding') + runs
       + block(T('studio.onboarding.startAs'), base)
       + block(T('studio.onboarding.twists'), `<div class="pmds-twists">${twists}</div>`)
+      + block(T('studio.onboarding.pipTitle'), pipBlock, { lead: T('studio.onboarding.pipLead') })
       + block(T('studio.onboarding.screensTitle'), screens, { lead: T('studio.onboarding.screensLead') });
   };
   function choice(id, on, role, action) {
@@ -223,8 +242,26 @@
       + actRow('terminal', T('studio.workspace.terminal'), T('studio.workspace.terminalSub'), btn(T('studio.workspace.terminalGo'), { do: 'agent-terminal', icon: 'play', off: !W.termAvail() }))
       + actRow('hand', T('studio.workspace.ask'), T('studio.workspace.askSub'), btn(T('studio.workspace.askGo'), { do: 'agent-ask', icon: 'play', off: !W.termAvail() })) + '</div>';
     return head('workspace') + block(T('studio.workspace.layouts'), lays, { lead: T('studio.workspace.layoutsLead') })
-      + block('', agents);
+      + titleBarBlock() + block('', agents);
   };
+  /* a radio card (the choice primitive every look styles): title, an optional line under it */
+  const radioCard = (on, action, arg, title, sub, o) => `<button type="button" role="radio"${at({ class: `pmds-choice${o && o.cls ? ' ' + o.cls : ''}${on ? ' pmds-on' : ''}`, 'aria-checked': String(!!on), 'data-pmds-do': action, 'data-arg': arg, 'data-key': `${action}:${arg}`, 'data-pmh': o && o.off ? null : 'tile', 'aria-disabled': o && o.off ? 'true' : null })}>`
+    + `<span class="pmds-mark" aria-hidden="true">${ico('check', 12)}</span><span class="pmds-choice-text"><span class="pmds-choice-title">${esc(title)}</span>${sub ? `<span class="pmds-choice-sub">${esc(sub)}</span>` : ''}</span></button>`;
+  /* Workspace › Title bar (W1, W2; option A "Tab" only): the project box's state as the projection reports it, a long
+     name, the bar's width (its own density folds it) and the menu */
+  function titleBarBlock() {
+    const TB = M.titlebar, k = 'studio.workspace.titlebar';
+    if (!TB.avail()) return block(T(`${k}.title`), `<p class="pmds-fine">${esc(T(`${k}.unavailable`))}</p>`);
+    const st = TB.state(), f = TB.folds(), sOk = TB.stateAvail(), w = TB.width();
+    const states = `<div class="pmds-choices pmds-choices-box" role="radiogroup" aria-label="${esc(T(`${k}.state`))}">`
+      + TB.STATES.map((id) => radioCard(st && st.id === id, 'tb-state', id, T(`${k}.states.${id}.title`), T(`${k}.states.${id}.sub`), { off: !sOk })).join('') + '</div>'
+      + `<p class="pmds-fine pmds-tbsays">${esc(T(`${k}.says`, { say: st && st.say ? st.say : T(`${k}.states.${st ? st.id : 'calm'}.title`) }))}</p>`;
+    const widths = `<div class="pmds-rowacts"><span class="pmds-btitle">${esc(T(`${k}.width`))}</span>${seg({ do: 'tb-width', value: w, label: T(`${k}.width`), off: !TB.widthAvail(), items: TB.WIDTHS.map((v) => ({ v, label: v === 'full' ? T(`${k}.full`) : T(`${k}.px`, { n: v }) })) })}</div>`
+      + `<p class="pmds-fine">${esc(T(`${k}.folds`, { brand: T(`${k}.brand.${f.brand === 'mark' ? 'mark' : 'full'}`), box: T(`${k}.box.${f.box === 'icon' ? 'icon' : 'full'}`) }))}${w !== 'full' && !TB.WIDTHS.includes(w) ? ' ' + esc(T(`${k}.custom`, { n: w })) : ''}</p>`;
+    const rows = sw({ id: 'tb-long', icon: 'workspace', title: T(`${k}.long`), sub: T(`${k}.longSub`, { name: TB.LONG.id }), on: TB.longOn(), do: 'tb-long', off: !TB.longAvail() })
+      + `<div class="pmds-actrows pmds-tbacts">${actRow('list', T(`${k}.menu`), T(`${k}.menuSub`), btn(T(`${k}.menuGo`), { do: 'tb-menu', icon: 'arrow', off: !TB.menuAvail() }))}</div>`;
+    return block(T(`${k}.title`), `<h5 class="pmds-gtitle"><span>${esc(T(`${k}.state`))}</span></h5>${states}${widths}<div class="pmds-tbrows">${rows}</div>`, { lead: T(`${k}.lead`), cls: 'pmds-titlebar' });
+  }
   const actRow = (icon, title, sub, act) => `<div class="pmds-actrow"><span class="pmds-swart" aria-hidden="true">${ico(icon, 18)}</span><span class="pmds-swtext"><span class="pmds-swtitle">${esc(title)}</span><span class="pmds-swsub">${esc(sub)}</span></span>${act}</div>`;
 
   /* ---- the assistant chat (91: M.chat over PM56_PORT.demo): recorded examples first, then the moments, then the take
@@ -302,6 +339,71 @@
         + sw({ id: 'sound', icon: 'sound', title: T('studio.looks.sound'), sub: T('studio.looks.soundSub'), on: L.soundAvail() && L.sound(), do: 'sound', off: !L.soundAvail() }));
   };
 
+  /* ---- Pip (W1, W4, W5): the kit in every look, faces on every live Pip, a squeezed title bar, the loader and Pip's
+     sound board. Every drawing is the kit's own (PMLogo.svg for the other looks, PMLogo.mark for the painted one), every
+     loader PM_PIP_LOADER's, every sound the one player's. ---- */
+  const SAY_MOODS = ['happy', 'idle', 'wonder', 'think', 'oops', 'sleep', 'alert'];
+  R.pip = () => {
+    const P = M.pip;
+    if (!P.avail()) return head('pip') + `<p class="pmds-fine">${esc(T('studio.pip.unavailable'))}</p>`;
+    return head('pip') + pipLooks() + pipMoods() + pipSqueeze() + pipLoader() + pipSound();
+  };
+  function pipLooks() {
+    const P = M.pip, painted = window.PMLogo.look(), tray = P.tray(), k = 'studio.pip.looks';
+    const cell = (lk, form, px, extra, mood) => `<span class="pmds-pipsw${extra ? ' ' + extra : ''}" style="background:${esc(P.ground(lk))}">${P.svg({ look: lk, form, px, mood: mood || 'idle' })}</span>`;
+    const rows = P.looks().map((lk) => {
+      const fam = lk.split('-')[0], mode = /-light$/.test(lk) ? 'light' : 'dark', now = lk === painted;
+      return `<tr${now ? ' class="pmds-on"' : ''}><th scope="row"><span class="pmds-ptlook">${esc(T(`studio.looks.families.${fam}`))} ${esc(T(`studio.looks.${mode}`))}</span>${now ? `<span class="pmds-ptnow">${esc(T(`${k}.now`))}</span>` : ''}</th>`
+        + `<td>${cell(lk, 'glyph', 24)}</td><td>${cell(lk, 'tile', 40, 'pmds-pipsw-tile')}</td>`
+        + `<td><span class="pmds-pttray">${tray.map((t) => cell(lk, 'tray', 16, 'pmds-pipsw-tray', t.mood)).join('')}</span></td></tr>`;
+    }).join('');
+    const table = `<div class="pmds-ptwrap"><table class="pmds-piptable"><thead><tr><th scope="col">${esc(T(`${k}.look`))}</th><th scope="col">${esc(T(`${k}.mark`))}</th><th scope="col">${esc(T(`${k}.tile`))}</th><th scope="col">${esc(T(`${k}.tray`))}</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    const legend = `<p class="pmds-fine">${esc(T(`${k}.trayOrder`, { list: tray.map((t) => T(`studio.pip.tray.${t.key}`)).join(', ') }))}</p>`;
+    return block(T(`${k}.title`), table + legend, { lead: T(`${k}.lead`) });
+  }
+  function pipMoods() {
+    const P = M.pip, live = P.live(), k = 'studio.pip.moods';
+    const faces = `<div class="pmds-looks pmds-faces" role="group" aria-label="${esc(T(`${k}.title`))}">` + P.moods().map((m) => `<button type="button"${at({ class: `pmds-looktile pmds-facetile${ST.pipMood === m ? ' pmds-on' : ''}`, 'aria-pressed': String(ST.pipMood === m), 'data-pmds-do': 'pip-mood', 'data-arg': m, 'data-key': `pip-mood:${m}`, 'data-pmh': 'tile' })}>`
+      + `<span class="pmds-face" aria-hidden="true">${P.mark({ px: 44, mood: m })}</span><span class="pmds-looklabel"><span>${esc(T(`${k}.names.${m}`))}</span></span></button>`).join('') + '</div>';
+    const reached = [live.stage ? T(`${k}.reachStage`) : '', live.chat ? T(live.chat === 1 ? `${k}.reachChat1` : `${k}.reachChat`, { n: live.chat }) : ''].filter(Boolean);
+    const line = `<p class="pmds-fine" data-pmds-live="pip-reach">${esc(reached.length ? T(`${k}.reach`, { list: reached.join(T('studio.pip.and')) }) : T(`${k}.none`))}</p>`;
+    return block(T(`${k}.title`), faces + line, { lead: T(`${k}.lead`) });
+  }
+  function pipSqueeze() {
+    const TB = M.titlebar, f = TB.folds(), w = TB.width(), k = 'studio.pip.squeeze';
+    const sub = f.brand === 'mark' ? T(`${k}.subMark`, { n: w === 'full' ? T('studio.workspace.titlebar.full') : w }) : T(`${k}.sub`);
+    return block(T(`${k}.title`), '<div class="pmds-actrows">' + actRow('titlebar', T(`${k}.row`), sub,
+      btn(T(`${k}.go`), { do: 'pip-mark-only', icon: 'arrow', off: !TB.markAvail() }) + (w !== 'full' ? btn(T('studio.workspace.titlebar.fullWidth'), { do: 'tb-width', arg: 'full', kind: 'quiet', icon: 'back' }) : '<span></span>')) + '</div>');
+  }
+  function pipLoader() {
+    const P = M.pip, ok = P.loaderAvail(), mo = ST.pipMotion, k = 'studio.pip.loader', nier = !!O55.theme().nier;
+    const sizes = [12, 16, 24, 44];
+    const strip = (m) => `<div class="pmds-ldrow"><span class="pmds-ldname">${esc(T(`${k}.motions.${m}`))}</span>${sizes.map((px) => `<span class="pmds-ldcell">${P.loader(m, px)}<span class="pmds-ldpx">${esc(T(`${k}.px`, { n: px }))}</span></span>`).join('')}</div>`;
+    const take = `<div class="pmds-rowacts"><span class="pmds-btitle">${esc(T(`${k}.take`))}</span>${seg({ do: 'pip-motion', value: ST.pipEvery ? '' : mo, label: T(`${k}.take`), off: !ok, items: P.motions().map((m) => ({ v: m, label: T(`${k}.motions.${m}`) })) })}</div>`;
+    const wall = ok ? `<div class="pmds-ldwall">${(ST.pipEvery ? P.motions() : [mo]).map(strip).join('')}</div>` : `<p class="pmds-fine">${esc(T(`${k}.unavailable`))}</p>`;
+    const notes = `<p class="pmds-fine">${esc(T(nier ? `${k}.nier` : `${k}.context`))} ${esc(T(`${k}.reduced`))}</p>`;
+    const st = ok ? P.stats() : null;
+    const acts = '<div class="pmds-actrows">'
+      + actRow('loader', T(`${k}.every`), T(`${k}.everySub`), `<span class="pmds-fine" data-pmds-live="loader-stats">${st ? esc(T(`${k}.stats`, { n: st.live, m: st.running })) : ''}</span>` + btn(T(`${k}.everyGo`), { do: 'pip-every', icon: 'play', off: !ok }))
+      + actRow('clock', T(`${k}.busy`), T(`${k}.busySub`), btn(T(`${k}.busyGo`), { do: 'pip-busy', icon: 'play', off: !ok, cls: 'pmds-busybtn' }) + '<span></span>') + '</div>';
+    const hold = sw({ id: 'pip-hold', icon: 'pause', title: T(`${k}.hold`), sub: T(`${k}.holdSub`), on: P.holdAvail() && P.held(), do: 'pip-hold', off: !P.holdAvail() });
+    return block(T(`${k}.title`), take + wall + notes + acts + `<div class="pmds-holdrow">${hold}</div>`, { lead: T(`${k}.lead`) });
+  }
+  function pipSound() {
+    const P = M.pip, ok = P.soundAvail(), k = 'studio.pip.sound', kit = ST.pipKit;
+    if (!ok) return block(T(`${k}.title`), `<p class="pmds-fine">${esc(T(`${k}.unavailable`))}</p>`);
+    const own = P.kitFor('look');
+    const kits = `<div class="pmds-rowacts"><span class="pmds-btitle">${esc(T(`${k}.kit`))}</span>${seg({ do: 'pip-kit', value: kit, label: T(`${k}.kit`), cls: 'pmds-seg-wrap', items: [{ v: 'look', label: T(`${k}.byLook`, { kit: T(`${k}.kits.${own}`) }) }].concat(P.kits().map((x) => ({ v: x, label: T(`${k}.kits.${x}`) }))) })}</div>`;
+    const off = P.muted() ? '<div class="pmds-actrows">' + actRow('sound', T(`${k}.off`), T(`${k}.offSub`), btn(T(`${k}.turnOn`), { do: 'sound', icon: 'sound', kind: 'primary' }) + '<span></span>') + '</div>' : '';
+    const events = P.events().map((g) => `<div class="pmds-evgroup"><h5 class="pmds-gtitle"><span>${esc(T(`${k}.groups.${g.id}`))}</span><span class="pmds-count">${g.ids.length}</span></h5><div class="pmds-chips">`
+      + g.ids.map((e) => btn(T(`${k}.events.${e}`), { do: 'pip-play', arg: `${g.window ? 'window' : 'kit'}:${e}`, kind: 'quiet', icon: 'play', iconSize: 12, cls: 'pmds-chip' })).join('') + '</div></div>').join('');
+    const loops = P.loops().map((n) => sw({ id: `pip-loop-${n}`, icon: 'motion', title: T(`${k}.loops.${n}.title`), sub: T(`${k}.loops.${n}.sub`), on: !!P.loopsOn[n], do: 'pip-loop', arg: n })).join('');
+    const sayText = ST.pipSay == null ? T(`${k}.sayDefault`) : ST.pipSay;
+    const sayBox = `<div class="pmds-say"><label class="pmds-btitle" for="pmds-say">${esc(T(`${k}.sayLabel`))}</label><div class="pmds-sayrow"><input id="pmds-say" class="pmds-url pmds-sayq" value="${esc(sayText)}" maxlength="160" spellcheck="false" autocomplete="off">`
+      + btn(T(`${k}.sayGo`), { do: 'pip-say', kind: 'primary', icon: 'play' }) + `</div><div class="pmds-rowacts">${seg({ do: 'pip-saymood', value: ST.pipSayMood, label: T(`${k}.sayMood`), cls: 'pmds-seg-wrap', items: SAY_MOODS.map((m) => ({ v: m, label: T(`studio.pip.moods.names.${m}`) })) })}</div></div>`;
+    return block(T(`${k}.title`), kits + off + `<div class="pmds-evgroups">${events}</div>` + `<h5 class="pmds-gtitle pmds-loopstitle"><span>${esc(T(`${k}.loopsTitle`))}</span><span class="pmds-count">${P.loops().length}</span></h5><div class="pmds-loops">${loops}</div>` + sayBox, { lead: T(`${k}.lead`) });
+  }
+
   R.reset = () => {
     const keys = M.reset.ownedKeys();
     const cards = '<div class="pmds-resets">' + M.reset.ids.map((id, i) => {
@@ -359,6 +461,22 @@
     add('looks', T('studio.looks.nier'), T('studio.looks.nierSub'), ['nier'], 'pod');
     add('looks', T('studio.looks.reduced'), T('studio.looks.reducedSub'), ['reduced'], 'motion');
     add('looks', T('studio.looks.sound'), T('studio.looks.soundSub'), ['sound'], 'sound');
+    /* Pip, the title bar and onboarding's Pip moments */
+    M.pip.moods().forEach((m) => add('pip', `${T('studio.pip.searchFace')} ${T(`studio.pip.moods.names.${m}`)}`, T('studio.pip.moods.title'), ['pip-mood', m], 'pip'));
+    add('pip', T('studio.pip.looks.title'), T('studio.pip.looks.lead'), ['go', 'pip'], 'pip');
+    add('pip', T('studio.pip.squeeze.row'), T('studio.pip.squeeze.sub'), ['pip-mark-only'], 'titlebar');
+    M.pip.motions().forEach((m) => add('pip', `${T('studio.pip.loader.title')}: ${T(`studio.pip.loader.motions.${m}`)}`, T('studio.pip.loader.take'), ['pip-motion', m], 'loader'));
+    add('pip', T('studio.pip.loader.every'), T('studio.pip.loader.everySub'), ['pip-every'], 'loader');
+    add('pip', T('studio.pip.loader.hold'), T('studio.pip.loader.holdSub'), ['go', 'pip'], 'pause');
+    add('pip', T('studio.pip.sound.title'), T('studio.pip.sound.lead'), ['go', 'pip'], 'sound');
+    M.pip.loops().forEach((n) => add('pip', T(`studio.pip.sound.loops.${n}.title`), T('studio.pip.sound.loopsTitle'), ['go', 'pip'], 'sound'));
+    add('pip', T('studio.pip.sound.sayLabel'), T('studio.pip.sound.title'), ['go', 'pip'], 'sound');
+    M.titlebar.STATES.forEach((id) => add('workspace', `${T('studio.workspace.titlebar.searchState')} ${T(`studio.workspace.titlebar.states.${id}.title`)}`, T(`studio.workspace.titlebar.states.${id}.sub`), ['tb-state', id], 'titlebar'));
+    add('workspace', T('studio.workspace.titlebar.long'), T('studio.workspace.titlebar.title'), ['tb-long'], 'titlebar');
+    M.titlebar.WIDTHS.forEach((v) => add('workspace', `${T('studio.workspace.titlebar.width')}: ${v === 'full' ? T('studio.workspace.titlebar.full') : T('studio.workspace.titlebar.px', { n: v })}`, T('studio.workspace.titlebar.title'), ['tb-width', v], 'titlebar'));
+    add('workspace', T('studio.workspace.titlebar.menu'), T('studio.workspace.titlebar.menuSub'), ['tb-menu'], 'list');
+    M.pipOnboarding.OOPS.forEach((o) => add('onboarding', T(`studio.onboarding.oops.items.${o.id}.title`), T('studio.onboarding.oops.title'), ['onb-oops', o.id], 'oops'));
+    M.pipOnboarding.ASKS.forEach((a) => add('onboarding', T(`studio.onboarding.ask.items.${a.id}.title`), T('studio.onboarding.ask.title'), ['onb-ask', a.id], 'ask'));
     M.reset.ids.forEach((id) => add('reset', T(`studio.reset.${id}.title`), T(`studio.reset.${id}.sub`), ['find-reset', id], 'reset'));
     M.switches.LOAD.concat(M.switches.FLAGS.map((f) => f.id)).forEach((id) => add('switches', T(`studio.switches.${id}`), T(`studio.switches.${id}Sub`), ['go', 'switches'], 'switches'));
     return out;
@@ -406,6 +524,7 @@
       + item('situation', M.situationLabel(M.currentSituation()))
       + item('look', `${T(`studio.looks.families.${L.look}`)} ${T(`studio.looks.${L.mode}`)}`)
       + item('motion', M.looks.reduced() ? T('studio.now.motionReduced') : T('studio.now.motionFull'))
+      + (M.titlebar.width() !== 'full' ? item('titlebar', T('studio.now.titlebarPx', { n: M.titlebar.width() })) : '')
       + (c ? item('story', storyNow(c), 'now-story') : '')
       + item('tour', ts.kind === 'at' ? T('studio.now.tourAt', { n: ts.step, total: ts.total }) : ts.kind === 'running' ? T('studio.now.tourRunning') : T('studio.now.tourNone'));
   }
@@ -621,6 +740,7 @@
     main.replaceChild(page, old);
     main.setAttribute('aria-labelledby', ST.q ? '' : `pmds-tab-${ST.section}`);
     exemptTags(page);
+    if (page.querySelector('[data-pip-loader]')) M.pip.arm(page);
     main.scrollTop = scroll;
     if (focusKey) { const f = page.querySelector(`[data-key="${CSS.escape(focusKey)}"]`); if (f) f.focus({ preventScroll: true }); }
     ST.sheet.querySelectorAll('.pmds-tab').forEach((t) => { const on = !ST.q && t.getAttribute('data-pmds-tab') === ST.section; t.setAttribute('aria-selected', String(on)); t.tabIndex = on || (ST.q && t.getAttribute('data-pmds-tab') === 'start') ? 0 : -1; t.classList.toggle('pmds-on', on); });
@@ -657,6 +777,8 @@
       const b = q('beats'); if (b && ST.tick % 2 === 0) { const html = beatsHtml(); if (b.innerHTML !== html) b.innerHTML = html; }
     }
     const h = q('hour'); if (h && M.usage.hourRunning()) h.textContent = M.usage.hourLabel();
+    const ls = q('loader-stats'), st = ls ? M.pip.stats() : null;
+    if (ls && st) { const v = T('studio.pip.loader.stats', { n: st.live, m: st.running }); if (ls.textContent !== v) ls.textContent = v; }
     ST.tick++;
   }
 
@@ -718,6 +840,7 @@
     if (!ST.open || !ST.sheet) return false;
     ST.open = false; ST.confirm = null;
     clearInterval(ST.timer); ST.timer = 0;
+    try { M.pip.stopLoops(); } catch (_) {}
     ST.entry.setAttribute('aria-expanded', 'false');
     ST.entry.removeAttribute('data-pm-hover-exempt');
     ST.el.removeAttribute('data-pmds-open');
@@ -743,6 +866,8 @@
 
   /* ---- actions ---- */
   function say(text) { try { if (O55.pageToast) O55.pageToast(text, 2600); else if (window.toast) window.toast(text); } catch (_) {} }
+  /* a Studio button wearing the system loader for a short wait (PM_PIP_LOADER.busy: aria-busy and the loader on it) */
+  function busyFor(el) { if (!el || !M.pip.busy(el, true)) return; real.setTimeout(() => { M.pip.busy(el, false); }, 2400); }
   function launch(fn) { close({ launch: true, focus: false }); real.setTimeout(() => { try { Promise.resolve(fn()).then(renderEntry, renderEntry); } catch (e) { console.error('[demo studio]', e); } }, 90); }
   const A = {
     close: () => close(),
@@ -803,6 +928,40 @@
       if (arg === 'layout') { M.reset.layout(); say(T('studio.toast.resetLayout')); return refresh(); }
       return launch(() => M.reset.everything());
     },
+    /* Pip */
+    'pip-mood': (arg) => { ST.pipMood = arg; const r = M.pip.feel(arg); if (!r.stage && !r.chat) say(T('studio.pip.moods.noneToast')); refresh(); },
+    'pip-mark-only': () => { const w = M.titlebar.markOnly(); say(w ? T('studio.pip.squeeze.done', { n: w }) : T('studio.toast.unavailable')); real.setTimeout(refresh, 40); },
+    'pip-motion': (arg) => { ST.pipMotion = arg; ST.pipEvery = false; refresh(); },
+    'pip-every': () => {
+      ST.pipEvery = true;
+      if (M.chat.avail()) { const r = M.chat.run('live', 'live-agent-turn'); if (!r || !r.ok) say(T('studio.toast.unavailable')); }
+      refresh();
+      real.raf(() => { const b = ST.sheet && ST.sheet.querySelector('.pmds-busybtn'); if (b) busyFor(b); });
+    },
+    'pip-busy': (arg, el) => { busyFor(el); },
+    'pip-hold': () => { M.pip.setHold(!M.pip.held()); refresh(); },
+    'pip-kit': (arg) => { ST.pipKit = arg; M.pip.setKit(arg); refresh(); },
+    'pip-play': (arg) => {
+      const i = String(arg).indexOf(':'), own = arg.slice(0, i) === 'window', ev = arg.slice(i + 1);
+      if (M.pip.muted()) return say(T('studio.pip.sound.offToast'));
+      if (!M.pip.play(ev, ST.pipKit, own)) say(T('studio.pip.sound.quiet'));
+    },
+    'pip-loop': (arg) => { if (M.pip.muted()) say(T('studio.pip.sound.offToast')); M.pip.loop(arg, !M.pip.loopsOn[arg], ST.pipKit); refresh(); },
+    'pip-say': () => {
+      const text = String(ST.pipSay == null ? T('studio.pip.sound.sayDefault') : ST.pipSay).trim();
+      if (!text) return;
+      const r = M.pip.say(text, ST.pipSayMood, ST.pipKit);
+      if (!r || !r.played) say(M.pip.muted() ? T('studio.pip.sound.offToast') : !M.pip.voicePart() ? T('studio.pip.sound.voiceOff') : T('studio.pip.sound.quiet'));
+    },
+    'pip-saymood': (arg) => { ST.pipSayMood = arg; refresh(); },
+    /* onboarding's Pip moments: they stay (the Studio is open beside the window) */
+    'onb-oops': (arg) => { if (!M.pipOnboarding.oopsAvail(arg)) return say(T('studio.toast.unavailable')); M.pipOnboarding.oops(arg, ST.pick); renderEntry(); real.setTimeout(refresh, 700); },
+    'onb-ask': (arg) => { if (!M.pipOnboarding.askAvail(arg)) return say(T('studio.toast.unavailable')); M.pipOnboarding.ask(arg, ST.pick); real.setTimeout(refresh, 700); },
+    /* the title bar */
+    'tb-state': (arg) => { if (!M.titlebar.setState(arg)) return say(T('studio.toast.unavailable')); if (arg === 'unsaved') say(T('studio.workspace.titlebar.unsavedToast')); real.setTimeout(refresh, 80); },
+    'tb-long': () => { M.titlebar.setLong(!M.titlebar.longOn()); real.setTimeout(refresh, 240); },
+    'tb-width': (arg) => { M.titlebar.setWidth(arg); refresh(); },
+    'tb-menu': () => { M.titlebar.openMenu(); },
     'sw-load': (arg) => { ST.sw = Object.assign({}, ST.sw || M.switches.now(), { load: arg }); refresh(); },
     'sw-situation': () => { const s = ST.sw || M.switches.now(); ST.sw = Object.assign({}, s, { situation: !s.situation }); refresh(); },
     'sw-copy': () => { const v = M.switches.url(ST.sw || M.switches.now()); try { navigator.clipboard.writeText(v).then(() => say(T('studio.switches.copied')), () => {}); } catch (_) {} },
@@ -820,10 +979,11 @@
     if (what.startsWith('sw-flag:')) { const id = what.slice(8), s = ST.sw || M.switches.now(); ST.sw = Object.assign({}, s, { flags: Object.assign({}, s.flags, { [id]: !s.flags[id] }) }); return refresh(); }
     const fn = A[what];
     if (!fn) return;
-    if (O55.sound && !['close', 'go'].includes(what)) O55.sound.play('select');
+    if (O55.sound && !['close', 'go', 'pip-play', 'pip-say', 'pip-loop'].includes(what)) O55.sound.play('select');
     try { fn(arg, b); } catch (err) { console.error('[demo studio]', what, err); say(T('studio.toast.unavailable')); }
   }
   function onInput(e) {
+    if (e.target.classList.contains('pmds-sayq')) { ST.pipSay = e.target.value; return; }
     if (!e.target.classList.contains('pmds-q')) return;
     const had = !!ST.q;
     ST.q = e.target.value.trim();
@@ -837,6 +997,7 @@
       if (ST.confirm) { ST.confirm = null; refresh(); return; }
       return close();
     }
+    if (t.classList && t.classList.contains('pmds-sayq') && e.key === 'Enter') { e.preventDefault(); A['pip-say'](); return; }
     if (t.classList && t.classList.contains('pmds-q') && e.key === 'Enter') { const first = ST.sheet.querySelector('.pmds-result'); if (first) { e.preventDefault(); first.click(); } return; }
     if (t.classList && t.classList.contains('pmds-q') && e.key === 'ArrowDown') { const first = ST.sheet.querySelector('.pmds-result'); if (first) { e.preventDefault(); first.focus(); } return; }
     if (t.classList && t.classList.contains('pmds-grip') && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home'].includes(e.key)) {
