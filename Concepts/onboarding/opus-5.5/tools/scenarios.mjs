@@ -703,6 +703,34 @@ def('pr21', 'fresh', 'Final check: after 720x900 -> 1390x480 the rail Pip sits o
     A.ok(f.pip != null && Math.abs(f.pip - f.bead) <= 3 && Math.abs(f.rope - f.w) <= 2, `${w}x${h} (${f.layout}): Pip ${f.pip} on bead ${f.bead}, rope ${f.rope} of ${f.w}`);
   }
 });
+/* per frame through a layout change: from the first frame the new layout is on, Pip sits on its bead and the rope
+   spans the rail in every frame (final check F1-3's residual: up to 15 frames at the old spot) */
+for (const look of ['basic-dark', 'glass-dark', 'nier-dark']) def('pr21f-' + look, 'fresh', `Final check F1-3: in ${look}, every frame of a layout change has Pip on its bead and the rope the rail's width`, async (d, A) => {
+  await d.openOnboarding();
+  await d.page.evaluate((l) => { const [f, m] = l.split('-'); if (f === 'nier') { window.O55.ui.applyLook('basic', m); if (!window.O55.nierLook.state().on) window.O55.nierLook.toggle('look', null); } else window.O55.ui.applyLook(f, m); }, look);
+  await sleep(f0(look));
+  await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'where', 'on Computer');
+  for (const [w, h] of [[720, 900], [1390, 480], [1440, 900]]) {
+    await d.page.evaluate(() => {
+      const rec = window.__rail = { on: true, frames: [] };
+      const loop = () => { if (!rec.on) return;
+        const nav = document.querySelector('#pm-o55-onboarding .o55-rail'), nr = nav.getBoundingClientRect(), k = nr.width / (nav.offsetWidth || nr.width);
+        const node = nav.querySelector('.o55-railitem[data-state="current"] .o55-railnode').getBoundingClientRect();
+        const m = /translate\(([-\d.]+)px/.exec(nav.querySelector('.o55-railpip').style.transform || ''), vb = (nav.querySelector('.o55-railzip').getAttribute('viewBox') || '').split(' ');
+        rec.frames.push({ layout: document.getElementById('pm-o55-onboarding').getAttribute('data-o55-layout'), bead: (node.left + node.width / 2 - nr.left) / k, pip: m ? +m[1] + 12 : null, w: nav.offsetWidth, rope: +vb[2] || 0 });
+        requestAnimationFrame(loop); };
+      requestAnimationFrame(loop);
+    });
+    await d.page.send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 1, mobile: false }); await sleep(1500);
+    const fr = await d.page.evaluate(() => { window.__rail.on = false; return window.__rail.frames; });
+    const want = w < 760 ? 'narrow' : h < 520 ? 'short' : 'wide', from = fr.findIndex((f) => f.layout === want);
+    const after = from >= 0 ? fr.slice(from + 1) : [];
+    const pipErr = Math.max(0, ...after.map((f) => Math.abs(f.pip - f.bead))), ropeErr = Math.max(0, ...after.map((f) => Math.abs(f.rope - f.w)));
+    A.ok(after.length > 10 && pipErr <= 2 && ropeErr <= 1, `${w}x${h} (${want}), ${after.length} frames: Pip within ${pipErr.toFixed(1)} px of its bead, rope within ${ropeErr.toFixed(1)} px`);
+  }
+});
+const f0 = (look) => (look.startsWith('nier') ? 5000 : 1500);
 def('pr22', 'fresh', 'Final check F1-3: opened straight into Glass at Computer, the rail is measured unscaled (Pip on its bead, the rope the rail\'s width)', async (d, A) => {
   await d.page.evaluate(() => { window.O55.ui.applyLook && 0; });
   await d.page.evaluate(() => { const [f, m] = ['glass', 'dark']; if (window.PM_THEME && window.PM_THEME.setFamily) { window.PM_THEME.setFamily(f); window.PM_THEME.setMode(m); } });

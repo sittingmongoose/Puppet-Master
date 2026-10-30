@@ -992,16 +992,23 @@
   rail.relayout = function relayout() {
     const nav = rail.nav; if (!nav || !nav.isConnected) return;
     const win = nav.closest('[data-o55-layout]'), layout = win ? win.getAttribute('data-o55-layout') : '';
+    const at = Math.max(0, rail.cur), was = rail.xs[at];
     rail.measure();
+    const now0 = rail.xs[at];
     if (rail.layout !== undefined && rail.layout !== layout) rail.x = null;
+    /* the layout moved the bead (the window growing or shrinking): Pip moves with it, a journey under way goes on */
+    else if (rail.x != null && was != null && now0 != null) rail.x += now0 - was;
     rail.layout = layout;
-    rail.kick();
+    /* drawn now: a ResizeObserver runs after layout and before paint, so Pip and the rope are in place in the very
+       frame the new layout paints (final check F1-3: a frame drawn later showed Pip at the old spot) */
+    if (rail.raf) { cancelAnimationFrame(rail.raf); rail.raf = 0; }
+    rail.force = true; rail.tick(); rail.force = false;
   };
   rail.kick = function kick() { if (!rail.raf) { rail.last = now(); rail.raf = requestAnimationFrame(rail.tick); } };
   rail.tick = function tick() {
     rail.raf = 0;
     const nav = rail.nav; if (!nav || !nav.isConnected || !rail.xs.length) return;
-    if (document.body.classList.contains('pm-resizing') || document.hidden) { setTimeout(rail.kick, 250); return; }
+    if (!rail.force && (document.body.classList.contains('pm-resizing') || document.hidden)) { setTimeout(rail.kick, 250); return; }
     const tn = now(), dt = Math.min(0.04, tn - rail.last) / H.speed(); rail.last = tn;
     const fam = String(rail.theme || 'basic-dark').split('-')[0], rigid = fam === 'nier', red = O55.motion.reduced();
     const W = rail.W, y0 = 9, x0 = 6, x1 = W - 6, tx = rail.xs[Math.max(0, rail.cur)] || x0, weight = rigid ? 0 : fam === 'basic' ? 2 : 4;
@@ -1012,7 +1019,7 @@
     const aA = -38 * rail.ang - 3.2 * rail.av - ax * 0.0016; rail.av += aA * dt; rail.ang += rail.av * dt;
     const moving = Math.abs(tx - rail.x) > 0.3 || Math.abs(rail.v) > 1 || Math.abs(rail.av) > 0.01 || Math.abs(rail.ang) > 0.004 || Math.abs(rail.dip - weight) > 0.05;
     /* Retro Light is paper: the rail is drawn ten times a second (the spring still runs every frame) */
-    if (rail.theme === 'retro-light' && moving && !red && tn - (rail.drawn || 0) < 0.1) { rail.kick(); return; }
+    if (rail.theme === 'retro-light' && moving && !red && !rail.force && tn - (rail.drawn || 0) < 0.1) { rail.kick(); return; }
     rail.drawn = tn;
     let px = rail.x, dip = Math.max(0, rail.dip);
     if (fam === 'retro') { px = Math.round(px / 4) * 4; dip = Math.round(dip); }
