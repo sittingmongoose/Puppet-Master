@@ -26840,12 +26840,10 @@ html[data-o55-open] body > [data-o55-held], html[data-o55-open] body > [data-o55
 /* NieR Mode's diamond loaders (styles.d/14-nier-parts.css) set their animation with an !important shorthand, which
    resets the play state and outranks the line above: under the window they are paused here by name, so ticking NieR
    Mode in the window never wakes the app beneath (performance rule 6; review W9).
-   The impossible t7.t7.t7:not(*) arm preserves the retired spinner's (0,2,1) specificity. */
-html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.pm6-wiz-disc-spin):not(.t7.t7:not(*)):not(t7:not(*)),
-html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.pm6-orch-pc-ring span):not(.t7.t7:not(*)):not(t7:not(*)),
+   The impossible t7.t7.t7:not(*) arm preserves the retired spinners' (0,2,1) specificity (the Wizard's and the
+   Orchestrator's rings and Projects' .pm6-spin are the system loader now, held here as .pml-nier). */
 html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.o55-spin):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.thread-working-pulse):not(.t7.t7:not(*)):not(t7:not(*)),
-html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.pm6-spin svg):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.pml-nier):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(t7.t7.t7:not(*)) { animation-play-state: paused !important; }
 /* the solid backdrop (60-ui-core.js): on a computer that cannot composite the app beneath at full rate, the app is
@@ -39360,8 +39358,12 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
 .pml-ld > .pml { display: block; width: 100%; height: 100%; }
 .pml-ld:not([data-pml-run]) { animation: pml-arm 1ms; }
 .pml-ld:not([data-pml-run]) > .pml { opacity: 0; }
-.pml-ld[data-pml-run="on"] > .pml { animation: pml-ld-in 160ms ease-out; }
+.pml-ld[data-pml-run="on"]:not([data-pml-in]) > .pml { animation: pml-ld-in 160ms ease-out; }
 .pml-ld[data-pml-redraw] > .pml { animation: none; }
+/* Reduced Motion: the loader is there at once (its wait signal is the breath and the blink), so no ancestor's freeze
+   lifting can replay a fade from nothing */
+:root[data-motion="reduced"] .pml-ld[data-pml-run] > .pml { animation: none; }
+@media (prefers-reduced-motion: reduce) { :root .pml-ld[data-pml-run] > .pml { animation: none; } }
 @keyframes pml-arm { from { outline-color: currentColor; } to { outline-color: currentColor; } }
 @keyframes pml-ld-in { from { opacity: 0; } to { opacity: 1; } }
 /* NieR (L7, pm-loader.js NIER): Pip never animates in NieR. The loader's one part is the plain ink ring every spinner
@@ -42537,6 +42539,10 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
       if (!el.isConnected) return;
       if (stillFor(el)) { set(el, 'still'); return; }
       phase(el); set(el, 'on');
+      /* the fade-in is the first arrival's only: once it has had its time (data-pml-in), coming back on (offscreen, a
+         hidden tab, a busy spell or an ancestor's freeze lifting) never fades from nothing again, which flashed the
+         still pose out for a frame */
+      if (!el.hasAttribute('data-pml-in') && !el.__pmlIn) el.__pmlIn = setTimeout(() => { el.__pmlIn = 0; el.setAttribute('data-pml-in', ''); }, 400);
     });
     pending.clear();
   }
@@ -177212,7 +177218,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const here = S.env.here, ck = S.sess.ui.check || { done: [] };
     const chip = (key, label) => {
       const done = (ck.done || []).includes(key);
-      return `<span class="o55-chip${done ? ' o55-chip-ok' : ''}" data-key="chip-${key}">${done ? C.done(13) : C.loader(14)}<span>${U.esc(done ? label : T('where.check.checking'))}</span></span>`;
+      return `<span class="o55-chip${done ? ' o55-chip-ok' : ''}" data-key="chip-${key}"${done ? '' : ' aria-busy="true"'}>${done ? C.done(13) : C.loader(14)}<span>${U.esc(done ? label : T('where.check.checking'))}</span></span>`;
     };
     return `<div class="o55-chiprow" data-key="check" role="status" aria-label="${U.esc(T('where.check.label'))}">`
       + chip('space', T('where.check.space', { gb: here.freeGB }))
@@ -177339,7 +177345,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           out += `<div class="o55-sublinks" data-key="l-found">${C.link(T('connect.route.found'), 'manualOff')}</div>`;
         } else {
           const list = found(S), st = F.state(S, scanKey(S));
-          if (!list.length) out += `<div class="o55-row o55-row-wait" data-key="scan">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('connect.route.looking'))}</span></span></div>`;
+          if (!list.length) out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('connect.route.looking'))}</span></span></div>`;
           else out += C.cards('pickServer', list.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: s.address + ' · ' + nProjects(s.projects.length), tag: s.via === 'vpn' ? 'VPN' : '' })), d.server_ref, { label: T('connect.route.found') });
           if (st && st.state === 'done' && !list.length) out += C.note(T('connect.route.none'), 'warn');
           out += C.note(T('connect.route.vpnLine'), 'info', 'link');
@@ -177663,7 +177669,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         if (kind === 'cloud') out += C.note(T('server.wait.cloudNote'), 'info', 'cloud');
         out += C.field({ bind: 'addr', label: T(kind === 'cloud' ? 'server.wait.cloudLabel' : 'connect.route.addressLabel'), value: sv.addr || '', placeholder: u.address, hint: hit ? T('server.wait.found', { name: u.name }) : T('connect.route.addressHint'), valid: hit });
       } else if (!unclaimedFound(S)) {
-        out += `<div class="o55-row o55-row-wait" data-key="scan">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
+        out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
       }
       if (unclaimedFound(S) || (sv.manual && String(sv.addr || '').trim().toLowerCase() === u.address)) {
         out += C.cards('pick', [{ v: u.id, glyph: 'server', title: T('server.wait.found', { name: u.name }), sub: T('server.wait.notSetUp'), tag: '' }], sv.target, { label: T('server.wait.title') });
@@ -178648,7 +178654,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         if (n.manual) {
           out += `<div class="o55-fieldrow" data-key="manual">${C.field({ bind: 'addr', label: T('nas.find.addressLabel'), value: n.addr || '', placeholder: '192.168.1.20', hint: T('nas.find.addressHint') })}${C.field({ bind: 'port', label: T('nas.find.portLabel'), value: n.port || '22', cls: 'o55-field-port' })}</div>`;
         } else if (!st || st.state !== 'done') {
-          out += `<div class="o55-row o55-row-wait" data-key="scan">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
+          out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
         } else {
           const cards = S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
             .concat(S.env.devices.map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
@@ -179316,7 +179322,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         out += `<div class="o55-inline" data-key="tokbtn">${O55.ui.btn({ label: T('ai.verify'), do: 'tokenCheck', cls: 'o55-small', disabled: !si.tokenTyped, reason: T('online.signin.tokenLabel') }, 'o55-secondary')}</div>`;
       }
       if (si.state === 'waiting' || si.state === 'code') {
-        out += `<div class="o55-row o55-row-wait" data-key="wait">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('online.signin.waiting'))}</span><span class="o55-rowmeta">${U.esc(T('official.signin', { name: si.name }))}</span></span></div>`;
+        out += `<div class="o55-row o55-row-wait" data-key="wait" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('online.signin.waiting'))}</span><span class="o55-rowmeta">${U.esc(T('official.signin', { name: si.name }))}</span></span></div>`;
         /* a device code only where the service has a device sign-in; otherwise the sign-in link to paste */
         if (si.state === 'waiting') out += `<div class="o55-sublinks" data-key="nob">${C.link(T('online.signin.noBrowser'), deviceFor(S, si) ? 'code' : 'copyLink')}</div>`;
         else {
@@ -180366,7 +180372,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       }
       if (!next) out += C.note(T('protect.done'), 'ok', 'check');
       const st = next && F.state(S, 'backup:' + next);
-      if (st && st.state === 'running') out += `<p class="o55-hint" data-key="work">${C.loader(14)} ${U.esc(T('chrome.working'))}</p>`;
+      if (st && st.state === 'running') out += `<p class="o55-hint" data-key="work" aria-busy="true">${C.loader(14)} ${U.esc(T('chrome.working'))}</p>`;
       return out;
     },
     foot(S) {
