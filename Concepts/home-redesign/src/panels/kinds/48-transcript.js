@@ -422,6 +422,8 @@ function mountTranscript(host, state, api) {
       statusEl.className = 'pmw-tx-status is-' + L.status;
       var ld = L.status === 'working' ? PMW.loader({ motion: 'swing', px: 12 }) : null;
       add(statusEl, [ld || statusMark(L.status, 12), h('span', { text: statusWord() })]);
+      // the wait's host is the status itself (never the feed, whose own live region must keep announcing new lines)
+      if (ld) statusEl.setAttribute('aria-busy', 'true'); else statusEl.removeAttribute('aria-busy');
       statusEl._st = L.status;
     }
     elapsedEl.textContent = fmtElapsed(elapsedOf(L));

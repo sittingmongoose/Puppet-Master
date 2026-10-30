@@ -453,6 +453,8 @@
     var showExpanded = expanded || (collapsing && st.holdExpanded !== false);
 
     node.setAttribute('data-pmt-status', status);
+    // a running command is a wait: the card says so (aria-busy) while its slot holds the loader (glyphFor)
+    if (status === 'running') node.setAttribute('aria-busy', 'true'); else node.removeAttribute('aria-busy');
     node.setAttribute('data-pmt-expanded', showExpanded ? 'true' : 'false');
     var word = statusWord(status), exit = exitText(sp, status);
     node.setAttribute('aria-label', 'Command ' + (command || 'without text') + ', ' + word + (exit ? ', ' + exit : ''));
