@@ -23777,8 +23777,6 @@ html[data-o55-nier-parts~="brackets"] .focus-ring { outline: 0 !important; box-s
 html[data-motion="reduced"] #o55np-reticle > i, html[data-motion="reduced"] #o55np-reticle { transition: none; }
 
 /* ---- Diamond loaders [diamonds]: spinners and busy marks become a slowly turning hollow diamond ---- */
-html[data-o55-nier-parts~="diamonds"] :where(.pm6-wiz-disc-spin):not(.t7.t7:not(*)),
-html[data-o55-nier-parts~="diamonds"] :where(.pm6-orch-pc-ring span):not(.t7.t7:not(*)),
 html[data-o55-nier-parts~="diamonds"] :where(.o55-spin):not(.t7.t7:not(*)),
 html[data-o55-nier-parts~="diamonds"] :is(.o55-ph-active .o55-phmark),
 html[data-o55-nier-parts~="diamonds"] :where(.thread-working-pulse):not(.t7.t7:not(*)) {
@@ -23792,13 +23790,8 @@ html[data-o55-nier-parts~="diamonds"] :is(.o55-ph-active .o55-phmark),
 html[data-o55-nier-parts~="diamonds"] :where(.thread-working-pulse):not(.t7.t7:not(*)) { outline: 0; }
 html[data-o55-nier-parts~="diamonds"] :where(.o55-spin):not(.t7.t7:not(*))::after,
 html[data-o55-nier-parts~="diamonds"] :is(.o55-ph-active .o55-phmark)::after { display: none !important; }
-/* Impossible arms preserve the retired spinner lists: (0,2,0) here, (0,2,1) in the motion overrides. */
-html[data-o55-nier-parts~="diamonds"] :is(.pm6-spin, .t7.t7:not(*)) svg {
-  border: 1px solid currentColor; box-sizing: border-box; outline: 1px solid currentColor; outline-offset: -5px;
-  animation: o55np-diamond 2.8s linear infinite !important;
-}
-html[data-o55-nier-parts~="diamonds"] :where(.pm6-spin):not(.t7.t7:not(*)) svg > *,
-html[data-o55-nier-parts~="diamonds"] :is(.t7.t7:not(*)) svg > * { visibility: hidden; }
+/* Impossible arms preserve the retired spinner lists' weight, (0,2,1) in the motion overrides. The Wizard's and the
+   Orchestrator's rings and Projects' .pm6-spin are gone: their waits are the system loader (W5), drawn below. */
 /* The system loader (W5, L7; glyph-system src/logo/pm-loader.js, pm-loader.css): in NieR its one part is the plain ink
    ring, and with this part installed it is the hollow diamond, sized to the loader (1em by default), turning only while
    the loader owner has it armed (data-pml-run="on": on screen, tab shown, no drag), at Animation speed (--pml-k), in
@@ -23810,12 +23803,9 @@ html[data-o55-nier-parts~="diamonds"] .pml-ld > .pml-nier {
 }
 html[data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: o55np-diamond calc(2.8s * var(--pml-k, 1)) linear var(--pml-ndelay, 0s) infinite var(--pml-ps, running); }
 @keyframes o55np-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(360deg) rotate(45deg) scale(.72); } }
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.pm6-wiz-disc-spin):not(.t7.t7:not(*)):not(t7:not(*)),
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.pm6-orch-pc-ring span):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.o55-spin):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.o55-ph-active .o55-phmark):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.thread-working-pulse):not(.t7.t7:not(*)):not(t7:not(*)),
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.pm6-spin svg):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(t7.t7.t7:not(*)) { animation: none !important; }
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
 
@@ -24113,12 +24103,9 @@ html[data-theme="basic-dark"][data-o55-nier-parts~="pointer"] :where(.tab):not(.
 /* ============================================================================================ Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
-  html[data-o55-nier-parts~="diamonds"] :where(.pm6-wiz-disc-spin):not(.t7.t7:not(*)):not(t7:not(*)),
-html[data-o55-nier-parts~="diamonds"] :where(.pm6-orch-pc-ring span):not(.t7.t7:not(*)):not(t7:not(*)),
-html[data-o55-nier-parts~="diamonds"] :where(.o55-spin):not(.t7.t7:not(*)):not(t7:not(*)),
+  html[data-o55-nier-parts~="diamonds"] :where(.o55-spin):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-o55-nier-parts~="diamonds"] :where(.o55-ph-active .o55-phmark):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-o55-nier-parts~="diamonds"] :where(.thread-working-pulse):not(.t7.t7:not(*)):not(t7:not(*)),
-html[data-o55-nier-parts~="diamonds"] :where(.pm6-spin svg):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-o55-nier-parts~="diamonds"] :is(t7.t7.t7:not(*)) { animation: none !important; }
   html[data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
   html[data-o55-nier-parts~="slice"] :is(.pm-sprout),
@@ -31479,12 +31466,11 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :where(.pm6-wiz
 html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :is(.pm6-wiz-schip.busy .pm6-wiz-sdot),
 html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :where(.pm6-wiz-skel-line):not(.t7.t7.t7:not(*)),
 html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :where(.pm6-wiz-doc-status):not(.t7.t7.t7:not(*)),
-html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :where(.pm6-wiz-disc-spin):not(.t7.t7.t7:not(*)),
 html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :where(.pm6-wiz-pulse):not(.t7.t7.t7:not(*)),
 html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :where(.pm-pop):not(.t7:not(*)):not(t7:not(*)),
 html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :where(.pm6-orch-dot):not(.t7:not(*)):not(t7:not(*)),
 html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :where(.pm6-orch-fresh-dot):not(.t7:not(*)):not(t7:not(*)),
-html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :is(.pm6-orch-pc-ring span) { animation: none !important; }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :is(t7.t7:not(*)) { animation: none !important; }
 html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator .pm6-orch-run-mode::after { animation: none !important; }
 html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :is(.pm-press):is(:hover, :active),
 html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :is(.pm6-wiz-bigbtn):is(:hover, :active),
@@ -31522,12 +31508,11 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator .pm6-orch
 #panel-wizard :is(.pm6-wiz-schip.busy .pm6-wiz-sdot),
 #panel-wizard :where(.pm6-wiz-skel-line):not(.t7.t7.t7:not(*)),
 #panel-wizard :where(.pm6-wiz-doc-status):not(.t7.t7.t7:not(*)),
-#panel-wizard :where(.pm6-wiz-disc-spin):not(.t7.t7.t7:not(*)),
 #panel-wizard :where(.pm6-wiz-pulse):not(.t7.t7.t7:not(*)),
 #panel-orchestrator :where(.pm-pop):not(.t7:not(*)):not(t7:not(*)),
 #panel-orchestrator :where(.pm6-orch-dot):not(.t7:not(*)):not(t7:not(*)),
 #panel-orchestrator :where(.pm6-orch-fresh-dot):not(.t7:not(*)):not(t7:not(*)),
-#panel-orchestrator :is(.pm6-orch-pc-ring span) { animation: none !important; }
+#panel-orchestrator :is(t7.t7:not(*)) { animation: none !important; }
   #panel-orchestrator .pm6-orch-run-mode::after { animation: none !important; }
   #panel-wizard :is(.pm-press):is(:hover, :active),
 #panel-wizard :is(.pm6-wiz-bigbtn):is(:hover, :active),
@@ -41860,9 +41845,11 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   }
   // the key of a drawing's shared stylesheet rules and defs: family x tier (pixel grids by size)
   function tierKey(family, tier, px) { return tier === 'pixel' ? 'g' + spriteGrid(px) : tier === 'micro' ? 'g16' : tier; }
+  /* One ratio per motion at every tier (Swing x1, Think x1.15, Hop x0.78), so a 12-18 px loader keeps the three motions
+     apart in time as well as in drawing; the pixel tiers' frame flips take their delays as exact fractions of the
+     period, so no period can open a gap between frames. */
   function periodOf(family, motion, tier) {
     const fam = MOTION[family] || MOTION.basic;
-    if (tier === 'micro' || tier === 'pixel') return fam.dur * ((motion === 'think' || motion === 'hop') ? .85 : 1) * 1000;
     return (motion === 'hop' ? R(fam.dur * .78) : motion === 'think' ? R(fam.dur * 1.15) : fam.dur) * 1000;
   }
 
@@ -66771,8 +66758,8 @@ div.pm56-host[data-theme^="retro"] [data-step-kind]:is([data-step-kind="agents"]
 div.pm56-host[data-theme^="retro"] [data-step-kind="bash"]{ --pm-step: var(--rt-step-tool); }
 div.pm56-host[data-theme^="retro"] *, div.pm56-host[data-theme^="retro"] *::before, div.pm56-host[data-theme^="retro"] *::after{ border-radius: 0 !important; }
 div.pm56-host[data-theme^="retro"] input:not([type="checkbox"]):not([type="radio"]):not(.pmx-step-input), div.pm56-host[data-theme^="retro"] select, div.pm56-host[data-theme^="retro"] .input-wrap, div.pm56-host[data-theme^="retro"] .pmx-sheet .pmx-hero-box, div.pm56-host[data-theme^="retro"] .meta-pill, div.pm56-host[data-theme^="retro"] .meta-chip, div.pm56-host[data-theme^="retro"] .goal-chip, div.pm56-host[data-theme^="retro"] .todo-chip, div.pm56-host[data-theme^="retro"] .af-chip, div.pm56-host[data-theme^="retro"] .qs-file-chip, div.pm56-host[data-theme^="retro"] .att-chip, div.pm56-host[data-theme^="retro"] .att-pill, div.pm56-host[data-theme^="retro"] .orbit-chip, div.pm56-host[data-theme^="retro"] .pmap-chip, div.pm56-host[data-theme^="retro"] .receipt-chip, div.pm56-host[data-theme^="retro"] .wa-tag, div.pm56-host[data-theme^="retro"] .qs-pill{ border-radius: 2px !important; }
-div.pm56-host[data-theme^="retro"] .status-dot, div.pm56-host[data-theme^="retro"] .status-ring, div.pm56-host[data-theme^="retro"] .status-orbit, div.pm56-host[data-theme^="retro"] .status-clock, div.pm56-host[data-theme^="retro"] .context-ring, div.pm56-host[data-theme^="retro"] .ring-mini, div.pm56-host[data-theme^="retro"] .ctx-spin, div.pm56-host[data-theme^="retro"] .ctx-cap .ctx-capdot, div.pm56-host[data-theme^="retro"] .orbit-track, div.pm56-host[data-theme^="retro"] .orbit-core, div.pm56-host[data-theme^="retro"] .orbit-sat, div.pm56-host[data-theme^="retro"] .orbit-node-flag, div.pm56-host[data-theme^="retro"] .orbit-narration-mark, div.pm56-host[data-theme^="retro"] .qs-orbit i, div.pm56-host[data-theme^="retro"] .qs-orrery-ring, div.pm56-host[data-theme^="retro"] .qs-orrery-bead, div.pm56-host[data-theme^="retro"] .qs-ask-mark-radio, div.pm56-host[data-theme^="retro"] .calm-glyph, div.pm56-host[data-theme^="retro"] .calm-dots i, div.pm56-host[data-theme^="retro"] .calm-marker, div.pm56-host[data-theme^="retro"] .working-variant-22 .c22-scope, div.pm56-host[data-theme^="retro"] .working-variant-22 .c22-ring, div.pm56-host[data-theme^="retro"] .working-variant-22 .c22-sweep, div.pm56-host[data-theme^="retro"] .working-variant-22 .c22-core, div.pm56-host[data-theme^="retro"] .working-variant-22 .c22-blip, div.pm56-host[data-theme^="retro"] .working-variant-20 .c20-pivot, div.pm56-host[data-theme^="retro"] .effort-dot, div.pm56-host[data-theme^="retro"] .goal-dot, div.pm56-host[data-theme^="retro"] .goal-chip-dot, div.pm56-host[data-theme^="retro"] .pmap-dot, div.pm56-host[data-theme^="retro"] .worktree-button .wt-dot, div.pm56-host[data-theme^="retro"] .message-meta .meta-live-dot, div.pm56-host[data-theme^="retro"] .pmx-lg-dot, div.pm56-host[data-theme^="retro"] .pmx-lg-hollow, div.pm56-host[data-theme^="retro"] .pmx-lg-filled, div.pm56-host[data-theme^="retro"] .pmx-stop-dot, div.pm56-host[data-theme^="retro"] .pmx-eli5-dot, div.pm56-host[data-theme^="retro"] .af-phase-dot, div.pm56-host[data-theme^="retro"] .plan-doc-compact .pd-compact-dot, div.pm56-host[data-theme^="retro"] .att-msg-drift-dot, div.pm56-host[data-theme^="retro"] .activity-item .state-mark, div.pm56-host[data-theme^="retro"] .activity-live-feed i, div.pm56-host[data-theme^="retro"] .activity-live-feed > button > i, div.pm56-host[data-theme^="retro"] .activity-live-feed > .pmap-feed-head > i, div.pm56-host[data-theme^="retro"] .pmx-sched-sw[data-kind="dot"], div.pm56-host[data-theme^="retro"] .pmx-sched-life li > i, div.pm56-host[data-theme^="retro"] .debug-phases li > span, div.pm56-host[data-theme^="retro"] .transcript-inner > [data-family="ledger"] > .event-icon, div.pm56-host[data-theme^="retro"] .tx-feed-inner > [data-family="ledger"] > .event-icon, div.pm56-host[data-theme^="retro"] .ss-bl, div.pm56-host[data-theme^="retro"] .ss-flood{ border-radius: 50% !important; }
-div.pm56-host[data-theme^="retro"] .status-ring::after, div.pm56-host[data-theme^="retro"] .status-orbit::after, div.pm56-host[data-theme^="retro"] .context-ring::after, div.pm56-host[data-theme^="retro"] .qs-ask-mark-radio::after, div.pm56-host[data-theme^="retro"] .pmx-bsd-ring::before, div.pm56-host[data-theme^="retro"] .pm-rail-item.orbit-strip-item.current::before, div.pm56-host[data-theme^="retro"] .working-variant-22 .c22-scope::before, div.pm56-host[data-theme^="retro"] .ribbon-item.done::after, div.pm56-host[data-theme^="retro"] .wa-chrome .wa-disc[data-action]::after, div.pm56-host[data-theme^="retro"] .plan-doc .pd-build-building::after, div.pm56-host[data-theme^="retro"] .att-obj[data-state="failed"] > .att-tracer::after, div.pm56-host[data-theme^="retro"] .ab-card .ab-head-icon::after, div.pm56-host[data-theme^="retro"] .ab-card .ab-avatar::after, div.pm56-host[data-theme^="retro"] .pm-lens-trigger.is-on::before, div.pm56-host[data-theme^="retro"] .nx-bolt::before, div.pm56-host[data-theme^="retro"] .nx-st::before, div.pm56-host[data-theme^="retro"] .sendstop::before, div.pm56-host[data-theme^="retro"] .ss-bl::before{ border-radius: 50% !important; }
+div.pm56-host[data-theme^="retro"] .status-dot, div.pm56-host[data-theme^="retro"] .status-ring, div.pm56-host[data-theme^="retro"] .status-orbit, div.pm56-host[data-theme^="retro"] .status-clock, div.pm56-host[data-theme^="retro"] .context-ring, div.pm56-host[data-theme^="retro"] .ring-mini, div.pm56-host[data-theme^="retro"] .ctx-cap .ctx-capdot, div.pm56-host[data-theme^="retro"] .orbit-track, div.pm56-host[data-theme^="retro"] .orbit-core, div.pm56-host[data-theme^="retro"] .orbit-sat, div.pm56-host[data-theme^="retro"] .orbit-node-flag, div.pm56-host[data-theme^="retro"] .orbit-narration-mark, div.pm56-host[data-theme^="retro"] .qs-ask-mark-radio, div.pm56-host[data-theme^="retro"] .calm-glyph, div.pm56-host[data-theme^="retro"] .calm-dots i, div.pm56-host[data-theme^="retro"] .calm-marker, div.pm56-host[data-theme^="retro"] .working-variant-22 .c22-scope, div.pm56-host[data-theme^="retro"] .working-variant-22 .c22-ring, div.pm56-host[data-theme^="retro"] .working-variant-22 .c22-sweep, div.pm56-host[data-theme^="retro"] .working-variant-22 .c22-core, div.pm56-host[data-theme^="retro"] .working-variant-22 .c22-blip, div.pm56-host[data-theme^="retro"] .working-variant-20 .c20-pivot, div.pm56-host[data-theme^="retro"] .effort-dot, div.pm56-host[data-theme^="retro"] .goal-dot, div.pm56-host[data-theme^="retro"] .goal-chip-dot, div.pm56-host[data-theme^="retro"] .pmap-dot, div.pm56-host[data-theme^="retro"] .worktree-button .wt-dot, div.pm56-host[data-theme^="retro"] .message-meta .meta-live-dot, div.pm56-host[data-theme^="retro"] .pmx-lg-dot, div.pm56-host[data-theme^="retro"] .pmx-lg-hollow, div.pm56-host[data-theme^="retro"] .pmx-lg-filled, div.pm56-host[data-theme^="retro"] .pmx-stop-dot, div.pm56-host[data-theme^="retro"] .pmx-eli5-dot, div.pm56-host[data-theme^="retro"] .af-phase-dot, div.pm56-host[data-theme^="retro"] .plan-doc-compact .pd-compact-dot, div.pm56-host[data-theme^="retro"] .att-msg-drift-dot, div.pm56-host[data-theme^="retro"] .activity-item .state-mark, div.pm56-host[data-theme^="retro"] .activity-live-feed i, div.pm56-host[data-theme^="retro"] .activity-live-feed > button > i, div.pm56-host[data-theme^="retro"] .activity-live-feed > .pmap-feed-head > i, div.pm56-host[data-theme^="retro"] .pmx-sched-sw[data-kind="dot"], div.pm56-host[data-theme^="retro"] .pmx-sched-life li > i, div.pm56-host[data-theme^="retro"] .debug-phases li > span, div.pm56-host[data-theme^="retro"] .transcript-inner > [data-family="ledger"] > .event-icon, div.pm56-host[data-theme^="retro"] .tx-feed-inner > [data-family="ledger"] > .event-icon, div.pm56-host[data-theme^="retro"] .ss-bl, div.pm56-host[data-theme^="retro"] .ss-flood{ border-radius: 50% !important; }
+div.pm56-host[data-theme^="retro"] .status-ring::after, div.pm56-host[data-theme^="retro"] .status-orbit::after, div.pm56-host[data-theme^="retro"] .context-ring::after, div.pm56-host[data-theme^="retro"] .qs-ask-mark-radio::after, div.pm56-host[data-theme^="retro"] .pmx-bsd-ring::before, div.pm56-host[data-theme^="retro"] .pm-rail-item.orbit-strip-item.current::before, div.pm56-host[data-theme^="retro"] .working-variant-22 .c22-scope::before, div.pm56-host[data-theme^="retro"] .ribbon-item.done::after, div.pm56-host[data-theme^="retro"] .wa-chrome .wa-disc[data-action]::after, div.pm56-host[data-theme^="retro"] .att-obj[data-state="failed"] > .att-tracer::after, div.pm56-host[data-theme^="retro"] .ab-card .ab-head-icon::after, div.pm56-host[data-theme^="retro"] .ab-card .ab-avatar::after, div.pm56-host[data-theme^="retro"] .pm-lens-trigger.is-on::before, div.pm56-host[data-theme^="retro"] .nx-bolt::before, div.pm56-host[data-theme^="retro"] .nx-st::before, div.pm56-host[data-theme^="retro"] .sendstop::before, div.pm56-host[data-theme^="retro"] .ss-bl::before{ border-radius: 50% !important; }
 html[data-ab-ready] div.pm56-host[data-theme^="retro"] .activity-item[data-hover-domain]::after{ border-radius: 50% !important; }
 div.pm56-host[data-theme^="retro"] .app-header{ background: var(--surface); border-bottom-color: var(--rt-line); box-shadow: 0 1px 0 var(--rt-line); }
 div.pm56-host[data-theme^="retro"] .brand-mark{ background: var(--accent); box-shadow: none; }
@@ -67340,15 +67327,6 @@ html[data-o55-nier-parts~="brackets"] .pm56-host :focus-visible{ outline: 0 !imp
   transition: transform 150ms cubic-bezier(.25, .9, .3, 1); }
 html[data-motion="reduced"] .pm56-host #o55np-reticle > i, html[data-motion="reduced"] .pm56-host #o55np-reticle{ transition: none; }
 div.pm56-host.pm56-reduced #o55np-reticle > i, div.pm56-host.pm56-reduced #o55np-reticle{ transition: none; }
-html[data-o55-nier-parts~="diamonds"] .pm56-host .ctx-spin, html[data-o55-nier-parts~="diamonds"] .pm56-host .qs-orbit{
-  color: var(--o55-nier-ink); border: 1px solid currentColor !important; background: transparent !important; box-shadow: none !important;
-  outline: 1px solid currentColor; outline-offset: -4px;
-  transform: rotateY(0deg) rotate(45deg) scale(.72);
-  animation: o55np-diamond 2.8s linear infinite !important;
-}
-html[data-o55-nier-parts~="diamonds"] .pm56-host .qs-orbit i{ visibility: hidden; }
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .pm56-host .ctx-spin, html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .pm56-host .qs-orbit{ animation: none !important; }
-html[data-o55-nier-parts~="diamonds"] div.pm56-host.pm56-reduced .ctx-spin, html[data-o55-nier-parts~="diamonds"] div.pm56-host.pm56-reduced .qs-orbit{ animation: none !important; }
 .pm56-host #o55np-reboot{ position: fixed; inset: 0; z-index: 2147483600; pointer-events: none; overflow: hidden; contain: strict;
   color: var(--rb-text); }
 .pm56-host #o55np-reboot .o55np-set{ position: absolute; inset: 0; }
@@ -67485,7 +67463,6 @@ html:not([data-motion="reduced"]) body:not(.pm56-reduced) div.pm56-host #o55np-p
 html:not([data-motion="reduced"]) body:not(.pm56-reduced) div.pm56-host #o55np-pod:not([data-idle]) .o55np-pod-shadow{ animation: o55np-bob-shadow 3.6s ease-in-out infinite alternate; }
 html[data-o55-nier-parts~="icons"] .pm56-host svg path, html[data-o55-nier-parts~="icons"] .pm56-host svg line, html[data-o55-nier-parts~="icons"] .pm56-host svg polyline, html[data-o55-nier-parts~="icons"] .pm56-host svg polygon, html[data-o55-nier-parts~="icons"] .pm56-host svg rect, html[data-o55-nier-parts~="icons"] .pm56-host svg circle, html[data-o55-nier-parts~="icons"] .pm56-host svg ellipse{ stroke-linecap: square; stroke-linejoin: miter; }
 @media (prefers-reduced-motion: reduce){.pm56-host #o55np-cursor, .pm56-host #o55np-cursor > i, .pm56-host #o55np-reticle, .pm56-host #o55np-reticle > i, .pm56-host #o55np-ground > .o55np-mote, .pm56-host #o55np-pod, .pm56-host #o55np-pod *, .pm56-host #o55np-wipe > i{ animation: none !important; transition: none !important; }
-html[data-o55-nier-parts~="diamonds"] .pm56-host .ctx-spin, html[data-o55-nier-parts~="diamonds"] .pm56-host .qs-orbit{ animation: none !important; }
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .dialog, html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .drawer, html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .pmx-sheet{ animation: none !important; scale: none !important; }
 html[data-o55-nier-parts~="slice"] body:not(.pm56-reduced) div.pm56-host .overlay-menu.pm-sprout{ scale: none !important; }}
 html[data-o55-nier="on"] .pm56-host .pmx-mark, html[data-o55-nier="on"] .pm56-host .pmx-p-mark{ --pn-o: 1px; --pn-l: 1.25px; --pn-s: .75px; --pn-j: .8px; }
