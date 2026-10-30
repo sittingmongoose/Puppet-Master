@@ -272,7 +272,7 @@
  function outcomeWord(p){return p.outcome==='completed'?'Done':p.outcome==='canceled'?'Cancelled':p.status==='working'?'Reading':p.outcome?cap(String(p.outcome).replace(/_/g,' ')):'Waiting';}
  function fallbackCommon(r,tab){
   const ms=r.messages||[];
-  if(tab==='transcript')return S.pmxViewSection({key:'rv-conv',title:'Conversation',meta:plural(ms.length,'message'),body:ms.length?S.pmxTimeline({key:'rv-tl:'+r.id,entries:ms.map(m=>entry(r,m))}):'<p class="collab-empty">No messages yet.</p>'});
+  if(tab==='transcript')return S.pmxViewSection({key:'rv-conv',title:'Conversation',meta:plural(ms.length,'message'),body:ms.length?S.pmxTimeline({key:'rv-tl:'+r.id,entries:ms.map(m=>entry(r,m))}):(S.pmxEmpty?S.pmxEmpty({cls:'collab-empty',text:'No messages yet.'}):'<p class="collab-empty">No messages yet.</p>')});
   if(tab==='participants'){
    const rows=r.participants.map((p,i)=>S.pmxTeamRow({key:'collab-p-'+p.id,cls:'collab-participant',kind:'review',attrs:'data-run="'+esc(r.id)+'" data-participant="'+esc(p.id)+'" data-doc="review"',
     markHtml:mark({persona:p.effectivePersona,seat:i+1},22,p.outcome==='completed'?'done':p.status==='working'?'working':'idle'),name:esc(p.role),

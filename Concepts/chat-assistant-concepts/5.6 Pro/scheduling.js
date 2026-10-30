@@ -1191,7 +1191,10 @@
     /* C56: the lead is the line's first row and Details sits beside it; what follows the lead (the detail, then the
        night ribbon) flows on the row below, and a decision's buttons get a row of their own under the sentence, so
        neither ever squeezes the sentence into a narrow column. The " · " stays in the text for screen readers. */
-    return '<div class="plan-schedule-line" data-plan-schedule="'+id+'" data-tone="'+tone+'"><span class="plan-sched-mark">'+SH.pmxKindMark('build-at',16)+'</span>'+
+    /* W4: Pip in its hard hat is the build's mark: asleep while the build waits for its window (or is paused), happy
+       once it is built, wondering when it needs you, its thinking dots while it runs */
+    var pipMark=SH.pmxPip?SH.pmxPip({prop:'hardhat',mood:{live:'working',done:'happy',update:'wonder'}[tone]||'sleep',size:22,detail:true,tone:tone==='update'?'warning':'',cls:'plan-sched-pip'}):'';
+    return '<div class="plan-schedule-line" data-plan-schedule="'+id+'" data-tone="'+tone+'"><span class="plan-sched-mark"'+(pipMark?' data-pip="1"':'')+'>'+(pipMark||SH.pmxKindMark('build-at',16))+'</span>'+
       '<p class="plan-sched-say"><b>'+lead+'</b>'+(say?'<span class="plan-sched-sep"> · </span><span class="plan-sched-detail">'+say+'</span>':'')+foot+'</p>'+
       '<span class="plan-sched-acts"><button type="button" class="text-button pmx-act" data-action="sched-open-plan-record" data-id="'+id+'">'+(b.state==='invalidated'&&b.pendingVersion!=null?'Review':'Details')+'</button></span>'+
       (acts?'<span class="plan-sched-decide pmx-actions">'+acts+'</span>':'')+night+'</div>';
@@ -2071,9 +2074,13 @@
      attention triangle. A schedule that is simply set (scheduled, active) keeps the clock, the concept every schedule
      surface draws. STATE_GLYPH / BUILD_GLYPH stay as the drawings used when the neon family is absent. */
   var STATE_MARK = { held: 'held', sent: 'complete', completed: 'complete', canceled: 'skipped', cancelled: 'skipped', expired: 'skipped', failed: 'failed', paused: 'paused', invalidated: 'attention' };
+  /* W4 (PC3, PM7 build 2026-10-29): a row's state is Pip's face (PM56_SHELL.pmxStatusFace, the catalog's Scheduled
+     table: scheduled and canceled and expired sleep, held wonders, sent is happy, failed says oops), in the status's
+     tone; the still status mark above is what it falls back to without the Pip kit. */
   function schedMark(st, size, old) {
     var s = STATE_MARK[st];
-    return s && SH.pmxStatus ? SH.pmxStatus(s, size) : SH.pmxGlyph(old || 'clock', size);
+    var mark = s && SH.pmxStatus ? SH.pmxStatus(s, size) : SH.pmxGlyph(old || 'clock', size);
+    return SH.pmxStatusFace ? SH.pmxStatusFace(st, size, '', mark) : mark;
   }
   function cssId(id) { return String(id || '').replace(/[^\w-]/g, '_'); }
   function managerFilter(tab) { var m = ui.managerFilters || (ui.managerFilters = {}); return m[tab] || (m[tab] = { status: 'all', query: '', sort: tab === 'events' ? 'time_desc' : 'time_asc' }); }
@@ -2190,7 +2197,7 @@
       '<span class="pmx-sched-toolpick"><span class="pmx-ctl-label">Show</span>' + SH.pickerButton({ action: 'sched-pick-manager-status', anchor: 'sched-manager-status', strong: esc(optionOf(MANAGER_STATUS_OPTIONS, f.status).label), iconHtml: ctx.icon('down', 11) }) + '</span>' +
       '<span class="pmx-sched-toolpick"><span class="pmx-ctl-label">Order</span>' + SH.pickerButton({ action: 'sched-pick-manager-sort', anchor: 'sched-manager-sort', strong: esc(optionOf(MANAGER_SORT_OPTIONS, f.sort).label), iconHtml: ctx.icon('down', 11) }) + '</span></div>';
   }
-  function emptyLine(text) { return '<p class="pmx-sched-empty">' + text + '</p>'; }
+  function emptyLine(text) { return SH.pmxEmpty ? SH.pmxEmpty({ cls: 'pmx-sched-empty', text: text }) : '<p class="pmx-sched-empty">' + text + '</p>'; }
 
   /* ---------------------------------------------------------------- Scheduled Messages */
   function rowActs(m, past) {
