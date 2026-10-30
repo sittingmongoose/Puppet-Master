@@ -1464,8 +1464,10 @@
     :is([data-theme^="retro"], [data-o55-nier="on"]) .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition-timing-function: steps(1, end); transition-duration: 80ms; }
     [data-motion="reduced"] .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition: none; }
     @media (prefers-reduced-motion: reduce) { .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition: none; } }
-    /* a resize drag holds the badge's loop (body.pm-resizing; the badge is the shared status mark) */
-    body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st, .nx-st-move) { animation-play-state: paused; }
+    /* a resize drag holds the badge's loops (body.pm-resizing; the badge is the shared status mark). Its backlight breath
+       runs on .nx-st::before, which does not inherit animation-play-state, so it is paused by name (audit W2-24) */
+    body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st, .nx-st-move),
+    body.pm-resizing #projectMenuBtn .pm6-tb-project-badge .nx-st::before { animation-play-state: paused; }
     /* Narrow windows: the density ladder folds the box to its folder (pm6-js-panels.js applyDensity, data-mode="icon") */
     .title-bar #projectMenuWrap[data-mode="icon"] #projectMenuBtn {
       width: 28px;
