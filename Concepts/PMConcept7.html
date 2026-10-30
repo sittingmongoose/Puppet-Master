@@ -66118,6 +66118,8 @@ html[data-motion="reduced"] .pm56-host .pmx-pip-host :is(.pmx-pip-rig),
 html[data-motion="reduced"] .pm56-host .pmx-pip-host :is(.pmx-pip-card),
 div.pm56-host.pm56-reduced .pmx-pip-host :is(.pmx-pip-rig),
 div.pm56-host.pm56-reduced .pmx-pip-host :is(.pmx-pip-card){ animation: none; }
+.pm56-host .pmx-pip-host[data-pip-run="off"] :is(.pmx-pip-rig),
+.pm56-host .pmx-pip-host[data-pip-run="off"] :is(.pmx-pip-card){ animation-play-state: paused; }
 .pm56-host .pmx-pip-lift-copy{ position: fixed; z-index: 2147483000; pointer-events: none; margin: 0; }
 .pm56-host .orbit-core-face{ position: relative; display: block; width: 40px; height: 40px; margin-top: -6px; flex: none; }
 .pm56-host .orbit-core-face > .pmx-pip-mk{ width: 40px; height: 40px; }
@@ -66150,6 +66152,9 @@ html[data-motion="reduced"] .pm56-host .orbit-core-face :is(.pmx-pip-dot4),
 div.pm56-host.pm56-reduced .orbit-core-face :is(.pmx-pip-dot2),
 div.pm56-host.pm56-reduced .orbit-core-face :is(.pmx-pip-dot3),
 div.pm56-host.pm56-reduced .orbit-core-face :is(.pmx-pip-dot4){ animation: none; }
+.pm56-host .orbit-core-face[data-pip-run="off"] :is(.pmx-pip-dot2),
+.pm56-host .orbit-core-face[data-pip-run="off"] :is(.pmx-pip-dot3),
+.pm56-host .orbit-core-face[data-pip-run="off"] :is(.pmx-pip-dot4){ animation-play-state: paused; }
 .pm56-host .qs-head-icon[data-pip]{ width: 22px; height: 22px; margin: -4px 0; background: none; display: inline-grid; place-items: center; }
 .pm56-host .plan-sched-mark[data-pip]{ width: 22px; height: 22px; margin: -3px 0 -3px -3px; padding-top: 0; }
 .pm56-host .menu-head-wand{ display: inline-flex; align-items: center; gap: 0; }
@@ -124844,7 +124849,10 @@ dispatchAction = function (action, el) {
     return { destroy };
   }
   /* ui.settings.pip_editor.open from the Settings row: the Settings side sheet */
-  function open() {
+  /* open() from the Settings row: the editor in Settings' side sheet. open({ from, returnFocus }) from anywhere else (the
+     Demo Studio's "Adjust Pip", a menu): the same editor as the dialog popup() opens, focus going back to returnFocus */
+  function open(opts) {
+    if (opts && typeof opts === 'object' && (opts.from || opts.returnFocus)) return popup(opts);
     if (!REG()) return false;
     const wrap = PM51.panel({ title: say('title', 'Customize Pip'), eyebrow: say('kicker', 'Pip'), icon: 'sliders', size: 'wide', cls: 'pipe-panel', closeLabel: say('done', 'Done'),
       summary: say('lead', 'Choose where Pip appears in the chat and in setup, the faces it makes and how it moves. A change applies at once and is saved for this Project.'), body: body() });
@@ -257240,10 +257248,19 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
 
   /* ---- vector Pip (Basic, Friendly, Glass): flat, one head in the seat's colour; no gradients, so nothing needs an id */
   function pipVector(K, th, fam, scheme, prop, mood, detail, bust, kettle, look2) {
-    var g = K.GEO[detail ? 'full' : 'small'], h = g.head, d = K.headPath(h), R = K.R;
+    var g = K.GEO[detail ? 'full' : 'small'];
     var shine = (fam === 'friendly' || fam === 'glass') && look2.shine, hd = look2.seat ? '@seat' : '@head';
     var pr = pipProp(K, prop, g, fam, detail), kt = kettle ? pipProp(K, 'grill', g, fam, detail) : { back: '', front: '' };
-    var head = '';
+    var head = pipFlatHead(K, g, fam, scheme, mood, detail, shine, hd, bust);
+    if (bust || !look2.strings) return pr.back + (bust ? head : '<g class="' + PIP_CLS.pup + '">' + head + '</g>') + pr.front + kt.front;
+    var strings = K.stringEnds(g, 'thread', PIP_ID, PIP_ID).map(function (e) { return pipLine(K, e.T, e.E, g.strW, '@str'); }).join('');
+    var ctl = K.controlSvg(g, th, PIP_CLS, { attach: 'thread' });
+    return strings + pr.back + '<g class="' + PIP_CLS.pup + '">' + head + '</g>' + ctl + pr.front + kt.front;
+  }
+  /* Pip's head and face drawn flat in its roles, with no SVG ids (a sheet's exit copy strips ids; W4): Glass a clear
+     lens with a rim lit from above, the other looks solid; Friendly and Glass add a shine and cheeks */
+  function pipFlatHead(K, g, fam, scheme, mood, detail, shine, hd, bust) {
+    var h = g.head, d = K.headPath(h), R = K.R, head = '';
     if (fam === 'glass' && !bust) {
       /* Glass: a clear lens in the seat's colour, a rim lit from above, a bright base (no brow band) */
       head += '<path d="' + d + '" fill="' + hd + '" fill-opacity=".74"/><path d="' + d + '" fill="#fff" fill-opacity="' + (scheme === 'dark' ? .1 : .2) + '"/>';
@@ -257257,11 +257274,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       var cy = g.eye.y + 6.2;
       head += '<ellipse cx="' + R(32 - g.eye.dx - 4.2) + '" cy="' + cy + '" rx="3.1" ry="1.9" fill="@cheek" opacity=".9"/><ellipse cx="' + R(32 + g.eye.dx + 4.2) + '" cy="' + cy + '" rx="3.1" ry="1.9" fill="@cheek" opacity=".9"/>';
     }
-    head += '<g class="' + PIP_CLS.face + '">' + K.faceShapes(g, mood, '@eye', { cls: PIP_CLS, shine: detail && shine }) + '</g>';
-    if (bust || !look2.strings) return pr.back + (bust ? head : '<g class="' + PIP_CLS.pup + '">' + head + '</g>') + pr.front + kt.front;
-    var strings = K.stringEnds(g, 'thread', PIP_ID, PIP_ID).map(function (e) { return pipLine(K, e.T, e.E, g.strW, '@str'); }).join('');
-    var ctl = K.controlSvg(g, th, PIP_CLS, { attach: 'thread' });
-    return strings + pr.back + '<g class="' + PIP_CLS.pup + '">' + head + '</g>' + ctl + pr.front + kt.front;
+    return head + '<g class="' + PIP_CLS.face + '">' + K.faceShapes(g, mood, '@eye', { cls: PIP_CLS, shine: detail && shine }) + '</g>';
   }
   /* ---- NieR Pip (O8): the kit's YoRHa unit in ink and paper; a still mark keeps the plain band (X3) */
   function pipNierMark(K, th, prop, mood, detail, bust, kettle, eyes, look2) {
@@ -257560,8 +257573,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     var look = pipLook(), key = 'host|' + look + '|' + kind + '|' + mood + '|' + (signHtml ? pmxHash(signHtml) : '') + '|' + pipPartsSig, v = pipMemo[key];
     if (v) return v;
     var K = P.kit, R = K.R, fam = P.family(look), scheme = P.scheme(look), th = K.rolePalette(look), g = K.GEO.full;
-    var ids = { face: 'pmx-pip-hf', grad: 'pmx-pip-hh-' + fam, clip: 'pmx-pip-hc-' + fam, rim: 'pmx-pip-hr-' + fam, glow: 'pmx-pip-hg-' + fam, spec: 'pmx-pip-hs-' + fam, drop: 'pmx-pip-hd-' + fam };
-    var tip = K.sticks(g).s1[1], defs = '', strings = '', pup = '', ctl = '';
+    var tip = K.sticks(g).s1[1], strings = '', pup = '', ctl = '';
     var signStr = fam === 'retro' ? '' : '<path d="M' + R(tip[0] - 1) + ' ' + R(tip[1] + 1) + 'L78 32" stroke="' + (fam === 'nier' ? '@ink' : '@str') + '" stroke-width="' + (fam === 'nier' ? 1 : 1.3) + '" fill="none"/>';
     if (fam === 'retro') {
       /* pixel Pip: the kit's 24 cells at 2.5 units each; its strings and the sign's string in square steps */
@@ -257570,26 +257582,23 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       strings = '<path d="M58 9H78V32" stroke="@str" stroke-width="2.5" fill="none" shape-rendering="crispEdges"/>';
     } else if (fam === 'nier') {
       /* NieR Pip with its eyes through the band at rest (X3: a live Pip) */
-      var r = K.pipNier(g, th, mood === 'dots' ? 'think' : mood, PIP_CLS, ids, { parts: true, eyes: true });
+      var r = K.pipNier(g, th, mood === 'dots' ? 'think' : mood, PIP_CLS, { face: 'x' }, { parts: true, eyes: true });
       strings = r.barNodes.map(function (q, i) { return pipLine(K, q, r.headNodes[i], 1, '@ink'); }).join('');
       pup = '<g class="pmx-pip-pup">' + r.headInner + '</g>';
       ctl = '<g class="pmx-pip-ctl">' + r.ctl + '</g>';
     } else {
       strings = K.stringEnds(g, 'eye', PIP_ID, PIP_ID).map(function (e) { return pipLine(K, e.T, e.E, g.strW, '@str'); }).join('');
-      var hd = K.pipHead(g, th, mood, ids, PIP_CLS, {});
-      defs = hd.defs;
-      pup = '<g class="pmx-pip-pup">' + K.eyeletRings(g, th, {}) + hd.body + '</g>';
+      /* the head as the agent marks draw it (flat, no ids), at the sheet's detail */
+      var shine = (fam === 'friendly' || fam === 'glass') && pipOn('cheeks-and-shine');
+      pup = '<g class="pmx-pip-pup">' + K.eyeletRings(g, th, {}) + pipFlatHead(K, g, fam, scheme, mood, true, shine, '@head', false) + '</g>';
       ctl = K.controlSvg(g, th, PIP_CLS, { attach: 'eye' });
     }
     var sign = pipSign(kind, fam, signHtml);
     if (!pipOn('strings')) { strings = ''; ctl = ''; signStr = ''; }
     var body = '<g class="pmx-pip-card">' + signStr + sign + '</g>' + strings + pup + ctl;
-    /* every gradient keeps a plain fallback: the head falls back to Pip's own colour, the rest to nothing */
-    body = body.replace(new RegExp('fill="url\\(#' + ids.grad + '\\)"', 'g'), 'style="fill:url(#' + ids.grad + ') var(--pip-head)"')
-      .replace(/(fill|stroke)="url\(#([^)]+)\)"/g, '$1="url(#$2) none"');
     v = '<span class="pmx-pip-host" data-k="pip-host" data-pip-kind="' + esc(kind) + '" data-pip-mood="' + esc(mood) + '" aria-hidden="true">' +
       '<svg class="pmx-pip-host-svg pmx-pip" data-fam="' + fam + '" data-sway="' + (pipOn('sway-and-physics') ? 1 : 0) + '" viewBox="0 0 ' + PIP_HOST.w + ' ' + PIP_HOST.h + '" width="' + R(PIP_HOST.w * PIP_HOST.k) + '" height="' + R(PIP_HOST.h * PIP_HOST.k) + '" overflow="visible" focusable="false">' +
-      (defs ? '<defs>' + defs + '</defs>' : '') + '<g class="pmx-pip-lift"><g class="pmx-pip-rig">' + body + '</g></g></svg></span>';
+      '<g class="pmx-pip-lift"><g class="pmx-pip-rig">' + body + '</g></g></svg></span>';
     v = K.roleStyles(v);
     if (++pipMemoN > 800) { pipMemo = Object.create(null); pipMemoN = 0; }
     pipMemo[key] = v;
@@ -282343,7 +282352,10 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     /* B09 replaces the old scripted Debug shortcuts with two checked workflows. */
     ['Capture · browser fixture','bc-open'],
     ['To-Dos · refused bulk completion','todo-attempt-bulk-complete'],
-    ['To-Dos · provider proposal','todo-attempt-provider-proposal']
+    ['To-Dos · provider proposal','todo-attempt-provider-proposal'],
+    /* W4 (PM7 build): Pip's moments for Demo Studio (pip.js); Scheduled's faces and the Orbit are the scheduling and
+       work rows above */
+    ['Pip · the sheet’s faces','pip-demo-faces'],['Pip · Activity agents','pip-demo-activity']
   ];
   function gallery(ctx){
     return (window.PM56_REPAIR_DEMOS?window.PM56_REPAIR_DEMOS.gallery(ctx):'')+'<section class="demo-section polish-demo-section"><h3>Feature demonstrations</h3><div class="demo-section-body">'+
@@ -297995,9 +298007,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
    How it stays live in a chat that renders by reconciling markup (app.js pmPatch): every move is a Web Animation on
    Pip's own nodes, which the reconcile never resets, and a face change redraws exactly what module-shell.js would draw
    for the new face and records it (hostMood), so the next render draws the same and the reconcile finds nothing to do.
-   No observer, no innerHTML hook, no island: the sheet's Pip is found after each render (PM56_EXT afterRender).
-   Every loop rests during a drag (body.pm-resizing and the other drag classes), in a hidden tab and offscreen, and
-   Reduced Motion keeps every Motion part still (faces still change, in one step). Animation speed scales every move. */
+   No mutation observer, no innerHTML hook, no island: the sheet's Pip is found after each render (PM56_EXT
+   afterRender). Every loop rests during a drag (body.pm-resizing and the other drag classes), in a hidden tab and
+   offscreen (an IntersectionObserver on Pip's own looping nodes), and Reduced Motion keeps every Motion part still
+   (faces still change, in one step). Animation speed scales every move. */
 (function () {
   'use strict';
   var W = window, D = document;
@@ -298342,8 +298355,62 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     return true;
   });
 
+  /* ---------------------------------------------------------------- Demo Studio moments (lab only, DR-070)
+     pip-demo-faces: the Crew sheet opens and its Pip shows each reaction in turn (watch, wonder, oops, then cheers and
+     hops), the way a person's pointer, typing and presses would make it. pip-demo-activity: Activity Detail's agents,
+     each a Pip. Scheduled's status faces and the Orbit's Pip are the gallery's scheduling and work rows. */
+  var demoT = [];
+  function demoFaces() {
+    demoT.forEach(clearTimeout); demoT = [];
+    var c = EXT.ctx(), b = D.createElement('button');
+    b.dataset.kind = 'crew'; b.dataset.auto = '0';
+    EXT.run('collab-open-configure', b, new Event('click'));
+    c.renderOverlays && c.renderOverlays();
+    var steps = [['watch', 1400], ['wonder', 1400], ['oops', 1900], ['happy', 2600]], at = 900;
+    steps.forEach(function (s) {
+      demoT.push(setTimeout(function () {
+        hosts.forEach(function (st) { feel(st, s[0], s[1], s[0] === 'happy'); if (s[0] === 'happy') hop(st); });
+      }, at));
+      at += s[1] + 300;
+    });
+  }
+  function demoActivity() {
+    var X = W.PM56_DEMO;
+    if (X && typeof X.trigger === 'function') X.trigger('Live subagents');
+    if (X && typeof X.openActivity === 'function') X.openActivity('subagents');
+  }
+  if (EXT && EXT.action) {
+    EXT.action('pip-demo-faces', function () { demoFaces(); return true; });
+    EXT.action('pip-demo-activity', function () { demoActivity(); return true; });
+  }
+
+  /* ---------------------------------------------------------------- loops rest offscreen */
+  /* The sheet's sway (pip.css, PC1) and the live Orbit's thinking dots are CSS loops on Pip's own nodes. They run only
+     while that Pip is in view and the tab is shown: data-pip-run="off" pauses them (pip.css). In view is what an
+     IntersectionObserver on those nodes reports, which clips through every scrolling ancestor, so a transcript scrolled
+     past the Orbit, a closed panel or a hidden page all count as out of view. The reconcile drops an attribute its
+     markup lacks, so each render puts it back from what was last seen, in the same task (no frame shows it running).
+     A drag pauses them through 95-perf-scope.css; Reduced Motion stops them. */
+  var LOOPS = '.pmx-sheet:not(.pmx-ghost) > .pmx-head > .pmx-pip-host, .orbit-core-face.is-live';
+  var inView = new WeakMap(), looping = new Set(), io = null;
+  function setRun(el) {
+    var v = !D.hidden && inView.get(el) === true ? 'on' : 'off';
+    if (el.getAttribute('data-pip-run') !== v) el.setAttribute('data-pip-run', v);
+  }
+  function seen(list) { list.forEach(function (e) { inView.set(e.target, e.isIntersecting); setRun(e.target); }); }
+  function syncLoops() {
+    if (!io && W.IntersectionObserver) io = new IntersectionObserver(seen);
+    var now = new Set(D.querySelectorAll(LOOPS));
+    looping.forEach(function (el) { if (!now.has(el)) { looping.delete(el); if (io) io.unobserve(el); } });
+    now.forEach(function (el) {
+      if (!looping.has(el)) { looping.add(el); if (io) io.observe(el); else inView.set(el, true); }
+      setRun(el);
+    });
+  }
+  D.addEventListener('visibilitychange', function () { looping.forEach(setRun); });
+
   /* ---------------------------------------------------------------- hooks */
-  if (EXT && EXT.slot) EXT.slot('afterRender', function () { scan(); syncThinking(); });
+  if (EXT && EXT.slot) EXT.slot('afterRender', function () { scan(); syncThinking(); syncLoops(); });
   startBlinks();
 
   W.PM56_PIP = Object.freeze({
@@ -298353,6 +298420,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     thinkingPip: thinkingPip,
     /* tests and Demo Studio: the sheet Pips on screen and a face on each */
     hosts: function () { return [...hosts.values()].map(function (s) { return { kind: s.kind, mood: s.mood }; }); },
+    loops: function () { return [...looping].map(function (el) { return { kind: el.classList.contains('orbit-core-face') ? 'orbit' : 'sheet', run: el.getAttribute('data-pip-run') }; }); },
     feel: function (mood, hold) { hosts.forEach(function (st) { feel(st, mood, hold); }); }
   });
 })();
