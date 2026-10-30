@@ -64914,7 +64914,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  * product controls, and a due-time preview calls the scheduler's owner seam.
  * Playback (2026-10-22, Jared: recorded examples play on their own after Start): every example plays from Start through
  * PM56_RECPLAY, paced to read, pressing the product's own controls (lit first): Open plan, More, Build At…, One time,
- * the date and the start time, Done, Revise, the feedback typed and sent, Review, Cancel schedule, To-Dos. Schedule build
+ * the date and the start time, Done, Revise, the feedback typed and sent, Review, Cancel schedule, To-Dos. Schedule for …
  * approves the exact version to build later, so it is yours, as a plan's Build is: each example waits there, and goes on
  * by itself after you press it. The due time is the demo clock reaching the slot (the scheduler's own seam, narrated). The
  * revise example also waits where the schedule waits on your decision: a newer version stopped the V1 schedule, and Use
@@ -64925,7 +64925,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  'use strict';
  const E=window.PM56_EXT,S=window.PM56_SCHED,P=window.PM56_PLANS,R=window.PM56_RECPLAY;
  let active=null,player=null;
- const common=[['Open the plan','Open plan','open'],['Choose when to build','Build At…','at'],['Set a one-time schedule','Set time','time'],['Save this exact version','Schedule build','save']];
+ const common=[['Open the plan','Open plan','open'],['Choose when to build','Build At…','at'],['Set a one-time schedule','Set time','time'],['Save this exact version','Schedule for …','save']];
  const flows={
   due:{label:'Schedule and build',summary:'Bind V1 → preview due time → complete',steps:[...common,['Inspect the saved binding','Return to plan','close'],['Preview the scheduled time','Preview due time','due'],['Follow the build','Open To-Dos','todos'],['Tasks are running','Waiting for completion','wait']]},
   revise:{label:'Revise a scheduled Plan',summary:'Schedule V1 → revise → explicitly use V2',steps:[...common,['Return to the document','Return to plan','close'],['Change the planned scope','Revise','revise'],['Create a new version','Send feedback','feedback'],['Inspect the outdated binding','Review schedule','review'],['Choose the new version explicitly','Use V2','rebind'],['Inspect the updated binding','Return to plan','close'],['Preview the new scheduled build','Preview due time','due']]},
@@ -64960,7 +64960,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   if(kind==='time')return [press('#pmOverlayRoot '+query('sched-set-build-kind',{value:'one_time'}),PACE.kind,{dialog:true}),
    {wait:PACE.field,dialog:true,run:()=>R.choose('[data-sched-input="build-date"]',tomorrow())},
    {wait:PACE.field,dialog:true,run:()=>R.choose('[data-sched-input="build-time"]','10:00').then(ok=>{if(ok){const z=document.querySelector('[data-sched-input="build-tz"]');if(z){z.value='America/New_York';z.dispatchEvent(new Event('change',{bubbles:true}));}}return ok;})}];
-  /* Schedule build approves this exact version for a later build: yours to press (follow() sees it and moves on) */
+  /* Schedule for … (Build At's own primary) approves this exact version for a later build: yours to press (follow() sees it and moves on) */
   if(kind==='save')return [];
   if(kind==='close')return [Object.assign(press('#pmOverlayRoot '+query('sched-close-dialog'),PACE.done,{dialog:true}),{skip:()=>!visible('sched-close-dialog')}),
    Object.assign(press(more+'[aria-expanded="true"]',PACE.item),{skip:()=>!document.querySelector(more+'[aria-expanded="true"]')})];
@@ -65043,7 +65043,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   }catch(err){a.error=String(err.message||err);}finally{a.busy=false;if(active===a)refreshGuide();}
  }
  /* the guide follows the reader's own click: a schedule for this Plan committed with the sheet's own primary (not
-    the guide's "Schedule build") moves the guide past its save step, so Done never strands the flow */
+    the guide's "Schedule for …") moves the guide past its save step, so Done never strands the flow */
  function follow(a){
   if(!a||a.busy||a.scheduleId)return;const k=flows[a.flow].steps.map(s=>s[2]),at=k.indexOf('save');if(at<0||a.step>at)return;
   const p=plan(),b=p&&S.list().builds.find(b=>b.target_id===p.plan_id&&b.state==='active'&&!a.known.includes(b.schedule_id));
@@ -65057,7 +65057,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  const SAY={open:'The assistant wrote a plan. Next: you open it, then schedule its build for later instead of building now.',
   at:'Next: Build At…, from the plan’s More menu, sets a time to build this exact version.',
   time:'Build At opens. Next: you choose One time, tomorrow at 10:00.',
-  save:'Your move: Schedule build approves this exact version, V1, to build tomorrow at 10:00. Press it when you’re ready; the recording goes on from there.',
+  save:'Your move: Build At’s Schedule for … button approves this exact version, V1, to build tomorrow at 10:00. Press it when you’re ready; the recording goes on from there.',
   close:'Scheduled: V1 builds tomorrow at 10:00, exactly as it is now. Next: back to the plan.',
   revise:'Scheduled for V1. Next: you revise the plan before the slot comes.',
   feedback:'Revising: the message box writes to this plan now. Next: you type what to change and send it.',
@@ -68825,8 +68825,9 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
    PM56_RECPLAY, paced to read. Your part is played on the product's own controls, lit first: a message's More menu and
    Save as a rule…, Save rule, typing /teach or a question in the message box and Send, View on a rule's receipt, Edit,
    the new wording typed into Teach, and Ask for a fix. A rule's reply tick is shown as if the pointer rested on it. The
-   examples end where the product waits for you: the missed example's request waits in the message box for your Send,
-   and the edit example stops at Turn off's confirm in the rule's row. The guide narrates; its only buttons are Replay
+   examples end where the product waits for you: the missed example's request waits in the message box for your Send
+   (Send gets a reply that keeps the compare step, checked against your rule like any other), and the edit example
+   stops at Turn off's confirm in the rule's row. The guide narrates; its only buttons are Replay
    and Close. */
 (function(){
  'use strict';const E=window.PM56_EXT,T=window.PM56_TEACH,S=window.PM56_SHELL,R=window.PM56_RECPLAY,clone=x=>JSON.parse(JSON.stringify(x));let current=null,seq=0;
@@ -68841,7 +68842,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  function start(kind){if(!flows[kind])return;const c=E.ctx(),id='teach-demo-'+kind+'-'+(++seq),t=clone(c.state.threads.find(t=>t.id==='plain')||c.state.threads[0]),at=new Date().toISOString();
   Object.assign(t,{id,title:flows[kind].label+' · recorded example',goalId:null,status:'ready',pinned:false,archived:false,projectId:'concept:teach-example:'+seq,messages:[{id:id+'-request',role:'user',type:'text',body:'Help me keep generated files consistent with their source.',time:at},{id:id+'-guidance',role:'assistant',type:'text',body:flows[kind].advice,time:at}]});
   c.state.threads.push(t);Object.assign(c.state,{mode:'Ask',menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};window.PM56_RUNTIME.composer.destination=null;
-  current={kind,threadId:id,sourceId:id+'-guidance',ids:[],asked:false,opened:false,fixed:false,previewed:false};c.switchThread(id);playback();c.renderApp();
+  current={kind,threadId:id,sourceId:id+'-guidance',ids:[],asked:false,opened:false,fixed:false,resent:false,previewed:false};c.switchThread(id);playback();c.renderApp();
  }
  document.addEventListener('pm56:teach-committed',e=>{if(current&&e.detail.threadId===current.threadId){current.ids.push(e.detail.id);T.markRecorded(e.detail.id);}});
  const thread=()=>E.ctx().state.threads.find(t=>t.id===current?.threadId);
@@ -68850,6 +68851,14 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   const m={id:current.threadId+'-answer',role:'assistant',type:'text',body:'Change the source template, then run the build so the dashboard file is generated again. Editing the generated file directly would be overwritten.',time:at};
   t.messages.push(m);current.asked=true;
   /* the ordinary reply boundary: the reply takes a note, and each rule that rode along is checked against it */
+  const M=window.PM56_AUTO_MEMORY,out=M?M.boundary(t,m):null;if(out&&out.id&&M.markRecorded)M.markRecorded(out.id);else T.noteReply(t,m);
+  c.renderApp();}
+ /* your Send of the fix request (the missed example's last move): the reply keeps the compare step and is checked at the
+    same reply boundary, so its receipt reads Followed 1 of your rules */
+ function resend(raw){const c=E.ctx(),t=thread();if(!t)return;const at=new Date().toISOString();
+  t.messages.push({id:current.threadId+'-fix-request',role:'user',type:'text',body:raw,time:at});
+  const m={id:current.threadId+'-fixed',role:'assistant',type:'text',body:'You’re right, I left out the compare step. Change the source template, run the build so the dashboard file is generated again, then compare the generated output with the previous version to confirm only what you meant changed. Editing the generated file directly would be overwritten.',time:at};
+  t.messages.push(m);current.resent=true;
   const M=window.PM56_AUTO_MEMORY,out=M?M.boundary(t,m):null;if(out&&out.id&&M.markRecorded)M.markRecorded(out.id);else T.noteReply(t,m);
   c.renderApp();}
  /* the recording: next() names the next beat from the example's own state (PM56_RECPLAY) */
@@ -68898,6 +68907,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  function stop(){if(player){player.stop();player=null;}}
  /* the example answers its own question when you send it, whoever types it: the reply boundary as before */
  window.PM56_RUNTIME.composer.preSendHooks.push((c,t,raw)=>{if(!current||t.id!==current.threadId||current.asked||raw.trim()!==QUESTION)return false;ask();return {claimed:true};});
+ window.PM56_RUNTIME.composer.preSendHooks.push((c,t,raw)=>{const text=raw.trim();if(!current||current.kind!=='missed'||t.id!==current.threadId||!current.fixed||current.resent||!/missed|fix/i.test(text))return false;resend(text);return {claimed:true};});
  function step(){
   const a=current,latest=T.get(a.ids.at(-1)),up=player&&player.upcoming();
   if(player&&player.errors.length)return {step:'This step couldn’t run, so the recording stopped here. Replay starts it again.',done:true};
@@ -68910,7 +68920,8 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     if(!a.previewed)return {step:'Your rules open beside the chat. Next: see what your next message will include.'};
     return {step:'Done · Your next message includes the rule. It rides along in this chat until you change it.',done:true};}
    if(!a.fixed)return {step:'Under the reply: Missed 1 of your rules. It left out the compare step. Next: you press Ask for a fix.'};
-   return {step:'Your move: the request to fix the reply waits in the message box. Nothing is sent until you press Send.',done:true,yours:true};}
+   if(!a.resent)return {step:'Your move: the request to fix the reply waits in the message box. Nothing is sent until you press Send.',done:true,yours:true};
+   return {step:'Done · The new reply keeps the compare step. Under it: Followed 1 of your rules.',done:true};}
   if(!latest){if(up&&up.id==='send-teach')return {step:'Typed /teach and the rule. Next: Send opens Teach with it.'};
    return {step:'Teach a rule the quick way: type /teach and the rule in the message box.'};}
   if(latest.version===1&&!latest.supersededBy&&!latest.revoked){
@@ -71716,7 +71727,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
     world('time','Tomorrow is selected. Next: set the start time to 10:00.',()=>R.choose('[data-sched-input="build-time"]','10:00'),1300,{dialog:true});
     add('topology','The time is ready. Next: choose Build as Goal for the scheduled execution.',sel('sched-pick-build-topology'),()=>!!R.find('.overlay-menu '+sel('shared-choice-pick','[data-value="goal_driven"]')),2500,{dialog:true});
     add('goal-topology','Execution choices are open. Next: select Build as Goal.', '.overlay-menu '+sel('shared-choice-pick','[data-value="goal_driven"]'),()=>c().state.dialog&&!c().state.menu&&!!R.find(sel('sched-pick-build-topology'))&&R.find(sel('sched-pick-build-topology')).textContent.includes('Goal'),1300,{dialog:true,menu:true});
-    beats.push({id:'schedule-approval',text:'Your move: review the time and Build as Goal, then press Schedule build to approve this future build. No Goal exists before the slot.',until:()=>!!schedule(),yours:true,dialog:true});
+    beats.push({id:'schedule-approval',text:'Your move: review the time and Build as Goal, then press Schedule for … to approve this future build. No Goal exists before the slot.',until:()=>!!schedule(),yours:true,dialog:true});
     add('close-schedule','The exact Plan is scheduled; no Goal exists yet. Next: return to the conversation before its approved slot.',sel('sched-close-dialog'),()=>!c().state.dialog,4200,{dialog:true});
     back('scheduled');
     world('due','The future build is approved, but no Goal exists yet. Next: the demonstration clock reaches that exact slot.',()=>{const b=schedule();window.PM56_SCHED.dispatchBuildAt(b.schedule_id,Date.parse(b.scheduled_at_utc),b.revision);return true;},5000);

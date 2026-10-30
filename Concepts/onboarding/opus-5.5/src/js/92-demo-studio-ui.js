@@ -963,7 +963,8 @@
     notice: (arg) => { M.notices.fire(arg); },
     'notices-clear': () => { M.notices.clear(); },
     look: (arg) => { const [f, m] = arg.split(':'); M.looks.set(f, m); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
-    wall: (arg) => { M.looks.walls.choose(arg); real.setTimeout(refresh, 120); },
+    /* Settings refuses a wallpaper it can't save and verify (a sandboxed preview has no storage): say so, not nothing */
+    wall: (arg) => { let ok = false; try { ok = M.looks.walls.choose(arg) !== false; } catch (_) {} if (!ok) say(T('studio.looks.walls.refused')); real.setTimeout(refresh, 120); },
     'lg-tier': (arg) => { M.looks.lg.setTier(arg); real.setTimeout(refresh, 80); },
     'lg-wall': (arg) => { M.looks.lg.setWall(arg); real.setTimeout(refresh, 80); },
     'look-mode': (arg) => { M.looks.mode(arg); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
@@ -1021,11 +1022,13 @@
     'onb-ask': (arg) => { if (!M.pipOnboarding.askAvail(arg)) return say(T('studio.toast.unavailable')); const pick = ST.pick; launch(() => M.pipOnboarding.ask(arg, pick)); },
     /* background activity */
     'act-scene': (arg) => { if (!M.activity.load(arg)) return say(T('studio.toast.unavailable')); real.setTimeout(refresh, 80); },
-    'act-open': (arg) => { M.activity.open(arg); real.setTimeout(refresh, 200); },
+    /* the panel, the chat's view and the owner's dialogs open where the sheet stands, so the Studio steps aside for them,
+       as it does for a screen row (QA2 hunter H7) */
+    'act-open': (arg) => { launch(() => M.activity.open(arg)); },
     /* the owner's answer decides: a thread without processes has no Processes view (D4), and the Studio says so */
-    'act-chat': () => { Promise.resolve(M.activity.processes()).then((r) => { if (!r.ok) say(T(r.reason === 'none' ? 'studio.activity.chatProcessesNone' : 'studio.activity.chatProcessesRefused')); refresh(); }); },
-    'act-stop-all': () => { M.activity.stopAll(); },
-    'act-quit': () => { M.activity.quit(); },
+    'act-chat': () => { if (!M.activity.processesAvail()) return say(T('studio.activity.chatProcessesNone')); launch(() => Promise.resolve(M.activity.processes()).then((r) => { if (!r.ok) say(T(r.reason === 'none' ? 'studio.activity.chatProcessesNone' : 'studio.activity.chatProcessesRefused')); })); },
+    'act-stop-all': () => { launch(() => M.activity.stopAll()); },
+    'act-quit': () => { launch(() => M.activity.quit()); },
     'act-words': (arg) => { M.activity.setWords(arg === 'words'); real.setTimeout(refresh, 80); },
     /* the title bar */
     'tb-state': (arg) => { if (!M.titlebar.setState(arg)) return say(T('studio.toast.unavailable')); if (arg === 'unsaved') say(T('studio.workspace.titlebar.unsavedToast')); real.setTimeout(refresh, 80); },
@@ -1034,7 +1037,12 @@
     'tb-menu': () => { M.titlebar.openMenu(); },
     'sw-load': (arg) => { ST.sw = Object.assign({}, ST.sw || M.switches.now(), { load: arg }); refresh(); },
     'sw-situation': () => { const s = ST.sw || M.switches.now(); ST.sw = Object.assign({}, s, { situation: !s.situation }); refresh(); },
-    'sw-copy': () => { const v = M.switches.url(ST.sw || M.switches.now()); try { navigator.clipboard.writeText(v).then(() => say(T('studio.switches.copied')), () => {}); } catch (_) {} },
+    /* a sandboxed preview has no clipboard: the address is selected in its field instead, and the Studio says so */
+    'sw-copy': () => {
+      const v = M.switches.url(ST.sw || M.switches.now());
+      const fallback = () => { const i = ST.sheet && ST.sheet.querySelector('#pmds-url'); if (i) { i.focus(); i.select(); } say(T('studio.switches.copyFailed')); };
+      try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(() => say(T('studio.switches.copied')), fallback); else fallback(); } catch (_) { fallback(); }
+    },
     'sw-reload': () => { M.switches.reload(ST.sw || M.switches.now()); }
   };
   function commitPick() { M.applySituation(M.joinSituation(ST.pick)); renderEntry(); refresh(); }

@@ -115,7 +115,7 @@
     world('time','Tomorrow is selected. Next: set the start time to 10:00.',()=>R.choose('[data-sched-input="build-time"]','10:00'),1300,{dialog:true});
     add('topology','The time is ready. Next: choose Build as Goal for the scheduled execution.',sel('sched-pick-build-topology'),()=>!!R.find('.overlay-menu '+sel('shared-choice-pick','[data-value="goal_driven"]')),2500,{dialog:true});
     add('goal-topology','Execution choices are open. Next: select Build as Goal.', '.overlay-menu '+sel('shared-choice-pick','[data-value="goal_driven"]'),()=>c().state.dialog&&!c().state.menu&&!!R.find(sel('sched-pick-build-topology'))&&R.find(sel('sched-pick-build-topology')).textContent.includes('Goal'),1300,{dialog:true,menu:true});
-    beats.push({id:'schedule-approval',text:'Your move: review the time and Build as Goal, then press Schedule build to approve this future build. No Goal exists before the slot.',until:()=>!!schedule(),yours:true,dialog:true});
+    beats.push({id:'schedule-approval',text:'Your move: review the time and Build as Goal, then press Schedule for … to approve this future build. No Goal exists before the slot.',until:()=>!!schedule(),yours:true,dialog:true});
     add('close-schedule','The exact Plan is scheduled; no Goal exists yet. Next: return to the conversation before its approved slot.',sel('sched-close-dialog'),()=>!c().state.dialog,4200,{dialog:true});
     back('scheduled');
     world('due','The future build is approved, but no Goal exists yet. Next: the demonstration clock reaches that exact slot.',()=>{const b=schedule();window.PM56_SCHED.dispatchBuildAt(b.schedule_id,Date.parse(b.scheduled_at_utc),b.revision);return true;},5000);

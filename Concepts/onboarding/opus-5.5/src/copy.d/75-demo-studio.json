@@ -1341,7 +1341,8 @@
       "walls": {
         "title": "Wallpaper",
         "lead": "Any wallpaper in any look. It shows behind the app in every look, in the print that follows light or dark.",
-        "own": "Look's own"
+        "own": "Look's own",
+        "refused": "The wallpaper didn't change: Settings couldn't save it on this page."
       }
     },
     "pip": {
@@ -1610,6 +1611,7 @@
       "reload": "Reload with these",
       "copy": "Copy the address",
       "copied": "Address copied",
+      "copyFailed": "This page can't copy, so the address is selected in its field: copy it from there.",
       "active": "On now"
     },
     "toast": {

@@ -86,8 +86,7 @@ var persist = PMW.persist = {
   },
   load: function () {
     // read the raw text: a record that is not valid JSON is quarantined too, not mistaken for "nothing saved"
-    var raw = null;
-    try { raw = localStorage.getItem(persist.key()); } catch (_) { raw = null; }
+    var raw = store.raw(persist.key());
     if (raw == null) return null;
     var rec;
     try { rec = JSON.parse(raw); } catch (_) { persist.quarantine(raw, 'unreadable'); return null; }
