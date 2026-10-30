@@ -1088,7 +1088,12 @@
         if (soft !== root.hasAttribute('data-pmh-soft')) { if (soft) root.setAttribute('data-pmh-soft', ''); else root.removeAttribute('data-pmh-soft'); }
       } catch (_) {}
     }
-    var idle = window.requestIdleCallback ? function (fn) { window.requestIdleCallback(fn, { timeout: 1500 }); } : function (fn) { setTimeout(fn, 0); };
+    /* idle work goes through the page's one admission (PM_BUSY.idle, 11-motion-start.js): never inside a held drag (F3-3) */
+    var idle = function (fn) {
+      var B = window.PM_BUSY;
+      if (B && typeof B.idle === 'function') { B.idle(fn, 1500); return; }
+      if (window.requestIdleCallback) window.requestIdleCallback(fn, { timeout: 1500 }); else setTimeout(fn, 0);
+    };
     stampSoon(1200);
     setTimeout(function () { idle(askSoft); }, 2500);
     setTimeout(function () { idle(askSoft); }, 6500);

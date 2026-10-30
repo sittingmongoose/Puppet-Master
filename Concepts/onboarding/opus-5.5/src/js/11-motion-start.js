@@ -131,6 +131,11 @@
        'calm'        the Reduce Animations NieR cover (#o55np-calm), through its fade
        'theme'       the look cover (js/12-theme-transition.js), until its lift has ended
        'nier'        a NieR switch asked and not yet painted (PM_NIER.wanted() differs from on())
+       'drag'        a drag is held (body.pm-resizing, pm-ab-dragging, pmw-dragging, pmu-pointer-op, pm7u-pointer-op):
+                     no idle job runs inside a drag (PM7 build F3-3); named last, so a cover is still named first
+     PM_BUSY.drag() -> true while a drag class is on the body. PM_BUSY.idle(fn, timeout?) is the one admission for idle
+     work: fn runs in an idle callback (requestIdleCallback with that timeout), but never inside a held drag: asked
+     during one, it waits for the spell's end ('pm-idle') and asks again; a callback that lands in one does the same.
      A hidden tab is not busy by itself (callers keep their own document.hidden check). It reads attributes and ids only,
      never style or layout, so it costs nothing in any frame. 'pm-idle' is sent on window in the first frame after a
      busy spell ends: every spell this script sees begin (one of those markers appearing) or that a call finds. */
@@ -141,6 +146,8 @@
      never a live collection, whose length walks the whole document again after any DOM change (4.3 ms a call on
      Nas1 during an editor open, Glass lane) */
   const tourCovered = () => { for (let c = document.body && document.body.lastElementChild; c; c = c.previousElementSibling) if (c.classList.contains('o55t-bootcover')) return true; return false; };
+  const DRAG_CLASSES = ['pm-resizing', 'pm-ab-dragging', 'pmw-dragging', 'pmu-pointer-op', 'pm7u-pointer-op'];
+  const dragging = () => { const b = document.body; if (!b) return false; for (const c of DRAG_CLASSES) if (b.classList.contains(c)) return true; return false; };
   let busyFrame = 0, busyTimer = 0;
   const busyNow = () => {
     for (const [a, why] of BUSY_ATTRS) if (busyRoot.hasAttribute(a)) return why;
@@ -148,6 +155,7 @@
     if (tourCovered()) return 'boot';
     try { const t = window.PM_THEME_TRANSITION; if (t && typeof t.busy === 'function' && t.busy()) return 'theme'; } catch (_) { /* none */ }
     try { const n = window.PM_NIER; if (n && typeof n.wanted === 'function' && typeof n.on === 'function' && !!n.wanted() !== !!n.on()) return 'nier'; } catch (_) { /* none */ }
+    if (dragging()) return 'drag';
     return '';
   };
   /* A spell's end is seen where it happens (an attribute or a cover going, the theme cover's lift ending, a NieR switch
@@ -166,12 +174,25 @@
   const busyEnded = () => { if (busySpell && !busyFrame) busyFrame = requestAnimationFrame(busyCheck); };
   window.PM_BUSY = function busy() { const why = busyNow(); if (why) busyArm(); return why; };
   window.PM_BUSY.ended = busyEnded;
+  window.PM_BUSY.drag = dragging;
+  /* the shared admission for idle work (F3-3): a held drag defers it to the spell's end; the spell is armed by asking */
+  const afterDrag = (ask) => { window.PM_BUSY(); window.addEventListener('pm-idle', ask, { once: true }); };
+  window.PM_BUSY.idle = function idleWhenStill(fn, timeout) {
+    if (typeof fn !== 'function') return;
+    const ask = () => {
+      const run = (dl) => { if (dragging()) { afterDrag(ask); return; } fn(dl); };
+      if (window.requestIdleCallback) window.requestIdleCallback(run, timeout ? { timeout } : undefined);
+      else setTimeout(() => run({ timeRemaining: () => 50, didTimeout: true }), 0);
+    };
+    if (dragging()) afterDrag(ask); else ask();
+  };
   /* a spell begins or ends: an attribute on html (NieR's own for a switch that paints), a cover added to or taken
      from the body */
   try {
     const seen = new MutationObserver(() => { if (busySpell) busyEnded(); else if (busyNow()) busyArm(); });
     seen.observe(busyRoot, { attributes: true, attributeFilter: BUSY_ATTRS.map((a) => a[0]).concat(['data-o55-nier']) });
-    const watchBody = () => { if (document.body) seen.observe(document.body, { childList: true }); };
+    // the body's class: a drag starting or ending (DRAG_CLASSES) begins or ends a spell
+    const watchBody = () => { if (document.body) seen.observe(document.body, { childList: true, attributes: true, attributeFilter: ['class'] }); };
     if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
   } catch (_) { /* calls still arm it */ }
 
