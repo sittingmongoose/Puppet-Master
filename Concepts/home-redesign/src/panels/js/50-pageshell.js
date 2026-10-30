@@ -91,12 +91,20 @@ var NOTICE_GAP = 10;     // the page's own gap between the bell and the first ca
    header row, a tab strip near the bar or the chat header (#19, ruling A), and then moved down (up to 320 px) or aside
    (up to 280 px) to the nearest spot that covered no control (review r3's ruling on #19). Every page and window size
    put the cards somewhere else: 74 px down on Home, 97 on Orchestrator, 49 down and 192 aside on Usage at 1440 x 900.
-   The cards now always hang tight under the title bar at the bell (BAR_GAP below its bottom edge), on every page, and
-   nothing on the page moves them. A card covers what is under it for its few seconds: hovering holds its time, its x
-   or a swipe takes it away, and a lasting notice then joins the bell. */
-var BAR_GAP = 6;
+   The cards now always hang tight under the title bar at the bell, on every page, and nothing on the page moves them.
+   A card covers what is under it for its few seconds: hovering holds its time, its x or a swipe takes it away, and a
+   lasting notice then joins the bell. */
+/* Jared, 2026-10-30: "The notifications should start below the bell. Like the theme selector does." So the first card
+   starts where the theme selector's menu starts: MENU_GAP under the selector (onboarding pm6-css-chat.css .pm6-tb-menu,
+   top: calc(100% + 6px); no look moves it). The selector ends a few pixels above the bar's bottom edge, by how much
+   depends on the look, so BAR_GAP under the bar had put the card 4-7 px lower than the menu in every look. BAR_GAP
+   stays for a window with no selector drawn. Kept to a tenth of a pixel, so the two tops are the same, not a pixel off.
+   The bell's own gap (NOTICE_GAP under the bell) puts the stage lower than the menu, so this drop can be negative. */
+var BAR_GAP = 6, MENU_GAP = 6;
 function noticeDrop(host) {
   var top = host.getBoundingClientRect().bottom + NOTICE_GAP;
+  var sel = doc.getElementById('themeMenuWrap'), sr = sel && sel.getClientRects().length ? sel.getBoundingClientRect() : null;
+  if (sr && sr.height) return Math.round((sr.bottom + MENU_GAP - top) * 10) / 10;   // may lift it: the bell ends lower than the selector
   var bar = doc.querySelector('.title-bar'), br = bar && bar.getClientRects().length ? bar.getBoundingClientRect() : null;
   return br && br.height ? Math.max(0, Math.round(br.bottom + BAR_GAP - top)) : 0;
 }
