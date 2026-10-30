@@ -1,0 +1,264 @@
+/* 48-work.css: the agents and processes panel, its detail block, the Stop list and the quit dialog (W6; 48-work.js).
+   OWNER: pm7-activity. It sits in the one overlay root (#pmw-overlay), so the Home panels' --pmw-* tokens are its
+   materials in every look: the floating plate (--pmw-pop, Glass's near-opaque menu tint), its line and shadow, the
+   menu radius. States are a registry mark and a word, counts are plain numbers, strips have full borders (DR-069: no
+   side stripes, no emoji, no pills). The status bar items' own rules are in pm7-t32-final.css. */
+
+#pm7-work, .wk-dialog-scrim, [data-work-detail], .pm7-work-group {
+  --wk-attn: var(--pmg-ink-attention, var(--pmw-warn, #ffb74d));
+  --wk-work: var(--pmg-ink-working, var(--pmw-accent, #64b5f6));
+  --wk-bad: var(--pmg-ink-blocked, var(--pmw-bad, #ef5350));
+  --wk-done: var(--pmg-ink-done, var(--pmw-ok, #66bb6a));
+  --wk-idle: var(--pmw-text-3, var(--text-muted, #8a8f98));
+  --wk-ink: var(--pmw-text, var(--text-primary, #e8e8e8));
+  --wk-ink2: var(--pmw-text-2, var(--text-secondary, #a0a0a0));
+  --wk-line: var(--pmw-pop-line, var(--border, #424242));
+  --wk-line2: var(--pmw-line, var(--border-light, #333));
+  --wk-mono: var(--mono-font, 'JetBrains Mono', ui-monospace, monospace);
+}
+#pm7-work [data-tone="attention"], .wk-dialog [data-tone="attention"], [data-work-detail] [data-tone="attention"] { --wk-t: var(--wk-attn); }
+#pm7-work [data-tone="working"], [data-work-detail] [data-tone="working"] { --wk-t: var(--wk-work); }
+#pm7-work [data-tone="blocked"], [data-work-detail] [data-tone="blocked"] { --wk-t: var(--wk-bad); }
+#pm7-work [data-tone="done"], [data-work-detail] [data-tone="done"] { --wk-t: var(--wk-done); }
+#pm7-work :is([data-tone="idle"], [data-tone="paused"]), [data-work-detail] :is([data-tone="idle"], [data-tone="paused"]) { --wk-t: var(--wk-idle); }
+
+/* ---- the category marks (X1): lit by status like the Activity bar's, the backlight a soft tail on the host ---- */
+.wk-g { position: relative; display: inline-grid; place-items: center; flex: none; isolation: isolate; }
+.wk-g > svg { width: 13px; height: 13px; color: var(--wk-idle); --nx-stroke-base: 2.2; --nx-tone-k: 1; --nx-hiv: visible; --nx-hi-a: var(--nx-h-quiet-i, .1); }
+.wk-g::before { content: ""; position: absolute; left: 50%; top: 50%; width: 220%; height: 220%; translate: -50% -50%; border-radius: 50%; z-index: -1;
+  pointer-events: none; background: radial-gradient(closest-side, var(--wk-work), transparent); opacity: 0; }
+.wk-g[data-tone="working"] > svg { color: var(--wk-work); --nx-hi-a: var(--nx-h-working-i, .2); }
+.wk-g[data-tone="working"]::before { opacity: var(--nx-bl-working, .1); }
+html[data-o55-nier="on"] .wk-g::before { display: none; }
+.wk-plink .wk-g > svg { width: 11px; height: 11px; }
+
+/* ---- the status bar's two items (W6, D5): their own group between the project folder and source control, drawn by
+   installStatusBar and painted by 48-work.js. Kept here, beside their painter: pm7-t32-final.css's rule count is pinned
+   by the Usage layer (usage_layer.py EXPECT). Numbers by default (glyph and number pairs, the words in the hover tag),
+   Words with the setting. The category glyph (X1) breathes on the 2200 ms beat while anything runs (.pmg-beat); what
+   waits on you is the waiting mark and its number in the attention ink. No CPU or RAM item (G4). */
+.pm7-work-group[hidden], .pm7-work-stale[hidden] { display: none !important; }
+.pm7-work-item { gap: 5px; flex: none; }
+/* the group keeps its numbers whole in a crowded bar; the shell's own groups clip theirs, and Words fall back to Numbers */
+#pm7GlobalStatusBar .pm7-work-group { flex-shrink: 0; }
+.pm7-work-item .wk-dim { color: var(--text-muted); font-weight: 600; }
+.wk-sb-ask { display: inline-flex; align-items: center; gap: 4px; margin-left: 4px; color: var(--pmg-ink-attention, var(--accent-orange)); }
+.wk-sb-ask strong { color: inherit; }
+.pm7-work-item.is-open { color: var(--text-primary); background: color-mix(in srgb, var(--accent-primary) 14%, transparent); }
+.pm7-work-stale { gap: 4px; }
+/* NieR's unit readouts (G9): the inverted mono label the bar's other readouts wear, and square marks */
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-work-item::before { order: -2; padding: 1px 4px 0; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  font: 600 8.5px/12px var(--mono-font); letter-spacing: .14em; }
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-work-item[data-status-action="agents"]::before { content: "AGT"; }
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-work-item[data-status-action="processes"]::before { content: "PRC"; }
+/* Words say agents and processes already, so the readout labels give their room to the words */
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-work-group[data-work-words="on"] .pm7-work-item::before { content: none; }
+html[data-o55-nier="on"] .pm7-work-item .wk-g > svg { color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pm7-work-item.is-open { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pm7-work-item.is-open :is(strong, .wk-g > svg, .wk-sb-ask) { color: var(--o55-nier-on-ink); }
+/* ---- the panel: the floating plate, above the status bar item that opened it ---- */
+#pm7-work {
+  position: fixed; z-index: 30; display: flex; flex-direction: column; box-sizing: border-box;
+  width: 620px; max-width: calc(100vw - 16px); max-height: min(74vh, 760px);
+  background: var(--pmw-pop); color: var(--wk-ink); border: 1px solid var(--wk-line); border-radius: var(--pmw-menu-radius, 13px);
+  box-shadow: var(--pmw-pop-shadow); font: 12.5px/1.35 var(--body-font, Inter, system-ui, sans-serif);
+}
+#pm7-work[hidden] { display: none; }
+#pm7-work[data-tab="resources"] { width: 820px; }
+#pm7-work.is-floating { max-height: 80vh; }
+#pm7-work.is-floating .wk-head { cursor: move; }
+.wk-head, #pm7-work > .wk-strip, .wk-tabs, .wk-foot { flex: none; }
+.wk-head { display: flex; align-items: center; gap: 8px; padding: 9px 8px 8px 14px; border-bottom: 1px solid var(--wk-line2); }
+.wk-head > strong { font-size: 13.5px; font-weight: 650; white-space: nowrap; }
+.wk-head-sum { color: var(--wk-ink2); font-size: 12px; white-space: nowrap; }
+.wk-grow { flex: 1 1 auto; }
+.wk-ib { all: unset; box-sizing: border-box; display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 6px; cursor: pointer; color: var(--wk-ink2); }
+.wk-ib:hover, .wk-ib[aria-pressed="true"] { background: var(--pmw-hover); color: var(--wk-ink); }
+.wk-ib:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: 1px; }
+.wk-strip { display: flex; align-items: flex-start; gap: 7px; margin: 8px 10px 0; padding: 7px 10px; border: 1px solid color-mix(in srgb, var(--wk-t, var(--wk-attn)) 45%, var(--wk-line));
+  border-radius: 7px; background: color-mix(in srgb, var(--wk-t, var(--wk-attn)) 9%, transparent); font-size: 12px; line-height: 1.4; color: var(--wk-ink); }
+
+/* Agents │ Processes │ Resources: each tab says what it holds and how many wait on you */
+.wk-tabs { display: flex; gap: 0; padding: 0 8px; border-bottom: 1px solid var(--wk-line2); overflow-x: auto; scrollbar-width: none; }
+.wk-tabs > button { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; gap: 6px; padding: 9px 12px 8px; margin-bottom: -1px;
+  border-bottom: 2px solid transparent; cursor: pointer; color: var(--wk-ink2); font-size: 12.5px; white-space: nowrap; }
+.wk-tabs > button[aria-selected="true"] { color: var(--wk-ink); border-bottom-color: currentColor; font-weight: 650; }
+.wk-tabs > button:hover { color: var(--wk-ink); }
+.wk-tabs > button:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: -2px; }
+.wk-n { opacity: .75; font-variant-numeric: tabular-nums; }
+.wk-ask-n { display: inline-flex; align-items: center; gap: 4px; margin-left: 2px; color: var(--wk-attn); font-weight: 650; font-size: 11.5px; }
+
+.wk-body { flex: 1 1 auto; min-height: 120px; overflow: auto; padding: 6px 6px 8px; overscroll-behavior: contain; }
+.wk-body:focus { outline: none; }
+.wk-foot { display: flex; align-items: center; gap: 10px; padding: 8px 12px 9px; border-top: 1px solid var(--wk-line2); font-size: 11.5px; }
+.wk-empty { padding: 14px 12px; color: var(--wk-ink2); font-size: 12.5px; line-height: 1.45; }
+.wk-dim { color: var(--wk-idle); }
+.wk-mono { font-family: var(--wk-mono); }
+
+/* sections: fixed ones are headings (Questions, Needs input, Scheduled, Finished); groups fold */
+.wk-shead { display: flex; align-items: center; gap: 7px; padding: 8px 8px 4px; font-size: 12px; color: var(--wk-ink2); }
+.wk-shead > strong { color: var(--wk-ink); font-size: 12.5px; }
+.wk-fixed[data-tone="attention"] .wk-shead > strong { color: var(--wk-attn); }
+.wk-fixed:is([data-sec="questions"], [data-sec="input"]) { margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--wk-line2); }
+.wk-group + .wk-group { margin-top: 4px; }
+.wk-ghead-row { display: flex; align-items: center; gap: 4px; }
+.wk-ghead { all: unset; box-sizing: border-box; display: flex; align-items: center; gap: 7px; flex: 1 1 auto; min-width: 0; padding: 7px 8px; border-radius: var(--pmw-row-radius, 7px);
+  cursor: pointer; font-size: 12px; color: var(--wk-ink2); }
+.wk-ghead > strong { color: var(--wk-ink); font-size: 12.5px; white-space: nowrap; }
+.wk-ghead:hover { background: var(--pmw-hover); }
+.wk-ghead:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: -2px; }
+.wk-gsum { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wk-gsum b[data-tone] { color: var(--wk-t); font-weight: 600; }
+.wk-gopen { flex: none; margin-right: 6px; }
+.wk-group[data-jump="1"] .wk-ghead { background: color-mix(in srgb, var(--wk-work) 16%, transparent); }
+.wk-alinks { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 14px; padding: 0 8px 4px 52px; }
+.wk-subs, .wk-plink { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; gap: 5px; padding: 3px 6px; border-radius: 6px; cursor: pointer; font-size: 11.5px; color: var(--wk-ink2); }
+.wk-subs:hover, .wk-plink:hover { color: var(--wk-ink); background: var(--pmw-hover); }
+.wk-subs:focus-visible, .wk-plink:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: 1px; }
+.wk-note { display: flex; gap: 6px; align-items: flex-start; margin: 4px 10px 6px 34px; font-size: 11.5px; line-height: 1.4; }
+
+/* one row: mark, kind (Pip for an agent), copy, word and time */
+.wk-row { padding-left: calc(var(--d, 0) * 18px); }
+.wk-row-btn { all: unset; box-sizing: border-box; display: grid; grid-template-columns: 16px 16px minmax(0, 1fr) auto; gap: 7px; align-items: start; width: 100%;
+  padding: 6px 8px; border-radius: var(--pmw-row-radius, 7px); cursor: pointer; }
+.wk-row-btn:hover { background: var(--pmw-hover); }
+.wk-row-btn:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: -2px; }
+.wk-row.is-open > .wk-row-btn { background: var(--pmw-press); }
+.wk-lead, .wk-kind { display: inline-flex; padding-top: 2px; }
+.wk-kind { color: var(--wk-idle); }
+.wk-pip { display: inline-grid; place-items: center; width: 16px; height: 16px; margin-top: -1px; }
+.wk-pip > svg { width: 14px; height: 14px; }
+.wk-copy { display: grid; min-width: 0; }
+.wk-copy strong { font-weight: 600; font-size: 12.5px; color: var(--wk-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wk-sub { color: var(--wk-ink2); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wk-row:is([data-kind="process"], [data-kind="service"]) .wk-sub { font-family: var(--wk-mono); font-size: 11px; }
+.wk-askline { font-weight: 600; color: var(--wk-ink); white-space: normal; }
+.wk-meta { color: var(--wk-idle); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wk-right { display: grid; justify-items: end; gap: 1px; white-space: nowrap; font-size: 11.5px; }
+.wk-right b[data-tone] { color: var(--wk-t); font-weight: 600; }
+.wk-right i { font-style: normal; color: var(--wk-idle); font-variant-numeric: tabular-nums; }
+
+/* ---- the detail block (also the chat's Processes view) ----
+   Its controls carry an id in :is() so they out-rank the hosted chat's scoped button resets (.pm56-host button);
+   the panel, the Stop list (#pm7-work-dialog) and the chat's detail blocks share one set of rules. */
+.wk-detail { padding: 4px 10px 10px 46px; font-size: 12px; color: var(--wk-ink2); }
+.wk-what { margin: 2px 0 6px; color: var(--wk-ink); }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 12px; margin: 4px 0 8px; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-facts dt { color: var(--wk-idle); }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-facts dd { margin: 0; color: var(--wk-ink); min-width: 0; overflow-wrap: anywhere; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-facts code { font-family: var(--wk-mono); font-size: 11.5px; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-link { all: unset; cursor: pointer; color: var(--wk-work); text-decoration: underline; text-underline-offset: 2px; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-link:hover { color: var(--wk-ink); }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-link:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: 2px; border-radius: 2px; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-ask { display: grid; gap: 7px; margin: 2px 0 10px; padding: 9px 10px; border: 1px solid color-mix(in srgb, var(--wk-attn) 55%, var(--wk-line)); border-radius: 8px;
+  background: color-mix(in srgb, var(--wk-attn) 8%, transparent); }
+.wk-ask-q { display: flex; align-items: flex-start; gap: 7px; color: var(--wk-ink); line-height: 1.4; }
+.wk-ask-q b { font-weight: 600; font-family: var(--wk-mono); font-size: 11.5px; }
+.wk-ask-a, .wk-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--wk-line); border-radius: 6px; overflow: hidden; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg > button { all: unset; box-sizing: border-box; cursor: pointer; padding: 3px 9px; font-size: 11.5px; color: var(--wk-ink2); white-space: nowrap; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg > button + button { border-left: 1px solid var(--wk-line); }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg > button:is([aria-pressed="true"], [aria-checked="true"]) { background: var(--pmw-press); color: var(--wk-ink); }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg > button:hover { color: var(--wk-ink); }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg > button:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: -2px; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-tail { margin: 2px 0 8px; border: 1px solid var(--wk-line2); border-radius: 7px; background: var(--pmw-gutter, rgba(0, 0, 0, .25)); overflow: hidden; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-tail pre { margin: 0; padding: 7px 9px; font: 11px/1.45 var(--wk-mono); color: var(--wk-ink2); white-space: pre-wrap; overflow-wrap: anywhere; max-height: 9.5em; overflow: auto; }
+.wk-tail-more { padding: 4px 9px; font-size: 10.5px; color: var(--wk-idle); border-bottom: 1px dashed var(--wk-line2); }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; gap: 5px; height: 24px; padding: 0 9px; border: 1px solid var(--wk-line);
+  border-radius: 6px; background: var(--pmw-hover); color: var(--wk-ink); font: 500 11.5px/1 var(--body-font, Inter, system-ui, sans-serif); white-space: nowrap; cursor: pointer; flex: none; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn:hover { background: var(--pmw-press); }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: 1px; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn[disabled] { opacity: .5; cursor: default; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn.wk-primary { background: var(--pmw-accent, var(--wk-work)); border-color: transparent; color: var(--pmw-on-accent, #0b1220); font-weight: 600; }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn.danger { color: var(--wk-bad); border-color: color-mix(in srgb, var(--wk-bad) 45%, var(--wk-line)); }
+:is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn.danger:hover { background: color-mix(in srgb, var(--wk-bad) 12%, transparent); }
+
+/* ---- Resources (G4): a table per environment under its server, an inspector below ---- */
+.wk-server .wk-ghead > svg:last-of-type { color: var(--wk-ink2); }
+.wk-env { margin: 2px 0 8px 22px; }
+.wk-env-head { display: flex; align-items: baseline; gap: 8px; padding: 4px 8px; font-size: 11.5px; font-weight: 650; color: var(--wk-ink); }
+.wk-env-head .wk-gsum { font-weight: 400; color: var(--wk-idle); }
+.wk-tr { all: unset; box-sizing: border-box; display: grid; grid-template-columns: minmax(160px, 1.6fr) 84px 56px 76px 56px minmax(110px, 1.2fr); gap: 8px;
+  align-items: center; width: 100%; padding: 5px 8px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+.wk-tr:not(.wk-th):hover { background: var(--pmw-hover); }
+.wk-tr.is-sel { background: var(--pmw-press); }
+.wk-tr:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: -2px; }
+.wk-th { cursor: default; border-bottom: 1px solid var(--wk-line2); border-radius: 0; }
+.wk-th > button { all: unset; display: inline-flex; align-items: center; gap: 3px; cursor: pointer; color: var(--wk-idle); font-size: 11px; font-weight: 600; }
+.wk-th > button:nth-child(3), .wk-th > button:nth-child(4), .wk-th > button:nth-child(5) { justify-self: end; }
+.wk-th > button:is([aria-sort="ascending"], [aria-sort="descending"]) { color: var(--wk-ink); }
+.wk-th > button:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: 2px; }
+.wk-tr > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--wk-ink2); }
+.wk-c-name { display: inline-flex; align-items: center; gap: 6px; }
+.wk-c-name b { color: var(--wk-ink); font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+.wk-tr b[data-tone] { color: var(--wk-t); font-weight: 600; }
+.wk-num { font-variant-numeric: tabular-nums; text-align: right; }
+.wk-inspector { margin: 8px 2px 0; padding-top: 8px; border-top: 1px solid var(--wk-line2); }
+.wk-ihead { display: flex; align-items: center; gap: 7px; padding: 0 8px 4px; }
+.wk-ihead b[data-tone] { margin-left: auto; color: var(--wk-t); font-weight: 600; }
+.wk-inspector .wk-detail { padding-left: 28px; }
+.wk-res-note { flex: 1 1 auto; }
+
+/* ---- the Stop list and the quit dialog, in the overlay root above everything else it holds ---- */
+.wk-dialog-scrim { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; background: rgba(0, 0, 0, .42); pointer-events: auto; }
+html[data-theme$="-light"] .wk-dialog-scrim { background: rgba(20, 24, 32, .28); }
+.wk-dialog { width: min(560px, calc(100vw - 32px)); max-height: 80vh; overflow: auto; box-sizing: border-box; padding: 18px 20px 16px;
+  background: var(--pmw-pop); color: var(--wk-ink); border: 1px solid var(--wk-line); border-radius: var(--pmw-menu-radius, 13px); box-shadow: var(--pmw-pop-shadow);
+  font: 13px/1.45 var(--body-font, Inter, system-ui, sans-serif); }
+.wk-dialog h2 { margin: 0 0 6px; font-size: 16px; }
+.wk-dialog > p { margin: 0 0 10px; color: var(--wk-ink2); }
+.wk-dialog .wk-choice { margin: 0 0 10px; }
+.wk-dialog-list { list-style: none; margin: 0 0 10px; padding: 0; border: 1px solid var(--wk-line2); border-radius: 8px; max-height: 260px; overflow: auto; }
+.wk-dialog-list li + li { border-top: 1px solid var(--wk-line2); }
+.wk-dialog-list label { display: grid; grid-template-columns: auto auto auto minmax(0, 1fr); align-items: center; gap: 7px; padding: 6px 10px; cursor: pointer; }
+.wk-dialog-list span { color: var(--wk-idle); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wk-dialog-list li.is-off { opacity: .45; }
+.wk-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
+
+/* ---- looks: Home's tokens carry each look's plate; these add each grammar ---- */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(#pm7-work, .wk-dialog) { border-radius: 0; font-family: var(--wk-mono); font-size: 12px; box-shadow: 4px 4px 0 rgba(0, 0, 0, .55); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) :is(.wk-row-btn, .wk-tr, .wk-ghead, .wk-seg, .wk-ask, .wk-strip, .wk-tail, .wk-btn, .wk-ib, .wk-subs, .wk-plink, .wk-dialog-list) { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) :is(.wk-seg > button[aria-pressed="true"], .wk-seg > button[aria-checked="true"], .wk-tr.is-sel, .wk-row.is-open > .wk-row-btn) { background: var(--wk-ink); color: var(--pmw-surface, #000); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.wk-tr.is-sel, .wk-row.is-open > .wk-row-btn) :is(span, b, i, strong) { color: var(--pmw-surface, #000) !important; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .wk-tabs > button[aria-selected="true"] { background: var(--wk-ink); color: var(--pmw-surface, #000); border-bottom-color: transparent; }
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) :is(#pm7-work, .wk-dialog) { border-radius: 16px; }
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) :is(.wk-row-btn, .wk-ghead, .wk-tr) { border-radius: 10px; }
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-btn { border-radius: 9px; padding: 0 11px; }
+html[data-theme^="glass"]:not([data-o55-nier="on"]) :is(#pm7-work, .wk-dialog) { box-shadow: var(--pmw-pop-shadow), inset 0 1px 0 rgba(255, 255, 255, .10); }
+html[data-o55-nier="on"] :is(#pm7-work, .wk-dialog) { border-radius: 0; letter-spacing: .02em; border-color: var(--o55-nier-ink, var(--wk-line)); box-shadow: none; }
+html[data-o55-nier="on"] :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) :is(.wk-row-btn, .wk-tr, .wk-ghead, .wk-seg, .wk-ask, .wk-strip, .wk-tail, .wk-btn, .wk-ib, .wk-subs, .wk-plink, .wk-dialog-list) { border-radius: 0; }
+html[data-o55-nier="on"] .wk-tabs > button[aria-selected="true"] { background: var(--o55-nier-ink, var(--wk-ink)); color: var(--o55-nier-on-ink, #fff); border-bottom-color: transparent; }
+html[data-o55-nier="on"] .wk-tabs > button[aria-selected="true"] :is(.wk-ask-n, .wk-g > svg) { color: var(--o55-nier-on-ink, #fff); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .wk-tabs > button[aria-selected="true"] :is(.wk-ask-n, .wk-g > svg) { color: var(--pmw-surface, #000); }
+html[data-o55-nier="on"] :is(.wk-tr.is-sel, .wk-row.is-open > .wk-row-btn) { background: var(--o55-nier-ink, var(--wk-ink)); }
+html[data-o55-nier="on"] :is(.wk-tr.is-sel, .wk-row.is-open > .wk-row-btn) :is(span, b, i, strong, .wk-kind) { color: var(--o55-nier-on-ink, #fff) !important; }
+
+/* ---- narrow and short windows: a sheet across the bottom, the table its first three columns ---- */
+@media (max-width: 760px) {
+  #pm7-work:not(.is-floating) { left: 8px !important; right: 8px !important; width: auto; max-height: calc(100vh - 80px); }
+  #pm7-work[data-tab="resources"] { width: auto; }
+  .wk-tabs > button { padding-inline: 9px; }
+  .wk-tabs .wk-ask-n { display: none; }
+  .wk-tr { grid-template-columns: minmax(0, 1fr) 72px 48px 64px; }
+  .wk-tr > :nth-child(5), .wk-tr > :nth-child(6) { display: none; }
+  .wk-detail { padding-left: 14px; }
+  .wk-alinks { padding-left: 30px; }
+  .wk-env { margin-left: 4px; }
+}
+@media (max-height: 520px) {
+  #pm7-work { max-height: calc(100vh - 48px); }
+  .wk-body { min-height: 60px; }
+}
+
+/* ---- motion: a short rise on open; still under Reduced Motion ---- */
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="reduced"]) #pm7-work:not([hidden]) { animation: wk-rise .14s ease-out; }
+}
+@keyframes wk-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* the chat's docked Activity Detail is narrow: facts stack, the When it ends choices stay one row */
+@container activityPanel (max-width: 380px) {
+  :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-facts { grid-template-columns: minmax(0, 1fr); gap: 1px; }
+  :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-facts dt { margin-top: 5px; }
+  :is(#pm7-work, #pm7-work-dialog, [data-work-detail]) .wk-seg > button { padding-inline: 6px; }
+}
