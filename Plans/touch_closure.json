@@ -5776,7 +5776,8 @@
       "wiring_status": "specified",
       "production_or_simulation": "Static catalog and production-intent row only.",
       "gui_triggers": [
-        "Settings Teacher and Help manager"
+        "Settings Teacher and Help manager",
+        "Work detail Open thread reuses cmd.chat.open_thread for its bound Assistant thread"
       ],
       "return_route": "Exact prior Settings manager and focus after thread close.",
       "reverse_consumers": [
@@ -7841,7 +7842,8 @@
         "thread Processes",
         "status work panel",
         "quit dialog",
-        "composer work dock Review / Show reuses cmd.chat.processes.open with exact work_id"
+        "composer work dock Review / Show reuses cmd.chat.processes.open with exact work_id",
+        "Shared detail Open port / Rerun / scheduled Cancel reuse existing Browser / Terminal / Scheduling owners"
       ],
       "return_route": "Stable invoking view, Project/thread and focus; no active-tab retargeting.",
       "reverse_consumers": [
@@ -7902,7 +7904,8 @@
         "status work panel",
         "quit dialog",
         "Activity Detail Pin / Unpin",
-        "System status popover from status bar and Processes System services"
+        "System status popover from status bar and Processes System services",
+        "Shared detail Copy command / Open surface / local owner-row selection; closed view/draft values"
       ],
       "return_route": "Stable invoking view, Project/thread and focus; no active-tab retargeting.",
       "reverse_consumers": [
@@ -13626,6 +13629,46 @@
       "ui.system_status.close",
       "partial",
       "D11/G4: read-only System status visibility; no service/Settings write. Source/schema coverage only; native overlay/focus proof absent."
+    ],
+    [
+      "TOUCH-PM7CMD-012",
+      "TCP-PM7-WORK",
+      "command",
+      "cmd.browser.open_workspace_preview",
+      "partial",
+      "Existing owner command reused by work detail; signed current target and owner schema/permission/result required. Static producer mapping only, native dispatcher/effect/accessibility unproved."
+    ],
+    [
+      "TOUCH-PM7CMD-013",
+      "TCP-PM7-WORK",
+      "command",
+      "cmd.chat.schedule_message.cancel",
+      "partial",
+      "Existing owner command reused by work detail; signed current target and owner schema/permission/result required. Static producer mapping only, native dispatcher/effect/accessibility unproved."
+    ],
+    [
+      "TOUCH-PM7CMD-014",
+      "TCP-PM7-WORK",
+      "command",
+      "cmd.terminal.rerun",
+      "partial",
+      "Existing owner command reused by work detail; signed current target and owner schema/permission/result required. Static producer mapping only, native dispatcher/effect/accessibility unproved."
+    ],
+    [
+      "TOUCH-PM7LOC-016",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_panel.copy_command",
+      "partial",
+      "Closed value branch and local clipboard/view owner; no runtime/Settings/event write. Native signal, refusal/success, focus and accessibility remain unproved."
+    ],
+    [
+      "TOUCH-PM7LOC-017",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_panel.open_surface",
+      "partial",
+      "Closed value branch and local clipboard/view owner; no runtime/Settings/event write. Native signal, refusal/success, focus and accessibility remain unproved."
     ]
   ],
   "excluded_tokens": [

@@ -1,5 +1,7 @@
 # PM7 Plans lane — final Step4 handoff, 2026-10-30
 
+**Current continuation — companion fix cycle 1/2:** reviews received 1030075153-e551; GUI ff9476a5c8 merged via 2c2ae604d3. Scoped prose/companion fixes A2–A6 and Muse 1–3 are in progress, with no GUI edits. Focused checks run serially; a new full gates/dry pass is held for the lead. A1 re-export citation now uses manifest 2261d771. Prior full/dry results below remain at 8d63d284ac.
+
 Branch: `t3/plans/pm7-plans-canon`. Verified canon source: `8d63d284ac77b26422a5ac8211e65217dacda0ab`. Final GUI input: `e9b15abc64`, merged via `001a301549`. Lead: `pm7-build`.
 
 **Steps 1–4 are complete for this GUI head.** All 57 Jared decision cards are applied and tagged. Nine focused/generation/builder checks pass. Completed full gates: **exit 1**. Dry landing: **exit 1, 0 blockers, 0 infrastructure findings**. No lane defect remains to repair. Independent companion review is ready under the lead; final recording deltas remain the lead's next signal. No landing, lock, reseal or native certification.

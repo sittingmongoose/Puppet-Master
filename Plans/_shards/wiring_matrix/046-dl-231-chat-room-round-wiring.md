@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L6453-L6719
+Source lines: L6453-L6723
 
-Source SHA256: `cc3663feaac6f9fab293bb8de55504fc13f34e07fffb2833479168a4a3a49d95`
+Source SHA256: `fb3b58e7bbbe98acccd4bb1969037a993398e2326f64283c58d85da85411ac91`
 
 ---
 
@@ -211,7 +211,7 @@ canonical_text: >-
   local wiring disposition with no production mutation row. Thread-switch coverage requires pinned
   follow-new-thread and unpinned close, including teardown and stale-action rejection. D11/G4, PM7 Step4,
   2026-10-30: System status is a small read-only overlay popover, reached from the existing status-bar System
-  status item and the Processes System services link. ui.system_status.open/close are typed local visibility
+  status item and the Processes System services link. ui.system_status.open and ui.system_status.close are typed local visibility
   actions, with statusbar.system_status, work.open_system_status and system_status.close binding families.
   Service owner links use the existing ui.settings.route.open action and system_status.service.open_settings
   binding, selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP
@@ -230,8 +230,12 @@ canonical_text: >-
   ordinary local Subagents row selection with no command or new action ID. Both source-anchor work-dock-review
   in activity-panel.js and preserve exact selected-thread/work identity. Existing work controls are reused in
   rail/Home shared rows; Resources Time reuses ui.work_panel.sort. No new production row or Touch action is
-  created by these producers; total control families become 470, of which 51 PM7 families have concept source
-  anchors.
+  created by these producers; total control families are 477, of which 58 PM7 families have concept source anchors.
+  D7/D8/D13, PM7 companion review fix1, 2026-10-30: the reverse work-detail census discovers emitted
+  data-work-act values and act.* button labels, including both goto destinations and scheduled Cancel versus
+  process Stop, and requires their binding/owner dispositions. It covers Copy command, Open port, Rerun,
+  actual Open thread/Open surface and local owner selection; forward token counts alone are not closure.
+  Existing owner commands receive producer/Touch coverage, never a new native handler or evidence promotion.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

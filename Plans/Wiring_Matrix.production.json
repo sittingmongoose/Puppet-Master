@@ -1875,7 +1875,7 @@
     },
     "assistant.redesign.cmd.chat_schedule_message_cancel": {
       "ui_element_id": "assistant.redesign.cmd.chat_schedule_message_cancel",
-      "ui_location": "Puppet Master Assistant > schedule_details",
+      "ui_location": "Puppet Master Assistant > schedule_details; Work panel / thread Processes > work.cancel_scheduled",
       "ui_command_id": "cmd.chat.schedule_message.cancel",
       "handler_location": "handlers::scheduling::schedule_message_cancel",
       "expected_event_types": [],
@@ -1887,7 +1887,8 @@
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
         "Correction v4 (SMSG-012, SMSG-016): cancel affects exactly one schedule, preserves the immutable audit record, and leaves other schedules in the thread untouched. Hiding a card never deletes schedule evidence.",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): scheduled_message_card, schedule_manager joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): scheduled_message_card, schedule_manager joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them.",
+        "D7/D8/D13 work producer work.cancel_scheduled: Scheduled Cancel uses the scheduling owner with exact schedule ID/revision, source scope and owner gates; no WorkTarget/PID or cmd.work.stop target. Concept W.stop dispatch is an adapter limitation."
       ],
       "evidence_required": "Future production evidence for cmd.chat.schedule_message.cancel: source-hashed native dispatcher and sole handler handlers::scheduling::schedule_message_cancel, typed ScheduledMessageCancelRequest/ScheduledMessageCancelResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Scheduling_and_Quota_Resume.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.schedule_message.cancel. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-031) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_schedule_message_cancel.availability",
@@ -11984,7 +11985,7 @@
     },
     "catalog.browser_open_workspace_preview": {
       "ui_element_id": "catalog.browser_open_workspace_preview",
-      "ui_location": "Browser preview and visible testing surfaces",
+      "ui_location": "Browser preview and visible testing surfaces; Work panel / thread Processes > work.open_port",
       "ui_command_id": "cmd.browser.open_workspace_preview",
       "handler_location": "handlers::browser::open_workspace_preview",
       "expected_event_types": [
@@ -12000,7 +12001,8 @@
         "cmd.browser.open_workspace_preview must declare state selector, disabled reason, browser event effect, and regression evidence before production certification",
         "Carries CV-360's placement fields where, mode, by and background and resolves through the one opening module (F3-634, DR-071), never a private placement argument; target_editor_panel_id, target_editor_group_id and target_group never select a home panel (UCC-200).",
         "by: user opens and takes focus; by: agent:<name> lands as a background tab with the 6 px hollow square and a polite announcement, never takes keyboard focus and never changes the active tab of a panel the person is typing in (F3-634).",
-        "workspace.layout_changed accompanies an added browser tab only; revealing an open session's tab adds no layout event (UCC-063 amended). Producers include the \"+\" menu's Browser sub-row and filter field, the terminal's URL links and the chat (home.*, terminal.* rows)."
+        "workspace.layout_changed accompanies an added browser tab only; revealing an open session's tab adds no layout event (UCC-063 amended). Producers include the \"+\" menu's Browser sub-row and filter field, the terminal's URL links and the chat (home.*, terminal.* rows).",
+        "D7/D8/D13 work producer work.open_port: Browser-owner URL derived from exact work/Project/server/environment and exposed port; protocol/host/port must be owner-authoritative. Concept localhost is a fixture convenience, never a native client-host assumption. CV-360 placement."
       ],
       "evidence_required": "Production wiring contract for cmd.browser.open_workspace_preview; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_open_workspace_preview.availability",
@@ -16431,7 +16433,7 @@
     },
     "catalog.chat_open_thread": {
       "ui_element_id": "catalog.chat_open_thread",
-      "ui_location": "Cross-surface thread entry points > Open Chat Thread",
+      "ui_location": "Cross-surface thread entry points > Open Chat Thread; Work panel / thread Processes > work.open_thread",
       "ui_command_id": "cmd.chat.open_thread",
       "handler_location": "handlers::chat::open_thread",
       "expected_event_types": [],
@@ -16443,7 +16445,8 @@
         "cmd.chat.open_thread must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "cmd.chat.open_thread availability class is selection (thread_exists) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)",
         "Cross-surface thread entry wrapper carrying route/OpenSubject identity; it opens the chat panel when closed, does not duplicate the chat-panel-local cmd.chat.switch_thread, and retired prototype token cmd.chat.open_at (excluded from production wiring) migrates to this canonical id.",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): scheduled_message_card, schedule_manager also raise cmd.chat.open_thread, and no other surface is added. Each reads state.cmd_chat_open_thread.enabled and state.cmd_chat_open_thread.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. Go to message and Open message carry route_target message."
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): scheduled_message_card, schedule_manager also raise cmd.chat.open_thread, and no other surface is added. Each reads state.cmd_chat_open_thread.enabled and state.cmd_chat_open_thread.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. Go to message and Open message carry route_target message.",
+        "D7/D8/D13 work producer work.open_thread: Exact bound Assistant thread via cmd.chat.open_thread. Native route resolves signed thread/Project, not the local owner-row selection or a child transcript tab by accident."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/assistant-chat-design.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_chat_open_thread.enabled",
@@ -59573,7 +59576,7 @@
     },
     "catalog.terminal_rerun": {
       "ui_element_id": "catalog.terminal_rerun",
-      "ui_location": "Chat command cards and the terminal tab's command-mark menu > Rerun in Terminal",
+      "ui_location": "Chat command cards and the terminal tab's command-mark menu > Rerun in Terminal; Work panel / thread Processes > work.rerun",
       "ui_command_id": "cmd.terminal.rerun",
       "handler_location": "handlers::terminal::rerun",
       "expected_event_types": [],
@@ -59583,7 +59586,8 @@
         "cmd.terminal.rerun dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.terminal.rerun must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.terminal.rerun must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "Hosted chat port (WM-096): Rerun in Terminal starts a new invocation under the existing terminal permissions and session contract, never appends output to a simulated inline terminal."
+        "Hosted chat port (WM-096): Rerun in Terminal starts a new invocation under the existing terminal permissions and session contract, never appends output to a simulated inline terminal.",
+        "D7/D8/D13 work producer work.rerun: Terminal-owner replay of the exact ended command, with a new invocation; explicit new-session request where needed, permission/currentness and no duplicate replay. Concept W.restart is not native owner admission."
       ],
       "evidence_required": "Production wiring contract for cmd.terminal.rerun; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.terminal_rerun.availability",

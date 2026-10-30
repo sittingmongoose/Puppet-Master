@@ -7,7 +7,10 @@ import hashlib
 from pathlib import Path
 import runpy
 import re
+import subprocess
 import sys
+
+import yaml
 
 import jsonschema
 
@@ -52,6 +55,30 @@ def project_badge_disposition(case):
             "change-modified": "Unsaved changes", "idle": ""}
     key = next((key for key in word if key in keys), "idle")
     return {"key": key, "word": word[key]}
+
+
+def pip_presets_match(canon, actual):
+    expected = {name.title(): ids for name, ids in actual.items()}
+    return canon == expected and canon.get("Plain") == []
+
+
+def work_detail_census_errors(source, bindings, cases):
+    """Reverse the literal detail controls/labels, including shared-hook branches."""
+    detail = source.split("function detail(it, o)", 1)[1].split("\n  const btn =", 1)[0]
+    actions = set(re.findall(r'data-work-act="([a-z_]+)"', detail))
+    actions.update(re.findall(r"btn\(\s*'([^']+)'\s*,", detail))
+    labels = set(re.findall(r"'act\.([^']+)'", detail))
+    errors = []
+    if actions != {case["source_action"] for case in cases}:
+        errors.append("Detail action census differs from source emissions")
+    if labels != {label for case in cases for label in case["source_labels"]}:
+        errors.append("Detail label census omits a visible branch")
+    by_id = {row["control_id"]: row for row in bindings}
+    for case in cases:
+        row = by_id.get(case["binding_id"], {})
+        if row.get("action_ids") != case["action_ids"] or row.get("disposition") != case["disposition"]:
+            errors.append("Missing/misrouted work control: " + case["binding_id"])
+    return errors
 
 
 def validate():
@@ -106,6 +133,21 @@ def validate():
         all(canon.get(key) == value for key, value in actual.items())
         for canon, actual in zip(parts["parts"], code_parts)),
         "S1-S9 parts IDs/labels/groups/defaults/sizes/help differ from the joined one registry")
+    # Evaluate the one shared preset table without booting any UI or dispatching events.
+    preset_script = """const fs=require('fs'),vm=require('vm');
+const context={window:{addEventListener(){}},document:{readyState:'loading',addEventListener(){}}};
+vm.runInNewContext(fs.readFileSync(process.argv[1],'utf8'),context,{timeout:1000});
+process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
+    actual_presets = json.loads(subprocess.check_output(
+        ["node", "-e", preset_script, str(ROOT / "Concepts/glyph-system/opus-5.5/src/logo/pm-pip-parts.js")],
+        text=True, timeout=10))
+    require(pip_presets_match(parts["presets"], actual_presets), "S1/S6 shared preset arrays differ")
+    for case in fixtures["pip_preset_parity_cases"]:
+        mutated = deepcopy(parts["presets"])
+        for name, replacement in case["overrides"].items():
+            mutated[name] = list(parts["presets"][replacement])
+        require(pip_presets_match(mutated, actual_presets) == case["valid"],
+                "Preset drift case differs: " + case["name"])
     require(not set(parts["presets"]["Still"]) & {
         part["id"] for part in parts["parts"] if part["group"] == "Motion" or part["id"] == "setup-world-life"
     }, "Still enables motion or living worlds")
@@ -146,6 +188,19 @@ def validate():
             next(row for row in glyphs["status_marks"] if row["key"] == "working")["surface_words"]["panels"],
             "L1 joined code and canon disagree on working panels words")
     kit = (ROOT / "Concepts/glyph-system/opus-5.5/src/logo/pm-logo.js").read_text()
+    chat = (ROOT / "Concepts/chat-assistant-concepts/5.6 Pro/module-shell.js").read_text()
+    chat_faces = re.search(r"var PIP_STATE_MOOD = \{(.*?)\};", chat, re.S)
+    face_map = {a or b: c for a, b, c in re.findall(
+        r"(?:'([^']+)'|(\w+)):\s*'([^']+)'", chat_faces[1])} if chat_faces else {}
+    aliases = {"needs-you": "needs", "dependency-wait": "waiting-dep"}
+    for state, (_, face) in glyphs["surface_status_faces"]["agents"].items():
+        actual = face_map.get(aliases.get(state, state), "idle")
+        require(face == ("working" if actual == "dots" else actual),
+                "A5 chat agent face differs: " + state)
+    require(glyphs["surface_status_faces"]["agents"]["working"] == ["working", "working"]
+            and re.search(r"function moodOf\(m\).*?m === 'working' \? 'dots'", kit)
+            and "working: 'working'" in kit,
+            "Working must use the public mood that both consumers render as dots")
     # A5: each real kit mood has its own alias; sharing the working status adds no status key.
     mood_row = re.search(r"const MOOD_STATUS = Object.freeze\(\{(.*?)\}\)", kit, re.S)
     code_moods = dict(re.findall(r"(\w+):\s*'([^']+)'", mood_row[1])) if mood_row else {}
@@ -172,6 +227,21 @@ def validate():
     require(all(part_id in pip_owner for part_id in ids), "Accepted parts list is absent from SSYS-056 prose")
 
     bindings = read("pm7_control_bindings.json")["bindings"]
+    work_source = (ROOT / "Concepts/onboarding/opus-5.5/src/js/48-work.js").read_text()
+    census = fixtures["work_detail_control_census"]
+    failures.extend(work_detail_census_errors(work_source, bindings, census))
+    for case in fixtures["work_detail_census_cases"]:
+        mutated_bindings, mutated_cases, mutated_source = deepcopy(bindings), deepcopy(census), work_source
+        if "remove_binding" in case:
+            mutated_bindings = [row for row in mutated_bindings if row["control_id"] != case["remove_binding"]]
+        if "remove_case" in case:
+            mutated_cases = [row for row in mutated_cases if row["binding_id"] != case["remove_case"]]
+        if "extra_action" in case:
+            mutated_source = mutated_source.replace("\n  const btn =", '\n data-work-act="' + case["extra_action"] + '"\n  const btn =', 1)
+        if "rebind" in case:
+            next(row for row in mutated_bindings if row["control_id"] == case["rebind"])["action_ids"] = case["action_ids"]
+        require((not work_detail_census_errors(mutated_source, mutated_bindings, mutated_cases)) == case["valid"],
+                "Reverse control census case differs: " + case["name"])
     by_control = {row["control_id"]: row for row in bindings}
     source_anchors = 0
     for row in bindings:
@@ -195,6 +265,27 @@ def validate():
                 control + ": System status gained a mutation route or lost its local identity")
     require(set(schema["$defs"]["system_status_settings_route_request"]["properties"]["setting_id"]["enum"])
             <= set(settings), "System status owner navigation targets an unknown setting")
+    unit_sets = {"Decision_Log.md": [f"DL-{n:03d}" for n in range(235, 257)],
+                 "FinalGUISpec.md": [f"F3-{n}" for n in range(660, 666)],
+                 "DRY_Rules.md": [f"DR-{n:03d}" for n in range(76, 80)],
+                 "Settings_System.md": ["SSYS-056", "SSYS-057"],
+                 "assistant-chat-design.md": ["ACD-505", "ACD-506", "ACD-507"],
+                 "Commands_System.md": ["CS-105", "CS-106"],
+                 "UI_Command_Catalog.md": ["UCC-209", "UCC-210", "UCC-211"],
+                 "Wiring_Matrix.md": ["WM-097"], "UI_Wiring_Rules.md": ["UIW-045"],
+                 "Shared_Integration_Runtime.md": ["SIR-054"]}
+    for file, wanted in unit_sets.items():
+        units = {}
+        for block in re.findall(r"```yaml\n(.*?)\n```", (PLANS / file).read_text(), re.S):
+            match = re.search(r"^plan_unit_id: (\S+)$", block, re.M)
+            if match and match[1] in wanted:
+                units[match[1]] = yaml.safe_load(block)
+        require(set(units) == set(wanted), "PM7 registered unit missing in " + file)
+        for unit_id, unit in units.items():
+            for token in unit.get("preserved_exact_tokens", []):
+                require(token in unit["canonical_text"], unit_id + ": registered token absent: " + token)
+            if unit_id in {"CS-106", "UCC-210", "F3-664"}:
+                require("ui.system_status.close" in unit["canonical_text"], unit_id + ": abbreviated System close token")
     pin = by_control.get("chat.activity.pin", {})
     require(pin.get("action_ids") == ["ui.activity_detail.pin"] and pin.get("disposition") == "local"
             and not pin.get("production_entries") and not pin.get("setting_ids"),
@@ -264,6 +355,9 @@ def validate():
             "identity_cases": len(fixtures["semantic_cases"]), "runtime_shape_cases": runtime_cases,
             "activity_thread_switch_cases": len(fixtures["activity_detail_thread_switch_cases"]),
             "project_badge_cases": len(fixtures["project_badge_cases"]),
+            "work_detail_controls": len(census),
+            "work_detail_omission_cases": len(fixtures["work_detail_census_cases"]),
+            "pip_preset_parity_cases": len(fixtures["pip_preset_parity_cases"]),
             "concept_source_anchors": source_anchors, "failures": failures}
 
 

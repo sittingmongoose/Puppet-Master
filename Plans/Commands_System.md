@@ -8174,10 +8174,12 @@ canonical_text: >-
   commands of the workspace/project router, not aliases of opening the menu. Stable project_id and current
   workspace identity/generation are required; stale/not-found/not-permitted refuse without changing the
   active tab. Ctrl+Shift+P binds typed local ui.project_switcher.open (registered ui.project_switcher.*
-  prefix); .close restores opener focus. Ctrl/Cmd+Enter on a row chooses the new-workspace-tab command;
+  prefix); ui.project_switcher.close restores opener focus. Ctrl/Cmd+Enter on a row chooses the new-workspace-tab command;
   keyboard/pointer send identical typed payloads. Opening/closing/filtering a picker does not dispatch a
   domain command. Existing project open/switch receipts and events stay owner-authoritative, no new event
   emission by these producers.
+  B2, PM7 companion review fix1, 2026-10-30: ui.project_switcher.all_projects is the no-write route to the
+  existing Projects primary view; it does not dispatch the side-panel switch command.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -8209,6 +8211,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 preserved_exact_tokens:
+- ui.project_switcher.all_projects
 - cmd.project.switch_active_tab
 - cmd.project.open_in_new_workspace_tab
 - ui.project_switcher.open
@@ -8265,7 +8268,7 @@ canonical_text: >-
   new thread. A missing domain shows its truthful empty/unavailable state. Pin is session view state, not a
   Settings row, durable layout field or runtime mutation. D11/G4, PM7 Step4, 2026-10-30: System status is a
   small read-only overlay popover, reached from the existing status-bar System status item and the Processes
-  System services link. ui.system_status.open/close are typed local visibility actions, with
+  System services link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with
   statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner
   links use the existing ui.settings.route.open action and system_status.service.open_settings binding,
   selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
@@ -8281,6 +8284,29 @@ canonical_text: >-
   Project/thread scope and current expected generation; missing, stale or foreign selection cannot retarget to
   a title match or another thread. This remains navigation with no process effect. Agent dock Review selects
   its existing Subagents detail locally and never opens a child transcript by this route.
+  D7/D8/D13, PM7 companion review fix1, 2026-10-30 (Astra A2/A3): work.open_owner is ui.work_panel.select
+  with an owner-row value, owner_id, destination agents|subagents, invoking view and focus; Subagents also
+  binds its exact thread_id. It never opens a transcript. Actual Open thread uses cmd.chat.open_thread for
+  the item’s bound Assistant thread; actual Open surface is ui.work_panel.open_surface, a local navigation
+  request to the resolved owner surface with work identity and focus, unavailable if that owner cannot be
+  reached. Copy command is ui.work_panel.copy_command, a local clipboard request over the selected current
+  command; clipboard refusal cannot report success. Open port reuses cmd.browser.open_workspace_preview with
+  a server/environment-authoritative URL and CV-360 placement, never an assumed client localhost. A
+  scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the exact schedule identity/revision and
+  owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new
+  invocation through the terminal owner, with an explicit new-session request when needed; Restart keeps
+  cmd.work.restart for restartable live server/db/watcher work. Concept W.restart/W.stop adapters do not
+  replace those native owner routes.
+  G4/D7/D10, PM7 companion review fix1, 2026-10-30 (Astra A4): local_action_request requires a closed
+  action-specific value. select_tab is agents|processes|resources. sort is {column:
+  title|rank|time|cpu|mem|ports|where, direction: -1|1}. filter distinguishes owner, agent_group and
+  process_grouping; expand distinguishes item, subagents and group plus boolean expanded. select
+  distinguishes an item work_id from owner_id with destination agents|subagents; exact thread_id is required
+  for Subagents. Quit draft selection is one closed choice keep_running|stop_selected, one
+  work_id/expected_generation/selected checkbox, or the Stop-list scope procs|all. Missing values, unknown
+  fields, arbitrary enums and cross-branch fields refuse before view or owner effects. Pin and System status
+  retain their separate restrictions. None of these draft/view changes creates a runtime mutation or saved
+  setting.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

@@ -50030,6 +50030,18 @@ canonical_text: >-
   status-key mood mapping, with the kind glyph beside the title. It consumes PMLogo.mark/moodFor/onLook,
   never a second renderer or a new binding. OS notification branding remains a native integration requirement;
   the concept tile does not certify OS delivery or a native notification bundle.
+  A5/PC2, PM7 companion review fix1, 2026-10-30 (Astra A6/Muse1): surface_status_faces.agents describes chat
+  agent rows. Working uses the public working mood, rendered as the distinct three-dot dots face by the
+  shared kit; think remains the intentional chat reviewing/recovering face. Platform rows consume
+  PMLogo.STATUS_FACE: working/reviewing/recovering use working/dots, mixed uses oops and skipped idle. These
+  are decorative surface differences over unchanged typed status keys. X3 B remains mandatory: the uncalled
+  eyes:false plain-band kit capability is legacy/gallery-only and no product caller may use it.
+  A1/A3/L4, PM7 companion review fix1, 2026-10-30 (Astra A1, title re-export): manifest.json in the title
+  lane icons bundle is SHA-256 2261d7719089a80b40c144dc6733d55850eb9b88c1418362102c43a0fd9f9500, re-hashed
+  for all 141 files. Its two animated Working SVGs are byte-equal to the final kit at ff9476a5c8: micro
+  Think 1.95 s, separate rest/control/lid reduced-motion drawing. Static file bytes are unchanged; per-file
+  manifest provenance distinguishes them from the two new exports. This supersedes the earlier
+  export-manifest citation, not A1’s fixed palette or native-certification boundary.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -50482,7 +50494,7 @@ canonical_text: >-
   popped-out desktop panel is one draggable, user-sized window preserving Project/tab/filter selection; it
   is a view of the same projection, not another runtime. Closing restores focus to its originating status
   item. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay popover, reached from the
-  existing status-bar System status item and the Processes System services link. ui.system_status.open/close
+  existing status-bar System status item and the Processes System services link. ui.system_status.open and ui.system_status.close
   are typed local visibility actions, with statusbar.system_status, work.open_system_status and
   system_status.close binding families. Service owner links use the existing ui.settings.route.open action and
   system_status.service.open_settings binding, selecting code.editing.lsp-server-catalog for language servers,
@@ -50504,6 +50516,19 @@ canonical_text: >-
   use body.pm-resizing and release/pointercancel notifies PM_DRAGEND so shared motion resumes once. Per-kind
   completion defaults stay DL-248’s agent for scripts/tests/builds and user for server/db/watcher; Quiet
   remains an explicit choice.
+  D7/D8/D13, PM7 companion review fix1, 2026-10-30 (Astra A2/A3): work.open_owner is ui.work_panel.select
+  with an owner-row value, owner_id, destination agents|subagents, invoking view and focus; Subagents also
+  binds its exact thread_id. It never opens a transcript. Actual Open thread uses cmd.chat.open_thread for
+  the item’s bound Assistant thread; actual Open surface is ui.work_panel.open_surface, a local navigation
+  request to the resolved owner surface with work identity and focus, unavailable if that owner cannot be
+  reached. Copy command is ui.work_panel.copy_command, a local clipboard request over the selected current
+  command; clipboard refusal cannot report success. Open port reuses cmd.browser.open_workspace_preview with
+  a server/environment-authoritative URL and CV-360 placement, never an assumed client localhost. A
+  scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the exact schedule identity/revision and
+  owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new
+  invocation through the terminal owner, with an explicit new-session request when needed; Restart keeps
+  cmd.work.restart for restartable live server/db/watcher work. Concept W.restart/W.stop adapters do not
+  replace those native owner routes.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

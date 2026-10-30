@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26830-L27554
+Source lines: L26830-L27559
 
-Source SHA256: `75e1c620b8a3b984d78b36c8c7b8b349e20327a9e83f95c6f5728e3d0ad12001`
+Source SHA256: `93df03df23ee496b364d012a444a935d05eaceaddb177b6e2206527378189dfe`
 
 ---
 
@@ -57,6 +57,11 @@ canonical_text: >-
   Activity Detail row as local view state, not cmd.agents.open_thread and not a direct permission/answer/stop
   action. The concept work-dock-review adapter uses PM56_DEMO.openActivity only to demonstrate those existing
   view routes; it admits no demo command to the product.
+  D7, PM7 companion review fix1, 2026-10-30 (Muse3): the concept’s agent work-dock-review adapter finds the
+  Subagents row by title through PM56_DEMO.openActivity. This title lookup is a concept limitation and can
+  be ambiguous for equal/renamed titles. Native owner-row selection must bind signed owner identity, thread
+  and generation as CS-106 requires; the concept is not evidence that this stronger guard exists.
+  Process/scheduled Review already passes the item ID.
 gui_related: true
 gui_classification_reason: "Defines the dock above the composer and the attention items it shows."
 split_recommended: false

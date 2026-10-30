@@ -12,6 +12,9 @@
 
 ## Change Summary
 
+- 2026-10-30: PM7 companion review fix1 (D7/D8/D13, G4/D10, S1/S2/S6, A5/PC2) separates local owner selection from thread/page opening, closes Copy/port/schedule-cancel/Rerun dispositions, adds reverse control and preset parity guards, closes local payload branches, and names the chat Working dots face. Exact Project/System visibility tokens and the title lane’s final 1.95 s Working export manifest are reconciled; no GUI edit or native-proof promotion.
+  ContractRef: ContractName:Plans/Commands_System.md#CS-105, ContractName:Plans/Commands_System.md#CS-106, ContractName:Plans/Wiring_Matrix.md#WM-097, ContractName:Plans/FinalGUISpec.md#F3-660
+
 - 2026-10-30: PM7 Step4 closes source-name alignment at final GUI e9b15abc64: D7 rail/Home Agents share PM7_WORK_UI.list, D2/D7 composer dock producers reuse Processes navigation or local Subagents selection, G4 Resources adds Time and 2 s visible-only sampling, O6/O10/O12 preserve silent hover and drawn Ready handoff, and SND1 uses the shared sound_render/sound_catalog/sound_board Pip tooling. L8 B adds shrinking-height settle and editor overflow consumers to the one sprout owner. G9/C5 records the activity lane’s actual context-ring border-tiling/clear-disc cause and isolated ring layer in ACD-506/DL-254. Native certification and governance reseal remain separate.
   ContractRef: ContractName:Plans/DRY_Rules.md#DR-078, ContractName:Plans/DRY_Rules.md#DR-079, ContractName:Plans/assistant-chat-design.md#ACD-476, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-663, ContractName:Plans/FinalGUISpec.md#F3-664, ContractName:Plans/Wiring_Matrix.md#WM-097
 

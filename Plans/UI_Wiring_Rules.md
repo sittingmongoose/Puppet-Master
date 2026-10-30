@@ -2646,7 +2646,7 @@ canonical_text: >-
   leak samples across Project/server/environment. One overlay/hover/loader/Pip kit and one work projection;
   no injection hooks, synthetic resize or replacement observers. D11/G4, PM7 Step4, 2026-10-30: System status
   is a small read-only overlay popover, reached from the existing status-bar System status item and the
-  Processes System services link. ui.system_status.open/close are typed local visibility actions, with
+  Processes System services link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with
   statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner
   links use the existing ui.settings.route.open action and system_status.service.open_settings binding,
   selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
@@ -2656,6 +2656,12 @@ canonical_text: >-
   stable control families with the joined source paths and exact tokens. They witness source alignment only;
   native dispatcher, owner, focus, storage and effect evidence stays partial until implemented. Pin/Processes,
   work-panel tabs and quit actions keep their stable IDs even when a concept data-action spelling differs.
+  D7/D8/D13, PM7 companion review fix1, 2026-10-30: WM-097’s reverse source-control census and
+  action-specific local payload validation close the visible work-detail controls. Local owner selection
+  never dispatches cmd.agents.open_thread; actual Assistant thread open, browser port open, scheduled Cancel
+  and terminal Rerun use UCC-210’s existing owner routes. Clipboard and owner-surface navigation are
+  declared local actions. Missing control dispositions or invalid local payloads fail focused checks; source
+  anchors still certify no native signal or effect.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

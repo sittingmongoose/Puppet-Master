@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16288-L16659
+Source lines: L16288-L16672
 
-Source SHA256: `66cfb69f35dcfa3839c5485cbbf1383fc09ecf46c86d3f892a560b8085a02a61`
+Source SHA256: `857b32d41f7577bda3072d2ef9e417e4f0e60b7f69280cd6b7b895e69bed82df`
 
 ---
 
@@ -273,7 +273,7 @@ canonical_text: >-
   panel-tab route and keyboard shortcuts remain deferred. Typed local ui.work_panel.* and ui.work_quit.*
   are no-write view state. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay popover,
   reached from the existing status-bar System status item and the Processes System services link.
-  ui.system_status.open/close are typed local visibility actions, with statusbar.system_status,
+  ui.system_status.open and ui.system_status.close are typed local visibility actions, with statusbar.system_status,
   work.open_system_status and system_status.close binding families. Service owner links use the existing
   ui.settings.route.open action and system_status.service.open_settings binding, selecting
   code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
@@ -287,6 +287,19 @@ canonical_text: >-
   preserving Project/thread/work identity and selecting that item in Processes. Agent Review selects the
   existing Subagents Activity Detail row as ordinary local view state; it does not open the live transcript or
   dispatch cmd.agents.open_thread. This view selection owns no runtime mutation or new action ID.
+  D7/D8/D13, PM7 companion review fix1, 2026-10-30 (Astra A2/A3): work.open_owner is ui.work_panel.select
+  with an owner-row value, owner_id, destination agents|subagents, invoking view and focus; Subagents also
+  binds its exact thread_id. It never opens a transcript. Actual Open thread uses cmd.chat.open_thread for
+  the item’s bound Assistant thread; actual Open surface is ui.work_panel.open_surface, a local navigation
+  request to the resolved owner surface with work identity and focus, unavailable if that owner cannot be
+  reached. Copy command is ui.work_panel.copy_command, a local clipboard request over the selected current
+  command; clipboard refusal cannot report success. Open port reuses cmd.browser.open_workspace_preview with
+  a server/environment-authoritative URL and CV-360 placement, never an assumed client localhost. A
+  scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the exact schedule identity/revision and
+  owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new
+  invocation through the terminal owner, with an explicit new-session request when needed; Restart keeps
+  cmd.work.restart for restartable live server/db/watcher work. Concept W.restart/W.stop adapters do not
+  replace those native owner routes.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

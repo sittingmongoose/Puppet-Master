@@ -8267,7 +8267,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "payload": "WorkPanelFilter: kind=owner (owner_id or null reset), agent_group (all|working|needs|waiting|done), or process_grouping (state|owner); closed view-only value.",
       "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
       "concept_sources": [
         {
@@ -8289,7 +8289,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "G4 Resources: selected column title|rank|time|cpu|mem|ports|where and direction; Time compares startedAt, stable title ties; view/scope/focus only, no resource/runtime write.",
+      "payload": "value={column:title|rank|time|cpu|mem|ports|where,direction:-1|1}; closed view-only value; Time compares startedAt with stable title ties.",
       "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
       "concept_sources": [
         {
@@ -8311,7 +8311,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "payload": "WorkPanelExpand: kind=item/subagents/group plus exact work_id/owner_id/group_id and boolean expanded; item/owner generation required.",
       "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
       "concept_sources": [
         {
@@ -8333,7 +8333,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "payload": "WorkRowSelection: kind=item with work_id/expected_generation, or kind=owner with owner_id/expected_generation/destination and thread_id for Subagents; current invoking scope/view/focus.",
       "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
       "concept_sources": [
         {
@@ -8592,16 +8592,14 @@
       "control_id": "work.open_owner",
       "surface": "Work panel / thread Processes > open_owner",
       "owner_ref": "Plans/FinalGUISpec.md#F3-664",
-      "disposition": "command",
+      "disposition": "local",
       "action_ids": [
-        "cmd.agents.open_thread"
+        "ui.work_panel.select"
       ],
-      "production_entries": [
-        "catalog.agents_open_thread"
-      ],
+      "production_entries": [],
       "setting_ids": [],
-      "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "",
+      "payload": "D7 local WorkRowSelection: kind=owner, owner_id, expected_generation, destination=agents|subagents, view/focus; subagents requires exact thread_id. Platform resolves by ID; concept chat showOwner finds by title, a known limitation. Native must resolve signed identity without title fallback.",
+      "no_production_reason": "Local owner-row selection/expansion only; no live transcript, layout event, runtime or Settings write.",
       "concept_sources": [
         {
           "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
@@ -8715,7 +8713,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "payload": "value={choice:keep_running|stop_selected}; closed quit draft selection, no mutation.",
       "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
       "concept_sources": [
         {
@@ -8737,7 +8735,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "payload": "value={choice:keep_running|stop_selected}; closed quit draft selection, no mutation.",
       "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
       "concept_sources": [
         {
@@ -8751,7 +8749,7 @@
     },
     {
       "control_id": "work.quit.select_target",
-      "surface": "Quit with running work > select_target",
+      "surface": "Work Stop list / quit dialog > target checkbox",
       "owner_ref": "Plans/FinalGUISpec.md#F3-665",
       "disposition": "local",
       "action_ids": [
@@ -8759,7 +8757,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "payload": "value={work_id,expected_generation,selected:boolean}; closed reviewed-target draft selection, no effect before owner confirmation.",
       "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
       "concept_sources": [
         {
@@ -9163,7 +9161,7 @@
       "action_ids": [],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "D2/D7 Review: current Project/thread/agent identity and generation; select the existing Subagents Activity Detail row, preserve return focus and reject stale/foreign work. No live-transcript open.",
+      "payload": "Concept work-dock-review selects Subagents by {title: it.title}, which can be ambiguous. Native selection uses signed Project/thread/owner_id and generation per CS-106, not title. Ordinary local view selection, no command or runtime effect.",
       "no_production_reason": "Ordinary Activity Detail domain/row selection is view state per UCC-210/ACD-476; no product command, new action ID, receipt, runtime or Settings write.",
       "concept_sources": [
         {
@@ -9172,6 +9170,174 @@
             "work-dock-review",
             "PM56_PMX.dock.provide(workDock)",
             "PM56_DEMO.openActivity"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "work.open_thread",
+      "surface": "Work panel / thread Processes > shared detail",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.chat.open_thread"
+      ],
+      "production_entries": [
+        "catalog.chat_open_thread"
+      ],
+      "setting_ids": [],
+      "payload": "Exact bound Assistant thread via cmd.chat.open_thread. Native route resolves signed thread/Project, not the local owner-row selection or a child transcript tab by accident.",
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "it.surface === 'assistant'",
+            "a === 'goto'"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "work.open_surface",
+      "surface": "Work panel / thread Processes > shared detail",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_panel.open_surface"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "WorkSurfaceSelection over work_id, expected_generation and owner surface. Concept PAGE_OF opens orchestrator/wizard only; prd/scout fall back to a notice. Native must navigate the actual available owner or report unavailable.",
+      "no_production_reason": "Declared no-write local view/clipboard/draft action per CS-106/UCC-210; no production mutation handler or native proof.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "PAGE_OF[it.surface]",
+            "a === 'goto'"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "work.copy_command",
+      "surface": "Work panel / thread Processes > shared detail",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_panel.copy_command"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "WorkViewTarget resolves the current visible command by work_id/expected_generation into local clipboard text. Native must report clipboard denial/failure, no fabricated success.",
+      "no_production_reason": "Declared no-write local view/clipboard/draft action per CS-106/UCC-210; no production mutation handler or native proof.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "btn('copy'",
+            "a === 'copy'"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "work.open_port",
+      "surface": "Work panel / thread Processes > shared detail",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.browser.open_workspace_preview"
+      ],
+      "production_entries": [
+        "catalog.browser_open_workspace_preview"
+      ],
+      "setting_ids": [],
+      "payload": "Browser-owner URL derived from exact work/Project/server/environment and exposed port; protocol/host/port must be owner-authoritative. Concept localhost is a fixture convenience, never a native client-host assumption. CV-360 placement.",
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "function openPort",
+            "a === 'port'"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "work.cancel_scheduled",
+      "surface": "Work panel / thread Processes > shared detail",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.chat.schedule_message.cancel"
+      ],
+      "production_entries": [
+        "assistant.redesign.cmd.chat_schedule_message_cancel"
+      ],
+      "setting_ids": [],
+      "payload": "Scheduled Cancel uses the scheduling owner with exact schedule ID/revision, source scope and owner gates; no WorkTarget/PID or cmd.work.stop target. Concept W.stop dispatch is an adapter limitation.",
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "'act.cancel'",
+            "a === 'stop'"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "work.rerun",
+      "surface": "Work panel / thread Processes > shared detail",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.rerun"
+      ],
+      "production_entries": [
+        "catalog.terminal_rerun"
+      ],
+      "setting_ids": [],
+      "payload": "Terminal-owner replay of the exact ended command, with a new invocation; explicit new-session request where needed, permission/currentness and no duplicate replay. Concept W.restart is not native owner admission.",
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "btn('rerun'",
+            "a === 'rerun'"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "work.stop_all.scope",
+      "surface": "Work Stop all list > scope",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.work_quit.select"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "value={scope:procs|all}; Stop-list draft scope only, not quit choice or runtime mutation.",
+      "no_production_reason": "Declared no-write local view/clipboard/draft action per CS-106/UCC-210; no production mutation handler or native proof.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "choice: [['procs'"
           ],
           "concept_only": true
         }

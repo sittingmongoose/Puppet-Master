@@ -651,6 +651,597 @@
         "work_id": "process-1"
       },
       "valid": false
+    },
+    {
+      "name": "review_r1_tab",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.select_tab",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": "agents"
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_sort",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.sort",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "column": "time",
+          "direction": 1
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_filter_owner",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.filter",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "owner",
+          "owner_id": null
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_filter_agents",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.filter",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "agent_group",
+          "group": "needs"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_filter_processes",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.filter",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "process_grouping",
+          "grouping": "owner"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_expand_item",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.expand",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "item",
+          "work_id": "p1",
+          "expected_generation": 4,
+          "expanded": true
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_expand_subagents",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.expand",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "subagents",
+          "owner_id": "a1",
+          "expected_generation": 4,
+          "expanded": false
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_expand_group",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.expand",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "group",
+          "group_id": "questions",
+          "expanded": false
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_select_item",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "item",
+          "work_id": "p1",
+          "expected_generation": 4
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_select_owner_platform",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "owner",
+          "owner_id": "a1",
+          "expected_generation": 4,
+          "destination": "agents"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_select_owner_chat",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "owner",
+          "owner_id": "a1",
+          "expected_generation": 4,
+          "destination": "subagents",
+          "thread_id": "t1"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_quit_choice",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_quit.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "choice": "keep_running"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_quit_target",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_quit.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "work_id": "p1",
+          "expected_generation": 4,
+          "selected": true
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_stop_scope",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_quit.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "scope": "procs"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_copy_command",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.copy_command",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "work_id": "p1",
+          "expected_generation": 4
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_open_surface",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.open_surface",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "work_id": "a1",
+          "expected_generation": 4,
+          "surface": "wizard"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "review_r1_missing_value_select_tab",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.select_tab",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform"
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_missing_value_sort",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.sort",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform"
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_missing_value_filter",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.filter",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform"
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_missing_value_expand",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.expand",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform"
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_missing_value_select",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform"
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_missing_value_select",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_quit.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform"
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_missing_value_copy_command",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.copy_command",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform"
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_missing_value_open_surface",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.open_surface",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform"
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_bogus_tab",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.select_tab",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": "bogus"
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_bogus_sort",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.sort",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "column": "temperature",
+          "direction": 0
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_sort_wrong_direction",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.sort",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "column": "cpu",
+          "direction": 0
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_filter_unknown_kind",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.filter",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "anything",
+          "owner_id": "a"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_expand_missing_boolean",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.expand",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "group",
+          "group_id": "questions"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_owner_missing_thread",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "owner",
+          "owner_id": "a",
+          "expected_generation": 4,
+          "destination": "subagents"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_owner_foreign_branch",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "owner",
+          "owner_id": "a",
+          "expected_generation": 4,
+          "destination": "agents",
+          "thread_id": "t"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_owner_bad_destination",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "kind": "owner",
+          "owner_id": "a",
+          "expected_generation": 4,
+          "destination": "live_transcript"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_copy_extra_text",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.copy_command",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "work_id": "p",
+          "expected_generation": 4,
+          "command": "invented"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_surface_unknown",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.open_surface",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "work_id": "a",
+          "expected_generation": 4,
+          "surface": "arbitrary"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_quit_bad_choice",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_quit.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "choice": "kill_everything"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_quit_cross_branch",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_quit.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "choice": "stop_selected",
+          "work_id": "p",
+          "expected_generation": 4,
+          "selected": true
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_quit_wrong_boolean",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_quit.select",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "work_id": "p",
+          "expected_generation": 4,
+          "selected": "yes"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "review_r1_close_extra_value",
+      "definition": "local_action_request",
+      "instance": {
+        "action_id": "ui.work_panel.close",
+        "project_id": null,
+        "scope_kind": "application",
+        "return_focus_id": "origin",
+        "view_id": "platform",
+        "value": {
+          "arbitrary": 1
+        }
+      },
+      "valid": false
     }
   ],
   "semantic_cases": [
@@ -772,12 +1363,12 @@
     "status_keys": 22,
     "pip_parts": 25,
     "default_parts": 24,
-    "pm7_bindings": 470,
-    "touch_rows": 710,
+    "pm7_bindings": 477,
+    "touch_rows": 715,
     "touch_profiles": 137,
     "production_wiring_entries": 1269,
     "new_production_rows": 11,
-    "new_bindings": 51
+    "new_bindings": 58
   },
   "activity_detail_thread_switch_cases": [
     {
@@ -987,5 +1578,212 @@
       "splash": 128
     },
     "family_token_owner": "PMLogo.MOTION"
-  }
+  },
+  "work_detail_control_census": [
+    {
+      "binding_id": "work.open_owner",
+      "source_action": "owner",
+      "source_labels": [],
+      "action_ids": [
+        "ui.work_panel.select"
+      ],
+      "disposition": "local"
+    },
+    {
+      "binding_id": "work.open_thread",
+      "source_action": "goto",
+      "source_labels": [
+        "openThread",
+        "answer"
+      ],
+      "action_ids": [
+        "cmd.chat.open_thread"
+      ],
+      "disposition": "command"
+    },
+    {
+      "binding_id": "work.open_surface",
+      "source_action": "goto",
+      "source_labels": [
+        "openSurface",
+        "answer"
+      ],
+      "action_ids": [
+        "ui.work_panel.open_surface"
+      ],
+      "disposition": "local"
+    },
+    {
+      "binding_id": "work.copy_command",
+      "source_action": "copy",
+      "source_labels": [
+        "copy"
+      ],
+      "action_ids": [
+        "ui.work_panel.copy_command"
+      ],
+      "disposition": "local"
+    },
+    {
+      "binding_id": "work.open_port",
+      "source_action": "port",
+      "source_labels": [
+        "openPort"
+      ],
+      "action_ids": [
+        "cmd.browser.open_workspace_preview"
+      ],
+      "disposition": "command"
+    },
+    {
+      "binding_id": "work.cancel_scheduled",
+      "source_action": "stop",
+      "source_labels": [
+        "cancel"
+      ],
+      "action_ids": [
+        "cmd.chat.schedule_message.cancel"
+      ],
+      "disposition": "command"
+    },
+    {
+      "binding_id": "work.rerun",
+      "source_action": "rerun",
+      "source_labels": [
+        "rerun"
+      ],
+      "action_ids": [
+        "cmd.terminal.rerun"
+      ],
+      "disposition": "command"
+    },
+    {
+      "binding_id": "work.restart",
+      "source_action": "restart",
+      "source_labels": [
+        "restart"
+      ],
+      "action_ids": [
+        "cmd.work.restart"
+      ],
+      "disposition": "command"
+    },
+    {
+      "binding_id": "work.stop",
+      "source_action": "stop",
+      "source_labels": [
+        "stop",
+        "stopping"
+      ],
+      "action_ids": [
+        "cmd.work.stop"
+      ],
+      "disposition": "command"
+    },
+    {
+      "binding_id": "work.send_input",
+      "source_action": "answer",
+      "source_labels": [],
+      "action_ids": [
+        "cmd.work.send_input"
+      ],
+      "disposition": "command"
+    },
+    {
+      "binding_id": "work.completion_delivery",
+      "source_action": "delivery",
+      "source_labels": [],
+      "action_ids": [
+        "cmd.work.set_completion_delivery"
+      ],
+      "disposition": "command"
+    },
+    {
+      "binding_id": "work.open_terminal",
+      "source_action": "terminal",
+      "source_labels": [
+        "openTerminal"
+      ],
+      "action_ids": [
+        "cmd.terminal.open"
+      ],
+      "disposition": "command"
+    },
+    {
+      "binding_id": "work.answer_terminal",
+      "source_action": "terminal",
+      "source_labels": [
+        "answerTerminal"
+      ],
+      "action_ids": [
+        "cmd.terminal.open"
+      ],
+      "disposition": "command"
+    }
+  ],
+  "work_detail_census_cases": [
+    {
+      "name": "missing_copy",
+      "remove_binding": "work.copy_command",
+      "valid": false
+    },
+    {
+      "name": "missing_port",
+      "remove_binding": "work.open_port",
+      "valid": false
+    },
+    {
+      "name": "missing_scheduled_branch",
+      "remove_case": "work.cancel_scheduled",
+      "valid": false
+    },
+    {
+      "name": "new_unmapped_control",
+      "extra_action": "unmapped",
+      "valid": false
+    },
+    {
+      "name": "owner_misrouted_to_transcript",
+      "rebind": "work.open_owner",
+      "action_ids": [
+        "cmd.agents.open_thread"
+      ],
+      "valid": false
+    }
+  ],
+  "pip_preset_parity_cases": [
+    {
+      "name": "shared_presets_unchanged",
+      "overrides": {},
+      "valid": true
+    },
+    {
+      "name": "quiet_drift",
+      "overrides": {
+        "Quiet": "Full"
+      },
+      "valid": false
+    },
+    {
+      "name": "plain_drift",
+      "overrides": {
+        "Plain": "Full"
+      },
+      "valid": false
+    },
+    {
+      "name": "still_drift",
+      "overrides": {
+        "Still": "Full"
+      },
+      "valid": false
+    },
+    {
+      "name": "full_drift",
+      "overrides": {
+        "Full": "Quiet"
+      },
+      "valid": false
+    }
+  ]
 }

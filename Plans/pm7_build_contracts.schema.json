@@ -87,7 +87,9 @@
         "ui.work_panel.select",
         "ui.work_quit.open",
         "ui.work_quit.select",
-        "ui.work_quit.cancel"
+        "ui.work_quit.cancel",
+        "ui.work_panel.copy_command",
+        "ui.work_panel.open_surface"
       ]
     },
     "pip_local_action_id": {
@@ -303,7 +305,9 @@
             "ui.project_switcher.all_projects",
             "ui.activity_detail.pin",
             "ui.system_status.open",
-            "ui.system_status.close"
+            "ui.system_status.close",
+            "ui.work_panel.copy_command",
+            "ui.work_panel.open_surface"
           ]
         },
         "project_id": {
@@ -397,6 +401,210 @@
                 "enum": [
                   "ui.system_status.open",
                   "ui.system_status.close"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": false
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.select_tab"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "enum": [
+                  "agents",
+                  "processes",
+                  "resources"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.sort"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "column",
+                  "direction"
+                ],
+                "properties": {
+                  "column": {
+                    "enum": [
+                      "title",
+                      "rank",
+                      "time",
+                      "cpu",
+                      "mem",
+                      "ports",
+                      "where"
+                    ]
+                  },
+                  "direction": {
+                    "enum": [
+                      -1,
+                      1
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.filter"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/WorkPanelFilter"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.expand"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/WorkPanelExpand"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.select"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/WorkRowSelection"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_quit.select"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/WorkQuitSelection"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.copy_command"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/WorkViewTarget"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.open_surface"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/WorkSurfaceSelection"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "enum": [
+                  "ui.project_switcher.open",
+                  "ui.project_switcher.close",
+                  "ui.project_switcher.all_projects",
+                  "ui.work_panel.close",
+                  "ui.work_quit.open",
+                  "ui.work_quit.cancel",
+                  "ui.settings.pip_editor.open",
+                  "ui.settings.pip_editor.close",
+                  "ui.settings.pip_editor.replay"
                 ]
               }
             }
@@ -660,7 +868,8 @@
                   "app-voice",
                   "setup-music"
                 ]
-              }
+              },
+              "maxItems": 0
             }
           }
         },
@@ -2079,6 +2288,347 @@
         }
       ],
       "description": "D11/G4: read-only System status owner-Settings reveal using the already admitted ui.settings.route.open action. No Settings write, service action, event or receipt."
+    },
+    "WorkViewTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_id",
+        "expected_generation"
+      ],
+      "properties": {
+        "work_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "WorkRowSelection": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "work_id",
+            "expected_generation"
+          ],
+          "properties": {
+            "kind": {
+              "const": "item"
+            },
+            "work_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected_generation": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "owner_id",
+            "destination",
+            "expected_generation"
+          ],
+          "properties": {
+            "kind": {
+              "const": "owner"
+            },
+            "owner_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "destination": {
+              "enum": [
+                "agents",
+                "subagents"
+              ]
+            },
+            "expected_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "destination": {
+                    "const": "subagents"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "thread_id"
+                ]
+              },
+              "else": {
+                "properties": {
+                  "thread_id": false
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "WorkPanelFilter": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "owner_id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "owner"
+            },
+            "owner_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "group"
+          ],
+          "properties": {
+            "kind": {
+              "const": "agent_group"
+            },
+            "group": {
+              "enum": [
+                "all",
+                "working",
+                "needs",
+                "waiting",
+                "done"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "grouping"
+          ],
+          "properties": {
+            "kind": {
+              "const": "process_grouping"
+            },
+            "grouping": {
+              "enum": [
+                "state",
+                "owner"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "WorkPanelExpand": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "work_id",
+            "expected_generation",
+            "expanded"
+          ],
+          "properties": {
+            "kind": {
+              "const": "item"
+            },
+            "work_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "expanded": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "owner_id",
+            "expected_generation",
+            "expanded"
+          ],
+          "properties": {
+            "kind": {
+              "const": "subagents"
+            },
+            "owner_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "expanded": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "group_id",
+            "expanded"
+          ],
+          "properties": {
+            "kind": {
+              "const": "group"
+            },
+            "group_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expanded": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "WorkQuitSelection": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "choice"
+          ],
+          "properties": {
+            "choice": {
+              "enum": [
+                "keep_running",
+                "stop_selected"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "work_id",
+            "expected_generation",
+            "selected"
+          ],
+          "properties": {
+            "work_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "selected": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope"
+          ],
+          "properties": {
+            "scope": {
+              "enum": [
+                "procs",
+                "all"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "WorkSurfaceSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_id",
+        "expected_generation",
+        "surface"
+      ],
+      "properties": {
+        "work_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "surface": {
+          "enum": [
+            "orchestrator",
+            "wizard",
+            "prd",
+            "scout"
+          ]
+        }
+      }
+    },
+    "reused_work_command_id": {
+      "description": "Existing owner command IDs reused by work-detail producers for reverse Touch coverage; no new command family or handler.",
+      "enum": [
+        "cmd.browser.open_workspace_preview",
+        "cmd.chat.schedule_message.cancel",
+        "cmd.terminal.rerun"
+      ]
     }
   }
 }

@@ -132,7 +132,7 @@ Faces never manufacture runtime state. Typed owner status wins over a decorative
 
 Project badge priority (B5): waiting > blocked > working > change-modified > idle. Tray (A3) aggregates every Project; waiting wins; paused applies when remaining work is paused. Never replace a stale feed with a healthy zero.
 
-Part contract (lead adopted, 2026-10-29): `Plans/pip_parts.json`, 25 options, Full = 24 on (app-voice off). Binding rows = 470; Touch = 710 rows / 137 profiles; production wiring = 1269. All projects is local `ui.project_switcher.all_projects`, not the rail-only `cmd.panel.switch`.
+Part contract (lead adopted, 2026-10-29): `Plans/pip_parts.json`, 25 options, Full = 24 on (app-voice off). Binding rows = 477; Touch = 715 rows / 137 profiles; production wiring = 1269. All projects is local `ui.project_switcher.all_projects`, not the rail-only `cmd.panel.switch`.
 
 Review completion allocation: **G-031** owns the durable PM7 help-entry records (Pip, Project box, Processes, Question, Needs input, Completion delivery, Lost, ObservableWork, Operational Awareness, Backgrounded, Resources). Resources reuses the existing **gauge** glyph. A5 per-surface face tables and A3 complete tray precedence are now explicit in canon and the catalog; the original 22 status keys remain.
 
@@ -145,3 +145,5 @@ Step4 System status: ui.system_status.open / ui.system_status.close (view-local)
 Step4 L8 B review-fix names (integration 4c49e10567): PM6_SPROUT.open(el, afterOpen, anchor, opts), close(el, done, opts), morph(el, from, to, opts); shared origin/shown/instant/fade inputs per DR-079. A4 A Friendly notification classes are .pmn-tile-pip and .pmn-kind; decorative, no binding added.
 
 Step4 final GUI e9b15abc64: PM7_WORK_UI.list / agentGroup / agentSummary supply rail and Home Agents. New binding families chat.work_dock.process_open (cmd.chat.processes.open, optional exact work_id) and chat.work_dock.agent_review (ordinary local Subagents selection, no action ID) map work-dock-review in activity-panel.js. There are 51 source-anchored PM7 families. Resources Time uses ui.work_panel.sort / startedAt and a 2 s visible-only sampler. Pip sound tooling is sound_render.mjs --pip-only, sound_catalog.py --pip, sound_board.py --pip / --pip-page; separate pip_sound_* tools are retired.
+
+Companion fix cycle 1 (D7/D8/D13/G4/D10): work.open_owner is local ui.work_panel.select. New bindings: work.open_thread (cmd.chat.open_thread), work.open_surface (ui.work_panel.open_surface), work.copy_command (ui.work_panel.copy_command), work.open_port (cmd.browser.open_workspace_preview), work.cancel_scheduled (cmd.chat.schedule_message.cancel), work.rerun (cmd.terminal.rerun), work.stop_all.scope (ui.work_quit.select). Two new local actions only; no new command. Totals: 477 bindings / 58 PM7 source families, 715 Touch rows / 137 profiles, 1269 production rows. Working chat agents use public working rendered as dots; reviewing/recovering stay think.

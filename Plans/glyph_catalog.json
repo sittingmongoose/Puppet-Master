@@ -2142,7 +2142,7 @@
     "agents": {
       "working": [
         "working",
-        "think"
+        "working"
       ],
       "reviewing": [
         "reviewing",
@@ -2202,5 +2202,9 @@
     "paused",
     "complete",
     "idle"
-  ]
+  ],
+  "surface_status_face_scopes": {
+    "agents": "Chat agent rows (PIP_STATE_MOOD). Public working renders as internal dots; reviewing/recovering remain think.",
+    "platform": "Platform rows use PMLogo.STATUS_FACE; working/reviewing/recovering use working/dots, mixed oops, skipped idle. Same status keys, deliberate decorative surface differences."
+  }
 }

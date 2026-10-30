@@ -669,6 +669,7 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     for profile, kind, definition in [
         ("TCP-PM7-PROJECT", "command", "project_command_id"),
         ("TCP-PM7-WORK", "command", "work_command_id"),
+        ("TCP-PM7-WORK", "command", "reused_work_command_id"),
         ("TCP-PM7-LOCAL", "ui_action", "project_local_action_id"),
         ("TCP-PM7-LOCAL", "ui_action", "work_local_action_id"),
         ("TCP-PM7-LOCAL", "ui_action", "activity_local_action_id"),
@@ -1855,7 +1856,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # producer). No Touch row/profile, alias, exclusion, native handler or proof
     # is added.
     exact_resolved_denominators = {
-        "row_count": 710,
+        "row_count": 715,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
         "profile_count": 137,

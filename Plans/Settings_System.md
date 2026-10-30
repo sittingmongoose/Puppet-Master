@@ -4228,6 +4228,10 @@ canonical_text: >-
   same editor; title/wand hosts use data-pip-local for the declared typed local actions. Registry def maps to
   default_enabled, lowercase preset IDs to Full/Quiet/Still/Plain, and new Settings writes remain the 25
   shared labels. pm7.pip-parts.changed is a concept change notification, not a new persisted event.
+  S1/S2/S6, PM7 companion review fix1, 2026-10-30 (Astra A5): all four preset arrays must equal
+  PM_PIP_PARTS.PRESETS through the lowercase-to-title-case name map, in registry order. Plain is exactly
+  empty. Quiet, Still and Full cannot silently replace one another; negative preset-drift fixtures enforce
+  the single-table boundary without changing stored LABELS.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
