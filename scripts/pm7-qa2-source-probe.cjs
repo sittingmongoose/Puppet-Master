@@ -13,6 +13,60 @@ function section(source, from, to) {
 }
 function context(extra = {}) { return vm.createContext({ console, ...extra }); }
 
+// N1: actual restore reach helpers bind the completed operation to its place.
+const serverScreens = read('Concepts/onboarding/opus-5.5/src/js/68-screens-server.js');
+const restoreHelpers = section(serverScreens, 'const kitsFor =', "def('r-source',");
+function restoreContext(test) {
+  const S = { sess: { restore: { scope: 'project', ...test.restore } },
+    env: { here: { recoveryKits: test.kit ? [test.kit] : [] }, devices: [] } };
+  const resets = [];
+  const c = context({ S, R: s => s.sess.restore, O55: {}, T: key => key,
+    F: { reset: (_s, key) => resets.push(key) } });
+  vm.runInContext(restoreHelpers, c, { timeout: 1000 });
+  return { c, S, resets };
+}
+for (const test of fixture.restore_reach_cases) {
+  const { c, S, resets } = restoreContext(test);
+  requireThat(c.O55.restore.reachKey(S) === test.expected_key, 'restore reach key ' + test.name);
+  requireThat(vm.runInContext('reached(S)', c) === test.reached, 'restore reused another place ' + test.name);
+  Object.assign(S.sess.restore, { unlocked: true, pick: 'copy-A', access: { credential_ref: 'fixture' } });
+  vm.runInContext('repoint(S)', c);
+  const r = S.sess.restore;
+  requireThat(r.reachedFor === null && r.unlocked === false && r.pick === null
+    && Object.keys(r.access).length === 0 && resets.join() === 'restore-s3', 'restore repoint leaked state ' + test.name);
+}
+counts.restore_reach_cases = fixture.restore_reach_cases.length;
+counts.restore_repoint_cases = fixture.restore_reach_cases.length;
+const safeScreens = read('Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js');
+const signInCallback = section(safeScreens, 'O55.official.handlers.restoreCloud =', '\n\n  const SI');
+for (const selected of ['gdrive', 'onedrive']) {
+  const { c, S } = restoreContext({ restore: { source: 'cloud', cloud: selected } });
+  c.O55.official = { handlers: {} }; S.sess.signin = { service: 'gdrive' };
+  vm.runInContext(signInCallback, c, { timeout: 1000 });
+  c.O55.official.handlers.restoreCloud(S);
+  requireThat(S.sess.restore.reachedFor === 'cloud:gdrive'
+    && vm.runInContext('reached(S)', c) === (selected === 'gdrive'), 'late sign-in followed selected service');
+}
+counts.restore_callback_cases = 2;
+const nasScreens = read('Concepts/onboarding/opus-5.5/src/js/70-screens-nas.js');
+const keyStatusSource = section(nasScreens, 'function keyStatus(S, k)', 'const keyWhere =');
+for (const test of fixture.ssh_key_unlock_cases) {
+  const c = context({ dev: () => ({ authorized: [] }), N: s => s.nas });
+  vm.runInContext(keyStatusSource, c, { timeout: 1000 });
+  requireThat(c.keyStatus({ nas: { unlocked: test.unlocked } }, { id: test.key_id, type: 'ed25519', passphrase: true })
+    === test.expected, 'key inherited another passphrase unlock');
+}
+counts.ssh_key_unlock_cases = fixture.ssh_key_unlock_cases.length;
+const draft = read('Concepts/onboarding/opus-5.5/src/js/35-draft.js');
+const normalizeSource = section(draft, 'function normalize(d)', 'function allowedVisibility(d)');
+for (const test of fixture.remote_route_cases) {
+  const c = context(); vm.runInContext(normalizeSource, c, { timeout: 1000 });
+  const value = { journey: 'new_or_local', project_mode: 'new', online_mode: 'none',
+    settings_transfer: { mode: 'start_fresh' }, remote_mode: test.mode, remote_endpoint: 'pm://signed-endpoint' };
+  requireThat(c.normalize(value).remote_endpoint === test.expected, 'Remote Link escaped route ' + test.mode);
+}
+counts.remote_route_cases = fixture.remote_route_cases.length;
+
 // CC5 uses its real provider and run/thread clock, not a parallel TTL implementation.
 const activity = read('Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.js');
 const dockSource = section(activity, 'var DOCK_MS =', 'var dockOn =');

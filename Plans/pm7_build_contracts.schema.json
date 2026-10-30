@@ -2794,7 +2794,8 @@
             "kit_carries_storage_signin",
             "accepted_kit_can_unlock",
             "reach_place_before_manifest",
-            "repoint_invalidates_unlock"
+            "repoint_invalidates_unlock",
+            "reach_bound_to_selected_place"
           ],
           "properties": {
             "locate_before_unlock": {
@@ -2813,6 +2814,9 @@
               "const": true
             },
             "repoint_invalidates_unlock": {
+              "const": true
+            },
+            "reach_bound_to_selected_place": {
               "const": true
             }
           }

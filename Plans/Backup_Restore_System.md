@@ -1057,48 +1057,90 @@ plan_unit_id: BRS-019
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Backup_Restore_System.md
-canonical_text: >-
-  Fresh or ordinary recovery follows one bounded order: locate the backup directly or through an untrusted Kit
-  locator, validate locator/trust, authenticate its actual storage place, select an existing repository, and
-  unlock through the protected owner credential (an accepted Kit may supply that credential; otherwise ask for
-  the phrase only when required), load encrypted manifests, select an immutable snapshot, inspect exact
-  coverage/compatibility, preview, and only then restore. SnapshotBrowser is paginated/read-only and treats
-  text, diff, history, HTML, macros, hooks, symlinks, and artifacts as untrusted content. Restore as New, in
-  place, selective, and Full Server modes retain dependency closure, current target revision, path/identity
-  mapping, migrations, disk space, profile/key readiness, secret exclusion, suspended work, owner approval, the
-  BRS-023 recovery prerequisite, target leases, staged verification, FileSafe decisions, and truthful rollback
+canonical_text: 'Fresh or ordinary recovery follows one bounded order: locate the backup directly or through
+  an untrusted Kit locator, validate locator/trust, authenticate its actual storage place, select an existing
+  repository, and unlock through the protected owner credential (an accepted Kit may supply that credential;
+  otherwise ask for the phrase only when required), load encrypted manifests, select an immutable snapshot,
+  inspect exact coverage/compatibility, preview, and only then restore. SnapshotBrowser is paginated/read-only
+  and treats text, diff, history, HTML, macros, hooks, symlinks, and artifacts as untrusted content. Restore
+  as New, in place, selective, and Full Server modes retain dependency closure, current target revision, path/identity
+  mapping, migrations, disk space, profile/key readiness, secret exclusion, suspended work, owner approval,
+  the BRS-023 recovery prerequisite, target leases, staged verification, FileSafe decisions, and truthful rollback
   availability. RestoreRun persists immutable selection, phase/retry/validation/outcome receipts on the recovery
   coordinator and survives Client loss or Full Server replacement through an external recovery endpoint/token.
   RuntimeResourceGovernor, ObservableWork, durable outbox, per-repository writer/maintenance leases, phase-aware
-  cancellation, cautious stale-lock recovery, retention holds, prune preview, separate destructive
-  authorization, and cold-retrieval consent remain shared-owner consumers. QA round 2, Jared 2026-10-30; DL-258;
-  GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted
-  locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud
-  sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud
-  service. Continue waits for the selected file/folder/device/account and required fields. Validate the
-  locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock
-  that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup
-  without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards.
-  Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval,
-  protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed
-  never proves native unlock or restore.
+  cancellation, cautious stale-lock recovery, retention holds, prune preview, separate destructive authorization,
+  and cold-retrieval consent remain shared-owner consumers. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18:
+  Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus
+  protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer
+  the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue
+  waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate
+  the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass
+  storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock;
+  name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the
+  former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and
+  actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock
+  or restore. QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected
+  service or device, not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit
+  or folder invalidates its old reach proof, protected access fields, unlock, copy selection and completed
+  bucket check. A late sign-in/check result stays bound to the service/device it authenticated and cannot advance
+  a different current choice. The concept reachKey/reachedFor projection is fixture state, never an owner credential
+  or permission receipt.'
 gui_related: true
 gui_classification_reason: SnapshotBrowser, RestorePreview, DestinationCard, ScopeCoverageSummary, RecoveryKitHandoff, VerificationBadge, RetentionPreview, ObservableWorkProgress, costs, failures, and exact completion axes are visible.
 depends_on: [BRS-006, BRS-014, BRS-015, BRS-017, BRS-018, SIR-032]
 unblocks: []
 acceptance_criteria:
-  - "A Kit is bounded untrusted input; a new endpoint is reviewed before credentials are sent, unreachable or apparently empty repositories are never initialized, and wrong account/key/repository, missing manifest, revoked access, corruption, and unsupported future format are distinct recoverable errors."
-  - "Snapshot selection binds immutable snapshot_id rather than latest; search/filter includes Project, capture date/time/timezone, host/source, verification and scope; details include PM/source/JJ coverage, unavailable sources, retention/hold, restore-test result, size, and retrieval conditions."
-  - "Previewed content cannot execute, escape path bounds, enter an active workspace, or reach agents without separate permission; large trees paginate and symlink/reparse/HTML/script/macro/hook hazards fail closed."
-  - "Restore apply requires current owner approval, the BRS-023 verified recovery-point or scoped verified-unavailability/human-consent prerequisite, target leases/quiescence, staged verification, and atomic activation where supported; cross-filesystem/remote activation uses a journaled recoverable boundary rather than a false atomic claim."
-  - "FileSafe adjudicates traversal, case/Unicode collisions, reserved names, executable bits, UID/GID/ACL/xattrs, absolute remaps, unsafe Git/JJ config, and untrusted hooks. Every crash/failure exposes the old state, rollback, quarantine, or a precise recovery boundary."
-  - "RestoreRun persists selection and per-source/destination phase, retry, validation, and outcome; completion separately reports data restored, source verified, indexes rebuilt, auth missing, and workloads paused. Client disconnect, UI refresh, or process-memory loss cannot fabricate resume or success."
-  - "RuntimeResourceGovernor preserves interactive/resume/approval reserve across capture, compression, encryption, hashing, IO, network, staging, retries, and process leases. Provider throttling, full staging queues, metered/time-window policy, and cost alerts stop/defer boundedly without hard-coded cloud prices."
-  - "Append-only/versioned/Object Lock claims require a tested engine/backend/maintenance profile; routine writers lack unnecessary delete authority, protected prune uses separate short-lived authorization, and locks are never removed merely because another writer is temporarily unreachable."
-  - "BackupCoordinator, CaptureBarrierService, SourceSnapshotAdapter/GitJJClosureValidator, BackupEngineAdapter, destination registry/adapters, scheduler/retention owner, RecoverySetKeyService, SnapshotCatalogProjection, and RestoreCoordinator remain the exact Backup DRY components; the exact shared GUI components are DestinationCard, ScopeCoverageSummary, SnapshotBrowser, RestorePreview, RecoveryKitHandoff, VerificationBadge, RetentionPreview, and ObservableWorkProgress."
-  - "CMDX-001/CMDX-002 require one owner command/handler route and the shared non-secret operation envelope; all Backup routes remain handler_unavailable and event-silent with \"expected_event_types=[]\" until independent native and Event Authority evidence exists."
-  - "PROC-001 and PROC-002 remain evidence requirements for a later bounded execution transaction; these static owner/schema/fixture repairs do not satisfy their baseline, acceptance, tranche, diff, release, or executable proof."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore."
+- A Kit is bounded untrusted input; a new endpoint is reviewed before credentials are sent, unreachable or
+  apparently empty repositories are never initialized, and wrong account/key/repository, missing manifest,
+  revoked access, corruption, and unsupported future format are distinct recoverable errors.
+- Snapshot selection binds immutable snapshot_id rather than latest; search/filter includes Project, capture
+  date/time/timezone, host/source, verification and scope; details include PM/source/JJ coverage, unavailable
+  sources, retention/hold, restore-test result, size, and retrieval conditions.
+- Previewed content cannot execute, escape path bounds, enter an active workspace, or reach agents without
+  separate permission; large trees paginate and symlink/reparse/HTML/script/macro/hook hazards fail closed.
+- Restore apply requires current owner approval, the BRS-023 verified recovery-point or scoped verified-unavailability/human-consent
+  prerequisite, target leases/quiescence, staged verification, and atomic activation where supported; cross-filesystem/remote
+  activation uses a journaled recoverable boundary rather than a false atomic claim.
+- FileSafe adjudicates traversal, case/Unicode collisions, reserved names, executable bits, UID/GID/ACL/xattrs,
+  absolute remaps, unsafe Git/JJ config, and untrusted hooks. Every crash/failure exposes the old state, rollback,
+  quarantine, or a precise recovery boundary.
+- RestoreRun persists selection and per-source/destination phase, retry, validation, and outcome; completion
+  separately reports data restored, source verified, indexes rebuilt, auth missing, and workloads paused. Client
+  disconnect, UI refresh, or process-memory loss cannot fabricate resume or success.
+- RuntimeResourceGovernor preserves interactive/resume/approval reserve across capture, compression, encryption,
+  hashing, IO, network, staging, retries, and process leases. Provider throttling, full staging queues, metered/time-window
+  policy, and cost alerts stop/defer boundedly without hard-coded cloud prices.
+- Append-only/versioned/Object Lock claims require a tested engine/backend/maintenance profile; routine writers
+  lack unnecessary delete authority, protected prune uses separate short-lived authorization, and locks are
+  never removed merely because another writer is temporarily unreachable.
+- BackupCoordinator, CaptureBarrierService, SourceSnapshotAdapter/GitJJClosureValidator, BackupEngineAdapter,
+  destination registry/adapters, scheduler/retention owner, RecoverySetKeyService, SnapshotCatalogProjection,
+  and RestoreCoordinator remain the exact Backup DRY components; the exact shared GUI components are DestinationCard,
+  ScopeCoverageSummary, SnapshotBrowser, RestorePreview, RecoveryKitHandoff, VerificationBadge, RetentionPreview,
+  and ObservableWorkProgress.
+- CMDX-001/CMDX-002 require one owner command/handler route and the shared non-secret operation envelope; all
+  Backup routes remain handler_unavailable and event-silent with "expected_event_types=[]" until independent
+  native and Event Authority evidence exists.
+- PROC-001 and PROC-002 remain evidence requirements for a later bounded execution transaction; these static
+  owner/schema/fixture repairs do not satisfy their baseline, acceptance, tranche, diff, release, or executable
+  proof.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to
+  unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place,
+  backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder,
+  another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required
+  fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner.
+  An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup
+  only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage
+  and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery
+  prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory;
+  a concept Kit or seed never proves native unlock or restore.'
+- 'QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service
+  or device, not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder
+  invalidates its old reach proof, protected access fields, unlock, copy selection and completed bucket check.
+  A late sign-in/check result stays bound to the service/device it authenticated and cannot advance a different
+  current choice. The concept reachKey/reachedFor projection is fixture state, never an owner credential or
+  permission receipt.'
 validation_surfaces: [Plans/backup_restore_system_contracts.schema.json#/$defs/restore_operational_safety_record, Plans/backup_restore_system_contract_fixtures.json, Plans/shared_integration_runtime_expansion_contracts.schema.json, future destructive restore/retention/provider/GUI/runtime tests]
 risk_class: unsafe_restore_or_false_operational_completion
 reasoning_tier: high

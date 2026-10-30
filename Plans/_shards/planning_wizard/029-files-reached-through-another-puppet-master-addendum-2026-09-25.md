@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2670-L2771
+Source lines: L2758-L2870
 
-Source SHA256: `267c68a08cd068658426fd0118e3386623e4041a8281d059e15edc4e89337634`
+Source SHA256: `da86162c041087b873a136ee5f83ce37ff9dd2190909e318f6b0be2dec331f84`
 
 ---
 
@@ -43,20 +43,22 @@ plan_unit_id: PWIZ-029
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: >-
-  When the device holding a Project's existing folder, its backup, or its chosen network storage already runs Puppet
-  Master, Product Onboarding reaches those files through that Puppet Master by Server-owned pairing, not by an SSH key.
-  The device's verified identity is shown first; cmd.client.pair.start then starts pairing by approval from a device
-  that already uses it, by code, or by QR, and approve, reject and cancel remain the Server owner's distinct
-  transitions. Onboarding never completes the pairing itself, and reachability or a matching identity never replaces
-  the approval. The setup draft records puppet_master in project_transport, backup_transport or storage_transport for
-  the purpose the folder serves, with a non-secret device-and-path reference, and binds the pairing result in
-  source_access_authorization_refs; it is never recorded as ssh and no SSH key is installed for it. A person may still
-  choose SSH for that device, which is then an ordinary ssh connection with a key. The paired device remains a Source
-  Location, backup source or storage location and never becomes the Connected Server, Project Home Server or Execution
-  Host; server_mode, server_ref, connection_pairing and remote_mode are unchanged by it. Before Review the pairing is
-  individually consented selected-source authentication limited to read-only browsing and validation of the chosen
-  folder or backup; folder creation, writes and Project registration wait for the reviewed commit.
+canonical_text: 'When the device holding a Project''s existing folder, its backup, or its chosen network storage
+  already runs Puppet Master, Product Onboarding reaches those files through that Puppet Master by Server-owned
+  pairing, not by an SSH key. The device''s verified identity is shown first; cmd.client.pair.start then starts
+  pairing by approval from a device that already uses it, by code, or by QR, and approve, reject and cancel
+  remain the Server owner''s distinct transitions. Onboarding never completes the pairing itself, and reachability
+  or a matching identity never replaces the approval. The setup draft records puppet_master in project_transport,
+  backup_transport or storage_transport for the purpose the folder serves, with a non-secret device-and-path
+  reference, and binds the pairing result in source_access_authorization_refs; it is never recorded as ssh
+  and no SSH key is installed for it. A person may still choose SSH for that device, which is then an ordinary
+  ssh connection with a key. The paired device remains a Source Location, backup source or storage location
+  and never becomes the Connected Server, Project Home Server or Execution Host; server_mode, server_ref, connection_pairing
+  and remote_mode are unchanged by it. Before Review the pairing is individually consented selected-source
+  authentication limited to read-only browsing and validation of the chosen folder or backup; folder creation,
+  writes and Project registration wait for the reviewed commit. QA2 follow-up N1, integration 6609384fd0; DL-258:
+  A protected SSH key passphrase unlock belongs to that exact selected key; changing keys requires that key’s
+  own owner-proven access and never inherits another key’s unlock.'
 gui_related: true
 gui_classification_reason: The identity check, the approval, code and QR choices, the waiting and expired states, the
   Use SSH instead choice, and the Review line naming the paired device are visible onboarding steps.
@@ -64,13 +66,22 @@ split_recommended: false
 depends_on: [PWIZ-024, SRV-004, SRV-006]
 unblocks: []
 acceptance_criteria:
-  - A folder, backup or storage location on a device that runs Puppet Master is reached by pairing through cmd.client.pair.start with approval, code or QR, never by an automatic pairing and never by an SSH key install.
-  - The device's identity picture and words are shown before pairing starts, and pairing does not finish until the owner reports approval.
-  - An expired code offers a new code, and a rejected or cancelled pairing returns to the choice of method with nothing recorded.
-  - The draft records puppet_master in the matching transport with a non-secret reference and binds the pairing result in source_access_authorization_refs; a draft with puppet_master and no pairing result is rejected.
-  - Choosing SSH for such a device records ssh with a key and no pairing.
-  - The pairing leaves server_mode, server_ref, connection_pairing and remote_mode unchanged, and the device is never shown as the Connected Server, Project Home Server or Execution Host.
-  - Before Review nothing is written to the device; only read-only browsing and validation of the chosen folder or backup run.
+- A folder, backup or storage location on a device that runs Puppet Master is reached by pairing through cmd.client.pair.start
+  with approval, code or QR, never by an automatic pairing and never by an SSH key install.
+- The device's identity picture and words are shown before pairing starts, and pairing does not finish until
+  the owner reports approval.
+- An expired code offers a new code, and a rejected or cancelled pairing returns to the choice of method with
+  nothing recorded.
+- The draft records puppet_master in the matching transport with a non-secret reference and binds the pairing
+  result in source_access_authorization_refs; a draft with puppet_master and no pairing result is rejected.
+- Choosing SSH for such a device records ssh with a key and no pairing.
+- The pairing leaves server_mode, server_ref, connection_pairing and remote_mode unchanged, and the device
+  is never shown as the Connected Server, Project Home Server or Execution Host.
+- Before Review nothing is written to the device; only read-only browsing and validation of the chosen folder
+  or backup run.
+- 'QA2 follow-up N1, integration 6609384fd0; DL-258: A protected SSH key passphrase unlock belongs to that
+  exact selected key; changing keys requires that key’s own owner-proven access and never inherits another
+  key’s unlock.'
 validation_surfaces:
   - Plans/product_onboarding_contracts.schema.json
   - Plans/product_onboarding_contract_fixtures.json

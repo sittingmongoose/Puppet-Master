@@ -1885,58 +1885,60 @@ plan_unit_id: PWIZ-021
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: >-
-  Product Onboarding owns the reversible draft-first eleven-stage semantic dependency graph and the unchanged
-  six-stage connect-existing shortcut. Before the context-specific reviewed commit, only bounded read-only
-  preflight and individually consented selected-source authentication may run. Project System commits the
-  selected existing owner command and required child receipts once, including Settings-owned exact-ID
-  copy/rebind and readback, before broad provider setup. The actual committed Project then enters
-  provider_setup, optional free_models_setup and truthful Ready. Explicit Project deferral skips both provider
-  phases without inventing a Project. UI choreography remains fourteen typed local actions
-  (ui.onboarding.choose_look added by DL-153), never an Onboarding backend or command family. Each
-  ui.onboarding.choose_look request replaces only the fields it sets in the session's optional look_choice;
-  absent or null fields mean nothing chosen yet. A resumed setup repaints that stored look choice, NieR Mode
-  included, and null fields fall back to F3-520's start rule; this session choice performs no Settings write
-  before commit. The 2026-10-14 presentation updates consume FinalGUISpec F3-655 (Planning Wizard theme
-  matching) and F3-656 (onboarding art and the chosen look through Create Project), with no new local action or
-  commit authority. Amended 2026-10-17 (DL-228): the onboarding concept's owner table marks eight command ids as
-  not canonical; none is catalogued, and onboarding ships none of them. Each routes as follows until its owner
-  admits an id: restoring a backup (cmd.restore.apply in the concept) dispatches the Backup owner's existing
-  cmd.restore.server_full or cmd.restore.project_as_new by the chosen scope, after cmd.restore.preview;
-  installing a tool product (cmd.tool_product.install) is the Installer owner's cmd.installation.install;
-  detecting installed provider tools (cmd.integration.connection.detect) is cmd.tool.discover; probing a device
-  (cmd.ssh_connection.device.probe) and checking a network share (cmd.storage.share.mount_check) are the
-  selected source's cmd.project.source_location.test; and discovering or installing an SSH key
-  (cmd.ssh_connection.keys.discover, cmd.ssh_connection.key.install) and enabling a free-model route
-  (cmd.free_models.route.enable) have no owner command yet, so onboarding offers those steps as their owners'
-  own screens, reached through cmd.settings.open, until the SSH and Models owners admit them. Amended 2026-10-29
-  (O1–O12; PM7): Onboarding presentation is F3-663’s one Pip with family worlds, bounded shared physics/solved
-  strings with implementation technique open (O2 A, Jared 2026-10-30) and optional live voice/music; its former
-  no-physics/no-loop presentation prohibition is superseded. Preserve every stage graph, commit/recovery
-  boundary and the fourteen ui.onboarding actions. Bubble is decorative aria-hidden; option question note is the
-  one pm7ob-explainer. O12 B (Jared 2026-10-30): Creating Continue/Ready require both completed owner phases and
-  the last block landing; Reduced Motion settles instantly, and no landing claims owner work completed. O6,
-  Jared 2026-10-30: look-tile hover is silent and changes no theme; click or keyboard activation changes the
-  look through the existing typed local action and persistence boundary. O1–O12/O7, PM7 Step4, 2026-10-30:
-  joined presentation modules O55.pipStage/pipWorlds/pipScenes/pipVoice, O55.tips and O55.pipOops consume the
-  one Pip/sound/option-note owners. O55.ui.act/fill/tip/open are the lab-facing adapters to the same real wizard
-  actions and drafts; they confer no new product action or owner permission. Choice explanations keep
-  pm7ob-explainer and the existing typed action; post-commit examples require the actual committed Project.
-  Fixture twists/signinFailed are lab/source data, never alternate validation or persisted event names. O10/O12,
-  PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): Ready’s tour action lets the shared Pip
-  stage’s handOff() visibly lift before calling O55.finish for the unchanged Tour; its handingOff guard prevents
-  a second press. Reduced Motion finishes the handoff instantly. Creating remains gated by current owner
-  completion and the last block landing; touchdown audio is F3-599’s shared cue and is never completion
-  evidence. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before
-  asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage
-  place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a
-  folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and
-  required fields. Validate the locator/trust and reach/authenticate the selected place through its existing
-  owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the
-  backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy,
-  coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner
-  recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries
-  remain mandatory; a concept Kit or seed never proves native unlock or restore.
+canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage semantic dependency graph
+  and the unchanged six-stage connect-existing shortcut. Before the context-specific reviewed commit, only
+  bounded read-only preflight and individually consented selected-source authentication may run. Project System
+  commits the selected existing owner command and required child receipts once, including Settings-owned exact-ID
+  copy/rebind and readback, before broad provider setup. The actual committed Project then enters provider_setup,
+  optional free_models_setup and truthful Ready. Explicit Project deferral skips both provider phases without
+  inventing a Project. UI choreography remains fourteen typed local actions (ui.onboarding.choose_look added
+  by DL-153), never an Onboarding backend or command family. Each ui.onboarding.choose_look request replaces
+  only the fields it sets in the session''s optional look_choice; absent or null fields mean nothing chosen
+  yet. A resumed setup repaints that stored look choice, NieR Mode included, and null fields fall back to F3-520''s
+  start rule; this session choice performs no Settings write before commit. The 2026-10-14 presentation updates
+  consume FinalGUISpec F3-655 (Planning Wizard theme matching) and F3-656 (onboarding art and the chosen look
+  through Create Project), with no new local action or commit authority. Amended 2026-10-17 (DL-228): the onboarding
+  concept''s owner table marks eight command ids as not canonical; none is catalogued, and onboarding ships
+  none of them. Each routes as follows until its owner admits an id: restoring a backup (cmd.restore.apply
+  in the concept) dispatches the Backup owner''s existing cmd.restore.server_full or cmd.restore.project_as_new
+  by the chosen scope, after cmd.restore.preview; installing a tool product (cmd.tool_product.install) is the
+  Installer owner''s cmd.installation.install; detecting installed provider tools (cmd.integration.connection.detect)
+  is cmd.tool.discover; probing a device (cmd.ssh_connection.device.probe) and checking a network share (cmd.storage.share.mount_check)
+  are the selected source''s cmd.project.source_location.test; and discovering or installing an SSH key (cmd.ssh_connection.keys.discover,
+  cmd.ssh_connection.key.install) and enabling a free-model route (cmd.free_models.route.enable) have no owner
+  command yet, so onboarding offers those steps as their owners'' own screens, reached through cmd.settings.open,
+  until the SSH and Models owners admit them. Amended 2026-10-29 (O1–O12; PM7): Onboarding presentation is
+  F3-663’s one Pip with family worlds, bounded shared physics/solved strings with implementation technique
+  open (O2 A, Jared 2026-10-30) and optional live voice/music; its former no-physics/no-loop presentation prohibition
+  is superseded. Preserve every stage graph, commit/recovery boundary and the fourteen ui.onboarding actions.
+  Bubble is decorative aria-hidden; option question note is the one pm7ob-explainer. O12 B (Jared 2026-10-30):
+  Creating Continue/Ready require both completed owner phases and the last block landing; Reduced Motion settles
+  instantly, and no landing claims owner work completed. O6, Jared 2026-10-30: look-tile hover is silent and
+  changes no theme; click or keyboard activation changes the look through the existing typed local action and
+  persistence boundary. O1–O12/O7, PM7 Step4, 2026-10-30: joined presentation modules O55.pipStage/pipWorlds/pipScenes/pipVoice,
+  O55.tips and O55.pipOops consume the one Pip/sound/option-note owners. O55.ui.act/fill/tip/open are the lab-facing
+  adapters to the same real wizard actions and drafts; they confer no new product action or owner permission.
+  Choice explanations keep pm7ob-explainer and the existing typed action; post-commit examples require the
+  actual committed Project. Fixture twists/signinFailed are lab/source data, never alternate validation or
+  persisted event names. O10/O12, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): Ready’s
+  tour action lets the shared Pip stage’s handOff() visibly lift before calling O55.finish for the unchanged
+  Tour; its handingOff guard prevents a second press. Reduced Motion finishes the handoff instantly. Creating
+  remains gated by current owner completion and the last block landing; touchdown audio is F3-599’s shared
+  cue and is never completion evidence. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point
+  to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery
+  credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then
+  the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected
+  file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected
+  place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication.
+  Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place.
+  Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot
+  selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit
+  boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore. QA2 follow-up N1,
+  integration 6609384fd0; DL-258: A reached backup place is bound to the selected service or device, not a
+  reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder invalidates its
+  old reach proof, protected access fields, unlock, copy selection and completed bucket check. A late sign-in/check
+  result stays bound to the service/device it authenticated and cannot advance a different current choice.
+  The concept reachKey/reachedFor projection is fixture state, never an owner credential or permission receipt.'
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -1957,25 +1959,67 @@ depends_on:
 - MS-122
 unblocks: []
 acceptance_criteria:
-  - "The eleven exact ordered stage IDs consume product_onboarding_contracts.schema.json main_stage_order; Final GUI uses the same definitions. These are dependencies, not eleven forced equally complex screens."
-  - "After a verified remote create with later local failure, automatic_preparation observes the retained Project recovery result under the PJCT-007 generic composition — the exact GitHub case via PJCT-008, other provider routes open — and presents Continue Setup, Open Repository, and Delete Repository as owner-route projections; no new local action mutates, and no silent re-create or silent delete occurs."
-  - "Continue Setup is enabled only with the explicit Project-owned recovery/resume transition and owner-resolved typed join, contracted as cmd.project.resume_creation with a creation_recovery_resume_binding with client booleans never granting authority, and is otherwise visible but unavailable until current draft, permission, recovery claim, central registration, wiring, and handler availability all hold for the resume command, or while another attempt holds the one-active-resume claim; owner resume eligibility stays distinct from effective dispatch availability and a verified created remote alone never forces available=true; replaying the original idempotency key never resumes; Open Repository uses the verified binding through the real Forge open-in-browser command; Delete Repository is separate explicit destructive intent consumed from the Forge FGI-021 delete admission with its exact currentness and target-bound confirmation, never automatic, never Project-local, and unavailable while the remote effect is unknown."
-  - "Connect-existing retains the exact six-stage shortcut, omits hidden Project/provider work, and claims Ready only from its reviewed usable owner route."
-  - "The guided deferred-project path is explicit and has no Project identity/commit binding or provider-readiness claim."
-  - "Before commit, selections, Project metadata/folder/source browsing, bounded read-only checks, and Settings draft previews leave no Project, destination files, history, repository, clone, sync or Settings mutation."
-  - "Selected-source authentication is just-in-time, separately permission/consent/currentness/Client fenced, owner verified, and unrelated to broad AI-provider setup."
-  - "Review shows source, destination, work computer, name, copy summary, privacy, skips and stale checks; Edit retains later still-valid choices."
-  - "Create Project, Add Project or Restore Project commits the exact reviewed draft/hash through Project System 3.1, never cmd.project.create or cmd.source_control.repository.init."
-  - "Project registration is listed/persisted only after required child-owner results and Settings readback; acknowledgement, provisional identity, partial work and cancelled/failed work are not completion."
-  - "Idempotent replay returns the same committed Project and owner results; provider_setup requires the exact real Project binding."
-  - "Detected usable accounts and copied routes appear first and become Ready after current owner verification without Connect/Use This Installation/Use This Provider/Open Installer."
-  - "Only selected external vendor CLI paths offer explicit official-source Install on the selected Host; API/SDK/shipped dependency paths never invent a provider-CLI Install."
-  - "Free Models is optional inside Onboarding after the paid-provider prompt, including after Skip; underlying account records and saved explicit model order remain canonical."
-  - "Every local action preserves exact revision/generation/return context and never claims a production receipt or native owner success."
-  - "Back is reversible before commit and cannot uncreate a committed Project; Close/resume preserves draft or unfinished provider phase, and optional skip differs from whole-session Skip."
-  - "Help/disclosures are bounded ephemeral typed local actions; source and provider owner commands remain separately typed and permission bound."
-  - "Ready starts no Goals, Plans, agents, builds or provider requests; optional Guided Tour follows PWIZ-023."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore."
+- The eleven exact ordered stage IDs consume product_onboarding_contracts.schema.json main_stage_order; Final
+  GUI uses the same definitions. These are dependencies, not eleven forced equally complex screens.
+- After a verified remote create with later local failure, automatic_preparation observes the retained Project
+  recovery result under the PJCT-007 generic composition — the exact GitHub case via PJCT-008, other provider
+  routes open — and presents Continue Setup, Open Repository, and Delete Repository as owner-route projections;
+  no new local action mutates, and no silent re-create or silent delete occurs.
+- Continue Setup is enabled only with the explicit Project-owned recovery/resume transition and owner-resolved
+  typed join, contracted as cmd.project.resume_creation with a creation_recovery_resume_binding with client
+  booleans never granting authority, and is otherwise visible but unavailable until current draft, permission,
+  recovery claim, central registration, wiring, and handler availability all hold for the resume command, or
+  while another attempt holds the one-active-resume claim; owner resume eligibility stays distinct from effective
+  dispatch availability and a verified created remote alone never forces available=true; replaying the original
+  idempotency key never resumes; Open Repository uses the verified binding through the real Forge open-in-browser
+  command; Delete Repository is separate explicit destructive intent consumed from the Forge FGI-021 delete
+  admission with its exact currentness and target-bound confirmation, never automatic, never Project-local,
+  and unavailable while the remote effect is unknown.
+- Connect-existing retains the exact six-stage shortcut, omits hidden Project/provider work, and claims Ready
+  only from its reviewed usable owner route.
+- The guided deferred-project path is explicit and has no Project identity/commit binding or provider-readiness
+  claim.
+- Before commit, selections, Project metadata/folder/source browsing, bounded read-only checks, and Settings
+  draft previews leave no Project, destination files, history, repository, clone, sync or Settings mutation.
+- Selected-source authentication is just-in-time, separately permission/consent/currentness/Client fenced,
+  owner verified, and unrelated to broad AI-provider setup.
+- Review shows source, destination, work computer, name, copy summary, privacy, skips and stale checks; Edit
+  retains later still-valid choices.
+- Create Project, Add Project or Restore Project commits the exact reviewed draft/hash through Project System
+  3.1, never cmd.project.create or cmd.source_control.repository.init.
+- Project registration is listed/persisted only after required child-owner results and Settings readback; acknowledgement,
+  provisional identity, partial work and cancelled/failed work are not completion.
+- Idempotent replay returns the same committed Project and owner results; provider_setup requires the exact
+  real Project binding.
+- Detected usable accounts and copied routes appear first and become Ready after current owner verification
+  without Connect/Use This Installation/Use This Provider/Open Installer.
+- Only selected external vendor CLI paths offer explicit official-source Install on the selected Host; API/SDK/shipped
+  dependency paths never invent a provider-CLI Install.
+- Free Models is optional inside Onboarding after the paid-provider prompt, including after Skip; underlying
+  account records and saved explicit model order remain canonical.
+- Every local action preserves exact revision/generation/return context and never claims a production receipt
+  or native owner success.
+- Back is reversible before commit and cannot uncreate a committed Project; Close/resume preserves draft or
+  unfinished provider phase, and optional skip differs from whole-session Skip.
+- Help/disclosures are bounded ephemeral typed local actions; source and provider owner commands remain separately
+  typed and permission bound.
+- Ready starts no Goals, Plans, agents, builds or provider requests; optional Guided Tour follows PWIZ-023.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to
+  unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place,
+  backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder,
+  another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required
+  fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner.
+  An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup
+  only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage
+  and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery
+  prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory;
+  a concept Kit or seed never proves native unlock or restore.'
+- 'QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service
+  or device, not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder
+  invalidates its old reach proof, protected access fields, unlock, copy selection and completed bucket check.
+  A late sign-in/check result stays bound to the service/device it authenticated and cannot advance a different
+  current choice. The concept reachKey/reachedFor projection is fixture state, never an owner credential or
+  permission receipt.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -2310,27 +2354,32 @@ plan_unit_id: PWIZ-025
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: >-
-  After safe local Server claim, Bootstrap may offer one `restore_existing_pm_data` branch that invokes the
-  Backup/Restore owner's protected fresh-recovery flow before Product Onboarding begins. Product Onboarding
-  keeps its current eleven-stage dependency graph and six-stage connect-existing shortcut and its `Restore a
-  backup` First Project route as Project restore; after a confirmed plan creates or opens the first Project, it
-  may project optional backup-destination setup and Recovery Kit confirmation. Remote Access setup consumes one
-  Server-owned PM connector operation with typed connector, IPC, identity, control, authorization,
-  private-endpoint, and route-test phases instead of package/component install state. Online-copy choices
-  consume distinct Forgejo and Gitea provider/instance profiles and independent repository-hosting versus
-  automation bindings with only the selected-source read-only/auth exception before commit; repository mutation
-  and binding remain commit-fenced. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the
-  actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery
-  credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the
-  explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected
-  file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected
-  place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage
-  authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its
-  selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock
-  and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual
-  restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or
-  restore.
+canonical_text: 'After safe local Server claim, Bootstrap may offer one `restore_existing_pm_data` branch that
+  invokes the Backup/Restore owner''s protected fresh-recovery flow before Product Onboarding begins. Product
+  Onboarding keeps its current eleven-stage dependency graph and six-stage connect-existing shortcut and its
+  `Restore a backup` First Project route as Project restore; after a confirmed plan creates or opens the first
+  Project, it may project optional backup-destination setup and Recovery Kit confirmation. Remote Access setup
+  consumes one Server-owned PM connector operation with typed connector, IPC, identity, control, authorization,
+  private-endpoint, and route-test phases instead of package/component install state. Online-copy choices consume
+  distinct Forgejo and Gitea provider/instance profiles and independent repository-hosting versus automation
+  bindings with only the selected-source read-only/auth exception before commit; repository mutation and binding
+  remain commit-fenced. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup
+  before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not
+  a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit
+  path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account
+  and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing
+  owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the
+  backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy,
+  coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner
+  recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries
+  remain mandatory; a concept Kit or seed never proves native unlock or restore. QA2 follow-up N1, integration
+  6609384fd0; DL-258: A reached backup place is bound to the selected service or device, not a reusable signed-in/ready
+  boolean. Choosing another source, service, device, Kit or folder invalidates its old reach proof, protected
+  access fields, unlock, copy selection and completed bucket check. A late sign-in/check result stays bound
+  to the service/device it authenticated and cannot advance a different current choice. The concept reachKey/reachedFor
+  projection is fixture state, never an owner credential or permission receipt. The Remote Link endpoint belongs
+  only to the Remote Link route; choosing Only at home/local-or-VPN, Tailscale or another route clears it from
+  the reviewed draft. No stale endpoint enters an unrelated route.'
 gui_related: true
 gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
   choices, protected handoffs, progress, exact return, and disabled/error states.
@@ -2347,19 +2396,58 @@ depends_on:
 - SCS-013
 unblocks: []
 acceptance_criteria:
-  - "The canonical Product Onboarding graphs remain the current eleven-stage dependency graph and exact six-stage connect-existing shortcut. `restore_existing_pm_data` is represented outside those enums as a Bootstrap handoff after safe local claim and before Product Onboarding."
-  - "Bootstrap fresh recovery does not require an old Server Catalog, a prior Project, model/provider authentication, or a new onboarding command family; it uses Backup-owned destination, protected sign-in, Recovery Kit/unlock, immutable snapshot inspection, preview, apply, and recovery receipts."
-  - "Full Server recovery begins recovery-safe, never auto-runs hooks, push, Goals, schedules, public ingress, or duplicate Server/connector identity, and reaches Product Onboarding only after truthful completion or explicit decline/defer."
-  - "`Restore a backup` in `first_project` remains a Project restore intent. It writes only the local draft before Review, dispatches only after confirmation, and never aliases the Bootstrap full-recovery branch."
-  - "Optional destination setup and Recovery Kit confirmation appear only after the confirmed owner work has established the first Project. They route Backup-owned protected operations and never expose key bytes, claim PM escrow, or mark acknowledgement as recovery proof."
-  - "The visible Tailscale card uses exact copy `Tailscale` / `Built into Puppet Master`, with normal `Not connected` and `Set Up`; no install, package, daemon, sidecar, Serve-toggle, WSL, or already-authenticated-host-profile prerequisite appears."
-  - "Hosted connector work projects the durable Server-owned phases Starting Puppet Master connection, Opening Tailscale sign-in, Waiting for authorization, Waiting for device approval, Creating private address, Testing web UI, API, and live connection, and Ready; cancel, denial, expiry, device approval, reauth, crash, corruption, mismatch, and route failure remain distinct."
-  - "Self-hosted Headscale collects the owner-approved control URL and protected enrollment method, never offers Funnel, and reports certificate/version/reachability/registration capability truth independently."
-  - "The Server-owned connector authorization/setup operation survives refresh, Client loss, and Client change. Protected browser contents, cookies, codes, and credentials remain bound to an authorized current Client handoff and are never inherited by another Client merely because the durable operation continues."
-  - "Connect-existing remains route-first and pre-Review activity remains cached or explicitly bounded read-only discovery. Connector authorization, endpoint mutation/test, Server identity verification, and pairing happen only after Review confirmation and return to the exact originating row/focus/generation."
-  - "`Bring one from online` and optional online copy expose Forgejo and Gitea as separate forge provider/instance choices with exact custom endpoint/trust/account identity. Repository hosting and automation binding may differ; Git-ready/API-unavailable stays a valid truthful plan and never fabricates Actions."
-  - "No command or EventRecord family is created here. Consumed packet commands remain handler_unavailable and event-silent with expected_event_types=[] until owner and central integration exist; concept/static state never proves owner work, native Slint execution, provider readiness, recovery, or security."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore."
+- The canonical Product Onboarding graphs remain the current eleven-stage dependency graph and exact six-stage
+  connect-existing shortcut. `restore_existing_pm_data` is represented outside those enums as a Bootstrap handoff
+  after safe local claim and before Product Onboarding.
+- Bootstrap fresh recovery does not require an old Server Catalog, a prior Project, model/provider authentication,
+  or a new onboarding command family; it uses Backup-owned destination, protected sign-in, Recovery Kit/unlock,
+  immutable snapshot inspection, preview, apply, and recovery receipts.
+- Full Server recovery begins recovery-safe, never auto-runs hooks, push, Goals, schedules, public ingress,
+  or duplicate Server/connector identity, and reaches Product Onboarding only after truthful completion or
+  explicit decline/defer.
+- '`Restore a backup` in `first_project` remains a Project restore intent. It writes only the local draft before
+  Review, dispatches only after confirmation, and never aliases the Bootstrap full-recovery branch.'
+- Optional destination setup and Recovery Kit confirmation appear only after the confirmed owner work has established
+  the first Project. They route Backup-owned protected operations and never expose key bytes, claim PM escrow,
+  or mark acknowledgement as recovery proof.
+- The visible Tailscale card uses exact copy `Tailscale` / `Built into Puppet Master`, with normal `Not connected`
+  and `Set Up`; no install, package, daemon, sidecar, Serve-toggle, WSL, or already-authenticated-host-profile
+  prerequisite appears.
+- Hosted connector work projects the durable Server-owned phases Starting Puppet Master connection, Opening
+  Tailscale sign-in, Waiting for authorization, Waiting for device approval, Creating private address, Testing
+  web UI, API, and live connection, and Ready; cancel, denial, expiry, device approval, reauth, crash, corruption,
+  mismatch, and route failure remain distinct.
+- Self-hosted Headscale collects the owner-approved control URL and protected enrollment method, never offers
+  Funnel, and reports certificate/version/reachability/registration capability truth independently.
+- The Server-owned connector authorization/setup operation survives refresh, Client loss, and Client change.
+  Protected browser contents, cookies, codes, and credentials remain bound to an authorized current Client
+  handoff and are never inherited by another Client merely because the durable operation continues.
+- Connect-existing remains route-first and pre-Review activity remains cached or explicitly bounded read-only
+  discovery. Connector authorization, endpoint mutation/test, Server identity verification, and pairing happen
+  only after Review confirmation and return to the exact originating row/focus/generation.
+- '`Bring one from online` and optional online copy expose Forgejo and Gitea as separate forge provider/instance
+  choices with exact custom endpoint/trust/account identity. Repository hosting and automation binding may
+  differ; Git-ready/API-unavailable stays a valid truthful plan and never fabricates Actions.'
+- No command or EventRecord family is created here. Consumed packet commands remain handler_unavailable and
+  event-silent with expected_event_types=[] until owner and central integration exist; concept/static state
+  never proves owner work, native Slint execution, provider readiness, recovery, or security.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to
+  unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place,
+  backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder,
+  another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required
+  fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner.
+  An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup
+  only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage
+  and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery
+  prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory;
+  a concept Kit or seed never proves native unlock or restore.'
+- 'QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service
+  or device, not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder
+  invalidates its old reach proof, protected access fields, unlock, copy selection and completed bucket check.
+  A late sign-in/check result stays bound to the service/device it authenticated and cannot advance a different
+  current choice. The concept reachKey/reachedFor projection is fixture state, never an owner credential or
+  permission receipt. The Remote Link endpoint belongs only to the Remote Link route; choosing Only at home/local-or-VPN,
+  Tailscale or another route clears it from the reviewed draft. No stale endpoint enters an unrelated route.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -2702,20 +2790,22 @@ plan_unit_id: PWIZ-029
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: >-
-  When the device holding a Project's existing folder, its backup, or its chosen network storage already runs Puppet
-  Master, Product Onboarding reaches those files through that Puppet Master by Server-owned pairing, not by an SSH key.
-  The device's verified identity is shown first; cmd.client.pair.start then starts pairing by approval from a device
-  that already uses it, by code, or by QR, and approve, reject and cancel remain the Server owner's distinct
-  transitions. Onboarding never completes the pairing itself, and reachability or a matching identity never replaces
-  the approval. The setup draft records puppet_master in project_transport, backup_transport or storage_transport for
-  the purpose the folder serves, with a non-secret device-and-path reference, and binds the pairing result in
-  source_access_authorization_refs; it is never recorded as ssh and no SSH key is installed for it. A person may still
-  choose SSH for that device, which is then an ordinary ssh connection with a key. The paired device remains a Source
-  Location, backup source or storage location and never becomes the Connected Server, Project Home Server or Execution
-  Host; server_mode, server_ref, connection_pairing and remote_mode are unchanged by it. Before Review the pairing is
-  individually consented selected-source authentication limited to read-only browsing and validation of the chosen
-  folder or backup; folder creation, writes and Project registration wait for the reviewed commit.
+canonical_text: 'When the device holding a Project''s existing folder, its backup, or its chosen network storage
+  already runs Puppet Master, Product Onboarding reaches those files through that Puppet Master by Server-owned
+  pairing, not by an SSH key. The device''s verified identity is shown first; cmd.client.pair.start then starts
+  pairing by approval from a device that already uses it, by code, or by QR, and approve, reject and cancel
+  remain the Server owner''s distinct transitions. Onboarding never completes the pairing itself, and reachability
+  or a matching identity never replaces the approval. The setup draft records puppet_master in project_transport,
+  backup_transport or storage_transport for the purpose the folder serves, with a non-secret device-and-path
+  reference, and binds the pairing result in source_access_authorization_refs; it is never recorded as ssh
+  and no SSH key is installed for it. A person may still choose SSH for that device, which is then an ordinary
+  ssh connection with a key. The paired device remains a Source Location, backup source or storage location
+  and never becomes the Connected Server, Project Home Server or Execution Host; server_mode, server_ref, connection_pairing
+  and remote_mode are unchanged by it. Before Review the pairing is individually consented selected-source
+  authentication limited to read-only browsing and validation of the chosen folder or backup; folder creation,
+  writes and Project registration wait for the reviewed commit. QA2 follow-up N1, integration 6609384fd0; DL-258:
+  A protected SSH key passphrase unlock belongs to that exact selected key; changing keys requires that key’s
+  own owner-proven access and never inherits another key’s unlock.'
 gui_related: true
 gui_classification_reason: The identity check, the approval, code and QR choices, the waiting and expired states, the
   Use SSH instead choice, and the Review line naming the paired device are visible onboarding steps.
@@ -2723,13 +2813,22 @@ split_recommended: false
 depends_on: [PWIZ-024, SRV-004, SRV-006]
 unblocks: []
 acceptance_criteria:
-  - A folder, backup or storage location on a device that runs Puppet Master is reached by pairing through cmd.client.pair.start with approval, code or QR, never by an automatic pairing and never by an SSH key install.
-  - The device's identity picture and words are shown before pairing starts, and pairing does not finish until the owner reports approval.
-  - An expired code offers a new code, and a rejected or cancelled pairing returns to the choice of method with nothing recorded.
-  - The draft records puppet_master in the matching transport with a non-secret reference and binds the pairing result in source_access_authorization_refs; a draft with puppet_master and no pairing result is rejected.
-  - Choosing SSH for such a device records ssh with a key and no pairing.
-  - The pairing leaves server_mode, server_ref, connection_pairing and remote_mode unchanged, and the device is never shown as the Connected Server, Project Home Server or Execution Host.
-  - Before Review nothing is written to the device; only read-only browsing and validation of the chosen folder or backup run.
+- A folder, backup or storage location on a device that runs Puppet Master is reached by pairing through cmd.client.pair.start
+  with approval, code or QR, never by an automatic pairing and never by an SSH key install.
+- The device's identity picture and words are shown before pairing starts, and pairing does not finish until
+  the owner reports approval.
+- An expired code offers a new code, and a rejected or cancelled pairing returns to the choice of method with
+  nothing recorded.
+- The draft records puppet_master in the matching transport with a non-secret reference and binds the pairing
+  result in source_access_authorization_refs; a draft with puppet_master and no pairing result is rejected.
+- Choosing SSH for such a device records ssh with a key and no pairing.
+- The pairing leaves server_mode, server_ref, connection_pairing and remote_mode unchanged, and the device
+  is never shown as the Connected Server, Project Home Server or Execution Host.
+- Before Review nothing is written to the device; only read-only browsing and validation of the chosen folder
+  or backup run.
+- 'QA2 follow-up N1, integration 6609384fd0; DL-258: A protected SSH key passphrase unlock belongs to that
+  exact selected key; changing keys requires that key’s own owner-proven access and never inherits another
+  key’s unlock.'
 validation_surfaces:
   - Plans/product_onboarding_contracts.schema.json
   - Plans/product_onboarding_contract_fixtures.json
