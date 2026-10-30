@@ -28800,7 +28800,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 96px; --pmf-band: 10px;
   --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 45%, #fff) 85%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 38%, transparent);
-  --pmf-sheen: rgb(255 255 255 / .066);
+  --pmf-sheen: rgb(255 255 255 / .045);   /* Jared QA round 2 Q20: the circle toned down to Basic's (.066 before) */
   --pmf-in: 140ms; --pmf-out: 360ms;
   --pmf-plate: 0 14px 28px -12px rgba(0, 4, 14, .55);
   --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .2);
@@ -28812,7 +28812,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 96px; --pmf-band: 10px;
   --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 85%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 28%, transparent);
-  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 6%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 4.5%, transparent);   /* Q20: Basic's (6% before) */
   --pmf-in: 140ms; --pmf-out: 360ms;
   --pmf-plate: 0 12px 24px -12px rgba(30, 40, 60, .18);
   --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .14);
@@ -69867,37 +69867,11 @@ html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) [data-lg-kind="menu"][data
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(250, 251, 253, .88); }
 html[data-lg="on"][data-theme="glass-dark"][data-lg-tier="cpu"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(12, 15, 28, .97); }
 html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(252, 253, 255, .97); }
-/* the pointer's light: one soft highlight clipped to the sheet under the pointer, moved on the compositor */
-#lg-shine { display: none; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-shine {
-  display: block; position: fixed; left: 0; top: 0; width: 0; height: 0; overflow: hidden; pointer-events: none; z-index: 2; opacity: 0;
-  transition: opacity 260ms ease;
-  /* the blend belongs on this element: it is a stacking context, so a blend on its child only mixed with its own empty
-     layer and the light painted as plain white over the text under the pointer */
-  mix-blend-mode: var(--lg-shine-blend, plus-lighter);
-}
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-shine.on { opacity: 1; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-shine > i {
-  /* the same radius as every look's hover light (pm7-hover's --pmf-r: 96 px in Glass); it was a 210 px disc */
-  position: absolute; left: calc(var(--pmf-r, 96px) * -1); top: calc(var(--pmf-r, 96px) * -1); width: calc(var(--pmf-r, 96px) * 2); height: calc(var(--pmf-r, 96px) * 2); border-radius: 50%;
-  background: radial-gradient(closest-side, var(--lg-shine-c), transparent); will-change: transform;
-}
-/* Jared #16 (2026-10-14): the circle right under the pointer turned down; the shared hover sheen (pm7-shell-polish)
-   drops to about 0.6x at the same time, the edge light stays */
+/* the pointer's light is the shared hover light only (22-hover.css: the sheen and the edge catch on a hovered card, tile or
+   row), as in Basic and Friendly; Glass's own sheet light (#lg-shine, Glass Light's --lg-glow) is gone (Jared, QA round 2
+   Q20). --lg-shine-c is still the arrival sweep's colour. */
 html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-shine-c: rgba(255, 255, 255, .06); }
-/* light: no pointer light. Any lightening blend lifts the dark letters under the pointer as much as the glass: an
-   additive light washed them to 3.6:1, and the overlay that replaced it (it roughly doubles dark values) still took a
-   chosen tab from 8.0:1 to 5.1:1 while the white-on-white glass around it showed no change at all (2026-10-14).
-   So Light's pointer light is drawn UNDER the sheet's content instead (Jared, 2026-10-14: "add a soft hover light to
-   Glass Light, drawn under the content"): a layer of the lit sheet's own background, above its tint and frost and below
-   every word, so it can only brighten the glass behind dark text (glass.js sets --lg-px / --lg-py on the lit sheet; GPU
-   tier only, since it repaints that sheet's background as the pointer moves). The edge light (the shared hover sheen)
-   is unchanged. */
-html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-shine-c: transparent; --lg-shine-blend: normal; }
-html[data-lg="on"][data-theme="glass-light"]:not(#lgz) #lg-shine { display: none; }
-html[data-lg="on"][data-lg-tier="gpu"][data-theme="glass-light"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-lit] {
-  --lg-glow: radial-gradient(circle calc(var(--pmf-r, 96px) * 1.15) at var(--lg-px, -400px) var(--lg-py, -400px), rgba(255, 255, 255, .95), rgba(255, 255, 255, .5) 38%, rgba(246, 250, 255, .16) 72%, rgba(255, 255, 255, 0) 100%);
-}
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-shine-c: transparent; }
 /* the arrival sweep: one band of light across the window as the glass condenses */
 /* calm: no light bands cross the board or the cards when a room or page changes (Jared, 2026-10-11: "The usage page
    animations are too busy... the side ways swipe across the whole screen when you change tabs can go away") */
@@ -308753,36 +308727,13 @@ try {
     mountMeasured(targets, true);
   }
 
-  /* ---- light: the pointer's shine on the rims, and the press ------------------------------------------------------- */
-  var ptr = null, ptrQ = false, ptrLate = false, lit = null, shine = null;
-  function shineEl() {
-    if (shine && shine.isConnected) return shine;
-    shine = el('div', { id: 'lg-shine', 'aria-hidden': 'true' }); shine.appendChild(el('i')); document.body.appendChild(shine); return shine;
-  }
-  function onPtr() {
-    ptrQ = false; if (!ptr || !isGlass()) return;
-    var g = ptr.t && ptr.t.closest ? ptr.t.closest('[data-lg-kind]') : null, sh = shineEl();
-    if (document.querySelector('#panel-usage .pmu-card:is([data-lifted],[data-settling])')) { sh.classList.remove('on'); return; }
-    /* a new sheet under the pointer is measured once; during a Usage room change that read forced the half-built room's
-       layout, so the light keeps its sheet until the change ends (boardMoment) */
-    if (g !== lit && boardMoment()) { ptrLate = true; return; }
-    if (g !== lit) {
-      if (lit) { lit.removeAttribute('data-lg-lit'); lit.style.removeProperty('--lg-px'); lit.style.removeProperty('--lg-py'); }
-      lit = g;
-      if (g) {   /* clip the light to this sheet's shape, once per sheet */
-        g.setAttribute('data-lg-lit', ''); var r = g.getBoundingClientRect(), cs = getComputedStyle(g);
-        sh.style.cssText = 'left:' + r.left + 'px;top:' + r.top + 'px;width:' + r.width + 'px;height:' + r.height + 'px;border-radius:' + cs.borderRadius;
-        sh.__r = r; sh.classList.add('on');
-      } else sh.classList.remove('on');
-    }
-    if (g && sh.__r) {
-      var lx = (ptr.x - sh.__r.left).toFixed(0) + 'px', ly = (ptr.y - sh.__r.top).toFixed(0) + 'px';
-      sh.firstChild.style.transform = 'translate3d(' + lx + ',' + ly + ',0)';
-      /* Glass Light's light is a layer of the lit sheet's own background, under its words (glass.css --lg-glow) */
-      if (root.getAttribute('data-theme') === 'glass-light' && root.getAttribute('data-lg-tier') === 'gpu') { g.style.setProperty('--lg-px', lx); g.style.setProperty('--lg-py', ly); }
-    }
-  }
-  document.addEventListener('pointermove', function (e) { ptr = { x: e.clientX, y: e.clientY, t: e.target }; if (!ptrQ) { ptrQ = true; requestAnimationFrame(onPtr); } }, { passive: true });
+  /* ---- light: the press ------------------------------------------------------------------------------------------
+     The pointer's light is the shared hover light only (18-hover.js, 22-hover.css): a sheen and an edge catch on the
+     hovered card, tile or row, as in Basic and Friendly. Glass also lit whatever sheet was under the pointer (#lg-shine,
+     a 96 px disc added over Glass Dark's panels, bars and dialogs, and Glass Light's --lg-glow under their words), so the
+     circle followed the pointer across panels with no edge light and doubled the sheen on the Usage widgets; it is gone
+     (Jared, QA round 2 Q20, 2026-10-30: "The hover glow circle around the mouse ... should be toned down. It also should be
+     on objects that have the edge glow like the usage widgets. Similar to how the friendly and basic theme does it."). */
   /* the press: buttons flex and a small light blooms under the finger. Strip items and rail icons get neither: their
      lens is the answer to a press (the white bloom read as a flash in the films). */
   document.addEventListener('pointerdown', function (e) {
@@ -309257,7 +309208,6 @@ try {
     /* a Usage room change has ended: its board is checked once (boardMoment) */
     if (!root.hasAttribute('data-pmu-moment')) {
       if (boardStale) { boardStale = false; var area = document.querySelector(BOARD_AREA); if (area) { dirtyScope(area); lazySync(false); } }
-      if (ptrLate) { ptrLate = false; if (!ptrQ) { ptrQ = true; requestAnimationFrame(onPtr); } }
     }
     var th = root.getAttribute('data-theme'), lg = root.getAttribute('data-lg');
     var tier = root.getAttribute('data-lg-tier'), wall = root.getAttribute('data-lg-wall'), motion = root.getAttribute('data-motion');
