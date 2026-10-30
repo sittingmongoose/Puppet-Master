@@ -70,7 +70,13 @@
     W.requestAnimationFrame(function () { W.requestAnimationFrame(fire); });
   }
 
-  /* ---- the chat's click path ---- */
+  /* ---- the chat's click path ----
+     Flagged (Astra W8 review R10, 2026-10-30): this is a synthetic click on a hidden button, kept because the chat
+     exposes no public dispatcher that runs what that click runs. Its handlers are chained through PM56_EXT.action and
+     app.js's onAppClick, and several read the button itself (b14/b15 play only from '.demo-dialog .demo-trigger';
+     recorded-play.js stops the playing example on such a click; about fifty modules chain 'reset-all'). PM56_DEMO.trigger
+     and PM56_DEMO.reset run only app.js's own part and would skip those chains. The fix belongs to the chat's owner: a
+     PM56_APP dispatcher taking (action, dataset, { demo: true }) that both real clicks and this bridge call. */
   function host() {
     var h = document.getElementById('pm56-demo-host');
     if (h && h.isConnected) return h;

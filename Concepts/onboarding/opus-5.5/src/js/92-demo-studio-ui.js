@@ -376,7 +376,7 @@
   R.pip = () => {
     const P = M.pip;
     if (!P.avail()) return head('pip') + `<p class="pmds-fine">${esc(T('studio.pip.unavailable'))}</p>`;
-    return head('pip') + pipLooks() + pipMoods() + pipSqueeze() + pipLoader() + pipSound();
+    return head('pip') + pipLooks() + pipTray() + pipMoods() + pipSqueeze() + pipLoader() + pipSound();
   };
   function pipLooks() {
     const P = M.pip, painted = window.PMLogo.look(), tray = P.tray(), k = 'studio.pip.looks';
@@ -392,6 +392,16 @@
     const legend = `<p class="pmds-fine">${esc(T(`${k}.trayOrder`, { list: tray.map((t) => T(`studio.pip.tray.${t.key}`)).join(', ') }))}</p>`;
     return block(T(`${k}.title`), table + legend, { lead: T(`${k}.lead`) });
   }
+  /* the tray and menu bar (A3): macOS template images on a light and a dark bar, Windows' colour mark, each face, and
+     Working's four-frame flip playing (91: M.pip.trayIcon) */
+  function pipTray() {
+    const P = M.pip, k = 'studio.pip.trayBar', tray = P.tray();
+    const head = `<tr><th scope="col">${esc(T(`${k}.bar`))}</th>${tray.map((t) => `<th scope="col" class="pmds-ptface">${esc(T(`studio.pip.tray.${t.key}`))}</th>`).join('')}<th scope="col" class="pmds-ptface">${esc(T(`${k}.flip`))}</th></tr>`;
+    const rows = P.TRAY_BARS.map((b) => `<tr><th scope="row">${esc(T(`${k}.bars.${b.id}`))}</th>`
+      + tray.map((t) => `<td><span class="pmds-pipsw pmds-pipsw-tray" style="background:${b.ground}">${P.trayIcon(b, t.mood)}</span></td>`).join('')
+      + `<td><span class="pmds-pipsw pmds-pipsw-tray" style="background:${b.ground}">${P.trayIcon(b, 'working', true)}</span></td></tr>`).join('');
+    return block(T(`${k}.title`), `<div class="pmds-ptwrap"><table class="pmds-piptable pmds-traytable"><thead>${head}</thead><tbody>${rows}</tbody></table></div><p class="pmds-fine">${esc(T(`${k}.note`))}</p>`, { lead: T(`${k}.lead`) });
+  }
   function pipMoods() {
     const P = M.pip, live = P.live(), k = 'studio.pip.moods';
     const faces = `<div class="pmds-looks pmds-faces" role="group" aria-label="${esc(T(`${k}.title`))}">` + P.moods().map((m) => `<button type="button"${at({ class: `pmds-looktile pmds-facetile${ST.pipMood === m ? ' pmds-on' : ''}`, 'aria-pressed': String(ST.pipMood === m), 'data-pmds-do': 'pip-mood', 'data-arg': m, 'data-key': `pip-mood:${m}`, 'data-pmh': 'tile' })}>`
@@ -404,7 +414,7 @@
     const TB = M.titlebar, f = TB.folds(), w = TB.width(), k = 'studio.pip.squeeze';
     const sub = f.brand === 'mark' ? T(`${k}.subMark`, { n: w === 'full' ? T('studio.workspace.titlebar.full') : w }) : T(`${k}.sub`);
     return block(T(`${k}.title`), '<div class="pmds-actrows">' + actRow('titlebar', T(`${k}.row`), sub,
-      btn(T(`${k}.go`), { do: 'pip-mark-only', icon: 'arrow', off: !TB.markAvail() }) + (w !== 'full' ? btn(T('studio.workspace.titlebar.fullWidth'), { do: 'tb-width', arg: 'full', kind: 'quiet', icon: 'back' }) : '<span></span>')) + '</div>');
+      btn(T(`${k}.go`), { do: 'pip-mark-only', icon: 'arrow', off: !TB.markAvail(), cls: 'pmds-markbtn' }) + (w !== 'full' ? btn(T('studio.workspace.titlebar.fullWidth'), { do: 'tb-width', arg: 'full', kind: 'quiet', icon: 'back' }) : '<span></span>')) + '</div>');
   }
   function pipLoader() {
     const P = M.pip, ok = P.loaderAvail(), mo = ST.pipMotion, k = 'studio.pip.loader', nier = !!O55.theme().nier;
@@ -416,7 +426,9 @@
     const st = ok ? P.stats() : null;
     const acts = '<div class="pmds-actrows">'
       + actRow('loader', T(`${k}.every`), T(`${k}.everySub`), `<span class="pmds-fine" data-pmds-live="loader-stats">${st ? esc(T(`${k}.stats`, { n: st.live, m: st.running })) : ''}</span>` + btn(T(`${k}.everyGo`), { do: 'pip-every', icon: 'play', off: !ok }))
-      + actRow('clock', T(`${k}.busy`), T(`${k}.busySub`), btn(T(`${k}.busyGo`), { do: 'pip-busy', icon: 'play', off: !ok, cls: 'pmds-busybtn' }) + '<span></span>') + '</div>';
+      + actRow('clock', T(`${k}.busy`), T(`${k}.busySub`), btn(T(`${k}.busyGo`), { do: 'pip-busy', icon: 'play', off: !ok, cls: 'pmds-busybtn' }) + '<span></span>')
+      + actRow('workspace', T(`${k}.panel`), T(`${k}.panelSub`), btn(T(`${k}.panelGo`), { do: 'pip-panel', icon: 'arrow', off: !P.panelAvail() }) + '<span></span>')
+      + actRow('start', T(`${k}.splash`), T(`${k}.splashSub`), btn(T(`${k}.splashGo`), { do: 'pip-splash', icon: 'arrow', off: !P.splashAvail() }) + '<span></span>') + '</div>';
     const hold = sw({ id: 'pip-hold', icon: 'pause', title: T(`${k}.hold`), sub: T(`${k}.holdSub`), on: P.holdAvail() && P.held(), do: 'pip-hold', off: !P.holdAvail() });
     return block(T(`${k}.title`), take + wall + notes + acts + `<div class="pmds-holdrow">${hold}</div>`, { lead: T(`${k}.lead`) });
   }
@@ -972,7 +984,14 @@
     },
     /* Pip */
     'pip-mood': (arg) => { ST.pipMood = arg; const r = M.pip.feel(arg); if (!r.stage && !r.chat) say(T('studio.pip.moods.noneToast')); refresh(); },
-    'pip-mark-only': () => { const w = M.titlebar.markOnly(); say(w ? T('studio.pip.squeeze.done', { n: w }) : T('studio.toast.unavailable')); real.setTimeout(refresh, 40); },
+    /* the search runs over about nine frames; the button wears the loader while it lasts */
+    'pip-mark-only': (arg, el) => {
+      if (M.titlebar.markBusy) return;
+      const b = el && el.closest ? el : null; if (b) M.pip.busy(b, true);
+      Promise.resolve(M.titlebar.markOnly()).then((w) => { say(w ? T('studio.pip.squeeze.done', { n: w }) : T('studio.toast.unavailable')); refresh(); }, () => { refresh(); });
+    },
+    'pip-panel': () => { Promise.resolve(M.pip.panel()).then((r) => { if (!r.ok) say(T('studio.toast.unavailable')); }); },
+    'pip-splash': () => { say(T('studio.pip.loader.splashSub')); },
     'pip-motion': (arg) => { ST.pipMotion = arg; ST.pipEvery = false; refresh(); },
     'pip-every': () => {
       ST.pipEvery = true;
@@ -1002,7 +1021,8 @@
     /* background activity */
     'act-scene': (arg) => { if (!M.activity.load(arg)) return say(T('studio.toast.unavailable')); real.setTimeout(refresh, 80); },
     'act-open': (arg) => { M.activity.open(arg); real.setTimeout(refresh, 200); },
-    'act-chat': () => { M.activity.processes(); real.setTimeout(refresh, 500); },
+    /* the owner's answer decides: a thread without processes has no Processes view (D4), and the Studio says so */
+    'act-chat': () => { Promise.resolve(M.activity.processes()).then((r) => { if (!r.ok) say(T(r.reason === 'none' ? 'studio.activity.chatProcessesNone' : 'studio.activity.chatProcessesRefused')); refresh(); }); },
     'act-stop-all': () => { M.activity.stopAll(); },
     'act-quit': () => { M.activity.quit(); },
     'act-words': (arg) => { M.activity.setWords(arg === 'words'); real.setTimeout(refresh, 80); },

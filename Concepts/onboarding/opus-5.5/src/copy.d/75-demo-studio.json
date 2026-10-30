@@ -506,7 +506,7 @@
         "resources": "Resources"
       },
       "chatProcesses": "The chat's Processes view",
-      "chatProcessesSub": "Activity Detail at Processes, while a process of the thread runs or needs input.",
+      "chatProcessesSub": "Activity Detail at Processes, on a thread with a process running or waiting on input (the current one when it has one).",
       "chatProcessesGo": "Open it",
       "stopAll": "Stop all",
       "stopAllSub": "Everything running across Puppet Master, listed so any of it can be unticked first.",
@@ -517,7 +517,9 @@
       "words": "Status bar",
       "numbers": "Numbers",
       "wordsOn": "Words",
-      "wordsLead": "Words show only where the bar has room; otherwise the items keep their numbers and the hover tag says the words. The choice is the Project's setting."
+      "wordsLead": "Words show only where the bar has room; otherwise the items keep their numbers and the hover tag says the words. The choice is the Project's setting.",
+      "chatProcessesNone": "No thread in the chat has a process running or waiting, so there is no Processes view: load Busy first.",
+      "chatProcessesRefused": "The chat did not open its Processes view for that thread."
     },
     "chat": {
       "kicker": "Chat",
@@ -1368,6 +1370,18 @@
         "complete": "Done",
         "idle": "Idle"
       },
+      "trayBar": {
+        "title": "The tray and menu bar",
+        "lead": "Each face as the system shows it at 16 px: macOS template images in one ink on a light and a dark menu bar, and the colour mark in the Windows taskbar.",
+        "bar": "Bar",
+        "bars": {
+          "macLight": "macOS, light",
+          "macDark": "macOS, dark",
+          "windows": "Windows, colour"
+        },
+        "flip": "Working flip",
+        "note": "Working is a four-frame flip a tray plays by swapping images; here it plays as the kit draws it. The colour mark is the app icon's Basic Dark Pip."
+      },
       "moods": {
         "title": "Faces",
         "lead": "Pick a face: every live Pip on screen wears it for a moment, then goes back to its own.",
@@ -1394,7 +1408,7 @@
       "squeeze": {
         "title": "A squeezed title bar",
         "row": "Mark only",
-        "sub": "Narrows the bar until its own density shows Pip's mark without the wordmark.",
+        "sub": "Narrows the bar step by step until its own density shows Pip's mark without the wordmark; the page stays live while it looks.",
         "subMark": "The bar shows Pip's mark only now, at {n} px.",
         "go": "Squeeze the bar",
         "done": "The brand folds to Pip's mark at {n} px."
@@ -1414,14 +1428,20 @@
         "nier": "NieR keeps its own loader: Pip never moves in NieR.",
         "reduced": "With Reduce motion on, the control breathes and Pip blinks; nothing travels.",
         "every": "Every loader",
-        "everySub": "All three motions at every size, the chat's thinking line on a live turn, and a busy button, at once.",
+        "everySub": "All three motions at every size, the chat's thinking line on a live turn, and a busy button, at once. A panel waiting is the row below.",
         "everyGo": "Show them all",
         "stats": "{n} on the page, {m} moving",
         "busy": "A busy button",
         "busySub": "This button wears the loader for a short wait.",
         "busyGo": "Check it",
         "hold": "Hold loaders",
-        "holdSub": "Waits that end keep their loader up, so it can be looked at. Off ends them."
+        "holdSub": "Waits that end keep their loader up, so it can be looked at. Off ends them.",
+        "panel": "A panel waiting",
+        "panelSub": "Projects › Refresh: the loader takes the button's icon place while the list is rescanned. With Hold loaders on it stays.",
+        "panelGo": "Refresh Projects",
+        "splash": "The splash",
+        "splashSub": "Not on this page: PMConcept7 paints straight into Home, with no splash screen to hold.",
+        "splashGo": "Hold the splash"
       },
       "sound": {
         "title": "Pip's sound board",
@@ -1441,7 +1461,7 @@
         "offSub": "Pip is quiet while Sound effects is off. Turn it on to hear the board.",
         "turnOn": "Turn sound on",
         "groups": {
-          "stage": "Pip's stage",
+          "stage": "Pip's stage and typing",
           "vocal": "Pip's voice",
           "window": "The window's own"
         },

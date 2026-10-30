@@ -598,3 +598,6 @@ html[data-pmds-tbw] .title-bar { max-width: min(100%, var(--pmds-tbw, 100%)) !im
 /* Activity (W6) */
 #o55-demo .pmds-choices-scenes { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
 #o55-demo .pmds-rowbtns { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+/* the tray and menu bar comparison: face names over 26 px cells */
+#o55-demo .pmds-traytable th.pmds-ptface { padding: 0 6px 0 0; font-size: 10px; letter-spacing: .04em; white-space: normal; max-width: 64px; vertical-align: bottom; }
+#o55-demo .pmds-traytable td { padding: 0 6px 0 0; }
