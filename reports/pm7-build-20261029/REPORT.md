@@ -1,8 +1,16 @@
 # PM7 Plans lane — 2026-10-29
 
-Branch: `t3/plans/pm7-plans-canon`. Current focused source head: `11ff2e2216fc334d83598ccbdb9a9095d25b502b` (Step4 core checkpoint; final GUI follow-ups pending). Lead: `pm7-build`.
+Branch: `t3/plans/pm7-plans-canon`. Current focused source head: `e2c3aceb5c5a86e5ab796bb075b3b018c98699d6`. Lead: `pm7-build`.
 
-**Steps 1–3 and all 57 Jared decision cards implemented.** W1–W9 canon and companions are pushed; the 2026-10-30 decision amendment passes all focused checks. Last full gates: **exit 1**. Dry landing: **exit 2 before integration; inventory guard PASS at Step4 core 11ff2e2216; final follow-up pass pending**, **0 Plan-attribution blockers**, **0 infrastructure results**. Full/dry aggregate attribution was run at b22d48bec8; the late label-storage ruling is covered by focused checks at the current head. The inventory-page guard passed at integration 543a85e5ff. A2’s later inventory help-text amendment now needs the lead’s integration republish before that guard is claimed current. No full aggregate rerun after that GUI integration is claimed. Step 4 is active after lead mail 1030045708-4421 (integration bbb72b6153); independent companion review follows this alignment. No landing, lock or reseal was performed.
+**Steps 1–3 and all 57 Jared decision cards are implemented and pushed. Step4 remains active.** Core alignment at 11ff2e2216, registry correction at 2ef2dd40ae, and the review-fix alignment at e2c3aceb5c are pushed to both remotes. Focused PM7/canon/Touch/shard/index checks pass. The single current full-gates/dry pass is held for the lead's final onboarding/activity integration head (mail 1030054152-1fbe); prior aggregate results below are historical at b22d48bec8. Independent companion review follows Step4. No landing, lock, reseal or native certification.
+
+## Step4 review-fix checkpoint — 2026-10-30
+
+Integration 4c49e10567 merged via 6e9b31a91c. Prose source e2c3aceb5c reconciles L8 B's real PM6_SPROUT close options, origin/shown/instant/fade inputs and Home morph adapter in DR-079/ACD-439. A4 A's Friendly notification tile consumes PMLogo.mark/moodFor/onLook, with .pmn-kind beside the title (F3-460/F3-660). It is decorative and adds no control or native OS certification. The five-file L-4 census has zero reported obsolete selectors after loader M2; DR-077 needs no remaining cleanup exception. Four existing owner units changed, only canonical_text; no PlanUnit added or removed. All derived changes belong to the four edited owner/index documents.
+
+Registry source 2ef2dd40ae adds the real working→working mood alias (22 keys remain) and aligns eight help strings with PM_PIP_PARTS. All 25 parts match the real registry in six fields and all 11 code mood aliases match canon. Seven review-fix generation/focused commands pass, as do the three registry-focused checks. Proofs and SHA-256 values are in verification.json.
+
+**Remaining:** the lead's final onboarding/activity GUI head; source-name alignment for rail/Home PM_WORK consumers, composer dock provider and Resources Time; then one full run-gates and dry landing attribution pass, independent companion review, and final handoff. No final completion is claimed at this checkpoint.
 
 ## Step4 core checkpoint — 2026-10-30
 
@@ -14,7 +22,7 @@ Loader L-1/L-2 now records all-tier ratios and the accepted 14 px busy-button/16
 
 **Core checks PASS:** PM7, canon, Touch, shard generation/check, index generation/validation and the exact PM7 builder guard. Fixtures cover 31 schema, 5 B5, 4 Pin-switch, 4 identity and 11 runtime cases. All 141 release-export files match the title manifest hashes. Shards remain 2956/99 and index 7237/96. Full aggregate/dry checks have not been rerun yet. Core proofs/logs and hashes are in verification.json. Step4 scratch remains active; no browser, server, recording, landing, lock, reseal or native certification.
 
-**Still to integrate/align:** sprout review fix head 4ed26e8fd7 (origin/shown/instant/fade inputs, scaled delays, last-transition close and drag hold for every consumer); activity’s rail/Home PM_WORK projections and composer dock provider; title’s Friendly notification Pip tile; the final loader M2 dead-selector census. The earlier sprout lane claim that the live inbox is not a sprout is superseded by F3-461/DR-079 and the lead’s explicit no-exemption instruction.
+**Core-checkpoint follow-ups:** sprout, Friendly notification tile and loader M2 census are now reconciled in the review-fix checkpoint above; activity/onboarding final fixes remain pending. The earlier sprout lane claim that the live inbox is not a sprout is superseded by F3-461/DR-079 and the lead’s explicit no-exemption instruction.
 
 ## Jared’s decisions — 2026-10-30
 
