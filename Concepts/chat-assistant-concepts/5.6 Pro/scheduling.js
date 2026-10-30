@@ -2180,12 +2180,17 @@
       '<div class="pmx-sched-mgrlegend"><p class="pmx-fine">The next 48 hours, your time (' + esc(zoneCity(deviceZone())) + ').' + (paused ? ' Paused: none of this starts until you turn it off.' : '') + '</p>' + legend + '</div>';
   }
   /* a row and its plate mark light each other (CSS :has, one rule per record; nothing is written from JS) */
-  function linkStyle(ids) {
+  /* a row and its mark light each other: hovering one dims the plate's other marks and lights its partner. Only a row
+     whose mark the plate draws does it (QA round 2, the Q17 sweep: a row with no mark in the 48 hours dimmed every mark
+     and lit none) */
+  function linkStyle(ids, plate) {
+    ids = ids.filter(function (id) { return plate.indexOf('data-sched-mark="' + id + '"') >= 0; });
     if (!ids.length) return '';
     var r = '#pmOverlayRoot .pmx-sched-mgr';
     return '<style data-k="sched-mgr-link">' + ids.map(function (id) {
-      return r + ':has([data-sched-row="' + id + '"]:is(:hover,:focus-within)) [data-sched-mark="' + id + '"]{opacity:1;--pmx-sched-mark-ink:var(--accent);}' +
-        r + ':has([data-sched-mark="' + id + '"]:hover) [data-sched-row="' + id + '"]{background-color:var(--pmx-wash);}';
+      var row = r + ':has([data-sched-row="' + id + '"]:is(:hover,:focus-within)) ', mark = r + ':has([data-sched-mark="' + id + '"]:hover) ';
+      return row + '[data-sched-mark]{opacity:.35;}' + row + '[data-sched-mark="' + id + '"]{opacity:1;--pmx-sched-mark-ink:var(--accent);}' +
+        mark + '[data-sched-mark]{opacity:.35;}' + mark + '[data-sched-mark="' + id + '"]{opacity:1;}' + mark + '[data-sched-row="' + id + '"]{background-color:var(--pmx-wash);}';
     }).join('') + '</style>';
   }
 
@@ -2397,12 +2402,13 @@
     var help = '<p class="pmx-help pmx-sched-tabhelp">' + esc(optionOf(MANAGER_TABS, tab).help) + '</p>';
     var body = tab === 'messages' ? messagesBody(ctx, now, focusMsg) : tab === 'builds' ? buildsBody(ctx, now) : tab === 'quota' ? safetyBody() : eventsBody(ctx);
     var ids = tab === 'messages' ? S.scheduledMessages.map(function (m) { return cssId(m.scheduled_dispatch_id); }) : tab === 'builds' ? S.buildSchedules.map(function (b) { return cssId(b.schedule_id); }) : [];
+    var plate = managerPlate(now);
     var saved = ui.persistenceAvailable === false ? 'Only kept until you reload.' : S.lastSavedAt ? 'Saved ' + clockAt(Date.parse(S.lastSavedAt), deviceZone()) + '.' : '';
     return SH.pmxSheet({ type: 'sched-manage', kind: 'scheduled', size: 'wide', cls: 'sched-dialog sched-dialog--manage pmx-sched-mgr' + (focused ? ' sched-dialog--focused' : ''),
       scrimClose: 'sched-close-dialog', closeAction: 'sched-close-dialog', ariaLabel: 'Scheduled and Automations', title: 'Scheduled', lead: esc(managerSummary()), markHtml: SH.pmxKindMark('scheduled', 26),
       guide: window.PM56_SCHEDULE_DEMOS ? window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx) : '',
-      hero: '<div class="pmx-sched-mgrtop" data-k="sched-mgr-top">' + managerPlate(now) + tabs + help + '</div>',
-      body: body + linkStyle(ids),
+      hero: '<div class="pmx-sched-mgrtop" data-k="sched-mgr-top">' + plate + tabs + help + '</div>',
+      body: body + linkStyle(ids, plate),
       foot: SH.pmxFoot({ cls: 'pmx-sched-foot pmx-sched-mgrfoot', readback: '<p class="pmx-fine pmx-sched-footnote">Nothing runs in the background in this preview.' + (saved ? ' ' + esc(saved) : '') + '</p>',
         cancel: { action: 'sched-open-message', label: 'Schedule a message…' }, primary: { action: 'sched-close-dialog', label: 'Done' } }) });
   }

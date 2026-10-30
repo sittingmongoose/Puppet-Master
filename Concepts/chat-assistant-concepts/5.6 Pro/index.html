@@ -13578,7 +13578,7 @@ body.pm56-reduced .pmx-sched-marker{transition:none;}
 .pmx-sched-evsay{min-width:0;font:var(--pmx-fs-help);color:var(--text);overflow-wrap:anywhere;}
 /* the plate: messages are marks on the line, build slots bands under it; a row and its mark light each other */
 .pmx-sched-mark{transition:opacity var(--pmx-t-light) var(--pmx-ease-linear);}
-.pmx-sched-mgr:has(.pmx-sched-row:hover, .pmx-sched-brow:hover, .pmx-sched-mark:hover) .pmx-sched-mark{opacity:.35;}
+/* the dimming is the pair's own (scheduling.js linkStyle): only a row or mark with a partner on the plate dims the rest */
 .pmx-sched-slotmark .pmx-sched-band{fill:var(--pmx-sched-mark-ink,var(--muted));}
 .pmx-sched-windbar{fill:var(--pmx-hatch);}
 .pmx-sched-mark .pmx-sched-dot{fill:var(--pmx-sched-mark-ink,var(--accent));}
@@ -18121,8 +18121,9 @@ html[data-motion="reduced"] .orbit-core-face :is(.pmx-pip-dot2, .pmx-pip-dot3, .
 .qs-head-icon[data-pip] { width: 22px; height: 22px; margin: -4px 0; background: none; display: inline-grid; place-items: center; }
 .plan-sched-mark[data-pip] { width: 22px; height: 22px; margin: -3px 0 -3px -3px; padding-top: 0; }
 /* the wand: Pip holds it */
-.menu-head-wand { display: inline-flex; align-items: center; gap: 0; }
-.menu-head-wand > .pmx-pip-mk { margin: -5px -5px -5px 0; }
+/* Pip beside the wand in the head, both the head's own children (the wand keeps its inks: neon-icons.css scopes them to
+   .menu-head > svg[data-nx="wand"]); Pip tucks up to it across the head's 7 px gap */
+.menu-head > .pmx-pip-mk.menu-head-pip { margin: -5px -12px -5px 0; }
 /* an empty list that draws its glyph faint keeps Pip whole */
 .af-empty > .pmx-empty-pip { opacity: 1; }
 .af-empty.pmx-empty-line { flex-direction: column; }
@@ -38883,21 +38884,17 @@ window.PM56_NIER_FACES = [
   /* The blink phase a Pip keeps (pip.js blinks one Pip at a time; this only orders them), from what it shows: never random */
   function pipPhase(s) { var h = 0x811c9dc5; s = str(s); for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0; } return h % 997; }
 
-  /* ---- "You": the person holding the strings (unchanged from item 14a: the user mark raising the cross-shaped
-     control, its two strings hanging free). Its face table, figure and sprites: */
+  /* ---- "You": the person, on their own (QA round 2, Q16; Jared 2026-10-30: "the You icon can just drop the marionette
+     cross"): head and shoulders in the look's own drawing, beside the team of Pips. Its face table and figure: */
   var PUP = {
     eyes: [[12.5, 11.7], [15.5, 11.7]], cheeks: [[11.3, 13.2], [16.7, 13.2]], smile: 'M13.2 13.7Q14 14.4 14.8 13.7',
     hair: 'M9.85 10.6A4.2 4.2 0 0 1 18.15 10.6Q16.4 9.2 14 9.8Q11.6 9.2 9.85 10.6Z', shine: 'M11.2 10.2A3 3 0 0 1 13.2 8'
   };
-  var YOU = {
-    head: [10.4, 12.2, 4.4], body: 'M3.4 26.6C3.4 21.2 6.4 18.2 10.4 18.2S17.4 21.2 17.4 26.6Z',
-    arms: 'M15.4 20.6 20.2 9.7', bar: 'M16.2 10.6 24.2 8.2', grip: 'M20.2 9.4V7.2', strs: 'M16.2 10.6V16M24.2 8.2V14.6'
-  };
+  var YOU = { head: [14, 10.2, 5.4], body: 'M4.6 27C4.6 21.1 8.8 17.8 14 17.8S23.4 21.1 23.4 27Z' };
   var SIL_PROP = { lead: 'crown', square: 'hardhat', circle: 'lens', triangle: 'square', diamond: 'pennant', hexagon: 'jester', orbit: 'orbit', bowl: 'grill', grill: 'grill', you: 'you' };
-  /* Retro's You: a 13 x 13 sprite on 2-unit cells (crisp edges). b bar, s string (a dotted half cell), h hair, k skin,
-     e eye, c tunic (seat hue), l legs. */
-  var PX_YOU = ['.............', '.......bbbbb.', '.......s.k.s.', '.......s.c.s.', '.hhhhh..c..s.', '.hkkkh..c....', '.kekek.c.....', '.kkkkk.c.....',
-    '..kkk.c......', '.ccccc.......', 'kccccc.......', '.ccccc.......', '..l.l........'];
+  /* Retro's You: a 13 x 13 sprite on 2-unit cells (crisp edges): h hair, k skin, e eye, c the tunic (seat hue). */
+  var PX_YOU = ['.............', '....hhhhh....', '...hhhhhhh...', '...hkkkkkh...', '...kekkkek...', '...kkkkkkk...',
+    '....kkkkk....', '.....kkk.....', '...ccccccc...', '..ccccccccc..', '.ccccccccccc.', '.ccccccccccc.', '.ccccccccccc.'];
   function pxSprite(rows) {
     var out = '';
     for (var r = 0; r < rows.length; r++) {
@@ -38975,15 +38972,15 @@ window.PM56_NIER_FACES = [
   }
   function headD(h) { return dCirc(h[0], h[1], h[2]); }
   function ppYou(M) {
-    var Y = YOU, fig = pp('body', Y.body) + pp('limb', Y.arms) + ppHead(Y.head, 'you', M);
-    return { rig: '<g class="pmx-pp-fig">' + fig + pp('str', Y.strs) + pp('bar', Y.bar) + pp('grip', Y.grip) + '</g>', halo: Y.arms + Y.body + headD(Y.head) + Y.bar + Y.grip };
+    var Y = YOU;
+    return { rig: '<g class="pmx-pp-fig">' + pp('body', Y.body) + ppHead(Y.head, 'you', M) + '</g>', halo: Y.body + headD(Y.head) };
   }
-  /* NieR's You (html[data-o55-nier="on"]): ink on parchment, the user's head under its visor slit raising the control
-     (paint in nier-parts.css); 16 px and under the 14-cell pixel map */
-  var PN_YOU = { bar: [16.6, 2.6, 9.6, 1.4], studs: [[17.2, 3.3], [25.6, 3.3]], arm: 'M16 16.6L19.6 10.6L21.4 4.8', hand: [21.4, 4.6, 1.9],
-    body: 'M8.4 24.8L9.4 17.4L11.2 15.6H15L16.8 17.4L17.8 24.8Z', head: 'M11.1 6.6H14.9L16.8 8.5V11.7L14.7 14.2H11.3L9.2 11.7V8.5Z', slit: [10.2, 9.3, 6.6, 1.9],
-    tiny: ['..............', '........#####.', '..........#...', '...###....#...', '..#####..#....', '..#oooo..#....', '..#####.#.....', '...###.#......',
-      '..######......', '.#######......', '.#######......', '.#######......', '.#######......', '..............'] };
+  /* NieR's You (html[data-o55-nier="on"]): ink on parchment, the user's head under its visor slit over the shoulders;
+     16 px and under the 14-cell pixel map */
+  var PN_YOU = { body: 'M6.4 26.6L7.6 19.2L10.4 16.8H17.6L20.4 19.2L21.6 26.6Z', head: 'M11.6 4.6H16.4L18.8 7V11L16.2 14.2H11.8L9.2 11V7Z',
+    slit: [10.2, 8.1, 7.6, 2.2],
+    tiny: ['..............', '.....####.....', '....######....', '....#oooo#....', '....######....', '.....####.....', '..............',
+      '...########...', '..##########..', '..##########..', '..##########..', '..##########..', '..##########..', '..............'] };
   function pnc(c) { return String(c).split(' ').map(function (x) { return 'pmx-pn-' + x; }).join(' '); }
   function pnP(c, d) { return '<path class="' + pnc(c) + '" d="' + d + '"/>'; }
   function pnR(c, x, y, w, h) { return '<rect class="' + pnc(c) + '" x="' + n2(x) + '" y="' + n2(y) + '" width="' + n2(w) + '" height="' + n2(h) + '"/>'; }
@@ -39002,8 +38999,7 @@ window.PM56_NIER_FACES = [
       }
       return '<g class="pmx-pn-px">' + out + '</g>';
     }
-    var s = pnR('i', Y.bar[0], Y.bar[1], Y.bar[2], Y.bar[3]) + (M.g3 ? pnSQ('i', Y.studs[0][0], Y.studs[0][1], 1.8) + pnSQ('i', Y.studs[1][0], Y.studs[1][1], 1.8) : '');
-    return s + pnP('sl', Y.arm) + pnSQ('i', Y.hand[0], Y.hand[1], Y.hand[2]) + pnP('i', Y.body) + pnP('i', Y.head) + pnR('slit', Y.slit[0], Y.slit[1], Y.slit[2], Y.slit[3]);
+    return pnP('i', Y.body) + pnP('i', Y.head) + pnR('slit', Y.slit[0], Y.slit[1], Y.slit[2], Y.slit[3]);
   }
   /* markInner(sil, seat, state, standin, role, size, grill) - the inside of a mark (28 grid). role, when given, picks the
      exact prop (moderator's gavel, teacher's page); without it the prop follows the silhouette. size: the mark's
@@ -42895,9 +42891,16 @@ window.PM56_NIER_FACES = [
       return false;
     }).join(' ');
   }
+  /* Only a control lights the plate ("while a control carrying data-pmx-affects is hovered"): a section or wrapper that
+     carries data-pmx-affects lights when the pointer or focus is on one of its controls, never for its words, its empty
+     space or the plate's picture (QA round 2, Q17: moving the mouse over Who's in the Crew dimmed the team to 35 %). A
+     control the plate holds (ELI5's voice switch) still lights. */
+  var LIGHT_CONTROL = 'button, input, select, textarea, label, a[href], [role="switch"], [role="radio"], [role="checkbox"], [role="tab"], [role="slider"], [role="spinbutton"], [role="combobox"], [contenteditable="true"]';
   function affectsOf(el) {
     var a = el && el.closest ? el.closest('[data-pmx-affects]') : null;
     if (!a || !a.closest('#pmOverlayRoot > .pmx-sheet')) return '';
+    var c = el.closest(LIGHT_CONTROL);
+    if (!c || !a.contains(c)) return '';
     return partsOf(a.getAttribute('data-pmx-affects'));
   }
   /* closing (COLLAB FR 8): only the parts the sheet actually draws in its visible mode light; a hover whose parts
@@ -58481,12 +58484,17 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       '<div class="pmx-sched-mgrlegend"><p class="pmx-fine">The next 48 hours, your time (' + esc(zoneCity(deviceZone())) + ').' + (paused ? ' Paused: none of this starts until you turn it off.' : '') + '</p>' + legend + '</div>';
   }
   /* a row and its plate mark light each other (CSS :has, one rule per record; nothing is written from JS) */
-  function linkStyle(ids) {
+  /* a row and its mark light each other: hovering one dims the plate's other marks and lights its partner. Only a row
+     whose mark the plate draws does it (QA round 2, the Q17 sweep: a row with no mark in the 48 hours dimmed every mark
+     and lit none) */
+  function linkStyle(ids, plate) {
+    ids = ids.filter(function (id) { return plate.indexOf('data-sched-mark="' + id + '"') >= 0; });
     if (!ids.length) return '';
     var r = '#pmOverlayRoot .pmx-sched-mgr';
     return '<style data-k="sched-mgr-link">' + ids.map(function (id) {
-      return r + ':has([data-sched-row="' + id + '"]:is(:hover,:focus-within)) [data-sched-mark="' + id + '"]{opacity:1;--pmx-sched-mark-ink:var(--accent);}' +
-        r + ':has([data-sched-mark="' + id + '"]:hover) [data-sched-row="' + id + '"]{background-color:var(--pmx-wash);}';
+      var row = r + ':has([data-sched-row="' + id + '"]:is(:hover,:focus-within)) ', mark = r + ':has([data-sched-mark="' + id + '"]:hover) ';
+      return row + '[data-sched-mark]{opacity:.35;}' + row + '[data-sched-mark="' + id + '"]{opacity:1;--pmx-sched-mark-ink:var(--accent);}' +
+        mark + '[data-sched-mark]{opacity:.35;}' + mark + '[data-sched-mark="' + id + '"]{opacity:1;}' + mark + '[data-sched-row="' + id + '"]{background-color:var(--pmx-wash);}';
     }).join('') + '</style>';
   }
 
@@ -58698,12 +58706,13 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var help = '<p class="pmx-help pmx-sched-tabhelp">' + esc(optionOf(MANAGER_TABS, tab).help) + '</p>';
     var body = tab === 'messages' ? messagesBody(ctx, now, focusMsg) : tab === 'builds' ? buildsBody(ctx, now) : tab === 'quota' ? safetyBody() : eventsBody(ctx);
     var ids = tab === 'messages' ? S.scheduledMessages.map(function (m) { return cssId(m.scheduled_dispatch_id); }) : tab === 'builds' ? S.buildSchedules.map(function (b) { return cssId(b.schedule_id); }) : [];
+    var plate = managerPlate(now);
     var saved = ui.persistenceAvailable === false ? 'Only kept until you reload.' : S.lastSavedAt ? 'Saved ' + clockAt(Date.parse(S.lastSavedAt), deviceZone()) + '.' : '';
     return SH.pmxSheet({ type: 'sched-manage', kind: 'scheduled', size: 'wide', cls: 'sched-dialog sched-dialog--manage pmx-sched-mgr' + (focused ? ' sched-dialog--focused' : ''),
       scrimClose: 'sched-close-dialog', closeAction: 'sched-close-dialog', ariaLabel: 'Scheduled and Automations', title: 'Scheduled', lead: esc(managerSummary()), markHtml: SH.pmxKindMark('scheduled', 26),
       guide: window.PM56_SCHEDULE_DEMOS ? window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx) : '',
-      hero: '<div class="pmx-sched-mgrtop" data-k="sched-mgr-top">' + managerPlate(now) + tabs + help + '</div>',
-      body: body + linkStyle(ids),
+      hero: '<div class="pmx-sched-mgrtop" data-k="sched-mgr-top">' + plate + tabs + help + '</div>',
+      body: body + linkStyle(ids, plate),
       foot: SH.pmxFoot({ cls: 'pmx-sched-foot pmx-sched-mgrfoot', readback: '<p class="pmx-fine pmx-sched-footnote">Nothing runs in the background in this preview.' + (saved ? ' ' + esc(saved) : '') + '</p>',
         cancel: { action: 'sched-open-message', label: 'Schedule a message…' }, primary: { action: 'sched-close-dialog', label: 'Done' } }) });
   }
@@ -63871,7 +63880,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var open=ctx.state.polishWandGroup||'';
     /* W4 (PM7 build 2026-10-29): Pip holds the wand at the head (the same head renderWandMenu draws) */
     var S=window.PM56_SHELL,pip=S&&S.pmxPip?S.pmxPip({mood:'watch',size:22,cls:'menu-head-pip',part:'wand-menu'}):'',wandIcon=ctx.icon('wand',13);
-    return '<div class="menu-head"><strong>Assistant capabilities</strong><span class="spacer"></span>'+(pip?'<span class="menu-head-wand" data-pip="1">'+pip+wandIcon+'</span>':wandIcon)+'</div>'+
+    return '<div class="menu-head"><strong>Assistant capabilities</strong><span class="spacer"></span>'+pip+wandIcon+'</div>'+
       groups.map(function(g){var on=g[0]===open;return '<div class="polish-wand-group" data-k="wand-group:'+g[0]+'"><button class="menu-item polish-group-toggle" type="button" data-action="polish-wand-group" data-group="'+g[0]+'" aria-expanded="'+on+'"><span class="menu-icon">'+ctx.icon(g[2],13)+'</span><span class="menu-copy"><strong>'+g[1]+'</strong></span>'+ctx.icon(on?'down':'chevron',11)+'</button>'+(on?'<div class="polish-group-body">'+buckets[g[0]].join('')+'</div>':'')+'</div>';}).join('');
   }
   var galleryRows=[
@@ -84037,7 +84046,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
 
   function wandHead(wand){
     const S=window.PM56_SHELL, pip=S&&S.pmxPip?S.pmxPip({mood:'watch',size:22,cls:'menu-head-pip',part:'wand-menu'}):'';
-    return pip?`<span class="menu-head-wand" data-pip="1">${pip}${wand}</span>`:wand;
+    /* Pip and the wand sit side by side in the head itself: the wand's own inks are scoped to .menu-head > svg (Q15) */
+    return pip+wand;
   }
   function renderWandMenu(){
     const rows=[
