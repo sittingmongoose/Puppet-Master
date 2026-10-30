@@ -495,7 +495,15 @@
   }
   function enter(c, it, delay) {
     const m = motion(), L = look();
-    const play = (e, f, o) => (e && typeof e.animate === 'function' ? e.animate(f, Object.assign({ fill: 'backwards', delay: delay || 0 }, o)) : null);
+    /* a card takes no clicks until it can be seen: while it waits out its delay and while it fades or unclips in, it
+       is invisible or nearly so, and a click meant for the control under it must reach that control (Jared #19) */
+    c.style.pointerEvents = 'none';
+    const shown = () => { if (c.isConnected && !c.classList.contains('pmn-leaving')) c.style.pointerEvents = ''; };
+    const play = (e, f, o) => {
+      const a = e && typeof e.animate === 'function' ? e.animate(f, Object.assign({ fill: 'backwards', delay: delay || 0 }, o)) : null;
+      if (e === c) { if (a && a.finished) a.finished.then(shown, shown); else shown(); }
+      return a;
+    };
     if (L === 'retro') {
       play(c, [{ transform: 'scaleY(.04)', filter: 'brightness(2.4)' }, { transform: 'scaleY(1)', filter: 'brightness(1.6)', offset: 0.6 }, { transform: 'none', filter: 'none' }], { duration: 220, easing: 'steps(5, end)' });
       typeOn(c.querySelector('.pmn-title'));
@@ -1006,11 +1014,32 @@
   /* keep the stage inside the window (its place is under the bell, tight under the title bar, on every page) */
   function clampStage() {
     stageEl.style.removeProperty('--pmn-stage-shift');
+    stageEl.style.removeProperty('--pmn-clear');
     const r = stageEl.getBoundingClientRect(), pad = 10;
     let shift = 0;
     if (r.right > innerWidth - pad) shift = innerWidth - pad - r.right;
     if (r.left + shift < pad) shift = pad - r.left;
     if (shift) stageEl.style.setProperty('--pmn-stage-shift', Math.round(shift) + 'px');
+    /* Jared #19, nothing the notices show sits over a control: the chat column's head (its header, Activity Detail's
+       head with Pin and close) can lie under the bell. Then the stage stays under the bell and drops just below that
+       row; where nothing is under it, it does not move */
+    const left = r.left + shift, right = r.right + shift, reach = r.top + Math.max(r.height, 64);
+    let drop = 0;
+    Array.prototype.forEach.call(doc.querySelectorAll('#pmRoot .chat-header, #pmRoot .activity-panel-head'), (h) => {
+      const q = h.getBoundingClientRect();
+      if (!q.width || !q.height || q.right <= left || q.left >= right || q.bottom <= r.top || q.top >= reach) return;
+      drop = Math.max(drop, Math.ceil(q.bottom - r.top) + 6);
+    });
+    if (drop) stageEl.style.setProperty('--pmn-clear', drop + 'px');
+    watchChat();
+  }
+  /* the chat column grows, shrinks or pops out while cards show (Activity Detail opening, a drag): clear its head again */
+  let chatWatched = false;
+  function watchChat() {
+    const c = !chatWatched && typeof ResizeObserver === 'function' && doc.getElementById('chatPanel');
+    if (!c) return;
+    chatWatched = true;
+    new ResizeObserver(() => { if (staged.size) clampStage(); }).observe(c);
   }
 
   /* ---------- actions (kind rows: canon F3-461; semantics as the base engine ran them) ----------------------------- */
@@ -1135,6 +1164,7 @@
     doc.addEventListener('keydown', (e) => { if (e.key === 'Escape' && open) closePanel(); }, true);
     doc.addEventListener('visibilitychange', () => { staged.forEach((rec) => { if (rec.bar && !rec.leaving) { if (doc.hidden) rec.bar.pause(); else if (!held) rec.bar.play(); } }); });
     window.addEventListener('resize', () => { if (open) placePanel(); if (staged.size) clampStage(); });
+
     /* times and lifetimes */
     setInterval(() => {
       if (!items.length) return;
