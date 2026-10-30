@@ -82,7 +82,15 @@ CSS_ORDER=(['styles.css','motion.css','variants-a.css','variants-b.css','variant
            +[f'{m}.css' for m in MODULES if f'{m}.css' not in CSS_LAST]+CSS_LAST)
 if len(set(CSS_ORDER))!=len(CSS_ORDER):
     raise SystemExit('build.py: a stylesheet is listed twice: '+', '.join(sorted({c for c in CSS_ORDER if CSS_ORDER.count(c)>1})))
-css=join(CSS_ORDER)
+# The menu sprout (open, close, height spring) is PMConcept7's, one owner for every menu (Jared, L8 B 2026-10-30): its
+# class contract and its script are read from PMConcept7's base layer, the contract before every chat sheet (as the page
+# orders them) and the script before every module, so app.js finds window.PM6_SPROUT. PMConcept7 has both already, so the
+# chat's hosted bundle (pm7-port/tools/chat56_layer.py, which reads CSS_ORDER and the data expression's file names)
+# leaves them out.
+SPROUT_BASE=root.parents[1]/'onboarding'/'opus-5.5'/'base'
+SPROUT_CSS=(SPROUT_BASE/'style'/'pm7-sprout.css').read_text(encoding=ENC)
+SPROUT_JS=(SPROUT_BASE/'script'/'pm7-sprout.js').read_text(encoding=ENC)
+css=SPROUT_CSS+'\n'+join(CSS_ORDER)
 
 # Minimal collector shim.  The full registry (render slots, action dispatch, the
 # context object) is implemented in app.js, which upgrades this object in place;
@@ -102,7 +110,7 @@ window.PM56_EXT = window.PM56_EXT || {
 };
 """
 
-data=(join(['data.js','motion.js','variants-a.js','variants-b.js','variants-c.js'])
+data=(SPROUT_JS + '\n' + join(['data.js','motion.js','variants-a.js','variants-b.js','variants-c.js'])
       + '\n' + EXT_SHIM + '\n'
       + read('plan-media-batch17.js') + '\n' + join([f'{m}.js' for m in MODULES]))
 app=read('app.js')

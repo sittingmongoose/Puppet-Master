@@ -279,24 +279,22 @@ html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .qs-orbit { animation: n
    flicker step. They mount once per opening (the app's patch keeps an open overlay's node), so the animation runs once.
    Centred dialogs are placed by translate(-50%, -50%): their slice scales about the box's corner so the line opens at
    the dialog's own centre; everything else scales about its middle. ---- */
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .overlay-menu,
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog,
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .drawer,
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .pmx-sheet {
   animation: o55np-slice 300ms linear backwards !important; transform-origin: 50% 50% !important;
 }
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog:not(.demo-dialog):not(.pmx-sheet) { transform-origin: 0 0 !important; }
-/* the menus' corner sprout (menus.css: a transform transition from --pm56-sx/sy/tx/ty) becomes identity, so the slice
-   is the only motion of an opening; their fade-in transition goes too (a running transition outranks an animation),
-   and their size springs stay. Closing, the menu's ghost (menus.js re-materialises it on <body>) folds back to a line. */
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu {
-  --pm56-sx: 1 !important; --pm56-sy: 1 !important; --pm56-tx: 0px !important; --pm56-ty: 0px !important;
-  transition-property: height, width !important;
+/* the menus are the menu sprout's (.pm-sprout, PM6_SPROUT): as PMConcept7's Slice part does it for every sprouting
+   menu (its 14-nier-parts.css, which this page does not carry), their sprout becomes identity and scale carries the slice
+   both ways: an opening unfolds from a 1px line with the flicker step, a closing folds back to one */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm-sprout {
+  --pm6-sprout-ox: 50% !important; --pm6-sprout-oy: 50% !important; --pm6-sprout-tx: 0px !important; --pm6-sprout-ty: 0px !important;
+  --pm6-sprout-sx: 1 !important; --pm6-sprout-sy: 1 !important;
+  scale: 1 .006;
+  transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms, visibility 0s linear 200ms !important;
 }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm56-menu-ghost {
-  transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms !important; transform-origin: 50% 50% !important;
-}
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm56-menu-ghost.pm56-collapsing { transform: none !important; scale: 1 .006; opacity: 0; }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm-sprout.is-open:not(.is-closing) { scale: none; transition: none !important; animation: o55np-slice 300ms linear backwards; }
 @keyframes o55np-slice {
   0% { scale: 1 .006; opacity: 1; animation-timing-function: cubic-bezier(.2, .85, .25, 1); }
   58% { scale: 1 1; opacity: 1; animation-timing-function: step-end; }
@@ -436,11 +434,10 @@ html[data-o55-nier-parts~="icons"] svg ellipse { stroke-linecap: square; stroke-
   #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
   html[data-o55-nier-parts~="diamonds"] .ctx-spin, html[data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
   /* the same selectors as the slice rules above (equal weight, later wins) */
-  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .overlay-menu,
   html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog,
   html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .drawer,
   html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .pmx-sheet { animation: none !important; scale: none !important; }
-  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm56-menu-ghost { transition: none !important; }
+  html[data-o55-nier-parts~="slice"] body:not(.pm56-reduced) .overlay-menu.pm-sprout { scale: none !important; }
 }
 
 /* ============================================================================================ Puppet agents */
