@@ -6,12 +6,12 @@
    Animations on Pip's own nodes, which the chat's reconcile never resets. Nothing here loops. */
 
 /* ---------------------------------------------------------------- the roles */
-.pmx-pip {
+/* Set on the look's own scope (the chat's body[data-theme], each .pm56-host when PMConcept7 hosts the chat), never
+   on a pmx rule: the chat keeps colour maths out of pmx selectors (neon-verify 5). Pip's nodes inherit them. */
+body[data-theme] {
   --pip-bg: var(--background, var(--canvas));
   --pip-accent: var(--accent-primary, var(--accent));
   --pip-head: var(--pip-accent);
-  /* an agent's head wears its seat (--pmx-seat), a status face its tone (--pmx-pip-tone), anything else Pip's own colour */
-  --pip-seat: var(--pmx-pip-tone, var(--pmx-seat, var(--pip-head)));
   --pip-ctl: var(--text-primary, var(--text));
   --pip-back: color-mix(in srgb, var(--pip-ctl) 58%, var(--pip-bg));
   --pip-pin: color-mix(in srgb, var(--pip-ctl) 60%, var(--pip-bg));
@@ -27,11 +27,11 @@
   --pip-cardedge: var(--border);
   --pip-cardshadow: transparent;
 }
-body[data-theme$="-light"] .pmx-pip {
+body[data-theme$="-light"] {
   --pip-pgold: #E8AE2C; --pip-pgold2: #C98E1A; --pip-pline: #3B2F36; --pip-pwood: #B9814F; --pip-ppaper: #FFFFFF; --pip-pcloth: #D9475A; --pip-pgrill: #2D2A30;
 }
 /* Friendly: a soft vinyl toy; the control in Friendly's lilac, peach cheeks */
-body[data-theme^="friendly"] .pmx-pip {
+body[data-theme^="friendly"] {
   --pip-ctl: var(--accent-magenta, var(--accent-2));
   --pip-pin: color-mix(in srgb, var(--pip-ctl) 80%, black);
   --pip-str: color-mix(in srgb, var(--text-muted, var(--muted)) 85%, var(--text-primary, var(--text)));
@@ -42,7 +42,7 @@ body[data-theme^="friendly"] .pmx-pip {
   --pip-card: var(--surface-2, #2E2A38);
   --pip-cardedge: rgb(255 255 255 / .14);
 }
-body[data-theme="friendly-light"] .pmx-pip {
+body[data-theme="friendly-light"] {
   --pip-str: color-mix(in srgb, var(--text-muted, var(--muted)) 75%, var(--pip-bg));
   --pip-head0: color-mix(in srgb, var(--pip-accent) 85%, white);
   --pip-head1: color-mix(in srgb, var(--pip-accent) 92%, black);
@@ -51,7 +51,7 @@ body[data-theme="friendly-light"] .pmx-pip {
   --pip-cardedge: #E4DCEA;
 }
 /* Glass: a clear lens, a rim lit from above, a bright base, glass rods; no brow band */
-body[data-theme^="glass"] .pmx-pip {
+body[data-theme^="glass"] {
   --pip-rod: color-mix(in srgb, var(--text-primary, var(--text)) 95%, var(--pip-bg));
   --pip-rodback: color-mix(in srgb, var(--pip-rod) 58%, var(--pip-bg));
   --pip-ctl: var(--pip-rod);
@@ -70,7 +70,7 @@ body[data-theme^="glass"] .pmx-pip {
   --pip-card: rgb(255 255 255 / .14);
   --pip-cardedge: rgb(255 255 255 / .55);
 }
-body[data-theme="glass-light"] .pmx-pip {
+body[data-theme="glass-light"] {
   --pip-rod: color-mix(in srgb, var(--text-primary, var(--text)) 85%, var(--pip-bg));
   --pip-str: color-mix(in srgb, var(--text-muted, var(--muted)) 80%, var(--pip-bg));
   --pip-tint0: color-mix(in srgb, var(--pip-accent) 27%, white);
@@ -87,18 +87,18 @@ body[data-theme="glass-light"] .pmx-pip {
   --pip-cardedge: rgb(255 255 255 / .95);
 }
 /* Basic: flat, one accent, no cheeks; the crown and hat a plainer gold */
-body[data-theme^="basic"] .pmx-pip {
+body[data-theme^="basic"] {
   --pip-pin: color-mix(in srgb, var(--pip-ctl) 60%, var(--pip-bg));
   --pip-pgold: #F5BD55; --pip-pgold2: #D69A35; --pip-pline: var(--pip-bg); --pip-pwood: var(--pip-ctl); --pip-ppaper: #F2F2F2; --pip-pcloth: var(--pip-accent); --pip-pgrill: #3A3A3A;
 }
-body[data-theme="basic-light"] .pmx-pip {
+body[data-theme="basic-light"] {
   --pip-ctl: color-mix(in srgb, var(--text-primary, var(--text)) 92%, var(--pip-bg));
   --pip-str: color-mix(in srgb, var(--text-muted, var(--muted)) 75%, var(--pip-bg));
   --pip-eye: var(--surface-elevated, var(--surface));
   --pip-pgold: #B57100; --pip-pgold2: #8F5900; --pip-ppaper: #FFFFFF; --pip-pgrill: #2B2B2B;
 }
 /* Retro: phosphor on the terminal (dark) and ink on the printout (light), square cells */
-body[data-theme^="retro"] .pmx-pip {
+body[data-theme^="retro"] {
   --pip-back: color-mix(in srgb, var(--pip-ctl) 58%, var(--surface-elevated, var(--surface)));
   --pip-head: var(--accent-lime, var(--pip-accent));
   --pip-cheek: var(--accent-orange, #E9853F);
@@ -107,7 +107,7 @@ body[data-theme^="retro"] .pmx-pip {
   --pip-cardedge: var(--border-strong, #4A533A);
   --pip-cardshadow: color-mix(in srgb, var(--text) 55%, transparent);
 }
-body[data-theme="retro-light"] .pmx-pip {
+body[data-theme="retro-light"] {
   --pip-back: color-mix(in srgb, var(--pip-ctl) 58%, var(--pip-bg));
   --pip-str: color-mix(in srgb, var(--text-muted, var(--muted)) 80%, var(--pip-bg));
   --pip-cheek: var(--accent-magenta, #FF1493);
@@ -117,14 +117,18 @@ body[data-theme="retro-light"] .pmx-pip {
   --pip-cardshadow: var(--text, #1A1A1A);
 }
 /* NieR (O8): ink on parchment; the error red for a broken state */
-html[data-o55-nier="on"] .pmx-pip {
+html[data-o55-nier="on"] body[data-theme] {
   --pip-ink: var(--o55-nier-ink, var(--text));
   --pip-paper: var(--o55-nier-raised, var(--surface-2, var(--surface)));
   --pip-red: var(--o55-nier-error, var(--danger));
   --pip-card: var(--pip-paper);
   --pip-cardedge: var(--pip-ink);
 }
-html[data-o55-nier="on"] body[data-theme$="-dark"] .pmx-pip { --pip-paper: var(--surface); }
+html[data-o55-nier="on"] body[data-theme$="-dark"] { --pip-paper: var(--surface); }
+
+/* an agent's head wears its seat (--pmx-seat, set on its mark), a status face its tone (--pmx-pip-tone), anything else
+   Pip's own colour: read where the mark is, so it stays on Pip's own node */
+.pmx-pip { --pip-seat: var(--pmx-pip-tone, var(--pmx-seat, var(--pip-head))); }
 
 /* ---------------------------------------------------------------- the marks */
 .pmx-pip-px, .pmx-pip-px * { shape-rendering: crispEdges; }
@@ -173,7 +177,7 @@ html[data-motion="reduced"] .pmx-pip-host :is(.pmx-pip-rig, .pmx-pip-card), body
 .orbit-core-face > .orbit-core-icon svg { width: 12px; height: 12px; }
 /* the core is the live subject's dark puck in every look but NieR, so on a light look Pip's ink control and strings
    take the puck's own ink (Friendly's lilac control reads on it as it is) */
-html:not([data-o55-nier="on"]) body:is([data-theme="basic-light"], [data-theme="glass-light"], [data-theme="retro-light"]) .orbit-core-face .pmx-pip {
+html:not([data-o55-nier="on"]) body:is([data-theme="basic-light"], [data-theme="glass-light"], [data-theme="retro-light"]) .orbit-core-face {
   --pip-ctl: var(--nx-disc-text); --pip-rod: var(--nx-disc-text); --pip-rodback: color-mix(in srgb, var(--nx-disc-text) 58%, var(--nx-disc));
   --pip-back: color-mix(in srgb, var(--nx-disc-text) 58%, var(--nx-disc)); --pip-pin: color-mix(in srgb, var(--nx-disc-text) 60%, var(--nx-disc));
   --pip-str: color-mix(in srgb, var(--nx-disc-text) 55%, var(--nx-disc));
