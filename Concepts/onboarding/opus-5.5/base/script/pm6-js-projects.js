@@ -338,12 +338,14 @@
   reg('proj.refresh', function () {
     if (refreshing) { say('Unavailable: busy — a rescan is already running.'); return; }
     refreshing = true;
+    /* the wait is the system loader in the icon's place (W5, DR-077; PM_PIP_LOADER): Hop, a short wait that ends with
+       the list rescanned (L5); aria-busy on the button while it lasts */
     var btn = $('#pm6-proj-refresh');
-    var ico = btn && btn.querySelector('.pm6-ico');
-    if (ico) ico.classList.add('pm6-spin');
+    var LD = window.PM_PIP_LOADER;
+    if (btn && LD) LD.busy(btn, true, { motion: LD.motion('short'), px: 14 });
     setTimeout(function () {
       refreshing = false;
-      if (ico) ico.classList.remove('pm6-spin');
+      if (btn && LD) LD.busy(btn, false);
       var total = $all('.pm6-proj-card').length;
       var broken = $all('.pm6-proj-card[data-health="error"]').length;
       say('Rescanned ' + total + ' project' + (total === 1 ? '' : 's') + ' — ' +

@@ -158,11 +158,11 @@
       outline-offset: 1px; border-color: transparent;
     }
 
-    /* header buttons: icon alignment + refresh spin */
+    /* header buttons: icon alignment; Refresh's wait is the system loader in the icon's place (pm6-js-projects.js) */
     .page-projects .projects-actions button { display: inline-flex; align-items: center; gap: 6px; }
     .page-projects .projects-actions .pm6-ico svg { width: 14px; height: 14px; display: block; }
-    @keyframes pm6-proj-spin { to { transform: rotate(360deg); } }
-    .pm6-spin svg { animation: pm6-proj-spin 0.8s linear infinite; }
+    .page-projects .projects-actions .pml-ld { --pml-size: 14px; }
+    .page-projects .projects-actions button[aria-busy="true"] .pm6-ico { display: none; }
 
     /* ---- empty state (No results for current filter) ---- */
     .pm6-proj-empty {
@@ -307,12 +307,10 @@
     @media (prefers-reduced-motion: reduce) {
       .page-projects .pm6-proj-card,
       .pm6-proj-sheet,
-      .status-badge.pm6-live,
-      .pm6-spin svg { animation: none; }
+      .status-badge.pm6-live { animation: none; }
       .pm6-proj-card.pm6-proj-leaving { transition: none; }
     }
     [data-motion="reduced"] .page-projects .pm6-proj-card,
     [data-motion="reduced"] .pm6-proj-sheet,
-    [data-motion="reduced"] .status-badge.pm6-live,
-    [data-motion="reduced"] .pm6-spin svg { animation: none; }
+    [data-motion="reduced"] .status-badge.pm6-live { animation: none; }
     [data-motion="reduced"] .pm6-proj-card.pm6-proj-leaving { transition: none; }
