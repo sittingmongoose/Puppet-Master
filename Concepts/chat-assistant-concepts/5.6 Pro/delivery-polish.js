@@ -46,7 +46,10 @@
     /* B09 replaces the old scripted Debug shortcuts with two checked workflows. */
     ['Capture · browser fixture','bc-open'],
     ['To-Dos · refused bulk completion','todo-attempt-bulk-complete'],
-    ['To-Dos · provider proposal','todo-attempt-provider-proposal']
+    ['To-Dos · provider proposal','todo-attempt-provider-proposal'],
+    /* W4 (PM7 build): Pip's moments for Demo Studio (pip.js); Scheduled's faces and the Orbit are the scheduling and
+       work rows above */
+    ['Pip · the sheet’s faces','pip-demo-faces'],['Pip · Activity agents','pip-demo-activity']
   ];
   function gallery(ctx){
     return (window.PM56_REPAIR_DEMOS?window.PM56_REPAIR_DEMOS.gallery(ctx):'')+'<section class="demo-section polish-demo-section"><h3>Feature demonstrations</h3><div class="demo-section-body">'+

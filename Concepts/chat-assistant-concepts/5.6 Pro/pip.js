@@ -19,9 +19,10 @@
    How it stays live in a chat that renders by reconciling markup (app.js pmPatch): every move is a Web Animation on
    Pip's own nodes, which the reconcile never resets, and a face change redraws exactly what module-shell.js would draw
    for the new face and records it (hostMood), so the next render draws the same and the reconcile finds nothing to do.
-   No observer, no innerHTML hook, no island: the sheet's Pip is found after each render (PM56_EXT afterRender).
-   Every loop rests during a drag (body.pm-resizing and the other drag classes), in a hidden tab and offscreen, and
-   Reduced Motion keeps every Motion part still (faces still change, in one step). Animation speed scales every move. */
+   No mutation observer, no innerHTML hook, no island: the sheet's Pip is found after each render (PM56_EXT
+   afterRender). Every loop rests during a drag (body.pm-resizing and the other drag classes), in a hidden tab and
+   offscreen (an IntersectionObserver on Pip's own looping nodes), and Reduced Motion keeps every Motion part still
+   (faces still change, in one step). Animation speed scales every move. */
 (function () {
   'use strict';
   var W = window, D = document;
@@ -366,8 +367,66 @@
     return true;
   });
 
+  /* ---------------------------------------------------------------- Demo Studio moments (lab only, DR-070)
+     pip-demo-faces: the Crew sheet opens and its Pip shows each reaction in turn (watch, wonder, oops, then cheers and
+     hops), the way a person's pointer, typing and presses would make it. pip-demo-activity: Activity Detail's agents,
+     each a Pip. Scheduled's status faces and the Orbit's Pip are the gallery's scheduling and work rows. */
+  var demoT = [];
+  function demoFaces() {
+    demoT.forEach(clearTimeout); demoT = [];
+    var c = EXT.ctx(), b = D.createElement('button');
+    b.dataset.kind = 'crew'; b.dataset.auto = '0';
+    EXT.run('collab-open-configure', b, new Event('click'));
+    c.renderOverlays && c.renderOverlays();
+    var steps = [['watch', 1400], ['wonder', 1400], ['oops', 1900], ['happy', 2600]], at = 900;
+    steps.forEach(function (s) {
+      demoT.push(setTimeout(function () {
+        hosts.forEach(function (st) { feel(st, s[0], s[1], s[0] === 'happy'); if (s[0] === 'happy') hop(st); });
+      }, at));
+      at += s[1] + 300;
+    });
+  }
+  function demoActivity() {
+    var X = W.PM56_DEMO;
+    if (X && typeof X.trigger === 'function') X.trigger('Live subagents');
+    if (X && typeof X.openActivity === 'function') X.openActivity('subagents');
+  }
+  if (EXT && EXT.action) {
+    EXT.action('pip-demo-faces', function () { demoFaces(); return true; });
+    EXT.action('pip-demo-activity', function () { demoActivity(); return true; });
+  }
+
+  /* ---------------------------------------------------------------- loops rest offscreen */
+  /* The sheet's sway (pip.css, PC1) and the live Orbit's thinking dots are CSS loops on Pip's own nodes. They run only
+     while that Pip is in view and the tab is shown: data-pip-run="off" pauses them (pip.css). In view is what an
+     IntersectionObserver on those nodes reports, which clips through every scrolling ancestor, so a transcript scrolled
+     past the Orbit, a closed panel or a hidden page all count as out of view. A drag (any of the drag classes, through
+     the shared clock's hold: PMLogo.clock) rests them too. The reconcile drops an attribute its markup lacks, so each
+     render puts it back from what was last seen, in the same task (no frame shows it running). Reduced Motion stops
+     them. */
+  var LOOPS = '.pmx-sheet:not(.pmx-ghost) > .pmx-head > .pmx-pip-host, .orbit-core-face.is-live';
+  var inView = new WeakMap(), looping = new Set(), io = null;
+  function setRun(el) {
+    var v = !D.hidden && !dragging() && inView.get(el) === true ? 'on' : 'off';
+    if (el.getAttribute('data-pip-run') !== v) el.setAttribute('data-pip-run', v);
+  }
+  function seen(list) { list.forEach(function (e) { inView.set(e.target, e.isIntersecting); setRun(e.target); }); }
+  var held = false;
+  function syncLoops() {
+    if (!io && W.IntersectionObserver) io = new IntersectionObserver(seen);
+    var L = LOGO();
+    if (!held && L && L.clock && typeof L.clock.on === 'function') { held = true; L.clock.on(function () { looping.forEach(setRun); }); }
+    var now = new Set(D.querySelectorAll(LOOPS));
+    looping.forEach(function (el) { if (!now.has(el)) { looping.delete(el); if (io) io.unobserve(el); } });
+    now.forEach(function (el) {
+      if (!looping.has(el)) { looping.add(el); if (io) io.observe(el); else inView.set(el, true); }
+      setRun(el);
+    });
+  }
+  D.addEventListener('visibilitychange', function () { looping.forEach(setRun); });
+
   /* ---------------------------------------------------------------- hooks */
-  if (EXT && EXT.slot) EXT.slot('afterRender', function () { scan(); syncThinking(); });
+  if (EXT && EXT.slot) EXT.slot('afterRender', function () { scan(); syncThinking(); syncLoops(); });
   startBlinks();
 
   W.PM56_PIP = Object.freeze({
@@ -377,6 +436,7 @@
     thinkingPip: thinkingPip,
     /* tests and Demo Studio: the sheet Pips on screen and a face on each */
     hosts: function () { return [...hosts.values()].map(function (s) { return { kind: s.kind, mood: s.mood }; }); },
+    loops: function () { return [...looping].map(function (el) { return { kind: el.classList.contains('orbit-core-face') ? 'orbit' : 'sheet', run: el.getAttribute('data-pip-run') }; }); },
     feel: function (mood, hold) { hosts.forEach(function (st) { feel(st, mood, hold); }); }
   });
 })();

@@ -381,10 +381,19 @@
 
   /* ---- vector Pip (Basic, Friendly, Glass): flat, one head in the seat's colour; no gradients, so nothing needs an id */
   function pipVector(K, th, fam, scheme, prop, mood, detail, bust, kettle, look2) {
-    var g = K.GEO[detail ? 'full' : 'small'], h = g.head, d = K.headPath(h), R = K.R;
+    var g = K.GEO[detail ? 'full' : 'small'];
     var shine = (fam === 'friendly' || fam === 'glass') && look2.shine, hd = look2.seat ? '@seat' : '@head';
     var pr = pipProp(K, prop, g, fam, detail), kt = kettle ? pipProp(K, 'grill', g, fam, detail) : { back: '', front: '' };
-    var head = '';
+    var head = pipFlatHead(K, g, fam, scheme, mood, detail, shine, hd, bust);
+    if (bust || !look2.strings) return pr.back + (bust ? head : '<g class="' + PIP_CLS.pup + '">' + head + '</g>') + pr.front + kt.front;
+    var strings = K.stringEnds(g, 'thread', PIP_ID, PIP_ID).map(function (e) { return pipLine(K, e.T, e.E, g.strW, '@str'); }).join('');
+    var ctl = K.controlSvg(g, th, PIP_CLS, { attach: 'thread' });
+    return strings + pr.back + '<g class="' + PIP_CLS.pup + '">' + head + '</g>' + ctl + pr.front + kt.front;
+  }
+  /* Pip's head and face drawn flat in its roles, with no SVG ids (a sheet's exit copy strips ids; W4): Glass a clear
+     lens with a rim lit from above, the other looks solid; Friendly and Glass add a shine and cheeks */
+  function pipFlatHead(K, g, fam, scheme, mood, detail, shine, hd, bust) {
+    var h = g.head, d = K.headPath(h), R = K.R, head = '';
     if (fam === 'glass' && !bust) {
       /* Glass: a clear lens in the seat's colour, a rim lit from above, a bright base (no brow band) */
       head += '<path d="' + d + '" fill="' + hd + '" fill-opacity=".74"/><path d="' + d + '" fill="#fff" fill-opacity="' + (scheme === 'dark' ? .1 : .2) + '"/>';
@@ -398,11 +407,7 @@
       var cy = g.eye.y + 6.2;
       head += '<ellipse cx="' + R(32 - g.eye.dx - 4.2) + '" cy="' + cy + '" rx="3.1" ry="1.9" fill="@cheek" opacity=".9"/><ellipse cx="' + R(32 + g.eye.dx + 4.2) + '" cy="' + cy + '" rx="3.1" ry="1.9" fill="@cheek" opacity=".9"/>';
     }
-    head += '<g class="' + PIP_CLS.face + '">' + K.faceShapes(g, mood, '@eye', { cls: PIP_CLS, shine: detail && shine }) + '</g>';
-    if (bust || !look2.strings) return pr.back + (bust ? head : '<g class="' + PIP_CLS.pup + '">' + head + '</g>') + pr.front + kt.front;
-    var strings = K.stringEnds(g, 'thread', PIP_ID, PIP_ID).map(function (e) { return pipLine(K, e.T, e.E, g.strW, '@str'); }).join('');
-    var ctl = K.controlSvg(g, th, PIP_CLS, { attach: 'thread' });
-    return strings + pr.back + '<g class="' + PIP_CLS.pup + '">' + head + '</g>' + ctl + pr.front + kt.front;
+    return head + '<g class="' + PIP_CLS.face + '">' + K.faceShapes(g, mood, '@eye', { cls: PIP_CLS, shine: detail && shine }) + '</g>';
   }
   /* ---- NieR Pip (O8): the kit's YoRHa unit in ink and paper; a still mark keeps the plain band (X3) */
   function pipNierMark(K, th, prop, mood, detail, bust, kettle, eyes, look2) {
@@ -701,8 +706,7 @@
     var look = pipLook(), key = 'host|' + look + '|' + kind + '|' + mood + '|' + (signHtml ? pmxHash(signHtml) : '') + '|' + pipPartsSig, v = pipMemo[key];
     if (v) return v;
     var K = P.kit, R = K.R, fam = P.family(look), scheme = P.scheme(look), th = K.rolePalette(look), g = K.GEO.full;
-    var ids = { face: 'pmx-pip-hf', grad: 'pmx-pip-hh-' + fam, clip: 'pmx-pip-hc-' + fam, rim: 'pmx-pip-hr-' + fam, glow: 'pmx-pip-hg-' + fam, spec: 'pmx-pip-hs-' + fam, drop: 'pmx-pip-hd-' + fam };
-    var tip = K.sticks(g).s1[1], defs = '', strings = '', pup = '', ctl = '';
+    var tip = K.sticks(g).s1[1], strings = '', pup = '', ctl = '';
     var signStr = fam === 'retro' ? '' : '<path d="M' + R(tip[0] - 1) + ' ' + R(tip[1] + 1) + 'L78 32" stroke="' + (fam === 'nier' ? '@ink' : '@str') + '" stroke-width="' + (fam === 'nier' ? 1 : 1.3) + '" fill="none"/>';
     if (fam === 'retro') {
       /* pixel Pip: the kit's 24 cells at 2.5 units each; its strings and the sign's string in square steps */
@@ -711,26 +715,23 @@
       strings = '<path d="M58 9H78V32" stroke="@str" stroke-width="2.5" fill="none" shape-rendering="crispEdges"/>';
     } else if (fam === 'nier') {
       /* NieR Pip with its eyes through the band at rest (X3: a live Pip) */
-      var r = K.pipNier(g, th, mood === 'dots' ? 'think' : mood, PIP_CLS, ids, { parts: true, eyes: true });
+      var r = K.pipNier(g, th, mood === 'dots' ? 'think' : mood, PIP_CLS, { face: 'x' }, { parts: true, eyes: true });
       strings = r.barNodes.map(function (q, i) { return pipLine(K, q, r.headNodes[i], 1, '@ink'); }).join('');
       pup = '<g class="pmx-pip-pup">' + r.headInner + '</g>';
       ctl = '<g class="pmx-pip-ctl">' + r.ctl + '</g>';
     } else {
       strings = K.stringEnds(g, 'eye', PIP_ID, PIP_ID).map(function (e) { return pipLine(K, e.T, e.E, g.strW, '@str'); }).join('');
-      var hd = K.pipHead(g, th, mood, ids, PIP_CLS, {});
-      defs = hd.defs;
-      pup = '<g class="pmx-pip-pup">' + K.eyeletRings(g, th, {}) + hd.body + '</g>';
+      /* the head as the agent marks draw it (flat, no ids), at the sheet's detail */
+      var shine = (fam === 'friendly' || fam === 'glass') && pipOn('cheeks-and-shine');
+      pup = '<g class="pmx-pip-pup">' + K.eyeletRings(g, th, {}) + pipFlatHead(K, g, fam, scheme, mood, true, shine, '@head', false) + '</g>';
       ctl = K.controlSvg(g, th, PIP_CLS, { attach: 'eye' });
     }
     var sign = pipSign(kind, fam, signHtml);
     if (!pipOn('strings')) { strings = ''; ctl = ''; signStr = ''; }
     var body = '<g class="pmx-pip-card">' + signStr + sign + '</g>' + strings + pup + ctl;
-    /* every gradient keeps a plain fallback: the head falls back to Pip's own colour, the rest to nothing */
-    body = body.replace(new RegExp('fill="url\\(#' + ids.grad + '\\)"', 'g'), 'style="fill:url(#' + ids.grad + ') var(--pip-head)"')
-      .replace(/(fill|stroke)="url\(#([^)]+)\)"/g, '$1="url(#$2) none"');
     v = '<span class="pmx-pip-host" data-k="pip-host" data-pip-kind="' + esc(kind) + '" data-pip-mood="' + esc(mood) + '" aria-hidden="true">' +
       '<svg class="pmx-pip-host-svg pmx-pip" data-fam="' + fam + '" data-sway="' + (pipOn('sway-and-physics') ? 1 : 0) + '" viewBox="0 0 ' + PIP_HOST.w + ' ' + PIP_HOST.h + '" width="' + R(PIP_HOST.w * PIP_HOST.k) + '" height="' + R(PIP_HOST.h * PIP_HOST.k) + '" overflow="visible" focusable="false">' +
-      (defs ? '<defs>' + defs + '</defs>' : '') + '<g class="pmx-pip-lift"><g class="pmx-pip-rig">' + body + '</g></g></svg></span>';
+      '<g class="pmx-pip-lift"><g class="pmx-pip-rig">' + body + '</g></g></svg></span>';
     v = K.roleStyles(v);
     if (++pipMemoN > 800) { pipMemo = Object.create(null); pipMemoN = 0; }
     pipMemo[key] = v;

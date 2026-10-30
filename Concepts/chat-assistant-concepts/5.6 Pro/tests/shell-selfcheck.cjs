@@ -526,7 +526,11 @@ const B = (name, html) => { built.push([name, html]); return html; };
   pc('A2-16 pmxParticipant without a Collab kind: no collab-participant-view, collab-empty or collab-close-participant', !ptPlain.includes('collab-') && ptPlain.includes('data-action="bsd-back"'), ptPlain);
   pc('A2-16 pmxParticipant with collabHooks: true keeps the Collab hooks', has(X.pmxParticipant({ collabHooks: true, role: 'R' }), 'collab-participant-view', 'data-action="collab-close-participant"'));
   pc('A2-16 pmxView: collab-panel-foot on a Collab kind only', has(X.pmxView({ key: 'v1', kind: 'crew', kindWord: 'Crew', title: 'T', actionsHtml: '<b>a</b>' }), 'class="pmx-view-acts collab-panel-foot"') && !X.pmxView({ key: 'v2', kind: 'revert', kindWord: 'Revert', title: 'T', actionsHtml: '<b>a</b>' }).includes('collab-'));
-  pc('D5 pmxParticipant: .collab-participant-view h3, .collab-empty, Back to everyone', has(pt, '<section class="pmx-participant collab-participant-view"', '<h3>Data mapper</h3>', '<p class="collab-empty">Nothing from Data mapper yet.</p>', '<button type="button" class="text-button" data-action="collab-close-participant">Back to everyone</button></section>'));
+  /* W4 (PM7 build): the empty line is the shared pmxEmpty (its Pip and the pmx-empty-line class beside collab-empty), so
+     the line is matched by its tag, its collab-empty class and its words rather than as one exact string */
+  const ptEmpty = pt.match(/<p class="([^"]*)"[^>]*>(?:(?!<\/p>).)*?Nothing from Data mapper yet\.<\/p>/);
+  pc('D5 pmxParticipant: .collab-participant-view h3, .collab-empty, Back to everyone', has(pt, '<section class="pmx-participant collab-participant-view"', '<h3>Data mapper</h3>', '<button type="button" class="text-button" data-action="collab-close-participant">Back to everyone</button></section>') &&
+    !!ptEmpty && ptEmpty[1].split(/\s+/).includes('collab-empty'), ptEmpty ? ptEmpty[0] : pt);
   pc('D5 messages replace the empty line', has(X.pmxParticipant({ kind: 'crew', role: 'R', messagesHtml: '<div class="collab-msg">m</div>' }), '<div class="collab-msg">m</div>') && !X.pmxParticipant({ kind: 'crew', role: 'R', messagesHtml: '<div class="collab-msg">m</div>' }).includes('collab-empty'));
 
   /* 8a. G-17 (D4 amendment) + F0 review cycle 2: the stand-in line is the builder's, never hand-rolled.
