@@ -173600,7 +173600,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           pr.op += (tg.op - pr.op) * Math.min(1, dt * 8);
         }
         if (!pr.settled && pr.state !== 'out' && Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30) this.settle(pr);
-        if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); }
+        if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); if (this.onLanded) this.onLanded(pr); }
         if (pr.state === 'out' && pr.len < 0 && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(id); }
       });
       // particles
@@ -173819,6 +173819,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (!this.root.hasAttribute('data-paused')) this.root.setAttribute('data-paused', '');
       if (!this.dead && this.active) this.parkT = setTimeout(() => this.kick(), 250);
     }
+    // how many blocks rest on the stack (Creating's Continue waits for the last one, O12 B)
+    blocksLanded() { let n = 0; this.props.forEach((pr) => { if (pr.spec.ground && pr.state !== 'out' && pr.landed) n++; }); return n; }
     // a screen change the window holds back a frame (60-ui-core.js transition): the scene waits with it
     hold(on) { this.held = !!on; if (!on) this.kick(); }
     release() { this.hold(false); }
@@ -174515,6 +174517,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!host || !O55.pipStage || !O55.pipStage.h.kit()) return null; /* the kit is the glyph system's head module */
     const H = O55.pipStage.h, st = O55.pipStage.ensure(host, { theme: H.theme(), layout: stageLayout(), reduced: O55.motion.reduced() });
     st.setReduced(O55.motion.reduced()); st.setLayout(stageLayout()); st.setTheme(H.theme());
+    /* a block down on Creating's stack: Continue may now go on (O12 B, 72-screens-review.js landing) */
+    if (!st.onLanded) st.onLanded = () => { if (S.open && S.sess.screen === 'creating' && (S.sess.commit || {}).state === 'done') refresh(); };
     return st;
   }
   function renderScene(force, hold, o) {
@@ -174547,11 +174551,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (cheer) { cheering = { text: O55.t('pip.cheer.' + cheer), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; }
     if (cheering && (oops || cheering.screen !== S.sess.screen || performance.now() > cheering.until)) cheering = null;
     if (cheering) { spec.say = cheering.text; spec.pip.mood = 'happy'; }
-    /* Pick a look: hovering a look makes Pip try it on (silent, O6); the world follows once it is picked */
-    if (S.sess.screen === 'look') {
-      const h = S.pipHover || '', mode = O55.theme().mode;
-      st.tryOn(/^pickFamily:/.test(h) ? h.slice(11) + '-' + mode : h === 'pickNier' ? 'nier-' + mode : null);
-    } else st.tryOn(null); /* (a look only tried on is put back once the screen is left) */
+    /* Pick a look: hovering a look has Pip watch it and say its line, silently; the look itself (the window and Pip's
+       world) changes only when it is picked (Jared, O6, 2026-10-30: "it shouldnt change the themes on hover, it should
+       change on click. It is a little too busy with it changing on hover") */
+    st.tryOn(null);
     /* a fault shown now wins over a feeling still held from a moment before (a cheer, a pick) */
     if (oops) st.moodOverride = null;
     st.direct(spec);
@@ -180171,6 +180174,19 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
     return note;
   }
+  /* O12 B (Jared, 2026-10-30: "as the concept"): once the Project is made, Continue waits for the last block to come
+     down onto Pip's stack. Each block lands in about half a second; Reduced Motion puts it there at once; and it never
+     waits longer than LAND_CAP, so a paused or missing stage cannot hold the run. The stage says when a block lands
+     (60-ui-core.js redraws Creating then). */
+  const LAND_CAP = 2500;
+  let landWait = null;
+  function landing(S) {
+    const cm = S.sess.commit || {}, host = S.root && S.root.querySelector('.o55-stage'), st = host && O55.pipStage && O55.pipStage.of ? O55.pipStage.of(host) : null;
+    if (!st || !st.blocksLanded || O55.motion.reduced() || !S.open || S.sess.screen !== 'creating') return false;
+    if (!landWait || landWait.key !== cm.key) { landWait = { key: cm.key, t: performance.now() }; O55.motion.after(LAND_CAP + 50, () => { if (S.open && S.sess.screen === 'creating') O55.ui.refresh(); }); }
+    if (performance.now() - landWait.t > LAND_CAP) return false;
+    return st.blocksLanded() < phasesFor(S).length;
+  }
   def('creating', {
     chapter: 'project', stage: 'automatic_preparation',
     /* (under NieR's art the scene carries the Project's name: its sign comes back with it, stamped) */
@@ -180207,8 +180223,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     },
     foot(S) {
       const cm = S.sess.commit || {};
-      /* (done is enough: while the made moment waits for the app to settle, Continue already goes on and skips it) */
-      if (cm.state === 'done') return { back: false, primary: { label: T('creating.continue'), do: 'next' } };
+      /* (done, and the last block down: while the made moment waits for the app to settle, Continue already goes on) */
+      if (cm.state === 'done') { const wait = landing(S); return { back: false, primary: { label: T('creating.continue'), do: 'next', disabled: wait, reason: wait ? T('chrome.working') : '' } }; }
       const reason = cm.state === 'failed' ? T('creating.failTitle') : cm.state === 'running' || cm.state === 'done' ? T('chrome.working') : T('creating.recovery.waiting');
       return { back: false, primary: { label: T('creating.continue'), do: 'next', disabled: true, reason } };
     },
