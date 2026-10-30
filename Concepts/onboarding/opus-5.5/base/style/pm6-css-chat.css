@@ -91,17 +91,7 @@
       --pm6-sprout-ty: -10px;
       --pm6-sprout-sx: 0.72;
       --pm6-sprout-sy: 0.48;
-      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms;
-      will-change: transform, opacity;
+      /* the motion is PM6_SPROUT's contract (pm7-sprout.css) */
     }
     /* Project menu sprouts from the left side of the trigger */
     #projectMenu {
@@ -110,29 +100,10 @@
       --pm6-sprout-ox: 12%;
     }
     .pm6-chat-more-menu.is-open,
-    .pm6-tb-menu.is-open {
-      display: block;
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s;
-    }
+    .pm6-tb-menu.is-open,
     .pm6-chat-more-menu.is-closing,
     .pm6-tb-menu.is-closing {
       display: block;
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms;
     }
     /* Override .chat-panel-header .panel-actions button { width/height: 24px }
        — that rule was squashing menu item labels into a 24×24 box. */
@@ -758,75 +729,7 @@
       --pm6-sprout-ty: 10px;
       --pm6-sprout-sx: 0.72;
       --pm6-sprout-sy: 0.48;
-      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
-      opacity: 0;
-      /* closed: compressed toward the trigger corner — taller grow than wide ("fill out") */
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms,
-        height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
-      will-change: transform, opacity, height;
-    }
-    .pm6-chat-mini-popout-portal.is-open,
-    .pm6-chat-mode-popout-portal.is-open,
-    .pm6-chat-persona-popout-portal.is-open,
-    .pm6-chat-effort-popout-portal.is-open,
-    .pm6-chat-pt-popout-portal.is-open {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s,
-        /* springy height for search-filter resize bounce */
-        height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
-    }
-    .pm6-chat-mini-popout-portal.is-closing,
-    .pm6-chat-mode-popout-portal.is-closing,
-    .pm6-chat-persona-popout-portal.is-closing,
-    .pm6-chat-effort-popout-portal.is-closing,
-    .pm6-chat-pt-popout-portal.is-closing {
-      /* video: solid through most of the collapse; only a late, tiny fade */
-      opacity: 0;
-      /* collapse into the same trigger corner set at open */
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms,
-        height 200ms cubic-bezier(0.45, 0.05, 0.55, 0.2);
-    }
-    /* search-filter / effort-option-count size bounce — stretch settles with height spring */
-    @keyframes pm6-popout-size-bounce {
-      0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-      40%  { transform: translate3d(0, 0, 0) scale3d(1.012, 1.055, 1); }
-      100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-    }
-    /* side flyouts (effort / mode thoroughness): stronger vertical overshoot —
-       matched to reference video when option count changes (e.g. 3 → 4 levels) */
-    @keyframes pm6-effort-size-bounce {
-      0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-      35%  { transform: translate3d(0, 0, 0) scale3d(1.018, 1.085, 1); }
-      70%  { transform: translate3d(0, 0, 0) scale3d(0.995, 0.975, 1); }
-      100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-    }
-    .pm6-chat-mini-popout-portal.is-open.is-size-bounce,
-    .pm6-chat-persona-popout-portal.is-open.is-size-bounce {
-      animation: pm6-popout-size-bounce 380ms cubic-bezier(0.22, 1.55, 0.36, 1);
-    }
-    .pm6-chat-effort-popout-portal.is-open.is-size-bounce,
-    .pm6-chat-pt-popout-portal.is-open.is-size-bounce {
-      animation: pm6-effort-size-bounce 420ms cubic-bezier(0.22, 1.65, 0.36, 1);
+      /* the motion is PM6_SPROUT's contract (pm7-sprout.css) */
     }
     .pm6-chat-effort-popout-portal {
       width: 148px; max-height: none; overflow: visible;
@@ -839,14 +742,6 @@
       --pm6-sprout-ty: 0px;
       --pm6-sprout-sx: 0.48;
       --pm6-sprout-sy: 0.72;
-    }
-    /* option-count resize: stronger height spring than search-filter bounce */
-    .pm6-chat-effort-popout-portal.is-open {
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s,
-        height 360ms cubic-bezier(0.22, 1.78, 0.36, 1);
     }
     .pm6-chat-mode-popout-portal { width: 260px; z-index: 1250; }
     .pm6-chat-persona-popout-portal { width: 260px; z-index: 1240; }
@@ -869,21 +764,6 @@
     .pm6-chat-modellist,
     .pm6-chat-modelist,
     .pm6-chat-personalist { display: flex; flex-direction: column; gap: 1px; }
-    [data-motion="reduced"] .pm6-chat-mini-popout-portal,
-    [data-motion="reduced"] .pm6-chat-mode-popout-portal,
-    [data-motion="reduced"] .pm6-chat-persona-popout-portal,
-    [data-motion="reduced"] .pm6-chat-effort-popout-portal,
-    [data-motion="reduced"] .pm6-chat-pt-popout-portal {
-      transition: none !important;
-      transform: none !important;
-    }
-    [data-motion="reduced"] .pm6-chat-mini-popout-portal.is-open,
-    [data-motion="reduced"] .pm6-chat-mode-popout-portal.is-open,
-    [data-motion="reduced"] .pm6-chat-persona-popout-portal.is-open,
-    [data-motion="reduced"] .pm6-chat-effort-popout-portal.is-open,
-    [data-motion="reduced"] .pm6-chat-pt-popout-portal.is-open {
-      opacity: 1; visibility: visible; pointer-events: auto;
-    }
     .pm6-chat-effortbtn {
       display: flex; width: 100%; align-items: center; justify-content: space-between;
       text-align: left; gap: 8px;

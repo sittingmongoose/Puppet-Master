@@ -301,7 +301,10 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # The readout's quick exit (2026-10-28, 30-charts.css: a card that is not on fades in 70 ms; on a hosted board it is the
 # Home budget card's readout, which lingered over the terminal's tabs, so it is meant to reach hosted boards) adds one
 # anchor: 'rewritten' 2,660.
-HOST_SCOPE_EXPECT = {'rewritten': 2660, 'compound': 20}
+# The menu sprout's owner (2026-10-30, L8 B: PMU.menu opens and closes through PM6_SPROUT and its pm7-sprout.css class
+# contract) takes sixteen anchors out: the menu's own motion states, reduced-motion rules and NieR slice copies in
+# 15-menu.css and 90-nier-shell.css: 'rewritten' 2,644.
+HOST_SCOPE_EXPECT = {'rewritten': 2644, 'compound': 20}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

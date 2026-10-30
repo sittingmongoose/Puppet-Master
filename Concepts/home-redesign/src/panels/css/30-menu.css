@@ -1,6 +1,7 @@
 /* PMW.menu: the picker look every PM dropdown uses (metrics from the Usage PMU.menu, itself the 5.6 Pro chat's menus):
-   13 px type, 34 px rows (42 with a description), 8 px row radius, 13 px plate radius, the corner sprout on open and
-   an asymmetric close; instant under Reduced Motion. No pills, no side stripes. */
+   13 px type, 34 px rows (42 with a description), 8 px row radius, 13 px plate radius. Its open and close are the menu
+   sprout's (PM6_SPROUT's class contract, base/style/pm7-sprout.css: the plate carries pm-sprout). No pills, no side
+   stripes. */
 
 .pmw-pop {
   position: fixed;
@@ -20,22 +21,7 @@
   overscroll-behavior: contain;
   scrollbar-width: thin;
 }
-.pmw-menu { display: flex; flex-direction: column; outline: none; transform-origin: var(--pmw-mox, 24px) var(--pmw-moy, 0%); }
-.pmw-menu[data-mstate="measure"] { opacity: 0; transition: none; }
-.pmw-menu[data-mstate="closed"] { opacity: 0; transform: translate3d(0, -10px, 0) scale3d(.72, .48, 1); transition: none; }
-.pmw-menu[data-side="above"][data-mstate="closed"] { transform: translate3d(0, 10px, 0) scale3d(.72, .48, 1); }
-.pmw-menu[data-mstate="open"] {
-  opacity: 1;
-  transform: none;
-  transition: opacity 160ms cubic-bezier(.2, .75, .25, 1), transform 300ms cubic-bezier(.22, 1.55, .36, 1);
-}
-.pmw-menu[data-mstate="leaving"] {
-  transform: translate3d(0, -6px, 0) scale(.94);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform 180ms cubic-bezier(.4, 0, .2, 1), opacity 54ms linear 126ms;
-}
-.pmw-menu[data-side="above"][data-mstate="leaving"] { transform: translate3d(0, 6px, 0) scale(.94); }
+.pmw-menu { display: flex; flex-direction: column; outline: none; }
 .pmw-mhead { display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 6px 8px 7px; margin: -2px 0 4px; border-bottom: 1px solid var(--pmw-pop-line); }
 .pmw-mhead strong { font-size: 13px; font-weight: 650; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pmw-mmeta { font-size: 12px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }

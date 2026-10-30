@@ -1,7 +1,9 @@
 /* PMW.menu: the picker every panels menu uses (the "+" menu, the "+N" list, panel and tab menus, the narrow switcher).
    Ported from the Usage PMU.menu (origin/concept/usage-pm7-20261009: src/js/45-menu.js, src/css/15-menu.css), itself a
-   port of the 5.6 Pro chat's menus: the same metrics, keyboard and corner sprout, so every PM dropdown looks alike
-   (Jared, 2026-10-02: "Drop down menus should use the chat assistant style drop down menus"). Rendered in #pmw-overlay.
+   port of the 5.6 Pro chat's menus: the same metrics and keyboard, so every PM dropdown looks alike (Jared, 2026-10-02:
+   "Drop down menus should use the chat assistant style drop down menus"). Rendered in #pmw-overlay. It opens and closes
+   through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js; the plate carries pm-sprout; Jared L8 B 2026-10-30:
+   one sprout owner for every menu); the levels and the plate's morph between them are this file's.
 
    open(anchor, spec) -> handle { el, close(), update(spec) }
    spec: { id, title, label (its name when it has no title, for screen readers and the next level's Back control), meta,
@@ -76,8 +78,10 @@ menu.open = function (anchor, spec) {
   var marksAnchor = !!(anchor && anchor.setAttribute && !spec.at);
   /* hover: rows opt into the merged hover engine (data-pmh="row"); hover TAGS stay off the rows with
      data-pm-hover-visual-suppressed (data-pm-hover-exempt would also take the rows out of the hover engine) */
-  var el = hnd.el = h('div', { class: 'pmw-menu pmw-pop' + (spec.className ? ' ' + spec.className : ''), role: 'menu', tabindex: '-1',
-    'data-pm-hover-visual-suppressed': 'true', 'data-pmh': 'off', 'data-mstate': 'measure', 'aria-label': valueOf(spec.title) || spec.label || 'Menu' });
+  var el = hnd.el = h('div', { class: 'pmw-menu pmw-pop pm-sprout' + (spec.className ? ' ' + spec.className : ''), role: 'menu', tabindex: '-1',
+    'data-pm-hover-visual-suppressed': 'true', 'data-pmh': 'off', 'data-portal-display': 'flex', 'aria-label': valueOf(spec.title) || spec.label || 'Menu' });
+  // measured at its full size: the labels' widths are read from their boxes (place()), which the closed scale would shrink
+  el.style.transform = 'none';
   overlay().appendChild(el);
   /* a level is its parts, the plate's children it rendered (head, search field, list, foot); the levels it can go back
      to stay in the plate after it, parked (data-lv="park"), so going back is a reveal and never a render. The
@@ -287,7 +291,6 @@ menu.open = function (anchor, spec) {
       scroll: hnd.list ? hnd.list.scrollTop : 0,
       parts: hnd.parts, items: hnd.items, search: hnd.search, list: hnd.list, titleEl: hnd.titleEl, back: hnd.back,
       at: { left: st.left, top: st.top, width: st.width, maxHeight: st.maxHeight, side: el.getAttribute('data-side'),
-        mox: st.getPropertyValue('--pmw-mox'), moy: st.getPropertyValue('--pmw-moy'),
         box: { left: parseFloat(st.left) || 0, top: parseFloat(st.top) || 0, width: parseFloat(st.width) || el.offsetWidth, height: lastH || el.offsetHeight } } };
     hnd.stack.push(lv);
     var leaving = hnd.parts;
@@ -534,9 +537,7 @@ menu.open = function (anchor, spec) {
     el.style.left = Math.round(x) + 'px';
     el.style.top = Math.round(y) + 'px';
     el.setAttribute('data-side', up ? 'above' : 'below');
-    var ox = clamp((ar.left + ar.width / 2) - x, 18, width - 18);
-    el.style.setProperty('--pmw-mox', ox + 'px');
-    el.style.setProperty('--pmw-moy', up ? '100%' : '0%');
+    hnd.from = at ? { x: at.x, y: at.y } : anchor;   // what the sprout grows out of
     hnd.placed = true;
     if (hnd.list) tidyLinkRows(hnd.list);
   }
@@ -565,7 +566,6 @@ menu.open = function (anchor, spec) {
       var st = el.style;
       st.maxHeight = to.maxHeight; st.width = to.width; st.left = to.left; st.top = to.top;
       el.setAttribute('data-side', to.side || 'below');
-      st.setProperty('--pmw-mox', to.mox); st.setProperty('--pmw-moy', to.moy);
       b = to.box;
     } else {
       place();
@@ -599,10 +599,9 @@ menu.open = function (anchor, spec) {
       if (sp.onClose && all.indexOf(sp) === i) try { sp.onClose(); } catch (_) {}
     });
     if (opts.instant || reducedMotion()) { el.remove(); return; }
-    // leaving: no keys, no clicks and no focus for the 200 ms the fade takes
+    // leaving: no keys, no clicks and no focus while the sprout folds back
     try { el.inert = true; } catch (_) {}
-    el.setAttribute('data-mstate', 'leaving');
-    setTimeout(function () { el.remove(); }, 200 * motion.speed() + 20);
+    window.PM6_SPROUT.close(el, function () { el.remove(); });
   }
   hnd.close = close;
   hnd.update = function (sp) { hnd.spec = sp; hnd.render(sp, true); morph(); };
@@ -610,9 +609,8 @@ menu.open = function (anchor, spec) {
   catch (err) { el.remove(); throw err; }   // a bad spec never leaves an invisible menu in the overlay
   lastH = el.offsetHeight;
   if (marksAnchor) { anchor.setAttribute('aria-expanded', 'true'); anchor.classList.add('pmw-anchor-open'); }
-  el.setAttribute('data-mstate', 'closed');
-  void el.offsetWidth;
-  el.setAttribute('data-mstate', 'open');
+  el.style.transform = '';
+  window.PM6_SPROUT.open(el, null, hnd.from);
   menu.current = hnd;
   setTimeout(function () { if (!hnd.closed) doc.addEventListener('pointerdown', onOutside, true); }, 0);
   window.addEventListener('resize', onResize);

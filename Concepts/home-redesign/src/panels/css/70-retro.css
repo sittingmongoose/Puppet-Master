@@ -46,7 +46,6 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mlead { background: tra
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-empty-btn, .pmw-empty-cell):is(:hover, :focus-visible) { background: var(--accent-lime); color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-empty-btn:is(:hover, :focus-visible) :is(.pmw-empty-key, .pmw-empty-path, .pmw-empty-chev) { color: inherit; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-empty-btn, .pmw-empty-cell) { border-radius: 0; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-menu[data-mstate] { transition: none; transform: none; }
 /* the landing preview: a dithered half-tone with a box-drawn outline */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-landing { border: 1px solid var(--accent-lime); border-radius: 0; background: repeating-conic-gradient(color-mix(in srgb, var(--accent-lime) 22%, transparent) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-landing-label { border-radius: 0; background: var(--accent-lime); color: var(--surface); font-family: var(--pm-font-code); }

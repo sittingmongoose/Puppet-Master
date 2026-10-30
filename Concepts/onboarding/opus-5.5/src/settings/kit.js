@@ -209,34 +209,15 @@ PM51.listDetail = ({ id, rosterId, rosterTitle, count, add, filter, items, detai
 /* ---------- popout engine: dropdown lists, menus, pickers ------------------- */
 /* Popouts live in document.body (position:fixed) so #pm-settings-portals' overflow:hidden and the
    root's contain never clip them. Nothing in body gets the engine's event routing (ownsEvent), so
-   the engine owns its listeners here; the motion contract is the chat assistant's "sprout"
-   (six --pm6-sprout-* vars, is-open / is-closing), driven by window.PM6_SPROUT when that script has
-   loaded and by an identical local class choreography otherwise. */
+   the engine owns its listeners here; the motion is PM6_SPROUT's, the one menu sprout (base/script/pm7-sprout.js,
+   its classes in pm7-sprout.css: six --pm6-sprout-* vars, is-open / is-closing). */
 let pmActive = null, popSeq = 0;
 const POP_ID = () => 'pm51-pop-' + (++popSeq);
-const pmSprout = () => (window.PM6_SPROUT && typeof window.PM6_SPROUT.open === 'function' && typeof window.PM6_SPROUT.close === 'function') ? window.PM6_SPROUT : null;
-function setSproutLocal(el, anchor) {
-  const r = el.getBoundingClientRect(), ar = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : null;
-  const ax = ar ? ar.left + ar.width / 2 : r.left + r.width / 2, ay = ar ? ar.top + ar.height / 2 : r.top;
-  const ox = ax < r.left + r.width / 2 ? 12 : 88, above = ay > r.top + r.height / 2;
-  el.style.setProperty('--pm6-sprout-ox', ox + '%'); el.style.setProperty('--pm6-sprout-oy', above ? '100%' : '0%');
-  el.style.setProperty('--pm6-sprout-tx', '0px'); el.style.setProperty('--pm6-sprout-ty', above ? '10px' : '-10px');
-  el.style.setProperty('--pm6-sprout-sx', '0.72'); el.style.setProperty('--pm6-sprout-sy', '0.48');
-  el.dataset.sprout = (above ? 'b' : 't') + (ox === 12 ? 'l' : 'r');
-}
+/* a popout with no anchor grows out of the corner it hangs from (positionPopout's stand-in trigger) */
 function sproutOpen(el, anchor) {
-  const S = pmSprout();
-  if (S) { S.open(el, null, anchor || null); if (!anchor) setSproutLocal(el, null); return; }
-  el.classList.remove('is-closing'); el.style.display = 'block'; setSproutLocal(el, anchor); void el.offsetHeight; el.classList.add('is-open');
+  window.PM6_SPROUT.open(el, null, anchor || { left: window.innerWidth - 240, top: 16, width: 224, height: 0 });
 }
-function sproutClose(el, done) {
-  const S = pmSprout();
-  if (S) { S.close(el, done); return; }
-  let finished = false; const finish = () => { if (finished) return; finished = true; el.removeEventListener('transitionend', onEnd); el.style.display = 'none'; done && done(); };
-  const onEnd = e => { if (e.target !== el || (e.propertyName !== 'opacity' && e.propertyName !== 'transform')) return; finish(); };
-  el.classList.remove('is-open'); el.classList.add('is-closing'); el.addEventListener('transitionend', onEnd);
-  window.setTimeout(finish, motionReduced() ? 0 : 280);
-}
+function sproutClose(el, done) { window.PM6_SPROUT.close(el, done); }
 function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
   const vw = window.innerWidth, vh = window.innerHeight;
   const r = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : { left: vw - 240, right: vw - 16, top: 16, bottom: 16, width: 224 };
