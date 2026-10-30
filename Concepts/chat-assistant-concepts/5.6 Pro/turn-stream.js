@@ -220,7 +220,10 @@
     if (on && !el && st.flow) {
       var c = C(), mdl = c.selectedModel ? c.selectedModel() : null;
       el = document.createElement('span'); el.className = 'tx-pending';
-      el.innerHTML = '<b>' + esc((mdl && mdl.name) || 'Assistant') + '</b><span class="tx-pending-verb">is thinking</span><em class="tx-pending-t"></em>';
+      /* W4/W5 (PM7 build): the thinking placeholder leads with the system loader's Think motion (L5); while the reply's
+         work runs, Pip in the Orbit's centre takes over and this one steps aside (pip.js: one Pip per reply) */
+      var pip = window.PM56_PIP && window.PM56_PIP.thinkingPip ? window.PM56_PIP.thinkingPip() : '';
+      el.innerHTML = pip + '<b>' + esc((mdl && mdl.name) || 'Assistant') + '</b><span class="tx-pending-verb">is thinking</span><em class="tx-pending-t"></em>';
       st.flow.appendChild(el);
     } else if (!on && el) {
       /* the label condenses toward the mark while the first word emerges

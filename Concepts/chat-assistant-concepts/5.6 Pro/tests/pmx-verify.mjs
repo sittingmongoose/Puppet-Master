@@ -778,6 +778,8 @@ export function inPageLint(o) {
     for (const a of live) {
       const t = a.effect.target;
       if (skipped(t)) continue;
+      /* W4 (PM7 build, PC1 accepted 2026-10-29): the sheet's Pip sways at rest (pip.css), outside the loop budget */
+      if (t.closest('.pmx-pip-host')) continue;
       const host = t.closest('.pmx-run') || t.closest('.pmx-view') || topPmx(t);
       if (!host) continue;
       const b = buckets.get(host) || []; b.push(a.animationName || a.id || (a.effect.getKeyframes()[0] ? Object.keys(a.effect.getKeyframes()[0]).filter(k => !/^(offset|easing|composite|computedOffset)$/.test(k)).join('+') : 'animation')); buckets.set(host, b);
