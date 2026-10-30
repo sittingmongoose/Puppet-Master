@@ -23909,13 +23909,14 @@ html[data-o55-nier-parts~="diamonds"] :where(.pm6-spin):not(.t7.t7:not(*)) svg >
 html[data-o55-nier-parts~="diamonds"] :is(.t7.t7:not(*)) svg > * { visibility: hidden; }
 /* The system loader (W5, L7; glyph-system src/logo/pm-loader.js, pm-loader.css): in NieR its one part is the plain ink
    ring, and with this part installed it is the hollow diamond, sized to the loader (1em by default), turning only while
-   the loader owner has it armed (data-pml-run="on": on screen, tab shown, no drag), at Animation speed (--pml-k).
-   Reduced Motion: it stands still and breathes in opacity (L3). */
+   the loader owner has it armed (data-pml-run="on": on screen, tab shown, no drag), at Animation speed (--pml-k), in
+   the shared clock's phase (--pml-ndelay). Reduced Motion: it stands still and breathes in opacity (L3; !important,
+   past the page's global reduced rule). */
 html[data-o55-nier-parts~="diamonds"] .pml-ld > .pml-nier {
   width: 100%; height: 100%; margin: 0; border-radius: 0; border: max(1px, .07em) solid currentColor;
   outline: max(1px, .07em) solid currentColor; outline-offset: -.3em; transform: rotateY(0deg) rotate(45deg) scale(.72);
 }
-html[data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: o55np-diamond calc(2.8s * var(--pml-k, 1)) linear infinite var(--pml-ps, running); }
+html[data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: o55np-diamond calc(2.8s * var(--pml-k, 1)) linear var(--pml-ndelay, 0s) infinite var(--pml-ps, running); }
 @keyframes o55np-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(360deg) rotate(45deg) scale(.72); } }
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.pm6-wiz-disc-spin):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.pm6-orch-pc-ring span):not(.t7.t7:not(*)):not(t7:not(*)),
@@ -23924,7 +23925,7 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.o55-ph-acti
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.thread-working-pulse):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.pm6-spin svg):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(t7.t7.t7:not(*)) { animation: none !important; }
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out infinite var(--pml-ps, running); }
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
 
 /* ====================================================================================================== Motion */
 
@@ -24228,7 +24229,7 @@ html[data-o55-nier-parts~="diamonds"] :where(.o55-ph-active .o55-phmark):not(.t7
 html[data-o55-nier-parts~="diamonds"] :where(.thread-working-pulse):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-o55-nier-parts~="diamonds"] :where(.pm6-spin svg):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-o55-nier-parts~="diamonds"] :is(t7.t7.t7:not(*)) { animation: none !important; }
-  html[data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out infinite var(--pml-ps, running); }
+  html[data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
   html[data-o55-nier-parts~="slice"] :is(.pm6-tb-menu),
 html[data-o55-nier-parts~="slice"] :is(.pm6-chat-more-menu),
 html[data-o55-nier-parts~="slice"] :is(.pm51-popout),
@@ -38890,6 +38891,17 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   :root [data-pml-run="on"] .pml-a .pml-blink { animation: pml-rblink var(--pml-bdur, 4.4s) ease-in-out var(--pml-bdelay, 0s) infinite var(--pml-ps, running) !important; }
   :root [data-pml-run="on"] .pml-a .pml-fr { animation: none !important; opacity: 0; }
   :root [data-pml-run="on"] .pml-a .pml-fr0 { opacity: 1; animation: pml-breath var(--pml-rdur, 2.2s) ease-in-out var(--pml-rdelay, 0s) infinite var(--pml-ps, running) !important; }
+  /* the Settings panel freezes its own subtree under the OS setting with an id selector (pm4-settings-css.css,
+     #panel-settings *): a loader in a Settings busy state keeps the same wait signal */
+  #panel-settings [data-pml-run="on"] .pml-a :is(.pml-pup),
+#panel-settings [data-pml-run="on"] .pml-a :is(.pml-str),
+#panel-settings [data-pml-run="on"] .pml-a :is(.pml-eyes),
+#panel-settings [data-pml-run="on"] .pml-a :is(.pml-dot2),
+#panel-settings [data-pml-run="on"] .pml-a :is(.pml-dot3),
+#panel-settings [data-pml-run="on"] .pml-a :is(.pml-dot4) { animation: none !important; }
+  #panel-settings [data-pml-run="on"] .pml-a :is(.pml-ctl),
+#panel-settings [data-pml-run="on"] .pml-a :is(.pml-fr0) { animation: pml-breath var(--pml-rdur, 2.2s) ease-in-out var(--pml-rdelay, 0s) infinite var(--pml-ps, running) !important; }
+  #panel-settings [data-pml-run="on"] .pml-a .pml-blink { animation: pml-rblink var(--pml-bdur, 4.4s) ease-in-out var(--pml-bdelay, 0s) infinite var(--pml-ps, running) !important; }
 }
 
 /* glyph-system/opus-5.5/src/logo/pm-loader.css */
@@ -38907,14 +38919,19 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
 @keyframes pml-ld-in { from { opacity: 0; } to { opacity: 1; } }
 /* NieR (L7, pm-loader.js NIER): Pip never animates in NieR. The loader's one part is the plain ink ring every spinner
    showed in NieR before this build (the Basic spinner); the Diamond loaders part turns it into NieR's hollow diamond
-   (styles.d/14-nier-parts.css). It turns only while armed (data-pml-run="on"), at Animation speed (--pml-k), and holds
-   during drags (--pml-ps). Reduced Motion: the ring stands still and breathes. */
+   (styles.d/14-nier-parts.css). It turns only while armed (data-pml-run="on"), at Animation speed (--pml-k), in the
+   shared clock's phase (--pml-sdelay, --pml-ndelay, --pml-nbdelay from pm-loader.js), and holds during drags
+   (--pml-ps). Reduced Motion: the ring stands still and breathes. */
 .pml-ld > .pml-nier { display: block; box-sizing: border-box; width: 72%; height: 72%; margin: 14%; border-radius: 50%; border: max(1.5px, .09em) solid currentColor; border-right-color: transparent; color: var(--o55-nier-ink, currentColor); }
-.pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-spin calc(.8s * var(--pml-k, 1)) linear infinite var(--pml-ps, running); }
+.pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-spin calc(.8s * var(--pml-k, 1)) linear var(--pml-sdelay, 0s) infinite var(--pml-ps, running); }
 @keyframes pml-nier-spin { to { transform: rotate(360deg); } }
 @keyframes pml-nier-breath { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
-:root[data-motion="reduced"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out infinite var(--pml-ps, running); }
-@media (prefers-reduced-motion: reduce) { .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out infinite var(--pml-ps, running); } }
+/* !important: the page's global reduced rule (pm6-css-global.css) cuts every animation to .01 ms, once; this
+   opacity-only breath is the loader's wait signal (L3), as the Pip loader's own reduced rules are (pm-logo.css) */
+:root[data-motion="reduced"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
+@media (prefers-reduced-motion: reduce) {
+  .pml-ld[data-pml-run="on"] > .pml-nier, #panel-settings .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
+}
 
 </style>
 <script id="pm-glyph-js">
@@ -40192,7 +40209,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
     meaning: 'Agents: AI workers acting for you, as a category (each agent itself is drawn as Pip; the terminal\'s spark and cursor cell mark an agent at the keyboard).', act: 'seq', aliases: ['agent', 'agents', 'bot'],
     replaces: ['T-core robot', 'T-bridge agents', 'background-activity concept rw-agents (the status bar\'s agents mark, D14)'],
     surfaces: ['status bar agents item (12-14 px)', 'agents and processes panel: Agents tab head', 'chat Activity bar (Subagents domain)', 'left rail'],
-    note: 'The antenna light blinks (it dims to .6 and back, 260 ms after the beat) and the eyes glance across. Category mark only (X1): ' +
+    note: 'The antenna light blinks (it dims to .6 and back, 26 % into the beat: 572 ms on the 2200 ms beat) and the eyes glance across. Category mark only (X1): ' +
       'never a stand-in for one agent. user and users (the chat) stay for people.',
     parts: ['<rect x="5" y="8" width="14" height="11.5" rx="3"/>', '<path d="M12 8V5.7M3 12.5v3M21 12.5v3"/>',
       { els: '<circle cx="12" cy="4" r="1.35" class="nx-f"/>', move: { ao: .6, ad: 260 } },
@@ -40692,7 +40709,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
     replaces: ['background-activity concept rw-processes (the chat domain\'s pulse and the status bar\'s terminal mark, D14)'],
     aliases: [],
     surfaces: ['status bar processes item (12-14 px)', 'agents and processes panel: Processes tab head', 'chat Activity bar: Processes domain (D4: only while a process runs or needs input)', 'Activity Detail: Processes tab'],
-    note: 'Two moving parts on the beat: the chevron nudges back (1.6 units) as it dims, and 160 ms later the cursor line types ' +
+    note: 'Two moving parts on the beat: the chevron nudges back (1.6 units) as it dims, and 16 % of the beat later (352 ms on the 2200 ms beat) the cursor line types ' +
       'in by its clip. The frame is 18 x 16 with 3-unit corners, so at 12 px it reads as a console, never as the bare ' +
       'terminal glyph. Colour comes from status, never from the glyph: the Activity bar\'s tone inks in the chat, the glyph ' +
       'inks (--pmg-ink-*) in the status bar.',
@@ -40840,6 +40857,14 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
     const n = stops.length - 1;
     return `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${R(x1)}" y1="${R(y1)}" x2="${R(x2)}" y2="${R(y2)}">${stops.map((c, i) => `<stop offset="${R(i / n)}" stop-color="${c}"/>`).join('')}</linearGradient>`;
   }
+  /* Options that reach markup are checked here, at the owner (the loader's html() does the same): a class token, an id
+     or selector stem, a CSS custom property name and a colour each have one accepted shape; anything else is dropped. */
+  const CLS_TOKEN = /^-?[_a-zA-Z][\w-]*$/;
+  const safeCls = (v) => String(v == null ? '' : v).split(/\s+/).filter((t) => CLS_TOKEN.test(t)).join(' ');
+  const safeStem = (v) => (typeof v === 'string' && /^[a-zA-Z][\w-]{0,40}$/.test(v) ? v : null);
+  const COLOR = /^(#[0-9a-fA-F]{3,8}|[a-zA-Z]{3,24}|(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\([0-9a-zA-Z.,%\s/+-]*\)|var\(--[\w-]+\))$/;
+  const safeColor = (v) => (typeof v === 'string' && COLOR.test(v.trim()) ? v.trim() : null);
+  const safeVar = (v) => (typeof v === 'number' && isFinite(v) ? String(v) : safeColor(v));
   const rot = (p, c, deg) => { const a = deg * D2R, s = Math.sin(a), k = Math.cos(a); const x = p[0] - c[0], y = p[1] - c[1]; return [c[0] + x * k - y * s, c[1] + x * s + y * k]; };
 
   /* --------------------------------------------------------------- geometry */
@@ -41404,7 +41429,10 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   function filePalette(look, tokens) {
     const e = EXPORT[look] || EXPORT['basic-dark'], family = familyOf(look), scheme = schemeOf(look);
     const p = Object.assign({ family, scheme, look }, e);
-    if (tokens) Object.keys(tokens).forEach((k) => { if (tokens[k]) p[k] = tokens[k]; });
+    if (tokens) Object.keys(tokens).forEach((k) => {
+      const t = tokens[k], c = Array.isArray(t) ? (t.length && t.every((x) => safeColor(x)) ? t.map((x) => safeColor(x)) : null) : safeColor(t);
+      if (c && Object.prototype.hasOwnProperty.call(e, k)) p[k] = c;
+    });
     const ctl = solid(p.ctl);
     p.back = family === 'nier' ? ctl : mix(ctl, family === 'retro' ? p.tile.stops[0] : p.bg, .42);
     p.headSolid = solid(p.head);
@@ -41419,7 +41447,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   function markBody(o, th, tier) {
     const anim = !!o.motion && !th.noMotion;
     const tray = o.form === 'tray';
-    const ink = tray ? o.ink || '#000' : null;
+    const ink = tray ? safeColor(o.ink) || '#000' : null;
     const live = anim && !o.reduced;
     const cls = o.cls;
     const ids = o.ids;
@@ -41489,8 +41517,14 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   }
   function mark(opts) {
     const o = Object.assign({ px: 24, mood: 'idle', motion: null, form: 'glyph' }, opts || {});
-    o.look = o.look && LOOKS.indexOf(o.look) >= 0 ? o.look : look();
-    const family = familyOf(o.look), th = rolePalette(o.look);
+    o.form = o.form === 'tray' ? 'tray' : 'glyph';
+    if (['micro', 'small', 'full', 'pixel'].indexOf(o.tier) < 0) o.tier = null;
+    const painted = look();
+    o.look = o.look && LOOKS.indexOf(o.look) >= 0 ? o.look : painted;
+    // the page's colour roles hold the painted look's tokens: a mark of another look draws in its export palette
+    const off = !!D && o.look !== painted;
+    const family = familyOf(o.look), th = off ? filePalette(o.look, null) : rolePalette(o.look);
+    const vars = o.vars && typeof o.vars === 'object' ? Object.keys(o.vars).filter((k) => /^[a-z0-9-]{1,24}$/.test(k) && safeVar(o.vars[k]) != null).map((k) => '--pip-' + k + ':' + safeVar(o.vars[k])) : [];
     o.px = +o.px || 24;
     const tier = o.tier || tierFor(o.px, family), tk = tierKey(family, tier, o.px);
     // below 12 px no part moves (F3-584); NieR never moves
@@ -41499,7 +41533,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
     o.cls = CLS;
     // per-instance colours (vars) reach gradients only through defs inside this svg: keyed by the vars, so the markup
     // stays a pure function of its options; marks without vars share one <defs> per family
-    const vk = o.vars ? '-v' + hashKey(JSON.stringify(o.vars)) : '';
+    const vk = (vars.length ? '-v' + hashKey(vars.join(';')) : '') + (off ? '-x' + o.look : '');
     o.ids = fixedIds(family, tk + vk, o.form, moodOf(o.mood));
     const m = markBody(o, th, tier), own = !!vk && !!m.defs, body = (own ? `<defs>${m.defs}</defs>` : '') + m.body;
     if (m.defs && !own) ensureDefs(family, o.ids.grad, m.defs);
@@ -41507,15 +41541,16 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
     if (anim) ensureAnim(family, o.motion, tier, tk, o.px);
     const label = o.title || 'Puppet Master';
     const role = anim || o.decorative ? 'aria-hidden="true" focusable="false"' : 'role="img" aria-label="' + esc(label) + '"';
-    const cls = 'pml pml-f-' + family + ' pml-t-' + tk + (anim ? ' pml-a pml-k-' + key + ' pml-m-' + o.motion : '') + (o.className ? ' ' + o.className : '');
+    const extra = safeCls(o.className);
+    const cls = 'pml pml-f-' + family + ' pml-t-' + tk + (anim ? ' pml-a pml-k-' + key + ' pml-m-' + o.motion : '') + (extra ? ' ' + extra : '');
     let vbox = `0 0 ${m.vb} ${m.vb}`;
     if (m.crisp) {
       const Dp = Math.round(o.px), k = Math.floor(Dp / m.vb);
       if (k >= 1 && Dp < 64 && Dp % m.vb) { const V = R(Dp / k), pad = R((V - m.vb) / 2); vbox = `${-pad} ${-pad} ${V} ${V}`; }
     }
-    const vars = o.vars ? ' style="' + Object.keys(o.vars).map((k2) => '--pip-' + k2 + ':' + String(o.vars[k2]).replace(/"/g, '')).join(';') + '"' : '';
+    const style = vars.length ? ' style="' + vars.join(';') + '"' : '';
     const size = o.size === 'em' ? 'width="1em" height="1em"' : `width="${o.px}" height="${o.px}"`;
-    return roleStyles(`<svg xmlns="http://www.w3.org/2000/svg" class="${cls}" ${size} viewBox="${vbox}"${m.crisp ? ' shape-rendering="crispEdges"' : ''} ${role} data-pml-mood="${esc(moodOf(o.mood))}"${vars}>${body}</svg>`);
+    return roleStyles(`<svg xmlns="http://www.w3.org/2000/svg" class="${cls}" ${size} viewBox="${vbox}"${m.crisp ? ' shape-rendering="crispEdges"' : ''} ${role} data-pml-mood="${esc(moodOf(o.mood))}"${style}>${body}</svg>`);
   }
 
   /* -------------------------------------------- shared defs and stylesheet */
@@ -41732,10 +41767,15 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   }
   function svg(opts) {
     const o = Object.assign({ theme: null, form: 'glyph', px: 64, dpr: 1, mood: 'idle', motion: null, reduced: false }, opts || {});
+    o.px = Math.max(1, Math.round(+o.px) || 64); o.dpr = Math.max(1, +o.dpr || 1);
+    o.form = ['glyph', 'tile', 'tray'].indexOf(o.form) >= 0 ? o.form : 'glyph';
+    o.motion = MOTIONS.indexOf(o.motion) >= 0 ? o.motion : null;
+    if (['micro', 'small', 'full', 'pixel', 'auto'].indexOf(o.tier) < 0) o.tier = null;
+    const outPx = o.px;
     const lk = LOOKS.indexOf(o.look || o.theme) >= 0 ? (o.look || o.theme) : (D ? look() : 'friendly-dark');
     const family = familyOf(lk);
     const th = filePalette(lk, o.tokens || liveTokens(lk));
-    o.prefix = o.prefix || nextId();
+    o.prefix = safeStem(o.prefix) || nextId();
     const p = o.prefix;
     const inner = o.form === 'tile' ? o.px * .68 : o.px;
     const tier = o.tier && o.tier !== 'auto' ? o.tier : tierFor(inner, family);
@@ -41771,7 +41811,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
       const ids = { tile: p + 't', glow: p + 'w', rim: p + 'q', clip: p + 'k' };
       const innerSvg = (m.defs ? `<defs>${m.defs}</defs>` : '') + body;
       const fr = tileFrame(th, ids, innerSvg, m.vb, m.crisp);
-      return `<svg xmlns="http://www.w3.org/2000/svg" class="${p}" width="${opts.px || 64}" height="${opts.px || 64}" viewBox="0 0 64 64" ${role}>${style}<defs>${fr.defs}</defs>${fr.body}</svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" class="${p}" width="${outPx}" height="${outPx}" viewBox="0 0 64 64" ${role}>${style}<defs>${fr.defs}</defs>${fr.body}</svg>`;
     }
     // sprites land on whole device pixels: pad the view box instead of scaling by a fraction
     let vbox = `0 0 ${m.vb} ${m.vb}`;
@@ -41906,7 +41946,8 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   G.PMLogo = {
     product: true, version: '1.0',
     mark, svg, dataUrl, favicon, look, onLook, family: familyOf, scheme: schemeOf, tierFor,
-    period: (o) => { const f = o && o.family || familyOf(o && o.look || look()); return periodOf(f, o && o.motion || 'swing', tierFor(o && o.px || 24, f)); },
+    // NieR never moves: 0. Whole ms at speed 1 otherwise.
+    period: (o) => { const f = o && o.family || familyOf(o && o.look || look()); return f === 'nier' ? 0 : Math.round(periodOf(f, o && o.motion || 'swing', tierFor(o && o.px || 24, f))); },
     LOOKS, FAMILIES, MOTION, MOTIONS, THEME_ORDER: LOOKS, THEMES, EXPORT,
     MOODS, MOOD_STATUS, STATUS_FACE, TRAY, trayFace, moodFor: (key) => STATUS_FACE[key] || 'idle',
     clock, solver, kit
@@ -41924,7 +41965,8 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
  *     The opt-in. The owner fills it with Pip (PMLogo.mark), so a host may write it empty; PM_PIP_LOADER.html() writes
  *     it already drawn (the still pose shows from the first frame the host paints). Sized 1em by default and set on the
  *     text baseline; --pml-size (or the size option) fixes another size. data-pip-px is the size the host expects in
- *     CSS px, which picks the drawing's tier (micro <= 18, small <= 40, full) and, below 12 px, keeps it still (F3-584).
+ *     CSS px, which picks the drawing's tier (micro <= 18, small <= 40, full) and, below 12 px, keeps it still (F3-584);
+ *     write it with --pml-size. Without it the owner measures the loader when it arms and uses that size.
  *   The motion is chosen by context and is never a setting (L5, SSYS-055): think for the chat's thinking placeholder,
  *   hop for a short wait that ends in success, swing for every other wait.
  *
@@ -41948,6 +41990,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
  * signal below needs-you: it is never put in a list row or tab for an item's state (that is st-working, L1).
  *
  * API: html(o) -> markup; mount(root?) arms loaders now; busy(host, on, o) marks a host busy with a loader;
+ *      hold(on) / held(): Demo Studio's lab hold (waits that end through busy() keep their loader until hold(false));
  *      refresh() redraws and re-phases every loader; motion(name) -> the context's motion; clock = PMLogo.clock;
  *      stats() -> counts for tests. */
 (function () {
@@ -41969,6 +42012,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
      the Diamond loaders part's hollow diamond (styles.d/14-nier-parts.css), or with that part off today's fallback,
      the plain ink ring every spinner showed in NieR before (pm-loader.css). */
   const NIER = '<span class="pml-nier" aria-hidden="true"></span>';
+  const NIER_MS = Object.freeze({ diamond: 2800, ring: 800, breath: 2400 });   // pm-loader.css, 14-nier-parts.css
   const isNier = (look) => L.family(look) === 'nier';
   function draw(el) {
     const look = L.look();
@@ -41981,10 +42025,17 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   function phase(el) {
     const look = L.look(), family = L.family(look), motion = motionOf(el), px = pxOf(el), k = L.clock.speed();
     el.style.setProperty('--pml-k', String(k));
-    if (family === 'nier') return;   // NieR's part keeps its own period, scaled by --pml-k
+    const ms = (v) => Math.round(v) + 'ms', c = L.clock;
+    if (family === 'nier') {
+      // NieR's part keeps its own periods (the diamond's 2.8 s turn, the ring's 0.8 s, the 2.4 s breath), scaled by
+      // --pml-k, and joins the shared clock's phase like every other loader
+      el.style.setProperty('--pml-ndelay', ms(c.delay(NIER_MS.diamond * k)));
+      el.style.setProperty('--pml-sdelay', ms(c.delay(NIER_MS.ring * k)));
+      el.style.setProperty('--pml-nbdelay', ms(c.delay(NIER_MS.breath * k)));
+      return;
+    }
     const P = L.period({ family, motion, px }) * k, base = (L.MOTION[family] || L.MOTION.basic).dur * 1000 * k;
-    const rP = base * 1.3, bP = base * 2.6, kP = P * 2, c = L.clock;
-    const ms = (v) => Math.round(v) + 'ms';
+    const rP = base * 1.3, bP = base * 2.6, kP = P * 2;
     el.style.setProperty('--pml-dur', ms(P)); el.style.setProperty('--pml-delay', ms(c.delay(P)));
     el.style.setProperty('--pml-rdur', ms(rP)); el.style.setProperty('--pml-rdelay', ms(c.delay(rP)));
     el.style.setProperty('--pml-bdur', ms(bP)); el.style.setProperty('--pml-bdelay', ms(c.delay(bP)));
@@ -42015,6 +42066,8 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   function arm(el) {
     if (!el || !el.isConnected || el.nodeType !== 1 || !el.hasAttribute('data-pip-loader')) return;
     el.classList.add('pml-ld');
+    // no data-pip-px from the host: the drawing's tier (and the below-12 px still rule) follow the size it renders at
+    if (!(+el.getAttribute('data-pip-px') > 0)) { const w = Math.round(el.getBoundingClientRect().width); if (w > 0) el.setAttribute('data-pip-px', String(w)); }
     if (!el.hasAttribute('aria-hidden')) el.setAttribute('aria-hidden', 'true');
     if (!drawn(el)) draw(el);
     sweep();
@@ -42061,8 +42114,13 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
     const list = [...waiting]; waiting.clear();
     list.forEach((el) => { if (el.isConnected) { el.removeAttribute('data-pml-run'); arm(el); } });
   });
-  /* a new look: every loader is drawn again in it and joins the phase */
+  /* a new look: every loader is drawn again in it and joins the phase. So does a change that swaps a running
+     loader's animation for another: NieR's parts (the diamond or the ring), Reduced Motion (the app's or the OS's). */
   L.onLook(() => refresh());
+  let swapT = 0;
+  const swapped = () => { if (!live.size && !waiting.size) return; cancelAnimationFrame(swapT); swapT = requestAnimationFrame(() => refresh()); };
+  new MutationObserver(swapped).observe(D.documentElement, { attributes: true, attributeFilter: ['data-o55-nier-parts', 'data-motion'] });
+  try { W.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', swapped); } catch (_) { /* old engines */ }
   /* Animation speed: a change in Settings (PM51.watch), and otherwise at the next arm, after a drag, a return to the
      window or the tab, and the end of a busy spell; every loader is phased again at the new period */
   let lastSpeed = L.clock.speed();
@@ -42102,14 +42160,27 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   }
   /* A host waiting: aria-busy on the host and a loader in it (first, or o.slot: 'end' or an element). The host's own
      words say what it waits for; o.status adds role="status" for a wait with no words of its own. */
+  /* Hold (Demo Studio's lab switch, for inspection): while held, a wait that ends through busy() leaves its loader up;
+     hold(false) ends those waits. Nothing else changes: a held loader still pauses offscreen and in drags, follows
+     Reduced Motion and NieR's routing. */
+  let holding = false;
+  const deferred = new Set();
+  function hold(on) {
+    holding = !!on;
+    if (!holding) { const list = [...deferred]; deferred.clear(); list.forEach((h) => { if (h.isConnected) busy(h, false); }); }
+    return holding;
+  }
   function busy(host, on, o) {
     if (!host) return false;
     o = o || {};
-    const mine = host.querySelector('.pml-ld[data-pml-busy]');
+    const mine = host.__pmlBusy && host.__pmlBusy.isConnected ? host.__pmlBusy : host.querySelector('.pml-ld[data-pml-busy]');
+    if (on) deferred.delete(host);
+    if (!on && holding && mine) { deferred.add(host); return true; }
     if (!on) {
       host.removeAttribute('aria-busy');
       if (host.getAttribute('data-pml-status') === 'on') { host.removeAttribute('role'); host.removeAttribute('data-pml-status'); }
       if (mine) mine.remove();
+      host.__pmlBusy = null;
       return true;
     }
     host.setAttribute('aria-busy', 'true');
@@ -42119,6 +42190,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
     t.innerHTML = html(o);
     const el = t.content.firstElementChild;
     el.setAttribute('data-pml-busy', '1');
+    host.__pmlBusy = el;   // found again on clear, even in an outside slot
     const slot = o.slot && o.slot.nodeType === 1 ? o.slot : null;
     if (slot) slot.appendChild(el); else if (o.slot === 'end') host.appendChild(el); else host.insertBefore(el, host.firstChild);
     return true;
@@ -42127,7 +42199,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   const motion = (context) => (context === 'thinking' ? 'think' : context === 'short' ? 'hop' : 'swing');
 
   W.PM_PIP_LOADER = Object.freeze({
-    version: 1, html, mount, busy, refresh, motion, clock: L.clock, MOTIONS,
+    version: 1, html, mount, busy, refresh, motion, hold, held: () => holding, clock: L.clock, MOTIONS,
     stats: () => ({ live: live.size, waiting: waiting.size, running: [...live].filter((el) => el.getAttribute('data-pml-run') === 'on').length, away })
   });
 })();
@@ -42141,8 +42213,9 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
  * and the agent puppet, helper marks and Activity agent rows stay Pip under every preset, Plain included. Where a NieR
  * part and a Pip part both draw, the NieR part wins (S7). There is no Pip on/off row (S6).
  *
- * Storage (S2): general.visual.pip-parts, per Project, a multiselect of the part labels, stored the way
- * general.visual.nier-parts is. The Settings engine is private to its script, so the registry reads and writes it
+ * Storage (S2): general.visual.pip-parts, per Project, a multiselect of the part labels, shown as-is in the Settings
+ * row, as general.visual.nier-parts stores its labels (lead's ruling, 2026-10-30). The registry keeps id <-> label, and
+ * a stored id still reads. The Settings engine is private to its script, so the registry reads and writes it
  * through window.PM_PIP_PARTS_STORE (Concepts/onboarding/opus-5.5/src/settings/kit.d/28-pip-parts.js: the same
  * transaction and refusal path as a Settings row). Until the Settings data has that row, and in a sandboxed preview,
  * the choice lives in memory for the session, per Project. A Project switch re-reads the row and says so if the parts
@@ -42156,7 +42229,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
  *   count()              -> { on, total } (the editor's "On N / 25" meter; its words are copy)
  *   preset()             -> 'full' | 'quiet' | 'still' | 'plain' when the parts match one exactly, else null ("Custom")
  *   set(ids)             -> stores exactly these parts for the current Project; returns true when stored
- *   toggle(id, on?)      -> one part; applyPreset(name) -> one of PRESETS
+ *   toggle(id, on?)      -> one part; applyPreset(name) -> one of PRESETS; both change the preview while one shows
  *   preview(ids | null)  -> a non-persistent choice painted over the stored one (onboarding before its Project is saved,
  *                           the editor's live preview); null clears it; previewing() -> ids or null;
  *                           commitPreview() -> stores the preview for the current Project and clears it
@@ -42222,7 +42295,6 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   });
 
   const order = (ids) => { const want = new Set((Array.isArray(ids) ? ids : []).map(String)); return IDS.filter((id) => want.has(id)); };
-  const labels = (ids) => order(ids).map((id) => byId.get(id).label);
 
   /* ------------------------------------------------------------ the store */
   // The Settings adapter (src/settings/kit.d/28-pip-parts.js) loads with the body's Settings script; read it late.
@@ -42242,7 +42314,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   const current = () => (pv ? pv.slice() : stored());
   function write(ids) {
     const list = order(ids), S = store();
-    if (S) return S.write(labels(list));
+    if (S) return S.write(list.map((id) => byId.get(id).label));
     memory[projectId()] = list;
     return true;
   }
@@ -42284,17 +42356,21 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
     count: () => ({ on: current().length, total: IDS.length }),
     preset: () => presetOf(current()),
     label: (id) => (byId.get(id) || {}).label || null,
+    /* set() always stores for the Project. While a preview shows (the editor's live preview, onboarding before its
+       Project is saved), toggle() and applyPreset() change the preview, which is what the person sees; commitPreview()
+       stores it. */
     set(ids) { const ok = write(ids); if (ok) emit('set'); return ok; },
     toggle(id, want) {
       if (!byId.has(id)) return false;
-      const now = stored(), has = now.indexOf(id) >= 0, next = want == null ? !has : !!want;
+      const now = current(), has = now.indexOf(id) >= 0, next = want == null ? !has : !!want;
       if (next === has) return true;
-      return this.set(next ? now.concat(id) : now.filter((x) => x !== id));
+      const ids = next ? now.concat(id) : now.filter((x) => x !== id);
+      return pv ? (this.preview(ids), true) : this.set(ids);
     },
-    applyPreset(name) { const p = PRESETS[String(name || '').toLowerCase()]; return p ? this.set(p) : false; },
+    applyPreset(name) { const p = PRESETS[String(name || '').toLowerCase()]; return p ? (pv ? (this.preview(p), true) : this.set(p)) : false; },
     preview(ids) { pv = ids == null ? null : order(ids); emit('preview'); return current(); },
     previewing: () => (pv ? pv.slice() : null),
-    commitPreview() { if (!pv) return true; const ids = pv; pv = null; const ok = write(ids); if (!ok) pv = ids; emit('set'); return ok; },
+    commitPreview() { if (!pv) return true; const ids = pv; pv = null; const ok = write(ids); if (!ok) { pv = ids; return false; } emit('set'); return true; },
     on, subscribe: (fn) => on('change', fn)
   });
 })();
@@ -42428,7 +42504,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
 
   function load(name) {
     const b = builders[name];
-    if (!b) { S.scenario = name; return false; }
+    if (!b) return false;   // an unknown scenario changes nothing: scenario() keeps naming what is loaded
     let r;
     try { r = b() || {}; } catch (e) { console.error(e); r = {}; }
     S.scenario = name; S.loaded = name;
@@ -42578,7 +42654,8 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
     emit('stop');
     return ids;
   }
-  const canRestart = (it) => !!it && it.kind === 'process' && !it.stopping;
+  // a process not stopping and not waiting for an answer (its prompt goes to the person, not away)
+  const canRestart = (it) => !!it && it.kind === 'process' && !it.stopping && !needsYou(it);
   function restart(id) {
     const it = item(id);
     if (!canRestart(it)) return false;
@@ -42654,6 +42731,9 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
     'cmd.work.clear_finished': (a) => clearFinished(a && a.view, a && a.pred),
     'cmd.work.quit': (a) => quit(a)
   };
+  /* args: cmd.work.stop { scope, id | thread | project, targets?, by? }; cmd.work.restart { id };
+     cmd.work.send_input { id, reply }; cmd.work.set_completion_delivery { id, delivery }; cmd.work.clear_finished
+     { view, pred? }; cmd.work.quit { choice, targets? }. An unknown command id throws (a wiring error, not a refusal). */
   function dispatch(id, args) {
     const fn = COMMANDS[id];
     if (!fn) throw new Error('PM_WORK: no command ' + id);
@@ -42730,7 +42810,9 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   };
   function scenario(name) {
     if (name == null) return S.scenario;
-    return load(String(name));
+    const n = String(name);
+    if (!builders[n]) return false;
+    return load(n);
   }
 
   W.PM_WORK = {
@@ -123369,7 +123451,7 @@ boot = function () {
    (window.PM_PIP_PARTS, Concepts/glyph-system/opus-5.5/src/logo/pm-pip-parts.js) is a head module and cannot reach the
    Settings engine, so it reads and writes general.visual.pip-parts through this adapter, on the same transaction and
    refusal path as a Settings row (the 28-chat-port.js pattern). The value is the current Project's: a multiselect of
-   the part labels, stored per Project as general.visual.nier-parts is. Until the Settings data has that row, ready()
+   the part labels (the inventory's options, shown as-is in the row), stored per Project as general.visual.nier-parts is. Until the Settings data has that row, ready()
    is false and the registry keeps the choice in memory for the session. */
 (function o55PipPartsStore() {
   const ID = 'general.visual.pip-parts';
@@ -163736,7 +163818,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (performance.now() - refreshedAt > 250) S.refresh('synth');
       return !S.muted && !holds.size && hasGesture();
     }
-    const allowed = (where) => soundOn() && (where === 'app' ? part('app-voice', false) : part('setup-voice', true));
+    const partFor = (where) => (where === 'app' ? 'app-voice' : 'setup-voice');
+    const allowed = (where) => soundOn() && part(partFor(where), where === 'app' ? false : true);
     function voiceOf(look) {
       let lk = look;
       if (!lk) { try { lk = W.PMLogo ? W.PMLogo.look() : ''; } catch (_) { lk = ''; } }
@@ -163773,13 +163856,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (!script || !script.length) return false;
       const t0 = ctx.currentTime + 0.006, end = script.reduce((mx, s) => Math.max(mx, s.t + s.d * 2.2), 0) + 0.5;
       line = voice(ctx, chain(ctx, vk, name, o, end), t0, script, vk, o);
+      line.part = partFor(o.where);   // the part this line sounds under: it stops when that part goes off
       logEntry({ t: Math.round(performance.now()), event: 'pip:' + name, kit: vk, muted: false, played: true });
       return true;
     }
     function say(text, opts) {
       const o = opts || {}, vk = o.voice && VOX[o.voice] ? o.voice : voiceOf(o.look), t = timing(text, o, vk);
-      hush();
+      // a line that may not sound leaves the one speaking alone (an app chirp with app-voice off never cuts setup)
       if (!text || !allowed(o.where)) return Object.assign(t, { played: false });
+      hush();
       const V = VOX[vk];
       const played = speak(() => (V.kind === 'pulse' || V.kind === 'tick' ? blipScript(text, V, o.mood, t.cps) : textScript(text, V, o.mood, t.cps)), vk, 'say', o);
       return Object.assign(t, { played });
@@ -163798,7 +163883,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       KITS2[String(id)] = def; return true;
     }
     function play(event, opts) {
-      const o = opts || {}, kid = o.kit && KITS2[o.kit] ? String(o.kit) : voiceOf(o.look), k = KITS2[kid], fn = k && k.events[event];
+      const o = opts || {};
+      if (o.kit != null && !KITS2[o.kit]) return false;   // a kit asked for by name and not registered plays nothing
+      const kid = o.kit != null ? String(o.kit) : voiceOf(o.look), k = KITS2[kid], fn = k && k.events[event];
       if (typeof fn !== 'function' || holds.size) return false;
       if (o.motion && reducedMotion()) return false;
       const trim = k.trim && k.trim[event] != null ? +k.trim[event] : 0, int = o.intensity == null ? 1 : clamp(+o.intensity, 0, 1);
@@ -163836,7 +163923,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     function follow() {
       if (S.muted || holds.size) { hush(); stopMusic(0.2); return; }
       if (tune && !part('setup-music', true)) stopMusic(0.4);
-      if (line && !part('setup-voice', true) && !part('app-voice', false)) hush();
+      if (line && !part(line.part, line.part !== 'app-voice')) hush();
     }
     W.addEventListener('o55:sound', follow);
     W.addEventListener('pm7.pip-parts.changed', follow);
