@@ -29964,6 +29964,11 @@ html[data-theme$="light"] {
 body.pmu-page-active #rsStage.pmn-stage { translate: none !important; }
 body.pmu-page-active #rsStage.pmn-stage > :is(.pmn-toast),
 body.pmu-page-active #rsStage.pmn-stage > :is(.pmn-pin) { pointer-events: auto !important; }
+/* on every page, Usage included, a card takes no clicks while it enters (still invisible or nearly so) or leaves: a
+   click meant for the control under it reaches that control (final check F3-5: on Usage the rule above beat the
+   card's inline none, and a click at its first frame landed on it, not on #pmuCustomize). :is(body, ...) lifts this
+   rule over the one above on Usage while matching every other page too */
+:is(body, body.pmu-page-active) #rsStage.pmn-stage > .pmn-toast:is(.pmn-entering, .pmn-leaving) { pointer-events: none !important; }
 
 /* dismiss: always there, quieter until the card is hovered or focused */
 .pmn-x {
@@ -168786,6 +168791,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (rec) finishStaged(rec, rec.it.durable ? 'join' : 'fade');
     }
     const c = toastEl(it);
+    c.classList.add('pmn-entering');   // no clicks from its first moment until its entrance has shown it (enter())
     const before = rects(stageKids());
     stageEl.appendChild(c);   // last child: NieR Mode's parts read it here, synchronously
     const rec = { it, el: c, timer: null, left: it.stageMs, started: 0, leaving: false };
@@ -168801,7 +168807,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       flip(before, c);
       /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
          show through each other (frame review, 2026-10-13) */
-      if (still()) { /* Reduced Motion: it is simply there */ }
+      if (still()) c.classList.remove('pmn-entering');   // Reduced Motion: it is simply there
       else enter(c, it, before.size ? Math.round(motion().move.duration * (look() === 'retro' || look() === 'nier' ? 0.5 : 0.32)) : 0);
       startTimer(rec);
     };
@@ -168814,9 +168820,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* a card takes no clicks until it can be seen: while it waits out its delay and while it fades or unclips in, it
        is invisible or nearly so, and a click meant for the control under it must reach that control (a recording of Pin,
        2026-10-29: a click landed on a card at opacity 0). Once shown it takes clicks, and covers what is under it (Jared,
-       2026-10-30) */
-    c.style.pointerEvents = 'none';
-    const shown = () => { if (c.isConnected && !c.classList.contains('pmn-leaving')) c.style.pointerEvents = ''; };
+       2026-10-30). A class, not an inline style: Usage's stage rule gives its cards pointer events with !important, which
+       beat the inline none there (final check F3-5); 26-notify-00-core.css answers it for entering and leaving cards */
+    c.classList.add('pmn-entering');
+    const shown = () => { if (c.isConnected && !c.classList.contains('pmn-leaving')) c.classList.remove('pmn-entering'); };
     const play = (e, f, o) => {
       const a = e && typeof e.animate === 'function' ? e.animate(f, Object.assign({ fill: 'backwards', delay: delay || 0 }, o)) : null;
       if (e === c) { if (a && a.finished) a.finished.then(shown, shown); else shown(); }
@@ -169204,6 +169211,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     };
     /* the panel's height springs to its new size, with the size bounce (F3-461): the menu sprout's, PM6_SPROUT.resize */
     if (animate && open && !still()) window.PM6_SPROUT.resize(panelEl.querySelector('.pmn-chrome'), mutate); else mutate();
+    if (open) pushStage();   // the cards under it follow it to its new height
     if (!animate || still()) { leaving.forEach((r) => r.remove()); return; }
     const m = motion(), L = look();
     /* moved rows slide to their new places; new rows arrive */
@@ -169266,11 +169274,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     stackEl.setAttribute('aria-expanded', 'true');
     renderPanel(false);
     placePanel();
-    pushStage();
     sound('open', 0.4);
     /* the inbox grows out of the stack under the bell, through the menu sprout (PM6_SPROUT; F3-461's chat-popout
        sprout, NieR's Slice part, Reduce motion and the drag hold with it), on the frames that are shown */
     window.PM6_SPROUT.open(panelEl.querySelector('.pmn-chrome'), null, stackEl, { display: false, origin: 'trigger', shown: true });
+    pushStage();   // after the owner has opened it (pushStage)
     if (!still()) {
       const L = look();
       /* the rows follow the panel in, one after another, on the frames that are shown (11-motion-start.js; final motion
@@ -169300,11 +169308,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* it folds back into the stack through the menu sprout */
     window.PM6_SPROUT.close(chrome, finish, { instant: quick === 'instant' });
   }
-  /* while the inbox is open, cards stage under it, not over it */
+  /* while the inbox is open, cards stage under it, not over it, at its resting height: read from layout (offsetHeight,
+     free of the sprout's opening scale), and while the owner's height spring runs, the height it springs to (the spring
+     sets it inline before it starts). It is read after PM6_SPROUT.open: the owner's close leaves the chrome display:none
+     and only its open clears that, so read before it a reopened inbox measured nothing, the stage was pushed 8 px and
+     the cards lay over the list (final check F3-6) */
   function pushStage() {
     if (!stageEl) return;
-    if (open) { const h = panelEl.getBoundingClientRect().height; stageEl.style.setProperty('--pmn-push', Math.round(h + 8) + 'px'); }
-    else stageEl.style.removeProperty('--pmn-push');
+    if (open) {
+      const ch = panelEl.querySelector('.pmn-chrome'), to = parseFloat(ch && ch.style.height);
+      const h = panelEl.offsetHeight + (ch && isFinite(to) ? to - ch.offsetHeight : 0);
+      stageEl.style.setProperty('--pmn-push', Math.round(h + 8) + 'px');
+    } else stageEl.style.removeProperty('--pmn-push');
   }
   /* keep the stage inside the window. Its place is under the bell, tight under the title bar, on every page and in every
      look, with or without Activity Detail open (home-redesign 50-pageshell.js places it). Jared, 2026-10-30: "It is fine
@@ -169442,7 +169457,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     doc.addEventListener('click', (e) => { if (open && !panelEl.contains(e.target) && !stackEl.contains(e.target)) closePanel(); });
     doc.addEventListener('keydown', (e) => { if (e.key === 'Escape' && open) closePanel(); }, true);
     doc.addEventListener('visibilitychange', () => { staged.forEach((rec) => { if (rec.bar && !rec.leaving) { if (doc.hidden) rec.bar.pause(); else if (!held) rec.bar.play(); } }); });
-    window.addEventListener('resize', () => { if (open) placePanel(); if (staged.size) clampStage(); });
+    window.addEventListener('resize', () => { if (open) { placePanel(); pushStage(); } if (staged.size) clampStage(); });
 
     /* times and lifetimes */
     setInterval(() => {
