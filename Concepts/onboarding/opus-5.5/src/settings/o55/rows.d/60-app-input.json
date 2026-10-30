@@ -461,6 +461,11 @@
     "id": "general.visual.nier-mode",
     "is": true
    }
+  },
+  "general.visual.pip-parts": {
+   "label": "Customize Pip",
+   "help": "Where Pip appears in the chat and in setup, the faces it makes, how it moves and whether it makes a sound.",
+   "editor": "pm51-o55-pip-editor"
   }
  }
 }

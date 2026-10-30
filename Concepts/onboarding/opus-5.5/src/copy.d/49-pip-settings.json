@@ -1,0 +1,54 @@
+{
+ "pipSettings": {
+  "kicker": "Pip",
+  "title": "Customize Pip",
+  "lead": "Choose where Pip appears in the chat and in setup, the faces it makes and how it moves. A change applies at once and is saved for this Project.",
+  "done": "Done",
+  "close": "Close",
+  "rowSummary": "On {on} of {total}",
+  "rowLabel": "Customize Pip: {text}. Open the Pip editor",
+  "custom": "Custom",
+  "size": "Size {n}",
+  "on": "On",
+  "off": "Off",
+  "meterLabel": "Pip parts",
+  "meter": "On {on} / {total}",
+  "presets": "Presets",
+  "play": "Play: the team works",
+  "playWhy": "Turn on State faces to see the team work.",
+  "stageLabel": "Preview: a small team in the chat",
+  "reach": "Parts change Pip in the chat and in setup. Pip’s mark, the app icon, the tray and loading signs stay as they are, and every helper is still a Pip.",
+  "motionNote": "Reduce motion is on, so these stay still. Your choices are kept for when it is off.",
+  "soundNote": "Pip sounds only while sound is on for this Project; muting the chat’s speaker mutes Pip too.",
+  "group": {
+   "Where Pip appears": "Where Pip appears",
+   "Faces": "Faces",
+   "Motion": "Motion",
+   "Look": "Look",
+   "Sound": "Sound"
+  },
+  "preset": {
+   "full": { "label": "Full", "help": "Everything but chirps in the app" },
+   "quiet": { "label": "Quiet", "help": "Pip where work is; no reactions" },
+   "still": { "label": "Still", "help": "Nothing moves" },
+   "plain": { "label": "Plain", "help": "No extras; helpers are still Pips" }
+  },
+  "cast": {
+   "coordinator": "Coordinator",
+   "builder": "Builder",
+   "checker": "Checker",
+   "critic": "Critic"
+  },
+  "state": {
+   "idle": "leads",
+   "working": "working",
+   "queued": "waits its turn",
+   "needs": "needs you",
+   "done": "done"
+  },
+  "themeMenu": {
+   "customize": "Customize Pip…",
+   "customizeLabel": "Customize Pip: where it appears, its faces and how it moves"
+  }
+ }
+}

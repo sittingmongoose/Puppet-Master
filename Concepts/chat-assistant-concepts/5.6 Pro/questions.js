@@ -488,7 +488,7 @@
   /* W4 (PM7 build 2026-10-29): a plan ready for review has Pip holding up the page (PM56_SHELL.pmxPip, the one kit),
      watching you read it; every other head keeps its glyph */
   function head(ctx, m, cls) {
-    var S = window.PM56_SHELL, pip = m.icon === 'plan' && S && S.pmxPip ? S.pmxPip({ prop: 'page', mood: 'watch', size: 22, detail: true, cls: 'qs-head-pip' }) : '';
+    var S = window.PM56_SHELL, pip = m.icon === 'plan' && S && S.pmxPip ? S.pmxPip({ prop: 'page', mood: 'watch', size: 22, detail: true, cls: 'qs-head-pip', part: 'plans' }) : '';
     return '<div class="qs-head' + (cls ? ' ' + cls : '') + '" data-k="qs-head">'
       + '<span class="event-icon qs-head-icon"' + (pip ? ' data-pip="1"' : '') + '>' + (pip || iconOf(ctx, m.icon, 13)) + '</span>'
       + '<strong class="qs-title">' + ctx.esc(m.title) + '</strong>'

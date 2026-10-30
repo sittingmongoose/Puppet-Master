@@ -2,7 +2,7 @@
    (window.PM_PIP_PARTS, Concepts/glyph-system/opus-5.5/src/logo/pm-pip-parts.js) is a head module and cannot reach the
    Settings engine, so it reads and writes general.visual.pip-parts through this adapter, on the same transaction and
    refusal path as a Settings row (the 28-chat-port.js pattern). The value is the current Project's: a multiselect of
-   the part labels, stored per Project as general.visual.nier-parts is. Until the Settings data has that row, ready()
+   the part labels (the inventory's options, shown as-is in the row), stored per Project as general.visual.nier-parts is. Until the Settings data has that row, ready()
    is false and the registry keeps the choice in memory for the session. */
 (function o55PipPartsStore() {
   const ID = 'general.visual.pip-parts';

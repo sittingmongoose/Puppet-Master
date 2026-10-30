@@ -8,7 +8,8 @@
  *     The opt-in. The owner fills it with Pip (PMLogo.mark), so a host may write it empty; PM_PIP_LOADER.html() writes
  *     it already drawn (the still pose shows from the first frame the host paints). Sized 1em by default and set on the
  *     text baseline; --pml-size (or the size option) fixes another size. data-pip-px is the size the host expects in
- *     CSS px, which picks the drawing's tier (micro <= 18, small <= 40, full) and, below 12 px, keeps it still (F3-584).
+ *     CSS px, which picks the drawing's tier (micro <= 18, small <= 40, full) and, below 12 px, keeps it still (F3-584);
+ *     write it with --pml-size. Without it the owner measures the loader when it arms and uses that size.
  *   The motion is chosen by context and is never a setting (L5, SSYS-055): think for the chat's thinking placeholder,
  *   hop for a short wait that ends in success, swing for every other wait.
  *
@@ -21,7 +22,7 @@
  *   on     moving, in phase                     off    held at the still pose: offscreen, the tab hidden, or the
  *   still  never moves: below 12 px                      person away (window not focused for 60 s)
  *   wait   still until a busy spell ends (PM_BUSY: a page change, the look cover, a NieR switch); the onboarding
- *          window's own loaders are not held by the window being open
+ *          window's own loaders and Demo Studio's are not held by the window being open
  * Drags hold every loader where it is (body.pm-resizing and the other drag classes set --pml-ps: paused, and the clock
  * stands still with them), and the onboarding window holds the app beneath it (10-window.css).
  *
@@ -32,6 +33,7 @@
  * signal below needs-you: it is never put in a list row or tab for an item's state (that is st-working, L1).
  *
  * API: html(o) -> markup; mount(root?) arms loaders now; busy(host, on, o) marks a host busy with a loader;
+ *      hold(on) / held(): Demo Studio's lab hold (waits that end through busy() keep their loader until hold(false));
  *      refresh() redraws and re-phases every loader; motion(name) -> the context's motion; clock = PMLogo.clock;
  *      stats() -> counts for tests. */
 (function () {
@@ -53,6 +55,7 @@
      the Diamond loaders part's hollow diamond (styles.d/14-nier-parts.css), or with that part off today's fallback,
      the plain ink ring every spinner showed in NieR before (pm-loader.css). */
   const NIER = '<span class="pml-nier" aria-hidden="true"></span>';
+  const NIER_MS = Object.freeze({ diamond: 2800, ring: 800, breath: 2400 });   // pm-loader.css, 14-nier-parts.css
   const isNier = (look) => L.family(look) === 'nier';
   function draw(el) {
     const look = L.look();
@@ -65,10 +68,17 @@
   function phase(el) {
     const look = L.look(), family = L.family(look), motion = motionOf(el), px = pxOf(el), k = L.clock.speed();
     el.style.setProperty('--pml-k', String(k));
-    if (family === 'nier') return;   // NieR's part keeps its own period, scaled by --pml-k
+    const ms = (v) => Math.round(v) + 'ms', c = L.clock;
+    if (family === 'nier') {
+      // NieR's part keeps its own periods (the diamond's 2.8 s turn, the ring's 0.8 s, the 2.4 s breath), scaled by
+      // --pml-k, and joins the shared clock's phase like every other loader
+      el.style.setProperty('--pml-ndelay', ms(c.delay(NIER_MS.diamond * k)));
+      el.style.setProperty('--pml-sdelay', ms(c.delay(NIER_MS.ring * k)));
+      el.style.setProperty('--pml-nbdelay', ms(c.delay(NIER_MS.breath * k)));
+      return;
+    }
     const P = L.period({ family, motion, px }) * k, base = (L.MOTION[family] || L.MOTION.basic).dur * 1000 * k;
-    const rP = base * 1.3, bP = base * 2.6, kP = P * 2, c = L.clock;
-    const ms = (v) => Math.round(v) + 'ms';
+    const rP = base * 1.3, bP = base * 2.6, kP = P * 2;
     el.style.setProperty('--pml-dur', ms(P)); el.style.setProperty('--pml-delay', ms(c.delay(P)));
     el.style.setProperty('--pml-rdur', ms(rP)); el.style.setProperty('--pml-rdelay', ms(c.delay(rP)));
     el.style.setProperty('--pml-bdur', ms(bP)); el.style.setProperty('--pml-bdelay', ms(c.delay(bP)));
@@ -77,7 +87,9 @@
   function busyNow(el) {
     let why = '';
     try { why = typeof W.PM_BUSY === 'function' ? W.PM_BUSY() : ''; } catch (_) { why = ''; }
-    if (why === 'onboarding' && el.closest('#pm-o55-onboarding')) return '';
+    // the onboarding window holds the app beneath it, not its own loaders nor Demo Studio's (#o55-demo, the one body
+    // child the window leaves usable, drawn above it)
+    if (why === 'onboarding' && el.closest('#pm-o55-onboarding, #o55-demo')) return '';
     return why;
   }
   function set(el, run) { if (el.getAttribute('data-pml-run') !== run) el.setAttribute('data-pml-run', run); }
@@ -99,6 +111,8 @@
   function arm(el) {
     if (!el || !el.isConnected || el.nodeType !== 1 || !el.hasAttribute('data-pip-loader')) return;
     el.classList.add('pml-ld');
+    // no data-pip-px from the host: the drawing's tier (and the below-12 px still rule) follow the size it renders at
+    if (!(+el.getAttribute('data-pip-px') > 0)) { const w = Math.round(el.getBoundingClientRect().width); if (w > 0) el.setAttribute('data-pip-px', String(w)); }
     if (!el.hasAttribute('aria-hidden')) el.setAttribute('aria-hidden', 'true');
     if (!drawn(el)) draw(el);
     sweep();
@@ -145,8 +159,13 @@
     const list = [...waiting]; waiting.clear();
     list.forEach((el) => { if (el.isConnected) { el.removeAttribute('data-pml-run'); arm(el); } });
   });
-  /* a new look: every loader is drawn again in it and joins the phase */
+  /* a new look: every loader is drawn again in it and joins the phase. So does a change that swaps a running
+     loader's animation for another: NieR's parts (the diamond or the ring), Reduced Motion (the app's or the OS's). */
   L.onLook(() => refresh());
+  let swapT = 0;
+  const swapped = () => { if (!live.size && !waiting.size) return; cancelAnimationFrame(swapT); swapT = requestAnimationFrame(() => refresh()); };
+  new MutationObserver(swapped).observe(D.documentElement, { attributes: true, attributeFilter: ['data-o55-nier-parts', 'data-motion'] });
+  try { W.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', swapped); } catch (_) { /* old engines */ }
   /* Animation speed: a change in Settings (PM51.watch), and otherwise at the next arm, after a drag, a return to the
      window or the tab, and the end of a busy spell; every loader is phased again at the new period */
   let lastSpeed = L.clock.speed();
@@ -186,14 +205,27 @@
   }
   /* A host waiting: aria-busy on the host and a loader in it (first, or o.slot: 'end' or an element). The host's own
      words say what it waits for; o.status adds role="status" for a wait with no words of its own. */
+  /* Hold (Demo Studio's lab switch, for inspection): while held, a wait that ends through busy() leaves its loader up;
+     hold(false) ends those waits. Nothing else changes: a held loader still pauses offscreen and in drags, follows
+     Reduced Motion and NieR's routing. */
+  let holding = false;
+  const deferred = new Set();
+  function hold(on) {
+    holding = !!on;
+    if (!holding) { const list = [...deferred]; deferred.clear(); list.forEach((h) => { if (h.isConnected) busy(h, false); }); }
+    return holding;
+  }
   function busy(host, on, o) {
     if (!host) return false;
     o = o || {};
-    const mine = host.querySelector('.pml-ld[data-pml-busy]');
+    const mine = host.__pmlBusy && host.__pmlBusy.isConnected ? host.__pmlBusy : host.querySelector('.pml-ld[data-pml-busy]');
+    if (on) deferred.delete(host);
+    if (!on && holding && mine) { deferred.add(host); return true; }
     if (!on) {
       host.removeAttribute('aria-busy');
       if (host.getAttribute('data-pml-status') === 'on') { host.removeAttribute('role'); host.removeAttribute('data-pml-status'); }
       if (mine) mine.remove();
+      host.__pmlBusy = null;
       return true;
     }
     host.setAttribute('aria-busy', 'true');
@@ -203,6 +235,7 @@
     t.innerHTML = html(o);
     const el = t.content.firstElementChild;
     el.setAttribute('data-pml-busy', '1');
+    host.__pmlBusy = el;   // found again on clear, even in an outside slot
     const slot = o.slot && o.slot.nodeType === 1 ? o.slot : null;
     if (slot) slot.appendChild(el); else if (o.slot === 'end') host.appendChild(el); else host.insertBefore(el, host.firstChild);
     return true;
@@ -211,7 +244,7 @@
   const motion = (context) => (context === 'thinking' ? 'think' : context === 'short' ? 'hop' : 'swing');
 
   W.PM_PIP_LOADER = Object.freeze({
-    version: 1, html, mount, busy, refresh, motion, clock: L.clock, MOTIONS,
+    version: 1, html, mount, busy, refresh, motion, hold, held: () => holding, clock: L.clock, MOTIONS,
     stats: () => ({ live: live.size, waiting: waiting.size, running: [...live].filter((el) => el.getAttribute('data-pml-run') === 'on').length, away })
   });
 })();

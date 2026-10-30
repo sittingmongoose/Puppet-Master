@@ -40,9 +40,9 @@
   function speed() { var L = LOGO(); try { return L && L.clock ? L.clock.speed() : 1; } catch (e) { return 1; } }
   function look() { var S = SH(); return S.pmxPipLook ? S.pmxPipLook() : 'basic-dark'; }
   function family() { return look().split('-')[0]; }
-  /* the parts Pip settings switch (M2: general.visual.pip-parts through PM_PIP_PARTS); until then every part is on but
-     the app voice (S3) */
-  function wants(part) { return part !== 'app-voice'; }
+  /* Pip's parts (general.visual.pip-parts, per Project, through window.PM_PIP_PARTS): module-shell reads them once per
+     change; without the registry every part is on but the app's chirps (S3) */
+  function wants(part) { var S = SH(); return S.pmxPipOn ? S.pmxPipOn(part) : part !== 'app-voice'; }
   function moves(part) { return wants(part) && !reduced(); }
   function anim(el, frames, o) {
     if (!el || typeof el.animate !== 'function') return null;
@@ -121,8 +121,21 @@
     t.innerHTML = S.pmxPipHost(st.kind, mood);
     return t.content.firstElementChild;
   }
+  /* "Pip chirps in the app" (S3, off by default): a small chirp with each face the sheet's Pip makes, in the look's voice,
+     through the one player (O55.sound.pip): it sounds only while the Project's sound switch is on, which the chat's
+     speaker writes (the hosted settings bridge), so a muted chat keeps Pip silent. NieR's Pod voice wins where both
+     would speak (S7). */
+  var CHIRP = { happy: 'cheer', wonder: 'alert', watch: 'think', oops: 'wake' };
+  function chirp(mood) {
+    if (!wants('app-voice') || !CHIRP[mood]) return;
+    var h = D.documentElement, nierVoice = h.getAttribute('data-o55-nier') === 'on' && /(^|\s)(Pod voice|Pod companion)(\s|$)/.test(h.getAttribute('data-o55-nier-parts') || '');
+    if (nierVoice) return;
+    var P = W.O55 && W.O55.sound && W.O55.sound.pip;
+    try { if (P && P.vocal) P.vocal(CHIRP[mood], { where: 'app' }); } catch (e) { /* sound is optional */ }
+  }
   function swapNow(st, mood) {
     var fresh = hostMarkup(st, mood); if (!fresh) return;
+    chirp(mood);
     MOOD[st.kind] = mood; st.mood = mood;
     st.el.setAttribute('data-pip-mood', mood);
     var nf = fresh.querySelector('.pmx-pip-face');
@@ -328,6 +341,30 @@
       if (ld.hidden !== orbit) ld.hidden = orbit;
     });
   }
+
+  /* ---------------------------------------------------------------- Pip settings (SSYS-056) in the chat
+     The wand's "Pip…" (Preferences, beside New chat defaults) opens the Pip editor (window.PM_PIP_EDITOR, the Settings
+     kit's row editor) as a dialog: the local action ui.settings.pip_editor.open, which writes nothing. A part change
+     (the registry's change event) draws the chat again, so what is on screen follows the parts at once. */
+  function editor() { return W.PM_PIP_EDITOR && typeof W.PM_PIP_EDITOR.popup === 'function' ? W.PM_PIP_EDITOR : null; }
+  function redraw() {
+    var c = EXT && EXT.ctx ? EXT.ctx() : null;
+    if (c && c.renderApp) c.renderApp();
+    if (c && c.renderOverlays) c.renderOverlays();
+  }
+  if (W.PM_PIP_PARTS && typeof W.PM_PIP_PARTS.on === 'function') W.PM_PIP_PARTS.on('change', function () { W.requestAnimationFrame(redraw); });
+  if (EXT && EXT.slot) EXT.slot('wandRows', function () {
+    if (!editor()) return '';
+    var S = SH(), mark = S.pmxPip ? S.pmxPip({ mood: 'idle', size: 15, cls: 'menu-pip' }) : '';
+    return '<button type="button" class="menu-item" data-action="pip-settings-open" data-k="pip-wand-row">' +
+      '<span class="menu-icon">' + mark + '</span><span class="menu-copy"><strong>Pip…</strong><span>Where Pip appears in the chat, the faces it makes and how it moves.</span></span></button>';
+  });
+  if (EXT && EXT.action) EXT.action('pip-settings-open', function (ctx, btn) {
+    var E = editor(); if (!E) return true;
+    if (ctx.closeMenu) ctx.closeMenu();
+    E.popup({ from: btn, returnFocus: function () { return D.querySelector('[data-menu="wand"]'); } });
+    return true;
+  });
 
   /* ---------------------------------------------------------------- hooks */
   if (EXT && EXT.slot) EXT.slot('afterRender', function () { scan(); syncThinking(); });
