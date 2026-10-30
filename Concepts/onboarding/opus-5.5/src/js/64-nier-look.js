@@ -4,9 +4,10 @@
    same non-persistent preview and scope as the theme pair. So:
    - inside the onboarding window it is a preview (PM_NIER.preview, kit.d/18-nier.js): kept in the session
      (S.sess.look = { nier, parts, background }; the setup-plan draft is a closed schema), shown again when the window
-     reopens, and saved with the look into the Project at the end (O55.shell.commitLook -> commit). Turning it on or off
-     plays NieR's reboot moment inside the window while the app beneath holds still; Adjust NieR look opens the
-     Plug-in Chips editor as a panel that replaces the window's interior (no nested dialog), on the preview store;
+     reopens, and saved with the look into the Project at the end (O55.shell.commitLook -> commit). Picking NieR plays
+     its reboot moment inside the window while the app beneath holds still, and leaving it the window's own look change;
+     Adjust NieR opens the Plug-in Chips editor as a panel that replaces the window's interior (no nested dialog), on
+     the preview store;
    - after setup (the tour) it is live: a change is saved at once and Adjust opens the chips dialog on the live store.
    API: state() -> { on, previewing }; toggle(source, el); adjust(el); and for the window: reapply(S) on open,
    commit(S) with the look, closed(reason) when the window closes unfinished, panelOpen(), busy() (a toggle's cover is
@@ -63,9 +64,9 @@
     const n = N(); if (n && n.previewing && n.previewing() && n.linger) n.linger();
   }
 
-  /* NieR Mode on or off. In the window the control shows the new state in the same frame and the moment plays inside
-     the window (hero spec H1, flip below); after setup it is saved at once (Settings' own reboot moment, in NieR's
-     voice). */
+  /* into or out of NieR (an older caller's toggle). In the window the control shows the new state in the same frame and
+     the moment plays inside the window (hero spec H1, flip below); after setup it is saved at once (Settings' own
+     reboot moment, in NieR's voice). */
   /* repainting the page for NieR Mode (or for a change of its parts) is expected heavy work: the long tasks it makes
      never count toward the window's low-resource mode, which would silence NieR's own texture for the rest of the run
      (O55.motion.quiet; the reboot's repaint measured 1.3 + 1.1 s of long tasks on the VM) */

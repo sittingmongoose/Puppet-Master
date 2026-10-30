@@ -66,7 +66,7 @@
     eyebrow: () => T('look.eyebrow'),
     title: () => T('look.title'),
     /* the note about Light / Dark (or, for a returning person, that their look is kept) ends the lead, on its short
-       second line, so the mode line has room for NieR Mode beside Light / Dark (review W5) */
+       second line (review W5) */
     lead: (S) => T('look.lead') + ' ' + T(S && S.env && S.env.here.projects.length ? 'look.keep' : 'look.modeHint'),
     body(S) {
       const th = O55.theme();
@@ -81,9 +81,8 @@
       }).map((html, i) => (FAMS[i] === 'nier'
         ? O55.tips.opt('pickFamily:nier', html + adjustNier(th), 'o55-opt-tile o55-opt-tile-wide', 'div', { note: false })
         : O55.tips.opt('pickFamily:' + FAMS[i], html, 'o55-opt-tile', 'div', { note: false }))).join('');
-      /* Light / Dark sits above the tiles. NieR Mode follows the tiles in reading order; on a wide window it is drawn
-         as a compact card on Light / Dark's line (13-nier-look.css), so the checkbox and Adjust are in the first view
-         with the four looks; the narrow window keeps it as a row under them */
+      /* Light / Dark sits above the five tiles; NieR's tile spans the grid under the other four, with Adjust NieR on it
+         while NieR is the chosen look (13-nier-look.css) */
       return `<div class="o55-lookgrid" data-key="lookgrid"><div class="o55-lookmode" data-key="mode">${C.segmented({ do: 'pickMode', value: th.mode, label: T('look.modeLabel'), options: [{ v: 'light', label: T('look.light'), glyph: 'spark' }, { v: 'dark', label: T('look.dark'), glyph: 'history' }] })}</div>`
         + `<div class="o55-tiles" role="radiogroup" aria-label="${U.esc(T('look.title'))}" data-key="tiles">${tiles}</div>`
         + FAMS.map((f) => O55.tips.explainer('pickFamily:' + f)).join('') + (th.chosen === 'nier' ? O55.tips.explainer('adjustNier') : '') + '</div>';
@@ -99,11 +98,11 @@
         host.innerHTML = '';
         O55.art.mount(host, 'tile', { family: f, mode, beat: 'default', tok: O55.art.tokens(tile), params: {}, instance: 'tile', band: true });
       });
-      /* the NieR row's scene is drawn in NieR's own tokens whether NieR Mode is on or off: while off it previews them
-         (data-o55-nier-preview over Basic, the look NieR Mode paints over); while on it takes the painted ones */
-      /* While NieR Mode is off the thumbnail is a still picture of it: drawn whole, its ambient loops and the rig's
+      /* NieR's tile scene is drawn in NieR's own tokens whichever look is painted: in another look it previews them
+         (data-o55-nier-preview over Basic, the tokens NieR paints over); in NieR it takes the painted ones */
+      /* While another look is painted the NieR scene is a still picture: drawn whole, its ambient loops and the rig's
          idle sway held (data-o55-ambient="off" on its host, which 30-art.css and the rig read; ART's still mount, when
-         it has one, is asked for too), so the look screen keeps four live scenes, not five. Once NieR Mode is painted it
+         it has one, is asked for too), so the look screen keeps four live scenes, not five. Once NieR is painted it
          lives like the tiles. */
       const th = O55.theme(), thumb = layer.querySelector('[data-nier-thumb]');
       if (thumb) {
