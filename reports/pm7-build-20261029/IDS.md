@@ -1,6 +1,6 @@
 # PM7 shared identities — 2026-10-29
 
-Owner: `pm7-plans`; source branch `t3/plans/pm7-plans-canon`, allocation checked at `dddfe5a763`. Canon follows the decision packet, including recommendations pending Jared's answers. Each change retains the decision IDs below. GUI lanes may use these names now; send additional names to `pm7-plans` and `pm7-build`.
+Owner: `pm7-plans`; source branch `t3/plans/pm7-plans-canon`, allocation checked at `dddfe5a763`. Canon follows Jared’s confirmed and revised decisions of 2026-10-30 in the decision packet; no PM7 card remains pending. Each change retains the decision IDs below. GUI lanes may use these names now; send additional names to `pm7-plans` and `pm7-build`.
 
 ## PlanUnit reservations
 
@@ -37,6 +37,7 @@ Owner: `pm7-plans`; source branch `t3/plans/pm7-plans-canon`, allocation checked
 | DR-076 | One brand mark / one Pip kit | W1/W3/W4 |
 | DR-077 | One loading indicator | W5 |
 | DR-078 | One agents/processes projection and resource owner | W6 |
+| DR-079 | One shared menu sprout owner; closes duplicate implementations | L8 B, Jared 2026-10-30 |
 | SSYS-056 | Pip parts, presets, scope and editor | W3/W4; S1–S9 |
 | SSYS-057 | Status bar Numbers/Words | W6; D5 |
 | ACD-505 | Processes domain and shared work attention | W6 |
@@ -75,6 +76,7 @@ Pip parts affect chat and onboarding only (S9). Brand, app icon, tray, loader an
 | `cmd.work.set_completion_delivery` | `agent | user | quiet`; owner writes the per-item delivery policy. |
 | `cmd.work.clear_finished` | G6: view-local hiding only, no record deletion; retained navigation_wrapper identity. |
 | `cmd.work.quit` | D10: reviewed choice `keep_running | stop_selected`; server owns the work. |
+| `ui.activity_detail.pin` | G1 B, Jared 2026-10-30: view-local boolean pinned, default false; pinned survives thread switches and follows new-thread data, unpinned closes on switch. No saved layout/Settings/runtime write. |
 | `ui.work_panel.close` / `.select_tab` / `.filter` / `.sort` / `.expand` / `.select` | Declared view-local panel actions, no runtime write. |
 | `ui.work_quit.select` / `.cancel` | Local quit choice/target draft and cancel; confirm dispatches `cmd.work.quit`. |
 | `ui.settings.pip_editor.open` / `.close` / `.replay` | Local editor actions; replay = Play: the team works. |
@@ -90,6 +92,7 @@ Reuse `cmd.terminal.open`, existing terminal rerun routing, `cmd.agents.open_thr
 | Status bar | `statusbar.agents`, `statusbar.processes` (no CPU/RAM item) |
 | Work panel | `work.panel.agents`, `work.panel.processes`, `work.panel.resources`, `work.panel.close`, `work.panel.pop_out`, `work.panel.filter`, `work.panel.sort`, `work.panel.expand`, `work.panel.select` |
 | Work actions | `work.stop`, `work.stop_all.thread`, `work.stop_all.platform`, `work.restart`, `work.send_input`, `work.answer_terminal`, `work.completion_delivery`, `work.clear_finished`, `work.open_terminal`, `work.open_owner`, `work.open_system_status` |
+| Activity Detail Pin | `chat.activity.pin` → `ui.activity_detail.pin` (G1 B) |
 | Chat Processes | `chat.activity.processes`, `chat.activity.processes.stop_all` |
 | Quit | `work.quit.open`, `work.quit.keep_running`, `work.quit.stop_selected`, `work.quit.select_target`, `work.quit.confirm`, `work.quit.cancel` |
 | Pip editor | `pip.editor.parts`, `pip.editor.preset`, `pip.editor.open`, `pip.editor.close`, `pip.editor.replay`, `pip.entry.settings`, `pip.entry.wand`, `pip.entry.titlebar` |
@@ -129,8 +132,10 @@ Faces never manufacture runtime state. Typed owner status wins over a decorative
 
 Project badge priority (B5): waiting > blocked > working > change-modified > idle. Tray (A3) aggregates every Project; waiting wins; paused applies when remaining work is paused. Never replace a stale feed with a healthy zero.
 
-Part contract (lead adopted, 2026-10-29): `Plans/pip_parts.json`, 25 options, Full = 24 on (app-voice off). Binding rows = 464; Touch = 707 rows / 137 profiles; production wiring = 1269. All projects is local `ui.project_switcher.all_projects`, not the rail-only `cmd.panel.switch`.
+Part contract (lead adopted, 2026-10-29): `Plans/pip_parts.json`, 25 options, Full = 24 on (app-voice off). Binding rows = 465; Touch = 708 rows / 137 profiles; production wiring = 1269. All projects is local `ui.project_switcher.all_projects`, not the rail-only `cmd.panel.switch`.
 
 Review completion allocation: **G-031** owns the durable PM7 help-entry records (Pip, Project box, Processes, Question, Needs input, Completion delivery, Lost, ObservableWork, Operational Awareness, Backgrounded, Resources). Resources reuses the existing **gauge** glyph. A5 per-surface face tables and A3 complete tray precedence are now explicit in canon and the catalog; the original 22 status keys remain.
 
 S2 storage ruling, 2026-10-30: `general.visual.pip-parts` options/default and new Settings writes use the part LABELS from PM_PIP_PARTS (for example Sheet hosts). The 25 stable IDs and internal preset arrays remain in pip_parts.json with the one-to-one label map; compatibility reads may accept IDs.
+
+Jared’s decision answers, 2026-10-30: all packet recommendations are confirmed except X3 B, A2 B, L8 B, clarified O2 A/O6, O12 B, G1 B and SND1 B. Canon uses eyes through every NieR band, an always-on tray, one menu sprout owner, concept-faithful bounded motion with implementation technique open, silent look hover with click selection, last-block Creating wait (Reduced Motion instant), restored view-local Activity Pin, and sound-tool numbers with listening later in the product. Step4 remains the later merged-GUI name alignment.

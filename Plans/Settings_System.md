@@ -4079,8 +4079,9 @@ canonical_text: >-
   saved choice; editing it never pins or unpins the current History, resizes the column or writes the
   Home layout record. The current History pin uses ui.chat_column.pin_history; Keep the chat open in
   narrow windows uses ui.chat_column.keep_open, and chat width uses
-  cmd.workspace_layout.resize_surface. None is a Settings row. Activity Detail starts pinned when
-  entered and explicit Unpin is temporary (ACD-453); no Activity pin default is added. The host's
+  cmd.workspace_layout.resize_surface. None is a Settings row. Jared G1 B (2026-10-30): Activity Detail starts
+  unpinned; its view-local Pin keeps it open across thread switches with the new thread’s data, while unpinned
+  detail closes on a switch (ACD-453/506). No Activity pin Settings default is added. The host's
   look, fonts, Reduced Motion and NieR settings reach the chat directly. A last-used chat model,
   effort or capability selection never becomes a global Settings default merely because the standalone
   concept saved it. Amended 2026-10-23 (DL-233): the scripted stand-in chat is removed; it was never a
@@ -4113,7 +4114,10 @@ canonical_text: >-
   History's initial-layout seed is built and preserves a saved false or true. The Settings master
   sound, working style, naming policy and future-chat mode bindings remain as reviewed; no additional
   layout, Activity pin, stand-in or family-take setting is admitted by final reconciliation.
-  Amended 2026-10-29 (S1–S9, G1; PM7): Admit SSYS-056’s pip-parts only for chat/onboarding extras with no second sound or brand setting. Activity Detail has no Pin/unpin state and opens full size until closed (ACD-506), superseding its former temporary-unpin description; History pin remains unchanged.
+  Amended 2026-10-29 (S1–S9, G1; PM7): Admit SSYS-056’s pip-parts only for chat/onboarding extras with no
+  second sound or brand setting. Jared G1 B (2026-10-30) restores session view-local Pin/unpin without a small
+  view or Settings/layout write: pinned detail follows thread switches and unpinned detail closes on a switch
+  (ACD-506); History pin remains unchanged.
 gui_related: true
 gui_classification_reason: Places and binds visible hosted chat preferences while keeping layout and chat-scoped controls separate.
 split_recommended: false

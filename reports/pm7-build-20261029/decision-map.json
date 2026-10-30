@@ -5,7 +5,7 @@
     "A1": {
       "question": "App icon: one fixed tile, or follow the project's look",
       "recommendation": "**One fixed tile, Basic Dark** (the first-run look)",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-076",
         "Plans/Decision_Log.md#DL-235",
@@ -16,12 +16,17 @@
       ],
       "decision_log_units": [
         "DL-235"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "One fixed tile, Basic Dark (the first-run look)",
+      "differs_or_clarifies_recommendation": false
     },
     "A2": {
       "question": "Tray: always on, or only while \"minimize to tray\" is on (canon)",
       "recommendation": "**Keep the gate**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-076",
         "Plans/Decision_Log.md#DL-235",
@@ -30,12 +35,17 @@
       ],
       "decision_log_units": [
         "DL-235"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "B",
+      "final_ruling": "Tray is always on while Puppet Master runs; minimize-to-tray controls Close behavior only.",
+      "differs_or_clarifies_recommendation": true
     },
     "A3": {
       "question": "Tray faces → status keys",
       "recommendation": "idle→idle, working→working, done→complete (~10 s), needs you→waiting (always wins), error→failed, paused→paused; summed over projects",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-076",
         "Plans/Decision_Log.md#DL-235",
@@ -44,12 +54,17 @@
       ],
       "decision_log_units": [
         "DL-235"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "idle→idle, working→working, done→complete (~10 s), needs you→waiting (always wins), error→failed, paused→paused; summed over projects",
+      "differs_or_clarifies_recommendation": false
     },
     "A4": {
       "question": "Notification faces",
       "recommendation": "**Pip on OS notifications and Friendly's app tile**; in-app cards keep their kind marks (F3-460)",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-076",
         "Plans/Decision_Log.md#DL-235",
@@ -60,12 +75,17 @@
       ],
       "decision_log_units": [
         "DL-235"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Pip on OS notifications and Friendly's app tile; in-app cards keep their kind marks (F3-460)",
+      "differs_or_clarifies_recommendation": false
     },
     "A5": {
       "question": "Moods against the 22 pinned status keys",
       "recommendation": "**One mood→key table; no new keys**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-051",
         "Plans/DRY_Rules.md#DR-076",
@@ -78,12 +98,17 @@
       ],
       "decision_log_units": [
         "DL-235"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "One mood→key table; no new keys",
+      "differs_or_clarifies_recommendation": false
     },
     "B1": {
       "question": "Command a row pick dispatches",
       "recommendation": "**Promote `cmd.project.switch_active_tab`** (WM-019, SMPFS-083)",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Commands_System.md#CS-105",
         "Plans/Decision_Log.md#DL-236",
@@ -101,12 +126,17 @@
       ],
       "decision_log_units": [
         "DL-236"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Promote `cmd.project.switch_active_tab` (WM-019, SMPFS-083)",
+      "differs_or_clarifies_recommendation": false
     },
     "B2": {
       "question": "Ctrl Shift P, when canon makes the Projects view the primary switcher",
       "recommendation": "**It opens the box's menu**; canon makes the box a secondary entry, the Projects view stays primary",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Commands_System.md#CS-105",
         "Plans/Commands_System.md#CS-106",
@@ -122,12 +152,17 @@
       ],
       "decision_log_units": [
         "DL-236"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "It opens the box's menu; canon makes the box a secondary entry, the Projects view stays primary",
+      "differs_or_clarifies_recommendation": false
     },
     "B3": {
       "question": "Where the §3.4 path summary goes",
       "recommendation": "**The hover tag and the menu rows**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Decision_Log.md#DL-236",
         "Plans/FinalGUISpec.md#F3-038",
@@ -137,12 +172,17 @@
       ],
       "decision_log_units": [
         "DL-236"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "The hover tag and the menu rows",
+      "differs_or_clarifies_recommendation": false
     },
     "B4": {
       "question": "Two chips in one strip while the menu is open",
       "recommendation": "**Approved as shown; amend F3-652**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Decision_Log.md#DL-236",
         "Plans/FinalGUISpec.md#F3-038",
@@ -153,12 +193,17 @@
       ],
       "decision_log_units": [
         "DL-236"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Approved as shown; amend F3-652",
+      "differs_or_clarifies_recommendation": false
     },
     "B5": {
       "question": "Blocked and needs-you badges",
       "recommendation": "**Separate marks**, ordered needs-you > blocked > working > unsaved > calm",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Decision_Log.md#DL-236",
         "Plans/FinalGUISpec.md#F3-038",
@@ -168,12 +213,17 @@
       ],
       "decision_log_units": [
         "DL-236"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Separate marks, ordered needs-you > blocked > working > unsaved > calm",
+      "differs_or_clarifies_recommendation": false
     },
     "B6": {
       "question": "\"Open in a new workspace tab\"",
       "recommendation": "**Ctrl/Cmd+Enter on a row**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Commands_System.md#CS-105",
         "Plans/Decision_Log.md#DL-236",
@@ -189,19 +239,29 @@
       ],
       "decision_log_units": [
         "DL-236"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Ctrl/Cmd+Enter on a row",
+      "differs_or_clarifies_recommendation": false
     },
     "B7": {
       "question": "NieR ignores a click on the box for ~1 s after a pick (stock PM7, not the concept)",
       "recommendation": "**Fix it** in this build if it is the reboot cover's input guard outliving the cover; otherwise leave it and say why in the review build",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Decision_Log.md#DL-236",
         "Plans/FinalGUISpec.md#F3-661"
       ],
       "decision_log_units": [
         "DL-236"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Fix it in this build if it is the reboot cover's input guard outliving the cover; otherwise leave it and say why in the review build",
+      "differs_or_clarifies_recommendation": false
     },
     "D1": {
       "question": "Approved background-activity source decision",
@@ -498,7 +558,7 @@
     "G1": {
       "question": "Pin, once there is no small view",
       "recommendation": "**Remove it.** Activity Detail stays open until closed (×, Esc or the icon again).",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-075",
         "Plans/Decision_Log.md#DL-254",
@@ -512,16 +572,26 @@
         "Plans/assistant-chat-design.md#ACD-453",
         "Plans/assistant-chat-design.md#ACD-501",
         "Plans/assistant-chat-design.md#ACD-506",
-        "Plans/storage-plan.md#SP-330"
+        "Plans/storage-plan.md#SP-330",
+        "Plans/Commands_System.md#CS-104",
+        "Plans/Commands_System.md#CS-106",
+        "Plans/UI_Command_Catalog.md#UCC-208",
+        "Plans/UI_Wiring_Rules.md#UIW-044",
+        "Plans/Wiring_Matrix.md#WM-096"
       ],
       "decision_log_units": [
         "DL-254"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "B",
+      "final_ruling": "Keep Activity Detail Pin: pinned stays open across thread switches and data follows the new thread; unpinned closes on switch. View-local ui.activity_detail.pin / chat.activity.pin, no new persisted setting or runtime write.",
+      "differs_or_clarifies_recommendation": true
     },
     "G10": {
       "question": "Items the concept left out: keyboard shortcuts for the panel, the OS badge and notification flows, the Home panel tab",
       "recommendation": "**Not in this build** (the Home tab is \"later\" per D6). The OS badge reads the same needs-you projection when it is built.",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Commands_System.md#CS-106",
         "Plans/Decision_Log.md#DL-245",
@@ -536,12 +606,17 @@
       "decision_log_units": [
         "DL-245",
         "DL-255"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Not in this build (the Home tab is \"later\" per D6). The OS badge reads the same needs-you projection when it is built.",
+      "differs_or_clarifies_recommendation": false
     },
     "G2": {
       "question": "When the window can't fit the docked panel",
       "recommendation": "**Widen the chat to make room**; past the window's limit, the panel covers the transcript at the column's full height. Never the small one.",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-075",
         "Plans/Decision_Log.md#DL-254",
@@ -558,12 +633,17 @@
       ],
       "decision_log_units": [
         "DL-254"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Widen the chat to make room; past the window's limit, the panel covers the transcript at the column's full height. Never the small one.",
+      "differs_or_clarifies_recommendation": false
     },
     "G3": {
       "question": "The chat width cap",
       "recommendation": "**No fixed 760 cap**; the drag runs until the centre reaches its own floor",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-075",
         "Plans/Decision_Log.md#DL-254",
@@ -578,7 +658,12 @@
       ],
       "decision_log_units": [
         "DL-254"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "No fixed 760 cap; the drag runs until the centre reaches its own floor",
+      "differs_or_clarifies_recommendation": false
     },
     "G4": {
       "question": "Explicit Jared ruling",
@@ -609,7 +694,7 @@
     "G5": {
       "question": "\"Stopping\"",
       "recommendation": "**`pending` with the word**; a new mark would break the 22-key pin",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Commands_System.md#CS-106",
         "Plans/DRY_Rules.md#DR-051",
@@ -625,12 +710,17 @@
       ],
       "decision_log_units": [
         "DL-255"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "`pending` with the word; a new mark would break the 22-key pin",
+      "differs_or_clarifies_recommendation": false
     },
     "G6": {
       "question": "`cmd.work.clear_finished`",
       "recommendation": "**View-local:** clearing hides finished rows from this view and deletes no record",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Commands_System.md#CS-106",
         "Plans/Decision_Log.md#DL-255",
@@ -641,12 +731,17 @@
       ],
       "decision_log_units": [
         "DL-255"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "View-local: clearing hides finished rows from this view and deletes no record",
+      "differs_or_clarifies_recommendation": false
     },
     "G7": {
       "question": "ProcessFacts shape (tracker §4)",
       "recommendation": "**(a)**, as the tracker recommends",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Commands_System.md#CS-106",
         "Plans/DRY_Rules.md#DR-078",
@@ -660,12 +755,17 @@
       ],
       "decision_log_units": [
         "DL-255"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "(a), as the tracker recommends",
+      "differs_or_clarifies_recommendation": false
     },
     "G8": {
       "question": "Name of the third tab",
       "recommendation": "**\"Resources\"** (shown in the review build so you can see it in place)",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Decision_Log.md#DL-245",
         "Plans/Decision_Log.md#DL-251",
@@ -677,12 +777,17 @@
       "decision_log_units": [
         "DL-245",
         "DL-251"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "\"Resources\" (shown in the review build so you can see it in place)",
+      "differs_or_clarifies_recommendation": false
     },
     "G9": {
       "question": "Items the concept left out: NieR's readout styling for the new status items, narrow chat widths",
       "recommendation": "**Designed in this build** and shown in the review build",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-067",
         "Plans/Decision_Log.md#DL-254",
@@ -694,7 +799,12 @@
       ],
       "decision_log_units": [
         "DL-254"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Designed in this build and shown in the review build",
+      "differs_or_clarifies_recommendation": false
     },
     "L1": {
       "question": "Explicit Jared ruling",
@@ -718,7 +828,7 @@
     "L2": {
       "question": "Skeletons",
       "recommendation": "**Keep F3-172's skeletons** where content has a layout to show; the loader for every other indeterminate wait; determinate progress stays a bar",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-077",
         "Plans/Decision_Log.md#DL-237",
@@ -727,12 +837,17 @@
       ],
       "decision_log_units": [
         "DL-237"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Keep F3-172's skeletons where content has a layout to show; the loader for every other indeterminate wait; determinate progress stays a bar",
+      "differs_or_clarifies_recommendation": false
     },
     "L3": {
       "question": "Reduced motion",
       "recommendation": "**The breath and the blink**, as a wait-signal exception (SSYS-010 keeps progress feedback)",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-077",
         "Plans/Decision_Log.md#DL-237",
@@ -744,12 +859,17 @@
       ],
       "decision_log_units": [
         "DL-237"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "The breath and the blink, as a wait-signal exception (SSYS-010 keeps progress feedback)",
+      "differs_or_clarifies_recommendation": false
     },
     "L4": {
       "question": "One shared period or per-look periods",
       "recommendation": "**Per-look**, as approved",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-077",
         "Plans/Decision_Log.md#DL-237",
@@ -758,12 +878,17 @@
       ],
       "decision_log_units": [
         "DL-237"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Per-look, as approved",
+      "differs_or_clarifies_recommendation": false
     },
     "L5": {
       "question": "Choosing Swing, Think or Hop",
       "recommendation": "**By context:** Think for the thinking placeholder, Swing otherwise, Hop for a short wait that ends in success. Never a setting.",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-077",
         "Plans/Decision_Log.md#DL-237",
@@ -771,12 +896,17 @@
       ],
       "decision_log_units": [
         "DL-237"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "By context: Think for the thinking placeholder, Swing otherwise, Hop for a short wait that ends in success. Never a setting.",
+      "differs_or_clarifies_recommendation": false
     },
     "L6": {
       "question": "Onboarding's own spinners (Retro `\\| / - \\`, NieR square)",
       "recommendation": "**The system loader replaces them**; NieR keeps Diamond loaders",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-077",
         "Plans/Decision_Log.md#DL-237",
@@ -784,12 +914,17 @@
       ],
       "decision_log_units": [
         "DL-237"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "The system loader replaces them; NieR keeps Diamond loaders",
+      "differs_or_clarifies_recommendation": false
     },
     "L7": {
       "question": "NieR with the Diamond loaders part off",
       "recommendation": "**Keep today's fallback**, so Pip never animates in NieR",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-077",
         "Plans/Decision_Log.md#DL-237",
@@ -798,36 +933,53 @@
       ],
       "decision_log_units": [
         "DL-237"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Keep today's fallback, so Pip never animates in NieR",
+      "differs_or_clarifies_recommendation": false
     },
     "L8": {
       "question": "The menu sprout is re-implemented three times (chat `menus.js`, Usage `PMU.menu`, Home `PMW.menu`)",
       "recommendation": "**Flagged as DRY debt, not fixed in this build** unless you add it",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-077",
         "Plans/Decision_Log.md#DL-237",
-        "Plans/FinalGUISpec.md#F3-662"
+        "Plans/FinalGUISpec.md#F3-662",
+        "Plans/DRY_Rules.md#DR-079",
+        "Plans/assistant-chat-design.md#ACD-439"
       ],
       "decision_log_units": [
         "DL-237"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "B",
+      "final_ruling": "This build fixes duplication: one sprout owner for every menu, including chat menus.js, Usage PMU.menu and Home PMW.menu; DR-079 is the rule.",
+      "differs_or_clarifies_recommendation": true
     },
     "LAND1": {
       "question": "One landing per slice (the handoff's plan) or one at the end",
       "recommendation": "**Review builds per phase in this folder; one landing after your OK on the final build**, with Plans in the same landing so canon and product stay together. The build branch is pushed after every step.",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Decision_Log.md#DL-256"
       ],
       "decision_log_units": [
         "DL-256"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Review builds per phase in this folder; one landing after your OK on the final build, with Plans in the same landing so canon and product stay together. The build branch is pushed after every step.",
+      "differs_or_clarifies_recommendation": false
     },
     "O1": {
       "question": "One Pip across every look",
       "recommendation": "**Accept**; the worlds keep each family's material",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/DRY_Rules.md#DR-076",
@@ -840,12 +992,17 @@
       ],
       "decision_log_units": [
         "DL-238"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Accept; the worlds keep each family's material",
+      "differs_or_clarifies_recommendation": false
     },
     "O10": {
       "question": "Ready",
       "recommendation": "**Pip hands the strings to the tour's first callout**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/Decision_Log.md#DL-238",
@@ -857,7 +1014,12 @@
       ],
       "decision_log_units": [
         "DL-238"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Pip hands the strings to the tour's first callout",
+      "differs_or_clarifies_recommendation": false
     },
     "O11": {
       "question": "Explicit Jared ruling",
@@ -881,7 +1043,7 @@
     "O12": {
       "question": "Creating: the concept finishes when the last block lands; canon says animation never gates progress",
       "recommendation": "**Each block lands when its owner phase completes.** The last landing is short and never delays Continue or Ready; instant under Reduced Motion.",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/Decision_Log.md#DL-238",
@@ -892,12 +1054,17 @@
       ],
       "decision_log_units": [
         "DL-238"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "B",
+      "final_ruling": "Creating Continue and Ready wait for the last block to land as well as owner completion; Reduced Motion settles instantly.",
+      "differs_or_clarifies_recommendation": true
     },
     "O2": {
       "question": "Physics, loops and filters",
       "recommendation": "**A bounded, transform-only solver** that stops when hidden and during drags. Blur and drop-shadow filters are replaced only if the look survives a frame-by-frame A/B.",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/DRY_Rules.md#DR-072",
@@ -911,12 +1078,17 @@
       ],
       "decision_log_units": [
         "DL-238"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Match the approved concept; implementation technique is up to the implementer, with bounded life/solved strings and pause/performance/fidelity behavior preserved.",
+      "differs_or_clarifies_recommendation": true
     },
     "O3": {
       "question": "Retro Dark and Light as different worlds, six kits; re-key Friendly to G and Glass to C",
       "recommendation": "**Accept the worlds and kits. Keep the music as you approved it** (no re-key) unless you OK the re-key.",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-043",
         "Plans/DRY_Rules.md#DR-056",
@@ -929,12 +1101,17 @@
       ],
       "decision_log_units": [
         "DL-238"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Accept the worlds and kits. Keep the music as you approved it (no re-key) unless you OK the re-key.",
+      "differs_or_clarifies_recommendation": false
     },
     "O4": {
       "question": "Voice and music: live synthesis, or rendered takes with a syllable bank",
       "recommendation": "**Keep live synthesis** through the one player, as Pip parts, and record its recipe as the metadata.",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-043",
         "Plans/DRY_Rules.md#DR-056",
@@ -949,12 +1126,17 @@
       ],
       "decision_log_units": [
         "DL-238"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Keep live synthesis through the one player, as Pip parts, and record its recipe as the metadata.",
+      "differs_or_clarifies_recommendation": false
     },
     "O5": {
       "question": "Reduced motion and sound",
       "recommendation": "**Reduced Motion never mutes**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-043",
         "Plans/DRY_Rules.md#DR-056",
@@ -968,12 +1150,17 @@
       ],
       "decision_log_units": [
         "DL-238"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Reduced Motion never mutes",
+      "differs_or_clarifies_recommendation": false
     },
     "O6": {
       "question": "Hovering a look tile",
       "recommendation": "**Keep the visual; no sound**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-043",
         "Plans/DRY_Rules.md#DR-056",
@@ -986,12 +1173,17 @@
       ],
       "decision_log_units": [
         "DL-238"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "custom",
+      "final_ruling": "No sound or theme change on look-tile hover; change theme on click or keyboard activation.",
+      "differs_or_clarifies_recommendation": true
     },
     "O7": {
       "question": "The `?` note",
       "recommendation": "**It is the one anchored explainer** (`pm7ob-explainer`, with aria-controls and describedby)",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/Decision_Log.md#DL-238",
@@ -1002,12 +1194,17 @@
       ],
       "decision_log_units": [
         "DL-238"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "It is the one anchored explainer (`pm7ob-explainer`, with aria-controls and describedby)",
+      "differs_or_clarifies_recommendation": false
     },
     "O8": {
       "question": "NieR",
       "recommendation": "**NieR Pip replaces the NieR unit marionette** (also in the chat's NieR agents); Pod 042 stays narrator of the Tour and Chat",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/DRY_Rules.md#DR-076",
@@ -1022,12 +1219,17 @@
       ],
       "decision_log_units": [
         "DL-238"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "NieR Pip replaces the NieR unit marionette (also in the chat's NieR agents); Pod 042 stays narrator of the Tour and Chat",
+      "differs_or_clarifies_recommendation": false
     },
     "O9": {
       "question": "The chapter rail",
       "recommendation": "**Pip is the current-chapter marker**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/Decision_Log.md#DL-238",
@@ -1039,12 +1241,17 @@
       ],
       "decision_log_units": [
         "DL-238"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Pip is the current-chapter marker",
+      "differs_or_clarifies_recommendation": false
     },
     "PC1": {
       "question": "Idle motion in sheets",
       "recommendation": "**Accept**, in a DL superseding DL-149's card 6",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Collaborative_Workflows.md#CWR-019",
         "Plans/Collaborative_Workflows.md#CWR-028",
@@ -1066,12 +1273,17 @@
       ],
       "decision_log_units": [
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Accept, in a DL superseding DL-149's card 6",
+      "differs_or_clarifies_recommendation": false
     },
     "PC2": {
       "question": "States carried by faces",
       "recommendation": "**Accept**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Collaborative_Workflows.md#CWR-019",
         "Plans/Collaborative_Workflows.md#CWR-028",
@@ -1088,12 +1300,17 @@
       ],
       "decision_log_units": [
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Accept",
+      "differs_or_clarifies_recommendation": false
     },
     "PC3": {
       "question": "Status faces in Scheduled and Memory",
       "recommendation": "**Accept**; faces map to catalog keys",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Collaborative_Workflows.md#CWR-019",
         "Plans/Collaborative_Workflows.md#CWR-028",
@@ -1113,12 +1330,17 @@
       ],
       "decision_log_units": [
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Accept; faces map to catalog keys",
+      "differs_or_clarifies_recommendation": false
     },
     "PC4": {
       "question": "Pip in the Orbit's centre with a tool badge",
       "recommendation": "**Accept**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Collaborative_Workflows.md#CWR-019",
         "Plans/Collaborative_Workflows.md#CWR-028",
@@ -1135,12 +1357,17 @@
       ],
       "decision_log_units": [
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Accept",
+      "differs_or_clarifies_recommendation": false
     },
     "PC5": {
       "question": "Glasses for Checker and Reviewer; gold crown and hat",
       "recommendation": "**Accept**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Collaborative_Workflows.md#CWR-019",
         "Plans/Collaborative_Workflows.md#CWR-028",
@@ -1158,12 +1385,17 @@
       ],
       "decision_log_units": [
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Accept",
+      "differs_or_clarifies_recommendation": false
     },
     "RM1": {
       "question": "Reduced Motion's scope: canon (SSYS-010) stores it per Project, the settings inventory scopes it global",
       "recommendation": "**Stored per Project as canon says, applying app-wide and following the OS preference**; no new app-global store. Say so if you want one app-wide setting instead. (Raised by the plans lane, 2026-10-29.)",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Decision_Log.md#DL-237",
         "Plans/FinalGUISpec.md#F3-662",
@@ -1171,12 +1403,17 @@
       ],
       "decision_log_units": [
         "DL-237"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Stored per Project as canon says, applying app-wide and following the OS preference; no new app-global store. Say so if you want one app-wide setting instead. (Raised by the plans lane, 2026-10-29.)",
+      "differs_or_clarifies_recommendation": false
     },
     "S1": {
       "question": "Classic preset",
       "recommendation": "**Drop it for Plain** (Classic would keep a second puppet primitive alive, against DR-044)",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/DRY_Rules.md#DR-075",
@@ -1194,12 +1431,17 @@
       ],
       "decision_log_units": [
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Drop it for Plain (Classic would keep a second puppet primitive alive, against DR-044)",
+      "differs_or_clarifies_recommendation": false
     },
     "S2": {
       "question": "Scope",
       "recommendation": "**Per Project, like NieR**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/DRY_Rules.md#DR-075",
@@ -1215,12 +1457,17 @@
       ],
       "decision_log_units": [
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Per Project, like NieR",
+      "differs_or_clarifies_recommendation": false
     },
     "S3": {
       "question": "Voice",
       "recommendation": "**Two parts:** \"Pip talks in setup\" (on) and \"Pip chirps in the app\" (off)",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-043",
         "Plans/DRY_Rules.md#DR-056",
@@ -1239,12 +1486,17 @@
       ],
       "decision_log_units": [
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Two parts: \"Pip talks in setup\" (on) and \"Pip chirps in the app\" (off)",
+      "differs_or_clarifies_recommendation": false
     },
     "S4": {
       "question": "Music",
       "recommendation": "**A \"Setup music\" part**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-043",
         "Plans/DRY_Rules.md#DR-056",
@@ -1263,12 +1515,17 @@
       ],
       "decision_log_units": [
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "A \"Setup music\" part",
+      "differs_or_clarifies_recommendation": false
     },
     "S5": {
       "question": "Where the editor opens",
       "recommendation": "**The Settings row, the wand's \"Pip…\", and \"Customize Pip…\" under NieR Mode** in the title-bar theme selector. Not inside onboarding.",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/DRY_Rules.md#DR-075",
@@ -1287,12 +1544,17 @@
       ],
       "decision_log_units": [
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "The Settings row, the wand's \"Pip…\", and \"Customize Pip…\" under NieR Mode in the title-bar theme selector. Not inside onboarding.",
+      "differs_or_clarifies_recommendation": false
     },
     "S6": {
       "question": "A Pip on/off row",
       "recommendation": "**None**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/DRY_Rules.md#DR-075",
@@ -1307,12 +1569,17 @@
       ],
       "decision_log_units": [
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "None",
+      "differs_or_clarifies_recommendation": false
     },
     "S7": {
       "question": "Overlap with NieR parts",
       "recommendation": "**NieR parts win where both draw**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/DRY_Rules.md#DR-075",
@@ -1328,12 +1595,17 @@
       ],
       "decision_log_units": [
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "NieR parts win where both draw",
+      "differs_or_clarifies_recommendation": false
     },
     "S8": {
       "question": "The tray",
       "recommendation": "**Faces carry its state**",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-056",
         "Plans/DRY_Rules.md#DR-075",
@@ -1352,7 +1624,12 @@
       "decision_log_units": [
         "DL-235",
         "DL-239"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Faces carry its state",
+      "differs_or_clarifies_recommendation": false
     },
     "S9": {
       "question": "Explicit Jared ruling",
@@ -1383,14 +1660,19 @@
     "SND1": {
       "question": "Pip's kits, voice and music pass the level and texture tools, but no agent can listen",
       "recommendation": "**You listen once** in the review build's sound board before landing",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/Decision_Log.md#DL-256",
         "Plans/FinalGUISpec.md#F3-649"
       ],
       "decision_log_units": [
         "DL-256"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "B",
+      "final_ruling": "Land on the sound tools’ measured numbers; Jared listens later in the product, without a pre-landing listening gate.",
+      "differs_or_clarifies_recommendation": true
     },
     "X1": {
       "question": "Explicit Jared ruling",
@@ -1419,7 +1701,7 @@
     "X2": {
       "question": "Loop ranking and reduced motion for all Pip motion",
       "recommendation": "**Needs-you stays the loudest loop.** Under Reduced Motion the loader keeps only the control's opacity breath and Pip's blink, with no travel.",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-077",
         "Plans/Decision_Log.md#DL-237",
@@ -1435,12 +1717,17 @@
       ],
       "decision_log_units": [
         "DL-237"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "A",
+      "final_ruling": "Needs-you stays the loudest loop. Under Reduced Motion the loader keeps only the control's opacity breath and Pip's blink, with no travel.",
+      "differs_or_clarifies_recommendation": false
     },
     "X3": {
       "question": "NieR Pip at rest: plain band (logo kit) or eyes through the band (onboarding idea 2)",
       "recommendation": "**Live Pips show the eyes** (onboarding stage, chat sheet host). **Static marks keep the plain band** (title bar, app icon, tray).",
-      "adoption": "adopted_recommendation_pending_any_correction",
+      "adoption": "explicit_jared_decision_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-076",
         "Plans/Decision_Log.md#DL-235",
@@ -1453,7 +1740,30 @@
       ],
       "decision_log_units": [
         "DL-235"
-      ]
+      ],
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "B",
+      "final_ruling": "NieR Pip shows eyes through the band on static title/app/tray marks and live Pips at every size.",
+      "differs_or_clarifies_recommendation": true
     }
-  }
+  },
+  "answers_source": {
+    "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md",
+    "section": "Jared's answers (2026-10-30, in the lead thread)",
+    "sha256": "5ee021fd43a91e5ce43bf0ed242bf1cb03951bacd850fc842b1b7f1bceade75c",
+    "decider": "Jared",
+    "date": "2026-10-30"
+  },
+  "decision_cards_answered": 57,
+  "changed_or_clarified_cards": [
+    "X3",
+    "A2",
+    "L8",
+    "O2",
+    "O6",
+    "O12",
+    "G1",
+    "SND1"
+  ]
 }

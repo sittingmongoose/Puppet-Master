@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37810-L38135
+Source lines: L37820-L38145
 
-Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
+Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
 
 ---
 
@@ -241,7 +241,7 @@ canonical_text: >-
   Crew. Amended 2026-10-29 (D1–D4, G1/G2; PM7): Activity domains are ten: Goal, To-Dos, Subagents,
   Processes, Crew, BrainStorm, Review, Chat Room, Changes, Artifacts. Processes is conditional on
   running/input work and retained while its card/detail is open; scheduled/finished alone never keep it.
-  Full-size detail opens directly; no Pin or small transient fallback.
+  Full-size detail opens directly with G1 B’s view-local Pin; no small transient fallback.
 gui_related: true
 gui_classification_reason: This unit specifies the Plan card and every Activity surface in the redesign.
 depends_on:

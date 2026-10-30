@@ -1172,7 +1172,7 @@
   {
    "id": "general.interaction.minimize-to-tray",
    "label": "Keep running when I close the window",
-   "desc": "It hides in the system tray so work keeps going.",
+   "desc": "Close hides the window so work keeps going. The tray is always present while Puppet Master runs.",
    "type": "toggle",
    "default": false,
    "scope": [

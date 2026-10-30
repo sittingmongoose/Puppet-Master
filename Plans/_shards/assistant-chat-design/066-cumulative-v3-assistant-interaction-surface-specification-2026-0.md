@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25107-L25493
+Source lines: L25110-L25505
 
-Source SHA256: `63c9c2df0d06e50d6f0e803255e1aedcde0319ecf34fae55f25c4b5a68a06159`
+Source SHA256: `18361d7f7e137b4d8f41ee4d70e0b9c8e3f59db1e80ae3ff091b5e1c7d7d87ea`
 
 ---
 
@@ -13,7 +13,7 @@ Source SHA256: `63c9c2df0d06e50d6f0e803255e1aedcde0319ecf34fae55f25c4b5a68a06159
 This section incorporates the cumulative v3 repairs and supersessions from the Assistant/Settings Plans Repair Packet (`APR-001` through `APR-070`), as selectively amended by the reference-layout supersession under `USER-REFERENCE-LAYOUT-ROLLBACK-20260908`. It supersedes contradictory earlier v1/v2 text and reference-video flat-row prescriptions while preserving all retained v2/correction-v4 contracts:
 
 1. **Floating Chat Activity Bar (`APR-004`)**: The styled inner Chat Activity Bar pill is restored and floats over the transcript with transparent side flanks and a transparent bottom area. Pointer pass-through (`pointer-events: none` on the transparent host container with `pointer-events: auto` on the interactive pill itself) ensures transcript items beneath the flanks remain clickable. The transcript maintains sufficient positive bottom scroll padding such that at settled bottom scroll (`scrollTop === scrollHeight - clientHeight`), the actual last child element (whether message text, rich card, decision host, or status receipt) clears the top of the floating bar completely with zero occlusion. The bar is never replaced by plain text or placed in an opaque in-flow footer strip.
-2. **Activity Detail Full-Size Geometry (`APR-001`, G1/G2)**: Opening any present Activity domain opens its full-size detail on the left directly. No Activity Pin/Unpin, small transient panel or persisted pin state exists. Widen the chat inside the current centre/page floor, then cover the transcript at full column height if the dock cannot fit; close by ×, Esc or the same icon and return focus. History keeps its separate flyout/pin and actual-width rules. Hover previews remain bounded and do not scroll internally.
+2. **Activity Detail Full-Size Geometry (`APR-001`, G1/G2)**: Opening any present Activity domain opens its full-size detail on the left directly. G1 B (Jared 2026-10-30) restores view-local Pin/unpin: pinned detail stays open across thread switches with the new thread’s data; unpinned detail closes on a switch. No small transient panel or persisted pin state exists. Widen the chat inside the current centre/page floor, then cover the transcript at full column height if the dock cannot fit; close by ×, Esc or the same icon and return focus. History keeps its separate flyout/pin and actual-width rules. Hover previews remain bounded and do not scroll internally.
 3. **History and Activity Coexistence (`APR-002`)**: Pinned History (left rail) and full-size Activity Detail must share the available viewport width dynamically rather than reserving overlapping or competing gutters. When both are open, the layout uses contiguous non-overlapping columns, preserving readable minimum widths or cleanly transitioning to occlusion with a prominent Return to chat navigation under extreme width pressure.
 4. **Transcript Zero Horizontal Overflow (`APR-003`)**: The chat transcript container strictly enforces `scrollWidth <= clientWidth` (within rounding tolerance). Intrinsic-width content—including attachment chips, folder manifests, hidden preview containers, rich-plan tables, code blocks, diff hunks, and structured cards—must wrap, ellipsize, or reflow. Inaccessible content must never be concealed by horizontal clipping alone.
 5. **Activity Previews and Navigation (`APR-005`, `APR-006`, `APR-007`)**: All Activity Bar hover panels are bounded previews with zero internal scrolling (`overflow: hidden`). Each preview presents a concise, high-value summary (e.g. To-Dos show completed-over-total count and several current tasks; Goal shows objective snippet and immediate lifecycle controls). Separate "Open Activity" launch buttons are removed from every preview; clicking any preview item or row directly navigates to its corresponding Activity Detail record using canonical routing. A count or overflow summary row may navigate to the full list, but must not masquerade as a duplicate launch button.
@@ -100,13 +100,20 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Amended 2026-10-29 (G1/G2): Activity Detail opens directly as the full-size docked view, never a small
-  transient view and never Pin/unpin. First widen the chat inside its current centre/page floor; at the
-  window limit cover the transcript at the full column height. Keep detail until ×, Esc or its own Activity
+  Amended 2026-10-30 (Jared G1 B/G2): Activity Detail opens directly as the full-size docked view, never a small
+  transient view; Pin/unpin changes its lifetime across thread switches. First widen the chat inside its
+  current centre/page floor; at the
+  window limit cover the transcript at the full column height. Within the current thread, keep detail until ×, Esc or its own Activity
   icon closes it, returning focus to the opener. Switching an Activity domain selects its full detail
-  without a pin state. Hover previews keep their existing dwell, route and no-internal-scroll rule. History
+  without changing size. Hover previews keep their existing dwell, route and no-internal-scroll rule. History
   is separately a flyout by default; its pin widens the column by its actual/user-sized width under F3-637
-  and DL-233, without narrowing messages.
+  and DL-233, without narrowing messages. G1 B (Jared 2026-10-30): Pin/unpin is the view-local
+  ui.activity_detail.pin action (binding chat.activity.pin), default false. Pinned Activity Detail stays open
+  across thread switches and reprojects the selected thread’s data; unpinned detail closes on a thread switch.
+  Pin changes lifetime only: one full-size docked-or-full-height-cover view, no small form. A switch cancels
+  stale subscriptions and never leaves the previous thread’s rows/actions in the new thread. A missing domain
+  shows its truthful empty/unavailable state. Pin is session view state, not a Settings row, durable layout
+  field or runtime mutation.
 gui_related: true
 gui_classification_reason: Activity Detail panel docking, preview navigation, and sidebar coexistence.
 depends_on:
@@ -118,7 +125,8 @@ unblocks:
 acceptance_criteria:
 - Every domain click opens full-size detail directly; the constrained fallback covers transcript at full column
   height.
-- Close/×/Esc/icon-again restores focus; no Activity Pin, Unpin or persisted pin state exists.
+- Pin remains open across thread switches and follows the new thread; unpinned detail closes on a switch.
+  Close/×/Esc/icon-again restores focus without a runtime or durable Settings/layout write.
 - History pin and its own width rule remain independent; hover previews do not scroll internally.
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
@@ -138,9 +146,10 @@ source_lineage:
 - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-002
 - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-006
 - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-007
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
-- Do not restore the small transient Activity Detail or an Activity Pin/Unpin control.
+- Do not restore the small transient Activity Detail or let Pin retain the previous thread’s rows/actions.
 - Do not remove History pin or keep separate Open Activity buttons in previews.
 stale_retired_dispositions:
 - 'Amended 2026-10-09 (DL-180): History is a flyout by default and its pin widens the chat column; the shared

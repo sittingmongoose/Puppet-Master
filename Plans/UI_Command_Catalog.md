@@ -16409,7 +16409,11 @@ canonical_text: >-
   therefore does not prove the application-scope Settings transaction above. In that snapshot Thought
   Stream changed only its shared preference and preview; the live thinking display it drives followed on
   2026-10-23 (ACD-221, DL-234). PM7 S5: hosted Pip parts use the same admitted inventory row and Settings
-  pair in every host. G1 retires Activity Pin while History pin remains; work actions use the UCC-210
+  pair in every host. G1 B (Jared 2026-10-30) restores ui.activity_detail.pin with boolean pinned (default
+  false), selected thread_id, view_id, source scope and return-focus identity. It is view-local, has no
+  runtime/Settings/event/receipt write and uses no production mutation handler. Pinned detail follows thread
+  data across switches; unpinned detail closes on a switch. History pin remains separate; work actions use the
+  UCC-210
   owners instead of chat-private aliases.
 gui_related: true
 gui_classification_reason: Maps hosted chat controls to existing commands, Settings transactions and local

@@ -8614,6 +8614,19 @@
       ],
       "payload": "Set boolean status-bar-words; Numbers false by default.",
       "no_production_reason": ""
+    },
+    {
+      "control_id": "chat.activity.pin",
+      "surface": "Chat > Activity Detail > Pin / Unpin",
+      "owner_ref": "Plans/assistant-chat-design.md#ACD-506",
+      "disposition": "local",
+      "action_ids": [
+        "ui.activity_detail.pin"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "G1 B, Jared 2026-10-30: scope_kind/project_id, selected thread_id, view_id, boolean pinned (default false), return_focus_id. Pin changes lifetime only; one full-size view.",
+      "no_production_reason": "Typed session view action; no durable layout/Settings/runtime write, event or receipt. Pinned switch follows new-thread data and cancels old subscriptions/actions; unpinned switch closes detail."
     }
   ],
   "held_controls": []

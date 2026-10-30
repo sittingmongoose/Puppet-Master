@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43799-L43917
+Source lines: L43822-L43942
 
-Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
+Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
 
 ---
 
@@ -60,7 +60,8 @@ canonical_text: >-
   trigger, end state, snap and sound path are shared by all five styles (DR-056). Current PM7 replacement:
   Amended 2026-10-29 (O1–O12; PM7): F3-663 replaces the troupe/one-shot-only hero art with one Pip, bounded
   living worlds and Retro Light/Dark distinction. One trigger/end-state/sound path remains; Ready hands to
-  first callout and never waits on animation. O11 leaves the Tour untouched.
+  the first callout after O12 B’s required Creating last-block landing; Reduced Motion places that block
+  instantly (Jared 2026-10-30). O11 leaves the Tour untouched.
 gui_related: true
 gui_classification_reason: Defines the act card, the wake and the curtain call of onboarding in the four theme
   families.
@@ -110,6 +111,7 @@ source_lineage:
 - Plans/Decision_Log.md#DL-153
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/JARED-REQUEST-20261009.md, SHA-256 5d4f5b2aa55364c55fb022e4624657b5185e5ea5b316b6108b880dde51a98e48
 - Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/nier-showpiece-next)
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - NieR Mode
 - APPROVED

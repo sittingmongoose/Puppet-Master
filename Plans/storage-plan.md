@@ -27581,7 +27581,13 @@ canonical_text: >-
   Existing non-default values survive. The old keys are dropped only after this project's layout is written,
   never while an unreadable record waits to be set aside; old defaults null, flyout and false are just
   dropped.
-  Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer width ≥400 or null for default and dynamically clamp rendering to current centre/page floors. Keep History pin/user width and narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the constrained fallback.
+  Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer
+  width ≥400 or null for default and dynamically clamp rendering to current centre/page floors. Keep History
+  pin/user width and narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the
+  constrained fallback. G1 B, Jared 2026-10-30: Activity Detail’s restored Pin/unpin is session-only view
+  state. It survives thread switches while the data follows the selected thread; unpinned detail closes on a
+  switch. It adds no persisted field, Settings row, receipt or event; history_pinned remains solely History’s
+  saved pin.
 gui_related: true
 gui_classification_reason: The persisted record decides the visible panels, tabs, chat column and what survives an upgrade.
 split_recommended: false
@@ -27638,6 +27644,7 @@ source_lineage:
   - "Concepts/home-redesign/src/panels/js/14-layouts.js at c4e32ec0b7, SHA-256 50a4cd1600bcb921430b5f96c1719bdea60703b6815722fa699cbb8cfe2e061a (the 64 KB board snapshot of a named layout and the skipped size; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
   - "pm.home_workspace_layout.v2"
   - "home_workspace_layout.v2:{project_id}:{workspace_tab_id}"

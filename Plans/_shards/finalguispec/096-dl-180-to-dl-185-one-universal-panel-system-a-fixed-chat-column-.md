@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44998-L47429
+Source lines: L45023-L47463
 
-Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
+Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
 
 ---
 
@@ -1457,8 +1457,10 @@ canonical_text: >-
   ui.chat_column.pin_history(history_pinned) and ui.chat_column.keep_open(keep_open) are local saved layout
   state without receipt/event/revision, never Settings; absent booleans toggle. Home options and chat
   header share these controls. The earlier measured 760-cap/960-budget examples are superseded historical
-  measurements, not current width limits. Activity Detail opens full size directly, without Pin/unpin or a
-  small transient view. It first asks the column for room, then covers the transcript at full column height
+  measurements, not current width limits. Activity Detail opens full size directly with view-local Pin/unpin
+  and no
+  small transient view (G1 B, Jared 2026-10-30). It first asks the column for room, then covers the transcript
+  at full column height
   if the window cannot fit it; ×, Esc or the same icon closes it. History pin is unaffected. Hosted chat
   sizes by its container and sends content opens through F3-634; one right chat and one history survive.
   This supersedes old movable chat, grips, bottom workspace mirroring and any fixed maximum-width Settings
@@ -1469,7 +1471,10 @@ canonical_text: >-
   desktop Pop out/Dock back and Keep the chat open in narrow windows, all routed to their existing
   command/local identities. general.visual.chat-layout-mode is retired and ignored/cleared on first read,
   never another layout store. Preserve Jared’s full-height requirement: The chat assistant window should be
-  full vertical height, unless it pops out, then the user can adjust it.
+  full vertical height, unless it pops out, then the user can adjust it. Pinned Activity Detail stays open
+  across thread switches while its contents follow the new thread; unpinned detail closes on a switch. This
+  pin is session presentation state and does not add a saved layout field or change the independent History
+  width/pin rule.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout
   and Activity Detail.
@@ -1572,6 +1577,7 @@ source_lineage:
   (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/SPACING-dc743c7320.patch, SHA-256 d88a28be144814a3c486e810afcf8c3dd348b06ebef611bbbf44fd4d5095a20b
   (source lineage; not native certification)
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - clamp(400, 0.26667 x window width + 88, 640)
 - '400'
@@ -2373,12 +2379,14 @@ canonical_text: >-
   This supersedes the concept practice of a demo panel per surface and changes no product unit. Amended
   2026-10-29 (W8, SND1; PM7): One lab Demo Studio covers Pip/loader/sound/parts, project box states/widths,
   expanded onboarding tips/errors and Activity/Resources/quit. Owner APIs only, missing owners unavailable;
-  no lab toolbar or magic demo errors in product. Jared listens to the sound board before landing. W8
+  no lab toolbar or magic demo errors in product. SND1 B (Jared 2026-10-30): land on the sound tools’ measured
+  level/texture numbers; Jared listens later in the product. W8
   normative Demo Studio matrix (2026-10-29; DL-256): one lab only, strings in 75-demo-studio.json, public
   owner APIs with unavailable controls when absent, 4.5:1 contrast in every look, Reset Everything clears
   only OWNED keys. Pip section: marks/tiles/tray in all ten looks, mood stay-row firing on every live Pip,
   Mark only, Swing/Think/Hop take, Every loader moment and Hold loaders. Sound board exposes
-  kit-by-look/choice, 42 events, 5 loops and Pip says input; Jared listens before landing (SND1).
+  kit-by-look/choice, 42 events, 5 loops and Pip says input; SND1 B uses the sound tools’ numbers for landing,
+  with Jared’s listening deferred to the product.
   Onboarding: pip twist antigravityOnce, Oops cases returning-name tastebook, Cursor refused key ≤11
   characters and first Antigravity sign-in failure with real retry state; Ask Pip opens a screen with its
   chosen ? note; pipRoughDay recipe. Chat: Adjust Pip beside Adjust NieR look, Full/Quiet/Still/Plain,
@@ -2427,6 +2435,7 @@ source_lineage:
 - Plans/Decision_Log.md#DL-185
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
   (D26)
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - Demo Studio
 negative_constraints:

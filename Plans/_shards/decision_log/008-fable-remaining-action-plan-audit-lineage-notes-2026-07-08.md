@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L18424
+Source lines: L14505-L18464
 
-Source SHA256: `4795856f3cb254b17be521ae5389046577c7c8378c1d909710125dc9cd6ba4d9`
+Source SHA256: `cda307c35a94d9246e6e931344e9a3ac3a748f2ba5fa0e8f7cc2d48b0df317f6`
 
 ---
 
@@ -2741,11 +2741,14 @@ canonical_text: >-
   Adopted 2026-10-29 for the PM7 build. X1, X3, A1–A5, S8: Pip is the brand and each individual agent;
   robot is the small category mark. One static Basic Dark app tile ships in the signed bundle (ICO 16–256,
   ICNS, PNG and SVG manifest); the title-bar mark is static, 24 px, state-free and non-interactive, with
-  mark-only density. Tray visibility retains minimize-to-tray. Across all Projects its face maps idle→idle,
+  mark-only density. A2 B (Jared 2026-10-30): the tray is always present while Puppet Master runs;
+  minimize-to-tray changes Close behavior only. Across all Projects its face maps idle→idle,
   working→working, done→complete for about 10 s, needs-you→waiting (wins), error→failed, paused→paused.
-  Static NieR keeps the plain band; live Pip has eyes. OS notifications and Friendly’s app tile use Pip;
-  in-app kind marks stay. No mood adds a status key. Recommendations follow the decision packet and remain
-  addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.
+  NieR Pip shows eyes through the band on live and static marks, including title bar, app icon and tray, at
+  every size (X3 B, Jared 2026-10-30). OS notifications and Friendly’s app tile use Pip;
+  in-app kind marks stay. No mood adds a status key. Jared decided these packet rows on 2026-10-30; every
+  unmodified recommendation is confirmed as his decision, and the decision IDs remain
+  the amendment keys. X1, L1, S9, O11 and G4 retain his earlier explicit rulings.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2753,9 +2756,10 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - Brand/title mark is static/non-interactive at 24 px with mark-only density; fixed app tile is Basic Dark.
-- Tray gate and full A3 precedence match one cross-Project projection, with complete lasting about 10 s and
-  asks winning.
-- Every mood maps to one of 22 existing keys and illustrative expressions never manufacture owner state.
+- The tray is always on while Puppet Master runs, independently of minimize-to-tray; full A3 precedence and
+  about 10 s complete duration use one cross-Project projection.
+- X3 B exposes NieR eyes through the band on every live/static mark and at every size; moods retain the 22
+  existing keys.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -2774,6 +2778,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2802,8 +2807,9 @@ canonical_text: >-
   Projects. Badge priority is needs-you > blocked > working > unsaved > calm. The box may wear a second
   chosen chip while its menu is open. Lens and tab ink follow layout before paint with zero exposed wrong
   frames. B7 fixes a cover guard that survives the NieR reboot cover; any different cause is reported with
-  evidence. Recommendations follow the decision packet and remain addressable by their decision IDs; X1,
-  L1, S9, O11 and G4 are Jared’s explicit rulings.
+  evidence. Jared decided these packet rows on 2026-10-30; every unmodified recommendation is confirmed as his
+  decision, and the decision IDs remain the amendment keys. X1,
+  L1, S9, O11 and G4 retain his earlier explicit rulings.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2831,6 +2837,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/onboarding/opus-5.5-pip/README.md
 - Concepts/project-picker-concepts/opus-5.5/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2858,9 +2865,12 @@ canonical_text: >-
   frames/1.2 s share one clock and scale with Animation speed. Reduced Motion permits only the control
   opacity breath and Pip blink as wait feedback, no travel; under 12 px is still. Needs-you stays the
   loudest loop. NieR routes to Diamond loaders and retains its existing fallback when that part is off;
-  static NieR Pip never animates. All loops pause offscreen, hidden and during drags. L8 records duplicate
-  menu-sprout implementations as deferred DRY debt. Recommendations follow the decision packet and remain
-  addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings. RM1: Reduced
+  static NieR Pip never animates. All loops pause offscreen, hidden and during drags. L8 B (Jared 2026-10-30):
+  this build removes
+  menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat menus.js, Usage PMU.menu and
+  Home PMW.menu delegate to it with no private animation implementation. Jared decided these packet rows on
+  2026-10-30; every unmodified recommendation is confirmed as his decision, and the decision IDs remain
+  the amendment keys. X1, L1, S9, O11 and G4 retain his earlier explicit rulings. RM1: Reduced
   Motion stays stored per Project, app-wide in effect for the active Project and combined with the OS
   preference. Global inventory applicability is not app-global persistence; the adopted ruling introduces
   no new store or key.
@@ -2893,6 +2903,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2915,14 +2926,21 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Adopted 2026-10-29 for the PM7 build. O1–O12: replace the troupe and NieR unit with one Pip across every
   look, preserving each family’s own world/material. Expand to every real onboarding route, screen, choice
-  and error, about 44 screens and 203 tips. Use bounded transform-only physics, shared gaze and solved
-  strings, paused hidden/offscreen/during drags. Retro Dark CRT and Retro Light paper have separate worlds
+  and error, about 44 screens and 203 tips. O2 A (Jared 2026-10-30): match the approved concept;
+  implementation technique is the implementer’s choice. Preserve solved
+  strings, world materials, bounded shared life and hidden/offscreen/drag pause behavior; an optimization must
+  preserve the concept in recorded frame-by-frame A/B. Retro Dark CRT and Retro Light paper have separate
+  worlds
   and sound kits; approved music is not re-keyed. Live synthesis uses the one sound player with recipe
-  metadata, setup-voice and music parts; Reduced Motion never mutes, look hover is silent. The question
+  metadata, setup-voice and music parts; Reduced Motion never mutes. O6 (Jared 2026-10-30): hovering a look
+  tile plays no sound and changes no theme; click or keyboard activation changes the theme. The question
   note is the one pm7ob-explainer. Pip marks the current chapter. Ready hands strings to the first Tour
-  callout, but O11 defers Tour redesign; Pod 042 remains Tour/Chat narrator. Creating blocks follow
-  completed owner phases and never gate Continue/Ready. Recommendations follow the decision packet and
-  remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.
+  callout, but O11 defers Tour redesign; Pod 042 remains Tour/Chat narrator. O12 B (Jared 2026-10-30):
+  Creating blocks follow
+  completed owner phases, and Continue and Ready wait for the last block to land. Reduced Motion settles the
+  blocks instantly; animation never bypasses an incomplete owner phase. Jared decided these packet rows on
+  2026-10-30; every unmodified recommendation is confirmed as his decision, and the decision IDs
+  remain the amendment keys. X1, L1, S9, O11 and G4 retain his earlier explicit rulings.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2931,9 +2949,11 @@ unblocks: []
 acceptance_criteria:
 - All real routes/screens/options/errors have Pip scenes and asked-for tips; no flow is replaced by a demo
   shortcut.
-- The chapter rail, faces/gaze, world lifecycle and six recipe kits satisfy F3-663, including Retro split and
-  no re-key.
-- Creating owner phases determine progress; Reduced Motion is instant, and Tour redesign stays deferred.
+- The chapter rail, faces/gaze, world lifecycle and six recipe kits satisfy F3-663, including Retro split
+  and no re-key; O2 preserves the concept while leaving implementation technique open.
+- Look-tile hover changes neither sound nor theme; click/keyboard activation changes the theme.
+- Creating Continue/Ready wait for both owner completion and the last block landing; Reduced Motion settles
+  instantly, and Tour redesign stays deferred.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -2955,6 +2975,7 @@ source_lineage:
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
 - Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2983,8 +3004,9 @@ canonical_text: >-
   only. Full, Quiet, Still, Plain replace Classic; no second primitive. One per-Project
   general.visual.pip-parts row, editor in Settings/wand/title-bar theme menu, never onboarding. Setup voice
   on, app chirps off, setup music on, all under the master sound; NieR parts win overlapping placements. No
-  Pip master switch and no switchable brand/tray/app-icon/loader/notification faces. Recommendations follow
-  the decision packet and remain addressable by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s
+  Pip master switch and no switchable brand/tray/app-icon/loader/notification faces. Jared decided these
+  packet rows on 2026-10-30; every unmodified recommendation is confirmed as his decision, and
+  the decision IDs remain the amendment keys. X1, L1, S9, O11 and G4 retain his earlier
   explicit rulings.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
@@ -3015,6 +3037,7 @@ source_lineage:
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
 - Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3765,27 +3788,36 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Adopted 2026-10-29 for the PM7 build. G1–G3/G9: remove Activity Detail Pin and the small transient view.
+  Adopted 2026-10-29 for the PM7 build. G1–G3/G9: keep Activity Detail Pin and remove the small transient view
+  (G1 B, Jared 2026-10-30).
   Click opens full-size docked detail and keeps it until ×, Esc or that icon closes it. Widen chat to fit,
   then cover transcript at full column height when no more room remains. Message area has no fixed 760 cap,
   preserving centre/page floors and the narrow ladder. History pin remains a different control. Floating
   Glass Activity/attachment/History plates use the persona/model menu plate; context rings must be
   continuous and artifact-free in Friendly/Glass. NieR and narrow forms are designed in this build.
-  Recommendations follow the decision packet and remain addressable by their decision IDs; X1, L1, S9, O11
-  and G4 are Jared’s explicit rulings. W7/C5 open investigation PM7-C5-CONTEXT-RING: the ring’s correct
+  Jared decided these packet rows on 2026-10-30; every unmodified recommendation is confirmed as his decision,
+  and the decision IDs remain the amendment keys. X1, L1, S9, O11
+  and G4 retain his earlier explicit rulings. W7/C5 open investigation PM7-C5-CONTEXT-RING: the ring’s correct
   continuous rendering is the requested acceptance outcome. The activity GUI lane must report the
   investigated cause and actual drawing/token fix; no mechanism is claimed by this decision before that
-  report.
+  report. G1 B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action (binding
+  chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and reprojects
+  the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only: one
+  full-size docked-or-full-height-cover view, no small form. A switch cancels stale subscriptions and never
+  leaves the previous thread’s rows/actions in the new thread. A missing domain shows its truthful
+  empty/unavailable state. Pin is session view state, not a Settings row, durable layout field or runtime
+  mutation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- No fixed 760 cap or Activity Pin/small transient fallback remains; History pin and centre/page floors survive.
+- No fixed 760 cap or small transient fallback remains; History pin and centre/page floors survive.
+- Pin keeps full-size Activity Detail open across thread switches and follows the new thread; unpinned detail
+  closes on a switch, with stale data/actions/subscriptions discarded.
 - Glass floating Activity/History/attachment surfaces share the persona/model menu plate.
-- Friendly/Glass ring acceptance is recorded with PM7-C5-CONTEXT-RING investigation and later GUI mechanism
-  evidence.
+- Friendly/Glass ring acceptance remains PM7-C5-CONTEXT-RING investigation and later GUI mechanism evidence.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -3804,6 +3836,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/background-activity/opus-5.5/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3829,8 +3862,9 @@ canonical_text: >-
   ProcessFacts is subordinate, referenced from subject_refs; it does not burden non-process work. Keyboard
   panel shortcuts, OS badge/notification flow implementation and Home panel-tab opening remain deferred; a
   future OS badge consumes the same needs-you projection. D9 in-app notices and existing OS notification
-  behavior remain their owners. Recommendations follow the decision packet and remain addressable by their
-  decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings.
+  behavior remain their owners. Jared decided these packet rows on 2026-10-30; every unmodified recommendation
+  is confirmed as his decision, and the decision IDs remain the amendment keys. X1, L1, S9, O11 and G4 retain
+  his earlier explicit rulings.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -3858,6 +3892,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/background-activity/opus-5.5/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3881,11 +3916,14 @@ canonical_text: >-
   Adopted 2026-10-29 for the PM7 build. W8/W9, SND1, LAND1: the one lab-only Demo Studio gains
   Pip/loader/moods/parts/sound, full onboarding errors/tips, project-box widths/states and background
   Activity/Resources/quit scenarios using public owner APIs. No concept toolbar, injected runtime,
-  innerHTML hook or duplicate store becomes product. Missing APIs are unavailable. Sound gets Jared’s
-  listening review before the lead’s single final landing approval; phase builds are review artifacts.
+  innerHTML hook or duplicate store becomes product. Missing APIs are unavailable. SND1 B (Jared 2026-10-30):
+  sound lands on the level/texture tools’ measured numbers; Jared listens later in the product, with no
+  pre-landing
+  listening gate. LAND1 A confirms phase review artifacts and one final landing after Jared’s approval.
   Static checks and concept recordings supply no native Rust/Slint, production-event or governance
-  certification. No reseal in this task. Recommendations follow the decision packet and remain addressable
-  by their decision IDs; X1, L1, S9, O11 and G4 are Jared’s explicit rulings. W8’s concrete lab-only matrix
+  certification. No reseal in this task. Jared decided these packet rows on 2026-10-30; every unmodified
+  recommendation is confirmed as his decision, and the decision IDs remain the amendment keys. X1, L1, S9, O11
+  and G4 retain his earlier explicit rulings. W8’s concrete lab-only matrix
   is normative in F3-649: all named Pip/loader/sound controls, 42 events/5 loops,
   antigravityOnce/tastebook/≤11-character key/Ask Pip/pipRoughDay, Adjust Pip/presets/recorded pip run,
   five Project states and widths, Busy/No asks/Quiet/Many/Stale feed/After restart/Right-now, all three
@@ -3899,7 +3937,8 @@ unblocks: []
 acceptance_criteria:
 - Every named F3-649 case/recipe is exposed in the one lab through public APIs or explicitly unavailable.
 - Words come from the Studio copy owner, contrast is 4.5:1 and Reset Everything clears only OWNED keys.
-- No lab trigger becomes a product preference/command/runtime, and sound awaits Jared listening before landing.
+- No lab trigger becomes a product preference/command/runtime. Sound acceptance uses the level/texture tools’
+  numbers; Jared listens later in the product, and LAND1 still requires his final landing approval.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -3920,6 +3959,7 @@ source_lineage:
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
 - Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

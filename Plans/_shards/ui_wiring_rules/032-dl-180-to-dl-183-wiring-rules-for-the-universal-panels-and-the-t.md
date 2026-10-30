@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L2103-L2682
+Source lines: L2103-L2688
 
-Source SHA256: `8150e7ad82a5252741150810b10418c8990f9df98e4905c88bca144c19f0d584`
+Source SHA256: `f8178b222787114c5465431af2b18394e3e0e1093b97cc30a7b80b4aa079bd63`
 
 ---
 
@@ -475,7 +475,9 @@ canonical_text: >-
   front. Astra finds that shared state still stale in this snapshot, even though the separate run-card
   visibility wrapper passes those cases. PM7 PC1/S5/G1: hosted chat keeps exact command/local identities
   and Settings ownership while adding the Pip editor and Processes domain. Shared hover/overlay/rig
-  teardown applies; redraw/cheer/preview never creates a second commit or runtime. Activity Pin is retired.
+  teardown applies; redraw/cheer/preview never creates a second commit or runtime. G1 B (Jared 2026-10-30)
+  restores the view-local ui.activity_detail.pin / chat.activity.pin; a pinned thread switch replaces the data
+  and cancels stale subscriptions, while an unpinned switch closes detail.
 gui_related: true
 gui_classification_reason: Defines forward and reverse verification for visible hosted chat controls.
 split_recommended: false
@@ -545,7 +547,10 @@ canonical_text: >-
   stable IDs, never array positions. Menu open and local view changes write nothing; work mutations call
   owner handlers after permissions/currentness and match keyboard/pointer requests. Reduced Motion and
   disabled states preserve meaningful feedback without activation; ack ≤100 ms and commit once. Full
-  Activity Detail replaces Pin/small view. Resources subscribes only while visible; stale requests cannot
+  Activity Detail replaces only the small view; G1 B (Jared 2026-10-30) restores ui.activity_detail.pin /
+  chat.activity.pin. Pin keeps detail open across switches while data follows the new thread; unpinned detail
+  closes on a switch, without a runtime or Settings write. Resources subscribes only while visible; stale
+  requests cannot
   leak samples across Project/server/environment. One overlay/hover/loader/Pip kit and one work projection;
   no injection hooks, synthetic resize or replacement observers.
 gui_related: true
@@ -580,6 +585,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
