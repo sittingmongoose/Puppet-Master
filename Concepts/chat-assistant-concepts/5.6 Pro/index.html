@@ -30443,6 +30443,49 @@ window.PM56_NIER_FACES = [
     return true;
   });
 
+  /* CC5 / ACD-476: the composer dock reads the one work projection too. What waits on you in this thread (a process's
+     prompt, a subagent's question) is a needs line with Review; each live process is a live line with its time; the
+     next scheduled run is a coming-up line. They carry no runId (they are not transcript cards), so they always show;
+     the app's PM_WORK subscription re-renders the dock on a change and the tick patcher moves its times. */
+  function workDock(ctx) {
+    var W = window.PM_WORK, S = window.PM56_SHELL, out = [];
+    if (!W || !S || !S.pmxDockLine || !ctx || !ctx.state) return out;
+    var tid = ctx.state.selectedThread;
+    var mine = W.items({ thread: tid, kind: ['process', 'agent', 'scheduled'], view: 'thread:' + tid });
+    var mark = function (it) { return ctx.icon(it.kind === 'agent' ? 'robot' : it.kind === 'scheduled' ? 'clock' : 'processes', 16); };
+    var line = function (it, tone, sentence, time, label) {
+      var d = it.kind === 'agent' ? 'subagents' : 'processes';
+      return { key: 'work:' + it.id, tone: tone, at: it.startedAt || 0, html: S.pmxDockLine({ key: 'pmx-dock:work:' + it.id, tone: tone, markHtml: mark(it),
+        kindWord: esc(ctx, wt(it.kind === 'agent' ? 'dock.agent' : it.kind === 'scheduled' ? 'dock.scheduled' : 'dock.process')), sentence: sentence,
+        time: time ? '<span data-work-time="' + esc(ctx, it.id) + '">' + esc(ctx, time) + '</span>' : '',
+        action: { action: 'work-dock-review', attrs: 'data-id="' + esc(ctx, it.id) + '" data-domain="' + d + '"', label: label } }) };
+    };
+    W.sort(mine.filter(W.needsYou)).forEach(function (it) {
+      out.push(line(it, 'needs', esc(ctx, it.title) + ' · ' + esc(ctx, it.ask || W.word(it)), '', wt('dock.review')));
+    });
+    W.sort(mine.filter(function (it) { return it.kind === 'process' && W.isLive(it) && !W.needsYou(it); })).forEach(function (it) {
+      out.push(line(it, 'live', esc(ctx, it.title), W.time(it), wt('dock.show')));
+    });
+    var next = W.sort(mine.filter(function (it) { return it.kind === 'scheduled' && it.state === 'pending'; }))[0];
+    if (next) out.push(line(next, 'comingup', esc(ctx, next.title), W.time(next), wt('dock.show')));
+    return out;
+  }
+  var dockOn = false;
+  function provideDock() {
+    if (dockOn || !(window.PM56_PMX && window.PM56_PMX.dock)) return;
+    dockOn = true;
+    window.PM56_PMX.dock.provide(workDock);
+  }
+  provideDock();
+  if (!dockOn) document.addEventListener('DOMContentLoaded', provideDock, { once: true });
+  /* a dock line's Review / Show: Activity Detail at that item (a subagent found by its title: the chat's records) */
+  EXT.action('work-dock-review', function (ctx, btn) {
+    var id = btn && btn.dataset.id, d = btn && btn.dataset.domain, W = window.PM_WORK, it = W && id ? W.item(id) : null;
+    if (!it || !window.PM56_DEMO) return true;
+    window.PM56_DEMO.openActivity(d, d === 'subagents' ? { title: it.title } : it.id);
+    return true;
+  });
+
   void 'activity-summary-card pmap-focus-pill pmap-chips-foot';
 })();
 

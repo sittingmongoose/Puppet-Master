@@ -188,7 +188,7 @@
   /* one row: the state mark, the kind (Pip for an agent), what it is and what it is doing, its word and its time */
   function row(it, depth, o) {
     o = o || {};
-    const t = tone(it), open = !!ui.expanded[it.id];
+    const t = tone(it), open = !!(o.expanded || ui.expanded)[it.id];
     const sub = needsYou(it) && it.ask ? '<b class="wk-askline">' + esc(it.ask) + '</b>' :
       esc(it.lost ? it.lost : (it.kind === 'agent' ? (it.detail || '') : (it.kind === 'scheduled' ? it.detail : it.command))) +
       (it.ports && it.ports.length && isLive(it) ? ' · <span class="wk-mono">:' + it.ports.join(', :') + '</span>' : '') +
@@ -202,7 +202,7 @@
       '<span class="wk-lead">' + st(W().key(it), 12) + '</span>' +
       '<span class="wk-kind">' + kindMark(it) + '</span>' +
       '<span class="wk-copy"><strong>' + esc(it.title) + '</strong><span class="wk-sub">' + sub + '</span>' + (meta.length ? '<span class="wk-meta">' + meta.join(' · ') + '</span>' : '') + '</span>' +
-      '<span class="wk-right"><b data-tone="' + t + '">' + esc(word(it)) + '</b><i data-work-time="' + esc(it.id) + '">' + esc(time(it)) + '</i></span></button>' +
+      '<span class="wk-right"><b data-tone="' + t + '">' + esc(word(it)) + '</b><i data-work-time="' + esc(it.id) + '">' + esc((o.time || time)(it)) + '</i></span></button>' +
       (open ? detail(it, { where: true }) : '') + '</div>';
   }
   function sec(key, title, list, o) {
@@ -285,7 +285,8 @@
 
   /* Resources (G4): every server and environment of the Project, what runs on each, CPU, memory and ports, read from
      the sampler only while this tab is on screen (D12). A sortable table per environment and an inspector. */
-  const COLS = [['title', 'name'], ['rank', 'state'], ['cpu', 'cpu'], ['mem', 'mem'], ['ports', 'port'], ['where', 'where']];
+  /* the concept's Task manager columns, Time after State (W6-24) */
+  const COLS = [['title', 'name'], ['rank', 'state'], ['time', 'time'], ['cpu', 'cpu'], ['mem', 'mem'], ['ports', 'port'], ['where', 'where']];
   function liveVal(it, k) { return isLive(it) ? (it[k] == null ? null : it[k]) : null; }
   /* the Resources sort: the column the person picked, then the title so equal values keep one order */
   function resCmp() {
@@ -295,6 +296,7 @@
       let d = 0;
       if (k === 'cpu' || k === 'mem') { const va = liveVal(a, k), vb = liveVal(b, k); d = dir * ((va == null ? -1 : va) - (vb == null ? -1 : vb)); }
       else if (k === 'rank') d = dir * (w.rank(a) - w.rank(b));
+      else if (k === 'time') d = dir * ((a.startedAt || 0) - (b.startedAt || 0));
       else if (k === 'ports') d = dir * (((a.ports || [])[0] || 99999) - ((b.ports || [])[0] || 99999));
       else { const sa = String(k === 'where' ? ownerName(a) : a.title).toLowerCase(), sb = String(k === 'where' ? ownerName(b) : b.title).toLowerCase(); d = dir * (sa < sb ? -1 : sa > sb ? 1 : 0); }
       return d || byTitle(a, b);
@@ -332,6 +334,7 @@
           return '<button type="button" class="wk-tr' + (sel ? ' is-sel' : '') + '" role="row" data-work-sel="' + esc(x.id) + '" aria-selected="' + sel + '">' +
             '<span role="cell" class="wk-c-name">' + st(W().key(x), 11) + '<b>' + esc(x.title) + '</b></span>' +
             '<span role="cell"><b data-tone="' + tone(x) + '">' + esc(word(x)) + '</b></span>' +
+            '<span role="cell" class="wk-num" data-work-time="' + esc(x.id) + '">' + esc(time(x)) + '</span>' +
             '<span role="cell" class="wk-num" data-work-cpu="' + esc(x.id) + '">' + pct(liveVal(x, 'cpu')) + '</span>' +
             '<span role="cell" class="wk-num" data-work-mem="' + esc(x.id) + '">' + mb(liveVal(x, 'mem')) + '</span>' +
             '<span role="cell" class="wk-num">' + (x.ports && x.ports.length ? x.ports.join(', ') : '') + '</span>' +
@@ -640,9 +643,16 @@
   function onPanelDrag(e) {
     if (!ui.floating || !e.target.closest('[data-work-drag]') || e.target.closest('button')) return;
     const sx = e.clientX, sy = e.clientY, ox = pop.offsetLeft, oy = pop.offsetTop;
+    /* a drag like every other: body.pm-resizing pauses the beats, loaders and the projection's tick while it moves,
+       and the shell's drag-end bus lets what waited catch up once (R-10) */
+    doc.body.classList.add('pm-resizing');
     const mv = (ev) => { ui.fx = ox + ev.clientX - sx; ui.fy = oy + ev.clientY - sy; clampFloat(pop); pop.style.left = ui.fx + 'px'; pop.style.top = ui.fy + 'px'; };
-    const up = () => { removeEventListener('pointermove', mv); removeEventListener('pointerup', up); };
-    addEventListener('pointermove', mv); addEventListener('pointerup', up);
+    const up = () => {
+      removeEventListener('pointermove', mv); removeEventListener('pointerup', up); removeEventListener('pointercancel', up);
+      doc.body.classList.remove('pm-resizing');
+      try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) { /* nothing waited */ }
+    };
+    addEventListener('pointermove', mv); addEventListener('pointerup', up); addEventListener('pointercancel', up);
   }
   /* the status bar's two items open the panel at their own tab, or close it (the group is installStatusBar's, which may
      be drawn after this file runs: the click is heard on the document) */
@@ -763,6 +773,100 @@
     });
   }
 
+  /* ------------------------------------------- the other agent surfaces: filters of the one projection (D7) */
+  /* the left rail's panels spell ages out ("6 minutes 57 seconds", leftrail D's AGE_RX); a list there (o.words) writes
+     them that way itself, so the rail's skin finds nothing to rewrite and a tick never shows the short form for a frame */
+  const UNITS = { s: 'second', m: 'minute', h: 'hour', d: 'day', w: 'week' };
+  const spelled = (it) => time(it).replace(/(^|\s)(\d+)([smhdw])(?=$|\s)/g, (m, pre, n, u) => pre + Number(n) + ' ' + UNITS[u] + (Number(n) === 1 ? '' : 's'));
+  /* DR-078 / DL-246: the rail's Agents panel and Home's Agents board are filters of PM_WORK drawn with the panel's own
+     rows; each keeps its frame. list(host, { filter, groups, section, empty, label, where, words, whenShown, active, onPaint }) paints into
+     host and keeps it current: a change repaints it while it is active, a tick only patches times, progress and output.
+     Its rows open in place (their own open state); their actions are the panel's (the [data-work-act] handler). */
+  function list(host, o) {
+    o = o || {};
+    const st = { expanded: {} };
+    host.classList.add('wk-list');
+    if (o.label) host.setAttribute('aria-label', o.label);
+    const fmt = o.words ? spelled : null;
+    const rowsOf = (g) => g.items.map((x) => row(x, g.depth ? g.depth(x) : 0, { expanded: st.expanded, where: !!o.where, time: fmt })).join('');
+    /* o.whenShown: a list in a frame that hides (the rail's panel) paints only while it has a size, and catches up when shown */
+    let shown = true, stale = false;
+    const ro = o.whenShown && typeof ResizeObserver === 'function' ? new ResizeObserver((es) => { shown = es[es.length - 1].contentRect.width > 0; if (shown && stale) paint(); }) : null;
+    function paint() {
+      if (!W() || (o.active && !o.active())) return;
+      if (!shown) { stale = true; return; }
+      stale = false;
+      const all = items().filter(o.filter || (() => true));
+      const groups = (o.groups ? o.groups(all) : [{ key: 'all', items: sort(all) }]).filter((g) => g.items.length);
+      const focused = doc.activeElement && host.contains(doc.activeElement) ? focusKey(doc.activeElement) : null;
+      const html = groups.map((g) => (o.section ? o.section(g, rowsOf(g)) : rowsOf(g))).join('');
+      host.innerHTML = html || '<p class="wk-empty">' + esc(o.empty || '') + '</p>';
+      if (focused) { const f = host.querySelector(focused); if (f) f.focus({ preventScroll: true }); }
+      if (o.onPaint) o.onPaint(all);
+    }
+    const onClick = (e) => {
+      const t = e.target.closest && e.target.closest('[data-work-x]');
+      if (!t || !host.contains(t)) return;
+      const id = t.getAttribute('data-work-x'); st.expanded[id] = !st.expanded[id]; paint();
+    };
+    host.addEventListener('click', onClick);
+    const off = W() && W().on ? W().on('change', (why) => { if (o.active && !o.active()) return; if (!shown) { stale = true; return; } if (why === 'tick') patchTicks(host, fmt); else paint(); }) : null;
+    paint();
+    if (ro) ro.observe(host);
+    return { refresh: paint, destroy() { if (typeof off === 'function') off(); if (ro) ro.disconnect(); host.removeEventListener('click', onClick); } };
+  }
+  /* Home's Agents board groups its filter chips by these (All, Working, Needs you, Waiting, Finished) */
+  const WAITING_KEYS = { pending: 1, 'waiting-dep': 1, paused: 1, idle: 1, off: 1 };
+  function agentGroup(it) {
+    /* Needs you is the projection's one needs-you set (DL-246: the same set as the status bar and the rail) */
+    if (needsYou(it)) return 'needs';
+    if (isDone(it)) return 'done';
+    if (WAITING_KEYS[W().key(it)]) return 'waiting';
+    return 'working';
+  }
+  function agentSummary() {
+    const all = items({ kind: 'agent' }), g = { working: 0, needs: 0 };
+    all.forEach((x) => { const k = agentGroup(x); if (g[k] != null) g[k]++; });
+    return T('board.summary', { n: plural(all.length, T('bar.agent'), T('bar.agents')), working: g.working }) + (g.needs ? T('board.needs', { n: g.needs }) : '');
+  }
+  /* the rail's Agents panel (#panel-agents): the deep view, every agent with its subagents under it (lineage), what
+     waits on you first, then the queue and what finished. Mounted once into the frame the shell keeps. */
+  function rail() {
+    const host = doc.querySelector('#panel-agents [data-work-rail]');
+    if (!host || host.__wk || !W()) return;
+    const status = doc.querySelector('#panel-agents [data-work-rail-status]');
+    const isQ = (x) => W().isQuestion(x);
+    const queued = (x) => !isDone(x) && WAITING_KEYS[W().key(x)];
+    host.__wk = list(host, {
+      filter: (x) => x.kind === 'agent', label: T('rail.label'), empty: T('emptyAgents'), where: true, words: true, whenShown: true,
+      groups: (all) => {
+        const ids = {}; all.forEach((x) => { ids[x.id] = 1; });
+        const active = all.filter((x) => !isDone(x) && !isQ(x) && !queued(x));
+        const tops = sort(active.filter((x) => !x.parent || !ids[x.parent] || isQ(byId(x.parent)))), line = [];
+        tops.forEach((t) => { line.push(t); sort(active.filter((x) => x.parent === t.id)).forEach((x) => line.push(x)); });
+        active.forEach((x) => { if (line.indexOf(x) < 0) line.push(x); });
+        return [
+          { key: 'needs', title: T('rail.needs'), items: sort(all.filter(isQ)) },
+          { key: 'active', title: T('rail.active'), items: line, depth: (x) => (x.parent && line.indexOf(byId(x.parent)) >= 0 ? 1 : 0) },
+          { key: 'queued', title: T('rail.queued'), items: sort(all.filter(queued)) },
+          { key: 'done', title: T('rail.done'), items: sort(all.filter(isDone)) }
+        ];
+      },
+      section: (g, rowsHtml) => '<section class="sh-shelf wk-rail-shelf" data-shelf="' + g.key + '"><div class="sh-head"><span class="sh-hlabel">' + esc(g.title) +
+        '</span><span class="sh-hcount">' + g.items.length + '</span></div><div class="sh-body">' + rowsHtml + '</div></section>',
+      onPaint: (all) => {
+        if (!status) return;
+        const ask = all.filter(isQ).length, live = all.filter(isLive).length;
+        const text = ask ? T('rail.statusAsk', { n: ask }) : T('rail.statusLive', { n: live });
+        status.setAttribute('data-tone', ask ? 'attention' : live ? 'working' : 'idle');
+        status.setAttribute('title', text);
+        const full = status.querySelector('.sh-bfull'), short = status.querySelector('.sh-bshort');
+        if (full) full.textContent = text;
+        if (short) short.textContent = String(ask || live);
+      }
+    });
+  }
+
   /* --------------------------------------------------------------------------------------- staying current */
   const progText = (it) => T('detail.progressOf', { done: it.progress.done, total: it.progress.total, unit: esc(it.progress.unit) });
   /* what a row is: a tick that changes any of it (work ends, fails, starts waiting, stops) repaints the panel; a tick
@@ -770,9 +874,9 @@
   const shape = () => items().map((x) => x.id + ':' + x.state + ':' + (x.stopping ? 1 : 0) + ':' + (needsYou(x) ? 1 : 0) + ':' + (x.lost ? 1 : 0) + ':' + (x.progress && isLive(x) ? 1 : 0)).join('|');
   let lastShape = '';
   /* time, output tail and progress in place, for the panel and for the chat's Processes view */
-  function patchTicks(root) {
+  function patchTicks(root, fmt) {
     if (!root) return;
-    root.querySelectorAll('[data-work-time]').forEach((el) => { const it = byId(el.getAttribute('data-work-time')); if (it) { const v = time(it); if (el.textContent !== v) el.textContent = v; } });
+    root.querySelectorAll('[data-work-time]').forEach((el) => { const it = byId(el.getAttribute('data-work-time')); if (it) { const v = (fmt || time)(it); if (el.textContent !== v) el.textContent = v; } });
     root.querySelectorAll('[data-work-prog]').forEach((el) => { const it = byId(el.getAttribute('data-work-prog')); if (it && it.progress) { const v = progText(it); if (el.innerHTML !== v) el.innerHTML = v; } });
     root.querySelectorAll('[data-work-tail]').forEach((el) => {
       const it = byId(el.getAttribute('data-work-tail')); if (!it || !it.tail) return;
@@ -800,6 +904,7 @@
     window.addEventListener('resize', () => { refit(); if (ui.open) place(); });
     if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', refit);
     paintBar();
+    rail();
   }
   /* ------------------------------------------------------------------- System status (D11's owner, A5) */
   /* The status bar's System status item and D11's link open it: a small popover in the overlay root listing the
@@ -846,6 +951,6 @@
   }
   doc.addEventListener('pointerdown', (e) => { if (sys && !sys.contains(e.target) && !(sysItem() && sysItem().contains(e.target))) closeSystem(false); }, true);
 
-  window.PM7_WORK_UI = { open, close, toggle, systemStatus, isOpen: () => ui.open, tab: () => ui.tab, detail, tail, patchTicks, confirmThread, confirmPlatform, quit, paintBar, ui };
+  window.PM7_WORK_UI = { open, close, toggle, systemStatus, list, agentGroup, agentSummary, isOpen: () => ui.open, tab: () => ui.tab, detail, tail, patchTicks, confirmThread, confirmPlatform, quit, paintBar, ui };
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', boot); else boot();
 })();

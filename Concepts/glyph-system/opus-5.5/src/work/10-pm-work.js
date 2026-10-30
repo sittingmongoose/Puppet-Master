@@ -124,6 +124,7 @@
     return () => set.delete(fn);
   }
 
+  const NOTIFY_ROLES = { server: 1, db: 1, watcher: 1 };
   function load(name) {
     const b = builders[name];
     if (!b) return false;   // an unknown scenario changes nothing: scenario() keeps naming what is loaded
@@ -131,6 +132,9 @@
     try { r = b() || {}; } catch (e) { console.error(e); r = {}; }
     S.scenario = name; S.loaded = name;
     S.items = Array.isArray(r.items) ? r.items : [];
+    /* D9 / DL-248, the typed default: a process or scheduled run with no delivery of its own gets its kind's default,
+       Notify me (user) for servers, databases and watchers, Tell the agent (agent) for scripts, tests and builds */
+    S.items.forEach((it) => { if ((it.kind === 'process' || it.kind === 'scheduled') && !it.delivery) it.delivery = NOTIFY_ROLES[it.role] ? 'user' : 'agent'; });
     S.servers = Array.isArray(r.servers) ? r.servers : [];
     S.feed = r.feed && r.feed.state === 'stale' ? { state: 'stale', at: r.feed.at || Date.now() } : { state: 'current', at: Date.now() };
     S.restarted = r.restarted ? { at: r.restarted.at || Date.now(), lost: r.restarted.lost || 0 } : null;
@@ -416,7 +420,7 @@
     samplers.add(s);
     ensure();
     try { s.cb(snapshot(s.project)); } catch (e) { console.error(e); }
-    if (!sampleTimer) sampleTimer = setInterval(sampleOnce, 1000);
+    if (!sampleTimer) sampleTimer = setInterval(sampleOnce, 2000);   // every 2 s, as the Resources tab says (W6-30)
     return () => {
       samplers.delete(s);
       if (!samplers.size && sampleTimer) { clearInterval(sampleTimer); sampleTimer = 0; }

@@ -182,32 +182,9 @@ function boardBtn(rec) { return rec.row ? rec.row.action('board') : null; }
 /* ==================================================================================================================
    Agents (drawn here, outside the engine)
    ================================================================================================================== */
-var AGENTS = [
-  { id: 'agent-query', name: 'Query Analyzer', model: 'Claude Sonnet 4.6', state: 'working', secs: 126, progress: 68,
-    now: 'Benchmarking tenant-scoped query alternatives', facts: '14 tools · 9 files · 42 tests' },
-  { id: 'agent-schema', name: 'Schema Reviewer', model: 'Qwen 3.8', state: 'blocked', secs: 101,
-    now: 'Changing the production schema needs your explicit go-ahead.', facts: 'Waiting on you' },
-  { id: 'agent-rollback', name: 'Rollback Rehearser', model: 'GLM 5.2', state: 'retrying', secs: 72,
-    now: 'Attempt 2 of 3: the connection closed during step 7.', facts: '6 tools' },
-  { id: 'agent-fallback', name: 'Fallback Router', model: 'Qwen 3.8', state: 'fallback', secs: 214,
-    now: 'Moved to the Alibaba Coding Plan after the five-hour cap.', facts: '9 tools' },
-  { id: 'agent-bench', name: 'Benchmark Runner', model: 'Kimi K3', state: 'queued', secs: 0,
-    now: 'Queued behind the fixture rebuild', facts: 'Starts next' },
-  { id: 'agent-orphan', name: 'Orphan Gate', model: 'GLM 5.2', state: 'failed', secs: 22,
-    now: 'Found 3 orphaned rows and stopped before changing anything.', facts: '2 tools' },
-  { id: 'agent-migration', name: 'Migration Auditor', model: 'Claude Opus 5', state: 'complete', secs: 262,
-    now: 'Finished with one required change', facts: '11 tools · 4 files' }
-];
-var STATE = {
-  working: { word: 'Working', icon: 'play', tone: 'accent', group: 'working', live: true },
-  retrying: { word: 'Retrying', icon: 'reload', tone: 'warn', group: 'working', live: true },
-  fallback: { word: 'Fallback route', icon: 'forward', tone: 'warn', group: 'working', live: true },
-  blocked: { word: 'Stalled', icon: 'problems', tone: 'warn', group: 'needs' },
-  failed: { word: 'Failed', icon: 'cross', tone: 'bad', group: 'needs' },
-  waiting: { word: 'Waiting', icon: 'pause', tone: 'dim', group: 'waiting' },
-  queued: { word: 'Queued', icon: 'clock', tone: 'dim', group: 'waiting' },
-  complete: { word: 'Complete', icon: 'check', tone: 'ok', group: 'done' }
-};
+/* D7 / DR-078 / DL-246: the board is a filter of the one work projection (PM_WORK), drawn with the agents panel's rows
+   (PM7_WORK_UI.list): the same agents, states, counts and needs-you set as the status bar, the panel and the rail. The
+   board keeps its own frame: its header, its filter (Show) and its summary. */
 var FILTERS = [
   { id: 'all', label: 'All agents' },
   { id: 'working', label: 'Working' },
@@ -215,97 +192,22 @@ var FILTERS = [
   { id: 'waiting', label: 'Waiting' },
   { id: 'done', label: 'Finished' }
 ];
-var agentClock = { secs: {}, progress: {} };   // shared, so every agents tab tells the same time
-AGENTS.forEach(function (a) { agentClock.secs[a.id] = a.secs; agentClock.progress[a.id] = a.progress || null; });
-var clockTimer = 0, clockUsers = 0;
-function clockStart() {
-  clockUsers += 1;
-  if (clockTimer) return;
-  clockTimer = setInterval(function () {
-    AGENTS.forEach(function (a) {
-      if (!STATE[a.state].live) return;
-      agentClock.secs[a.id] += 1;
-      if (agentClock.progress[a.id] != null && agentClock.secs[a.id] % 9 === 0) agentClock.progress[a.id] = Math.min(96, agentClock.progress[a.id] + 1);
-    });
-    recList().forEach(function (r) { if (r.tickAgents && r.shown) r.tickAgents(); });
-  }, 1000);
-}
-function clockStop() {
-  clockUsers = Math.max(0, clockUsers - 1);
-  if (!clockUsers && clockTimer) { clearInterval(clockTimer); clockTimer = 0; }
-}
-function elapsed(s) {
-  if (!s) return 'Not started';
-  var m = Math.floor(s / 60), r = s % 60;
-  return (m ? m + 'm ' : '') + (r < 10 && m ? '0' : '') + r + 's';
-}
-function agentSummary() {
-  var g = { working: 0, needs: 0 };
-  AGENTS.forEach(function (a) { var k = STATE[a.state].group; if (g[k] != null) g[k] += 1; });
-  var parts = [AGENTS.length + ' agents', g.working + ' working'];
-  if (g.needs) parts.push(g.needs + ' need you');
-  return parts.join(' · ');
-}
-
-function openTranscript(rec, a, alt) {
-  var tid = 'thread-' + a.id;
-  var it = PM_HOME.catalog.find(tid);
-  var spec = Object.assign({}, it && it.spec ? it.spec : { id: tid, kind: 'transcript', agentId: a.id }, { label: a.name, mode: 'keep' });
-  if (alt) spec.where = 'panel';
-  rec.api.open(spec);
-}
+var WORK = function () { return window.PM7_WORK_UI && window.PM_WORK ? window.PM7_WORK_UI : null; };
+function agentSummary() { var U = WORK(); return U ? U.agentSummary() : ''; }
 
 function mountAgents(rec) {
-  var list = h('div', { class: 'pmw-dash-agent-list', role: 'list', 'aria-label': 'Agents at work' });
-  var empty = h('p', { class: 'pmw-dash-agent-empty', hidden: true, text: 'No agents match this filter.' });
-  var scroll = h('div', { class: 'pmw-dash-agents' }, [list, empty]);
+  var list = h('div', { class: 'pmw-dash-agent-list' });
+  var scroll = h('div', { class: 'pmw-dash-agents' }, [list]);
   rec.stage.appendChild(scroll);
-  var cells = {};
-  AGENTS.forEach(function (a) {
-    var st = STATE[a.state];
-    var time = h('span', { class: 'pmw-dash-agent-time' });
-    var bar = a.progress != null ? h('i', { class: 'pmw-dash-agent-fill' }) : null;
-    var barWrap = bar ? h('span', { class: 'pmw-dash-agent-bar', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-label': a.name + ' progress' }, [bar]) : null;
-    var open = h('button', { type: 'button', class: 'pmw-act pmw-dash-agent-open', 'data-pmh': 'icon',
-      'data-pm-hover-label': 'Open transcript', 'data-pm-hover-detail': 'Alt+click opens it in a new panel' }, [PMW.icon('transcript', { size: 14 }), h('span', { text: 'Open transcript' })]);
-    open.addEventListener('click', function (e) { openTranscript(rec, a, e.altKey); });
-    var card = h('article', { class: 'pmw-dash-agent', role: 'listitem', 'data-pmh': 'card', 'data-state': a.state, 'data-tone': st.tone, 'aria-label': a.name + ', ' + st.word }, [
-      h('header', { class: 'pmw-dash-agent-head' }, [
-        h('span', { class: 'pmw-dash-st' }, [PMW.icon(st.icon, { size: 13, cls: 'pmw-dash-st-ico' }), h('span', { text: st.word })]),
-        time
-      ]),
-      h('h3', { class: 'pmw-dash-agent-name', text: a.name }),
-      h('p', { class: 'pmw-dash-agent-now', text: a.now }),
-      barWrap,
-      h('p', { class: 'pmw-dash-agent-meta', text: a.model + ' · ' + a.facts }),
-      h('div', { class: 'pmw-dash-agent-acts' }, [open])
-    ]);
-    list.appendChild(card);
-    cells[a.id] = { card: card, time: time, bar: bar, barWrap: barWrap, group: st.group };
+  var U = WORK();
+  if (!U) { list.appendChild(h('p', { class: 'pmw-dash-agent-empty', text: 'Agents show here once the work projection is running.' })); return; }
+  rec.work = U.list(list, {
+    label: 'Agents at work', empty: 'No agents match this filter.', where: true,
+    filter: function (it) { var f = rec.filter || 'all'; return it.kind === 'agent' && (f === 'all' || U.agentGroup(it) === f); },
+    active: function () { return !rec.gone && rec.shown !== false; },
+    onPaint: function () { if (rec.paintLeft) rec.paintLeft(); }
   });
-  rec.tickAgents = function () {
-    AGENTS.forEach(function (a) {
-      var c = cells[a.id];
-      var t = elapsed(agentClock.secs[a.id]);
-      if (c.time.textContent !== t) c.time.textContent = t;
-      if (c.bar) {
-        var p = agentClock.progress[a.id];
-        c.bar.style.width = p + '%';
-        c.barWrap.setAttribute('aria-valuenow', String(p));
-      }
-    });
-  };
-  rec.filterAgents = function () {
-    var f = rec.filter || 'all', shown = 0;
-    AGENTS.forEach(function (a) {
-      var on = f === 'all' || cells[a.id].group === f;
-      cells[a.id].card.hidden = !on;
-      if (on) shown += 1;
-    });
-    empty.hidden = !!shown;
-  };
-  rec.tickAgents();
-  rec.filterAgents();
+  rec.filterAgents = function () { rec.work.refresh(); };
 }
 function setFilter(rec, f) {
   rec.filter = f;
@@ -1152,16 +1054,14 @@ PM_HOME.registerKind('dashboard', {
       onShow: function () {
         rec.shown = true;
         if (rec.b) { if (pageActive()) rec.b.show(); }
-        // the clock runs only while Home is the page in front (a render pass in the page-out animation can still call
-        // onShow); its own flag, so the host's onShow on return starts it
-        else if (type === 'agents') { if (pageActive() && !rec.clockOn) { rec.clockOn = true; clockStart(); } rec.tickAgents(); }
+        // the agents list repaints only while shown (its own PM_WORK subscription idles while hidden); catch up now
+        else if (type === 'agents' && rec.work) rec.work.refresh();
         rec.paintLeft();
       },
       onHide: function () {
         if (!rec.shown) return;
         rec.shown = false;
         if (rec.b) rec.b.hide();
-        else if (type === 'agents' && rec.clockOn) { rec.clockOn = false; clockStop(); }
         hourTicker(rec);
       },
       onResize: function (size) {
@@ -1176,7 +1076,7 @@ PM_HOME.registerKind('dashboard', {
         if (rec.b && typeof fields.widget === 'string') rec.b.reveal(fields.widget);
       },
       unmount: function () {
-        if (type === 'agents' && rec.clockOn) { rec.clockOn = false; clockStop(); }
+        if (rec.work) { rec.work.destroy(); rec.work = null; }
         dismissUndo(rec, { instant: true });
         rec.gone = true;
         if (rec.hourTimer) { clearInterval(rec.hourTimer); rec.hourTimer = 0; }
