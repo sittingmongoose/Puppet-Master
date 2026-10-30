@@ -29,6 +29,18 @@ def target_disposition(request, observed):
     return "current"
 
 
+def activity_detail_after_thread_switch(before, selected_thread):
+    """G1 B contract oracle; native subscriptions/rendering still need GUI evidence."""
+    remains_open = before["open"] and before["pinned"]
+    return {
+        "view_id": before["view_id"],
+        "thread_id": selected_thread["thread_id"],
+        "open": remains_open,
+        "pinned": before["pinned"],
+        "row_ids": list(selected_thread["row_ids"]) if remains_open else [],
+    }
+
+
 def validate():
     failures = []
 
@@ -48,6 +60,15 @@ def validate():
     for case in fixtures["semantic_cases"]:
         require(target_disposition(case["request"], case["observed"]) == case["expected"],
                 "Target guard differs: " + case["name"])
+    activity_state_schema = {**schema, "$ref": "#/$defs/ActivityDetailViewState"}
+    activity_state_schema.pop("oneOf", None)
+    activity_state_validator = jsonschema.Draft202012Validator(activity_state_schema)
+    for case in fixtures["activity_detail_thread_switch_cases"]:
+        actual = activity_detail_after_thread_switch(case["before"], case["selected_thread"])
+        require(activity_state_validator.is_valid(case["before"])
+                and activity_state_validator.is_valid(case["expected"]),
+                "Invalid G1 view-state fixture: " + case["name"])
+        require(actual == case["expected"], "G1 thread switch differs: " + case["name"])
 
     parts = read("pip_parts.json")
     scoped = {**schema, "$ref": "#/$defs/PipPartsRegistry"}
@@ -100,6 +121,10 @@ def validate():
 
     bindings = read("pm7_control_bindings.json")["bindings"]
     by_control = {row["control_id"]: row for row in bindings}
+    pin = by_control.get("chat.activity.pin", {})
+    require(pin.get("action_ids") == ["ui.activity_detail.pin"] and pin.get("disposition") == "local"
+            and not pin.get("production_entries") and not pin.get("setting_ids"),
+            "G1 Pin must retain its single view-local route without a Settings/runtime writer")
     require(not any(row["control_id"].startswith("statusbar.") and
                     any(term in row["control_id"] for term in ("cpu", "memory", "ram")) for row in bindings),
             "G4 prohibits a CPU/RAM status bar item")
@@ -162,7 +187,8 @@ def validate():
         require(count == counts[key], key + ": fixture count pin differs")
     return {"status": "fail" if failures else "pass", "scope": "Static PM7 contracts; no native/runtime/rendering certification",
             "counts": observed, "schema_cases": len(fixtures["schema_cases"]),
-            "identity_cases": len(fixtures["semantic_cases"]), "runtime_shape_cases": runtime_cases, "failures": failures}
+            "identity_cases": len(fixtures["semantic_cases"]), "runtime_shape_cases": runtime_cases,
+            "activity_thread_switch_cases": len(fixtures["activity_detail_thread_switch_cases"]), "failures": failures}
 
 
 if __name__ == "__main__":

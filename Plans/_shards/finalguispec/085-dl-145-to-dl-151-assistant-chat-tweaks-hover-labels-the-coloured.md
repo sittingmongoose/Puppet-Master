@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42298-L42943
+Source lines: L42316-L42962
 
-Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
+Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
 
 ---
 
@@ -337,7 +337,8 @@ canonical_text: >-
   from F3-635. Grill Me is a switch, not a participant: the existing speaker peeks over its kettle grill.
   You hold strings, never an agent puppet. Family materials are Friendly vinyl, Glass clear blue lens
   without brow band, Basic flat accent without cheeks, Retro pixel sprites, NieR ink with visor/square
-  nodes/diamond. Live NieR shows eyes; static brand/tray keeps plain band. Strings use the kit’s shared
+  nodes/diamond. NieR Pip shows eyes through the band on live and static marks, including title bar, app icon
+  and tray, at every size (X3 B, Jared 2026-10-30). Strings use the kit’s shared
   eye-to-eye solver and may be hidden by the chat’s optional Strings part without restoring old art. Markup
   is a pure theme/identity/state function, no random or per-render IDs; exit copies survive ID stripping.
   Shared styles avoid per-instance style blocks. Faces carry typed state: working think, queued

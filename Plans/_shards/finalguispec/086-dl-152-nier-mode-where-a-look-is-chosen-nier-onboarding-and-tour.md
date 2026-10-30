@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42945-L43320
+Source lines: L42964-L43343
 
-Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
+Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
 
 ---
 
@@ -110,8 +110,9 @@ canonical_text: >-
   in the outgoing look's colours, with no slats or travel, that names what is being applied, is announced
   politely, and lifts once the new look is drawn; the waiting reboot cover's movement is a compositor ink
   sweep across its segmented meter. Current PM7 replacement: Amended 2026-10-29 (O8/O11, X3; PM7): F3-663’s
-  NieR Pip replaces the unit marionette for onboarding and chat agents. Static marks keep plain band, live
-  stage/sheet Pip shows blinking eyes. Retain NieR material/HUD/reboot and Pod 042 as Tour/Chat narrator;
+  NieR Pip replaces the unit marionette for onboarding and chat agents. NieR Pip shows eyes through the band
+  on live and static marks, including title bar, app icon and tray, at every size (X3 B, Jared 2026-10-30).
+  Retain NieR material/HUD/reboot and Pod 042 as Tour/Chat narrator;
   no Tour redesign now.
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look
@@ -143,7 +144,7 @@ acceptance_criteria:
   families keep their own directions, with the hero moments of F3-600; with it on NieR's moments play whatever
   family is chosen beneath it (DL-153).
 - NieR agents and onboarding use Pip’s brace head, blindfold, square string nodes and shared size tiers; live
-  Pips show eyes, static marks the plain band. The retired unit’s collar/body and 1.21 head-to-torso ratio
+  Pips show eyes through the band on live and static marks at every size (X3 B, Jared 2026-10-30). The retired unit’s collar/body and 1.21 head-to-torso ratio
   do not constrain Pip.
 - Every NieR beat is gated by an existing installed part, and Animation speed still scales the motion.
 - Words longer than 8 characters type on with their final layout reserved from the first frame, and a label
@@ -301,7 +302,9 @@ canonical_text: >-
   [0,4,7,12] (C E G C); Retro Light root 79, [0,2,4,7] (G A B D); NieR root 69 minor, [12,15,19,22] (A C E
   G). Preserve approved pitch/chapter transposition and synthesis recipes with source/licence/version
   metadata through the one player; no re-key to the old canon. Six setup kits coexist with the unchanged
-  Tour’s existing cue mappings, not another player, switch or local registry.
+  Tour’s existing cue mappings, not another player, switch or local registry. O6, Jared 2026-10-30: look-tile
+  hover has no sound or theme change in any look, NieR included. Only click/keyboard activation selects the
+  look; this does not silence deliberate Ask Pip or other owner-routed cues.
 gui_related: true
 gui_classification_reason: Places onboarding and Guided Tour sound cues, their kits and the NieR kit in the
   sound settings model.
@@ -363,6 +366,7 @@ source_lineage:
 - Plans/Decision_Log.md#DL-152
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-REQUEST-20261007.md, SHA-256 416638453431ef6bac2b4a8066560214c4fa3bcd8e0663cf778fba89bc63e652
 - Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/polish-nier-onboarding-sounds)
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - general.interaction.sound-effects
 - general.interaction.sound-mapping

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27600-L28029
+Source lines: L27612-L28044
 
-Source SHA256: `63c9c2df0d06e50d6f0e803255e1aedcde0319ecf34fae55f25c4b5a68a06159`
+Source SHA256: `18361d7f7e137b4d8f41ee4d70e0b9c8e3f59db1e80ae3ff091b5e1c7d7d87ea`
 
 ---
 
@@ -277,7 +277,10 @@ canonical_text: >-
   tab at start; the home layout is the layout record's (SP-330). Pop out keeps the chat's History and Activity Detail
   with it (F3-637); the web client offers no Pop out and the chat stays in its column (F3-637, UCC-203). This adds the port's
   requirements to the binding-by-reference of the 5.6 Pro concept and supersedes nothing else.
-  Amended 2026-10-29 (G1–G3, PC1; PM7): Pip parts/gaze/overlays reuse host owners. Chat width has no fixed 760 cap; Activity Detail has no small/Pin view, first widening then full-height covering. History and detail floating plates use one Glass menu token.
+  Amended 2026-10-29 (G1–G3, PC1; PM7): Pip parts/gaze/overlays reuse host owners. Chat width has no fixed 760
+  cap; Activity Detail has no small view, first widening then full-height covering. G1 B (Jared 2026-10-30):
+  Pin preserves the full-size view across thread switches while its contents follow the new thread; unpinned
+  detail closes on a switch. History and detail floating plates use one Glass menu token.
 gui_related: true
 gui_classification_reason: Lists what the 5.6 Pro chat's colours, names, sizing, layers, hover tags, bans, demo controls and keys must meet when it moves into PMConcept7.
 split_recommended: false

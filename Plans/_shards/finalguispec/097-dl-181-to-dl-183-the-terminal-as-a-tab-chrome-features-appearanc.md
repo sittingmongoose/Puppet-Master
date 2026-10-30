@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L47431-L50446
+Source lines: L47465-L50493
 
-Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
+Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
 
 ---
 
@@ -2483,8 +2483,10 @@ canonical_text: >-
   static; one Basic Dark app tile, ICO/ICNS/PNG/SVG assets with manifest. Logical micro ≤18, small 19–40
   and full >40 tiers remain consistent across DPR. Each look reads its tokens: Friendly vinyl, Glass clear
   blue lens/rim/base without brow band, Basic flat single accent without cheeks, Retro pixel grids, NieR
-  ink/visor/diamond. Static NieR keeps the plain band; live Pip shows its eyes. Every animated asset has a
-  complete still base. The gated tray uses A3’s aggregate status faces across Projects; waiting always wins
+  ink/visor/diamond. NieR Pip shows eyes through the band on live and static marks, including title bar, app
+  icon and tray, at every size (X3 B, Jared 2026-10-30). Every animated asset has a
+  complete still base. The always-on tray (A2 B, Jared 2026-10-30) uses A3’s aggregate status faces across
+  Projects; waiting always wins
   and complete lasts about 10 s. Its accessible name carries the typed status, no colored badge. OS
   notifications and Friendly’s app tile use Pip while in-app cards keep their kind marks and the
   notification stack remains the only in-app notification entry. Individual agents consume F3-594’s Pip
@@ -2511,7 +2513,8 @@ canonical_text: >-
   lower-priority facts and freshness in the accessible summary. Never replace a stale projection with a
   healthy zero. W1: Retro draws hand-placed 16, 24 and 32 px sprite grids, with consistent logical tier
   selection across DPR. The PM monogram and gallery Direction switch are retired lineage, never a product
-  brand variant.
+  brand variant. X3 B changes visibility of the eyes, never the static/non-interactive nature of title, app
+  and tray rest marks.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2525,7 +2528,7 @@ acceptance_criteria:
 - Title mark is static and non-interactive at every density and DPR; no bell displacement.
 - All assets and live consumers share geometry/tokens and connected strings; static base remains visible without
   CSS.
-- Tray gating and priority agree with the shared work projection and existing settings.
+- Always-on tray visibility and A3 priority agree with the shared work projection; minimize-to-tray affects Close only.
 - The ≤24 px app mark and macOS-template/Windows-colour tray exports match the kit; four-frame Working becomes
   still under Reduced Motion/NieR.
 - Full A5 defaults and surface-specific overrides preserve all 22 typed keys and complete A3 tray precedence.
@@ -2547,6 +2550,7 @@ source_lineage:
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
 - Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2664,7 +2668,9 @@ canonical_text: >-
   meaningful accessible wait label, announced once rather than by every Pip. No loader preference or
   switch. The first-paint owner reads the Project look without another theme copy. All 35 inventoried sites
   and the missing Settings/tab busy states consume this owner; the loader rollout report records each site.
-  L8’s menu-sprout duplicates are recorded debt outside this change. L1 reference host sizes: splash 128
+  L8 B (Jared 2026-10-30): this build removes menu-sprout duplication. DR-079 is the one sprout owner for
+  every menu; chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it with no private animation
+  implementation. L1 reference host sizes: splash 128
   px, chat Working/thinking row 18 px, busy button 16 px, content-wait tab 14 px, panel 40 px. The shared
   em/baseline contract fits each host; the <12 px still gate and item-state st-working distinction continue
   to apply.
@@ -2704,6 +2710,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -2731,14 +2738,17 @@ canonical_text: >-
   journey-specific chapter counts; narrow <760 px and short <520 px use the real layout. Basic is first,
   first run Basic Dark. Away is new-Server only and recommended; Later skips AI; Creating goes to Protect
   with backup; AI has no Back and Continue needs a Ready account or explicit skip. Ready’s Tour/help work.
-  The Tour itself is unchanged (O11); Pod 042 remains its NieR narrator. One bounded transform solver makes
+  The Tour itself is unchanged (O11); Pod 042 remains its NieR narrator. One bounded shared solver makes
   Pip/props pendulums and joins strings eye-to-eye; world/idle life pauses offscreen, hidden, in
   low-resource mode and during drags. Theme tokens supply materials. Friendly is a felt world with vinyl
   Pip; Glass uses Ribbons, glass floor/reflection, ripples; Basic has dot grid/ruler/protractor/plumb;
   Retro Dark is the existing CRT with grain, persistence, rolling bar and <3 percent flicker at 20 fps;
   Retro Light is green-bar printer paper without bezel at 10 fps, rail included; NieR is a HUD with
-  hovering eyed/visored Pip, QUEST UPDATED and two slipping bands, never black frames. Filters are changed
-  only after frame-by-frame A/B preserves the look (O2). No per-page physics clock. Welcome sleeps until
+  hovering eyed/visored Pip, QUEST UPDATED and two slipping bands, never black frames. O2 A (Jared
+  2026-10-30): match the approved concept; implementation technique is the implementer’s choice. Preserve
+  solved strings, world materials, bounded shared life and hidden/offscreen/drag pause behavior; an
+  optimization must preserve the concept in recorded frame-by-frame A/B. No per-page physics clock. Welcome
+  sleeps until
   real pointer travel or key arrival. Watch follows 420 ms stable dwell, stays ≥900 ms and holds 600 ms
   after leave; preview highlights the choice without committing. Choosing is happy through the whole line;
   field typing is wonder; work think; owner errors oops with warning and a recovery cheer. Wink occurs once
@@ -2757,8 +2767,9 @@ canonical_text: >-
   (one large line then 2–3 lines then ellipsis), vault/cloud/backup, house/globe, review clipboard,
   Creating blocks, AI orbs, Ready charms/crew; expanded routes add NAS, key, identity card, QR/code,
   Recovery Kit, lock, settings copy, forge services and free models. Blocks slow into place level, squash
-  on touchdown, give below, unhook strings and rest on floor; each follows its owner phase and never delays
-  Continue/Ready, instant under Reduced Motion (O12). Name empty/long/taken, wrong/expired pairing, NAS,
+  on touchdown, give below, unhook strings and rest on floor; each follows its owner phase. O12 B (Jared
+  2026-10-30): Continue and Ready wait for the last block to land as well as the owner phases to finish;
+  Reduced Motion places every block instantly. Name empty/long/taken, wrong/expired pairing, NAS,
   token/key/sign-in and Creating failures use real errors, including retryable sign-in failure, not
   demo-only magic names. Cursor accepts ≥12; rejected demo is ≤11, label API key for Cursor / Check key; no
   unsupported OpenAI API key claim and Family recipes remains valid. Six original sound kits (Retro split)
@@ -2767,7 +2778,8 @@ canonical_text: >-
   live synthesis passes the one Notifications & Sounds player/gesture gate/master
   general.interaction.sound-effects and header speaker, with recipe/source/licence/version metadata in the
   existing sound tools/library. Setup voice/music are Pip parts, app chirps default off; Reduced Motion
-  never mutes and look hover is silent. Preserve Sound on — click to mute and Sound off — click to turn on.
+  never mutes. O6 (Jared 2026-10-30): look-tile hover changes neither sound nor theme; click or keyboard
+  activation changes the theme. Preserve Sound on — click to mute and Sound off — click to turn on.
   No local mute store; first run is factory parts plus session sound preview, rerun reads the Project.
   Reduced Motion stops all swing/travel/flicker/trails and places props instantly; state faces remain
   meaningful. Ready hands strings to the existing first Tour callout without a Tour redesign. O9 chapter
@@ -2810,7 +2822,8 @@ canonical_text: >-
   the answer, with the idea cue through the one gesture-gated/master-controlled player. It does not
   choose/commit the option or replay the stage entrance. This is distinct from O6’s silent look hover;
   reserve the full note/bubble layout first, preserve the existing heading/choice semantics and focus
-  return.
+  return. O12’s landing wait is presentation completion only: it neither dispatches owner work nor
+  manufactures a completed phase. Other choices and recovery controls remain responsive during Creating.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2832,8 +2845,7 @@ acceptance_criteria:
   states.
 - Ask Pip previews without commit/entrance replay, types one anchored answer, uses the idea cue and returns
   focus with correct accessible targeting.
-- Creating never delays owner Continue/Ready; six original recipe kits pass level/texture checks with no re-key,
-  no pre-gesture sound and no reduced-motion mute.
+- Creating Continue/Ready wait for owner completion and the last block landing, instantly settled under Reduced Motion; six original kits pass level/texture checks with no re-key, no pre-gesture sound and no reduced-motion mute.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -2854,6 +2866,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - pm7ob-explainer
 - ui.onboarding.open_details

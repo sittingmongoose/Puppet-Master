@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L6453-L6691
+Source lines: L6453-L6697
 
-Source SHA256: `ffdfb4e7786d3b56f787c3fa10ae10a48da8b35d7b7259f52eb5e5eeede37e59`
+Source SHA256: `ad65ad36fddd03d342d8bd2a02f327ea4a5d65344d84f6df69adf25adfd707f1`
 
 ---
 
@@ -129,7 +129,9 @@ canonical_text: >-
   destination or refusing a mismatch before draft mutation; the original thread alone is not sufficient
   reverse coverage. PM7 W4/W6/W7: hosted chat adds Pip editor producers through the existing Settings pair
   and the conditional Processes domain through UCC-210. Existing file/terminal/thread routes retain exact
-  identity; no private opener, small Activity Detail or Activity Pin returns.
+  identity; no private opener or small Activity Detail returns. G1 B (Jared 2026-10-30) restores the
+  view-local ui.activity_detail.pin / chat.activity.pin contract: pinned detail follows the new thread across
+  switches, and unpinned detail closes on a switch.
 gui_related: true
 gui_classification_reason: Binds hosted chat producers to existing wiring rows and their reverse GUI consumers.
 split_recommended: false
@@ -204,7 +206,10 @@ canonical_text: >-
   locations and falsifiable effect checks. Request/source scope pairing is explicit: application scope has
   project_id null, project scope has a real Project, and platform target permissions remain per owner. Null
   is never permission to substitute an active/default Project. Local action requests preserve the same
-  source scope without persistence.
+  source scope without persistence. G1 B, Jared 2026-10-30: chat.activity.pin binds ui.activity_detail.pin,
+  with thread_id, boolean pinned, view/scope/focus identity and one Touch reverse consumer. It is an explicit
+  local wiring disposition with no production mutation row. Thread-switch coverage requires pinned
+  follow-new-thread and unpinned close, including teardown and stale-action rejection.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -216,7 +221,7 @@ depends_on:
 - UIW-045
 unblocks: []
 acceptance_criteria:
-- Every one of 464 binding families resolves its declared command/local disposition with unique control identity
+- Every one of 465 binding families resolves its declared command/local disposition with unique control identity
   and valid Settings IDs.
 - All eleven new production-intent rows have typed requests/results/availability/accessibility/effect evidence
   requirements and one handler.
@@ -239,6 +244,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

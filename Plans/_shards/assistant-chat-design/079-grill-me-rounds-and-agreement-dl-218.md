@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L28031-L28446
+Source lines: L28046-L28471
 
-Source SHA256: `63c9c2df0d06e50d6f0e803255e1aedcde0319ecf34fae55f25c4b5a68a06159`
+Source SHA256: `18361d7f7e137b4d8f41ee4d70e0b9c8e3f59db1e80ae3ff091b5e1c7d7d87ea`
 
 ---
 
@@ -297,7 +297,8 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   G1–G3/G9, DL-254. Activity-bar click directly opens full-size Activity Detail, never a small transient
-  view and never Pin/unpin. Keep it until ×, Esc or icon-again. If dock does not fit, widen chat within
+  view; Pin/unpin changes lifetime across thread switches only. Within the current thread, keep it until ×, Esc or icon-again. If dock
+  does not fit, widen chat within
   centre/page floor; at window limit cover transcript at full column height. No fixed 760 px cap; preserve
   400 px message minimum, current centre floor/narrow ladder and History’s user-sized pin. Popped-out chat
   uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu
@@ -307,7 +308,13 @@ canonical_text: >-
   investigation PM7-C5-CONTEXT-RING remains owned by the activity GUI lane until its report identifies the
   renderer/token cause and resulting drawing rule. Do not invent a causal fix from this prose. Recheck
   Friendly/Glass at actual widths/DPR/Reduced Motion after that implementation; Step 4 reconciles its
-  measured mechanism.
+  measured mechanism. G1 B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action
+  (binding chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and
+  reprojects the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only:
+  one full-size docked-or-full-height-cover view, no small form. A switch cancels stale subscriptions and
+  never leaves the previous thread’s rows/actions in the new thread. A missing domain shows its truthful
+  empty/unavailable state. Pin is session view state, not a Settings row, durable layout field or runtime
+  mutation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -318,8 +325,10 @@ depends_on:
 - DR-067
 unblocks: []
 acceptance_criteria:
-- Every Activity domain opens full detail directly, widening then covering transcript at full height when constrained,
-  with no Pin/small view.
+- Every Activity domain opens full detail directly, widening then covering transcript at full height when
+  constrained, without a small view.
+- Pinned detail follows selected-thread data across switches; unpinned detail closes on a switch, and stale
+  rows/actions/subscriptions are removed.
 - Chat drag has no fixed 760 cap and preserves the minimum, centre/page floor, user History width and narrow
   ladder.
 - Glass Activity/History/attachment plates use the same menu token, and C5 remains an explicit measured acceptance/investigation
@@ -342,6 +351,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/background-activity/opus-5.5/README.md
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

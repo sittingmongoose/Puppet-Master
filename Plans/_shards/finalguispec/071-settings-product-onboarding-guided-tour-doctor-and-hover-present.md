@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36516-L37549
+Source lines: L36520-L37559
 
-Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
+Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
 
 ---
 
@@ -190,13 +190,18 @@ canonical_text: >-
   F3-598 consumes this rule. The Home options menu row is named Run Onboarding Again everywhere (DL-153,
   UCC-200); Run setup wizard is its earlier name, and it sits directly below Restore home layout, the
   former Reset Layout. Amended 2026-10-29 (O1–O12; PM7): F3-663 supersedes the troupe, no-physics/no-loop
-  prohibition and separately drawn spinner. One Pip in distinct family worlds, bounded transform-only life
-  and shared solver, six kits including Retro split, live voice/music through one player. One
+  prohibition and separately drawn spinner. One Pip in distinct family worlds, bounded shared life
+  and solved strings, with implementation technique open under Jared’s O2 A ruling of 2026-10-30, six kits
+  including Retro split, live voice/music through one player. One
   option-anchored ? note is pm7ob-explainer. All real routes/errors/203 tips expand beyond the small
-  concept. Owner phases gate progress, animation never does; real flow and 14 onboarding actions remain.
+  concept. O12 B (Jared 2026-10-30) amends the former animation-never-gates rule: Creating Continue and Ready
+  wait for owner completion and the last block to land; Reduced Motion settles instantly. Real flow and 14
+  onboarding actions remain.
   O11 defers the Tour. O7 (2026-10-29): preserving the settled scene during Details/? permits F3-663’s
   same-stage choice preview, note-directed Pip and typed answer/idea cue; no choice commit or entrance
-  replay. The older settled-scene acceptance is read with this specific interaction.
+  replay. The older settled-scene acceptance is read with this specific interaction. O6, Jared 2026-10-30:
+  hovering a look tile changes neither the theme nor sound. Click or keyboard activation requests
+  ui.onboarding.choose_look; this keeps the existing ephemeral/current-Project persistence boundary.
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -430,6 +435,7 @@ source_lineage:
 - Concepts/pm7-tools/onboarding_cinematic_source.py
 - Concepts/pm7-tools/home_workspace_source.py
 - Concepts/pm7-tools/home_workspace_refresh_source.py
+- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 preserved_exact_tokens:
 - welcome
 - simple_path
@@ -503,7 +509,7 @@ negative_constraints:
   or an inert Set up access later action.
 - Do not expose `shell`, command/schema/route IDs, owner names, host/environment terminology, or unexplained
   developer/source-control vocabulary in user-visible onboarding copy.
-- Do not make animation block input or delay navigation; continuous Pip/world life is allowed only through
+- Do not make animation block input or delay navigation except O12 B’s Creating Continue/Ready wait for the last block landing; continuous Pip/world life is allowed only through
   F3-663’s bounded shared clock, paused hidden/offscreen/during drags, or become required to understand state.
 - Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world
   effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving

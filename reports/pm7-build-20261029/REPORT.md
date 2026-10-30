@@ -1,104 +1,97 @@
-# Plans lane report — 2026-10-29
+# PM7 Plans lane — 2026-10-29
 
-Branch: `t3/plans/pm7-plans-canon`. Lead: `pm7-build`.
+Branch: `t3/plans/pm7-plans-canon`. Current focused source head: `543a85e5ffd2da233ac4f7a55ed35afa31a6248a`. Lead: `pm7-build`.
 
-- **Step 1 done:** checked allocation against live owner documents; published shared `IDS.md` and committed its mirror at `reports/pm7-build-20261029/IDS.md`. DL-235–256, F3-660–665, DR-076–078, SSYS-056–057 reserved with all command, binding and glyph identities and the 22-key mood map.
-- **Step 2 done:** 27 owner docs amended across W1–W9 with decision IDs, including D1–D14 and G4 amendments, stale counts/title geometry, one Pip/loader/projection, full onboarding, chat, ProcessFacts and per-server Resources. Shards and PlanUnit index regenerated. Ledger compilation not used.
-- **Step 3 implemented; aggregate verification running:** command/request/result/local schemas, ProcessFacts and per-server resource records, closed input requests, positive/negative and identity fixtures, 45 new bindings, 11 new production-intent rows, 26 Touch obligations / 3 profiles, two Settings rows and 25-part registry. Derived files regenerated; focused companion checks pass.
-- **Step 4 pending:** GUI lanes' merged implementation names, then reconciliation.
+**Steps 1–3 implemented.** W1–W9 canon and companions are pushed. Final full gates: **exit 1**. Dry landing: **exit 2 before integration; exact inventory guard now PASS**, **0 Plan-attribution blockers**, **0 infrastructure results**. Full/dry aggregate attribution was run at b22d48bec8; the late label-storage ruling is covered by focused checks at the current head. The inventory-page guard subsequently passed when the lead republished PM7 and this lane synced integration 543a85e5ff. No full aggregate rerun after that GUI integration is claimed. Step 4 and independent companion review wait for the lead’s merged-GUI signal. No landing, lock or reseal was performed.
 
-## Checks
+## Coverage
 
-Allocation scan: next free starts verified DL-235, F3-660, DR-076, SSYS-056. Initial tree clean at dddfe5a763. No browser or media captures were generated; validation logs are retained outside the repository. No governance reseal, landing, lock or shared-main changes.
-
-## Names introduced
-
-See `../../IDS.md`. Two new Settings rows admitted (1011 total). Stop all reuses `cmd.work.stop` scope. Clear Finished hides rows in the current view. Loader/projection API names are provisional pending found's shared owner APIs; binding and PlanUnit IDs are allocated now.
-
-## Open items
-
-Aggregate gates/dry landing check and any branch-owned fixes; GUI lane reconciliation after lead merges. Lead asked found to adopt the 25 admitted option IDs. Resources reuses the existing gauge glyph. Independent review is lead-owned. No ledger is being compiled, so the ledger compile witness is not applicable.
-
-## Step 2 validation and boundary
-
-Shard generation: PASS, 2955 shards / 99 source documents. Index generation: exit 0. Ignored currentness audit symlink and exact full-checkout auxiliary inputs installed before indexing; no tracked input was overwritten. Shard check result retained in the evidence folder. Aggregate gates and dry landing check follow companion updates. No Spec Lock, auto-decisions or evidence bundle writes.
-
-Source files: `Plans/00-plans-index.md`, `Plans/CLI_Bridged_Providers.md`, `Plans/Collaborative_Workflows.md`, `Plans/Commands_System.md`, `Plans/DRY_Rules.md`, `Plans/Decision_Log.md`, `Plans/Executor_Protocol.md`, `Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Goal_Runtime_System.md`, `Plans/Planning_Wizard.md`, `Plans/Run_Graph_View.md`, `Plans/Run_Modes.md`, `Plans/Scheduling_and_Quota_Resume.md`, `Plans/Section15_MVP_Promoted_Features_Spec.md`, `Plans/Server_System.md`, `Plans/Settings_System.md`, `Plans/Shared_Integration_Runtime.md`, `Plans/UI_Command_Catalog.md`, `Plans/UI_Wiring_Rules.md`, `Plans/Widget_System.md`, `Plans/Wiring_Matrix.md`, `Plans/assistant-chat-design.md`, `Plans/assistant-memory-subsystem.md`, `Plans/storage-plan.md`.
-
-## Step 3 companions and counts
-
-Counts: 1011 settings; 22 status keys; 25 Pip parts (24 default); 464 control bindings; 1269 production wiring rows; 707 Touch rows / 137 profiles. Stop all shares cmd.work.stop; All projects is ui.project_switcher.all_projects with existing page route. Source scripts pin these counts and independently discover the new action enums. New contract checker is integrated into pm7-canon-check.py.
-
-Focused checks: pm7-build-check.py PASS (schema, target identity and resource facts); pm7-canon-check.py PASS; Touch Closure PASS with all 707 rows still partial, no native proof promoted. Shards PASS 2957 / 99 sources; index PASS 7235 / 96 docs. Existing new-contracts suite also passed before the last added edge cases; the aggregate suite will check the final set.
-
-Names: Plans/pip_parts.json; Plans/pm7_build_contracts.schema.json and .fixtures.json; scripts/pm7-build-check.py; ProcessFacts, ServerResourceSample, InputRequest. New semantic checks reject missing subordinate fact joins and host memory beyond its total.
-
-
-## Workstream coverage
-
-| Work | Plans result |
+| Work | Result |
 |---|---|
-| W1 | F3-660 brand/assets/tiers/tray/notification faces; title-bar and tray amendments; DL-235 and DR-076. |
-| W2 | F3-661 project box A, same-frame chip, real badge priority, B1/B2/B6 dispatch and rows; CS-105/UCC-209. |
-| W3 | F3-663 covers all routes/tips/errors/props/worlds, face/gaze/rig timing, six kits, sound metadata and non-gating Creating; existing onboarding owners and Planning Wizard amended, Tour deferred. |
-| W4 | F3-594 redraws the single agent primitive; ACD-507 owns sheet/list/Orbit handoff; SSYS-056 and the 25-part registry admit one Settings row/editor. |
-| W5 | F3-662 and DR-077 replace indeterminate spinners with one loader, retaining skeletons/bars and item status, NieR fallback and reduced-motion wait signal. |
-| W6 | F3-664/665 three-tab platform panel, two status items, quit; ACD-505 thread Processes; D1–D14 in DL-240–253; SIR-054 and runtime schemas/fixtures for process facts, safe prompts, identity and per-server Resources. |
-| W7 | ACD-506 and F3-637 remove small Activity Detail/Pin and fixed width cap; layout schema/fixtures permit wide preferences; shared Glass plates and clean ring requirements. |
-| W8 | F3-649/DL-256 specify one lab Demo Studio with Pip/sound/parts, full onboarding tips/errors, project states/widths and Activity/Resources/quit scenarios. GUI implementation belongs to demo lane. |
-| W9 | Shared IDs, 27 owner docs, DRY/glossary/index, command catalog, production-intent wiring, bindings, Touch, settings/part/glyph companions and count pins. Regeneration and focused checks pass; final aggregate attribution follows. |
+| W1 | One brand/Pip kit, size tiers, app/tray/notification faces, 40 px title bar / 46 Glass, corrected tray precedence; F3-660 / DL-235 / DR-076. |
+| W2 | Project box A, same-frame chip, five badge states, menu/row geometry, Ctrl Shift P and Ctrl/Cmd+Enter, stable Project/workspace command identity; F3-661 / CS-105 / UCC-209. |
+| W3 | Complete onboarding Pip worlds, rail, rigs, gaze/props, tips/errors/routes, six sound kits and exact roots, gesture gates, Ready handoff; F3-663 / Planning Wizard. Tour remains under O11. |
+| W4 | Shared individual-agent Pip, optional sheet/list/Orbit handoff, parts editor and exact 25-part registry/presets/defaults; F3-594 / ACD-507 / SSYS-056. |
+| W5 | One indeterminate loader, context variants/periods, known-layout skeletons, determinate bars, item-state separation, NieR and Reduced Motion; F3-662 / DR-077. |
+| W6 | Thread Processes; Agents/Processes/Resources panel; two status items; work/quit commands; D1–D14/G4; ProcessFacts, InputRequest, per-server samples, identity/permissions/delivery and view-local clear; F3-664/665 / ACD-505 / SIR-054. |
+| W7 | Full-size Activity Detail without Pin, widen-then-cover, saved width ≥400 with no fixed maximum, separate History behavior and shared Glass plates; F3-637 / ACD-453/506 / SP-330 and schema/registry parity. Context-ring mechanism remains GUI-owned, with no invented diagnosis. |
+| W8 | Named Demo Studio matrix, 42 events / 5 loops / six kits, Pip/parts, onboarding tips/errors and project/activity/Resources/quit recipes; F3-649 / DL-256. |
+| W9 | 27 owner docs, 45 new PlanUnits, shared IDs, commands/local actions, production wiring, bindings, Touch, settings, glyphs, runtime/layout schemas, fixtures, glossary/help entries, count pins and regenerated shards/index. |
 
-The report-only `reports/pm7-build-20261029/decision-map.json` maps all 62 packet/ruling IDs (including the lead's RM1 clarification) to canonical owner units, for applying later answers. The new main reseal/snapshot/baseline was inherited through integration, never edited by this lane. The obsolete pre-merge check attempt was stopped before completion; final verification runs on the merged base with 600 s subcheck bounds.
+All recommendations are adopted in tagged canon for later corrections. `decision-map.json` maps all **76** packet/ruling/source IDs (including RM1 and D1–D14) to current owner units. No ledger compilation was used; compile witness is not applicable.
 
+## Identities and counts
 
-## Review responses
+`IDS.md` is published in the build share and mirrored in this result bundle. Sequences: DL-235–256, F3-660–665, DR-076–078, SSYS-056–057, ACD-505–507, CS-105–106, UCC-209–211, WM-097, UIW-045, SIR-054 and G-031.
 
-All 19 Astra findings and all 20 Muse findings are accepted and addressed in the consolidated prose pass; the first Astra recheck found six residual/new gaps, now accepted for correction, with per-finding details in `REVIEW-RESPONSES.md` beside this report and `reports/pm7-build-20261029/REVIEW-RESPONSES.md`. No finding is rejected. The original 44 units now have specific, falsifiable criteria; G-031 adds correctly formed durable help entries. Wrong-unit insertion audit reports zero misplaced original amendments. Current chat/Activity Bar requirements, History pin and original user literals were preserved while old Pin, primitive and width rules were retired.
+| Contract | Count / rule |
+|---|---|
+| Settings | 1011 rows; only `general.visual.pip-parts` and `general.interaction.status-bar-words` added. Per-Project persistence; inventory global scope remains applicability metadata. |
+| Pip | 25 stable IDs / five groups / 24 default-on; app-voice off; Full, Quiet, Still, Plain use IDs internally, and Settings stores their shared-registry LABELS. Shared help and Size 1–6, total 61. |
+| Status | 22 existing keys; no new key. Mood defaults and Memory/Scheduled/13-agent subsets preserved. |
+| Bindings / production wiring | 464 bindings; 1269 wiring rows (11 new). |
+| Touch | 707 rows / 137 profiles; all native proof residuals remain partial. |
+| Derived | 2956 shards / 99 sources; 7236 PlanUnits / 96 indexed docs. |
 
-Fresh generation passes: 2956 shards / 99 sources; PlanUnit index 7236 / 96 docs. Post-fix focused PM7, canon and Touch checks pass. Complete generated-file staging and clean committed extraction verification precede the final aggregate rerun. Decision map now covers all 76 packet/ruling/source IDs (62 packet/ruling plus D1–D14).
+Stop all reuses `cmd.work.stop`; Clear Finished is view-local; All projects is `ui.project_switcher.all_projects`, never the side-panel command. Explicit application scope uses project_id null; target ownership/Project/server/environment permissions remain authoritative.
 
-The completed pre-review aggregate returned 1. Two own new-contract fixture failures were missing `semantic_rule` harness labels, now corrected. Its three context-compaction GUI-fixture errors match the baseline's exact fingerprints; the remaining failures need the final dry check's staleness/pre-existing attribution. The preliminary dry run was stopped to apply the requested reviews; it is not claimed as a completed verification.
+## Review and corrections
 
-## GUI reconciliation input received
+Original Astra 19 and Muse 20 findings were accepted. Both follow-up sets were repaired. The capped final Astra recheck closes **all 21 prior rows** and raised N1–N3; lead explicitly requested direct fixes/proofs without another review. N1 current v2 storage mirror is synchronized and guarded for parity/above-760 acceptance; N2 fixture copy derives inventory membership; N3 PC4 no longer points to notebook unit ACD-451. Per-item responses are in `REVIEW-RESPONSES.md`.
 
-Activity lane report at 52b68952ad records no fixed chat maximum, current centre floor 480, Activity width reservation/drop order and one Glass plate, with concept names PM56_HOST.reserveActivity/activityWidth, PMW.chatCol.activityW, narrow.state.act/actDropped, --pmw-chat-act-w and activity-panel.cover/data-layout dock|cover. It reports no context-ring spec change. These are captured for Step 4 once the lead confirms the GUI integration merge; they are concept lineage, not new native APIs. PM7-C5-CONTEXT-RING remains integration/verification work rather than an invented drawing mechanism.
+The c2a3acc3b4 dry run returned 26 blocking rows from one stale full-thread dependency pin, repeated in both aggregate checks. Only ObservableWorkRecord changed among old definitions; all six definitions reachable by the Goal references are exactly unchanged. Two live Goal-realm dependency digests were refreshed. Exact stored-profile union checks pass for all three families; native realm, stored member wrappers and protected governance remain unchanged. This repair has a consistency guard and retained closure proof. N2’s purpose-only edit also required one Touch fixture-digest refresh; all command contracts/dispositions and every other fixture field are unchanged, with no native proof promotion.
 
-## Application scope completion
+## Verification and attribution
 
-D2/D10/D13/G4: companion requests now carry explicit application/project scope. Quit, platform controls, editor/navigation and service facts work without inventing a Project. Source/owner scope and every target’s real Project/server/environment permission remain required. CS-106, SIR-054 and WM-097 state this existing-policy boundary. Production rows now carry command-specific locations and effect checks. Focused PM7 checks pass: 13 request cases, 4 identity cases, 11 runtime fact cases; all counts unchanged. Final aggregate and dry attribution will run on the frozen follow-up head.
+| Check | Result |
+|---|---|
+| PM7/canon | PASS at current label head; 15 schema cases (13 request/local plus 2 label-value), 4 identity, 11 runtime; count pins agree. |
+| Direct correction / reference proofs | PASS: N1–N3 semantic + rg receipts; six unchanged Goal definitions; all three stored-profile unions; unchanged Settings command/disposition data. |
+| Touch | PASS, 707 rows / 137 profiles, all native evidence residuals partial. |
+| Shards / committed extraction | PASS, 2956 / 99. Clean current-label extraction passes, including regenerated inventory shards. |
+| PlanUnit index | PASS generation, 7236 / 96. Required ignored full-checkout/audit inputs installed before indexing. |
+| Standard full gates | Exit 1 at b22d48bec8; no new-contract, Touch, wiring or shard failure. Latest label-only correction passes focused checks per lead. |
+| Dry landing, current baseline | Exit 2 at b22d48bec8: attribution has zero Plan blockers/zero infrastructure; inventory-page guard has since passed at current merged integration after the lead republished PM7. No full aggregate rerun is claimed after this GUI integration. |
+| Review | All 21 prior rows closed; N1–N3 directly repaired per lead’s two-cycle cap; companion review follows Step4. |
 
-Foundation names received at 46e222c5c9: PMLogo, PM_PIP_LOADER, PM_WORK, PM_PIP_PARTS; exact 25 parts agree. Exported preset IDs are lowercase full|quiet|still|plain with display names Full/Quiet/Still/Plain, and projection field delivery maps the owner contract completion_delivery. Step 4 reconciles these after the lead confirms GUI integration.
+At b22d48bec8, no new branch-owned non-staleness failure remained. The completed dry comparison reports 14778 on-branch staleness rows and 0 pre-existing rows. The three context-compaction GUI-fixture failures are unchanged baseline failures. There are 8 new non-staleness rows outside the branch: two old tail-shard references in protected Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json, repeated across graph/evidence checks. The old paths are storage_value_registry/579-lines-115418-115511.md and settings_inventory/127-lines-25128-25234.md under Plans/_shards. Reported for the assigned reseal; not hand-edited. Exact records are in verification.json/raw report.
 
-## First recheck follow-up
+Baseline currency and complete raw attribution are retained in `closed-dry-landing.json`. Governance staleness is the expected result of edited canon awaiting the separately assigned reseal; lead should request that reseal after integration. No baseline, Spec Lock, auto-decisions, `.evidence`, graph or migration snapshot was refreshed by this lane. Inherited main/reseal commits are excluded from lane authorship.
 
-Astra recheck at 78b06ddc00: 14 fixed / 5 partial original findings, with six distinct open items (one major, five minor). Accepted R1–R6: shared sheet-motion exemption; three moved owners’ behavioral acceptance; To-Do full-size route; live ten-domain enumeration; historical August index denominator; shared part help/size schema/data. Focused fixes are prepared outside the checkout while d934851c07 aggregate runs. Muse recheck remains lead-owned and pending. No final prose approval is claimed yet.
+## Files and evidence
 
-## Astra recheck repairs
+Owner prose: `00-plans-index`, `CLI_Bridged_Providers`, `Collaborative_Workflows`, `Commands_System`, `Crosswalk`, `DRY_Rules`, `Decision_Log`, `Executor_Protocol`, `FinalGUISpec`, `Glossary`, `Goal_Runtime_System`, `Planning_Wizard`, `Run_Graph_View`, `Run_Modes`, `Scheduling_and_Quota_Resume`, `Section15_MVP_Promoted_Features_Spec`, `Server_System`, `Settings_System`, `Shared_Integration_Runtime`, `ToDo_Runtime`, `UI_Command_Catalog`, `UI_Wiring_Rules`, `Widget_System`, `Wiring_Matrix`, `assistant-chat-design`, `assistant-memory-subsystem`, `storage-plan` (all under `Plans/`, `.md`).
 
-R1–R6 applied after the completed d934851c07 gate run: F3-584 now exempts only F3-594/ACD-507’s optional shared sheet rig; SMPFS-003/083 and WM-019 have falsifiable Project-box/keyboard/identity/producer criteria; To-Do routes target full-size detail; live presentation enumerates all ten domains; the dated August index keeps 828; and every Pip part admits/provides help and Size (1–6) from the single registry. The foundation lane confirmed all 25 sizes (total 61). Presets/defaults/counts are unchanged. Regeneration and the final aggregate/dry rerun follow. Muse recheck remains pending; no final review approval is claimed.
+Companions include PM7 request/result/local schema + fixtures, Pip registry, full/shared runtime schemas + fixtures, layout schema + fixtures/current storage mirror, glyph/catalog/bindings/wiring/Touch/settings data, current Settings fixture and two live schema-reference pins. Script changes are limited to count/closure validation in `pm-plans-verify.py`, `pm-touch-closure-verify.py`, `pm7-build-check.py`, `pm7-canon-check.py`, `pm_full_thread_semantics.py`. Derived files were regenerated, never hand-edited.
 
-The completed d934851c07 aggregate returned 1: validate_new_contracts now PASS, as do wiring, Touch and shard checks. Its failing groups are Spec Lock, plan graph, evidence, PRD runtime contracts, readiness, migration, three baseline context-compaction GUI fixtures, and audit closure. The automatically started pre-fix dry check was stopped when these requested repairs became applicable; final dry attribution runs on the repaired head.
+Raw retained checks: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/`. Exact paths, commands, source commit and SHA-256 values are in `verification.json` in this result bundle.
 
-## Combined recheck repairs ready for final verification
+| Artifact | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-run-gates.json` | `ca8f75e5966aacbb893fa75141a2b665741cdaa4acbefe7d6bcf546534573bec` |
+| `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-dry-landing.json` | `5e00efc75d1ce41524752c2fe5f025e63855a70dde6ac4ec0209602b38aa17cf` |
+| `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-cycle-direct-fixes.json` | `eae45b9f7cc9667a2fa2ea6f70e817718c550136b52a9d25faa965b63dae1fa6` |
+| `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/schema-reference-closure-proof.json` | `c1b63a66ecdc454ebe66033f66bc0ef6d24e62bc31b6590c1addbaa146f0727f` |
+| `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/settings-disposition-pin-proof.json` | `cce5fa7208ce87c8546101c0eb244cceb6761bf9f4ffaf3b012f7a668e8c9a35` |
+| `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/label-committed-shards-check.log` | `7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f` |
+| `reports/pm7-build-20261029/verification.json` | `cf05b77d08fd4eb073ff32dcc6982abc13429fb853257f5507192e82bd0e7fc0` |
 
-Muse recheck at 78b06ddc00: 15 fixed / 5 partial originals, two major/eight minor follow-ups. All ten accepted and repaired; two overlap already-fixed Astra items. Cumulative §17, ACD-451/453, SSYS-056, EP-043 and F3-635 now agree with the operative PM7 owners. Retired art/loader descriptions are explicitly scoped as history, and four source-lineage residues are corrected. The per-item response table is in REVIEW-RESPONSES.md. No final prose approval is claimed until the lead’s final focused Astra check. After regeneration, source freezes for final full gates and dry attribution.
+## Step 4 inputs and open work
 
-## Final focused Astra review
+The generated-page inventory guard is resolved at synced integration 543a85e5ff: the lead republished PM7 and its exact builder check passes here. This lane’s earlier generation probe was restored without commit; no GUI source or generated-page edit was authored by this lane. The final 2026-10-30 label-storage ruling is already applied in inventory/prose/schema/value fixtures with all25 mappings equal to PM_PIP_PARTS; the lead requested focused checks and an immediate merge for chatpip.
 
-RECHECK2-prose-astra.md at c2a3acc3b4 closes all 21 prior review rows. It identifies three new items: N1 current storage-value mirror still caps chat width at 760 (major), N2 current All Settings fixture purpose still says 828 (minor), N3 PC4 decision map still cites removed ACD-451 (minor). Lead explicitly requested direct repair with proof, regeneration/push, and no further prose review cycle. Fixes are prepared outside source until the frozen dry check finishes; the companion checker will enforce whole current-v2 owner/registry parity and above-760 acceptance. Legacy v1 import remains unchanged. Companion review follows Step4 after GUI alignment.
+- **Merge signal:** still pending. Align actual GUI names/control hosts and rerun affected checks after the lead merges lanes; independent companion review follows then.
+- **Title input (A1/A3):** release icons and manifest are under the shared lane title/icons folder: app/puppet-master.ico, app/puppet-master.icns, app/png/16..1024.png, app/macos-1024.png, app/tile.svg; tray/macos and tray/windows state assets plus working-flip SVGs. New source names: pm7-brand-mark, .pm-brand-mark/.pm-brand-word, .app-name[data-mode=full|mark], .app-shell[data-tb-menu-open], pm7.home.unsaved. Reconcile paths with canon at Step4.
+- **L1 word drop:** Plans working.panels already omits loading (27e2c815c4); guarded by pm7-build-check.py. Loader owns the code-catalog drop; verify the joined result at Step4.
+- **Foundation names at f1e4ef8c38:** PMLogo; PM_PIP_LOADER; PM_WORK; PM_PIP_PARTS / PM_PIP_PARTS_STORE; O55.sound.pip. Preset IDs lowercase map to display names; `def` maps to default_enabled; `delivery` maps to completion_delivery. Latest canSendInput/answer, pending Restarting, trayFace and NieR diamond/ink fallback introduce no IDs.
+- **Activity input at 52b68952ad:** no fixed saved-width maximum, centre floor 480, Activity reservation/drop/cover geometry and one Glass plate; source names PM56_HOST.reserveActivity/activityWidth, PMW.chatCol.activityW, narrow.state.act/actDropped, --pmw-chat-act-w, activity-panel.cover/data-layout. It reports no context-ring spec change; integration/GUI evidence closes C5.
+- **B5 correction for Step4 (lead 2026-10-30):** badge means a Home tab with dirty buffers in the active Project. Home autosaves layout; the UI word is Unsaved changes. Align the B5 canon, binding and fixture wording when the GUI merge is supplied.
+- **Source question corrections:** apply later Jared answers by their decision IDs; all other current recommendations are already canon.
 
-## Final companion corrections
+No browsers, servers or media were created. Owned scratch archives/helpers and superseded logs were removed; retained checks/reviews are enumerated above.
 
-N1/N2/N3 are directly fixed with semantic and rg receipts in final-cycle-direct-fixes.json: current v2 registry/owner whole-schema parity and >760 acceptance; current-purpose copy derives the admitted inventory; PC4 retains correct Orbit owners only. No legacy v1 family changed. Frozen c2 dry completed exit2 with 26 blocking rows, all one full-thread dependency-digest mismatch repeated across run-gates/audit. Updated only two live Goal-realm pins after proving all six transitively referenced definitions unchanged, and all three exact stored-union validators now pass. Native/frozen realms and protected governance remain untouched. PM7 checker prevents both missing mirror and digest closure regressions. Source/companion corrections are ready for final validation; raw proofs are in the lane evidence folder.
+## T3 restart checkpoint — 2026-10-30 01:15 UTC
 
-Foundation final API additions at f1e4ef8c38 introduce no IDs: canSendInput / answer, pending Restarting, one trayFace reducer, NieR diamond-or-ink loader fallback, O55.sound.pip and PM_PIP_PARTS_STORE. Captured for Step4 only; no GUI merge signal received.
+Steps 1–3 and the verification bundle are committed/pushed through 1be9eb53f4; the tree had no uncommitted work when the restart warning arrived. No recording, browser or server is active; owned scratch is already removed. Current branch is t3/plans/pm7-plans-canon. No validation job or review is in progress.
 
-## Settings fixture reference closure
-
-The e5d3fb2beb full aggregate passed new-contracts and cleared the 26 stored-union reference errors, but exposed one Touch fixture-pin mismatch from N2’s descriptive edit. Refreshed Touch’s one source_sha256 after proving all command contracts/dispositions and every fixture field except the All Settings purpose are unchanged. Standalone Touch and canon pass; no native evidence was promoted. The concurrent dry attempt was stopped/superseded and is not claimed complete. Final checks run on the committed one-line correction and regenerated index.
-
-Step4 steering received (B5, lead 2026-10-30): Unsaved means dirty Home-tab buffers in the active Project, with UI word “Unsaved changes”; Home autosaves layout. Lead explicitly assigns the canonical/binding/fixture wording alignment to Step4. Captured; frozen validation source is unchanged.
-
-## Immediate labels handoff
-
-Final S2 ruling applied ahead of Step4: Pip options/default persist actual shared-registry labels (25/24), while IDs and ID presets stay in pip_parts.json. All 25 mappings equal PM_PIP_PARTS at f1e4ef8c38. Fifteen schema cases now test label writes and reject ID writes; PM7, canon, Touch and shard checks pass. Only this row’s two arrays changed in inventory. Lead will merge this head immediately for chatpip’s Settings row. Full/dry attribution at b22 has zero Plan blockers /zero infrastructure results; dry exit2 is the inventory-page guard explicitly deferred by lead to merged-GUI Step4. The generated page probe was restored, no Concepts edit is committed.
+Next: check pm-mail as pm7-plans and wait for pm7-build’s explicit full GUI-merge signal. Step4 is still pending. Then fetch/merge current integration, align companions with actual lane names/controls/APIs/assets, apply the deferred B5 dirty-buffer / Unsaved changes wording, verify the already-done Plans L1 word drop against joined code, and run affected checks. Pip label storage is already final/merged; do not switch it back to IDs. Independent companion review follows Step4 under the lead. No landing/reseal is authorized.
