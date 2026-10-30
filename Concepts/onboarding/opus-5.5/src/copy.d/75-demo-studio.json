@@ -17,6 +17,7 @@
       "tour": "Guided Tour",
       "story": "Story",
       "workspace": "Workspace",
+      "activity": "Activity",
       "chat": "Chat",
       "usage": "Usage",
       "notices": "Notices",
@@ -31,6 +32,7 @@
       "tour": "{n} steps",
       "story": "Clock and five points",
       "workspace": "Layouts and agents",
+      "activity": "Agents and processes",
       "chat": "Examples, moments and takes",
       "usage": "Demo readings",
       "notices": "Sample notifications",
@@ -54,7 +56,8 @@
       "tourAt": "Step {n} of {total}",
       "tourRunning": "Running",
       "titlebar": "Title bar",
-      "titlebarPx": "{n} px wide"
+      "titlebarPx": "{n} px wide",
+      "background": "Background"
     },
     "start": {
       "kicker": "Start here",
@@ -114,6 +117,10 @@
       "pipRoughDay": {
         "title": "Pip's rough day",
         "sub": "Back with Projects from before: the name Tastebook is taken, then Antigravity's sign-in fails once. From the Name screen."
+      },
+      "quitWithWork": {
+        "title": "Quit with work running",
+        "sub": "The Busy scenario, then Quit asks what happens to the agents and processes still running."
       }
     },
     "onboarding": {
@@ -447,6 +454,70 @@
         }
       },
       "unavailable": "Not on this page"
+    },
+    "activity": {
+      "kicker": "Activity",
+      "title": "Agents and processes in the background",
+      "lead": "Change what is running behind the person's work, then open the panel, the chat's Processes view, Stop all or Quit. The status bar, the project box and the tray read the same thing.",
+      "nowKicker": "Running in the background",
+      "none": "Not on this page",
+      "unavailableLead": "The work projection's scenarios are not on this page.",
+      "counts": "{agents} agents, {questions} questions; {processes} processes, {input} need input",
+      "stale": "The feed is reconnecting.",
+      "studioScene": "A title bar scene",
+      "scenesTitle": "Scenario",
+      "scenesLead": "Each is a world of its own; picking one replaces what runs now.",
+      "scenes": {
+        "busy": {
+          "title": "Busy",
+          "sub": "16 agents and 10 processes; three things wait on you."
+        },
+        "no-asks": {
+          "title": "No asks",
+          "sub": "The same work with nothing waiting on you."
+        },
+        "quiet": {
+          "title": "Quiet",
+          "sub": "Nothing running: the chat's Processes icon goes away."
+        },
+        "many": {
+          "title": "Many",
+          "sub": "34 more processes across four agents, for long lists and By owner."
+        },
+        "stale": {
+          "title": "Stale feed",
+          "sub": "Busy, last heard from 40 seconds ago; the counts stay as they were."
+        },
+        "restart": {
+          "title": "After restart",
+          "sub": "Two processes ended while Puppet Master was closed: Lost."
+        },
+        "servers": {
+          "title": "Several servers",
+          "sub": "Busy across four servers and six environments, for the Resources tab."
+        }
+      },
+      "panelTitle": "Open it",
+      "panel": "The panel",
+      "panelSub": "Rises from the status bar at one tab.",
+      "tabs": {
+        "agents": "Agents",
+        "processes": "Processes",
+        "resources": "Resources"
+      },
+      "chatProcesses": "The chat's Processes view",
+      "chatProcessesSub": "Activity Detail at Processes, while a process of the thread runs or needs input.",
+      "chatProcessesGo": "Open it",
+      "stopAll": "Stop all",
+      "stopAllSub": "Everything running across Puppet Master, listed so any of it can be unticked first.",
+      "stopAllGo": "Stop all…",
+      "quit": "Quit",
+      "quitSub": "Quitting with work running asks: keep it running on the server, or stop what is ticked.",
+      "quitGo": "Quit…",
+      "words": "Status bar",
+      "numbers": "Numbers",
+      "wordsOn": "Words",
+      "wordsLead": "Words show only where the bar has room; otherwise the items keep their numbers and the hover tag says the words. The choice is the Project's setting."
     },
     "chat": {
       "kicker": "Chat",
@@ -1217,6 +1288,20 @@
       "nier": "NieR Mode",
       "nierSub": "Ink and parchment over Basic, with Pod 042.",
       "nierAdjust": "Adjust NieR look",
+      "pip": {
+        "title": "Pip's parts",
+        "sub": "{preset}: {on} of {total} parts on, in the chat and in onboarding.",
+        "subNone": "Pip's parts are not on this page.",
+        "preset": "Preset",
+        "presets": {
+          "full": "Full",
+          "quiet": "Quiet",
+          "still": "Still",
+          "plain": "Plain",
+          "custom": "Custom"
+        },
+        "adjust": "Adjust Pip"
+      },
       "reduced": "Reduce motion",
       "reducedSub": "Movement becomes fades. The Studio, onboarding and the tour follow it.",
       "sound": "Sound effects",

@@ -23,7 +23,7 @@
   'use strict';
   const O55 = window.O55, U = O55.util, esc = U.esc, T = (k, v) => O55.t(k, v), M = O55.studio;
   const real = O55.motion.real;
-  const SECTIONS = ['start', 'onboarding', 'tour', 'story', 'workspace', 'chat', 'usage', 'notices', 'looks', 'pip', 'reset', 'switches'];
+  const SECTIONS = ['start', 'onboarding', 'tour', 'story', 'workspace', 'activity', 'chat', 'usage', 'notices', 'looks', 'pip', 'reset', 'switches'];
   /* pip*: the Pip section's lab picks (the face last worn, the loader take, the sound kit and the line Pip says); never
      saved, like the chat's takes */
   const ST = { el: null, entry: null, sheet: null, open: false, section: 'start', q: '', pick: null, sw: null, confirm: null, timer: 0, tick: 0, anims: [], busy: false, focusKey: null, pos: null, home: null, drag: null, chatView: 'guided',
@@ -104,6 +104,7 @@
     /* Pip in the Studio's own stroke grammar: the control bar, two strings and the head (the real mark is drawn by
        PMLogo in the Pip section itself) */
     pip: '<path d="M5 4h14"/><path d="M8.5 4v6.2M15.5 4v6.2"/><circle cx="12" cy="14.5" r="5.5"/><path d="M10 14v.6M14 14v.6"/>',
+    activity: '<rect x="3.5" y="5" width="17" height="12" rx="1.5"/><path d="M6.5 11h2.5l1.5-3 2.5 6 1.5-3h3"/><path d="M8.5 20.5h7"/>',
     titlebar: '<rect x="3.5" y="4.5" width="17" height="15" rx="1.5"/><path d="M3.5 9h17"/><path d="M6.5 6.8h3M12 6.8h5"/>',
     loader: '<path d="M12 3.5a8.5 8.5 0 1 1-8.5 8.5"/><path d="M12 7.5v4.5l3 2"/>',
     oops: '<circle cx="12" cy="12" r="8.5"/><path d="M8.5 10h.01M15.5 10h.01"/><path d="M8.8 16c1-1 2-1.4 3.2-1.4s2.2.4 3.2 1.4"/><path d="M17.5 6.5c.8.7 1.1 1.5 1 2.4"/>',
@@ -244,6 +245,25 @@
     return head('workspace') + block(T('studio.workspace.layouts'), lays, { lead: T('studio.workspace.layoutsLead') })
       + titleBarBlock() + block('', agents);
   };
+  /* ---- background activity (W6, 91: M.activity): the scenario the work projection shows, the platform panel at each
+     tab, the chat's Processes view, Stop all and Quit (each opens the owner's own dialog), Numbers or Words ---- */
+  const ACT_TAB_ICON = { agents: 'agent', processes: 'terminal', resources: 'gauge' };
+  function sceneTitle(id) { return !id ? '' : M.activity.SCENES.includes(id) ? T(`studio.activity.scenes.${id}.title`) : /^studio-box-/.test(id) ? T('studio.activity.studioScene') : id; }
+  R.activity = () => {
+    const A = M.activity, k = 'studio.activity', ok = A.avail(), cur = ok ? A.scene() : null, c = ok ? A.counts() : null, feed = ok ? A.feed() : null;
+    const bar = `<div class="pmds-runbar"><div class="pmds-runtext"><span class="pmds-runkicker">${esc(T(`${k}.nowKicker`))}</span><span class="pmds-runsit">${esc(ok ? sceneTitle(cur) : T(`${k}.none`))}</span>`
+      + `<span class="pmds-runstate">${esc(c ? T(`${k}.counts`, { agents: c.agents, questions: c.questions, processes: c.processes, input: c.needsInput }) + (feed && feed.state === 'stale' ? ' ' + T(`${k}.stale`) : '') : T(`${k}.unavailableLead`))}</span></div></div>`;
+    const scenes = `<div class="pmds-choices pmds-choices-scenes" role="radiogroup" aria-label="${esc(T(`${k}.scenesTitle`))}">`
+      + A.SCENES.map((id) => radioCard(cur === id, 'act-scene', id, T(`${k}.scenes.${id}.title`), T(`${k}.scenes.${id}.sub`), { off: !A.has(id) })).join('') + '</div>';
+    const pOk = A.panelAvail();
+    const panel = '<div class="pmds-actrows">'
+      + actRow('activity', T(`${k}.panel`), T(`${k}.panelSub`), `<span class="pmds-rowbtns">${A.TABS.map((t) => btn(T(`${k}.tabs.${t}`), { do: 'act-open', arg: t, icon: ACT_TAB_ICON[t], off: !pOk })).join('')}</span>` + '<span></span>')
+      + actRow('chat', T(`${k}.chatProcesses`), T(`${k}.chatProcessesSub`), btn(T(`${k}.chatProcessesGo`), { do: 'act-chat', icon: 'arrow', off: !A.processesAvail() }) + '<span></span>')
+      + actRow('hand', T(`${k}.stopAll`), T(`${k}.stopAllSub`), btn(T(`${k}.stopAllGo`), { do: 'act-stop-all', icon: 'arrow', off: !A.stopAllAvail() }) + '<span></span>')
+      + actRow('close', T(`${k}.quit`), T(`${k}.quitSub`), btn(T(`${k}.quitGo`), { do: 'act-quit', icon: 'arrow', off: !A.quitAvail() }) + '<span></span>') + '</div>';
+    const words = `<div class="pmds-rowacts"><span class="pmds-btitle">${esc(T(`${k}.words`))}</span>${seg({ do: 'act-words', value: A.wordsAvail() && A.words() ? 'words' : 'numbers', label: T(`${k}.words`), off: !A.wordsAvail(), items: [{ v: 'numbers', label: T(`${k}.numbers`) }, { v: 'words', label: T(`${k}.wordsOn`) }] })}</div><p class="pmds-fine">${esc(T(`${k}.wordsLead`))}</p>`;
+    return head('activity') + bar + block(T(`${k}.scenesTitle`), scenes, { lead: T(`${k}.scenesLead`) }) + block(T(`${k}.panelTitle`), panel) + block('', words);
+  };
   /* a radio card (the choice primitive every look styles): title, an optional line under it */
   const radioCard = (on, action, arg, title, sub, o) => `<button type="button" role="radio"${at({ class: `pmds-choice${o && o.cls ? ' ' + o.cls : ''}${on ? ' pmds-on' : ''}`, 'aria-checked': String(!!on), 'data-pmds-do': action, 'data-arg': arg, 'data-key': `${action}:${arg}`, 'data-pmh': o && o.off ? null : 'tile', 'aria-disabled': o && o.off ? 'true' : null })}>`
     + `<span class="pmds-mark" aria-hidden="true">${ico('check', 12)}</span><span class="pmds-choice-text"><span class="pmds-choice-title">${esc(title)}</span>${sub ? `<span class="pmds-choice-sub">${esc(sub)}</span>` : ''}</span></button>`;
@@ -335,9 +355,19 @@
     return head('looks') + block('', grid + mode) + walls + lg
       + block('', sw({ id: 'nier', icon: 'pod', title: T('studio.looks.nier'), sub: T('studio.looks.nierSub'), on: L.nierOn(), do: 'nier', off: !L.nierAvail() })
         + (L.nierOn() ? `<div class="pmds-rowacts pmds-indent">${btn(T('studio.looks.nierAdjust'), { do: 'nier-adjust', icon: 'studio' })}</div>` : '')
+        + pipPartsRow()
         + sw({ id: 'reduced', icon: 'motion', title: T('studio.looks.reduced'), sub: T('studio.looks.reducedSub'), on: L.reduced(), do: 'reduced', off: !L.reducedAvail() })
         + sw({ id: 'sound', icon: 'sound', title: T('studio.looks.sound'), sub: T('studio.looks.soundSub'), on: L.soundAvail() && L.sound(), do: 'sound', off: !L.soundAvail() }));
   };
+
+  /* Looks › Pip: the parts' presets (the registry's, saved to the Project) and Adjust Pip (the product's editor) */
+  function pipPartsRow() {
+    const P = M.looks.pip, ok = P.avail(), cur = ok ? P.preset() : null, c = ok ? P.count() : null, k = 'studio.looks.pip';
+    return `<div class="pmds-swrow pmds-piprow${ok ? '' : ' pmds-unavail'}"><span class="pmds-swart" aria-hidden="true">${ico('pip', 18)}</span><span class="pmds-swtext"><span class="pmds-swtitle">${esc(T(`${k}.title`))}</span>`
+      + `<span class="pmds-swsub">${esc(c ? T(`${k}.sub`, { on: c.on, total: c.total, preset: T(`${k}.presets.${cur}`) }) : T(`${k}.subNone`))}</span></span></div>`
+      + `<div class="pmds-rowacts pmds-indent">${seg({ do: 'pip-preset', value: cur, label: T(`${k}.preset`), off: !ok, cls: 'pmds-seg-wrap', items: (ok ? P.presets() : ['full', 'quiet', 'still', 'plain']).map((v) => ({ v, label: T(`${k}.presets.${v}`) })) })}`
+      + btn(T(`${k}.adjust`), { do: 'pip-adjust', icon: 'studio', off: !P.editorAvail() }) + '</div>';
+  }
 
   /* ---- Pip (W1, W4, W5): the kit in every look, faces on every live Pip, a squeezed title bar, the loader and Pip's
      sound board. Every drawing is the kit's own (PMLogo.svg for the other looks, PMLogo.mark for the painted one), every
@@ -460,6 +490,8 @@
     M.notices.ids.forEach((id) => add('notices', T(`studio.notices.${id}.title`), T(`studio.notices.${id}.sub`), ['notice', id], NOTICE_ICON[id]));
     M.looks.ids.forEach((f) => ['light', 'dark'].forEach((m) => add('looks', `${T(`studio.looks.families.${f}`)} ${T(`studio.looks.${m}`)}`, T('studio.looks.title'), ['look', `${f}:${m}`], m === 'light' ? 'sun' : 'moon')));
     add('looks', T('studio.looks.nier'), T('studio.looks.nierSub'), ['nier'], 'pod');
+    ['full', 'quiet', 'still', 'plain'].forEach((v) => add('looks', `${T('studio.looks.pip.title')}: ${T(`studio.looks.pip.presets.${v}`)}`, T('studio.looks.pip.preset'), ['pip-preset', v], 'pip'));
+    add('looks', T('studio.looks.pip.adjust'), T('studio.looks.pip.title'), ['pip-adjust'], 'pip');
     add('looks', T('studio.looks.reduced'), T('studio.looks.reducedSub'), ['reduced'], 'motion');
     add('looks', T('studio.looks.sound'), T('studio.looks.soundSub'), ['sound'], 'sound');
     /* Pip, the title bar and onboarding's Pip moments */
@@ -476,6 +508,12 @@
     add('workspace', T('studio.workspace.titlebar.long'), T('studio.workspace.titlebar.title'), ['tb-long'], 'titlebar');
     M.titlebar.WIDTHS.forEach((v) => add('workspace', `${T('studio.workspace.titlebar.width')}: ${v === 'full' ? T('studio.workspace.titlebar.full') : T('studio.workspace.titlebar.px', { n: v })}`, T('studio.workspace.titlebar.title'), ['tb-width', v], 'titlebar'));
     add('workspace', T('studio.workspace.titlebar.menu'), T('studio.workspace.titlebar.menuSub'), ['tb-menu'], 'list');
+    M.activity.SCENES.forEach((id) => add('activity', T(`studio.activity.scenes.${id}.title`), T(`studio.activity.scenes.${id}.sub`), ['act-scene', id], 'activity'));
+    M.activity.TABS.forEach((t) => add('activity', `${T('studio.activity.panel')}: ${T(`studio.activity.tabs.${t}`)}`, T('studio.activity.panelSub'), ['act-open', t], ACT_TAB_ICON[t]));
+    add('activity', T('studio.activity.chatProcesses'), T('studio.activity.chatProcessesSub'), ['act-chat'], 'chat');
+    add('activity', T('studio.activity.stopAll'), T('studio.activity.stopAllSub'), ['act-stop-all'], 'hand');
+    add('activity', T('studio.activity.quit'), T('studio.activity.quitSub'), ['act-quit'], 'close');
+    add('activity', T('studio.activity.words'), T('studio.activity.wordsLead'), ['go', 'activity'], 'activity');
     M.pipOnboarding.OOPS.forEach((o) => add('onboarding', T(`studio.onboarding.oops.items.${o.id}.title`), T('studio.onboarding.oops.title'), ['onb-oops', o.id], 'oops'));
     M.pipOnboarding.ASKS.forEach((a) => add('onboarding', T(`studio.onboarding.ask.items.${a.id}.title`), T('studio.onboarding.ask.title'), ['onb-ask', a.id], 'ask'));
     M.reset.ids.forEach((id) => add('reset', T(`studio.reset.${id}.title`), T(`studio.reset.${id}.sub`), ['find-reset', id], 'reset'));
@@ -525,6 +563,7 @@
       + item('situation', M.situationLabel(M.currentSituation()))
       + item('look', `${T(`studio.looks.families.${L.look}`)} ${T(`studio.looks.${L.mode}`)}`)
       + item('motion', M.looks.reduced() ? T('studio.now.motionReduced') : T('studio.now.motionFull'))
+      + (M.activity.avail() ? item('background', sceneTitle(M.activity.scene())) : '')
       + (M.titlebar.width() !== 'full' ? item('titlebar', T('studio.now.titlebarPx', { n: M.titlebar.width() })) : '')
       + (c ? item('story', storyNow(c), 'now-story') : '')
       + item('tour', ts.kind === 'at' ? T('studio.now.tourAt', { n: ts.step, total: ts.total }) : ts.kind === 'running' ? T('studio.now.tourRunning') : T('studio.now.tourNone'));
@@ -918,6 +957,8 @@
     'look-mode': (arg) => { M.looks.mode(arg); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
     nier: () => { M.looks.setNier(!M.looks.nierOn()); real.setTimeout(() => { syncLook(); refresh(); }, 120); },
     'nier-adjust': (arg, el) => { M.looks.adjust(el); },
+    'pip-preset': (arg) => { if (!M.looks.pip.avail()) return say(T('studio.toast.unavailable')); M.looks.pip.apply(arg); real.setTimeout(refresh, 80); },
+    'pip-adjust': (arg, el) => { if (!M.looks.pip.editorAvail()) return say(T('studio.toast.unavailable')); M.looks.pip.edit(el); },
     reduced: () => { M.looks.setReduced(!M.looks.reducedSetting()); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
     sound: () => { M.looks.setSound(!M.looks.sound()); refresh(); },
     'find-reset': (arg) => { ST.q = ''; ST.sheet.querySelector('.pmds-q').value = ''; ST.section = 'reset'; renderMain('down'); moveInk(false); focusKey(`reset:${arg}`); },
@@ -958,6 +999,13 @@
     /* onboarding's Pip moments: the window takes the screen, so the Studio steps aside as it does for a screen row */
     'onb-oops': (arg) => { if (!M.pipOnboarding.oopsAvail(arg)) return say(T('studio.toast.unavailable')); const pick = ST.pick; launch(() => M.pipOnboarding.oops(arg, pick)); },
     'onb-ask': (arg) => { if (!M.pipOnboarding.askAvail(arg)) return say(T('studio.toast.unavailable')); const pick = ST.pick; launch(() => M.pipOnboarding.ask(arg, pick)); },
+    /* background activity */
+    'act-scene': (arg) => { if (!M.activity.load(arg)) return say(T('studio.toast.unavailable')); real.setTimeout(refresh, 80); },
+    'act-open': (arg) => { M.activity.open(arg); real.setTimeout(refresh, 200); },
+    'act-chat': () => { M.activity.processes(); real.setTimeout(refresh, 500); },
+    'act-stop-all': () => { M.activity.stopAll(); },
+    'act-quit': () => { M.activity.quit(); },
+    'act-words': (arg) => { M.activity.setWords(arg === 'words'); real.setTimeout(refresh, 80); },
     /* the title bar */
     'tb-state': (arg) => { if (!M.titlebar.setState(arg)) return say(T('studio.toast.unavailable')); if (arg === 'unsaved') say(T('studio.workspace.titlebar.unsavedToast')); real.setTimeout(refresh, 80); },
     'tb-long': () => { M.titlebar.setLong(!M.titlebar.longOn()); real.setTimeout(refresh, 240); },

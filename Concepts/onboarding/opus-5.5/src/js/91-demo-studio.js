@@ -386,6 +386,45 @@
     openMenu() { O55.motion.real.setTimeout(() => { try { BOX().open(); } catch (_) {} }, 0); return true; }
   };
 
+  /* ---- background activity (W6): the work projection's scenarios (PM_WORK.scenario: lane activity's fixture,
+     src/work/20-fixture.js), the platform panel and its dialogs (PM7_WORK_UI, src/js/48-work.js), the chat's Processes
+     view (PM56_DEMO.openActivity, the chat's own demo call) and the status bar's Numbers or Words (the setting
+     general.interaction.status-bar-words, written the way Reduce animations is). ---- */
+  const WUI = () => W('PM7_WORK_UI');
+  const ACT_SCENES = ['busy', 'no-asks', 'quiet', 'many', 'stale', 'restart', 'servers'];
+  const WORDS_KEY = 'general.interaction.status-bar-words';
+  const activity = {
+    SCENES: ACT_SCENES, TABS: ['agents', 'processes', 'resources'],
+    avail: () => !!(WORK() && fn(WORK(), 'scenario') && (WORK().SCENARIOS || []).some((x) => ACT_SCENES.includes(x))),
+    has: (name) => !!(WORK() && (WORK().SCENARIOS || []).includes(name)),
+    scene: () => (WORK() && fn(WORK(), 'scenario') ? WORK().scenario() : null),
+    load(name) { if (!activity.has(name)) return false; WORK().scenario(name); return true; },
+    counts: () => { try { return WORK().counts(); } catch (_) { return null; } },
+    feed: () => { try { return WORK().feed(); } catch (_) { return null; } },
+    panelAvail: () => fn(WUI(), 'open'),
+    panelOpen: () => !!(WUI() && fn(WUI(), 'isOpen') && WUI().isOpen()),
+    panelTab: () => (WUI() && fn(WUI(), 'tab') ? WUI().tab() : null),
+    /* the panel rises from the status bar on the Home page */
+    open(tab) { goHome(); O55.motion.real.setTimeout(() => { try { WUI().open(tab); } catch (_) {} }, 0); return true; },
+    /* the chat's tenth Activity Detail domain, shown while a process of the thread runs or needs input (D4) */
+    processesAvail: () => chat.avail() && fn(W('PM56_DEMO'), 'openActivity'),
+    processes() { chat.show(); O55.motion.real.setTimeout(() => { try { W('PM56_DEMO').openActivity('processes'); } catch (_) {} }, 320); return true; },
+    quitAvail: () => fn(WUI(), 'quit'),
+    quit() { O55.motion.real.setTimeout(() => { try { WUI().quit(); } catch (_) {} }, 0); return true; },
+    stopAllAvail: () => fn(WUI(), 'confirmPlatform'),
+    stopAll() { O55.motion.real.setTimeout(() => { try { WUI().confirmPlatform(); } catch (_) {} }, 0); return true; },
+    wordsAvail: () => fn(W('PM12_KIMI'), 'setSettingFromHost') && !!WUI(),
+    words() {
+      try { const K = W('PM12_KIMI'), st = K && K.getState && K.getState(), v = st && st.settings ? st.settings[WORDS_KEY] : undefined; if (v !== undefined) return v === true || v === 'On' || v === 'on'; } catch (_) {}
+      return document.documentElement.getAttribute('data-pm-status-words') === 'on';
+    },
+    setWords(on) {
+      const K = W('PM12_KIMI'), ok = K.setSettingFromHost(WORDS_KEY, !!on, false, false);
+      try { const t = tome(); if (t && t.applyPaint) t.applyPaint(K.getState()); } catch (_) {}
+      return ok;
+    }
+  };
+
   /* ---- Pip (W1, W4, W5): the kit's drawings in every look, the faces on every live Pip, the loader, Pip's sound ---- */
   const LOGO = () => W('PMLogo'), LOADER = () => W('PM_PIP_LOADER'), VOX = () => (O55.pipVoice || null);
   const PIP_HOLD = 2600;
@@ -618,7 +657,19 @@
     },
     soundAvail: () => !!(O55.sound && fn(O55.sound, 'setMuted')),
     sound: () => !!(O55.sound && !O55.sound.muted),
-    setSound: (on) => O55.sound.setMuted(!on, 'demo_studio')
+    setSound: (on) => O55.sound.setMuted(!on, 'demo_studio'),
+    /* Pip's parts (W4, S1-S9: Pip in the chat and onboarding only), beside NieR Mode: the presets are the registry's own
+       (PM_PIP_PARTS.applyPreset, saved to the Project like a look), and Adjust Pip opens the product's editor (lane
+       chatpip, PM_PIP_EDITOR.open) */
+    pip: {
+      avail: () => fn(W('PM_PIP_PARTS'), 'applyPreset'),
+      presets: () => { const P = W('PM_PIP_PARTS'); return P && P.PRESETS ? Object.keys(P.PRESETS) : []; },
+      preset: () => { try { return W('PM_PIP_PARTS').preset() || 'custom'; } catch (_) { return 'custom'; } },
+      count: () => { try { return W('PM_PIP_PARTS').count(); } catch (_) { return null; } },
+      apply: (name) => W('PM_PIP_PARTS').applyPreset(name),
+      editorAvail: () => fn(W('PM_PIP_EDITOR'), 'open'),
+      edit(from) { W('PM_PIP_EDITOR').open({ from, returnFocus: () => from }); return true; }
+    }
   };
 
   /* ---- resets ---- */
@@ -693,6 +744,8 @@
     { id: 'learn', icon: 'tour', kind: 'launch', avail: tour.avail, run: () => tour.start() },
     { id: 'storyFinish', icon: 'flag', kind: 'stay', avail: story.avail, run: () => { goHome(); story.jump('c3_run_complete'); story.speed(2); story.play(); return true; } },
     { id: 'busy', icon: 'bell', kind: 'stay', avail: () => notices.avail(), run: () => {
+      /* the work too (W6): the Busy scenario fills the status bar, the panel and the chat's Processes domain */
+      if (activity.has('busy')) activity.load('busy');
       if (workspace.agentsAvail()) workspace.agents();
       O55.motion.real.setTimeout(() => notices.fire('burst'), 900);
       if (usage.hourAvail() && !usage.hourRunning()) usage.hour();
@@ -703,6 +756,8 @@
        Me showcase (a recorded example: it plays on its own) */
     { id: 'chatWork', icon: 'chat', kind: 'stay', avail: () => chat.avail(), run: () => chat.run('live', 'live-agent-turn').ok },
     { id: 'chatGrill', icon: 'wonder', kind: 'launch', avail: () => chat.avail(), run: () => chat.runGuided('wonderer-crew').ok },
+    /* quitting with work running (W6, D10): the Busy scenario, then Quit asks what happens to it */
+    { id: 'quitWithWork', icon: 'activity', kind: 'stay', avail: () => activity.has('busy') && activity.quitAvail(), run: () => { activity.load('busy'); return activity.quit(); } },
     /* Pip's rough day (W3): back with Projects from before, Antigravity's sign-in fails once, from the Name screen (the
        name Tastebook is taken there, and the AI chapter's sign-in fails the first time) */
     { id: 'pipRoughDay', icon: 'pip', kind: 'launch', avail: () => onboarding.avail() && hasScreen('name') && !!(O55.fixtures && O55.fixtures.SCENARIOS.antigravityOnce),
@@ -713,7 +768,7 @@
     BASES, GROUPS, TWISTS, CLASH, SCREEN_CHAPTERS, POINTS, RECIPES, LOOKS,
     parseSituation, joinSituation, situationLabel, situationLong, currentSituation, toggleTwist, applySituation, sitTitle,
     hasScreen, onboardingState, tourChapters, tourState, fmtClock,
-    onboarding, pipOnboarding, tour, story, workspace, titlebar, chat, usage, notices, looks, pip, reset, switches,
+    onboarding, pipOnboarding, tour, story, workspace, titlebar, activity, chat, usage, notices, looks, pip, reset, switches,
     /* open/close/toggle are filled in by the UI (92-demo-studio-ui.js) */
     open: () => false, close: () => false, toggle: () => false
   };
