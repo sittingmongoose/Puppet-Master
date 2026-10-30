@@ -447,8 +447,13 @@
     var run = CS.run[tid];
     if (!run) return '';
     if (run.phase === 'working') {
-      return '<div class="ctx-status working" data-k="ctxstatus" role="status">' +
-        '<span class="ctx-spin" aria-hidden="true"></span><span>Compacting thread context…</span>' +
+      /* the wait is the system loader (W5, DR-077; window.PM_PIP_LOADER), the one loader for this wait (the Compact now
+         button only says Compacting…); its slot is left to it by the reconcile (data-pm-keep) so a redraw keeps it in
+         phase instead of arming it again */
+      var LD = window.PM_PIP_LOADER;
+      var wait = LD ? '<span class="ctx-wait" data-k="ctxwait" data-pm-keep aria-hidden="true">' + LD.html({ motion: 'swing', px: 12 }) + '</span>' : '';
+      return '<div class="ctx-status working" data-k="ctxstatus" role="status" aria-busy="true">' +
+        wait + '<span>Compacting thread context…</span>' +
         (run.notice ? '<span class="ctx-hist">' + esc(run.notice) + '</span>' : '') + '</div>';
     }
     var o = run.outcome || {};
