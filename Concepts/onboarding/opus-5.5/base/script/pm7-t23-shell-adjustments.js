@@ -896,7 +896,7 @@
       bar.setAttribute('aria-label','Workspace status');
       bar.innerHTML =
         '<div class="pm7-statusbar-group">' +
-          '<button type="button" class="pm7-statusitem" data-status-action="system" title="Open system status" data-pm-hover-label="System status" data-pm-hover-detail="Everything Puppet Master needs is running. Click to see each service."><span class="pm7-status-dot"></span><strong>Ready</strong></button>' +
+          '<button type="button" class="pm7-statusitem" data-status-action="system" aria-haspopup="dialog" aria-expanded="false" aria-controls="pm7-work-system" title="Open system status" data-pm-hover-label="System status" data-pm-hover-detail="Everything Puppet Master needs is running. Click to see each service."><span class="pm7-status-dot"></span><strong>Ready</strong></button>' +
           '<span class="pm7-statusitem" title="Project root" data-pm-hover-label="Project folder" data-pm-hover-detail="Where this Project\'s files are kept on this computer."><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 5.5h5l1.6 1.8h8.4v8.2h-15z"/></svg>~/Puppet-Master</span>' +
         '</div>' +
         /* agents and processes across Puppet Master (W6, D5): their own group, framed by the bar's dividers, between the
@@ -935,6 +935,8 @@
     document.addEventListener('click', function (event) {
       var action = event.target.closest && event.target.closest('[data-status-action]');
       var which = action && action.getAttribute('data-status-action');
+      /* System status opens its popover (PM7_WORK_UI.systemStatus: the services and their Settings owners, A5) */
+      if (which === 'system' && window.PM7_WORK_UI && typeof window.PM7_WORK_UI.systemStatus === 'function') { window.PM7_WORK_UI.systemStatus(); return; }
       if (which === 'snapshot' || which === 'source' || which === 'system') statusToast(which === 'snapshot' ? 'Snapshot details · last safe point 10 minutes ago' : which === 'source' ? 'Source control · main · clean' : 'System status · all core services ready');
       if (event.target.closest && event.target.closest('[data-page]')) setTimeout(updatePage, 0);
     });

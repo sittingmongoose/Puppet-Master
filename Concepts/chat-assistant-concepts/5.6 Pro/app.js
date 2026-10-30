@@ -1898,7 +1898,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const work=window.PM_WORK;
     const processes=work?work.items({thread:tid,kind:['process','scheduled'],view:'thread:'+tid}):[];
     const workThread=work&&work.thread?work.thread(tid):null;
-    const procShown=!!(workThread&&workThread.processes)||(processes.length>0&&((state.activity.open&&state.activity.domain==='processes')||(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes')));
+    /* D4: shown while a process runs or needs input, and held while its view or card is open whatever its rows are (a
+       Clear that empties the view leaves an empty Processes view, never another domain; A9) */
+    const procShown=!!(workThread&&workThread.processes)||!!(work&&((state.activity.open&&state.activity.domain==='processes')||(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes')));
     return {
       tid, hasAttachedGoal, hasGoalReceipt:false, hasGoalHistory, capGoal:false, hasGoal,
       todos, subagents, hasSubagents, hasCrewEvent, hasCrew, crew, changes, artifacts,
@@ -1996,7 +1998,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const aWorking=agents.filter(a=>a.status==='working').length;
       const aBlocked=agents.filter(a=>a.status==='blocked').length;
       const aWaiting=agents.filter(a=>a.status==='waiting').length;
-      out.subagents={icon:'users',label:'Subagents',
+      out.subagents={icon:window.PM56_NEON&&PM56_NEON.has&&PM56_NEON.has('robot')?'robot':'users',label:'Subagents',
         count:String(agents.length),
         state:aWorking?'live':'changed',
         tone:aBlocked?'blocked':aWorking?'working':aWaiting?'idle':'done',
@@ -3572,7 +3574,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(state.hover.type==='activity') return !state.menu;
     return false;
   }
+  /* D4 holds the Processes icon while its card is open; every way a card closes (pointer, focus, Escape, a click)
+     ends here, so a card on Processes that gives way repaints the bar once, and a quiet thread's icon goes (A13) */
+  let procHover=false;
   function syncHoverCard(){
+    const nowProc=!!(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes');
+    if(procHover&&!nowProc&&!(state.activity.open&&state.activity.domain==='processes')) requestAnimationFrame(()=>renderApp());
+    procHover=nowProc;
     const root=document.getElementById('pmOverlayRoot');
     if(!root) return;
     let el=root.querySelector(':scope > [data-overlay="hover"]');
@@ -5166,7 +5174,12 @@ suggested path                    migration 0043, reversible</div></div></sectio
     setVariant:(family,option)=>{const f=Number(family);state.variants[f]=clamp(Number(option),0,familyMax(f));state.recipe=-1;renderApp();},
     selectThread:switchThread,
     pinActivity:(on=true)=>{state.activity.pinned=!!on;renderApp();},
-    openActivity:(domain)=>{if(activityDefs()[domain]){state.activity.open=true;state.activity.domain=domain;state.activity.scope='focus';renderApp();}},
+    /* pick (optional): a row to open with it, by id or by { title } (the work panel's owner link names a subagent by
+       its title; A5) */
+    openActivity:(domain,pick)=>{if(!activityDefs()[domain])return false;state.activity.open=true;state.activity.domain=domain;state.activity.scope='focus';
+      if(pick){const sc=activityScope(state.selectedThread),list=(domain==='subagents'?sc.subagents:domain==='processes'?sc.processes:null)||[];
+        const hit=typeof pick==='string'?list.find(x=>x.id===pick):list.find(x=>(x.name||x.title)===pick.title);if(hit)state.activity.selected={domain,id:hit.id};}
+      renderApp();return true;},
     openContext:()=>{state.context.details=true;renderOverlays();},
     openQuestionnaire:()=>{decisionExit=null;state.decision={type:'question'};renderApp();},
     openPlan:()=>{decisionExit=null;state.decision={type:'plan',mode:'review'};renderApp();},
@@ -5377,7 +5390,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
      those in place instead of rendering the chat each second; the core rests while hidden or dragging. */
   if(HOSTED&&window.PM_WORK&&typeof window.PM_WORK.on==='function'){
     let workQueued=false, workSig='';
-    const sig=()=>{ const t=window.PM_WORK.thread?window.PM_WORK.thread(state.selectedThread):null; return t?JSON.stringify(t.counts)+'|'+(t.processes?1:0)+'|'+t.key:''; };
+    /* while the Processes view or card shows, a progress step is a change too: its rows draw progress (A6) */
+    const showingProcs=()=>(state.activity.open&&state.activity.domain==='processes')||!!(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes');
+    const progSig=()=>{ const W=window.PM_WORK; return W.items({thread:state.selectedThread,kind:['process','scheduled']}).map(p=>p.progress&&W.isLive(p)?p.id+':'+p.progress.done:'').join(','); };
+    const sig=()=>{ const t=window.PM_WORK.thread?window.PM_WORK.thread(state.selectedThread):null; return t?JSON.stringify(t.counts)+'|'+(t.processes?1:0)+'|'+t.key+(showingProcs()?'|'+progSig():''):''; };
     window.PM_WORK.on('change',why=>{
       const now=sig();
       if(why==='tick'&&now===workSig){ patchWorkTicks(); return; }
@@ -5387,15 +5403,12 @@ suggested path                    migration 0043, reversible</div></div></sectio
       requestAnimationFrame(()=>{ workQueued=false; renderApp(); });
     });
   }
+  /* time, progress and output tails in place: the platform panel's one patcher, over the chat and its overlays */
   function patchWorkTicks(){
-    const W=window.PM_WORK, UI=window.PM7_WORK_UI;
-    document.querySelectorAll('#pmRoot [data-work-time], #pmOverlayRoot [data-work-time]').forEach(el=>{ const it=W.item(el.getAttribute('data-work-time')); if(it){ const v=W.time(it); if(el.textContent!==v) el.textContent=v; } });
-    if(!UI||!UI.tail) return;
-    document.querySelectorAll('#pmRoot [data-work-tail]').forEach(el=>{
-      const it=W.item(el.getAttribute('data-work-tail')), pre=el.querySelector('pre');
-      if(!it||!it.tail||!pre||pre.textContent===it.tail.slice(-6).join('\n')) return;
-      const tmp=document.createElement('div'); tmp.innerHTML=UI.tail(it,6); el.replaceWith(tmp.firstChild);
-    });
+    const UI=window.PM7_WORK_UI;
+    if(!UI||!UI.patchTicks) return;
+    UI.patchTicks(document.getElementById('pmRoot'));
+    UI.patchTicks(document.getElementById('pmOverlayRoot'));
   }
   /* the column resizes without a window resize (its divider, the narrow ladder, a pop out): the same re-render rules */
   if(HOSTED&&typeof ResizeObserver==='function'&&HOST.frame()){
