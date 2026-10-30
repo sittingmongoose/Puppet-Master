@@ -6,6 +6,7 @@
  *
  * --sandbox runs every check inside a sandboxed iframe the way T3's file preview shows the page (scripts allowed, an
  * opaque origin, no storage; QA round 2): the tool writes a wrapper page into <out> and drives the frame.
+ * --only 23,47 runs just those checks (each sets up its own state), for a re-check.
  *
  * It reads the page only through its owners: PM_WORK (the work projection and its fixture scenarios), PM7_WORK_UI (the
  * status bar items and the panel, src/js/48-work.js), PM56_DEMO (the hosted chat's own demo API) and real clicks.
@@ -21,6 +22,7 @@ const argv = process.argv.slice(2);
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const page0 = argv[0] && !argv[0].startsWith('--') ? argv[0] : null;
 const sandbox = argv.includes('--sandbox');
+const only = opt('only') ? new Set(opt('only').split(',').map(Number)) : null;
 const cdp = opt('cdp');
 if (!page0 || !cdp) { console.error('usage: work_checks.mjs <page path or url> --cdp <endpoint> [--look basic-dark] [--width 1920] [--out dir]'); process.exit(2); }
 const url = /^https?:|^file:/.test(page0) ? page0 : pathToFileURL(resolve(page0)).href;
@@ -36,6 +38,7 @@ const errors = [];
 page.on('pageerror', (e) => errors.push(String(e && e.message || e).slice(0, 300)));
 const results = [];
 async function check(n, name, fn) {
+  if (only && !only.has(n)) return;
   let ok = false, note = '';
   try { const r = await fn(); ok = r === true || (r && r.ok === true); note = r && r.note ? r.note : (typeof r === 'string' ? r : ''); }
   catch (e) { note = 'threw: ' + String(e.message || e).slice(0, 200); }

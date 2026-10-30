@@ -65,7 +65,8 @@
     U.announce(text, win);
   }
   O55.ui.toast = (text) => toast(O55.S, text);
-  O55.official.handlers.restoreCloud = (S) => { if (S.sess.restore) S.sess.restore.cloudSignedIn = true; };
+  /* (the sign-in reaches the service it was for, not whichever is chosen later: QA2 review N1) */
+  O55.official.handlers.restoreCloud = (S) => { if (S.sess.restore) S.sess.restore.reachedFor = 'cloud:' + ((S.sess.signin || {}).service || ''); };
 
   const SI = (S) => S.sess.signin || {};
   /* where a sign-in opens: a source service's page, or (restore from a cloud account) the account's own page */

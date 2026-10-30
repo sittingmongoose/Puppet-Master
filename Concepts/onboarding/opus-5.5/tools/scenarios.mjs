@@ -810,6 +810,51 @@ def('pr28', 'fresh', 'QA2 hunter H1: a screen opened straight has what the scree
     A.ok(r.body > 10, id + ': the screen is not empty (' + r.body + ' characters)');
   }
 });
+def('pr29', 'fresh', 'QA2 review N1: a sign-in reaches the cloud service it was for; another service after Back is reached again', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('restoreAll');
+  A.eq(await d.screen(), 'r-source', 'Where is the backup?');
+  await d.act('source', 'cloud'); await d.primary();
+  A.eq(await d.screen(), 'online-signin', 'Google Drive signs in first'); await d.act('signIn');
+  await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed in', 8000); await d.primary();
+  A.eq(await d.screen(), 'r-unlock', 'then the phrase');
+  for (let i = 0; i < 3 && (await d.screen()) !== 'r-source'; i++) await d.back();
+  A.eq(await d.screen(), 'r-source', 'back at Where is the backup?');
+  await d.act('cloud', 'onedrive'); await d.primary();
+  A.eq(await d.screen(), 'online-signin', 'OneDrive signs in too: Google Drive\'s sign-in is not OneDrive\'s');
+  for (let i = 0; i < 3 && (await d.screen()) !== 'r-source'; i++) await d.back();
+  await d.act('cloud', 's3');
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="acc-secret"]')), 'S3 shows its bucket and key fields');
+  A.ok((await d.primaryInfo()).disabled, 'and Continue waits for them');
+  await d.type('acc-bucket', 's3://book-club-backups'); await d.type('acc-keyId', 'AKIAEXAMPLEKEY'); await d.type('acc-secret', 'not-a-real-secret'); await d.primary();
+  await d.untilScreen('r-unlock', 8000); A.ok(true, 'the phrase comes after the bucket is reached');
+  for (let i = 0; i < 3 && (await d.screen()) !== 'r-source'; i++) await d.back();
+  await d.act('cloud', 'gdrive'); await d.act('cloud', 's3');
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="acc-secret"]')), 'after another service, S3 asks for its details again');
+});
+def('pr30', 'fresh', 'QA2 review N1 sweep: a Remote Link leaves the plan when another way to reach the Server is chosen', async (d, A) => {
+  await d.openOnboarding();
+  await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'away' }));
+  await d.untilScreen('away', 12000);
+  await d.act('more'); await d.act('route', 'remote_link'); await d.type('link', 'pm-remote-link:home-nas/7Q2K');
+  A.eq((await d.draft('main')).remote_endpoint, 'pm-remote-link:home-nas/7Q2K', 'the Remote Link is in the plan');
+  await d.act('pick', 'home');
+  A.eq((await d.draft('main')).remote_endpoint || '', '', 'Only at home: the Remote Link has left the plan');
+  await d.act('route', 'remote_link'); await d.type('link', 'pm-remote-link:home-nas/7Q2K'); await d.act('pick', 'anywhere');
+  A.eq((await d.draft('main')).remote_endpoint || '', '', 'Tailscale: the Remote Link has left the plan');
+});
+def('pr31', 'fresh', "QA2 review N1 sweep: a key's passphrase is asked for that key, and once", async (d, A) => {
+  await toNasKey(d);
+  A.eq(await d.screen(), 'nas-key', 'Choose a key');
+  await d.act('pick', 'k-rsa'); await d.primary();
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-sheet[data-open="true"] [data-o55-bind="pass"]')), 'its passphrase is asked');
+  await d.type('pass', 'correct horse'); await d.act('passOk');
+  const after = await d.screen(); A.ok(after !== 'nas-key', 'then the step goes on (' + after + ')');
+  for (let i = 0; i < 3 && (await d.screen()) !== 'nas-key'; i++) await d.back();
+  A.eq(await d.screen(), 'nas-key', 'back at Choose a key');
+  await d.act('pick', 'k-rsa'); await d.primary();
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding .o55-sheet[data-open="true"] [data-o55-bind="pass"]')), 'the same key is not asked again');
+  A.eq(await d.state(() => window.O55.S.sess.nas.unlocked), 'k-rsa', 'unlocked names the key it was for');
+});
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();
