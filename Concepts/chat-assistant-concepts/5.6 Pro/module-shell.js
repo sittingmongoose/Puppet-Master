@@ -288,6 +288,19 @@
     var L = typeof window !== 'undefined' ? window.PMLogo : null;
     return L && L.kit && typeof L.kit.faceShapes === 'function' && typeof L.kit.roleStyles === 'function' ? L : null;
   }
+  /* Pip's parts (SSYS-056, S1-S9): window.PM_PIP_PARTS, the one registry (found's head module), stored per Project in
+     general.visual.pip-parts. Parts change Pip in the chat and onboarding only (S9): an agent is Pip under every preset
+     (Plain too); a part switches a placement, a face, a motion or a piece of the look. Read once per change (the
+     registry says when), so a render never reads Settings. Without the registry every part but the app's chirps is on. */
+  var pipParts = null, pipPartsSig = 'all', pipPartsBound = false;
+  function pipPartsNow() {
+    var R = typeof window !== 'undefined' ? window.PM_PIP_PARTS : null;
+    if (!R || typeof R.ids !== 'function') return null;
+    if (!pipPartsBound && typeof R.on === 'function') { pipPartsBound = true; R.on('change', function () { pipParts = null; }); }
+    if (!pipParts) { var ids = R.ids(); pipParts = Object.create(null); ids.forEach(function (id) { pipParts[id] = 1; }); pipPartsSig = ids.join(','); }
+    return pipParts;
+  }
+  function pipOn(id) { var p = pipPartsNow(); return p ? !!p[id] : id !== 'app-voice'; }
   /* the face classes the live Pip (pip.js) finds: eyes, the blink inside them, the thinking dots, the face group */
   var PIP_CLS = { eyes: 'pmx-pip-eyes', blink: 'pmx-pip-blink', dot: 'pmx-pip-dot', face: 'pmx-pip-face', ctl: 'pmx-pip-ctl', pup: 'pmx-pip-pup' };
   /* an agent's state as Pip's face (PC2; glyph_catalog surface_status_faces.agents) */
@@ -367,18 +380,18 @@
   var PIP_ID = function (q) { return q; };
 
   /* ---- vector Pip (Basic, Friendly, Glass): flat, one head in the seat's colour; no gradients, so nothing needs an id */
-  function pipVector(K, th, fam, scheme, prop, mood, detail, bust, kettle) {
+  function pipVector(K, th, fam, scheme, prop, mood, detail, bust, kettle, look2) {
     var g = K.GEO[detail ? 'full' : 'small'], h = g.head, d = K.headPath(h), R = K.R;
-    var shine = fam === 'friendly' || fam === 'glass';
+    var shine = (fam === 'friendly' || fam === 'glass') && look2.shine, hd = look2.seat ? '@seat' : '@head';
     var pr = pipProp(K, prop, g, fam, detail), kt = kettle ? pipProp(K, 'grill', g, fam, detail) : { back: '', front: '' };
     var head = '';
     if (fam === 'glass' && !bust) {
       /* Glass: a clear lens in the seat's colour, a rim lit from above, a bright base (no brow band) */
-      head += '<path d="' + d + '" fill="@seat" fill-opacity=".74"/><path d="' + d + '" fill="#fff" fill-opacity="' + (scheme === 'dark' ? .1 : .2) + '"/>';
-      head += '<ellipse cx="' + (h.x0 + 10.5) + '" cy="' + (h.y0 + 6.5) + '" rx="7.5" ry="4" fill="#fff" fill-opacity=".55"/>';
+      head += '<path d="' + d + '" fill="' + hd + '" fill-opacity=".74"/><path d="' + d + '" fill="#fff" fill-opacity="' + (scheme === 'dark' ? .1 : .2) + '"/>';
+      if (shine) head += '<ellipse cx="' + (h.x0 + 10.5) + '" cy="' + (h.y0 + 6.5) + '" rx="7.5" ry="4" fill="#fff" fill-opacity=".55"/>';
       head += '<path d="' + d + '" fill="none" stroke="#fff" stroke-opacity="' + (scheme === 'dark' ? .7 : .9) + '" stroke-width="' + (detail ? 1.5 : 2.2) + '"/>';
     } else {
-      head += '<path d="' + d + '" fill="@seat"/>';
+      head += '<path d="' + d + '" fill="' + hd + '"/>';
       if (shine) head += '<ellipse cx="' + (h.x0 + 10.5) + '" cy="' + (h.y0 + 6.5) + '" rx="7.5" ry="4.2" fill="#fff" fill-opacity=".26"/>';
     }
     if (shine && detail && mood !== 'dots' && mood !== 'error') {
@@ -386,18 +399,18 @@
       head += '<ellipse cx="' + R(32 - g.eye.dx - 4.2) + '" cy="' + cy + '" rx="3.1" ry="1.9" fill="@cheek" opacity=".9"/><ellipse cx="' + R(32 + g.eye.dx + 4.2) + '" cy="' + cy + '" rx="3.1" ry="1.9" fill="@cheek" opacity=".9"/>';
     }
     head += '<g class="' + PIP_CLS.face + '">' + K.faceShapes(g, mood, '@eye', { cls: PIP_CLS, shine: detail && shine }) + '</g>';
-    if (bust) return pr.back + head + pr.front + kt.front;
+    if (bust || !look2.strings) return pr.back + (bust ? head : '<g class="' + PIP_CLS.pup + '">' + head + '</g>') + pr.front + kt.front;
     var strings = K.stringEnds(g, 'thread', PIP_ID, PIP_ID).map(function (e) { return pipLine(K, e.T, e.E, g.strW, '@str'); }).join('');
     var ctl = K.controlSvg(g, th, PIP_CLS, { attach: 'thread' });
     return strings + pr.back + '<g class="' + PIP_CLS.pup + '">' + head + '</g>' + ctl + pr.front + kt.front;
   }
   /* ---- NieR Pip (O8): the kit's YoRHa unit in ink and paper; a still mark keeps the plain band (X3) */
-  function pipNierMark(K, th, prop, mood, detail, bust, kettle, eyes) {
+  function pipNierMark(K, th, prop, mood, detail, bust, kettle, eyes, look2) {
     var g = K.GEO[detail ? 'full' : 'small'];
     var r = K.pipNier(g, th, mood === 'dots' ? 'think' : mood, PIP_CLS, { face: 'x' }, { parts: true, eyes: !!eyes });
     var pr = pipProp(K, prop, g, 'nier', detail), kt = kettle ? pipProp(K, 'grill', g, 'nier', detail) : { back: '', front: '' };
     var head = '<g class="' + PIP_CLS.pup + '">' + r.headInner + '</g>';
-    if (bust) return pr.back + head + pr.front + kt.front;
+    if (bust || (look2 && !look2.strings)) return pr.back + head + pr.front + kt.front;
     var strings = r.barNodes.map(function (q, i) { return pipLine(K, q, r.headNodes[i], detail ? 1 : 2.6, '@ink'); }).join('');
     return strings + pr.back + head + '<g class="' + PIP_CLS.ctl + '">' + r.ctl + '</g>' + pr.front + kt.front;
   }
@@ -414,11 +427,14 @@
     grill: { x: 2, y: 17, rows: ['iiiiiiiiiiiiiiiiiiii', '.dddddddddddddddddd.', '..dddddddddddddddd..', '...dddddddddddddd...', '.....dddddddddd.....', '....d..........d....', '...d............d...'] }
   };
   var PIP_PX_COL = { c: '@ctl', b: '@back', s: '@str', h: '@seat', k: '@cheek', l: '@eye', g: '@pgold', G: '@pgold2', r: '@pcloth', w: '@pwood', p: '@ppaper', i: '@ctl', d: '@pgrill' };
-  function pipPixel(K, prop, mood, bust, kettle) {
+  var PIP_PX_COL_PLAIN = Object.assign({}, PIP_PX_COL, { h: '@head' });
+  function pipPixel(K, prop, mood, bust, kettle, look2) {
+    look2 = look2 || { strings: true, shine: true, seat: true };
     var G = 24, rows = K.spriteRows(G, mood === 'dots' ? 'dots' : mood).map(function (r) { return r.split(''); });
     var put = function (x, y, ch) { if (x >= 0 && x < G && y >= 0 && y < G) rows[y][x] = ch; };
     var stamp = function (p) { p.rows.forEach(function (row, j) { for (var i = 0; i < row.length; i++) if (row.charAt(i) !== '.') put(p.x + i, p.y + j, row.charAt(i)); }); };
-    if (bust) for (var y0 = 0; y0 < 10; y0++) for (var x0 = 0; x0 < G; x0++) rows[y0][x0] = '.';
+    if (bust || !look2.strings) for (var y0 = 0; y0 < 10; y0++) for (var x0 = 0; x0 < G; x0++) rows[y0][x0] = '.';
+    if (!look2.shine) for (var y1 = 0; y1 < G; y1++) for (var x1 = 0; x1 < G; x1++) if (rows[y1][x1] === 'k') rows[y1][x1] = 'h';
     var ring = null;
     if (prop === 'orbit') {
       /* a tilted ring in cells: the far half before the head's colour goes on, the near half after it */
@@ -437,7 +453,7 @@
     if (prop && PIP_PX_PROP[prop]) stamp(PIP_PX_PROP[prop]);
     if (kettle) stamp(PIP_PX_PROP.grill);
     if (ring) ring.front.forEach(function (p) { put(p[0], p[1], 'g'); });
-    return K.pixelRects(rows.map(function (r) { return r.join(''); }), PIP_PX_COL);
+    return K.pixelRects(rows.map(function (r) { return r.join(''); }), look2.seat ? PIP_PX_COL : PIP_PX_COL_PLAIN);
   }
   /* pipInner(prop, mood, size, o) - Pip on the 28 grid (the inside of a mark's svg). size: the mark's px (none = a
      plate seat, the richest detail). o.kettle: the lead behind the kettle grill (DL-218); o.eyes: a live NieR Pip's
@@ -448,15 +464,18 @@
     var look = pipLook(), z = size == null ? 99 : num(size, 22), kettle = !!o.kettle;
     var bust = o.bust != null ? !!o.bust : z <= 12, detail = o.detail != null ? !!o.detail : z >= 28;
     if (mood === 'working') mood = 'dots';
-    var key = look + '|' + prop + '|' + mood + '|' + (bust ? 'b' : detail ? 'f' : 's') + (kettle ? 'k' : '') + (o.eyes ? 'e' : '');
+    pipPartsNow();
+    if (!pipOn('role-props')) { prop = null; kettle = false; }
+    var key = look + '|' + prop + '|' + mood + '|' + (bust ? 'b' : detail ? 'f' : 's') + (kettle ? 'k' : '') + (o.eyes ? 'e' : '') + '|' + pipPartsSig;
     var v = pipMemo[key];
     if (v) return v;
     var K = P.kit, fam = P.family(look), scheme = P.scheme(look), th = K.rolePalette(look), body;
+    var look2 = { strings: pipOn('strings'), shine: pipOn('cheeks-and-shine'), seat: pipOn('seat-colours') };
     if (fam === 'retro') {
-      body = pipPixel(K, prop, mood, bust, kettle);
+      body = pipPixel(K, prop, mood, bust, kettle, look2);
       v = bust ? '<g class="pmx-pip-px" transform="translate(-3 -9.5) scale(1.42)">' + body + '</g>' : '<g class="pmx-pip-px" transform="translate(2 2)">' + body + '</g>';
     } else {
-      body = fam === 'nier' ? pipNierMark(K, th, prop, mood, detail, bust, kettle, o.eyes) : pipVector(K, th, fam, scheme, prop, mood, detail, bust, kettle);
+      body = fam === 'nier' ? pipNierMark(K, th, prop, mood, detail, bust, kettle, o.eyes, look2) : pipVector(K, th, fam, scheme, prop, mood, detail, bust, kettle, look2);
       v = bust ? '<g class="pmx-pip-v" transform="translate(-6.2 -14.6) scale(.63)">' + body + '</g>' : '<g class="pmx-pip-v" transform="scale(.4375)">' + body + '</g>';
     }
     v = K.roleStyles(v);
@@ -606,7 +625,7 @@
       else { var v = ppYou(M); out = '<g class="pmx-pp" data-prop="you" data-fam="v">' + (M.halo ? '<path class="pmx-pp-halo" d="' + v.halo + '"/>' : '') + '<g class="pmx-pp-v">' + v.rig + '</g></g>'; }
     } else {
       out = '<g class="pmx-pp pmx-pip" data-prop="' + prop + '" data-fam="' + fam + '" data-pip="1" data-pip-phase="' + pipPhase(prop + '|' + seat + '|' + state + '|' + size) + '"' + gAttr + '>' +
-        pipInner(prop === 'grill' ? 'grill' : prop, pipMoodOf(state), size, { kettle: kettle }) + '</g>';
+        pipInner(prop === 'grill' ? 'grill' : prop, pipOn('state-faces') ? pipMoodOf(state) : 'idle', size, { kettle: kettle }) + '</g>';
     }
     if (state === 'done') out += '<circle class="pmx-m-nd" cx="23" cy="23" r="5.4"/><path class="pmx-m-nc" d="m20.6 23.1 1.7 1.7 3.2-3.4"/>';
     if (state === 'needs') out += '<circle class="pmx-m-nd" cx="23" cy="23" r="5.4"/><path class="pmx-m-nw" d="M23 20.2v3.3M23 25.9v.1"/>';
@@ -624,11 +643,13 @@
   /* ---- Pip outside an agent mark (W4 owners): a status face, the Orbit's centre, Plans, the build window, the wand
      and the empty lists. pmxPip({mood, prop, size, tone, cls, key, label}) - a 28-grid svg of its own. tone: the colour
      Pip's head wears (a chat token name: 'positive', 'danger', 'warning', 'accent', 'muted'; none = the look's own Pip).
-     bust / detail: Pip's head alone / the full cut, whatever the size. A status face is still and decorative unless it is
+     bust / detail: Pip's head alone / the full cut, whatever the size. part: the Pip part that places it (working-orbit,
+     plans, wand-menu, empty-lists, status-faces); off, pmxPip draws nothing and the owner keeps its glyph. A status face is still and decorative unless it is
      given a label. '' without the kit. */
   var PIP_TONES = { positive: 1, danger: 1, warning: 1, accent: 1, muted: 1, text: 1, subtle: 1 };
   function pmxPip(o) {
     o = o || {};
+    if (o.part && !pipOn(o.part)) return '';
     var inner = pipInner(o.prop || null, o.mood || 'idle', num(o.size, 22), { eyes: !!o.eyes, kettle: !!o.kettle, bust: o.bust, detail: o.detail });
     if (!inner) return '';
     var size = num(o.size, 22), look = pipLook(), tone = PIP_TONES[o.tone] ? ' style="--pmx-pip-tone:var(--' + o.tone + ')"' : '';
@@ -654,15 +675,15 @@
   function pmxStatusFace(status, size, extraCls, fallback) {
     status = str(status) || 'pending'; size = num(size, 14);
     var f = PIP_LIST_FACE[status];
-    if (!f || !pipKit()) return fallback != null ? fallback : pmxStatus(status, size, extraCls);
-    var face = pmxPip({ mood: f[1], size: Math.max(20, size + 6), tone: PIP_KEY_TONE[f[0]] || 'muted', cls: 'pmx-pip-face-mk', bust: true, detail: true });
+    if (!f || !pipKit() || !pipOn('status-faces')) return fallback != null ? fallback : pmxStatus(status, size, extraCls);
+    var face = pmxPip({ mood: pipOn('state-faces') ? f[1] : 'idle', size: Math.max(20, size + 6), tone: PIP_KEY_TONE[f[0]] || 'muted', cls: 'pmx-pip-face-mk', bust: true, detail: true });
     return '<span class="' + cls('pmx-pip-status', extraCls) + '" data-k="st:' + esc(status) + '" data-status="' + f[0] + '" style="--pmx-pip-box:' + size + 'px" aria-hidden="true">' + face + '</span>';
   }
   /* pmxEmpty({cls, text, tag, key, attrs}) - the one empty-list line: a sleeping Pip, then the words. Each list keeps its
      own class (its layout); the line is the same everywhere (W4 "Empty lists"). Without the kit it is the words alone. */
   function pmxEmpty(o) {
     o = o || {};
-    var tag = o.tag === 'div' ? 'div' : 'p', pip = pmxPip({ mood: 'sleep', size: 28, cls: 'pmx-empty-pip', detail: true });
+    var tag = o.tag === 'div' ? 'div' : 'p', pip = pmxPip({ mood: 'sleep', size: 28, cls: 'pmx-empty-pip', detail: true, part: 'empty-lists' });
     var text = str(o.text);
     return '<' + tag + ' class="' + cls('pmx-empty-line', o.cls) + '"' + k(o.key) + raw(o.attrs) + '>' + pip + (tag === 'div' && text.charAt(0) !== '<' ? '<span>' + text + '</span>' : text) + '</' + tag + '>';
   }
@@ -676,7 +697,8 @@
   function pmxPipHost(kind, mood, signHtml) {
     var P = pipKit(); if (!P) return '';
     mood = str(mood) || 'idle';
-    var look = pipLook(), key = 'host|' + look + '|' + kind + '|' + mood + '|' + (signHtml ? pmxHash(signHtml) : ''), v = pipMemo[key];
+    pipPartsNow();
+    var look = pipLook(), key = 'host|' + look + '|' + kind + '|' + mood + '|' + (signHtml ? pmxHash(signHtml) : '') + '|' + pipPartsSig, v = pipMemo[key];
     if (v) return v;
     var K = P.kit, R = K.R, fam = P.family(look), scheme = P.scheme(look), th = K.rolePalette(look), g = K.GEO.full;
     var ids = { face: 'pmx-pip-hf', grad: 'pmx-pip-hh-' + fam, clip: 'pmx-pip-hc-' + fam, rim: 'pmx-pip-hr-' + fam, glow: 'pmx-pip-hg-' + fam, spec: 'pmx-pip-hs-' + fam, drop: 'pmx-pip-hd-' + fam };
@@ -701,12 +723,13 @@
       ctl = K.controlSvg(g, th, PIP_CLS, { attach: 'eye' });
     }
     var sign = pipSign(kind, fam, signHtml);
+    if (!pipOn('strings')) { strings = ''; ctl = ''; signStr = ''; }
     var body = '<g class="pmx-pip-card">' + signStr + sign + '</g>' + strings + pup + ctl;
     /* every gradient keeps a plain fallback: the head falls back to Pip's own colour, the rest to nothing */
     body = body.replace(new RegExp('fill="url\\(#' + ids.grad + '\\)"', 'g'), 'style="fill:url(#' + ids.grad + ') var(--pip-head)"')
       .replace(/(fill|stroke)="url\(#([^)]+)\)"/g, '$1="url(#$2) none"');
     v = '<span class="pmx-pip-host" data-k="pip-host" data-pip-kind="' + esc(kind) + '" data-pip-mood="' + esc(mood) + '" aria-hidden="true">' +
-      '<svg class="pmx-pip-host-svg pmx-pip" data-fam="' + fam + '" viewBox="0 0 ' + PIP_HOST.w + ' ' + PIP_HOST.h + '" width="' + R(PIP_HOST.w * PIP_HOST.k) + '" height="' + R(PIP_HOST.h * PIP_HOST.k) + '" overflow="visible" focusable="false">' +
+      '<svg class="pmx-pip-host-svg pmx-pip" data-fam="' + fam + '" data-sway="' + (pipOn('sway-and-physics') ? 1 : 0) + '" viewBox="0 0 ' + PIP_HOST.w + ' ' + PIP_HOST.h + '" width="' + R(PIP_HOST.w * PIP_HOST.k) + '" height="' + R(PIP_HOST.h * PIP_HOST.k) + '" overflow="visible" focusable="false">' +
       (defs ? '<defs>' + defs + '</defs>' : '') + '<g class="pmx-pip-lift"><g class="pmx-pip-rig">' + body + '</g></g></svg></span>';
     v = K.roleStyles(v);
     if (++pipMemoN > 800) { pipMemo = Object.create(null); pipMemoN = 0; }
@@ -1449,10 +1472,9 @@
   /* the sheet's Pip (W4): every sheet has one by its close button unless it says pip: false; its face is the one the
      live Pip (pip.js, window.PM56_PIP) shows now, so a render draws what is on screen and the reconcile keeps it */
   function pipHostFor(o) {
-    if (o.pip === false) return '';
+    if (o.pip === false || !pipOn('sheet-hosts')) return '';
     var kind = str(o.kind) || str(o.type) || 'sheet', live = typeof window !== 'undefined' ? window.PM56_PIP : null, mood = 'idle';
     try { if (live && typeof live.hostMood === 'function') mood = live.hostMood(kind) || 'idle'; } catch (e) { mood = 'idle'; }
-    if (live && typeof live.wants === 'function' && !live.wants('hosts')) return '';
     return pmxPipHost(kind, mood, o.kind && KIND_GLYPH[str(o.kind)] ? '' : (o.markHtml || ''));
   }
   function pmxQuestion(o) {
@@ -2747,7 +2769,7 @@
     /* closing: pmxMd's inline renderer (a note body is itself a <p>, BSD) and the disclosure primitive (PREFS) */
     pmxMdInline: inlineOnly, pmxDisclosure: pmxDisclosure,
     /* W4 (PM7 build): Pip outside an agent mark, the sheet's Pip, the painted look */
-    pmxPip: pmxPip, pmxStatusFace: pmxStatusFace, pmxEmpty: pmxEmpty, pmxPipHost: pmxPipHost, pmxPipLook: pipLook, pmxPipMood: pipMoodOf
+    pmxPip: pmxPip, pmxStatusFace: pmxStatusFace, pmxEmpty: pmxEmpty, pmxPipHost: pmxPipHost, pmxPipLook: pipLook, pmxPipMood: pipMoodOf, pmxPipOn: pipOn
   };
   for (var name in API) if (Object.prototype.hasOwnProperty.call(API, name)) SHELL[name] = API[name];
 })();
