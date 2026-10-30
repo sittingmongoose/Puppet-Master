@@ -1126,7 +1126,7 @@
   PM51.on('servers-test', el => {
     const id = ds(el, 'id'); if (!serverById(id) || testing.has(id)) return;
     testing.add(id); PM51.waitOn(el, true, 'Checking…');
-    setTimeout(() => { testing.delete(id); if (el.isConnected) PM51.waitOn(el, false); else refresh(); const s = serverById(id); if (s) reportServerCheck(s); }, 700);
+    setTimeout(() => { testing.delete(id); if (el && el.isConnected) PM51.waitOn(el, false); else refresh(); const s = serverById(id); if (s) reportServerCheck(s); }, 700);
   });
   function reportServerCheck(s) {
     PM51.check({ title: `Test connection · ${s.name}`, steps: [

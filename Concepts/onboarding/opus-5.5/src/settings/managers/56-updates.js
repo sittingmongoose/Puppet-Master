@@ -111,7 +111,7 @@
   PM51.on('updates-catalogs', el => {
     if (catalogsOut) return;
     catalogsOut = true; PM51.waitOn(el, true, 'Refreshing…');
-    setTimeout(() => { catalogsOut = false; if (el.isConnected) PM51.waitOn(el, false); else refresh(); reportCatalogs(); }, 700);
+    setTimeout(() => { catalogsOut = false; if (el && el.isConnected) PM51.waitOn(el, false); else refresh(); reportCatalogs(); }, 700);
   });
   function reportCatalogs() {
     const X = ux(); PM51.check({ title: 'Refresh catalogs', outcome: 'Current · example data', steps: (X.catalogs || []).map(([name, status]) => ({ title: name, desc: status })) });
