@@ -588,6 +588,8 @@ html[data-pmds-tbw] .title-bar { max-width: min(100%, var(--pmds-tbw, 100%)) !im
 #o55-demo .pmds-sheet .pmds-scrow.pmds-pmrow { min-height: 42px; padding-block: 6px; }
 #o55-demo .pmds-pmtext { display: grid; gap: 2px; }
 #o55-demo .pmds-sheet .pmds-scrow .pmds-pmsub { font-size: 11.5px; line-height: 1.35; color: var(--pmds-mute); }
+/* under the pointer or focus the row's wash darkens the ground: the second line steps up a tier (Retro Light read 4.47) */
+#o55-demo .pmds-sheet .pmds-scrow.pmds-pmrow:is(:hover, :focus-visible) .pmds-pmsub { color: var(--pmds-ink2); }
 /* Workspace › Title bar */
 #o55-demo .pmds-choices-box { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 #o55-demo .pmds-tbsays { margin-top: 8px; }
