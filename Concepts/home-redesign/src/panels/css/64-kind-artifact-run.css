@@ -43,8 +43,9 @@
 .pmw-art-loadt b { color: var(--pmw-text); font-weight: 600; }
 .pmw-art-progress { position: relative; height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--pmw-accent) 18%, transparent); overflow: hidden; }
 .pmw-art-progbar { position: absolute; left: 0; top: 0; bottom: 0; background: var(--pmw-accent); border-radius: 3px; transition: width .12s linear; }
-.pmw-art-progress.is-indeterminate .pmw-art-progbar { width: 30%; animation: pmw-art-sweep 1.1s steps(12) infinite; }
-@keyframes pmw-art-sweep { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
+/* drawing it again: no bar, the system loader before the words (44-artifact.js) */
+.pmw-art-loading.is-wait .pmw-art-loadt { margin: 0; }
+.pmw-art-loading.is-wait .pml-ld { --pml-size: 16px; margin-right: 8px; vertical-align: -3px; }
 .pmw-art-loading .pmw-art-fine { margin-top: 10px; }
 
 /* ---- charts: one series colour, thin marks, square at the baseline, values at the tips ---- */
@@ -537,8 +538,6 @@ html[data-o55-nier="on"] .pmw-art-img .i-bg { fill: var(--o55-nier-paper); }
 
 /* Reduced Motion: nothing moves; bars and states arrive at once */
 html[data-motion="reduced"] :is(.pmw-art-progbar, .pmw-art-sortmark) { transition: none !important; }
-html[data-motion="reduced"] .pmw-art-progress.is-indeterminate .pmw-art-progbar { animation: none; width: 100%; opacity: .5; }
 @media (prefers-reduced-motion: reduce) {
   :is(.pmw-art-progbar, .pmw-art-sortmark) { transition: none !important; }
-  .pmw-art-progress.is-indeterminate .pmw-art-progbar { animation: none; width: 100%; opacity: .5; }
 }

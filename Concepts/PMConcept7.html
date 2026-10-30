@@ -12163,11 +12163,11 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
       outline-offset: 1px; border-color: transparent;
     }
 
-    /* header buttons: icon alignment + refresh spin */
+    /* header buttons: icon alignment; Refresh's wait is the system loader in the icon's place (pm6-js-projects.js) */
     .page-projects .projects-actions button { display: inline-flex; align-items: center; gap: 6px; }
     .page-projects .projects-actions .pm6-ico svg { width: 14px; height: 14px; display: block; }
-    @keyframes pm6-proj-spin { to { transform: rotate(360deg); } }
-    .pm6-spin svg { animation: pm6-proj-spin 0.8s linear infinite; }
+    .page-projects .projects-actions .pml-ld { --pml-size: 14px; }
+    .page-projects .projects-actions button[aria-busy="true"] .pm6-ico { display: none; }
 
     /* ---- empty state (No results for current filter) ---- */
     .pm6-proj-empty {
@@ -12312,14 +12312,12 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
     @media (prefers-reduced-motion: reduce) {
       .page-projects .pm6-proj-card,
       .pm6-proj-sheet,
-      .status-badge.pm6-live,
-      .pm6-spin svg { animation: none; }
+      .status-badge.pm6-live { animation: none; }
       .pm6-proj-card.pm6-proj-leaving { transition: none; }
     }
     [data-motion="reduced"] .page-projects .pm6-proj-card,
     [data-motion="reduced"] .pm6-proj-sheet,
-    [data-motion="reduced"] .status-badge.pm6-live,
-    [data-motion="reduced"] .pm6-spin svg { animation: none; }
+    [data-motion="reduced"] .status-badge.pm6-live { animation: none; }
     [data-motion="reduced"] .pm6-proj-card.pm6-proj-leaving { transition: none; }
 </style>
   <!-- PM7 SECTION 7/32: wizard-css - planning wizard + PRD builder styles (style#pm6-css-wizard) -->
@@ -22170,6 +22168,11 @@ html[data-theme$="-light"]:not([data-theme^="glass"]) #pm-hover-tag-root .pm-hov
 #panel-settings .pm51-btn.small { min-height: 28px; padding: 0 10px; font-size: 11.5px; }
 #panel-settings .pm51-btn .icon, #panel-settings .pm51-btn svg { width: 14px; height: 14px; }
 #panel-settings .pm51-btn[aria-disabled="true"], #panel-settings .pm51-mgr [aria-disabled="true"] { opacity: var(--k3-dim, .7); cursor: not-allowed; transform: none; }
+/* a busy button (PM51.btn busy) waits rather than refuses: full strength, the system loader at the icon's size */
+#panel-settings .btn[data-pm51-busy], #panel-settings .pm51-mgr .pm51-btn[data-pm51-busy] { opacity: 1; cursor: progress; transform: none; }
+#panel-settings .btn > .pml-ld { --pml-size: 14px; }
+#panel-settings .btn > .pml-ld > svg { width: 100%; height: 100%; }
+#panel-settings .pm51-waiting > .pml-ld { --pml-size: 14px; margin-right: 1px; }
 #panel-settings .pm51-link { border: 0; background: none; padding: 0; color: var(--k3-text-3); font: inherit; font-size: 11.5px; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; }
 #panel-settings .pm51-link:hover { color: var(--k3-text-1); }
 #panel-settings .pm51-quiet { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 10px 2px 0; margin-top: 12px; border-top: 1px solid var(--k3-line); }
@@ -42124,7 +42127,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
     if (tier === 'micro' || tier === 'pixel') {
       const frames = motion === 'swing' ? 8 : 4;
       css += `${s} .pml-fr{${ANIM('pml-flip' + frames, 'steps(1,end)')}}`;
-      for (let i = 0; i < frames; i++) css += `${s} .pml-fr${i}{animation-delay:calc(var(--pml-delay,0s) + var(--pml-dur) * ${R(i / frames - 1)})}`;
+      for (let i = 0; i < frames; i++) css += `${s} .pml-fr${i}{animation-delay:calc(var(--pml-delay,0s) + var(--pml-dur) * ${+(i / frames - 1).toFixed(4)})}`;
       return css;
     }
     const g = GEO[tier === 'small' ? 'small' : 'full'], k = rigFrames(motion, family, g, 'eye'), P = g.P;
@@ -43876,6 +43879,9 @@ body.pmw-dragging #pm-hover-tag-root, body.pm-resizing:not(.pmw-dragging) #pm-ho
 .pmw-tmark[hidden] { display: none; }
 .pmw-exit { color: var(--pmw-bad); font-family: var(--pm-font-code); }
 .pmw-agentmark { width: 7px; height: 7px; background: var(--pmw-warn); display: block; }
+/* a busy tab off screen: the shared working mark, 12 px, lit and still (32-strip.js updateTab) */
+.pmw-tbusy { display: inline-flex; width: 12px; height: 12px; }
+.pmw-tbusy .nx-st, .pmw-tbusy svg { display: block; width: 12px; height: 12px; }
 /* close target 24 x 24; the dirty dot sits in it until hover */
 .pmw-tclose {
   flex: none;
@@ -44813,6 +44819,8 @@ html[data-motion="reduced"] .pmw-ink-opt { transition: none; }
 .pmw-act.is-danger { color: var(--pmw-bad); }
 .pmw-act[aria-disabled="true"] { opacity: .5; cursor: default; }
 .pmw-act .pmw-ico { width: 14px; height: 14px; }
+/* a busy button's wait: the system loader in the icon's place (27-frames.js frames.button b.busy) */
+.pmw-act .pml-ld { --pml-size: 14px; }
 /* Friendly's page rule [data-theme^="friendly"] button { border-radius: var(--radius-md) } (0,1,1, 14 px) outranks the
    one-class rules here and turns 20-36 px controls into capsules (the pill ban); these restate the frames' radii at that
    weight, in Friendly only, so kinds' own two-class rules still win and NieR's square part keeps its square corners */
@@ -46941,6 +46949,8 @@ html[data-o55-nier="on"] .pmw-exit { color: var(--pmw-text); }
 .pmw-br-addr:focus-within { border-color: var(--pmw-focus); box-shadow: 0 0 0 1px var(--pmw-focus); }
 .pmw-br-aicon { display: inline-flex; flex: none; }
 .pmw-br-aicon .pmw-ico { width: 13px; height: 13px; }
+/* a page's wait is the system loader in the icon's place (20-browser.js show) */
+.pmw-br-aicon .pml-ld { --pml-size: 13px; }
 .pmw-br-addrin { flex: 1 1 auto; min-width: 0; height: 22px; padding: 0; border: 0; outline: none; background: transparent; color: var(--pmw-text);
   font-family: var(--pm-font-code); font-size: 12px; text-transform: none; letter-spacing: 0; }
 /* the capture toolbar shows its words only when the address still has room: the row's labelsAt (1100 px, 20-browser.js)
@@ -47086,8 +47096,6 @@ html[data-o55-nier="on"] .pmw-exit { color: var(--pmw-text); }
 .pmw-br-flash { position: absolute; inset: 0; z-index: 5; pointer-events: none; background: #fff; opacity: 0; }
 .pmw-br-flash.is-on { animation: pmw-br-flash 240ms ease-out; }
 @keyframes pmw-br-flash { 0% { opacity: .55; } 100% { opacity: 0; } }
-.pmw-br-view.is-loading::after { content: ""; position: absolute; left: 0; top: 0; z-index: 5; height: 2px; width: 100%; background: var(--pmw-accent); transform-origin: 0 50%; animation: pmw-br-load 320ms ease-out forwards; }
-@keyframes pmw-br-load { from { transform: scaleX(.05); } to { transform: scaleX(1); opacity: .2; } }
 .pmw-br-prompt { position: absolute; z-index: 6; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; max-width: calc(100% - 16px); box-sizing: border-box; padding: 4px 4px 4px 10px;
   background: var(--pmw-pop); color: var(--pmw-text); border: 1px solid var(--pmw-pop-line); border-radius: 8px; box-shadow: var(--pmw-pop-shadow); font-family: var(--pm-font-ui); font-size: 12px; }
 .pmw-br-prompt[hidden] { display: none; }
@@ -47464,7 +47472,6 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) :where(.pmw-br-hl):not(.t7.t
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-hl.is-picked) { outline-color: var(--accent-lime); outline-style: dashed; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-br-hltag { background: var(--accent-lime); color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-br-prompt { border-color: var(--accent-lime); box-shadow: 3px 3px 0 rgba(0, 0, 0, .35); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-br-view.is-loading::after { animation-timing-function: steps(4, end); }
 
 /* NieR: ink and parchment, square corners, no glow; small headers go uppercase with the headers part */
 html[data-o55-nier="on"] :is(.pmw-br-addr),
@@ -47518,18 +47525,15 @@ html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-br-dseg, .pmw-
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-br-nrow.is-head),
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-tool-tr.is-head),
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :where(.pmw-br-kv dt):not(.t7.t7:not(*)) { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
-html[data-o55-nier="on"] .pmw-br-view.is-loading::after { animation-timing-function: steps(4, end); background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-br-flash { background: var(--o55-nier-paper); }
 
 /* Reduced Motion: nothing moves; every action still works */
-html[data-motion="reduced"] .pmw-br-flash, html[data-motion="reduced"] .pmw-br-view.is-loading::after { animation: none !important; }
-html[data-motion="reduced"] .pmw-br-view.is-loading::after { display: none; }
+html[data-motion="reduced"] .pmw-br-flash { animation: none !important; }
 html[data-motion="reduced"] .pmw-br-tb-card { transition: none; }
 html[data-motion="reduced"] .pmw-br-tb-card:hover { transform: none; }
 html[data-motion="reduced"] .pmw-tool-list { transition: none; }
 @media (prefers-reduced-motion: reduce) {
-  .pmw-br-flash, .pmw-br-view.is-loading::after { animation: none !important; }
-  .pmw-br-view.is-loading::after { display: none; }
+  .pmw-br-flash { animation: none !important; }
   .pmw-br-tb-card { transition: none; }
   .pmw-br-tb-card:hover { transform: none; }
   .pmw-tool-list { transition: none; }
@@ -47965,8 +47969,7 @@ html[data-motion="reduced"] .pmw-dash-live-ring { display: none; }
 .pmw-act.pmw-plan-build[aria-disabled="true"] { opacity: 1; color: var(--pmw-text-2); cursor: default; }
 .pmw-act.pmw-plan-build.is-ready[aria-disabled="true"] { opacity: .55; }
 .pmw-act.pmw-plan-build.is-canceled { text-decoration: line-through; color: var(--pmw-text-3); }
-.pmw-plan-busy { width: 6px; height: 6px; margin-left: 2px; border-radius: 50%; background: var(--pmw-accent); animation: pmw-plan-busy 1.6s ease-in-out infinite; }
-@keyframes pmw-plan-busy { 50% { opacity: .35; } }
+.pmw-plan-link .pml-ld { margin-right: 5px; }
 :is(.pmw-plan, .pmw-docu) .pmw-act[aria-pressed="true"] { background: var(--pmw-press); border-color: var(--pmw-text-3); }
 /* the frame's .pmw-act carries its own radius in every look (45-frames.css); these kinds' own rows and text buttons stop
    at 8 px, so Friendly's 14 px page rule for buttons never turns a 32 px row into a capsule */
@@ -48239,8 +48242,7 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-note.is-chosen :wh
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-note.is-chosen :where(b):not(.t7:not(*)),
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-note.is-chosen :is(.pmw-docu-note-mark) { color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-phase.is-now .pmw-docu-phase-no { border-color: var(--surface); color: var(--surface); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-docu-phase-no),
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan-busy) { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-phase-no { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plan-mdrail.is-done::before, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plan-mdrail.is-now::before { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan-link):hover,
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-docu-link):hover,
@@ -48253,7 +48255,6 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-docu-note),
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan-q-opt),
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan-art),
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-docu-sum) { border-radius: 0; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plan-busy { animation: none; }
 
 /* ---- looks: NieR (ink and parchment always; small uppercase headers with its headers part, square corners with its
    square part; no glow) ---- */
@@ -48261,7 +48262,6 @@ html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-plan, .pmw-doc
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-plan, .pmw-docu) :where(.pmw-docu-h2):not(.t7:not(*)):not(t7:not(*)),
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-plan, .pmw-docu) :is(.pmw-sec-head h2) { font-size: 12px; line-height: 18px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
 html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmw-docu-phase-no),
-html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmw-plan-busy),
 html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmw-docu-tbtn),
 html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmw-docu-note),
 html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmw-plan-q-opt),
@@ -48276,16 +48276,13 @@ html[data-o55-nier="on"] .pmw-docu-note.is-chosen :where(b):not(.t7:not(*)),
 html[data-o55-nier="on"] .pmw-docu-note.is-chosen :is(.pmw-docu-note-mark) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pmw-docu-phase.is-now .pmw-docu-phase-no { border-color: var(--o55-nier-on-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pmw-plan-pv-bar { fill: rgba(var(--o55-nier-ink-rgb), .78); }
-html[data-o55-nier="on"] .pmw-plan-busy { animation: none; }
 
 /* ---- Reduced Motion: nothing moves; the flash is a still tint ---- */
 html[data-motion="reduced"] :is(.pmw-plan-step),
 html[data-motion="reduced"] :is(.pmw-plan-q) { transition: none; }
 html[data-motion="reduced"] .pmw-docu-sum::before { transition: none; }
-html[data-motion="reduced"] .pmw-plan-busy { animation: none; }
 @media (prefers-reduced-motion: reduce) {
   .pmw-plan-step, .pmw-plan-q, .pmw-docu-sum::before { transition: none; }
-  .pmw-plan-busy { animation: none; }
 }
 /* ---- panels/css/64-kind-artifact-run.css ---- */
 /* The Artifact viewer (kinds/44-artifact.js, pmw-art-) and the Run view (kinds/46-run.js, pmw-run-). Both fill the
@@ -48333,8 +48330,9 @@ html[data-motion="reduced"] .pmw-plan-busy { animation: none; }
 .pmw-art-loadt b { color: var(--pmw-text); font-weight: 600; }
 .pmw-art-progress { position: relative; height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--pmw-accent) 18%, transparent); overflow: hidden; }
 .pmw-art-progbar { position: absolute; left: 0; top: 0; bottom: 0; background: var(--pmw-accent); border-radius: 3px; transition: width .12s linear; }
-.pmw-art-progress.is-indeterminate .pmw-art-progbar { width: 30%; animation: pmw-art-sweep 1.1s steps(12) infinite; }
-@keyframes pmw-art-sweep { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
+/* drawing it again: no bar, the system loader before the words (44-artifact.js) */
+.pmw-art-loading.is-wait .pmw-art-loadt { margin: 0; }
+.pmw-art-loading.is-wait .pml-ld { --pml-size: 16px; margin-right: 8px; vertical-align: -3px; }
 .pmw-art-loading .pmw-art-fine { margin-top: 10px; }
 
 /* ---- charts: one series colour, thin marks, square at the baseline, values at the tips ---- */
@@ -48869,11 +48867,9 @@ html[data-o55-nier="on"] .pmw-art-img .i-bg { fill: var(--o55-nier-paper); }
 /* Reduced Motion: nothing moves; bars and states arrive at once */
 html[data-motion="reduced"] :is(.pmw-art-progbar),
 html[data-motion="reduced"] :is(.pmw-art-sortmark) { transition: none !important; }
-html[data-motion="reduced"] .pmw-art-progress.is-indeterminate .pmw-art-progbar { animation: none; width: 100%; opacity: .5; }
 @media (prefers-reduced-motion: reduce) {
   :is(.pmw-art-progbar),
 :is(.pmw-art-sortmark) { transition: none !important; }
-  .pmw-art-progress.is-indeterminate .pmw-art-progbar { animation: none; width: 100%; opacity: .5; }
 }
 /* ---- panels/css/65-kind-records.css ---- */
 /* The Agent transcript (pmw-tx-), Context detail (pmw-ctx-) and Record viewer (pmw-rec-) kinds. Sizes key on the tab
@@ -48910,12 +48906,11 @@ html[data-motion="reduced"] .pmw-art-progress.is-indeterminate .pmw-art-progbar 
 .pmw-tx-smark { flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .pmw-tx-smark .pmw-tx-smbg { opacity: .3; }
 .pmw-tx-status.is-working .pmw-tx-smark, .pmw-tx-status.is-fallback .pmw-tx-smark { color: var(--pmw-accent); }
-.pmw-tx-status.is-working .pmw-tx-smark { transform-origin: 50% 50%; animation: pmw-tx-spin 1.1s linear infinite; }
+.pmw-tx-status .pml-ld { --pml-size: 12px; }
 .pmw-tx-status.is-complete .pmw-tx-smark { color: var(--pmw-ok); }
 .pmw-tx-status.is-failed .pmw-tx-smark { color: var(--pmw-bad); }
 .pmw-tx-status.is-blocked .pmw-tx-smark, .pmw-tx-status.is-retrying .pmw-tx-smark { color: var(--pmw-warn); }
 .pmw-tx-status.is-queued .pmw-tx-smark, .pmw-tx-status.is-waiting .pmw-tx-smark { color: var(--pmw-text-3); }
-@keyframes pmw-tx-spin { to { transform: rotate(360deg); } }
 
 /* where it stands, the foot line */
 .pmw-tx-standing:empty { display: none; }
@@ -49204,7 +49199,6 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-ctx-lbar) { border-
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tx-item::before { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tx-node.is-live { background: var(--accent-lime); color: var(--surface); box-shadow: none; animation: pmw-tx-blink 1s steps(1, end) infinite; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tx-item.is-live::before { animation: pmw-tx-blink 1s steps(1, end) infinite; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tx-status.is-working .pmw-tx-smark { animation: none; }
 @keyframes pmw-tx-blink { 50% { opacity: .25; } }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-tx-shead):is(:hover, :focus-visible),
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-ctx-dis):is(:hover, :focus-visible),
@@ -49227,7 +49221,6 @@ html[data-o55-nier="on"] :is(.pmw-rec) ::selection { background: var(--o55-nier-
 html[data-o55-nier="on"] .pmw-tx-node.is-live { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; animation: pmw-tx-blink 1.2s steps(1, end) infinite; }
 html[data-o55-nier="on"] .pmw-tx-item.is-live::before { border-color: var(--o55-nier-ink); animation: pmw-tx-blink 1.2s steps(1, end) infinite; }
 html[data-o55-nier="on"] .pmw-tx-node { color: var(--o55-nier-ink); }
-html[data-o55-nier="on"] .pmw-tx-status.is-working .pmw-tx-smark { animation: pmw-tx-spin 1.6s steps(8, end) infinite; }
 html[data-o55-nier="on"] :is(.pmw-tx-jump),
 html[data-o55-nier="on"] :is(.pmw-ctx-tip) { border-color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-ctx { --pmw-ctx-c1: rgba(var(--o55-nier-ink-rgb), .92); --pmw-ctx-c2: rgba(var(--o55-nier-ink-rgb), .72); --pmw-ctx-c3: rgba(var(--o55-nier-ink-rgb), .56);
@@ -50939,9 +50932,12 @@ html[data-motion="reduced"] .pmt-bgmove, .pmt-bgmove[data-anim="still"] { animat
 html[data-motion="reduced"] .pmt-root :not(.pmt-calm), html[data-motion="reduced"] .pmt-root :not(.pmt-calm)::before,
 html[data-motion="reduced"] .pmt-root :not(.pmt-calm)::after { animation: none !important; transition: none !important; }
 html[data-motion="reduced"] .pmt-root.pmt-bell .pmt-body { box-shadow: inset 0 0 0 1px var(--pmw-warn, var(--accent-warning)); }
+/* a program's progress of unknown length, still: the whole bar at half strength, never a 30 % stub that reads as
+   measured progress (W5) -- under the app's switch and under the system's setting alike */
 html[data-motion="reduced"] .pmt-progress[data-pmt-state="indeterminate"]::before { width: 100%; left: 0; opacity: .5; }
 @media (prefers-reduced-motion: reduce) {
   .pmt-root :not(.pmt-calm), .pmt-root :not(.pmt-calm)::before, .pmt-root :not(.pmt-calm)::after { animation: none !important; transition: none !important; }
+  .pmt-progress[data-pmt-state="indeterminate"]::before { width: 100%; left: 0; opacity: .5; }
 }
 /* ---- terminal/css/40-nier.css ---- */
 /* NieR Mode for the terminal (D23), under the binding rule for new surfaces (NIER-RULES-for-new-surfaces.md, DL-152,
@@ -51605,9 +51601,9 @@ html[data-o55-nier="on"][data-motion="reduced"] .pmt-findring.pmt-calm { animati
       (words and rows type on, the mark snaps down onto its line), glitch (a failure and a request arrive with a short
       jitter), slice (the band and the window open and close in eight steps). Reduced Motion, Still and Colors only
       (no Motion part) show end states at once. Colours only from --o55-nier-* tokens; no glow, filter or blur.
-   Loops: the running glyph turns (1.4 s a turn) in Basic, Friendly and Glass; the Retro running square and the
-   waiting caret blink at 1.2 s. Nothing loops under Reduced Motion or in NieR. The elapsed time is text that changes
-   once a second, never an animation.
+   Loops: a running command's slot is the system loader (js/80-card.js glyphFor; its owner sets its motion per look,
+   its Reduced Motion breath and NieR's Diamond loaders); the waiting caret blinks at 1.2 s. Nothing else loops under
+   Reduced Motion or in NieR. The elapsed time is text that changes once a second, never an animation.
 
    Looks are read from html[data-theme], html[data-o55-nier="on"] with its installed parts, and
    html[data-motion="reduced"]. Colours come from the page tokens and, in NieR, the --o55-nier-* helpers. */
@@ -51727,6 +51723,7 @@ html[data-o55-nier="on"][data-motion="reduced"] .pmt-findring.pmt-calm { animati
 }
 /* the glyph slot: one element at a fixed size; the neon glyph rollout puts its own mark here */
 .pmt-card-gi { display: inline-flex; width: var(--pmt-card-gs); height: var(--pmt-card-gs); flex: none; }
+.pmt-card-gi > .pml-ld { --pml-size: var(--pmt-card-gs); vertical-align: 0; }
 .pmt-card-g {
   width: 100%;
   height: 100%;
@@ -52067,7 +52064,6 @@ html[data-o55-nier="on"][data-motion="reduced"] .pmt-findring.pmt-calm { animati
 @keyframes pmt-card-flag-ring {
   0%, 22% { border-color: color-mix(in srgb, var(--pmt-card-sc) 72%, var(--pmt-card-edge)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--pmt-card-sc) 20%, transparent), var(--pmt-card-shadow); }
 }
-@keyframes pmt-card-turn { to { transform: rotate(360deg); } }
 @keyframes pmt-card-blink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
 
 /* ================================================================================================================
@@ -52160,15 +52156,9 @@ html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmt-card-cue-done::bef
   background-image: linear-gradient(105deg, transparent 42%, rgb(255 255 255 / .38) 50%, transparent 58%);
 }
 
-/* ---- loops: the running glyph turns, Retro's running square and the waiting caret blink like a cursor; only with
-   motion allowed, never in NieR ---- */
+/* ---- loops: the waiting caret blinks like a cursor; only with motion allowed, never in NieR. A running command's
+   loop is the system loader's (js/80-card.js glyphFor) ---- */
 @media (prefers-reduced-motion: no-preference) {
-  html:not([data-motion="reduced"]):not([data-o55-nier="on"]):not([data-theme^="retro"]) .pmt-card[data-pmt-status="running"] .pmt-card-g {
-    animation: pmt-card-turn 1.4s linear infinite;
-  }
-  html:not([data-motion="reduced"]):not([data-o55-nier="on"]):not([data-theme^="retro"]) .pmt-card[data-pmt-status="running"] .pmt-card-g-arc { display: inline; }
-  html:not([data-motion="reduced"]):not([data-o55-nier="on"]):not([data-theme^="retro"]) .pmt-card[data-pmt-status="running"] .pmt-card-g-dot { display: none; }
-  html:not([data-motion="reduced"]):not([data-o55-nier="on"])[data-theme^="retro"] .pmt-card[data-pmt-status="running"] .pmt-card-g-sq,
   html:not([data-motion="reduced"]):not([data-o55-nier="on"]) .pmt-card[data-pmt-status="waiting"] .pmt-card-g-caret {
     animation: pmt-card-blink 1.2s linear infinite;
   }
@@ -56178,12 +56168,8 @@ div.pm56-host[data-theme="retro-light"]{
 .pm56-host .ctx-status.warn{ background: color-mix(in srgb, var(--warning) 14%, var(--surface-3)); border-color: color-mix(in srgb, var(--warning) 44%, var(--border)); }
 .pm56-host .ctx-status.working{ flex-direction: row; align-items: center; gap: 7px; }
 @keyframes ctx-status-in{ from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-.pm56-host .ctx-spin{
-  width: 11px; height: 11px; flex: none; border-radius: 50%;
-  border: 2px solid var(--surface-4); border-top-color: var(--accent);
-  animation: ctx-spin 900ms linear infinite;
-}
-@keyframes ctx-spin{ to { transform: rotate(360deg); } }
+.pm56-host .ctx-wait{ display: inline-flex; flex: none; width: 12px; height: 12px; line-height: 0; }
+.pm56-host .ctx-wait > .pml-ld{ --pml-size: 12px; }
 .pm56-host .ctx-drawer .ctx-note{ font-size: 10px; color: var(--muted); margin: 8px 0 0; line-height: 1.5; }
 .pm56-host .ctx-drawer .ctx-note.warn{ color: var(--warning); display: flex; align-items: flex-start; gap: 5px; }
 .pm56-host .ctx-drawer .ctx-note.warn svg{ flex: none; margin-top: 2px; }
@@ -56328,13 +56314,7 @@ div.pm56-host[data-theme="retro-light"]{
 .pm56-host .ctx-cache{ flex: 1 0 100%; }}
 @container pm56tab (max-width: 210.6px){.pm56-host .ctx-acts{ flex-wrap: wrap; }
 .pm56-host .ctx-cache{ flex: 1 0 100%; }}
-@media (prefers-reduced-motion: reduce){.pm56-host .ctx-spin{
-    animation: none;
-    border-color: var(--surface-4);
-    border-top-color: var(--accent);
-    border-right-color: var(--accent);
-  }
-.pm56-host .ctx-status{ animation: none; }
+@media (prefers-reduced-motion: reduce){.pm56-host .ctx-status{ animation: none; }
 .pm56-host .ctx-meter i{ animation: none; }
 .pm56-host .ctx-morebtn .ctx-chev{ transition: none; }
 .pm56-host .ctx-growth .ctx-dot{ transition: none; }}
@@ -58122,70 +58102,8 @@ div.pm56-host.pm56-reduced .wa-track, html[data-motion="reduced"] .pm56-host .wa
   max-height:none; min-height:44px;
 }
 .pm56-host .qs-pill-label{ font-size:13px; font-weight:650; flex:1 1 auto; min-width:0; text-align:left; }
-.pm56-host .qs-orbit{
-  position:relative; width:18px; height:18px; flex:0 0 18px; flex-shrink:0;
-  margin-right:4px;
-  animation:qs-orbit-turn 900ms linear infinite;
-}
-.pm56-host .qs-orbit i{
-  position:absolute; width:4px; height:4px; border-radius:50%;
-  background:var(--accent); opacity:.9;
-}
-.pm56-host .qs-orbit i:nth-child(1){ top:0; left:50%; margin-left:-2px; }
-.pm56-host .qs-orbit i:nth-child(2){ top:50%; right:0; margin-top:-2px; }
-.pm56-host .qs-orbit i:nth-child(3){ bottom:0; left:50%; margin-left:-2px; }
-.pm56-host .qs-orbit i:nth-child(4){ top:50%; left:0; margin-top:-2px; }
-@keyframes qs-orbit-turn{ to{ transform:rotate(360deg); } }
-.pm56-host .qs-orrery{
-  position:relative; width:22px; height:22px; flex:0 0 22px; flex-shrink:0;
-  margin-right:4px; overflow:visible;
-  transform-style:preserve-3d; perspective:36px;
-}
-.pm56-host .qs-orrery-ring{
-  position:absolute; left:50%; top:50%;
-  border:1.5px solid color-mix(in srgb,var(--text) 40%, transparent);
-  border-radius:50%; box-sizing:border-box; pointer-events:none;
-}
-.pm56-host .qs-orrery-a{
-  width:20px; height:20px; margin:-10px 0 0 -10px;
-  animation:qs-orrery-spin 2.2s linear infinite;
-}
-.pm56-host .qs-orrery-b{
-  width:16px; height:16px; margin:-8px 0 0 -8px;
-  animation:qs-orrery-spin-rev 3.4s linear infinite;
-}
-.pm56-host .qs-orrery-bead{
-  position:absolute; left:50%; top:50%;
-  width:4px; height:4px; margin:-2px 0 0 -2px;
-  border-radius:50%; background:var(--accent);
-  pointer-events:none;
-}
-.pm56-host .qs-orrery-bead:nth-of-type(1){ animation:qs-orrery-bead-a 1.8s linear infinite; }
-.pm56-host .qs-orrery-bead:nth-of-type(2){ animation:qs-orrery-bead-b 2.6s linear infinite; }
-.pm56-host .qs-orrery-bead:nth-of-type(3){
-  width:5px; height:5px; margin:-2.5px 0 0 -2.5px;
-  animation:qs-orrery-bead-c 2.2s linear infinite 0.4s;
-}
-@keyframes qs-orrery-spin{
-  from{ transform:rotateX(68deg) rotateZ(0deg); }
-  to{ transform:rotateX(68deg) rotateZ(360deg); }
-}
-@keyframes qs-orrery-spin-rev{
-  from{ transform:rotateX(68deg) rotateZ(70deg); }
-  to{ transform:rotateX(68deg) rotateZ(-290deg); }
-}
-@keyframes qs-orrery-bead-a{
-  from{ transform:rotate(0deg) translateX(9px) rotate(0deg); }
-  to{ transform:rotate(360deg) translateX(9px) rotate(-360deg); }
-}
-@keyframes qs-orrery-bead-b{
-  from{ transform:rotate(180deg) translateX(6px) rotate(-180deg); }
-  to{ transform:rotate(540deg) translateX(6px) rotate(-540deg); }
-}
-@keyframes qs-orrery-bead-c{
-  from{ transform:rotate(90deg) translateX(9px) rotate(-90deg); }
-  to{ transform:rotate(450deg) translateX(9px) rotate(-450deg); }
-}
+.pm56-host .qs-wait{ display:inline-flex; flex:0 0 18px; width:18px; height:18px; margin-right:4px; line-height:0; }
+.pm56-host .qs-wait > .pml-ld{ --pml-size:18px; }
 .pm56-host .qs-morph-face{
   position:absolute; inset:auto 0 0 0; height:44px;
   max-width:none; margin:0; border:0; background:transparent; box-shadow:none;
@@ -58985,12 +58903,7 @@ div.pm56-host.pm56-reduced .wa-track, html[data-motion="reduced"] .pm56-host .wa
 .pm56-host .qs-queue-row{ grid-template-columns:auto minmax(0,1fr); }
 .pm56-host .qs-queue-count{ display:none; }
 .pm56-host .qs-head{ padding:8px; gap:5px; }}
-@media (prefers-reduced-motion: reduce){.pm56-host .qs-progress-track.is-scan i, .pm56-host .qs-orbit, .pm56-host .qs-orbit i, .pm56-host .qs-orrery, .pm56-host .qs-orrery-ring, .pm56-host .qs-orrery-bead{ animation:none !important; }
-.pm56-host .qs-orrery-a{ transform:rotateX(68deg) rotateZ(25deg); }
-.pm56-host .qs-orrery-b{ transform:rotateX(68deg) rotateZ(70deg); }
-.pm56-host .qs-orrery-bead:nth-of-type(1){ transform:rotate(40deg) translateX(9px); }
-.pm56-host .qs-orrery-bead:nth-of-type(2){ transform:rotate(200deg) translateX(6px); }
-.pm56-host .qs-orrery-bead:nth-of-type(3){ transform:rotate(110deg) translateX(9px); }
+@media (prefers-reduced-motion: reduce){.pm56-host .qs-progress-track.is-scan i{ animation:none !important; }
 .pm56-host .qs-card, .pm56-host .qs-sheet, .pm56-host .qs-inspector, .pm56-host .qs-ask, .pm56-host .qs-stack-live, .pm56-host .qs-fold, .pm56-host .qs-step-live, .pm56-host .qs-shell, .pm56-host .qs-reel, .pm56-host .qs-reel-out, .pm56-host .qs-reel [data-k^="qs-opt"], .pm56-host .qs-reel .qs-other, .pm56-host .qs-ask-foot, .pm56-host .qs-ask-title, .pm56-host .qs-ask-sub, .pm56-host .qs-ask-opt, .pm56-host .qs-ask-review-row, .pm56-host .qs-ask-note, .pm56-host .qs-spine, .pm56-host .qs-ask-x, .pm56-host .qs-spine-thumb, .pm56-host .decision-surface{
     animation-duration:1ms !important; animation-delay:0ms !important; filter:none !important;
   }
@@ -61499,13 +61412,8 @@ div.pm56-host.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="n
   background:var(--surface-2); color:var(--muted); border-color:var(--border);
   text-decoration:line-through; text-decoration-thickness:1px;
 }
-.pm56-host .plan-doc .pd-build-building::after{
-  content:''; display:inline-block; width:9px; height:9px; margin:0 -2px 0 5px;
-  vertical-align:middle; border-radius:50%; background:radial-gradient(closest-side, var(--accent) 55%, transparent);
-  animation:pd-breathe 1370ms var(--spring-soft-ease) infinite;
-}
-html[data-o55-nier="on"] .pm56-host .plan-doc .pd-build-building::after{ width:5px; height:5px; margin:0 0 0 7px; background:var(--accent); }
-@keyframes pd-breathe{ 0%,100%{opacity:.25} 50%{opacity:1} }
+.pm56-host .plan-doc .pd-wait{ display:inline-flex; width:14px; height:14px; margin:0 6px 0 -2px; vertical-align:-3px; line-height:0; }
+.pm56-host .plan-doc .pd-wait > .pml-ld{ --pml-size:14px; }
 .pm56-host .plan-doc .pd-wait{
   display:inline-flex; align-items:center; gap:6px;
   font:400 11px/1.4 var(--font-ui); color:var(--muted);
@@ -61626,8 +61534,7 @@ html[data-o55-nier="on"] .pm56-host .plan-doc .pd-build-building::after{ width:5
 .pm56-host .plan-doc .pd-body{ max-height:380px; }}
 @container pm56tab (max-width: 318.6px){.pm56-host .plan-doc .pd-kv span{ flex-basis:110px; }
 .pm56-host .plan-doc .pd-body{ max-height:380px; }}
-@media (prefers-reduced-motion: reduce){.pm56-host .plan-doc .pd-build-building::after{ animation:none; opacity:1; }
-.pm56-host .pd-dialog{ animation:none; }
+@media (prefers-reduced-motion: reduce){.pm56-host .pd-dialog{ animation:none; }
 .pm56-host .plan-doc .pd-view, .pm56-host .plan-doc .pd-build, .pm56-host .plan-doc .pd-step, .pm56-host .plan-doc .pd-artifact{ transition:none; }}
 .pm56-host .plan-doc .pd-step-blocked{ border-color:color-mix(in srgb, var(--danger) 45%, var(--border)); }
 .pm56-host .plan-doc .pd-step-skipped .pd-step-copy strong{ color:var(--muted); }
@@ -75425,9 +75332,10 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-seg-ink { borde
 :is(#panel-usage,[data-pmu-host]) .pmu-iconbtn:hover { color: var(--pmu-ink); background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-iconbtn:active { transform: scale(.94); }
 :is(#panel-usage,[data-pmu-host]) .pmu-iconbtn svg { width: 16px; height: 16px; }
-/* refresh (WOW-SPEC 3.18): one turn in 650 ms that lands with the measured 5.6 Pro POP settle */
-:is(#panel-usage,[data-pmu-host]) .pmu-iconbtn.spinning svg { animation: pmu-spin calc(650ms * var(--pmu-speed, 1)) linear(0,.028,.111 8%,.412 20%,.686 30%,.867 40%,.964 50%,1.012 62%,1.014 74%,1.003 88%,1) 1; }
-@keyframes pmu-spin { to { transform: rotate(360deg); } }
+/* refresh: while the readings are on their way the system loader takes the icon's place (90-api.js refresh; W5 replaces
+   WOW-SPEC 3.18's one turn in 650 ms) */
+:is(#panel-usage,[data-pmu-host]) .pmu-iconbtn > .pml-ld { --pml-size: 16px; }
+:is(#panel-usage,[data-pmu-host]) .pmu-iconbtn[aria-busy="true"] > .pmu-ico { display: none; }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-ctlbtn),
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-iconbtn) { border-radius: 0; }
 
@@ -78565,16 +78473,8 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(#panel-usage
 /* empty: the machine drawing above every empty state */
 html[data-o55-nier-parts~="empty"] :is(#panel-usage,[data-pmu-host]) .pmu-empty::before { content: ""; display: block; width: 44px; height: 44px; margin: 0 auto 8px;
   background: var(--o55nw-art-machine) center / contain no-repeat; opacity: .82; }
-/* diamonds: the refresh is the app's diamond loader (styles.d/14-nier-parts.css, the 5.6 Pro port): the icon's strokes go
-   and a hollow diamond with an inner square turns on its vertical axis, one half turn in the refresh's 650 ms (the app's
-   loop turns once in 2.8 s; a refresh is one shot, so nothing keeps turning). Reduce Motion: the still diamond. */
-html[data-o55-nier-parts~="diamonds"] :is(#panel-usage,[data-pmu-host]) .pmu-iconbtn.spinning svg { box-sizing: border-box; border: 1px solid currentColor; outline: 1px solid currentColor; outline-offset: -5px;
-  transform: rotate(45deg) scale(.72); animation: pmu-nier-diamond calc(650ms * var(--pmu-speed, 1)) linear 1; }
-html[data-o55-nier-parts~="diamonds"] :is(#panel-usage) .pmu-iconbtn.spinning svg > *,
-html[data-o55-nier-parts~="diamonds"] :where([data-pmu-host]):not(#t7:not(*)) .pmu-iconbtn.spinning svg > * { visibility: hidden; }
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(#panel-usage,[data-pmu-host]) .pmu-iconbtn.spinning svg { animation: none; }
-@media (prefers-reduced-motion: reduce) { html[data-o55-nier-parts~="diamonds"] :is(#panel-usage,[data-pmu-host]) .pmu-iconbtn.spinning svg { animation: none; } }
-@keyframes pmu-nier-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(180deg) rotate(45deg) scale(.72); } }
+/* diamonds: the refresh's wait is the system loader, which the loader owner hands to the app's Diamond loaders part
+   (glyph-system src/logo/pm-loader.js, styles.d/14-nier-parts.css); nothing of Usage's own */
 
 /* group heading bands are not plates: no corner ticks, no ink frame */
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-card[data-head="band"] { background-image: none !important; border-color: transparent; box-shadow: none; }
@@ -102577,19 +102477,29 @@ if (usagePanel) new MutationObserver(syncUsageLayer).observe(usagePanel, { attri
 
 PMU.core.rangeHours = rangeHours;
 
+var refreshOut = false;   // a refresh's readings are on their way (PM7_USAGE.refresh)
 window.PM7_USAGE = {
   render: render, rerender: rerender, syncNavInk: function (animate) { PMU.shell.syncInk(animate !== false); },
   state: state, data: DATA, rooms: ROOM, details: DETAIL, widget_ids: KNOWN_USAGE_WIDGET_IDS,
   roomWidgets: roomWidgets, selectRoom: selectRoom,
   setRoomDetail: function (room, detail) { var patch = {}; if (ROOM[room]) patch.room = room; if (DETAIL[detail]) patch.detail = detail; return PMU.shell.setView(patch, 'api'); },
   projectedAttempts: projectedAttempts,
+  /* a refresh is a wait: the button holds the system loader (W5, DR-077; window.PM_PIP_LOADER, Hop, a short wait that
+     ends with fresh numbers, L5) and aria-busy until the readings come back (the fixture's 650 ms); the page redraws
+     and says so when they do. A second press while one is out does nothing. */
   refresh: function () {
+    if (refreshOut) return;
     command('cmd.usage.refresh', { room: state.room, range: state.range, scope: state.scope }, { requested: true });
-    var button = document.getElementById('pmuRefresh');
-    if (button) { button.classList.add('spinning'); setTimeout(function () { button.classList.remove('spinning'); }, 650); }
-    rerender();
-    usageEvent('view.usage.projection_refreshed', { room: state.room, range: state.range });
-    toast(t('toast.refreshed'));
+    var button = document.getElementById('pmuRefresh'), LD = window.PM_PIP_LOADER;
+    if (button && LD) LD.busy(button, true, { motion: LD.motion('short'), px: 16 });
+    refreshOut = true;
+    setTimeout(function () {
+      refreshOut = false;
+      if (button && LD) LD.busy(button, false);
+      rerender();
+      usageEvent('view.usage.projection_refreshed', { room: state.room, range: state.range });
+      toast(t('toast.refreshed'));
+    }, 650);
   },
   spinRefresh: function () { this.refresh(); },
   exportJson: usageExportJson,
@@ -117120,6 +117030,10 @@ PM51.mark = (key, tone) => `<span class="pm-status-mark" data-status="${a(key)}"
    PM51.pill keeps its name so every manager converts without edits. */
 PM51.status = (label, tone) => { const t = tone || PM51.tone(label); return `<span class="pm51-status tone-${a(t)}">${PM51.mark(PM51.statusKey(label, t), t)}<span>${h(label)}</span></span>`; };
 PM51.pill = PM51.status;
+/* A state that is a wait the person watches, in a single subject's header (a server's detail while it connects): the
+   status token with the system loader in its slot instead of a mark (W5, DR-077; window.PM_PIP_LOADER), aria-busy on the
+   token. The same word in a list row stays a status mark (PM51.status): an item's state there is not a loader (L1). */
+PM51.waiting = (label, motion) => { const LD = window.PM_PIP_LOADER; if (!LD) return PM51.status(label, 'info'); return `<span class="pm51-status tone-info pm51-waiting" aria-busy="true">${LD.html({ motion: motion || 'swing', px: 14 })}<span>${h(label)}</span></span>`; };
 PM51.statusPill = status => PM51.status(PM51.plain(status));
 PM51.tag = (label, { icon: ic } = {}) => `<span class="pm51-tag">${ic ? icon(ic) : ''}${h(label)}</span>`;
 PM51.kbd = key => `<kbd class="pm51-kbd">${h(key)}</kbd>`;
@@ -117128,10 +117042,16 @@ PM51.dot = (tone, label) => { const t = String(tone || ''); const cls = { ready:
 /* ---------- primitives -------------------------------------------------- */
 const dataAttrs = data => Object.entries(data || {}).map(([k, v]) => `data-${a(k)}="${a(v == null ? '' : v)}"`).join(' ');
 
-PM51.btn = ({ label, action, data, icon: ic, primary, small, ghost, danger, disabled, reason, ui, cls, title, callback }) => {
-  const dis = disabled ? `aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(reason || 'Not available in this concept preview.')}" data-pm-hover-label="${a(label || '')}" data-pm-hover-detail="${a(reason || 'Not available in this concept preview.')}"` : '';
+/* busy (true, or a motion name): the button is waiting on what it started. It holds the system loader in its icon's
+   place at the icon's size (W5, DR-077; window.PM_PIP_LOADER), says aria-busy, and stays unavailable with its reason
+   until the wait ends, without the disabled dimming; the manager draws it again un-busy when the result is in. */
+PM51.btn = ({ label, action, data, icon: ic, primary, small, ghost, danger, disabled, reason, ui, cls, title, callback, busy }) => {
+  const LD = busy ? window.PM_PIP_LOADER : null;
+  if (busy) { disabled = true; reason = reason || 'Still working on it.'; }
+  const dis = disabled ? `aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(reason || 'Not available in this concept preview.')}" data-pm-hover-label="${a(label || '')}" data-pm-hover-detail="${a(reason || 'Not available in this concept preview.')}"${busy ? ' aria-busy="true" data-pm51-busy="1"' : ''}` : '';
   const act = disabled ? 'data-action="pm51-disabled"' : (callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`);
-  return `<button type="button" class="btn pm51-btn${primary ? ' primary' : ''}${small ? ' small' : ''}${ghost ? ' ghost' : ''}${danger ? ' danger' : ''}${cls ? ' ' + cls : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} ${dis} ${title ? `title="${a(title)}"` : ''}>${ic ? icon(ic) : ''}${label ? `<span>${h(label)}</span>` : ''}</button>`;
+  const lead = LD ? LD.html({ motion: typeof busy === 'string' ? busy : 'swing', px: 14 }) : (ic ? icon(ic) : '');
+  return `<button type="button" class="btn pm51-btn${primary ? ' primary' : ''}${small ? ' small' : ''}${ghost ? ' ghost' : ''}${danger ? ' danger' : ''}${cls ? ' ' + cls : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} ${dis} ${title ? `title="${a(title)}"` : ''}>${lead}${label ? `<span>${h(label)}</span>` : ''}</button>`;
 };
 PM51.iconBtn = ({ action, data, icon: ic, label, cls, callback, ui, disabled, reason }) => {
   const act = disabled ? 'data-action="pm51-disabled"' : (callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`);
@@ -117609,6 +117529,24 @@ openDrawer = function ({ title, subtitle = '', pill = '', status = null, eyebrow
   return wrap;
 };
 PM51.panel = opts => openDrawer(opts);
+/* A button already on screen that now waits on what it started (a drawer's primary while a sign-in finishes): the
+   system loader at its start (W5; window.PM_PIP_LOADER.busy), aria-busy, unavailable until it ends, optional words
+   for the wait; off puts its words back. */
+PM51.waitOn = (btn, on, label) => {
+  if (!btn) return;
+  const LD = window.PM_PIP_LOADER;
+  if (on) {
+    if (btn.dataset.pm51Busy === '1') return;
+    btn._pm51Words = btn.innerHTML;
+    if (label) btn.textContent = label;
+    btn.setAttribute('aria-disabled', 'true'); btn.dataset.pm51Busy = '1'; btn.dataset.pm51Disabled = '1'; btn.dataset.disabledReason = 'Still waiting.';
+    if (LD) LD.busy(btn, true, { motion: 'swing', px: 14 }); else btn.setAttribute('aria-busy', 'true');
+    return;
+  }
+  if (LD) LD.busy(btn, false); else btn.removeAttribute('aria-busy');
+  if (btn._pm51Words != null) { btn.innerHTML = btn._pm51Words; btn._pm51Words = null; }
+  btn.removeAttribute('aria-disabled'); delete btn.dataset.pm51Busy; delete btn.dataset.pm51Disabled; delete btn.dataset.disabledReason;
+};
 PM51.panelSection = (title, body, help, { icon: ic, tone } = {}) => `<section class="pm51-panel-card pm51-panel-section${tone ? ' tone-' + a(tone) : ''}"><div class="pm51-pc-head">${ic ? `<span class="pm51-pc-icon">${icon(ic)}</span>` : ''}<div class="pm51-ps-title">${h(title)}</div></div>${help ? `<p class="pm51-ps-help">${h(help)}</p>` : ''}<div class="pm51-pc-body">${body}</div></section>`;
 PM51.menu = (anchor, items, title) => openMenu(anchor, items, title || '');
 PM51.confirm = (title, message, label, onConfirm, danger) => confirmDialog(title, message, label, onConfirm, !!danger);
@@ -125171,9 +125109,12 @@ PM51.bound = {
     const s = PM51.setting(id); if (!s) return '';
     return `<label class="o55-bound o55-bound-search" data-setting-id="${a(id)}">${icon('search')}<input type="search" value="${a(settingValue(s) || '')}" placeholder="${a(placeholder || 'Search')}" aria-label="${a(label || PM51.rowLabel(s))}" data-action="input-setting" data-setting="${a(id)}"/></label>`;
   },
-  action(id, { label, icon: ic, small = true, primary, ghost } = {}) {
+  /* busy: the action is running; the button holds the system loader and stays unavailable, as PM51.btn's busy does */
+  action(id, { label, icon: ic, small = true, primary, ghost, busy, reason } = {}) {
     const s = PM51.setting(id); if (!s) return '';
-    return `<button type="button" class="btn${small ? ' small' : ''}${primary ? ' primary' : ''}${ghost ? ' ghost' : ''} pm51-btn o55-bound" data-setting-id="${a(id)}" data-action="run-setting-action" data-setting="${a(id)}">${ic ? icon(ic) : ''}<span>${h(label || (PM51.rowMeta(id).actionLabel) || PM51.rowLabel(s))}</span></button>`;
+    const LD = busy ? window.PM_PIP_LOADER : null;
+    const wait = busy ? ` aria-disabled="true" aria-busy="true" data-pm51-busy="1" data-pm51-disabled="1" data-disabled-reason="${a(reason || 'Still working on it.')}"` : '';
+    return `<button type="button" class="btn${small ? ' small' : ''}${primary ? ' primary' : ''}${ghost ? ' ghost' : ''} pm51-btn o55-bound" data-setting-id="${a(id)}" data-action="${busy ? 'pm51-disabled' : 'run-setting-action'}" data-setting="${a(id)}"${wait}>${LD ? LD.html({ motion: typeof busy === 'string' ? busy : 'swing', px: 14 }) : ic ? icon(ic) : ''}<span>${h(label || (PM51.rowMeta(id).actionLabel) || PM51.rowLabel(s))}</span></button>`;
   },
   /* an ordinary row, drawn inside a manager card (e.g. inside an account or a skill) */
   row(id, { label, help } = {}) {
@@ -128092,7 +128033,14 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
         { title: 'Approve Puppet Master', desc: 'You choose what it may use.' },
         { title: 'Come back here', desc: 'The account appears under Accounts.' }
       ])) + PM51.note('Your password never passes through Puppet Master.'),
-      primaryLabel: 'Open browser sign-in', onPrimary: () => example('Sign-in requested', `Example data only. No browser was opened for ${service} in this preview.`)
+      /* the sign-in is a wait (W5): the button holds the system loader while the browser window would be open; this
+         preview opens none, so the wait ends after a moment and says so */
+      primaryLabel: 'Open browser sign-in', onPrimary: wrap => {
+        const btn = wrap.querySelector('.btn.primary[data-callback]');
+        PM51.waitOn(btn, true, 'Waiting for the browser…');
+        window.setTimeout(() => { if (!wrap.isConnected) return; PM51.waitOn(btn, false); closeDrawerWrap(wrap); example('Sign-in requested', `Example data only. No browser was opened for ${service} in this preview.`); }, 1400);
+        return false;
+      }
     });
   }
   function signInPanel(p, key, label) {
@@ -134741,6 +134689,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
 }
 `);
   const refresh = () => { saveState(); PM51.refresh(ID, { swap: false }); };
+  const testing = new Set();   // servers whose Check this server is waiting for the answer (W5)
   const fingerprint = s => { let x = 0; for (const c of String(s.id + s.address)) x = (x * 31 + c.charCodeAt(0)) >>> 0; return 'SHA256:' + x.toString(16).padStart(8, '0').toUpperCase() + '…' + (x * 7 >>> 0).toString(16).slice(0, 6).toUpperCase(); };
   const runOptions = () => {
     const opts = [['Automatic', 'Automatic (Home server)']];
@@ -135260,7 +135209,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       PM51.section({ title: 'Claim and bootstrap', body: PM51.kv([['Claimed', isClaimed(srv) ? 'Yes · identity confirmed' : 'Not yet'], ['Identity', fingerprint(srv)], ['Trust', isClaimed(srv) ? 'Owner' : 'None until claimed'], ['Bootstrap', srv.role === 'This computer' ? 'Installed with the app' : 'Claimed from an existing install']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${PM51.btn({ label: 'Claim this server', small: true, icon: 'lock', action: 'pm51-servers-claim', data: { id: srv.id }, disabled: isClaimed(srv), reason: 'This server is already yours.' })}${PM51.btn({ label: 'Set up a new server', small: true, icon: 'plus', action: 'pm51-servers-add' })}</div>` }),
       PM51.section({ title: 'Deployment', body: PM51.kv([['How it runs', srv.deployment || 'Unknown'], ['Image', /container/i.test(srv.deployment || '') ? 'puppetmaster/server:0.8.0' : 'Not a container'], ['Environments', (srv.environments || []).join(' · ') || 'None reported']]) }),
       PM51.section({ title: 'Full server backup', help: 'Backs up everything on this server, not just this workspace.', body: PM51.rows([{ label: 'Whole-server backup', help: 'Set up and run from Backup & Restore.', action: { label: 'Open Backup & Restore', action: 'pm51-go', data: { domain: 'system', workspace: 'backup' }, icon: 'arrowRight' } }]) }),
-      PM51.section({ title: 'Host and environment details', body: `<div class="pm51-servers-actions">${PM51.btn({ label: 'Check this server', small: true, icon: 'test', action: 'pm51-servers-test', data: { id: srv.id } })}${PM51.btn({ label: 'Add another server', small: true, icon: 'plus', action: 'pm51-servers-add' })}</div>` }),
+      PM51.section({ title: 'Host and environment details', body: `<div class="pm51-servers-actions">${PM51.btn({ label: testing.has(srv.id) ? 'Checking…' : 'Check this server', small: true, icon: 'test', action: 'pm51-servers-test', data: { id: srv.id }, busy: testing.has(srv.id), reason: 'Already checking this server.' })}${PM51.btn({ label: 'Add another server', small: true, icon: 'plus', action: 'pm51-servers-add' })}</div>` }),
       PM51.section({ title: 'Topology diagnostics', body: PM51.kv([['Servers', String(S.servers.length)], ['Devices', String(S.devices.length)], ['Routes ready', String(readyRoutes().length)]]) + `<div style="margin-top:10px"></div>` })
     ].join(''));
     return PM51.listDetail({
@@ -135268,7 +135217,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       add: { action: 'pm51-servers-add', label: 'Add a server', data: { 'command-id': 'cmd.server.claim' } },
       items,
       detail: {
-        title: srv.name, subtitle: `${srv.role} · ${srv.address}`, pill: PM51.status(srv.state),
+        title: srv.name, subtitle: `${srv.role} · ${srv.address}`, pill: srv.state === 'Checking' ? PM51.waiting('Checking') : PM51.status(srv.state),
         primary: { label: 'Open web UI', icon: 'external', action: 'pm51-servers-webui', data: { id: srv.id } },
         menu: anchor => PM51.menu(anchor, [
           { label: 'Connect', icon: 'network', disabled: srv.state === 'Connected', meta: srv.state === 'Connected' ? 'Already connected' : '', onClick: () => { srv.state = 'Checking'; refresh(); setTimeout(() => { srv.state = 'Needs attention'; srv.lastCheck = 'Just now'; refresh(); PM51.toast('Could not confirm the connection', 'Example data only. Run Test connection to see what was checked.', 'info'); }, 600); } },
@@ -135322,7 +135271,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     const data = { id: r.id };
     if (r.status === 'not-set-up') return PM51.btn({ label: r.setupLabel || 'Set Up', small: true, primary: !!r.recommended, action: 'pm51-servers-remote', data });
     if (r.status === 'needs-sign-in') return PM51.btn({ label: r.kind === 'remote-link' ? 'Continue pairing' : 'Continue sign-in', small: true, primary: true, action: 'pm51-servers-remote', data });
-    if (r.status === 'testing') return PM51.btn({ label: 'Check route', small: true, icon: 'test', action: 'pm51-servers-route-check', data, disabled: true, reason: 'A check is already running.' });
+    if (r.status === 'testing') return PM51.btn({ label: 'Checking…', small: true, icon: 'test', action: 'pm51-servers-route-check', data, busy: true, reason: 'A check is already running.' });
     if (r.status === 'ready' || r.status === 'needs-attention' || r.status === 'offline') return PM51.btn({ label: 'Check route', small: true, icon: 'test', action: 'pm51-servers-route-check', data });
     return PM51.btn({ label: 'Manage', small: true, action: 'pm51-servers-remote', data });
   }
@@ -135719,15 +135668,22 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     if (s.default) { PM51.toast('One server must be the default', 'Turn this on for another server instead.', 'info'); return; }
     S.servers.forEach(x => { x.default = x.id === s.id; }); refresh();
   });
+  /* Check this server waits for the server's answer before it reports (W5): its button holds the system loader for the
+     fixture's 700 ms, like the route check's, then the result opens. The button waits in place (PM51.waitOn), so the
+     Advanced section it sits in stays open; testing keeps it busy if the page is drawn again meanwhile. */
   PM51.on('servers-test', el => {
-    const s = serverById(ds(el, 'id')); if (!s) return;
+    const id = ds(el, 'id'); if (!serverById(id) || testing.has(id)) return;
+    testing.add(id); PM51.waitOn(el, true, 'Checking…');
+    setTimeout(() => { testing.delete(id); if (el && el.isConnected) PM51.waitOn(el, false); else refresh(); const s = serverById(id); if (s) reportServerCheck(s); }, 700);
+  });
+  function reportServerCheck(s) {
     PM51.check({ title: `Test connection · ${s.name}`, steps: [
       { title: 'Address resolves', desc: s.address },
       { title: 'Server answers', desc: 'Puppet Master service' },
       { title: 'Identity matches', desc: fingerprint(s) },
       { title: 'Version compatible', desc: s.version === '—' ? 'Unknown until claimed' : s.version, tone: s.version === '—' ? 'attention' : 'ready', status: s.version === '—' ? 'Unknown' : 'Checked' }
     ] });
-  });
+  }
   PM51.on('servers-claim-identity', el => {
     const s = serverById(ds(el, 'id')); if (!s) return;
     openDialog({ title: 'Confirm identity', subtitle: `Compare this fingerprint with the one shown on ${s.name}. They must match exactly.`, body: `<div class="pm51-servers-conf">${h(fingerprint(s))}</div>`, saveLabel: 'They match', onSave: () => { s.claimSteps = Object.assign({}, s.claimSteps, { identity: true }); refresh(); } });
@@ -137461,6 +137417,8 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
   PM51.style(`
 #panel-settings .pm51-doctor-row.is-focus { background: rgba(var(--accent-primary-rgb), .08); border-radius: 8px; margin: 0 -8px; padding-left: 8px; padding-right: 8px; }
 #panel-settings .pm51-doctor-checked { font-size: 11.5px; color: var(--k3-text-3); white-space: nowrap; }
+#panel-settings .pm51-doctor-wait { display: inline-flex; align-items: center; }
+#panel-settings .pm51-doctor-wait > .pml-ld { --pml-size: 14px; }
 #panel-settings .pm51-doctor-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 #panel-settings .pm51-doctor-evidence { margin-top: 10px; }
 `);
@@ -137494,10 +137452,17 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     setTimeout(() => { const again = groups().find(x => x.id === gid); if (!again) return; again.findings.forEach((f, i) => { f.state = prior[i]; f.checked = 'just now'; }); again.checking = false; PM51.s().doctorLastCheck = `${nowLabel()} · ${again.title}`; refresh(); if (done) done(); }, 700);
   }
 
+  /* Waiting (W5): one loader per wait, on what started it. A group's check is its busy Check Again button; Check
+     everything is its own busy button and the groups it walks read Checking without a loader of their own; a finding
+     re-checked by itself (the return from a fix) holds the loader where its Fix button stands. A finding's status word
+     and mark stay its state. */
+  let checkingAll = false;
+  const waitMark = () => window.PM_PIP_LOADER ? `<span class="pm51-doctor-wait" aria-hidden="true">${window.PM_PIP_LOADER.html({ motion: 'swing', px: 14 })}</span>` : '';
   function findingRow(g, f) {
     const focus = !!(PM51.s().doctorReturn && PM51.s().doctorReturn.gid === g.id && PM51.s().doctorReturn.fid === f.id && returnArmed);
     const fix = f.fix && f.state !== 'Checking' && f.state !== 'Ready' ? PM51.btn({ label: f.fix, small: true, action: 'pm51-doctor-fix', data: { gid: g.id, fid: f.id } }) : (f.fix && f.state === 'Ready' && g.id === 'updates' ? PM51.btn({ label: f.fix, small: true, action: 'pm51-doctor-fix', data: { gid: g.id, fid: f.id } }) : '');
-    return { label: PM51.serviceText(f.title), pill: PM51.pill(f.state, tone(f.state)), id: `${g.id}:${f.id}`, cls: `pm51-doctor-row${focus ? ' is-focus' : ''}`, control: `<span class="pm51-doctor-checked">checked ${h(f.checked)}</span>${fix}${PM51.iconBtn({ icon: 'chevron', label: `Open ${f.title}`, action: 'pm51-doctor-open', data: { gid: g.id, fid: f.id } })}` };
+    const wait = f.state === 'Checking' && !g.checking ? waitMark() : '';
+    return { label: PM51.serviceText(f.title), pill: PM51.pill(f.state, tone(f.state)), id: `${g.id}:${f.id}`, cls: `pm51-doctor-row${focus ? ' is-focus' : ''}`, control: `<span class="pm51-doctor-checked">checked ${h(f.checked)}</span>${wait}${fix}${PM51.iconBtn({ icon: 'chevron', label: `Open ${f.title}`, action: 'pm51-doctor-open', data: { gid: g.id, fid: f.id } })}` };
   }
 
   function render() {
@@ -137510,7 +137475,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     ]);
     const sections = groups().map(g => PM51.section({
       title: g.title, help: g.help,
-      action: { label: g.checking ? 'Checking…' : 'Check Again', icon: 'refresh', small: true, action: 'pm51-doctor-check', data: { gid: g.id }, disabled: !!g.checking, reason: 'A check is already running for this group.' },
+      action: { label: g.checking ? 'Checking…' : 'Check Again', icon: 'refresh', small: true, action: 'pm51-doctor-check', data: { gid: g.id }, disabled: !!g.checking || checkingAll, busy: !!g.checking && !checkingAll, reason: checkingAll ? 'Check everything is running.' : 'A check is already running for this group.' },
       body: PM51.rows(g.findings.map(f => findingRow(g, f)))
     })).join('');
     const S = PM51.s();
@@ -137518,7 +137483,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       PM51.section({ title: 'Cached summary', body: PM51.kv([['Last check', S.doctorLastCheck || 'Loaded from cache · 2 min ago'], ['Findings cached', String(allFindings().length)], ['Oldest result', '2 h ago (Code & Version History)'], ['Cache age limit', 'Results older than a day are marked for a re-check']]) + `<div class="pm51-doctor-actions" style="margin-top:10px">${PM51.btn({ label: 'Copy support details', small: true, icon: 'copy', action: 'pm51-doctor-copy' })}</div>` })
     ].join(''));
     /* The last checkup is a dated snapshot, not a promise; "Check everything" is the inventory's own action. */
-    const summary = `<div class="o55-toolbar o55-doctor-summary">${PM51.home('system.health.doctor-summary', `<span class="o55-doctor-last">${PM51.status(`Last checkup: ${c.Unavailable && !c.Ready ? 'Blocked' : c['Needs attention'] || c.Unavailable ? 'Ready with warnings' : 'Ready'}`, c['Needs attention'] || c.Unavailable ? 'attention' : 'ready')}<small>${h(S.doctorLastCheck || '2 min ago')}</small></span>`, 'span')}<span class="o55-toolbar-spacer"></span>${PM51.bound.action('system.health.run-doctor', { label: 'Check everything', icon: 'refresh' })}</div>`;
+    const summary = `<div class="o55-toolbar o55-doctor-summary">${PM51.home('system.health.doctor-summary', `<span class="o55-doctor-last">${PM51.status(`Last checkup: ${c.Unavailable && !c.Ready ? 'Blocked' : c['Needs attention'] || c.Unavailable ? 'Ready with warnings' : 'Ready'}`, c['Needs attention'] || c.Unavailable ? 'attention' : 'ready')}<small>${h(S.doctorLastCheck || '2 min ago')}</small></span>`, 'span')}<span class="o55-toolbar-spacer"></span>${PM51.bound.action('system.health.run-doctor', { label: checkingAll ? 'Checking…' : 'Check everything', icon: 'refresh', busy: checkingAll, reason: 'Every group is being checked.' })}</div>`;
     scheduleReturn();
     return PM51.page({ id: ID, key: KEY, body: summary + stats + sections + advanced, quiet: [
       { label: 'Export report', action: 'pm51-doctor-export' }
@@ -137584,8 +137549,10 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
   /* ---------- actions ------------------------------------------------------ */
   PM51.on('doctor-check', el => recheckGroup(ds(el, 'gid')));
   PM51.on('doctor-check-all', () => {
+    if (checkingAll) return;
     const ids = groups().map(g => g.id); let i = 0;
-    const next = () => { if (i >= ids.length) { PM51.s().doctorLastCheck = `${nowLabel()} · all groups`; refresh(); PM51.toast('All checks finished', 'Example data only. Every group was re-read from the cache.', 'info'); return; } recheckGroup(ids[i++], next); };
+    checkingAll = true;
+    const next = () => { if (i >= ids.length) { checkingAll = false; PM51.s().doctorLastCheck = `${nowLabel()} · all groups`; refresh(); PM51.toast('All checks finished', 'Example data only. Every group was re-read from the cache.', 'info'); return; } recheckGroup(ids[i++], next); };
     next();
   });
   PM51.on('doctor-open', el => findingPanel(ds(el, 'gid'), ds(el, 'fid')));
@@ -137615,6 +137582,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
 
   const up = () => { if (!state.updates) state.updates = { automatic: true, channel: 'Stable', source: 'GitHub Releases', checkInterval: 'On open and hourly', currentVersion: '0.8.0-dev', availableVersion: '0.8.1', lastCheck: '7 minutes ago', history: [] }; return state.updates; };
   const ux = () => PM51.s().updates;
+  let checking = false, catalogsOut = false;   // Check now / Refresh catalogs are waiting for their lists
   const refresh = () => { saveState(); PM51.refresh(ID, { swap: false }); };
   const hasUpdate = () => { const U = up(); return !!U.availableVersion && U.availableVersion !== U.currentVersion; };
   const servers = () => (PM51.s().serverProject && PM51.s().serverProject.servers) || [];
@@ -137626,7 +137594,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     const U = up(), X = ux();
     const app = PM51.section({
       title: 'Puppet Master', help: hasUpdate() ? `${U.availableVersion} is ready to install.` : 'You are on the latest version.',
-      action: { label: 'Check now', icon: 'refresh', action: 'pm51-updates-check', data: { 'command-id': 'cmd.update.app.check' } },
+      action: { label: checking ? 'Checking…' : 'Check now', icon: 'refresh', action: 'pm51-updates-check', data: { 'command-id': 'cmd.update.app.check' }, busy: checking, reason: 'Already checking for updates.' },
       body: PM51.rows([
         { label: 'Look for updates automatically', help: 'You can still check at any time.', control: PM51.bound.toggle('system.advanced.auto-update') },
         autoOn() ? { label: 'Also install on its own when idle', help: 'Otherwise you are asked before anything installs.', control: PM51.toggle(!!U.automatic, { action: 'pm51-updates-auto', data: { 'command-id': 'cmd.update.app.automatic.set_enabled' }, label: 'Also install on its own when idle' }) } : null,
@@ -137638,7 +137606,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     });
     const catalogs = PM51.section({
       title: 'Content and catalogs', help: 'Lists the app keeps fresh, like templates, personas and the models each service offers.',
-      action: { label: 'Refresh catalogs', icon: 'refresh', small: true, action: 'pm51-updates-catalogs' },
+      action: { label: catalogsOut ? 'Refreshing…' : 'Refresh catalogs', icon: 'refresh', small: true, action: 'pm51-updates-catalogs', busy: catalogsOut, reason: 'Already refreshing the catalogs.' },
       body: PM51.bound.rows(['system.advanced.catalog-updates']) + PM51.rows((X.catalogs || []).map(([name, status]) => ({ label: name, value: catalogsOn() ? status : 'Not kept up to date', pill: catalogsOn() ? PM51.pill(status.split(' · ')[0]) : PM51.pill('Off', 'off') })))
     });
     const history = PM51.section({
@@ -137680,14 +137648,22 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
   }
 
   /* ---------- actions ------------------------------------------------------ */
-  PM51.on('updates-check', () => {
+  /* Check now waits for the release list before it reports (W5): the button holds the system loader for the fixture's
+     700 ms, as Doctor's checks do, then the result opens. It waits in place (PM51.waitOn), so nothing else on the page
+     is drawn again; checking keeps it busy if the page is. */
+  PM51.on('updates-check', el => {
+    if (checking) return;
+    checking = true; PM51.waitOn(el, true, 'Checking…');
+    setTimeout(() => { checking = false; reportCheck(); }, 700);
+  });
+  function reportCheck() {
     const U = up(); U.lastCheck = 'Just now'; refresh();
     PM51.check({ title: 'Check for updates', outcome: hasUpdate() ? `${U.availableVersion} available · example data` : 'Up to date · example data', steps: [
       { title: 'Release list read', desc: `${U.source} · ${PM51.valueLabel('system.advanced.release-channel', PM51.value('system.advanced.release-channel'))}` },
       { title: 'Compared with the installed version', desc: `${U.currentVersion} installed${hasUpdate() ? `, ${U.availableVersion} available` : ''}` },
       { title: 'Signature checked', desc: hasUpdate() ? U.availableVersion : 'Nothing new to check' }
     ] });
-  });
+  }
   PM51.on('updates-auto', () => { const U = up(); U.automatic = !U.automatic; refresh(); });
   PM51.on('updates-install', () => {
     const U = up(); if (!hasUpdate()) return;
@@ -137704,9 +137680,14 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       ])) + PM51.note('This is a concept preview. Nothing was installed or restarted.', 'info') });
     } });
   });
-  PM51.on('updates-catalogs', () => {
-    const X = ux(); PM51.check({ title: 'Refresh catalogs', outcome: 'Current · example data', steps: (X.catalogs || []).map(([name, status]) => ({ title: name, desc: status })) });
+  PM51.on('updates-catalogs', el => {
+    if (catalogsOut) return;
+    catalogsOut = true; PM51.waitOn(el, true, 'Refreshing…');
+    setTimeout(() => { catalogsOut = false; if (el && el.isConnected) PM51.waitOn(el, false); else refresh(); reportCatalogs(); }, 700);
   });
+  function reportCatalogs() {
+    const X = ux(); PM51.check({ title: 'Refresh catalogs', outcome: 'Current · example data', steps: (X.catalogs || []).map(([name, status]) => ({ title: name, desc: status })) });
+  }
   PM51.on('updates-rollback', el => rollback(Number(ds(el, 'index'))));
   PM51.on('updates-details', el => detailsPanel(Number(ds(el, 'index'))));
   PM51.onChange('updates-restart', el => { up().restartPolicy = el.value; saveState(); });
@@ -147760,12 +147741,14 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
   reg('proj.refresh', function () {
     if (refreshing) { say('Unavailable: busy — a rescan is already running.'); return; }
     refreshing = true;
+    /* the wait is the system loader in the icon's place (W5, DR-077; PM_PIP_LOADER): Hop, a short wait that ends with
+       the list rescanned (L5); aria-busy on the button while it lasts */
     var btn = $('#pm6-proj-refresh');
-    var ico = btn && btn.querySelector('.pm6-ico');
-    if (ico) ico.classList.add('pm6-spin');
+    var LD = window.PM_PIP_LOADER;
+    if (btn && LD) LD.busy(btn, true, { motion: LD.motion('short'), px: 14 });
     setTimeout(function () {
       refreshing = false;
-      if (ico) ico.classList.remove('pm6-spin');
+      if (btn && LD) LD.busy(btn, false);
       var total = $all('.pm6-proj-card').length;
       var broken = $all('.pm6-proj-card[data-health="error"]').length;
       say('Rescanned ' + total + ' project' + (total === 1 ? '' : 's') + ' — ' +
@@ -196179,11 +196162,28 @@ frames.tiles = function (items) {
   return g;
 };
 
+/* The system loader (W5, DR-077; window.PM_PIP_LOADER, glyph-system src/logo/pm-loader.js) as one element, drawn by its
+   owner, for an indeterminate wait: o = { motion: 'swing' | 'think' | 'hop' (by context, never a setting, L5), px: the
+   size the host shows it at }. Null without the owner, so a caller just goes without. The drawing is aria-hidden; the
+   host says it waits (aria-busy, or its own words in a role=status). An item's state in a row or a tab stays the
+   working status mark (L1). */
+PMW.loader = function (o) {
+  var LD = window.PM_PIP_LOADER;
+  if (!LD) return null;
+  var t = doc.createElement('template');
+  t.innerHTML = LD.html(o || {});
+  return t.content.firstElementChild;
+};
+
+/* b.busy (true, or a motion name): the button's own wait, the loader in its icon's place at the icon's size (14 px) and
+   aria-busy on the button */
 frames.button = function (b) {
   var el = h('button', { type: 'button', class: 'pmw-act' + (b.primary ? ' is-primary' : '') + (b.danger ? ' is-danger' : ''), 'data-pmh': 'icon',
     'data-pm-hover-label': b.label, 'data-pm-hover-detail': b.detail || '', 'data-id': b.id != null ? String(b.id) : null });
   if (b.pressed != null) el.setAttribute('aria-pressed', b.pressed ? 'true' : 'false');
-  if (b.icon) el.appendChild(icon(b.icon, { size: 14 }));
+  var ld = b.busy ? PMW.loader({ motion: typeof b.busy === 'string' ? b.busy : 'swing', px: 14 }) : null;
+  if (ld) { el.setAttribute('aria-busy', 'true'); el.appendChild(ld); }
+  else if (b.icon) el.appendChild(icon(b.icon, { size: 14 }));
   el.appendChild(h('span', { text: b.label }));
   if (b.disabled) { el.setAttribute('aria-disabled', 'true'); if (b.reason) el.setAttribute('data-disabled-reason', b.reason); }
   if (b.menu) el.setAttribute('aria-haspopup', 'menu');
@@ -198035,21 +198035,28 @@ function updateTab(el, rec, p, l) {
   var k = kindDef(rec.kind);
   var iconName = tabIcon(rec);
   if (ico._name !== iconName) { ico.textContent = ''; ico.appendChild(kindIcon(iconName)); ico._name = iconName; }
-  // marks: failed command's exit code (D12), agent mark
+  // marks: failed command's exit code (D12), agent mark, and the working mark of a busy tab (data-busy). A busy tab's
+  // state is the shared working status mark, never the loader (L1: the loader is for the wait inside the tab): lit and
+  // still with its one act as it appears (nx-still, F3-658), shown only while the tab is not the one on screen (F3-631)
+  // and only when no failed exit or driving agent outranks it in the one mark slot
   var mark = el.querySelector('.pmw-tmark');
   var markText = rec.exitCode != null && rec.exitCode !== 0 ? exitWords(rec.exitCode) : '';
-  setAttr(mark, 'hidden', !markText && !rec.agent);
-  if (mark._t !== markText + '|' + (rec.agent || '')) {
+  var working = !!rec.busy && !active && !markText && !rec.agent && !!(window.PMG && window.PMG.status);
+  var markKey = markText + '|' + (rec.agent || '') + '|' + (working ? 'working' : '');
+  setAttr(mark, 'hidden', !markText && !rec.agent && !working);
+  if (mark._t !== markKey) {
     mark.textContent = '';
     if (rec.agent) mark.appendChild(h('i', { class: 'pmw-agentmark', 'aria-hidden': 'true' }));
     if (markText) mark.appendChild(h('span', { class: 'pmw-exit', text: markText }));
-    mark._t = markText + '|' + (rec.agent || '');
+    if (working) mark.appendChild(h('span', { class: 'pmw-tbusy', 'aria-hidden': 'true', html: window.PMG.status('working', 12, 'nx-still') }));
+    mark._t = markKey;
   }
   var desc = [];
   if (rec.preview) desc.push('preview');
   if (rec.dirty) desc.push('unsaved changes');
   if (rec.pinned) desc.push('pinned');
   if (rec.attention) desc.push('new');
+  if (rec.busy) desc.push('working');
   if (markText) desc.push('last command failed with exit code ' + rec.exitCode);
   if (rec.agent) desc.push(rec.agent + ' is driving it');
   el.setAttribute('aria-label', label + (desc.length ? ', ' + desc.join(', ') : ''));
@@ -211278,6 +211285,13 @@ function mountBrowser(host, st, api) {
     show({ busy: true, reload: true });
     api.announce('Reloaded ' + (page ? page.title : 'the page'));
   }
+  function paintAddrIcon() {
+    var name = S.session === 'protected' || /^https:/i.test(S.url) ? 'lock' : 'browser';
+    if (addrIcon._name === name && !addrIcon.querySelector('.pml-ld')) return;
+    addrIcon.textContent = '';
+    addrIcon.appendChild(ico(name, 13));
+    addrIcon._name = name;
+  }
   function show(o) {
     o = o || {};
     disarm();
@@ -211295,15 +211309,17 @@ function mountBrowser(host, st, api) {
     viewport.scrollTop = 0;
     viewport.setAttribute('aria-label', 'Page: ' + page.title);
     addrIn.value = S.url;
-    addrIcon.textContent = '';
-    addrIcon.appendChild(ico(S.session === 'protected' || /^https:/i.test(S.url) ? 'lock' : 'browser', 13));
+    paintAddrIcon();
     setAttr(backBtn, 'aria-disabled', S.hIndex <= 0 ? 'true' : null);
     setAttr(fwdBtn, 'aria-disabled', S.hIndex >= S.history.length - 1 ? 'true' : null);
     var label = /^link:/.test(api.id) && S.history.length === 1 ? (linkTitle(api.id, st) || page.title) : (page.label || page.title);
     api.update({ label: label, title: page.title + ' · ' + shortUrl(S.url), busy: !!o.busy });
+    /* the page's wait: the system loader in the address field's icon place (W5; Hop, a short wait that ends with the
+       page shown, L5) and aria-busy on the page until it ends; the fixture's 320 ms wait, none under Reduced Motion */
     if (o.busy) {
-      view.classList.add('is-loading');
-      var t = setTimeout(function () { view.classList.remove('is-loading'); api.update({ busy: false }); }, PMW.reduced() ? 0 : 320);
+      var ld = PMW.reduced() ? null : PMW.loader({ motion: 'hop', px: 13 });
+      if (ld) { addrIcon.textContent = ''; addrIcon.appendChild(ld); view.setAttribute('aria-busy', 'true'); }
+      var t = setTimeout(function () { view.removeAttribute('aria-busy'); paintAddrIcon(); api.update({ busy: false }); }, PMW.reduced() ? 0 : 320);
       timers.push(t);
     }
     if (o.reload && PMW.motion) PMW.motion.animate(viewport, [{ opacity: 0.35 }, { opacity: 1 }], { dur: 220 });
@@ -214952,10 +214968,10 @@ function mountPlan(host, state, api) {
     var blocked = !!plan.blocked && live.status === 'ready';
     var canBuild = live.status === 'ready' && !old && !blocked;
     var reason = old ? 'Build uses the current version, V' + plan.version : blocked ? 'Answer the open items first' : live.status === 'building' ? 'The build is running' : live.status === 'completed' ? 'This plan was built' : live.status === 'canceled' ? 'This plan was canceled' : '';
-    var build = PMW.frames.button({ label: buildLabel(), primary: canBuild, disabled: !canBuild, reason: reason, detail: canBuild ? 'Start the steps in order' : reason, run: startBuild });
+    // while it builds, the button's wait is the system loader (frames.button busy), not a pulsing dot of its own
+    var build = PMW.frames.button({ label: buildLabel(), primary: canBuild, disabled: !canBuild, reason: reason, detail: canBuild ? 'Start the steps in order' : reason, run: startBuild, busy: live.status === 'building' });
     build.classList.add('pmw-plan-build', 'is-' + live.status);
     build.setAttribute('data-k', 'build');
-    if (live.status === 'building') build.appendChild(h('span', { class: 'pmw-plan-busy', 'aria-hidden': 'true' }));
     foot.appendChild(build);
     if (live.status === 'ready' || live.status === 'building') {
       var rv = PMW.frames.button({ label: live.status === 'building' ? 'Stop and revise' : 'Revise', detail: 'Say what to change in the chat', run: revise });
@@ -215250,6 +215266,9 @@ function mountDiscovery(host, state, api) {
       if (q.type === 'fact') {
         var rc = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'recheck:' + q.id, 'data-pmh': 'icon', text: q.state === 'researching' ? 'Checking…' : 'Recheck source',
           'data-pm-hover-label': 'Recheck source', 'data-pm-hover-detail': 'Read the source again and say if it changed' });
+        // the check's wait: the system loader before "Checking…", sized to the link's text (W5)
+        var rcld = q.state === 'researching' ? PMW.loader({ motion: 'swing', px: 12 }) : null;
+        if (rcld) { rc.insertBefore(rcld, rc.firstChild); rc.setAttribute('aria-busy', 'true'); }
         if (q.state === 'researching') rc.setAttribute('aria-disabled', 'true');
         else rc.addEventListener('click', function () { recheck(q); });
         acts.push(rc);
@@ -217390,8 +217409,9 @@ function mountArtifact(host, state, api) {
         { label: 'Keep this version', run: function () { s.pinned = true; render(); api.announce('Kept this version'); } }]));
     }
     if (stt === 'loading' && !s.retrying) { out = out.concat(loadingBody()); startLoading(); return out; }
-    if (s.retrying) return out.concat([h('div', { class: 'pmw-art-loading', role: 'status' }, [h('p', { class: 'pmw-art-loadt' }, [h('b', { text: 'Drawing it again' }), h('span', { text: ' · reading the same source' })]),
-      h('div', { class: 'pmw-art-progress is-indeterminate', 'aria-hidden': 'true' }, [h('span', { class: 'pmw-art-progbar' })])])]);
+    // drawing it again is a wait of unknown length: the system loader before its words (W5), never a bar that sweeps
+    // as if it measured something; the first draw keeps its measured bar (loadingBody)
+    if (s.retrying) return out.concat([h('div', { class: 'pmw-art-loading is-wait', role: 'status', 'aria-busy': 'true' }, [h('p', { class: 'pmw-art-loadt' }, [PMW.loader({ motion: 'swing', px: 16 }), h('b', { text: 'Drawing it again' }), h('span', { text: ' · reading the same source' })])])]);
     if (stt === 'error') {
       var e = art.error;
       out.push(note('bad', 'problems', s.retries ? 'Still could not draw this view' : 'This view could not be drawn', e.reason + ' ' + e.detail, [
@@ -218805,9 +218825,15 @@ function mountTranscript(host, state, api) {
     'data-pm-hover-detail': parentTitle + ' · shows it in the chat' }, ['Parent: ', h('span', { text: parentTitle })]);
   parentBtn.addEventListener('click', showParent);
   function paintHead() {
-    statusEl.textContent = '';
-    statusEl.className = 'pmw-tx-status is-' + L.status;
-    add(statusEl, [statusMark(L.status, 12), h('span', { text: statusWord() })]);
+    /* the agent at work is a wait you watch: the system loader in the mark's place (W5); every other state keeps its
+       mark. Drawn again only when the state changes, so the loader keeps its phase while the head repaints. */
+    if (statusEl._st !== L.status) {
+      statusEl.textContent = '';
+      statusEl.className = 'pmw-tx-status is-' + L.status;
+      var ld = L.status === 'working' ? PMW.loader({ motion: 'swing', px: 12 }) : null;
+      add(statusEl, [ld || statusMark(L.status, 12), h('span', { text: statusWord() })]);
+      statusEl._st = L.status;
+    }
     elapsedEl.textContent = fmtElapsed(elapsedOf(L));
     roEl.textContent = '';
     add(roEl, [PMW.icon('lock', { size: 12, glyph: false }), h('span', { text: isLive() ? 'Read-only · live' : 'Read-only' })]);
@@ -239823,7 +239849,7 @@ var T = {};
      and scroll sideways; a line cut off at the right fades out at the edge, and the left edge fades once scrolled. A
      carriage return keeps only the text after it (what the terminal shows); C0 controls are dropped; a line is cut at
      1000 characters. A finished command with no output says "No output".
-   - Status: a glyph plus words: Running, Needs input, Done, Failed, Interrupted. A stopped command with an exit code
+   - Status: a glyph plus words: Running (the system loader, glyphFor), Needs input, Done, Failed, Interrupted. A stopped command with an exit code
      says it in words after the status: "exited 101" (Done and Interrupted too: "exited 0", "exited 130"). No stripes,
      no capsule badges.
    - Running: the elapsed time is text in tabular figures that updates once a second from startedAt (one shared timer
@@ -239885,6 +239911,16 @@ var T = {};
     return s;
   }
   function glyphSvg(status) { return svg(GLYPH[status], 'pmt-card-g'); }
+  /* a running command is a wait the person watches: its slot holds the system loader (W5, DR-077; window.PM_PIP_LOADER,
+     Swing), sized to the slot, which the owner draws, pauses and hands to NieR's Diamond loaders; the other states keep
+     their marks. Without the owner the old running mark stands in. */
+  function glyphFor(status) {
+    var LD = window.PM_PIP_LOADER;
+    if (status !== 'running' || !LD) return glyphSvg(status);
+    var t = document.createElement('template');
+    t.innerHTML = LD.html({ motion: 'swing', px: 14, className: 'pmt-card-ld' });
+    return t.content.firstElementChild;
+  }
   function el(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -240255,7 +240291,7 @@ var T = {};
     if (glyphChanged) {
       st.glyph = status;
       p.gi.textContent = '';
-      p.gi.appendChild(glyphSvg(status));
+      p.gi.appendChild(glyphFor(status));
     }
 
     p.cmd.textContent = command;
@@ -249980,8 +250016,13 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     var run = CS.run[tid];
     if (!run) return '';
     if (run.phase === 'working') {
-      return '<div class="ctx-status working" data-k="ctxstatus" role="status">' +
-        '<span class="ctx-spin" aria-hidden="true"></span><span>Compacting thread context…</span>' +
+      /* the wait is the system loader (W5, DR-077; window.PM_PIP_LOADER), the one loader for this wait (the Compact now
+         button only says Compacting…); its slot is left to it by the reconcile (data-pm-keep) so a redraw keeps it in
+         phase instead of arming it again */
+      var LD = window.PM_PIP_LOADER;
+      var wait = LD ? '<span class="ctx-wait" data-k="ctxwait" data-pm-keep aria-hidden="true">' + LD.html({ motion: 'swing', px: 12 }) + '</span>' : '';
+      return '<div class="ctx-status working" data-k="ctxstatus" role="status" aria-busy="true">' +
+        wait + '<span>Compacting thread context…</span>' +
         (run.notice ? '<span class="ctx-hist">' + esc(run.notice) + '</span>' : '') + '</div>';
     }
     var o = run.outcome || {};
@@ -255315,7 +255356,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
   /* Glyphs come from the neon registry through ctx.icon (one drawing per concept: the plan decision draws the plan's
      folded map, the permission decision the shield, as the transcript cards do). They are concept or control glyphs
      with no loop, so nothing inside a decision sheet runs an infinite animation; the morph's pill face remounts, so
-     it carries no neon act of its own (its orrery is a spinner in token colour). */
+     it carries no neon act of its own (its wait is the system loader, waitHtml). */
   function iconOf(ctx, name, size) { return ctx.icon(name, size || 12); }
 
   function pills(ctx, m) {
@@ -256009,23 +256050,18 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       + '</section>';
   }
 
-  function orreryHtml() {
-    return '<span class="qs-orrery" aria-hidden="true">'
-      + '<span class="qs-orrery-ring qs-orrery-a"></span>'
-      + '<span class="qs-orrery-ring qs-orrery-b"></span>'
-      + '<i class="qs-orrery-bead"></i>'
-      + '<i class="qs-orrery-bead"></i>'
-      + '<i class="qs-orrery-bead"></i>'
-      + '</span>';
+  /* Preparing and submitting are waits: the system loader (W5, DR-077; window.PM_PIP_LOADER, Swing; Think is the thinking
+     placeholder's), 18 px, in a slot the reconcile leaves to it (data-pm-keep, stable data-k) so the work tick never
+     arms it again. It replaces take 8's orrery and the other takes' four-dot orbit. */
+  function waitHtml() {
+    var LD = window.PM_PIP_LOADER;
+    return LD ? '<span class="qs-wait" data-k="qs-wait" data-pm-keep aria-hidden="true">' + LD.html({ motion: 'swing', px: 18 }) + '</span>' : '';
   }
   function waitPill(ctx, m) {
     var label = m.type === 'preparing' ? 'Preparing questions…' : 'Submitting answers…';
-    var spin = (m.take === 8 || takeOf(ctx) === 8)
-      ? orreryHtml()
-      : '<span class="qs-orbit" aria-hidden="true"><i></i><i></i><i></i><i></i></span>';
-    return '<div class="qs qs-pill-beat" data-k="qs-pill">'
+    return '<div class="qs qs-pill-beat" data-k="qs-pill" aria-busy="true">'
       + '<span class="qs-pill-label">' + ctx.esc(label) + '</span>'
-      + spin
+      + waitHtml()
       + '</div>';
   }
   function wrapShell(ctx, m, html) {
@@ -256437,7 +256473,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
   function pillFace(label, extraClass) {
     var face = document.createElement('div');
     face.className = 'qs-pill-beat qs-morph-face' + (extraClass ? ' ' + extraClass : '');
-    face.innerHTML = '<span class="qs-pill-label"></span>' + orreryHtml();
+    face.innerHTML = '<span class="qs-pill-label"></span>' + waitHtml();
     face.querySelector('.qs-pill-label').textContent = label;
     return face;
   }
@@ -265563,10 +265599,15 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var live  = r.status==='ready'&&eligible(r).build;
     var cls   = 'pd-build pmx-act pd-build-'+esc(r.status);
     /* Terminal states and Building… are the SAME element, disabled. Rendering a
-       <span> for them would make it a badge, which §7.3 explicitly rules out. */
-    return '<button type="button" class="'+cls+'"'+(live?'':' disabled aria-disabled="true"')+
+       <span> for them would make it a badge, which §7.3 explicitly rules out.
+       Building… is the build's wait: the system loader (W5, DR-077; window.PM_PIP_LOADER) leads the label at the
+       control's 14 px, in a slot the reconcile leaves to it (data-pm-keep) so a redraw never arms it again, with
+       aria-busy on the button; "disabled" then never reads as "stalled". */
+    var LD = r.status==='building' ? window.PM_PIP_LOADER : null;
+    var wait = LD ? '<span class="pd-wait" data-k="pd-wait:'+esc(r.plan_id)+'" data-pm-keep aria-hidden="true">'+LD.html({ motion:'swing', px:14 })+'</span>' : '';
+    return '<button type="button" class="'+cls+'"'+(live?'':' disabled aria-disabled="true"')+(LD?' aria-busy="true"':'')+
       ' data-action="'+(live?'pd-build':'pd-noop')+'" data-id="'+esc(r.plan_id)+'"'+
-      ' data-hover-key="pd-build-'+esc(r.plan_id)+'">'+esc(label)+'</button>';
+      ' data-hover-key="pd-build-'+esc(r.plan_id)+'">'+wait+esc(label)+'</button>';
   }
 
   /* Support copy sits BESIDE the control, not inside it.

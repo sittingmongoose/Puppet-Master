@@ -849,7 +849,7 @@
     if (tier === 'micro' || tier === 'pixel') {
       const frames = motion === 'swing' ? 8 : 4;
       css += `${s} .pml-fr{${ANIM('pml-flip' + frames, 'steps(1,end)')}}`;
-      for (let i = 0; i < frames; i++) css += `${s} .pml-fr${i}{animation-delay:calc(var(--pml-delay,0s) + var(--pml-dur) * ${R(i / frames - 1)})}`;
+      for (let i = 0; i < frames; i++) css += `${s} .pml-fr${i}{animation-delay:calc(var(--pml-delay,0s) + var(--pml-dur) * ${+(i / frames - 1).toFixed(4)})}`;
       return css;
     }
     const g = GEO[tier === 'small' ? 'small' : 'full'], k = rigFrames(motion, family, g, 'eye'), P = g.P;

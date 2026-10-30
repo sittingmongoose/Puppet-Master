@@ -415,9 +415,15 @@ function mountTranscript(host, state, api) {
     'data-pm-hover-detail': parentTitle + ' · shows it in the chat' }, ['Parent: ', h('span', { text: parentTitle })]);
   parentBtn.addEventListener('click', showParent);
   function paintHead() {
-    statusEl.textContent = '';
-    statusEl.className = 'pmw-tx-status is-' + L.status;
-    add(statusEl, [statusMark(L.status, 12), h('span', { text: statusWord() })]);
+    /* the agent at work is a wait you watch: the system loader in the mark's place (W5); every other state keeps its
+       mark. Drawn again only when the state changes, so the loader keeps its phase while the head repaints. */
+    if (statusEl._st !== L.status) {
+      statusEl.textContent = '';
+      statusEl.className = 'pmw-tx-status is-' + L.status;
+      var ld = L.status === 'working' ? PMW.loader({ motion: 'swing', px: 12 }) : null;
+      add(statusEl, [ld || statusMark(L.status, 12), h('span', { text: statusWord() })]);
+      statusEl._st = L.status;
+    }
     elapsedEl.textContent = fmtElapsed(elapsedOf(L));
     roEl.textContent = '';
     add(roEl, [PMW.icon('lock', { size: 12, glyph: false }), h('span', { text: isLive() ? 'Read-only · live' : 'Read-only' })]);

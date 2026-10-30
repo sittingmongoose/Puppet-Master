@@ -175,8 +175,7 @@
 .pmw-act.pmw-plan-build[aria-disabled="true"] { opacity: 1; color: var(--pmw-text-2); cursor: default; }
 .pmw-act.pmw-plan-build.is-ready[aria-disabled="true"] { opacity: .55; }
 .pmw-act.pmw-plan-build.is-canceled { text-decoration: line-through; color: var(--pmw-text-3); }
-.pmw-plan-busy { width: 6px; height: 6px; margin-left: 2px; border-radius: 50%; background: var(--pmw-accent); animation: pmw-plan-busy 1.6s ease-in-out infinite; }
-@keyframes pmw-plan-busy { 50% { opacity: .35; } }
+.pmw-plan-link .pml-ld { margin-right: 5px; }
 :is(.pmw-plan, .pmw-docu) .pmw-act[aria-pressed="true"] { background: var(--pmw-press); border-color: var(--pmw-text-3); }
 /* the frame's .pmw-act carries its own radius in every look (45-frames.css); these kinds' own rows and text buttons stop
    at 8 px, so Friendly's 14 px page rule for buttons never turns a 32 px row into a capsule */
@@ -443,29 +442,25 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-note.is-chosen,
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-phase.is-now { background: var(--accent-lime); color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-note.is-chosen :is(span, b, .pmw-docu-note-mark) { color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-phase.is-now .pmw-docu-phase-no { border-color: var(--surface); color: var(--surface); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-docu-phase-no, .pmw-plan-busy) { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-phase-no { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plan-mdrail.is-done::before, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plan-mdrail.is-now::before { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan-link, .pmw-docu-link, .pmw-plan-dep):hover { background: var(--accent-lime); color: var(--surface); text-decoration: none; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan-link, .pmw-docu-link, .pmw-plan-dep, .pmw-docu-tbtn, .pmw-docu-note, .pmw-plan-q-opt, .pmw-plan-art, .pmw-docu-sum) { border-radius: 0; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plan-busy { animation: none; }
 
 /* ---- looks: NieR (ink and parchment always; small uppercase headers with its headers part, square corners with its
    square part; no glow) ---- */
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-plan, .pmw-docu) :is(.pmw-plan-h2, .pmw-docu-h2, .pmw-sec-head h2) { font-size: 12px; line-height: 18px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
-html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmw-docu-phase-no, .pmw-plan-busy, .pmw-docu-tbtn, .pmw-docu-note, .pmw-plan-q-opt, .pmw-plan-dep, .pmw-plan-art, .pmw-docu-sum) { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmw-docu-phase-no, .pmw-docu-tbtn, .pmw-docu-note, .pmw-plan-q-opt, .pmw-plan-dep, .pmw-plan-art, .pmw-docu-sum) { border-radius: 0; }
 html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-plan-mdrail:is(.is-done, .is-now)::before { border-radius: 0; }
 html[data-o55-nier="on"] .pmw-plan-mdrail.is-done::before, html[data-o55-nier="on"] .pmw-plan-mdrail.is-now::before { background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-docu-note.is-chosen, html[data-o55-nier="on"] .pmw-docu-phase.is-now { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pmw-docu-note.is-chosen :is(span, b, .pmw-docu-note-mark) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pmw-docu-phase.is-now .pmw-docu-phase-no { border-color: var(--o55-nier-on-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pmw-plan-pv-bar { fill: rgba(var(--o55-nier-ink-rgb), .78); }
-html[data-o55-nier="on"] .pmw-plan-busy { animation: none; }
 
 /* ---- Reduced Motion: nothing moves; the flash is a still tint ---- */
 html[data-motion="reduced"] :is(.pmw-plan-step, .pmw-plan-q) { transition: none; }
 html[data-motion="reduced"] .pmw-docu-sum::before { transition: none; }
-html[data-motion="reduced"] .pmw-plan-busy { animation: none; }
 @media (prefers-reduced-motion: reduce) {
   .pmw-plan-step, .pmw-plan-q, .pmw-docu-sum::before { transition: none; }
-  .pmw-plan-busy { animation: none; }
 }

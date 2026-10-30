@@ -210,12 +210,9 @@ body[data-theme="retro-light"] {
 .ctx-status.warn { background: color-mix(in srgb, var(--warning) 14%, var(--surface-3)); border-color: color-mix(in srgb, var(--warning) 44%, var(--border)); }
 .ctx-status.working { flex-direction: row; align-items: center; gap: 7px; }
 @keyframes ctx-status-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-.ctx-spin {
-  width: 11px; height: 11px; flex: none; border-radius: 50%;
-  border: 2px solid var(--surface-4); border-top-color: var(--accent);
-  animation: ctx-spin 900ms linear infinite;
-}
-@keyframes ctx-spin { to { transform: rotate(360deg); } }
+/* Compacting's wait: the system loader (context.js statusLine), 12 px, the smallest size that still moves (F3-584) */
+.ctx-wait { display: inline-flex; flex: none; width: 12px; height: 12px; line-height: 0; }
+.ctx-wait > .pml-ld { --pml-size: 12px; }
 
 /* =====================================================================
    B. THE DRAWER  (slot contextDrawer)
@@ -399,12 +396,7 @@ body[data-theme="retro-light"] {
    driven by a timer, not by an animation — it simply stops moving.
    ===================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  .ctx-spin {
-    animation: none;
-    border-color: var(--surface-4);
-    border-top-color: var(--accent);
-    border-right-color: var(--accent);
-  }
+  /* Compacting's loader keeps its own Reduced Motion wait signal (the loader owner's breath and blink) */
   .ctx-status { animation: none; }
   .ctx-meter i { animation: none; }
   .ctx-morebtn .ctx-chev { transition: none; }

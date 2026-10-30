@@ -301,7 +301,11 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # The readout's quick exit (2026-10-28, 30-charts.css: a card that is not on fades in 70 ms; on a hosted board it is the
 # Home budget card's readout, which lingered over the terminal's tabs, so it is meant to reach hosted boards) adds one
 # anchor: 'rewritten' 2,660.
-HOST_SCOPE_EXPECT = {'rewritten': 2660, 'compound': 20}
+# The system loader (W5, PM7 build 2026-10-30, 10-shell.css / 90-nier-shell.css): the refresh's one-turn spin and its four
+# NieR diamond rules go (the loader owner draws the wait and hands NieR to its Diamond loaders part) and two rules size the
+# loader and hide the icon while the button is busy; the refresh button lives only in the Usage page's own header, so a
+# hosted board never shows them: 'rewritten' 2,657.
+HOST_SCOPE_EXPECT = {'rewritten': 2657, 'compound': 20}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

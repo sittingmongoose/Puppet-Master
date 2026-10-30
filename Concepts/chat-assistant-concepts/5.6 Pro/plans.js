@@ -1103,10 +1103,15 @@
     var live  = r.status==='ready'&&eligible(r).build;
     var cls   = 'pd-build pmx-act pd-build-'+esc(r.status);
     /* Terminal states and Building… are the SAME element, disabled. Rendering a
-       <span> for them would make it a badge, which §7.3 explicitly rules out. */
-    return '<button type="button" class="'+cls+'"'+(live?'':' disabled aria-disabled="true"')+
+       <span> for them would make it a badge, which §7.3 explicitly rules out.
+       Building… is the build's wait: the system loader (W5, DR-077; window.PM_PIP_LOADER) leads the label at the
+       control's 14 px, in a slot the reconcile leaves to it (data-pm-keep) so a redraw never arms it again, with
+       aria-busy on the button; "disabled" then never reads as "stalled". */
+    var LD = r.status==='building' ? window.PM_PIP_LOADER : null;
+    var wait = LD ? '<span class="pd-wait" data-k="pd-wait:'+esc(r.plan_id)+'" data-pm-keep aria-hidden="true">'+LD.html({ motion:'swing', px:14 })+'</span>' : '';
+    return '<button type="button" class="'+cls+'"'+(live?'':' disabled aria-disabled="true"')+(LD?' aria-busy="true"':'')+
       ' data-action="'+(live?'pd-build':'pd-noop')+'" data-id="'+esc(r.plan_id)+'"'+
-      ' data-hover-key="pd-build-'+esc(r.plan_id)+'">'+esc(label)+'</button>';
+      ' data-hover-key="pd-build-'+esc(r.plan_id)+'">'+wait+esc(label)+'</button>';
   }
 
   /* Support copy sits BESIDE the control, not inside it.

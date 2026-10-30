@@ -636,6 +636,13 @@ function mountBrowser(host, st, api) {
     show({ busy: true, reload: true });
     api.announce('Reloaded ' + (page ? page.title : 'the page'));
   }
+  function paintAddrIcon() {
+    var name = S.session === 'protected' || /^https:/i.test(S.url) ? 'lock' : 'browser';
+    if (addrIcon._name === name && !addrIcon.querySelector('.pml-ld')) return;
+    addrIcon.textContent = '';
+    addrIcon.appendChild(ico(name, 13));
+    addrIcon._name = name;
+  }
   function show(o) {
     o = o || {};
     disarm();
@@ -653,15 +660,17 @@ function mountBrowser(host, st, api) {
     viewport.scrollTop = 0;
     viewport.setAttribute('aria-label', 'Page: ' + page.title);
     addrIn.value = S.url;
-    addrIcon.textContent = '';
-    addrIcon.appendChild(ico(S.session === 'protected' || /^https:/i.test(S.url) ? 'lock' : 'browser', 13));
+    paintAddrIcon();
     setAttr(backBtn, 'aria-disabled', S.hIndex <= 0 ? 'true' : null);
     setAttr(fwdBtn, 'aria-disabled', S.hIndex >= S.history.length - 1 ? 'true' : null);
     var label = /^link:/.test(api.id) && S.history.length === 1 ? (linkTitle(api.id, st) || page.title) : (page.label || page.title);
     api.update({ label: label, title: page.title + ' · ' + shortUrl(S.url), busy: !!o.busy });
+    /* the page's wait: the system loader in the address field's icon place (W5; Hop, a short wait that ends with the
+       page shown, L5) and aria-busy on the page until it ends; the fixture's 320 ms wait, none under Reduced Motion */
     if (o.busy) {
-      view.classList.add('is-loading');
-      var t = setTimeout(function () { view.classList.remove('is-loading'); api.update({ busy: false }); }, PMW.reduced() ? 0 : 320);
+      var ld = PMW.reduced() ? null : PMW.loader({ motion: 'hop', px: 13 });
+      if (ld) { addrIcon.textContent = ''; addrIcon.appendChild(ld); view.setAttribute('aria-busy', 'true'); }
+      var t = setTimeout(function () { view.removeAttribute('aria-busy'); paintAddrIcon(); api.update({ busy: false }); }, PMW.reduced() ? 0 : 320);
       timers.push(t);
     }
     if (o.reload && PMW.motion) PMW.motion.animate(viewport, [{ opacity: 0.35 }, { opacity: 1 }], { dur: 220 });

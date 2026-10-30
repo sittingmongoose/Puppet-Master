@@ -10,6 +10,7 @@
 
   const up = () => { if (!state.updates) state.updates = { automatic: true, channel: 'Stable', source: 'GitHub Releases', checkInterval: 'On open and hourly', currentVersion: '0.8.0-dev', availableVersion: '0.8.1', lastCheck: '7 minutes ago', history: [] }; return state.updates; };
   const ux = () => PM51.s().updates;
+  let checking = false, catalogsOut = false;   // Check now / Refresh catalogs are waiting for their lists
   const refresh = () => { saveState(); PM51.refresh(ID, { swap: false }); };
   const hasUpdate = () => { const U = up(); return !!U.availableVersion && U.availableVersion !== U.currentVersion; };
   const servers = () => (PM51.s().serverProject && PM51.s().serverProject.servers) || [];
@@ -21,7 +22,7 @@
     const U = up(), X = ux();
     const app = PM51.section({
       title: 'Puppet Master', help: hasUpdate() ? `${U.availableVersion} is ready to install.` : 'You are on the latest version.',
-      action: { label: 'Check now', icon: 'refresh', action: 'pm51-updates-check', data: { 'command-id': 'cmd.update.app.check' } },
+      action: { label: checking ? 'Checking…' : 'Check now', icon: 'refresh', action: 'pm51-updates-check', data: { 'command-id': 'cmd.update.app.check' }, busy: checking, reason: 'Already checking for updates.' },
       body: PM51.rows([
         { label: 'Look for updates automatically', help: 'You can still check at any time.', control: PM51.bound.toggle('system.advanced.auto-update') },
         autoOn() ? { label: 'Also install on its own when idle', help: 'Otherwise you are asked before anything installs.', control: PM51.toggle(!!U.automatic, { action: 'pm51-updates-auto', data: { 'command-id': 'cmd.update.app.automatic.set_enabled' }, label: 'Also install on its own when idle' }) } : null,
@@ -33,7 +34,7 @@
     });
     const catalogs = PM51.section({
       title: 'Content and catalogs', help: 'Lists the app keeps fresh, like templates, personas and the models each service offers.',
-      action: { label: 'Refresh catalogs', icon: 'refresh', small: true, action: 'pm51-updates-catalogs' },
+      action: { label: catalogsOut ? 'Refreshing…' : 'Refresh catalogs', icon: 'refresh', small: true, action: 'pm51-updates-catalogs', busy: catalogsOut, reason: 'Already refreshing the catalogs.' },
       body: PM51.bound.rows(['system.advanced.catalog-updates']) + PM51.rows((X.catalogs || []).map(([name, status]) => ({ label: name, value: catalogsOn() ? status : 'Not kept up to date', pill: catalogsOn() ? PM51.pill(status.split(' · ')[0]) : PM51.pill('Off', 'off') })))
     });
     const history = PM51.section({
@@ -75,14 +76,22 @@
   }
 
   /* ---------- actions ------------------------------------------------------ */
-  PM51.on('updates-check', () => {
+  /* Check now waits for the release list before it reports (W5): the button holds the system loader for the fixture's
+     700 ms, as Doctor's checks do, then the result opens. It waits in place (PM51.waitOn), so nothing else on the page
+     is drawn again; checking keeps it busy if the page is. */
+  PM51.on('updates-check', el => {
+    if (checking) return;
+    checking = true; PM51.waitOn(el, true, 'Checking…');
+    setTimeout(() => { checking = false; reportCheck(); }, 700);
+  });
+  function reportCheck() {
     const U = up(); U.lastCheck = 'Just now'; refresh();
     PM51.check({ title: 'Check for updates', outcome: hasUpdate() ? `${U.availableVersion} available · example data` : 'Up to date · example data', steps: [
       { title: 'Release list read', desc: `${U.source} · ${PM51.valueLabel('system.advanced.release-channel', PM51.value('system.advanced.release-channel'))}` },
       { title: 'Compared with the installed version', desc: `${U.currentVersion} installed${hasUpdate() ? `, ${U.availableVersion} available` : ''}` },
       { title: 'Signature checked', desc: hasUpdate() ? U.availableVersion : 'Nothing new to check' }
     ] });
-  });
+  }
   PM51.on('updates-auto', () => { const U = up(); U.automatic = !U.automatic; refresh(); });
   PM51.on('updates-install', () => {
     const U = up(); if (!hasUpdate()) return;
@@ -99,9 +108,14 @@
       ])) + PM51.note('This is a concept preview. Nothing was installed or restarted.', 'info') });
     } });
   });
-  PM51.on('updates-catalogs', () => {
-    const X = ux(); PM51.check({ title: 'Refresh catalogs', outcome: 'Current · example data', steps: (X.catalogs || []).map(([name, status]) => ({ title: name, desc: status })) });
+  PM51.on('updates-catalogs', el => {
+    if (catalogsOut) return;
+    catalogsOut = true; PM51.waitOn(el, true, 'Refreshing…');
+    setTimeout(() => { catalogsOut = false; if (el && el.isConnected) PM51.waitOn(el, false); else refresh(); reportCatalogs(); }, 700);
   });
+  function reportCatalogs() {
+    const X = ux(); PM51.check({ title: 'Refresh catalogs', outcome: 'Current · example data', steps: (X.catalogs || []).map(([name, status]) => ({ title: name, desc: status })) });
+  }
   PM51.on('updates-rollback', el => rollback(Number(ds(el, 'index'))));
   PM51.on('updates-details', el => detailsPanel(Number(ds(el, 'index'))));
   PM51.onChange('updates-restart', el => { up().restartPolicy = el.value; saveState(); });

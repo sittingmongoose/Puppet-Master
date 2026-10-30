@@ -90,9 +90,10 @@ html[data-theme^="retro"] #panel-usage .pmu-seg-ink { border-radius: 0; transiti
 #panel-usage .pmu-iconbtn:hover { color: var(--pmu-ink); background: var(--pmu-row-hover); }
 #panel-usage .pmu-iconbtn:active { transform: scale(.94); }
 #panel-usage .pmu-iconbtn svg { width: 16px; height: 16px; }
-/* refresh (WOW-SPEC 3.18): one turn in 650 ms that lands with the measured 5.6 Pro POP settle */
-#panel-usage .pmu-iconbtn.spinning svg { animation: pmu-spin calc(650ms * var(--pmu-speed, 1)) linear(0,.028,.111 8%,.412 20%,.686 30%,.867 40%,.964 50%,1.012 62%,1.014 74%,1.003 88%,1) 1; }
-@keyframes pmu-spin { to { transform: rotate(360deg); } }
+/* refresh: while the readings are on their way the system loader takes the icon's place (90-api.js refresh; W5 replaces
+   WOW-SPEC 3.18's one turn in 650 ms) */
+#panel-usage .pmu-iconbtn > .pml-ld { --pml-size: 16px; }
+#panel-usage .pmu-iconbtn[aria-busy="true"] > .pmu-ico { display: none; }
 html[data-theme^="retro"] #panel-usage :is(.pmu-ctlbtn, .pmu-iconbtn) { border-radius: 0; }
 
 /* provider marks (A1 5.1): monogram tiles in vendor hues; letters never under 11 px */
