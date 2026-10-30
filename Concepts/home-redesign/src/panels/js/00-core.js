@@ -80,20 +80,34 @@ function nextFrame(fn) {
   });
 }
 
-/* ---- storage (never throws; a failed write reports false) ---- */
+/* ---- storage (never throws; a failed write reports false) ----
+   A page with no storage at all keeps Home's records in memory for the visit: a sandboxed preview (an opaque origin,
+   T3's file preview among them) throws on any touch of localStorage, and every layout commit was rolled back there as a
+   failed write ("Your layout could not be saved, so the change was undone", Jared's QA round 2, Q18). Its layout now
+   holds until the page closes, as a fresh visit would. A page that has storage but cannot write (full) still reports
+   false, and the commit still rolls back. */
+var LS = (function () { try { var ls = window.localStorage; ls.getItem('pm.home.panels:probe'); return ls; } catch (_) { return null; } })();
+var memoryStore = LS ? null : Object.create(null);
 var store = PMW.store = {
+  persistent: !!LS,
+  /* the stored text for a key, or null */
+  raw: function (key) {
+    if (memoryStore) return Object.prototype.hasOwnProperty.call(memoryStore, key) ? memoryStore[key] : null;
+    try { return LS.getItem(key); } catch (_) { return null; }
+  },
   get: function (key) {
-    try { var raw = localStorage.getItem(key); return raw == null ? null : JSON.parse(raw); } catch (_) { return null; }
+    try { var raw = store.raw(key); return raw == null ? null : JSON.parse(raw); } catch (_) { return null; }
   },
   set: function (key, value) {
     try {
       if (PMW.faults && PMW.faults.failNextWrite) { PMW.faults.failNextWrite = false; return false; }
       var raw = JSON.stringify(value);
-      localStorage.setItem(key, raw);
-      return localStorage.getItem(key) === raw;
+      if (memoryStore) { memoryStore[key] = raw; return true; }
+      LS.setItem(key, raw);
+      return LS.getItem(key) === raw;
     } catch (_) { return false; }
   },
-  remove: function (key) { try { localStorage.removeItem(key); } catch (_) {} }
+  remove: function (key) { if (memoryStore) { delete memoryStore[key]; return; } try { LS.removeItem(key); } catch (_) {} }
 };
 PMW.faults = { failNextWrite: false };
 

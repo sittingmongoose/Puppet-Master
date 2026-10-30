@@ -1033,7 +1033,12 @@
     'tb-menu': () => { M.titlebar.openMenu(); },
     'sw-load': (arg) => { ST.sw = Object.assign({}, ST.sw || M.switches.now(), { load: arg }); refresh(); },
     'sw-situation': () => { const s = ST.sw || M.switches.now(); ST.sw = Object.assign({}, s, { situation: !s.situation }); refresh(); },
-    'sw-copy': () => { const v = M.switches.url(ST.sw || M.switches.now()); try { navigator.clipboard.writeText(v).then(() => say(T('studio.switches.copied')), () => {}); } catch (_) {} },
+    /* a sandboxed preview has no clipboard: the address is selected in its field instead, and the Studio says so */
+    'sw-copy': () => {
+      const v = M.switches.url(ST.sw || M.switches.now());
+      const fallback = () => { const i = ST.sheet && ST.sheet.querySelector('#pmds-url'); if (i) { i.focus(); i.select(); } say(T('studio.switches.copyFailed')); };
+      try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(() => say(T('studio.switches.copied')), fallback); else fallback(); } catch (_) { fallback(); }
+    },
     'sw-reload': () => { M.switches.reload(ST.sw || M.switches.now()); }
   };
   function commitPick() { M.applySituation(M.joinSituation(ST.pick)); renderEntry(); refresh(); }
