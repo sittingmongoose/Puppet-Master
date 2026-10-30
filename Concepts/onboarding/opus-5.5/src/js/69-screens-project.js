@@ -197,7 +197,7 @@
     O55.sound.play(O55.motion.reduced() ? 'type' : 'string', { step: v.length, pan: v.length % 2 ? 0.12 : -0.12 });
     if (!O55.art.poke) return;
     O55.art.poke(stage(S), 'sign', { amp: grew ? 1 : 0.55, dir: v.length % 2 ? 1 : -1, fleck: grew });
-    if (!wasOk && F.nonEmpty(v) && !nameProblem(S, v)) O55.motion.after(180, () => O55.art.react(stage(S)));
+    /* (Pip watches the field in wonder while it is typed into: its line says the name is good; no cheer over it) */
   }
   def('name', {
     chapter: 'project', stage: 'first_project', charmSlot: 'name',

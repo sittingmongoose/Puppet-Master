@@ -103,7 +103,9 @@
 #pm-o55-onboarding .pst[data-layout="compact"] .pst-nlab { gap: 10px; padding: 3px 6px; }
 #pm-o55-onboarding .pst[data-fam="friendly"] .pst-bubble { color: #3b3442; background: var(--bb); border-radius: 16px; box-shadow: 0 6px 16px rgba(0, 0, 0, .18); }
 #pm-o55-onboarding .pst[data-fam="friendly"][data-scheme="dark"] .pst-bubble { --bb: #f6f1fb; }
-#pm-o55-onboarding .pst[data-fam="glass"] .pst-bubble { --pst-font: 'Inter', system-ui, sans-serif; --bb: rgba(255, 255, 255, .2); --bl: rgba(255, 255, 255, .45); --bw: 1px; font-weight: 600; color: #f6f8fc; background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .45); border-radius: 14px; backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 8px 22px rgba(0, 2, 12, .35); }
+/* Glass Dark's speech and note are smoked glass: the wallpaper's bright parts showed through the clear glass behind white
+   words (2.3:1, Astra M09); the light scheme keeps its frosted white */
+#pm-o55-onboarding .pst[data-fam="glass"] .pst-bubble { --pst-font: 'Inter', system-ui, sans-serif; --bb: rgba(12, 16, 32, .64); --bl: rgba(255, 255, 255, .45); --bw: 1px; font-weight: 600; color: #f6f8fc; background: rgba(12, 16, 32, .64); border: 1px solid rgba(255, 255, 255, .45); border-radius: 14px; backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 8px 22px rgba(0, 2, 12, .35); }
 #pm-o55-onboarding .pst[data-fam="glass"][data-scheme="light"] .pst-bubble { --bb: rgba(255, 255, 255, .78); --bl: rgba(255, 255, 255, .95); color: #0c0f15; background: rgba(255, 255, 255, .62); border-color: rgba(255, 255, 255, .95); box-shadow: inset 0 1px 0 #fff, 0 8px 22px rgba(30, 45, 90, .18); }
 #pm-o55-onboarding .pst[data-fam="basic"] .pst-bubble { --pst-font: 'Inter', system-ui, sans-serif; --bl: #c4c4c4; --bw: 1px; font-weight: 600; border-radius: 6px; background: var(--bb); color: #1a1a1a; border: 1px solid #c4c4c4; box-shadow: 0 2px 8px rgba(0, 0, 0, .1); }
 #pm-o55-onboarding .pst[data-fam="basic"][data-scheme="dark"] .pst-bubble { --bb: #2d2d2d; --bl: #424242; color: #e8e8e8; border-color: #424242; }
@@ -259,9 +261,10 @@
 #pm-o55-onboarding .pst:not([data-layout="portrait"]) .pst-tip { display: none; }
 #pm-o55-onboarding .pst[data-fam="friendly"] .pst-tip { color: #4a4550; background: #fff9ec; border: 1.5px dashed rgba(122, 109, 140, .5); border-radius: 12px; rotate: -1.2deg; box-shadow: 0 5px 12px rgba(0, 0, 0, .14); }
 #pm-o55-onboarding .pst[data-fam="friendly"] .pst-tip-k { color: #c86a4a; }
-#pm-o55-onboarding .pst[data-fam="glass"] .pst-tip { --pst-font: 'Inter', system-ui, sans-serif; color: #f6f8fc; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .32); border-radius: 12px; backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35); }
+#pm-o55-onboarding .pst[data-fam="glass"] .pst-tip { --pst-font: 'Inter', system-ui, sans-serif; color: #f6f8fc; background: rgba(12, 16, 32, .62); border: 1px solid rgba(255, 255, 255, .32); border-radius: 12px; backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35); }
 #pm-o55-onboarding .pst[data-fam="glass"][data-scheme="light"] .pst-tip { color: #0c0f15; background: rgba(255, 255, 255, .55); border-color: rgba(255, 255, 255, .95); }
 #pm-o55-onboarding .pst[data-fam="glass"] .pst-tip-k { opacity: .75; }
+#pm-o55-onboarding .pst[data-fam="glass"][data-scheme="dark"] .pst-tip-k { opacity: 1; }
 #pm-o55-onboarding .pst[data-fam="basic"] .pst-tip { --pst-font: 'Inter', system-ui, sans-serif; color: #1a1a1a; background: #fff; border: 1px dashed #b9b9b9; border-radius: 4px; }
 #pm-o55-onboarding .pst[data-fam="basic"][data-scheme="dark"] .pst-tip { color: #e8e8e8; background: #232323; border-color: #4a4a4a; }
 #pm-o55-onboarding .pst[data-fam="basic"] .pst-tip-k { color: #0056b3; }

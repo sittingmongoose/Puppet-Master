@@ -113,7 +113,7 @@
   function summary(S) {
     const d = md(S), cm = S.sess.commit || {}, ai = O55.ai ? O55.ai.readyIds(S) : [], free = Object.values(S.sess.ai.freeRoutes || {}).filter((x) => x === 'ready').length, b = S.sess.backup;
     /* Free Models and Backup have a ? beside their name (summary:<row>), the note under the summary */
-    const row = (k, v, ok) => `<div class="o55-revrow" data-key="sum-${k}"><span class="o55-revk"><span class="o55-labq">${U.esc(T('ready.' + k))}${O55.tips.q('summary:' + k)}</span></span><span class="o55-revv">${U.esc(v)}</span>${ok ? C.pill('ready', T('ai.ready')) : ''}</div>`;
+    const row = (k, v, ok) => `<div class="o55-revrow" data-key="sum-${k}"${O55.tips.described('summary:' + k)}><span class="o55-revk"><span class="o55-labq">${U.esc(T('ready.' + k))}${O55.tips.q('summary:' + k)}</span></span><span class="o55-revv">${U.esc(v)}</span>${ok ? C.pill('ready', T('ai.ready')) : ''}</div>`;
     let out = '';
     if (cm.state === 'done') out += row('project', d.project_name + ' · ' + O55.review.whereWork(S), true);
     out += row('ai', ai.length ? ai.map((id) => O55.ai.pname(O55.fixtures.provider(id))).join(', ') : T('ready.noAi'), ai.length > 0);
@@ -158,7 +158,8 @@
     },
     do: {
       enter(S) { O55.finish(S, { tour: false }); },
-      tour(S) { O55.finish(S, { tour: true }); },
+      /* O10: Pip hands the strings on: its hand lifts away as the tour's first callout grows out of the window */
+      tour(S) { const st = O55.pipStage && O55.pipStage.of(S.root && S.root.querySelector('.o55-stage')); if (st && st.handOff) st.handOff(); O55.finish(S, { tour: true }); },
       createNow(S) { O55.draft.set(md(S), { project_mode: 'new', review_confirmed: false }); S.sess.commit = { state: 'none', attempt: 0 }; S.sess.ui.begin = 'new'; S.save(); O55.ui.go('begin'); }
     }
   });

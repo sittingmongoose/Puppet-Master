@@ -91,15 +91,16 @@
       this.cmdText = text;
       const inp = this.hudEl.querySelector('.pst-term-in'), ok = this.hudEl.querySelector('.pst-term-ok');
       if (!inp) return;
-      clearInterval(this.cmdT);
+      if (this.cmdT) this.cmdT.cancel();
       // the teletype: the head returns to the margin and prints the next line
       const tty = this.tube === 'teletype';
       ok.textContent = '';
       const s = text || '';
       if (this.reduced) { inp.textContent = s; this.headTo(); return; }
-      let i = 0; inp.textContent = ''; this.headTo();
+      inp.textContent = ''; this.headTo();
       if (tty && s) this.sfx('decode', { len: s.length });
-      this.cmdT = setInterval(() => { i += 1; inp.textContent = s.slice(0, i); this.headTo(); if (i >= s.length) clearInterval(this.cmdT); }, tty ? 30 : 24);
+      if (!s) return;
+      this.cmdT = PIP.h.typer(s.length, tty ? 1000 / 30 : 1000 / 24, (i) => { inp.textContent = s.slice(0, i); this.headTo(); }, { paused: () => !this.live() });
     },
     // the print head sits where the next letter will land
     headTo() {
@@ -123,12 +124,10 @@
       const lines = (O55.tx('pip.stage.' + (this.tube === 'teletype' ? 'retroLight' : 'retroDark') + '.boot') || []).concat(['']);
       const all = lines.join('\n');
       if (this.reduced) { pre.textContent = ''; return; }
-      let i = 0; pre.textContent = ''; pre.classList.remove('gone');
-      clearInterval(this.bootT);
-      this.bootT = setInterval(() => {
-        i += 2; pre.textContent = all.slice(0, i);
-        if (i >= all.length) { clearInterval(this.bootT); setTimeout(() => pre.classList.add('gone'), 900); }
-      }, 14);
+      pre.textContent = ''; pre.classList.remove('gone');
+      if (this.bootT) this.bootT.cancel();
+      this.bootT = PIP.h.typer(Math.ceil(all.length / 2), 1000 / 14, (i) => { pre.textContent = all.slice(0, i * 2); },
+        { paused: () => !this.live(), done: () => setTimeout(() => pre.classList.add('gone'), 900) });
     },
     powerOn() {
       if (this.reduced) return;

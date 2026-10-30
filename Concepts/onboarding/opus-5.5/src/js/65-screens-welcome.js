@@ -35,10 +35,12 @@
     const on = O55.nierLook.state().on, name = T('look.families.' + th.chosen + '.name'), sub = on ? T('look.nier.subOn', { name }) : T('look.nier.sub');
     return `<div class="o55-nierlook" data-key="nier" data-on="${on}">`
       + `<button type="button" class="o55-niercheck${on ? ' o55-on' : ''}" role="checkbox" aria-checked="${on}" aria-labelledby="o55-niername" aria-describedby="o55-niersub${O55.tips.open('pickNier') ? ' pm7ob-explainer' : ''}" title="${U.esc(sub)}" data-o55-do="pickNier" data-o55-sound="self" data-o55-nier-check data-key="nier-check" data-pm-hover-exempt="true">`
-      + `<span class="o55-nierthumb o55-scene-host" data-nier-thumb aria-hidden="true" data-morph-skip></span>`
       + `<span class="o55-niertext"><span class="o55-niertitle"><span class="o55-nierbox" aria-hidden="true"></span><span class="o55-niername" id="o55-niername">${U.esc(T('look.nier.label'))}</span>`
       + `<span class="o55-tag o55-niertag">${U.esc(T('look.nier.tag'))}</span></span>`
       + `<span class="o55-niersub" id="o55-niersub">${U.esc(sub)}</span></span></button>`
+      /* the scene beside them is the checkbox's picture: a press on it toggles too, as a label's would. It sits beside the
+         checkbox, not inside it, so Adjust (under the title) never covers any of the checkbox (Muse B1) */
+      + `<span class="o55-nierthumb o55-scene-host" data-nier-thumb data-o55-do="pickNier" data-o55-sound="self" aria-hidden="true" data-morph-skip></span>`
       + O55.tips.q('pickNier', { cls: 'o55-tipq-nier' })
       + `<button type="button" class="o55-btn o55-secondary o55-small o55-nieradjust" data-o55-do="adjustNier" data-o55-sound="self" data-key="nier-adjust"${O55.tips.described('adjustNier')} data-pm-hover-exempt="true">${O55.nierLook.icon()}<span>${U.esc(T('look.nier.adjust'))}</span></button>${O55.tips.q('adjustNier')}</div>`
       + O55.tips.explainer('pickNier') + O55.tips.explainer('adjustNier');
