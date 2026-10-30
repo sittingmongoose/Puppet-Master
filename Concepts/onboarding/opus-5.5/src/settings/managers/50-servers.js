@@ -1121,11 +1121,12 @@
     S.servers.forEach(x => { x.default = x.id === s.id; }); refresh();
   });
   /* Check this server waits for the server's answer before it reports (W5): its button holds the system loader for the
-     fixture's 700 ms, like the route check's, then the result opens */
+     fixture's 700 ms, like the route check's, then the result opens. The button waits in place (PM51.waitOn), so the
+     Advanced section it sits in stays open; testing keeps it busy if the page is drawn again meanwhile. */
   PM51.on('servers-test', el => {
     const id = ds(el, 'id'); if (!serverById(id) || testing.has(id)) return;
-    testing.add(id); refresh();
-    setTimeout(() => { testing.delete(id); refresh(); const s = serverById(id); if (s) reportServerCheck(s); }, 700);
+    testing.add(id); PM51.waitOn(el, true, 'Checking…');
+    setTimeout(() => { testing.delete(id); if (el.isConnected) PM51.waitOn(el, false); else refresh(); const s = serverById(id); if (s) reportServerCheck(s); }, 700);
   });
   function reportServerCheck(s) {
     PM51.check({ title: `Test connection · ${s.name}`, steps: [

@@ -77,10 +77,11 @@
 
   /* ---------- actions ------------------------------------------------------ */
   /* Check now waits for the release list before it reports (W5): the button holds the system loader for the fixture's
-     700 ms, as Doctor's checks do, then the result opens. */
-  PM51.on('updates-check', () => {
+     700 ms, as Doctor's checks do, then the result opens. It waits in place (PM51.waitOn), so nothing else on the page
+     is drawn again; checking keeps it busy if the page is. */
+  PM51.on('updates-check', el => {
     if (checking) return;
-    checking = true; refresh();
+    checking = true; PM51.waitOn(el, true, 'Checking…');
     setTimeout(() => { checking = false; reportCheck(); }, 700);
   });
   function reportCheck() {
@@ -107,10 +108,10 @@
       ])) + PM51.note('This is a concept preview. Nothing was installed or restarted.', 'info') });
     } });
   });
-  PM51.on('updates-catalogs', () => {
+  PM51.on('updates-catalogs', el => {
     if (catalogsOut) return;
-    catalogsOut = true; refresh();
-    setTimeout(() => { catalogsOut = false; refresh(); reportCatalogs(); }, 700);
+    catalogsOut = true; PM51.waitOn(el, true, 'Refreshing…');
+    setTimeout(() => { catalogsOut = false; if (el.isConnected) PM51.waitOn(el, false); else refresh(); reportCatalogs(); }, 700);
   });
   function reportCatalogs() {
     const X = ux(); PM51.check({ title: 'Refresh catalogs', outcome: 'Current · example data', steps: (X.catalogs || []).map(([name, status]) => ({ title: name, desc: status })) });
