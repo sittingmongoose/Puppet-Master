@@ -129,6 +129,8 @@
     "folder": "Choose the folder first.",
     "repository": "Choose which online Project to bring in.",
     "backup": "Choose the backup to restore.",
+    "kit": "Choose your Recovery Kit file first.",
+    "backupFolder": "Choose the folder the backup is in first.",
     "storage": "Choose where on the network the files will live.",
     "signin": "Sign in to the online service first.",
     "server": "Choose your Puppet Master first.",
@@ -404,12 +406,23 @@
       "lead": "Nothing on this computer is replaced without asking.",
       "kit": {
         "title": "A Recovery Kit file",
-        "sub": "The file you saved when you set up backups"
+        "sub": "It knows where the backup is, and unlocks it"
       },
+      "or": "No Recovery Kit file? Point to the backup itself:",
+      "kitFile": "In {folder} · for the backup on {where}",
+      "kitReads": "This kit says the backup is on {where}, and it unlocks it: no recovery phrase to type.",
+      "kitLooked": "Found where Recovery Kits are usually kept: Downloads, Documents and the Desktop.",
+      "kitNone": "No Recovery Kit file here. Point to the backup itself below.",
       "folder": {
         "title": "A folder on this computer",
         "sub": "Or a drive you plugged in"
       },
+      "folderDrive": "On a plugged-in drive · {path}",
+      "folderHere": "On this computer · {path}",
+      "folderElse": "It's somewhere else",
+      "folderFound": "Show the folders found",
+      "folderLabel": "Where the backup folder is",
+      "folderHint": "Like /Volumes/My Drive/Puppet Master",
       "nas": {
         "title": "A NAS or another computer",
         "sub": "Uses a secure connection (SSH)"
@@ -423,6 +436,7 @@
       "eyebrow": "Restore",
       "title": "Unlock the backup",
       "lead": "Enter the recovery phrase from your Recovery Kit. It is used once and never saved.",
+      "leadAt": "The backup on {where} is locked. Enter the recovery phrase from your Recovery Kit. It is used once and never saved.",
       "label": "Recovery phrase",
       "hint": "Six words, like: river candle orbit maple quiet lantern",
       "wrong": "That phrase doesn't unlock this backup."
@@ -431,6 +445,7 @@
       "eyebrow": "Restore",
       "title": "Choose what to bring back",
       "lead": "Pick the copy you want.",
+      "leadAt": "Found on {where}. Pick the copy you want.",
       "full": "Everything from {label}",
       "project": "{project} from {where}"
     },
@@ -1209,9 +1224,10 @@
     "smb": {
       "eyebrow": "Shared folder",
       "title": "Sign in to the shared folder",
-      "lead": "Puppet Master checks it can read the folder. Your sign-in is kept in the system keychain.",
+      "lead": "Puppet Master checks it can read the folder.",
       "user": "Username",
       "password": "Password",
+      "passwordHint": "Your computer keeps it in its keychain, as it does for any shared folder. Puppet Master never stores it.",
       "check": "Check access",
       "phases": {
         "mount": "Opening the shared folder",

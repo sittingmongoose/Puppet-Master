@@ -95,9 +95,17 @@
 #pm-o55-onboarding .pst-bubble.pst-hush { opacity: 0; transition: opacity .25s; }
 #pm-o55-onboarding .pst-bt-off { visibility: hidden; }
 @keyframes pstBubble { from { opacity: 0; scale: .6; } to { opacity: 1; scale: 1; } }
-#pm-o55-onboarding .pst-bubble::after { content: ''; position: absolute; width: 10px; height: 10px; background: var(--bb); border: inherit; border-width: 0; }
-#pm-o55-onboarding .pst-bubble[data-side="down"]::after { left: var(--tx, 30px); bottom: -5px; translate: -50% 0; rotate: 45deg; border-right: var(--bw, 0) solid var(--bl); border-bottom: var(--bw, 0) solid var(--bl); }
-#pm-o55-onboarding .pst-bubble[data-side="left"]::after { top: var(--ty, 16px); left: -5px; translate: 0 -50%; rotate: 45deg; border-left: var(--bw, 0) solid var(--bl); border-bottom: var(--bw, 0) solid var(--bl); }
+/* The tail comes out of the bubble (Jared, QA round 2, Q10): one triangle in the bubble's fill that starts on the
+   bubble's own edge and covers its line where the tail joins, and behind it one triangle a line wider in the bubble's
+   line colour, so the tail's two sides carry the bubble's border. Nothing is drawn over the bubble itself (it was a
+   diamond whose top half showed through Glass). The same shape in every look; NieR's dialogue box has no tail. */
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble::before, #pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble::after { content: ''; position: absolute; pointer-events: none; }
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble::after { background: var(--bb); }
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble::before { background: var(--bl, transparent); }
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="down"]::after { left: var(--tx, 30px); top: 100%; width: 14px; height: calc(8px + var(--bw, 0px)); margin-top: calc(-1 * var(--bw, 0px)); translate: -50% 0; clip-path: polygon(0 0, 100% 0, 50% 100%); }
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="down"]::before { left: var(--tx, 30px); top: 100%; width: calc(14px + 2.64 * var(--bw, 0px)); height: calc(8px + 2.54 * var(--bw, 0px)); margin-top: calc(-1 * var(--bw, 0px)); translate: -50% 0; clip-path: polygon(0 0, 100% 0, 50% 100%); }
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="left"]::after { top: var(--ty, 16px); right: 100%; height: 14px; width: calc(8px + var(--bw, 0px)); margin-right: calc(-1 * var(--bw, 0px)); translate: 0 -50%; clip-path: polygon(100% 0, 100% 100%, 0 50%); }
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="left"]::before { top: var(--ty, 16px); right: 100%; height: calc(14px + 2.64 * var(--bw, 0px)); width: calc(8px + 2.54 * var(--bw, 0px)); margin-right: calc(-1 * var(--bw, 0px)); translate: 0 -50%; clip-path: polygon(100% 0, 100% 100%, 0 50%); }
 #pm-o55-onboarding .pst:not([data-layout="portrait"]) .pst-bubble { font-size: 12px; padding: 6px 10px; max-width: min(56%, 230px); }
 #pm-o55-onboarding .pst[data-layout="compact"] .pst-ntop, #pm-o55-onboarding .pst[data-layout="compact"] .pst-term-top span:last-child { display: none; }
 #pm-o55-onboarding .pst[data-layout="compact"] .pst-nlab { gap: 10px; padding: 3px 6px; }
@@ -106,7 +114,7 @@
 /* Glass Dark's speech and note are smoked glass: the wallpaper's bright parts showed through the clear glass behind white
    words (2.3:1, Astra M09); the light scheme keeps its frosted white */
 #pm-o55-onboarding .pst[data-fam="glass"] .pst-bubble { --pst-font: 'Inter', system-ui, sans-serif; --bb: rgba(12, 16, 32, .64); --bl: rgba(255, 255, 255, .45); --bw: 1px; font-weight: 600; color: #f6f8fc; background: rgba(12, 16, 32, .64); border: 1px solid rgba(255, 255, 255, .45); border-radius: 14px; backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 8px 22px rgba(0, 2, 12, .35); }
-#pm-o55-onboarding .pst[data-fam="glass"][data-scheme="light"] .pst-bubble { --bb: rgba(255, 255, 255, .78); --bl: rgba(255, 255, 255, .95); color: #0c0f15; background: rgba(255, 255, 255, .62); border-color: rgba(255, 255, 255, .95); box-shadow: inset 0 1px 0 #fff, 0 8px 22px rgba(30, 45, 90, .18); }
+#pm-o55-onboarding .pst[data-fam="glass"][data-scheme="light"] .pst-bubble { --bb: rgba(255, 255, 255, .62); --bl: rgba(255, 255, 255, .95); color: #0c0f15; background: rgba(255, 255, 255, .62); border-color: rgba(255, 255, 255, .95); box-shadow: inset 0 1px 0 #fff, 0 8px 22px rgba(30, 45, 90, .18); }
 #pm-o55-onboarding .pst[data-fam="basic"] .pst-bubble { --pst-font: 'Inter', system-ui, sans-serif; --bl: #c4c4c4; --bw: 1px; font-weight: 600; border-radius: 6px; background: var(--bb); color: #1a1a1a; border: 1px solid #c4c4c4; box-shadow: 0 2px 8px rgba(0, 0, 0, .1); }
 #pm-o55-onboarding .pst[data-fam="basic"][data-scheme="dark"] .pst-bubble { --bb: #2d2d2d; --bl: #424242; color: #e8e8e8; border-color: #424242; }
 /* --------------------------------------------- Retro: the monitor and its tube */
