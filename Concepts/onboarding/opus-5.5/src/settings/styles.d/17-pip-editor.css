@@ -1,0 +1,113 @@
+/* O55 · Pip's parts editor (kit.d/29-pip-editor.js; SSYS-056; PM7 build, lane chatpip). It sits in the Settings side
+   sheet and in a body-level dialog (.pipe-host), and uses Settings' own tokens (--k3-*), so it reads in every look and
+   in ink and parchment under NieR Mode. The dialog maps --k3-* onto the page tokens the sheet itself uses, the way
+   NieR's editor host does. The preview stage is a small chat canvas (.pm56-host), so its team is drawn and painted by
+   the chat. Nothing here moves on its own; state changes are short colour transitions. No pills, no side colour bars. */
+
+.pipe-host {
+  --k3-bg-0: var(--background);
+  --k3-bg-1: var(--surface-alt);
+  --k3-bg-2: var(--surface);
+  --k3-surface-0: var(--surface);
+  --k3-surface-1: var(--surface-elevated, var(--surface));
+  --k3-surface-2: var(--surface-alt);
+  --k3-line: var(--border);
+  --k3-line-strong: var(--border);
+  --k3-text-1: var(--text-primary);
+  --k3-text-2: var(--text-secondary);
+  --k3-text-3: var(--text-muted);
+  color: var(--text-primary);
+  font-family: var(--body-font);
+}
+:is(#panel-settings, .pipe-host) .pipe { display: grid; gap: 16px; color: var(--k3-text-1); --pipe-accent: var(--accent-primary, var(--k3-text-1)); }
+:is(#panel-settings, .pipe-host) .pipe button { font: inherit; color: inherit; }
+
+/* ---------- the row's summary (Customize Pip) ---------- */
+:is(#panel-settings, .pipe-host) .pipe-open .pipe-rowcells { display: grid; grid-template-columns: repeat(25, 1fr); gap: 2px; width: 150px; height: 6px; margin-top: 5px; }
+:is(#panel-settings, .pipe-host) .pipe-open .pipe-rowcells > i { border-radius: 1px; background: color-mix(in srgb, var(--k3-text-1) 16%, transparent); }
+:is(#panel-settings, .pipe-host) .pipe-open .pipe-rowcells > i.on { background: var(--accent-primary, var(--k3-text-1)); }
+
+/* ---------- the top: the preview stage, the meter, the presets, Play ---------- */
+:is(#panel-settings, .pipe-host) .pipe-top { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; align-items: stretch; }
+:is(#panel-settings, .pipe-host) .pipe-stage { display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 6px; min-height: 150px; padding: 12px 10px; border-radius: 12px; border: 1px solid var(--k3-line); }
+/* the Settings side sheet is narrower than the dialog: the team takes the whole width above the meter and presets */
+#panel-settings .pipe-top { grid-template-columns: 1fr; }
+:is(#panel-settings, .pipe-host) .pipe-seat { margin: 0; display: grid; justify-items: center; gap: 6px; min-width: 60px; }
+:is(#panel-settings, .pipe-host) .pipe-stage .pipe-seat .pmx-mark[data-size] { --pmx-mark-size: 54px; }
+:is(#panel-settings, .pipe-host) .pipe-seat figcaption { font-size: 12px; font-weight: 600; text-align: center; line-height: 1.25; color: var(--text); }
+:is(#panel-settings, .pipe-host) .pipe-seat figcaption small { display: block; font-weight: 400; font-size: 11px; color: var(--muted); }
+:is(#panel-settings, .pipe-host) .pipe-side { display: grid; gap: 10px; align-content: start; }
+:is(#panel-settings, .pipe-host) .pipe-meter-head { display: flex; justify-content: space-between; font-size: 12px; color: var(--k3-text-2); margin-bottom: 6px; }
+:is(#panel-settings, .pipe-host) .pipe-meter-head b { color: var(--k3-text-1); font-weight: 650; }
+:is(#panel-settings, .pipe-host) .pipe-meter-cells { display: grid; grid-template-columns: repeat(25, 1fr); gap: 2px; }
+:is(#panel-settings, .pipe-host) .pipe-meter-cells i { height: 8px; border-radius: 2px; background: var(--k3-line); transition: background-color 120ms linear; }
+:is(#panel-settings, .pipe-host) .pipe-meter-cells i.on { background: var(--pipe-accent); }
+:is(#panel-settings, .pipe-host) .pipe-presets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+:is(#panel-settings, .pipe-host) .pipe-preset { display: grid; gap: 2px; text-align: left; padding: 7px 10px; border-radius: 9px; border: 1px solid var(--k3-line); background: transparent; cursor: pointer; transition: border-color 120ms linear; }
+:is(#panel-settings, .pipe-host) .pipe-preset span { font-size: 13px; font-weight: 600; }
+:is(#panel-settings, .pipe-host) .pipe-preset small { font-size: 11px; color: var(--k3-text-2); }
+:is(#panel-settings, .pipe-host) .pipe-preset:hover { border-color: var(--k3-text-3); }
+:is(#panel-settings, .pipe-host) .pipe-preset[aria-pressed="true"] { border-color: var(--pipe-accent); box-shadow: inset 0 0 0 1px var(--pipe-accent); }
+:is(#panel-settings, .pipe-host) .pipe-play { justify-self: start; }
+:is(#panel-settings, .pipe-host) .pipe-play[aria-disabled="true"] { opacity: .55; cursor: default; }
+:is(#panel-settings, .pipe-host) .pipe-play-why { margin: 0; font-size: 11.5px; color: var(--k3-text-2); }
+:is(#panel-settings, .pipe-host) .pipe-play-why:empty { display: none; }
+:is(#panel-settings, .pipe-host) .pipe-reach { margin: 0; font-size: 12px; line-height: 1.5; color: var(--k3-text-2); max-width: 70ch; }
+
+/* ---------- the groups and their chips ---------- */
+:is(#panel-settings, .pipe-host) .pipe-group { display: grid; gap: 8px; }
+:is(#panel-settings, .pipe-host) .pipe-ghead { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--k3-line); padding-bottom: 4px; }
+:is(#panel-settings, .pipe-host) .pipe-ghead h4 { margin: 0; font-size: 13px; font-weight: 650; }
+:is(#panel-settings, .pipe-host) .pipe-gcount { font-size: 12px; color: var(--k3-text-2); }
+:is(#panel-settings, .pipe-host) .pipe-note { margin: 0; font-size: 12px; color: var(--k3-text-2); }
+:is(#panel-settings, .pipe-host) .pipe:not([data-still]) .pipe-motion-note { display: none; }
+:is(#panel-settings, .pipe-host) .pipe-chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+:is(#panel-settings, .pipe-host) .pipe-chip { display: grid; gap: 4px; align-content: start; text-align: left; padding: 9px 11px; border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--k3-line); background: transparent; transition: border-color 120ms linear, background-color 120ms linear; }
+:is(#panel-settings, .pipe-host) .pipe-chip:hover { border-color: var(--k3-text-3); }
+:is(#panel-settings, .pipe-host) .pipe-chip-name { font-size: 13px; font-weight: 600; }
+:is(#panel-settings, .pipe-host) .pipe-chip-help { font-size: 11.5px; line-height: 1.35; color: var(--k3-text-2); }
+:is(#panel-settings, .pipe-host) .pipe-chip-foot { display: flex; justify-content: space-between; font-size: 11px; color: var(--k3-text-2); margin-top: 2px; }
+:is(#panel-settings, .pipe-host) .pipe-chip-state { font-weight: 650; }
+:is(#panel-settings, .pipe-host) .pipe-chip[aria-checked="true"] { border-color: color-mix(in srgb, var(--pipe-accent) 55%, transparent); background: color-mix(in srgb, var(--pipe-accent) 9%, transparent); }
+:is(#panel-settings, .pipe-host) .pipe-chip[aria-checked="true"] .pipe-chip-state { color: var(--pipe-accent); }
+:is(#panel-settings, .pipe-host) :is(.pipe-chip, .pipe-preset):focus-visible { outline: 2px solid var(--pipe-accent); outline-offset: 2px; }
+/* a still look's motion parts read as kept, not lost */
+:is(#panel-settings, .pipe-host) .pipe[data-still] [data-pipe-group="Motion"] .pipe-chip[aria-checked="true"] { background: transparent; }
+/* Retro and NieR keep their square corners */
+:is(html[data-o55-nier="on"], html[data-theme^="retro"]) :is(#panel-settings, .pipe-host) :is(.pipe-chip, .pipe-preset, .pipe-stage, .pipe-meter-cells i, .pipe-open .pipe-rowcells > i) { border-radius: 0; }
+html[data-o55-nier="on"] :is(#panel-settings, .pipe-host) .pipe { --pipe-accent: var(--o55-nier-ink, var(--k3-text-1)); }
+@media (max-width: 820px) {
+  :is(#panel-settings, .pipe-host) .pipe-top { grid-template-columns: 1fr; }
+}
+html[data-motion="reduced"] :is(#panel-settings, .pipe-host) :is(.pipe-chip, .pipe-preset, .pipe-meter-cells i) { transition: none; }
+@media (prefers-reduced-motion: reduce) { .pipe-host :is(.pipe-chip, .pipe-preset, .pipe-meter-cells i) { transition: none; } }
+
+/* ---------- the dialog (the wand's "Pip…", the theme menu's "Customize Pip…") ---------- */
+.pipe-pop { position: fixed; inset: 0; display: grid; place-items: center; }
+.pipe-pop-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--background) 62%, transparent); opacity: 0; transition: opacity 160ms ease-out; }
+.pipe-pop-dialog { position: relative; display: flex; flex-direction: column; width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 64px);
+  /* the look's raised surface over its own opaque ground, so a translucent Glass surface never shows the page through */
+  border: 1px solid var(--border); border-radius: var(--radius-lg, 14px); background: linear-gradient(var(--surface-elevated, var(--surface)), var(--surface-elevated, var(--surface))), var(--background); box-shadow: 0 24px 60px rgb(0 0 0 / .32);
+  opacity: 0; transform: translateY(8px) scale(.985); transition: opacity 160ms ease-out, transform 200ms cubic-bezier(.2, .8, .3, 1); }
+.pipe-pop[data-open="true"] .pipe-pop-scrim { opacity: 1; }
+.pipe-pop[data-open="true"] .pipe-pop-dialog { opacity: 1; transform: none; }
+.pipe-pop-head { display: flex; align-items: flex-start; gap: 12px; padding: 16px 18px 12px; border-bottom: 1px solid var(--border); }
+.pipe-pop-titles { flex: 1 1 auto; min-width: 0; }
+.pipe-pop-eye { margin: 0 0 2px; font-size: 11px; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--text-muted); }
+.pipe-pop-title { margin: 0; font-size: 18px; font-weight: 650; color: var(--text-primary); }
+.pipe-pop-lead { margin: 6px 0 0; font-size: 13px; line-height: 1.6; color: var(--text-secondary); max-width: 64ch; }
+.pipe-pop-x { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border: 0; border-radius: 8px; background: none; color: var(--text-secondary); cursor: pointer; }
+.pipe-pop-x:hover { background: var(--surface-alt, var(--surface)); color: var(--text-primary); }
+.pipe-pop-body { flex: 1 1 auto; overflow: auto; padding: 16px 18px; }
+.pipe-pop-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 18px; border-top: 1px solid var(--border); }
+.pipe-host .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 30px; padding: 0 12px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--surface); color: var(--text-primary); font: 600 12.5px/1.3 var(--body-font, inherit); cursor: pointer; white-space: nowrap; }
+.pipe-host .btn:hover { border-color: var(--text-muted); }
+.pipe-host .btn.primary { background: var(--accent-primary, var(--text-primary)); border-color: transparent; color: var(--on-accent, var(--background)); }
+html[data-o55-nier="on"] .pipe-pop-dialog { border-radius: 0; border-color: var(--o55-nier-ink, var(--border)); box-shadow: none; }
+html[data-o55-nier="on"] :is(.pipe-pop-x, .pipe-host .btn) { border-radius: 0; }
+html[data-o55-nier="on"] .pipe-host .btn.primary { background: var(--o55-nier-ink, var(--text-primary)); color: var(--o55-nier-on-ink, var(--background)); }
+html[data-theme^="retro"] :is(.pipe-pop-dialog, .pipe-pop-x, .pipe-host .btn) { border-radius: 0; }
+html[data-motion="reduced"] :is(.pipe-pop-scrim, .pipe-pop-dialog) { transition: none; }
+@media (prefers-reduced-motion: reduce) { :is(.pipe-pop-scrim, .pipe-pop-dialog) { transition: none; } }

@@ -1193,7 +1193,7 @@
        neither ever squeezes the sentence into a narrow column. The " · " stays in the text for screen readers. */
     /* W4: Pip in its hard hat is the build's mark: asleep while the build waits for its window (or is paused), happy
        once it is built, wondering when it needs you, its thinking dots while it runs */
-    var pipMark=SH.pmxPip?SH.pmxPip({prop:'hardhat',mood:{live:'working',done:'happy',update:'wonder'}[tone]||'sleep',size:22,detail:true,tone:tone==='update'?'warning':'',cls:'plan-sched-pip'}):'';
+    var pipMark=SH.pmxPip?SH.pmxPip({prop:'hardhat',mood:{live:'working',done:'happy',update:'wonder'}[tone]||'sleep',size:22,detail:true,tone:tone==='update'?'warning':'',cls:'plan-sched-pip',part:'plans'}):'';
     return '<div class="plan-schedule-line" data-plan-schedule="'+id+'" data-tone="'+tone+'"><span class="plan-sched-mark"'+(pipMark?' data-pip="1"':'')+'>'+(pipMark||SH.pmxKindMark('build-at',16))+'</span>'+
       '<p class="plan-sched-say"><b>'+lead+'</b>'+(say?'<span class="plan-sched-sep"> · </span><span class="plan-sched-detail">'+say+'</span>':'')+foot+'</p>'+
       '<span class="plan-sched-acts"><button type="button" class="text-button pmx-act" data-action="sched-open-plan-record" data-id="'+id+'">'+(b.state==='invalidated'&&b.pendingVersion!=null?'Review':'Details')+'</button></span>'+

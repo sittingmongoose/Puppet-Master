@@ -3756,7 +3756,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
 
   function wandHead(wand){
-    const S=window.PM56_SHELL, pip=S&&S.pmxPip?S.pmxPip({mood:'watch',size:22,cls:'menu-head-pip'}):'';
+    const S=window.PM56_SHELL, pip=S&&S.pmxPip?S.pmxPip({mood:'watch',size:22,cls:'menu-head-pip',part:'wand-menu'}):'';
     return pip?`<span class="menu-head-wand" data-pip="1">${pip}${wand}</span>`:wand;
   }
   function renderWandMenu(){
