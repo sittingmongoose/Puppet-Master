@@ -4589,21 +4589,8 @@ body.pm-resizing #projectMenuBtn .pm6-tb-project-badge .nx-st::before { animatio
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       box-shadow: var(--elev-3);
-      /* Sprout-in: body-appended fixed menu starts hidden; the builders add
-         .is-open one rAF after append so the transition reliably runs */
-      opacity: 0;
-      transform: translateY(-4px) scale(0.98);
-      transform-origin: top left;
-      transition: opacity 140ms ease, transform 180ms cubic-bezier(.2, .9, .3, 1.05);
+      /* it opens and closes as a menu sprout (.pm-sprout, PM6_SPROUT; base/style/pm7-sprout.css) */
     }
-    .pm-ed-overflow-menu.is-open {
-      opacity: 1;
-      transform: none;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .pm-ed-overflow-menu { transition: none; }
-    }
-    [data-motion="reduced"] .pm-ed-overflow-menu { transition: none; }
     .pm-ed-overflow-menu button {
       text-align: left;
       padding: 6px 12px;
@@ -11669,71 +11656,6 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
   top: 0;
 }
 .pm-home-surface[data-pm-home-collapsed="true"] > .pm-home-resize-handle { display: none; }
-.pm-home-portal {
-  position: fixed;
-  z-index: 10080;
-  box-sizing: border-box;
-  padding: 5px 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--surface-elevated);
-  box-shadow: var(--elev-3);
-  color: var(--text-primary);
-  font-family: var(--body-font);
-  --pm6-sprout-ox: 88%;
-  --pm6-sprout-oy: 0%;
-  --pm6-sprout-tx: 0px;
-  --pm6-sprout-ty: -10px;
-  --pm6-sprout-sx: .72;
-  --pm6-sprout-sy: .48;
-  transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0) scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-  transition: opacity 140ms var(--ease-out), transform 260ms cubic-bezier(.22,1.3,.36,1), visibility 0s linear 260ms;
-}
-.pm-home-menu-portal,
-.pm-home-surface-menu { width: 260px; max-height: min(420px, 70vh); overflow: auto; }
-.pm-home-flyout-portal { width: 148px; }
-.pm-home-portal.is-open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translate3d(0,0,0) scale3d(1,1,1);
-  transition: opacity 130ms var(--ease-out), transform 260ms cubic-bezier(.22,1.3,.36,1), visibility 0s;
-}
-.pm-home-portal.is-closing {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-.pm-home-menu-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  min-height: 32px;
-  padding: 7px 11px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--text-secondary);
-  font: 600 11px/1.3 var(--body-font);
-  letter-spacing: .01em;
-  text-align: left;
-  white-space: nowrap;
-  cursor: pointer;
-}
-.pm-home-menu-row:hover,
-.pm-home-menu-row:focus-visible,
-.pm-home-menu-row[aria-expanded="true"] { background: var(--surface); color: var(--text-primary); outline: none; }
-.pm-home-menu-row:disabled,
-.pm-home-menu-row[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
-.pm-home-menu-row svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.6; }
-.pm-home-menu-separator { height: 1px; margin: 4px 0; background: var(--border-light); }
-.pm-home-menu-danger { color: var(--accent-error); }
 /* Direct-manipulation move (u11-prism vocabulary). The held surface is a fixed
    clone tracking the pointer 1:1; the slot it left becomes a real in-flow
    placeholder inside the target host, and every neighbour FLIPs to its new
@@ -11888,10 +11810,6 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
   .pm-home-host[data-pm-home-host="dock_right"] { flex-direction: row; }
   .pm-home-host[data-pm-home-host="home_main"] > .pm-home-surface { flex: 0 0 auto; min-width: min(84vw, 250px); }
 }
-@media (prefers-reduced-motion: reduce) {
-  .pm-home-portal { transition-duration: 0s !important; }
-}
-[data-motion="reduced"] .pm-home-portal { transition-duration: 0s !important; }
 </style>
 <!-- PM7 SECTION 6/32: projects-css - projects page styles (style#pm6-css-projects) -->
 <style id="pm6-css-projects">
@@ -15659,8 +15577,9 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
   transition-duration: var(--pm6-sprout-fade-in, 140ms), 300ms, 0s, 340ms;
   transition-timing-function: var(--pm6-sprout-fade-ease, var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))),
     cubic-bezier(0.22, 1.55, 0.36, 1), linear,
-    /* springy height for search-filter resize bounce */
-    cubic-bezier(0.22, 1.72, 0.36, 1);
+    /* springy height for search-filter resize bounce; a shrink takes it without the overshoot (the owner's resize sets
+       --pm6-sprout-height-ease), so the box never dips below its content */
+    var(--pm6-sprout-height-ease, cubic-bezier(0.22, 1.72, 0.36, 1));
   transition-delay: 0s;
 }
 /* the close: solid through most of the collapse, then a late, tiny fade, into the same corner the open set */
@@ -15716,7 +15635,7 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
 .pm6-chat-effort-popout-portal.is-open {
   transition-duration: var(--pm6-sprout-fade-in, 140ms), 300ms, 0s, 360ms;
   transition-timing-function: var(--pm6-sprout-fade-ease, var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))),
-    cubic-bezier(0.22, 1.55, 0.36, 1), linear, cubic-bezier(0.22, 1.78, 0.36, 1);
+    cubic-bezier(0.22, 1.55, 0.36, 1), linear, var(--pm6-sprout-height-ease, cubic-bezier(0.22, 1.78, 0.36, 1));
 }
 /* Reduce motion: instant show and hide, the same end state (Settings' switch, and the system setting for .pm-sprout) */
 [data-motion="reduced"] .pm-sprout,
@@ -19907,9 +19826,6 @@ html[data-theme^="glass"] :where(.dropdown-menu):not(#t7:not(*)):not(.page-tabs)
 html[data-theme^="glass"] :where(.rs-panel):not(#t7:not(*)):not(.page-tabs),
 html[data-theme^="glass"] :where(.pm7ctx-pop):not(#t7:not(*)):not(.page-tabs),
 html[data-theme^="glass"] :where(.pm7ctx-drawer):not(#t7:not(*)):not(.page-tabs),
-html[data-theme^="glass"] :where(.pm-home-portal):not(#t7:not(*)):not(.page-tabs),
-html[data-theme^="glass"] :where(.pm-home-flyout-portal):not(#t7:not(*)):not(.page-tabs),
-html[data-theme^="glass"] :where(.pm-home-surface-menu):not(#t7:not(*)):not(.page-tabs),
 html[data-theme^="glass"] :where(.s4-bloom):not(#t7:not(*)):not(.page-tabs),
 html[data-theme^="glass"] :where(.s4-panel):not(#t7:not(*)):not(.page-tabs),
 html[data-theme^="glass"] :where(.s4-psm):not(#t7:not(*)):not(.page-tabs),
@@ -23928,7 +23844,6 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm-sprout),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-tb-menu),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-chat-more-menu),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm51-popout),
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm-home-portal),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-chat-pt-popout-portal),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-chat-persona-popout-portal),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-chat-effort-popout-portal),
@@ -23948,7 +23863,6 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm-sprout):
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-tb-menu):is(.is-open, .open):not(.is-closing),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-chat-more-menu):is(.is-open, .open):not(.is-closing),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm51-popout):is(.is-open, .open):not(.is-closing),
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm-home-portal):is(.is-open, .open):not(.is-closing),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-chat-pt-popout-portal):is(.is-open, .open):not(.is-closing),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-chat-persona-popout-portal):is(.is-open, .open):not(.is-closing),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-chat-effort-popout-portal):is(.is-open, .open):not(.is-closing),
@@ -24132,7 +24046,6 @@ html[data-o55-nier-parts~="diamonds"] :is(t7.t7.t7:not(*)) { animation: none !im
 html[data-o55-nier-parts~="slice"] :is(.pm6-tb-menu),
 html[data-o55-nier-parts~="slice"] :is(.pm6-chat-more-menu),
 html[data-o55-nier-parts~="slice"] :is(.pm51-popout),
-html[data-o55-nier-parts~="slice"] :is(.pm-home-portal),
 html[data-o55-nier-parts~="slice"] :is(.pm6-chat-pt-popout-portal),
 html[data-o55-nier-parts~="slice"] :is(.pm6-chat-persona-popout-portal),
 html[data-o55-nier-parts~="slice"] :is(.pm6-chat-effort-popout-portal),
@@ -53259,8 +53172,6 @@ div.pm56-host[data-theme^="glass"]::before{ content:"";position:fixed;inset:-25%
 .pm56-host::-webkit-scrollbar-track, .pm56-host *::-webkit-scrollbar-track{background:transparent}
 .pm56-host::-webkit-scrollbar-thumb, .pm56-host *::-webkit-scrollbar-thumb{background:var(--surface-4);border:2px solid transparent;background-clip:padding-box;border-radius:8px}
 .pm56-host::-webkit-scrollbar-thumb:hover, .pm56-host *::-webkit-scrollbar-thumb:hover{background:var(--border-strong);border:2px solid transparent;background-clip:padding-box}
-@keyframes menu-pop{0%{opacity:0;transform:translateY(7px) scale(.94)}55%{opacity:1}100%{opacity:1;transform:none}}
-@keyframes sidecar-pop{0%{opacity:0;transform:translateX(calc(var(--side-dir,1)*-12px)) scale(.96)}100%{opacity:1;transform:none}}
 @keyframes drawer-in{0%{opacity:0;transform:translateX(30px) scale(.985)}100%{opacity:1;transform:none}}
 @keyframes history-in{0%{opacity:0;transform:translateX(24px)}100%{opacity:1;transform:none}}
 @keyframes dialog-in{0%{opacity:0;transform:translate(-50%,-47%) scale(.97)}100%{opacity:1;transform:translate(-50%,-50%)}}
@@ -144853,8 +144764,12 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
 
   /* body-appended picker (terminal overflow-menu pattern): row click
      promotes the tab into the bar, the per-row X closes it */
+  /* the overflow pickers open and close through the menu sprout (PM6_SPROUT); a closed one leaves the page */
+  function edSproutClose(menu) {
+    if (menu) window.PM6_SPROUT.close(menu, function () { if (menu.parentNode) menu.parentNode.removeChild(menu); });
+  }
   function edCloseOverflowMenu() {
-    if (edMenuEl && edMenuEl.parentNode) edMenuEl.parentNode.removeChild(edMenuEl);
+    edSproutClose(edMenuEl);
     edMenuEl = null;
     document.removeEventListener('click', edMenuOutside, true);
     var strip = edStrip();
@@ -144875,7 +144790,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     var chip = strip && strip.querySelector('.pm-ed-overflow');
     if (!chip) return;
     var menu = document.createElement('div');
-    menu.className = 'pm-ed-overflow-menu';
+    menu.className = 'pm-ed-overflow-menu pm-sprout';
     edHidden.forEach(function (path) {
       var row = document.createElement('button');
       row.type = 'button';
@@ -144904,10 +144819,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     menu.style.left = left + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     chip.classList.add('active');
-    /* sprout-in: let the hidden initial styles paint before opening */
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { menu.classList.add('is-open'); });
-    });
+    window.PM6_SPROUT.open(menu, null, chip, { display: false });
     edMenuEl = menu;
     document.addEventListener('click', edMenuOutside, true);
   }
@@ -145161,7 +145073,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     requestAnimationFrame(run);
   }
   function ed2CloseMenu() {
-    if (ed2MenuEl && ed2MenuEl.parentNode) ed2MenuEl.parentNode.removeChild(ed2MenuEl);
+    edSproutClose(ed2MenuEl);
     ed2MenuEl = null;
     document.removeEventListener('click', ed2MenuOutside, true);
     var strip = ed2Strip();
@@ -145181,7 +145093,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     var chip = strip && strip.querySelector('.pm-ed-overflow');
     if (!chip) return;
     var menu = document.createElement('div');
-    menu.className = 'pm-ed-overflow-menu';
+    menu.className = 'pm-ed-overflow-menu pm-sprout';
     ed2Hidden.forEach(function (tab) {
       var row = document.createElement('button');
       row.type = 'button';
@@ -145201,10 +145113,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     chip.classList.add('active');
-    /* sprout-in: let the hidden initial styles paint before opening */
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { menu.classList.add('is-open'); });
-    });
+    window.PM6_SPROUT.open(menu, null, chip, { display: false });
     ed2MenuEl = menu;
     document.addEventListener('click', ed2MenuOutside, true);
   }
@@ -145935,7 +145844,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
 
   function edGenericCloseMenu() {
     var menu = document.getElementById('pm-ed-generic-overflow-menu');
-    if (menu && menu.parentNode) menu.parentNode.removeChild(menu);
+    if (menu) { menu.removeAttribute('id'); edSproutClose(menu); }
     document.querySelectorAll('.editor-tabs .pm-ed-overflow.active').forEach(function (c) { c.classList.remove('active'); });
   }
 
@@ -145945,7 +145854,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     if (!hidden.length) return;
     var menu = document.createElement('div');
     menu.id = 'pm-ed-generic-overflow-menu';
-    menu.className = 'pm-ed-overflow-menu';
+    menu.className = 'pm-ed-overflow-menu pm-sprout';
     hidden.forEach(function (tab) {
       var row = document.createElement('button');
       row.type = 'button';
@@ -145980,10 +145889,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     chip.classList.add('active');
-    /* sprout-in: let the hidden initial styles paint before opening */
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { menu.classList.add('is-open'); });
-    });
+    window.PM6_SPROUT.open(menu, null, chip, { display: false });
     setTimeout(function () {
       document.addEventListener('click', function once(ev) {
         if (menu.contains(ev.target) || (ev.target.closest && ev.target.closest('.pm-ed-overflow'))) return;
@@ -150964,11 +150870,14 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
      isOpen(el)
      aim(el, anchor, origin)            pins the corner again (a flyout whose row moved)
      resize(el, mutate)                 runs mutate and springs the height from the old box to the new one, with the
-                                        size bounce (the search filter, an option count, a drill-in, a list that grew)
+                                        size bounce (the search filter, an option count, a drill-in, a list that grew);
+                                        a box that grows passes its new size and settles back, a box that shrinks
+                                        settles onto it without passing it, so it never cuts into its own content
      morph(el, from, to, opts)          for a surface that places itself (Home's plate): the box moves from one geometry
                                         to another ({ left, top, width, height }, px). A height-only change is the
-                                        contract's height spring with the size bounce (resize's motion, and none where a
-                                        look has no height spring); a change of width or place (a level drilled into)
+                                        contract's height spring with the size bounce (resize's motion, a shrink's
+                                        without the overshoot, and none where a look has no height spring); a change
+                                        of width or place (a level drilled into)
                                         takes opts.shape { duration, easing }, the surface's own level timing. Returns
                                         the Animation, or null when nothing moves
      bounce(el)                         the size bounce alone, for a surface that sets its new height itself
@@ -150987,7 +150896,12 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
   var doc = document, root = doc.documentElement;
   var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   var OWN_CLASS = ['is-open', 'is-closing', 'is-size-bounce'];
-  var OWN_VARS = ['--pm6-sprout-ox', '--pm6-sprout-oy', '--pm6-sprout-tx', '--pm6-sprout-ty', '--pm6-sprout-sx', '--pm6-sprout-sy'];
+  var OWN_VARS = ['--pm6-sprout-ox', '--pm6-sprout-oy', '--pm6-sprout-tx', '--pm6-sprout-ty', '--pm6-sprout-sx', '--pm6-sprout-sy',
+    '--pm6-sprout-height-ease'];
+  /* the height spring overshoots (y1 > 1): a box that grows passes its new size and settles back. A box that shrinks takes
+     the same curve without the overshoot (Astra r2 R1: a filter that leaves one row dipped below it and hid it), so it
+     never ends up smaller than its content on the way. The contract's height curve reads --pm6-sprout-height-ease. */
+  var SPRING = 'cubic-bezier(0.22, 1.72, 0.36, 1)', SETTLE = 'cubic-bezier(0.22, 1, 0.36, 1)';
   var CLOSING = { opacity: 1, transform: 1, scale: 1, translate: 1, visibility: 1 };
   var states = typeof WeakMap === 'function' ? new WeakMap() : null;
   var gen = 0;
@@ -151151,6 +151065,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       el.style.display = 'none';
       el.style.height = '';
       el.style.overflow = '';
+      el.style.removeProperty('--pm6-sprout-height-ease');
       var list = s.dones; s.dones = [];
       for (var i = 0; i < list.length; i++) list[i]();
     }
@@ -151184,11 +151099,14 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     if (Math.abs(endH - startH) < 0.5) {
       el.style.height = '';
       el.style.overflow = '';
+      el.style.removeProperty('--pm6-sprout-height-ease');
       return;
     }
     el.style.height = startH + 'px';
     void el.offsetHeight;
-    /* CSS height spring (y>1) overshoots past endH then settles: the search bounce */
+    /* CSS height spring (y>1) overshoots past endH then settles: the search bounce; a shrink settles without it */
+    if (endH < startH) el.style.setProperty('--pm6-sprout-height-ease', SETTLE);
+    else el.style.removeProperty('--pm6-sprout-height-ease');
     el.style.height = endH + 'px';
     el.classList.remove('is-size-bounce');
     void el.offsetWidth;
@@ -151203,6 +151121,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       if (s.hg !== hg) return;                      /* a later resize owns the height now */
       el.style.height = '';
       el.style.overflow = '';
+      el.style.removeProperty('--pm6-sprout-height-ease');
       el.classList.remove('is-size-bounce');
     }
     el.addEventListener('transitionend', clearH);
@@ -151241,9 +151160,10 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     }
     if (!moved) return null;
     if (shape && opts.shape) return track(el.animate([k0, k1], { duration: opts.shape.duration || 220, easing: opts.shape.easing || 'ease' }));
-    /* the height spring, as resize's: where the look's contract has none (NieR's Slice part) the box just takes its size */
+    /* the height spring, as resize's (a shrink without the overshoot): where the look's contract has none (NieR's Slice
+       part) the box just takes its size */
     if (!endOf(el, { height: 1 })) return null;
-    var anim = track(el.animate([k0, k1], { duration: 340, easing: 'cubic-bezier(0.22, 1.72, 0.36, 1)' }));
+    var anim = track(el.animate([k0, k1], { duration: 340, easing: b.height < a.height - 2 ? SETTLE : SPRING }));
     bounce(el);
     return anim;
   }
