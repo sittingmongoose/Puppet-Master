@@ -15,8 +15,9 @@ html[data-o55-open] body > [data-o55-held], html[data-o55-open] body > [data-o55
 /* NieR Mode's diamond loaders (styles.d/14-nier-parts.css) set their animation with an !important shorthand, which
    resets the play state and outranks the line above: under the window they are paused here by name, so ticking NieR
    Mode in the window never wakes the app beneath (performance rule 6; review W9).
-   The impossible t7.t7.t7:not(*) arm preserves the retired spinner's (0,2,1) specificity. */
-html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .thread-working-pulse, .pm6-spin svg, .pml-nier, t7.t7.t7:not(*)) { animation-play-state: paused !important; }
+   The impossible t7.t7.t7:not(*) arm preserves the retired spinners' (0,2,1) specificity (the Wizard's and the
+   Orchestrator's rings and Projects' .pm6-spin are the system loader now, held here as .pml-nier). */
+html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(.o55-spin, .thread-working-pulse, .pml-nier, t7.t7.t7:not(*)) { animation-play-state: paused !important; }
 /* the solid backdrop (60-ui-core.js): on a computer that cannot composite the app beneath at full rate, the app is
    not drawn at all while the window is open; the scrim then lies over the page's own ground */
 html[data-o55-open][data-o55-solid] body > [data-o55-held] { visibility: hidden !important; }
@@ -82,6 +83,13 @@ html:not([data-o55-nier="on"]) :is(#pm-o55-onboarding > .o55-win, .o55t-root > *
 .o55-railitem[data-state="current"] { color: var(--text-primary); font-weight: 650; }
 .o55-railitem[data-state="current"] .o55-railnode { border-color: var(--o55-accent); background: var(--o55-win-bg); box-shadow: 0 0 0 4px color-mix(in srgb, var(--o55-accent) 24%, transparent); }
 .o55-railstring { display: none; }
+/* a finished chapter's name (and its bead) takes you back to it: the name is a button that keeps the label's look */
+.o55-railjump { margin: 0; padding: 0; border: 0; background: none; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; line-height: inherit; cursor: pointer; border-radius: 3px; }
+.o55-railjump:hover { color: var(--text-primary); text-decoration: underline; text-underline-offset: 3px; }
+.o55-railjump:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 3px; }
+/* (the bead answers a press but keeps the default cursor: a pointer-cursor rule for it slowed the app's chat-edge drag
+   with the window closed, frame gap p95 100 ms -> 300 ms in tools/perf/resize_perf.py, consistently across builds) */
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-railjump { display: block; position: absolute; inset: 0; overflow: hidden; color: transparent; text-decoration: none; }
 /* rail per family */
 #pm-o55-onboarding[data-family="basic"] .o55-railitem { --o55-node-w: 9px; }
 #pm-o55-onboarding[data-family="basic"] .o55-railnode { border-radius: 2px; width: 9px; height: 9px; }
@@ -103,6 +111,12 @@ html:not([data-o55-nier="on"]) :is(#pm-o55-onboarding > .o55-win, .o55t-root > *
    is restyled by the main thread every frame) */
 #pm-o55-onboarding[data-family="retro"] .o55-railitem[data-state="current"] .o55-railnode { box-shadow: none; background: transparent; position: relative; }
 #pm-o55-onboarding[data-family="retro"] .o55-railitem[data-state="current"] .o55-railnode::after { content: ''; position: absolute; inset: 0; background: var(--o55-accent); animation: o55-pixblink 1s steps(1, end) infinite; }
+/* (the current chapter sits in the switchers' reverse-video chip, Liquid Glass's lens on the rail: its word and its
+   blinking square take the chip's ink, as the look's other switchers do; the screen's ink on the lime chip read
+   1.6:1 in Dark and 2.5:1 in Light) */
+html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-raillabel { color: var(--pm-switch-ink-on); }
+html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-railnode { border-color: var(--pm-switch-mark-on); }
+html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-railnode::after { background: var(--pm-switch-mark-on); }
 @keyframes o55-pixblink { 50% { opacity: 0; } }
 .o55-headctl { display: flex; align-items: center; gap: 4px; }
 .o55-iconbtn, .o55-sound { display: inline-flex; align-items: center; gap: 6px; height: 34px; min-width: 34px; justify-content: center; padding: 0 10px; border-radius: var(--o55-btn-r); border: 1px solid transparent;
@@ -204,6 +218,11 @@ html:not([data-o55-nier="on"]) :is(#pm-o55-onboarding > .o55-win, .o55t-root > *
   --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 94%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 88%, #000); }
 #pm-o55-onboarding[data-family="retro"][data-mode="light"] { --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 93%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 61%, #000); }
 .o55-check { width: 20px; height: 20px; border-radius: 50%; border: 1.6px solid var(--o55-line); transition: all 200ms ease; flex: none; }
+/* a card's radio circle keeps the last column whether or not the card has a tag, so every circle in a list lines up
+   (Astra m03: an untagged card's circle took the tag's column, a gap short of the tagged one's) */
+.o55-card > .o55-check { grid-column: 4; }
+.o55-card > .o55-tag { grid-column: 3; }
+.o55-card > .o55-cardtext:first-child { grid-column: 1 / 3; }
 .o55-on > .o55-check { border-color: var(--o55-accent); background: var(--o55-accent); box-shadow: inset 0 0 0 4px var(--o55-win-bg); }
 #pm-o55-onboarding[data-family="friendly"] .o55-card { border: 2px solid color-mix(in srgb, var(--o55-ink) 55%, transparent); box-shadow: 3px 4px 0 color-mix(in srgb, var(--text-primary) 12%, transparent); }
 #pm-o55-onboarding[data-family="friendly"] .o55-card.o55-on { border-color: var(--o55-ink); box-shadow: 4px 5px 0 color-mix(in srgb, var(--o55-accent) 70%, transparent); }
@@ -223,7 +242,7 @@ html:not([data-o55-nier="on"]) :is(#pm-o55-onboarding > .o55-win, .o55t-root > *
   color: var(--text-primary); cursor: pointer; text-align: left; font: inherit; transition: transform 200ms ease, border-color 200ms ease, box-shadow 220ms ease; }
 .o55-tile:hover { transform: translateY(-2px); }
 .o55-tile.o55-on { border-color: var(--o55-accent); box-shadow: inset 0 0 0 1px var(--o55-accent), 0 12px 26px -16px color-mix(in srgb, var(--o55-accent) 90%, transparent); }
-.o55-tileart { position: relative; display: block; height: 100px; border-radius: calc(var(--o55-card-r) * 0.7); overflow: hidden; background: var(--background); margin-bottom: 6px; }
+.o55-tileart { position: relative; display: block; height: var(--o55-tileart-h, 100px); border-radius: calc(var(--o55-card-r) * 0.7); overflow: hidden; background: var(--background); margin-bottom: 6px; }
 .o55-tilename { font: 700 14px/1.2 var(--body-font); padding: 0 4px; }
 /* (each look tile carries its own look's tokens; some looks' secondary ink is a tint that reads under 4.5:1 on a tile in
    another look's window, so a tile's line is its own text colour at 82%) */
@@ -369,7 +388,7 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 /* narrow + short windows: the stage becomes a band; nothing is hidden, every choice stays reachable */
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: 170px minmax(0, 1fr); }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-stage { border-right: 0; border-bottom: 1px solid var(--o55-line); }
-#pm-o55-onboarding[data-o55-layout="narrow"] .o55-raillabel { display: none; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-raillabel:not(.o55-railjump) { display: none; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-brand span, #pm-o55-onboarding[data-o55-layout="narrow"] .o55-close span { display: none; }
 #pm-o55-onboarding[data-o55-layout="narrow"] { --o55-pad: 22px; }
 /* at phone width Back is its chevron alone (its name stays for screen readers), so the primary keeps one line */
@@ -377,7 +396,7 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-back { padding-inline: 10px; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-back > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-#pm-o55-onboarding[data-o55-layout="narrow"] .o55-tileart { height: 84px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-tiles { --o55-tileart-h: 84px; }
 #pm-o55-onboarding[data-o55-layout="short"] .o55-body { grid-template-columns: minmax(220px, 30%) minmax(0, 1fr); }
 #pm-o55-onboarding[data-o55-layout="short"] .o55-content { padding-top: 20px; }
 @media (max-width: 560px) { .o55-win { width: calc(100vw - 16px); height: calc(100vh - 16px); } }
@@ -435,7 +454,7 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 .o55-lookmode { margin: -6px 0 2px; }
 .o55-keep { display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); }
 .o55-keep .o55-sg { color: var(--accent-lime); }
-#pm-o55-onboarding[data-family="retro"] .o55-tileart { height: 86px; }
+#pm-o55-onboarding[data-family="retro"] .o55-tiles { --o55-tileart-h: 86px; }
 
 /* ====================================================================================================== Ask Pip: ?
    Every choice's ? (61-components.js, O55.tips): at a card's right edge, past its radio circle, in a look tile's corner,
@@ -466,6 +485,9 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 #pm-o55-onboarding[data-family="retro"] .o55-opt-on > .o55-card + .o55-tipq:not([aria-expanded="true"]) { color: var(--o55-on-accent); border-color: var(--o55-on-accent); }
 #pm-o55-onboarding[data-family="retro"] .o55-opt-on > .o55-card + .o55-tipq[aria-expanded="true"] { color: var(--o55-accent); background: var(--o55-on-accent); border-color: var(--o55-on-accent); outline-color: var(--o55-on-accent); }
 #pm-o55-onboarding[data-family="friendly"] .o55-tipq { border-width: 2px; border-color: color-mix(in srgb, var(--o55-ink) 55%, transparent); color: var(--o55-ink); }
+/* (open, on its accent fill, the mark takes Friendly's dark ink in both modes: the ink above is the accent's own
+   brightness in Dark, Astra M09) */
+#pm-o55-onboarding[data-family="friendly"] .o55-tipq[aria-expanded="true"] { color: #1c1624; border-color: var(--o55-accent); }
 #pm-o55-onboarding[data-family="glass"] .o55-tipq { border-color: rgba(255, 255, 255, 0.34); background: rgba(255, 255, 255, 0.08); }
 #pm-o55-onboarding[data-family="glass"][data-mode="light"] .o55-tipq { border-color: rgba(40, 36, 80, 0.26); background: rgba(255, 255, 255, 0.55); }
 #pm-o55-onboarding[data-family="glass"] .o55-tipq[aria-expanded="true"] { background: var(--o55-accent); }
@@ -492,8 +514,10 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 #pm-o55-onboarding[data-family="retro"] .o55-explainer-h { font-family: var(--display-font); text-transform: uppercase; letter-spacing: 0.04em; }
 .o55-opt-tile { display: grid; }
 .o55-opt-tile > .o55-tile { height: 100%; }
-.o55-opt-tile > .o55-tile + .o55-tipq { position: absolute; right: 11px; bottom: 11px; }
-.o55-opt-tile > .o55-tile .o55-tilesub { padding-right: 26px; }
+/* (the ? sits on the name's line, so the look's line below keeps the tile's whole width and never wraps under it:
+   Muse m2, Retro's mono line wrapped and pushed the tiles past the first view) */
+.o55-opt-tile > .o55-tile + .o55-tipq { position: absolute; right: 11px; top: calc(var(--o55-tileart-h, 100px) + 16px); }
+.o55-opt-tile > .o55-tile .o55-tilename { padding-right: 26px; }
 .o55-step > .o55-tipq, .o55-crumbs > .o55-tipq, .o55-suggest > .o55-tipq, .o55-sublinks > .o55-tipq, .o55-checkline > .o55-tipq { width: 19px; height: 19px; font-size: 10.5px; margin-left: 4px; align-self: center; }
 .o55-explainer + .o55-explainer { margin-top: 0; }
 /* NieR Mode's row on Pick a look: its ? in the card's top corner, Adjust's beside Adjust at the bottom */
@@ -527,3 +551,5 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 /* the brand's Pip: 22 px, on the text's line */
 .o55-logo-pip { display: inline-grid; place-items: center; width: 22px; height: 22px; flex: none; }
 .o55-logo-pip > svg { display: block; width: 22px; height: 22px; }
+/* a wait's loader (L6) sits on the line like the mark it replaced */
+.o55-ldwrap { display: inline-flex; align-items: center; flex: none; }

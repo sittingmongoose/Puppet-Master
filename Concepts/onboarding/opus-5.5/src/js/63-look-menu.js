@@ -19,9 +19,10 @@
     },
     panel(attr) {
       const th = O55.theme();
-      const opt = (f) => `<button type="button" class="o55-lookopt${f === th.chosen ? ' o55-on' : ''}" ${attr}="lookFamily" data-arg="${f}" role="menuitemradio" aria-checked="${f === th.chosen}" data-pm-hover-exempt="true">`
+      const by = (id) => (attr === 'data-o55-do' && O55.tips ? O55.tips.described(id) : '');
+      const opt = (f) => `<button type="button" class="o55-lookopt${f === th.chosen ? ' o55-on' : ''}" ${attr}="lookFamily" data-arg="${f}" role="menuitemradio" aria-checked="${f === th.chosen}"${by('lookFamily:' + f)} data-pm-hover-exempt="true">`
         + `<span class="o55-lookswatch" data-theme="${f}-${th.mode}" aria-hidden="true"><i></i><i></i><i></i></span><span class="o55-lookname">${U.esc(T('look.families.' + f + '.name'))}</span></button>`;
-      const mode = (m) => `<button type="button" class="${m === th.mode ? 'o55-on' : ''}" ${attr}="lookMode" data-arg="${m}" role="menuitemradio" aria-checked="${m === th.mode}" data-pm-hover-exempt="true">${U.esc(T('look.' + m))}</button>`;
+      const mode = (m) => `<button type="button" class="${m === th.mode ? 'o55-on' : ''}" ${attr}="lookMode" data-arg="${m}" role="menuitemradio" aria-checked="${m === th.mode}"${by('lookMode:' + m)} data-pm-hover-exempt="true">${U.esc(T('look.' + m))}</button>`;
       /* in onboarding each choice has its ? (O55.tips: pip.tips.chrome), its note under the menu; the tour's bar has none */
       const tq = attr === 'data-o55-do' && O55.tips ? (id) => O55.tips.q(id, { cls: 'o55-tipq-menu' }) : () => '';
       const notes = attr === 'data-o55-do' && O55.tips ? FAMILIES.map((f) => 'lookFamily:' + f).concat(['lookMode:light', 'lookMode:dark', 'lookNier:nier', 'lookNierAdjust:nier-adjust']).map((id) => O55.tips.explainer(id)).join('') : '';

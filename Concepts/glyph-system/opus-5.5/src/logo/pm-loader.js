@@ -103,6 +103,10 @@
       if (!el.isConnected) return;
       if (stillFor(el)) { set(el, 'still'); return; }
       phase(el); set(el, 'on');
+      /* the fade-in is the first arrival's only: once it has had its time (data-pml-in), coming back on (offscreen, a
+         hidden tab, a busy spell or an ancestor's freeze lifting) never fades from nothing again, which flashed the
+         still pose out for a frame */
+      if (!el.hasAttribute('data-pml-in') && !el.__pmlIn) el.__pmlIn = setTimeout(() => { el.__pmlIn = 0; el.setAttribute('data-pml-in', ''); }, 400);
     });
     pending.clear();
   }

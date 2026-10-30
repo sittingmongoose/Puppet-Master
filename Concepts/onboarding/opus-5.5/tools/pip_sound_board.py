@@ -39,11 +39,18 @@ change. The music is a composed eight-bar tune per look; pick a chapter to hear 
 <h2>Music and beds</h2><div class="row" id="loopKits"></div><div class="row" id="loops"></div>
 </main>
 <script>
-/* the one player, standing in: a context, a master and the switch on (in PMConcept7 these are O55.sound's) */
-window.O55 = { sound: { ctx: null, master: null, muted: false, unlock() { if (!this.ctx) { const AC = window.AudioContext || window.webkitAudioContext; this.ctx = new AC({ latencyHint: 'interactive' }); this.master = this.ctx.createGain(); this.master.connect(this.ctx.destination); } if (this.ctx.state !== 'running') this.ctx.resume(); return true; } } };
-document.addEventListener('pointerdown', () => O55.sound.unlock(), { capture: true });
+/* the product's own player (O55.sound, 15-sound.js, with its voice core O55.sound.pip), on the modules it stands on;
+   the page has no Settings, so the sound switch is its factory default (on) and the parts registry is absent (all on) */
+__CORE__
+O55.t = O55.t || ((k) => k);
+O55.theme = O55.theme || (() => ({ family: 'basic', mode: 'dark', chosen: 'basic', nier: document.documentElement.getAttribute('data-o55-nier') === 'on' }));
 </script>
 <script>__SRC__</script>
+<script>__SOUND__</script>
+<script>
+/* sound starts with the first click or key, as in the product */
+document.addEventListener('pointerdown', () => { if (O55.sound.unlock) O55.sound.unlock(); }, { capture: true });
+</script>
 <script>
 (function () {
   const $ = (s) => document.querySelector(s), V = O55.pipVoice;
@@ -99,7 +106,9 @@ def main():
     picks = [('welcome', 'wake', 'happy'), ('look', 'enter', 'idle'), ('where', 'pick:this', 'happy'), ('begin', 'pick:new', 'happy'), ('name', 'empty', 'watch'), ('name', 'typing', 'wonder'),
              ('safe', 'enter', 'idle'), ('review', 'enter', 'think'), ('creating', 'folder', 'think'), ('creating', 'done', 'happy'), ('ai', 'one', 'happy'), ('ready', 'enter', 'happy')]
     lines = [[copy[s][i], m] for s, i, m in picks if s in copy and i in copy[s]]
-    page = PAGE.replace('__SRC__', SRC.replace('</script', '<\\/script')).replace('__LINES__', json.dumps(lines))
+    rd = lambda f: open(os.path.join(HERE, 'src', 'js', f), encoding='utf8').read().replace('</script', '<\\/script')
+    core = '\n'.join(rd(f) for f in ('00-namespace.js', '05-util.js', '10-motion.js'))
+    page = PAGE.replace('__CORE__', core).replace('__SOUND__', rd('15-sound.js')).replace('__SRC__', SRC.replace('</script', '<\\/script')).replace('__LINES__', json.dumps(lines))
     open(out, 'w', encoding='utf8').write(page)
     print(out, len(page))
 if __name__ == '__main__':

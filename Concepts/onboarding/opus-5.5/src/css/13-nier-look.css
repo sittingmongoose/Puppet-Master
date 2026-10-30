@@ -14,22 +14,22 @@
 [aria-checked="true"] .o55-nierbox::after { transform: rotate(45deg) scale(1); }
 
 /* ---------------------------------------------------------------- "Pick a look": the row under the tiles */
-/* The checkbox (scene + title + help) spans the row; Adjust sits under the help text, on top of the checkbox's lower
-   edge (the text keeps room for it), so the scene runs the row's full height beside both. */
+/* The scene runs the row's full height; beside it the checkbox (title + help) and, under it, Adjust. The scene is the
+   checkbox's picture (a press on it toggles too) but not part of it, so nothing covers the checkbox (Muse B1). */
 .o55-nierlook { position: relative; display: grid; grid-template-columns: 136px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; column-gap: 16px; margin-top: 14px; padding: 8px;
   border-radius: var(--o55-card-r); border: 1px solid var(--o55-line); background: var(--o55-card-bg); transition: border-color 200ms ease, box-shadow 220ms ease; }
 .o55-nierlook[data-on="true"] { border-color: var(--o55-accent); box-shadow: inset 0 0 0 1px var(--o55-accent); }
-.o55-niercheck { grid-column: 1 / -1; grid-row: 1 / -1; min-width: 0; display: grid; grid-template-columns: subgrid; align-items: stretch; padding: 0; border: 0;
+.o55-niercheck { grid-column: 2; grid-row: 1; min-width: 0; display: grid; align-items: start; padding: 0; border: 0;
   border-radius: calc(var(--o55-card-r) * 0.7); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
-.o55-nierthumb { position: relative; display: block; min-height: 96px; border-radius: calc(var(--o55-card-r) * 0.7); overflow: hidden; background: var(--background);
+.o55-nierthumb { grid-column: 1; grid-row: 1 / -1; cursor: pointer; position: relative; display: block; min-height: 96px; border-radius: calc(var(--o55-card-r) * 0.7); overflow: hidden; background: var(--background);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text-primary) 10%, transparent); transition: transform 200ms ease; }
-.o55-niercheck:hover .o55-nierthumb { transform: translateY(-1px); }
-.o55-niertext { display: grid; align-content: start; gap: 5px; min-width: 0; padding: 4px 6px 48px 0; }
+.o55-niercheck:hover + .o55-nierthumb, .o55-nierthumb:hover { transform: translateY(-1px); }
+.o55-niertext { display: grid; align-content: start; gap: 5px; min-width: 0; padding: 4px 6px 10px 0; }
 .o55-niertitle { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; }
 .o55-niername { font: 700 14.5px/1.2 var(--body-font); }
 .o55-niertag { font-size: 10px; }
 .o55-niersub { font: 400 12.5px/1.45 var(--body-font); color: var(--text-secondary); max-width: 62ch; }
-.o55-nieradjust { grid-column: 2; grid-row: 2; justify-self: start; align-self: end; position: relative; z-index: 1; margin: 0 0 4px; gap: 7px; }
+.o55-nieradjust { grid-column: 2; grid-row: 2; justify-self: start; align-self: end; margin: 0 0 4px; gap: 7px; }
 .o55-nieradjust .o55-sg { opacity: 0.85; }
 .o55-niercheck:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 4px; }
 
@@ -68,7 +68,7 @@
 #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-lookgrid > .o55-nierlook { grid-area: nier; justify-self: end; margin: 0; padding: 3px 12px 3px 3px; column-gap: 11px;
   grid-template-columns: 78px auto; grid-template-rows: minmax(0, 1fr) auto; }
 #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-nierlook .o55-nierthumb { min-height: 0; height: 44px; }
-#pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-nierlook .o55-niertext { align-content: start; padding: 2px 0 27px; gap: 0; }
+#pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-nierlook .o55-niertext { align-content: start; padding: 2px 0 3px; gap: 0; }
 #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-nierlook .o55-niertitle { flex-wrap: nowrap; gap: 8px; white-space: nowrap; }
 #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-nierlook .o55-niername { font-size: 13.5px; }
 #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-nierlook .o55-niersub { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

@@ -29,7 +29,7 @@ async function measure(page, mode) {
     const P = window.PipSound, out = [];
     const raw = mode === 'raw';
     for (const kit of P.KITS) {
-      const jobs = P.EVENTS.map((e) => ['play', e]).concat([['say', 'say']], P.LOOPS.map((l) => ['loop', l]));
+      const jobs = P.EVENTS.map((e) => ['play', e]).concat(P.LOOPS.map((l) => ['loop', l])); /* (Pip's lines are O55.sound.pip's: found measures them) */
       for (const [kind, name] of jobs) {
         const buf = await P._render(kit, kind, name, {}, { raw, notrim: raw, seconds: kind === 'loop' ? 8 : undefined });
         const s = P._stats(buf, { whole: kind === 'loop' });
@@ -92,7 +92,7 @@ try {
     const pk = Math.max(...rs.map((r) => r.peakDb)), lg = rs.reduce((a, r) => (r.dur > a.dur ? r : a), rs[0]);
     console.log(`${k.padEnd(10)} ${String(rs.length).padStart(6)}  ${v[0]} / ${v[Math.floor(v.length / 2)]} / ${v[v.length - 1]}`.padEnd(46) + `${pk}`.padStart(8) + `  ${lg.key} ${lg.dur}s`);
   });
-  const groups = { ui: ['tap', 'hover', 'select', 'toggleOn', 'toggleOff', 'next', 'back', 'key'], foley: ['lower', 'land', 'lift', 'hop', 'rail', 'sparkle'], voice: ['say', 'wake', 'sleep', 'think', 'happy', 'wink', 'alert'], stings: ['cheer', 'chapter', 'power', 'tick', 'block'], big: ['confetti', 'crew'], loops: ['loop:snore', 'loop:work', 'loop:power', 'loop:swing', 'loop:bed'] };
+  const groups = { ui: ['tap', 'hover', 'select', 'toggleOn', 'toggleOff', 'next', 'back', 'key'], foley: ['lower', 'land', 'lift', 'hop', 'rail', 'sparkle'], voice: ['wake', 'sleep', 'think', 'happy', 'wink', 'alert'], stings: ['cheer', 'chapter', 'power', 'tick', 'block'], big: ['confetti', 'crew'], loops: ['loop:snore', 'loop:work', 'loop:power', 'loop:swing', 'loop:bed'] };
   console.log('\ngroup   mean rms per kit (' + kits.join(', ') + ')');
   Object.entries(groups).forEach(([g, keys]) => {
     console.log(g.padEnd(7) + ' ' + kits.map((k) => { const rs = m.rows.filter((r) => r.kit === k && keys.includes(r.key)); return (rs.reduce((a, r) => a + r.rmsDb, 0) / rs.length).toFixed(1); }).join('  '));
