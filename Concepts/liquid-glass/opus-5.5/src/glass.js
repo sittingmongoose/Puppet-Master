@@ -332,15 +332,18 @@
   /* During a shell/Home resize drag the rims would be re-measured and re-baked for geometry that is obsolete
      a frame later; the baked rim simply stretches with the sheet until release. Held targets (and the scopes
      they dirty) flush once the drag ends: the ResizeObserver does not refire for a size that has settled. */
-  var heldTargets = new Map(), heldScopes = [], heldTimer = 0;
+  var heldTargets = new Map(), heldScopes = [], heldTimer = 0, heldBox = false;
   function dragHeld() { return !!(document.body && document.body.classList.contains('pm-resizing')); }
   function flushHeldSoon() {
     if (heldTimer) return;
     heldTimer = setTimeout(function () {
       heldTimer = 0;
       if (dragHeld()) { flushHeldSoon(); return; }
-      var targets = heldTargets, scopes = heldScopes;
-      heldTargets = new Map(); heldScopes = [];
+      var targets = heldTargets, scopes = heldScopes, box = heldBox;
+      heldTargets = new Map(); heldScopes = []; heldBox = false;
+      /* the project box changed width during the drag: its tabs' chip is placed after the next layout, never through
+         lazySync, with the tab ink under it (Muse review m4) */
+      if (box) afterLayout(function () { syncAll(); try { if (window.PM7_PAGE_TAB_INK && window.PM7_PAGE_TAB_INK.resync) window.PM7_PAGE_TAB_INK.resync(); } catch (e) { /* hidden under the switcher */ } });
       scopes.forEach(function (s) { dirtyScope(s); });
       if (targets.size) mountMeasured(targets);
       if (targets.size || scopes.length) lazySync(false);
@@ -2908,7 +2911,7 @@
         if (w === boxW) return;
         var first = boxW < 0; boxW = w;
         if (first) return;
-        if (dragHeld()) { heldScopes.push(boxWrap.parentElement); flushHeldSoon(); return; }
+        if (dragHeld()) { heldBox = true; flushHeldSoon(); return; }
         syncAll();
         try { if (window.PM7_PAGE_TAB_INK && window.PM7_PAGE_TAB_INK.resync) window.PM7_PAGE_TAB_INK.resync(); } catch (e) { /* the ink is hidden under the switcher */ }
       }).observe(boxWrap);

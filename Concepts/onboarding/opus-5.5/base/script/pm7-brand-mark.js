@@ -15,11 +15,10 @@
     }
     draw();
     L.onLook(draw);
+    /* the static link in shell.html's head is this same tile written out; the kit stays its source */
     try {
-      if (!document.querySelector('link[rel~="icon"]')) {
-        var icon = document.createElement('link');
-        icon.rel = 'icon'; icon.type = 'image/svg+xml'; icon.href = L.favicon(32);
-        document.head.appendChild(icon);
-      }
+      var icon = document.querySelector('link[rel~="icon"]'), href = L.favicon(32);
+      if (!icon) { icon = document.createElement('link'); icon.rel = 'icon'; icon.type = 'image/svg+xml'; document.head.appendChild(icon); }
+      if (icon.getAttribute('href') !== href) icon.setAttribute('href', href);
     } catch (e) { /* a page without a favicon still works */ }
   })();
