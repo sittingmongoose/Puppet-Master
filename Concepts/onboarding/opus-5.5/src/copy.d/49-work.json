@@ -188,7 +188,8 @@
         "cpu": "CPU",
         "mem": "Memory",
         "port": "Port",
-        "where": "Started by"
+        "where": "Started by",
+        "time": "Time"
       },
       "label": "Resources by server and environment",
       "sampled": "Sampled every 2 s while this tab is open",
@@ -253,6 +254,26 @@
       "open": "Settings",
       "openLabel": "Open {where} in Settings",
       "note": "Puppet Master runs these for you. They are started and stopped in Settings, never from here."
+    },
+    "rail": {
+      "label": "Agents, with their subagents",
+      "needs": "Needs you",
+      "active": "Active",
+      "queued": "Queued",
+      "done": "Recently completed",
+      "statusAsk": "{n} need you",
+      "statusLive": "{n} live"
+    },
+    "board": {
+      "summary": "{n} · {working} working",
+      "needs": " · {n} need you"
+    },
+    "dock": {
+      "process": "Process",
+      "agent": "Subagent",
+      "scheduled": "Scheduled",
+      "review": "Review",
+      "show": "Show"
     }
   }
 }
