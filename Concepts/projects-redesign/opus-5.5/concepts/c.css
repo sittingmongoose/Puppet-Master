@@ -1,0 +1,659 @@
+/* Projects concepts (Opus 5.5): concept C, "Split".
+
+   The shell is Usage's own (.pmu-shell, .pmu-rail, .pmu-stagehead, .pmu-scroll, .pmu-card plates, .pmu-facts,
+   .pmu-textbtn), with Home's .pmw-act buttons. Usage anchors its rules on :is(#panel-usage,[data-pmu-host]), which
+   counts as an id, so the few places this concept bends them are anchored on the shell's own id, #pjxc, and on
+   html[data-pjx] where Usage's look rules add an attribute of their own. This file comes after Usage's, so a tie is
+   this file's.
+
+   Rules kept from the newer pages: no :has(), no coloured side bars (no border-left of 2 px or more), no capsule
+   corners (controls take min(radius, 8px) or the look's own square), no pills, no viewport @media (container queries on
+   .pjx-root, which is the size container "pjx"), type never under 11 px, colour only for status, no hover lifts or glows
+   (PMH draws hover on the plates). Reduced Motion: every arrival is cut to its end state. */
+
+/* ------------------------------------------------------------------ the shell: library | page */
+html[data-pjx] #pjxc.pmu-shell { --pjxc-libw: 288px; display: grid; grid-template-columns: var(--pjxc-libw) minmax(0, 1fr); position: relative; overflow: hidden;
+  --pjxc-r-ctl: min(var(--pmu-r-card, 8px), 8px); --pjxc-ease: cubic-bezier(.2, .8, .2, 1); --pjxc-dur: 200ms; }
+html[data-theme^="retro"][data-pjx] #pjxc.pmu-shell { --pjxc-libw: 300px; --pjxc-r-ctl: 0px; }
+/* the two columns are placed by name; the drawer's scrim and the live region take no cell */
+html[data-pjx] #pjxc .pjxc-lib.pmu-rail { grid-column: 1; grid-row: 1; }
+html[data-pjx] #pjxc .pjxc-stage.pmu-stage { grid-column: 2; grid-row: 1; }
+#pjxc .pjxc-scrim { display: none; }
+html[data-o55-nier="on"][data-pjx] #pjxc.pmu-shell { --pjxc-r-ctl: 0px; }
+html[data-theme^="friendly"][data-pjx] #pjxc.pmu-shell { --pjxc-ease: cubic-bezier(.34, 1.4, .64, 1); --pjxc-dur: 260ms; }
+/* how a new page's contents arrive: a short rise (Basic, Friendly's spring), a fade in Glass (its sheets never move),
+   a three-step fade in Retro and NieR */
+html[data-pjx] #pjxc.pmu-shell { --pjxc-arrive: pjxc-rise; --pjxc-arrive-dur: var(--pjxc-dur); --pjxc-arrive-ease: var(--pjxc-ease); }
+html[data-theme^="glass"][data-pjx] #pjxc.pmu-shell { --pjxc-arrive: pjxc-fade; --pjxc-arrive-dur: 220ms; --pjxc-arrive-ease: ease-out; }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"])[data-pjx] #pjxc.pmu-shell { --pjxc-arrive: pjxc-fade; --pjxc-arrive-dur: 150ms; --pjxc-arrive-ease: steps(3, end); }
+
+/* ------------------------------------------------------------------ the library column (Usage's rail, wider) */
+html[data-pjx] #pjxc .pjxc-lib.pmu-rail { width: auto; min-width: 0; padding: 14px 8px 0; gap: 10px; overflow: hidden; display: flex; flex-direction: column; }
+#pjxc .pjxc-libhead { display: flex; flex-direction: column; gap: 8px; flex: none; padding: 0 2px; }
+html[data-pjx] #pjxc .pjxc-brand { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; }
+html[data-pjx] #pjxc .pjxc-brand h1 { display: flex; align-items: baseline; gap: 8px; margin: 2px 6px 0; font-size: 15px; font-weight: 650; letter-spacing: -.01em; color: var(--pmu-ink); }
+#pjxc .pjxc-drawer-x { display: none; width: 28px; height: 28px; flex: none; }
+#pjxc[data-drawer] .pjxc-drawer-x { display: inline-grid; }
+#pjxc .pjxc-count { font-size: 12px; font-weight: 550; color: var(--pmu-ink-3); font-variant-numeric: tabular-nums; letter-spacing: 0; text-transform: none; }
+html[data-pjx] #pjxc .pjxc-filter.pmu-ctlbtn { height: 28px; padding: 0 6px 0 8px; gap: 5px; max-width: 62%; border-radius: var(--pjxc-r-ctl); }
+html[data-pjx] #pjxc .pjxc-filter .pmu-ctltext { max-width: 130px; }
+#pjxc .pjxc-filter .pmu-ctllead, #pjxc .pjxc-filter .pmu-ctlchev { display: inline-grid; place-items: center; width: 15px; height: 15px; color: var(--pmu-ink-3); }
+#pjxc .pjxc-filter svg { width: 14px; height: 14px; }
+#pjxc .pjxc-filter[data-on] { color: var(--pmu-ink); border-color: color-mix(in srgb, var(--pmu-accent, var(--accent-primary)) 55%, var(--pmu-rule)); }
+#pjxc .pjxc-filter[data-on] .pmu-ctllead { color: var(--pmu-accent, var(--accent-primary)); }
+
+/* search: the look's own field (a rectangle with Usage's rule), the glass fill in Glass */
+#pjxc .pjxc-search { position: relative; display: flex; align-items: center; height: 32px; padding: 0 4px 0 30px; border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: var(--pjxc-r-ctl);
+  background: var(--pmu-card-2, transparent); cursor: text; }
+#pjxc .pjxc-search:focus-within { border-color: transparent; outline: 2px solid color-mix(in srgb, var(--pmw-focus, var(--accent-primary)) 75%, transparent); outline-offset: 0; }
+#pjxc .pjxc-search-ico { position: absolute; left: 9px; top: 50%; width: 15px; height: 15px; margin-top: -7.5px; color: var(--pmu-ink-3); pointer-events: none; }
+#pjxc .pjxc-search-ico svg { width: 15px; height: 15px; display: block; }
+#pjxc .pjxc-search-in { flex: 1 1 auto; min-width: 0; height: 100%; border: 0; outline: none; background: transparent; color: var(--pmu-ink); font: inherit; font-size: 13px; padding: 0; }
+#pjxc .pjxc-search-in::placeholder { color: var(--pmu-ink-3); }
+#pjxc .pjxc-search-in::-webkit-search-cancel-button { display: none; }
+#pjxc .pjxc-search-x { width: 24px; height: 24px; }
+#pjxc .pjxc-search-x[hidden] { display: none; }
+#pjxc .pjxc-search-x svg { width: 14px; height: 14px; }
+html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-search { background: var(--lg-fill); border-color: var(--lg-line); }
+
+/* New Project: the page's one accent fill, the whole column wide. While the launcher is open it wears the chosen-row
+   material instead (you are there), so the launcher's Continue or Create is the one fill on screen */
+html[data-pjx] #pjxc .pjxc-new { width: 100%; height: 34px; justify-content: center; gap: 7px; font-size: 13px; font-weight: 640; border-radius: var(--pjxc-r-ctl); }
+#pjxc .pjxc-new .pjxc-bico svg { width: 16px; height: 16px; }
+html[data-pjx] #pjxc .pjxc-new[aria-pressed="true"] {
+  background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint, transparent)), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat,
+    linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens, var(--pmu-row-sel))), var(--pm-switch-fill, var(--lg-tint-lens, var(--pmu-row-sel)))),
+    linear-gradient(var(--pm-switch-body, var(--lg-lens-body, transparent)), var(--pm-switch-body, var(--lg-lens-body, transparent)));
+  box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair, transparent)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top, transparent)), var(--pm-switch-shadow, var(--lg-lens-drop, none));
+  border-color: transparent; color: var(--pm-switch-ink-on, var(--pmu-ink)); }
+
+/* the list: groups with small mono caps and plain numeral counts; only the list scrolls */
+#pjxc .pjxc-undo:empty { display: none; }
+/* before there is anything to find, the list has no search and no filter */
+#pjxc .pjxc-lib[data-empty] :is(.pjxc-search, .pjxc-filter) { display: none; }
+#pjxc .pjxc-undo { flex: none; padding: 0 2px; }
+#pjxc .pjxc-undo .pjx-undo { font-size: 12px; line-height: 16px; align-items: flex-start; }
+#pjxc .pjxc-list { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; margin: 0 -8px; padding: 2px 8px 16px; }
+#pjxc .pjxc-group + .pjxc-group { margin-top: 12px; }
+#pjxc .pjxc-ghead { display: flex; align-items: center; gap: 6px; height: 24px; padding: 0 8px; margin: 0 0 2px; font-family: var(--pmu-mono); font-size: 11px; font-weight: 500;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--pmu-ink-3); }
+#pjxc .pjxc-ghead.is-toggle { width: 100%; border: 0; background: transparent; cursor: pointer; border-radius: var(--pm-switch-r, var(--pjxc-r-ctl)); text-align: left; }
+#pjxc .pjxc-ghead.is-toggle:hover { color: var(--pmu-ink-2); background: var(--pm-switch-hover, var(--pmu-row-hover)); }
+#pjxc .pjxc-gchev { display: inline-grid; width: 13px; height: 13px; margin-left: -2px; }
+#pjxc .pjxc-gchev svg { width: 13px; height: 13px; }
+#pjxc .pjxc-glabel { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#pjxc .pjxc-gcount { margin-left: auto; font-variant-numeric: tabular-nums; letter-spacing: 0; color: var(--pmu-ink-3); }
+/* a machine's line under its name: whether it answers, and the one thing to do about it */
+#pjxc .pjxc-gdev { display: flex; align-items: center; flex-wrap: wrap; gap: 2px 6px; min-height: 20px; padding: 0 8px 4px; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+#pjxc .pjxc-gdev .pjx-st-mark, #pjxc .pjxc-gdev .pjx-st-mark svg { width: 13px; height: 13px; }
+#pjxc .pjxc-gdev-text { min-width: 0; }
+#pjxc .pjxc-gdev[data-tone="attention"] .pjxc-gdev-text { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); font-weight: 550; }
+#pjxc .pjxc-gdev .pjx-link { font-size: 12px; padding: 0 2px; }
+#pjxc .pjxc-gdev-sep { color: var(--pmu-ink-3); }
+/* "Add a project from it…" takes its own line, under the machine's address */
+#pjxc .pjxc-gdev .pjx-link[data-c-key^="dev:add"] { flex-basis: 100%; text-align: left; padding-left: 19px; }
+#pjxc .pjxc-group[data-device] > .pjxc-ghead { margin-bottom: 0; }
+#pjxc .pjxc-group[data-device] > .pjxc-gdev:last-child { padding-bottom: 2px; }
+
+/* "4 need you": the line above the list that shows only those (and back) */
+#pjxc .pjxc-needslot { flex: none; padding: 0 2px; }
+#pjxc .pjxc-needslot:empty { display: none; }
+#pjxc .pjxc-needbtn { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 32px; padding: 5px 10px; box-sizing: border-box; font: inherit; font-size: 12.5px; line-height: 17px; text-align: left; cursor: pointer;
+  color: var(--pmu-ink-2); border: var(--pmu-bw, 1px) solid color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-warn)) 42%, var(--pmu-rule)); border-radius: var(--pjxc-r-ctl);
+  background: color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-warn)) 7%, transparent); }
+#pjxc .pjxc-needbtn[data-tone="idle"] { border-color: var(--pmu-rule); background: transparent; }
+#pjxc .pjxc-needbtn:hover { background: color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-warn)) 12%, transparent); }
+#pjxc .pjxc-needbtn .pjx-st-mark svg { width: 14px; height: 14px; }
+#pjxc .pjxc-needcount { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); font-weight: 650; white-space: nowrap; }
+#pjxc .pjxc-needbtn[data-tone="idle"] .pjxc-needcount { color: var(--pmu-ink-2); }
+#pjxc .pjxc-needgo { margin-left: auto; color: var(--pmu-ink-2); font-weight: 550; white-space: nowrap; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--pmu-ink-3) 55%, transparent); text-underline-offset: 2px; }
+#pjxc .pjxc-needbtn[aria-pressed="true"] { border-color: color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-warn)) 70%, var(--pmu-rule)); }
+html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-needbtn { background: var(--lg-fill); }
+
+/* the New Project you left: a dashed row that waits until it is made or started over */
+#pjxc .pjxc-row.is-draft { outline: 1px dashed var(--pmu-rule-strong, var(--pmu-rule)); outline-offset: -1px; }
+#pjxc .pjxc-row.is-draft:focus-visible { outline: 2px solid var(--pmw-focus, var(--accent-primary)); outline-offset: -2px; }
+#pjxc .pjxc-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px; }
+
+/* a row: glyph, name over its state or last opened, the status mark at the end. Not a wrapper around other buttons */
+#pjxc .pjxc-row { position: relative; display: grid; grid-template-columns: 16px minmax(0, 1fr) 16px; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 5px 9px 5px 10px;
+  border: 0; border-radius: var(--pm-switch-r, var(--pm-ctl-r, var(--pjxc-r-ctl))); background: transparent; color: var(--pm-switch-ink, var(--pmu-ink-2)); font: inherit; text-align: left; cursor: pointer;
+  transition: background-color 120ms ease-out; }
+#pjxc .pjxc-row:hover:not([aria-current="true"]) { background: var(--pm-switch-hover, var(--pmu-row-hover)); color: var(--pm-switch-ink-hover, var(--pmu-ink)); }
+#pjxc .pjxc-row:focus-visible { outline: 2px solid var(--pmw-focus, var(--accent-primary)); outline-offset: -2px; }
+#pjxc .pjxc-row-ico { width: 16px; height: 16px; color: var(--pmu-ink-3); align-self: start; margin-top: 2px; }
+#pjxc .pjxc-row-ico svg, #pjxc .pjxc-row-mark svg { width: 100%; height: 100%; display: block; }
+#pjxc .pjxc-row-text { display: flex; flex-direction: column; min-width: 0; }
+#pjxc .pjxc-row-name { font-size: 13px; line-height: 18px; font-weight: 600; color: var(--pmu-ink); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#pjxc .pjxc-row-line { font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#pjxc .pjxc-row-line[data-tone="blocked"] { color: var(--pmg-ink-blocked, var(--pmu-ink-error)); font-weight: 550; }
+#pjxc .pjxc-row-line[data-tone="attention"] { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); font-weight: 550; }
+#pjxc .pjxc-row-line[data-tone="working"] { color: var(--pmu-ink-2); }
+#pjxc .pjxc-row-mark { width: 14px; height: 14px; justify-self: end; }
+/* the chosen row: the look's chosen-row material, worn in place (the switcher's in-place material: Basic's tinted chip,
+   Friendly's mint pebble, Glass's lens, Retro's reverse video, NieR's ink bar) */
+#pjxc .pjxc-row[aria-current="true"] {
+  background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint, transparent)), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat,
+    linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens, var(--pmu-row-sel))), var(--pm-switch-fill, var(--lg-tint-lens, var(--pmu-row-sel)))),
+    linear-gradient(var(--pm-switch-body, var(--lg-lens-body, transparent)), var(--pm-switch-body, var(--lg-lens-body, transparent)));
+  box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair, transparent)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top, transparent)),
+    inset 0 -1px 1px var(--pm-switch-bottom, var(--lg-edge-bot, transparent)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge, transparent)), var(--pm-switch-shadow, var(--lg-lens-drop, none));
+  color: var(--pm-switch-ink-on, var(--pmu-ink)); }
+#pjxc .pjxc-row[aria-current="true"] .pjxc-row-ico { color: var(--pm-switch-mark, var(--accent-primary)); }
+#pjxc .pjxc-row[aria-current="true"] .pjxc-row-name { color: var(--pm-switch-ink-on, var(--pmu-ink)); }
+html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-row[aria-current="true"] .pjxc-row-ico { color: var(--accent-blue, var(--accent-primary)); }
+/* an opaque chip (Retro's reverse video, NieR's ink bar): every word, glyph and mark inside reads in the chip's one ink */
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #pjxc .pjxc-row[aria-current="true"] :is(.pjxc-row-ico, .pjxc-row-name, .pjxc-row-line, .pjxc-row-mark, .pjxc-row-mark .nx-st, .pjxc-row-mark svg) {
+  color: var(--pm-switch-ink-on) !important; --nx-ink: var(--pm-switch-ink-on); }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #pjxc .pjxc-row[aria-current="true"] .pjxc-row-mark .nx-st { background: transparent !important; box-shadow: none !important; }
+/* NieR: the cursor is an ink bar with paper words, as on Usage's room list */
+html[data-o55-nier="on"] #pjxc .pjxc-row:hover:not([aria-current="true"]) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] #pjxc .pjxc-row:hover:not([aria-current="true"]) :is(.pjxc-row-ico, .pjxc-row-name, .pjxc-row-line) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] #pjxc .pjxc-row-name { letter-spacing: .02em; }
+html[data-theme^="retro"] #pjxc .pjxc-ghead { border-bottom: 2px solid var(--pmu-rule); margin-bottom: 4px; }
+
+#pjxc .pjxc-libempty { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin: 6px 8px; padding: 14px 12px; border: var(--pmu-bw, 1px) dashed var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px);
+  font-size: 12.5px; line-height: 17px; color: var(--pmu-ink-3); }
+#pjxc .pjxc-libempty b { font-size: 13px; color: var(--pmu-ink); font-weight: 640; }
+#pjxc .pjxc-libempty-ico { width: 22px; height: 22px; color: var(--pmu-ink-3); }
+#pjxc .pjxc-libempty-ico svg { width: 22px; height: 22px; }
+
+/* ------------------------------------------------------------------ the page head: a document title in Usage's head bar */
+/* the page is its own size container: its plates and the New Project grid follow the page's width, not the window's or
+   the whole pane's (the library takes ~300 px of the pane beside it) */
+html[data-pjx] #pjxc .pjxc-stage.pmu-stage { min-width: 0; min-height: 0; container: pjxcpage / inline-size; }
+html[data-pjx] #pjxc .pjxc-head.pmu-stagehead { height: auto; min-height: 76px; padding: 12px 14px 12px 18px; gap: 14px; align-items: center; flex-wrap: nowrap; }
+#pjxc .pjxc-headmain { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1 1 auto; }
+/* wide: a grid, so the state line runs under the actions as well as under the name */
+html[data-pjx] #pjxc .pjxc-head.pmu-stagehead { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "ico title acts" "ico line line";
+  column-gap: 12px; row-gap: 3px; align-items: center; }
+#pjxc .pjxc-head > .pjxc-headmain, #pjxc .pjxc-head .pjxc-titles { display: contents; }
+#pjxc .pjxc-head .pjxc-headico { grid-area: ico; align-self: start; margin-top: 2px; }
+#pjxc .pjxc-head .pjxc-title { grid-area: title; }
+#pjxc .pjxc-head .pjxc-headline { grid-area: line; }
+#pjxc .pjxc-head > .pjxc-acts { grid-area: acts; }
+#pjxc .pjxc-headico { display: inline-grid; place-items: center; width: 40px; height: 40px; flex: none; border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px);
+  color: var(--pmu-ink-2); background: var(--pmu-card-2, transparent); }
+#pjxc .pjxc-headico svg { width: 22px; height: 22px; }
+html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-headico { background: var(--lg-fill); border-color: var(--lg-line); }
+#pjxc .pjxc-titles { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1 1 auto; }
+/* the name: Home's document title, 22 / 650 */
+#pjxc .pjxc-title { margin: 0; font-size: 22px; line-height: 27px; font-weight: 650; letter-spacing: -.02em; color: var(--pmu-ink); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; outline: none; }
+#pjxc .pjxc-title:focus-visible { outline: 2px solid color-mix(in srgb, var(--pmw-focus, var(--accent-primary)) 70%, transparent); outline-offset: 3px; }
+#pjxc .pjxc-head .pjxc-title { justify-self: start; max-width: 100%; }
+#pjxc .pjxc-hero .pjxc-title, #pjxc .pjxc-title-in { align-self: flex-start; max-width: 100%; }
+html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-title { color: var(--text-primary); font-weight: 700; }
+html[data-o55-nier="on"] #pjxc .pjxc-title { text-transform: uppercase; letter-spacing: .08em; font-size: 20px; }
+#pjxc .pjxc-headline { display: flex; align-items: center; flex-wrap: wrap; gap: 2px 14px; min-width: 0; font-size: 12.5px; line-height: 18px; color: var(--pmu-ink-2); }
+#pjxc .pjxc-headline > * { min-width: 0; }
+#pjxc .pjxc-headst .pjx-st-word { font-size: 12.5px; white-space: nowrap; }
+#pjxc .pjxc-place { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+#pjxc .pjxc-pico { display: inline-grid; width: 14px; height: 14px; color: var(--pmu-ink-3); }
+#pjxc .pjxc-pico svg { width: 14px; height: 14px; }
+#pjxc .pjxc-headsub { color: var(--pmu-ink-3); font-size: 12.5px; }
+#pjxc .pjxc-headline > .pjxc-mid { flex: 1 1 120px; max-width: 320px; color: var(--pmu-ink-3); }
+html[data-pjx] #pjxc .pjxc-acts.pmu-headctl { display: flex; align-items: center; gap: 6px; flex: none; flex-wrap: wrap; justify-content: flex-end; }
+
+/* buttons: Home's .pmw-act at the head, Usage's .pmu-textbtn in plates; .is-strong is the page's main project action,
+   in the accent's outline (the fill stays New Project's) */
+#pjxc .pjxc-btn { white-space: nowrap; }
+#pjxc .pjxc-btn .pjxc-bico { display: inline-grid; place-items: center; width: 15px; height: 15px; flex: none; }
+#pjxc .pjxc-btn .pjxc-bico svg { width: 15px; height: 15px; display: block; }
+#pjxc .pjxc-btn .pjxc-bchev { display: inline-grid; width: 14px; height: 14px; margin-right: -4px; color: var(--pmu-ink-3); }
+#pjxc .pjxc-btn .pjxc-bchev svg { width: 14px; height: 14px; }
+#pjxc .pjxc-btn .pjxc-blabel { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+html[data-pjx] #pjxc .pmw-act { border-radius: var(--pjxc-r-ctl); }
+html[data-pjx] #pjxc .pmw-act.is-strong { border-color: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 60%, transparent); color: var(--pmw-accent, var(--accent-primary));
+  background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 10%, transparent); font-weight: 640; }
+html[data-pjx] #pjxc .pmw-act.is-strong:hover { background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 16%, transparent); }
+html[data-pjx] #pjxc :is(.pmw-act, .pmu-textbtn)[aria-disabled="true"] { opacity: .5; cursor: default; }
+html[data-pjx] #pjxc :is(.pmw-act, .pmu-textbtn)[aria-disabled="true"]:hover { background: transparent; }
+html[data-pjx] #pjxc .pmw-act.is-primary[aria-disabled="true"] { opacity: .45; }
+html[data-pjx] #pjxc .pmw-act.is-primary[aria-disabled="true"]:hover { background: var(--pmw-accent, var(--accent-primary)); }
+#pjxc .pjxc-bcount { margin-left: 2px; font-size: 11.5px; font-weight: 650; color: var(--pmg-ink-attention, var(--pmu-ink-warn)); font-variant-numeric: tabular-nums; }
+html[data-pjx] #pjxc .pmu-textbtn { border-radius: var(--pjxc-r-ctl); }
+html[data-pjx] #pjxc .pmu-textbtn:not(.is-primary):not(.is-danger) { border-color: var(--pmu-rule); color: var(--pmu-ink); font-weight: 560; }
+html[data-pjx] #pjxc .pmu-textbtn:not(.is-primary):not(.is-danger):hover:not([aria-disabled="true"]) { background: var(--pmu-row-hover); border-color: var(--pmu-rule-strong, var(--pmu-rule)); }
+html[data-pjx] #pjxc .pmu-textbtn.is-quiet { border-color: transparent; color: var(--pmu-ink-2); }
+html[data-pjx] #pjxc .pmu-textbtn.is-danger { border-color: color-mix(in srgb, var(--pmg-ink-blocked, var(--pmu-ink-crit)) 55%, transparent); color: var(--pmg-ink-blocked, var(--pmu-ink-crit)); }
+html[data-pjx] #pjxc .pmu-textbtn.is-danger:hover:not([aria-disabled="true"]) { background: color-mix(in srgb, var(--pmg-ink-blocked, var(--pmu-ink-crit)) 9%, transparent); }
+#pjxc .pmu-textbtn .pjxc-bico, #pjxc .pmu-textbtn .pjxc-bico svg { width: 14px; height: 14px; }
+html[data-lg="on"][data-theme^="glass"] #pjxc .pmu-textbtn:not(.is-primary):not(.is-danger) { background: var(--lg-fill); border-color: var(--lg-line); }
+html[data-lg="on"][data-theme^="glass"] #pjxc .pmu-textbtn:not(.is-primary):not(.is-danger):hover:not([aria-disabled="true"]) { background: var(--lg-fill-hover); }
+#pjxc :is(button, input, [tabindex]):focus-visible { outline: 2px solid var(--pmw-focus, var(--accent-primary)); outline-offset: 1px; }
+/* the search and paste fields draw their focus on their own box, not on the bare input inside */
+#pjxc .pjxc-search > input.pjxc-search-in:focus-visible, #pjxc .pjxc-pastefield > input.pjxc-paste-in:focus-visible { outline: none; }
+#pjxc .pjx-link { font-size: 12.5px; }
+#pjxc .pjx-grow { flex: 1 1 auto; }
+
+/* a path: the code face, cut in the middle so the last folder always shows */
+#pjxc .pjxc-mid { display: inline-flex; min-width: 0; max-width: 100%; font-family: var(--pm-font-code, var(--pmu-mono)); font-size: 12px; font-weight: 500; letter-spacing: 0; white-space: nowrap; vertical-align: bottom; }
+#pjxc .pjxc-mid-a { flex: 0 1000 auto; min-width: 1.6em; overflow: hidden; text-overflow: ellipsis; }
+#pjxc .pjxc-mid-b { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+#pjxc .pjxc-code { font-family: var(--pm-font-code, var(--pmu-mono)); font-size: 12px; font-weight: 550; }
+
+/* ------------------------------------------------------------------ the page body */
+html[data-pjx] #pjxc .pjxc-scroll.pmu-scroll { scrollbar-gutter: stable; }
+#pjxc .pjxc-body { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px 28px; min-width: 0; }
+#pjxc .pjxc-band { display: flex; flex-direction: column; gap: 8px; }
+#pjxc .pjxc-bandbox { min-width: 0; border-radius: min(var(--pmu-r-card, 10px), 10px); }
+#pjxc .pjxc-bandbox > .pjx-notice { box-shadow: var(--pmu-plate-rest); }
+#pjxc .pjx-notice { grid-template-columns: 18px minmax(0, 1fr); padding: 12px 14px; gap: 3px 10px; }
+#pjxc .pjx-notice-mark { padding-top: 2px; }
+#pjxc .pjx-notice-title { font-size: 13.5px; }
+#pjxc .pjx-notice-text { font-size: 12.5px; line-height: 18px; max-width: 72ch; }
+#pjxc .pjx-notice-acts { margin-top: 8px; gap: 6px; }
+#pjxc .pjx-notice[data-tone="done"] { border-color: color-mix(in srgb, var(--pmg-ink-done, var(--pmu-ink-good)) 55%, var(--pmu-rule)); background: color-mix(in srgb, var(--pmg-ink-done, var(--pmu-ink-good)) 8%, var(--pmu-card)); }
+#pjxc .pjx-notice[data-tone="paused"] { background: var(--pmu-card); }
+/* in Glass the box is the sheet: the notice inside paints no plate of its own; its mark carries the state */
+html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-bandbox > .pjx-notice { background: transparent; border-color: transparent; box-shadow: none; }
+
+/* the bento: Usage plates in a calm two-column grid; Now, Where it lives, Settings and Delete span the page */
+#pjxc .pjxc-bento { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; align-items: stretch; }
+#pjxc .pjxc-bento > [data-plate="now"], #pjxc .pjxc-bento > [data-plate="settings"], #pjxc .pjxc-bento > [data-plate="delete"] { grid-column: 1 / -1; }
+html[data-o55-nier-parts~="ticks"] #pjxc :is(.pjxc-bento, .pjxc-band, .pjxc-flowgrid) { counter-reset: pmu-nier-usage; }
+html[data-o55-nier-parts~="ticks"][data-pjx] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardhead { min-height: 58px; padding-bottom: 12px; }
+
+/* plates: Usage's plate, laid out by its content (Usage's board gives every plate a fixed grid height; this page does
+   not, so the body is not a size-contained box here) */
+html[data-pjx] #pjxc .pjxc-plate.pmu-card { min-height: 0; }
+html[data-pjx] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardbody { contain: none; overflow: visible; flex: 1 1 auto; gap: 10px; padding: 6px 14px 12px; }
+html[data-pjx] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardhead { height: auto; min-height: 52px; padding: 12px 14px 4px; align-items: flex-start; gap: 10px; cursor: default; }
+html[data-pjx] #pjxc .pjxc-plate:hover .pmu-cardmeta, html[data-pjx] #pjxc .pjxc-plate:focus-within .pmu-cardmeta { opacity: 1; }
+html[data-pjx] #pjxc .pjxc-plate .pmu-cardmeta { max-width: 64%; margin-top: 1px; overflow: visible; }
+html[data-pjx] #pjxc .pjxc-plate .pmu-cardmeta .pjx-st { max-width: 100%; }
+html[data-pjx] #pjxc .pjxc-plate .pmu-cardsub { white-space: normal; overflow-wrap: break-word; }
+#pjxc .pjxc-plico { display: inline-grid; place-items: center; width: 16px; height: 20px; flex: none; color: var(--pmu-ink-3); }
+#pjxc .pjxc-plico svg { width: 16px; height: 16px; }
+/* the foot: the plate's actions, labelled, on the plate's floor */
+html[data-pjx] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardbody > .pjxc-foot.pmu-cardfoot { margin: auto -14px -12px; padding: 10px 14px 12px; flex-wrap: wrap; gap: 6px; }
+#pjxc .pjxc-facts { flex: none; }
+html[data-pjx] #pjxc .pjxc-facts .pmu-factl { flex: 0 0 auto; max-width: 62%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; overflow-wrap: normal; }
+html[data-pjx] #pjxc .pjxc-facts .pmu-factv { overflow-wrap: break-word; }
+html[data-pjx] #pjxc .pjxc-facts .pmu-factv .pjxc-mid { max-width: 100%; justify-content: flex-end; }
+#pjxc .pjxc-say { margin: 0; font-size: 12.5px; line-height: 18px; color: var(--pmu-ink-2); max-width: 70ch; }
+#pjxc .pjxc-say.is-lead { color: var(--pmu-ink); font-size: 13px; }
+#pjxc .pjxc-say.is-hint { color: var(--pmu-ink-3); font-size: 12px; }
+#pjxc .pjxc-working { display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 12.5px; color: var(--pmu-ink-2); }
+#pjxc .pjxc-working b { color: var(--pmu-ink); font-weight: 640; }
+#pjxc .pjxc-working .pjx-st-mark svg { width: 14px; height: 14px; }
+/* Now: one line of what it is doing, the mark beside it */
+#pjxc .pjxc-now { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; align-items: start; padding: 2px 0 2px; }
+#pjxc .pjxc-now-mark { width: 18px; height: 18px; margin-top: 3px; }
+#pjxc .pjxc-now-mark svg { width: 18px; height: 18px; display: block; }
+#pjxc .pjxc-now-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+#pjxc .pjxc-now-text b { font-size: 17px; line-height: 23px; font-weight: 640; letter-spacing: -.012em; color: var(--pmu-ink); }
+#pjxc .pjxc-now-text span { font-size: 12.5px; line-height: 18px; color: var(--pmu-ink-2); }
+#pjxc .pjxc-now[data-tone="attention"] b { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); }
+#pjxc .pjxc-now[data-tone="blocked"] b { color: var(--pmg-ink-blocked, var(--pmu-ink-error)); }
+/* Kept safe: History · Online copy · Backup at a glance, three cells in one ruled box, each a button to its plate */
+html[data-pjx] #pjxc .pjxc-safe.pjx-safe { border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); overflow: hidden; margin: 2px 0 0; }
+#pjxc button.pjxc-safecell { appearance: none; align-content: start; margin: 0; padding: 9px 12px 9px 10px; border: 0; border-radius: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; min-width: 0;
+  transition: background-color 120ms ease-out; }
+#pjxc button.pjxc-safecell + button.pjxc-safecell { border-left: 1px solid var(--pmu-rule); }
+#pjxc button.pjxc-safecell:hover { background: var(--pmu-row-hover); }
+#pjxc button.pjxc-safecell:focus-visible { outline: 2px solid var(--pmw-focus, var(--accent-primary)); outline-offset: -2px; }
+#pjxc .pjxc-safecell .pjx-safe-label { font-size: 11.5px; line-height: 15px; color: var(--pmu-ink-3); }
+/* a cell's word may take two lines rather than lose its end ("Jujutsu · bookmark main") */
+#pjxc .pjxc-safecell .pjx-safe-word { font-size: 12.5px; line-height: 17px; white-space: normal; overflow: visible; overflow-wrap: anywhere; }
+#pjxc .pjxc-safecell[data-tone="working"] .pjx-safe-word { color: var(--pmg-ink-working, var(--pmu-ink)); }
+html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-safe.pjx-safe { background: var(--lg-fill); border-color: var(--lg-line); }
+html[data-lg="on"][data-theme^="glass"] #pjxc button.pjxc-safecell + button.pjxc-safecell { border-left-color: var(--lg-line); }
+html[data-lg="on"][data-theme^="glass"] #pjxc button.pjxc-safecell:hover { background: var(--lg-fill-hover); }
+html[data-theme^="retro"] #pjxc .pjxc-safe.pjx-safe { border-width: 2px; border-radius: 0; }
+html[data-o55-nier="on"] #pjxc .pjxc-safe.pjx-safe { border-radius: 0; }
+@container pjxcpage (max-width: 459.98px) {
+  html[data-pjx] #pjxc .pjxc-safe.pjx-safe { grid-template-columns: minmax(0, 1fr); }
+  #pjxc button.pjxc-safecell + button.pjxc-safecell { border-left: 0; border-top: 1px solid var(--pmu-rule); }
+  html[data-lg="on"][data-theme^="glass"] #pjxc button.pjxc-safecell + button.pjxc-safecell { border-top-color: var(--lg-line); }
+}
+/* the danger plate: a plain plate whose only colour is its action's error ink */
+#pjxc .pjxc-danger .pjxc-plico { color: var(--pmg-ink-blocked, var(--pmu-ink-crit)); }
+
+/* Find the folder and Finish setup, in place: the hero of a broken Project */
+/* the shared repair's red notice says what the plate's lead already says (and the head says "Folder missing"): it is
+   folded into the lead, so the problem is said once, with the path, and the ways to fix it come straight after */
+#pjxc .pjxc-repairplate .pjx-repair > .pjx-notice:first-child { display: none; }
+#pjxc .pjxc-missing { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 8px; align-items: start; }
+#pjxc .pjxc-missing .pjx-st-mark { margin-top: 2px; }
+#pjxc .pjxc-missing .pjxc-code { overflow-wrap: anywhere; color: var(--pmu-ink); }
+/* the hero of a broken Project: the whole plate outlined in the blocked ink (never a side bar) */
+html[data-pjx] #pjxc .pjxc-repairplate.pmu-card[data-tone="blocked"] { border-color: color-mix(in srgb, var(--pmg-ink-blocked, var(--pmu-ink-error)) 50%, var(--pmu-rule)); }
+html[data-pjx] #pjxc .pjxc-resumeplate.pmu-card[data-tone="attention"] { border-color: color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-warn)) 50%, var(--pmu-rule)); }
+html[data-lg="on"][data-theme^="glass"][data-pjx] #pjxc :is(.pjxc-repairplate, .pjxc-resumeplate).pmu-card[data-tone] { border-color: transparent; }
+#pjxc .pjxc-repairplate .pjx-group-label, #pjxc .pjxc-resumeplate .pjx-group-label { font-family: var(--pmu-mono); font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--pmu-ink-3); }
+/* the ways to fix it are explained in full: their second lines wrap instead of ending in "..." */
+#pjxc .pjxc-repairplate .pjx-choices-list .pjx-choice-sub { white-space: normal; overflow: visible; }
+#pjxc .pjxc-resume { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 4px 24px; }
+#pjxc .pjxc-resume .pjx-group { margin-top: 0; }
+html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-plate .pjx-notice { background: var(--lg-fill); border-color: var(--lg-line); }
+
+/* the narrow page's opening plate: name, state, place and actions */
+#pjxc .pjxc-hero { padding: 14px; gap: 12px; }
+html[data-pjx] #pjxc .pjxc-hero .pjxc-acts.pmu-headctl { justify-content: flex-start; }
+#pjxc .pjxc-hero .pjxc-headline { gap: 2px 12px; }
+#pjxc .pjxc-hero .pjxc-headline > .pjxc-mid { flex-basis: 100%; max-width: 100%; }
+
+/* ------------------------------------------------------------------ New Project: the launcher */
+#pjxc .pjxc-paste { padding: 16px 16px 14px; gap: 10px; }
+#pjxc .pjxc-welcome { margin: 0 0 2px; font-size: 13.5px; line-height: 20px; color: var(--pmu-ink-2); max-width: 64ch; }
+#pjxc .pjxc-pastefield { position: relative; display: flex; align-items: center; height: 50px; border: var(--pmu-bw, 1px) solid var(--pmu-rule-strong, var(--pmu-rule)); border-radius: min(var(--pmu-r-card, 10px), 10px);
+  background: var(--pmu-card-2, transparent); }
+#pjxc .pjxc-pastefield:focus-within { border-color: color-mix(in srgb, var(--pmw-focus, var(--accent-primary)) 70%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--pmw-focus, var(--accent-primary)) 70%, transparent); }
+#pjxc .pjxc-pasteico { display: inline-grid; place-items: center; width: 44px; flex: none; color: var(--pmu-ink-3); }
+#pjxc .pjxc-pasteico svg { width: 18px; height: 18px; }
+#pjxc .pjxc-paste-in { flex: 1 1 auto; min-width: 0; height: 100%; padding: 0 14px 0 0; border: 0; outline: none; background: transparent; color: var(--pmu-ink); font: inherit; font-size: 15px; letter-spacing: -.005em; }
+#pjxc .pjxc-paste-in::placeholder { color: var(--pmu-ink-3); }
+#pjxc .pjxc-paste-in:focus-visible { outline: none; }
+html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-pastefield { background: var(--lg-fill); border-color: var(--lg-line); }
+/* the field is the box; the bare input inside it paints nothing of its own (Glass gives inputs a fill) */
+/* (the id twice: Glass fills every input at one id and six classes; these two inputs are parts of a field that is filled) */
+html[data-pjx] #pjxc#pjxc :is(.pjxc-paste-in, .pjxc-search-in) { background: transparent !important; border: 0 !important; box-shadow: none !important; border-radius: 0 !important; }
+#pjxc .pjxc-detect { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; min-height: 32px; font-size: 12.5px; line-height: 17px; color: var(--pmu-ink-2); }
+#pjxc .pjxc-detect > .pjx-st-mark { align-self: center; }
+#pjxc .pjxc-detect-text { display: flex; flex-direction: column; min-width: 0; flex: 1 1 200px; }
+#pjxc .pjxc-detect-text b { color: var(--pmu-ink); font-weight: 640; font-size: 13px; overflow-wrap: anywhere; }
+#pjxc .pjxc-detect-text span { color: var(--pmu-ink-3); }
+#pjxc .pjxc-detect[data-state="found"] { animation: pjxc-fade 160ms ease-out both; }
+#pjxc .pjxc-detect-try { font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--pmu-ink-3); }
+#pjxc .pjxc-try { text-align: left; overflow-wrap: anywhere; font-family: var(--pm-font-code, var(--pmu-mono)); font-size: 12px; font-weight: 500; color: var(--pmu-ink-2); text-decoration-color: color-mix(in srgb, var(--pmu-ink-3) 60%, transparent); }
+#pjxc .pjxc-try:hover { color: var(--pmu-ink); }
+#pjxc .pjxc-likenote { display: flex; align-items: center; gap: 6px; margin: 0; font-size: 12px; color: var(--pmu-ink-3); }
+#pjxc .pjxc-likenote svg { width: 13px; height: 13px; display: block; }
+#pjxc .pjxc-title-in { font-size: 19px; line-height: 24px; }
+
+/* the five ways: large plates; the most common one leads across the page */
+#pjxc .pjxc-ways { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+html[data-pjx] #pjxc .pjxc-way.pmu-card { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; grid-template-rows: auto auto; align-items: start; column-gap: 12px; row-gap: 0;
+  min-height: 92px; padding: 16px 14px 14px 16px; text-align: left; font: inherit; color: var(--pmu-ink); cursor: pointer; }
+#pjxc .pjxc-way:first-child { grid-column: 1 / -1; min-height: 84px; }
+#pjxc .pjxc-way-ico { grid-row: 1 / span 2; width: 28px; height: 28px; display: grid; place-items: center; color: var(--pmu-ink-2); }
+#pjxc .pjxc-way-ico svg { width: 24px; height: 24px; }
+#pjxc .pjxc-way-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+#pjxc .pjxc-way-title { font-size: 14.5px; line-height: 20px; font-weight: 640; letter-spacing: -.008em; color: var(--pmu-ink); }
+#pjxc .pjxc-way-sub { font-size: 12.5px; line-height: 17px; color: var(--pmu-ink-2); }
+#pjxc .pjxc-way-tag { grid-column: 2; grid-row: 2; margin-top: 8px; font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--pmu-ink-3); }
+#pjxc .pjxc-way-go { grid-column: 3; grid-row: 1; width: 16px; height: 20px; display: grid; place-items: center; color: var(--pmu-ink-3); transition: color 140ms ease-out, translate 160ms var(--pjxc-ease); }
+#pjxc .pjxc-way-go svg { width: 16px; height: 16px; }
+#pjxc .pjxc-way:hover .pjxc-way-go, #pjxc .pjxc-way:focus-visible .pjxc-way-go { color: var(--pmu-ink); translate: 2px 0; }
+#pjxc .pjxc-way:focus-visible { outline: 2px solid var(--pmw-focus, var(--accent-primary)); outline-offset: 2px; }
+#pjxc .pjxc-way[aria-pressed="true"] { border-color: color-mix(in srgb, var(--accent-primary) 55%, var(--pmu-rule)); }
+#pjxc .pjxc-way[aria-pressed="true"] .pjxc-way-ico { color: var(--accent-primary); }
+html[data-theme^="retro"] #pjxc .pjxc-way[aria-pressed="true"] { background: var(--pm-switch-fill, var(--pmu-ink)); }
+html[data-theme^="retro"] #pjxc .pjxc-way[aria-pressed="true"] :is(.pjxc-way-ico, .pjxc-way-title, .pjxc-way-sub, .pjxc-way-tag, .pjxc-way-go) { color: var(--pm-switch-ink-on, var(--pmu-card)); }
+html[data-o55-nier="on"] #pjxc .pjxc-way-title { text-transform: uppercase; letter-spacing: .06em; font-size: 13.5px; }
+#pjxc .pjxc-more { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 10px 14px; border: var(--pmu-bw, 1px) dashed var(--pmu-rule);
+  border-radius: min(var(--pmu-r-card, 10px), 10px); color: var(--pmu-ink-3); font-size: 12.5px; line-height: 17px; }
+#pjxc .pjxc-more-ico { width: 16px; height: 16px; color: var(--pmu-ink-3); }
+#pjxc .pjxc-more-ico svg { width: 16px; height: 16px; display: block; }
+#pjxc .pjxc-more-text { display: flex; flex-direction: column; min-width: 0; }
+#pjxc .pjxc-more-text b { color: var(--pmu-ink-2); font-weight: 600; }
+/* in Glass the quiet line sits on the wallpaper: it takes a light plate of the glass fill so its words stay readable */
+html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-more { background: var(--lg-tint-card, var(--lg-fill)); border-style: solid; border-color: var(--lg-line); }
+
+/* ------------------------------------------------------------------ New Project: the questions beside a live Review */
+#pjxc .pjxc-flowgrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; align-items: start; }
+/* the questions card is a size container of its own: its numbering hangs in a margin only when there is room for it */
+#pjxc .pjxc-steps { padding: 0; min-width: 0; container: pjxcsteps / inline-size; }
+#pjxc .pjxc-begins { display: flex; align-items: center; gap: 12px; padding: 14px 16px 12px; border-bottom: 1px solid var(--pmu-rule-2); }
+#pjxc .pjxc-begins-ico { display: inline-grid; place-items: center; width: 20px; height: 20px; color: var(--pmu-ink-2); }
+#pjxc .pjxc-begins-ico svg { width: 20px; height: 20px; }
+#pjxc .pjxc-begins-text { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+#pjxc .pjxc-begins-text b { font-size: 14px; font-weight: 640; color: var(--pmu-ink); }
+#pjxc .pjxc-begins-acts { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 14px; }
+#pjxc .pjxc-cap { margin: 0; font-family: var(--pmu-mono); font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--pmu-ink-3); }
+#pjxc .pjxc-stepsin { counter-reset: pjxc-step; padding: 4px 16px 18px; }
+#pjxc .pjxc-stepsin[data-busy] { opacity: .55; }
+#pjxc .pjxc-stepsin > .pjx-step { counter-increment: pjxc-step; padding-top: 16px; }
+#pjxc .pjxc-stepsin > .pjx-step + .pjx-step { margin-top: 18px; }
+#pjxc .pjxc-stepsin .pjx-q { position: relative; padding-left: 34px; }
+#pjxc .pjxc-stepsin .pjx-q::before { content: counter(pjxc-step, decimal-leading-zero); position: absolute; left: 0; top: 3px; font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .06em; color: var(--pmu-ink-3); }
+#pjxc .pjxc-stepsin .pjx-q-title { font-size: 16px; line-height: 22px; }
+html[data-o55-nier="on"] #pjxc .pjxc-stepsin .pjx-q-title { text-transform: uppercase; letter-spacing: .07em; font-size: 14px; }
+#pjxc .pjxc-stepsin .pjx-step > :not(.pjx-q) { margin-left: 34px; }
+/* the review plate stays in view beside the questions */
+html[data-pjx] #pjxc .pjxc-review.pmu-card { min-width: 0; }
+#pjxc .pjxc-review:focus { outline: none; }
+html[data-pjx] #pjxc .pjxc-review .pmu-cardtitle { white-space: normal; overflow-wrap: break-word; }
+html[data-pjx] #pjxc .pjxc-review .pmu-cardsub { white-space: normal; }
+#pjxc .pjxc-rgroup { padding: 8px 0; border-top: 1px dashed var(--pmu-rule); }
+#pjxc .pjxc-rgroup:first-child { border-top: 0; padding-top: 0; }
+#pjxc .pjxc-rghead { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+#pjxc .pjxc-rrows { display: grid; grid-template-columns: minmax(84px, auto) minmax(0, 1fr); gap: 3px 12px; margin: 0; font-size: 12.5px; line-height: 17px; }
+#pjxc .pjxc-rrows dt { color: var(--pmu-ink-2); }
+#pjxc .pjxc-rrows dd { margin: 0; color: var(--pmu-ink); font-weight: 600; overflow-wrap: anywhere; }
+#pjxc .pjxc-commit { display: flex; flex-direction: column; gap: 8px; margin: 2px -14px -12px; padding: 12px 14px 14px; border-top: 1px solid var(--pmu-rule-2); }
+html[data-pjx] #pjxc .pjxc-commit .pmw-act { width: 100%; height: 36px; justify-content: center; font-size: 13px; font-weight: 640; }
+#pjxc .pjxc-why { display: flex; align-items: flex-start; gap: 6px; padding: 0; border: 0; background: none; color: var(--pmg-ink-attention, var(--pmu-ink-warn)); font: inherit; font-size: 12.5px; font-weight: 600; line-height: 17px; text-align: left; cursor: pointer; }
+#pjxc .pjxc-why .pjx-st-mark { margin-top: 1px; }
+#pjxc .pjxc-why:hover span:last-child { text-decoration: underline; text-underline-offset: 2px; }
+#pjxc .pjxc-steps-n { margin: 0; font-size: 12px; color: var(--pmu-ink-3); text-align: center; }
+#pjxc .pjxc-demo { font-size: 12px; color: var(--pmu-ink-2); padding-top: 6px; border-top: 1px dashed var(--pmu-rule); }
+#pjxc .pjxc-review .pjx-phases { gap: 8px; }
+/* the onboarding explanations are read in full: a choice's second line wraps instead of ending in "..." */
+#pjxc .pjxc-stepsin .pjx-choices-list .pjx-choice-sub { white-space: normal; overflow: visible; text-overflow: clip; }
+#pjxc .pjxc-stepsin .pjx-sync { display: flex; align-items: flex-start; gap: 6px; }
+#pjxc .pjxc-stepsin .pjx-sync svg { width: 13px; height: 13px; flex: none; margin-top: 2px; }
+/* the Review while it runs: the Project's name is the plate's title (it never breaks inside a name), what is happening
+   and how far is its second line, and the lead is the moving mark */
+html[data-pjx] #pjxc .pjxc-review .pmu-cardtitle { overflow-wrap: normal; word-break: normal; hyphens: manual; }
+html[data-pjx] #pjxc .pjxc-review .pmu-cardmeta { flex: none; max-width: none; }
+#pjxc .pjxc-plico.is-mark svg { width: 16px; height: 16px; display: block; }
+#pjxc .pjxc-nobr { white-space: nowrap; }
+#pjxc .pjxc-steps-n.is-left { text-align: left; margin-top: 2px; }
+/* a Review value nobody has chosen yet: said plainly, in the quiet ink */
+#pjxc .pjxc-rrows dd.is-open { color: var(--pmu-ink-3); font-weight: 500; }
+@container pjxcsteps (max-width: 440px) {
+  #pjxc .pjxc-stepsin .pjx-q { padding-left: 0; }
+  #pjxc .pjxc-stepsin .pjx-q::before { position: static; display: block; margin-bottom: 3px; }
+  #pjxc .pjxc-stepsin .pjx-step > :not(.pjx-q) { margin-left: 0; }
+}
+
+/* ------------------------------------------------------------------ wide: the bento and the flow go to two columns
+   Measured on the page itself (pjxcpage). The plates pair up only when each gets ~350 px, so a value never wraps
+   under its label; below that one calm column reads better than two cramped ones. The Review sits beside the
+   questions from a 600 px page, in a column narrow enough to leave the questions room to explain themselves. */
+@container pjxcpage (min-width: 720px) {
+  #pjxc .pjxc-bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container pjxcpage (min-width: 600px) {
+  #pjxc .pjxc-flowgrid { grid-template-columns: minmax(0, 1fr) clamp(228px, 36%, 272px); }
+  html[data-pjx] #pjxc .pjxc-review.pmu-card { position: sticky; top: 12px; }
+  /* in the narrow review column a row is its label over its value, so names and paths keep their words whole */
+  #pjxc .pjxc-review .pjxc-rrows { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  #pjxc .pjxc-review .pjxc-rrows dt { font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+  #pjxc .pjxc-review .pjxc-rrows dd { margin-bottom: 6px; overflow-wrap: break-word; }
+  #pjxc .pjxc-review .pjxc-rrows dd:last-child { margin-bottom: 0; }
+}
+@container pjxcpage (min-width: 1000px) {
+  #pjxc .pjxc-flowgrid { grid-template-columns: minmax(0, 1fr) clamp(272px, 32%, 320px); }
+}
+
+/* a mid-width page (the library beside it), or a name the actions would cut (c.js fitHead): the actions go under the
+   state line, so the name keeps its room */
+@container pjx (min-width: 740px) and (max-width: 899.98px) {
+  html[data-pjx] #pjxc .pjxc-head.pmu-stagehead { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "ico title" "ico line" "ico acts"; }
+  html[data-pjx] #pjxc .pjxc-head > .pjxc-acts.pmu-headctl { justify-content: flex-start; margin-top: 6px; }
+}
+html[data-pjx] #pjxc .pjxc-head.pmu-stagehead[data-tight] { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "ico title" "ico line" "ico acts"; }
+html[data-pjx] #pjxc .pjxc-head.pmu-stagehead[data-tight] > .pjxc-acts.pmu-headctl { justify-content: flex-start; margin-top: 6px; }
+
+/* ------------------------------------------------------------------ narrow: the library is a drawer behind "Projects" */
+@container pjx (max-width: 739.98px) {
+  html[data-pjx] #pjxc.pmu-shell { grid-template-columns: minmax(0, 1fr); }
+  html[data-pjx] #pjxc .pjxc-stage.pmu-stage { grid-column: 1; }
+  html[data-pjx] #pjxc .pjxc-lib.pmu-rail { position: absolute; z-index: 30; left: 0; top: 0; bottom: 0; width: min(320px, calc(100% - 28px)); display: none;
+    border-right: var(--pmu-bw, 1px) solid var(--pmu-rule-strong, var(--pmu-rule)); box-shadow: var(--pmu-shadow-pop); background: var(--pmu-card); }
+  html[data-pjx] #pjxc[data-drawer] .pjxc-lib.pmu-rail { display: flex; animation: pjxc-drawer var(--pjxc-dur) var(--pjxc-ease) both; }
+  #pjxc .pjxc-scrim { position: absolute; inset: 0; z-index: 29; display: none; background: color-mix(in srgb, var(--background, #000) 46%, transparent); }
+  #pjxc[data-drawer] .pjxc-scrim { display: block; animation: pjxc-fade 160ms ease-out both; }
+  html[data-pjx] #pjxc .pjxc-head.pmu-stagehead { display: flex; min-height: 52px; padding: 0 10px 0 12px; gap: 8px; }
+  #pjxc .pjxc-body { padding: 10px 10px 24px; }
+  #pjxc .pjxc-headico { width: 34px; height: 34px; }
+  #pjxc .pjxc-title { font-size: 19px; line-height: 24px; white-space: normal; overflow-wrap: anywhere; }
+  #pjxc .pjxc-headline > .pjxc-mid { max-width: 100%; }
+}
+@container pjx (max-width: 420px) {
+  #pjxc .pjxc-ways { grid-template-columns: minmax(0, 1fr); }
+  /* a choice's tag ("Most likely", "Recommended") goes under its words instead of over them */
+  #pjxc .pjx-choice { grid-template-columns: auto minmax(0, 1fr); }
+  #pjxc .pjx-choice-tag { grid-column: 2; margin-top: -4px; }
+  #pjxc .pjx-choice-meta { grid-column: 2; }
+  #pjxc .pjx-notice-title { overflow-wrap: anywhere; }
+  html[data-pjx] #pjxc .pjxc-way.pmu-card { min-height: 0; padding: 12px; }
+  #pjxc .pjxc-way-sub { font-size: 12px; }
+  #pjxc .pjxc-hero .pjxc-headico { display: none; }
+  #pjxc .pjxc-more { grid-template-columns: 16px minmax(0, 1fr); }
+  #pjxc .pjxc-more > .pjx-link { grid-column: 2; justify-self: start; }
+  #pjxc .pjxc-stepsin { padding: 4px 12px 16px; }
+  #pjxc .pjxc-stepsin .pjx-q { padding-left: 0; }
+  #pjxc .pjxc-stepsin .pjx-q::before { position: static; display: block; margin-bottom: 2px; }
+  #pjxc .pjxc-stepsin .pjx-step > :not(.pjx-q) { margin-left: 0; }
+  html[data-pjx] #pjxc .pjxc-plate .pmu-cardsub { white-space: normal; }
+  html[data-pjx] #pjxc .pjxc-facts .pmu-fact { flex-wrap: wrap; }
+  html[data-pjx] #pjxc .pjxc-facts .pmu-factl { max-width: 100%; white-space: normal; }
+  /* a plate's state goes under its title, and every line keeps its words */
+  html[data-pjx] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardhead { flex-wrap: wrap; row-gap: 2px; }
+  html[data-pjx] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardhead .pmu-cardtitles { flex: 1 1 calc(100% - 26px); }
+  html[data-pjx] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardhead .pmu-cardtitle { white-space: normal; overflow-wrap: break-word; }
+  html[data-pjx] #pjxc .pjxc-plate .pmu-cardmeta { order: 3; flex-basis: 100%; max-width: none; margin: 2px 0 0 26px; }
+  html[data-pjx] #pjxc .pjxc-plate .pmu-cardmeta .pjx-st { white-space: normal; align-items: flex-start; }
+  html[data-pjx] #pjxc .pjxc-plate .pmu-cardmeta .pjx-st-word { white-space: normal; }
+  #pjxc .pjxc-plate .pjx-choices-list .pjx-choice-sub { white-space: normal; }
+  #pjxc .pjxc-begins { flex-wrap: wrap; row-gap: 6px; }
+  #pjxc .pjxc-begins > .pjx-link { flex-basis: 100%; text-align: left; padding-left: 32px; }
+  #pjxc .pjxc-can-shrink { width: 32px; padding: 0; justify-content: center; }
+  #pjxc .pjxc-can-shrink .pjxc-blabel { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  #pjxc .pjxc-detect[data-state="empty"] { flex-direction: column; align-items: flex-start; gap: 4px; }
+  #pjxc .pjxc-paste-in { font-size: 14px; }
+}
+
+/* the narrowest pane (a 640 px window leaves Projects about 175 px): every line wraps, every action takes the width */
+@container pjx (max-width: 319.98px) {
+  html[data-pjx] #pjxc .pjxc-head.pmu-stagehead { flex-wrap: wrap; padding: 8px; row-gap: 6px; column-gap: 6px; }
+  #pjxc .pjxc-head > .pjx-grow { display: none; }
+  #pjxc .pjxc-head > .pjxc-btn { flex: 1 1 auto; justify-content: center; }
+  #pjxc .pjxc-head > .pjxc-btn.pjxc-can-shrink { flex: none; }
+  #pjxc .pjxc-body { padding: 6px 6px 20px; }
+  html[data-pjx] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardhead { padding: 10px 10px 4px; gap: 8px; }
+  html[data-pjx] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardbody { padding: 4px 10px 10px; }
+  html[data-pjx] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardbody > .pjxc-foot.pmu-cardfoot { margin: auto -10px -10px; padding: 8px 10px 10px; }
+  html[data-pjx] #pjxc .pjxc-plate .pmu-cardmeta { margin-left: 24px; }
+  #pjxc :is(.pjxc-foot, .pjxc-acts, .pjx-notice-acts) > .pjxc-btn, #pjxc .pjx-notice-acts > button { flex: 1 1 100%; justify-content: flex-start; white-space: normal; height: auto; min-height: 30px; padding-top: 4px; padding-bottom: 4px; text-align: left; }
+  #pjxc .pjxc-btn .pjxc-blabel { white-space: normal; overflow: visible; }
+  /* stacked, the main action of a plate comes first */
+  #pjxc .pjxc-foot > .is-primary { order: -1; }
+  html[data-pjx] #pjxc .pjxc-facts .pmu-fact { flex-wrap: wrap; row-gap: 0; }
+  html[data-pjx] #pjxc .pjxc-facts .pmu-factv { flex-basis: 100%; text-align: left; }
+  html[data-pjx] #pjxc .pjxc-facts .pmu-factv .pjxc-mid { justify-content: flex-start; }
+  #pjxc .pjx-notice { padding: 10px; grid-template-columns: 16px minmax(0, 1fr); gap: 3px 8px; }
+  #pjxc .pjxc-hero { padding: 10px; }
+  #pjxc .pjxc-title { font-size: 17px; line-height: 22px; }
+  html[data-pjx] #pjxc .pjxc-lib.pmu-rail { width: 100%; }
+  #pjxc .pjxc-paste { padding: 10px; }
+  #pjxc .pjxc-pasteico { width: 32px; }
+  #pjxc .pjxc-pastefield { height: 44px; }
+  html[data-pjx] #pjxc .pjxc-way.pmu-card { grid-template-columns: 20px minmax(0, 1fr); column-gap: 8px; padding: 10px; }
+  #pjxc .pjxc-way-ico, #pjxc .pjxc-way-ico svg { width: 20px; height: 20px; }
+  #pjxc .pjxc-way-go { display: none; }
+  #pjxc .pjxc-way-title { font-size: 13.5px; line-height: 18px; }
+  #pjxc .pjxc-more { grid-template-columns: minmax(0, 1fr); padding: 10px; }
+  #pjxc .pjxc-more-ico { display: none; }
+  #pjxc .pjxc-more > .pjx-link { grid-column: 1; }
+  #pjxc .pjxc-begins { padding: 10px; }
+  #pjxc .pjxc-begins > .pjx-link { padding-left: 0; }
+  #pjxc .pjxc-stepsin { padding: 2px 10px 14px; }
+  #pjxc .pjxc-rrows { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  #pjxc .pjxc-rrows dt { font-size: 12px; color: var(--pmu-ink-3); }
+  #pjxc .pjxc-rrows dd { margin-bottom: 6px; overflow-wrap: break-word; }
+  #pjxc .pjxc-headline { gap: 2px 8px; }
+}
+
+/* ------------------------------------------------------------------ Glass (Liquid Glass sheets from data-lg-surface) */
+/* the library is a panel sheet beside the page, the head a bar sheet, every plate a card sheet; each sits on the
+   wallpaper with the gaps Usage keeps. Glass draws their material; nothing here transforms them */
+html[data-lg="on"][data-theme^="glass"][data-pjx] #pjxc .pjxc-lib.pmu-rail { margin: 0 6px 0 2px; padding-bottom: 6px; }
+html[data-lg="on"][data-theme^="glass"][data-pjx] #pjxc .pjxc-head.pmu-stagehead { margin: 0 6px 6px 0; }
+html[data-lg="on"][data-theme^="glass"][data-pjx] #pjxc .pjxc-body { padding: 2px 6px 24px 0; }
+html[data-lg="on"][data-theme^="glass"][data-pjx] #pjxc .pjxc-plate.pmu-card, html[data-lg="on"][data-theme^="glass"][data-pjx] #pjxc .pjxc-way.pmu-card { border-radius: var(--lg-r-card) !important; }
+html[data-lg="on"][data-theme^="glass"] #pjxc :is(.pjxc-ghead, .pjxc-count, .pmu-cardsub, .pjxc-headsub), html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-row-line:not([data-tone="blocked"]):not([data-tone="attention"]) { color: var(--text-secondary); }
+/* Glass Light: words take the text ink and the marks keep the tone (as the core's status words do) */
+html[data-lg="on"][data-theme="glass-light"] #pjxc .pjxc-row-line[data-tone] { color: var(--text-primary); font-weight: 550; }
+html[data-lg="on"][data-theme="glass-light"] #pjxc .pmu-fact[data-tone] .pmu-factv { color: var(--text-primary); }
+html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-row[aria-current="true"] { border-radius: var(--pm-ctl-r, 6px); }
+@container pjx (max-width: 739.98px) {
+  html[data-lg="on"][data-theme^="glass"][data-pjx] #pjxc .pjxc-lib.pmu-rail { margin: 0; box-shadow: none; }
+  /* the drawer is a baked menu sheet here: it fades in, it never slides (a baked sheet is never transformed) */
+  html[data-theme^="glass"][data-pjx] #pjxc[data-drawer] .pjxc-lib.pmu-rail { animation-name: pjxc-fade; }
+  html[data-lg="on"][data-theme^="glass"][data-pjx] #pjxc .pjxc-head.pmu-stagehead { margin: 0 6px 6px 2px; }
+  html[data-lg="on"][data-theme^="glass"][data-pjx] #pjxc .pjxc-body { padding: 2px 6px 24px 2px; }
+}
+
+/* ------------------------------------------------------------------ light looks: every state word keeps 4.5:1
+   As Home's light looks do (H50-looks.css) and as the core does for its own status words: a state's ink is drawn
+   toward the text ink, so a 12 px word on white stays readable while keeping its hue (Glass Light has its own rule:
+   words take the text ink). */
+html[data-theme$="-light"]:not([data-theme="glass-light"]) #pjxc :is(.pjxc-row-line[data-tone="attention"], .pjxc-gdev[data-tone="attention"] .pjxc-gdev-text, .pjxc-needcount, .pjxc-bcount, .pjxc-why, .pjxc-now[data-tone="attention"] b,
+  .pjx-st[data-tone="attention"] .pjx-st-word, .pjx-safe-cell[data-tone="attention"] .pjx-safe-word, .pmu-fact[data-tone="warn"] .pmu-factv, .pjx-field-problem) { color: color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-warn)) 52%, var(--pmu-ink)); }
+html[data-theme$="-light"]:not([data-theme="glass-light"]) #pjxc :is(.pjxc-row-line[data-tone="blocked"], .pjxc-now[data-tone="blocked"] b, .pjx-st[data-tone="blocked"] .pjx-st-word, .pjx-safe-cell[data-tone="blocked"] .pjx-safe-word,
+  .pmu-fact[data-tone="crit"] .pmu-factv, .pjx-phase.is-failed) { color: color-mix(in srgb, var(--pmg-ink-blocked, var(--pmu-ink-crit)) 62%, var(--pmu-ink)); }
+html[data-theme$="-light"]:not([data-theme="glass-light"]) #pjxc :is(.pjx-st[data-tone="working"] .pjx-st-word, .pjx-safe-cell[data-tone="working"] .pjx-safe-word) { color: color-mix(in srgb, var(--pmg-ink-working, var(--pmu-ink)) 56%, var(--pmu-ink)); }
+html[data-theme$="-light"]:not([data-theme="glass-light"]) #pjxc :is(.pjx-st[data-tone="done"] .pjx-st-word, .pmu-fact[data-tone="good"] .pmu-factv) { color: color-mix(in srgb, var(--pmg-ink-done, var(--pmu-ink-good)) 56%, var(--pmu-ink)); }
+html[data-theme="glass-light"] #pjxc :is(.pjxc-gdev-text, .pjxc-needcount, .pjxc-bcount, .pjxc-why) { color: var(--text-primary, var(--pmu-ink)); }
+/* words in the accent (links, the plate actions' main button, the head's Open) are drawn toward the text ink the same
+   way: Friendly Light's sky accent and Retro Light's green are under 4.5:1 on paper as they are */
+html[data-theme$="-light"]:not([data-theme="glass-light"]) #pjxc :is(.pjx-link, .pmu-textbtn.is-primary, .pmw-act.is-strong) { color: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 55%, var(--pmu-ink)); }
+html[data-theme$="-light"]:not([data-theme="glass-light"]) #pjxc .pjxc-needgo { color: var(--pmu-ink); }
+/* NieR Light's third ink is too faint for a choice's explanation on its paper plate: it takes a darker second */
+html[data-o55-nier="on"][data-theme$="-light"] #pjxc :is(.pjx-choice-sub, .pjx-choice-tag) { color: color-mix(in srgb, var(--pmu-ink-2) 45%, var(--pmu-ink)); }
+
+/* ------------------------------------------------------------------ Retro: square, 2 px rules, mono, reverse video */
+html[data-theme^="retro"] #pjxc :is(.pjxc-search, .pjxc-pastefield, .pjxc-headico, .pjxc-more, .pjxc-libempty, .pjxc-bandbox, .pjx-notice) { border-radius: 0; }
+html[data-theme^="retro"] #pjxc :is(.pjxc-search, .pjxc-pastefield, .pjxc-headico) { border-width: 2px; }
+html[data-theme^="retro"] #pjxc :is(.pjxc-rgroup, .pjxc-demo) { border-top-width: 2px; }
+html[data-theme^="retro"] #pjxc :is(.pjxc-begins, .pjxc-commit) { border-width: 2px; }
+html[data-theme^="retro"] #pjxc .pjxc-title { letter-spacing: -.01em; font-weight: 700; }
+html[data-theme^="retro"] #pjxc .pjxc-pastefield:focus-within { box-shadow: 3px 3px 0 color-mix(in srgb, var(--pmu-ink) 30%, transparent); }
+
+/* ------------------------------------------------------------------ NieR: square, ink-only marks, uppercase tracked titles */
+html[data-o55-nier="on"] #pjxc :is(.pjxc-search, .pjxc-pastefield, .pjxc-headico, .pjxc-more, .pjxc-libempty, .pjxc-bandbox, .pjx-notice, .pjxc-row, .pjxc-ghead) { border-radius: 0; }
+html[data-o55-nier="on"] #pjxc :is(.pjxc-brand h1, .pjxc-begins-text b) { text-transform: uppercase; letter-spacing: .08em; }
+html[data-o55-nier="on"] #pjxc .pjx-notice { background: transparent; border-color: rgba(var(--o55-nier-ink-rgb), .45); }
+html[data-o55-nier="on"] #pjxc .pjx-notice-title { text-transform: uppercase; letter-spacing: .06em; font-size: 12.5px; }
+html[data-o55-nier="on"] #pjxc :is(.pjxc-row-line, .pjxc-gcount, .pjxc-why, .pjxc-now b, .pjxc-bcount)[data-tone], html[data-o55-nier="on"] #pjxc :is(.pjxc-why, .pjxc-bcount, .pjxc-now b) { color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #pjxc .pjxc-way[aria-pressed="true"] { background: var(--o55-nier-ink); }
+/* ink only: the status marks too (PMConcept7 tints them from --danger, --warning...): in NieR they are told apart by
+   their shapes, as on rail D */
+/* (Needs you is NieR's own filled ink block already, its "?" cut out of it: it keeps its own inks) */
+html[data-o55-nier="on"] #pjxc svg.nx:is(.nx-t-blocked, .nx-t-failed, .nx-t-warning, .nx-t-offline, .nx-t-complete) { --nx-ink: var(--o55-nier-ink); }
+/* ink only: every state word is in the ink; the marks tell the states apart by their shape */
+html[data-o55-nier="on"] #pjxc :is(.pjx-st-word, .pmu-fact[data-tone] .pmu-factv, .pjxc-gcount[data-tone], .pjxc-now[data-tone] b, .pjxc-needcount, .pjxc-gdev-text, .pjx-safe-word) { color: var(--o55-nier-ink) !important; }
+html[data-o55-nier="on"] #pjxc .pjxc-needbtn { border-color: var(--o55-nier-ink); background: transparent; }
+html[data-o55-nier="on"] #pjxc .pjxc-way[aria-pressed="true"] :is(.pjxc-way-ico, .pjxc-way-title, .pjxc-way-sub, .pjxc-way-tag, .pjxc-way-go) { color: var(--o55-nier-on-ink); }
+
+/* ------------------------------------------------------------------ Friendly: soft corners (its controls stay under 9 px) */
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"])) #pjxc button.pmw-act, :where(html[data-theme^="friendly"]:not([data-o55-nier="on"])) #pjxc button.pmu-textbtn { border-radius: 8px; }
+html[data-theme^="friendly"] #pjxc :is(.pjxc-pastefield, .pjxc-more, .pjxc-libempty) { border-radius: 14px; }
+
+/* ------------------------------------------------------------------ motion: each look's own voice, short and cut by Reduced Motion
+   A new page's contents arrive (never the sheets: in Glass only opacity moves); the launcher's ways follow one another;
+   the drawer slides in. Retro and NieR step instead of gliding. */
+@keyframes pjxc-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pjxc-rise { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+@keyframes pjxc-drawer { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+#pjxc[data-swap] .pjxc-body > * > :is(.pmu-cardhead, .pmu-cardbody, .pjx-notice, .pjxc-headmain, .pjxc-acts),
+#pjxc[data-swap] .pjxc-body > :is(.pjxc-band, .pjxc-bento, .pjxc-flowgrid) > * > :is(.pmu-cardhead, .pmu-cardbody, .pjx-notice, .pjxc-begins, .pjxc-stepsin),
+#pjxc[data-swap] .pjxc-body > .pjxc-paste > *, #pjxc[data-swap] .pjxc-way > *, #pjxc[data-swap] .pjxc-more > *,
+#pjxc[data-swap] .pjxc-head :is(.pjxc-headico, .pjxc-title, .pjxc-headline), #pjxc[data-swap] .pjxc-head > .pjxc-acts { animation: var(--pjxc-arrive) var(--pjxc-arrive-dur) var(--pjxc-arrive-ease) both; }
+#pjxc[data-swap] .pjxc-bento > :nth-child(2) > *, #pjxc[data-swap] .pjxc-way:nth-child(2) > * { animation-delay: 30ms; }
+#pjxc[data-swap] .pjxc-bento > :nth-child(3) > *, #pjxc[data-swap] .pjxc-way:nth-child(3) > * { animation-delay: 50ms; }
+#pjxc[data-swap] .pjxc-bento > :nth-child(n+4) > *, #pjxc[data-swap] .pjxc-way:nth-child(n+4) > * { animation-delay: 70ms; }
+#pjxc[data-swap] .pjxc-way:nth-child(5) > * { animation-delay: 90ms; }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #pjxc[data-drawer] .pjxc-lib.pmu-rail { animation-timing-function: steps(3, end) !important; animation-duration: 150ms !important; }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #pjxc .pjxc-way-go { transition: none; }
+:is(html[data-motion="reduced"], html[data-reduced-motion="1"]) #pjxc *, :is(html[data-motion="reduced"], html[data-reduced-motion="1"]) #pjxc { transition: none !important; animation: none !important; }
+@media (prefers-reduced-motion: reduce) { #pjxc *, #pjxc { transition: none !important; animation: none !important; } }
+
+/* ------------------------------------------------------------------ the title bar's notes while this page shows (c.js placeNotes) */
+body[data-pjxc-page] #rsStage { translate: var(--pjxc-rs-x, 0px) var(--pjxc-rs-y, 0px); }
+body[data-pjxc-page] #rsStage, body[data-pjxc-page] #rsStage .rs-card { pointer-events: none !important; }
