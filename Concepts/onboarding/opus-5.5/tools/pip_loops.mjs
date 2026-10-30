@@ -17,6 +17,8 @@
  *   sheet-hidden-tab    the window minimized: run off, clock still
  *   sheet-back          restored: running, clock advancing
  *   reduced             prefers-reduced-motion: reduce: no loop animation on either host
+ *   still-preset        PM_PIP_PARTS Still (no Motion part): the sheet's Pip draws data-sway="0" and runs no animation;
+ *                       Full again: data-sway="1"
  *   sheet-head-no-ids   in all ten looks, the sheet's Pip (PM56_SHELL.pmxPipHost, eight faces) has no SVG id and no
  *                       url(#...) reference, draws the same twice, and the open sheet's live head has none either
  * A hidden-tab case is a SKIP where the browser keeps a minimized page visible. A modal sheet can't be scrolled away
@@ -164,6 +166,15 @@ try {
   record('sheet-back', running(w) && w.run === 'on', w);
   const redSheet = await reducedNow(SHEET, SWAY);
   record('reduced', redSheet === 0 && redOrbit === 0, { sheetLoops: redSheet, orbitLoops: redOrbit });
+
+  /* the Still preset (no Motion part): the sheet's Pip doesn't sway */
+  await page.evaluate(() => PM_PIP_PARTS.applyPreset('still'));
+  await sleep(600);
+  const still = await page.evaluate((sel) => { const h = document.querySelector(sel); const svg = h && h.querySelector('svg'); return h ? { sway: svg.getAttribute('data-sway'), loops: h.getAnimations({ subtree: true }).filter((a) => a.playState === 'running').map((a) => a.animationName || 'web animation') } : null; }, SHEET);
+  await page.evaluate(() => PM_PIP_PARTS.applyPreset('full'));
+  await sleep(600);
+  const full = await page.evaluate((sel) => { const svg = document.querySelector(sel + ' svg'); return svg && svg.getAttribute('data-sway'); }, SHEET);
+  record('still-preset', !!still && still.sway === '0' && still.loops.length === 0 && full === '1', { still, fullSway: full });
 
   /* ---- the sheet's Pip is drawn with no SVG ids (an exit copy strips ids; W4), the same each time, in every look */
   const bad = [];

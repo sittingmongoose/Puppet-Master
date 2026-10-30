@@ -92,7 +92,7 @@
       st.leaving = true;
       var copy = st.el.cloneNode(true), cheered = st.cheerAt && Date.now() - st.cheerAt < 4000;
       unmount(st);
-      if (!cheered || !moves('cheers')) return;
+      if (!cheered || !moves('cheers') || !moves('sway-and-physics')) return;
       /* the exit copy takes the sheet a moment later (a microtask); look again on the next frame */
       W.requestAnimationFrame(function () { liftOff(st, copy); });
     });
@@ -129,7 +129,9 @@
   var CHIRP = { happy: 'cheer', wonder: 'alert', watch: 'think', oops: 'wake' };
   function chirp(mood) {
     if (!wants('app-voice') || !CHIRP[mood]) return;
-    var h = D.documentElement, nierVoice = h.getAttribute('data-o55-nier') === 'on' && /(^|\s)(Pod voice|Pod companion)(\s|$)/.test(h.getAttribute('data-o55-nier-parts') || '');
+    /* html[data-o55-nier-parts] holds NieR's part ids: voice (Pod voice) and pod (Pod companion) */
+    var h = D.documentElement, nierParts = (h.getAttribute('data-o55-nier-parts') || '').split(/\s+/);
+    var nierVoice = h.getAttribute('data-o55-nier') === 'on' && (nierParts.indexOf('voice') >= 0 || nierParts.indexOf('pod') >= 0);
     if (nierVoice) return;
     var P = W.O55 && W.O55.sound && W.O55.sound.pip;
     try { if (P && P.vocal) P.vocal(CHIRP[mood], { where: 'app' }); } catch (e) { /* sound is optional */ }
@@ -192,18 +194,25 @@
     setFace(st, mood, instant);
     if (hold) st.holdT = setTimeout(function () { if (!st.typing) setFace(st, st.base); }, Math.round(hold * speed()));
   }
+  /* the hop and the lift-off are travel, so they need Sway and physics as well as Cheers: under Still (no Motion part)
+     or Reduced Motion a cheer is the happy face alone, settled where Pip hangs (SSYS-056 / assistant-chat-design: Still
+     snaps to the settled state without entrance, sway, flicker or lift-off travel) */
   function hop(st) {
-    if (!moves('cheers')) return;
+    if (!moves('cheers') || !moves('sway-and-physics')) return;
     var fam = family();
     anim(st.el, [{ transform: 'none' }, { transform: 'translateY(-6px)', offset: .34 }, { transform: 'translateY(1px)', offset: .64 }, { transform: 'none' }],
       { duration: 600, easing: fam === 'retro' ? 'steps(6, end)' : fam === 'nier' ? 'steps(4, end)' : 'cubic-bezier(.3, 0, .3, 1)' });
   }
 
-  /* gaze: the eyes lean toward the last place the pointer was, and stay there */
+  /* gaze: the eyes lean toward the last place the pointer was, and stay there. With Sway and physics on (and no Reduced
+     Motion) they follow the pointer; otherwise (Still) the face doesn't travel: each new face settles, in one step,
+     looking where the pointer last was. Retro's Pip is the kit's one 24-cell sprite with its eyes cut out of the head,
+     so it has no face of its own to lean and doesn't gaze. */
   var lastPt = null, gazeQueued = false;
   var NO_GAZE = { dots: 1, working: 1, sleep: 1, happy: 1 };
   function applyGaze(st, now) {
     if (!st.face || !st.face.isConnected) return;
+    if (!now && !moves('sway-and-physics')) return;
     var x = 0, y = 0;
     if (lastPt && wants('gaze') && !NO_GAZE[st.mood] && family() !== 'retro') {
       var r = st.el.getBoundingClientRect(); if (!r.width) return;
@@ -335,7 +344,8 @@
   function syncThinking() {
     var slots = D.querySelectorAll('.tx-pending-pip');
     if (!slots.length) return;
-    var orbit = !!D.querySelector('.orbit-core-face.is-live');
+    /* the Orbit's Pip is drawn for a running run (its badge is live), whether or not its thinking dots move */
+    var orbit = !!D.querySelector('.orbit-core-face > .orbit-core-icon.is-live');
     slots.forEach(function (s) {
       if (!s.firstElementChild) { var l = loaderHtml(); if (!l) return; s.innerHTML = l; }
       var ld = s.firstElementChild;
