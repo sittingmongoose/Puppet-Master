@@ -147,11 +147,6 @@ html[data-o55-nier="on"] body[data-theme$="-dark"] { --pip-paper: var(--surface)
 .pmx-empty-line { display: flex; align-items: center; gap: 10px; }
 .pmx-empty-line > .pmx-empty-pip { margin: -6px 0 -4px; }
 
-/* ---------------------------------------------------------------- You (Q16)
-   Retro's You holds Pip's control in its own colours: u / v the front and back sticks of the sprite (module-shell PX_YOU) */
-.pmx-pp-xu { fill: var(--pip-ctl); }
-.pmx-pp-xv { fill: var(--pip-back); }
-
 /* ---------------------------------------------------------------- the sheet's Pip */
 /* by the close button, level with it (Jared, 2026-10-29: 10 px lower than the first cut), hanging over the sheet's head */
 .pmx-pip-host { flex: none; display: block; position: relative; width: 92px; height: 66px; margin: -10px 8px -28px 12px; align-self: flex-start; pointer-events: none; }
@@ -210,8 +205,9 @@ html[data-motion="reduced"] .orbit-core-face :is(.pmx-pip-dot2, .pmx-pip-dot3, .
 .qs-head-icon[data-pip] { width: 22px; height: 22px; margin: -4px 0; background: none; display: inline-grid; place-items: center; }
 .plan-sched-mark[data-pip] { width: 22px; height: 22px; margin: -3px 0 -3px -3px; padding-top: 0; }
 /* the wand: Pip holds it */
-.menu-head-wand { display: inline-flex; align-items: center; gap: 0; }
-.menu-head-wand > .pmx-pip-mk { margin: -5px -5px -5px 0; }
+/* Pip beside the wand in the head, both the head's own children (the wand keeps its inks: neon-icons.css scopes them to
+   .menu-head > svg[data-nx="wand"]); Pip tucks up to it across the head's 7 px gap */
+.menu-head > .pmx-pip-mk.menu-head-pip { margin: -5px -12px -5px 0; }
 /* an empty list that draws its glyph faint keeps Pip whole */
 .af-empty > .pmx-empty-pip { opacity: 1; }
 .af-empty.pmx-empty-line { flex-direction: column; }

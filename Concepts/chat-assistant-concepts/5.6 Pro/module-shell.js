@@ -493,25 +493,17 @@
   /* The blink phase a Pip keeps (pip.js blinks one Pip at a time; this only orders them), from what it shows: never random */
   function pipPhase(s) { var h = 0x811c9dc5; s = str(s); for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0; } return h % 997; }
 
-  /* ---- "You": the person holding the strings. QA round 2 (Q16, Jared 2026-10-30): the person raises a sleeved arm and
-     holds Pip's own control (the kit's crossed sticks, in Pip's colours: the same cross every Pip hangs from) by its
-     crossing, and its two strings hang from the control's lower ends toward the team. Its face table and figure: */
+  /* ---- "You": the person, on their own (QA round 2, Q16; Jared 2026-10-30: "the You icon can just drop the marionette
+     cross"): head and shoulders in the look's own drawing, beside the team of Pips. Its face table and figure: */
   var PUP = {
     eyes: [[12.5, 11.7], [15.5, 11.7]], cheeks: [[11.3, 13.2], [16.7, 13.2]], smile: 'M13.2 13.7Q14 14.4 14.8 13.7',
     hair: 'M9.85 10.6A4.2 4.2 0 0 1 18.15 10.6Q16.4 9.2 14 9.8Q11.6 9.2 9.85 10.6Z', shine: 'M11.2 10.2A3 3 0 0 1 13.2 8'
   };
-  /* ctl: the control's centre and scale on the 28 grid (the kit draws it on 64); hand: the hand's radius below its
-     crossing; strs: where the two strings end */
-  var YOU = {
-    head: [6.7, 13.7, 4.1], body: 'M0.8 27.2C0.8 22.2 3.4 19.4 6.7 19.4S12.6 22.2 12.6 27.2Z',
-    sleeve: 'M9.4 20.9L15.1 10.4L17.8 11.8L12.6 23.2Z', ctl: [18.4, 5.2, .74], hand: 2, strs: [16.4, 22.6]
-  };
+  var YOU = { head: [14, 10.2, 5.4], body: 'M4.6 27C4.6 21.1 8.8 17.8 14 17.8S23.4 21.1 23.4 27Z' };
   var SIL_PROP = { lead: 'crown', square: 'hardhat', circle: 'lens', triangle: 'square', diamond: 'pennant', hexagon: 'jester', orbit: 'orbit', bowl: 'grill', grill: 'grill', you: 'you' };
-  /* Retro's You: a 13 x 13 sprite on 2-unit cells (crisp edges). u / v the control's front and back sticks (Pip's
-     control colours), k the hand under their crossing and the skin, s string (a dotted half cell), h hair, e eye, c the
-     sleeve and tunic (seat hue). */
-  var PX_YOU = ['.......v...u.', '........v.u..', '.........u...', '........ukv..', '.......u.c.v.', '.hhh...s.c.s.',
-    'hkkkh..sc..s.', 'kekek..c...s.', 'kkkkk.c....s.', '.kkk.c.....s.', 'cccccc.......', 'cccccc.......', 'cccccc.......'];
+  /* Retro's You: a 13 x 13 sprite on 2-unit cells (crisp edges): h hair, k skin, e eye, c the tunic (seat hue). */
+  var PX_YOU = ['.............', '....hhhhh....', '...hhhhhhh...', '...hkkkkkh...', '...kekkkek...', '...kkkkkkk...',
+    '....kkkkk....', '.....kkk.....', '...ccccccc...', '..ccccccccc..', '.ccccccccccc.', '.ccccccccccc.', '.ccccccccccc.'];
   function pxSprite(rows) {
     var out = '';
     for (var r = 0; r < rows.length; r++) {
@@ -588,42 +580,22 @@
     return t ? '<g transform="' + t + '">' + inner + '</g>' : inner;
   }
   function headD(h) { return dCirc(h[0], h[1], h[2]); }
-  /* Pip's control at You's hand: the kit's own sticks (64 grid) scaled onto the 28 grid; ends = its two lower ends */
-  function youControl(K, ctlSvg) {
-    var C = YOU.ctl, k = C[2] * .4375, st = K.sticks(K.GEO.full), mx = (st.s1[0][0] + st.s1[1][0]) / 2, my = (st.s1[0][1] + st.s1[1][1]) / 2;
-    var hw = (st.s1[1][0] - st.s1[0][0]) / 2 * k, hh = (st.s1[1][1] - st.s1[0][1]) / 2 * k;
-    return { svg: '<g transform="translate(' + n2(C[0]) + ' ' + n2(C[1]) + ') scale(' + n2(k) + ') translate(' + n2(-mx) + ' ' + n2(-my) + ')">' + ctlSvg + '</g>',
-      ends: [[C[0] - hw, C[1] + hh], [C[0] + hw, C[1] + hh]] };
-  }
-  /* the cross drawn without the kit (the standalone self-check), in the figure's own ink */
-  function youCross(C) { return 'M' + n2(C[0] - 6.7) + ' ' + n2(C[1] - 2.4) + 'L' + n2(C[0] + 6.7) + ' ' + n2(C[1] + 2.4) + 'M' + n2(C[0] - 6.7) + ' ' + n2(C[1] + 2.4) + 'L' + n2(C[0] + 6.7) + ' ' + n2(C[1] - 2.4); }
   function ppYou(M) {
-    var Y = YOU, P = pipKit(), C = Y.ctl, ctl, strs;
-    if (P) {
-      var K = P.kit, c = youControl(K, K.controlSvg(K.GEO.full, K.rolePalette(pipLook()), {}, { attach: 'thread' }));
-      ctl = K.roleStyles(c.svg);
-      strs = K.roleStyles('<path d="M' + n2(c.ends[0][0]) + ' ' + n2(c.ends[0][1]) + 'V' + Y.strs[0] + 'M' + n2(c.ends[1][0]) + ' ' + n2(c.ends[1][1]) + 'V' + Y.strs[1] + '" fill="none" stroke="@str" stroke-width=".7" stroke-linecap="round"/>');
-    } else {
-      ctl = pp('bar', youCross(C));
-      strs = pp('str', 'M' + n2(C[0] - 6.7) + ' ' + n2(C[1] + 2.4) + 'V' + Y.strs[0] + 'M' + n2(C[0] + 6.7) + ' ' + n2(C[1] + 2.4) + 'V' + Y.strs[1]);
-    }
-    var hand = ppo('head', n2(C[0] - .3), n2(C[1] + 3.2), Y.hand);
-    var fig = pp('body', Y.body) + pp('body', Y.sleeve) + hand + ctl + ppHead(Y.head, 'you', M);
-    return { rig: '<g class="pmx-pp-fig">' + strs + fig + '</g>', halo: Y.body + Y.sleeve + headD(Y.head) + dCirc(C[0] - .3, C[1] + 3.2, Y.hand) + youCross(C) };
+    var Y = YOU;
+    return { rig: '<g class="pmx-pp-fig">' + pp('body', Y.body) + ppHead(Y.head, 'you', M) + '</g>', halo: Y.body + headD(Y.head) };
   }
-  /* NieR's You (html[data-o55-nier="on"]): ink on parchment, the user's head under its visor slit; its ink arm holds
-     NieR Pip's own control by a square hand (Q16). 16 px and under: the 14-cell pixel map, the control a cross of
-     cells. */
-  var PN_YOU = { arm: 'M9.4 19.4L17.6 9.2', body: 'M8.4 24.8L9.4 17.4L11.2 15.6H15L16.8 17.4L17.8 24.8Z', head: 'M11.1 6.6H14.9L16.8 8.5V11.7L14.7 14.2H11.3L9.2 11.7V8.5Z',
-    slit: [10.2, 9.3, 6.6, 1.9], fig: 'translate(-6.6 2.6)',
-    tiny: ['.........#...#', '..........#.#.', '...........#..', '..###.....###.', '.#####...##..#', '.#oooo...#...#', '.#####..#....#',
-      '..###..#.....#', '.#######.....#', '.#######......', '.#######......', '.#######......', '.#######......', '..............'] };
+  /* NieR's You (html[data-o55-nier="on"]): ink on parchment, the user's head under its visor slit over the shoulders;
+     16 px and under the 14-cell pixel map */
+  var PN_YOU = { body: 'M6.4 26.6L7.6 19.2L10.4 16.8H17.6L20.4 19.2L21.6 26.6Z', head: 'M11.6 4.6H16.4L18.8 7V11L16.2 14.2H11.8L9.2 11V7Z',
+    slit: [10.2, 8.1, 7.6, 2.2],
+    tiny: ['..............', '.....####.....', '....######....', '....#oooo#....', '....######....', '.....####.....', '..............',
+      '...########...', '..##########..', '..##########..', '..##########..', '..##########..', '..##########..', '..............'] };
   function pnc(c) { return String(c).split(' ').map(function (x) { return 'pmx-pn-' + x; }).join(' '); }
   function pnP(c, d) { return '<path class="' + pnc(c) + '" d="' + d + '"/>'; }
   function pnR(c, x, y, w, h) { return '<rect class="' + pnc(c) + '" x="' + n2(x) + '" y="' + n2(y) + '" width="' + n2(w) + '" height="' + n2(h) + '"/>'; }
   function pnSQ(c, cx, cy, s) { return pnR(c, cx - s / 2, cy - s / 2, s, s); }
   function pnYou(M) {
-    var Y = PN_YOU, C = YOU.ctl;
+    var Y = PN_YOU;
     if (M.z <= 16) {
       var out = '';
       for (var y = 0; y < Y.tiny.length; y++) {
@@ -636,14 +608,7 @@
       }
       return '<g class="pmx-pn-px">' + out + '</g>';
     }
-    var P = pipKit(), ctl, strs = '';
-    if (P) {
-      var K = P.kit, u = K.pipNier(K.GEO.full, K.rolePalette(pipLook()), 'idle', {}, { face: 'x' }, { parts: true }), c = youControl(K, u.ctl);
-      ctl = K.roleStyles(c.svg);
-      strs = pnP('str', 'M' + n2(c.ends[0][0]) + ' ' + n2(c.ends[0][1]) + 'V' + YOU.strs[0] + 'M' + n2(c.ends[1][0]) + ' ' + n2(c.ends[1][1]) + 'V' + YOU.strs[1]);
-    } else ctl = pnP('sl', youCross(C));
-    var fig = '<g transform="' + Y.fig + '">' + pnP('i', Y.body) + pnP('i', Y.head) + pnR('slit', Y.slit[0], Y.slit[1], Y.slit[2], Y.slit[3]) + '</g>';
-    return strs + pnP('sl', Y.arm) + fig + ctl + pnSQ('i', C[0] - .3, C[1] + 3.1, 2.6);
+    return pnP('i', Y.body) + pnP('i', Y.head) + pnR('slit', Y.slit[0], Y.slit[1], Y.slit[2], Y.slit[3]);
   }
   /* markInner(sil, seat, state, standin, role, size, grill) - the inside of a mark (28 grid). role, when given, picks the
      exact prop (moderator's gavel, teacher's page); without it the prop follows the silhouette. size: the mark's
