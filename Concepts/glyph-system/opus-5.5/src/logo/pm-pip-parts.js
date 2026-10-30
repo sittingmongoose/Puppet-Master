@@ -22,7 +22,7 @@
  *   count()              -> { on, total } (the editor's "On N / 25" meter; its words are copy)
  *   preset()             -> 'full' | 'quiet' | 'still' | 'plain' when the parts match one exactly, else null ("Custom")
  *   set(ids)             -> stores exactly these parts for the current Project; returns true when stored
- *   toggle(id, on?)      -> one part; applyPreset(name) -> one of PRESETS
+ *   toggle(id, on?)      -> one part; applyPreset(name) -> one of PRESETS; both change the preview while one shows
  *   preview(ids | null)  -> a non-persistent choice painted over the stored one (onboarding before its Project is saved,
  *                           the editor's live preview); null clears it; previewing() -> ids or null;
  *                           commitPreview() -> stores the preview for the current Project and clears it
@@ -149,17 +149,21 @@
     count: () => ({ on: current().length, total: IDS.length }),
     preset: () => presetOf(current()),
     label: (id) => (byId.get(id) || {}).label || null,
+    /* set() always stores for the Project. While a preview shows (the editor's live preview, onboarding before its
+       Project is saved), toggle() and applyPreset() change the preview, which is what the person sees; commitPreview()
+       stores it. */
     set(ids) { const ok = write(ids); if (ok) emit('set'); return ok; },
     toggle(id, want) {
       if (!byId.has(id)) return false;
-      const now = stored(), has = now.indexOf(id) >= 0, next = want == null ? !has : !!want;
+      const now = current(), has = now.indexOf(id) >= 0, next = want == null ? !has : !!want;
       if (next === has) return true;
-      return this.set(next ? now.concat(id) : now.filter((x) => x !== id));
+      const ids = next ? now.concat(id) : now.filter((x) => x !== id);
+      return pv ? (this.preview(ids), true) : this.set(ids);
     },
-    applyPreset(name) { const p = PRESETS[String(name || '').toLowerCase()]; return p ? this.set(p) : false; },
+    applyPreset(name) { const p = PRESETS[String(name || '').toLowerCase()]; return p ? (pv ? (this.preview(p), true) : this.set(p)) : false; },
     preview(ids) { pv = ids == null ? null : order(ids); emit('preview'); return current(); },
     previewing: () => (pv ? pv.slice() : null),
-    commitPreview() { if (!pv) return true; const ids = pv; pv = null; const ok = write(ids); if (!ok) pv = ids; emit('set'); return ok; },
+    commitPreview() { if (!pv) return true; const ids = pv; pv = null; const ok = write(ids); if (!ok) { pv = ids; return false; } emit('set'); return true; },
     on, subscribe: (fn) => on('change', fn)
   });
 })();

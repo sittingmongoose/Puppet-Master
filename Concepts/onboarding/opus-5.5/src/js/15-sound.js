@@ -2494,8 +2494,9 @@
     }
     function say(text, opts) {
       const o = opts || {}, vk = o.voice && VOX[o.voice] ? o.voice : voiceOf(o.look), t = timing(text, o, vk);
-      hush();
+      // a line that may not sound leaves the one speaking alone (an app chirp with app-voice off never cuts setup)
       if (!text || !allowed(o.where)) return Object.assign(t, { played: false });
+      hush();
       const V = VOX[vk];
       const played = speak(() => (V.kind === 'pulse' || V.kind === 'tick' ? blipScript(text, V, o.mood, t.cps) : textScript(text, V, o.mood, t.cps)), vk, 'say', o);
       return Object.assign(t, { played });
@@ -2514,7 +2515,9 @@
       KITS2[String(id)] = def; return true;
     }
     function play(event, opts) {
-      const o = opts || {}, kid = o.kit && KITS2[o.kit] ? String(o.kit) : voiceOf(o.look), k = KITS2[kid], fn = k && k.events[event];
+      const o = opts || {};
+      if (o.kit != null && !KITS2[o.kit]) return false;   // a kit asked for by name and not registered plays nothing
+      const kid = o.kit != null ? String(o.kit) : voiceOf(o.look), k = KITS2[kid], fn = k && k.events[event];
       if (typeof fn !== 'function' || holds.size) return false;
       if (o.motion && reducedMotion()) return false;
       const trim = k.trim && k.trim[event] != null ? +k.trim[event] : 0, int = o.intensity == null ? 1 : clamp(+o.intensity, 0, 1);

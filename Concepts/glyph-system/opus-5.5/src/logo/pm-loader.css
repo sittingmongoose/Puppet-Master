@@ -22,4 +22,6 @@
 /* !important: the page's global reduced rule (pm6-css-global.css) cuts every animation to .01 ms, once; this
    opacity-only breath is the loader's wait signal (L3), as the Pip loader's own reduced rules are (pm-logo.css) */
 :root[data-motion="reduced"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
-@media (prefers-reduced-motion: reduce) { .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; } }
+@media (prefers-reduced-motion: reduce) {
+  .pml-ld[data-pml-run="on"] > .pml-nier, #panel-settings .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
+}
