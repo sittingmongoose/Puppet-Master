@@ -12383,8 +12383,8 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
       padding: var(--3xl); display: flex; flex-direction: column; gap: var(--lg);
       align-items: center; text-align: center;
     }
-    /* the wait is the system loader (W5, DR-077; PM_PIP_LOADER, glyph-system src/logo/pm-loader.js), at the old spinner's size */
-    .pm6-wiz-disc-ld { --pml-size: 44px; }
+    /* the wait is the system loader (W5, DR-077; PM_PIP_LOADER, glyph-system src/logo/pm-loader.js), at the W5 gallery's panel size (40 px, the small cut) */
+    .pm6-wiz-disc-ld { --pml-size: 40px; }
     .pm6-wiz-disc-ld[hidden] { display: none; }
     .pm6-wiz-disc-title { font-family: var(--display-font); font-size: var(--fs-xl); color: var(--text-primary); }
     .pm6-wiz-disc-sub { font-size: var(--fs-sm); color: var(--text-muted); display: flex; align-items: center; gap: var(--sm); }
@@ -13979,8 +13979,8 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
       animation: pm-enter-scale var(--motion-med) var(--ease-default) both;
     }
     .pm6-orch-pc-pending[hidden] { display: none; }
-    /* the wait is the system loader (W5, DR-077; PM_PIP_LOADER, glyph-system src/logo/pm-loader.js), at the old ring's size */
-    .pm6-orch-pc-ld { --pml-size: 44px; }
+    /* the wait is the system loader (W5, DR-077; PM_PIP_LOADER, glyph-system src/logo/pm-loader.js), at the W5 gallery's panel size (40 px, the small cut) */
+    .pm6-orch-pc-ld { --pml-size: 40px; }
     .pm6-orch-pc-pending-title { font: 700 var(--fs-lg) var(--display-font); color: var(--text-primary); }
     .pm6-orch-pc-pending-sub { font-size: var(--fs-xs); color: var(--text-secondary); max-width: 420px; line-height: var(--lh-body); }
     .pm6-orch-pc-recon { margin-top: var(--md); display: flex; flex-direction: column; gap: var(--xs); text-align: left; }
@@ -73329,7 +73329,7 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
             <section class="pm6-wiz-stage pm6-wiz-stage-discovery" id="pm6WizStageDiscovery" data-wiz-stage="discovery">
               <div class="pm6-wiz-disc-wrap">
                 <div data-lg-surface="card" class="pm6-wiz-disc-card pm-enter-scale" id="pm6WizDiscCard" aria-busy="true">
-                  <span class="pml-ld pm6-wiz-disc-ld" id="pm6WizDiscLd" data-pip-loader="swing" data-pip-px="44" aria-hidden="true"></span>
+                  <span class="pml-ld pm6-wiz-disc-ld" id="pm6WizDiscLd" data-pip-loader="swing" data-pip-px="40" aria-hidden="true"></span>
                   <div class="pm6-wiz-disc-title">Reading your project&hellip;</div>
                   <div class="pm6-wiz-disc-sub"><span class="pm6-wiz-ro-badge">READ-ONLY</span> Looking, not touching. This takes a few seconds.</div>
                   <div class="pm6-wiz-scanrows" id="pm6WizScanRows"></div>
@@ -73536,7 +73536,7 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
               <!-- ============ PLAN COMPILE ============ -->
               <div class="orch-tab-content pm6-orch-pane" id="orch-panel-plan_compile" data-tab="plan_compile">
                 <div class="pm6-orch-pc-pending" id="pm6OrchPcPending" aria-busy="true" hidden>
-                  <span class="pml-ld pm6-orch-pc-ld" data-pip-loader="swing" data-pip-px="44" aria-hidden="true"></span>
+                  <span class="pml-ld pm6-orch-pc-ld" data-pip-loader="swing" data-pip-px="40" aria-hidden="true"></span>
                   <div class="pm6-orch-pc-pending-title">Waiting for PlanApproved…</div>
                   <div class="pm6-orch-pc-pending-sub">The approval receipt from the Planning Wizard is being reconciled. A durable PlanCompileRun binds the moment it lands.</div>
                   <div class="pm6-orch-pc-recon" id="pm6OrchPcRecon">
