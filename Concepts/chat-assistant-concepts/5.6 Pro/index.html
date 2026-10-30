@@ -2904,6 +2904,10 @@ html[data-motion="reduced"] .working-variant-10 .tc10-line b.pm-shimmer.pm-settl
   height: 28px;
   flex: 0 0 auto;
 }
+/* Retro's monospace "Activity Detail" is 135 px at 15 px; beside the domain menu, Pin and close it had 119 and
+   ellipsized (Muse m5). Retro gives it the room from its gaps and a half step of size; the buttons keep 28 px */
+body[data-theme^="retro"] .activity-panel-head { gap: 4px; padding-left: 10px; padding-right: 6px; }
+body[data-theme^="retro"] .activity-panel-head > strong { font-size: 13.5px; letter-spacing: -.01em; }
 .activity-head-overflow { display: none; position: relative; }
 .activity-head-overflow > summary {
   display: grid;
@@ -77395,7 +77399,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var el = st.flow && st.flow.querySelector('.tx-pending');
     if (on && !el && st.flow) {
       var c = C(), mdl = c.selectedModel ? c.selectedModel() : null;
-      el = document.createElement('span'); el.className = 'tx-pending';
+      el = document.createElement('span'); el.className = 'tx-pending'; el.setAttribute('aria-busy', 'true');
       /* W4/W5 (PM7 build): the thinking placeholder leads with the system loader's Think motion (L5); while the reply's
          work runs, Pip in the Orbit's centre takes over and this one steps aside (pip.js: one Pip per reply) */
       var pip = window.PM56_PIP && window.PM56_PIP.thinkingPip ? window.PM56_PIP.thinkingPip() : '';
@@ -78839,7 +78843,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
          elapsed time), so the loader sits in a slot the reconcile leaves to it (data-pm-keep); pip.js fills the slot and
          hands it over to the Orbit's Pip while the reply's work runs (one Pip per reply) */
       var slot = window.PM56_PIP && window.PM56_PIP.thinkingPip ? '<span class="tx-pending-pip tt-pending-pip" data-pm-keep aria-hidden="true"></span>' : '';
-      return '<span class="tt-label tt-label-live" data-k="tt-label:live:' + esc(T.id) + '"><span class="tx-pending tt-pending">' + slot + '<b>' + esc(model) + '</b>' +
+      return '<span class="tt-label tt-label-live" data-k="tt-label:live:' + esc(T.id) + '"><span class="tx-pending tt-pending" aria-busy="true">' + slot + '<b>' + esc(model) + '</b>' +
         '<span class="tx-pending-verb">is thinking</span><em class="tx-pending-t" data-tt-elapsed>' + esc(L ? elapsed(L) : '') + '</em></span></span>';
     }
     var head = th.state === 'ended' ? 'Thinking ended after ' + th.secs + 's' : 'Thought for ' + th.secs + 's';
