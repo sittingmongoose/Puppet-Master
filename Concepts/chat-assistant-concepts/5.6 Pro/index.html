@@ -21401,7 +21401,7 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
    Animation speed, which rescales their durations and delays), never from a constant: a close finishes when the last
    of them has ended, so the collapse always runs to its end, with a bounded fallback for a transition that never
    reports. A close that begins inside a resize drag (body.pm-resizing) lands at once, and the contract holds every
-   consumer still while a drag is under way. Reopening a closing menu cancels that close; a close called again on a
+   consumer still while a drag is under way; a morph that a drag catches mid-flight lands at its end. Reopening a closing menu cancels that close; a close called again on a
    closing menu finishes both callers together. */
 (function () {
   'use strict';
@@ -21631,6 +21631,27 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
     setTimeout(clearH, endOf(el, { height: 1 }) + 120);
   }
 
+  /* The drag hold for the motion this script runs itself (morph's animations; the CSS ones are the contract's): a resize
+     drag that begins while one runs (body.pm-resizing) lands it at its end at once. Heard the way the shared clock hears
+     drags (pm-logo.js watchDrags), by the body's class, and only while one of them runs. */
+  var running = [], dragWatch = null;
+  function settleAll() { if (!held()) return; running.slice().forEach(function (a) { try { a.finish(); } catch (_) { /* gone */ } }); }
+  function track(anim) {
+    if (!anim) return anim;
+    running.push(anim);
+    if (!dragWatch && doc.body && typeof MutationObserver === 'function') {
+      dragWatch = new MutationObserver(settleAll);
+      dragWatch.observe(doc.body, { attributes: true, attributeFilter: ['class'] });
+    }
+    var drop = function () {
+      var i = running.indexOf(anim);
+      if (i >= 0) running.splice(i, 1);
+      if (!running.length && dragWatch) { dragWatch.disconnect(); dragWatch = null; }
+    };
+    anim.finished.then(drop, drop);
+    return anim;
+  }
+
   function morph(el, a, b, opts) {
     if (!el || !a || !b || reduced() || held() || !isOpen(el) || typeof el.animate !== 'function') return null;
     opts = opts || {};
@@ -21640,10 +21661,10 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
       if (Math.abs(a[p] - b[p]) > 2) { k0[p] = a[p] + 'px'; k1[p] = b[p] + 'px'; moved = true; if (p !== 'height' && p !== 'top') shape = true; }
     }
     if (!moved) return null;
-    if (shape && opts.shape) return el.animate([k0, k1], { duration: opts.shape.duration || 220, easing: opts.shape.easing || 'ease' });
+    if (shape && opts.shape) return track(el.animate([k0, k1], { duration: opts.shape.duration || 220, easing: opts.shape.easing || 'ease' }));
     /* the height spring, as resize's: where the look's contract has none (NieR's Slice part) the box just takes its size */
     if (!endOf(el, { height: 1 })) return null;
-    var anim = el.animate([k0, k1], { duration: 340, easing: 'cubic-bezier(0.22, 1.72, 0.36, 1)' });
+    var anim = track(el.animate([k0, k1], { duration: 340, easing: 'cubic-bezier(0.22, 1.72, 0.36, 1)' }));
     bounce(el);
     return anim;
   }
