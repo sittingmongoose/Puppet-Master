@@ -441,10 +441,35 @@
     fillToast(c, it);
     return c;
   }
+  /* A4 A (Jared, 2026-10-30; F3-460, F3-660): in Friendly the app-icon tile is Pip, its face the item's mood (severity ->
+     status key -> PMLogo.moodFor: info idle, success complete, warn waiting, error failed), and the kind glyph moves
+     beside the title as a small kind mark, so the kind still sits beside its copy. Every other look keeps the glyph tile
+     and no kind mark. The title stays one text node (the kind mark is its sibling; NieR's decode reads the title). The
+     toasts, the banner and the inbox rows are drawn again when the look changes. */
+  const SEV_KEY = { info: 'idle', success: 'complete', warn: 'waiting', error: 'failed' };
+  function fillTile(root, it) {
+    const tile = root.querySelector('.pmn-tile'), title = root.querySelector('.n-title'), L = window.PMLogo;
+    if (!tile) return;
+    root.__pmnItem = it;
+    const pip = look() === 'friendly' && !!L && typeof L.mark === 'function';
+    tile.innerHTML = pip ? L.mark({ px: 24, mood: L.moodFor(SEV_KEY[it.severity] || 'idle'), decorative: true }) : icon(it.icon);
+    tile.classList.toggle('pmn-tile-pip', pip);
+    let kind = root.querySelector('.pmn-kind');
+    if (pip && title) {
+      if (!kind) { kind = el('span', 'pmn-kind', { 'aria-hidden': 'true' }); title.parentNode.insertBefore(kind, title); }
+      kind.innerHTML = icon(it.icon);
+    } else if (kind) kind.remove();
+  }
+  if (window.PMLogo && typeof window.PMLogo.onLook === 'function') {
+    window.PMLogo.onLook(() => {
+      const roots = new Set(Array.prototype.slice.call(doc.querySelectorAll('.pmn-toast, .pmn-banner')).concat(Array.from(rowEls.values())));
+      roots.forEach((r) => { if (r.__pmnItem) fillTile(r, r.__pmnItem); });
+    });
+  }
   function fillToast(c, it) {
     c.className = 'pmn-toast n-sev-' + it.severity + (c.classList.contains('pmn-leaving') ? ' pmn-leaving' : '');
     c.setAttribute('data-level', it.level); c.setAttribute('data-kind', it.kind); c.setAttribute('data-src', it.source);
-    c.querySelector('.pmn-tile').innerHTML = icon(it.icon);
+    fillTile(c, it);
     c.querySelector('.pmn-src').textContent = it.level === 'quiet' ? '' : T('src.' + it.source);
     c.querySelector('.pmn-when').textContent = it.level === 'quiet' ? '' : T('now');
     c.querySelector('.pmn-title').textContent = it.title;
@@ -761,6 +786,7 @@
       '<button type="button" class="pmn-btn" data-pmn="banner-open"></button><button type="button" class="pmn-x" aria-label="' + T('dismiss') + '">' + icon('x') + '</button><i class="pmn-timer" aria-hidden="true"></i>';
     bannerEl.querySelector('.n-title').textContent = it.title;
     bannerEl.querySelector('.n-body').textContent = it.body;
+    fillTile(bannerEl, it);
     const ob = bannerEl.querySelector('[data-pmn="banner-open"]'); ob.textContent = T('show');
     (bar && bar.parentElement ? bar.parentElement : doc.body).appendChild(bannerEl);
     const b = bannerEl, m = motion();
@@ -798,7 +824,7 @@
     }
     r.className = 'pmn-item n-sev-' + it.severity + ' kind-' + it.kind + (it.read ? '' : ' is-unread');
     r.setAttribute('data-level', it.level);
-    r.querySelector('.pmn-tile').innerHTML = icon(it.icon);
+    fillTile(r, it);
     r.querySelector('.pmn-item-title').textContent = it.title;
     const b = r.querySelector('.pmn-item-body'); b.textContent = it.body; b.hidden = !it.body;
     r.querySelector('.pmn-item-src').textContent = T('src.' + (it.level === 'blocking' ? 'needs' : it.source));
