@@ -87,7 +87,6 @@
   });
 
   const order = (ids) => { const want = new Set((Array.isArray(ids) ? ids : []).map(String)); return IDS.filter((id) => want.has(id)); };
-  const labels = (ids) => order(ids).map((id) => byId.get(id).label);
 
   /* ------------------------------------------------------------ the store */
   // The Settings adapter (src/settings/kit.d/28-pip-parts.js) loads with the body's Settings script; read it late.
