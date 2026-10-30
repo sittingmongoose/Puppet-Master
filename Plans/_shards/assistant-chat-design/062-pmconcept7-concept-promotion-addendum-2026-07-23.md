@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24437-L24834
+Source lines: L24437-L24835
 
-Source SHA256: `d220edc0852d8be39d0084da5e01bc2b7811f1deb9cab2f22c3239017048e79c`
+Source SHA256: `8ff8cd2ffe0dc8e681ec6e6df5253dcbbea369bfbef0c0c2c07ef8aa382dae68`
 
 ---
 
@@ -34,14 +34,15 @@ canonical_text: >-
   removes their former duplicates while retaining this unit’s visible motion/focus contract. L8 B, PM7 Step4,
   2026-10-30: the shared implementation is window.PM6_SPROUT in base/script/pm7-sprout.js with
   base/style/pm7-sprout.css, registered as pm7-sprout-js/css. Its contract is open(el, afterOpen, anchor,
-  opts), close(el, done), isOpen, aim, resize, bounce, keep and reduced; pm-sprout/pm-sprout-edge opt in and
+  opts), close(el, done, opts), isOpen, aim, resize, morph, bounce, keep and reduced; pm-sprout/pm-sprout-edge opt in and
   the owner writes is-open/is-closing/is-size-bounce and six --pm6-sprout-* values. Legacy selector adapters
   may keep their names only while using that same lifecycle. Title, chat/worktree/sidecar, Settings, rail
   PMR.menu/filterMenu, Usage PMU.menu, Home PMW.menu, PMMenu/File Manager and live notification inbox
   #pmnPanel all consume it; there is no inbox exemption. The standalone chat reads the same owner files.
   Preserve each trigger’s opening origin/fade, one speed-scaled close timeline, last-relevant-transition
   completion with cancellation/reopen guards and bounded fallback, and drag hold even for motion already in
-  flight. Shared presentation APIs create no new product command or saved key.
+  flight. DR-079 also owns the shared origin/shown/instant/fade inputs and Home's morph geometry adapter;
+  chat does not recreate those operations. Shared presentation APIs create no new product command or saved key.
 gui_related: true
 gui_classification_reason: Defines visible open/close motion and search behavior for chat popouts.
 split_recommended: false

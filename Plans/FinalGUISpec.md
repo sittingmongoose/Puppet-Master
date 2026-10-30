@@ -33163,6 +33163,11 @@ canonical_text: >-
   warning, error failed, info info; F3-658), lit and still; the dismiss is the close glyph in the same button
   and keeps its name Dismiss; the empty stack shows the bell glyph; marks hold 3:1 on severity-tinted cards.
   Amended 2026-10-29 (A4, D9; PM7): Keep every in-app kind mark beside its copy and the single title-bar notification entry. Only Friendly’s app tile and OS notification branding become Pip; completion notices route through this alert owner and never add a second affordance.
+  A4 A, Jared 2026-10-30; joined PM7 review fix 4c49e10567: Friendly's .pmn-tile-pip draws one decorative
+  24 px PMLogo mark. The item's severity maps through the existing status key and PMLogo.moodFor:
+  info→idle, success→complete, warn→waiting, error→failed. Its kind glyph remains in .pmn-kind beside the
+  title's text node; the tile is no additional control. Other looks retain their kind-glyph tile. Toasts,
+  banners and inbox rows repaint through the same fillTile owner in src/js/19-notify.js when the look changes.
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
 split_recommended: false
@@ -50002,6 +50007,10 @@ canonical_text: >-
   painted: bg #121212, ctl #E8E8E8, pin #9E9E9E, str #7A8290, head #64B5F6, tile #2D2D2D, edge
   rgba(255,255,255,.08). These fixed file-export values are distinct from live token-role mixing;
   app/tray/favicon exports use this one palette rather than resampling per surface.
+  A4 A, PM7 Step4 review fix: F3-460 owns Friendly's decorative 24 px notification Pip tile and its existing
+  status-key mood mapping, with the kind glyph beside the title. It consumes PMLogo.mark/moodFor/onLook,
+  never a second renderer or a new binding. OS notification branding remains a native integration requirement;
+  the concept tile does not certify OS delivery or a native notification bundle.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

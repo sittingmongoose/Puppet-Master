@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L13-L176
+Source lines: L13-L179
 
-Source SHA256: `6def7dd2661f45850f684df771c087c06ff3a5397f7dcdbf793791a9a004d457`
+Source SHA256: `1f4b609be77d3a73f934876ea54250d546ef8707eb1e1afe4b6c3dcca388a2f8`
 
 ---
 
 ## Change Summary
+
+- 2026-10-30: PM7 Step4 review fixes at integration 4c49e10567 align L8 B's shared sprout origin/shown/instant/fade inputs and PM6_SPROUT.morph, plus A4 A's Friendly notification Pip tile and adjacent kind mark. The loader M2 source census confirms the reported obsolete spinner selectors were removed; no remaining exception is added to DR-077.
+  ContractRef: ContractName:Plans/DRY_Rules.md#DR-079, ContractName:Plans/FinalGUISpec.md#F3-460, ContractName:Plans/FinalGUISpec.md#F3-660
 
 - 2026-10-30: PM7 Step4 reconciles full GUI integration bbb72b6153 with the stable Plans contracts: B5 dirty Home buffers / Unsaved changes, the read-only System status popover and owner-Settings routes, actual shared Pip/loader/project/work/editor APIs and release asset names. F3-662 records all-tier Swing ×1 / Think ×1.15 / Hop ×0.78 and accepted 14 px busy-button / 16 px thinking sizes (L-1/L-2). DR-070 records the one inherited lab hidden-click bridge exception and its PM56_APP retirement path (D-1); DR-079/F3-461 require the live inbox, PMMenu/File Manager and rail resizing to use the one sprout owner, with no inbox exemption. Source-name alignment does not certify native runtime, audio, rendering or governance.
   ContractRef: ContractName:Plans/Wiring_Matrix.md#WM-097, ContractName:Plans/FinalGUISpec.md#F3-662, ContractName:Plans/FinalGUISpec.md#F3-664, ContractName:Plans/DRY_Rules.md#DR-070, ContractName:Plans/DRY_Rules.md#DR-079

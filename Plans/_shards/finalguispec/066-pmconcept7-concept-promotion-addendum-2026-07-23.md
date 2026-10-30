@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33123-L33971
+Source lines: L33123-L33976
 
-Source SHA256: `16c1f42c58a4128badf778586b123b8812d4f70f6dd6753e1de96c6d04925d4c`
+Source SHA256: `57d809e48384bd034b600817abfc91d11f8be1b62948f0bc1cb9a70c1b755ff9`
 
 ---
 
@@ -51,6 +51,11 @@ canonical_text: >-
   warning, error failed, info info; F3-658), lit and still; the dismiss is the close glyph in the same button
   and keeps its name Dismiss; the empty stack shows the bell glyph; marks hold 3:1 on severity-tinted cards.
   Amended 2026-10-29 (A4, D9; PM7): Keep every in-app kind mark beside its copy and the single title-bar notification entry. Only Friendly’s app tile and OS notification branding become Pip; completion notices route through this alert owner and never add a second affordance.
+  A4 A, Jared 2026-10-30; joined PM7 review fix 4c49e10567: Friendly's .pmn-tile-pip draws one decorative
+  24 px PMLogo mark. The item's severity maps through the existing status key and PMLogo.moodFor:
+  info→idle, success→complete, warn→waiting, error→failed. Its kind glyph remains in .pmn-kind beside the
+  title's text node; the tile is no additional control. Other looks retain their kind-glyph tile. Toasts,
+  banners and inbox rows repaint through the same fillTile owner in src/js/19-notify.js when the look changes.
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
 split_recommended: false

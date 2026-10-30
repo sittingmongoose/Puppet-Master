@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L47482-L50572
+Source lines: L47487-L50581
 
-Source SHA256: `16c1f42c58a4128badf778586b123b8812d4f70f6dd6753e1de96c6d04925d4c`
+Source SHA256: `57d809e48384bd034b600817abfc91d11f8be1b62948f0bc1cb9a70c1b755ff9`
 
 ---
 
@@ -2531,6 +2531,10 @@ canonical_text: >-
   painted: bg #121212, ctl #E8E8E8, pin #9E9E9E, str #7A8290, head #64B5F6, tile #2D2D2D, edge
   rgba(255,255,255,.08). These fixed file-export values are distinct from live token-role mixing;
   app/tray/favicon exports use this one palette rather than resampling per surface.
+  A4 A, PM7 Step4 review fix: F3-460 owns Friendly's decorative 24 px notification Pip tile and its existing
+  status-key mood mapping, with the kind glyph beside the title. It consumes PMLogo.mark/moodFor/onLook,
+  never a second renderer or a new binding. OS notification branding remains a native integration requirement;
+  the concept tile does not certify OS delivery or a native notification bundle.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

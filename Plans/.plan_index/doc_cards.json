@@ -75,7 +75,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6155,
+      "line_count": 6158,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -215,7 +215,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "6def7dd2661f45850f684df771c087c06ff3a5397f7dcdbf793791a9a004d457",
+      "sha256": "1f4b609be77d3a73f934876ea54250d546ef8707eb1e1afe4b6c3dcca388a2f8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -623,7 +623,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 28489,
+      "line_count": 28490,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 491,
       "plan_unit_ids": [
@@ -1473,7 +1473,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "d220edc0852d8be39d0084da5e01bc2b7811f1deb9cab2f22c3239017048e79c",
+      "sha256": "8ff8cd2ffe0dc8e681ec6e6df5253dcbbea369bfbef0c0c2c07ef8aa382dae68",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 489,
@@ -6549,7 +6549,7 @@
         "scripts/pm-server-command-gap-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 4530,
+      "line_count": 4536,
       "path": "Plans/DRY_Rules.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -6641,7 +6641,7 @@
         "shared_runtime_parallel_owner_drift",
         "usage_role_parallel_owner_drift"
       ],
-      "sha256": "20f3e2cd5ac1c6ef4b5a1ad340533c91d4dc5d29de97a6e150183d04a20aeb5c",
+      "sha256": "ce03911743e06c82ecd28baeb9262f06f3c2e2b96df1ff05ddece8d1a45c8ef7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -7747,7 +7747,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 50574,
+      "line_count": 50583,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 653,
       "plan_unit_ids": [
@@ -8544,7 +8544,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "16c1f42c58a4128badf778586b123b8812d4f70f6dd6753e1de96c6d04925d4c",
+      "sha256": "57d809e48384bd034b600817abfc91d11f8be1b62948f0bc1cb9a70c1b755ff9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 646,
@@ -21012,7 +21012,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-30T05:21:25Z",
+  "generated_at_utc": "2026-10-30T05:57:39Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

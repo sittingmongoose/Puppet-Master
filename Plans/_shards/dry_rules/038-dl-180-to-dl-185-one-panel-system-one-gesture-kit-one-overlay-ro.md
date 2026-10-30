@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3462-L4530
+Source lines: L3462-L4536
 
-Source SHA256: `20f3e2cd5ac1c6ef4b5a1ad340533c91d4dc5d29de97a6e150183d04a20aeb5c`
+Source SHA256: `ce03911743e06c82ecd28baeb9262f06f3c2e2b96df1ff05ddece8d1a45c8ef7`
 
 ---
 
@@ -1026,14 +1026,20 @@ canonical_text: >-
   focus and availability contracts; sharing motion dispatches no command or runtime write. L8 B, PM7 Step4,
   2026-10-30: the shared implementation is window.PM6_SPROUT in base/script/pm7-sprout.js with
   base/style/pm7-sprout.css, registered as pm7-sprout-js/css. Its contract is open(el, afterOpen, anchor,
-  opts), close(el, done), isOpen, aim, resize, bounce, keep and reduced; pm-sprout/pm-sprout-edge opt in and
+  opts), close(el, done, opts), isOpen, aim, resize, morph, bounce, keep and reduced; pm-sprout/pm-sprout-edge opt in and
   the owner writes is-open/is-closing/is-size-bounce and six --pm6-sprout-* values. Legacy selector adapters
   may keep their names only while using that same lifecycle. Title, chat/worktree/sidecar, Settings, rail
   PMR.menu/filterMenu, Usage PMU.menu, Home PMW.menu, PMMenu/File Manager and live notification inbox
   #pmnPanel all consume it; there is no inbox exemption. The standalone chat reads the same owner files.
   Preserve each trigger’s opening origin/fade, one speed-scaled close timeline, last-relevant-transition
   completion with cancellation/reopen guards and bounded fallback, and drag hold even for motion already in
-  flight. Shared presentation APIs create no new product command or saved key.
+  flight. L8 B, joined review fixes at 4c49e10567: opts.origin accepts corner (default), trigger, or
+  {ox,oy,tx,ty,sx,sy}; opts.shown waits for timely painted entrance frames, and close opts.instant settles
+  immediately. The shared --pm6-sprout-fade-in/--pm6-sprout-fade-ease inputs preserve the consumers' fades
+  (160 ms for Home/Usage/chat, 140 ms default). morph(el, from, to, opts) moves the same box between
+  {left,top,width,height} geometries: height-only changes use the shared height spring/size bounce;
+  a level's width/place change uses its opts.shape duration/easing, with the same motion gates.
+  Shared presentation APIs create no new product command or saved key.
 gui_related: true
 gui_classification_reason: Defines one visible menu motion and lifecycle owner.
 split_recommended: false
