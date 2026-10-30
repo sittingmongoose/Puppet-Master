@@ -121,4 +121,9 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   :root [data-pml-run="on"] .pml-a .pml-blink { animation: pml-rblink var(--pml-bdur, 4.4s) ease-in-out var(--pml-bdelay, 0s) infinite var(--pml-ps, running) !important; }
   :root [data-pml-run="on"] .pml-a .pml-fr { animation: none !important; opacity: 0; }
   :root [data-pml-run="on"] .pml-a .pml-fr0 { opacity: 1; animation: pml-breath var(--pml-rdur, 2.2s) ease-in-out var(--pml-rdelay, 0s) infinite var(--pml-ps, running) !important; }
+  /* the Settings panel freezes its own subtree under the OS setting with an id selector (pm4-settings-css.css,
+     #panel-settings *): a loader in a Settings busy state keeps the same wait signal */
+  #panel-settings [data-pml-run="on"] .pml-a :is(.pml-pup, .pml-str, .pml-eyes, .pml-dot2, .pml-dot3, .pml-dot4) { animation: none !important; }
+  #panel-settings [data-pml-run="on"] .pml-a :is(.pml-ctl, .pml-fr0) { animation: pml-breath var(--pml-rdur, 2.2s) ease-in-out var(--pml-rdelay, 0s) infinite var(--pml-ps, running) !important; }
+  #panel-settings [data-pml-run="on"] .pml-a .pml-blink { animation: pml-rblink var(--pml-bdur, 4.4s) ease-in-out var(--pml-bdelay, 0s) infinite var(--pml-ps, running) !important; }
 }

@@ -126,7 +126,7 @@
 
   function load(name) {
     const b = builders[name];
-    if (!b) { S.scenario = name; return false; }
+    if (!b) return false;   // an unknown scenario changes nothing: scenario() keeps naming what is loaded
     let r;
     try { r = b() || {}; } catch (e) { console.error(e); r = {}; }
     S.scenario = name; S.loaded = name;
@@ -276,7 +276,8 @@
     emit('stop');
     return ids;
   }
-  const canRestart = (it) => !!it && it.kind === 'process' && !it.stopping;
+  // a process not stopping and not waiting for an answer (its prompt goes to the person, not away)
+  const canRestart = (it) => !!it && it.kind === 'process' && !it.stopping && !needsYou(it);
   function restart(id) {
     const it = item(id);
     if (!canRestart(it)) return false;
@@ -352,6 +353,9 @@
     'cmd.work.clear_finished': (a) => clearFinished(a && a.view, a && a.pred),
     'cmd.work.quit': (a) => quit(a)
   };
+  /* args: cmd.work.stop { scope, id | thread | project, targets?, by? }; cmd.work.restart { id };
+     cmd.work.send_input { id, reply }; cmd.work.set_completion_delivery { id, delivery }; cmd.work.clear_finished
+     { view, pred? }; cmd.work.quit { choice, targets? }. An unknown command id throws (a wiring error, not a refusal). */
   function dispatch(id, args) {
     const fn = COMMANDS[id];
     if (!fn) throw new Error('PM_WORK: no command ' + id);
@@ -428,7 +432,9 @@
   };
   function scenario(name) {
     if (name == null) return S.scenario;
-    return load(String(name));
+    const n = String(name);
+    if (!builders[n]) return false;
+    return load(n);
   }
 
   W.PM_WORK = {
