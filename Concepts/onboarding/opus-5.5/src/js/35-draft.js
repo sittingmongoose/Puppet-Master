@@ -74,9 +74,11 @@
     /* remote access (#16-#23) */
     const clearRemote = () => Object.assign(d, { tailscale_control: null, tailscale_account_action: null, headscale_url: '', proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null });
     if (d.remote_mode === 'none') { clearRemote(); d.include_vpn_networks = false; d.remote_endpoint = ''; }
-    else if (d.remote_mode === 'local_or_vpn') { clearRemote(); }
+    /* (a Remote Link belongs to its own route: it left the draft for none, not for these two, so one typed before
+       Back and a change of route stayed in the plan; QA2 review N1's sweep) */
+    else if (d.remote_mode === 'local_or_vpn') { clearRemote(); d.remote_endpoint = ''; }
     else if (d.remote_mode === 'tailscale') {
-      Object.assign(d, { server_connection_mode: 'discover', include_vpn_networks: false, proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null });
+      Object.assign(d, { server_connection_mode: 'discover', include_vpn_networks: false, proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null, remote_endpoint: '' });
       if (!d.tailscale_control) d.tailscale_control = 'hosted';
       d.tailscale_account_action = d.tailscale_control === 'hosted' ? 'check_existing_then_sign_in_once' : 'headscale_enrollment';
       if (d.tailscale_control === 'hosted') d.headscale_url = ''; else if (d.headscale_url && !/^https:\/\//.test(d.headscale_url)) d.headscale_url = 'https://' + d.headscale_url.replace(/^[a-z]+:\/\//i, '');
