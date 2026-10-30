@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "projects-redesign:opus-5.5",
+  "topic": "projects-redesign",
+  "model": "Opus 5.5",
+  "presentation": "entries",
+  "order": 40,
+  "widthControl": {
+    "enabled": false,
+    "label": "Workspace width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "entries": [
+    {
+      "id": "projects-page",
+      "title": "Projects page and New Project: three concepts in PMConcept7",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["projects", "new project", "backups", "source control", "pmconcept7"],
+      "order": 10
+    }
+  ]
+}

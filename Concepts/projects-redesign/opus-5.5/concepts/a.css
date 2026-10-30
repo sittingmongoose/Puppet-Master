@@ -1,0 +1,633 @@
+/* Projects concepts (Opus 5.5): Concept A · Polish.
+
+   Usage's own rules draw the plates, heads, facts, controls and the inspector (they reach [data-pmu-host] .pmu-shell),
+   so this file adds only what a project card, its drawer and the New Project window need, and corrects the few Usage
+   rules that assume Usage's board. Usage's rules carry an id in their :is() (#panel-usage), so every page rule here
+   starts at #panel-projects to outrank them without !important. The dialogs live outside the page (in body) and are
+   scoped by .pjx-dlg-back[data-concept="a"].
+
+   Lints kept: no :has(), no border-left of 2 px or more, no capsule radii (controls take min(radius, 8-9px)), no viewport
+   @media (container queries on .pjx-root, named pjx), type never under 11 px, colour only for status, no hover lifts
+   or glows (PMConcept7's hover engine draws hover). */
+
+/* ------------------------------------------------------------------ shell and head */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-shell { background: transparent; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-top { position: relative; z-index: 6; flex: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-head { height: 52px; padding: 0 12px 0 18px; gap: 12px; border-bottom: 1px solid var(--pmu-rule); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-head > .pmu-titleblock { flex: 1 1 auto; min-width: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-title { outline: none; margin: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmu-ink);
+  font-size: 18px; font-weight: 640; line-height: 22px; letter-spacing: -.015em; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sub { display: block; margin: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--pmu-ink-3); font-size: 12px; line-height: 15px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-ctl { gap: 6px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn .pmu-ctllead { display: inline-grid; place-items: center; width: 16px; height: 16px; color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn .pmu-ctlchev { display: inline-grid; place-items: center; width: 14px; height: 14px; color: var(--pmu-ink-3);
+  transition: transform calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-spring, ease); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn :is(.pmu-ctllead, .pmu-ctlchev) svg { width: 100%; height: 100%; display: block; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn[aria-expanded="true"] .pmu-ctlchev { transform: rotate(180deg); }
+/* a filter that is on says so with its box (never an underline) */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn[data-on] { color: var(--pmu-ink); background: var(--pmu-row-sel); border-color: color-mix(in srgb, var(--pmu-accent) 45%, var(--pmu-rule)); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn[data-on] .pmu-ctllead { color: var(--pmu-accent); }
+/* the search field: the look's rectangle, as tall as the controls */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-search { display: flex; align-items: center; gap: 6px; box-sizing: border-box; width: 196px; height: 30px; padding: 0 4px 0 9px;
+  border: 1px solid var(--pmu-rule); border-radius: 9px; background: transparent; color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-search:focus-within { border-color: color-mix(in srgb, var(--pmu-accent) 70%, var(--pmu-rule)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 45%, transparent); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-search-ico { display: inline-grid; place-items: center; width: 15px; height: 15px; flex: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-search-ico svg { width: 15px; height: 15px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-q { flex: 1 1 auto; min-width: 0; height: 28px; padding: 0; border: 0; outline: none; background: transparent; color: var(--pmu-ink);
+  font: inherit; font-size: 12.5px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-q::placeholder { color: var(--pmu-ink-3); opacity: 1; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-q::-webkit-search-cancel-button { display: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-qx { display: inline-grid; place-items: center; width: 22px; height: 22px; flex: none; padding: 0; border: 0; border-radius: 6px;
+  background: transparent; color: var(--pmu-ink-3); cursor: pointer; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-qx[hidden] { display: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-qx:hover { color: var(--pmu-ink); background: var(--pmu-row-hover); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-qx svg { width: 13px; height: 13px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-searchbtn { display: none; }
+#panel-projects .pjx-root[data-concept="a"] .pmu-iconbtn svg { width: 16px; height: 16px; display: block; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-refresh.is-spinning svg { animation: pjx-a-spin 650ms cubic-bezier(.2, .8, .2, 1) 1; }
+@keyframes pjx-a-spin { to { transform: rotate(360deg); } }
+/* the page's one primary: Home's .pmw-act.is-primary, as tall as the head's controls */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-new { height: 30px; flex: none; padding: 0 12px 0 10px; border-radius: min(var(--pmu-r-card, 8px), 8px); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-new .pjx-a-bico { display: inline-grid; width: 15px; height: 15px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-new .pjx-a-bico svg { width: 15px; height: 15px; }
+/* the first run has nothing to show, sort or search, and its welcome holds New Project */
+#panel-projects .pjx-root[data-concept="a"][data-none] :is(.pjx-a-ctl, .pjx-a-head > .pjx-a-new) { display: none; }
+
+/* ------------------------------------------------------------------ the summary line: what needs you, each with its fix */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sum { display: flex; align-items: center; gap: 14px; min-height: 38px; padding: 0 12px 0 18px; box-sizing: border-box;
+  border-bottom: 1px solid var(--pmu-rule); font-size: 12.5px; color: var(--pmu-ink-2); white-space: nowrap; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sum[hidden] { display: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sum-lead { flex: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sum-lead b { font-weight: 650; color: var(--pmu-ink); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sum-list { display: flex; align-items: center; gap: 18px; flex: 1 1 auto; min-width: 0; overflow: hidden; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-si { position: relative; display: inline-flex; align-items: center; gap: 6px; flex: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-si[hidden] { display: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-si + .pjx-a-si::before { content: ""; position: absolute; left: -10px; top: 50%; width: 1px; height: 14px; margin-top: -7px; background: var(--pmu-rule); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-si .pjx-st-mark svg { width: 13px; height: 13px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-si-name { font-weight: 640; color: var(--pmu-ink); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-si-dash { color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sibtn { height: 24px; margin-left: 4px; padding: 0 8px; font-size: 12px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sum-more { flex: none; margin-left: auto; }
+
+/* ------------------------------------------------------------------ the page body and the grid of plates */
+/* (Usage's scroll pane is a grid that stretches its rows to fill; this page's pane is a plain column) */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-scroll { display: block; padding: 12px 12px 24px; box-sizing: border-box; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr)); gap: 8px; align-items: stretch; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-grid[hidden] { display: none; }
+/* a plate is a column: head, body (where it lives and the "now" slot), the Safe line, the foot */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card { display: flex; flex-direction: column; min-height: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card > .pjx-a-cardhead { height: auto; min-height: var(--pmu-head-plate, 52px); padding: 12px 14px 6px; gap: 10px; align-items: flex-start;
+  cursor: default; user-select: text; -webkit-user-select: text; touch-action: auto; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pmu-cardtitles { padding-top: 1px; }
+/* NieR's ticks part gives a plate head a fixed height (and room under it for its rule and U-nn); a project head grows
+   with what it holds (a wrapped state on a narrow pane), keeping that room */
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-card > .pjx-a-cardhead { height: auto; min-height: calc(var(--pmu-head-plate, 52px) + 6px); padding-bottom: 12px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pmu-cardsub { display: block; }
+/* the project's glyph in the host's ink, in a quiet frame: who it is, never a status */
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-glyph { display: grid; place-items: center; flex: none; width: 34px; height: 34px; box-sizing: border-box;
+  border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 9px), 9px); background: var(--pmu-card-2, transparent); color: var(--pmu-ink-2); }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-glyph svg { width: 18px; height: 18px; display: block; }
+/* the status slot stays put on hover (Usage fades its meta for a tools cluster these plates do not have) */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-a-meta { opacity: 1; max-width: 50%; margin-top: 2px; overflow: visible; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-meta .pjx-st { max-width: 100%; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card > .pjx-a-cardbody { display: flex; flex-direction: column; contain: none; overflow: visible; flex: none; gap: 8px; padding: 2px 14px 12px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-facts .pmu-fact { height: 26px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-where { display: flex; align-items: center; justify-content: flex-end; gap: 7px; min-width: 0; overflow: hidden; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-place { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+/* a missing folder: the word, then the old path struck through in the quiet ink (the slot and the notice carry the tone) */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-missing { flex: none; font-weight: 600; color: var(--pmu-ink-2); }
+/* a path: mono, cut in the middle (its head gives way, its folder name stays) */
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-path { display: inline-flex; min-width: 0; flex: 0 1 auto; font-family: var(--pm-font-code, var(--pmu-mono)); font-size: 12px; font-weight: 450;
+  letter-spacing: -.01em; color: var(--pmu-ink-2); white-space: nowrap; }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-path-a { min-width: 1ch; overflow: hidden; text-overflow: ellipsis; flex: 0 1 auto; }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-path-b { flex: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-path.is-gone :is(.pjx-a-path-a, .pjx-a-path-b) { color: var(--pmu-ink-3); text-decoration: line-through; text-decoration-thickness: 1px; }
+:is(html[data-o55-nier="on"], html[data-theme^="retro"]) :is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-path { font-family: var(--pmu-mono); }
+/* the "now" slot: the same height on every card, whatever it holds (a running task, the problem and its fix, or what
+   the project last did), so a row of cards keeps its rows level and a healthy card has no hole beside a troubled one */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-now { box-sizing: border-box; min-height: 52px; margin: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-now.is-act { display: flex; flex-direction: column; justify-content: center; gap: 1px; padding: 7px 0; border: 1px solid transparent; min-width: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-now-t { margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; line-height: 17px; color: var(--pmu-ink); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-now-m { margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+/* the Safe line runs edge to edge, a band between the body and the foot; it takes a row's spare height (a neighbour's
+   value on two lines), so every band in a row starts on one level and its column rules run to the foot */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card > .pjx-safe { flex: 1 1 auto; margin: 0; padding: 0 14px; align-content: stretch; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-safe-cell { padding-top: 8px; padding-bottom: 9px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-safe-word { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+/* the problem and its one fix, inside the card that has it: the problem (or its reason) beside the fix, the reason under it */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-notice { grid-template-columns: 16px minmax(0, 1fr) auto; align-items: center; gap: 0 9px; padding: 7px 8px 7px 10px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-notice > .pjx-notice-mark { grid-row: auto; padding-top: 0; align-self: center; display: grid; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-ntext { display: grid; gap: 1px; min-width: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-ntext > .pjx-notice-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; line-height: 17px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-ntext > .pjx-notice-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 16px; color: var(--pmu-ink-2); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-notice.is-same .pjx-a-ntext > .pjx-notice-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; white-space: normal; color: var(--pmu-ink); font-size: 12.5px; line-height: 17px; font-weight: 550; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-notice .pjx-notice-acts { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; margin: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-notice .pmu-textbtn { height: 26px; padding: 0 9px; font-size: 12px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-also { padding: 0 2px; font-size: 12px; line-height: 15px; }
+/* a card's notice is quieter than an alert in Details: a thinner tint, so the status slot leads and the card does not shout */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-notice[data-tone="blocked"] { border-color: color-mix(in srgb, var(--pmg-ink-blocked, var(--pmu-ink-crit)) 34%, var(--pmu-rule)); background: color-mix(in srgb, var(--pmg-ink-blocked, var(--pmu-ink-crit)) 5%, var(--pmu-card)); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-notice[data-tone="attention"] { border-color: color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-warn)) 38%, var(--pmu-rule)); background: color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-warn)) 5%, var(--pmu-card)); }
+/* the essentials: one line in the slot for every card (the reason is in the hover tag and in Details) */
+#panel-projects .pjx-root[data-concept="a"][data-density="compact"] .pjx-a-now { min-height: 38px; }
+#panel-projects .pjx-root[data-concept="a"][data-density="compact"] .pjx-a-now.is-act { padding: 5px 0; }
+#panel-projects .pjx-root[data-concept="a"][data-density="compact"] :is(.pjx-a-now-m, .pjx-a-notice:not(.is-same) .pjx-notice-text, .pjx-a-also) { display: none; }
+#panel-projects .pjx-root[data-concept="a"][data-density="compact"] .pjx-a-notice { padding-top: 5px; padding-bottom: 5px; }
+#panel-projects .pjx-root[data-concept="a"][data-density="compact"] .pjx-a-notice.is-same .pjx-a-ntext > .pjx-notice-text { -webkit-line-clamp: 1; }
+#panel-projects .pjx-root[data-concept="a"][data-density="compact"] .pjx-a-working.pjx-a-now { padding-top: 6px; padding-bottom: 7px; row-gap: 4px; }
+#panel-projects .pjx-root[data-concept="a"][data-density="compact"] .pjx-a-card > .pjx-a-cardhead { padding-bottom: 8px; }
+/* a running owner task: what it is doing now, and where it is in its phases */
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-working { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; align-items: center; gap: 6px 9px; margin-top: 4px; padding: 9px 10px 10px;
+  border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); font-size: 12.5px; }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-working .pjx-st-mark svg { width: 14px; height: 14px; }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-working-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmu-ink-2); }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-working-text b { font-weight: 640; color: var(--pmu-ink); }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-working-n { font-size: 12px; color: var(--pmu-ink-3); font-variant-numeric: tabular-nums; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-working.pjx-a-now { margin: 0; align-content: center; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-segs { grid-column: 1 / -1; display: flex; gap: 3px; height: 3px; }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-working .pjx-a-segs { grid-column: 1 / -1; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-segs i { flex: 1 1 0; border-radius: 2px; background: var(--pmu-rule); transition: background-color 200ms; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-segs i.is-done { background: color-mix(in srgb, var(--pmg-ink-working, var(--pmu-ink)) 70%, transparent); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-segs i.is-now { background: color-mix(in srgb, var(--pmg-ink-working, var(--pmu-ink)) 38%, var(--pmu-rule)); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card > .pjx-a-creating-note { flex: 1 1 auto; margin: -4px 14px 10px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-hint { margin: 2px 0 0; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+/* the foot: when it was opened, then its labelled actions */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card > .pjx-a-foot { margin: 0; padding: 8px 10px 8px 14px; gap: 6px 10px; flex-wrap: wrap; justify-content: space-between;
+  border-top: 1px solid var(--pmu-rule-2); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-when { display: inline-flex; align-items: center; gap: 6px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: 12px; color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-when-ico { display: inline-grid; color: var(--pmu-accent); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-when.is-work { color: var(--pmu-ink-2); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-when .pjx-st-mark svg { width: 13px; height: 13px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-when-ico svg { width: 13px; height: 13px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card[aria-current="true"] .pjx-a-when { color: var(--pmu-ink); font-weight: 600; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-acts { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+/* archived plates step back: the name in the second ink, the glyph faded, the plate without its depth */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card[data-life="archived"] .pmu-cardtitle { color: var(--pmu-ink-2); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card[data-life="archived"] .pjx-a-glyph { opacity: .55; }
+html:not([data-theme^="glass"]) #panel-projects .pjx-root[data-concept="a"] .pjx-a-card[data-life="archived"] { background: color-mix(in srgb, var(--pmu-card) 55%, transparent); box-shadow: none; }
+/* the project being created while its window is closed */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-card.is-creating .pjx-a-glyph { border-style: dashed; }
+
+/* ------------------------------------------------------------------ buttons on the page, in the drawer and in the window */
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 28px;
+  padding: 0 10px; box-sizing: border-box; border: 1px solid var(--pmw-line-2, var(--pmu-rule)); border-radius: min(var(--pmu-r-card, 8px), 8px); background: transparent;
+  color: var(--pmu-ink); font: inherit; font-size: 12.5px; font-weight: 550; white-space: nowrap; cursor: pointer; }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-btn:hover { background: var(--pmu-row-hover); }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) :is(.pjx-a-btn, .pmu-textbtn, .pjx-a-way, .pjx-a-step):focus-visible { outline: 2px solid var(--pmu-accent, var(--accent-primary)); outline-offset: 1px; }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-btn.is-danger { color: var(--pmu-ink-crit, var(--pmw-bad)); }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) :is(.pjx-a-btn, .pmu-textbtn)[aria-disabled="true"] { opacity: 1; border-color: var(--pmu-rule); background: transparent; color: var(--pmu-ink-3); cursor: default; }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-bico { display: inline-grid; place-items: center; width: 15px; height: 15px; flex: none; }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-bico svg { width: 15px; height: 15px; display: block; }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-btn .pjx-a-bico { color: var(--pmu-ink-2); }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-btn.is-danger .pjx-a-bico { color: inherit; }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-bchev { display: inline-grid; width: 13px; height: 13px; margin-right: -3px; color: var(--pmu-ink-3);
+  transition: transform calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-spring, ease); }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-a-bchev svg { width: 13px; height: 13px; }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) [aria-expanded="true"] > .pjx-a-bchev { transform: rotate(180deg); }
+:is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pmu-textbtn .pjx-a-bico svg { width: 14px; height: 14px; }
+
+/* ------------------------------------------------------------------ notes above the grid, the empty states, the welcome */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-notes { display: grid; gap: 8px; margin-bottom: 8px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-notes[hidden] { display: none; }
+#panel-projects .pjx-root[data-concept="a"] :is(.pjx-a-band, .pjx-a-undo) { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 9px; min-height: 36px; padding: 6px 12px; box-sizing: border-box;
+  border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); background: var(--pmu-card); color: var(--pmu-ink-2); font-size: 12.5px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-band .pjx-link { margin-left: auto; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-band-t { flex: 1 1 220px; min-width: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-band-ico { display: inline-grid; color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-band-ico svg { width: 15px; height: 15px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-empty { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 64px 16px; text-align: center; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-empty[hidden] { display: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-empty-mark { display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 4px; border: 1px solid var(--pmu-rule);
+  border-radius: min(var(--pmu-r-card, 10px), 10px); color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-empty-mark svg { width: 20px; height: 20px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-empty-t { margin: 0; font-size: 15px; font-weight: 640; color: var(--pmu-ink); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-empty-s { margin: 0 0 10px; max-width: 46ch; font-size: 12.5px; color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome { display: flex; flex-direction: column; align-items: center; max-width: 780px; margin: 22px auto 16px; padding: 30px 28px 22px;
+  box-sizing: border-box; text-align: center; border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: var(--pmu-r-card); background: var(--pmu-card); box-shadow: var(--pmu-plate-rest, none); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome[hidden] { display: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome-mark { display: grid; place-items: center; width: 52px; height: 52px; box-sizing: border-box; border: 1px solid var(--pmu-rule);
+  border-radius: min(var(--pmu-r-card, 12px), 12px); background: var(--pmu-card-2, transparent); color: var(--pmu-ink-2); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome-mark svg { width: 26px; height: 26px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome-t { margin: 14px 0 4px; font-size: 20px; font-weight: 650; line-height: 26px; letter-spacing: -.015em; color: var(--pmu-ink); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome-s { margin: 0 0 20px; max-width: 54ch; font-size: 13px; line-height: 19px; color: var(--pmu-ink-2); }
+/* the most common way leads on its own row; the other four sit two by two under it */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-ways { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; text-align: left; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-way { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-height: 120px; padding: 14px 14px 13px;
+  box-sizing: border-box; border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 12px), 12px); background: var(--pmu-card-2, transparent); color: var(--pmu-ink);
+  font: inherit; text-align: left; cursor: pointer; transition: background-color 140ms, border-color 140ms; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-way:hover { background: var(--pmu-row-hover); border-color: var(--pmu-rule-strong, var(--pmu-rule)); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-way { min-height: 104px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-way:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: 22px minmax(0, 1fr); column-gap: 14px; row-gap: 2px; min-height: 0; padding: 16px 16px 15px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-way:first-child .pjx-a-way-ico { grid-row: 1 / span 2; margin: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-way:first-child .pjx-a-way-t { font-size: 14.5px; line-height: 19px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-way-ico { display: grid; place-items: center; width: 22px; height: 22px; margin-bottom: 9px; color: var(--pmu-ink-2); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-way-ico svg { width: 22px; height: 22px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-way-t { font-size: 13.5px; font-weight: 640; line-height: 18px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-way-s { font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-way-tag { position: absolute; top: 14px; right: 13px; font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .04em; color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome-acts { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px 12px; margin-top: 20px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome-acts .pjx-a-new { height: 32px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome-or { font-size: 12px; color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome-note { display: flex; align-items: flex-start; gap: 7px; max-width: 64ch; margin: 18px 0 0; text-align: left; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome-note .pjx-a-band-ico svg { width: 14px; height: 14px; margin-top: 1px; }
+
+/* ------------------------------------------------------------------ Details: Usage's inspector, over the right of the page */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-drawer { top: var(--pjx-a-top, 52px); z-index: 30; width: 440px; max-width: 100%; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-scrim { position: absolute; z-index: 29; inset: var(--pjx-a-top, 52px) 0 0 0; background: rgba(0, 0, 0, .26);
+  opacity: 0; transition: opacity 200ms ease; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-scrim.is-on { opacity: 1; }
+html[data-theme$="-light"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-scrim { background: rgba(21, 32, 43, .12); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-scrim[hidden] { display: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-dh { gap: 10px; min-height: 62px; padding: 10px 8px 10px 16px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-dh .pmu-insptitles { gap: 2px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-dh-title { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; outline: none; font-size: 16px; font-weight: 650; line-height: 20px; letter-spacing: -.01em; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-dh-sub { display: flex; align-items: center; gap: 8px; min-width: 0; margin: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-dh-place { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-dh .pmu-textbtn { flex: none; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-db { padding: 0 16px 32px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sec { padding: 14px 0 14px; border-top: 1px solid var(--pmu-rule-2); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sec:first-child { border-top: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sech { margin: 0 0 8px; font-family: var(--pmu-mono); font-size: 11px; font-weight: 500; line-height: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sec > .pjx-notice { margin: 0 0 8px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sec > .pjx-a-working { margin: 0 0 8px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-rows { display: grid; grid-template-columns: 78px minmax(0, 1fr); margin: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-rows > :is(dt, dd) { margin: 0; padding: 6px 0; border-top: 1px dashed var(--pmu-rule); font-size: 12.5px; line-height: 17px; min-width: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-rows > :is(dt, dd):nth-child(-n+2) { border-top: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-rows > dt { color: var(--pmu-ink-2); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-rows > dd { color: var(--pmu-ink); font-weight: 550; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-rowv { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; min-width: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-rowv > span:last-child { min-width: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-rowv .pjx-st-mark svg { width: 13px; height: 13px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-path.is-full { font-size: 12px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-dacts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-dacts + .pjx-a-hint, #panel-projects .pjx-root[data-concept="a"] .pjx-a-dacts + div > .pjx-a-dacts { margin-top: 8px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sec .pjx-a-hint { margin-top: 6px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-safe { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 10px; padding: 11px 0 12px; border-top: 1px dashed var(--pmu-rule); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-safe:first-of-type { border-top: 0; padding-top: 2px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-safe > .pjx-st-mark { margin-top: 1px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-safe-head { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-safe-l { font-size: 12px; line-height: 15px; color: var(--pmu-ink-3); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-safe-w { font-size: 13px; line-height: 18px; font-weight: 600; color: var(--pmu-ink); overflow-wrap: anywhere; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-safe[data-tone="attention"] .pjx-a-safe-w { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-safe[data-tone="blocked"] .pjx-a-safe-w { color: var(--pmg-ink-blocked, var(--pmu-ink-crit)); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-safe .pjx-a-dacts { margin-top: 8px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sync { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-sync svg { width: 13px; height: 13px; display: block; }
+/* Delete data: apart from everything above it, under its own heading, in the error ink only (no red fill at rest) */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-danger { margin-top: 18px; padding: 14px 14px 14px; border: 1px solid color-mix(in srgb, var(--pmu-ink-crit) 38%, var(--pmu-rule));
+  border-radius: min(var(--pmu-r-card, 10px), 10px); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-danger .pjx-a-sech { color: var(--pmu-ink-crit); }
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-danger .pjx-a-hint { margin: 0; }
+
+/* ------------------------------------------------------------------ New Project: the stepped window */
+/* one height for every step, so the window never jumps as the steps change; the body scrolls */
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg { height: min(700px, calc(100vh - 48px)); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-dlg-head { padding-bottom: 8px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwsteps { flex: none; padding: 0 20px 12px; border-bottom: 1px solid var(--pmu-rule-2); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwsteps[hidden] { display: none; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-stepper { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-stepper > li { display: flex; align-items: center; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-stepsep { width: 14px; justify-content: center; color: var(--pmu-ink-3); opacity: .7; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-stepsep svg { width: 12px; height: 12px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-step { display: inline-flex; align-items: center; gap: 7px; height: 28px; padding: 0 10px 0 5px; box-sizing: border-box;
+  border: 1px solid transparent; border-radius: min(var(--pmu-r-card, 8px), 8px); background: transparent; color: var(--pmu-ink-3); font: inherit; font-size: 12.5px; font-weight: 550; cursor: pointer;
+  transition: background-color 140ms, color 140ms; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-step[disabled] { cursor: default; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-step:not([disabled]):hover { background: var(--pmu-row-hover); color: var(--pmu-ink); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-stepn { display: grid; place-items: center; width: 18px; height: 18px; box-sizing: border-box; border: 1px solid var(--pmu-rule);
+  border-radius: 5px; font-size: 11px; font-weight: 650; line-height: 1; font-variant-numeric: tabular-nums; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-stepn svg { width: 12px; height: 12px; display: block; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-step.is-done { color: var(--pmu-ink-2); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-step.is-done .pjx-a-stepn { border-color: transparent; background: color-mix(in srgb, var(--pmu-ink) 11%, transparent); color: var(--pmu-ink); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-step.is-now { background: var(--pmu-row-sel); border-color: color-mix(in srgb, var(--pmu-accent) 42%, transparent); color: var(--pmu-ink); font-weight: 640; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-step.is-now .pjx-a-stepn { border-color: transparent; background: var(--pmu-accent); color: var(--pmu-card); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-dlg-body { padding: 20px 24px 22px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-q { margin-bottom: 16px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-q-title { outline: none; font-size: 19px; line-height: 24px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-dlg-foot { min-height: 60px; box-sizing: border-box; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwnote { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-left: 6px; font-size: 12px; color: var(--pmu-ink-3); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-dlg-foot > .pjx-btn { flex: none; }
+/* steps move in from the side they come from: short, and gone under Reduced Motion */
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwstage.is-fwd > .pjx-step { animation: pjx-a-fwd 210ms cubic-bezier(.2, .8, .2, 1) both; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwstage.is-back > .pjx-step { animation: pjx-a-bck 210ms cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes pjx-a-fwd { from { opacity: 0; transform: translateX(16px); } }
+@keyframes pjx-a-bck { from { opacity: 0; transform: translateX(-16px); } }
+/* Begin: the ways as large cards; a pick shows chosen, then the window moves on */
+/* the same order as the empty page's welcome: the most common way leads on its own row, the other four two by two */
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-choices-ways { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-choices-ways .pjx-choice { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 0; min-height: 112px; padding: 14px 14px 14px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-choices-ways .pjx-choice:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: 38px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 14px; align-items: center; min-height: 0; padding: 14px 16px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-choices-ways .pjx-choice:first-child .pjx-choice-ico { grid-row: 1 / span 2; margin: 0; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-choices-ways .pjx-choice:first-child .pjx-choice-text { grid-row: 1 / span 2; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-choices-ways .pjx-choice-ico { width: 38px; height: 38px; margin-bottom: 12px; box-sizing: border-box; border: 1px solid var(--pmu-rule);
+  border-radius: min(var(--pmu-r-card, 10px), 10px); color: var(--pmu-ink-2); transition: color 140ms, border-color 140ms; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-choices-ways .pjx-choice-ico svg { width: 20px; height: 20px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-choices-ways .pjx-choice.is-on .pjx-choice-ico { border-color: color-mix(in srgb, var(--pmu-accent) 60%, var(--pmu-rule)); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-choices-ways .pjx-choice-title { font-size: 14px; line-height: 19px; font-weight: 640; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-choices-ways .pjx-choice-sub { margin-top: 3px; font-size: 12.5px; line-height: 17px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-choices-ways .pjx-choice-tag { position: absolute; top: 15px; right: 14px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-more-ways { margin-top: 16px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-paste { display: flex; align-items: center; gap: 8px; margin: 14px 0 0; padding: 9px 12px; border: 1px dashed var(--pmu-rule);
+  border-radius: min(var(--pmu-r-card, 10px), 10px); font-size: 12.5px; line-height: 17px; color: var(--pmu-ink-3); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-paste-ico { display: inline-grid; flex: none; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-paste-ico svg { width: 13px; height: 13px; }
+/* the concept-demo switch, clearly outside the product: a dashed box with its own caption */
+.pjx-dlg-back[data-concept="a"] .pjx-a-demo { margin-top: 18px; padding: 10px 12px 11px; border: 1px dashed color-mix(in srgb, var(--pmu-ink-3) 70%, transparent); border-radius: min(var(--pmu-r-card, 10px), 10px); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-demo .pjx-check { font-size: 12.5px; color: var(--pmu-ink-2); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-demo .pjx-check input:disabled + span { color: var(--pmu-ink-3); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-hint { margin: 6px 0 0; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+/* Creating, Done, Setup didn't finish, Nothing was made */
+.pjx-dlg-back[data-concept="a"] .pjx-a-out .pjx-phases { gap: 8px; margin-top: 4px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-out .pjx-phase { font-size: 13px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-out .pjx-notice { margin: 4px 0 14px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-count { margin: 0; flex: none; font-variant-numeric: tabular-nums; }
+/* Creating: the progress and its steps on the left, what was chosen on the right (one column when the window is narrow) */
+.pjx-dlg-back[data-concept="a"] .pjx-a-outgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 18px 32px; align-items: start; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-progress { display: flex; align-items: center; gap: 12px; margin: 2px 0 14px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-segs { display: flex; gap: 3px; height: 3px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-segs.is-big { flex: 1 1 auto; height: 4px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-segs i { flex: 1 1 0; border-radius: 2px; background: var(--pmu-rule); transition: background-color 240ms ease; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-segs i.is-done { background: var(--pmg-ink-done, var(--pmu-ink-good)); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-segs i.is-now { background: color-mix(in srgb, var(--pmg-ink-working, var(--pmu-ink)) 55%, var(--pmu-rule)); }
+html[data-o55-nier="on"] .pjx-dlg-back[data-concept="a"] .pjx-a-segs i:is(.is-done, .is-now) { background: var(--pmu-ink); }
+html[data-o55-nier="on"] .pjx-dlg-back[data-concept="a"] .pjx-a-segs i.is-now { opacity: .45; }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) .pjx-dlg-back[data-concept="a"] .pjx-a-segs i { border-radius: 0; transition-timing-function: steps(2, end); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-outside { padding: 12px 14px; border: 1px solid var(--pmu-rule-2); border-radius: min(var(--pmu-r-card, 10px), 10px); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-outside .pjx-review-group { padding: 8px 0; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-outside .pjx-review-group:first-child { padding-top: 0; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-outside .pjx-review-group:last-child { padding-bottom: 0; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-outside .pjx-review-rows { grid-template-columns: minmax(96px, auto) minmax(0, 1fr); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-outside .pjx-review-rows :is(dt, dd) { font-size: 12px; }
+html[data-theme^="retro"] .pjx-dlg-back[data-concept="a"] .pjx-a-outside, html[data-o55-nier="on"] .pjx-dlg-back[data-concept="a"] .pjx-a-outside { border-radius: 0; }
+/* the outcome screens fill the window: the stage is a column, and Done, Setup didn't finish and Nothing was made sit
+   in its middle, so the fixed-height window never shows a short list floating at its top */
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-dlg-body { display: flex; flex-direction: column; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwstage { flex: 1 0 auto; display: flex; flex-direction: column; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwstage > .pjx-step { flex: none; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwstage > .pjx-a-out { flex: 1 0 auto; display: flex; flex-direction: column; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-nwstage > .pjx-a-out:is([data-phase="done"], [data-phase="failed"], [data-phase="nothing"]) { justify-content: center; align-items: center; padding: 4px 0 8px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-out:is([data-phase="done"], [data-phase="failed"], [data-phase="nothing"]) > * { width: min(620px, 100%); }
+/* the hero: the project's glyph in its frame, the state's mark on the frame's corner, the sentence, one line */
+.pjx-dlg-back[data-concept="a"] .pjx-a-hero { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: center; gap: 16px; margin: 0 0 18px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-hero-frame { position: relative; display: grid; place-items: center; width: 56px; height: 56px; box-sizing: border-box;
+  border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 14px), 14px); background: var(--pmu-card-2, transparent); color: var(--pmu-ink); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-hero-glyph { display: grid; place-items: center; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-hero-glyph svg { width: 26px; height: 26px; display: block; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-hero-badge { position: absolute; right: -7px; bottom: -7px; display: grid; place-items: center; width: 22px; height: 22px; box-sizing: border-box;
+  border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 7px), 7px); background: var(--pmu-card); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-hero-badge svg { width: 14px; height: 14px; display: block; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-hero-text { margin: 0; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-hero-text .pjx-q-title { font-size: 21px; line-height: 26px; letter-spacing: -.02em; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-hero-text .pjx-q-lead { margin-top: 3px; max-width: 60ch; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-out:is([data-phase="creating"], [data-phase="resuming"]) .pjx-a-hero { margin-bottom: 20px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-out:is([data-phase="creating"], [data-phase="resuming"]) .pjx-a-hero-text .pjx-q-title { font-size: 19px; line-height: 24px; }
+/* the preview: the project as its card shows it on the page */
+.pjx-dlg-back[data-concept="a"] .pjx-a-pv-cap { margin: 0 0 6px; font-family: var(--pmu-mono); font-size: 11px; line-height: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--pmu-ink-3); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-preview { box-sizing: border-box; border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: var(--pmu-r-card, 12px); background: var(--pmu-card);
+  box-shadow: var(--pmu-plate-rest, none); overflow: hidden; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-pv-head { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px 6px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-pv-titles { display: grid; flex: 1 1 auto; min-width: 0; padding-top: 1px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-pv-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; font-weight: 640; line-height: 20px; color: var(--pmu-ink); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-pv-sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-pv-head > .pjx-st { flex: none; margin-top: 2px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-pv-where { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 30px; padding: 0 14px 4px; font-size: 12.5px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-pv-l { color: var(--pmu-ink-2); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-pv-v { display: flex; align-items: center; gap: 7px; min-width: 0; overflow: hidden; font-weight: 600; color: var(--pmu-ink); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-pv-v .pjx-a-place { flex: none; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-preview > .pjx-safe { padding: 0 14px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-preview .pjx-safe-cell { padding-top: 8px; padding-bottom: 10px; }
+/* what was done: folded under its count, so the moment leads with the project, not with a log */
+.pjx-dlg-back[data-concept="a"] .pjx-a-donelist { margin-top: 14px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-donelist > summary { display: inline-flex; align-items: center; gap: 6px; list-style: none; cursor: pointer; padding: 3px 4px; margin-left: -4px;
+  border-radius: min(var(--pmu-r-card, 6px), 6px); font-size: 12.5px; font-weight: 600; color: var(--pmu-ink-2); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-donelist > summary::-webkit-details-marker { display: none; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-donelist > summary:hover { color: var(--pmu-ink); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-donelist > summary:focus-visible { outline: 2px solid var(--pmu-accent, var(--accent-primary)); outline-offset: 1px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-sum-ico { display: inline-grid; transition: transform 160ms var(--pmu-ease-out, ease); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-sum-ico svg { width: 13px; height: 13px; display: block; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-donelist[open] .pjx-a-sum-ico { transform: rotate(90deg); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-donelist .pjx-phases { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 6px 20px; margin-top: 8px; }
+/* Setup didn't finish: a ledger, what is already there beside what is left */
+.pjx-dlg-back[data-concept="a"] .pjx-a-ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); border: 1px solid var(--pmu-rule-2); border-radius: min(var(--pmu-r-card, 10px), 10px); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-ledger-col { min-width: 0; padding: 12px 14px 14px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-ledger-col + .pjx-a-ledger-col { border-left: 1px solid var(--pmu-rule-2); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-ledger .pjx-facts, .pjx-dlg-back[data-concept="a"] .pjx-a-ledger .pjx-phases { margin-top: 2px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-ledger-note { margin-top: 12px; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-out[data-phase="nothing"] .pjx-facts { margin: 0; }
+/* the arrival: once, when the screen first shows (never on a redraw); the badge settles onto the frame, the preview
+   rises into place, and each part of the Safe line lights in turn */
+.pjx-dlg-back[data-concept="a"] .pjx-a-out.is-arrive .pjx-a-hero-frame { animation: pjx-a-settle 280ms cubic-bezier(.2, .8, .2, 1) both; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-out.is-arrive .pjx-a-hero-badge { animation: pjx-a-pop 320ms cubic-bezier(.34, 1.4, .64, 1) 160ms both; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-out.is-arrive .pjx-a-hero-text { animation: pjx-a-fade 240ms ease 60ms both; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-out.is-arrive .pjx-a-pv-wrap { animation: pjx-a-in 300ms cubic-bezier(.2, .8, .2, 1) 120ms both; }
+.pjx-dlg-back[data-concept="a"] .pjx-a-out.is-arrive .pjx-a-preview .pjx-safe-cell .pjx-st-mark { animation: pjx-a-pop 280ms cubic-bezier(.34, 1.4, .64, 1) both; animation-delay: calc(360ms + var(--c, 0) * 90ms); }
+.pjx-dlg-back[data-concept="a"] .pjx-a-out.is-arrive :is(.pjx-a-ledger, .pjx-facts, .pjx-a-donelist) { animation: pjx-a-fade 260ms ease 140ms both; }
+@keyframes pjx-a-settle { from { opacity: 0; transform: scale(.86); } }
+
+/* ------------------------------------------------------------------ motion: the entrance, a status that changed */
+#panel-projects .pjx-root[data-concept="a"] .pjx-a-grid > .pjx-a-card.is-new { animation: pjx-a-in 240ms cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i, 0) * 24ms); }
+@keyframes pjx-a-in { from { opacity: 0; transform: translateY(6px); } }
+@keyframes pjx-a-fade { from { opacity: 0; } }
+#panel-projects .pjx-root[data-concept="a"] .pjx-st.is-changed .pjx-st-mark { animation: pjx-a-pop 300ms cubic-bezier(.34, 1.4, .64, 1) both; }
+@keyframes pjx-a-pop { 0% { transform: scale(.55); opacity: .2; } 100% { transform: none; opacity: 1; } }
+/* Friendly springs */
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) #panel-projects .pjx-root[data-concept="a"] .pjx-a-grid > .pjx-a-card.is-new { animation-timing-function: cubic-bezier(.34, 1.36, .64, 1); animation-duration: 320ms; }
+/* Retro and NieR step */
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #panel-projects .pjx-root[data-concept="a"] .pjx-a-grid > .pjx-a-card.is-new { animation: pjx-a-fade 180ms steps(3, end) both; animation-delay: calc(var(--i, 0) * 30ms); }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #panel-projects .pjx-root[data-concept="a"] .pjx-st.is-changed .pjx-st-mark { animation-timing-function: steps(3, end); }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #panel-projects .pjx-root[data-concept="a"] .pjx-a-refresh.is-spinning svg { animation-timing-function: steps(4, end); }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) .pjx-dlg-back[data-concept="a"] .pjx-a-nwstage:is(.is-fwd, .is-back) > .pjx-step { animation-duration: 150ms; animation-timing-function: steps(3, end); }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #panel-projects .pjx-root[data-concept="a"] .pjx-a-scrim { transition-timing-function: steps(3, end); }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) .pjx-dlg-back[data-concept="a"] .pjx-a-out.is-arrive :is(.pjx-a-hero-frame, .pjx-a-hero-badge, .pjx-a-hero-text, .pjx-a-pv-wrap, .pjx-a-preview .pjx-safe-cell .pjx-st-mark, .pjx-a-ledger, .pjx-facts, .pjx-a-donelist) {
+  animation-name: pjx-a-fade; animation-timing-function: steps(3, end); animation-duration: 180ms; }
+/* Glass: a baked sheet's contents fade, they never scale or slide */
+html[data-lg="on"][data-theme^="glass"] .pjx-dlg-back[data-concept="a"] .pjx-a-out.is-arrive :is(.pjx-a-hero-frame, .pjx-a-pv-wrap) { animation-name: pjx-a-fade; }
+/* Reduced Motion: end states at once (the core stops the page; the window's steps are outside it) */
+html[data-motion="reduced"] .pjx-dlg-back[data-concept="a"] *, html[data-reduced-motion="1"] .pjx-dlg-back[data-concept="a"] * { animation: none !important; transition: none !important; }
+
+/* ------------------------------------------------------------------ Retro: square, 2 px rules, reverse-video choice */
+html[data-theme^="retro"] #panel-projects .pjx-root[data-concept="a"] :is(.pjx-a-glyph, .pjx-a-search, .pjx-a-qx, .pjx-a-new, .pjx-a-working, .pjx-a-segs i, .pjx-a-band, .pjx-a-undo,
+  .pjx-a-empty-mark, .pjx-a-welcome, .pjx-a-welcome-mark, .pjx-a-way, .pjx-a-danger),
+html[data-theme^="retro"] :is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) :is(.pjx-a-btn, .pmu-textbtn),
+html[data-theme^="retro"] .pjx-dlg-back[data-concept="a"] :is(.pjx-a-step, .pjx-a-stepn, .pjx-a-paste, .pjx-a-demo, .pjx-choice-ico, .pjx-a-out .pjx-safe, .pjx-a-glyph, .pjx-a-hero-frame, .pjx-a-hero-badge,
+  .pjx-a-preview, .pjx-a-ledger, .pjx-a-working, .pjx-a-donelist > summary) { border-radius: 0; }
+html[data-theme^="retro"] .pjx-dlg-back[data-concept="a"] :is(.pjx-a-hero-frame, .pjx-a-preview, .pjx-a-ledger) { border-width: 2px; }
+html[data-theme^="retro"] .pjx-dlg-back[data-concept="a"] .pjx-a-preview { box-shadow: 4px 4px 0 color-mix(in srgb, var(--pmu-ink) 22%, transparent); }
+html[data-theme^="retro"] #panel-projects .pjx-root[data-concept="a"] :is(.pjx-a-glyph, .pjx-a-search, .pjx-a-way, .pjx-a-working, .pjx-a-band) { border-width: var(--pmu-bw, 2px); }
+html[data-theme^="retro"] #panel-projects .pjx-root[data-concept="a"] :is(.pjx-a-head, .pjx-a-sum) { border-bottom-width: 2px; }
+html[data-theme^="retro"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-card > .pjx-a-foot { border-top-width: 2px; }
+html[data-theme^="retro"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn[data-on] { background: var(--pmu-ink); color: var(--pmu-card); border-color: var(--pmu-ink); }
+html[data-theme^="retro"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn[data-on] :is(.pmu-ctllead, .pmu-ctlchev) { color: var(--pmu-card); }
+html[data-theme^="retro"] .pjx-dlg-back[data-concept="a"] .pjx-a-step.is-now { background: var(--pmu-ink); color: var(--pmu-card); border-color: var(--pmu-ink); }
+html[data-theme^="retro"] .pjx-dlg-back[data-concept="a"] .pjx-a-step.is-now .pjx-a-stepn { background: var(--pmu-card); color: var(--pmu-ink); }
+html[data-theme^="retro"] .pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-choices-ways .pjx-choice.is-on .pjx-choice-ico { border-color: var(--pmu-card); }
+
+/* ------------------------------------------------------------------ NieR: square, ink only, uppercase tracked titles */
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] :is(.pjx-a-glyph, .pjx-a-search, .pjx-a-qx, .pjx-a-working, .pjx-a-segs i, .pjx-a-band, .pjx-a-undo, .pjx-a-empty-mark,
+  .pjx-a-welcome, .pjx-a-welcome-mark, .pjx-a-way, .pjx-a-danger, .pjx-a-new),
+html[data-o55-nier="on"] :is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) :is(.pjx-a-btn, .pmu-textbtn),
+html[data-o55-nier="on"] .pjx-dlg-back[data-concept="a"] :is(.pjx-a-step, .pjx-a-stepn, .pjx-a-paste, .pjx-a-demo, .pjx-choice-ico, .pjx-a-out .pjx-safe, .pjx-a-glyph, .pjx-a-hero-frame, .pjx-a-hero-badge,
+  .pjx-a-preview, .pjx-a-ledger, .pjx-a-working, .pjx-a-donelist > summary) { border-radius: 0; }
+html[data-o55-nier="on"] .pjx-dlg-back[data-concept="a"] .pjx-a-preview { box-shadow: none; border-color: color-mix(in srgb, var(--pmu-ink) 38%, transparent); }
+html[data-o55-nier="on"] .pjx-dlg-back[data-concept="a"] :is(.pjx-a-hero-text .pjx-q-title, .pjx-a-pv-name) { text-transform: uppercase; letter-spacing: .08em; }
+html[data-o55-nier="on"] .pjx-dlg-back[data-concept="a"] .pjx-a-hero-text .pjx-q-title { font-size: 17px; }
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-title { font-size: 15px; line-height: 19px; letter-spacing: .1em; text-transform: uppercase; }
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-head > .pmu-titleblock { gap: 2px; padding-bottom: 4px; }
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] :is(.pjx-a-welcome-t, .pjx-a-empty-t, .pjx-a-dh-title) { letter-spacing: .08em; text-transform: uppercase; }
+html[data-o55-nier="on"] .pjx-dlg-back[data-concept="a"] .pjx-a-nwdlg .pjx-q-title { font-size: 16px; letter-spacing: .08em; text-transform: uppercase; }
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] :is(.pjx-st-word, .pjx-safe-word, .pjx-a-sum-lead b, .pjx-a-missing, .pjx-a-safe-w) { color: var(--pmu-ink) !important; }
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] :is(.pmu-textbtn, .pjx-a-when-ico, .pjx-a-ctlbtn[data-on] .pmu-ctllead) { color: var(--pmu-ink); border-color: color-mix(in srgb, var(--pmu-ink) 45%, transparent); }
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] .pmu-textbtn.is-primary { background: color-mix(in srgb, var(--pmu-ink) 10%, transparent); }
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-segs i:is(.is-done, .is-now) { background: var(--pmu-ink); }
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-segs i.is-now { opacity: .45; }
+/* marks and state words in ink only: the shapes tell the states apart (the rail does the same) */
+html[data-o55-nier="on"] :is(#panel-projects .pjx-root[data-concept="a"] > .pjx-a-shell, .pjx-dlg-back[data-concept="a"] > .pjx-dlg-shell) {
+  --pmg-ink-attention: var(--pmu-ink); --pmg-ink-blocked: var(--pmu-ink); --pmg-ink-working: var(--pmu-ink); --pmg-ink-done: var(--pmu-ink); --pmg-ink-changed: var(--pmu-ink); }
+html[data-o55-nier="on"] :is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) :is(.pjx-st-mark, .pjx-notice-mark, .pjx-fact-mark, .pjx-phase-mark, .pjx-a-hero-badge, .pjx-choice-meta, .pjx-checking) { color: var(--pmu-ink); }
+html[data-o55-nier="on"] :is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) :is(.pjx-st-mark, .pjx-notice-mark, .pjx-fact-mark, .pjx-phase-mark, .pjx-a-hero-badge, .pjx-choice-meta, .pjx-checking, .pjx-field-problem) svg.nx:not(.nx-t-waiting) { --nx-ink: currentColor; --nx-hi-a: transparent; }
+html[data-o55-nier="on"] :is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-notice[data-tone] { background: transparent; border-color: color-mix(in srgb, var(--pmu-ink) 45%, transparent); }
+html[data-o55-nier="on"] :is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-notice[data-tone="blocked"] { border-style: solid; border-width: 2px; }
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-danger { border-color: color-mix(in srgb, var(--pmu-ink) 55%, transparent); border-style: dashed; }
+html[data-o55-nier="on"] :is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) :is(.pjx-a-danger .pjx-a-sech, .pjx-a-btn.is-danger, .pjx-btn.is-danger, .pjx-phase.is-failed, .pjx-field-problem) { color: var(--pmu-ink); }
+/* NieR draws the inspector's head as an ink band (Usage's headers part): everything on it takes the band's paper */
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-dh :is(.pjx-st-word, .pjx-st-mark, .pjx-a-dh-place, .pmu-textbtn, .pjx-a-glyph, .pjx-a-bico) { color: var(--o55-nier-on-ink, var(--pmu-card)) !important; }
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-dh :is(.pmu-textbtn, .pjx-a-glyph) { background: transparent; border-color: color-mix(in srgb, var(--o55-nier-on-ink, var(--pmu-card)) 55%, transparent); }
+html[data-o55-nier="on"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-dh .pmu-textbtn[aria-disabled="true"] { opacity: .6; }
+html[data-o55-nier="on"] .pjx-dlg-back[data-concept="a"] .pjx-a-step.is-now { background: var(--pmu-ink); color: var(--pmu-card); border-color: var(--pmu-ink); }
+html[data-o55-nier="on"] .pjx-dlg-back[data-concept="a"] .pjx-a-step.is-now .pjx-a-stepn { background: var(--pmu-card); color: var(--pmu-ink); }
+
+/* ------------------------------------------------------------------ Liquid Glass: the head is a bar, every plate a card sheet, Details a panel */
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-top { margin: 6px 6px 0; border-radius: var(--lg-r-bar, 14px); }
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-head { border-bottom: 0; }
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-sum { border-bottom: 0; border-top: 1px solid var(--lg-line, var(--pmu-rule)); }
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-scroll { padding: 8px 6px 20px; }
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] :is(.pjx-a-card, .pjx-a-welcome, .pjx-a-band, .pjx-a-undo) { border-radius: var(--lg-r-card, 16px); }
+/* nothing inside a sheet paints its own plate: frames keep their line, lose their fill */
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] :is(.pjx-a-glyph, .pjx-notice, .pjx-a-welcome-mark) { background: transparent; }
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] :is(.pjx-a-search, .pjx-a-way) { background: var(--lg-fill, transparent); border-color: var(--lg-line, var(--pmu-rule)); }
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-way:hover { background: var(--lg-fill-hover, var(--pmu-row-hover)); }
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn[data-on] { background: var(--lg-sel, var(--pmu-row-sel)); color: var(--lg-on-sel, var(--pmu-ink)); border-color: transparent; }
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn[data-on] :is(.pmu-ctllead, .pmu-ctlchev) { color: inherit; }
+/* a baked sheet never moves: Details fades in place in Glass, as a panel sheet inset from the page's edges */
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-drawer { top: calc(var(--pjx-a-top, 52px) + 12px); right: 6px; bottom: 6px; width: 440px; max-width: calc(100% - 12px);
+  border-left: 0; border-radius: var(--lg-r-sheet, 18px); box-shadow: none; transform: none; transition: opacity 160ms ease, visibility 0s linear 160ms; }
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-drawer.open { transform: none; transition: opacity 160ms ease; }
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-drawer::before { display: none; }
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-scrim { inset: calc(var(--pjx-a-top, 52px) + 6px) 0 0 0; background: color-mix(in srgb, #000 16%, transparent); }
+html[data-lg="on"][data-theme^="glass"] #panel-projects .pjx-root[data-concept="a"] .pjx-a-grid > .pjx-a-card.is-new { animation-name: pjx-a-fade; }
+html[data-lg="on"][data-theme^="glass"] .pjx-dlg-back[data-concept="a"] .pjx-a-step.is-now { background: var(--lg-sel, var(--pmu-row-sel)); color: var(--lg-on-sel, var(--pmu-ink)); border-color: transparent; }
+html[data-lg="on"][data-theme^="glass"] .pjx-dlg-back[data-concept="a"] :is(.pjx-a-paste, .pjx-a-demo) { background: transparent; }
+/* nothing inside a sheet paints its own plate: the window's frame, badge, preview and ledger keep their lines only */
+html[data-lg="on"][data-theme^="glass"] .pjx-dlg-back[data-concept="a"] :is(.pjx-a-hero-frame, .pjx-a-hero-badge, .pjx-a-preview, .pjx-a-glyph) { background: transparent; box-shadow: none; }
+html[data-lg="on"][data-theme^="glass"] .pjx-dlg-back[data-concept="a"] :is(.pjx-a-hero-frame, .pjx-a-hero-badge, .pjx-a-preview, .pjx-a-ledger, .pjx-a-glyph) { border-color: var(--lg-line, var(--pmu-rule)); }
+html[data-lg="on"][data-theme^="glass"] .pjx-dlg-back[data-concept="a"] .pjx-a-preview { border-radius: var(--lg-r-card, 16px); }
+
+/* ------------------------------------------------------------------ light modes: state words reach 4.5:1
+   core.css draws the attention and blocked words toward the text ink; Friendly's working blue and done green measure
+   3.9:1 on white too, and Details' Safe values are this page's own, so those follow the same rule here (words only:
+   the marks keep their tone) */
+html[data-theme$="-light"]:not([data-o55-nier="on"]) :is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-st[data-tone="working"] .pjx-st-word { color: color-mix(in srgb, var(--pmg-ink-working, #0056b3) 70%, var(--pmu-ink)); }
+html[data-theme$="-light"]:not([data-o55-nier="on"]) :is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) .pjx-st[data-tone="done"] .pjx-st-word { color: color-mix(in srgb, var(--pmg-ink-done, #0b8043) 62%, var(--pmu-ink)); }
+html[data-theme$="-light"]:not([data-o55-nier="on"]) #panel-projects .pjx-root[data-concept="a"] .pjx-a-safe[data-tone="attention"] .pjx-a-safe-w { color: color-mix(in srgb, var(--pmg-ink-attention, #b45309) 58%, var(--pmu-ink)); }
+html[data-theme$="-light"]:not([data-o55-nier="on"]) #panel-projects .pjx-root[data-concept="a"] .pjx-a-safe[data-tone="blocked"] .pjx-a-safe-w { color: color-mix(in srgb, var(--pmg-ink-blocked, #b91c1c) 66%, var(--pmu-ink)); }
+html[data-theme="glass-light"] #panel-projects .pjx-root[data-concept="a"] .pjx-safe-word { color: var(--pmu-ink); }
+/* Friendly Light's accent is a light sky blue (2.9:1 as text on white): its labelled text buttons and links take it
+   drawn toward the ink, so every action's word reads at 4.5:1; the outline keeps the accent */
+html[data-theme="friendly-light"]:not([data-o55-nier="on"]) :is(#panel-projects .pjx-root[data-concept="a"], .pjx-dlg-back[data-concept="a"]) :is(.pmu-textbtn, .pjx-link, .pjx-a-btn.is-accent) { color: color-mix(in srgb, var(--pmu-accent, var(--accent-primary)) 56%, var(--pmu-ink)); }
+
+/* ------------------------------------------------------------------ the app's title-bar notes, at the bottom right of
+   this page while it shows (a.js measures; core.css already takes their pointer) */
+html[data-pjx="a"] body.pjx-page-active #rsStage { translate: var(--pjx-a-rs-x, 0px) var(--pjx-a-rs-y, 58px); }
+
+/* ------------------------------------------------------------------ narrow: the head folds, the Safe line stacks, Details covers the page */
+@container pjx (max-width: 780px) {
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-search { display: none; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-searchbtn { display: inline-grid; }
+  /* the folded search opens over the controls, as wide as the head, until it is empty and left */
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-head.is-searching .pjx-a-search { display: flex; position: absolute; z-index: 3; top: 10px; right: 12px; left: 12px; width: auto; height: 32px;
+    background: var(--pmu-card); }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-head.is-searching .pjx-a-searchbtn { visibility: hidden; }
+}
+@container pjx (max-width: 640px) {
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn .pmu-ctltext { display: none; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn { padding: 0 6px 0 7px; gap: 3px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-ctl { gap: 4px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-head { gap: 8px; padding: 0 10px 0 14px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-sum { padding: 0 10px 0 14px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-drawer { width: 100%; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-dh-place { display: none; }
+  /* Details' head on a narrow pane: the name and its state keep the line, Open goes under them */
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-dh { flex-wrap: wrap; row-gap: 8px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-dh .pmu-insptitles { flex: 1 1 calc(100% - 90px); }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-dh > .pmu-textbtn { order: 3; margin-left: 44px; }
+}
+@container pjx (max-width: 470px) {
+  /* two rows: the title and New Project, then the controls */
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-head { flex-wrap: wrap; height: auto; padding: 10px 10px 8px 14px; row-gap: 8px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-head > .pmu-titleblock { order: 0; flex: 1 1 120px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-head > .pjx-a-new { order: 1; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-head > .pjx-a-ctl { order: 2; flex: 1 1 100%; justify-content: flex-start; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-head.is-searching .pjx-a-search { top: auto; bottom: 7px; left: 10px; right: 10px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-title { font-size: 16.5px; letter-spacing: -.02em; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-scroll { padding: 8px 8px 16px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-safe { grid-template-columns: minmax(0, 1fr); }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-safe-cell + .pjx-safe-cell { padding-left: 0; border-left: 0; border-top: 1px dashed var(--pmu-rule-2); }
+  /* each part on one line, as a fact row: its mark, its label, its word at the right */
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-safe-cell { grid-template-columns: 14px auto minmax(0, 1fr); grid-template-rows: auto; align-items: center; padding: 6px 0; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-safe-cell .pjx-st-mark { grid-row: auto; margin-top: 0; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-safe-word { text-align: right; -webkit-line-clamp: 2; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pmu-fact { height: auto; min-height: 26px; flex-wrap: wrap; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome { padding: 22px 14px 16px; margin-top: 10px; }
+  /* the ways become rows: the glyph beside the words, so all five fit without a long scroll */
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-ways { grid-template-columns: minmax(0, 1fr); }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-way, #panel-projects .pjx-root[data-concept="a"] .pjx-a-way:first-child { display: grid; grid-template-columns: 22px minmax(0, 1fr); column-gap: 12px; row-gap: 2px; min-height: 0; padding: 11px 12px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-way-ico { grid-row: 1 / span 2; margin: 1px 0 0; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-way-tag { display: none; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome-mark { display: none; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome-t { margin-top: 0; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-sum-list { display: none; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-sum-more { margin-left: 0; }
+}
+@container pjx (max-width: 300px) {
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-head { padding: 8px 8px 8px 12px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-ctl { gap: 2px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-ctlbtn { padding: 0 4px 0 5px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card > .pjx-a-cardhead { flex-wrap: wrap; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-a-meta { order: 3; flex: 1 1 100%; max-width: 100%; margin-top: 0; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-where .pjx-a-place { display: none; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-acts { margin-left: 0; justify-content: flex-start; }
+  /* a pane this narrow (a 640 px window beside the chat): each Safe value goes under its label, whole */
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-safe-cell { grid-template-columns: 14px minmax(0, 1fr); grid-template-rows: auto auto; align-items: start; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-safe-cell .pjx-st-mark { grid-row: 1 / span 2; margin-top: 1px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-safe-word { text-align: left; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome { padding: 18px 10px 14px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-welcome-t { font-size: 17px; line-height: 22px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-way, #panel-projects .pjx-root[data-concept="a"] .pjx-a-way:first-child { grid-template-columns: minmax(0, 1fr); padding: 10px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-way-ico { display: none; }
+  /* cards: the folder's own name only, the state word may take two lines */
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-a-path-a { display: none; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-a-meta .pjx-st { white-space: normal; align-items: flex-start; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-card .pjx-a-meta .pjx-st-word { overflow: visible; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-notice { grid-template-columns: 16px minmax(0, 1fr); row-gap: 6px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-notice .pjx-notice-acts { grid-column: 2; align-items: flex-start; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-ntext > .pjx-notice-text { white-space: normal; }
+  #panel-projects .pjx-root[data-concept="a"] :is(.pjx-a-now-t, .pjx-a-now-m) { white-space: normal; }
+  /* Details on a pane this narrow: each row's label above its value, notices in one column, every word whole */
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-db { padding: 0 12px 28px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-dh { padding-left: 12px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-dh > .pmu-textbtn { margin-left: 0; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-dh .pjx-a-glyph { display: none; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-rows { grid-template-columns: minmax(0, 1fr); }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-rows > dt { padding-bottom: 0; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-rows > dd { border-top: 0; padding-top: 1px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-rows > :is(dt, dd):nth-child(2) { padding-top: 1px; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-rowv { display: flex; flex-wrap: wrap; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-rowv.is-path .pjx-a-path { white-space: normal; overflow-wrap: anywhere; display: inline; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-drawer .pjx-notice { grid-template-columns: 16px minmax(0, 1fr); }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-drawer :is(.pjx-notice-text, .pjx-notice-title, .pjx-a-safe-w, .pjx-a-hint) { overflow-wrap: anywhere; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-drawer .pjx-notice-acts { grid-column: 1 / -1; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-dacts > * { max-width: 100%; height: auto; min-height: 28px; padding-top: 4px; padding-bottom: 4px; white-space: normal; text-align: left; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-drawer .pjx-notice-acts > * { max-width: 100%; height: auto; min-height: 26px; white-space: normal; text-align: left; }
+  #panel-projects .pjx-root[data-concept="a"] .pjx-a-danger { padding: 12px 10px; }
+}

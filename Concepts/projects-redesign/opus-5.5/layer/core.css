@@ -1,0 +1,267 @@
+/* Projects concepts (Opus 5.5): shared styles.
+
+   Every concept root is `div.pjx-root.pmw-scope[data-pmu-host] > div.pmu-shell`, and every dialog is the same pair:
+   Usage's 2,600 rules are anchored on :is(#panel-usage,[data-pmu-host]) and its tokens live on .pmu-shell, so the
+   concepts are drawn in Usage's own plates, rows, controls, inks, corners and per-look treatments (Basic, Friendly, Glass,
+   Retro, NieR) without copying them; .pmw-scope adds Home's tokens and its .pmw-act buttons. This file adds only what
+   Usage and Home have no part for: the mount, dialogs, the New Project flow's parts, the status slot and the Safe line.
+
+   Rules kept from the lints of the newer pages: no :has(), no coloured side bars (no border-left of 2 px or more), no
+   capsule corners (controls take min(radius, 8px)), no pill class names, no viewport @media (container queries only),
+   type never under 11 px, colour only for status. */
+
+/* ------------------------------------------------------------------ the mount */
+html[data-pjx] #panel-projects > :not(.pjx-root) { display: none !important; }
+html[data-pjx] #panel-projects.page-projects { padding: 0 !important; overflow: hidden !important; display: flex; flex-direction: column; }
+.pjx-root { position: relative; flex: 1 1 auto; min-height: 0; min-width: 0; display: flex; flex-direction: column; container-type: inline-size; container-name: pjx; }
+.pjx-root > .pmu-shell { flex: 1 1 auto; min-height: 0; }
+/* Usage's plates carry a grab cursor for its board; a project plate is not draggable */
+.pjx-root .pmu-cardhead { cursor: default; }
+
+/* ------------------------------------------------------------------ buttons the flow and dialogs use
+   .pjx-btn mirrors Home's .pmw-act (H45-frames.css) so it reads the same in every look; .is-primary is the page's one
+   accent fill; .is-quiet has no border until hover; .is-danger only inks the label (no red fill at rest) */
+.pjx-btn { height: 32px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 12px; border: 1px solid var(--pmw-line-2, var(--pmu-rule)); border-radius: min(var(--pmu-r-card, 8px), 8px);
+  background: transparent; color: var(--pmu-ink); font: inherit; font-size: 12.5px; font-weight: 550; cursor: pointer; white-space: nowrap; }
+.pjx-btn:hover { background: var(--pmw-hover, var(--pmu-row-hover)); }
+.pjx-btn:focus-visible, .pjx-iconbtn:focus-visible, .pjx-link:focus-visible, .pjx-choice:focus-visible, .pjx-seg-btn:focus-visible { outline: 2px solid var(--pmw-focus, var(--accent-primary)); outline-offset: 1px; }
+.pjx-btn.is-primary { background: var(--pmw-accent, var(--accent-primary)); border-color: transparent; color: var(--pmw-surface, #111); }
+@supports (color: color(from red srgb-linear r g b)) {
+  .pjx-btn.is-primary { color: color(from var(--pmw-accent, var(--accent-primary)) srgb-linear clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1)); }
+}
+.pjx-btn.is-primary:hover { background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 88%, #fff); }
+.pjx-btn.is-quiet { border-color: transparent; color: var(--pmu-ink-2); }
+.pjx-btn.is-quiet:hover { color: var(--pmu-ink); }
+.pjx-btn.is-danger { color: var(--pmu-ink-error, var(--pmw-bad)); }
+.pjx-btn[disabled], .pjx-btn[aria-disabled="true"] { opacity: .5; cursor: default; }
+.pjx-btn svg { width: 15px; height: 15px; flex: none; }
+.pjx-iconbtn { width: 30px; height: 30px; display: inline-grid; place-items: center; border: 0; border-radius: min(var(--pmu-r-card, 8px), 8px); background: transparent; color: var(--pmu-ink-2); cursor: pointer; padding: 0; }
+.pjx-iconbtn:hover { background: var(--pmu-row-hover); color: var(--pmu-ink); }
+.pjx-iconbtn svg { width: 16px; height: 16px; }
+.pjx-link { border: 0; background: none; padding: 0 2px; color: var(--accent-primary); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.pjx-grow { flex: 1 1 auto; }
+html[data-theme^="retro"] :is(.pjx-btn, .pjx-iconbtn), html[data-o55-nier="on"] :is(.pjx-btn, .pjx-iconbtn) { border-radius: 0; }
+
+/* ------------------------------------------------------------------ the status slot: a mark and a word, never a pill */
+.pjx-st { display: inline-flex; align-items: center; gap: 6px; min-width: 0; font-size: 12px; font-weight: 600; line-height: 16px; white-space: nowrap; }
+.pjx-st-mark { width: 14px; height: 14px; flex: none; display: inline-grid; place-items: center; }
+.pjx-st-mark svg { width: 14px; height: 14px; display: block; }
+.pjx-st-word { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.pjx-st[data-tone="blocked"] .pjx-st-word { color: var(--pmg-ink-blocked, var(--pmu-ink-error)); }
+.pjx-st[data-tone="attention"] .pjx-st-word { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); }
+.pjx-st[data-tone="working"] .pjx-st-word { color: var(--pmg-ink-working, var(--pmu-ink)); }
+.pjx-st[data-tone="done"] .pjx-st-word { color: var(--pmg-ink-done, var(--pmu-ink-ok)); }
+.pjx-st[data-tone="changed"] .pjx-st-word { color: var(--pmg-ink-changed, var(--pmu-ink)); }
+.pjx-st:is([data-tone="paused"], [data-tone="idle"]) .pjx-st-word { color: var(--pmu-ink-2); font-weight: 550; }
+/* Glass Light: words take the text ink, marks keep the tone (24-no-pills-projects.css) */
+html[data-theme="glass-light"] .pjx-st .pjx-st-word { color: var(--pmu-ink); }
+
+/* ------------------------------------------------------------------ the Safe line: history, online copy, backup */
+.pjx-safe { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--pmu-rule-2); }
+.pjx-safe-cell { display: grid; grid-template-columns: 14px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 6px; padding: 7px 10px 7px 0; min-width: 0; }
+.pjx-safe-cell + .pjx-safe-cell { padding-left: 10px; border-left: 1px solid var(--pmu-rule-2); }
+.pjx-safe-cell .pjx-st-mark { grid-row: 1 / span 2; align-self: start; margin-top: 1px; }
+.pjx-safe-label { font-size: 11px; line-height: 14px; color: var(--pmu-ink-3); letter-spacing: .01em; }
+.pjx-safe-word { font-size: 12.5px; line-height: 16px; font-weight: 600; color: var(--pmu-ink); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pjx-safe-cell[data-tone="attention"] .pjx-safe-word { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); }
+.pjx-safe-cell[data-tone="blocked"] .pjx-safe-word { color: var(--pmg-ink-blocked, var(--pmu-ink-error)); }
+.pjx-safe-cell:is([data-tone="paused"], [data-tone="idle"]) .pjx-safe-word { color: var(--pmu-ink-2); font-weight: 550; }
+html[data-theme^="retro"] .pjx-safe { border-top-width: 2px; }
+
+/* ------------------------------------------------------------------ dialogs (above the whole app) */
+.pjx-dlg-back { position: fixed; inset: 0; z-index: 900; display: grid; place-items: center; padding: 24px; box-sizing: border-box;
+  background: color-mix(in srgb, var(--background, #000) 58%, transparent); opacity: 0; transition: opacity 160ms var(--pmu-ease-out, ease); }
+.pjx-dlg-back[data-open] { opacity: 1; }
+.pjx-dlg-back[data-leaving] { opacity: 0; }
+.pjx-dlg-back > .pmu-shell.pjx-dlg-shell { display: contents !important; }
+.pjx-dlg { position: relative; width: min(560px, 100%); max-height: min(760px, calc(100vh - 48px)); display: flex; flex-direction: column; box-sizing: border-box;
+  background: var(--pmu-card); color: var(--pmu-ink); border: var(--pmu-bw, 1px) solid var(--pmu-rule-strong, var(--pmu-rule)); border-radius: var(--pmu-r-card);
+  box-shadow: var(--pmu-shadow-pop); font-family: var(--pmu-font); font-size: 13px; line-height: 1.45;
+  transform: translateY(6px) scale(.985); transition: transform 180ms var(--pmu-ease-out, ease); }
+.pjx-dlg[data-wide] { width: min(760px, 100%); }
+.pjx-dlg[data-size="xl"] { width: min(920px, 100%); max-height: min(820px, calc(100vh - 48px)); }
+.pjx-dlg-back[data-open] .pjx-dlg { transform: none; }
+.pjx-dlg-head { display: flex; align-items: flex-start; gap: 10px; padding: 16px 16px 10px 20px; }
+.pjx-dlg-titles { flex: 1 1 auto; min-width: 0; }
+.pjx-dlg-kicker { font-size: 11px; line-height: 14px; color: var(--pmu-ink-3); font-family: var(--pmu-mono); letter-spacing: .06em; text-transform: uppercase; }
+.pjx-dlg-title { font-size: 18px; line-height: 22px; font-weight: 640; letter-spacing: -.015em; }
+.pjx-dlg-body { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 4px 20px 16px; }
+.pjx-dlg-foot { display: flex; align-items: center; gap: 8px; padding: 12px 16px 16px 20px; border-top: 1px solid var(--pmu-rule-2); }
+.pjx-dlg-foot:empty { display: none; }
+html[data-theme^="retro"] .pjx-dlg, html[data-o55-nier="on"] .pjx-dlg { border-radius: 0; }
+html[data-theme^="retro"] .pjx-dlg { box-shadow: 6px 6px 0 color-mix(in srgb, var(--pmu-ink) 30%, transparent); }
+html[data-o55-nier="on"] .pjx-dlg { box-shadow: none; }
+html[data-o55-nier="on"] .pjx-dlg-title { text-transform: uppercase; letter-spacing: .08em; font-size: 15px; }
+html[data-theme^="retro"] .pjx-dlg-back, html[data-o55-nier="on"] .pjx-dlg-back { transition-timing-function: steps(3, end); }
+/* Liquid Glass: the dialog is a dense menu sheet (glass.js mounts it from data-lg-surface); nothing inside paints a plate */
+html[data-lg="on"][data-theme^="glass"] .pjx-dlg[data-lg-surface] { background: transparent; border-color: transparent; box-shadow: none; }
+
+/* ------------------------------------------------------------------ the New Project flow's parts (flow.js) */
+.pjx-q { margin: 2px 0 14px; }
+.pjx-q-title { margin: 0; font-size: 18px; line-height: 22px; font-weight: 640; letter-spacing: -.015em; color: var(--pmu-ink); }
+.pjx-q-lead { margin: 4px 0 0; font-size: 13px; line-height: 18px; color: var(--pmu-ink-2); max-width: 62ch; }
+.pjx-step + .pjx-step { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--pmu-rule-2); }
+.pjx-group { margin: 14px 0 0; }
+.pjx-group:first-child { margin-top: 0; }
+.pjx-group-label { margin: 0 0 6px; font-size: 12px; line-height: 16px; font-weight: 640; color: var(--pmu-ink-2); }
+html[data-o55-nier="on"] .pjx-group-label { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
+.pjx-hint { font-size: 12px; line-height: 17px; color: var(--pmu-ink-3); margin-top: 6px; }
+.pjx-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+
+/* choices: a filled box when chosen (never an underline or a side line) */
+.pjx-choices { display: grid; gap: 6px; }
+.pjx-choices-ways { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+.pjx-choices-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+.pjx-choices-tiles { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.pjx-choices-list { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+.pjx-choice { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; min-height: 44px; padding: 9px 12px; text-align: left;
+  border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); background: var(--pmu-card-2, transparent); color: var(--pmu-ink);
+  font: inherit; cursor: pointer; transition: background-color 120ms, border-color 120ms; }
+.pjx-choices-list .pjx-choice { min-height: 40px; padding: 7px 10px; }
+.pjx-choice:hover { background: var(--pmu-row-hover); }
+.pjx-choice.is-on { background: var(--pmu-row-sel); border-color: color-mix(in srgb, var(--accent-primary) 55%, var(--pmu-rule)); }
+.pjx-choice.is-off { opacity: .55; cursor: default; }
+.pjx-choice.is-quiet { background: transparent; }
+.pjx-choice-ico { width: 20px; height: 20px; display: grid; place-items: center; color: var(--pmu-ink-2); }
+.pjx-choice.is-on .pjx-choice-ico { color: var(--accent-primary); }
+.pjx-choice-ico svg { width: 20px; height: 20px; }
+.pjx-choices-list .pjx-choice-ico, .pjx-choices-list .pjx-choice-ico svg { width: 16px; height: 16px; }
+.pjx-choice-text { display: grid; min-width: 0; }
+.pjx-choice-title { font-size: 13px; line-height: 18px; font-weight: 600; }
+.pjx-choice-sub { font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+/* explanations wrap (they are onboarding's words); only a path in a list is cut, in the middle by the concept if needed */
+.pjx-choices-list .pjx-choice-sub { overflow-wrap: anywhere; }
+.pjx-choice-tag { font-size: 11px; line-height: 14px; color: var(--pmu-ink-3); font-family: var(--pmu-mono); letter-spacing: .04em; }
+.pjx-choice-meta { display: inline-flex; }
+.pjx-choice-meta svg { width: 13px; height: 13px; }
+html[data-theme^="retro"] .pjx-choice, html[data-o55-nier="on"] .pjx-choice { border-radius: 0; }
+html[data-theme^="retro"] .pjx-choice.is-on { background: var(--pmu-ink); color: var(--pmu-card); border-color: var(--pmu-ink); }
+html[data-theme^="retro"] .pjx-choice.is-on :is(.pjx-choice-sub, .pjx-choice-tag, .pjx-choice-ico) { color: var(--pmu-card); }
+html[data-o55-nier="on"] .pjx-choice.is-on { background: color-mix(in srgb, var(--pmu-ink) 14%, var(--pmu-card)); border-color: var(--pmu-ink); }
+html[data-lg="on"][data-theme^="glass"] .pjx-choice { background: var(--lg-fill); border-color: var(--lg-line); }
+html[data-lg="on"][data-theme^="glass"] .pjx-choice:hover { background: var(--lg-fill-hover); }
+html[data-lg="on"][data-theme^="glass"] .pjx-choice.is-on { background: var(--lg-sel); color: var(--lg-on-sel); border-color: transparent; }
+html[data-lg="on"][data-theme^="glass"] .pjx-choice.is-on :is(.pjx-choice-sub, .pjx-choice-tag, .pjx-choice-ico) { color: var(--lg-on-sel); }
+.pjx-more-ways { margin-top: 12px; }
+.pjx-more-label { font-size: 11px; line-height: 14px; color: var(--pmu-ink-3); margin-bottom: 4px; font-family: var(--pmu-mono); letter-spacing: .06em; text-transform: uppercase; }
+
+/* fields */
+.pjx-field { display: grid; gap: 4px; margin-top: 12px; }
+.pjx-field:first-child { margin-top: 0; }
+.pjx-field-label { font-size: 12px; line-height: 16px; font-weight: 600; color: var(--pmu-ink-2); }
+.pjx-input { height: 34px; box-sizing: border-box; width: 100%; padding: 0 10px; border: var(--pmu-bw, 1px) solid var(--pmu-rule-strong, var(--pmu-rule)); border-radius: min(var(--pmu-r-card, 8px), 8px);
+  background: var(--pmu-card-2, transparent); color: var(--pmu-ink); font: inherit; font-size: 13px; }
+.pjx-input:focus { outline: 2px solid color-mix(in srgb, var(--accent-primary) 70%, transparent); outline-offset: 0; border-color: transparent; }
+.pjx-field.has-problem .pjx-input { border-color: var(--pmg-ink-attention, var(--pmu-ink-warn)); }
+.pjx-field-hint { font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+.pjx-field-problem { display: flex; align-items: center; gap: 6px; font-size: 12px; line-height: 16px; color: var(--pmg-ink-attention, var(--pmu-ink-warn)); font-weight: 600; }
+.pjx-field-problem svg { width: 13px; height: 13px; flex: none; }
+html[data-theme^="retro"] .pjx-input, html[data-o55-nier="on"] .pjx-input { border-radius: 0; }
+html[data-lg="on"][data-theme^="glass"] .pjx-input { background: var(--lg-fill); border-color: var(--lg-line); }
+.pjx-check { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
+.pjx-check input { width: 15px; height: 15px; accent-color: var(--accent-primary); margin: 0; }
+
+/* segmented choices: the chosen segment fills its own box */
+.pjx-seg { display: inline-flex; flex-wrap: wrap; gap: 2px; padding: 2px; border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 9px), 9px); background: var(--pmu-card-2, transparent); }
+.pjx-seg-btn { height: 28px; padding: 0 10px; border: 0; border-radius: min(var(--pmu-r-card, 7px), 7px); background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 12.5px; font-weight: 550; cursor: pointer; white-space: nowrap; }
+.pjx-seg-btn:hover { color: var(--pmu-ink); background: var(--pmu-row-hover); }
+.pjx-seg-btn.is-on { background: var(--pmu-row-sel); color: var(--pmu-ink); font-weight: 640; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 45%, transparent); }
+html[data-theme^="retro"] :is(.pjx-seg, .pjx-seg-btn), html[data-o55-nier="on"] :is(.pjx-seg, .pjx-seg-btn) { border-radius: 0; }
+html[data-theme^="retro"] .pjx-seg-btn.is-on { background: var(--pmu-ink); color: var(--pmu-card); box-shadow: none; }
+html[data-o55-nier="on"] .pjx-seg-btn.is-on { background: var(--pmu-ink); color: var(--pmu-card); box-shadow: none; }
+html[data-lg="on"][data-theme^="glass"] .pjx-seg { background: var(--lg-fill); border-color: var(--lg-line); }
+html[data-lg="on"][data-theme^="glass"] .pjx-seg-btn.is-on { background: var(--lg-sel); color: var(--lg-on-sel); box-shadow: none; }
+
+/* facts: one mark and one sentence per line */
+.pjx-facts { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 4px; }
+.pjx-fact { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 8px; align-items: start; font-size: 12.5px; line-height: 17px; color: var(--pmu-ink); }
+.pjx-fact-mark { display: grid; place-items: center; height: 17px; color: var(--pmu-ink-3); }
+.pjx-fact-mark svg { width: 14px; height: 14px; }
+.pjx-checking { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 12.5px; color: var(--pmu-ink-2); }
+.pjx-checking svg { width: 14px; height: 14px; }
+
+/* the folder picker */
+.pjx-picker { margin-top: 8px; border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); padding: 8px; background: var(--pmu-card-2, transparent); }
+.pjx-crumbs { display: flex; align-items: center; flex-wrap: wrap; gap: 2px; margin-bottom: 6px; }
+.pjx-crumb-sep { display: inline-grid; color: var(--pmu-ink-3); }
+.pjx-crumb-sep svg { width: 12px; height: 12px; }
+.pjx-tree { display: grid; gap: 1px; max-height: 190px; overflow: auto; }
+.pjx-tree-item { display: grid; grid-template-columns: 15px minmax(0, 1fr) 13px; align-items: center; gap: 8px; height: 30px; padding: 0 8px; border: 0; border-radius: min(var(--pmu-r-card, 6px), 6px); background: transparent; color: var(--pmu-ink); font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
+.pjx-tree-item:hover { background: var(--pmu-row-hover); }
+.pjx-tree-item svg { width: 15px; height: 15px; color: var(--pmu-ink-2); }
+html[data-theme^="retro"] :is(.pjx-picker, .pjx-tree-item), html[data-o55-nier="on"] :is(.pjx-picker, .pjx-tree-item) { border-radius: 0; }
+
+/* the review */
+.pjx-review-group { padding: 10px 0; border-top: 1px solid var(--pmu-rule-2); }
+.pjx-review-group:first-child { border-top: 0; padding-top: 0; }
+.pjx-review-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.pjx-review-rows { display: grid; grid-template-columns: minmax(110px, auto) minmax(0, 1fr); gap: 4px 14px; margin: 4px 0 0; }
+.pjx-review-rows dt { font-size: 12.5px; color: var(--pmu-ink-2); }
+.pjx-review-rows dd { margin: 0; font-size: 12.5px; font-weight: 600; color: var(--pmu-ink); overflow-wrap: anywhere; }
+
+/* the creating list */
+.pjx-phases { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+.pjx-phase { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 10px; align-items: center; font-size: 13px; line-height: 18px; color: var(--pmu-ink-3); }
+.pjx-phase-mark { display: grid; place-items: center; }
+.pjx-phase-mark svg { width: 14px; height: 14px; }
+.pjx-phase.is-working { color: var(--pmu-ink); font-weight: 600; }
+.pjx-phase.is-complete { color: var(--pmu-ink-2); }
+.pjx-phase.is-failed { color: var(--pmg-ink-blocked, var(--pmu-ink-error)); font-weight: 600; }
+
+/* a stepper: words in boxes, the current one filled; done steps are buttons back */
+.pjx-stepper { display: flex; flex-wrap: wrap; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.pjx-stepper li { display: contents; }
+.pjx-stepper button { height: 26px; padding: 0 9px; display: inline-flex; align-items: center; gap: 6px; border: var(--pmu-bw, 1px) solid transparent; border-radius: min(var(--pmu-r-card, 7px), 7px); background: transparent; color: var(--pmu-ink-3); font: inherit; font-size: 12px; font-weight: 550; cursor: default; }
+.pjx-stepper button.is-done { color: var(--pmu-ink-2); cursor: pointer; }
+.pjx-stepper button.is-done:hover { background: var(--pmu-row-hover); color: var(--pmu-ink); }
+.pjx-stepper button.is-now { background: var(--pmu-row-sel); color: var(--pmu-ink); font-weight: 640; border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+.pjx-stepper svg { width: 12px; height: 12px; }
+html[data-theme^="retro"] .pjx-stepper button, html[data-o55-nier="on"] .pjx-stepper button { border-radius: 0; }
+html[data-theme^="retro"] .pjx-stepper button.is-now, html[data-o55-nier="on"] .pjx-stepper button.is-now { background: var(--pmu-ink); color: var(--pmu-card); }
+html[data-lg="on"][data-theme^="glass"] .pjx-stepper button.is-now { background: var(--lg-sel); color: var(--lg-on-sel); border-color: transparent; }
+
+/* an inline notice (an attention block): a full tinted outline, never a side stripe */
+.pjx-notice { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 4px 10px; padding: 10px 12px; border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); background: var(--pmu-card-2, transparent); }
+.pjx-notice[data-tone="blocked"] { border-color: color-mix(in srgb, var(--pmg-ink-blocked, var(--pmu-ink-error)) 55%, var(--pmu-rule)); background: color-mix(in srgb, var(--pmg-ink-blocked, var(--pmu-ink-error)) 8%, var(--pmu-card)); }
+.pjx-notice[data-tone="attention"] { border-color: color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-warn)) 55%, var(--pmu-rule)); background: color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-warn)) 8%, var(--pmu-card)); }
+.pjx-notice-mark { grid-row: 1 / span 3; padding-top: 1px; }
+.pjx-notice-mark svg { width: 16px; height: 16px; }
+.pjx-notice-title { font-size: 13px; line-height: 18px; font-weight: 640; color: var(--pmu-ink); }
+.pjx-notice-text { font-size: 12.5px; line-height: 17px; color: var(--pmu-ink-2); }
+.pjx-notice-acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+html[data-theme^="retro"] .pjx-notice, html[data-o55-nier="on"] .pjx-notice { border-radius: 0; }
+
+/* the visually hidden live region */
+.pjx-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ------------------------------------------------------------------ Reduced Motion: end states at once */
+:is(html[data-motion="reduced"], html[data-reduced-motion="1"]) :is(.pjx-dlg-back, .pjx-dlg, .pjx-choice, .pjx-root *) { transition: none !important; animation: none !important; }
+@media (prefers-reduced-motion: reduce) { :is(.pjx-dlg-back, .pjx-dlg, .pjx-choice) { transition: none !important; } }
+
+/* the undo strip after Remove from list */
+.pjx-undo { display: flex; align-items: center; gap: 8px; padding: 6px 10px; font-size: 12.5px; color: var(--pmu-ink-2); border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 8px), 8px); background: var(--pmu-card-2, transparent); }
+.pjx-undo .pjx-st-mark svg { width: 14px; height: 14px; }
+html[data-theme^="retro"] .pjx-undo, html[data-o55-nier="on"] .pjx-undo { border-radius: 0; }
+
+/* PMConcept7's title-bar notes never block the Projects head while it shows (core sets the class; Usage does the same) */
+body.pjx-page-active #rsStage, body.pjx-page-active #rsStage .rs-card { pointer-events: none !important; }
+
+/* light looks: state words are drawn toward the text ink so 12 px words keep 4.5:1 (as Home's looks do, H50-looks.css) */
+html[data-theme$="-light"] :is(.pjx-root, .pjx-dlg-back) .pjx-st[data-tone="attention"] .pjx-st-word,
+html[data-theme$="-light"] :is(.pjx-root, .pjx-dlg-back) .pjx-safe-cell[data-tone="attention"] .pjx-safe-word,
+html[data-theme$="-light"] :is(.pjx-root, .pjx-dlg-back) .pjx-field-problem { color: color-mix(in srgb, var(--pmg-ink-attention, #b45309) 58%, var(--pmu-ink)); }
+html[data-theme$="-light"] :is(.pjx-root, .pjx-dlg-back) .pjx-st[data-tone="blocked"] .pjx-st-word,
+html[data-theme$="-light"] :is(.pjx-root, .pjx-dlg-back) .pjx-safe-cell[data-tone="blocked"] .pjx-safe-word,
+html[data-theme$="-light"] :is(.pjx-root, .pjx-dlg-back) .pjx-phase.is-failed { color: color-mix(in srgb, var(--pmg-ink-blocked, #b91c1c) 66%, var(--pmu-ink)); }
+/* NieR: status marks in ink only, told apart by their shapes (rail D) */
+/* (on .pmu-shell, where --pmu-ink is defined) */
+html[data-o55-nier="on"] :is(.pjx-root, .pjx-dlg-back) .pmu-shell { --pmg-ink-blocked: var(--pmu-ink); --pmg-ink-attention: var(--pmu-ink); --pmg-ink-working: var(--pmu-ink); --pmg-ink-changed: var(--pmu-ink); --pmg-ink-done: var(--pmu-ink); --pmg-ink-paused: var(--pmu-ink-2); --pmg-ink-idle: var(--pmu-ink-2); }
+html[data-o55-nier="on"] :is(.pjx-root, .pjx-dlg-back) :is(.pjx-st-mark, .pjx-notice-mark, .pjx-fact-mark, .pjx-phase-mark) { color: var(--pmu-ink); }
+html[data-o55-nier="on"] :is(.pjx-root, .pjx-dlg-back) :is(.pjx-st-mark, .pjx-notice-mark, .pjx-fact-mark, .pjx-phase-mark) svg.nx:not(.nx-t-waiting) { --nx-ink: currentColor; }
+/* Friendly Light: text buttons and links reach 4.5:1 */
+html[data-theme="friendly-light"] :is(.pjx-root, .pjx-dlg-back) :is(.pmu-textbtn, .pjx-link) { color: color-mix(in srgb, var(--pmu-accent, var(--accent-primary)) 56%, var(--pmu-ink)); }
+html[data-o55-nier="on"] :is(.pjx-root, .pjx-dlg-back) .pjx-notice:is([data-tone="blocked"], [data-tone="attention"]) { border-color: var(--pmu-ink); background: color-mix(in srgb, var(--pmu-ink) 6%, var(--pmu-card)); }
+.pjx-notice[data-tone="done"] { border-color: color-mix(in srgb, var(--pmg-ink-done, var(--pmu-ink-ok)) 45%, var(--pmu-rule)); }
+/* Notices stage under the bell on every page, Usage included (Jared, 2026-10-13 22:10 ET; 19-notify.js): the concepts'
+   own placements are held off, so a toast may sit over the head for its few seconds but never takes a click */
+html[data-pjx] body #rsStage { translate: none !important; }
