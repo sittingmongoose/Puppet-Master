@@ -128,7 +128,9 @@ html[data-o55-nier="on"] body[data-theme$="-dark"] .pmx-pip { --pip-paper: var(-
 
 /* ---------------------------------------------------------------- the marks */
 .pmx-pip-px, .pmx-pip-px * { shape-rendering: crispEdges; }
-.pmx-pip :is(.pmx-pip-face, .pmx-pip-eyes, .pmx-pip-blink, .pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4) { transform-box: fill-box; transform-origin: center; }
+/* every part of a face shrinks to and opens from its own centre (a face change, a blink); a part without this would
+   scale toward the drawing's corner and fly across the face for a frame or two */
+.pmx-pip :is(.pmx-pip-face, .pmx-pip-face > *, .pmx-pip-eyes, .pmx-pip-blink, .pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4) { transform-box: fill-box; transform-origin: center; }
 /* Pip hangs from its control: the mark's floor bar (a working puppet stood on it) is gone with the puppet */
 .pmx-pip-mk { display: block; overflow: visible; flex: none; }
 .pmx-pip-mk > .pmx-pip { overflow: visible; }
