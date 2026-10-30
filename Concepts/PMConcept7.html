@@ -1910,6 +1910,23 @@ body:not(.pmu-page-active) :is(.rd-console):hover { --pm6-sb-ink: var(--pm6-sb-t
       white-space: nowrap;
       flex: 0 0 auto;
       margin-inline-start: 0; /* inset comes only from title-bar padding */
+      /* the brand (W1, F3-660): Pip's static 24 px mark, then the look's wordmark (each look styles the word through its
+         title-bar fonts and the rules below) */
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    /* the mark's slot keeps its size before pm7-brand-mark.js draws into it, so the bar never moves when it arrives */
+    .title-bar .app-name .pm-brand-mark { display: inline-flex; flex: none; width: 24px; height: 24px; }
+    .title-bar .app-name .pm-brand-mark > svg { display: block; width: 24px; height: 24px; }
+    /* a squeezed bar shows the mark only (pm6-js-panels.js applyDensity); the word stays in the accessibility tree */
+    .title-bar .app-name[data-mode="mark"] .pm-brand-word {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
     }
     /* The project box (option A "Tab"; F3-661, DL-236): one of the title bar's tabs. It has the page tabs' 28 px height,
        type and resting ink, a folder and a drawn chevron from PMG, the project's badge from the shared status marks, and
@@ -70595,7 +70612,8 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
 </div>
   <div class="app-shell">
     <header class="title-bar">
-      <span class="app-name">Puppet Master</span>
+      <!-- The brand (W1, F3-660): Pip's static mark, drawn by pm7-brand-mark.js below, and the look's wordmark. -->
+      <span class="app-name" data-mode="full"><span class="pm-brand-mark" aria-hidden="true"></span><span class="pm-brand-word">Puppet Master</span></span>
       <div class="pm6-tb-menu-wrap" id="projectMenuWrap" data-mode="full">
         <!-- The project box (option A, "Tab"; F3-661): one of the title bar's tabs. Its folder, chevron and badge are drawn
              from PMG by PM_PROJECT_BOX (pm6-js-panels.js), which also renders every row of the menu; each slot keeps its
@@ -70701,6 +70719,32 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
         </div>
       </div>
     </header>
+    <script id="pm7-brand-mark">  /* W1 (F3-660, DR-076, DL-235): Pip, Puppet Master's mark, beside the look's wordmark. Drawn here, just after the title
+     bar, so the bar's first paint has it (the kit, PMLogo, is a head module). Static, 24 px, the painted look's own Pip
+     (NieR keeps the plain band, X3). It never animates, carries no state and takes no click: the notification stack stays
+     the bar's only notification affordance (F3-460). Redrawn only when the look changes. Its 24 px slot is sized in CSS
+     (style-002.css), so drawing it never moves the project box or the tabs. A squeezed bar shows the mark only
+     (pm6-js-panels.js applyDensity). The page's favicon is the app icon (A1: one fixed Basic Dark tile, static). */
+  (function () {
+    var L = window.PMLogo, host = document.querySelector('.title-bar .app-name .pm-brand-mark');
+    if (!L || !host) return;
+    function draw() {
+      var k = L.look();
+      if (host.getAttribute('data-look') === k && host.firstChild) return;
+      host.setAttribute('data-look', k);
+      host.innerHTML = L.mark({ look: k, px: 24, decorative: true });
+    }
+    draw();
+    L.onLook(draw);
+    try {
+      if (!document.querySelector('link[rel~="icon"]')) {
+        var icon = document.createElement('link');
+        icon.rel = 'icon'; icon.type = 'image/svg+xml'; icon.href = L.favicon(32);
+        document.head.appendChild(icon);
+      }
+    } catch (e) { /* a page without a favicon still works */ }
+  })();
+</script>
 
     <div class="main-area">
       <div class="left-panel">
@@ -124518,7 +124562,10 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
   win.setAttribute('data-pm-hover-exempt', 'true');
   win.setAttribute('aria-label', title);
   const rail = steps.map((s, i) => `<li class="o55g-railitem" data-i="${i}" data-state="next"><span class="o55g-railnode" aria-hidden="true"></span><span class="o55g-raillabel">${h(s.label)}</span></li>`).join('');
-  win.innerHTML = `<header class="o55g-head"><div class="o55g-brand"><span class="o55g-brandicon" aria-hidden="true">${icon(ic || 'spark')}</span><span class="o55g-brandname">${h(title)}</span></div>`
+  /* the header's brand is Pip, Puppet Master's static mark (W1, F3-660; NieR's plain band, X3), redrawn on a look change
+     while the window is open; the stage's emblem keeps the flow's own icon */
+  const pip = () => (window.PMLogo ? window.PMLogo.mark({ px: 19, decorative: true }) : icon(ic || 'spark'));
+  win.innerHTML = `<header class="o55g-head"><div class="o55g-brand"><span class="o55g-brandicon" aria-hidden="true">${pip()}</span><span class="o55g-brandname">${h(title)}</span></div>`
     + `<nav class="o55g-railwrap" aria-label="Steps">${steps.length > 1 ? `<ol class="o55g-rail">${rail}</ol>` : ''}</nav>`
     + `<button type="button" class="o55g-close" data-action="close-overlay" aria-label="${a('Close ' + title)}">${icon('close')}<span>Close</span></button></header>`
     + `<div class="o55g-body"><div class="o55g-stage" aria-hidden="true"><div class="o55g-art">${o55gArt(steps.length)}<span class="o55g-emblem"></span></div><div class="o55g-recap"></div></div>`
@@ -124527,6 +124574,10 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
     + `<span class="o55g-footnote"></span><span class="o55g-grow"></span>`
     + `<button type="button" class="btn primary o55g-primary" data-callback="${registerAction(() => move(1))}"><span>Continue</span>${icon('arrowRight')}</button></footer>`
     + `<div class="o55g-live" aria-live="polite" role="status"></div>`;
+  if (window.PMLogo) {
+    const brandIcon = win.querySelector('.o55g-brandicon');
+    const offLook = window.PMLogo.onLook(() => { if (!brandIcon.isConnected) { offLook(); return; } brandIcon.innerHTML = pip(); });
+  }
   /* a click on the dimmed page nudges the window rather than closing it with the answers inside */
   wrap.addEventListener('mousedown', e => {
     if (e.target !== wrap) return;
@@ -155448,6 +155499,9 @@ policies for tenant isolation, and add migration script.</textarea>
     var NOTIFY_MIN = 120;
     var THEME_ICON = 32;
     var PROJECT_ICON = 32;
+    var BRAND_MARK = 24;   /* the brand folded to Pip's mark (W1) */
+    var brand = bar.querySelector('.app-name');
+    var fullBrandW = 0;
     var popOpen = false;
     var closeTimer = null;
     var raf = null;
@@ -155669,6 +155723,12 @@ policies for tenant isolation, and add migration script.</textarea>
       return fullProjectW;
     }
 
+    /* the brand: Pip's mark and the wordmark, or the mark only (W1: "mark only when the bar is squeezed") */
+    function setBrandMode(mode) {
+      if (!brand || brand.getAttribute('data-mode') === mode) return;
+      brand.setAttribute('data-mode', mode);
+    }
+
     function naturalOverflow() {
       var gap = 0;
       var pad = 0;
@@ -155709,6 +155769,8 @@ policies for tenant isolation, and add migration script.</textarea>
         } else if (el === themeWrap) {
           if (themeWrap.getAttribute('data-mode') === 'icon') w = THEME_ICON;
           else w = fullThemeW || Math.max(el.offsetWidth || 0, el.scrollWidth || 0);
+        } else if (el === brand) {
+          w = brand.getAttribute('data-mode') === 'mark' ? BRAND_MARK : (fullBrandW || Math.max(el.offsetWidth || 0, el.scrollWidth || 0));
         } else if (el === projectWrap) {
           if (projectWrap.getAttribute('data-mode') === 'icon') w = PROJECT_ICON;
           else w = fullProjectW || Math.max(el.offsetWidth || 0, el.scrollWidth || 0);
@@ -155740,12 +155802,14 @@ policies for tenant isolation, and add migration script.</textarea>
       var SEARCH_MAX = searchMaxPx();
       setSearchMode('full');
       setThemeMode('icon');
+      setBrandMode('full');
       setProjectMode('full');
       setSearchW(SEARCH_MAX);
       setNotifyW(NOTIFY_MAX);
       resetPageTabsOverflow();
       void bar.offsetWidth;
       measureProjectFull();
+      if (brand) fullBrandW = brand.offsetWidth || fullBrandW;
 
       var over = naturalOverflow();
       if (over <= 0) return;
@@ -155777,13 +155841,20 @@ policies for tenant isolation, and add migration script.</textarea>
       }
       if (need <= 0) return;
 
-      /* 4) Project label → folder icon */
+      /* 4) The brand → Pip's mark only: the wordmark goes before the project's name, which says where you are */
+      if (brand) {
+        setBrandMode('mark');
+        need -= Math.max(0, fullBrandW - BRAND_MARK);
+        if (need <= 0) return;
+      }
+
+      /* 5) Project label → folder icon */
       var pw = fullProjectW || measureProjectFull();
       setProjectMode('icon');
       need -= Math.max(0, pw - PROJECT_ICON);
       if (need <= 0) return;
 
-      /* 5) Progressive page-tab overflow → ▼ sprout (last resort) */
+      /* 6) Progressive page-tab overflow → ▼ sprout (last resort) */
       if (naturalOverflow() > 0) fitPageTabsOverflow();
     }
 
