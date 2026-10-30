@@ -8263,7 +8263,19 @@ canonical_text: >-
   closes on a thread switch. Pin changes lifetime only: one full-size docked-or-full-height-cover view, no
   small form. A switch cancels stale subscriptions and never leaves the previous thread’s rows/actions in the
   new thread. A missing domain shows its truthful empty/unavailable state. Pin is session view state, not a
-  Settings row, durable layout field or runtime mutation.
+  Settings row, durable layout field or runtime mutation. D11/G4, PM7 Step4, 2026-10-30: System status is a
+  small read-only overlay popover, reached from the existing status-bar System status item and the Processes
+  System services link. ui.system_status.open/close are typed local visibility actions, with
+  statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner
+  links use the existing ui.settings.route.open action and system_status.service.open_settings binding,
+  selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
+  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value
+  or controlling a service. The popover has close/Escape/outside closure, return focus and the common
+  overlay/Glass plate; unavailable owner navigation says why. System status open/close and owner-Settings
+  navigation carry the same explicit source scope, view and return-focus identity as other no-write local
+  actions. G6 Clear finished is a Processes-view action; it never clears finished agents. Concept thread Stop
+  all reviews processes/scheduled runs, while platform Stop all may include agents after review; the canonical
+  cmd.work.stop identity and per-owner permission/identity checks remain.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

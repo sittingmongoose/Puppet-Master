@@ -58,7 +58,7 @@ Owner: `pm7-plans`; source branch `t3/plans/pm7-plans-canon`, allocation checked
 
 Inventory becomes **1011** (1009 + these two). No Pip on/off, loader-style, voice, music, fixed chat-width-cap or icon-visibility row. Setup voice, app voice and setup music are Pip parts. D9 defaults are typed owner defaults; D10 always asks; finished rows last this session. They introduce no additional Settings rows in this build.
 
-Pip parts affect chat and onboarding only (S9). Brand, app icon, tray, loader and notification faces always use the kit. Agent, helper and Activity row primitives remain Pip even under Plain. Final part IDs come from found's shared registry; count and preset pins will follow it before integration.
+Pip parts affect chat and onboarding only (S9). Brand, app icon, tray, loader and notification faces always use the kit. Agent, helper and Activity row primitives remain Pip even under Plain. The joined PM_PIP_PARTS registry has 25 stable IDs, 24 default-on parts and four admitted presets; counts/defaults/labels are pinned in companions.
 
 ## Commands, local actions and keys
 
@@ -104,10 +104,10 @@ Repeated rows carry stable work/project IDs; these binding IDs identify control 
 
 - **`processes`**: new console-framed prompt glyph. **`robot`**: existing category glyph, redrawn with lit antenna. Agents ≤16 px/category surfaces use robot; each individual agent is Pip (X1).
 - **`PMLogo` / `PMLogo.kit`**: the one drawing kit, head module at `src/logo/pm-logo.js`. Product uses `pip`, never the monogram. Tier is chosen from logical target size consistently across DPR.
-- **`PM_PIP_LOADER`**: proposed shared loader owner; context variants `swing`, `think`, `hop`; common opt-in `data-pip-loader`, decorative drawing with busy semantics on host. Found may refine its API and report it; no per-surface loader implementation.
-- **`PM_WORK`**: proposed shared OperationalAwareness/ObservableWork projection API; found may refine the API and report it. ProcessFacts stays subordinate; server resource samples carry server/environment identity.
-- **Pip parts registry**: found owns its final exported name and option IDs. It is the only option/default/preset table; Plans will mirror its admitted contract.
-- **Resources tab glyph**: reuse **`gauge`** if present in the live catalog; otherwise **`gauge`**. Do not add a third category glyph just for this tab.
+- **`PM_PIP_LOADER`**: confirmed shared loader owner (html/mount/busy/refresh/motion/hold/held/clock/stats); context variants `swing`, `think`, `hop`; common opt-in `data-pip-loader`, decorative drawing with busy semantics on host. Code uses pml-ld, data-pip-px, data-pml-run and data-pml-redraw with PMLogo.MOTION/period/clock; no per-surface loader implementation.
+- **`PM_WORK`**: joined shared OperationalAwareness/ObservableWork projection API; PM7_WORK_UI owns its visible platform panel/Stop/Quit/System status adapters. ProcessFacts stays subordinate; server resource samples carry server/environment identity.
+- **Pip parts registry**: PM_PIP_PARTS / PM_PIP_PARTS_STORE is the only option/default/preset table and Settings adapter; PM_PIP_EDITOR open/popup/close/replay is the single editor. Stable IDs/def/lowercase preset IDs map to canon IDs/default_enabled/Full–Quiet–Still–Plain; Settings stores labels.
+- **Resources tab glyph**: reuse the admitted **`gauge`** in the live catalog. Do not add a third category glyph just for this tab.
 
 ## A5 mood → existing status key
 
@@ -126,16 +126,18 @@ Repeated rows carry stable work/project IDs; these binding IDs identify control 
 | stopped | `skipped` | Show word Stopped |
 | lost | `warning` | Show word Lost; reconcile before asserting |
 | scheduled | `pending` | Show word Scheduled |
-| unsaved | `change-modified` | Project layout change, separate from run state |
+| unsaved | `change-modified` | Unsaved changes in active-Project Home buffers; layout autosaves |
 
 Faces never manufacture runtime state. Typed owner status wins over a decorative expression. Keep all **22** catalog keys: waiting, blocked, failed, warning, offline, recovering, reviewing, working, waiting-dep, pending, mixed, complete, paused, skipped, off, idle, info, change-added, change-modified, change-deleted, change-conflict, change-renamed. The existing `pip-done` tour word is unrelated to the mascot.
 
 Project badge priority (B5): waiting > blocked > working > change-modified > idle. Tray (A3) aggregates every Project; waiting wins; paused applies when remaining work is paused. Never replace a stale feed with a healthy zero.
 
-Part contract (lead adopted, 2026-10-29): `Plans/pip_parts.json`, 25 options, Full = 24 on (app-voice off). Binding rows = 465; Touch = 708 rows / 137 profiles; production wiring = 1269. All projects is local `ui.project_switcher.all_projects`, not the rail-only `cmd.panel.switch`.
+Part contract (lead adopted, 2026-10-29): `Plans/pip_parts.json`, 25 options, Full = 24 on (app-voice off). Binding rows = 468; Touch = 710 rows / 137 profiles; production wiring = 1269. All projects is local `ui.project_switcher.all_projects`, not the rail-only `cmd.panel.switch`.
 
 Review completion allocation: **G-031** owns the durable PM7 help-entry records (Pip, Project box, Processes, Question, Needs input, Completion delivery, Lost, ObservableWork, Operational Awareness, Backgrounded, Resources). Resources reuses the existing **gauge** glyph. A5 per-surface face tables and A3 complete tray precedence are now explicit in canon and the catalog; the original 22 status keys remain.
 
 S2 storage ruling, 2026-10-30: `general.visual.pip-parts` options/default and new Settings writes use the part LABELS from PM_PIP_PARTS (for example Sheet hosts). The 25 stable IDs and internal preset arrays remain in pip_parts.json with the one-to-one label map; compatibility reads may accept IDs.
 
 Jared’s decision answers, 2026-10-30: all packet recommendations are confirmed except X3 B, A2 B, L8 B, clarified O2 A/O6, O12 B, G1 B and SND1 B. Canon uses eyes through every NieR band, an always-on tray, one menu sprout owner, concept-faithful bounded motion with implementation technique open, silent look hover with click selection, last-block Creating wait (Reduced Motion instant), restored view-local Activity Pin, and sound-tool numbers with listening later in the product. Step4 remains the later merged-GUI name alignment.
+
+Step4 System status: ui.system_status.open / ui.system_status.close (view-local); statusbar.system_status, existing work.open_system_status, system_status.close, system_status.service.open_settings. Service links reuse ui.settings.route.open for code.editing.lsp-server-catalog, system.mcp.server-list or web.index.enable; no write or new production command. Code-source anchors in the bindings remain concept-only evidence. PM6_SPROUT is the shared menu lifecycle (DR-079); PMLogo.MOTION is the family motion token row. B5 says Unsaved changes for dirty active-Project Home buffers, never autosaved layout.

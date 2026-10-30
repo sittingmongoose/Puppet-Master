@@ -45,6 +45,9 @@
     },
     {
       "$ref": "#/$defs/PipPartsRegistry"
+    },
+    {
+      "$ref": "#/$defs/system_status_settings_route_request"
     }
   ],
   "$defs": {
@@ -298,7 +301,9 @@
             "ui.settings.pip_editor.close",
             "ui.settings.pip_editor.replay",
             "ui.project_switcher.all_projects",
-            "ui.activity_detail.pin"
+            "ui.activity_detail.pin",
+            "ui.system_status.open",
+            "ui.system_status.close"
           ]
         },
         "project_id": {
@@ -382,6 +387,23 @@
             "properties": {
               "thread_id": false,
               "pinned": false
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "enum": [
+                  "ui.system_status.open",
+                  "ui.system_status.close"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": false
             }
           }
         }
@@ -1915,7 +1937,9 @@
     },
     "activity_local_action_id": {
       "enum": [
-        "ui.activity_detail.pin"
+        "ui.activity_detail.pin",
+        "ui.system_status.open",
+        "ui.system_status.close"
       ]
     },
     "ActivityDetailViewState": {
@@ -1973,6 +1997,82 @@
           }
         }
       ]
+    },
+    "system_status_settings_route_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "project_id",
+        "return_focus_id",
+        "view_id",
+        "scope_kind",
+        "setting_id"
+      ],
+      "properties": {
+        "action_id": {
+          "const": "ui.settings.route.open"
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_focus_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "view_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "setting_id": {
+          "enum": [
+            "code.editing.lsp-server-catalog",
+            "system.mcp.server-list",
+            "web.index.enable"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ],
+      "description": "D11/G4: read-only System status owner-Settings reveal using the already admitted ui.settings.route.open action. No Settings write, service action, event or receipt."
     }
   }
 }

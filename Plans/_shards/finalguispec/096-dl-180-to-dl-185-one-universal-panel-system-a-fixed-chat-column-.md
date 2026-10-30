@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45023-L47463
+Source lines: L45028-L47480
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `16c1f42c58a4128badf778586b123b8812d4f70f6dd6753e1de96c6d04925d4c`
 
 ---
 
@@ -2399,7 +2399,19 @@ canonical_text: >-
   optional D9 notices use the real alert owner. No imported concept toolbar, fake product errors, second
   Demo Studio, new product command or preference is authorized by these lab cases. Documentation retires
   the claim that sample notices cannot fire and updates the recorded-example census from its actual
-  registry.
+  registry. W8 review D-1, lead-accepted PM7 Step4, 2026-10-30: the one named temporary DR-070 exception is
+  5.6 Pro/pm7-port/js/50-demo-bridge.js, inherited from main since 2026-10-22. Its lab bridge presses a hidden
+  .demo-dialog .demo-trigger so PM56_EXT.action/app.js and the recorded-example/reset chains all run. This is
+  tracked DOM-coupling debt, not permission for other synthetic clicks, hidden controls or product dispatch.
+  Retirement requires the chat owner to expose one PM56_APP dispatcher taking (action, dataset, {demo:true})
+  for both real clicks and the bridge; migrate every recorded example/reset chain, prove equivalent behavior,
+  then delete the hidden host/button and close this named exception. PM56_DEMO.trigger/reset alone do not run
+  all chains and are not a substitute. Current lab adapters are
+  O55.studio.pip/pipOnboarding/titlebar/activity/looks.pip and recipes pipRoughDay/quitWithWork. Onboarding
+  examples call O55.ui.act/fill/tip/open and refuse when unavailable; they do not write fields or call private
+  screen definitions. Hold loaders copy names only waits ending on their button; Mark only discloses the bar
+  owner’s approximately half-second layout pass per step. No lab trigger is admitted to product commands,
+  Settings or Touch.
 gui_related: true
 gui_classification_reason: Defines the one Demo Studio for PMConcept7's concept surfaces and keeps it out of
   the product.

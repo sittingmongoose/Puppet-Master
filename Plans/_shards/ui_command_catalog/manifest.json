@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-10-30T02:16:36Z",
+  "generated_at_utc": "2026-10-30T05:20:44Z",
   "index_path": "Plans/_shards/ui_command_catalog/00-index.md",
-  "index_sha256": "339e88972f24c8db94a81e58018bfd7863a51925d15ec2ad0455c8d913489ffd",
+  "index_sha256": "2d6e0047476ab45e005f75307fa23271f5e031e6e4e2570c81d9fcf8c182e075",
   "manifest_path": "Plans/_shards/ui_command_catalog/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/ui_command_catalog/001-preamble.md",
-      "sha256": "cf198b2d921bc4b3f6496a088407186c57de991c1426ccaec19350608c8c9cd6",
+      "sha256": "c690df5cf493df28c4fb233e4aa7265fef5c816bdd81ba5117575b4121778646",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/ui_command_catalog/002-canonical-owner-section-requirements.md",
-      "sha256": "f704da34141d1030721c0d13391347a5dda2743f287657913fc021912027730d",
+      "sha256": "9599ab1c6fe2d37abef76b917a21348e4f619afc44869ba44c64f6810819f67a",
       "shard_id": "002",
       "source_line_end": 21,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/ui_command_catalog/003-0.-scope.md",
-      "sha256": "ee96f4e16c8bbced3e10e86cbceb3364dcff68885d145e404a7436df53d20c38",
+      "sha256": "5d3427176f66c545080579c2031651aca6b77c51d9e55195f6f26a2a9f0ad90a",
       "shard_id": "003",
       "source_line_end": 30,
       "source_line_start": 23,
@@ -35,7 +35,7 @@
     {
       "heading": "1. Naming rules",
       "path": "Plans/_shards/ui_command_catalog/004-1.-naming-rules.md",
-      "sha256": "c78722bfe309599e98e1bb8e7e09a842dc370ed452ffc1aea0ad827447f06137",
+      "sha256": "855f688e2ebd4c29fddbccca951bc57f7ca9eeadfdd2caf9b2541523a9305300",
       "shard_id": "004",
       "source_line_end": 40,
       "source_line_start": 32,
@@ -44,7 +44,7 @@
     {
       "heading": "2. Canonical command IDs",
       "path": "Plans/_shards/ui_command_catalog/005-2.-canonical-command-ids.md",
-      "sha256": "d441fde60c7ca1692699ac7ec00fae72e31d48b7fbf2baa7c48154fb75f58dad",
+      "sha256": "44bd89b0d679e4bdcd1e955ce9cb591afc08c3f4e0680c855be09626ef18b878",
       "shard_id": "005",
       "source_line_end": 131,
       "source_line_start": 42,
@@ -53,7 +53,7 @@
     {
       "heading": "Known-37 recovery-unavailable catalog rows - 2026-07-18",
       "path": "Plans/_shards/ui_command_catalog/006-known-37-recovery-unavailable-catalog-rows-2026-07-18.md",
-      "sha256": "9b19ea6bfdbd6b67edd9c9e1da1f5bc3dceb356eb760bc32087eee9cbb245740",
+      "sha256": "53518be290ca131d45eea7ea9adce48754e338c51fdb37d915def26dcc698dc3",
       "shard_id": "006",
       "source_line_end": 1157,
       "source_line_start": 133,
@@ -62,7 +62,7 @@
     {
       "heading": "References",
       "path": "Plans/_shards/ui_command_catalog/007-references.md",
-      "sha256": "190cae295eab8d1f3fd88784385f2f975b29d6f2c3d8a556a9b49685e2a9436e",
+      "sha256": "df4ec46eb966b632dc2034d9ee45d25c78aef40b0bc0e4d457b73c714e5541bd",
       "shard_id": "007",
       "source_line_end": 1261,
       "source_line_start": 1158,
@@ -71,7 +71,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/ui_command_catalog/008-owner-consumer-map.md",
-      "sha256": "25f6b2cee7eec07cf3a6c81f1cc118500808386fdb4e566ae8d050da065e7cf9",
+      "sha256": "ea6d63679b98369a0fa615a756a6ffcbc5748bdfb27a6c26c9399b1be164069d",
       "shard_id": "008",
       "source_line_end": 1267,
       "source_line_start": 1263,
@@ -80,7 +80,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/ui_command_catalog/009-planunits.md",
-      "sha256": "443db62d4b07fc56178a96bc145701a706ad4d66dd754848a7f3403f80a83375",
+      "sha256": "2a2f83d32bc800a737166cbac6e7154700ea0a4b7ba1f0f308ef1aebb061dcf8",
       "shard_id": "009",
       "source_line_end": 6959,
       "source_line_start": 1269,
@@ -89,7 +89,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/ui_command_catalog/010-migration-coverage.md",
-      "sha256": "5222f1f59388b16c7a85a20557a16b0d17495504b51654fd8801203e18b73c1c",
+      "sha256": "31568504de27a5800416b398fcbf832e0b56310544a83d34ebe322fe81dedbf7",
       "shard_id": "010",
       "source_line_end": 6971,
       "source_line_start": 6961,
@@ -98,7 +98,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/ui_command_catalog/011-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "619a80cb780f1a58241e5811d4407720fb9db724b664d567927c8777b9333e36",
+      "sha256": "404e6f52c75df39d5b0506981385e8d15536ede50622a408159b878152f1cd5b",
       "shard_id": "011",
       "source_line_end": 7117,
       "source_line_start": 6974,
@@ -107,7 +107,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
       "path": "Plans/_shards/ui_command_catalog/012-ledger-compile-addendum-pldg-20260622-001-fff.md",
-      "sha256": "cbe163722385b34a71af095fcff311cfa1a27badd465c2b1631109ba8f27660c",
+      "sha256": "f3b59bd225dd9c1a758bc4560a9038f859034ebdbfe0c064c6cee1ffc41406e3",
       "shard_id": "012",
       "source_line_end": 7162,
       "source_line_start": 7119,
@@ -116,7 +116,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/ui_command_catalog/013-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "246aca373f929a4255879af486227b7bc9b1418fe0c9bda09b7f61c290121dc8",
+      "sha256": "58dffdfb46b5741915866579ee4786310d3dac1080981ea5d8be57ad8f81385d",
       "shard_id": "013",
       "source_line_end": 7604,
       "source_line_start": 7165,
@@ -125,7 +125,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
       "path": "Plans/_shards/ui_command_catalog/014-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
-      "sha256": "5e34847d68b33d0cc293ce09abff9db3786fccddfc2419c440458fb98540428a",
+      "sha256": "2b6c4de328a84abc380f0c58a659236b993121cf47b6110ca3dd2ab0834b5878",
       "shard_id": "014",
       "source_line_end": 7758,
       "source_line_start": 7606,
@@ -134,7 +134,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260701-001-feature-intake",
       "path": "Plans/_shards/ui_command_catalog/015-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
-      "sha256": "2b6c78daba755d583f6229e39aac183a54442abe6208db9b6fd8c87a317ddba9",
+      "sha256": "b6e8ea75365d8528585f7cca55340988bbe1b6bd750b9209c6dfcf9faa539089",
       "shard_id": "015",
       "source_line_end": 7927,
       "source_line_start": 7760,
@@ -143,7 +143,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260630-001-feature-intake",
       "path": "Plans/_shards/ui_command_catalog/016-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
-      "sha256": "4e0926bdb97d7b594b12528976e99e096b6b78f75ae6a3082a01354bff059cab",
+      "sha256": "2e58c84fb874b9028fe2b08e285bed87adc55f2f43e69da49ad78aa1310c062d",
       "shard_id": "016",
       "source_line_end": 8078,
       "source_line_start": 7929,
@@ -152,7 +152,7 @@
     {
       "heading": "GUI / PMConcept implementation-readiness repair addendum (2026-07-02)",
       "path": "Plans/_shards/ui_command_catalog/017-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md",
-      "sha256": "a818e170351e8223f5f1ebf2aefb5c95730435eb475485182e7af0aa14278388",
+      "sha256": "84bbe582f246e6779f130565fe7411c9722a07334dec0241027409cb0626b63e",
       "shard_id": "017",
       "source_line_end": 8143,
       "source_line_start": 8080,
@@ -161,7 +161,7 @@
     {
       "heading": "FABLE GUI command contract closure addendum (2026-07-07)",
       "path": "Plans/_shards/ui_command_catalog/018-fable-gui-command-contract-closure-addendum-2026-07-07.md",
-      "sha256": "721d0d4053fa3b0dc517f4545671ac548682f65658da99ad28b90a60473214ea",
+      "sha256": "b1e40b7ed4844a67b66204dfc27bb50066ea3a7500c754737347be00f62edd13",
       "shard_id": "018",
       "source_line_end": 8315,
       "source_line_start": 8145,
@@ -170,7 +170,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/ui_command_catalog/019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "3ced40e2dea96c16ab7d538db2d6531cdf33f787ce3521e5b22ed9d686110244",
+      "sha256": "e1baddb5d321f123c374e6bf564ab9d848ec9f7cb6bd99b4d2ec0282b61602f1",
       "shard_id": "019",
       "source_line_end": 8353,
       "source_line_start": 8317,
@@ -179,7 +179,7 @@
     {
       "heading": "Usage GUI Propagation Addendum - 2026-07-09",
       "path": "Plans/_shards/ui_command_catalog/020-usage-gui-propagation-addendum-2026-07-09.md",
-      "sha256": "fbf2397b06ba882fb66776fea4a77735e4c431a79337b86a9e0056639dc27c81",
+      "sha256": "dfafa18a6dc885c8cb033c564237c798e8306548eea5ee33ddb4db21334d562e",
       "shard_id": "020",
       "source_line_end": 8425,
       "source_line_start": 8355,
@@ -188,7 +188,7 @@
     {
       "heading": "PMConcept6 Control Census Command Addendum - 2026-07-16",
       "path": "Plans/_shards/ui_command_catalog/021-pmconcept6-control-census-command-addendum-2026-07-16.md",
-      "sha256": "e4445a9f8023e8beed388589f4afea4ee059cc39ff2b31751d02a7824dd94ffb",
+      "sha256": "0502b1abc1b4555db15c05cb7eb25909c471dc525d2eaf610abe6365599df096",
       "shard_id": "021",
       "source_line_end": 8617,
       "source_line_start": 8427,
@@ -197,7 +197,7 @@
     {
       "heading": "Case L command registration and storage-gate propagation - 2026-07-17",
       "path": "Plans/_shards/ui_command_catalog/022-case-l-command-registration-and-storage-gate-propagation-2026-07.md",
-      "sha256": "91c2230f74c511c12516d47860f64335477c9fbbd62490f933c0d4c044b0fcde",
+      "sha256": "31bec6c04f18c6a6d0a9745bdf536fc3baa1248f02f6ab1d082ae4cfefd826be",
       "shard_id": "022",
       "source_line_end": 9826,
       "source_line_start": 8619,
@@ -206,7 +206,7 @@
     {
       "heading": "Cozy Shelves Panel Reconciliation Addendum - 2026-07-27",
       "path": "Plans/_shards/ui_command_catalog/023-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
-      "sha256": "8d3042fa7aa0428e7160ec26ab0b8f8e77305a24382b402ea5af89ffe28504b1",
+      "sha256": "0b9690a8a3e6b600afba776919be4b5ee948da229fa25cb36a94b6a33cb2b311",
       "shard_id": "023",
       "source_line_end": 10753,
       "source_line_start": 9828,
@@ -215,7 +215,7 @@
     {
       "heading": "Run & Debug Revival Addendum - 2026-07-27",
       "path": "Plans/_shards/ui_command_catalog/024-run-debug-revival-addendum-2026-07-27.md",
-      "sha256": "c039974b742d8bb73c06d8bab2e55b5238fdd16e15206292e9b7cb0353547c68",
+      "sha256": "7641919b7783ef2b1140eacc8abbb58007244ace2e35a2024fcee778f6abc134",
       "shard_id": "024",
       "source_line_end": 10965,
       "source_line_start": 10755,
@@ -224,7 +224,7 @@
     {
       "heading": "Guided Tour local focus-route catalog disposition - 2026-09-01",
       "path": "Plans/_shards/ui_command_catalog/025-guided-tour-local-focus-route-catalog-disposition-2026-09-01.md",
-      "sha256": "cd4c7930c7020340b8cad617162df39429badea1a86cf69d0016d2f976ecb7b1",
+      "sha256": "3cc79d5e42d95bc8878dd4ab1eafdcbc6032b3b89d2473702c9cd26ecb0c658c",
       "shard_id": "025",
       "source_line_end": 11021,
       "source_line_start": 10967,
@@ -233,7 +233,7 @@
     {
       "heading": "Agent plugin lifecycle UI catalog addendum - 2026-09-01",
       "path": "Plans/_shards/ui_command_catalog/026-agent-plugin-lifecycle-ui-catalog-addendum-2026-09-01.md",
-      "sha256": "6561162f1b2fc1aea6047cd65c85ca0ac6d8ee03520b8090f47a6a56e1873321",
+      "sha256": "282eb4494f0aa8a9d7c046c784e2fce684c95e3e7b32d4b9493bd3d1a02ad8e2",
       "shard_id": "026",
       "source_line_end": 11094,
       "source_line_start": 11023,
@@ -242,7 +242,7 @@
     {
       "heading": "Cross-owner Product Onboarding and Settings consumer catalog addendum - 2026-09-01",
       "path": "Plans/_shards/ui_command_catalog/027-cross-owner-product-onboarding-and-settings-consumer-catalog-add.md",
-      "sha256": "66b136dc0c646865ec0401c2e1ecd1a67d203e2c29c05d823e83bcd6e4e7738d",
+      "sha256": "713eaf5aec5ee3f34c27480ceeea3610282b88151cc3feca1489290896800ff5",
       "shard_id": "027",
       "source_line_end": 11356,
       "source_line_start": 11096,
@@ -251,7 +251,7 @@
     {
       "heading": "PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28",
       "path": "Plans/_shards/ui_command_catalog/028-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md",
-      "sha256": "4d071d9bda9827aed53cae2427b0e6d061a08124094f0917d581167f0bb25995",
+      "sha256": "bd47bd2e5d0c70ed9cadae34c2c83a80963077b78b419b8a05014a2257214179",
       "shard_id": "028",
       "source_line_end": 11421,
       "source_line_start": 11358,
@@ -260,7 +260,7 @@
     {
       "heading": "PMConcept7 Deferred Token Hygiene Addendum - 2026-07-29",
       "path": "Plans/_shards/ui_command_catalog/029-pmconcept7-deferred-token-hygiene-addendum-2026-07-29.md",
-      "sha256": "68f91c29525e8e7f002a7d0e599989011ac1df4ccb660d4545c4e4e85f58a4bb",
+      "sha256": "58dfd07c4e898265f70a3183862aae97cf986f52405f8cb58577c05a849cf133",
       "shard_id": "029",
       "source_line_end": 11447,
       "source_line_start": 11423,
@@ -269,7 +269,7 @@
     {
       "heading": "PMConcept7 Home Workspace command reconciliation \u2014 2026-08-04",
       "path": "Plans/_shards/ui_command_catalog/030-pmconcept7-home-workspace-command-reconciliation-2026-08-04.md",
-      "sha256": "dd70d37d880949b4f89a8da03e497a174b385ef94f86f9fa1474b0baf98b432e",
+      "sha256": "a45496480030c7b3385e705da91fda8ba8a16d9a248dbab39440d8c969f817d6",
       "shard_id": "030",
       "source_line_end": 11576,
       "source_line_start": 11449,
@@ -278,7 +278,7 @@
     {
       "heading": "Shared Runtime Command Catalog Addendum - 2026-08-13",
       "path": "Plans/_shards/ui_command_catalog/031-shared-runtime-command-catalog-addendum-2026-08-13.md",
-      "sha256": "eb57c8be01c0de744cfc07102d415667b56a3596a961d8824953c9bbc86fc313",
+      "sha256": "9c78562c68d69247a2db2c13a24b68d8b71863d739b6a44bd1977a3fb9cd0e2c",
       "shard_id": "031",
       "source_line_end": 11674,
       "source_line_start": 11578,
@@ -287,7 +287,7 @@
     {
       "heading": "u11 Prism II Usage Command Registration Addendum - 2026-08-18",
       "path": "Plans/_shards/ui_command_catalog/032-u11-prism-ii-usage-command-registration-addendum-2026-08-18.md",
-      "sha256": "534d7241ab893f5139b9caa8145ff1564a3e701ae713ef9c8cdc3c22ba172b39",
+      "sha256": "6210e5ccfbc4fccfe4a8ec6f5f58b3c8169f8935ebdb0cc2b8a305d33f9536aa",
       "shard_id": "032",
       "source_line_end": 11787,
       "source_line_start": 11676,
@@ -296,7 +296,7 @@
     {
       "heading": "PMConcept7 command reuse and view-local disposition addendum - 2026-08-27",
       "path": "Plans/_shards/ui_command_catalog/033-pmconcept7-command-reuse-and-view-local-disposition-addendum-202.md",
-      "sha256": "5df51d8303cc98b260ee66165ba9fae9c5b4b016085854f4db7e6eda63063da5",
+      "sha256": "87d6fa5a8ed3037953d49949d346e9ba5c9ad62a0bb5c3f80f2a88a305b18a5c",
       "shard_id": "033",
       "source_line_end": 11933,
       "source_line_start": 11789,
@@ -305,7 +305,7 @@
     {
       "heading": "Server/Egolite Exact Command And Reverse-Consumer Catalog Addendum - 2026-09-01",
       "path": "Plans/_shards/ui_command_catalog/034-server-egolite-exact-command-and-reverse-consumer-catalog-addend.md",
-      "sha256": "617a246d1df61aa880e9094952330367f797a44d4c93643abd2b63b1aad8a4b0",
+      "sha256": "6dbbd545862a781ae94659117788e94edc3b5a9eb7ed9ca41284a66663c40e85",
       "shard_id": "034",
       "source_line_end": 12188,
       "source_line_start": 11934,
@@ -314,7 +314,7 @@
     {
       "heading": "Central Touch Reverse-GUI Catalog Addendum - 2026-09-01",
       "path": "Plans/_shards/ui_command_catalog/035-central-touch-reverse-gui-catalog-addendum-2026-09-01.md",
-      "sha256": "16db2d6792a86e362d27d00a7f989d2a4a73e369503a38e2d3890c5add3f5f4c",
+      "sha256": "726ceaded19fbd0287000337df29498fc4cf295bda31c0e0ef254a87bf665982",
       "shard_id": "035",
       "source_line_end": 12459,
       "source_line_start": 12190,
@@ -323,7 +323,7 @@
     {
       "heading": "ConnectionDraft Catalog And Reverse-Consumer Addendum - 2026-09-02",
       "path": "Plans/_shards/ui_command_catalog/036-connectiondraft-catalog-and-reverse-consumer-addendum-2026-09-02.md",
-      "sha256": "9383abc957ca34baf87ad18f6f016e5fcdcb052d29bb3dd5b569a7fad7aa56e6",
+      "sha256": "45c65a5e55d9452315b83933ddacedd8b4556f756e80589105e88f91e686c266",
       "shard_id": "036",
       "source_line_end": 12514,
       "source_line_start": 12461,
@@ -332,7 +332,7 @@
     {
       "heading": "Post-Integration Auth Alias Catalog Closure - 2026-09-02",
       "path": "Plans/_shards/ui_command_catalog/037-post-integration-auth-alias-catalog-closure-2026-09-02.md",
-      "sha256": "af0a53ef3cdb5c4c3958e433bfc3dc636a0e580da538b79bfe2d4b1979c270de",
+      "sha256": "ab1f531315b2ffee31a3a864ae65b968a74f98e43ad001961602d7575a261b7b",
       "shard_id": "037",
       "source_line_end": 12560,
       "source_line_start": 12516,
@@ -341,7 +341,7 @@
     {
       "heading": "Neutral Source-Control Concrete Catalog Completion - 2026-09-02",
       "path": "Plans/_shards/ui_command_catalog/038-neutral-source-control-concrete-catalog-completion-2026-09-02.md",
-      "sha256": "345c339eda34970a82dd210573601efcd4f83d7d42bc314b57b307ebe79eed02",
+      "sha256": "1b4244430fc9f37d322c1854a11aa3ebe18d57c7b0c82b792ac12fb2ab35e18e",
       "shard_id": "038",
       "source_line_end": 12602,
       "source_line_start": 12562,
@@ -350,7 +350,7 @@
     {
       "heading": "Puppet Master Assistant Redesign Command Registration - 2026-09-03",
       "path": "Plans/_shards/ui_command_catalog/039-puppet-master-assistant-redesign-command-registration-2026-09-03.md",
-      "sha256": "84a18c4aea6ef0fa2b12b26db65b29514a846bdd28cdca852d0a3736d94aac21",
+      "sha256": "18460b9fe9900835852ce9629a912c58bbc3fa541702248faf840f2815110795",
       "shard_id": "039",
       "source_line_end": 12904,
       "source_line_start": 12604,
@@ -359,7 +359,7 @@
     {
       "heading": "Additive Correction v4 \u2014 Revised Command Rows (2026-09-03)",
       "path": "Plans/_shards/ui_command_catalog/040-additive-correction-v4-revised-command-rows-2026-09-03.md",
-      "sha256": "9c3ff6994ae2da5e240ce5d91ac8023a703754a579fd837db4cbe19cd55e0481",
+      "sha256": "408bbb1554968291b833867f408f3d9f852cacc263db4ab5f75186e8f1344b90",
       "shard_id": "040",
       "source_line_end": 12934,
       "source_line_start": 12906,
@@ -368,7 +368,7 @@
     {
       "heading": "Working Notebook Command Rows Addendum (2026-09-05)",
       "path": "Plans/_shards/ui_command_catalog/041-working-notebook-command-rows-addendum-2026-09-05.md",
-      "sha256": "a08fa1c8d46c8e2c43b2b39d8e09076e10f2b4b8a02120ca46d0cd0840dd7176",
+      "sha256": "0322d7c4d7aff87a3e994740ca40c4d11f987b1a3d32b184e3ddbde386cea074",
       "shard_id": "041",
       "source_line_end": 12975,
       "source_line_start": 12936,
@@ -377,7 +377,7 @@
     {
       "heading": "Cumulative v3 UI Command Catalog Dispositions and Re-use (2026-09-07)",
       "path": "Plans/_shards/ui_command_catalog/042-cumulative-v3-ui-command-catalog-dispositions-and-re-use-2026-09.md",
-      "sha256": "279f07fb5d4b8af1820494153a720a9ff73c59ded011f039b369795ed3077cb4",
+      "sha256": "0e203df91357ba81551a4dabb239a003db15a7a8522f7ae611a17c937884ec16",
       "shard_id": "042",
       "source_line_end": 13056,
       "source_line_start": 12977,
@@ -386,7 +386,7 @@
     {
       "heading": "Accepted Terminal Research Action Candidates \u2014 DL-035 (2026-09-09)",
       "path": "Plans/_shards/ui_command_catalog/043-accepted-terminal-research-action-candidates-dl-035-2026-09-09.md",
-      "sha256": "62c25eaedb597ad330249e14c7bbb8f5f8cd0dcc25fc3249f569059d1d473d28",
+      "sha256": "95fdf60ee0aea820e96ef9f521f233b49f5d9e42b5a5e8dd3d40276f1ab8d187",
       "shard_id": "043",
       "source_line_end": 13155,
       "source_line_start": 13058,
@@ -395,7 +395,7 @@
     {
       "heading": "Research and Audit Decision Review Command Profile \u2014 DL-036 (2026-09-09)",
       "path": "Plans/_shards/ui_command_catalog/044-research-and-audit-decision-review-command-profile-dl-036-2026-0.md",
-      "sha256": "668859f2c3c3c3bbb726c44fd2287a3446b26deee8cef5440b2618feaac2c310",
+      "sha256": "e568d8bb4430ee3c613952d00aee107040758165469aaaeecfed8f4131c8f7b2",
       "shard_id": "044",
       "source_line_end": 13319,
       "source_line_start": 13157,
@@ -404,7 +404,7 @@
     {
       "heading": "DL-043 \u2014 Accepted Jujutsu Surface And Contract Planning (2026-09-11)",
       "path": "Plans/_shards/ui_command_catalog/045-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md",
-      "sha256": "560dbb039c1a35373363344f1743149397c567ca8d201d2b5ec2dc3b304df5a2",
+      "sha256": "b1c6832053a4fbf3b75c3b436e6d18e59088f49e40884b9ac195d35d68b372b6",
       "shard_id": "045",
       "source_line_end": 13459,
       "source_line_start": 13321,
@@ -413,7 +413,7 @@
     {
       "heading": "Project Recovery And Forge Delete/CI Central Admission \u2014 2026-09-26",
       "path": "Plans/_shards/ui_command_catalog/046-project-recovery-and-forge-delete-ci-central-admission-2026-09-2.md",
-      "sha256": "37013d7e079d65553a298ded27da67ad116bc6a40562a2d775792aece69d4790",
+      "sha256": "97ba1ee5185e6b2b8838c175daa7481538a7b2462fc0c4ff52f2c8852bd9145a",
       "shard_id": "046",
       "source_line_end": 13523,
       "source_line_start": 13461,
@@ -422,7 +422,7 @@
     {
       "heading": "Commands Shortcuts Central Consumers \u2014 2026-09-26",
       "path": "Plans/_shards/ui_command_catalog/047-commands-shortcuts-central-consumers-2026-09-26.md",
-      "sha256": "50c550fb1ff01d1bbb68d39b4560e4f85da3402cc45bbe96deb955a32c34c710",
+      "sha256": "2260189dda67fb4acde423688d7ea23c339f3cf1feba5d7985a3f513484a2d8b",
       "shard_id": "047",
       "source_line_end": 13565,
       "source_line_start": 13525,
@@ -431,7 +431,7 @@
     {
       "heading": "Git adapter command mapping closure \u2014 2026-09-27",
       "path": "Plans/_shards/ui_command_catalog/048-git-adapter-command-mapping-closure-2026-09-27.md",
-      "sha256": "046891b727effaf30aa8631a44a56706844ee25779c033db570e0023ba22c747",
+      "sha256": "1ae9625808ffe4d144b340072faa08424563acc8d5fb02e999c75ed30b835286",
       "shard_id": "048",
       "source_line_end": 13697,
       "source_line_start": 13567,
@@ -440,7 +440,7 @@
     {
       "heading": "Wand Modules Redesign Addendum (2026-09-27)",
       "path": "Plans/_shards/ui_command_catalog/049-wand-modules-redesign-addendum-2026-09-27.md",
-      "sha256": "e023ccbc4f5ecc0a73c8f3684f9c3432d86aa584f597b8bc371fa88443d2fa7e",
+      "sha256": "bd9c1c04aab7382214966c1ef479b4dad9abbd156b648fc7a1ed222a4f87f192",
       "shard_id": "049",
       "source_line_end": 14837,
       "source_line_start": 13699,
@@ -449,7 +449,7 @@
     {
       "heading": "5.6 Pro Chat Round Command Census (2026-10-09)",
       "path": "Plans/_shards/ui_command_catalog/050-5.6-pro-chat-round-command-census-2026-10-09.md",
-      "sha256": "8d8172b4e0c6a6bdd460332bb74e709a44c1c872750ce0a1a9f433d6be976c83",
+      "sha256": "c65da4149115a51d2cf73a7afdfc34ecba1f86db6f4ededc78f3cc66c2c6ca9f",
       "shard_id": "050",
       "source_line_end": 14958,
       "source_line_start": 14839,
@@ -458,7 +458,7 @@
     {
       "heading": "Open Exact Plan Version Command (2026-10-09)",
       "path": "Plans/_shards/ui_command_catalog/051-open-exact-plan-version-command-2026-10-09.md",
-      "sha256": "afd911a96447ba0467c2916bcf05cdef77da201ff84212c4c365ceaceaed2784",
+      "sha256": "f602b6599f4cbb0dd2c63a6542b7b16301f42f4615aee880f66383d7c1db0913",
       "shard_id": "051",
       "source_line_end": 15038,
       "source_line_start": 14960,
@@ -467,7 +467,7 @@
     {
       "heading": "DL-180 to DL-183 \u2014 Panel Tabs, Layout, Opening, Terminal Tabs And Duplicate Ids (2026-10-09)",
       "path": "Plans/_shards/ui_command_catalog/052-dl-180-to-dl-183-panel-tabs-layout-opening-terminal-tabs-and-dup.md",
-      "sha256": "d938bff4800fc6cec08c80eb22dffa25d3aa76fe38051a7d4378e8dddeef2040",
+      "sha256": "14835cd02eb6753cc1d1d44a1a43e52c06385496d70ce9a56ab614e7a58191f3",
       "shard_id": "052",
       "source_line_end": 16113,
       "source_line_start": 15041,
@@ -476,7 +476,7 @@
     {
       "heading": "Wonderer Check It and grilling command census \u2014 DL-218",
       "path": "Plans/_shards/ui_command_catalog/053-wonderer-check-it-and-grilling-command-census-dl-218.md",
-      "sha256": "45dd9e130b51926946d0a706008ed768b89892b291223bd3d2df72e8ee3b96a1",
+      "sha256": "f6f8b4b30f905a6bf7f6dbb62996f545cd21be90d6b38658dbc26141bb9c95d1",
       "shard_id": "053",
       "source_line_end": 16286,
       "source_line_start": 16115,
@@ -485,25 +485,25 @@
     {
       "heading": "DL-231 Chat Room round controls",
       "path": "Plans/_shards/ui_command_catalog/054-dl-231-chat-room-round-controls.md",
-      "sha256": "bf16a78f6de84231156f261603c8491d4bc8abb5f5103ff5426e39fb83f83387",
+      "sha256": "c18206ffbe9a175f89207c4295c78d231ac72ec896d47818e0db62ad49e6591f",
       "shard_id": "054",
-      "source_line_end": 16644,
+      "source_line_end": 16655,
       "source_line_start": 16288,
       "split_rule": "heading-##"
     },
     {
       "heading": "PM7 project and work command entries (2026-10-29; B1/B6, D2/D6/D8\u2013D13, G4\u2013G7)",
       "path": "Plans/_shards/ui_command_catalog/055-pm7-project-and-work-command-entries-2026-10-29-b1-b6-d2-d6-d8-d.md",
-      "sha256": "6648e4dd68a1b939711e728d5961858b4e31fe82137f02ca1f666b49e68d933b",
+      "sha256": "fc4f31703280a1d7f66c63f71b179420c53ca36a08036c4b18e4318805e90fea",
       "shard_id": "055",
-      "source_line_end": 16667,
-      "source_line_start": 16649,
+      "source_line_end": 16678,
+      "source_line_start": 16660,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 16667,
+    "line_count": 16678,
     "path": "Plans/UI_Command_Catalog.md",
-    "sha256": "cd59305b17fd10a90053df362a4d10002c6fdf64954e2d69c15ed28f9f55b32d"
+    "sha256": "18cee2ec816f524c6a92436b8c8d72a258e47a2fb67ee22d3c34be0e08049e4b"
   }
 }

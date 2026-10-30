@@ -1855,7 +1855,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # producer). No Touch row/profile, alias, exclusion, native handler or proof
     # is added.
     exact_resolved_denominators = {
-        "row_count": 708,
+        "row_count": 710,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
         "profile_count": 137,

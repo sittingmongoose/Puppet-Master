@@ -7879,7 +7879,8 @@
         "Plans/UI_Wiring_Rules.md#UIW-045",
         "Plans/Commands_System.md#CS-106",
         "Plans/Wiring_Matrix.md#WM-097",
-        "Plans/assistant-chat-design.md#ACD-506"
+        "Plans/assistant-chat-design.md#ACD-506",
+        "Plans/FinalGUISpec.md#F3-664"
       ],
       "owner_plan": "Plans/UI_Wiring_Rules.md",
       "plan_unit": "UIW-045",
@@ -7899,7 +7900,8 @@
         "thread Processes",
         "status work panel",
         "quit dialog",
-        "Activity Detail Pin / Unpin"
+        "Activity Detail Pin / Unpin",
+        "System status popover from status bar and Processes System services"
       ],
       "return_route": "Stable invoking view, Project/thread and focus; no active-tab retargeting.",
       "reverse_consumers": [
@@ -13607,6 +13609,22 @@
       "ui.activity_detail.pin",
       "partial",
       "G1 B, Jared 2026-10-30: session-only Pin; pinned follows new-thread data across switches, unpinned closes. Static fixtures only; native focus/subscription/currentness evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-014",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.system_status.open",
+      "partial",
+      "D11/G4: read-only System status visibility; no service/Settings write. Source/schema coverage only; native overlay/focus proof absent."
+    ],
+    [
+      "TOUCH-PM7LOC-015",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.system_status.close",
+      "partial",
+      "D11/G4: read-only System status visibility; no service/Settings write. Source/schema coverage only; native overlay/focus proof absent."
     ]
   ],
   "excluded_tokens": [

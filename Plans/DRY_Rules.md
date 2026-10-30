@@ -3252,6 +3252,9 @@ canonical_text: >-
   dropdown is the one chat picker primitive with ACD-439's sprout, with no second dropdown style and no native
   select. F3-658 now owns the shared glyph vocabulary and fitted inks (D44, DL-201); F3-619 and F3-585 consume
   it while their domain meanings remain with their owners. DL-162's earlier unification question is settled.
+  L8 B, PM7 Step4, 2026-10-30: rail menus and filter resizing delegate to DR-079’s PM6_SPROUT lifecycle,
+  keeping placement, rows, focus and routes with the rail; no private height/bounce/cleanup implementation
+  remains.
 gui_related: true
 gui_classification_reason: "Fixes one owner for the left rail's presentation grammar."
 split_recommended: false
@@ -3292,7 +3295,6 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-620, ContractName:Plans/FinalGUISpec.md#F3-621, ContractName:Plans/FinalGUISpec.md#F3-622, ContractName:Plans/assistant-chat-design.md#ACD-439, ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/DRY_Rules.md#DR-069
@@ -3327,7 +3329,9 @@ canonical_text: >-
   units it amends), auto-switch values and rules with Multi-Account MA-073 through the Settings
   owner's transaction (SSYS-009, SSYS-018), and the board transaction with Widget_System WS-019.
   DR-038 and DR-039 stand: Usage admits no shared-runtime role, creates no run-out projection, and
-  keeps one Usage authority, one widget-layout authority and one command language.
+  keeps one Usage authority, one widget-layout authority and one command language. L8 B, PM7 Step4,
+  2026-10-30: Usage PMU.menu delegates open/close/resize/keep to DR-079’s one sprout owner; it does not keep a
+  Usage-specific spring, close or NieR motion copy.
 gui_related: true
 gui_classification_reason: "Fixes one owner for the Usage page's presentation grammar and points it at the owners it reuses."
 split_recommended: false
@@ -3933,7 +3937,14 @@ canonical_text: >-
   control, setting, command, wiring row, saved value or test gate, and no canon number comes from a demo control. No
   product catalog (UI_Command_Catalog, settings_inventory, Wiring_Matrix, touch_closure, storage_value_registry,
   Automated_Testing_System) names a demo control. Its presentation is F3-649's, and in the concept it sits above the
-  one overlay root (DR-067).
+  one overlay root (DR-067). W8 review D-1, lead-accepted PM7 Step4, 2026-10-30: the one named temporary
+  DR-070 exception is 5.6 Pro/pm7-port/js/50-demo-bridge.js, inherited from main since 2026-10-22. Its lab
+  bridge presses a hidden .demo-dialog .demo-trigger so PM56_EXT.action/app.js and the recorded-example/reset
+  chains all run. This is tracked DOM-coupling debt, not permission for other synthetic clicks, hidden
+  controls or product dispatch. Retirement requires the chat owner to expose one PM56_APP dispatcher taking
+  (action, dataset, {demo:true}) for both real clicks and the bridge; migrate every recorded example/reset
+  chain, prove equivalent behavior, then delete the hidden host/button and close this named exception.
+  PM56_DEMO.trigger/reset alone do not run all chains and are not a substitute.
 gui_related: true
 gui_classification_reason: "Fixes one Demo Studio for every PMConcept7 concept surface and keeps it out of the product."
 split_recommended: false
@@ -4463,7 +4474,17 @@ canonical_text: >-
   lifecycle, family motion tokens, Reduced Motion settle, drag/hidden pause and teardown. Chat menus.js,
   Usage PMU.menu and Home PMW.menu delegate to that owner instead of carrying duplicate sprout
   implementations. This build closes the former L8 DRY debt. Menus retain their existing items, routing,
-  focus and availability contracts; sharing motion dispatches no command or runtime write.
+  focus and availability contracts; sharing motion dispatches no command or runtime write. L8 B, PM7 Step4,
+  2026-10-30: the shared implementation is window.PM6_SPROUT in base/script/pm7-sprout.js with
+  base/style/pm7-sprout.css, registered as pm7-sprout-js/css. Its contract is open(el, afterOpen, anchor,
+  opts), close(el, done), isOpen, aim, resize, bounce, keep and reduced; pm-sprout/pm-sprout-edge opt in and
+  the owner writes is-open/is-closing/is-size-bounce and six --pm6-sprout-* values. Legacy selector adapters
+  may keep their names only while using that same lifecycle. Title, chat/worktree/sidecar, Settings, rail
+  PMR.menu/filterMenu, Usage PMU.menu, Home PMW.menu, PMMenu/File Manager and live notification inbox
+  #pmnPanel all consume it; there is no inbox exemption. The standalone chat reads the same owner files.
+  Preserve each trigger’s opening origin/fade, one speed-scaled close timeline, last-relevant-transition
+  completion with cancellation/reopen guards and bounded fallback, and drag hold even for motion already in
+  flight. Shared presentation APIs create no new product command or saved key.
 gui_related: true
 gui_classification_reason: Defines one visible menu motion and lifecycle owner.
 split_recommended: false

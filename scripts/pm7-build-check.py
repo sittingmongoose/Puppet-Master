@@ -5,6 +5,7 @@ import json
 import hashlib
 from pathlib import Path
 import runpy
+import re
 import sys
 
 import jsonschema
@@ -41,6 +42,17 @@ def activity_detail_after_thread_switch(before, selected_thread):
     }
 
 
+def project_badge_disposition(case):
+    """B5 contract oracle: buffers belong to their Project; layout is autosaved."""
+    keys = set(case["status_keys"])
+    if any(tab["project_id"] == case["project_id"] and tab["dirty"] for tab in case["home_tabs"]):
+        keys.add("change-modified")
+    word = {"waiting": "Needs you", "blocked": "Blocked", "working": "Working",
+            "change-modified": "Unsaved changes", "idle": ""}
+    key = next((key for key in word if key in keys), "idle")
+    return {"key": key, "word": word[key]}
+
+
 def validate():
     failures = []
 
@@ -60,6 +72,8 @@ def validate():
     for case in fixtures["semantic_cases"]:
         require(target_disposition(case["request"], case["observed"]) == case["expected"],
                 "Target guard differs: " + case["name"])
+    for case in fixtures["project_badge_cases"]:
+        require(project_badge_disposition(case) == case["expected"], "B5 badge differs: " + case["name"])
     activity_state_schema = {**schema, "$ref": "#/$defs/ActivityDetailViewState"}
     activity_state_schema.pop("oneOf", None)
     activity_state_validator = jsonschema.Draft202012Validator(activity_state_schema)
@@ -116,11 +130,54 @@ def validate():
             "A3 tray aggregation precedence differs from canon")
     require(next(row for row in glyphs["object_control_mappings"] if row["semantic_name"] == "work-panel-resources")["glyph_id"] == "gauge",
             "Resources does not reuse the existing gauge")
+    code_status = json.loads((ROOT / "Concepts/glyph-system/opus-5.5/src/data/status.json").read_text())
+    require(code_status["surfaces"]["working"]["panels"] ==
+            next(row for row in glyphs["status_marks"] if row["key"] == "working")["surface_words"]["panels"],
+            "L1 joined code and canon disagree on working panels words")
+    kit = (ROOT / "Concepts/glyph-system/opus-5.5/src/logo/pm-logo.js").read_text()
+    period = re.search(r"function periodOf\([^)]*\)\s*\{(.*?)\n  \}", kit, re.S)
+    require(bool(period) and "tier" not in period[1] and "fam.dur * .78" in period[1]
+            and "fam.dur * 1.15" in period[1], "L-1 motion ratios differ by tier or from the accepted values")
+    require(fixtures["loader_contract"]["family_token_owner"] == "PMLogo.MOTION"
+            and fixtures["loader_contract"]["ratios"] == {"swing": 1, "think": 1.15, "hop": .78},
+            "Loader motion owner/fixture ratios differ")
+    basic_export = re.search(r"'basic-dark':\s*\{(.*?)(?=\n    'basic-light':)", kit, re.S)
+    for token in ("#121212", "#E8E8E8", "#9E9E9E", "#7A8290", "#64B5F6", "#2D2D2D", "rgba(255,255,255,.08)"):
+        require(bool(basic_export) and token in basic_export[1], "W1-40 release EXPORT palette differs: " + token)
+    require("px: 14" in (ROOT / "Concepts/onboarding/opus-5.5/src/settings/kit.js").read_text()
+            and "px: 14" in (ROOT / "Concepts/home-redesign/src/panels/js/27-frames.js").read_text()
+            and "px: 16" in (ROOT / "Concepts/chat-assistant-concepts/5.6 Pro/pip.js").read_text(),
+            "L-2 busy-button/thinking source sizes differ")
+    require(fixtures["loader_contract"]["placements_px"] == {
+        "busy_button": 14, "thinking_placeholder": 16, "working_row": 18,
+        "content_wait_tab": 14, "panel": 40, "splash": 128}, "L-2 accepted placement fixture differs")
     pip_owner = (PLANS / "Settings_System.md").read_text()
     require(all(part_id in pip_owner for part_id in ids), "Accepted parts list is absent from SSYS-056 prose")
 
     bindings = read("pm7_control_bindings.json")["bindings"]
     by_control = {row["control_id"]: row for row in bindings}
+    source_anchors = 0
+    for row in bindings:
+        for anchor in row.get("concept_sources", []):
+            source_anchors += 1
+            path = ROOT / anchor["path"]
+            require(path.is_file(), row["control_id"] + ": missing concept source " + anchor["path"])
+            if path.is_file():
+                body = path.read_text()
+                for token in anchor["tokens"]:
+                    require(token in body, row["control_id"] + ": missing source token " + token)
+    require(sum(bool(row.get("concept_sources")) for row in bindings) == fixtures["counts"]["new_bindings"],
+            "A new PM7 control lacks its joined source-name mapping")
+    for control, action in (("statusbar.system_status", "ui.system_status.open"),
+                            ("work.open_system_status", "ui.system_status.open"),
+                            ("system_status.close", "ui.system_status.close"),
+                            ("system_status.service.open_settings", "ui.settings.route.open")):
+        row = by_control.get(control, {})
+        require(row.get("action_ids") == [action] and row.get("disposition") == "local"
+                and not row.get("production_entries") and not row.get("setting_ids"),
+                control + ": System status gained a mutation route or lost its local identity")
+    require(set(schema["$defs"]["system_status_settings_route_request"]["properties"]["setting_id"]["enum"])
+            <= set(settings), "System status owner navigation targets an unknown setting")
     pin = by_control.get("chat.activity.pin", {})
     require(pin.get("action_ids") == ["ui.activity_detail.pin"] and pin.get("disposition") == "local"
             and not pin.get("production_entries") and not pin.get("setting_ids"),
@@ -188,7 +245,9 @@ def validate():
     return {"status": "fail" if failures else "pass", "scope": "Static PM7 contracts; no native/runtime/rendering certification",
             "counts": observed, "schema_cases": len(fixtures["schema_cases"]),
             "identity_cases": len(fixtures["semantic_cases"]), "runtime_shape_cases": runtime_cases,
-            "activity_thread_switch_cases": len(fixtures["activity_detail_thread_switch_cases"]), "failures": failures}
+            "activity_thread_switch_cases": len(fixtures["activity_detail_thread_switch_cases"]),
+            "project_badge_cases": len(fixtures["project_badge_cases"]),
+            "concept_source_anchors": source_anchors, "failures": failures}
 
 
 if __name__ == "__main__":

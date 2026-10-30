@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L28046-L28471
+Source lines: L28056-L28487
 
-Source SHA256: `18361d7f7e137b4d8f41ee4d70e0b9c8e3f59db1e80ae3ff091b5e1c7d7d87ea`
+Source SHA256: `d220edc0852d8be39d0084da5e01bc2b7811f1deb9cab2f22c3239017048e79c`
 
 ---
 
@@ -386,7 +386,13 @@ canonical_text: >-
   the last known position. Retro entrance/face changes step; live NieR sheet changes cut with a bounded
   flicker, no black frame. Effective Reduced Motion/Still snaps to the settled state without entrance,
   sway, flicker or lift-off travel. Static NieR brand/tray/app marks remain static; acknowledgement stays
-  ≤100 ms with no dispatch deferral or double commit.
+  ≤100 ms with no dispatch deferral or double commit. PC1–PC5/S5, PM7 Step4, 2026-10-30: the joined adapters
+  are PM56_PIP and PM56_SHELL.pmxPip/pmxStatusFace/pmxEmpty/pmxPipHost/pmxPipLook/pmxPipMood/pmxPipOn. Sheet
+  hosts, face lists and Orbit use the shared kit rather than a second renderer. O55.sound.pip.chatMute binds
+  hosted chat mute to the same sound owner. The concept’s press helper acknowledges in the first painted frame
+  and runs the existing action in the next task without replaying a click; native ≤100 ms acknowledgment and
+  one-commit acceptance are unchanged. PMX kept-subtree slots preserve loader owner attributes while the
+  transcript reconciles; they do not admit a replacement observer or private loader.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

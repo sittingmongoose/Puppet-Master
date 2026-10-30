@@ -1919,6 +1919,12 @@ canonical_text: >-
   both completed owner phases and the last block landing; Reduced Motion settles instantly, and no landing
   claims owner work completed. O6, Jared 2026-10-30: look-tile hover is silent and changes no theme; click or
   keyboard activation changes the look through the existing typed local action and persistence boundary.
+  O1–O12/O7, PM7 Step4, 2026-10-30: joined presentation modules O55.pipStage/pipWorlds/pipScenes/pipVoice,
+  O55.tips and O55.pipOops consume the one Pip/sound/option-note owners. O55.ui.act/fill/tip/open are the
+  lab-facing adapters to the same real wizard actions and drafts; they confer no new product action or owner
+  permission. Choice explanations keep pm7ob-explainer and the existing typed action; post-commit examples
+  require the actual committed Project. Fixture twists/signinFailed are lab/source data, never alternate
+  validation or persisted event names.
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.

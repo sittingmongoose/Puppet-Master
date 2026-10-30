@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33123-L33966
+Source lines: L33123-L33971
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `16c1f42c58a4128badf778586b123b8812d4f70f6dd6753e1de96c6d04925d4c`
 
 ---
 
@@ -153,7 +153,12 @@ canonical_text: >-
   focus to the next; Enter activates the row's body (F3-447); Escape closes from anywhere and returns focus to
   the bell. A timed item shows its countdown ("Expires in N s", FileSafe's 60 s hold), a folded group offers
   "N more" and "Show less", and an action that opens a page reads "Open <page>".
-  Amended 2026-10-29 (D9; PM7): Completion delivery user uses this alert store, deduplicated/coalesced by work identity and completion generation, with one durable notice and its existing transient treatment. Agent delivery never wakes a user-stopped thread.
+  Amended 2026-10-29 (D9; PM7): Completion delivery user uses this alert store, deduplicated/coalesced by work
+  identity and completion generation, with one durable notice and its existing transient treatment. Agent
+  delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live #pmnPanel inbox is
+  explicitly a consumer of DR-079’s PM6_SPROUT lifecycle, including open/close and size changes. Alert
+  content/acknowledgment/routing/focus remain here and in F3-453; no separate per-look inbox motion owner is
+  exempted. The retired #rsPanel is not evidence of live-inbox closure.
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
 split_recommended: false

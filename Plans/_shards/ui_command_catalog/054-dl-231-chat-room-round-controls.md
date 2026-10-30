@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16288-L16644
+Source lines: L16288-L16655
 
-Source SHA256: `cd59305b17fd10a90053df362a4d10002c6fdf64954e2d69c15ed28f9f55b32d`
+Source SHA256: `18cee2ec816f524c6a92436b8c8d72a258e47a2fb67ee22d3c34be0e08049e4b`
 
 ---
 
@@ -271,7 +271,18 @@ canonical_text: >-
   navigation_wrapper hiding only; cmd.work.quit confirms keep_running|stop_selected. Each canonical row has
   one handler and identity. Reuse cmd.terminal.open, owner thread/node routes and schedule cancel. New Home
   panel-tab route and keyboard shortcuts remain deferred. Typed local ui.work_panel.* and ui.work_quit.*
-  are no-write view state.
+  are no-write view state. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay popover,
+  reached from the existing status-bar System status item and the Processes System services link.
+  ui.system_status.open/close are typed local visibility actions, with statusbar.system_status,
+  work.open_system_status and system_status.close binding families. Service owner links use the existing
+  ui.settings.route.open action and system_status.service.open_settings binding, selecting
+  code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
+  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value
+  or controlling a service. The popover has close/Escape/outside closure, return focus and the common
+  overlay/Glass plate; unavailable owner navigation says why. G6 confines Clear finished producers to the
+  thread Processes view and panel Processes tab. PM7_WORK_UI and PM_WORK demonstrate these routes in the
+  concept; they are adapters to the stable catalog identities, not replacement native commands or Event
+  Authority admission.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

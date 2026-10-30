@@ -2,13 +2,18 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L13-L171
+Source lines: L13-L176
 
-Source SHA256: `912e4002af52d354f043552a789b095cda2e863d480db11dd256dd316ef60ae4`
+Source SHA256: `6def7dd2661f45850f684df771c087c06ff3a5397f7dcdbf793791a9a004d457`
 
 ---
 
 ## Change Summary
+
+- 2026-10-30: PM7 Step4 reconciles full GUI integration bbb72b6153 with the stable Plans contracts: B5 dirty Home buffers / Unsaved changes, the read-only System status popover and owner-Settings routes, actual shared Pip/loader/project/work/editor APIs and release asset names. F3-662 records all-tier Swing ×1 / Think ×1.15 / Hop ×0.78 and accepted 14 px busy-button / 16 px thinking sizes (L-1/L-2). DR-070 records the one inherited lab hidden-click bridge exception and its PM56_APP retirement path (D-1); DR-079/F3-461 require the live inbox, PMMenu/File Manager and rail resizing to use the one sprout owner, with no inbox exemption. Source-name alignment does not certify native runtime, audio, rendering or governance.
+  ContractRef: ContractName:Plans/Wiring_Matrix.md#WM-097, ContractName:Plans/FinalGUISpec.md#F3-662, ContractName:Plans/FinalGUISpec.md#F3-664, ContractName:Plans/DRY_Rules.md#DR-070, ContractName:Plans/DRY_Rules.md#DR-079
+
+
 
 - 2026-10-30: Jared answered every PM7 decision card. All unmodified recommendations are his confirmed decisions. DL-235–239 and DL-254–256 apply X3 B (NieR eyes through every static/live band at every size), A2 B (always-on tray; minimize-to-tray controls Close only), L8 B / DR-079 (one sprout owner for all menus), O2 A (approved-concept fidelity, implementation technique open), O6 (silent look hover changes no theme; click selects), O12 B (Creating Continue/Ready wait for the last block; Reduced Motion instant), G1 B (view-local Pin survives thread switches with new-thread data; unpinned closes), and SND1 B (tools’ measured sound numbers for landing; Jared listens later in the product). G1 restores ui.activity_detail.pin / chat.activity.pin without a persisted setting or runtime write. Step4 GUI-name alignment remains separate; no governance reseal or native certification is supplied.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-235, ContractName:Plans/Decision_Log.md#DL-238, ContractName:Plans/Decision_Log.md#DL-254, ContractName:Plans/Decision_Log.md#DL-256, ContractName:Plans/DRY_Rules.md#DR-079

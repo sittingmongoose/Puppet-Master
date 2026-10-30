@@ -1780,7 +1780,7 @@ Canonical shell rule:
 
 Required visible behavior:
 - current bare project name in the box; path/branch in its hover tag and menu rows (B3)
-- badge when the active project has background activity, blocked items, or unsaved shell state that needs attention
+- badge when the active Project has background activity, blocked items, or a Home tab with unsaved buffer changes (B5; Home autosaves layout)
 - Ctrl+Shift+P opens the secondary project-box menu (B2); Ctrl/Cmd+Enter on a row opens a new workspace tab (B6)
 - responsive collapse without losing the command-palette project switch path
 
@@ -2711,7 +2711,7 @@ Project-summary cards derived from stale or `/degraded` projections downgrade co
 
 `project_summary` rows carry `project_id`, `activity_state` (`idle | active | background_active | historical_only`), `attention_state` (`none | advisory | attention_required | blocked`), `health_state` (`healthy | degraded | blocked`), optional `primary_owner_kind`, optional `primary_reason_code`, optional `primary_object_ref`, `active_run_count`, `blocked_run_count`, `attention_object_count`, `projection_trust_state`, `last_activity_at_utc`, and `historical_run_count`.
 
-Project cards, `/title-bar` badges, and `/attention` surfaces share one status vocabulary with explicit precedence and rollup rules so background activity, blocked items, and unsaved shell state do not compete as unrelated badges.
+Project cards, `/title-bar` badges, and `/attention` surfaces share one status vocabulary with explicit precedence and rollup rules so background activity, blocked items, and Home buffer changes (B5: Unsaved changes, not autosaved layout) do not compete as unrelated badges.
 
 Project status appears through the same precedence rules on title-bar badges, project cards, command-palette summaries, and attention-center rows.
 
@@ -33265,7 +33265,12 @@ canonical_text: >-
   focus to the next; Enter activates the row's body (F3-447); Escape closes from anywhere and returns focus to
   the bell. A timed item shows its countdown ("Expires in N s", FileSafe's 60 s hold), a folded group offers
   "N more" and "Show less", and an action that opens a page reads "Open <page>".
-  Amended 2026-10-29 (D9; PM7): Completion delivery user uses this alert store, deduplicated/coalesced by work identity and completion generation, with one durable notice and its existing transient treatment. Agent delivery never wakes a user-stopped thread.
+  Amended 2026-10-29 (D9; PM7): Completion delivery user uses this alert store, deduplicated/coalesced by work
+  identity and completion generation, with one durable notice and its existing transient treatment. Agent
+  delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live #pmnPanel inbox is
+  explicitly a consumer of DR-079’s PM6_SPROUT lifecycle, including open/close and size changes. Alert
+  content/acknowledgment/routing/focus remain here and in F3-453; no separate per-look inbox motion owner is
+  exempted. The retired #rsPanel is not evidence of live-inbox closure.
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
 split_recommended: false
@@ -47411,7 +47416,19 @@ canonical_text: >-
   optional D9 notices use the real alert owner. No imported concept toolbar, fake product errors, second
   Demo Studio, new product command or preference is authorized by these lab cases. Documentation retires
   the claim that sample notices cannot fire and updates the recorded-example census from its actual
-  registry.
+  registry. W8 review D-1, lead-accepted PM7 Step4, 2026-10-30: the one named temporary DR-070 exception is
+  5.6 Pro/pm7-port/js/50-demo-bridge.js, inherited from main since 2026-10-22. Its lab bridge presses a hidden
+  .demo-dialog .demo-trigger so PM56_EXT.action/app.js and the recorded-example/reset chains all run. This is
+  tracked DOM-coupling debt, not permission for other synthetic clicks, hidden controls or product dispatch.
+  Retirement requires the chat owner to expose one PM56_APP dispatcher taking (action, dataset, {demo:true})
+  for both real clicks and the bridge; migrate every recorded example/reset chain, prove equivalent behavior,
+  then delete the hidden host/button and close this named exception. PM56_DEMO.trigger/reset alone do not run
+  all chains and are not a substitute. Current lab adapters are
+  O55.studio.pip/pipOnboarding/titlebar/activity/looks.pip and recipes pipRoughDay/quitWithWork. Onboarding
+  examples call O55.ui.act/fill/tip/open and refuse when unavailable; they do not write fields or call private
+  screen definitions. Hold loaders copy names only waits ending on their button; Mark only discloses the bar
+  owner’s approximately half-second layout pass per step. No lab trigger is admitted to product commands,
+  Settings or Touch.
 gui_related: true
 gui_classification_reason: Defines the one Demo Studio for PMConcept7's concept surfaces and keeps it out of
   the product.
@@ -49798,7 +49815,10 @@ canonical_text: >-
   lost warning. Working item bead stays st-working; indeterminate waits use F3-662. Onboarding Pip is the
   required current-chapter marker, beads retain ring-dot; tour pip-done is unrelated. Category
   robot/processes loops rank below needs-you and rest lit/still under Reduced Motion; loader alone permits
-  breath/blink.
+  breath/blink. L1, PM7 Step4, 2026-10-30: terminal command/gutter and item/tab status marks retain this
+  vocabulary. The single command card’s active indeterminate wait and the transcript Working head consume
+  F3-662’s loader beside their Running/Working elapsed words; this wait feedback is distinct from a list or
+  gutter state mark.
 gui_related: true
 gui_classification_reason: Shared glyph vocabulary and presentation.
 split_recommended: false
@@ -49968,7 +49988,20 @@ canonical_text: >-
   healthy zero. W1: Retro draws hand-placed 16, 24 and 32 px sprite grids, with consistent logical tier
   selection across DPR. The PM monogram and gallery Direction switch are retired lineage, never a product
   brand variant. X3 B changes visibility of the eyes, never the static/non-interactive nature of title, app
-  and tray rest marks.
+  and tray rest marks. A1/A3/X3, PM7 Step4, 2026-10-30: release asset names are app/puppet-master.ico
+  (16,20,24,32,48,64,128,256), app/puppet-master.icns, app/png/<size>.png (16 through 1024),
+  app/macos-1024.png and app/tile.svg. Tray exports use tray/macos/<key>-black.svg and -white.svg plus 16/32
+  PNGs, tray/windows/<key>.svg plus 16/20/24/32 PNGs, and working-flip SVGs from the shared micro Think
+  drawing. The fixed app-level tray set follows A1’s app-icon logic rather than a Project’s changing look:
+  macOS template ink, Windows Basic Dark colour; seven status faces and A3 precedence remain. The exported
+  manifest under the title lane icons directory is source/export evidence, not certification of a signed
+  native bundle. Source APIs are PMLogo.mark/svg/dataUrl/favicon/tierFor/period/kit/TRAY/trayFace and the
+  static pm7-brand-mark block, pm-brand-mark/pm-brand-word and app-name data-mode full|mark; the title mark
+  remains non-interactive.
+  A1/W1-40, PM7 Step4 audit: lock the Basic Dark release-asset EXPORT palette used when no live page is
+  painted: bg #121212, ctl #E8E8E8, pin #9E9E9E, str #7A8290, head #64B5F6, tile #2D2D2D, edge
+  rgba(255,255,255,.08). These fixed file-export values are distinct from live token-role mixing;
+  app/tray/favicon exports use this one palette rather than resampling per surface.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -50005,7 +50038,14 @@ source_lineage:
 - Concepts/onboarding/opus-5.5-pip/README.md
 - Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
-preserved_exact_tokens: []
+preserved_exact_tokens:
+- '#121212'
+- '#E8E8E8'
+- '#9E9E9E'
+- '#7A8290'
+- '#64B5F6'
+- '#2D2D2D'
+- rgba(255,255,255,.08)
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
 owner_hints:
@@ -50035,7 +50075,8 @@ canonical_text: >-
   menu opens with ui.project_switcher.open and Ctrl+Shift+P. Pick dispatches
   cmd.project.switch_active_tab(project_id); Ctrl/Cmd+Enter dispatches
   cmd.project.open_in_new_workspace_tab(project_id); All projects navigates to Projects. Menu closure
-  restores focus. Badge reads the shared work/layout owner: waiting > blocked > working > change-modified >
+  restores focus. Badge reads the shared work and dirty-buffer owners: waiting > blocked > working >
+  change-modified >
   idle, preserving other states in the accessible description. Never conflate blocked and needs-you. A
   native layout observer resynchronizes the lens and tab ink after layout and before paint, honoring
   resize-drag pause/defer rules, without lazySync’s 140 ms delay or synthetic resize. Zero painted frames
@@ -50044,7 +50085,15 @@ canonical_text: >-
   documented. Shared hover engine and --pm-switch-* materials own hover/selection; Retro/NieR chevron
   steps, Reduced Motion is instant. No concept STATE fixture or local theme store supplies live status. B2
   visible menu heading is Projects, with Ctrl Shift P shown. Page-tab height remains 28 px inside the 40 px
-  title bar (46 px Glass); the heading does not replace the bare Project label.
+  title bar (46 px Glass); the heading does not replace the bare Project label. B5, PM7 Step4, 2026-10-30:
+  Unsaved changes means a Home tab has dirty/unsaved buffers in the active Project. Home autosaves layout; a
+  layout change alone never raises this badge. PMW.unsaved/PMW.noteUnsaved and pm7.home.unsaved provide the
+  concept’s buffer-owner observation to PM_WORK.project; waiting > blocked > working > change-modified > idle
+  remains the priority. The accessible words are Unsaved changes, never Unsaved layout. The joined code
+  exposes PM_PROJECT_BOX row/add/select/state/states/refresh/open/close/log and PM_TB_DENSITY apply/schedule;
+  these adapters keep the declared cmd.project.* and ui.project_switcher.* identities. PM_LG.syncScope
+  synchronizes the selected lens before paint. pm7.project.command and pm7.project.ui_action are concept
+  dispatch logs, not new persisted product events.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -50124,10 +50173,25 @@ canonical_text: >-
   and the missing Settings/tab busy states consume this owner; the loader rollout report records each site.
   L8 B (Jared 2026-10-30): this build removes menu-sprout duplication. DR-079 is the one sprout owner for
   every menu; chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it with no private animation
-  implementation. L1 reference host sizes: splash 128
-  px, chat Working/thinking row 18 px, busy button 16 px, content-wait tab 14 px, panel 40 px. The shared
+  implementation. L1 reference sizes, amended by accepted review L-2 (PM7 Step4, 2026-10-30): splash 128
+  px, Working row 18 px, chat thinking placeholder 16 px, busy button 14 px, content-wait tab 14 px and panel
+  40 px. Busy buttons retain their existing height and baseline; the former 16 px button/18 px thinking
+  defaults are superseded. The shared
   em/baseline contract fits each host; the <12 px still gate and item-state st-working distinction continue
-  to apply.
+  to apply. L4/L5 and review L-1, PM7 Step4, 2026-10-30: every tier, including 12–18 px micro loaders, uses
+  Swing ×1, Think ×1.15 and Hop ×0.78 of its family base period; there is no micro-tier ×0.85 exception. Pixel
+  frame delays are exact fractions of the resulting period, with no blank frame. The joined owner is
+  PM_PIP_LOADER (html/mount/busy/refresh/motion/hold/held/clock/stats), backed by PMLogo.period and
+  PMLogo.clock; opt-in data-pip-loader, data-pip-px and pml-ld, with owner-written
+  data-pml-run/data-pml-redraw/--pml-k. Home uses PMW.loader/frames.button{busy}, Settings
+  PM51.btn/bound.action{busy}/waitOn/waiting, chat its kept wait slots and Terminal pmt-card-ld. The
+  terminal’s one running command card and transcript Working head are wait hosts; terminal gutter/item-state
+  marks remain shared status glyphs. Host aria-busy/status and one-Pip thinking/Orbit handoff still apply.
+  Demo hold affects waits that end through busy(host,false), not waits redrawn from owner state. Hold/stats
+  are lab observation hooks, not product preferences.
+  L4/W5-14, PM7 Step4 audit: PMLogo.MOTION is the sole family motion token row (dur, amp, wave and label),
+  read by PMLogo.period/clock and the shared loader; it is not a per-view timing table. Think/Hop multipliers
+  use the kit’s two-decimal period rounding at every tier.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -50365,7 +50429,8 @@ canonical_text: >-
   show their reason. Floating panel, quit dialog and exit animations use DR-067’s overlay owner and
   near-opaque Glass menu plate. Stop per item and Stop all (thread/platform target list) use cmd.work.stop
   and D8 process-group semantics; restart/input/completion routing use UCC-210. Questions and process input
-  remain separate counts over one needs-you set. Clear finished hides only this view’s rows. Lost follows
+  remain separate counts over one needs-you set. G6 Clear finished is offered only on Processes and hides this
+  view’s finished process/scheduled rows, never agents or owner records. Lost follows
   reconciliation, warning; Stopping uses pending until observed exit, Stopped skipped, Scheduled pending,
   Done complete, Failed failed with exit N. Live category glyphs robot/processes use the shared 2200 ms
   beat below needs-you, Reduced Motion lit/still; row marks stay still, individual agents use Pip. Design
@@ -50381,7 +50446,21 @@ canonical_text: >-
   is identical. Popped-out routing follows the same one-view identity and returns focus on close. D6: the
   popped-out desktop panel is one draggable, user-sized window preserving Project/tab/filter selection; it
   is a view of the same projection, not another runtime. Closing restores focus to its originating status
-  item.
+  item. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay popover, reached from the
+  existing status-bar System status item and the Processes System services link. ui.system_status.open/close
+  are typed local visibility actions, with statusbar.system_status, work.open_system_status and
+  system_status.close binding families. Service owner links use the existing ui.settings.route.open action and
+  system_status.service.open_settings binding, selecting code.editing.lsp-server-catalog for language servers,
+  system.mcp.server-list for MCP servers or web.index.enable for the search index. They open Settings and
+  reveal the owner row without writing a value or controlling a service. The popover has close/Escape/outside
+  closure, return focus and the common overlay/Glass plate; unavailable owner navigation says why. The joined
+  concept owner is PM7_WORK_UI in src/js/48-work.js: open/close/toggle/tab/isOpen, detail/tail/patchTicks,
+  confirmThread/confirmPlatform, quit and paintBar; #pm7-work owns the three tabs and #pm7-work-dialog the
+  reviewed Stop/Quit list. PM_WORK remains the only projection. Concept view IDs platform and thread:<id> map
+  to the invoking view, not a new persistence key. Counts.finished/failed describe the Processes list, while
+  finishedAgents belongs to Agents. Environment headings count all displayed state groups. Resource samples
+  re-sort under the selected column, deferring row movement while the pointer/focus is in the table. These
+  concept APIs/fixtures do not certify native handlers or windows.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

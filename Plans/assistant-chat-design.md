@@ -24457,7 +24457,17 @@ canonical_text: >-
   keep search. Under reduced motion, open and close render as instant show/hide. The
   single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single sprout
   implementation for every menu; chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it. This build
-  removes their former duplicates while retaining this unit’s visible motion/focus contract.
+  removes their former duplicates while retaining this unit’s visible motion/focus contract. L8 B, PM7 Step4,
+  2026-10-30: the shared implementation is window.PM6_SPROUT in base/script/pm7-sprout.js with
+  base/style/pm7-sprout.css, registered as pm7-sprout-js/css. Its contract is open(el, afterOpen, anchor,
+  opts), close(el, done), isOpen, aim, resize, bounce, keep and reduced; pm-sprout/pm-sprout-edge opt in and
+  the owner writes is-open/is-closing/is-size-bounce and six --pm6-sprout-* values. Legacy selector adapters
+  may keep their names only while using that same lifecycle. Title, chat/worktree/sidecar, Settings, rail
+  PMR.menu/filterMenu, Usage PMU.menu, Home PMW.menu, PMMenu/File Manager and live notification inbox
+  #pmnPanel all consume it; there is no inbox exemption. The standalone chat reads the same owner files.
+  Preserve each trigger’s opening origin/fade, one speed-scaled close timeline, last-relevant-transition
+  completion with cancellation/reopen guards and bounded fallback, and drag hold even for motion already in
+  flight. Shared presentation APIs create no new product command or saved key.
 gui_related: true
 gui_classification_reason: Defines visible open/close motion and search behavior for chat popouts.
 split_recommended: false
@@ -28421,7 +28431,13 @@ canonical_text: >-
   the last known position. Retro entrance/face changes step; live NieR sheet changes cut with a bounded
   flicker, no black frame. Effective Reduced Motion/Still snaps to the settled state without entrance,
   sway, flicker or lift-off travel. Static NieR brand/tray/app marks remain static; acknowledgement stays
-  ≤100 ms with no dispatch deferral or double commit.
+  ≤100 ms with no dispatch deferral or double commit. PC1–PC5/S5, PM7 Step4, 2026-10-30: the joined adapters
+  are PM56_PIP and PM56_SHELL.pmxPip/pmxStatusFace/pmxEmpty/pmxPipHost/pmxPipLook/pmxPipMood/pmxPipOn. Sheet
+  hosts, face lists and Orbit use the shared kit rather than a second renderer. O55.sound.pip.chatMute binds
+  hosted chat mute to the same sound owner. The concept’s press helper acknowledges in the first painted frame
+  and runs the existing action in the next task without replaying a click; native ≤100 ms acknowledgment and
+  one-commit acceptance are unchanged. PMX kept-subtree slots preserve loader owner attributes while the
+  transcript reconciles; they do not admit a replacement observer or private loader.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L2103-L2688
+Source lines: L2103-L2699
 
-Source SHA256: `f8178b222787114c5465431af2b18394e3e0e1093b97cc30a7b80b4aa079bd63`
+Source SHA256: `91dd9d627b98b65b37ee5b46a98abbd11fa3d2c2cf512246db235d031e7194d3`
 
 ---
 
@@ -552,7 +552,18 @@ canonical_text: >-
   closes on a switch, without a runtime or Settings write. Resources subscribes only while visible; stale
   requests cannot
   leak samples across Project/server/environment. One overlay/hover/loader/Pip kit and one work projection;
-  no injection hooks, synthetic resize or replacement observers.
+  no injection hooks, synthetic resize or replacement observers. D11/G4, PM7 Step4, 2026-10-30: System status
+  is a small read-only overlay popover, reached from the existing status-bar System status item and the
+  Processes System services link. ui.system_status.open/close are typed local visibility actions, with
+  statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner
+  links use the existing ui.settings.route.open action and system_status.service.open_settings binding,
+  selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
+  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value
+  or controlling a service. The popover has close/Escape/outside closure, return focus and the common
+  overlay/Glass plate; unavailable owner navigation says why. WM-097’s optional concept_sources records pair
+  stable control families with the joined source paths and exact tokens. They witness source alignment only;
+  native dispatcher, owner, focus, storage and effect evidence stays partial until implemented. Pin/Processes,
+  work-panel tabs and quit actions keep their stable IDs even when a concept data-action spelling differs.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

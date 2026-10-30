@@ -6651,7 +6651,22 @@ canonical_text: >-
   source scope without persistence. G1 B, Jared 2026-10-30: chat.activity.pin binds ui.activity_detail.pin,
   with thread_id, boolean pinned, view/scope/focus identity and one Touch reverse consumer. It is an explicit
   local wiring disposition with no production mutation row. Thread-switch coverage requires pinned
-  follow-new-thread and unpinned close, including teardown and stale-action rejection.
+  follow-new-thread and unpinned close, including teardown and stale-action rejection. D11/G4, PM7 Step4,
+  2026-10-30: System status is a small read-only overlay popover, reached from the existing status-bar System
+  status item and the Processes System services link. ui.system_status.open/close are typed local visibility
+  actions, with statusbar.system_status, work.open_system_status and system_status.close binding families.
+  Service owner links use the existing ui.settings.route.open action and system_status.service.open_settings
+  binding, selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP
+  servers or web.index.enable for the search index. They open Settings and reveal the owner row without
+  writing a value or controlling a service. The popover has close/Escape/outside closure, return focus and the
+  common overlay/Glass plate; unavailable owner navigation says why. Each new PM7 binding carries
+  concept_sources path/token anchors for its actual GUI adapter. Sources use PM_PROJECT_BOX/PM_TB_DENSITY for
+  project controls, PM7_WORK_UI/PM_WORK for work, PM_PIP_EDITOR and the shared parts registry for Pip, and the
+  existing Settings reveal route for System status owner links. No JavaScript adapter is native command/effect
+  proof. W6 identity mapping: PM_WORK item delivery maps to completion_delivery, restarting maps to pending
+  with Restarting words, and its clearFinished platform/thread:<id> views map to the invoking view.
+  canSendInput/answer are concept projections of current prompt eligibility and owner answers; native process
+  identity, generation, permission, yes/no-only stdin and read-only-service gates remain unchanged.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -6663,7 +6678,7 @@ depends_on:
 - UIW-045
 unblocks: []
 acceptance_criteria:
-- Every one of 465 binding families resolves its declared command/local disposition with unique control identity
+- Every one of 468 binding families resolves its declared command/local disposition with unique control identity
   and valid Settings IDs.
 - All eleven new production-intent rows have typed requests/results/availability/accessibility/effect evidence
   requirements and one handler.

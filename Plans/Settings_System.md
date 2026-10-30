@@ -4222,7 +4222,12 @@ canonical_text: >-
   that same one-to-one id/label table before preview/apply. Compatibility reads may accept prior ID arrays
   through the table, but new writes use labels. PipPartsSettingValue in
   Plans/pm7_build_contracts.schema.json pins this label-valued multiselect; no second option table or store
-  is introduced.
+  is introduced. S2/S5/S9, PM7 Step4, 2026-10-30: PM_PIP_PARTS and PM_PIP_PARTS_STORE are the shared
+  registry/adapter; PM_PIP_EDITOR open/popup/close/replay is the single editor, installed by
+  kit.d/29-pip-editor.js. The Settings row emits o55-pip-editor and the chat’s pip-settings-open opens that
+  same editor; title/wand hosts use data-pip-local for the declared typed local actions. Registry def maps to
+  default_enabled, lowercase preset IDs to Full/Quiet/Still/Plain, and new Settings writes remain the 25
+  shared labels. pm7.pip-parts.changed is a concept change notification, not a new persisted event.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -4297,7 +4302,11 @@ canonical_text: >-
   remains No agents/No processes and stale is explicit. Scope global is applicability metadata and ordinary
   storage remains Project-owned under SSYS-002. Every host edits it through Settings transaction
   preview/apply. Visibility, stop/quit rules, CPU/RAM sampling and finished retention are rules, not extra
-  preference rows.
+  preference rows. D5, PM7 Step4, 2026-10-30: the implemented adapter is kit.d/47-status-words.js and
+  html[data-pm-status-words]; the status bar records the actual display with data-work-words. When the
+  requested Words presentation cannot fit, it renders Numbers while keeping the saved boolean true and
+  complete hover/accessibility words. It retries fit on look/width/count/setting changes, not on every tick,
+  so the bar does not flicker or overwrite the preference.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

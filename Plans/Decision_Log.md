@@ -17303,7 +17303,11 @@ canonical_text: >-
   frames. B7 fixes a cover guard that survives the NieR reboot cover; any different cause is reported with
   evidence. Jared decided these packet rows on 2026-10-30; every unmodified recommendation is confirmed as his
   decision, and the decision IDs remain the amendment keys. X1,
-  L1, S9, O11 and G4 retain his earlier explicit rulings.
+  L1, S9, O11 and G4 retain his earlier explicit rulings. B5, PM7 Step4, 2026-10-30: Unsaved changes means a
+  Home tab has dirty/unsaved buffers in the active Project. Home autosaves layout; a layout change alone never
+  raises this badge. PMW.unsaved/PMW.noteUnsaved and pm7.home.unsaved provide the concept’s buffer-owner
+  observation to PM_WORK.project; waiting > blocked > working > change-modified > idle remains the priority.
+  The accessible words are Unsaved changes, never Unsaved layout.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -17367,7 +17371,10 @@ canonical_text: >-
   the amendment keys. X1, L1, S9, O11 and G4 retain his earlier explicit rulings. RM1: Reduced
   Motion stays stored per Project, app-wide in effect for the active Project and combined with the OS
   preference. Global inventory applicability is not app-global persistence; the adopted ruling introduces
-  no new store or key.
+  no new store or key. L4/L5 and accepted reviews L-1/L-2, PM7 Step4, 2026-10-30: Swing ×1, Think ×1.15 and
+  Hop ×0.78 apply at every drawing tier; busy buttons use 14 px and the chat thinking placeholder 16 px,
+  keeping Working-row 18 px, content-wait tab 14 px, panel 40 px and splash 128 px. This changes no preference
+  or status key.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -18073,7 +18080,15 @@ canonical_text: >-
   Adopted 2026-10-29 for the PM7 build. D11: collapsed System services ends the Processes tab, mirrors
   owner status and links System status. No Stop/Restart/Stop all in this feature may affect those services.
   Authority: Jared decided D11 on 2026-10-28; this is an approved source-thread decision, not an unanswered
-  packet recommendation.
+  packet recommendation. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay popover,
+  reached from the existing status-bar System status item and the Processes System services link.
+  ui.system_status.open/close are typed local visibility actions, with statusbar.system_status,
+  work.open_system_status and system_status.close binding families. Service owner links use the existing
+  ui.settings.route.open action and system_status.service.open_settings binding, selecting
+  code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
+  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value
+  or controlling a service. The popover has close/Escape/outside closure, return focus and the common
+  overlay/Glass plate; unavailable owner navigation says why.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -18358,7 +18373,10 @@ canonical_text: >-
   future OS badge consumes the same needs-you projection. D9 in-app notices and existing OS notification
   behavior remain their owners. Jared decided these packet rows on 2026-10-30; every unmodified recommendation
   is confirmed as his decision, and the decision IDs remain the amendment keys. X1, L1, S9, O11 and G4 retain
-  his earlier explicit rulings.
+  his earlier explicit rulings. G6, PM7 Step4, 2026-10-30: Clear finished is available only for
+  process/scheduled rows in the invoking Processes view; finished agents remain in Agents. PM_WORK uses
+  platform and thread:<id> view identities in the concept without creating a saved setting or deleting an
+  owner record.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -18422,7 +18440,15 @@ canonical_text: >-
   antigravityOnce/tastebook/≤11-character key/Ask Pip/pipRoughDay, Adjust Pip/presets/recorded pip run,
   five Project states and widths, Busy/No asks/Quiet/Many/Stale feed/After restart/Right-now, all three
   tabs/multiple environments/Quit/Stop all/Numbers-Words and busy/quitWithWork. No generic topic-only demo
-  substitutes for that matrix; strings/contrast/OWNED reset and public API availability remain required.
+  substitutes for that matrix; strings/contrast/OWNED reset and public API availability remain required. W8
+  review D-1, lead-accepted PM7 Step4, 2026-10-30: the one named temporary DR-070 exception is 5.6
+  Pro/pm7-port/js/50-demo-bridge.js, inherited from main since 2026-10-22. Its lab bridge presses a hidden
+  .demo-dialog .demo-trigger so PM56_EXT.action/app.js and the recorded-example/reset chains all run. This is
+  tracked DOM-coupling debt, not permission for other synthetic clicks, hidden controls or product dispatch.
+  Retirement requires the chat owner to expose one PM56_APP dispatcher taking (action, dataset, {demo:true})
+  for both real clicks and the bridge; migrate every recorded example/reset chain, prove equivalent behavior,
+  then delete the hidden host/button and close this named exception. PM56_DEMO.trigger/reset alone do not run
+  all chains and are not a substitute.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

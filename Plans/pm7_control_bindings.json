@@ -7986,8 +7986,18 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Stable project_id and workspace_tab_id; Ctrl+Shift+P opens; Ctrl/Cmd+Enter picks a new workspace tab (B1/B2/B6).",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "payload": "Stable project_id and workspace_tab_id; Ctrl+Shift+P opens; Ctrl/Cmd+Enter picks a new workspace tab (B1/B2/B6). B5: active-Project dirty Home buffers say Unsaved changes; Home autosaves layout, so layout alone never raises the badge.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/base/script/pm6-js-panels.js",
+          "tokens": [
+            "ui.project_switcher.open",
+            "window.PM_PROJECT_BOX"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "shell.project.close",
@@ -8000,7 +8010,17 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable project_id and workspace_tab_id; Ctrl+Shift+P opens; Ctrl/Cmd+Enter picks a new workspace tab (B1/B2/B6).",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/base/script/pm6-js-panels.js",
+          "tokens": [
+            "ui.project_switcher.close",
+            "window.PM_PROJECT_BOX"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "shell.project.pick",
@@ -8015,7 +8035,17 @@
       ],
       "setting_ids": [],
       "payload": "Stable project_id and workspace_tab_id; Ctrl+Shift+P opens; Ctrl/Cmd+Enter picks a new workspace tab (B1/B2/B6).",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/base/script/pm6-js-panels.js",
+          "tokens": [
+            "cmd.project.switch_active_tab",
+            "window.PM_PROJECT_BOX"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "shell.project.open_new_workspace_tab",
@@ -8030,7 +8060,17 @@
       ],
       "setting_ids": [],
       "payload": "Stable project_id and workspace_tab_id; Ctrl+Shift+P opens; Ctrl/Cmd+Enter picks a new workspace tab (B1/B2/B6).",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/base/script/pm6-js-panels.js",
+          "tokens": [
+            "cmd.project.open_in_new_workspace_tab",
+            "window.PM_PROJECT_BOX"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "shell.project.shortcut",
@@ -8043,7 +8083,17 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable project_id and workspace_tab_id; Ctrl+Shift+P opens; Ctrl/Cmd+Enter picks a new workspace tab (B1/B2/B6).",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/base/script/pm6-js-panels.js",
+          "tokens": [
+            "ui.project_switcher.open",
+            "window.PM_PROJECT_BOX"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "shell.project.all",
@@ -8056,7 +8106,17 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Existing Projects page route; tab_id projects. No work owner mutation.",
-      "no_production_reason": "Existing Projects page focus (route tab_id projects); typed local navigation, no side-panel cmd.panel.switch and no runtime mutation."
+      "no_production_reason": "Existing Projects page focus (route tab_id projects); typed local navigation, no side-panel cmd.panel.switch and no runtime mutation.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/base/script/pm6-js-panels.js",
+          "tokens": [
+            "ui.project_switcher.all_projects",
+            "window.PM_PROJECT_BOX"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "statusbar.agents",
@@ -8071,7 +8131,16 @@
       ],
       "setting_ids": [],
       "payload": "tab=agents; same view toggles on second press, no CPU/RAM bar item.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-status-action=\"agents\""
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "statusbar.processes",
@@ -8086,7 +8155,16 @@
       ],
       "setting_ids": [],
       "payload": "tab=processes; same view toggles on second press, no CPU/RAM bar item.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-status-action=\"processes\""
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.panel.agents",
@@ -8099,7 +8177,17 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "tab=agents; Resources sampling only while this selected tab is visible.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-work-tab",
+            "'agents'"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.panel.processes",
@@ -8112,7 +8200,17 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "tab=processes; Resources sampling only while this selected tab is visible.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-work-tab",
+            "'processes'"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.panel.resources",
@@ -8125,7 +8223,17 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "tab=resources; Resources sampling only while this selected tab is visible.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-work-tab",
+            "'resources'"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.panel.close",
@@ -8138,7 +8246,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-work-p=\"close\""
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.panel.filter",
@@ -8151,7 +8268,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-work-procs"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.panel.sort",
@@ -8164,7 +8290,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-work-sort"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.panel.expand",
@@ -8177,7 +8312,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-work-x"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.panel.select",
@@ -8190,7 +8334,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-work-sel"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.panel.pop_out",
@@ -8205,7 +8358,16 @@
       ],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-work-p=\"float\""
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.stop",
@@ -8220,7 +8382,16 @@
       ],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "w.stop({ scope: 'item'"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.stop_all.thread",
@@ -8235,7 +8406,17 @@
       ],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "function confirmThread(",
+            "w.stop({ scope: 'thread'"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.stop_all.platform",
@@ -8250,7 +8431,17 @@
       ],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "function confirmPlatform(",
+            "w.stop({ scope: 'platform'"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.restart",
@@ -8265,7 +8456,16 @@
       ],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "w.restart(id)"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.send_input",
@@ -8280,7 +8480,16 @@
       ],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "w.sendInput(id, r)"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.completion_delivery",
@@ -8295,11 +8504,20 @@
       ],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "w.setCompletionDelivery(id, v)"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.clear_finished",
-      "surface": "Work panel / thread Processes > clear_finished",
+      "surface": "Processes tab / thread Processes > Clear finished",
       "owner_ref": "Plans/FinalGUISpec.md#F3-664",
       "disposition": "command",
       "action_ids": [
@@ -8309,8 +8527,18 @@
         "pm7.work_clear_finished"
       ],
       "setting_ids": [],
-      "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "payload": "Invoking view identity only (concept platform or thread:<id>); hide finished process/scheduled rows in this view, never finished agents or owner records.",
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "W().clearFinished(VIEW)",
+            "ui.tab === 'processes'"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.open_terminal",
@@ -8325,7 +8553,16 @@
       ],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "function openTerminal("
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.answer_terminal",
@@ -8340,7 +8577,16 @@
       ],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "function openTerminal("
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.open_owner",
@@ -8355,7 +8601,16 @@
       ],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "function showOwner("
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.open_system_status",
@@ -8363,12 +8618,22 @@
       "owner_ref": "Plans/FinalGUISpec.md#F3-664",
       "disposition": "local",
       "action_ids": [
-        "ui.work_panel.select"
+        "ui.system_status.open"
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Reveal existing System status route in shell, no service action.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "payload": "D11 System services link opens the same read-only System status popover as statusbar.system_status; explicit source scope/view/return focus, no service control.",
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "work.open_system_status",
+            "ui.system_status.open"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "chat.activity.processes",
@@ -8383,7 +8648,16 @@
       ],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-bar.js",
+          "tokens": [
+            "'processes'"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "chat.activity.processes.stop_all",
@@ -8398,7 +8672,16 @@
       ],
       "setting_ids": [],
       "payload": "scope=thread and current thread identity; reviewed current descendant process targets, no system services.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.js",
+          "tokens": [
+            "proc-stop-all"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.quit.open",
@@ -8411,7 +8694,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "function quit("
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.quit.keep_running",
@@ -8424,7 +8716,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "'keep_running'"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.quit.stop_selected",
@@ -8437,7 +8738,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "'stop_selected'"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.quit.select_target",
@@ -8450,7 +8760,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "input[type=checkbox]"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.quit.confirm",
@@ -8465,7 +8784,16 @@
       ],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-x=\"go\""
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "work.quit.cancel",
@@ -8478,7 +8806,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-x=\"cancel\""
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "pip.editor.parts",
@@ -8497,7 +8834,16 @@
         "general.visual.pip-parts"
       ],
       "payload": "One pip-parts row patch; preset is a value of that row, never a separate setting.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/settings/kit.d/29-pip-editor.js",
+          "tokens": [
+            "data-pipe-part"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "pip.editor.preset",
@@ -8516,7 +8862,16 @@
         "general.visual.pip-parts"
       ],
       "payload": "One pip-parts row patch; preset is a value of that row, never a separate setting.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/settings/kit.d/29-pip-editor.js",
+          "tokens": [
+            "data-pipe-preset"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "pip.editor.open",
@@ -8529,7 +8884,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/settings/kit.d/29-pip-editor.js",
+          "tokens": [
+            "window.PM_PIP_EDITOR"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "pip.editor.close",
@@ -8542,7 +8906,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/settings/kit.d/29-pip-editor.js",
+          "tokens": [
+            "ui.settings.pip_editor.close"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "pip.editor.replay",
@@ -8555,7 +8928,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/settings/kit.d/29-pip-editor.js",
+          "tokens": [
+            "ui.settings.pip_editor.replay"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "pip.entry.settings",
@@ -8568,7 +8950,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/settings/kit.d/29-pip-editor.js",
+          "tokens": [
+            "o55-pip-editor"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "pip.entry.wand",
@@ -8581,7 +8972,17 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/chat-assistant-concepts/5.6 Pro/pip.js",
+          "tokens": [
+            "pip-settings-open",
+            "PM_PIP_EDITOR"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "pip.entry.titlebar",
@@ -8594,7 +8995,16 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "Stable target/view identity and expected generation; CS-106.",
-      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close."
+      "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/settings/kit.d/23-nier-theme-menu.js",
+          "tokens": [
+            "PM_PIP_EDITOR"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "statusbar.words",
@@ -8613,7 +9023,17 @@
         "general.interaction.status-bar-words"
       ],
       "payload": "Set boolean status-bar-words; Numbers false by default.",
-      "no_production_reason": ""
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/settings/kit.d/47-status-words.js",
+          "tokens": [
+            "general.interaction.status-bar-words",
+            "data-pm-status-words"
+          ],
+          "concept_only": true
+        }
+      ]
     },
     {
       "control_id": "chat.activity.pin",
@@ -8626,7 +9046,88 @@
       "production_entries": [],
       "setting_ids": [],
       "payload": "G1 B, Jared 2026-10-30: scope_kind/project_id, selected thread_id, view_id, boolean pinned (default false), return_focus_id. Pin changes lifetime only; one full-size view.",
-      "no_production_reason": "Typed session view action; no durable layout/Settings/runtime write, event or receipt. Pinned switch follows new-thread data and cancels old subscriptions/actions; unpinned switch closes detail."
+      "no_production_reason": "Typed session view action; no durable layout/Settings/runtime write, event or receipt. Pinned switch follows new-thread data and cancels old subscriptions/actions; unpinned switch closes detail.",
+      "concept_sources": [
+        {
+          "path": "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
+          "tokens": [
+            "ui.activity_detail.pin",
+            "chat.activity.pin",
+            "state.activity.pinned"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "statusbar.system_status",
+      "surface": "Status bar > System status",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.system_status.open"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Application/project source scope, view and return focus; open the read-only services popover, never a service action.",
+      "no_production_reason": "Typed local presentation/navigation only; no Settings/runtime write, service control, domain event or receipt. Native proof remains partial.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/base/script/pm7-t23-shell-adjustments.js",
+          "tokens": [
+            "statusbar.system_status",
+            "ui.system_status.open"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "system_status.close",
+      "surface": "System status popover > Close / Escape / outside",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.system_status.close"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Application/project source scope, view and return focus; close and release the overlay, no write.",
+      "no_production_reason": "Typed local presentation/navigation only; no Settings/runtime write, service control, domain event or receipt. Native proof remains partial.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "data-sys-x",
+            "ui.system_status.close"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "system_status.service.open_settings",
+      "surface": "System status popover > Service > Open Settings",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-664",
+      "disposition": "local",
+      "action_ids": [
+        "ui.settings.route.open"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "setting_id is code.editing.lsp-server-catalog, system.mcp.server-list or web.index.enable; reveal that existing Settings owner row without editing it. Preserve scope/view/focus.",
+      "no_production_reason": "Typed local presentation/navigation only; no Settings/runtime write, service control, domain event or receipt. Native proof remains partial.",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/48-work.js",
+          "tokens": [
+            "system_status.service.open_settings",
+            "SERVICE_SETTING",
+            "revealSetting(id)"
+          ],
+          "concept_only": true
+        }
+      ]
     }
   ],
   "held_controls": []

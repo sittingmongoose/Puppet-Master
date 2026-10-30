@@ -444,6 +444,123 @@
         "return_focus_id": "chat.activity.processes"
       },
       "valid": false
+    },
+    {
+      "name": "system_status_open_without_active_project",
+      "definition": "local_action_request",
+      "instance": {
+        "scope_kind": "application",
+        "project_id": null,
+        "view_id": "system-status",
+        "return_focus_id": "statusbar.system_status",
+        "action_id": "ui.system_status.open"
+      },
+      "valid": true
+    },
+    {
+      "name": "system_status_close_is_local",
+      "definition": "local_action_request",
+      "instance": {
+        "scope_kind": "application",
+        "project_id": null,
+        "view_id": "system-status",
+        "return_focus_id": "statusbar.system_status",
+        "action_id": "ui.system_status.close"
+      },
+      "valid": true
+    },
+    {
+      "name": "system_status_cannot_invent_project_scope",
+      "definition": "local_action_request",
+      "instance": {
+        "scope_kind": "application",
+        "project_id": "invented",
+        "view_id": "system-status",
+        "return_focus_id": "statusbar.system_status",
+        "action_id": "ui.system_status.open"
+      },
+      "valid": false
+    },
+    {
+      "name": "system_status_cannot_smuggle_service_stop",
+      "definition": "local_action_request",
+      "instance": {
+        "scope_kind": "application",
+        "project_id": null,
+        "view_id": "system-status",
+        "return_focus_id": "statusbar.system_status",
+        "action_id": "ui.system_status.open",
+        "value": {
+          "operation": "stop"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "system_status_reveals_0",
+      "definition": "system_status_settings_route_request",
+      "instance": {
+        "scope_kind": "application",
+        "project_id": null,
+        "view_id": "system-status",
+        "return_focus_id": "statusbar.system_status",
+        "action_id": "ui.settings.route.open",
+        "setting_id": "code.editing.lsp-server-catalog"
+      },
+      "valid": true
+    },
+    {
+      "name": "system_status_reveals_1",
+      "definition": "system_status_settings_route_request",
+      "instance": {
+        "scope_kind": "application",
+        "project_id": null,
+        "view_id": "system-status",
+        "return_focus_id": "statusbar.system_status",
+        "action_id": "ui.settings.route.open",
+        "setting_id": "system.mcp.server-list"
+      },
+      "valid": true
+    },
+    {
+      "name": "system_status_reveals_2",
+      "definition": "system_status_settings_route_request",
+      "instance": {
+        "scope_kind": "application",
+        "project_id": null,
+        "view_id": "system-status",
+        "return_focus_id": "statusbar.system_status",
+        "action_id": "ui.settings.route.open",
+        "setting_id": "web.index.enable"
+      },
+      "valid": true
+    },
+    {
+      "name": "system_status_unknown_setting_refused",
+      "definition": "system_status_settings_route_request",
+      "instance": {
+        "scope_kind": "application",
+        "project_id": null,
+        "view_id": "system-status",
+        "return_focus_id": "statusbar.system_status",
+        "action_id": "ui.settings.route.open",
+        "setting_id": "not.registered"
+      },
+      "valid": false
+    },
+    {
+      "name": "system_status_owner_link_cannot_write_value",
+      "definition": "system_status_settings_route_request",
+      "instance": {
+        "scope_kind": "application",
+        "project_id": null,
+        "view_id": "system-status",
+        "return_focus_id": "statusbar.system_status",
+        "action_id": "ui.settings.route.open",
+        "setting_id": "code.editing.lsp-server-catalog",
+        "value": true
+      },
+      "valid": false
     }
   ],
   "semantic_cases": [
@@ -565,12 +682,12 @@
     "status_keys": 22,
     "pip_parts": 25,
     "default_parts": 24,
-    "pm7_bindings": 465,
-    "touch_rows": 708,
+    "pm7_bindings": 468,
+    "touch_rows": 710,
     "touch_profiles": 137,
     "production_wiring_entries": 1269,
     "new_production_rows": 11,
-    "new_bindings": 46
+    "new_bindings": 49
   },
   "activity_detail_thread_switch_cases": [
     {
@@ -675,5 +792,110 @@
         "row_ids": []
       }
     }
-  ]
+  ],
+  "project_badge_cases": [
+    {
+      "name": "dirty_home_buffer_is_unsaved_changes",
+      "project_id": "p-1",
+      "status_keys": [],
+      "home_tabs": [
+        {
+          "project_id": "p-1",
+          "dirty": true
+        }
+      ],
+      "layout_changed": false,
+      "expected": {
+        "key": "change-modified",
+        "word": "Unsaved changes"
+      }
+    },
+    {
+      "name": "autosaved_layout_does_not_raise_badge",
+      "project_id": "p-1",
+      "status_keys": [],
+      "home_tabs": [
+        {
+          "project_id": "p-1",
+          "dirty": false
+        }
+      ],
+      "layout_changed": true,
+      "expected": {
+        "key": "idle",
+        "word": ""
+      }
+    },
+    {
+      "name": "another_projects_dirty_buffer_does_not_raise_badge",
+      "project_id": "p-1",
+      "status_keys": [],
+      "home_tabs": [
+        {
+          "project_id": "p-2",
+          "dirty": true
+        }
+      ],
+      "layout_changed": false,
+      "expected": {
+        "key": "idle",
+        "word": ""
+      }
+    },
+    {
+      "name": "needs_you_outranks_unsaved",
+      "project_id": "p-1",
+      "status_keys": [
+        "working",
+        "blocked",
+        "waiting"
+      ],
+      "home_tabs": [
+        {
+          "project_id": "p-1",
+          "dirty": true
+        }
+      ],
+      "layout_changed": false,
+      "expected": {
+        "key": "waiting",
+        "word": "Needs you"
+      }
+    },
+    {
+      "name": "blocked_outranks_working_and_unsaved",
+      "project_id": "p-1",
+      "status_keys": [
+        "working",
+        "blocked"
+      ],
+      "home_tabs": [
+        {
+          "project_id": "p-1",
+          "dirty": true
+        }
+      ],
+      "layout_changed": false,
+      "expected": {
+        "key": "blocked",
+        "word": "Blocked"
+      }
+    }
+  ],
+  "loader_contract": {
+    "ratios": {
+      "swing": 1,
+      "think": 1.15,
+      "hop": 0.78
+    },
+    "placements_px": {
+      "busy_button": 14,
+      "thinking_placeholder": 16,
+      "working_row": 18,
+      "content_wait_tab": 14,
+      "panel": 40,
+      "splash": 128
+    },
+    "family_token_owner": "PMLogo.MOTION"
+  }
 }
