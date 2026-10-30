@@ -2120,6 +2120,14 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
      attached, browser fixtures and shadows are never treated as owner state. */
   var CONCEPT_FIXTURE_MODE=true;
   var PREFIX='pm7:settings:tome-tabs:v1:';
+  /* The Project store. A page with no storage at all (a sandboxed preview: an opaque origin, where touching localStorage
+     throws; T3's file preview is one) keeps each Project's Settings in memory for the visit, as Home's and onboarding's
+     stores do (demo d56f73f012). A page with storage writes through to it, so a write that fails there still throws and
+     is refused or rolled back as before. window.PM7_SETTINGS_STORE: the same store for the kit's own records. */
+  var projectStore=window.PM7_SETTINGS_STORE||(window.PM7_SETTINGS_STORE=(function(){
+    try{var ls=window.localStorage;ls.getItem(PREFIX);return{persistent:true,getItem:function(k){return ls.getItem(k);},setItem:function(k,v){ls.setItem(k,v);},removeItem:function(k){ls.removeItem(k);},key:function(i){return ls.key(i);},get length(){return ls.length;}};}
+    catch(_e){var m=new Map();return{persistent:false,getItem:function(k){k=String(k);return m.has(k)?m.get(k):null;},setItem:function(k,v){m.set(String(k),String(v));},removeItem:function(k){m.delete(String(k));},key:function(i){var a=Array.from(m.keys());return i>=0&&i<a.length?a[i]:null;},get length(){return m.size;}};}
+  })());
   var bridgeDepth=0;
   var lastProject='';
   var lastChatLayout='';
@@ -2220,24 +2228,24 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
       }else if(CONCEPT_FIXTURE_MODE){
         var fixture=window.PM_SETTINGS_PROJECT_SNAPSHOTS&&window.PM_SETTINGS_PROJECT_SNAPSHOTS[p.id];
         if(fixture&&fixture.settings){projection=fixture;source='supplied_concept_fixture';}
-        if(!projection){projection=JSON.parse(localStorage.getItem(k)||'{}');source=projection&&projection.settings?'local_concept_fixture':'concept_default_fixture';}
+        if(!projection){projection=JSON.parse(projectStore.getItem(k)||'{}');source=projection&&projection.settings?'local_concept_fixture':'concept_default_fixture';}
       }
       var saved=merge(base,scrubCredentialSettings(projection||{}));saved.settingsProjectionSource=source;saved.settingsProjectionReadOnly=false;credentialSettingIds.forEach(function(id){delete saved.settings[id];});
       if(projection&&projection.settings&&projection.settings['general.visual.theme']&&!Object.prototype.hasOwnProperty.call(projection.settings,'general.visual.theme-mode')){var legacyMode=themeSlug(projection.settings['general.visual.theme']).split('-')[1];if(legacyMode==='light'||legacyMode==='dark')saved.settings['general.visual.theme-mode']=themeLabel(legacyMode);}
       /* Chat Layout is retired (D3, D32): a stored value is ignored and cleared on first read */
       var retiredChat='general.visual.chat-layout-mode';
-      if(projection&&projection.settings&&Object.prototype.hasOwnProperty.call(projection.settings,retiredChat)){delete projection.settings[retiredChat];if(projection.changed)delete projection.changed[retiredChat];if(Object.prototype.hasOwnProperty.call(base.settings,retiredChat))saved.settings[retiredChat]=base.settings[retiredChat];else delete saved.settings[retiredChat];if(saved.changed)delete saved.changed[retiredChat];if(source==='local_concept_fixture')try{localStorage.setItem(k,JSON.stringify(scrubCredentialSettings(projection)));}catch(_e){}}
+      if(projection&&projection.settings&&Object.prototype.hasOwnProperty.call(projection.settings,retiredChat)){delete projection.settings[retiredChat];if(projection.changed)delete projection.changed[retiredChat];if(Object.prototype.hasOwnProperty.call(base.settings,retiredChat))saved.settings[retiredChat]=base.settings[retiredChat];else delete saved.settings[retiredChat];if(saved.changed)delete saved.changed[retiredChat];if(source==='local_concept_fixture')try{projectStore.setItem(k,JSON.stringify(scrubCredentialSettings(projection)));}catch(_e){}}
       var priorAlpha=saved.settings['general.visual.glass-transparency'],alpha=clampGlassAlpha(saved.settings,priorAlpha);saved.settings['general.visual.glass-transparency']=alpha;
-      if(source==='local_concept_fixture'&&projection&&projection.settings&&Number(priorAlpha)!==alpha){var repaired=scrubCredentialSettings(projection);repaired.settings['general.visual.glass-transparency']=alpha;try{localStorage.setItem(k,JSON.stringify(repaired));}catch(_e){}}
+      if(source==='local_concept_fixture'&&projection&&projection.settings&&Number(priorAlpha)!==alpha){var repaired=scrubCredentialSettings(projection);repaired.settings['general.visual.glass-transparency']=alpha;try{projectStore.setItem(k,JSON.stringify(repaired));}catch(_e){}}
       return saved;
     }catch(_e){base.settingsProjectionSource=window.PM_SETTINGS_REGISTRY?'owner_registry_read_failed':'concept_default_fixture';base.settingsProjectionReadOnly=!!window.PM_SETTINGS_REGISTRY;return base;}
   }
   function save(snapshot){
     var k=key(),safe=scrubCredentialSettings(snapshot);safe.settings['general.visual.glass-transparency']=clampGlassAlpha(safe.settings,safe.settings['general.visual.glass-transparency']);var owned={schema_version:'pm7.settings.project_projection.v1',settings:safe.settings,changed:clone(snapshot&&snapshot.changed||{}),domain:snapshot&&snapshot.domain,workspace:snapshot&&snapshot.workspace,activeSection:clone(snapshot&&snapshot.activeSection||{}),transferCategories:clone(snapshot&&snapshot.transferCategories||[]),settingsTransferHistory:clone(snapshot&&snapshot.settingsTransferHistory||[]),settingsTransferRollbacks:clone(snapshot&&snapshot.settingsTransferRollbacks||{}),settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null)};var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}
-    if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{localStorage.setItem(k,JSON.stringify(owned));}catch(_e){}
+    if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{projectStore.setItem(k,JSON.stringify(owned));}catch(_e){}
     if(!bridgeDepth)applyPaint(snapshot);
   }
-  function reset(){var k=key();if(k)try{localStorage.removeItem(k);}catch(_e){}}
+  function reset(){var k=key();if(k)try{projectStore.removeItem(k);}catch(_e){}}
   function projectSnapshot(projectId){
     var owner=window.PM_SETTINGS_REGISTRY,registry=owner&&owner.getProjectSnapshot;
     if(owner){
@@ -2247,7 +2255,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     if(!CONCEPT_FIXTURE_MODE)return null;
     var fixture=window.PM_SETTINGS_PROJECT_SNAPSHOTS&&window.PM_SETTINGS_PROJECT_SNAPSHOTS[projectId];
     if(fixture&&fixture.settings)return scrubCredentialSettings(fixture);
-    try{var saved=JSON.parse(localStorage.getItem(PREFIX+encodeURIComponent(projectId))||'null');return saved&&saved.settings?scrubCredentialSettings(saved):null;}catch(_e){return null;}
+    try{var saved=JSON.parse(projectStore.getItem(PREFIX+encodeURIComponent(projectId))||'null');return saved&&saved.settings?scrubCredentialSettings(saved):null;}catch(_e){return null;}
   }
   function commandId(prefix){commandSeq+=1;return prefix+'-'+Date.now().toString(36)+'-'+commandSeq.toString(36);}
   function dispatch(canonicalCommandId,operationFields,continuation){
@@ -2842,7 +2850,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     const add=(id,label)=>{if(typeof id!=='string'||!id||id===current||seen.has(id))return;const snapshot=window.PM7_SETTINGS_TOME.projectSnapshot(id);if(!snapshot?.settings)return;seen.add(id);rows.push({value:id,label:String(label||id)});};
     for(const row of Array.isArray(window.PM_SETTINGS_PROJECT_CATALOG)?window.PM_SETTINGS_PROJECT_CATALOG:[])if(row)add(row.id,row.label);
     for(const id of Object.keys(window.PM_SETTINGS_PROJECT_SNAPSHOTS||{}))add(id,window.PM_SETTINGS_PROJECT_SNAPSHOTS[id]?.label||id);
-    try{for(let index=0;index<localStorage.length;index++){const key=localStorage.key(index)||'';if(!key.startsWith('pm7:settings:tome-tabs:v1:'))continue;const id=decodeURIComponent(key.slice('pm7:settings:tome-tabs:v1:'.length));add(id,id);}}catch(_e){}
+    try{const store=window.PM7_SETTINGS_STORE||localStorage;for(let index=0;index<store.length;index++){const key=store.key(index)||'';if(!key.startsWith('pm7:settings:tome-tabs:v1:'))continue;const id=decodeURIComponent(key.slice('pm7:settings:tome-tabs:v1:'.length));add(id,id);}}catch(_e){}
     return rows.sort((a,b)=>a.label.localeCompare(b.label));
   }
   function settingsTransferProvenanceHtml(){
