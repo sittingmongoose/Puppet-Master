@@ -66028,20 +66028,20 @@ html[data-o55-nier="on"] div.pm56-host[data-theme$="-dark"]{ --pip-paper: var(--
 .pm56-host .pmx-pip-host .pmx-pip-rig{ transform-box: view-box; transform-origin: 32px 8px; }
 .pm56-host .pmx-pip-host .pmx-pip-card{ transform-box: view-box; transform-origin: 54px 21px; }
 .pm56-host .pmx-pip-host .pmx-pip-sign{ color: var(--text); }
-.pm56-host .pmx-pip-host .pmx-pip-rig{ animation-name: pmx-pip-sway; animation-duration: 4.4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate; }
-.pm56-host .pmx-pip-host .pmx-pip-card{ animation-name: pmx-pip-card; animation-duration: 4.4s; animation-timing-function: ease-in-out; animation-delay: -.7s; animation-iteration-count: infinite; animation-direction: alternate; }
+.pm56-host .pmx-pip-host-svg[data-sway="1"] .pmx-pip-rig{ animation-name: pmx-pip-sway; animation-duration: 4.4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate; }
+.pm56-host .pmx-pip-host-svg[data-sway="1"] .pmx-pip-card{ animation-name: pmx-pip-card; animation-duration: 4.4s; animation-timing-function: ease-in-out; animation-delay: -.7s; animation-iteration-count: infinite; animation-direction: alternate; }
 .pm56-host .pmx-pip-host-svg[data-fam="retro"] :is(.pmx-pip-rig),
 .pm56-host .pmx-pip-host-svg[data-fam="retro"] :is(.pmx-pip-card){ animation-timing-function: steps(4, end); }
 .pm56-host .pmx-pip-host-svg[data-fam="nier"] :is(.pmx-pip-rig),
 .pm56-host .pmx-pip-host-svg[data-fam="nier"] :is(.pmx-pip-card){ animation: none; }
 @keyframes pmx-pip-sway{ from { transform: rotate(-1.8deg); } to { transform: rotate(1.8deg); } }
 @keyframes pmx-pip-card{ from { transform: rotate(2.4deg); } to { transform: rotate(-2.4deg); } }
-@media (prefers-reduced-motion: reduce){.pm56-host .pmx-pip-host :is(.pmx-pip-rig),
-.pm56-host .pmx-pip-host :is(.pmx-pip-card){ animation: none; }}
-html[data-motion="reduced"] .pm56-host .pmx-pip-host :is(.pmx-pip-rig),
-html[data-motion="reduced"] .pm56-host .pmx-pip-host :is(.pmx-pip-card),
-div.pm56-host.pm56-reduced .pmx-pip-host :is(.pmx-pip-rig),
-div.pm56-host.pm56-reduced .pmx-pip-host :is(.pmx-pip-card){ animation: none; }
+@media (prefers-reduced-motion: reduce){.pm56-host .pmx-pip-host .pmx-pip-host-svg :is(.pmx-pip-rig),
+.pm56-host .pmx-pip-host .pmx-pip-host-svg :is(.pmx-pip-card){ animation: none; }}
+html[data-motion="reduced"] .pm56-host .pmx-pip-host .pmx-pip-host-svg :is(.pmx-pip-rig),
+html[data-motion="reduced"] .pm56-host .pmx-pip-host .pmx-pip-host-svg :is(.pmx-pip-card),
+div.pm56-host.pm56-reduced .pmx-pip-host .pmx-pip-host-svg :is(.pmx-pip-rig),
+div.pm56-host.pm56-reduced .pmx-pip-host .pmx-pip-host-svg :is(.pmx-pip-card){ animation: none; }
 .pm56-host .pmx-pip-host[data-pip-run="off"] :is(.pmx-pip-rig),
 .pm56-host .pmx-pip-host[data-pip-run="off"] :is(.pmx-pip-card){ animation-play-state: paused; }
 .pm56-host .pmx-pip-lift-copy{ position: fixed; z-index: 2147483000; pointer-events: none; margin: 0; }
@@ -124717,6 +124717,7 @@ dispatchAction = function (action, el) {
       + `<span class="pipe-chip-name">${esc(p.label)}</span><span class="pipe-chip-help">${esc(p.help)}</span>`
       + `<span class="pipe-chip-foot"><span>${esc(say('size', 'Size {n}', { n: p.size }))}</span><span class="pipe-chip-state">${esc(say('off', 'Off'))}</span></span></button>`;
   }
+  let bodyN = 0;
   function body() {
     const R = REG(); if (!R) return '';
     const groups = R.GROUPS.map(g => {
@@ -124727,12 +124728,14 @@ dispatchAction = function (action, el) {
         + `<div class="pipe-chips">${ps.map(chip).join('')}</div></section>`;
     }).join('');
     const presets = (R.PRESET_INFO || []).map(p => `<button type="button" class="pipe-preset" aria-pressed="false" data-pipe-preset="${esc(p.id)}"><span>${esc(say('preset.' + p.id + '.label', p.label))}</span><small>${esc(say('preset.' + p.id + '.help', p.help))}</small></button>`).join('');
+    /* the stage is a labelled group, so each seat's caption (its role and state) reads; Play names why it can't run */
+    const why = 'pipe-play-why-' + (++bodyN);
     return '<div class="pipe">'
-      + `<div class="pipe-top"><div class="pipe-stage pm56-host" data-theme="${esc(chatTheme())}" aria-label="${esc(say('stageLabel', 'Preview: a small team in the chat'))}" role="img">${team(-1)}</div>`
+      + `<div class="pipe-top"><div class="pipe-stage pm56-host" data-theme="${esc(chatTheme())}" aria-label="${esc(say('stageLabel', 'Preview: a small team in the chat'))}" role="group">${team(-1)}</div>`
       + '<div class="pipe-side">'
       + `<div class="pipe-meter"><div class="pipe-meter-head"><span>${esc(say('meterLabel', 'Pip parts'))}</span><b class="pipe-meter-n"></b></div><div class="pipe-meter-cells">${R.PARTS.map(() => '<i></i>').join('')}</div></div>`
       + `<div class="pipe-presets" role="group" aria-label="${esc(say('presets', 'Presets'))}">${presets}</div>`
-      + `<button type="button" class="btn small pipe-play" data-pipe-replay data-pip-local="ui.settings.pip_editor.replay"><span>${esc(say('play', 'Play: the team works'))}</span></button><p class="pipe-play-why"></p>`
+      + `<button type="button" class="btn small pipe-play" data-pipe-replay data-pip-local="ui.settings.pip_editor.replay" aria-describedby="${why}"><span>${esc(say('play', 'Play: the team works'))}</span></button><p class="pipe-play-why" id="${why}"></p>`
       + '</div></div>'
       + `<p class="pipe-reach">${esc(say('reach', 'Parts change Pip in the chat and in setup. Pip’s mark, the app icon, the tray and loading signs stay as they are, and every helper is still a Pip.'))}</p>`
       + groups + '</div>';
@@ -298198,7 +298201,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       st.leaving = true;
       var copy = st.el.cloneNode(true), cheered = st.cheerAt && Date.now() - st.cheerAt < 4000;
       unmount(st);
-      if (!cheered || !moves('cheers')) return;
+      if (!cheered || !moves('cheers') || !moves('sway-and-physics')) return;
       /* the exit copy takes the sheet a moment later (a microtask); look again on the next frame */
       W.requestAnimationFrame(function () { liftOff(st, copy); });
     });
@@ -298235,7 +298238,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   var CHIRP = { happy: 'cheer', wonder: 'alert', watch: 'think', oops: 'wake' };
   function chirp(mood) {
     if (!wants('app-voice') || !CHIRP[mood]) return;
-    var h = D.documentElement, nierVoice = h.getAttribute('data-o55-nier') === 'on' && /(^|\s)(Pod voice|Pod companion)(\s|$)/.test(h.getAttribute('data-o55-nier-parts') || '');
+    /* html[data-o55-nier-parts] holds NieR's part ids: voice (Pod voice) and pod (Pod companion) */
+    var h = D.documentElement, nierParts = (h.getAttribute('data-o55-nier-parts') || '').split(/\s+/);
+    var nierVoice = h.getAttribute('data-o55-nier') === 'on' && (nierParts.indexOf('voice') >= 0 || nierParts.indexOf('pod') >= 0);
     if (nierVoice) return;
     var P = W.O55 && W.O55.sound && W.O55.sound.pip;
     try { if (P && P.vocal) P.vocal(CHIRP[mood], { where: 'app' }); } catch (e) { /* sound is optional */ }
@@ -298298,18 +298303,25 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     setFace(st, mood, instant);
     if (hold) st.holdT = setTimeout(function () { if (!st.typing) setFace(st, st.base); }, Math.round(hold * speed()));
   }
+  /* the hop and the lift-off are travel, so they need Sway and physics as well as Cheers: under Still (no Motion part)
+     or Reduced Motion a cheer is the happy face alone, settled where Pip hangs (SSYS-056 / assistant-chat-design: Still
+     snaps to the settled state without entrance, sway, flicker or lift-off travel) */
   function hop(st) {
-    if (!moves('cheers')) return;
+    if (!moves('cheers') || !moves('sway-and-physics')) return;
     var fam = family();
     anim(st.el, [{ transform: 'none' }, { transform: 'translateY(-6px)', offset: .34 }, { transform: 'translateY(1px)', offset: .64 }, { transform: 'none' }],
       { duration: 600, easing: fam === 'retro' ? 'steps(6, end)' : fam === 'nier' ? 'steps(4, end)' : 'cubic-bezier(.3, 0, .3, 1)' });
   }
 
-  /* gaze: the eyes lean toward the last place the pointer was, and stay there */
+  /* gaze: the eyes lean toward the last place the pointer was, and stay there. With Sway and physics on (and no Reduced
+     Motion) they follow the pointer; otherwise (Still) the face doesn't travel: each new face settles, in one step,
+     looking where the pointer last was. Retro's Pip is the kit's one 24-cell sprite with its eyes cut out of the head,
+     so it has no face of its own to lean and doesn't gaze. */
   var lastPt = null, gazeQueued = false;
   var NO_GAZE = { dots: 1, working: 1, sleep: 1, happy: 1 };
   function applyGaze(st, now) {
     if (!st.face || !st.face.isConnected) return;
+    if (!now && !moves('sway-and-physics')) return;
     var x = 0, y = 0;
     if (lastPt && wants('gaze') && !NO_GAZE[st.mood] && family() !== 'retro') {
       var r = st.el.getBoundingClientRect(); if (!r.width) return;
@@ -298441,7 +298453,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   function syncThinking() {
     var slots = D.querySelectorAll('.tx-pending-pip');
     if (!slots.length) return;
-    var orbit = !!D.querySelector('.orbit-core-face.is-live');
+    /* the Orbit's Pip is drawn for a running run (its badge is live), whether or not its thinking dots move */
+    var orbit = !!D.querySelector('.orbit-core-face > .orbit-core-icon.is-live');
     slots.forEach(function (s) {
       if (!s.firstElementChild) { var l = loaderHtml(); if (!l) return; s.innerHTML = l; }
       var ld = s.firstElementChild;
