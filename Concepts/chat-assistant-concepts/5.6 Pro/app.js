@@ -156,7 +156,7 @@
     threads:clone(D.threads), editorTabs:['plan-query'], activeEditor:'plan-query',
     historyMode:'pinned', historySearch:'', historyWidth:224, editorWidth:54, activityWidth:280,
     historySections:{pinned:true, recent:true, archived:false},
-    activity:{open:false,domain:'goal',scope:'all',filterVisible:true,expanded:['goal','todo','subagents','crew','changes','artifacts']},
+    activity:{open:false,pinned:false,domain:'goal',scope:'all',filterVisible:true,expanded:['goal','todo','subagents','crew','changes','artifacts']},
     context:{
       compact:false,details:false,compacted:false,drawerView:'curated',dispatchSeq:0,
       projections:clone(D.contextByThread||{})
@@ -1937,7 +1937,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function syncActivityDomain(){
     const live=liveDomainIds();
     if(!live.length){
-      if(state.activity.open) state.activity.open=false;
+      /* pinned, it stays open in a thread with no activity yet (G1 B) and shows that, rather than closing for good */
+      if(state.activity.open&&!state.activity.pinned) state.activity.open=false;
       return live;
     }
     if(!live.includes(state.activity.domain)){
@@ -2125,15 +2126,24 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const cover=layout==='cover';
     const defs=activityDefs();
     const live=ACTIVITY_ORDER.filter(id=>defs[id]);
-    if(!live.length) return '';
+    if(!live.length&&!state.activity.pinned) return '';
     const d=defs[state.activity.domain]?state.activity.domain:live[0];
     const allScope=state.activity.scope!=='focus';
     const sections=allScope?live:[d];
     const n=live.length;
     const headDef=defs[d]||defs[live[0]];
+    /* Pin (G1 B, 2026-10-30): pinned, Activity Detail stays open across thread switches and shows the new thread;
+       unpinned, a thread switch closes it like the other per-thread surfaces. One size either way. */
+    const pinned=!!state.activity.pinned;
+    const pinButton=`<button class="icon-button activity-head-pin${pinned?' is-pinned':''}" data-action="toggle-activity-pin" data-ui-action-id="ui.activity_detail.pin" data-binding-id="chat.activity.pin" aria-pressed="${pinned}"${hoverAttrs('act-pin',pinned?'Unpin — close Activity Detail when you switch threads':'Pin — keep Activity Detail open when you switch threads')}>${icon(pinned?'unpin':'pin',13)}</button>`;
+    if(!live.length){
+      const S=window.PM56_SHELL, text='No activity in this thread yet. It shows here as soon as there is some.';
+      const empty=S&&S.pmxEmpty&&window.PMLogo?S.pmxEmpty({tag:'div',cls:'pmap-empty',key:'pmap-empty',text:`<span>${esc(text)}</span>`}):`<div class="pmap-empty" data-k="pmap-empty">${icon('info',12)}<span>${esc(text)}</span></div>`;
+      return `<aside class="activity-panel${cover?' cover':''}" data-k="activity-panel-${layout}" data-variant="${state.variants[4]}" data-scope="all" data-domain="" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon('info',13,'nx-t-idle')}</span><strong>Activity Detail</strong><span class="spacer"></span>${pinButton}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-scroll" data-scroll-key="activity">${empty}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    }
     const filterButton=`<button class="icon-button activity-head-filter" data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}"${hoverAttrs('act-filter','Show or hide category filter')}>${icon('filter',13)}</button>`;
     const overflow=`<details class="activity-head-overflow"><summary class="icon-button" aria-label="More Activity Detail actions">${icon('more',13)}</summary><div class="activity-head-menu"><button data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}">${icon('filter',12)} ${state.activity.filterVisible?'Hide':'Show'} domains</button></div></details>`;
-    return `<aside class="activity-panel${cover?' cover':''}" data-k="activity-panel-${layout}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    return `<aside class="activity-panel${cover?' cover':''}" data-k="activity-panel-${layout}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}${pinButton}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
   }
 
   function renderActivitySection(id){
@@ -4175,6 +4185,9 @@ suggested path                    migration 0043, reversible</div></div></sectio
        background: owners land their end state now, so returning shows it done. */
     if(prev&&prev.id!==id) notifyTurnOwners('cancel',prev.id);
     state.selectedThread=id;t.unread=0;state.composer=state.drafts[id]||'';state.menu=null;state.hover=null;state.decision=null;decisionExit=null;
+    /* Activity Detail is per thread unless pinned (G1 B): pinned it stays and shows the new thread (a row picked in the
+       old thread does not carry over); unpinned it closes, and the column gives its width back in the same render */
+    if(state.activity.open&&prev&&prev.id!==id){ if(state.activity.pinned) state.activity.selected=null; else state.activity.open=false; }
     /* Leaving the thread abandons its work sequence; abandoning it without
        stopping the clock is the leak described above. state.work.running is
        cleared with it so the two never disagree -- a card that says "running"
@@ -4804,6 +4817,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(a==='focus-activity'){if(!activityDefs()[btn.dataset.domain])return;state.activity.domain=btn.dataset.domain;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);renderApp();return;}
     if(a==='toggle-activity-section'){const id=btn.dataset.domain;state.activity.expanded=state.activity.expanded.includes(id)?state.activity.expanded.filter(x=>x!==id):[...state.activity.expanded,id];renderApp();return;}
     if(a==='toggle-activity-filter'){state.activity.filterVisible=!state.activity.filterVisible;renderApp();return;}
+    if(a==='toggle-activity-pin'){state.activity.pinned=!state.activity.pinned;renderApp();focusActivityControl('.activity-panel [data-action="toggle-activity-pin"]');return;}
     if(a==='close-activity'){const domain=state.activity.domain;state.activity.open=false;renderApp();focusActivityBarDomain(domain);return;}
     if(a==='context-details'){state.context.details=true;state.menu=null;renderApp();return;}
     if(a==='close-context-details'){state.context.details=false;renderOverlays();return;}
@@ -5151,6 +5165,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     setRecipe:(i)=>applyRecipe(i),
     setVariant:(family,option)=>{const f=Number(family);state.variants[f]=clamp(Number(option),0,familyMax(f));state.recipe=-1;renderApp();},
     selectThread:switchThread,
+    pinActivity:(on=true)=>{state.activity.pinned=!!on;renderApp();},
     openActivity:(domain)=>{if(activityDefs()[domain]){state.activity.open=true;state.activity.domain=domain;state.activity.scope='focus';renderApp();}},
     openContext:()=>{state.context.details=true;renderOverlays();},
     openQuestionnaire:()=>{decisionExit=null;state.decision={type:'question'};renderApp();},
