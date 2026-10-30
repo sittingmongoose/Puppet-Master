@@ -104,6 +104,14 @@
     const n = stops.length - 1;
     return `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${R(x1)}" y1="${R(y1)}" x2="${R(x2)}" y2="${R(y2)}">${stops.map((c, i) => `<stop offset="${R(i / n)}" stop-color="${c}"/>`).join('')}</linearGradient>`;
   }
+  /* Options that reach markup are checked here, at the owner (the loader's html() does the same): a class token, an id
+     or selector stem, a CSS custom property name and a colour each have one accepted shape; anything else is dropped. */
+  const CLS_TOKEN = /^-?[_a-zA-Z][\w-]*$/;
+  const safeCls = (v) => String(v == null ? '' : v).split(/\s+/).filter((t) => CLS_TOKEN.test(t)).join(' ');
+  const safeStem = (v) => (typeof v === 'string' && /^[a-zA-Z][\w-]{0,40}$/.test(v) ? v : null);
+  const COLOR = /^(#[0-9a-fA-F]{3,8}|[a-zA-Z]{3,24}|(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\([0-9a-zA-Z.,%\s/+-]*\)|var\(--[\w-]+\))$/;
+  const safeColor = (v) => (typeof v === 'string' && COLOR.test(v.trim()) ? v.trim() : null);
+  const safeVar = (v) => (typeof v === 'number' && isFinite(v) ? String(v) : safeColor(v));
   const rot = (p, c, deg) => { const a = deg * D2R, s = Math.sin(a), k = Math.cos(a); const x = p[0] - c[0], y = p[1] - c[1]; return [c[0] + x * k - y * s, c[1] + x * s + y * k]; };
 
   /* --------------------------------------------------------------- geometry */
@@ -668,7 +676,10 @@
   function filePalette(look, tokens) {
     const e = EXPORT[look] || EXPORT['basic-dark'], family = familyOf(look), scheme = schemeOf(look);
     const p = Object.assign({ family, scheme, look }, e);
-    if (tokens) Object.keys(tokens).forEach((k) => { if (tokens[k]) p[k] = tokens[k]; });
+    if (tokens) Object.keys(tokens).forEach((k) => {
+      const t = tokens[k], c = Array.isArray(t) ? (t.length && t.every((x) => safeColor(x)) ? t.map((x) => safeColor(x)) : null) : safeColor(t);
+      if (c && Object.prototype.hasOwnProperty.call(e, k)) p[k] = c;
+    });
     const ctl = solid(p.ctl);
     p.back = family === 'nier' ? ctl : mix(ctl, family === 'retro' ? p.tile.stops[0] : p.bg, .42);
     p.headSolid = solid(p.head);
@@ -683,7 +694,7 @@
   function markBody(o, th, tier) {
     const anim = !!o.motion && !th.noMotion;
     const tray = o.form === 'tray';
-    const ink = tray ? o.ink || '#000' : null;
+    const ink = tray ? safeColor(o.ink) || '#000' : null;
     const live = anim && !o.reduced;
     const cls = o.cls;
     const ids = o.ids;
@@ -753,8 +764,14 @@
   }
   function mark(opts) {
     const o = Object.assign({ px: 24, mood: 'idle', motion: null, form: 'glyph' }, opts || {});
-    o.look = o.look && LOOKS.indexOf(o.look) >= 0 ? o.look : look();
-    const family = familyOf(o.look), th = rolePalette(o.look);
+    o.form = o.form === 'tray' ? 'tray' : 'glyph';
+    if (['micro', 'small', 'full', 'pixel'].indexOf(o.tier) < 0) o.tier = null;
+    const painted = look();
+    o.look = o.look && LOOKS.indexOf(o.look) >= 0 ? o.look : painted;
+    // the page's colour roles hold the painted look's tokens: a mark of another look draws in its export palette
+    const off = !!D && o.look !== painted;
+    const family = familyOf(o.look), th = off ? filePalette(o.look, null) : rolePalette(o.look);
+    const vars = o.vars && typeof o.vars === 'object' ? Object.keys(o.vars).filter((k) => /^[a-z0-9-]{1,24}$/.test(k) && safeVar(o.vars[k]) != null).map((k) => '--pip-' + k + ':' + safeVar(o.vars[k])) : [];
     o.px = +o.px || 24;
     const tier = o.tier || tierFor(o.px, family), tk = tierKey(family, tier, o.px);
     // below 12 px no part moves (F3-584); NieR never moves
@@ -763,7 +780,7 @@
     o.cls = CLS;
     // per-instance colours (vars) reach gradients only through defs inside this svg: keyed by the vars, so the markup
     // stays a pure function of its options; marks without vars share one <defs> per family
-    const vk = o.vars ? '-v' + hashKey(JSON.stringify(o.vars)) : '';
+    const vk = (vars.length ? '-v' + hashKey(vars.join(';')) : '') + (off ? '-x' + o.look : '');
     o.ids = fixedIds(family, tk + vk, o.form, moodOf(o.mood));
     const m = markBody(o, th, tier), own = !!vk && !!m.defs, body = (own ? `<defs>${m.defs}</defs>` : '') + m.body;
     if (m.defs && !own) ensureDefs(family, o.ids.grad, m.defs);
@@ -771,15 +788,16 @@
     if (anim) ensureAnim(family, o.motion, tier, tk, o.px);
     const label = o.title || 'Puppet Master';
     const role = anim || o.decorative ? 'aria-hidden="true" focusable="false"' : 'role="img" aria-label="' + esc(label) + '"';
-    const cls = 'pml pml-f-' + family + ' pml-t-' + tk + (anim ? ' pml-a pml-k-' + key + ' pml-m-' + o.motion : '') + (o.className ? ' ' + o.className : '');
+    const extra = safeCls(o.className);
+    const cls = 'pml pml-f-' + family + ' pml-t-' + tk + (anim ? ' pml-a pml-k-' + key + ' pml-m-' + o.motion : '') + (extra ? ' ' + extra : '');
     let vbox = `0 0 ${m.vb} ${m.vb}`;
     if (m.crisp) {
       const Dp = Math.round(o.px), k = Math.floor(Dp / m.vb);
       if (k >= 1 && Dp < 64 && Dp % m.vb) { const V = R(Dp / k), pad = R((V - m.vb) / 2); vbox = `${-pad} ${-pad} ${V} ${V}`; }
     }
-    const vars = o.vars ? ' style="' + Object.keys(o.vars).map((k2) => '--pip-' + k2 + ':' + String(o.vars[k2]).replace(/"/g, '')).join(';') + '"' : '';
+    const style = vars.length ? ' style="' + vars.join(';') + '"' : '';
     const size = o.size === 'em' ? 'width="1em" height="1em"' : `width="${o.px}" height="${o.px}"`;
-    return roleStyles(`<svg xmlns="http://www.w3.org/2000/svg" class="${cls}" ${size} viewBox="${vbox}"${m.crisp ? ' shape-rendering="crispEdges"' : ''} ${role} data-pml-mood="${esc(moodOf(o.mood))}"${vars}>${body}</svg>`);
+    return roleStyles(`<svg xmlns="http://www.w3.org/2000/svg" class="${cls}" ${size} viewBox="${vbox}"${m.crisp ? ' shape-rendering="crispEdges"' : ''} ${role} data-pml-mood="${esc(moodOf(o.mood))}"${style}>${body}</svg>`);
   }
 
   /* -------------------------------------------- shared defs and stylesheet */
@@ -996,10 +1014,15 @@
   }
   function svg(opts) {
     const o = Object.assign({ theme: null, form: 'glyph', px: 64, dpr: 1, mood: 'idle', motion: null, reduced: false }, opts || {});
+    o.px = Math.max(1, Math.round(+o.px) || 64); o.dpr = Math.max(1, +o.dpr || 1);
+    o.form = ['glyph', 'tile', 'tray'].indexOf(o.form) >= 0 ? o.form : 'glyph';
+    o.motion = MOTIONS.indexOf(o.motion) >= 0 ? o.motion : null;
+    if (['micro', 'small', 'full', 'pixel', 'auto'].indexOf(o.tier) < 0) o.tier = null;
+    const outPx = o.px;
     const lk = LOOKS.indexOf(o.look || o.theme) >= 0 ? (o.look || o.theme) : (D ? look() : 'friendly-dark');
     const family = familyOf(lk);
     const th = filePalette(lk, o.tokens || liveTokens(lk));
-    o.prefix = o.prefix || nextId();
+    o.prefix = safeStem(o.prefix) || nextId();
     const p = o.prefix;
     const inner = o.form === 'tile' ? o.px * .68 : o.px;
     const tier = o.tier && o.tier !== 'auto' ? o.tier : tierFor(inner, family);
@@ -1035,7 +1058,7 @@
       const ids = { tile: p + 't', glow: p + 'w', rim: p + 'q', clip: p + 'k' };
       const innerSvg = (m.defs ? `<defs>${m.defs}</defs>` : '') + body;
       const fr = tileFrame(th, ids, innerSvg, m.vb, m.crisp);
-      return `<svg xmlns="http://www.w3.org/2000/svg" class="${p}" width="${opts.px || 64}" height="${opts.px || 64}" viewBox="0 0 64 64" ${role}>${style}<defs>${fr.defs}</defs>${fr.body}</svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" class="${p}" width="${outPx}" height="${outPx}" viewBox="0 0 64 64" ${role}>${style}<defs>${fr.defs}</defs>${fr.body}</svg>`;
     }
     // sprites land on whole device pixels: pad the view box instead of scaling by a fraction
     let vbox = `0 0 ${m.vb} ${m.vb}`;
@@ -1170,7 +1193,8 @@
   G.PMLogo = {
     product: true, version: '1.0',
     mark, svg, dataUrl, favicon, look, onLook, family: familyOf, scheme: schemeOf, tierFor,
-    period: (o) => { const f = o && o.family || familyOf(o && o.look || look()); return periodOf(f, o && o.motion || 'swing', tierFor(o && o.px || 24, f)); },
+    // NieR never moves: 0. Whole ms at speed 1 otherwise.
+    period: (o) => { const f = o && o.family || familyOf(o && o.look || look()); return f === 'nier' ? 0 : Math.round(periodOf(f, o && o.motion || 'swing', tierFor(o && o.px || 24, f))); },
     LOOKS, FAMILIES, MOTION, MOTIONS, THEME_ORDER: LOOKS, THEMES, EXPORT,
     MOODS, MOOD_STATUS, STATUS_FACE, TRAY, trayFace, moodFor: (key) => STATUS_FACE[key] || 'idle',
     clock, solver, kit

@@ -12,11 +12,16 @@
 @keyframes pml-ld-in { from { opacity: 0; } to { opacity: 1; } }
 /* NieR (L7, pm-loader.js NIER): Pip never animates in NieR. The loader's one part is the plain ink ring every spinner
    showed in NieR before this build (the Basic spinner); the Diamond loaders part turns it into NieR's hollow diamond
-   (styles.d/14-nier-parts.css). It turns only while armed (data-pml-run="on"), at Animation speed (--pml-k), and holds
-   during drags (--pml-ps). Reduced Motion: the ring stands still and breathes. */
+   (styles.d/14-nier-parts.css). It turns only while armed (data-pml-run="on"), at Animation speed (--pml-k), in the
+   shared clock's phase (--pml-sdelay, --pml-ndelay, --pml-nbdelay from pm-loader.js), and holds during drags
+   (--pml-ps). Reduced Motion: the ring stands still and breathes. */
 .pml-ld > .pml-nier { display: block; box-sizing: border-box; width: 72%; height: 72%; margin: 14%; border-radius: 50%; border: max(1.5px, .09em) solid currentColor; border-right-color: transparent; color: var(--o55-nier-ink, currentColor); }
-.pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-spin calc(.8s * var(--pml-k, 1)) linear infinite var(--pml-ps, running); }
+.pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-spin calc(.8s * var(--pml-k, 1)) linear var(--pml-sdelay, 0s) infinite var(--pml-ps, running); }
 @keyframes pml-nier-spin { to { transform: rotate(360deg); } }
 @keyframes pml-nier-breath { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
-:root[data-motion="reduced"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out infinite var(--pml-ps, running); }
-@media (prefers-reduced-motion: reduce) { .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out infinite var(--pml-ps, running); } }
+/* !important: the page's global reduced rule (pm6-css-global.css) cuts every animation to .01 ms, once; this
+   opacity-only breath is the loader's wait signal (L3), as the Pip loader's own reduced rules are (pm-logo.css) */
+:root[data-motion="reduced"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
+@media (prefers-reduced-motion: reduce) {
+  .pml-ld[data-pml-run="on"] > .pml-nier, #panel-settings .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
+}

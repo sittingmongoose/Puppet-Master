@@ -102,7 +102,7 @@
     replaces: ['background-activity concept rw-processes (the chat domain\'s pulse and the status bar\'s terminal mark, D14)'],
     aliases: [],
     surfaces: ['status bar processes item (12-14 px)', 'agents and processes panel: Processes tab head', 'chat Activity bar: Processes domain (D4: only while a process runs or needs input)', 'Activity Detail: Processes tab'],
-    note: 'Two moving parts on the beat: the chevron nudges back (1.6 units) as it dims, and 160 ms later the cursor line types ' +
+    note: 'Two moving parts on the beat: the chevron nudges back (1.6 units) as it dims, and 16 % of the beat later (352 ms on the 2200 ms beat) the cursor line types ' +
       'in by its clip. The frame is 18 x 16 with 3-unit corners, so at 12 px it reads as a console, never as the bare ' +
       'terminal glyph. Colour comes from status, never from the glyph: the Activity bar\'s tone inks in the chat, the glyph ' +
       'inks (--pmg-ink-*) in the status bar.',
