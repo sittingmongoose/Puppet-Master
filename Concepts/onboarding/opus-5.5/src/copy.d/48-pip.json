@@ -633,6 +633,12 @@
           "title": "Which online service",
           "text": "These websites keep an online copy of your Project. They all keep it the same way, so the choice is about where you or your team already have an account. If you don't have one, pick GitHub: it's free for private Projects.",
           "expert": "The forge that hosts the remote repository and its access. Local history (Git or Jujutsu) is separate; every forge here takes a Git push. Sign-in is per service: a browser sign-in on most, a personal access token on Forgejo and Gitea."
+        },
+        "others": {
+          "title": "Which service to pick",
+          "text": "These websites keep an online copy of your Project, and they all keep it the same way. The difference is where you or your team already have an account. If you don't have one, GitHub is the safe choice: it's free for private Projects.",
+          "expert": "Every service here hosts a Git remote for your local history (Git or Jujutsu). Choose by where your account, organisation or self-managed instance already is. Sign-in differs: a browser sign-in on most, a personal access token on Forgejo and Gitea. Without a reason to pick another, use GitHub.com.",
+          "expertTitle": "Choosing a service"
         }
       },
       "online-signin": {

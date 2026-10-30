@@ -108,9 +108,12 @@
     return `<div class="o55-suggest" role="group">` + values.map((v) => `<button type="button" class="o55-suggestchip${v === current ? ' o55-on' : ''}" data-o55-do="${U.esc(action)}" data-arg="${U.esc(v)}"${O55.tips.described(gid)} data-pm-hover-exempt="true" data-key="sg-${U.esc(U.slug(v))}">${U.esc(v)}</button>`).join('') + O55.tips.q(gid) + '</div>' + O55.tips.explainer(gid);
   };
   /* A disclosure row that reveals more choices in place (source_more / remote_more); never a nested dialog. */
+  /* (a disclosure whose action has a tip of its own, such as which online service to pick, carries its ? beside it) */
   F.more = function more(open, label, action, body, key) {
-    return `<div class="o55-more${open ? ' o55-open' : ''}" data-key="more-${U.esc(key || action)}"><button type="button" class="o55-morebtn" data-o55-do="${U.esc(action)}" aria-expanded="${open}" data-pm-hover-exempt="true">`
-      + `<span>${U.esc(label)}</span>${U.nx('chevron-down', 16, 'control') || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>'}</button>`
+    const qh = O55.tips.exact(action) ? O55.tips.q(action) : '';
+    const btn = `<button type="button" class="o55-morebtn" data-o55-do="${U.esc(action)}" aria-expanded="${open}" data-pm-hover-exempt="true"${qh ? O55.tips.described(action) : ''}>`
+      + `<span>${U.esc(label)}</span>${U.nx('chevron-down', 16, 'control') || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>'}</button>`;
+    return `<div class="o55-more${open ? ' o55-open' : ''}" data-key="more-${U.esc(key || action)}">` + (qh ? `<div class="o55-morehead">${btn}${qh}</div>${O55.tips.explainer(action)}` : btn)
       + (open ? `<div class="o55-morebody">${body}</div>` : '') + '</div>';
   };
   /* Copy-to-clipboard button with a transient "Copied" state (no fake success: it reports the clipboard result). */
