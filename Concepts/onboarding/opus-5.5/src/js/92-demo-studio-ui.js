@@ -175,8 +175,8 @@
       + g.ids.map((id) => choice(id, p.twists.includes(id), 'checkbox', 'pick-twist')).join('') + '</div></div>').join('');
     const screens = '<div class="pmds-screens">' + M.SCREEN_CHAPTERS.map(([ch, ids]) => `<div class="pmds-scgroup"><h5 class="pmds-gtitle"><span>${esc(T(`studio.onboarding.chapters.${ch}`))}</span><span class="pmds-count">${ids.length}</span></h5><div class="pmds-sclist">`
       + ids.map((id) => `<button type="button"${at({ class: 'pmds-scrow', 'data-pmds-do': 'open-screen', 'data-arg': id, 'data-key': `open-screen:${id}`, 'data-pmh': M.hasScreen(id) && M.onboarding.avail() ? 'row' : null, 'aria-disabled': M.hasScreen(id) && M.onboarding.avail() ? null : 'true' })}><span>${esc(T(`studio.onboarding.screens.${id}`))}</span>${ico('chevron', 13)}</button>`).join('') + '</div></div>').join('') + '</div>';
-    /* Pip's moments (W3): the oops states and a ? note open; each opens its screen and does what a person would, and the
-       Studio stays open beside the window */
+    /* Pip's moments (W3): the oops states and a ? note open; each opens its screen and does what a person would there
+       (the Studio steps aside, as for a screen row) */
     const P = M.pipOnboarding;
     const prow = (action, id, ok, icon) => `<button type="button"${at({ class: 'pmds-scrow pmds-pmrow', 'data-pmds-do': action, 'data-arg': id, 'data-key': `${action}:${id}`, 'data-pmh': ok ? 'row' : null, 'aria-disabled': ok ? null : 'true' })}>`
       + `<span class="pmds-pmtext"><span>${esc(T(`studio.onboarding.${action === 'onb-oops' ? 'oops' : 'ask'}.items.${id}.title`))}</span><span class="pmds-pmsub">${esc(T(`studio.onboarding.${action === 'onb-oops' ? 'oops' : 'ask'}.items.${id}.sub`))}</span></span>${ico(icon, 13)}</button>`;
@@ -350,7 +350,8 @@
   };
   function pipLooks() {
     const P = M.pip, painted = window.PMLogo.look(), tray = P.tray(), k = 'studio.pip.looks';
-    const cell = (lk, form, px, extra, mood) => `<span class="pmds-pipsw${extra ? ' ' + extra : ''}" style="background:${esc(P.ground(lk))}">${P.svg({ look: lk, form, px, mood: mood || 'idle' })}</span>`;
+    /* the tray is a template image: one ink, light on a dark menu bar and dark on a light one, as the system draws it */
+    const cell = (lk, form, px, extra, mood) => `<span class="pmds-pipsw${extra ? ' ' + extra : ''}" style="background:${esc(P.ground(lk))}">${P.svg(Object.assign({ look: lk, form, px, mood: mood || 'idle' }, form === 'tray' ? { ink: /-light$/.test(lk) ? '#1a1a1a' : '#ffffff' } : {}))}</span>`;
     const rows = P.looks().map((lk) => {
       const fam = lk.split('-')[0], mode = /-light$/.test(lk) ? 'light' : 'dark', now = lk === painted;
       return `<tr${now ? ' class="pmds-on"' : ''}><th scope="row"><span class="pmds-ptlook">${esc(T(`studio.looks.families.${fam}`))} ${esc(T(`studio.looks.${mode}`))}</span>${now ? `<span class="pmds-ptnow">${esc(T(`${k}.now`))}</span>` : ''}</th>`
@@ -954,9 +955,9 @@
       if (!r || !r.played) say(M.pip.muted() ? T('studio.pip.sound.offToast') : !M.pip.voicePart() ? T('studio.pip.sound.voiceOff') : T('studio.pip.sound.quiet'));
     },
     'pip-saymood': (arg) => { ST.pipSayMood = arg; refresh(); },
-    /* onboarding's Pip moments: they stay (the Studio is open beside the window) */
-    'onb-oops': (arg) => { if (!M.pipOnboarding.oopsAvail(arg)) return say(T('studio.toast.unavailable')); M.pipOnboarding.oops(arg, ST.pick); renderEntry(); real.setTimeout(refresh, 700); },
-    'onb-ask': (arg) => { if (!M.pipOnboarding.askAvail(arg)) return say(T('studio.toast.unavailable')); M.pipOnboarding.ask(arg, ST.pick); real.setTimeout(refresh, 700); },
+    /* onboarding's Pip moments: the window takes the screen, so the Studio steps aside as it does for a screen row */
+    'onb-oops': (arg) => { if (!M.pipOnboarding.oopsAvail(arg)) return say(T('studio.toast.unavailable')); const pick = ST.pick; launch(() => M.pipOnboarding.oops(arg, pick)); },
+    'onb-ask': (arg) => { if (!M.pipOnboarding.askAvail(arg)) return say(T('studio.toast.unavailable')); const pick = ST.pick; launch(() => M.pipOnboarding.ask(arg, pick)); },
     /* the title bar */
     'tb-state': (arg) => { if (!M.titlebar.setState(arg)) return say(T('studio.toast.unavailable')); if (arg === 'unsaved') say(T('studio.workspace.titlebar.unsavedToast')); real.setTimeout(refresh, 80); },
     'tb-long': () => { M.titlebar.setLong(!M.titlebar.longOn()); real.setTimeout(refresh, 240); },

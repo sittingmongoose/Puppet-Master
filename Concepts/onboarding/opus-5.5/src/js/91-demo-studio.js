@@ -103,11 +103,11 @@
   };
 
   /* ---- onboarding with Pip (W3): moments that open a screen and then do what a person would there, through the
-     screen's own actions, so the real state shows (Pip's oops face, the warning under the field, the failed sign-in) and
-     the Studio stays open beside it. The window mounts two frames after O55.ui.open, so each step waits for its screen.
-     O55.ui.act / O55.ui.fill are the window's calls for this (lane onb); until they are on the page the step calls the
-     same screen action its control would (O55.screens.defs[screen].do / .bind, what the window's click and input
-     handlers call). ---- */
+     window's own calls, so the real state shows (Pip's oops face and line, the warning under the field, the failed
+     sign-in). The window mounts two frames after O55.ui.open, so each step waits for its screen. O55.ui.act presses the
+     on-screen control as the click dispatcher does and O55.ui.fill types into a bound field through its binding (lane
+     onb); a page without them calls the same screen action its control would (O55.screens.defs[screen].do / .bind,
+     what the window's click and input handlers call). ---- */
   const OUI = () => O55.ui || null;
   function whenScreen(id, step, ms) {
     const until = performance.now() + (ms || 4000);
@@ -135,7 +135,7 @@
   /* the three oops moments (pip.oops.*): what each needs from the situation, the screen and the steps on it */
   const CURSOR_KEY = 'sk-cur-0042';   /* 11 characters: 12 or more passes the real check (73-screens-ai.js keyCheck) */
   const OOPS = [
-    { id: 'nameTaken', screen: 'name', base: 'returning', run: (S) => (fn(OUI(), 'fill') ? screenFill(S, 'name', 'name', 'tastebook') : screenAct(S, 'name', 'suggest', 'tastebook')) },
+    { id: 'nameTaken', screen: 'name', base: 'returning', run: (S) => (fn(OUI(), 'fill') ? screenFill(S, 'name', 'name', 'Tastebook') : screenAct(S, 'name', 'suggest', 'Tastebook')) },
     { id: 'keyRefused', screen: 'ai', run: (S) => {
       screenAct(S, 'ai', 'key', 'cursor');
       O55.motion.real.setTimeout(() => { if (screenFill(S, 'ai', 'key:cursor', CURSOR_KEY)) screenAct(S, 'ai', 'keyCheck', 'cursor'); }, 260);
@@ -349,8 +349,13 @@
       const B = BOX();
       if (on) {
         if (!titlebar.longOn()) titlebar.from = activeProject();
+        /* a new Project opens in its own settings (Basic Dark): it takes the look on screen, through the title-bar
+           menu's own path, so the long name is seen in the look being reviewed */
+        const was = lookNow();
         B.add(LONG.id, { path: LONG.path, branch: LONG.branch, stack: LONG.stack });
-        return B.select(LONG.id);
+        const ok = B.select(LONG.id);
+        O55.motion.real.setTimeout(() => { try { const n = lookNow(); if (titlebar.longOn() && (n.look !== was.look || n.setMode !== was.setMode)) looks.set(was.look, was.setMode); } catch (_) {} }, 360);
+        return ok;
       }
       return B.select(titlebar.from && titlebar.from !== LONG.id ? titlebar.from : 'tastebook');
     },
@@ -400,7 +405,7 @@
     ground: (look) => { const e = pip.avail() && LOGO().EXPORT ? LOGO().EXPORT[look] : null; return e ? e.bg : ''; },
     /* a still drawing in any look (literal colours: the page paints only its own look), kept per painted look */
     svg(o) {
-      const key = `${LOGO().look()}|${o.look}|${o.form}|${o.px}|${o.mood || 'idle'}`;
+      const key = `${LOGO().look()}|${o.look}|${o.form}|${o.px}|${o.mood || 'idle'}|${o.ink || ''}`;
       if (svgCache.has(key)) return svgCache.get(key);
       let out = ''; try { out = LOGO().svg(Object.assign({ decorative: true, motion: null }, o)); } catch (_) { out = ''; }
       if (svgCache.size > 400) svgCache.clear();
@@ -434,7 +439,7 @@
     events() {
       const V = VOX(); if (!V || !V.EVENTS) return [];
       const vocal = ['wake', 'sleep', 'think', 'happy', 'wink', 'alert', 'cheer', 'crew'];
-      const ui = ['tap', 'hover', 'select', 'toggleOn', 'toggleOff', 'next', 'back', 'open', 'close', 'key', 'warn'];
+      const ui = ['tap', 'hover', 'select', 'toggleOn', 'toggleOff', 'next', 'back', 'open', 'close', 'key', 'warn', 'chapter'];
       return [
         { id: 'stage', ids: V.EVENTS.filter((e) => !vocal.includes(e) && !ui.includes(e)) },
         { id: 'vocal', ids: V.EVENTS.filter((e) => vocal.includes(e)) },
