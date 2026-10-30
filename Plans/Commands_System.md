@@ -6296,7 +6296,7 @@ disposition rules in accordance with APR-014, APR-019, and APR-023, strictly adh
      `cmd.execution_window.cancel`.
   10. *Quota Resume Consent:* Reuses `cmd.runtime.quota_resume.set`, preserving manual stop precedence.
 - **Local Presentation Boundary:** Pure visual toggles—shared picker dropdown open/filter/selection,
-  collapsible sections, plan Rich/Markdown toggle, Activity Detail unpin/pin, and manager tabs—are
+  collapsible sections, plan Rich/Markdown toggle, Activity Detail open/close (G1), and manager tabs—are
   classified as `LOCAL_PRESENTATION`. They utilize local or shared view-state primitives and emit no
   domain command.
 - **Isolation of Demo Fixtures (APR-014):** Test fixtures, replay commands, mock simulations, and
@@ -8089,60 +8089,213 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  Hosted chat producers use UCC-208's closed mapping (DL-232). Dispatch normalizes
-  cmd.editor.close_tab to cmd.panel_tab.close before gates and receipts; the alias has no handler.
-  Domain openers use CV-360 placement and F3-634's one opening module; a child transcript remains
-  cmd.agents.open_thread, not a chat-private open. Existing command identity, authorization,
-  idempotency, typed results and effect rules do not change with the renderer. Pin History and Keep
-  open are the existing ui.chat_column.pin_history and ui.chat_column.keep_open local actions, with no
-  receipt or event; resize is the existing cmd.workspace_layout.resize_surface, committed once on
-  release. An app-modal open, hover preview, disclosure or body redraw is local presentation. An
-  admitted preference changed in chat uses the same cmd.settings.transaction.preview then
-  cmd.settings.transaction.apply over its inventory id as Settings; application/project defaults never
-  masquerade as the per-chat ELI5 command. A mirrored renderer value does not write a second store or
-  echo the Settings save into a loop. No new event, command, alias or future handler is added by the
-  port, and existing DL-218 command candidates retain their exact exclusions until separately
-  admitted. The integrated concept at 59ca2d4382 realizes the Home opening and local-column controls
-  through JavaScript bridges; it does not implement the native dispatcher or typed receipts specified
-  here. Its existing Settings adapter persists Project default ELI5, while All chats remains
-  session-only (SSYS-055); that session choice is not evidence of an application-scope transaction.
-  Thought Stream's shared preference drives the chat's live thinking display (ACD-221, DL-234);
-  opening or folding a thinking block is local presentation with no command, receipt or event. Demo
-  Studio launches, lab-only document ids and unknown-id document fallback add no product command.
+  Hosted chat producers use UCC-208's closed mapping (DL-232). Dispatch normalizes cmd.editor.close_tab to
+  cmd.panel_tab.close before gates and receipts; the alias has no handler. Domain openers use CV-360
+  placement and F3-634's one opening module; a child transcript remains cmd.agents.open_thread, not a
+  chat-private open. Existing command identity, authorization, idempotency, typed results and effect rules
+  do not change with the renderer. Pin History and Keep open are the existing ui.chat_column.pin_history
+  and ui.chat_column.keep_open local actions, with no receipt or event; resize is the existing
+  cmd.workspace_layout.resize_surface, committed once on release. An app-modal open, hover preview,
+  disclosure or body redraw is local presentation. An admitted preference changed in chat uses the same
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply over its inventory id as Settings;
+  application/project defaults never masquerade as the per-chat ELI5 command. A mirrored renderer value
+  does not write a second store or echo the Settings save into a loop. No new event, command, alias or
+  future handler is added by the port, and existing DL-218 command candidates retain their exact exclusions
+  until separately admitted. The integrated concept at 59ca2d4382 realizes the Home opening and
+  local-column controls through JavaScript bridges; it does not implement the native dispatcher or typed
+  receipts specified here. Its existing Settings adapter persists Project default ELI5, while All chats
+  remains session-only (SSYS-055); that session choice is not evidence of an application-scope transaction.
+  Thought Stream's shared preference drives the chat's live thinking display (ACD-221, DL-234); opening or
+  folding a thinking block is local presentation with no command, receipt or event. Demo Studio launches,
+  lab-only document ids and unknown-id document fallback add no product command. PM7 S5/G1–G3: hosted chat
+  adds the one Pip editor’s typed no-write open/close/replay; admitted parts edit the existing Settings
+  pair. Activity Pin is retired; History pin/Keep open remain local, and resizing uses the existing layout
+  command. CS-105/106 own the newly admitted project/work commands.
 gui_related: true
-gui_classification_reason: Defines shared dispatch, alias normalization and local actions for the hosted chat controls.
+gui_classification_reason: Defines shared dispatch, alias normalization and local actions for the hosted chat
+  controls.
 split_recommended: false
-depends_on: [DL-232, UCC-208, CS-100, CS-101, CS-103, DL-234]
+depends_on:
+- DL-232
+- UCC-208
+- CS-100
+- CS-101
+- CS-103
+- DL-234
 unblocks: []
 acceptance_criteria:
-  - "Hosted producers preserve the existing handler, alias normalization and effect contract."
-  - "Reverse preference projection emits no second command or Settings write."
+- Hosted producers preserve the existing handler, alias normalization and effect contract.
+- Reverse preference projection emits no second command or Settings write.
 validation_surfaces:
-  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
-  - "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: hosted_chat_owner_drift
 reasoning_tier: high
 context_scope: chat56_pmconcept7_port
 implementation_surfaces:
-  - "Plans/Commands_System.md"
+- Plans/Commands_System.md
 node_compile_hint:
   mode: owner_presentation_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
+- Plans/Decision_Log.md#DL-185
+- /mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D3, D4, D7, D8, D9, D26, D27, D28)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b
+  (concept integration lineage, not native API authority)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md,
+  SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated
+  against concept source; not native or final visual verification)
 preserved_exact_tokens:
-  - "cmd.editor.close_tab"
-  - "cmd.panel_tab.close"
+- cmd.editor.close_tab
+- cmd.panel_tab.close
 negative_constraints:
-  - "Do not admit native handlers or events through concept JavaScript bridges."
+- Do not admit native handlers or events through concept JavaScript bridges.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-  - "Plans/Commands_System.md"
+- Plans/Commands_System.md
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-208, ContractName:Plans/Wiring_Matrix.md#WM-096
+
+
+### CS-105 - Project Box Dispatch And Shortcuts
+
+```yaml
+plan_unit_id: CS-105
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  B1/B2/B6. cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab are canonical owner
+  commands of the workspace/project router, not aliases of opening the menu. Stable project_id and current
+  workspace identity/generation are required; stale/not-found/not-permitted refuse without changing the
+  active tab. Ctrl+Shift+P binds typed local ui.project_switcher.open (registered ui.project_switcher.*
+  prefix); .close restores opener focus. Ctrl/Cmd+Enter on a row chooses the new-workspace-tab command;
+  keyboard/pointer send identical typed payloads. Opening/closing/filtering a picker does not dispatch a
+  domain command. Existing project open/switch receipts and events stay owner-authoritative, no new event
+  emission by these producers.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-236
+- SMPFS-083
+- UCC-013
+unblocks: []
+acceptance_criteria:
+- Two Project commands resolve one workspace owner with stable project/workspace identity and currentness rejection.
+- Ctrl+Shift+P/open/close/All projects are typed local menu/page actions; Ctrl/Cmd+Enter dispatches the new-workspace
+  command.
+- Keyboard/pointer requests match and menu visibility emits no runtime event or duplicate lifecycle.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/Commands_System.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens:
+- cmd.project.switch_active_tab
+- cmd.project.open_in_new_workspace_tab
+- ui.project_switcher.open
+- ui.project_switcher.close
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/Commands_System.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-236, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-083, ContractName:Plans/UI_Command_Catalog.md#UCC-013
+
+
+
+
+### CS-106 - Work Action Contracts And Local Prefixes
+
+```yaml
+plan_unit_id: CS-106
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  D8–D13, G5–G7/G10. UCC-210 declares cmd.work.stop, cmd.work.restart, cmd.work.send_input,
+  cmd.work.set_completion_delivery, cmd.work.clear_finished, cmd.work.quit, cmd.chat.processes.open,
+  cmd.agents_and_processes.show and cmd.agents_and_processes.pop_out. Runtime commands bind
+  project/server/environment, stable work/owner and process identity, expected projection/input generation,
+  actor/permission and idempotency key, return an owner receipt or typed rejection, and never
+  optimistically manufacture success. Unknown/stale/unavailable owner refuses. Navigation and view-local
+  clear do not write runtime state or emit events. Stop all is cmd.work.stop with scope thread/platform and
+  the reviewed target list, never a second handler; process-group semantics are EP-043/SIR-054. Input is
+  current safe yes/no only; other input reveals terminal. Restart is eligible owner-controlled new
+  invocation, no PID-only replay. Completion policy writes one owner value; delivery does not wake stopped
+  threads. Quit defaults keep_running; stop_selected excludes services and binds the reviewed current
+  target set. Registered local prefixes: ui.work_panel.* (close/select_tab/filter/sort/expand/select),
+  ui.work_quit.* (select/cancel), ui.project_switcher.* (open/close), ui.settings.pip_editor.*
+  (open/close/replay), plus ui.work_quit.open to draft the quit dialog. They write no durable/runtime
+  state, carry return focus/scope and release timers/subscriptions/copies. cmd.work.clear_finished is a
+  navigation_wrapper with view-local hiding, not record deletion. All settings hosts use preview/apply. No
+  Home panel-tab command or panel shortcut in this build. ProcessFacts and command request/result/error
+  fixtures are static contracts; new input/completion event candidates remain non-emitting until Event
+  Authority. B2: ui.project_switcher.all_projects is the typed local action that focuses the existing
+  Projects page route tab_id projects. It never misuses cmd.panel.switch, which is only a rail side-panel
+  shell action. D10/D13/G4: Requests carry explicit scope_kind under the existing application/project
+  policy. Quit and platform Stop all are application-scoped with project_id null; thread Processes is
+  project-scoped with a real Project. A global panel or local editor/navigation action works without an
+  active Project. Every reviewed target still carries its actual Project/server/environment and current
+  owner permission. Dispatch verifies source/target scope rather than inferring a default Project; a
+  mismatch refuses before effects. This adds no Settings store or event family.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-255
+- SIR-054
+- EP-043
+unblocks: []
+acceptance_criteria:
+- Every command has one sole handler and closed typed request/result; explicit source scope, target owner/permission/storage/currentness
+  reject before effects, including application controls with no active Project.
+- Stop all reuses cmd.work.stop; pid/start/group/descendant targeting and 3 s grace are enforced by the owner.
+- Prompt input is current safe yes/no only, quit defaults keep-running, clear is view-local and candidate events
+  remain non-emitting.
+- All declared local prefixes write no runtime state and release focus/subscriptions/copies on close.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/Commands_System.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/Commands_System.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/Shared_Integration_Runtime.md#SIR-054, ContractName:Plans/Executor_Protocol.md#EP-043
+
+

@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2657-L2718
+Source lines: L2657-L2719
 
-Source SHA256: `bccd54e33ea58b285a0e6ea9aafae3a46a5bf8dc437d5e2828ed313de3dd286c`
+Source SHA256: `818a665c0e08e56adf62f1e93f5ff45d9239d1b0c1399f0c8e2ad14e4f6228b6`
 
 ---
 
@@ -32,6 +32,7 @@ canonical_text: >-
   assistant-turn presentation vocabulary (segment roles, subject statuses, terminal states) is
   defined once in EP-128; other owners, including collaboration runs, reference it and do not
   redefine it.
+  Amended 2026-10-29 (O3–O6, S3/S4; PM7): Pip setup voice/music and app chirps are parts, not separate sound keys/players. Live synthesis recipes register with the one Notifications & Sounds player/library and master switch. Retro has distinct Light/Dark kits; no approved music re-key. Loader periods are family-owned (F3-662), not per-view overrides.
 gui_related: true
 gui_classification_reason: "Fixes single owners for chat presentation rules."
 split_recommended: false

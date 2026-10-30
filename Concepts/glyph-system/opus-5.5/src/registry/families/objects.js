@@ -232,7 +232,7 @@
     meaning: 'Agents: AI workers acting for you, as a category (each agent itself is drawn as Pip; the terminal\'s spark and cursor cell mark an agent at the keyboard).', act: 'seq', aliases: ['agent', 'agents', 'bot'],
     replaces: ['T-core robot', 'T-bridge agents', 'background-activity concept rw-agents (the status bar\'s agents mark, D14)'],
     surfaces: ['status bar agents item (12-14 px)', 'agents and processes panel: Agents tab head', 'chat Activity bar (Subagents domain)', 'left rail'],
-    note: 'The antenna light blinks (it dims to .6 and back, 260 ms after the beat) and the eyes glance across. Category mark only (X1): ' +
+    note: 'The antenna light blinks (it dims to .6 and back, 26 % into the beat: 572 ms on the 2200 ms beat) and the eyes glance across. Category mark only (X1): ' +
       'never a stand-in for one agent. user and users (the chat) stay for people.',
     parts: ['<rect x="5" y="8" width="14" height="11.5" rx="3"/>', '<path d="M12 8V5.7M3 12.5v3M21 12.5v3"/>',
       { els: '<circle cx="12" cy="4" r="1.35" class="nx-f"/>', move: { ao: .6, ad: 260 } },

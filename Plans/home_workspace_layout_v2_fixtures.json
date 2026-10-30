@@ -1403,6 +1403,192 @@
           "migrated_at": "2026-10-09T12:00:00Z"
         }
       }
+    },
+    {
+      "name": "wide_chat_preference_no_fixed_cap",
+      "description": "G3: a finite 1200 px preference is valid; owner rendering clamps to current centre/page space.",
+      "record": {
+        "schema_id": "pm.home_workspace_layout.v2",
+        "schema_version": "2.0.0",
+        "project_id": "proj-tastebook",
+        "workspace_tab_id": "wt-main",
+        "revision": 0,
+        "updated_at": "2026-10-09T12:00:00Z",
+        "root": {
+          "node": "split",
+          "id": "split-root",
+          "axis": "column",
+          "children": [
+            {
+              "node": "split",
+              "id": "split-top",
+              "axis": "row",
+              "children": [
+                {
+                  "node": "panel",
+                  "id": "panel-dash",
+                  "tab_ids": [
+                    "dashboard:home",
+                    "dashboard:agents"
+                  ],
+                  "active_tab_id": "dashboard:home",
+                  "preview_tab_id": null,
+                  "pinned_count": 1,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "panel-docs",
+                  "tab_ids": [
+                    "file:src/main.rs",
+                    "file:src/routes/recipes.rs",
+                    "plan:ap-index"
+                  ],
+                  "active_tab_id": "file:src/main.rs",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                }
+              ],
+              "sizes": [
+                0.5,
+                0.5
+              ]
+            },
+            {
+              "node": "panel",
+              "id": "panel-tools",
+              "tab_ids": [
+                "terminal:t1",
+                "terminal:t2",
+                "output"
+              ],
+              "active_tab_id": "terminal:t1",
+              "preview_tab_id": null,
+              "pinned_count": 0,
+              "collapsed": false,
+              "locked": false
+            }
+          ],
+          "sizes": [
+            0.6,
+            0.4
+          ]
+        },
+        "tabs": {
+          "dashboard:home": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": true,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "home"
+            }
+          },
+          "dashboard:agents": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "agents"
+            }
+          },
+          "file:src/main.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/main.rs"
+            }
+          },
+          "file:src/routes/recipes.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/routes/recipes.rs"
+            }
+          },
+          "plan:ap-index": {
+            "kind": "plan",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "plan_id": "ap-index"
+            }
+          },
+          "terminal:t1": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t1"
+            }
+          },
+          "terminal:t2": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t2"
+            }
+          },
+          "output": {
+            "kind": "output",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "channel": "build"
+            },
+            "ref": {}
+          }
+        },
+        "view_state": {
+          "focused_panel_id": "panel-docs",
+          "maximized_panel_id": null,
+          "recent_tab_ids": [
+            "file:src/main.rs",
+            "terminal:t1",
+            "dashboard:home"
+          ]
+        },
+        "chat_column": {
+          "width_px": 1200,
+          "history_pinned": false,
+          "shown": true
+        },
+        "named_layouts": [],
+        "closed_tabs": [],
+        "migration": {
+          "origin": "created_default",
+          "source_key": null,
+          "source_schema_id": null,
+          "source_revision": null,
+          "migrated_at": null
+        }
+      }
     }
   ],
   "migration": [
@@ -2548,17 +2734,17 @@
       "why": "The reopen stack holds 20."
     },
     {
-      "name": "chat_width_out_of_range",
+      "name": "chat_width_below_floor",
       "base_valid": "default_home",
       "rejected_by": "schema",
       "ops": [
         {
           "op": "replace",
           "path": "/chat_column/width_px",
-          "value": 800
+          "value": 399
         }
       ],
-      "why": "The chat is dragged between 400 and 760 px."
+      "why": "G3 removes the fixed 760 maximum; the message-area minimum remains 400 px."
     },
     {
       "name": "chat_position_saved",

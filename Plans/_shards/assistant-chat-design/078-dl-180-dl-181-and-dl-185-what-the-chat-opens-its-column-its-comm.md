@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27546-L27973
+Source lines: L27600-L28029
 
-Source SHA256: `c0c6409fa65d05d98a600d5145ecae0efae9602af2b85f17b5f91023a204798c`
+Source SHA256: `63c9c2df0d06e50d6f0e803255e1aedcde0319ecf34fae55f25c4b5a68a06159`
 
 ---
 
@@ -277,6 +277,7 @@ canonical_text: >-
   tab at start; the home layout is the layout record's (SP-330). Pop out keeps the chat's History and Activity Detail
   with it (F3-637); the web client offers no Pop out and the chat stays in its column (F3-637, UCC-203). This adds the port's
   requirements to the binding-by-reference of the 5.6 Pro concept and supersedes nothing else.
+  Amended 2026-10-29 (G1–G3, PC1; PM7): Pip parts/gaze/overlays reuse host owners. Chat width has no fixed 760 cap; Activity Detail has no small/Pin view, first widening then full-height covering. History and detail floating plates use one Glass menu token.
 gui_related: true
 gui_classification_reason: Lists what the 5.6 Pro chat's colours, names, sizing, layers, hover tags, bans, demo controls and keys must meet when it moves into PMConcept7.
 split_recommended: false
@@ -377,6 +378,7 @@ canonical_text: >-
   Terminal opens a new terminal tab in the command's folder and runs it there, as for a command with no
   session; Restart in the old tab stays the terminal's own action. A Rerun while an agent drives that terminal
   is a take-over by the person (F3-646), typed as the person.
+  Amended 2026-10-29 (D2/D13; PM7): Process rows reuse the exact Open in Terminal and Rerun in Terminal routing specified here, preserving session identity and new-invocation semantics; Answer in Terminal reveals the same input-owning session, no synthetic input.
 gui_related: true
 gui_classification_reason: Defines which terminal tab each chat card action opens or reveals, how agent-started terminals appear, and which terminal canon leaves the chat document.
 split_recommended: false

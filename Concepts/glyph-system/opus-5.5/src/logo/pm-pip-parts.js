@@ -6,8 +6,9 @@
  * and the agent puppet, helper marks and Activity agent rows stay Pip under every preset, Plain included. Where a NieR
  * part and a Pip part both draw, the NieR part wins (S7). There is no Pip on/off row (S6).
  *
- * Storage (S2): general.visual.pip-parts, per Project, a multiselect of the part labels, stored the way
- * general.visual.nier-parts is. The Settings engine is private to its script, so the registry reads and writes it
+ * Storage (S2): general.visual.pip-parts, per Project, a multiselect of the part labels, shown as-is in the Settings
+ * row, as general.visual.nier-parts stores its labels (lead's ruling, 2026-10-30). The registry keeps id <-> label, and
+ * a stored id still reads. The Settings engine is private to its script, so the registry reads and writes it
  * through window.PM_PIP_PARTS_STORE (Concepts/onboarding/opus-5.5/src/settings/kit.d/28-pip-parts.js: the same
  * transaction and refusal path as a Settings row). Until the Settings data has that row, and in a sandboxed preview,
  * the choice lives in memory for the session, per Project. A Project switch re-reads the row and says so if the parts
@@ -21,7 +22,7 @@
  *   count()              -> { on, total } (the editor's "On N / 25" meter; its words are copy)
  *   preset()             -> 'full' | 'quiet' | 'still' | 'plain' when the parts match one exactly, else null ("Custom")
  *   set(ids)             -> stores exactly these parts for the current Project; returns true when stored
- *   toggle(id, on?)      -> one part; applyPreset(name) -> one of PRESETS
+ *   toggle(id, on?)      -> one part; applyPreset(name) -> one of PRESETS; both change the preview while one shows
  *   preview(ids | null)  -> a non-persistent choice painted over the stored one (onboarding before its Project is saved,
  *                           the editor's live preview); null clears it; previewing() -> ids or null;
  *                           commitPreview() -> stores the preview for the current Project and clears it
@@ -87,7 +88,6 @@
   });
 
   const order = (ids) => { const want = new Set((Array.isArray(ids) ? ids : []).map(String)); return IDS.filter((id) => want.has(id)); };
-  const labels = (ids) => order(ids).map((id) => byId.get(id).label);
 
   /* ------------------------------------------------------------ the store */
   // The Settings adapter (src/settings/kit.d/28-pip-parts.js) loads with the body's Settings script; read it late.
@@ -105,9 +105,10 @@
     return m ? m.slice() : DEFAULT.slice();
   }
   const current = () => (pv ? pv.slice() : stored());
+  let writing = false;   // our own write: the adapter's notice is not a second change
   function write(ids) {
     const list = order(ids), S = store();
-    if (S) return S.write(labels(list));
+    if (S) { writing = true; try { return S.write(list.map((id) => byId.get(id).label)); } finally { writing = false; } }
     memory[projectId()] = list;
     return true;
   }
@@ -127,7 +128,7 @@
   function bind() {
     if (bound || !W.PM_PIP_PARTS_STORE) return;
     bound = true;
-    W.PM_PIP_PARTS_STORE.onChange(() => emit(projectId() === lastProject ? 'settings' : 'project'));
+    W.PM_PIP_PARTS_STORE.onChange(() => { if (!writing) emit(projectId() === lastProject ? 'settings' : 'project'); });
     emit('settings');
   }
   let lastProject = '';
@@ -149,17 +150,21 @@
     count: () => ({ on: current().length, total: IDS.length }),
     preset: () => presetOf(current()),
     label: (id) => (byId.get(id) || {}).label || null,
+    /* set() always stores for the Project. While a preview shows (the editor's live preview, onboarding before its
+       Project is saved), toggle() and applyPreset() change the preview, which is what the person sees; commitPreview()
+       stores it. */
     set(ids) { const ok = write(ids); if (ok) emit('set'); return ok; },
     toggle(id, want) {
       if (!byId.has(id)) return false;
-      const now = stored(), has = now.indexOf(id) >= 0, next = want == null ? !has : !!want;
+      const now = current(), has = now.indexOf(id) >= 0, next = want == null ? !has : !!want;
       if (next === has) return true;
-      return this.set(next ? now.concat(id) : now.filter((x) => x !== id));
+      const ids = next ? now.concat(id) : now.filter((x) => x !== id);
+      return pv ? (this.preview(ids), true) : this.set(ids);
     },
-    applyPreset(name) { const p = PRESETS[String(name || '').toLowerCase()]; return p ? this.set(p) : false; },
+    applyPreset(name) { const p = PRESETS[String(name || '').toLowerCase()]; return p ? (pv ? (this.preview(p), true) : this.set(p)) : false; },
     preview(ids) { pv = ids == null ? null : order(ids); emit('preview'); return current(); },
     previewing: () => (pv ? pv.slice() : null),
-    commitPreview() { if (!pv) return true; const ids = pv; pv = null; const ok = write(ids); if (!ok) pv = ids; emit('set'); return ok; },
+    commitPreview() { if (!pv) return true; const ids = pv; pv = null; const ok = write(ids); if (!ok) { pv = ids; return false; } emit('set'); return true; },
     on, subscribe: (fn) => on('change', fn)
   });
 })();
