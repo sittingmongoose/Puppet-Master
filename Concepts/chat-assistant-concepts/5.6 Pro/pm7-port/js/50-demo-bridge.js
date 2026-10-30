@@ -128,10 +128,15 @@
     ['bsd', [['survives', 'bsd12-start'], ['resolves', 'bsd12-start']]],
     ['debug', [['repair', 'debug-demo-start'], ['drift', 'debug-demo-start']]],
     ['revert', [['whole', 'revert-demo-start'], ['conflict', 'revert-demo-start']]],
-    ['attach', [['intake', 'b19-start'], ['live', 'b19-start'], ['folder', 'b19-start']]]
+    ['attach', [['intake', 'b19-start'], ['live', 'b19-start'], ['folder', 'b19-start']]],
+    /* Pip in the chat (W4, PM7 build): the Crew run from queued to done, every member drawn as Pip (Demo Studio's pip) */
+    ['pip', [['delegation', 'crew-demo-start']]]
   ];
   /* the single-surface demos (repair-demos.js 'repair-demo' scenarios, delivery-polish.js 'polish-demo-action' rows) */
   var SURFACES = [
+    /* Pip in the chat (W4, PM7 build; delivery-polish.js pip-demo-*): the sheet Pip's faces, Scheduled's status faces,
+       Activity's agents and the Orbit's Pip, the same rows as the groups below where they also belong */
+    ['pip', ['pip-demo-faces', 'schedules-overview', 'pip-demo-activity', 'work-orbit']],
     ['scheduling', ['schedules-overview', 'schedules-windows', 'schedule-new', 'schedule-edit', 'schedule-once', 'schedule-recurring']],
     ['safety', ['schedule-stop', 'schedule-race', 'schedule-duplicate', 'af-title-race-demo', 'todo-attempt-bulk-complete', 'todo-attempt-provider-proposal']],
     ['lineups', ['crew-config', 'crew-auto-config', 'chat-room-config', 'brainstorm-config', 'review-config', 'bsd-config', 'bsd-held']],
