@@ -27223,6 +27223,8 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 /* the brand's Pip: 22 px, on the text's line */
 .o55-logo-pip { display: inline-grid; place-items: center; width: 22px; height: 22px; flex: none; }
 .o55-logo-pip > svg { display: block; width: 22px; height: 22px; }
+/* a wait's loader (L6) sits on the line like the mark it replaced */
+.o55-ldwrap { display: inline-flex; align-items: center; flex: none; }
 
 /* ---- css/11-window-nier.css ---- */
 /* ---- NieR Mode's onboarding window ------------------------------------------------------------------------------
@@ -160792,13 +160794,67 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   }
 
 
-  /* ---------------------------------------------------------------- the player: Pip's bus on the one player */
-  /* A part of Pip (found's registry when it is there; on by default otherwise): voice and music in setup */
+  /* ---------------------------------------------------------------- the player
+     In PMConcept7 Pip's sound is the one player's (found's O55.sound.pip, 15-sound.js): the voice is its say() and
+     vocal(), each look's kit is registered with registerKit() under the kit's own id (friendly, glass, basic, phosphor,
+     teletype, nier: voiceOf(look)), and the music with registerMusic(); its switch, first-gesture rule, holds and the
+     parts setup-voice and setup-music gate them all. The sound board (tools/pip_sound_board.py), which has no one
+     player, falls back to a bus on the context it stands in. */
   const part = (id) => (O55.pipStage && O55.pipStage.h ? O55.pipStage.h.part(id) : true);
   const SND = () => O55.sound || null;
-  const P = { g: null, ctx: null, st: newState(), kit: 'basic', loops: {}, want: {}, sayH: null, pumpT: 0, muted: null };
+  const API = () => { const S = SND(); return S && S.pip && typeof S.pip.registerKit === 'function' ? S.pip : null; };
+  const P = { g: null, ctx: null, st: newState(), kit: 'basic', look: 'basic-dark', loops: {}, want: {}, sayH: null, pumpT: 0, muted: null, tune: null };
   const nier = () => document.documentElement.getAttribute('data-o55-nier') === 'on';
-  /* the one player's context and master, once a gesture has woken them and the switch is on */
+  const QUIET_UNLESS_NIER = new Set(['hover', 'ghost', 'tryOn']);
+  /* the window's own clicks, moves and chapter sting are O55.sound's; Pip only keeps the music's chord in step */
+  const WINDOW_OWNS = new Set(['chapter', 'open', 'close', 'next', 'back', 'tap', 'select', 'toggleOn', 'toggleOff', 'warn']);
+  const VOCALS = new Set(VOCAL);
+  /* the rooms' wet tails ride a bus of their own on the one player's master, so a tail outlives the short chain the
+     player gives each sound */
+  const TAILS = new WeakMap();
+  function tails(c) { let b = TAILS.get(c); if (!b) { const S = SND(); b = c.createGain(); b.connect((S && S.master) || c.destination); TAILS.set(c, b); } return b; }
+  /* one event of a kit, into the chain the player made for it (its trim and pan are the player's) */
+  function into(c, out, kitName, name, op, t) {
+    const K = KIT[kitName], fn = K && K.ev[name];
+    if (!fn) return false;
+    const prevR = R; R = P.st.r;
+    try {
+      const vg = c.createGain(); vg.gain.value = 0.38 + (op.intensity == null ? 0.7 : clamp(op.intensity, 0, 1)) * 0.885; vg.connect(out);
+      const send = c.createGain(); send.gain.value = DRY[name] != null ? DRY[name] : 1; vg.connect(send); send.connect(roomOf(c, kitName, tails(c)));
+      fn(c, vg, t, op, helper(kitName, op, P.st, variant(P.st, kitName, name)));
+    } finally { R = prevR; }
+    return true;
+  }
+  /* the music and the stage's beds (snore, work, power, swing) as one tune: the player plays one at a time */
+  function tune(kitName) {
+    return {
+      start(c, out, t0) {
+        const g = { bus: out }, insts = {}, h = { kit: kitName };
+        const inst = (name) => insts[name] || (insts[name] = loopInst(c, g, kitName, name, t0, P.st));
+        h.level = (name, level) => { const L = insts[name] || (level > 0.001 ? inst(name) : null); if (L) L.set(level, c.currentTime); };
+        h.level('bed', P.want.bed == null ? 1 : P.want.bed);
+        Object.keys(P.want).forEach((n) => { if (n !== 'bed' && P.want[n] > 0.001) h.level(n, P.want[n]); });
+        const pump = () => { const t = c.currentTime; Object.keys(insts).forEach((n) => { const L = insts[n]; if (L.next < t) L.next = t + 0.02; if (L.level > 0.001) L.pump(t + 0.5, false); }); };
+        const id = setInterval(pump, 120); pump();
+        h.stop = (t, fade) => { clearInterval(id); Object.keys(insts).forEach((n) => { try { insts[n].stop(t); } catch (_) {} }); if (P.tune === h) P.tune = null; };
+        P.tune = h;
+        return h;
+      }
+    };
+  }
+  let registered = false;
+  function register() {
+    const pip = API(); if (!pip || registered) return !!pip;
+    KITS.forEach((kn) => {
+      const events = {};
+      Object.keys(KIT[kn].ev).forEach((name) => { if (!WINDOW_OWNS.has(name)) events[name] = (ctx, out, t0, opts) => into(ctx, out, kn, name, opts || {}, t0); });
+      pip.registerKit(kn, { events, trim: Object.assign({}, TRIM[kn] || {}) });
+      pip.registerMusic('pip-' + kn, tune(kn));
+    });
+    registered = true;
+    return true;
+  }
+  /* (the board's stand-in: the context and master it made) */
   function attach() {
     const S = SND(); if (!S || S.muted) return false;
     if (!S.ctx && S.unlock) S.unlock();
@@ -160807,42 +160863,50 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return true;
   }
   const tnow = () => (P.ctx ? P.ctx.currentTime + 0.006 : 0);
-  const QUIET_UNLESS_NIER = new Set(['hover', 'ghost', 'tryOn']);
-  /* the window's chapter sting is O55.sound's; Pip only keeps the music's chord in step */
-  const WINDOW_OWNS = new Set(['chapter', 'open', 'close', 'next', 'back', 'tap', 'select', 'toggleOn', 'toggleOff', 'warn']);
   function play(name, opts) {
-    const op = opts || {}, kn = op.kit ? kitOf(op.kit) : P.kit;
-    if (op.chapter != null) setCh(P.st, op.chapter, tnow());
+    const op = Object.assign({}, opts || {}), kn = op.kit ? kitOf(op.kit) : P.kit;
+    if (op.chapter != null) setCh(P.st, op.chapter, SND() && SND().ctx ? SND().ctx.currentTime : 0);
     if (EVENTS.indexOf(name) < 0 || WINDOW_OWNS.has(name)) return false;
     if (QUIET_UNLESS_NIER.has(name) && !nier()) return false;
+    const pip = API();
+    if (pip && register()) {
+      if (VOCALS.has(name) && !/^(cheer|crew)$/.test(name)) return pip.vocal(name, { look: P.look, pan: op.pan });
+      return pip.play(name, Object.assign(op, { kit: kn, priority: op.priority == null ? 35 : op.priority }));
+    }
     if (!attach()) return false;
     return dispatch(P.ctx, P.g, P.st, kn, name, op, tnow(), false);
   }
   function say(text, opts) {
-    const op = opts || {}, kn = op.kit ? kitOf(op.kit) : P.kit, timing = sayTiming(kn, text, op);
+    const op = opts || {}, pip = API();
+    if (pip) return pip.say(text, { mood: op.mood, look: P.look, where: 'setup', pan: op.pan });
+    const kn = op.kit ? kitOf(op.kit) : P.kit, timing = sayTiming(kn, text, op);
     hush();
     if (!text || !part('setup-voice') || !attach()) return timing;
     P.sayH = sayOn(P.ctx, P.g, P.st, kn, text, op, tnow(), false);
     pumpOn();
     return timing;
   }
-  function hush() { if (P.sayH && P.ctx) { try { P.sayH.stop(P.ctx.currentTime); } catch (_) {} P.sayH = null; } }
+  function hush() { const pip = API(); if (pip) { pip.hush(); return; } if (P.sayH && P.ctx) { try { P.sayH.stop(P.ctx.currentTime); } catch (_) {} P.sayH = null; } }
+  function loop(name, level) {
+    if (LOOPS.indexOf(name) < 0) return;
+    level = clamp(+level || 0, 0, 1);
+    if (name === 'bed' && !part('setup-music')) level = 0;
+    P.want[name] = level;
+    const pip = API();
+    if (pip && register()) {
+      if (name === 'bed') { if (level > 0.001) pip.music('pip-' + P.kit); else pip.stopMusic(0.6); return; }
+      if (P.tune) P.tune.level(name, level);
+      return;
+    }
+    applyLoop(name, level);
+    pumpOn();
+  }
   function applyLoop(name, level) {
     if (!attach()) return;
     let inst = P.loops[name];
     if (!inst && level > 0.001) { inst = P.loops[name] = loopInst(P.ctx, P.g, P.kit, name, P.ctx.currentTime, P.st); inst.next = P.ctx.currentTime + 0.05; }
     if (inst && Math.abs(inst.level - level) > 0.004) inst.set(level, P.ctx.currentTime);
   }
-  function loop(name, level) {
-    if (LOOPS.indexOf(name) < 0) return;
-    level = clamp(+level || 0, 0, 1);
-    if (name === 'bed' && !part('setup-music')) level = 0;
-    P.want[name] = level;
-    applyLoop(name, level);
-    pumpOn();
-  }
-  /* the pump schedules the loops a little ahead, follows the switch (off: every loop and the voice fade out at once;
-     on again: the loops come back where they were) and stops itself when nothing is wanted */
   function pumpOn() { if (!P.pumpT) P.pumpT = setInterval(pump, 120); }
   function pump() {
     const S = SND(), off = !S || S.muted;
@@ -160861,17 +160925,24 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     });
     if (!Object.keys(P.loops).length && !Object.values(P.want).some((v) => v > 0.001) && !P.sayH) { clearInterval(P.pumpT); P.pumpT = 0; }
   }
-  /* a new look: the loops cross into its kit, at the levels they had */
+  /* a new look: its kit, its voice, and its music in place of the last one's */
   function setTheme(t) {
+    P.look = String(t || P.look);
     const kn = kitOf(t); if (kn === P.kit) return;
     P.kit = kn;
+    const pip = API();
+    if (pip && register()) { if (P.want.bed > 0.001) pip.music('pip-' + kn); return; }
     if (P.ctx) { const t0 = tnow(); Object.keys(P.loops).forEach((n) => { P.loops[n].stop(t0); delete P.loops[n]; }); }
     Object.keys(P.want).forEach((n) => applyLoop(n, P.want[n]));
   }
+  register();
+  /* the music asked for before the first click or key (the window opens on its own) starts with that gesture */
+  const wake = () => { const pip = API(); if (!pip || !(P.want.bed > 0.001) || !part('setup-music')) return; const pl = pip.playing(); if (!pl || pl.music !== 'pip-' + P.kit) pip.music('pip-' + P.kit); };
+  ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, () => setTimeout(wake, 0), { capture: true, passive: true }));
   O55.pipVoice = {
     EVENTS, KITS, LOOPS, TARGET, SUBTLE, OFFSET, TRIM, kitOf,
     play, say, hush, loop, setTheme,
-    sayTiming: (text, opts) => sayTiming((opts && opts.kit) ? kitOf(opts.kit) : P.kit, text, opts || {}),
+    sayTiming: (text, opts) => { const pip = API(); return pip ? pip.timing(text, { mood: opts && opts.mood, look: P.look }) : sayTiming((opts && opts.kit) ? kitOf(opts.kit) : P.kit, text, opts || {}); },
     render: renderOne, stats, wav, chainGain, MAKEUP
   };
 })();
@@ -169188,7 +169259,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const stageOf = (host) => (PIP.of ? PIP.of(host) : null);
   A.release = (host) => { const s = stageOf(host); if (s && s.release) s.release(); };
   A.react = (host) => { const s = stageOf(host); if (s && s.picked) s.picked(); };
-  A.poke = (host) => { const s = stageOf(host); if (s && s.busy) s.busy(); };
+  A.poke = (host, id, o) => { const s = stageOf(host); if (s && s.poke) s.poke(id, o || {}); else if (s && s.busy) s.busy(); };
   A.celebrate = (host, o) => { const s = stageOf(host); if (s && s.celebrate) s.celebrate(o || {}); };
   A.createdAct = (host, o) => { const s = stageOf(host); if (s && s.created) s.created(o || {}); };
   A.curtainCall = (host, o) => { const s = stageOf(host); if (s && s.curtainCall) s.curtainCall(o || {}); return !!s; };
@@ -171285,6 +171356,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     // a screen change the window holds back a frame (60-ui-core.js transition): the scene waits with it
     hold(on) { this.held = !!on; if (!on) this.kick(); }
     release() { this.hold(false); }
+    // a letter lands on the sign (Name): it swings a little, alternately left and right (Reduced Motion: still)
+    poke(id, o) { this.busy(); const pr = id && this.props.get(id); if (!pr || this.reduced) return; pr.av += (o.dir || 1) * this.fam.kick * 0.35 * (o.amp || 1); this.kick(); }
     // a choice made (O55.ui.charm): Pip is happy through its line and the chosen prop pops
     picked() { const sp = this.spec || {}; this.busy(); this.cheer(sp.target, { mood: 'happy', hold: 2600 }); }
     celebrate(o) { o = o || {}; this.confetti(o.count || 46); this.cheer(null, { sound: o.sound || 'crew' }); }
@@ -172050,7 +172123,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!layer) return transition(null);
     const hadSheet = !!layer.querySelector('.o55-sheet[data-open="true"]');
     U.morph(layer, paneHtml(def));
-    O55.tips.write(layer);
+    O55.tips.write(layer); armLoaders(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
     const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
     if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() || skin('stepped') ? 'auto' : 'smooth' });
@@ -172089,7 +172162,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     layer.setAttribute('data-screen', def.id);
     layer.innerHTML = paneHtml(def);
     pane.appendChild(layer);
-    O55.tips.write(layer);
+    O55.tips.write(layer); armLoaders(layer);
     layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => n.style.setProperty('--ci', i));
     /* the entrance classes leave once every entrance animation has finished (never cut short, even in slow motion) */
     O55.motion.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back', 'o55-in-open'));
@@ -172195,6 +172268,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!prev) return;
     go(prev, { dir: 'back', noHistory: true });
   }
+
+  /* the waits' loaders (L6) start once they are on the page (the loader owner, PM_PIP_LOADER) */
+  const armLoaders = (layer) => { const P = window.PM_PIP_LOADER; if (P && typeof P.mount === 'function' && layer.querySelector('[data-pip-loader]')) try { P.mount(layer); } catch (_) {} };
 
   /* ---------------------------------------------------------------- ? tips */
   function tip(id, el) {
@@ -172625,6 +172701,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const mark = (status, s, old) => U.mark(status, px(s), 'o55-sg o55-mk', status === 'working') || (old != null ? old : '');
   const spinOld = '<span class="o55-spin" aria-hidden="true"></span>';
   const spin = (s) => mark('working', s || 12, spinOld);
+  /* A wait (scanning a network, checking this computer, a sign-in in the browser, protect's working line) is the system
+     loader (L1, L6: PM_PIP_LOADER, Pip's swing; NieR's Diamond loaders under NieR Mode); an item's state in a row keeps
+     the working mark (spin above). */
+  /* (kept whole through the window's morph, so a refresh never restarts it; 60-ui-core.js arms it with PM_PIP_LOADER.mount) */
+  const loader = (s) => { const P = window.PM_PIP_LOADER; try { if (P && typeof P.html === 'function') return `<span class="o55-ldwrap" data-morph-skip>${P.html({ motion: 'swing', px: s || 16, className: 'o55-loader' })}</span>`; } catch (_) {} return spin(s); };
   const done = (s) => mark('complete', s, smallArt('check', s));
   const X = { 'data-pm-hover-exempt': 'true' };
   const PHASE = { waiting: 'pending', active: 'working', done: 'complete', failed: 'failed' };
@@ -172725,7 +172806,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   O55.tips = { of: tipOf, open: tipOpen, q, explainer, opt, exact, described, onStage, write };
 
   const C = O55.c = {
-    glyph, small, smallArt, mark, spin, done, stepmark,
+    glyph, small, smallArt, mark, spin, loader, done, stepmark,
     /* Choice cards (radio semantics). options: [{v, title, sub, glyph, tag, disabled, reason, key}]; each with its ? */
     cards(action, options, selected, o) {
       o = o || {};
@@ -174588,7 +174669,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const here = S.env.here, ck = S.sess.ui.check || { done: [] };
     const chip = (key, label) => {
       const done = (ck.done || []).includes(key);
-      return `<span class="o55-chip${done ? ' o55-chip-ok' : ''}" data-key="chip-${key}">${done ? C.done(13) : C.spin(12)}<span>${U.esc(done ? label : T('where.check.checking'))}</span></span>`;
+      return `<span class="o55-chip${done ? ' o55-chip-ok' : ''}" data-key="chip-${key}">${done ? C.done(13) : C.loader(14)}<span>${U.esc(done ? label : T('where.check.checking'))}</span></span>`;
     };
     return `<div class="o55-chiprow" data-key="check" role="status" aria-label="${U.esc(T('where.check.label'))}">`
       + chip('space', T('where.check.space', { gb: here.freeGB }))
@@ -174715,7 +174796,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           out += `<div class="o55-sublinks" data-key="l-found">${C.link(T('connect.route.found'), 'manualOff')}</div>`;
         } else {
           const list = found(S), st = F.state(S, scanKey(S));
-          if (!list.length) out += `<div class="o55-row o55-row-wait" data-key="scan">${C.spin(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('connect.route.looking'))}</span></span></div>`;
+          if (!list.length) out += `<div class="o55-row o55-row-wait" data-key="scan">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('connect.route.looking'))}</span></span></div>`;
           else out += C.cards('pickServer', list.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: s.address + ' · ' + nProjects(s.projects.length), tag: s.via === 'vpn' ? 'VPN' : '' })), d.server_ref, { label: T('connect.route.found') });
           if (st && st.state === 'done' && !list.length) out += C.note(T('connect.route.none'), 'warn');
           out += C.note(T('connect.route.vpnLine'), 'info', 'link');
@@ -175039,7 +175120,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         if (kind === 'cloud') out += C.note(T('server.wait.cloudNote'), 'info', 'cloud');
         out += C.field({ bind: 'addr', label: T(kind === 'cloud' ? 'server.wait.cloudLabel' : 'connect.route.addressLabel'), value: sv.addr || '', placeholder: u.address, hint: hit ? T('server.wait.found', { name: u.name }) : T('connect.route.addressHint'), valid: hit });
       } else if (!unclaimedFound(S)) {
-        out += `<div class="o55-row o55-row-wait" data-key="scan">${C.spin(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
+        out += `<div class="o55-row o55-row-wait" data-key="scan">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
       }
       if (unclaimedFound(S) || (sv.manual && String(sv.addr || '').trim().toLowerCase() === u.address)) {
         out += C.cards('pick', [{ v: u.id, glyph: 'server', title: T('server.wait.found', { name: u.name }), sub: T('server.wait.notSetUp'), tag: '' }], sv.target, { label: T('server.wait.title') });
@@ -175788,7 +175869,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     O55.sound.play(O55.motion.reduced() ? 'type' : 'string', { step: v.length, pan: v.length % 2 ? 0.12 : -0.12 });
     if (!O55.art.poke) return;
     O55.art.poke(stage(S), 'sign', { amp: grew ? 1 : 0.55, dir: v.length % 2 ? 1 : -1, fleck: grew });
-    if (!wasOk && F.nonEmpty(v) && !nameProblem(S, v)) O55.motion.after(180, () => O55.art.react(stage(S)));
+    /* (Pip watches the field in wonder while it is typed into: its line says the name is good; no cheer over it) */
   }
   def('name', {
     chapter: 'project', stage: 'first_project', charmSlot: 'name',
@@ -176024,7 +176105,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         if (n.manual) {
           out += `<div class="o55-fieldrow" data-key="manual">${C.field({ bind: 'addr', label: T('nas.find.addressLabel'), value: n.addr || '', placeholder: '192.168.1.20', hint: T('nas.find.addressHint') })}${C.field({ bind: 'port', label: T('nas.find.portLabel'), value: n.port || '22', cls: 'o55-field-port' })}</div>`;
         } else if (!st || st.state !== 'done') {
-          out += `<div class="o55-row o55-row-wait" data-key="scan">${C.spin(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
+          out += `<div class="o55-row o55-row-wait" data-key="scan">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
         } else {
           const cards = S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
             .concat(S.env.devices.map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
@@ -176692,7 +176773,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         out += `<div class="o55-inline" data-key="tokbtn">${O55.ui.btn({ label: T('ai.verify'), do: 'tokenCheck', cls: 'o55-small', disabled: !si.tokenTyped, reason: T('online.signin.tokenLabel') }, 'o55-secondary')}</div>`;
       }
       if (si.state === 'waiting' || si.state === 'code') {
-        out += `<div class="o55-row o55-row-wait" data-key="wait">${C.spin(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('online.signin.waiting'))}</span><span class="o55-rowmeta">${U.esc(T('official.signin', { name: si.name }))}</span></span></div>`;
+        out += `<div class="o55-row o55-row-wait" data-key="wait">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('online.signin.waiting'))}</span><span class="o55-rowmeta">${U.esc(T('official.signin', { name: si.name }))}</span></span></div>`;
         /* a device code only where the service has a device sign-in; otherwise the sign-in link to paste */
         if (si.state === 'waiting') out += `<div class="o55-sublinks" data-key="nob">${C.link(T('online.signin.noBrowser'), deviceFor(S, si) ? 'code' : 'copyLink')}</div>`;
         else {
@@ -177728,7 +177809,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       }
       if (!next) out += C.note(T('protect.done'), 'ok', 'check');
       const st = next && F.state(S, 'backup:' + next);
-      if (st && st.state === 'running') out += `<p class="o55-hint" data-key="work">${C.mark('working', 12, '<span class="o55-spin"></span>')} ${U.esc(T('chrome.working'))}</p>`;
+      if (st && st.state === 'running') out += `<p class="o55-hint" data-key="work">${C.loader(14)} ${U.esc(T('chrome.working'))}</p>`;
       return out;
     },
     foot(S) {
@@ -178240,7 +178321,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     },
     do: {
       enter(S) { O55.finish(S, { tour: false }); },
-      tour(S) { O55.finish(S, { tour: true }); },
+      /* O10: Pip hands the strings on: its hand lifts away as the tour's first callout grows out of the window */
+      tour(S) { const st = O55.pipStage && O55.pipStage.of(S.root && S.root.querySelector('.o55-stage')); if (st && st.handOff) st.handOff(); O55.finish(S, { tour: true }); },
       createNow(S) { O55.draft.set(md(S), { project_mode: 'new', review_confirmed: false }); S.sess.commit = { state: 'none', attempt: 0 }; S.sess.ui.begin = 'new'; S.save(); O55.ui.go('begin'); }
     }
   });
