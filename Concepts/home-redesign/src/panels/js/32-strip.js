@@ -395,21 +395,28 @@ function updateTab(el, rec, p, l) {
   var k = kindDef(rec.kind);
   var iconName = tabIcon(rec);
   if (ico._name !== iconName) { ico.textContent = ''; ico.appendChild(kindIcon(iconName)); ico._name = iconName; }
-  // marks: failed command's exit code (D12), agent mark
+  // marks: failed command's exit code (D12), agent mark, and the working mark of a busy tab (data-busy). A busy tab's
+  // state is the shared working status mark, never the loader (L1: the loader is for the wait inside the tab): lit and
+  // still with its one act as it appears (nx-still, F3-658), shown only while the tab is not the one on screen (F3-631)
+  // and only when no failed exit or driving agent outranks it in the one mark slot
   var mark = el.querySelector('.pmw-tmark');
   var markText = rec.exitCode != null && rec.exitCode !== 0 ? exitWords(rec.exitCode) : '';
-  setAttr(mark, 'hidden', !markText && !rec.agent);
-  if (mark._t !== markText + '|' + (rec.agent || '')) {
+  var working = !!rec.busy && !active && !markText && !rec.agent && !!(window.PMG && window.PMG.status);
+  var markKey = markText + '|' + (rec.agent || '') + '|' + (working ? 'working' : '');
+  setAttr(mark, 'hidden', !markText && !rec.agent && !working);
+  if (mark._t !== markKey) {
     mark.textContent = '';
     if (rec.agent) mark.appendChild(h('i', { class: 'pmw-agentmark', 'aria-hidden': 'true' }));
     if (markText) mark.appendChild(h('span', { class: 'pmw-exit', text: markText }));
-    mark._t = markText + '|' + (rec.agent || '');
+    if (working) mark.appendChild(h('span', { class: 'pmw-tbusy', 'aria-hidden': 'true', html: window.PMG.status('working', 12, 'nx-still') }));
+    mark._t = markKey;
   }
   var desc = [];
   if (rec.preview) desc.push('preview');
   if (rec.dirty) desc.push('unsaved changes');
   if (rec.pinned) desc.push('pinned');
   if (rec.attention) desc.push('new');
+  if (rec.busy) desc.push('working');
   if (markText) desc.push('last command failed with exit code ' + rec.exitCode);
   if (rec.agent) desc.push(rec.agent + ' is driving it');
   el.setAttribute('aria-label', label + (desc.length ? ', ' + desc.join(', ') : ''));

@@ -20,6 +20,8 @@
 .pmw-br-addr:focus-within { border-color: var(--pmw-focus); box-shadow: 0 0 0 1px var(--pmw-focus); }
 .pmw-br-aicon { display: inline-flex; flex: none; }
 .pmw-br-aicon .pmw-ico { width: 13px; height: 13px; }
+/* a page's wait is the system loader in the icon's place (20-browser.js show) */
+.pmw-br-aicon .pml-ld { --pml-size: 13px; }
 .pmw-br-addrin { flex: 1 1 auto; min-width: 0; height: 22px; padding: 0; border: 0; outline: none; background: transparent; color: var(--pmw-text);
   font-family: var(--pm-font-code); font-size: 12px; text-transform: none; letter-spacing: 0; }
 /* the capture toolbar shows its words only when the address still has room: the row's labelsAt (1100 px, 20-browser.js)
@@ -165,8 +167,6 @@
 .pmw-br-flash { position: absolute; inset: 0; z-index: 5; pointer-events: none; background: #fff; opacity: 0; }
 .pmw-br-flash.is-on { animation: pmw-br-flash 240ms ease-out; }
 @keyframes pmw-br-flash { 0% { opacity: .55; } 100% { opacity: 0; } }
-.pmw-br-view.is-loading::after { content: ""; position: absolute; left: 0; top: 0; z-index: 5; height: 2px; width: 100%; background: var(--pmw-accent); transform-origin: 0 50%; animation: pmw-br-load 320ms ease-out forwards; }
-@keyframes pmw-br-load { from { transform: scaleX(.05); } to { transform: scaleX(1); opacity: .2; } }
 .pmw-br-prompt { position: absolute; z-index: 6; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; max-width: calc(100% - 16px); box-sizing: border-box; padding: 4px 4px 4px 10px;
   background: var(--pmw-pop); color: var(--pmw-text); border: 1px solid var(--pmw-pop-line); border-radius: 8px; box-shadow: var(--pmw-pop-shadow); font-family: var(--pm-font-ui); font-size: 12px; }
 .pmw-br-prompt[hidden] { display: none; }
@@ -496,7 +496,6 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-br-pbtn:first-child { b
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-hl, .pmw-br-hl.is-picked) { outline-color: var(--accent-lime); outline-style: dashed; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-br-hltag { background: var(--accent-lime); color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-br-prompt { border-color: var(--accent-lime); box-shadow: 3px 3px 0 rgba(0, 0, 0, .35); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-br-view.is-loading::after { animation-timing-function: steps(4, end); }
 
 /* NieR: ink and parchment, square corners, no glow; small headers go uppercase with the headers part */
 html[data-o55-nier="on"] :is(.pmw-br-addr, .pmw-br-prompt, .pmw-br-pbtn, .pmw-br-tpick, .pmw-br-cap, .pmw-br-thumb, .pmw-br-hltag, .pmw-br-rhint, .pmw-br-rsize, .pmw-tool-chan, .pmw-tool-btn, .pmw-tool-sdot) { border-radius: 0; }
@@ -527,18 +526,15 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-br-prow, .pmw-b
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-br-prow, .pmw-br-cap, .pmw-tool-file, .pmw-tool-prow):is(:hover, :focus-visible) :is(span, b, .pmw-ico, .pmw-tool-mark) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-br-dseg, .pmw-br-tseg) .pmw-seg-opt,
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-br-nrow.is-head, .pmw-tool-tr.is-head, .pmw-br-kv dt) { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
-html[data-o55-nier="on"] .pmw-br-view.is-loading::after { animation-timing-function: steps(4, end); background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-br-flash { background: var(--o55-nier-paper); }
 
 /* Reduced Motion: nothing moves; every action still works */
-html[data-motion="reduced"] .pmw-br-flash, html[data-motion="reduced"] .pmw-br-view.is-loading::after { animation: none !important; }
-html[data-motion="reduced"] .pmw-br-view.is-loading::after { display: none; }
+html[data-motion="reduced"] .pmw-br-flash { animation: none !important; }
 html[data-motion="reduced"] .pmw-br-tb-card { transition: none; }
 html[data-motion="reduced"] .pmw-br-tb-card:hover { transform: none; }
 html[data-motion="reduced"] .pmw-tool-list { transition: none; }
 @media (prefers-reduced-motion: reduce) {
-  .pmw-br-flash, .pmw-br-view.is-loading::after { animation: none !important; }
-  .pmw-br-view.is-loading::after { display: none; }
+  .pmw-br-flash { animation: none !important; }
   .pmw-br-tb-card { transition: none; }
   .pmw-br-tb-card:hover { transform: none; }
   .pmw-tool-list { transition: none; }

@@ -165,7 +165,10 @@ html[data-motion="reduced"] .pmt-bgmove, .pmt-bgmove[data-anim="still"] { animat
 html[data-motion="reduced"] .pmt-root :not(.pmt-calm), html[data-motion="reduced"] .pmt-root :not(.pmt-calm)::before,
 html[data-motion="reduced"] .pmt-root :not(.pmt-calm)::after { animation: none !important; transition: none !important; }
 html[data-motion="reduced"] .pmt-root.pmt-bell .pmt-body { box-shadow: inset 0 0 0 1px var(--pmw-warn, var(--accent-warning)); }
+/* a program's progress of unknown length, still: the whole bar at half strength, never a 30 % stub that reads as
+   measured progress (W5) -- under the app's switch and under the system's setting alike */
 html[data-motion="reduced"] .pmt-progress[data-pmt-state="indeterminate"]::before { width: 100%; left: 0; opacity: .5; }
 @media (prefers-reduced-motion: reduce) {
   .pmt-root :not(.pmt-calm), .pmt-root :not(.pmt-calm)::before, .pmt-root :not(.pmt-calm)::after { animation: none !important; transition: none !important; }
+  .pmt-progress[data-pmt-state="indeterminate"]::before { width: 100%; left: 0; opacity: .5; }
 }

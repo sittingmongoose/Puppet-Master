@@ -169,6 +169,8 @@ html[data-motion="reduced"] .pmw-ink-opt { transition: none; }
 .pmw-act.is-danger { color: var(--pmw-bad); }
 .pmw-act[aria-disabled="true"] { opacity: .5; cursor: default; }
 .pmw-act .pmw-ico { width: 14px; height: 14px; }
+/* a busy button's wait: the system loader in the icon's place (27-frames.js frames.button b.busy) */
+.pmw-act .pml-ld { --pml-size: 16px; margin: 0 -1px; }
 /* Friendly's page rule [data-theme^="friendly"] button { border-radius: var(--radius-md) } (0,1,1, 14 px) outranks the
    one-class rules here and turns 20-36 px controls into capsules (the pill ban); these restate the frames' radii at that
    weight, in Friendly only, so kinds' own two-class rules still win and NieR's square part keeps its square corners */

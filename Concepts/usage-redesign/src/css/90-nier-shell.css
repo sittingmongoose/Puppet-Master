@@ -90,15 +90,8 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pm
 /* empty: the machine drawing above every empty state */
 html[data-o55-nier-parts~="empty"] #panel-usage .pmu-empty::before { content: ""; display: block; width: 44px; height: 44px; margin: 0 auto 8px;
   background: var(--o55nw-art-machine) center / contain no-repeat; opacity: .82; }
-/* diamonds: the refresh is the app's diamond loader (styles.d/14-nier-parts.css, the 5.6 Pro port): the icon's strokes go
-   and a hollow diamond with an inner square turns on its vertical axis, one half turn in the refresh's 650 ms (the app's
-   loop turns once in 2.8 s; a refresh is one shot, so nothing keeps turning). Reduce Motion: the still diamond. */
-html[data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg { box-sizing: border-box; border: 1px solid currentColor; outline: 1px solid currentColor; outline-offset: -5px;
-  transform: rotate(45deg) scale(.72); animation: pmu-nier-diamond calc(650ms * var(--pmu-speed, 1)) linear 1; }
-html[data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg > * { visibility: hidden; }
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg { animation: none; }
-@media (prefers-reduced-motion: reduce) { html[data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg { animation: none; } }
-@keyframes pmu-nier-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(180deg) rotate(45deg) scale(.72); } }
+/* diamonds: the refresh's wait is the system loader, which the loader owner hands to the app's Diamond loaders part
+   (glyph-system src/logo/pm-loader.js, styles.d/14-nier-parts.css); nothing of Usage's own */
 
 /* group heading bands are not plates: no corner ticks, no ink frame */
 html[data-o55-nier="on"] #panel-usage .pmu-card[data-head="band"] { background-image: none !important; border-color: transparent; box-shadow: none; }

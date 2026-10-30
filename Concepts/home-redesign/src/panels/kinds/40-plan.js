@@ -667,10 +667,10 @@ function mountPlan(host, state, api) {
     var blocked = !!plan.blocked && live.status === 'ready';
     var canBuild = live.status === 'ready' && !old && !blocked;
     var reason = old ? 'Build uses the current version, V' + plan.version : blocked ? 'Answer the open items first' : live.status === 'building' ? 'The build is running' : live.status === 'completed' ? 'This plan was built' : live.status === 'canceled' ? 'This plan was canceled' : '';
-    var build = PMW.frames.button({ label: buildLabel(), primary: canBuild, disabled: !canBuild, reason: reason, detail: canBuild ? 'Start the steps in order' : reason, run: startBuild });
+    // while it builds, the button's wait is the system loader (frames.button busy), not a pulsing dot of its own
+    var build = PMW.frames.button({ label: buildLabel(), primary: canBuild, disabled: !canBuild, reason: reason, detail: canBuild ? 'Start the steps in order' : reason, run: startBuild, busy: live.status === 'building' });
     build.classList.add('pmw-plan-build', 'is-' + live.status);
     build.setAttribute('data-k', 'build');
-    if (live.status === 'building') build.appendChild(h('span', { class: 'pmw-plan-busy', 'aria-hidden': 'true' }));
     foot.appendChild(build);
     if (live.status === 'ready' || live.status === 'building') {
       var rv = PMW.frames.button({ label: live.status === 'building' ? 'Stop and revise' : 'Revise', detail: 'Say what to change in the chat', run: revise });
@@ -965,6 +965,9 @@ function mountDiscovery(host, state, api) {
       if (q.type === 'fact') {
         var rc = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'recheck:' + q.id, 'data-pmh': 'icon', text: q.state === 'researching' ? 'Checking…' : 'Recheck source',
           'data-pm-hover-label': 'Recheck source', 'data-pm-hover-detail': 'Read the source again and say if it changed' });
+        // the check's wait: the system loader before "Checking…", sized to the link's text (W5)
+        var rcld = q.state === 'researching' ? PMW.loader({ motion: 'swing', px: 12 }) : null;
+        if (rcld) { rc.insertBefore(rcld, rc.firstChild); rc.setAttribute('aria-busy', 'true'); }
         if (q.state === 'researching') rc.setAttribute('aria-disabled', 'true');
         else rc.addEventListener('click', function () { recheck(q); });
         acts.push(rc);

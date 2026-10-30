@@ -156,19 +156,29 @@ if (usagePanel) new MutationObserver(syncUsageLayer).observe(usagePanel, { attri
 
 PMU.core.rangeHours = rangeHours;
 
+var refreshOut = false;   // a refresh's readings are on their way (PM7_USAGE.refresh)
 window.PM7_USAGE = {
   render: render, rerender: rerender, syncNavInk: function (animate) { PMU.shell.syncInk(animate !== false); },
   state: state, data: DATA, rooms: ROOM, details: DETAIL, widget_ids: KNOWN_USAGE_WIDGET_IDS,
   roomWidgets: roomWidgets, selectRoom: selectRoom,
   setRoomDetail: function (room, detail) { var patch = {}; if (ROOM[room]) patch.room = room; if (DETAIL[detail]) patch.detail = detail; return PMU.shell.setView(patch, 'api'); },
   projectedAttempts: projectedAttempts,
+  /* a refresh is a wait: the button holds the system loader (W5, DR-077; window.PM_PIP_LOADER, Hop, a short wait that
+     ends with fresh numbers, L5) and aria-busy until the readings come back (the fixture's 650 ms); the page redraws
+     and says so when they do. A second press while one is out does nothing. */
   refresh: function () {
+    if (refreshOut) return;
     command('cmd.usage.refresh', { room: state.room, range: state.range, scope: state.scope }, { requested: true });
-    var button = document.getElementById('pmuRefresh');
-    if (button) { button.classList.add('spinning'); setTimeout(function () { button.classList.remove('spinning'); }, 650); }
-    rerender();
-    usageEvent('view.usage.projection_refreshed', { room: state.room, range: state.range });
-    toast(t('toast.refreshed'));
+    var button = document.getElementById('pmuRefresh'), LD = window.PM_PIP_LOADER;
+    if (button && LD) LD.busy(button, true, { motion: LD.motion('short'), px: 16 });
+    refreshOut = true;
+    setTimeout(function () {
+      refreshOut = false;
+      if (button && LD) LD.busy(button, false);
+      rerender();
+      usageEvent('view.usage.projection_refreshed', { room: state.room, range: state.range });
+      toast(t('toast.refreshed'));
+    }, 650);
   },
   spinRefresh: function () { this.refresh(); },
   exportJson: usageExportJson,
