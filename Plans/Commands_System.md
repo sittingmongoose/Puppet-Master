@@ -7533,16 +7533,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  The 5.6 Pro chat round's non-command controls are fixed. View state (LOCAL_PRESENTATION, no command, no event, no
-  catalog row): Edit objective, Cancel edit and Objective history inside Goal Activity Detail; a To-Do row's selection
-  and expansion and Close details; Activity Detail's domain tabs; a stretch row's toggle, Expand or Collapse and More
-  details in a subagent's live transcript; message More and its panel; a setup sheet's dropdown trigger pressed again;
-  Technical details on a setup sheet's Advanced page and Show raw data. Hover tags, press-to-close and the activity
-  preview dwell are presentation. The Schedule Message send-time track is draft state. Opening a subagent's live
-  transcript reuses cmd.agents.open_thread from every ACD-485 opener, with no chat-local alias; the transcript's Copy is
-  cmd.chat.copy_message and the Goal preview's Edit objective is cmd.chat.goal.open_editor. The concept's Demo Studio
-  NieR controls and its nier-*, feed-stretch and goal-* action names are concept demos under CS-079; NieR Mode is a
-  Settings write.
+  The 5.6 Pro chat round's non-command controls are fixed. View state (LOCAL_PRESENTATION, no command, no event,
+  no catalog row): Edit objective, Cancel edit and Objective history inside Goal Activity Detail; a To-Do row's
+  selection and expansion and Close details; Activity Detail's domain tabs; a stretch row's toggle, Expand or
+  Collapse and More details in a subagent's live transcript; message More and its panel; a setup sheet's
+  dropdown trigger pressed again; Technical details on a setup sheet's Advanced page and Show raw data. Hover
+  tags, press-to-close and the activity preview dwell are presentation. The Schedule Message send-time track is
+  draft state. Opening a subagent's live transcript reuses cmd.agents.open_thread from every ACD-485 opener,
+  with no chat-local alias; the transcript's Copy is cmd.chat.copy_message and the Goal preview's Edit objective
+  is cmd.chat.goal.open_editor. The concept's Demo Studio NieR controls and its nier-*, feed-stretch and goal-*
+  action names are concept demos under CS-079; A NieR family selection is an ordinary theme Settings write
+  through cmd.settings.transaction.preview then cmd.settings.transaction.apply (Q22); editor open/close/replay
+  remain local presentation actions. Amended Q22, Jared 2026-10-30 (DL-257): the fifth family uses the existing
+  theme owner; no separate override remains.
 gui_related: true
 gui_classification_reason: "Keeps the 5.6 Pro round's view, draft and demo controls out of the command catalog."
 split_recommended: false
@@ -8363,3 +8366,6 @@ owner_hints:
 ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/Shared_Integration_Runtime.md#SIR-054, ContractName:Plans/Executor_Protocol.md#EP-043
 
 
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

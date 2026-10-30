@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6716-L6811
+Source lines: L6682-L6780
 
-Source SHA256: `43ced988255e047f6410149fa3f48c7398c3c6c1697b7b6f16a7ba1815f5dd9f`
+Source SHA256: `718a143daa9bb41b024fb52dcf2de09ba2733c1f6caf7b2fff5992e79c026c89`
 
 ---
 
@@ -104,3 +104,6 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-231, ContractName:Plans/Collaborative_Workflows.md#CWR-044, ContractName:Plans/assistant-chat-design.md#ACD-476, ContractName:Plans/UI_Command_Catalog.md#UCC-207, ContractName:Plans/Wiring_Matrix.md#WM-095, ContractName:Plans/Contracts_V0.md#CV-364
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

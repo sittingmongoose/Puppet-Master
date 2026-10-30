@@ -1794,11 +1794,11 @@
     }
   ],
   "counts": {
-    "settings": 1011,
+    "settings": 1010,
     "status_keys": 22,
     "pip_parts": 25,
     "default_parts": 24,
-    "pm7_bindings": 477,
+    "pm7_bindings": 479,
     "touch_rows": 715,
     "touch_profiles": 140,
     "production_wiring_entries": 1269,
@@ -3412,6 +3412,1226 @@
       "expected": {
         "action": "defer"
       }
+    }
+  ],
+  "q11_row_motion_contract": {
+    "decision_id": "Q11",
+    "decider": "Jared",
+    "decided_at": "2026-10-30",
+    "owner_ref": "Plans/Decision_Log.md#DL-253",
+    "source_clarification": "pm7-build:1030183348-18bd",
+    "evidence_level": "static_contract_oracle_only",
+    "new_command_or_event": false,
+    "native_runtime_executed": false,
+    "live_states": [
+      "working",
+      "checking",
+      "retrying"
+    ],
+    "shared_clock_owner": "PMLogo.clock / existing document-clock status rhythm",
+    "row_consumers": [
+      "Work panel",
+      "Agents rail",
+      "Home board"
+    ],
+    "nier_policy": "No exemption: own Diamond/fallback loader for working agents, never animated Pip; running process mark moves."
+  },
+  "q11_row_motion_cases": [
+    {
+      "name": "basic_dark_agent_working",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "basic-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "basic_dark_agent_checking",
+      "value": {
+        "kind": "agent",
+        "state": "checking",
+        "look": "basic-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "basic_dark_agent_retrying",
+      "value": {
+        "kind": "agent",
+        "state": "retrying",
+        "look": "basic-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "basic_dark_process_working",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "basic-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "basic_dark_process_checking",
+      "value": {
+        "kind": "process",
+        "state": "checking",
+        "look": "basic-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "basic_dark_process_retrying",
+      "value": {
+        "kind": "process",
+        "state": "retrying",
+        "look": "basic-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "basic_light_agent_working",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "basic-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "basic_light_agent_checking",
+      "value": {
+        "kind": "agent",
+        "state": "checking",
+        "look": "basic-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "basic_light_agent_retrying",
+      "value": {
+        "kind": "agent",
+        "state": "retrying",
+        "look": "basic-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "basic_light_process_working",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "basic-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "basic_light_process_checking",
+      "value": {
+        "kind": "process",
+        "state": "checking",
+        "look": "basic-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "basic_light_process_retrying",
+      "value": {
+        "kind": "process",
+        "state": "retrying",
+        "look": "basic-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "friendly_dark_agent_working",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "friendly-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "friendly_dark_agent_checking",
+      "value": {
+        "kind": "agent",
+        "state": "checking",
+        "look": "friendly-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "friendly_dark_agent_retrying",
+      "value": {
+        "kind": "agent",
+        "state": "retrying",
+        "look": "friendly-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "friendly_dark_process_working",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "friendly-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "friendly_dark_process_checking",
+      "value": {
+        "kind": "process",
+        "state": "checking",
+        "look": "friendly-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "friendly_dark_process_retrying",
+      "value": {
+        "kind": "process",
+        "state": "retrying",
+        "look": "friendly-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "friendly_light_agent_working",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "friendly-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "friendly_light_agent_checking",
+      "value": {
+        "kind": "agent",
+        "state": "checking",
+        "look": "friendly-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "friendly_light_agent_retrying",
+      "value": {
+        "kind": "agent",
+        "state": "retrying",
+        "look": "friendly-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "friendly_light_process_working",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "friendly-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "friendly_light_process_checking",
+      "value": {
+        "kind": "process",
+        "state": "checking",
+        "look": "friendly-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "friendly_light_process_retrying",
+      "value": {
+        "kind": "process",
+        "state": "retrying",
+        "look": "friendly-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "glass_dark_agent_working",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "glass-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "glass_dark_agent_checking",
+      "value": {
+        "kind": "agent",
+        "state": "checking",
+        "look": "glass-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "glass_dark_agent_retrying",
+      "value": {
+        "kind": "agent",
+        "state": "retrying",
+        "look": "glass-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "glass_dark_process_working",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "glass-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "glass_dark_process_checking",
+      "value": {
+        "kind": "process",
+        "state": "checking",
+        "look": "glass-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "glass_dark_process_retrying",
+      "value": {
+        "kind": "process",
+        "state": "retrying",
+        "look": "glass-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "glass_light_agent_working",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "glass-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "glass_light_agent_checking",
+      "value": {
+        "kind": "agent",
+        "state": "checking",
+        "look": "glass-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "glass_light_agent_retrying",
+      "value": {
+        "kind": "agent",
+        "state": "retrying",
+        "look": "glass-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "glass_light_process_working",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "glass-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "glass_light_process_checking",
+      "value": {
+        "kind": "process",
+        "state": "checking",
+        "look": "glass-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "glass_light_process_retrying",
+      "value": {
+        "kind": "process",
+        "state": "retrying",
+        "look": "glass-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "retro_dark_agent_working",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "retro-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "retro_dark_agent_checking",
+      "value": {
+        "kind": "agent",
+        "state": "checking",
+        "look": "retro-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "retro_dark_agent_retrying",
+      "value": {
+        "kind": "agent",
+        "state": "retrying",
+        "look": "retro-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "retro_dark_process_working",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "retro-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "retro_dark_process_checking",
+      "value": {
+        "kind": "process",
+        "state": "checking",
+        "look": "retro-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "retro_dark_process_retrying",
+      "value": {
+        "kind": "process",
+        "state": "retrying",
+        "look": "retro-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "retro_light_agent_working",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "retro-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "retro_light_agent_checking",
+      "value": {
+        "kind": "agent",
+        "state": "checking",
+        "look": "retro-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "retro_light_agent_retrying",
+      "value": {
+        "kind": "agent",
+        "state": "retrying",
+        "look": "retro-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "pip_think"
+    },
+    {
+      "name": "retro_light_process_working",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "retro-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "retro_light_process_checking",
+      "value": {
+        "kind": "process",
+        "state": "checking",
+        "look": "retro-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "retro_light_process_retrying",
+      "value": {
+        "kind": "process",
+        "state": "retrying",
+        "look": "retro-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "nier_dark_agent_working",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "nier_loader"
+    },
+    {
+      "name": "nier_dark_agent_checking",
+      "value": {
+        "kind": "agent",
+        "state": "checking",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "nier_loader"
+    },
+    {
+      "name": "nier_dark_agent_retrying",
+      "value": {
+        "kind": "agent",
+        "state": "retrying",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "nier_loader"
+    },
+    {
+      "name": "nier_dark_process_working",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "nier_dark_process_checking",
+      "value": {
+        "kind": "process",
+        "state": "checking",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "nier_dark_process_retrying",
+      "value": {
+        "kind": "process",
+        "state": "retrying",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "nier_light_agent_working",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "nier-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "nier_loader"
+    },
+    {
+      "name": "nier_light_agent_checking",
+      "value": {
+        "kind": "agent",
+        "state": "checking",
+        "look": "nier-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "nier_loader"
+    },
+    {
+      "name": "nier_light_agent_retrying",
+      "value": {
+        "kind": "agent",
+        "state": "retrying",
+        "look": "nier-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "nier_loader"
+    },
+    {
+      "name": "nier_light_process_working",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "nier-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "nier_light_process_checking",
+      "value": {
+        "kind": "process",
+        "state": "checking",
+        "look": "nier-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "nier_light_process_retrying",
+      "value": {
+        "kind": "process",
+        "state": "retrying",
+        "look": "nier-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "process_mark"
+    },
+    {
+      "name": "still_agent_waiting",
+      "value": {
+        "kind": "agent",
+        "state": "waiting",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_agent_waiting-dep",
+      "value": {
+        "kind": "agent",
+        "state": "waiting-dep",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_agent_blocked",
+      "value": {
+        "kind": "agent",
+        "state": "blocked",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_agent_done",
+      "value": {
+        "kind": "agent",
+        "state": "done",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_agent_finished",
+      "value": {
+        "kind": "agent",
+        "state": "finished",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_agent_stopped",
+      "value": {
+        "kind": "agent",
+        "state": "stopped",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_agent_scheduled",
+      "value": {
+        "kind": "agent",
+        "state": "scheduled",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_agent_unknown",
+      "value": {
+        "kind": "agent",
+        "state": "unknown",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_process_waiting",
+      "value": {
+        "kind": "process",
+        "state": "waiting",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_process_waiting-dep",
+      "value": {
+        "kind": "process",
+        "state": "waiting-dep",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_process_blocked",
+      "value": {
+        "kind": "process",
+        "state": "blocked",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_process_done",
+      "value": {
+        "kind": "process",
+        "state": "done",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_process_finished",
+      "value": {
+        "kind": "process",
+        "state": "finished",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_process_stopped",
+      "value": {
+        "kind": "process",
+        "state": "stopped",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_process_scheduled",
+      "value": {
+        "kind": "process",
+        "state": "scheduled",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "still_process_unknown",
+      "value": {
+        "kind": "process",
+        "state": "unknown",
+        "look": "nier-dark",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_basic_agent_visible",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "basic-light",
+        "visible": false,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_basic_agent_dragging",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "basic-light",
+        "visible": true,
+        "dragging": true,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_basic_agent_hidden_tab",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "basic-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": true,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_basic_agent_reduced_motion",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "basic-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": true
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_basic_process_visible",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "basic-light",
+        "visible": false,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_basic_process_dragging",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "basic-light",
+        "visible": true,
+        "dragging": true,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_basic_process_hidden_tab",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "basic-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": true,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_basic_process_reduced_motion",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "basic-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": true
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_nier_agent_visible",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "nier-light",
+        "visible": false,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_nier_agent_dragging",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "nier-light",
+        "visible": true,
+        "dragging": true,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_nier_agent_hidden_tab",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "nier-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": true,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_nier_agent_reduced_motion",
+      "value": {
+        "kind": "agent",
+        "state": "working",
+        "look": "nier-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": true
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_nier_process_visible",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "nier-light",
+        "visible": false,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_nier_process_dragging",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "nier-light",
+        "visible": true,
+        "dragging": true,
+        "hidden_tab": false,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_nier_process_hidden_tab",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "nier-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": true,
+        "reduced_motion": false
+      },
+      "expected": "still"
+    },
+    {
+      "name": "hold_nier_process_reduced_motion",
+      "value": {
+        "kind": "process",
+        "state": "working",
+        "look": "nier-light",
+        "visible": true,
+        "dragging": false,
+        "hidden_tab": false,
+        "reduced_motion": true
+      },
+      "expected": "still"
     }
   ]
 }

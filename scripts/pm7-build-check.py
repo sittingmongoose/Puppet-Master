@@ -24,6 +24,16 @@ def read(name):
     return json.loads((PLANS / name).read_text())
 
 
+def q11_row_motion(value):
+    """Q11 eligibility oracle only; GUI clock/cap/performance need source proof."""
+    if (not value["visible"] or value["dragging"] or value["hidden_tab"]
+            or value["reduced_motion"] or value["state"] not in {"working", "checking", "retrying"}):
+        return "still"
+    if value["kind"] == "process":
+        return "process_mark"
+    return "nier_loader" if value["look"].startswith("nier-") else "pip_think"
+
+
 def target_disposition(request, observed):
     """Static oracle for the identity guard required before owner dispatch."""
     scope = ("work_id", "project_id", "server_id", "environment_id", "generation")
@@ -139,6 +149,9 @@ def validate():
     schema = read("pm7_build_contracts.schema.json")
     jsonschema.Draft202012Validator.check_schema(schema)
     fixtures = read("pm7_build_contracts.fixtures.json")
+    for case in fixtures["q11_row_motion_cases"]:
+        require(q11_row_motion(case["value"]) == case["expected"],
+                "Q11 row eligibility differs: " + case["name"])
     touch_profiles = {p["profile_id"]: p for p in read("touch_closure.json")["profiles"]}
     schema_documents = [schema, read("ui_command_response.schema.json"),
                         read("full_thread_runtime_contracts.schema.json"),
@@ -323,7 +336,7 @@ process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
             "S9 immutable brand/loader consumers became switchable")
     inventory = read("settings_inventory.json")["settings"]
     settings = {row["id"]: row for row in inventory}
-    require(len(settings) == len(inventory) == 1011, "Settings count differs from the two-row admission")
+    require(len(settings) == len(inventory) == 1010, "Q22 Settings count differs after retiring the NieR override row")
     pip = settings["general.visual.pip-parts"]
     labels = [part["label"] for part in parts["parts"]]
     label_by_id = {part["id"]: part["label"] for part in parts["parts"]}
@@ -530,6 +543,7 @@ process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
             "counts": observed, "schema_cases": len(fixtures["schema_cases"]),
             "identity_cases": len(fixtures["semantic_cases"]), "runtime_shape_cases": runtime_cases,
             "activity_thread_switch_cases": len(fixtures["activity_detail_thread_switch_cases"]),
+            "q11_row_motion_cases": len(fixtures["q11_row_motion_cases"]),
             "project_badge_cases": len(fixtures["project_badge_cases"]),
             "work_detail_controls": len(census),
             "work_detail_omission_cases": len(fixtures["work_detail_census_cases"]),

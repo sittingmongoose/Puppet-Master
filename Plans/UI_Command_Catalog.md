@@ -8238,22 +8238,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  The FABLE GUI command repair registers missing theme, persona, alert, concern, model,
-  chat send/stop, panel undock/redock, Orchestrator pause/resume, Dashboard widget,
-  Free Models onboarding, launch-chain, runtime recovery, and FileManager command
-  contracts with field-level payload, result, error, and receipt/event requirements.
-  Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain
-  canonical and are strengthened by the shared UICommandResponse and no fabricated
-  command_applied event rule. In the cmd.theme.* family the title bar's Light/Dark/Auto
-  segmented control (amended 2026-10-17, DL-228, no longer dispatching cmd.theme.set_mode, as the census row
-  shell.theme.mode and SSYS-010 say), its family rows and NieR Mode
-  checkbox, the Guided Tour bar's Look menu and the NieR Mode editor compose
-  cmd.settings.transaction.preview then cmd.settings.transaction.apply as UCC-120's
-  local affordances do; no theme family or NieR command is added. The application's start
-  and onboarding's look previews (ui.onboarding.start, ui.onboarding.choose_look) dispatch
-  no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the stored theme
-  of the Project the application opens on (F3-468, DL-153).
-  Amended 2026-10-09 (DL-180): from the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat, into a window (UCC-203); cmd.dashboard.add_widget becomes an alias of cmd.widget.add (UCC-202).
+  The FABLE GUI command repair registers missing theme, persona, alert, concern, model, chat send/stop, panel
+  undock/redock, Orchestrator pause/resume, Dashboard widget, Free Models onboarding, launch-chain, runtime
+  recovery, and FileManager command contracts with field-level payload, result, error, and receipt/event
+  requirements. Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain canonical and
+  are strengthened by the shared UICommandResponse and no fabricated command_applied event rule. In the
+  cmd.theme.* family the title bar's Light/Dark/Auto segmented control (amended 2026-10-17, DL-228, no longer
+  dispatching cmd.theme.set_mode, as the census row shell.theme.mode and SSYS-010 say), its five family rows,
+  including NieR (Q22), the Guided Tour bar's Look menu and the NieR Mode editor compose
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply as UCC-120's local affordances do; no
+  theme family or NieR command is added. The application's start and onboarding's look previews
+  (ui.onboarding.start, ui.onboarding.choose_look) dispatch no cmd.theme.* and emit no settings.theme.updated:
+  the pre-paint reads the stored theme of the Project the application opens on (F3-468, DL-153). Amended
+  2026-10-09 (DL-180): from the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat,
+  into a window (UCC-203); cmd.dashboard.add_widget becomes an alias of cmd.widget.add (UCC-202). Amended Q22,
+  Jared 2026-10-30 (DL-257): the fifth family uses the existing theme owner; no separate override remains.
 gui_related: true
 gui_classification_reason: Defines user-visible GUI command families, command payloads, responses, disabled states, and receipts.
 depends_on: [UCC-089, UCC-097, DL-180]
@@ -9312,19 +9311,20 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Settings navigation uses cmd.settings.open with the typed pm.settings_route_request.v1 target and
-  exact-return contract owned by SSYS-018; the K3 Settings host chooses the current presentation and the
-  command encodes no bloom-specific geometry. The historical cmd.settings.open_notifications,
-  cmd.settings.category.reset, and cmd.settings.suggestion.dismiss spellings are retained only as retired,
-  non-alias local-affordance lineage. Notifications navigation emits cmd.settings.open. Category reset and
-  suggestion dismissal each compose cmd.settings.transaction.preview followed by cmd.settings.transaction.apply,
-  and so do the live look controls (DL-153): the title-bar theme selector's family rows and NieR Mode checkbox, the
-  Guided Tour bar's Look menu and sound control, and every live edit in the NieR Mode editor (SSYS-043, F3-082).
-  The historical spellings receive no primary handler, production-wiring row, or alias. SSYS-023's hash-bound
-  80-token disposition registry is transitive catalog input: its canonical targets retain their existing rows, its
-  seven typed local actions receive no command rows, and retired or rejected packet spellings remain non-actionable.
-  The earlier 72 non-primary source-spelling count is historical after DL-200; the live
-  direct/non-primary sets are derived from the same fixture.
+  Settings navigation uses cmd.settings.open with the typed pm.settings_route_request.v1 target and exact-return
+  contract owned by SSYS-018; the K3 Settings host chooses the current presentation and the command encodes no
+  bloom-specific geometry. The historical cmd.settings.open_notifications, cmd.settings.category.reset, and
+  cmd.settings.suggestion.dismiss spellings are retained only as retired, non-alias local-affordance lineage.
+  Notifications navigation emits cmd.settings.open. Category reset and suggestion dismissal each compose
+  cmd.settings.transaction.preview followed by cmd.settings.transaction.apply, and so do the live look controls
+  (DL-153): the title-bar theme selector's five family rows including NieR (Q22), the Guided Tour bar's Look
+  menu and sound control, and every live edit in the NieR Mode editor (SSYS-043, F3-082). The historical
+  spellings receive no primary handler, production-wiring row, or alias. SSYS-023's hash-bound 80-token
+  disposition registry is transitive catalog input: its canonical targets retain their existing rows, its seven
+  typed local actions receive no command rows, and retired or rejected packet spellings remain non-actionable.
+  The earlier 72 non-primary source-spelling count is historical after DL-200; the live direct/non-primary sets
+  are derived from the same fixture. Amended Q22, Jared 2026-10-30 (DL-257): the fifth family uses the existing
+  theme owner; no separate override remains.
 gui_related: true
 gui_classification_reason: Registers user-visible typed Settings routing and the transaction composition used by reset and dismissal affordances.
 depends_on: [SSYS-018, SSYS-023, F3-436, F3-437, F3-441]
@@ -16698,3 +16698,6 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-239, ContractName:Plans/Setti
 All eleven entries have normalization.kind = canonical, alias_of_command_id = null and normalizes_to_contract = Plans/pm7_build_contracts.schema.json at the matching *_request definition. Handlers and exact request/result refs are in production wiring; semantic owner checks precede effects.
 
 Typed local actions: `ui.project_switcher.open`, `ui.project_switcher.close`, `ui.work_panel.close`, `ui.work_panel.select_tab`, `ui.work_panel.filter`, `ui.work_panel.sort`, `ui.work_panel.expand`, `ui.work_panel.select`, `ui.work_quit.open`, `ui.work_quit.select`, `ui.work_quit.cancel`, `ui.settings.pip_editor.open`, `ui.settings.pip_editor.close`, `ui.settings.pip_editor.replay`. They write no durable/runtime value; Settings part edits use the existing transaction pair.
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

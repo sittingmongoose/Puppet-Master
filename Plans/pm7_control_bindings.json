@@ -6301,7 +6301,7 @@
         "general.visual.nier-background",
         "general.visual.wallpaper"
       ],
-      "payload": "The visible control supplies the requested nier-background only. The one wallpaper coordinator builds the atomic Settings set patch {general.visual.nier-background: requested_scene, general.visual.wallpaper: look} before preview; apply uses that bound preview. Project revision orders accepted choices; no secondary writer or timestamp. A stale/refused change writes neither field.",
+      "payload": "The visible control supplies the requested nier-background only. The one wallpaper coordinator builds the atomic Settings set patch {general.visual.nier-background: requested_scene, general.visual.wallpaper: look} before preview; apply uses that bound preview. Project revision orders accepted choices; no secondary writer or timestamp. A stale/refused change writes neither field. Q22, Jared 2026-10-30 (DL-257): shown for family nier; CSS reuse of Basic does not make Basic-only controls applicable.",
       "no_production_reason": ""
     },
     {
@@ -6362,7 +6362,7 @@
         "general.visual.theme",
         "general.visual.theme-mode"
       ],
-      "payload": "Preview and apply the SSYS-009 atomic theme-family/mode pair. The Glass lens consumes F3-652 without changing command, value, scope or transaction; no timed app-theme trial.",
+      "payload": "Preview and apply the SSYS-009 atomic theme-family/mode pair. The Glass lens consumes F3-652 without changing command, value, scope or transaction; no timed app-theme trial. Q22, Jared 2026-10-30 (DL-257): family order basic, friendly, glass, retro, nier; ten variants, with family nier using the existing atomic theme/mode pair and the direction-sensitive cover.",
       "no_production_reason": ""
     },
     {
@@ -6382,63 +6382,45 @@
         "general.visual.theme",
         "general.visual.theme-mode"
       ],
-      "payload": "Preview and apply the SSYS-009 atomic theme-family/mode pair. The Glass lens consumes F3-652 without changing command, value, scope or transaction; no timed app-theme trial.",
+      "payload": "Preview and apply the SSYS-009 atomic theme-family/mode pair. The Glass lens consumes F3-652 without changing command, value, scope or transaction; no timed app-theme trial. Q22, Jared 2026-10-30 (DL-257): family order basic, friendly, glass, retro, nier; ten variants, with family nier using the existing atomic theme/mode pair and the direction-sensitive cover.",
       "no_production_reason": ""
     },
     {
       "control_id": "shell.nier.mode",
-      "surface": "Title-bar theme selector > NieR Mode checkbox",
+      "surface": "Retired Q22 checkbox: Title-bar theme selector > NieR Mode checkbox",
       "owner_ref": "Plans/Settings_System.md#SSYS-043",
-      "disposition": "command",
-      "action_ids": [
-        "cmd.settings.transaction.preview",
-        "cmd.settings.transaction.apply"
-      ],
-      "production_entries": [
-        "catalog.settings_transaction_preview",
-        "catalog.settings_transaction_apply"
-      ],
-      "setting_ids": [
-        "general.visual.nier-mode"
-      ],
-      "payload": "Preview then apply general.visual.nier-mode under the verified current Project binding; the chosen family and mode are untouched (SSYS-043, DL-153; review r1)",
-      "no_production_reason": ""
+      "disposition": "non_dispatch",
+      "action_ids": [],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Q22, Jared 2026-10-30 (DL-257): historical control ID only; no rendered control, dispatch, preview, setting write or independent boolean.",
+      "no_production_reason": "Q22 retires the override checkbox; NieR selection uses the existing family control."
     },
     {
       "control_id": "tour.nier.mode",
-      "surface": "Guided Tour bar > Look menu > NieR Mode checkbox",
+      "surface": "Retired Q22 checkbox: Guided Tour bar > Look menu > NieR Mode checkbox",
       "owner_ref": "Plans/Settings_System.md#SSYS-043",
-      "disposition": "command",
-      "action_ids": [
-        "cmd.settings.transaction.preview",
-        "cmd.settings.transaction.apply"
-      ],
-      "production_entries": [
-        "catalog.settings_transaction_preview",
-        "catalog.settings_transaction_apply"
-      ],
-      "setting_ids": [
-        "general.visual.nier-mode"
-      ],
-      "payload": "The same Settings transaction pair as the title bar; adds no ui.guided_tour.* action (SSYS-043; review r1)",
-      "no_production_reason": ""
+      "disposition": "non_dispatch",
+      "action_ids": [],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Q22, Jared 2026-10-30 (DL-257): historical control ID only; no rendered control, dispatch, preview, setting write or independent boolean.",
+      "no_production_reason": "Q22 retires the override checkbox; NieR selection uses the existing family control."
     },
     {
       "control_id": "onboarding.nier.mode",
-      "surface": "Onboarding look choice and onboarding Look menu > NieR Mode checkbox and NieR Mode editor panel",
+      "surface": "Retired Q22 checkbox: Onboarding look choice and onboarding Look menu > NieR Mode checkbox and NieR Mode editor panel",
       "owner_ref": "Plans/FinalGUISpec.md#F3-598",
-      "disposition": "local",
-      "action_ids": [
-        "ui.onboarding.choose_look"
-      ],
+      "disposition": "non_dispatch",
+      "action_ids": [],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "A preview inside the onboarding window, written with the theme pair when the look is committed to the Project; also opens and closes the editor panel (SSYS-043; review r1)",
-      "no_production_reason": "Onboarding look preview; persistence follows the Project commit, not this control."
+      "payload": "Q22, Jared 2026-10-30 (DL-257): historical control ID only; no rendered control, dispatch, preview, setting write or independent boolean.",
+      "no_production_reason": "Q22 retires the override checkbox; NieR selection uses the existing family control."
     },
     {
       "control_id": "nier.editor.parts",
-      "surface": "NieR Mode editor (from Adjust NieR look) > parts and presets",
+      "surface": "NieR Mode editor (from Adjust NieR) > parts and presets",
       "owner_ref": "Plans/Settings_System.md#SSYS-043",
       "disposition": "command",
       "action_ids": [
@@ -6452,12 +6434,12 @@
       "setting_ids": [
         "general.visual.nier-parts"
       ],
-      "payload": "Preview then apply general.visual.nier-parts; several NieR rows changed together are one atomic group (SSYS-043; review r1)",
+      "payload": "Preview then apply general.visual.nier-parts; several NieR rows changed together are one atomic group (SSYS-043; review r1) Q22, Jared 2026-10-30 (DL-257): the row is visible when a NieR theme is selected; it keeps its stored list while hidden and does not select a family.",
       "no_production_reason": ""
     },
     {
       "control_id": "nier.editor.turn_on",
-      "surface": "NieR Mode editor (from Adjust NieR look, while NieR Mode is off) > Turn on NieR Mode",
+      "surface": "NieR Adjust editor > off notice > Use the NieR theme",
       "owner_ref": "Plans/Settings_System.md#SSYS-043",
       "disposition": "command",
       "action_ids": [
@@ -6469,14 +6451,15 @@
         "catalog.settings_transaction_apply"
       ],
       "setting_ids": [
-        "general.visual.nier-mode"
+        "general.visual.theme",
+        "general.visual.theme-mode"
       ],
-      "payload": "Preview then apply general.visual.nier-mode true under the verified current Project binding; the chosen family and mode are untouched (SSYS-043, DL-153; review r2)",
+      "payload": "Q22, Jared 2026-10-30 (DL-257): select family nier in the current mode through the existing atomic theme preview/apply pair; never write the retired boolean. Inside onboarding the same compatibility family pick uses ui.onboarding.choose_look. Source name PM_NIER.set(true); this compatibility helper selects the family and does not reinstate the retired boolean.",
       "no_production_reason": ""
     },
     {
       "control_id": "nier.editor.open",
-      "surface": "NieR Mode editor > Adjust NieR look (title bar, Tour bar)",
+      "surface": "NieR Mode editor > Adjust NieR (title bar, Tour bar)",
       "owner_ref": "Plans/Settings_System.md#SSYS-043",
       "disposition": "local",
       "action_ids": [
@@ -6484,7 +6467,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Typed local presentation action that writes nothing (SSYS-043, DL-153; review r1)",
+      "payload": "Typed local presentation action that writes nothing (SSYS-043, DL-153; review r1) Q22, Jared 2026-10-30 (DL-257): retained Adjust presentation action; replay is a rehearsal, not a theme write.",
       "no_production_reason": "Editor presentation only; no setting write or command receipt."
     },
     {
@@ -6497,7 +6480,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Typed local presentation action that writes nothing (SSYS-043, DL-153; review r1)",
+      "payload": "Typed local presentation action that writes nothing (SSYS-043, DL-153; review r1) Q22, Jared 2026-10-30 (DL-257): retained Adjust presentation action; replay is a rehearsal, not a theme write.",
       "no_production_reason": "Editor presentation only; no setting write or command receipt."
     },
     {
@@ -6510,7 +6493,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Typed local presentation action that writes nothing (SSYS-043, DL-153; review r1)",
+      "payload": "Typed local presentation action that writes nothing (SSYS-043, DL-153; review r1) Q22, Jared 2026-10-30 (DL-257): retained Adjust presentation action; replay is a rehearsal, not a theme write.",
       "no_production_reason": "Editor presentation only; no setting write or command receipt."
     },
     {
@@ -9342,6 +9325,39 @@
           "concept_only": true
         }
       ]
+    },
+    {
+      "control_id": "tour.theme.family",
+      "surface": "Guided Tour bar > Look menu > family",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-521",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "general.visual.theme",
+        "general.visual.theme-mode"
+      ],
+      "payload": "Q22, Jared 2026-10-30 (DL-257): choose basic, friendly, glass, retro or nier with the current Light/Dark/Auto mode under the verified Project binding; same atomic owner as the shell selector.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "onboarding.theme.family",
+      "surface": "Onboarding welcome and header Look menu > family and retained Adjust choices",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-520",
+      "disposition": "local",
+      "action_ids": [
+        "ui.onboarding.choose_look"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Q22, Jared 2026-10-30 (DL-257): choose_look previews basic, friendly, glass, retro or nier, mode or retained nier_parts/nier_background in the closed look_choice; disclosure toggles write no look; persistence follows the existing exact Project commit/finish boundary.",
+      "no_production_reason": "Onboarding-owned local preview, not a Settings transaction or native command producer."
     }
   ],
   "held_controls": []

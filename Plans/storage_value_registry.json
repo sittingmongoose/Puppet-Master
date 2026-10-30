@@ -14223,13 +14223,12 @@
           },
           "onboarding__onboarding_look_choice": {
             "title": "OnboardingLookChoice",
-            "description": "The closed look one ui.onboarding.choose_look request previews inside the onboarding window (DL-153): the theme family and Light/Dark mode for intent choose_look, or NieR Mode's three Settings rows (Settings_System SSYS-043) by their canonical inventory labels for intent preview_nier. Only the fields the intent changes are non-null; a NieR preset is one value of nier_parts. It is a preview written with the Project at commit (FinalGUISpec F3-520), never a Settings transaction or a cmd.theme.* dispatch.",
+            "description": "Q22, Jared 2026-10-30 (DL-257): closed preview of five-family/mode choices or the retained NieR parts/background Adjust rows via ui.onboarding.choose_look intent choose_look. Only changed fields are non-null; one preset is one nier_parts value. No independent nier_mode or preview_nier intent, Settings dispatch or durable write before the existing exact Project commit/finish boundary.",
             "type": "object",
             "additionalProperties": false,
             "required": [
               "theme_family",
               "theme_mode",
-              "nier_mode",
               "nier_parts",
               "nier_background"
             ],
@@ -14238,10 +14237,11 @@
                 "oneOf": [
                   {
                     "enum": [
+                      "basic",
                       "friendly",
                       "glass",
                       "retro",
-                      "basic"
+                      "nier"
                     ]
                   },
                   {
@@ -14256,16 +14256,6 @@
                       "light",
                       "dark"
                     ]
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              "nier_mode": {
-                "oneOf": [
-                  {
-                    "type": "boolean"
                   },
                   {
                     "type": "null"
@@ -14624,10 +14614,11 @@
               },
               "theme_family": {
                 "enum": [
+                  "basic",
                   "friendly",
                   "glass",
                   "retro",
-                  "basic"
+                  "nier"
                 ]
               },
               "theme_mode": {
@@ -16088,7 +16079,11 @@
           },
           "settings__setting_id": {
             "type": "string",
-            "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+            "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$",
+            "not": {
+              "const": "general.visual.nier-mode"
+            },
+            "description": "Current ordinary setting ID. Q22 retires general.visual.nier-mode to the load migration only; no current snapshot or transaction writes it."
           }
         }
       },
@@ -78385,7 +78380,7 @@
             ]
           },
           "existing_index_root": {
-            "title": "Generic EventRecord index checkpoint custody — external proposal",
+            "title": "Generic EventRecord index checkpoint custody \u2014 external proposal",
             "description": "NEW derived checkpoint; typed source-selection binding is a verified reader projection of existing CURRENT/manifest owners, not a replacement on-disk control format. Native parsing/auth/durability remain separate proof obligations."
           },
           "existing_index_root__source_selection": {

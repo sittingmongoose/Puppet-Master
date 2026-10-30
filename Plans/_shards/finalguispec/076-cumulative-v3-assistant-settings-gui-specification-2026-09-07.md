@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38388-L39115
+Source lines: L38223-L38951
 
-Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
+Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
 
 ---
 
@@ -689,20 +689,21 @@ canonical_text: >-
   decorative accent bars, inspector width tokens unchanged). Manager workspaces of the published concept are
   presentation groupings over the unchanged 38-key registry: separate Code & Tools workspaces for Skills,
   Plugins, MCP Servers, and Commands & Shortcuts; one System workspace Server & Project Location; Single Owners
-  and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain
-  switches obey F3-513, built-in sounds are labelled demonstration tones per F3-405, and All Settings scrolls
-  with the page while remaining virtualized per SSYS-005.
+  and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain switches
+  obey F3-513, built-in sounds are labelled demonstration tones per F3-405, and All Settings scrolls with the
+  page while remaining virtualized per SSYS-005. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family
+  supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: Owns the visible manager presentation grammar, workspace grouping, and side-panel anatomy of every Settings manager in the published concept.
 split_recommended: false
 depends_on: [F3-542, F3-519, F3-513, F3-405, SSYS-033]
 unblocks: []
 acceptance_criteria:
-  - No manager workspace renders a header-level action strip; no manager exposes more than six tabs; each view has at most one Advanced disclosure.
-  - Manager drawers and the setting Details inspector share one anatomy and the spring/material motion tokens; the inspector measures 350 px (min(370 px, 82 percent) overlay at 960 px and below).
-  - The browser checkpoint and the slow-motion film show no blank or uniform-frame flash on domain switch, tab switch, panel open/close, or inspector open/close.
-  - Eight themes at 760, 960, and 1440 px render the key managers with zero horizontal overflow.
-  - (USER-SETTINGS-MANAGER-REFRESH-20260909) Status tokens instead of pills, concept-drawn listboxes and menus with the shared popout motion, independently scrolling rosters, a two-column sound grid, ordered account and route lists with inline priority controls, and inline manager-topic settings rendered exactly once (F3-551).
+  - "No manager workspace renders a header-level action strip; no manager exposes more than six tabs; each view has at most one Advanced disclosure."
+  - "Manager drawers and the setting Details inspector share one anatomy and the spring/material motion tokens; the inspector measures 350 px (min(370 px, 82 percent) overlay at 960 px and below)."
+  - "The browser checkpoint and the slow-motion film show no blank or uniform-frame flash on domain switch, tab switch, panel open/close, or inspector open/close."
+  - "Ten themes at 760, 960, and 1440 px render the key managers with zero horizontal overflow."
+  - "(USER-SETTINGS-MANAGER-REFRESH-20260909) Status tokens instead of pills, concept-drawn listboxes and menus with the shared popout motion, independently scrolling rosters, a two-column sound grid, ordered account and route lists with inline priority controls, and inline manager-topic settings rendered exactly once (F3-551)."
 validation_surfaces:
   - "Verify F3-543's manager presentation, status tokens, menus, scrolling, row placement and motion against the current Settings owner."
   - python3 scripts/pm-plans-verify.py run-gates

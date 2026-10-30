@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37616-L37706
+Source lines: L37441-L37532
 
-Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
+Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0
 
 F3-528 supersedes only generic GitHub-Actions-shell identity and the older Backup/Remote Access presentation details
 named below. GitHub-specific behavior remains intact inside the selected GitHub automation binding. The selected K3
-Settings layout, PMConcept7 chrome, left-rail placement, exact ten-panel census, eight-theme authority, title-bar
+Settings layout, PMConcept7 chrome, left-rail placement, exact ten-panel census, ten-theme authority, title-bar
 notification stack, sprout inbox, and bottom/status mechanisms remain unchanged.
 
 ### F3-528 - Provider-neutral automation and recovery/connector presentation
@@ -23,17 +23,18 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Final GUI presents one canonical repository_automation side-panel occupant labeled Actions & Pipelines, owner-routed
-  Backup and Recovery components inside the K3 Settings/Files/Project contexts, and Remote Access connector state in
-  existing Settings/Onboarding/Doctor/status surfaces. It paints exact owner projections, routes, currentness,
-  availability, protected handoffs, ObservableWork phases, alerts, focus, and return context without owning provider,
-  source-control, backup, scheduler, encryption/key, connector, auth, Doctor, notification-store, or status truth.
-  Every packet action remains visibly truthful and unavailable until its owner and central runtime integration exist.
-  Amended 2026-10-09 (DL-162): in the left rail the AutomationBinding selector is a field labelled Automation
-  service that opens the chat picker (F3-621), never a native select; picking runs
-  ui.repository_automation.binding.select and changes nothing else. As Forge_Integrations' route unit says, the
-  field shows only when the project has several bindings; with one, the rail names the service as a fact beside
-  the revision (owner, 2026-10-10).
+  Final GUI presents one canonical repository_automation side-panel occupant labeled Actions & Pipelines,
+  owner-routed Backup and Recovery components inside the K3 Settings/Files/Project contexts, and Remote Access
+  connector state in existing Settings/Onboarding/Doctor/status surfaces. It paints exact owner projections,
+  routes, currentness, availability, protected handoffs, ObservableWork phases, alerts, focus, and return
+  context without owning provider, source-control, backup, scheduler, encryption/key, connector, auth, Doctor,
+  notification-store, or status truth. Every packet action remains visibly truthful and unavailable until its
+  owner and central runtime integration exist. Amended 2026-10-09 (DL-162): in the left rail the
+  AutomationBinding selector is a field labelled Automation service that opens the chat picker (F3-621), never a
+  native select; picking runs ui.repository_automation.binding.select and changes nothing else. As
+  Forge_Integrations' route unit says, the field shows only when the project has several bindings; with one, the
+  rail names the service as a fact beside the revision (owner, 2026-10-10). Amended Q22, Jared 2026-10-30
+  (DL-257): the current family/variant and inventory census supersede earlier counts.
 gui_related: true
 gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
 split_recommended: false
@@ -61,14 +62,14 @@ acceptance_criteria:
   - All eight PMConcept7 themes, selected K3 geometry, representative narrow/default/wide widths, variable-height virtualization, keyboard/touch, stable focus, non-color status, screen readers, localization, Reduced Motion, and phase-based non-fake progress apply to every new state. Browser-concept or static fixture results remain `concept_fixture_only`, never native Slint/runtime/visual/security/performance/accessibility evidence.
   - No command or EventRecord is admitted by this GUI unit. All new Forge, Backup, and connector command families remain handler_unavailable and event-silent with expected_event_types=[] until owner schema, central command, sole handler, permission, receipt/ObservableWork, persistence, production/reverse wiring, and executable evidence close independently.
 validation_surfaces:
-  - Plans/final_gui_interaction_contracts.schema.json
-  - Plans/final_gui_interaction_contract_fixtures.json
-  - Plans/forge_integration_contracts.schema.json
-  - Plans/backup_restore_system_contracts.schema.json
-  - Plans/remote_access_system_contracts.schema.json
-  - future legacy-panel migration/no-duplicate-occupant and provider-capability transition fixtures
-  - future protected-handoff/no-capture and immutable-snapshot exact-return fixtures
-  - future native Slint eight-theme/width/keyboard/touch/Reduced-Motion/virtualization tests
+  - "Plans/final_gui_interaction_contracts.schema.json"
+  - "Plans/final_gui_interaction_contract_fixtures.json"
+  - "Plans/forge_integration_contracts.schema.json"
+  - "Plans/backup_restore_system_contracts.schema.json"
+  - "Plans/remote_access_system_contracts.schema.json"
+  - "future legacy-panel migration/no-duplicate-occupant and provider-capability transition fixtures"
+  - "future protected-handoff/no-capture and immutable-snapshot exact-return fixtures"
+  - "future native Slint ten-theme/width/keyboard/touch/Reduced-Motion/virtualization tests"
 risk_class: generic_shell_migration_or_protected_recovery_presentation_leak
 reasoning_tier: high
 context_scope: final_gui_forge_backup_tsnet_consumers

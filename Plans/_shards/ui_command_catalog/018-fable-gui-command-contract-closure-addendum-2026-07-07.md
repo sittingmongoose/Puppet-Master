@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8145-L8315
+Source lines: L8145-L8314
 
-Source SHA256: `abf861a820953cae1e30d252a2ce76f7c0da051dd99fd8961d3b4b527c99d309`
+Source SHA256: `6f74a055720f9dd8558fa6c3e7eaa41c71e64497697a78b190d98cafa20476dc`
 
 ---
 
@@ -104,22 +104,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  The FABLE GUI command repair registers missing theme, persona, alert, concern, model,
-  chat send/stop, panel undock/redock, Orchestrator pause/resume, Dashboard widget,
-  Free Models onboarding, launch-chain, runtime recovery, and FileManager command
-  contracts with field-level payload, result, error, and receipt/event requirements.
-  Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain
-  canonical and are strengthened by the shared UICommandResponse and no fabricated
-  command_applied event rule. In the cmd.theme.* family the title bar's Light/Dark/Auto
-  segmented control (amended 2026-10-17, DL-228, no longer dispatching cmd.theme.set_mode, as the census row
-  shell.theme.mode and SSYS-010 say), its family rows and NieR Mode
-  checkbox, the Guided Tour bar's Look menu and the NieR Mode editor compose
-  cmd.settings.transaction.preview then cmd.settings.transaction.apply as UCC-120's
-  local affordances do; no theme family or NieR command is added. The application's start
-  and onboarding's look previews (ui.onboarding.start, ui.onboarding.choose_look) dispatch
-  no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the stored theme
-  of the Project the application opens on (F3-468, DL-153).
-  Amended 2026-10-09 (DL-180): from the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat, into a window (UCC-203); cmd.dashboard.add_widget becomes an alias of cmd.widget.add (UCC-202).
+  The FABLE GUI command repair registers missing theme, persona, alert, concern, model, chat send/stop, panel
+  undock/redock, Orchestrator pause/resume, Dashboard widget, Free Models onboarding, launch-chain, runtime
+  recovery, and FileManager command contracts with field-level payload, result, error, and receipt/event
+  requirements. Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain canonical and
+  are strengthened by the shared UICommandResponse and no fabricated command_applied event rule. In the
+  cmd.theme.* family the title bar's Light/Dark/Auto segmented control (amended 2026-10-17, DL-228, no longer
+  dispatching cmd.theme.set_mode, as the census row shell.theme.mode and SSYS-010 say), its five family rows,
+  including NieR (Q22), the Guided Tour bar's Look menu and the NieR Mode editor compose
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply as UCC-120's local affordances do; no
+  theme family or NieR command is added. The application's start and onboarding's look previews
+  (ui.onboarding.start, ui.onboarding.choose_look) dispatch no cmd.theme.* and emit no settings.theme.updated:
+  the pre-paint reads the stored theme of the Project the application opens on (F3-468, DL-153). Amended
+  2026-10-09 (DL-180): from the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat,
+  into a window (UCC-203); cmd.dashboard.add_widget becomes an alias of cmd.widget.add (UCC-202). Amended Q22,
+  Jared 2026-10-30 (DL-257): the fifth family uses the existing theme owner; no separate override remains.
 gui_related: true
 gui_classification_reason: Defines user-visible GUI command families, command payloads, responses, disabled states, and receipts.
 depends_on: [UCC-089, UCC-097, DL-180]

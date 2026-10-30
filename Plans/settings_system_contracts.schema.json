@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json",
   "title": "Puppet Master Settings System contracts",
-  "description": "Strict Plans-only contracts for project Settings snapshots, transaction preview/apply/rollback/export, exact Settings routes and returns, manager/owner projections, Doctor projection boundaries, migration previews, appearance previews, UI action availability, and concept-fixture custody. These schemas and fixtures are not runtime or certification evidence. Includes a read-only exact-ID Settings Transfer draft preview and post-confirmation rebind to a real Project; no Project or Settings mutation is granted by a draft preview.",
+  "description": "Strict Plans-only contracts for project Settings snapshots, transaction preview/apply/rollback/export, exact Settings routes and returns, manager/owner projections, Doctor projection boundaries, migration previews, appearance previews, UI action availability, and concept-fixture custody. These schemas and fixtures are not runtime or certification evidence. Includes a read-only exact-ID Settings Transfer draft preview and post-confirmation rebind to a real Project; no Project or Settings mutation is granted by a draft preview. Q22, Jared 2026-10-30 (DL-257): five families and ten variants; the independent NieR setting is retired.",
   "oneOf": [
     {
       "$ref": "#/$defs/project_settings_snapshot"
@@ -102,7 +102,11 @@
     },
     "setting_id": {
       "type": "string",
-      "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+      "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$",
+      "not": {
+        "const": "general.visual.nier-mode"
+      },
+      "description": "Current ordinary setting ID. Q22 retires general.visual.nier-mode to the load migration only; no current snapshot or transaction writes it."
     },
     "manager_id": {
       "type": "string",
@@ -343,10 +347,11 @@
       "properties": {
         "family": {
           "enum": [
+            "Basic",
             "Friendly",
             "Glass",
             "Retro",
-            "Basic"
+            "NieR"
           ]
         },
         "presentation_mode": {
@@ -361,14 +366,16 @@
     },
     "effective_theme_variant": {
       "enum": [
+        "Basic Dark",
+        "Basic Light",
         "Friendly Dark",
         "Friendly Light",
         "Glass Dark",
         "Glass Light",
         "Retro Dark",
         "Retro Light",
-        "Basic Dark",
-        "Basic Light"
+        "NieR Dark",
+        "NieR Light"
       ]
     },
     "glass_projection": {
@@ -728,6 +735,35 @@
                 "enum": [
                   "Basic Dark",
                   "Basic Light"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "theme_pair": {
+                "properties": {
+                  "family": {
+                    "const": "NieR"
+                  }
+                },
+                "required": [
+                  "family"
+                ]
+              }
+            },
+            "required": [
+              "theme_pair"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_theme_variant": {
+                "enum": [
+                  "NieR Dark",
+                  "NieR Light"
                 ]
               }
             }

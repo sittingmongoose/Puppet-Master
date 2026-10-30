@@ -52,7 +52,7 @@
       "registry_id": "TCR-SETTINGS-PACKET-COMMANDS",
       "source_path": "Plans/settings_system_contract_fixtures.json",
       "json_pointer": "/packet_command_dispositions",
-      "source_sha256": "d77ff74645420bf3cf2421b6c20fdd9659b428ea5021450e5ac6aba900cd3468",
+      "source_sha256": "90a25b71e939eae395b825427c7896d2c8827038f1f07361e6b10f587402954d",
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-023",
       "expected_token_count": 80,
@@ -10627,7 +10627,7 @@
       "ui_action",
       "ui.onboarding.choose_look",
       "partial",
-      "The closed action covers the look choice and the header's Look menu (choose_look, preview_nier, toggle_look_menu, toggle_look_editor) with a closed look_choice and no owner route, cmd.theme.* or Settings transaction; the look is written with the Project at commit (DL-153). The onboarding session's durable NieR field, browser accessibility and native Slint evidence remain absent."
+      "Q22, Jared 2026-10-30 (DL-257): choose_look previews five-family/mode and retained NieR Adjust values in the closed session look_choice; preview_nier/nier_mode are retired. No owner command/Settings transaction or precommit write. Native Slint/accessibility evidence remains absent."
     ],
     [
       "TOUCH-TOUR-001",

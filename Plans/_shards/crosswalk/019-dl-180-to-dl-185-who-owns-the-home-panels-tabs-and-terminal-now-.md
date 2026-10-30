@@ -2,9 +2,9 @@
 
 Source: `Plans/Crosswalk.md`
 
-Source lines: L3547-L3568
+Source lines: L3547-L3571
 
-Source SHA256: `cb2cf76956a56ead164c2f35a0d529e59e80ff5998be1c4d45bb74996fcff053`
+Source SHA256: `3abb1cf569e859bf71410fc96b1de66de1dee6e1465ffb6f739965f2805c403c`
 
 ---
 
@@ -30,3 +30,6 @@ Jared's home redesign of 2026-10-09 (DL-180 to DL-185) replaces the Home model o
 | The words: terminal section, terminal tab, terminal pane, panel, tab | G-010 | `Plans/Glossary.md#G-030`, with G-010 amended |
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-638, ContractName:Plans/FinalGUISpec.md#F3-640, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/Contracts_V0.md#CV-360, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/Glossary.md#G-030
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

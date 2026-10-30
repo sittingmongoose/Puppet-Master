@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4302-L14483
+Source lines: L4302-L14502
 
-Source SHA256: `8c3e43a461bdb0951b91585669e35562ca3074910c2512d6b56b5bf1610651ec`
+Source SHA256: `5e7cf8e9afc50ceeca6a4c4f1888d43a42ef8129ba5d71c476626a4dea99c425`
 
 ---
 
@@ -5868,21 +5868,21 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Jared decided on 2026-09-27 (owner amendments J-1, "no new display face", and J-2, "nothing
-  cramped") that every wand-module surface uses
-  its theme's own font with no separate display face and no italic voice face, the voice roles
-  differing only by size, weight and colour, and that the J-2 spacing minimums are a floor in every
-  theme that padding and gaps never compress below. This decision does not change which font each
-  theme's canon tokens name; canon typography adoption is a separate open question. FinalGUISpec
-  F3-566 carries the owner text.
+  Jared decided on 2026-09-27 (owner amendments J-1, "no new display face", and J-2, "nothing cramped") that
+  every wand-module surface uses its theme's own font with no separate display face and no italic voice face,
+  the voice roles differing only by size, weight and colour, and that the J-2 spacing minimums are a floor in
+  every theme that padding and gaps never compress below. This decision does not change which font each theme's
+  canon tokens name; canon typography adoption is a separate open question. FinalGUISpec F3-566 carries the
+  owner text. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override
+  wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: Sets the typography and spacing floor of the wand module surfaces.
 split_recommended: false
 depends_on: []
 unblocks: [F3-566, DR-044]
 acceptance_criteria:
-  - Every wand-module surface renders in its theme's own font with no display face.
-  - Every wand-module surface meets the J-2 minimums in all eight themes.
+  - "Every wand-module surface renders in its theme's own font with no display face."
+  - "Every wand-module surface meets the J-2 minimums in all ten themes."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -7896,16 +7896,18 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-144 records the owner decisions of 2026-10-02. NieR Mode (SSYS-043) covers every assistant chat surface, with
-  each installed part placed in the chat and the transcript stage counted as the app's ground so the scene shows
-  behind the conversation (F3-589). A change from one scene to another cross-fades by opacity over 520 ms, never above
-  either scene's resting strength, everywhere a scene changes, PMConcept7 included; the chat adds no moving touches
-  inside the scenes. In the concept NieR Light and NieR Dark are Demo Studio themes (lab only, ACD-474); in the
-  product NieR Mode stays the Settings switch. Jared wrote "Dont forget about the new NieR mode found in
-  PMConcept7.html, that will impacting this once it is ported into PMoncept7(not your job) so might as well address
-  those changes now too.", then "might as well add the nier mode to the whole concept as well.  it will need to be
-  done eventually so might as well have you do it.  Make it a selectable theme in the demo studio.", and on the two
-  scene ideas "Also the images you sent me looked good.  Do 2 but not 1."
+  DL-144 records the owner decisions of 2026-10-02. NieR Mode (SSYS-043) covers every assistant chat surface,
+  with each installed part placed in the chat and the transcript stage counted as the app's ground so the scene
+  shows behind the conversation (F3-589). A change from one scene to another cross-fades by opacity over 520 ms,
+  never above either scene's resting strength, everywhere a scene changes, PMConcept7 included; the chat adds no
+  moving touches inside the scenes. Q22 supersedes the earlier lab-only restriction: NieR Light and NieR Dark
+  are product themes, mirrored in Demo Studio (DL-257). Jared wrote "Dont forget about the new NieR mode found
+  in PMConcept7.html, that will impacting this once it is ported into PMoncept7(not your job) so might as well
+  address those changes now too.", then "might as well add the nier mode to the whole concept as well.  it will
+  need to be done eventually so might as well have you do it.  Make it a selectable theme in the demo studio.",
+  and on the two scene ideas "Also the images you sent me looked good.  Do 2 but not 1." Amended Q22, Jared
+  2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration
+  and retained Adjust controls.
 gui_related: true
 gui_classification_reason: Records an owner decision on the assistant chat's visual design.
 split_recommended: false
@@ -7936,7 +7938,7 @@ preserved_exact_tokens:
   - "DL-144"
   - "Do 2 but not 1."
 negative_constraints:
-  - "Do not make NieR Mode a ninth selectable theme in the product."
+  - "Do not retain an independent NieR override or checkbox; Q22 makes it the fifth family via the existing theme owner."
   - "Do not add moving touches inside the scenes in the chat."
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -8339,32 +8341,47 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-152 records the owner request of 2026-10-07. NieR Mode is reached wherever a look is chosen: the title-bar
-  theme selector, the onboarding look choice and the onboarding and Tour Look menus carry a NieR Mode checkbox with an
-  Adjust NieR look button that opens the NieR Mode editor, as a popup over the application or a panel inside the
-  onboarding window (F3-082, F3-598); during setup NieR is a preview written with the look. Onboarding and the
-  Guided Tour gain a NieR presentation, NieR ink marionettes included, gated by NieR Mode and the existing parts
-  (F3-598). Their sounds become one Notifications & Sounds cue category with variants per cue, sounds for new
-  moments with fixed fallbacks, a NieR kit while NieR Mode is painted with Menu sounds installed, one player and merged
-  coincident cues, and every cue is listed in the Settings sound library (F3-599), 354 entries in the concept. The
-  showpiece pass is part of this decision: the hero moments in setup and the tour, and the rules that long words type
-  on and that a large area does not flash. No settings key, NieR part,
-  theme variant or onboarding or tour action is added. Amended 2026-10-09 by DL-153: no command id, route, settings
-  key or ui.guided_tour.* action is added, but onboarding's look choice and its NieR Mode controls use one new typed
-  local action, ui.onboarding.choose_look, the NieR Mode editor's open, close and replay are
-  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay, and the live
-  controls compose cmd.settings.transaction.preview then cmd.settings.transaction.apply. NieR Mode gets its own Settings unit, SSYS-043, which DL-144
-  and F3-589 now cite. Jared asked for the three tasks in one request on PMConcept7: a more polished NieR Mode in
-  setup and the tour with NieR puppets and sounds, NieR Mode as a checkbox with an adjust button wherever a theme is
-  chosen, and livelier, more varied setup and tour sounds with NieR ones, all listed in the sound library; the record
-  states it in plain words, without quoting him.
+  Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable theme family (nier), ordered after Basic,
+  Friendly, Glass and Retro. NieR Light (nier-light) and NieR Dark (nier-dark) complete ten built-in variants. A
+  NieR family pick uses general.visual.theme and the existing mode through cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply; no independent NieR switch or command remains. Adjust NieR opens the one
+  existing editor. general.visual.nier-parts (29 parts) and general.visual.nier-background remain its Adjust
+  rows, shown when general.visual.theme is NieR Light or NieR Dark, with hidden values retained. Basic High
+  contrast and Basic color scheme remain Basic-only; Glass and Retro controls remain confined to their own
+  families. The title-bar selector, Guided Tour Look menu, onboarding welcome and its Look menu all offer the
+  same five families in order basic, friendly, glass, retro, nier. Live family picks use the Settings
+  transaction pair; inside onboarding, choose_look on ui.onboarding.choose_look previews family/mode or retained
+  NieR Adjust values in the closed look_choice and persists only at the existing exact Project commit/finish
+  boundary. preview_nier and the independent nier_mode field are retired. Hover is silent and changes no theme;
+  click or keyboard activation selects (O6). ui.settings.nier_editor.open, ui.settings.nier_editor.close and
+  ui.settings.nier_editor.replay remain presentation-only; nier.editor.open is the Adjust binding. No
+  manager_id, route, detail id, command, new part or event is added. shell.nier.mode, tour.nier.mode and
+  onboarding.nier.mode are retired non_dispatch census tombstones with no action, setting or production writer.
+  Onboarding and the Guided Tour gain a NieR presentation, NieR ink marionettes included, gated by NieR Mode and
+  the existing parts (F3-598). Their sounds become one Notifications & Sounds cue category with variants per
+  cue, sounds for new moments with fixed fallbacks, a NieR kit while NieR Mode is painted with Menu sounds
+  installed, one player and merged coincident cues, and every cue is listed in the Settings sound library
+  (F3-599), 354 entries in the concept. The showpiece pass is part of this decision: the hero moments in setup
+  and the tour, and the rules that long words type on and that a large area does not flash. Q22 adds one family
+  and two variants with no new key, part, command, onboarding action or tour action. Amended 2026-10-09 by
+  DL-153: no command id, route, settings key or ui.guided_tour.* action is added, but onboarding's look choice
+  and its NieR Mode controls use one new typed local action, ui.onboarding.choose_look, the NieR Mode editor's
+  open, close and replay are ui.settings.nier_editor.open, ui.settings.nier_editor.close and
+  ui.settings.nier_editor.replay, and the live controls compose cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply. NieR Mode gets its own Settings unit, SSYS-043, which DL-144 and F3-589 now
+  cite. Jared asked for the three tasks in one request on PMConcept7: a more polished NieR Mode in setup and the
+  tour with NieR puppets and sounds, NieR Mode as a checkbox with an adjust button wherever a theme is chosen,
+  and livelier, more varied setup and tour sounds with NieR ones, all listed in the sound library; the record
+  states it in plain words, without quoting him. Retained historical/source tokens (not active overrides):
+  DL-152. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source
+  confirmation 1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only.
 gui_related: true
 gui_classification_reason: Records an owner decision on NieR Mode's entry points and on onboarding and Guided Tour presentation and sound.
 split_recommended: false
 depends_on: [DL-107, DL-144, SSYS-043, F3-082, F3-405, F3-520, F3-521]
 unblocks: [F3-598, F3-599]
 acceptance_criteria:
-  - "The title-bar theme selector, the onboarding look choice and both Look menus carry the NieR Mode checkbox and the Adjust NieR look button, and NieR Mode never appears as a theme or family (F3-598)."
+  - "The title-bar selector, onboarding welcome and both Look menus offer family nier and its Light/Dark variants with the retained Adjust editor (F3-598, Q22)."
   - "Onboarding and Tour cues form one Notifications & Sounds category with a NieR kit, and all of them are listed in the sound library (F3-599)."
   - "No settings key, NieR part or theme variant is added."
   - "The owner request is recorded in plain words, with the verbatim source cited by path and SHA-256."
@@ -8393,7 +8410,7 @@ preserved_exact_tokens:
   - "NieR Mode"
   - "Adjust NieR look"
 negative_constraints:
-  - "Do not make NieR Mode a ninth theme or a family choice."
+  - "Do not retain an independent NieR override or checkbox; Q22 makes it the fifth family via the existing theme owner."
   - "Do not add a settings key, a NieR part or an onboarding-, tour- or NieR-only sound setting."
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -8408,25 +8425,27 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-153 records the owner request of 2026-10-09 and its two rulings. The pre-paint layer shows the look stored for
-  the Project the application opens on, NieR Mode included, read from that Project's Settings, and stores no theme of
-  its own (F3-468). A new install's onboarding always starts in Basic Dark, preselected, whatever look was shown before;
-  Run Onboarding Again starts in the look on screen, NieR Mode included, preselected (F3-520). Onboarding's wake, act
-  card and curtain call take five styles, one per look family: NieR's whenever NieR Mode is painted, whatever family is
-  beneath, and otherwise the painted family's own, in its own materials and in both its variants (F3-600; F3-598 and
-  F3-599 amended). The application's own notices about the tour's restore stay quiet in every look (F3-521). No
-  settings key, theme variant, NieR part, sound setting, command id, route or tour action is added. Lead rulings under
-  existing canon, not owner answers, wire DL-152's look controls: the live ones compose
-  cmd.settings.transaction.preview then cmd.settings.transaction.apply (the title bar's Light/Dark/Auto keeps
-  cmd.theme.set_mode); the NieR Mode editor opens, closes and replays through ui.settings.nier_editor.open,
-  ui.settings.nier_editor.close and ui.settings.nier_editor.replay; the onboarding look choice, its NieR Mode controls
-  and its Look menu use one new typed local action, ui.onboarding.choose_look, a preview written with the Project at
-  commit that never dispatches cmd.theme.* or a Settings transaction; the sound library's Which look switch and Show N
-  more takes are typed local actions and playing an entry is cmd.sound.preview; the Tour's Look menu and sound
-  control are not tour actions; and DR-056 keeps one NieR Mode editor, reboot plate, look store and set of hero
-  moments. Jared asked for the four
-  next steps of the NieR showpiece and ruled on the five styles and on setup's starting look; the record states them in
-  plain words, the rulings kept word for word in the cited source.
+  DL-153 records the owner request of 2026-10-09 and its two rulings. The pre-paint layer shows the look stored
+  for the Project the application opens on, NieR Mode included, read from that Project's Settings, and stores no
+  theme of its own (F3-468). A new install's onboarding always starts in Basic Dark, preselected, whatever look
+  was shown before; Run Onboarding Again starts in the look on screen, NieR Mode included, preselected (F3-520).
+  Onboarding's wake, act card and curtain call take five styles, one per look family: NieR's when family nier is
+  selected, and otherwise the selected family's own, in its own materials and in both its variants (F3-600;
+  F3-598 and F3-599 amended). The application's own notices about the tour's restore stay quiet in every look
+  (F3-521). No settings key, theme variant, NieR part, sound setting, command id, route or tour action is added.
+  Lead rulings under existing canon, not owner answers, wire DL-152's look controls: the live ones compose
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply (the title bar's Light/Dark/Auto uses the
+  same atomic Settings pair under DL-228); the NieR Mode editor opens, closes and replays through
+  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay; the onboarding
+  look choice, its NieR Mode controls and its Look menu use one new typed local action,
+  ui.onboarding.choose_look, a preview written with the Project at commit that never dispatches cmd.theme.* or a
+  Settings transaction; the sound library's Which look switch and Show N more takes are typed local actions and
+  playing an entry is cmd.sound.preview; the Tour's Look menu and sound control are not tour actions; and DR-056
+  keeps one NieR Mode editor, reboot plate, look store and set of hero moments. Jared asked for the four next
+  steps of the NieR showpiece and ruled on the five styles and on setup's starting look; the record states them
+  in plain words, the rulings kept word for word in the cited source. Amended Q22, Jared 2026-10-30 (DL-257):
+  the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust
+  controls.
 gui_related: true
 gui_classification_reason: Records an owner decision on the first paint, onboarding's starting look, the families' hero moments and the tour's restore notices.
 split_recommended: false

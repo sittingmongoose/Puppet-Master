@@ -2,17 +2,17 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30384-L31501
+Source lines: L30358-L31474
 
-Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
+Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
 
 ---
 
 ## Theme System Addendum - 2026-07-16
 
-This addendum promotes the user-approved PMConcept6 eight-theme system into canonical PlanUnits and carries the exact per-variant token tables as spec data. `Concepts/pm6-build/**` remains illustrative source-lineage only per `Plans/usage-feature.md`. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+This addendum promotes the user-approved PMConcept6 ten-theme system into canonical PlanUnits and carries the exact per-variant token tables as spec data. `Concepts/pm6-build/**` remains illustrative source-lineage only per `Plans/usage-feature.md`. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
-### F3-425 - Eight Built-In Themes And Basic Dark Factory Default
+### F3-425 - Ten Built-In Themes And Basic Dark Factory Default
 
 ```yaml
 plan_unit_id: F3-425
@@ -20,32 +20,34 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The built-in theme set is exactly eight variants across four families: friendly-dark,
-  friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-dark, and basic-light.
-  Basic Dark is the factory theme only for an untouched first open or a genuinely fresh Project
-  with no committed theme snapshot. Existing explicit saved Project theme/layout customization
-  survives startup and Project switching. An admitted Project copy materializes the source
-  theme/layout into a detached destination-owned snapshot; subsequent source changes do not
-  propagate. The selector additionally carries a presentation mode dimension (Light, Dark,
-  Auto); Auto resolves the selected family to its dark or light variant by following the
-  operating system appearance (prefers-color-scheme) and updates live when the OS setting
-  changes. The former Friendly Dark default and prior three-family/Retro Dark adjudication are
-  preserved only as clearly labeled superseded lineage. Theme identity continues through the
-  existing Project-scoped theme:v1 contract carrying family, presentation mode, and resolved
-  variant; no new storage key is introduced for theme identity.
+  The built-in theme set is exactly ten variants across five families, ordered Basic, Friendly, Glass, Retro and
+  NieR: basic-dark, basic-light, friendly-dark, friendly-light, glass-dark, glass-light, retro-dark,
+  retro-light, nier-dark and nier-light. Basic Dark is the factory seed only for an untouched first open or a
+  genuinely fresh Project without a committed snapshot. Existing explicit saved Project selections and detached
+  copied snapshots survive startup and Project switches. Light, Dark and Auto remain the presentation-mode
+  dimension; Auto follows OS appearance live, including for family nier. The existing Project-scoped theme:v1
+  carries family, presentation mode and resolved variant; no new identity key is added. general.visual.nier-mode
+  is a retired migration-only key, removed from the active inventory. On load, stored true selects the NieR
+  theme in the stored presentation mode (Light, Dark or Auto, resolving Auto through the OS), preserving parts
+  and background; false or absent preserves the existing family/mode. The old boolean is then cleared, and
+  repeating migration has no further effect. No second underlying family is saved to restore later. Rendering
+  reuses Basic CSS via data-theme='basic-<scheme>' plus html[data-o55-nier='on']; that marker is derived only
+  from family nier, never an independent override. PMLogo.look() returns nier-<scheme>. NieR uses its existing
+  precomputed palette and local fonts; its accent/font ownership while selected is unchanged, and stored general
+  appearance overrides resume where applicable after another family is selected. Amended Q22, Jared 2026-10-30
+  (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained
+  Adjust controls. Retained historical/source tokens (not active overrides): prefers-color-scheme, Light, Dark,
+  Auto.
 gui_related: true
 gui_classification_reason: This unit defines the user-visible built-in theme set and the default theme selection.
 split_recommended: false
 depends_on: [F3-073, F3-217]
 unblocks: []
 acceptance_criteria:
-- "The theme selector exposes exactly eight built-in variants: friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-dark, and basic-light."
-- "The selector additionally exposes a Light/Dark/Auto presentation mode, and in Auto the selected family resolves to its dark or light variant by following the OS appearance (prefers-color-scheme) live."
-- "Basic Dark is the untouched first-open/fresh-project factory default; an explicit saved Project selection is never overwritten by that seed."
-- "A copied Project receives a detached destination-owned theme/layout snapshot and never continuously inherits later source-project changes."
-- "The superseded Friendly Dark default and three-family selector contracts remain findable in the owner doc as clearly labeled lineage prose."
-- "Project-scoped theme:v1 persists the theme family, presentation mode, and resolved variant, and no new storage key is registered for theme identity."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "The ten variants are basic-dark, basic-light, friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light, nier-dark and nier-light."
+  - "Basic Dark seeds untouched/fresh Projects; explicit existing and copied selections survive."
+  - "theme:v1 retains family/mode/resolved variant; old true migrates once to family nier in the stored mode."
+  - "Each of the ten variants resolves to its existing deterministic precomputed token table."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -79,7 +81,7 @@ negative_constraints:
 - "Do not overwrite an explicit saved Project theme/layout or keep a copied Project live-linked to its source Project."
 - "Do not register a new storage key for theme identity; theme:v1 carries the theme family, presentation mode, and resolved variant."
 compatibility_only_notes:
-- "Slint portability: all eight built-in variants resolve to deterministic precomputed token sets; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+- "Slint portability: all ten built-in variants resolve (Q22) to deterministic precomputed token sets; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
 - "The three-family / Retro-Dark-default selector adjudication is superseded per dec-2026-07-16-pm6-theme-settings-canon-promotion-seal and preserved as migration lineage prose."
 - "The later Friendly-Dark-default promotion is itself superseded by the Basic Dark untouched first-open/fresh-project factory contract; it remains historical lineage only."
@@ -97,25 +99,25 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Each of the eight built-in theme variants ships a complete precomputed token table covering
-  surfaces, text colors, borders, the six named accents plus the primary accent and its RGB
-  triple, the six graph-state colors, elevation shadows, radius and border-width geometry,
-  motion easing resolution and durations, the per-variant diff-tint variable set, and
-  typography. The exact values are spec data carried in the Theme Token Tables of this
-  addendum; they are canonical, not illustrative. Token values that the concept derives at
-  runtime through color-mix() or alpha-scaling calc() expressions are resolved to precomputed
-  per-variant constants at build time, and the application performs no runtime color
-  derivation.
+  Each of the ten built-in theme variants ships a complete precomputed token table covering surfaces, text
+  colors, borders, the six named accents plus the primary accent and its RGB triple, the six graph-state colors,
+  elevation shadows, radius and border-width geometry, motion easing resolution and durations, the per-variant
+  diff-tint variable set, and typography. The exact values are spec data carried in the Theme Token Tables of
+  this addendum; they are canonical, not illustrative. Token values that the concept derives at runtime through
+  color-mix() or alpha-scaling calc() expressions are resolved to precomputed per-variant constants at build
+  time, and the application performs no runtime color derivation. Amended Q22, Jared 2026-10-30 (DL-257): the
+  fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust
+  controls.
 gui_related: true
 gui_classification_reason: This unit defines the visible color, typography, and geometry token values for every built-in theme variant.
 split_recommended: false
 depends_on: [F3-425, F3-074, F3-078]
 unblocks: []
 acceptance_criteria:
-- "Every one of the eight built-in variants has a complete token table in the owner doc covering surfaces, text, borders, accents with the primary accent and RGB triple, graph-state colors, elevation, geometry, motion, diff tints, and typography."
-- "The addendum token table values are treated as canonical spec data, and per-variant values marked runtime-derived in the concept are precomputed constants in the product."
-- "No token value is derived at runtime through color-mix() or alpha-scaling calc() expressions."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Every one of the ten built-in variants has a complete token table in the owner doc covering surfaces, text, borders, accents with the primary accent and RGB triple, graph-state colors, elevation, geometry, motion, diff tints, and typography."
+  - "The addendum token table values are treated as canonical spec data, and per-variant values marked runtime-derived in the concept are precomputed constants in the product."
+  - "No token value is derived at runtime through color-mix() or alpha-scaling calc() expressions."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -368,51 +370,48 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The theme families ship Inter for Basic and Glass, Poppins for Friendly with Nunito fallback, and
-  IBM Plex Mono for Retro only, bundled locally with the application; no runtime font CDN is used
-  (DL-138). The Friendly ground is a warm paper texture with an 18px dot grid and static pastel
-  corner glows. Frosted chrome backdrop blur of 14px is limited to the title bar, status bar, and
-  bottom panel. Five category pastels (mint, sky, coral, lavender, butter) tint category surfaces
-  through the cozy hook tokens. Theme switches involving Friendly or Retro fonts are live: same-family
-  switches stay live; cross-family switches that change font families between Retro (IBM Plex Mono)
-  and Friendly (Poppins, Nunito) are live under the look's cover (F3-077, DL-230); and switches
-  between the Inter Glass and Basic families stay live. Superseded lineage (kept findable): until
-  2026-10-17 such cross-family switches required restart. NieR Mode overrides body and
-  display with PM NieR Sans, the M PLUS 1 variable face at weights 100-900 in
-  mplus1-latin-var.woff2, a free stand-in for the commercial Fontworks FOT-Rodin, and mono with PM
-  NieR Mono, the JetBrains Mono variable face at weights 100-800 in jetbrains-mono-latin-var.woff2.
-  Both are bundled under SIL OFL with their licences; the regular theme faces and Nunito fallback
-  are bundled too. The source font declarations are
-  Concepts/onboarding/opus-5.5/src/settings/styles.d/13-nier.css and its nier/fonts/OFL-*.txt
-  licences. The concepts carry the theme faces the same way (DL-161): PMConcept7 embeds Inter
-  (variable, upright and italic), Poppins 400-800 with italic 400 and 600, Nunito (variable) and IBM
-  Plex Mono 400-700 with italic 400 and 600 as Latin woff2 data: URIs, declared in
-  Concepts/onboarding/opus-5.5/src/css/01-webfonts.css from its src/fonts files and OFL-*.txt
-  licences, and Gelasio, an SIL OFL face drawn to Georgia's metrics, stands in under the family name
-  Georgia for the info-badge glyph because Georgia cannot be embedded. Its Inter, Poppins and IBM
-  Plex Mono files are the bytes the 5.6 Pro chat concept embeds (DR-050). Since 2026-10-09 (DL-161
-  amended) each embedded family also carries the other scripts it supports, as unicode-range slices
-  declared before its unchanged Latin file: Inter Latin Extended, Vietnamese, Cyrillic and Greek
-  with their extended blocks; Poppins Latin Extended and Devanagari; Nunito and IBM Plex Mono Latin
-  Extended, Vietnamese and Cyrillic; PM NieR Sans Latin Extended and Vietnamese; PM NieR Mono those
-  and Cyrillic and Greek. Scripts no family carries use the computer's fonts. Code text follows the
-  look's code face, the --mono-font token: JetBrains Mono, embedded under that name with the shared
-  non-Latin PM NieR Mono slices and, in PMConcept7, the full-axis Latin upright and own italic
-  governed by F3-644 (DR-050 records the dated shared-file exception), in Basic, Glass and Friendly
-  (the home redesign's D17), IBM Plex Mono in Retro, its whole face (owner, 2026-10-10), and PM NieR
-  Mono in NieR Mode; both concepts set their code blocks, inline code, file paths and logs through
-  that token. The home redesign's editor and terminal faces are decided separately (its D17, which
-  its Plans thread records). The page's symbol characters (arrows, check and cross marks, triangles,
-  the warning sign, dots, math signs, the command key and box lines) are PM Symbols in
-  proportional and monospace variable-font forms, attached to every embedded text face for those
-  characters only and matching each face's own family, style and weight; form controls
-  take the look's face. While on, NieR Mode owns general.visual.accent-color and
-  general.visual.app-font (F3-441); turning it off restores the chosen theme. It is an overlay, not
-  a ninth theme.
-  Amended 2026-10-17 (DL-228): Japanese is not embedded. M PLUS 1 carries it upstream, but PM NieR Sans ships
-  only its Latin, Latin Extended and Vietnamese slices, so Japanese text uses the computer's fonts, and
-  DL-161's "scripts it supports" does not require it. The cross-family switching rule is F3-077's; Jared
-  chose on 2026-10-17 that a family switch is live under the look's cover (DL-230).
+  The theme families ship Inter for Basic and Glass, Poppins for Friendly with Nunito fallback, and IBM Plex
+  Mono for Retro only, bundled locally with the application; no runtime font CDN is used (DL-138). The Friendly
+  ground is a warm paper texture with an 18px dot grid and static pastel corner glows. Frosted chrome backdrop
+  blur of 14px is limited to the title bar, status bar, and bottom panel. Five category pastels (mint, sky,
+  coral, lavender, butter) tint category surfaces through the cozy hook tokens. Theme switches involving
+  Friendly or Retro fonts are live: same-family switches stay live; cross-family switches that change font
+  families between Retro (IBM Plex Mono) and Friendly (Poppins, Nunito) are live under the look's cover (F3-077,
+  DL-230); and switches between the Inter Glass and Basic families stay live. Superseded lineage (kept
+  findable): until 2026-10-17 such cross-family switches required restart. The selected NieR family supplies
+  body and display with PM NieR Sans, the M PLUS 1 variable face at weights 100-900 in mplus1-latin-var.woff2, a
+  free stand-in for the commercial Fontworks FOT-Rodin, and mono with PM NieR Mono, the JetBrains Mono variable
+  face at weights 100-800 in jetbrains-mono-latin-var.woff2. Both are bundled under SIL OFL with their licences;
+  the regular theme faces and Nunito fallback are bundled too. The source font declarations are
+  Concepts/onboarding/opus-5.5/src/settings/styles.d/13-nier.css and its nier/fonts/OFL-*.txt licences. The
+  concepts carry the theme faces the same way (DL-161): PMConcept7 embeds Inter (variable, upright and italic),
+  Poppins 400-800 with italic 400 and 600, Nunito (variable) and IBM Plex Mono 400-700 with italic 400 and 600
+  as Latin woff2 data: URIs, declared in Concepts/onboarding/opus-5.5/src/css/01-webfonts.css from its src/fonts
+  files and OFL-*.txt licences, and Gelasio, an SIL OFL face drawn to Georgia's metrics, stands in under the
+  family name Georgia for the info-badge glyph because Georgia cannot be embedded. Its Inter, Poppins and IBM
+  Plex Mono files are the bytes the 5.6 Pro chat concept embeds (DR-050). Since 2026-10-09 (DL-161 amended) each
+  embedded family also carries the other scripts it supports, as unicode-range slices declared before its
+  unchanged Latin file: Inter Latin Extended, Vietnamese, Cyrillic and Greek with their extended blocks; Poppins
+  Latin Extended and Devanagari; Nunito and IBM Plex Mono Latin Extended, Vietnamese and Cyrillic; PM NieR Sans
+  Latin Extended and Vietnamese; PM NieR Mono those and Cyrillic and Greek. Scripts no family carries use the
+  computer's fonts. Code text follows the look's code face, the --mono-font token: JetBrains Mono, embedded
+  under that name with the shared non-Latin PM NieR Mono slices and, in PMConcept7, the full-axis Latin upright
+  and own italic governed by F3-644 (DR-050 records the dated shared-file exception), in Basic, Glass and
+  Friendly (the home redesign's D17), IBM Plex Mono in Retro, its whole face (owner, 2026-10-10), and PM NieR
+  Mono in NieR Mode; both concepts set their code blocks, inline code, file paths and logs through that token.
+  The home redesign's editor and terminal faces are decided separately (its D17, which its Plans thread
+  records). The page's symbol characters (arrows, check and cross marks, triangles, the warning sign, dots, math
+  signs, the command key and box lines) are PM Symbols in proportional and monospace variable-font forms,
+  attached to every embedded text face for those characters only and matching each face's own family, style and
+  weight; form controls take the look's face. While selected, the NieR family owns the effective accent and font
+  (F3-441), retaining other stored appearance preferences for applicable families. It is the fifth family, with
+  NieR Light and NieR Dark (Q22); Basic CSS reuse is an implementation detail. Amended 2026-10-17 (DL-228):
+  Japanese is not embedded. M PLUS 1 carries it upstream, but PM NieR Sans ships only its Latin, Latin Extended
+  and Vietnamese slices, so Japanese text uses the computer's fonts, and DL-161's "scripts it supports" does not
+  require it. The cross-family switching rule is F3-077's; Jared chose on 2026-10-17 that a family switch is
+  live under the look's cover (DL-230). Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls. Retained historical/source
+  tokens (not active overrides): general.visual.app-font, general.visual.accent-color.
 gui_related: true
 gui_classification_reason: This unit defines the visible Friendly theme fonts, ground texture, frosted chrome, pastels, and switch behavior.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43887-L44007
+Source lines: L43701-L43821
 
-Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
+Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
 
 ---
 
@@ -12,14 +12,14 @@ Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0
 
 This addendum compiles the owner decision DL-153, Jared's request of 2026-10-09 to take the next steps of the NieR
 onboarding showpiece (DL-152) and his two rulings of that day. It amends F3-468 (the first paint), F3-520 (the look
-onboarding starts in), F3-521 (the restore's own notices), F3-598 and F3-599 (the four families' pictures), and adds
+onboarding starts in), F3-521 (the restore's own notices), F3-598 and F3-599 (the five families' pictures), and adds
 F3-600. The wiring rulings DL-153 records also name each look control's command or typed local action in F3-082,
 F3-520, F3-521, F3-598 and F3-599. Behaviour stays with its owners: `Plans/Planning_Wizard.md` PWIZ-021 to PWIZ-023 (onboarding and tour
 orchestration), `Plans/Settings_System.md` section 4.4 and SSYS-043 (the theme pair and NieR Mode). The units own the
 presentation only. The concept is source lineage only: its class names, keys, event identifiers, harness hooks and every
 measured timing outside these units are not canon.
 
-### F3-600 — The Hero Moments In The Four Theme Families
+### F3-600 — The Hero Moments In The Five Theme Families (Q22)
 
 ```yaml
 plan_unit_id: F3-600
@@ -28,40 +28,40 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Superseded 2026-10-29 for onboarding by O1–O12/F3-663; retained source description follows: Product
-  Onboarding's three hero moments, the wake as the window opens, the act card at a chapter's end and the
-  curtain call at Ready, take five styles, one per look family: Basic, Friendly, Glass, Retro and NieR
-  (DL-153). Whenever NieR Mode is painted, its onboarding preview included, NieR's moments play as F3-598
-  sets them out, whatever family is chosen beneath it, and no family has a NieR variant. Otherwise the
-  painted family plays its own style, the same in its Light and its Dark variant and drawn only in that
-  family's own materials, never a recoloured NieR. Basic is one drafting job: as the window opens a
-  parallel rule sweeps down the sheet drawing its construction lines before the strings are tensioned; at a
-  chapter's end a title block is drafted over the stage, the rail draws a dimension line to the next
-  chapter and a DONE stamp presses onto the block before the sheet is lifted away; at Ready the troupe bows
-  on the chord and an APPROVED stamp lands on the Ready sign. Friendly is a paper theatre: the footlights
-  come up and the house curtain gathers as the paper troupe folds up from flat; a title card on a stick
-  pops up from below the stage while a paper pennant hops along the rail; at Ready the troupe bows and
-  paper roses land at its feet. Glass is a light lab: the lab switches on under its beam and light runs
-  down each filament into its helper; a frosted plate lights up under a beam while a pulse of light runs
-  along the rail; at Ready a spotlight comes on over each helper as it bows. Retro is an arcade: an attract
-  screen types the name and the sprites spawn in stepped frames; a stage-clear screen with a bonus tally
-  wipes over the stage while the rail's cursor jumps; at Ready the sprites duck their bows, ALL CLEAR types
-  under the sign and a pixel arrow points to the Guided Tour. The wake plays on a fresh opening, the act
-  card on the first forward arrival in a chapter of the run and the curtain call on the first arrival at
-  Ready; the act card is that chapter's one sting, and the rail keeps its old state until the moment's beat
-  moves it. Each family's moments play only that family's existing cues (F3-599). Reduced Motion and low
-  resource show each moment's end state at once; a key or a press snaps a running moment to its end state,
-  and input never waits; motion is one-shot transform or opacity, scaled by Animation speed; no surface
-  larger than 340x256 px reverses its opacity more than once a second, and a large area leaves one way; no
-  filter, blur, blend mode, mask, canvas or WebGL is used. Outside these moments every onboarding screen
-  settles exactly as before; Ready settles with the troupe in a line and its family's mark (the APPROVED
-  stamp, the roses, the spotlights, ALL CLEAR with its arrow). Ready still hands the window over to the
-  Guided Tour's first callout in every family. The moments add no settings key, theme family, theme
-  variant, NieR part, sound setting, `ui.onboarding.*` action or `ui.guided_tour.*` action; their one
-  trigger, end state, snap and sound path are shared by all five styles (DR-056). Current PM7 replacement:
-  Amended 2026-10-29 (O1–O12; PM7): F3-663 replaces the troupe/one-shot-only hero art with one Pip, bounded
-  living worlds and Retro Light/Dark distinction. One trigger/end-state/sound path remains; Ready hands to
-  the first callout after O12 B’s required Creating last-block landing; Reduced Motion places that block
-  instantly (Jared 2026-10-30). O11 leaves the Tour untouched.
+  Onboarding's three hero moments, the wake as the window opens, the act card at a chapter's end and the curtain
+  call at Ready, take five styles, one per look family: Basic, Friendly, Glass, Retro and NieR (DL-153). When
+  the NieR family is selected or previewed, its moments play as F3-598 sets them out; no independent override or
+  underlying family remains (Q22). Otherwise the painted family plays its own style, the same in its Light and
+  its Dark variant and drawn only in that family's own materials, never a recoloured NieR. Basic is one drafting
+  job: as the window opens a parallel rule sweeps down the sheet drawing its construction lines before the
+  strings are tensioned; at a chapter's end a title block is drafted over the stage, the rail draws a dimension
+  line to the next chapter and a DONE stamp presses onto the block before the sheet is lifted away; at Ready the
+  troupe bows on the chord and an APPROVED stamp lands on the Ready sign. Friendly is a paper theatre: the
+  footlights come up and the house curtain gathers as the paper troupe folds up from flat; a title card on a
+  stick pops up from below the stage while a paper pennant hops along the rail; at Ready the troupe bows and
+  paper roses land at its feet. Glass is a light lab: the lab switches on under its beam and light runs down
+  each filament into its helper; a frosted plate lights up under a beam while a pulse of light runs along the
+  rail; at Ready a spotlight comes on over each helper as it bows. Retro is an arcade: an attract screen types
+  the name and the sprites spawn in stepped frames; a stage-clear screen with a bonus tally wipes over the stage
+  while the rail's cursor jumps; at Ready the sprites duck their bows, ALL CLEAR types under the sign and a
+  pixel arrow points to the Guided Tour. The wake plays on a fresh opening, the act card on the first forward
+  arrival in a chapter of the run and the curtain call on the first arrival at Ready; the act card is that
+  chapter's one sting, and the rail keeps its old state until the moment's beat moves it. Each family's moments
+  play only that family's existing cues (F3-599). Reduced Motion and low resource show each moment's end state
+  at once; a key or a press snaps a running moment to its end state, and input never waits; motion is one-shot
+  transform or opacity, scaled by Animation speed; no surface larger than 340x256 px reverses its opacity more
+  than once a second, and a large area leaves one way; no filter, blur, blend mode, mask, canvas or WebGL is
+  used. Outside these moments every onboarding screen settles exactly as before; Ready settles with the troupe
+  in a line and its family's mark (the APPROVED stamp, the roses, the spotlights, ALL CLEAR with its arrow).
+  Ready still hands the window over to the Guided Tour's first callout in every family. The moments add no
+  settings key, theme family, theme variant, NieR part, sound setting, `ui.onboarding.*` action or
+  `ui.guided_tour.*` action; their one trigger, end state, snap and sound path are shared by all five styles
+  (DR-056). Current PM7 replacement: Amended 2026-10-29 (O1–O12; PM7): F3-663 replaces the troupe/one-shot-only
+  hero art with one Pip, bounded living worlds and Retro Light/Dark distinction. One trigger/end-state/sound
+  path remains; Ready hands to the first callout after O12 B’s required Creating last-block landing; Reduced
+  Motion places that block instantly (Jared 2026-10-30). O11 leaves the Tour untouched. Amended Q22, Jared
+  2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration
+  and retained Adjust controls. Retained historical/source tokens (not active overrides): NieR Mode.
 gui_related: true
 gui_classification_reason: Defines the act card, the wake and the curtain call of onboarding in the four theme
   families.

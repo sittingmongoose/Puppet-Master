@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L18523
+Source lines: L14524-L18558
 
-Source SHA256: `8c3e43a461bdb0951b91585669e35562ca3074910c2512d6b56b5bf1610651ec`
+Source SHA256: `5e7cf8e9afc50ceeca6a4c4f1888d43a42ef8129ba5d71c476626a4dea99c425`
 
 ---
 
@@ -2878,36 +2878,43 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Adopted 2026-10-29 for the PM7 build. X2, RM1, L1–L8: Pip marks every indeterminate wait: page, panel,
-  splash, button, check, sign-in, thinking placeholder; st-working remains item state in rows and tabs.
-  Keep meaningful skeletons and determinate bars. Think is the thinking context, Swing the default, Hop a
-  short success wait; these are not preferences. Friendly 1.8 s, Glass 2.6 s, Basic 1.7 s, Retro eight
-  frames/1.2 s share one clock and scale with Animation speed. Reduced Motion permits only the control
-  opacity breath and Pip blink as wait feedback, no travel; under 12 px is still. Needs-you stays the
-  loudest loop. NieR routes to Diamond loaders and retains its existing fallback when that part is off;
-  static NieR Pip never animates. All loops pause offscreen, hidden and during drags. L8 B (Jared 2026-10-30):
-  this build removes
-  menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat menus.js, Usage PMU.menu and
-  Home PMW.menu delegate to it with no private animation implementation. Jared decided these packet rows on
-  2026-10-30; every unmodified recommendation is confirmed as his decision, and the decision IDs remain
-  the amendment keys. X1, L1, S9, O11 and G4 retain his earlier explicit rulings. RM1: Reduced
-  Motion stays stored per Project, app-wide in effect for the active Project and combined with the OS
-  preference. Global inventory applicability is not app-global persistence; the adopted ruling introduces
-  no new store or key. L4/L5 and accepted reviews L-1/L-2, PM7 Step4, 2026-10-30: Swing ×1, Think ×1.15 and
-  Hop ×0.78 apply at every drawing tier; busy buttons use 14 px and the chat thinking placeholder 16 px,
-  keeping Working-row 18 px, content-wait tab 14 px, panel 40 px and splash 128 px. This changes no preference
-  or status key.
+  Adopted 2026-10-29 for the PM7 build. X2, RM1, L1–L8: Pip marks every indeterminate wait: page, panel, splash,
+  button, check, sign-in, thinking placeholder; st-working remains item state vocabulary, with Q11’s
+  working-agent row-loader exception. Keep meaningful skeletons and determinate bars. Think is the thinking
+  context, Swing the default, Hop a short success wait; these are not preferences. Friendly 1.8 s, Glass 2.6 s,
+  Basic 1.7 s, Retro eight frames/1.2 s share one clock and scale with Animation speed. Reduced Motion permits
+  only the control opacity breath and Pip blink as wait feedback, no travel; under 12 px is still. Needs-you
+  stays the loudest loop. NieR routes to Diamond loaders and retains its existing fallback when that part is
+  off; static NieR Pip never animates. All loops pause offscreen, hidden and during drags. L8 B (Jared
+  2026-10-30): this build removes menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat
+  menus.js, Usage PMU.menu and Home PMW.menu delegate to it with no private animation implementation. Jared
+  decided these packet rows on 2026-10-30; every unmodified recommendation is confirmed as his decision, and the
+  decision IDs remain the amendment keys. X1, L1, S9, O11 and G4 retain his earlier explicit rulings. RM1:
+  Reduced Motion stays stored per Project, app-wide in effect for the active Project and combined with the OS
+  preference. Global inventory applicability is not app-global persistence; the adopted ruling introduces no new
+  store or key. L4/L5 and accepted reviews L-1/L-2, PM7 Step4, 2026-10-30: Swing ×1, Think ×1.15 and Hop ×0.78
+  apply at every drawing tier; busy buttons use 14 px and the chat thinking placeholder 16 px, keeping
+  Working-row 18 px, content-wait tab 14 px, panel 40 px and splash 128 px. This changes no preference or status
+  key. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and
+  retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting,
+  waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs
+  and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the
+  same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption: a
+  working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip;
+  running NieR process marks move in their existing material language. The 2200 ms category-head breath remains
+  distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner
+  is added.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Every indeterminate wait uses the shared loader while item state, skeletons and measured progress keep their
-  owners.
-- Family periods are 1.8/2.6/1.7/1.2 s, scaled by Animation speed; all clocks pause hidden/offscreen/during
-  drags.
-- Reduced Motion has only permitted wait breath/blink; NieR routes to Diamond/fallback and <12 px stays still.
+  - "Every indeterminate wait uses the shared loader while item state, skeletons and measured progress keep their owners."
+  - "Family periods are 1.8/2.6/1.7/1.2 s, scaled by Animation speed; all clocks pause hidden/offscreen/during drags."
+  - "Reduced Motion has only permitted wait breath/blink; NieR routes to Diamond/fallback and <12 px stays still."
+  - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
+  - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -3773,21 +3780,30 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Adopted 2026-10-29 for the PM7 build. D14 with X1: processes is a console-framed >_ glyph; robot is the
-  existing redrawn antenna category glyph, not an individual agent figure. Live category glyphs breathe on
-  2200 ms, cursor/antenna move below needs-you’s motion priority. Panel heads join; list marks stay still.
-  Reduced Motion shows the lit rest pose. Every individual agent is the one Pip primitive. Authority: Jared
-  decided D14 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet
-  recommendation.
+  existing redrawn antenna category glyph, not an individual agent figure. Live category glyphs breathe on 2200
+  ms, cursor/antenna move below needs-you’s motion priority. Panel heads join; Q11 replaces the former blanket
+  list-mark stillness. Reduced Motion shows the lit rest pose. Every individual agent is the one Pip primitive.
+  Authority: Jared decided D14 on 2026-10-28; this is an approved source-thread decision, not an unanswered
+  packet recommendation. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen.
+  Working, checking and retrying agents use the shared Think loader; running process marks move on the shared
+  document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen
+  rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and
+  Home board consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no
+  NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never
+  animated Pip; running NieR process marks move in their existing material language. The 2200 ms category-head
+  breath remains distinct and below needs-you priority. No polling loop, command, event, setting, state or extra
+  loader owner is added.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Processes is the console-framed prompt and robot the category antenna, while each individual agent remains
-  Pip.
-- Live category heads breathe at 2200 ms below needs-you; list state marks stay still.
-- Reduced Motion and hidden/offscreen/drag state retain recognizable rest poses without live loops.
+  - "Processes is the console-framed prompt and robot the category antenna, while each individual agent remains Pip."
+  - "Live category heads breathe at 2200 ms below needs-you; Q11 live agent/process rows animate only while their row is visible and gates allow it."
+  - "Reduced Motion and hidden/offscreen/drag state retain recognizable rest poses without live loops."
+  - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
+  - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44009-L44074
+Source lines: L43823-L43889
 
-Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
+Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
 
 ---
 
@@ -20,19 +20,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  When the assistant chat opens as a page of its own, its first painted frame is the viewer's stored look (DL-159,
-  F3-468): the stored theme in its family and mode, Basic Dark when nothing is stored, and with NieR Mode on, Basic in
-  the stored mode under NieR Mode's attributes with the installed parts listed, so the ground of every family, NieR
-  Mode's parchment or ink and Glass's backdrop are right before the chat's content draws. A reader that runs before
-  the first frame reads the chat's own look store and never writes it. It stores nothing new, keeps no app-global
-  copy of the theme, and writes only what the chat's renderer and NieR Mode's engine write on their first render,
-  which still own the look and write the same values. No large surface changes colour between the first frame and
-  the rendered chat. Reduced motion is the system's setting and is not read from the store. NieR Mode's boot log plays
-  only when the chat opens in NieR Mode with the Boot sequence part installed and motion allowed, as it did; it
-  arrives with the first render, so the chat never shows before it, and the reboot moment never plays on a reload. A
-  pinned history drawer is in place from the first frame. When the chat is ported into PMConcept7 (the home
-  redesign), PMConcept7's head boot script owns first paint for the page and the chat's own reader is dropped
-  (DR-054).
+  When the assistant chat opens as a page of its own, its first painted frame is the viewer's stored look
+  (DL-159, F3-468): the stored theme in its family and mode, Basic Dark when nothing is stored, and with the
+  NieR family selected, Basic in the stored mode under NieR Mode's attributes with the installed parts listed,
+  so the ground of every family, NieR Mode's parchment or ink and Glass's backdrop are right before the chat's
+  content draws. A reader that runs before the first frame reads the chat's own look store and never writes it.
+  It stores nothing new, keeps no app-global copy of the theme, and writes only what the chat's renderer and
+  NieR Mode's engine write on their first render, which still own the look and write the same values. No large
+  surface changes colour between the first frame and the rendered chat. Reduced motion is the system's setting
+  and is not read from the store. NieR Mode's boot log plays only when the chat opens in NieR Mode with the Boot
+  sequence part installed and motion allowed, as it did; it arrives with the first render, so the chat never
+  shows before it, and the reboot moment never plays on a reload. A pinned history drawer is in place from the
+  first frame. When the chat is ported into PMConcept7 (the home redesign), PMConcept7's head boot script owns
+  first paint for the page and the chat's own reader is dropped (DR-054). Amended Q22, Jared 2026-10-30
+  (DL-257): the fifth family uses the existing theme owner; no separate override remains.
 gui_related: true
 gui_classification_reason: Defines what the assistant chat paints in its first frame and which reader paints it.
 split_recommended: false

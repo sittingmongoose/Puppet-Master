@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40308-L40534
+Source lines: L40144-L40371
 
-Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
+Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
 
 ---
 
@@ -20,26 +20,27 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The assistant chat transcript renders in the Turn Stage presentation owned by ACD-469 (DL-104): a
-  turn mark and a paint-only spine per assistant turn, seven item families by message type with
-  distinct silhouettes, prose without a container, a neutral right-aligned user bubble (under Retro
-  both drawn as F3-597 states, DL-151), and the accent budget. The working activity keeps Orbit as the default and Step Rail as the simple style,
-  with the behaviour owned by ACD-473 (DL-105): concurrent, failed and waiting subjects, clustering
-  to at most 30 nodes, narration that tucks into the card's caption, and the fold into the strip
-  when the final answer starts. For the transcript and the working activity this supersedes the
-  2026-09-03 redesign section's binding-by-reference list where it conflicts and Additive Correction
-  v4's statements that Orbit and Step Rail stay exactly as specified and that nothing authorises a
-  broad restyle. That binding-by-reference never includes the concept's lab tools (ACD-474). The
-  narration tuck is a projection of the turn's own progress summary into its card and does not
-  violate the rule that cards do not float out of narrative position. The eight themes keep their
-  tokens; family hues and the accent budget are theme-token roles defined for all eight.
+  The assistant chat transcript renders in the Turn Stage presentation owned by ACD-469 (DL-104): a turn mark
+  and a paint-only spine per assistant turn, seven item families by message type with distinct silhouettes,
+  prose without a container, a neutral right-aligned user bubble (under Retro both drawn as F3-597 states,
+  DL-151), and the accent budget. The working activity keeps Orbit as the default and Step Rail as the simple
+  style, with the behaviour owned by ACD-473 (DL-105): concurrent, failed and waiting subjects, clustering to at
+  most 30 nodes, narration that tucks into the card's caption, and the fold into the strip when the final answer
+  starts. For the transcript and the working activity this supersedes the 2026-09-03 redesign section's
+  binding-by-reference list where it conflicts and Additive Correction v4's statements that Orbit and Step Rail
+  stay exactly as specified and that nothing authorises a broad restyle. That binding-by-reference never
+  includes the concept's lab tools (ACD-474). The narration tuck is a projection of the turn's own progress
+  summary into its card and does not violate the rule that cards do not float out of narrative position. The ten
+  themes keep their tokens; family hues and the accent budget are theme-token roles defined for all eight.
+  Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording;
+  SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: "Promotes the rebuilt chat transcript and working activity presentation."
 split_recommended: false
 depends_on: [DL-104, DL-105, ACD-469, ACD-473, ACD-474]
 unblocks: []
 acceptance_criteria:
-  - "The chat transcript renders families, turn marks and the spine per ACD-469 in all eight themes."
+  - "The chat transcript renders families, turn marks and the spine per ACD-469 in all ten themes."
   - "The working activity behaves per ACD-473 in both styles."
   - "No lab tool listed in ACD-474 appears in a product surface."
 validation_surfaces:

@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3462-L4548
+Source lines: L3462-L4571
 
-Source SHA256: `8ee7e010b8c993b7fda6333cc8cf92f101befe2b7bc2cf8a8b4329c45e53d885`
+Source SHA256: `f8293556f35dfc8682aab0d523f18537246977b9ead49c64eede243e878288d6`
 
 ---
 
@@ -914,11 +914,19 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   L1–L8, X2: one F3-662 loader owner/opt-in/class contract and clock supplies every indeterminate wait with
-  contextual Swing/Think/Hop, per-family timing, size/accessibility and pause gates. Preserve layout
-  skeletons and determinate bars; working status remains st-working. NieR routes to its Diamond
-  owner/fallback. No surface spinner, loader-setting or duplicate thinking/Orbit Pip. L8 B (Jared 2026-10-30):
-  this build removes menu-sprout duplication. DR-079 is the one sprout owner for every menu;
-  chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it with no private animation implementation.
+  contextual Swing/Think/Hop, per-family timing, size/accessibility and pause gates. Preserve layout skeletons
+  and determinate bars; working status remains st-working. NieR routes to its Diamond owner/fallback. No surface
+  spinner, loader-setting or duplicate thinking/Orbit Pip. L8 B (Jared 2026-10-30): this build removes
+  menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat menus.js, Usage PMU.menu and Home
+  PMW.menu delegate to it with no private animation implementation. Q11 B, Jared 2026-10-30: only live Work rows
+  animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running
+  process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and
+  scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable
+  rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead
+  clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader
+  owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing
+  material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling
+  loop, command, event, setting, state or extra loader owner is added.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -928,9 +936,11 @@ depends_on:
 - SSYS-010
 unblocks: []
 acceptance_criteria:
-- Every loader consumer opts into one owner/class/clock rather than implementing a spinner.
-- Skeletons, measured bars and status marks retain their own contracts, including NieR routing.
-- Family periods, size gate, accessibility and hidden/drag/Reduced Motion behavior agree across all consumers.
+  - "Every loader consumer opts into one owner/class/clock rather than implementing a spinner."
+  - "Skeletons, measured bars and status marks retain their own contracts, including NieR routing."
+  - "Family periods, size gate, accessibility and hidden/drag/Reduced Motion behavior agree across all consumers."
+  - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
+  - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -969,19 +979,27 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project
-  badge and composer attention are filtered OperationalAwareness over ObservableWork and registry lineage.
-  No consumer owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate
-  ProcessFacts; host monitor owns server/environment resource samples while Resources is open only. Actions
-  route to one owner command/handler; services are read-only and stop lists are generation-bound. D7, PM7
-  Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): PM7_WORK_UI.list(host, options),
-  agentGroup and agentSummary in src/js/48-work.js are the shared row/filter/summary adapters. The rail
-  #panel-agents [data-work-rail] keeps its four shelves (Needs you, Active with lineage, Queued, Recently
-  completed); Home dashboard:agents in 30-dashboard.js keeps its frame/filter. Both read PM_WORK and the same
-  needs-you set; no AGENTS fixture array, private clock or parallel transcript opener remains. list refreshes
-  on change, patchTicks updates times/progress/output, hidden lists catch up on show, and destroy removes
-  subscriptions/observers. Rail uses spelled-out ages; Home keeps its short time form. These source adapters
-  demonstrate the projection boundary without certifying native runtime.
+  D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project badge and
+  composer attention are filtered OperationalAwareness over ObservableWork and registry lineage. No consumer
+  owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate ProcessFacts; host monitor
+  owns server/environment resource samples while Resources is open only. Actions route to one owner
+  command/handler; services are read-only and stop lists are generation-bound. D7, PM7 Step4 final-source
+  alignment, 2026-10-30 (integration e9b15abc64): PM7_WORK_UI.list(host, options), agentGroup and agentSummary
+  in src/js/48-work.js are the shared row/filter/summary adapters. The rail #panel-agents [data-work-rail] keeps
+  its four shelves (Needs you, Active with lineage, Queued, Recently completed); Home dashboard:agents in
+  30-dashboard.js keeps its frame/filter. Both read PM_WORK and the same needs-you set; no AGENTS fixture array,
+  private clock or parallel transcript opener remains. list refreshes on change, patchTicks updates
+  times/progress/output, hidden lists catch up on show, and destroy removes subscriptions/observers. Rail uses
+  spelled-out ages; Home keeps its short time form. These source adapters demonstrate the projection boundary
+  without certifying native runtime. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on
+  screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the
+  shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still.
+  Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel,
+  Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification
+  1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7
+  part/fallback rules, never animated Pip; running NieR process marks move in their existing material language.
+  The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command,
+  event, setting, state or extra loader owner is added.
 gui_related: false
 gui_classification_reason: Defines owner authority, record semantics or lifecycle.
 split_recommended: false
@@ -990,9 +1008,11 @@ depends_on:
 - SIR-054
 unblocks: []
 acceptance_criteria:
-- Counts, rows, freshness and attention agree across thread/status/panel/rail/board/tray/composer filters.
-- ProcessFacts and resource samples resolve their sole Executor/terminal/host owner with stable identity.
-- No surface-private runtime list/stop handler or system-service mutation is introduced.
+  - "Counts, rows, freshness and attention agree across thread/status/panel/rail/board/tray/composer filters."
+  - "ProcessFacts and resource samples resolve their sole Executor/terminal/host owner with stable identity."
+  - "No surface-private runtime list/stop handler or system-service mutation is introduced."
+  - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
+  - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -1095,3 +1115,6 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-237, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/assistant-chat-design.md#ACD-439
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

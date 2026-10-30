@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42372-L43018
+Source lines: L42211-L42860
 
-Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
+Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
 
 ---
 
@@ -582,32 +582,35 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Under Retro Dark and Retro Light the assistant chat paints the app's Retro token tables (F3-426), which now carry
-  PMConcept7's retro themes (DL-151): Retro Dark is PMConcept7's olive Atlas palette with a lime-yellow primary, and
-  Retro Light is ink on warm paper with a blue primary. On Retro Light the warning ink is the darker orange of
-  F3-426's table, which reads at about 4.6:1 on the paper, and the user turn's text is paper-coloured on its green
-  (decision card 3). The chat uses PMConcept7's retro box grammar. Every corner is square, except 2 px on inputs,
-  chips and pills, and except the round dials, rings, status dots and the discs a motion draws. Structural boxes carry
-  a 2 px dark structural line (--border) and inner boxes a hairline (--border-light); where a box had a 1 px border
-  its second pixel is an outer ring, so no box changes size. Shadows are hard offsets with no blur, from F3-426's
-  elevation tokens: 5 px (--elev-3) on menus, hover cards, drawers, dialogs and sheets, 3 px (--shadow) on thread
-  rows, deliverables and the assistant turn, and 2 px (--elev-1) on the primary button and the activity bar; menus,
-  hover cards, drawers and dialogs are opaque. Thread rows are boxed on a darker rail, and the selected row is a lime
-  box with a lime line and a lime hard shadow. The user turn is a solid block in the theme's lime (--accent-lime, a
-  theme-token role under DR-043, not the accent) inside the structural line, with PMConcept7's soft directional lime
-  glow beside it, the one blurred shadow under Retro; it is a Retro-only exception to ACD-469's neutral user bubble.
-  The assistant turn sits in a square box on the raised surface with one plain structural line all round and the hard
-  retro shadow, never a coloured edge or side strip on any side, with its turn mark and spine still in the gutter
-  outside the box (decision card 4). Live work is PMConcept7's operation card (a lime wash and an olive edge) instead
-  of the accent ring and glow; deliverables are cards with a hard shadow, and system, event and plan cards are cards
-  with no shadow; no surface carries a decorative gradient. The composer is a square box in the structural line that
-  keeps its resting look on focus, with square selectors and a square Send, and a queued follow-up is a square chip
-  with an orange line. Module sheets take the structural line and the 5 px hard shadow. Focus is a 2 px outline, lime
-  on Retro Dark and blue on Retro Light (F3-201); scrollbar thumbs are square, in the primary at half strength; the
-  Retro pixel grid lies over the whole app under the Retro texture settings (Settings_System section 4.4) and never
-  takes a pointer. Kept unchanged: IBM Plex Mono and every retro font size, every retro motion (ACD-475's Retro voice,
-  the print-in, the phosphor bloom and the block caret) and the retro sound kit. NieR Mode paints over Basic, so none
-  of this applies under NieR Mode.
+  Under Retro Dark and Retro Light the assistant chat paints the app's Retro token tables (F3-426), which now
+  carry PMConcept7's retro themes (DL-151): Retro Dark is PMConcept7's olive Atlas palette with a lime-yellow
+  primary, and Retro Light is ink on warm paper with a blue primary. On Retro Light the warning ink is the
+  darker orange of F3-426's table, which reads at about 4.6:1 on the paper, and the user turn's text is
+  paper-coloured on its green (decision card 3). The chat uses PMConcept7's retro box grammar. Every corner is
+  square, except 2 px on inputs, chips and pills, and except the round dials, rings, status dots and the discs a
+  motion draws. Structural boxes carry a 2 px dark structural line (--border) and inner boxes a hairline
+  (--border-light); where a box had a 1 px border its second pixel is an outer ring, so no box changes size.
+  Shadows are hard offsets with no blur, from F3-426's elevation tokens: 5 px (--elev-3) on menus, hover cards,
+  drawers, dialogs and sheets, 3 px (--shadow) on thread rows, deliverables and the assistant turn, and 2 px
+  (--elev-1) on the primary button and the activity bar; menus, hover cards, drawers and dialogs are opaque.
+  Thread rows are boxed on a darker rail, and the selected row is a lime box with a lime line and a lime hard
+  shadow. The user turn is a solid block in the theme's lime (--accent-lime, a theme-token role under DR-043,
+  not the accent) inside the structural line, with PMConcept7's soft directional lime glow beside it, the one
+  blurred shadow under Retro; it is a Retro-only exception to ACD-469's neutral user bubble. The assistant turn
+  sits in a square box on the raised surface with one plain structural line all round and the hard retro shadow,
+  never a coloured edge or side strip on any side, with its turn mark and spine still in the gutter outside the
+  box (decision card 4). Live work is PMConcept7's operation card (a lime wash and an olive edge) instead of the
+  accent ring and glow; deliverables are cards with a hard shadow, and system, event and plan cards are cards
+  with no shadow; no surface carries a decorative gradient. The composer is a square box in the structural line
+  that keeps its resting look on focus, with square selectors and a square Send, and a queued follow-up is a
+  square chip with an orange line. Module sheets take the structural line and the 5 px hard shadow. Focus is a 2
+  px outline, lime on Retro Dark and blue on Retro Light (F3-201); scrollbar thumbs are square, in the primary
+  at half strength; the Retro pixel grid lies over the whole app under the Retro texture settings
+  (Settings_System section 4.4) and never takes a pointer. Kept unchanged: IBM Plex Mono and every retro font
+  size, every retro motion (ACD-475's Retro voice, the print-in, the phosphor bloom and the block caret) and the
+  retro sound kit. NieR is its own family, reusing Basic CSS as an implementation detail, so none of this
+  applies under NieR Mode. Q22, Jared 2026-10-30 (DL-257): family nier replaces the independent overlay model;
+  retained sound parts and the shared player remain.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's presentation under the Retro theme family.
 split_recommended: false

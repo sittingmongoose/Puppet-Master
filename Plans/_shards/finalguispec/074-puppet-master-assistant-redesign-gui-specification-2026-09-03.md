@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37875-L38200
+Source lines: L37701-L38035
 
-Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
+Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
 
 ---
 
@@ -108,7 +108,7 @@ Thread status continues to derive from owner projections. Review, multi-agent, s
 
 ### 16. Responsive and theme behavior
 
-All eight themes and every width in the concept's existing verification apply, plus the narrow 390–590px states. Under width pressure the priority order is: preserve Send and Stop; preserve destination identity and its close control; preserve Attach and the active capability glyphs; collapse the participant cluster and the attachment overflow; use the existing selector icon mode; keep the Plan primary status control visible and overflow its secondary actions; and preserve Activity icon access even when labels and counts collapse.
+All ten themes and every width in the concept's existing verification apply, plus the narrow 390–590px states. Under width pressure the priority order is: preserve Send and Stop; preserve destination identity and its close control; preserve Attach and the active capability glyphs; collapse the participant cluster and the attachment overflow; use the existing selector icon mode; keep the Plan primary status control visible and overflow its secondary actions; and preserve Activity icon access even when labels and counts collapse.
 
 Do not add left accent bars, excessive padding, permanent bright status surfaces, or white-until-hover defects. The J-2 spacing minimums of F3-566 are a floor, not excess padding. A run card narrower than 360 px is a card-inside-a-narrow-chat case (the S card tier of F3-569), not a new minimum chat width; the dock is transient, not a permanent status surface.
 
@@ -296,7 +296,16 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  All eight themes and every width in the concept's existing verification apply to the redesign, plus the narrow 390 to 590 pixel states. Under width pressure the priority order is to preserve Send and Stop, then destination identity and its close control, then Attach and the active capability glyphs, then to collapse the participant cluster and attachment overflow, then to use the existing selector icon mode, then to keep the Plan primary status control visible while overflowing its secondary actions, and finally to preserve Activity icon access even when labels and counts collapse. Left accent bars, excessive padding, permanent bright status surfaces, and white-until-hover defects are prohibited. Accessibility semantics already present must be preserved when a component is touched, and no separate accessibility expansion workstream is in scope for this wave.
+  All ten themes and every width in the concept's existing verification apply to the redesign, plus the narrow
+  390 to 590 pixel states. Under width pressure the priority order is to preserve Send and Stop, then
+  destination identity and its close control, then Attach and the active capability glyphs, then to collapse the
+  participant cluster and attachment overflow, then to use the existing selector icon mode, then to keep the
+  Plan primary status control visible while overflowing its secondary actions, and finally to preserve Activity
+  icon access even when labels and counts collapse. Left accent bars, excessive padding, permanent bright status
+  surfaces, and white-until-hover defects are prohibited. Accessibility semantics already present must be
+  preserved when a component is touched, and no separate accessibility expansion workstream is in scope for this
+  wave. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording;
+  SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: This unit governs responsive collapse order and visual prohibitions across every redesign surface.
 depends_on: [F3-532, F3-533]

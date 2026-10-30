@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L2103-L2716
+Source lines: L2105-L2722
 
-Source SHA256: `8b6f430968f6c17615bb7151af1d57f7a4347a3a219c1db05325134dbd990330`
+Source SHA256: `87b76a83dd44be420699a3771514fc4050e0eea1d0b9af0e9f37eec3d107b1e2`
 
 ---
 
@@ -349,47 +349,46 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  Plans/pm7_control_bindings.json is the finite appearance and shell producer census, extending UIW-040
-  through UIW-042. Each row names the visible control, owner unit, setting/field payload, exact command
-  path or typed local action/non-dispatch disposition, and the corresponding production entry or reason it
-  has none. Each admitted editor setting and every retained customizer field has its own row; aliases and
-  view-local affordances never become invented cmd.* ids. Plans/Wiring_Matrix.production.json remains the
-  runtime command wiring inventory; a producer binding can reuse its canonical command entry only when the
-  census names that entry and exact argument mapping. Its schema is not relaxed for local controls: local
-  exclusions are explicit in the census and the production exclusions notes. Required evidence includes the
-  rendered pointer/keyboard path, projected availability and disabled reason, request/result, readback,
-  receipt/event delta, focus and accessible names. Static source declarations certify neither native
-  handlers nor the complete rendered census. Every PM7 control must be classified, including Settings
-  entry/scope/reset, token color channels/hex/reset, preview/sample actions, wallpaper keys/default,
-  notifications, DnD and each resize surface. Demo-only controls and preview harnesses are outside the
-  product census. Composite quick-set rows reference the one exact field/value patch in
-  Plans/appearance_quick_sets.json, list only its affected setting ids in either scope, and adapt it
-  atomically to the existing writer. Reset/restore-default operations have an explicit exact id set
-  distinct from value patches. A binding cannot substitute all editor or terminal fields for a smaller
-  quick set. The round-3 bezel/background/mask fields and saved terminal preset controls are now
-  enumerated. Local library actions explicitly declare their SP-331-only persistence; picker Back
-  explicitly declares no persistence. Terminal round 5 (DL-213) retires the Flicker Amount bindings and
-  narrows Bell to Follow look and Off; the consistency pass (DL-214) adds no binding, command or stored
-  state. F6 (DL-222) adds no binding, command, production entry or stored state. The page-change hold and a
-  Customize pick's acknowledgement order are ACD-475's; this census adds no row for them. The two bell
-  Continue controls are separate local census rows forwarding the original prompt's own typed action. Setup
-  retains PWIZ-021/UCC-106's ui.onboarding.start and closed pm.product_onboarding.action_request.v2 resume
-  context; Guided Tour retains PWIZ-023's ui.guided_tour.resume and pm.guided_tour.action_request.v3
-  session/checkpoint/currentness context. They create no command, event or new action id. Amended
-  2026-10-17 (DL-228): the census classifies every PM7 appearance and shell control and every Settings
-  control another surface hosts (SSYS-043, SSYS-044, the Usage-hosted rows included). Usage page controls
-  that host no Settings row are classified by UCC-147's PM7 producer census, as view_only or their existing
-  command, and the left rail's local controls (the Owner dropdown, the publish fold, the More tray, the
-  Jujutsu head buttons, strip keys) by F3-618 to F3-625, which add no command, action or wiring row;
-  neither needs a row here. The earlier "every PM7 control" reads with those two owners. Amended 2026-10-17
-  (review r1): SSYS-043's hosted NieR controls now have rows: the NieR Mode checkbox in the title-bar theme
-  selector and the Guided Tour bar's Look menu (the Settings transaction pair), the same checkbox inside
-  the onboarding window (ui.onboarding.choose_look), the NieR Mode editor's parts edit (the pair), the
-  editor's Turn on NieR Mode button, offered while NieR Mode is off (nier.editor.turn_on, the pair over
-  general.visual.nier-mode; review r2), and the editor's open, close and Play reboot moment
-  (ui.settings.nier_editor.*). PM7 B1/B2/B6, S5, D5/G4: shell census includes each project row/shortcut,
-  Pip entry/editor control, work status item and all three panel tabs; WM-097 and pm7_control_bindings.json
-  bind every command/local disposition. Decorative mark/loader are not controls.
+  Plans/pm7_control_bindings.json is the finite appearance and shell producer census, extending UIW-040 through
+  UIW-042. Each row names the visible control, owner unit, setting/field payload, exact command path or typed
+  local action/non-dispatch disposition, and the corresponding production entry or reason it has none. Each
+  admitted editor setting and every retained customizer field has its own row; aliases and view-local
+  affordances never become invented cmd.* ids. Plans/Wiring_Matrix.production.json remains the runtime command
+  wiring inventory; a producer binding can reuse its canonical command entry only when the census names that
+  entry and exact argument mapping. Its schema is not relaxed for local controls: local exclusions are explicit
+  in the census and the production exclusions notes. Required evidence includes the rendered pointer/keyboard
+  path, projected availability and disabled reason, request/result, readback, receipt/event delta, focus and
+  accessible names. Static source declarations certify neither native handlers nor the complete rendered census.
+  Every PM7 control must be classified, including Settings entry/scope/reset, token color channels/hex/reset,
+  preview/sample actions, wallpaper keys/default, notifications, DnD and each resize surface. Demo-only controls
+  and preview harnesses are outside the product census. Composite quick-set rows reference the one exact
+  field/value patch in Plans/appearance_quick_sets.json, list only its affected setting ids in either scope, and
+  adapt it atomically to the existing writer. Reset/restore-default operations have an explicit exact id set
+  distinct from value patches. A binding cannot substitute all editor or terminal fields for a smaller quick
+  set. The round-3 bezel/background/mask fields and saved terminal preset controls are now enumerated. Local
+  library actions explicitly declare their SP-331-only persistence; picker Back explicitly declares no
+  persistence. Terminal round 5 (DL-213) retires the Flicker Amount bindings and narrows Bell to Follow look and
+  Off; the consistency pass (DL-214) adds no binding, command or stored state. F6 (DL-222) adds no binding,
+  command, production entry or stored state. The page-change hold and a Customize pick's acknowledgement order
+  are ACD-475's; this census adds no row for them. The two bell Continue controls are separate local census rows
+  forwarding the original prompt's own typed action. Setup retains PWIZ-021/UCC-106's ui.onboarding.start and
+  closed pm.product_onboarding.action_request.v2 resume context; Guided Tour retains PWIZ-023's
+  ui.guided_tour.resume and pm.guided_tour.action_request.v3 session/checkpoint/currentness context. They create
+  no command, event or new action id. Amended 2026-10-17 (DL-228): the census classifies every PM7 appearance
+  and shell control and every Settings control another surface hosts (SSYS-043, SSYS-044, the Usage-hosted rows
+  included). Usage page controls that host no Settings row are classified by UCC-147's PM7 producer census, as
+  view_only or their existing command, and the left rail's local controls (the Owner dropdown, the publish fold,
+  the More tray, the Jujutsu head buttons, strip keys) by F3-618 to F3-625, which add no command, action or
+  wiring row; neither needs a row here. The earlier "every PM7 control" reads with those two owners.
+  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay remain
+  presentation-only; nier.editor.open is the Adjust binding. No manager_id, route, detail id, command, new part
+  or event is added. shell.nier.mode, tour.nier.mode and onboarding.nier.mode are retired non_dispatch census
+  tombstones with no action, setting or production writer. Family controls bind the existing theme pair, and the
+  retained editor parts/background use the same live writer (Q22). PM7 B1/B2/B6, S5, D5/G4: shell census
+  includes each project row/shortcut, Pip entry/editor control, work status item and all three panel tabs;
+  WM-097 and pm7_control_bindings.json bind every command/local disposition. Decorative mark/loader are not
+  controls. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override
+  wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false
@@ -622,3 +621,8 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/UI_Wiring_Rules.md#UIW-024, ContractName:Plans/UI_Wiring_Rules.md#UIW-025, ContractName:Plans/UI_Wiring_Rules.md#UIW-043
+
+
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

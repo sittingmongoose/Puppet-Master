@@ -19,6 +19,9 @@ def read(name):
 def check():
     failures = []
 
+    nier_report = runpy.run_path(str(ROOT / "scripts/pm7-nier-theme-check.py"))["check"]()
+    failures.extend("Q22: " + item for item in nier_report["failures"])
+
     def require(ok, message):
         if not ok:
             failures.append(message)

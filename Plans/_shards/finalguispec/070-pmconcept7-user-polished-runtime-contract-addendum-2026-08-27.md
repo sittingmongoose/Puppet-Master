@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36100-L36573
+Source lines: L36067-L36541
 
-Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
+Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
 
 ---
 
@@ -20,7 +20,7 @@ retains that classification.
 
 Build8 browser receipts do not establish an all-visuals pass. The protected Settings actual-pixel review retains
 `IVR-T41-B8-XPAGE-001`: the rightmost Settings card column is visibly cropped at 1180, 980, 860, and 680 in all
-eight themes even though the cross-page runner reports root-level containment. The P2 narrow page-overflow menu
+ten themes even though the cross-page runner reports root-level containment. The P2 narrow page-overflow menu
 keyboard-focus and Arrow-key-navigation defect also remains open, and PNC-019 remains outside this evidence.
 
 ### F3-513 - User-Polished PMConcept7 Whole-Application Authority
@@ -32,12 +32,13 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The user-polished PMConcept7 is the visual and interaction authority for the recovered concept across the
-  global shell, title bar, primary pages, side panels, Cozy Shelves, Home workspace, Dashboard, Usage,
-  shared Assistant and Context surfaces, bottom/status surfaces, menus, hover states, and motion.
-  PMConcept7 is the appearance and interaction reference for these surfaces; canonical product
-  behavior and implementation authority remain with the Plans owners. The eight built-in themes remain Basic Dark,
-  Basic Light, Friendly Dark, Friendly Light, Retro Dark, Retro Light, Glass Dark, and Glass Light, with the
-  recovered family-specific typography, palette, shape, contrast, and motion behavior.
+  global shell, title bar, primary pages, side panels, Cozy Shelves, Home workspace, Dashboard, Usage, shared
+  Assistant and Context surfaces, bottom/status surfaces, menus, hover states, and motion. PMConcept7 is the
+  appearance and interaction reference for these surfaces; canonical product behavior and implementation
+  authority remain with the Plans owners. The ten built-in themes remain Basic Dark, Basic Light, Friendly Dark,
+  Friendly Light, Retro Dark, Retro Light, Glass Dark, and Glass Light, with the recovered family-specific
+  typography, palette, shape, contrast, and motion behavior. Amended Q22, Jared 2026-10-30 (DL-257): the current
+  family/variant and inventory census supersede earlier counts.
 gui_related: true
 gui_classification_reason: This unit establishes the whole-application appearance and interaction reference and its boundary with canonical product owners.
 split_recommended: false

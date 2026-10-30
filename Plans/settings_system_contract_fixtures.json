@@ -3017,6 +3017,86 @@
         "hydration_policy": "cached_bounded_summary_then_selected_details",
         "owner_gap_reason": "CS-081 eight-action census (see owner_local_action_refs) with machine companions; S1-S7 bind registered Project values extensions.commands.{keyboard-shortcuts, shortcut-hints, keyboard-layout, command-palette-visibility} via transaction preview/apply; rest view-only; sole handler handlers::commands::apply_local_action (native absent). No owner action IDs: commands.* is not cmd.*. Presets, not UICommands; scope selector never changes file roots."
       }
+    },
+    {
+      "case_id": "q22-valid-nier-dark",
+      "schema_ref": "#/$defs/appearance_projection",
+      "record": {
+        "theme_pair": {
+          "family": "NieR",
+          "presentation_mode": "Dark"
+        },
+        "effective_theme_variant": "NieR Dark",
+        "glass": {
+          "alpha": null,
+          "availability": {
+            "state": "disabled",
+            "reason_code": "not_applicable",
+            "human_reason": "Glass controls apply only to the Glass theme family.",
+            "selector_ref": "settings.appearance.glass.available",
+            "evaluated_at_utc": "2026-08-31T12:10:00Z",
+            "projection_generation": 9
+          }
+        },
+        "tooltips": {
+          "hover_tooltips_enabled": false,
+          "focus_accessible_description_retained": true,
+          "help_details_retained": true
+        },
+        "reduced_motion": {
+          "project_requested": true,
+          "platform_requested": false,
+          "effective": true,
+          "policy": "calm_nonessential_motion_preserve_state_feedback"
+        },
+        "derived_from_setting_ids": [
+          "general.visual.theme",
+          "general.visual.theme-mode",
+          "general.visual.glass-transparency",
+          "general.interaction.show-tooltips",
+          "general.visual.reduce-animations"
+        ]
+      }
+    },
+    {
+      "case_id": "q22-valid-nier-light",
+      "schema_ref": "#/$defs/appearance_projection",
+      "record": {
+        "theme_pair": {
+          "family": "NieR",
+          "presentation_mode": "Light"
+        },
+        "effective_theme_variant": "NieR Light",
+        "glass": {
+          "alpha": null,
+          "availability": {
+            "state": "disabled",
+            "reason_code": "not_applicable",
+            "human_reason": "Glass controls apply only to the Glass theme family.",
+            "selector_ref": "settings.appearance.glass.available",
+            "evaluated_at_utc": "2026-08-31T12:10:00Z",
+            "projection_generation": 9
+          }
+        },
+        "tooltips": {
+          "hover_tooltips_enabled": false,
+          "focus_accessible_description_retained": true,
+          "help_details_retained": true
+        },
+        "reduced_motion": {
+          "project_requested": true,
+          "platform_requested": false,
+          "effective": true,
+          "policy": "calm_nonessential_motion_preserve_state_feedback"
+        },
+        "derived_from_setting_ids": [
+          "general.visual.theme",
+          "general.visual.theme-mode",
+          "general.visual.glass-transparency",
+          "general.interaction.show-tooltips",
+          "general.visual.reduce-animations"
+        ]
+      }
     }
   ],
   "negative_cases": [
@@ -3775,6 +3855,172 @@
         "migration_receipt_ref": null
       },
       "expected_keyword": "const"
+    },
+    {
+      "case_id": "q22-invalid-nier-basic-variant-dark",
+      "schema_ref": "#/$defs/appearance_projection",
+      "record": {
+        "theme_pair": {
+          "family": "NieR",
+          "presentation_mode": "Dark"
+        },
+        "effective_theme_variant": "Basic Dark",
+        "glass": {
+          "alpha": null,
+          "availability": {
+            "state": "disabled",
+            "reason_code": "not_applicable",
+            "human_reason": "Glass controls apply only to the Glass theme family.",
+            "selector_ref": "settings.appearance.glass.available",
+            "evaluated_at_utc": "2026-08-31T12:10:00Z",
+            "projection_generation": 9
+          }
+        },
+        "tooltips": {
+          "hover_tooltips_enabled": false,
+          "focus_accessible_description_retained": true,
+          "help_details_retained": true
+        },
+        "reduced_motion": {
+          "project_requested": true,
+          "platform_requested": false,
+          "effective": true,
+          "policy": "calm_nonessential_motion_preserve_state_feedback"
+        },
+        "derived_from_setting_ids": [
+          "general.visual.theme",
+          "general.visual.theme-mode",
+          "general.visual.glass-transparency",
+          "general.interaction.show-tooltips",
+          "general.visual.reduce-animations"
+        ]
+      },
+      "expected_keyword": "enum"
+    },
+    {
+      "case_id": "q22-invalid-independent-nier-mode-dark",
+      "schema_ref": "#/$defs/appearance_projection",
+      "record": {
+        "theme_pair": {
+          "family": "NieR",
+          "presentation_mode": "Dark"
+        },
+        "effective_theme_variant": "NieR Dark",
+        "glass": {
+          "alpha": null,
+          "availability": {
+            "state": "disabled",
+            "reason_code": "not_applicable",
+            "human_reason": "Glass controls apply only to the Glass theme family.",
+            "selector_ref": "settings.appearance.glass.available",
+            "evaluated_at_utc": "2026-08-31T12:10:00Z",
+            "projection_generation": 9
+          }
+        },
+        "tooltips": {
+          "hover_tooltips_enabled": false,
+          "focus_accessible_description_retained": true,
+          "help_details_retained": true
+        },
+        "reduced_motion": {
+          "project_requested": true,
+          "platform_requested": false,
+          "effective": true,
+          "policy": "calm_nonessential_motion_preserve_state_feedback"
+        },
+        "derived_from_setting_ids": [
+          "general.visual.theme",
+          "general.visual.theme-mode",
+          "general.visual.glass-transparency",
+          "general.interaction.show-tooltips",
+          "general.visual.reduce-animations"
+        ],
+        "nier_mode": true
+      },
+      "expected_keyword": "additionalProperties"
+    },
+    {
+      "case_id": "q22-invalid-nier-basic-variant-light",
+      "schema_ref": "#/$defs/appearance_projection",
+      "record": {
+        "theme_pair": {
+          "family": "NieR",
+          "presentation_mode": "Light"
+        },
+        "effective_theme_variant": "Basic Light",
+        "glass": {
+          "alpha": null,
+          "availability": {
+            "state": "disabled",
+            "reason_code": "not_applicable",
+            "human_reason": "Glass controls apply only to the Glass theme family.",
+            "selector_ref": "settings.appearance.glass.available",
+            "evaluated_at_utc": "2026-08-31T12:10:00Z",
+            "projection_generation": 9
+          }
+        },
+        "tooltips": {
+          "hover_tooltips_enabled": false,
+          "focus_accessible_description_retained": true,
+          "help_details_retained": true
+        },
+        "reduced_motion": {
+          "project_requested": true,
+          "platform_requested": false,
+          "effective": true,
+          "policy": "calm_nonessential_motion_preserve_state_feedback"
+        },
+        "derived_from_setting_ids": [
+          "general.visual.theme",
+          "general.visual.theme-mode",
+          "general.visual.glass-transparency",
+          "general.interaction.show-tooltips",
+          "general.visual.reduce-animations"
+        ]
+      },
+      "expected_keyword": "enum"
+    },
+    {
+      "case_id": "q22-invalid-independent-nier-mode-light",
+      "schema_ref": "#/$defs/appearance_projection",
+      "record": {
+        "theme_pair": {
+          "family": "NieR",
+          "presentation_mode": "Light"
+        },
+        "effective_theme_variant": "NieR Light",
+        "glass": {
+          "alpha": null,
+          "availability": {
+            "state": "disabled",
+            "reason_code": "not_applicable",
+            "human_reason": "Glass controls apply only to the Glass theme family.",
+            "selector_ref": "settings.appearance.glass.available",
+            "evaluated_at_utc": "2026-08-31T12:10:00Z",
+            "projection_generation": 9
+          }
+        },
+        "tooltips": {
+          "hover_tooltips_enabled": false,
+          "focus_accessible_description_retained": true,
+          "help_details_retained": true
+        },
+        "reduced_motion": {
+          "project_requested": true,
+          "platform_requested": false,
+          "effective": true,
+          "policy": "calm_nonessential_motion_preserve_state_feedback"
+        },
+        "derived_from_setting_ids": [
+          "general.visual.theme",
+          "general.visual.theme-mode",
+          "general.visual.glass-transparency",
+          "general.interaction.show-tooltips",
+          "general.visual.reduce-animations"
+        ],
+        "nier_mode": true
+      },
+      "expected_keyword": "additionalProperties"
     }
   ]
 }

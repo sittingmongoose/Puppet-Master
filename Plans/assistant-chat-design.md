@@ -27881,41 +27881,43 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The 5.6 Pro chat follows these shared presentation and behavior requirements (DL-185, D27).
-  Colours: its Basic, Friendly and Glass colours are fixed to PMConcept7's
-  (all four families, their light/dark modes and NieR type follow the host, DL-232); it follows PMConcept7's one look setting and NieR Mode setting and keeps no theme
-  store of its own, and its own names for colours, radii, surfaces and the code face map onto PMConcept7's, so the
-  look settings reach every chat surface. General code text follows Plans/Decision_Log.md#DL-161,
-  Plans/FinalGUISpec.md#F3-426, #F3-430 and Plans/DRY_Rules.md#DR-050. Under NieR Mode it follows the rule for new
-  surfaces of DL-152, Plans/Settings_System.md#SSYS-043, Plans/FinalGUISpec.md#F3-598 and DR-056 (existing parts
-  only, colours from the NieR tables, stepped motion), and it draws no NieR scene, ground layer, NieR Mode editor or
-  reboot plate of its own: PMConcept7's are the only ones. Names: its class names, element ids and token names are
-  namespaced so none of them collides with PMConcept7's. Size: it sizes itself by its own column, and by its own
-  window when popped out, never by the app window: every width tier, breakpoint and pin rule it has (History,
-  Activity Detail, the composer's selector row) keys on its own container. Layers: its menus, popouts, sheets,
-  drawers, toasts and drag ghosts open in the page's one overlay root, in its one stacking order
-  (Plans/DRY_Rules.md#DR-067); it appends no overlay of its own to the page. Hover: PMConcept7's hover controller
-  owns every hover tag in the chat (Plans/FinalGUISpec.md#F3-523), and its cards, rows, tiles and icons take
-  PMConcept7's one hover grammar with no hover effect of their own (Plans/DRY_Rules.md#DR-072,
-  Plans/FinalGUISpec.md#F3-465); the chat draws no
-  second tag and keeps no native titles, and its Activity Bar previews stay its own bounded previews (ACD-453). Bans:
-  its pills and coloured side stripes are removed (Plans/DRY_Rules.md#DR-069, Plans/FinalGUISpec.md#F3-648),
-  among them the meta chips, the goal and to-do chips, the Ask Card's capsule buttons, the attachment chips, the
-  activity bar's capsule outline, the Read-only marker, the browser's session tabs, the working card's left rail in
-  the step colour, the model picker's active provider tab and the browser's stale row; selection shows by the
-  surface itself. Openings: its editor pane goes, everything it opened there opens through ACD-500, and its inline
-  Shell box becomes ACD-500's command card. Demo controls: its Demo Studio, its guided examples and every other demo
-  control fold into the one Demo Studio of PMConcept7 (Plans/DRY_Rules.md#DR-070, Plans/FinalGUISpec.md#F3-649),
-  which stays lab only (ACD-474). Keys: keys the chat answers without a modifier act only while focus is inside the
-  chat, and Escape closes the innermost open thing and stops there (F3-635, F3-568). Start: the ported chat opens no
-  tab at start; the home layout is the layout record's (SP-330). Pop out keeps the chat's History and Activity Detail
-  with it (F3-637); the web client offers no Pop out and the chat stays in its column (F3-637, UCC-203). This adds the port's
-  requirements to the binding-by-reference of the 5.6 Pro concept and supersedes nothing else.
-  Amended 2026-10-29 (G1–G3, PC1; PM7): Pip parts/gaze/overlays reuse host owners. Chat width has no fixed 760
-  cap; Activity Detail has no small view. G2, Jared follow-up 2026-10-30: widen first; at the column
-  limit dock/squeeze if at least 360 px of messages remain, otherwise cover at full column height. G1 B (Jared 2026-10-30):
-  Pin preserves the full-size view across thread switches while its contents follow the new thread; unpinned
-  detail closes on a switch. History and detail floating plates use one Glass menu token.
+  The 5.6 Pro chat follows these shared presentation and behavior requirements (DL-185, D27). Colours: its
+  Basic, Friendly and Glass colours are fixed to PMConcept7's (all five families, their light/dark modes and
+  NieR type follow the host, DL-232); it follows PMConcept7's one look setting and NieR Mode setting and keeps
+  no theme store of its own, and its own names for colours, radii, surfaces and the code face map onto
+  PMConcept7's, so the look settings reach every chat surface. General code text follows
+  Plans/Decision_Log.md#DL-161, Plans/FinalGUISpec.md#F3-426, #F3-430 and Plans/DRY_Rules.md#DR-050. Under NieR
+  Mode it follows the rule for new surfaces of DL-152, Plans/Settings_System.md#SSYS-043,
+  Plans/FinalGUISpec.md#F3-598 and DR-056 (existing parts only, colours from the NieR tables, stepped motion),
+  and it draws no NieR scene, ground layer, NieR Mode editor or reboot plate of its own: PMConcept7's are the
+  only ones. Names: its class names, element ids and token names are namespaced so none of them collides with
+  PMConcept7's. Size: it sizes itself by its own column, and by its own window when popped out, never by the app
+  window: every width tier, breakpoint and pin rule it has (History, Activity Detail, the composer's selector
+  row) keys on its own container. Layers: its menus, popouts, sheets, drawers, toasts and drag ghosts open in
+  the page's one overlay root, in its one stacking order (Plans/DRY_Rules.md#DR-067); it appends no overlay of
+  its own to the page. Hover: PMConcept7's hover controller owns every hover tag in the chat
+  (Plans/FinalGUISpec.md#F3-523), and its cards, rows, tiles and icons take PMConcept7's one hover grammar with
+  no hover effect of their own (Plans/DRY_Rules.md#DR-072, Plans/FinalGUISpec.md#F3-465); the chat draws no
+  second tag and keeps no native titles, and its Activity Bar previews stay its own bounded previews (ACD-453).
+  Bans: its pills and coloured side stripes are removed (Plans/DRY_Rules.md#DR-069,
+  Plans/FinalGUISpec.md#F3-648), among them the meta chips, the goal and to-do chips, the Ask Card's capsule
+  buttons, the attachment chips, the activity bar's capsule outline, the Read-only marker, the browser's session
+  tabs, the working card's left rail in the step colour, the model picker's active provider tab and the
+  browser's stale row; selection shows by the surface itself. Openings: its editor pane goes, everything it
+  opened there opens through ACD-500, and its inline Shell box becomes ACD-500's command card. Demo controls:
+  its Demo Studio, its guided examples and every other demo control fold into the one Demo Studio of PMConcept7
+  (Plans/DRY_Rules.md#DR-070, Plans/FinalGUISpec.md#F3-649), which stays lab only (ACD-474). Keys: keys the chat
+  answers without a modifier act only while focus is inside the chat, and Escape closes the innermost open thing
+  and stops there (F3-635, F3-568). Start: the ported chat opens no tab at start; the home layout is the layout
+  record's (SP-330). Pop out keeps the chat's History and Activity Detail with it (F3-637); the web client
+  offers no Pop out and the chat stays in its column (F3-637, UCC-203). This adds the port's requirements to the
+  binding-by-reference of the 5.6 Pro concept and supersedes nothing else. Amended 2026-10-29 (G1–G3, PC1; PM7):
+  Pip parts/gaze/overlays reuse host owners. Chat width has no fixed 760 cap; Activity Detail has no small view.
+  G2, Jared follow-up 2026-10-30: widen first; at the column limit dock/squeeze if at least 360 px of messages
+  remain, otherwise cover at full column height. G1 B (Jared 2026-10-30): Pin preserves the full-size view
+  across thread switches while its contents follow the new thread; unpinned detail closes on a switch. History
+  and detail floating plates use one Glass menu token. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR
+  family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: Lists what the 5.6 Pro chat's colours, names, sizing, layers, hover tags, bans, demo controls and keys must meet when it moves into PMConcept7.
 split_recommended: false
@@ -28516,3 +28518,6 @@ owner_hints:
 ContractRef: ContractName:Plans/Decision_Log.md#DL-239, ContractName:Plans/FinalGUISpec.md#F3-594, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-586, ContractName:Plans/Settings_System.md#SSYS-056, ContractName:Plans/DRY_Rules.md#DR-072
 
 
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

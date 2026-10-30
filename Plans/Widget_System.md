@@ -1266,7 +1266,7 @@ retains that classification.
 
 Build8 browser receipts do not establish an all-visuals pass. The protected Settings actual-pixel review retains
 `IVR-T41-B8-XPAGE-001`: the rightmost Settings card column is visibly cropped at 1180, 980, 860, and 680 in all
-eight themes even though the cross-page runner reports root-level containment. The P2 narrow page-overflow menu
+eight then-current themes (historical audit evidence; Q22 now requires ten) even though the cross-page runner reports root-level containment. The P2 narrow page-overflow menu
 keyboard-focus and Arrow-key-navigation defect also remains open, and PNC-019 remains outside this evidence.
 
 ### WS-017 - Kind-Aware Curated Size And Adaptive Content Contract
@@ -2064,3 +2064,6 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-186, ContractName:Plans/FinalGUISpec.md#F3-638, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/usage-feature.md#UF-062, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Widget_System.md#WS-019, ContractName:Plans/Widget_System.md#WS-020, ContractName:Plans/DRY_Rules.md#DR-066
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

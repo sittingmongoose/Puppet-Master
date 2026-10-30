@@ -3099,7 +3099,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:P
 
 DL-152 reaches NieR Mode from four places and DL-153 gives onboarding's hero moments five styles and the first paint the stored look. Each of these must exist once, so the four places and the five styles never grow copies of their own.
 
-### DR-056 - One NieR Mode Editor, One Reboot Plate, One Look Store And One Set Of Hero Moments
+### DR-056 - One NieR Adjust Editor, One Reboot Plate, One Look Store And One Set Of Hero Moments
 
 ```yaml
 plan_unit_id: DR-056
@@ -3107,33 +3107,33 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  NieR Mode has exactly one editor, SSYS-043's row editor titled NieR Mode, reached from the Settings row Customize
-  NieR Mode, the title-bar theme selector, the Guided Tour bar's Look menu and the onboarding look choice and its Look
-  menu, and drawn either as a popup dialog over the application or as a panel inside the onboarding window. It reads
-  and writes only through a store: live, the current Project's Settings through cmd.settings.transaction.preview then
-  cmd.settings.transaction.apply; inside the onboarding window, the onboarding preview through
-  ui.onboarding.choose_look, written with the Project at commit (DL-153). Its open, close and replay are
-  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay, and inside the
-  onboarding window ui.onboarding.choose_look opens and closes the panel. No surface keeps a second editor or its own
-  preset, part or background list. Every NieR Mode on or off, from Settings, the title bar, the Tour or the onboarding
-  window, plays the one reboot plate and its slat transition (F3-598); no surface draws a plate of its own. The look
-  has one store, the current Project's Settings (SSYS-010): the first paint only reads it (F3-468), and no app-global,
-  cross-Project or local-storage theme copy or paint hint exists. Onboarding's hero moments (the wake, the act card
-  and the curtain call) have one trigger, one end state, one snap to that end state and one sound path through the
-  Notifications & Sounds owner's player (DR-043); their five styles, NieR's (F3-598) and the four families' (F3-600),
-  differ in presentation only.
-  Amended 2026-10-29 (O1–O12, S1–S9; PM7): Pip has one SSYS-056 row editor, one parts/default/preset registry and one Project Settings transaction, reached from Settings/wand/titlebar only. Onboarding reads factory/Project parts, no editor inside it. One hero trigger/end state/snap/sound path remains for all Pip worlds and Ready handoff; no second local store.
+  Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable theme family (nier), ordered after Basic,
+  Friendly, Glass and Retro. NieR Light (nier-light) and NieR Dark (nier-dark) complete ten built-in variants. A
+  NieR family pick uses general.visual.theme and the existing mode through cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply; no independent NieR switch or command remains. Exactly one NieR row editor
+  serves Settings, the title bar, the Guided Tour and onboarding. Preset, part and background lists have one
+  owner. Live edits use the existing Project Settings preview/apply pair; onboarding uses its existing
+  non-persistent ui.onboarding.choose_look preview and exact commit boundary. The retained local actions
+  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay add no command
+  or store. Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it
+  uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover.
+  Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local
+  rehearsal that changes no setting. One Project look store and one first-paint reader serve all five theme
+  families. No app-global or cross-Project copy, independent NieR boolean writer, local-storage hint, second
+  Reboot plate or per-surface family selector exists. Hero moments share one trigger, end state, snap and sound
+  path through DR-043; five family styles differ in presentation only. Pip keeps the SSYS-056 row editor, shared
+  parts/preset registry and Settings owner. Onboarding reads factory/Project Pip parts and has no Pip editor.
+  Legacy NieR Mode and Customize NieR Mode labels are source lineage, superseded by Q22.
 gui_related: true
 gui_classification_reason: "Fixes single owners for the NieR Mode editor, the reboot plate, the look store and onboarding's hero moments."
 split_recommended: false
 depends_on: [SSYS-043, SSYS-010, F3-468, F3-598, F3-600, DL-152, DL-153, DR-043]
 unblocks: []
 acceptance_criteria:
-  - "The Settings row, the title-bar theme selector, the Tour bar's Look menu and the onboarding look choice open the same NieR Mode editor; no second editor, preset list, part list or background list exists."
-  - "The editor writes only through the live Settings transaction pair or, inside the onboarding window, through ui.onboarding.choose_look's preview, never through a store of its own."
-  - "Every NieR Mode on or off plays the one reboot plate and slat transition, wherever it is turned."
-  - "The theme and NieR rows are stored only in the current Project's Settings; the first paint reads them and keeps no app-global, cross-Project or local-storage copy or hint."
-  - "The five styles of the wake, the act card and the curtain call share one trigger, end state, snap and sound path and differ in presentation only."
+  - "One editor, part/preset/background registry, look store and first-paint reader serve all five families."
+  - "Live writes use the existing Settings pair and onboarding uses its existing preview/commit boundary."
+  - "Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting."
+  - "No independent NieR boolean, separate family command, per-surface selector list or second sound player exists."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -4365,11 +4365,19 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   L1–L8, X2: one F3-662 loader owner/opt-in/class contract and clock supplies every indeterminate wait with
-  contextual Swing/Think/Hop, per-family timing, size/accessibility and pause gates. Preserve layout
-  skeletons and determinate bars; working status remains st-working. NieR routes to its Diamond
-  owner/fallback. No surface spinner, loader-setting or duplicate thinking/Orbit Pip. L8 B (Jared 2026-10-30):
-  this build removes menu-sprout duplication. DR-079 is the one sprout owner for every menu;
-  chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it with no private animation implementation.
+  contextual Swing/Think/Hop, per-family timing, size/accessibility and pause gates. Preserve layout skeletons
+  and determinate bars; working status remains st-working. NieR routes to its Diamond owner/fallback. No surface
+  spinner, loader-setting or duplicate thinking/Orbit Pip. L8 B (Jared 2026-10-30): this build removes
+  menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat menus.js, Usage PMU.menu and Home
+  PMW.menu delegate to it with no private animation implementation. Q11 B, Jared 2026-10-30: only live Work rows
+  animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running
+  process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and
+  scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable
+  rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead
+  clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader
+  owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing
+  material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling
+  loop, command, event, setting, state or extra loader owner is added.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -4379,9 +4387,11 @@ depends_on:
 - SSYS-010
 unblocks: []
 acceptance_criteria:
-- Every loader consumer opts into one owner/class/clock rather than implementing a spinner.
-- Skeletons, measured bars and status marks retain their own contracts, including NieR routing.
-- Family periods, size gate, accessibility and hidden/drag/Reduced Motion behavior agree across all consumers.
+  - "Every loader consumer opts into one owner/class/clock rather than implementing a spinner."
+  - "Skeletons, measured bars and status marks retain their own contracts, including NieR routing."
+  - "Family periods, size gate, accessibility and hidden/drag/Reduced Motion behavior agree across all consumers."
+  - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
+  - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -4420,19 +4430,27 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project
-  badge and composer attention are filtered OperationalAwareness over ObservableWork and registry lineage.
-  No consumer owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate
-  ProcessFacts; host monitor owns server/environment resource samples while Resources is open only. Actions
-  route to one owner command/handler; services are read-only and stop lists are generation-bound. D7, PM7
-  Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): PM7_WORK_UI.list(host, options),
-  agentGroup and agentSummary in src/js/48-work.js are the shared row/filter/summary adapters. The rail
-  #panel-agents [data-work-rail] keeps its four shelves (Needs you, Active with lineage, Queued, Recently
-  completed); Home dashboard:agents in 30-dashboard.js keeps its frame/filter. Both read PM_WORK and the same
-  needs-you set; no AGENTS fixture array, private clock or parallel transcript opener remains. list refreshes
-  on change, patchTicks updates times/progress/output, hidden lists catch up on show, and destroy removes
-  subscriptions/observers. Rail uses spelled-out ages; Home keeps its short time form. These source adapters
-  demonstrate the projection boundary without certifying native runtime.
+  D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project badge and
+  composer attention are filtered OperationalAwareness over ObservableWork and registry lineage. No consumer
+  owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate ProcessFacts; host monitor
+  owns server/environment resource samples while Resources is open only. Actions route to one owner
+  command/handler; services are read-only and stop lists are generation-bound. D7, PM7 Step4 final-source
+  alignment, 2026-10-30 (integration e9b15abc64): PM7_WORK_UI.list(host, options), agentGroup and agentSummary
+  in src/js/48-work.js are the shared row/filter/summary adapters. The rail #panel-agents [data-work-rail] keeps
+  its four shelves (Needs you, Active with lineage, Queued, Recently completed); Home dashboard:agents in
+  30-dashboard.js keeps its frame/filter. Both read PM_WORK and the same needs-you set; no AGENTS fixture array,
+  private clock or parallel transcript opener remains. list refreshes on change, patchTicks updates
+  times/progress/output, hidden lists catch up on show, and destroy removes subscriptions/observers. Rail uses
+  spelled-out ages; Home keeps its short time form. These source adapters demonstrate the projection boundary
+  without certifying native runtime. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on
+  screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the
+  shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still.
+  Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel,
+  Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification
+  1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7
+  part/fallback rules, never animated Pip; running NieR process marks move in their existing material language.
+  The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command,
+  event, setting, state or extra loader owner is added.
 gui_related: false
 gui_classification_reason: Defines owner authority, record semantics or lifecycle.
 split_recommended: false
@@ -4441,9 +4459,11 @@ depends_on:
 - SIR-054
 unblocks: []
 acceptance_criteria:
-- Counts, rows, freshness and attention agree across thread/status/panel/rail/board/tray/composer filters.
-- ProcessFacts and resource samples resolve their sole Executor/terminal/host owner with stable identity.
-- No surface-private runtime list/stop handler or system-service mutation is introduced.
+  - "Counts, rows, freshness and attention agree across thread/status/panel/rail/board/tray/composer filters."
+  - "ProcessFacts and resource samples resolve their sole Executor/terminal/host owner with stable identity."
+  - "No surface-private runtime list/stop handler or system-service mutation is introduced."
+  - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
+  - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -4546,3 +4566,6 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-237, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/assistant-chat-design.md#ACD-439
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

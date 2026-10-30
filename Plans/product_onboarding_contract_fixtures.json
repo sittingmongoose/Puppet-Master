@@ -33,14 +33,14 @@
   "coverage": {
     "canonical_stage_count": 11,
     "typed_action_count": 14,
-    "valid_request_count": 36,
+    "valid_request_count": 40,
     "valid_applied_result_count": 31,
     "valid_disabled_result_count": 1,
     "valid_rejected_result_count": 1,
     "valid_session_count": 5,
     "valid_migration_receipt_count": 4,
-    "invalid_case_count": 230,
-    "valid_setup_plan_count": 15,
+    "invalid_case_count": 233,
+    "valid_setup_plan_count": 17,
     "invalid_setup_plan_count": 43,
     "connect_existing_setup_plan_count": 6,
     "local_or_vpn_setup_plan_count": 2,
@@ -109,7 +109,10 @@
     "recovery_open_owner_flow_request_count": 3,
     "look_choice_request_count": 6,
     "look_choice_applied_result_count": 2,
-    "look_choice_negative_count": 18
+    "look_choice_negative_count": 18,
+    "q22_nier_family_count": 5,
+    "q22_legacy_preview_intent_retired": true,
+    "q22_nier_setup_plan_cases": 2
   },
   "valid": [
     {
@@ -7183,7 +7186,6 @@
           "look_choice": {
             "theme_family": "glass",
             "theme_mode": "light",
-            "nier_mode": null,
             "nier_parts": null,
             "nier_background": null
           }
@@ -7191,7 +7193,7 @@
       }
     },
     {
-      "name": "valid.request.choose_look.nier_checkbox",
+      "name": "valid.request.choose_look.nier_family",
       "definition": "onboarding_action_request",
       "value": {
         "schema_id": "pm.product_onboarding.action_request.v2",
@@ -7209,7 +7211,7 @@
         "source_surface": "first_run",
         "return_focus_id": "onboarding.welcome.look.nier_mode",
         "local_context": {
-          "intent": "preview_nier",
+          "intent": "choose_look",
           "scope": null,
           "branch_kind": null,
           "branch_step": null,
@@ -7226,9 +7228,8 @@
           "project_commit_ref": null,
           "setup_commit_binding": null,
           "look_choice": {
-            "theme_family": null,
-            "theme_mode": null,
-            "nier_mode": true,
+            "theme_family": "nier",
+            "theme_mode": "dark",
             "nier_parts": null,
             "nier_background": null
           }
@@ -7254,7 +7255,7 @@
         "source_surface": "first_run",
         "return_focus_id": "onboarding.look_editor.preset.colors_only",
         "local_context": {
-          "intent": "preview_nier",
+          "intent": "choose_look",
           "scope": null,
           "branch_kind": null,
           "branch_step": null,
@@ -7273,7 +7274,6 @@
           "look_choice": {
             "theme_family": null,
             "theme_mode": null,
-            "nier_mode": null,
             "nier_parts": [
               "Square hairlines",
               "Menu cursor",
@@ -7306,7 +7306,7 @@
         "source_surface": "settings_rerun",
         "return_focus_id": "onboarding.look_editor.background.bunker",
         "local_context": {
-          "intent": "preview_nier",
+          "intent": "choose_look",
           "scope": null,
           "branch_kind": null,
           "branch_step": null,
@@ -7325,7 +7325,6 @@
           "look_choice": {
             "theme_family": null,
             "theme_mode": null,
-            "nier_mode": null,
             "nier_parts": null,
             "nier_background": "The Bunker"
           }
@@ -7609,15 +7608,300 @@
           "project_created": false
         },
         "look_choice": {
-          "theme_family": "basic",
+          "theme_family": "nier",
           "theme_mode": "dark",
-          "nier_mode": true,
           "nier_parts": [
             "Square hairlines",
             "Menu cursor"
           ],
           "nier_background": "Parchment"
         }
+      }
+    },
+    {
+      "name": "q22.valid.request.nier_light",
+      "definition": "onboarding_action_request",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_request.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.choose_look",
+        "action_instance_id": "action:onboarding:choose_look:2",
+        "onboarding_session_id": "onboarding:action:choose_look:2",
+        "stage": "welcome",
+        "expected_revision": 6,
+        "continuation_generation": 2,
+        "choice": null,
+        "owner_route_ref": null,
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:onboarding:choose_look:2",
+        "source_surface": "first_run",
+        "return_focus_id": "onboarding.welcome.look.nier_mode",
+        "local_context": {
+          "intent": "choose_look",
+          "scope": null,
+          "branch_kind": null,
+          "branch_step": null,
+          "selection_ref": null,
+          "target_ref": null,
+          "owner_operation_ref": null,
+          "owner_branch_ref": null,
+          "expanded": null,
+          "start_tour": null,
+          "recovery_condition": null,
+          "owner_phase": null,
+          "owner_command_id": null,
+          "precommit_authorization_ref": null,
+          "project_commit_ref": null,
+          "setup_commit_binding": null,
+          "look_choice": {
+            "theme_family": "nier",
+            "theme_mode": "light",
+            "nier_parts": null,
+            "nier_background": null
+          }
+        }
+      }
+    },
+    {
+      "name": "q22.valid.request.nier_dark",
+      "definition": "onboarding_action_request",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_request.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.choose_look",
+        "action_instance_id": "action:onboarding:choose_look:2",
+        "onboarding_session_id": "onboarding:action:choose_look:2",
+        "stage": "welcome",
+        "expected_revision": 6,
+        "continuation_generation": 2,
+        "choice": null,
+        "owner_route_ref": null,
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:onboarding:choose_look:2",
+        "source_surface": "first_run",
+        "return_focus_id": "onboarding.welcome.look.nier_mode",
+        "local_context": {
+          "intent": "choose_look",
+          "scope": null,
+          "branch_kind": null,
+          "branch_step": null,
+          "selection_ref": null,
+          "target_ref": null,
+          "owner_operation_ref": null,
+          "owner_branch_ref": null,
+          "expanded": null,
+          "start_tour": null,
+          "recovery_condition": null,
+          "owner_phase": null,
+          "owner_command_id": null,
+          "precommit_authorization_ref": null,
+          "project_commit_ref": null,
+          "setup_commit_binding": null,
+          "look_choice": {
+            "theme_family": "nier",
+            "theme_mode": "dark",
+            "nier_parts": null,
+            "nier_background": null
+          }
+        }
+      }
+    },
+    {
+      "name": "q22.valid.request.nier_with_adjust",
+      "definition": "onboarding_action_request",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_request.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.choose_look",
+        "action_instance_id": "action:onboarding:choose_look:2",
+        "onboarding_session_id": "onboarding:action:choose_look:2",
+        "stage": "welcome",
+        "expected_revision": 6,
+        "continuation_generation": 2,
+        "choice": null,
+        "owner_route_ref": null,
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:onboarding:choose_look:2",
+        "source_surface": "first_run",
+        "return_focus_id": "onboarding.welcome.look.nier_mode",
+        "local_context": {
+          "intent": "choose_look",
+          "scope": null,
+          "branch_kind": null,
+          "branch_step": null,
+          "selection_ref": null,
+          "target_ref": null,
+          "owner_operation_ref": null,
+          "owner_branch_ref": null,
+          "expanded": null,
+          "start_tour": null,
+          "recovery_condition": null,
+          "owner_phase": null,
+          "owner_command_id": null,
+          "precommit_authorization_ref": null,
+          "project_commit_ref": null,
+          "setup_commit_binding": null,
+          "look_choice": {
+            "theme_family": "nier",
+            "theme_mode": "dark",
+            "nier_parts": [],
+            "nier_background": "Parchment"
+          }
+        }
+      }
+    },
+    {
+      "name": "q22.valid.setup_plan.nier_light",
+      "definition": "onboarding_setup_plan",
+      "value": {
+        "schema_id": "pm.product_onboarding.setup_plan.v2",
+        "planned_only": true,
+        "applied": false,
+        "journey": "connect_existing",
+        "theme_family": "nier",
+        "theme_mode": "light",
+        "project_mode": "later",
+        "project_name": "",
+        "project_source_ref": "",
+        "backup_source_ref": "",
+        "project_transport": "local",
+        "backup_transport": "local",
+        "local_location_mode": "automatic",
+        "local_location": "",
+        "local_history": false,
+        "history_backend": "git",
+        "filesafe": true,
+        "online_mode": "none",
+        "forge": "none",
+        "forge_provider_variant": null,
+        "forge_instance_url": "",
+        "forge_instance_profile": null,
+        "forge_account_action": null,
+        "forge_account_ref": "",
+        "repository_name": "",
+        "repository_description": "",
+        "repository_visibility": null,
+        "repository_owner_scope": "personal",
+        "repository_ref": "",
+        "repository_container": "",
+        "repository_project": "",
+        "repository_default_branch": "main",
+        "repository_initialize_readme": false,
+        "repository_gitignore": "automatic",
+        "repository_license": "none",
+        "server_mode": "existing_server",
+        "server_connection_mode": "discover",
+        "server_ref": "server:home:local",
+        "server_trust_confirmed": false,
+        "storage_mode": "with_server",
+        "storage_transport": "mounted",
+        "storage_location": "",
+        "client_mode": "this_device",
+        "remote_mode": "local_or_vpn",
+        "remote_more": false,
+        "include_vpn_networks": false,
+        "connection_pairing": "approval",
+        "tailscale_control": null,
+        "tailscale_account_action": null,
+        "headscale_url": "",
+        "remote_endpoint": "",
+        "proxy_kind": null,
+        "proxy_hosting": null,
+        "proxy_hostname": "",
+        "proxy_tls": null,
+        "source_more": false,
+        "review_confirmed": false,
+        "project_draft_ref": "draft:onboarding-project-1",
+        "project_draft_revision": 3,
+        "settings_transfer": {
+          "mode": "start_fresh",
+          "source_project_id": null,
+          "source_revision": null,
+          "draft_preview_ref": null,
+          "draft_preview_sha256": null,
+          "explicit_choice_setting_ids": [],
+          "settings_applied": false
+        },
+        "preflight_result_refs": [],
+        "source_access_authorization_refs": [],
+        "project_created": false
+      }
+    },
+    {
+      "name": "q22.valid.setup_plan.nier_dark",
+      "definition": "onboarding_setup_plan",
+      "value": {
+        "schema_id": "pm.product_onboarding.setup_plan.v2",
+        "planned_only": true,
+        "applied": false,
+        "journey": "connect_existing",
+        "theme_family": "nier",
+        "theme_mode": "dark",
+        "project_mode": "later",
+        "project_name": "",
+        "project_source_ref": "",
+        "backup_source_ref": "",
+        "project_transport": "local",
+        "backup_transport": "local",
+        "local_location_mode": "automatic",
+        "local_location": "",
+        "local_history": false,
+        "history_backend": "git",
+        "filesafe": true,
+        "online_mode": "none",
+        "forge": "none",
+        "forge_provider_variant": null,
+        "forge_instance_url": "",
+        "forge_instance_profile": null,
+        "forge_account_action": null,
+        "forge_account_ref": "",
+        "repository_name": "",
+        "repository_description": "",
+        "repository_visibility": null,
+        "repository_owner_scope": "personal",
+        "repository_ref": "",
+        "repository_container": "",
+        "repository_project": "",
+        "repository_default_branch": "main",
+        "repository_initialize_readme": false,
+        "repository_gitignore": "automatic",
+        "repository_license": "none",
+        "server_mode": "existing_server",
+        "server_connection_mode": "discover",
+        "server_ref": "server:home:local",
+        "server_trust_confirmed": false,
+        "storage_mode": "with_server",
+        "storage_transport": "mounted",
+        "storage_location": "",
+        "client_mode": "this_device",
+        "remote_mode": "local_or_vpn",
+        "remote_more": false,
+        "include_vpn_networks": false,
+        "connection_pairing": "approval",
+        "tailscale_control": null,
+        "tailscale_account_action": null,
+        "headscale_url": "",
+        "remote_endpoint": "",
+        "proxy_kind": null,
+        "proxy_hosting": null,
+        "proxy_hostname": "",
+        "proxy_tls": null,
+        "source_more": false,
+        "review_confirmed": false,
+        "project_draft_ref": "draft:onboarding-project-1",
+        "project_draft_revision": 3,
+        "settings_transfer": {
+          "mode": "start_fresh",
+          "source_project_id": null,
+          "source_revision": null,
+          "draft_preview_ref": null,
+          "draft_preview_sha256": null,
+          "explicit_choice_setting_ids": [],
+          "settings_applied": false
+        },
+        "preflight_result_refs": [],
+        "source_access_authorization_refs": [],
+        "project_created": false
       }
     }
   ],
@@ -13218,7 +13502,7 @@
       "name": "invalid.choose_look.dispatches_settings_transaction",
       "definition": "onboarding_action_request",
       "expected_error": "a NieR preview inside the onboarding window never applies a Settings transaction",
-      "base_valid": "valid.request.choose_look.nier_checkbox",
+      "base_valid": "valid.request.choose_look.nier_family",
       "patch": {
         "local_context.owner_command_id": "cmd.settings.transaction.apply"
       }
@@ -13233,9 +13517,9 @@
       ]
     },
     {
-      "name": "invalid.choose_look.family_choice_carries_nier_rows",
+      "name": "invalid.choose_look.retired_boolean",
       "definition": "onboarding_action_request",
-      "expected_error": "intent choose_look changes the family and mode only",
+      "expected_error": "Q22 removes nier_mode from the closed look_choice",
       "base_valid": "valid.request.choose_look.look_tile",
       "patch": {
         "local_context.look_choice.nier_mode": true
@@ -13251,21 +13535,26 @@
       }
     },
     {
-      "name": "invalid.choose_look.nier_preview_carries_theme_pair",
+      "name": "invalid.choose_look.retired_preview_intent",
       "definition": "onboarding_action_request",
-      "expected_error": "intent preview_nier changes NieR's rows only",
-      "base_valid": "valid.request.choose_look.nier_checkbox",
+      "expected_error": "Q22 retires preview_nier; it is not an alias",
+      "base_valid": "valid.request.choose_look.nier_family",
       "patch": {
-        "local_context.look_choice.theme_family": "basic"
+        "local_context.intent": "preview_nier"
       }
     },
     {
-      "name": "invalid.choose_look.nier_preview_changes_nothing",
+      "name": "invalid.choose_look.changes_nothing",
       "definition": "onboarding_action_request",
-      "expected_error": "intent preview_nier changes at least one NieR row",
-      "base_valid": "valid.request.choose_look.nier_checkbox",
+      "expected_error": "choose_look changes at least one retained appearance field",
+      "base_valid": "valid.request.choose_look.nier_family",
       "patch": {
-        "local_context.look_choice.nier_mode": null
+        "local_context.look_choice": {
+          "theme_family": null,
+          "theme_mode": null,
+          "nier_parts": null,
+          "nier_background": null
+        }
       }
     },
     {
@@ -13278,12 +13567,12 @@
       }
     },
     {
-      "name": "invalid.choose_look.nier_as_family",
+      "name": "invalid.choose_look.unknown_family",
       "definition": "onboarding_action_request",
-      "expected_error": "NieR Mode is never a theme family",
+      "expected_error": "Q22 admits nier, not arbitrary family names",
       "base_valid": "valid.request.choose_look.look_tile",
       "patch": {
-        "local_context.look_choice.theme_family": "nier"
+        "local_context.look_choice.theme_family": "unknown-family"
       }
     },
     {
@@ -13315,7 +13604,6 @@
         "local_context.look_choice": {
           "theme_family": "retro",
           "theme_mode": "dark",
-          "nier_mode": null,
           "nier_parts": null,
           "nier_background": null
         }
@@ -13330,7 +13618,6 @@
         "local_context.look_choice": {
           "theme_family": "basic",
           "theme_mode": "dark",
-          "nier_mode": null,
           "nier_parts": null,
           "nier_background": null
         }
@@ -13508,9 +13795,8 @@
           "project_created": false
         },
         "look_choice": {
-          "theme_family": "basic",
+          "theme_family": "nier",
           "theme_mode": "dark",
-          "nier_mode": true,
           "nier_parts": [
             "Square hairlines",
             "Menu cursor"
@@ -13519,6 +13805,24 @@
         }
       },
       "expected_error": "look_choice.nier_background must use the canonical onboarding_look_choice enum"
+    },
+    {
+      "name": "q22.invalid.setup_plan.unknown_family",
+      "definition": "onboarding_setup_plan",
+      "base_valid": "q22.valid.setup_plan.nier_dark",
+      "patch": {
+        "theme_family": "unknown-family"
+      },
+      "expected_error": "Q22 uses family nier and the existing closed SetupDraft shape"
+    },
+    {
+      "name": "q22.invalid.setup_plan.retired_boolean",
+      "definition": "onboarding_setup_plan",
+      "base_valid": "q22.valid.setup_plan.nier_dark",
+      "patch": {
+        "nier_mode": true
+      },
+      "expected_error": "Q22 uses family nier and the existing closed SetupDraft shape"
     }
   ],
   "resolved_owner_inputs": {

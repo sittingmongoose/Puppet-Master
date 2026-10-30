@@ -639,7 +639,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Exactly two paths write objective_text. A direct user edit in Goal Activity Detail writes revision n+1 with change_source user_direct; Save is the approved change and requires no confirmation dialog, no agent review, and no material-difference analysis. An agent-proposed complete replacement, permitted only after an explicit user instruction to change the Goal, dispatches cmd.chat.goal.propose_update, returns an ApprovalRequest, and writes nothing until the user approves, at which point the accepted text is written with change_source agent_proposed_user_approved and the originating approval_id. The agent may create a Goal on an explicit user request without a second approval, and may never infer one from a long task, repeated failures, a Plan Build, or a schedule. The system must never silently rewrite, narrow, broaden, summarize, reformat, translate, or clarify objective_text; an attempt is a typed error, not a quiet no-op.
+  Exactly two paths write objective_text. A direct user edit in Goal Activity Detail writes revision n+1 with
+  change_source user_direct; Save is the approved change and requires no confirmation dialog, no agent review,
+  and no material-difference analysis. An agent-proposed complete replacement, permitted only after an explicit
+  user instruction to change the Goal, dispatches cmd.chat.goal.propose_update, returns an ApprovalRequest, and
+  writes nothing until the user approves, at which point the accepted text is written with change_source
+  agent_proposed_user_approved and the originating approval_id. The agent may create a Goal on an explicit user
+  request without a second approval, and may never infer one from a long task, repeated failures, a Plan Build,
+  or a schedule. The system must never silently rewrite, narrow, broaden, summarize, reformat, translate, or
+  clarify objective_text; an attempt is a typed error, not a quiet no-op. Q22, Jared 2026-10-30 (DL-257): Goal
+  Activity Detail consumes the same five-family/ten-variant Project theme snapshot, including NieR Light/Dark
+  and its retained Adjust parts/background. No Goal-local NieR override, appearance command, stored theme or
+  lifecycle mutation is introduced; SSYS-043 owns appearance and migration.
 gui_related: true
 gui_classification_reason: This defines the Goal editor Save behavior and the approval dialog contents for agent proposals.
 depends_on: [GRS-048]
@@ -7975,3 +7986,6 @@ gui_classification_reason: Original source, native authority/custody, schema, st
 ```
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

@@ -4,7 +4,7 @@ Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
 Source lines: L1914-L2027
 
-Source SHA256: `64e858a20c01af8b263735faeb050f2102a9d5328ae964cd5f4c4ebf53a1469d`
+Source SHA256: `f143f38e3cf82e3af2fe5a213070d72e4508c794febcfc9cdd738e67f9ed83f7`
 
 ---
 
@@ -113,7 +113,7 @@ The GUI rebuild is not Home-complete until the evidence set verifies:
   restoreOwnerRefs never dropping section records;
 - dashboard widget reorder and grid-snap resize on the shared direct-manipulation
   vocabulary, still persisted under the widget layout contract;
-- project/workspace persistence, corruption/migration/off-screen recovery, all eight
+- project/workspace persistence, corruption/migration/off-screen recovery, all ten
   themes, Light/Dark/Auto, inline SVG only, no emoji, and zero page/console errors.
 - one source-hashed zero-omission control census, byte-identical dual pipeline
   builds, and the exact 72-case fresh-context visual matrix plus direct headful

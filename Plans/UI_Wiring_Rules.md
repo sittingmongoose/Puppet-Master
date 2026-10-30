@@ -1053,8 +1053,8 @@ activating.
 
 | Typed local action | Required local result boundary |
 |---|---|
-| `ui.onboarding.start` | `source_surface=first_run` (the window opened by itself because no Project exists yet) paints a Basic Dark preview from the first frame, with Basic Dark preselected and NieR Mode unticked, whatever look was shown before; `source_surface=settings_rerun` (Run Onboarding Again) starts in the look on screen, NieR Mode included, preselected. Neither dispatches `cmd.theme.*` nor writes a setting (`Plans/FinalGUISpec.md#F3-520`, DL-153). |
-| `ui.onboarding.choose_look` | `intent=choose_look` (a look tile, or a family and Light/Dark in the Look menu) or `intent=preview_nier` (the NieR Mode checkbox, or a preset, part, background or Turn on in the NieR Mode editor panel) carries a closed `local_context.look_choice` whose only non-null fields are the ones the intent changes, previews that look, and writes the session (the draft's `theme_family` and `theme_mode`, the session's NieR choice) with `local_effect=look_previewed`. `intent=toggle_look_menu` or `toggle_look_editor` opens or closes the header's Look menu or the editor panel with `expanded`, `look_choice=null` and `disclosure_opened` or `disclosure_closed`, writing nothing. It has no owner route or owner command, `production_receipt_ref=null` and `owner_mutation_claimed=false`, and never dispatches `cmd.theme.*` or a Settings transaction; the look is written with the Project at commit (`Plans/FinalGUISpec.md#F3-520`, DL-153). |
+| `ui.onboarding.start` | `source_surface=first_run` (the window opened by itself because no Project exists yet) paints a Basic Dark preview from the first frame, with Basic Dark preselected, whatever look was shown before; `source_surface=settings_rerun` (Run Onboarding Again) starts in the look on screen, NieR Mode included, preselected. Neither dispatches `cmd.theme.*` nor writes a setting (`Plans/FinalGUISpec.md#F3-520`, DL-153). |
+| `ui.onboarding.choose_look` | Q22: `intent=choose_look` carries the closed `local_context.look_choice` for any of five families (including nier), mode or retained NieR parts/background; only changed fields are non-null. It previews and stores the session choice with `look_previewed`, with no Settings dispatch before the existing exact Project commit/finish boundary. `preview_nier` and independent `nier_mode` are retired. `toggle_look_menu` and `toggle_look_editor` carry look_choice null, toggle disclosure only and keep exact focus return. |
 | `ui.onboarding.defer` | Before modal dismissal, durably write one resumable continuation snapshot preserving exact stage, selected path, active branch, bounded history, revision, continuation generation, initiating Client, and return-focus identity. It does not complete or skip the session and claims no owner mutation. |
 | `ui.onboarding.close` | Dismiss the modal and restore initiating focus without marking the session completed, skipped, deferred, or any owner Ready. It does not silently cancel owner work. |
 | `ui.onboarding.skip` | Record the explicit `skipped` session outcome without implying Onboarding-path completion or owner readiness. |
@@ -1088,35 +1088,37 @@ unit_type: wiring_contract
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  Product Onboarding exposes exactly fourteen typed local ui.onboarding.* actions through the closed action-request and
-  action-result envelopes. Every control has one action, accessible availability/disabled behavior, deterministic local
-  result and focus return, and an owner route only where the action explicitly launches the existing owner command.
-  Every request includes closed normalized secret-free local_context, and more_ways/skip variants are disambiguated by
-  exact intent, scope, choice, branch, and result-effect combinations rather than arbitrary control payload.
-  Defer durably preserves exact continuation, Close is a non-completion dismissal, Skip records a skipped session, and
-  Details is ephemeral/same-stage/non-persistent/owner-command-free. ui.onboarding.choose_look (DL-153) previews the
-  look choice, the NieR Mode checkbox, the header's Look menu and the NieR Mode editor panel through a closed
-  look_choice, with no owner route, cmd.theme.* or Settings transaction, the look being written with the Project at
-  commit; ui.onboarding.start opens a first_run window in a Basic Dark preview and a settings_rerun window in the look
-  on screen. No cmd.onboarding.* command, alias, handler,
-  EventRecord, production row, full-page route, or breadcrumb chrome is created.
+  Product Onboarding exposes exactly fourteen typed local ui.onboarding.* actions through the closed
+  action-request and action-result envelopes. Every control has one action, accessible availability/disabled
+  behavior, deterministic local result and focus return, and an owner route only where the action explicitly
+  launches the existing owner command. Every request includes closed normalized secret-free local_context, and
+  more_ways/skip variants are disambiguated by exact intent, scope, choice, branch, and result-effect
+  combinations rather than arbitrary control payload. Defer durably preserves exact continuation, Close is a
+  non-completion dismissal, Skip records a skipped session, and Details is
+  ephemeral/same-stage/non-persistent/owner-command-free. ui.onboarding.choose_look (DL-153) previews the
+  five-family look choice, header Look menu and NieR Adjust editor panel through a closed look_choice, with no
+  owner route, cmd.theme.* or Settings transaction, the look being written with the Project at commit;
+  ui.onboarding.start opens a first_run window in a Basic Dark preview and a settings_rerun window in the look
+  on screen. No cmd.onboarding.* command, alias, handler, EventRecord, production row, full-page route, or
+  breadcrumb chrome is created. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
 depends_on: [PWIZ-021, PWIZ-022, UCC-106, WM-041, UIW-013]
 unblocks: []
 acceptance_criteria:
-  - The exact action census is the fourteen named ui.onboarding.* IDs, and every authored control carries exactly one typed local action.
-  - ui.onboarding.choose_look's choose_look and preview_nier intents carry a closed look_choice with only the changed fields non-null and write the session with look_previewed; its two toggles carry look_choice null and write nothing; none has an owner route, owner command, cmd.theme.* or Settings transaction (DL-153).
-  - ui.onboarding.start with source_surface first_run paints a Basic Dark preview with Basic Dark preselected and NieR Mode unticked; with settings_rerun it keeps the look on screen preselected; neither writes a setting (F3-520, DL-153).
-  - Every request/result validates against pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2 with closed applied, disabled, and rejected outcomes.
-  - local_context consumes PWIZ-021's exact closed v2 owner definition, including required nullable phase/command/preflight/Project-commit bindings and their gated proofs; the wiring rule does not re-own a field list. Missing/additional/arbitrary/raw/secret-bearing context is rejected.
-  - UI controls preserve the bounded uncreated draft and Settings-owned copy preview until exact Review commit. Precommit routes require current owner-issued read-only or selected-source-auth admission and actual owner request validation; a route/ref string alone grants nothing. Paid-provider then Free Models setup uses the real committed Project; Close/resume/Back neither undo nor repeat its creation. Consume PWIZ-021, PJCT-007, SSYS-036, MACS-005, and MS-122.
-  - more_ways stage disclosure and branch-local state updates cannot normalize into each other, and whole-session Skip cannot normalize into optional Project/Remote-Access Skip; exact request fields and result effects/statuses prove the selected variant.
-  - Disabled/rejected results have no local effect, write, continuation, owner route, owner operation, or production receipt and expose exact accessible reasons.
-  - Defer persists exact stage/path/branch/history/revision/continuation/initiating-Client/focus return before dismissal; Close does not complete; Skip is explicitly skipped; Details remains same-stage and ephemeral.
-  - The eight named packet candidate cmd.onboarding.* tokens are source-lineage only and receive no command, alias, handler, or production row; UCC-106's eleven retired command-era tokens retain their separate lineage count.
-  - The flow stays a bounded modal with no route-history or breadcrumb chrome, and no static/browser evidence is treated as native or runtime proof.
+  - "The exact action census is the fourteen named ui.onboarding.* IDs, and every authored control carries exactly one typed local action."
+  - "ui.onboarding.choose_look's choose_look intent (Q22 retires preview_nier) carry a closed look_choice with only the changed fields non-null and write the session with look_previewed; its two toggles carry look_choice null and write nothing; none has an owner route, owner command, cmd.theme.* or Settings transaction (DL-153)."
+  - "ui.onboarding.start with source_surface first_run paints a Basic Dark preview with Basic Dark preselected; with settings_rerun it keeps the look on screen preselected; neither writes a setting (F3-520, DL-153)."
+  - "Every request/result validates against pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2 with closed applied, disabled, and rejected outcomes."
+  - "local_context consumes PWIZ-021's exact closed v2 owner definition, including required nullable phase/command/preflight/Project-commit bindings and their gated proofs; the wiring rule does not re-own a field list. Missing/additional/arbitrary/raw/secret-bearing context is rejected."
+  - "UI controls preserve the bounded uncreated draft and Settings-owned copy preview until exact Review commit. Precommit routes require current owner-issued read-only or selected-source-auth admission and actual owner request validation; a route/ref string alone grants nothing. Paid-provider then Free Models setup uses the real committed Project; Close/resume/Back neither undo nor repeat its creation. Consume PWIZ-021, PJCT-007, SSYS-036, MACS-005, and MS-122."
+  - "more_ways stage disclosure and branch-local state updates cannot normalize into each other, and whole-session Skip cannot normalize into optional Project/Remote-Access Skip; exact request fields and result effects/statuses prove the selected variant."
+  - "Disabled/rejected results have no local effect, write, continuation, owner route, owner operation, or production receipt and expose exact accessible reasons."
+  - "Defer persists exact stage/path/branch/history/revision/continuation/initiating-Client/focus return before dismissal; Close does not complete; Skip is explicitly skipped; Details remains same-stage and ephemeral."
+  - "The eight named packet candidate cmd.onboarding.* tokens are source-lineage only and receive no command, alias, handler, or production row; UCC-106's eleven retired command-era tokens retain their separate lineage count."
+  - "The flow stays a bounded modal with no route-history or breadcrumb chrome, and no static/browser evidence is treated as native or runtime proof."
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
@@ -2441,47 +2443,46 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  Plans/pm7_control_bindings.json is the finite appearance and shell producer census, extending UIW-040
-  through UIW-042. Each row names the visible control, owner unit, setting/field payload, exact command
-  path or typed local action/non-dispatch disposition, and the corresponding production entry or reason it
-  has none. Each admitted editor setting and every retained customizer field has its own row; aliases and
-  view-local affordances never become invented cmd.* ids. Plans/Wiring_Matrix.production.json remains the
-  runtime command wiring inventory; a producer binding can reuse its canonical command entry only when the
-  census names that entry and exact argument mapping. Its schema is not relaxed for local controls: local
-  exclusions are explicit in the census and the production exclusions notes. Required evidence includes the
-  rendered pointer/keyboard path, projected availability and disabled reason, request/result, readback,
-  receipt/event delta, focus and accessible names. Static source declarations certify neither native
-  handlers nor the complete rendered census. Every PM7 control must be classified, including Settings
-  entry/scope/reset, token color channels/hex/reset, preview/sample actions, wallpaper keys/default,
-  notifications, DnD and each resize surface. Demo-only controls and preview harnesses are outside the
-  product census. Composite quick-set rows reference the one exact field/value patch in
-  Plans/appearance_quick_sets.json, list only its affected setting ids in either scope, and adapt it
-  atomically to the existing writer. Reset/restore-default operations have an explicit exact id set
-  distinct from value patches. A binding cannot substitute all editor or terminal fields for a smaller
-  quick set. The round-3 bezel/background/mask fields and saved terminal preset controls are now
-  enumerated. Local library actions explicitly declare their SP-331-only persistence; picker Back
-  explicitly declares no persistence. Terminal round 5 (DL-213) retires the Flicker Amount bindings and
-  narrows Bell to Follow look and Off; the consistency pass (DL-214) adds no binding, command or stored
-  state. F6 (DL-222) adds no binding, command, production entry or stored state. The page-change hold and a
-  Customize pick's acknowledgement order are ACD-475's; this census adds no row for them. The two bell
-  Continue controls are separate local census rows forwarding the original prompt's own typed action. Setup
-  retains PWIZ-021/UCC-106's ui.onboarding.start and closed pm.product_onboarding.action_request.v2 resume
-  context; Guided Tour retains PWIZ-023's ui.guided_tour.resume and pm.guided_tour.action_request.v3
-  session/checkpoint/currentness context. They create no command, event or new action id. Amended
-  2026-10-17 (DL-228): the census classifies every PM7 appearance and shell control and every Settings
-  control another surface hosts (SSYS-043, SSYS-044, the Usage-hosted rows included). Usage page controls
-  that host no Settings row are classified by UCC-147's PM7 producer census, as view_only or their existing
-  command, and the left rail's local controls (the Owner dropdown, the publish fold, the More tray, the
-  Jujutsu head buttons, strip keys) by F3-618 to F3-625, which add no command, action or wiring row;
-  neither needs a row here. The earlier "every PM7 control" reads with those two owners. Amended 2026-10-17
-  (review r1): SSYS-043's hosted NieR controls now have rows: the NieR Mode checkbox in the title-bar theme
-  selector and the Guided Tour bar's Look menu (the Settings transaction pair), the same checkbox inside
-  the onboarding window (ui.onboarding.choose_look), the NieR Mode editor's parts edit (the pair), the
-  editor's Turn on NieR Mode button, offered while NieR Mode is off (nier.editor.turn_on, the pair over
-  general.visual.nier-mode; review r2), and the editor's open, close and Play reboot moment
-  (ui.settings.nier_editor.*). PM7 B1/B2/B6, S5, D5/G4: shell census includes each project row/shortcut,
-  Pip entry/editor control, work status item and all three panel tabs; WM-097 and pm7_control_bindings.json
-  bind every command/local disposition. Decorative mark/loader are not controls.
+  Plans/pm7_control_bindings.json is the finite appearance and shell producer census, extending UIW-040 through
+  UIW-042. Each row names the visible control, owner unit, setting/field payload, exact command path or typed
+  local action/non-dispatch disposition, and the corresponding production entry or reason it has none. Each
+  admitted editor setting and every retained customizer field has its own row; aliases and view-local
+  affordances never become invented cmd.* ids. Plans/Wiring_Matrix.production.json remains the runtime command
+  wiring inventory; a producer binding can reuse its canonical command entry only when the census names that
+  entry and exact argument mapping. Its schema is not relaxed for local controls: local exclusions are explicit
+  in the census and the production exclusions notes. Required evidence includes the rendered pointer/keyboard
+  path, projected availability and disabled reason, request/result, readback, receipt/event delta, focus and
+  accessible names. Static source declarations certify neither native handlers nor the complete rendered census.
+  Every PM7 control must be classified, including Settings entry/scope/reset, token color channels/hex/reset,
+  preview/sample actions, wallpaper keys/default, notifications, DnD and each resize surface. Demo-only controls
+  and preview harnesses are outside the product census. Composite quick-set rows reference the one exact
+  field/value patch in Plans/appearance_quick_sets.json, list only its affected setting ids in either scope, and
+  adapt it atomically to the existing writer. Reset/restore-default operations have an explicit exact id set
+  distinct from value patches. A binding cannot substitute all editor or terminal fields for a smaller quick
+  set. The round-3 bezel/background/mask fields and saved terminal preset controls are now enumerated. Local
+  library actions explicitly declare their SP-331-only persistence; picker Back explicitly declares no
+  persistence. Terminal round 5 (DL-213) retires the Flicker Amount bindings and narrows Bell to Follow look and
+  Off; the consistency pass (DL-214) adds no binding, command or stored state. F6 (DL-222) adds no binding,
+  command, production entry or stored state. The page-change hold and a Customize pick's acknowledgement order
+  are ACD-475's; this census adds no row for them. The two bell Continue controls are separate local census rows
+  forwarding the original prompt's own typed action. Setup retains PWIZ-021/UCC-106's ui.onboarding.start and
+  closed pm.product_onboarding.action_request.v2 resume context; Guided Tour retains PWIZ-023's
+  ui.guided_tour.resume and pm.guided_tour.action_request.v3 session/checkpoint/currentness context. They create
+  no command, event or new action id. Amended 2026-10-17 (DL-228): the census classifies every PM7 appearance
+  and shell control and every Settings control another surface hosts (SSYS-043, SSYS-044, the Usage-hosted rows
+  included). Usage page controls that host no Settings row are classified by UCC-147's PM7 producer census, as
+  view_only or their existing command, and the left rail's local controls (the Owner dropdown, the publish fold,
+  the More tray, the Jujutsu head buttons, strip keys) by F3-618 to F3-625, which add no command, action or
+  wiring row; neither needs a row here. The earlier "every PM7 control" reads with those two owners.
+  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay remain
+  presentation-only; nier.editor.open is the Adjust binding. No manager_id, route, detail id, command, new part
+  or event is added. shell.nier.mode, tour.nier.mode and onboarding.nier.mode are retired non_dispatch census
+  tombstones with no action, setting or production writer. Family controls bind the existing theme pair, and the
+  retained editor parts/background use the same live writer (Q22). PM7 B1/B2/B6, S5, D5/G4: shell census
+  includes each project row/shortcut, Pip entry/editor control, work status item and all three panel tabs;
+  WM-097 and pm7_control_bindings.json bind every command/local disposition. Decorative mark/loader are not
+  controls. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override
+  wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false
@@ -2716,3 +2717,6 @@ owner_hints:
 ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/UI_Wiring_Rules.md#UIW-024, ContractName:Plans/UI_Wiring_Rules.md#UIW-025, ContractName:Plans/UI_Wiring_Rules.md#UIW-043
 
 
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L3046-L3158
 
-Source SHA256: `43ced988255e047f6410149fa3f48c7398c3c6c1697b7b6f16a7ba1815f5dd9f`
+Source SHA256: `718a143daa9bb41b024fb52dcf2de09ba2733c1f6caf7b2fff5992e79c026c89`
 
 ---
 
@@ -50,11 +50,11 @@ motion; terminal section/workgroup limits and identity preservation; reload,
 corruption, migration, and off-screen recovery; one-command/one-persist semantic
 commit behavior; and zero console/page errors. The visual matrix captures
 `1024x768`, `1280x800`, `1600x900`, and `2200x1200` in default, all-open,
-edge-docked, and floating layouts, with all eight themes for all-open, Friendly
+edge-docked, and floating layouts, with all ten themes for all-open, Friendly
 Dark and Glass Light across all layouts, plus reduced-motion captures.
 
-The required cross-product is exactly 72 deterministic fresh-context cases:
-eight themes by four viewports with all surfaces open (32), Friendly Dark and
+The required cross-product is exactly 80 deterministic fresh-context cases (Q22; the earlier 72-case matrix is historical):
+ten themes by four viewports with all surfaces open (40), Friendly Dark and
 Glass Light by four additional layouts by four viewports (32), and both anchor
 themes by reduced motion by four viewports (8). Additional layouts are default,
 edge-docked, floating, and terminal-max. Listeners for console and page errors are

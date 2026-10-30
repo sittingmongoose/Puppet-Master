@@ -4,7 +4,7 @@ Source: `Plans/newtools.md`
 
 Source lines: L8719-L8864
 
-Source SHA256: `886f1e8ed3cde26070966d603c085df84a94293ec72e8e4d0425dbdd97c7c7b6`
+Source SHA256: `1b0bdcb55e15169ccc9818d10fdfa505b8801844413f8974f20d3b041f1ef208`
 
 ---
 
@@ -54,7 +54,7 @@ Storage owns registry and projection bindings. Doctor persists descriptor revisi
 
 Legacy `doctor.registry.auth` is a compatibility alias only for the DockerHub-specific `doctor.dockerhub.auth.capability` rule already stated above. Migration validates aliases against one active descriptor, preserves descriptor revision plus finding owner/cache generation and currentness hash only when owner/target identity and schema version remain compatible, marks uncertain state stale without upgrading freshness, and quarantines collisions or secret-bearing legacy payloads. `pm.doctor.cache_migration_receipt.v1` is the one-time domain reconciliation record closed by `Plans/doctor_contracts.schema.json`; it MUST reference the sole terminal durable `pm.storage_value.migration_receipt.v1` receipt rather than acting as peer storage authority. It reports exact source, accepted, stale, dropped, and quarantined row counts; enumerates preserved accepted/stale descriptor and finding currentness rows; names every dropped and quarantined row with a reason; records alias resolutions; and fixes `owner_work_replayed=false`, `private_repair_performed=false`, and `migrated_cache_is_fresh_execution_evidence=false`. A migrated cache is never fresh execution evidence and migration never runs a private Doctor repair.
 
-Acceptance includes registry schema validation; duplicate/alias/owner/schema/side-effect/secret negative cases; cached-first and targeted scheduling; dedupe/coalescing; timeout/cancel/reconnect; stale-generation rejection; optional-Off and Usage-unknown cases; all configured remote routes; protected-auth isolation; low-resource waves; lazy bounded evidence; remediation exact return; keyboard/focus/screen-reader behavior; six-width/eight-theme/Reduced Motion rendering; and proof that a routed action does not mark remediation complete. Failures remain failures and named residual risk remains visible.
+Acceptance includes registry schema validation; duplicate/alias/owner/schema/side-effect/secret negative cases; cached-first and targeted scheduling; dedupe/coalescing; timeout/cancel/reconnect; stale-generation rejection; optional-Off and Usage-unknown cases; all configured remote routes; protected-auth isolation; low-resource waves; lazy bounded evidence; remediation exact return; keyboard/focus/screen-reader behavior; six-width/ten-theme/Reduced Motion rendering; and proof that a routed action does not mark remediation complete. Failures remain failures and named residual risk remains visible.
 
 ### N2-152 - Doctor descriptor registry and bounded router
 

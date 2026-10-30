@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45088-L47545
+Source lines: L44903-L47352
 
-Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
+Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
 
 ---
 
@@ -2078,77 +2078,70 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every panel surface, the strip, the "+" menu, the "+N" list, the empty-panel launcher, the panel
-  and tab menus, the dividers, drag ghosts and landing previews, is designed in Friendly, Glass,
-  Retro and Basic, light and dark, and in NieR Mode and Reduced Motion, from the first build
-  (DL-180, D23). Friendly, Glass and Basic mark the active tab with F3-631's seated chip (DL-214; amended
-  2026-10-17, DL-228, it read: draw the fused silhouette with their own crown, shoulder and flare, the active tab one
-  surface with its body); Glass keeps its 1 px glass rim on
-  the plate, goes to .92 opacity only while a tab is carried (F3-505), takes its replacement sheet
-  and lens material from F3-652 since the 2026-10-15 publication; the old closed Glass blur count is
-  superseded. Retro: reverse-video tabs (the active tab a phosphor-filled block with dark text),
-  bracket glyphs ("[+7]", "[+]"), the reverse-video chip in place of the notch and its stepped corners (DL-214), kind icons as glyphs of at most
-  two cells from the code face (never emoji), the dirty mark an asterisk after the label, box-drawn
-  menus with a hard frame and reverse-video rows, dividers drawn as a single box-drawing line that
-  doubles while hovered or dragged, and a dithered landing preview with a box-drawn outline; Retro
-  motion snaps and never springs, and its three rotating effects play on selection and reorder
-  (F3-631). NieR Mode paints only while NieR Mode is on, and each touch is gated by its own
-  installed part, using the existing part keys only and never a new part (SSYS-043, F3-598, DL-152):
-  square gives the chip square corners (the chamfered silhouette with a straight foot it gave is superseded by
-  DL-214), an
-  ink rule under each strip, square dirty and attention marks, hairline dividers with ticks and a
-  hatched landing preview; cursor fills the active tab and hovered or chosen menu and launcher rows
-  with ink, the YoRHa menu cursor, puts the square list cursor before the focused panel's active
-  label and gives other panels' active tabs the same ink fill as their fused panel; headers sets tab
-  labels, "+N" and menu headings in the YoRHa caption treatment; brackets puts target brackets on
-  the focused or chosen item; icons draws kind icons with square strokes; empty draws the
-  empty-panel launcher's ink empty state; ground shows the parchment dot grid between panels. NieR
-  colours come only from the NieR token tables or the ordinary theme tokens NieR repaints; NieR
-  motion is stepped, with no glow, filter or blur, loops only by transform or opacity, and no
-  surface larger than 340 x 256 px reverses its opacity more than once a second; there is one NieR
-  Mode editor and one reboot plate (DR-056). Reduced Motion: every gesture, glide, settle, spring
-  and effect is instant (every duration of F3-630 and F3-631 is 0), the Retro effects and NieR fills
-  show their end state at once, drags still work and still show their landing previews, and NieR's
-  Still and Colors only presets show end states at once. Hover follows the merged hover system:
-  Plans/DRY_Rules.md#DR-072 owns its grammar and boundary and F3-465 its behaviour. Tab,
-  strip/header and terminal icon buttons consume F3-465's small-control marker without card magnet.
-  Dividers use F3-657's shared resize feedback; editor and terminal text stay outside card effects.
-  Card hover rests during a divider drag. No look draws a forbidden pill label, coloured side stripe
-  or chrome emoji under F3-648 and its explicit exemptions. This supersedes F3-505's and F3-466's
-  per-theme tab skins where they differ, and gives the home panels the NieR Mode treatment they
-  lacked (DL-144 and DL-152 covered the chat, onboarding and the Tour). Retro's editor syntax stays
-  monochrome: brightness and weight in dark, the black and red ribbon in light. Its colour follows
-  the terminal's Retro scheme choice, Phosphor Green or Amber; choosing Amber turns Retro's editor
-  syntax amber. That choice is stored once in F3-642's terminal appearance model; the editor reads
-  it and keeps no copy. The active tab's chip follows the look's selection grammar (amended 2026-10-17, DL-228; it read:
-  the active tab and its panel are one shape in every look; the shape's fill follows it): the body's fill in Friendly, Glass and Basic, reverse video
-  in Retro, ink in NieR. Glass's 1 px rim along the crown is material, not an accent. Text and state
-  colours, including dim text, accent, ok, warn, bad and inactive tabs, reach at least 4.5:1 in
-  every look and in NieR. They are mixed from the page's own colours so the Settings accent flows
-  through. A primary button chooses black or white ink from the fill's luminance and keeps at least
-  4.5:1 contrast. Kind icons consume the shared F3-658 glyph registry; the earlier ASCII kind
-  substitutions are compatibility lineage, not a second icon set. Each kind supplies its icon to the
-  strip, +N list, every-tab list and recent-tab switcher through the one registered icon source.
-  Primary-button black/white ink switches at fill luminance Y 0.1791, with a 4.58:1 theoretical
-  floor. Source measurements changed Glass light from 1.75:1 to 4.68:1 (hover 7.3:1), Friendly light
-  from 2.97:1 to 6.79:1, and give at least 4.68:1 in every look; the required floor remains 4.5:1.
-  The menus' nested levels and Back consume F3-632. Basic, Friendly and Glass exchange levels on one
-  axis with their own crisp, gentle or soft voice, the old level gone before the incoming text
-  becomes visible; Retro and NieR cut the old level and step in the new. The plate morphs its size
-  and position without row reflow, keeping its bottom edge when it opens upward. Reduced Motion
-  swaps immediately.
-  Amended 2026-10-16 (DL-214, the consistency pass): the active Home tab in every look is F3-631's
-  switcher chip, Retro's reverse-video block seated on its rule line. The add-a-tab picker's search is the
-  look's own search field, a raised surface with the look's hairline and corner, and in Glass one seamless
-  Glass field whose typing area blends into its bar (as F3-652's Find fields). Every control draws only
-  its own look's palette: Settings' primary buttons take the look's accent with its on-accent ink, Retro's
-  the reverse-video key the chat's primary buttons use; danger buttons take the look's own red and
-  attention notes its own amber; Projects, the Planning Wizard and the Orchestrator take each look's own
-  hues; Glass Dark's quieter Settings words and its toggle key take Glass's cool white, not lavender. Hues
-  kept on purpose: swatches that show a real choice, Basic's Usage good teal (its colour-blind separation
-  from warn), the approved glyph status cyan and the Usage pulse in Glass, Settings' pick-several chip
-  toggles in the palette's accent (their checkbox carries the state), and Friendly Light's own lavender
-  borders.
+  Every panel surface, the strip, the "+" menu, the "+N" list, the empty-panel launcher, the panel and tab
+  menus, the dividers, drag ghosts and landing previews, is designed in Friendly, Glass, Retro and Basic, light
+  and dark, and in NieR Mode and Reduced Motion, from the first build (DL-180, D23). Friendly, Glass and Basic
+  mark the active tab with F3-631's seated chip (DL-214; amended 2026-10-17, DL-228, it read: draw the fused
+  silhouette with their own crown, shoulder and flare, the active tab one surface with its body); Glass keeps
+  its 1 px glass rim on the plate, goes to .92 opacity only while a tab is carried (F3-505), takes its
+  replacement sheet and lens material from F3-652 since the 2026-10-15 publication; the old closed Glass blur
+  count is superseded. Retro: reverse-video tabs (the active tab a phosphor-filled block with dark text),
+  bracket glyphs ("[+7]", "[+]"), the reverse-video chip in place of the notch and its stepped corners (DL-214),
+  kind icons as glyphs of at most two cells from the code face (never emoji), the dirty mark an asterisk after
+  the label, box-drawn menus with a hard frame and reverse-video rows, dividers drawn as a single box-drawing
+  line that doubles while hovered or dragged, and a dithered landing preview with a box-drawn outline; Retro
+  motion snaps and never springs, and its three rotating effects play on selection and reorder (F3-631). NieR
+  Mode paints only while the NieR family is selected, and each touch is gated by its own installed part, using
+  the existing part keys only and never a new part (SSYS-043, F3-598, DL-152): square gives the chip square
+  corners (the chamfered silhouette with a straight foot it gave is superseded by DL-214), an ink rule under
+  each strip, square dirty and attention marks, hairline dividers with ticks and a hatched landing preview;
+  cursor fills the active tab and hovered or chosen menu and launcher rows with ink, the YoRHa menu cursor, puts
+  the square list cursor before the focused panel's active label and gives other panels' active tabs the same
+  ink fill as their fused panel; headers sets tab labels, "+N" and menu headings in the YoRHa caption treatment;
+  brackets puts target brackets on the focused or chosen item; icons draws kind icons with square strokes; empty
+  draws the empty-panel launcher's ink empty state; ground shows the parchment dot grid between panels. NieR
+  colours come only from the NieR token tables or the ordinary theme tokens NieR repaints; NieR motion is
+  stepped, with no glow, filter or blur, loops only by transform or opacity, and no surface larger than 340 x
+  256 px reverses its opacity more than once a second; there is one NieR Mode editor and one reboot plate
+  (DR-056). Reduced Motion: every gesture, glide, settle, spring and effect is instant (every duration of F3-630
+  and F3-631 is 0), the Retro effects and NieR fills show their end state at once, drags still work and still
+  show their landing previews, and NieR's Still and Colors only presets show end states at once. Hover follows
+  the merged hover system: Plans/DRY_Rules.md#DR-072 owns its grammar and boundary and F3-465 its behaviour.
+  Tab, strip/header and terminal icon buttons consume F3-465's small-control marker without card magnet.
+  Dividers use F3-657's shared resize feedback; editor and terminal text stay outside card effects. Card hover
+  rests during a divider drag. No look draws a forbidden pill label, coloured side stripe or chrome emoji under
+  F3-648 and its explicit exemptions. This supersedes F3-505's and F3-466's per-theme tab skins where they
+  differ, and gives the home panels the NieR Mode treatment they lacked (DL-144 and DL-152 covered the chat,
+  onboarding and the Tour). Retro's editor syntax stays monochrome: brightness and weight in dark, the black and
+  red ribbon in light. Its colour follows the terminal's Retro scheme choice, Phosphor Green or Amber; choosing
+  Amber turns Retro's editor syntax amber. That choice is stored once in F3-642's terminal appearance model; the
+  editor reads it and keeps no copy. The active tab's chip follows the look's selection grammar (amended
+  2026-10-17, DL-228; it read: the active tab and its panel are one shape in every look; the shape's fill
+  follows it): the body's fill in Friendly, Glass and Basic, reverse video in Retro, ink in NieR. Glass's 1 px
+  rim along the crown is material, not an accent. Text and state colours, including dim text, accent, ok, warn,
+  bad and inactive tabs, reach at least 4.5:1 in every look and in NieR. They are mixed from the page's own
+  colours so the Settings accent flows through. A primary button chooses black or white ink from the fill's
+  luminance and keeps at least 4.5:1 contrast. Kind icons consume the shared F3-658 glyph registry; the earlier
+  ASCII kind substitutions are compatibility lineage, not a second icon set. Each kind supplies its icon to the
+  strip, +N list, every-tab list and recent-tab switcher through the one registered icon source. Primary-button
+  black/white ink switches at fill luminance Y 0.1791, with a 4.58:1 theoretical floor. Source measurements
+  changed Glass light from 1.75:1 to 4.68:1 (hover 7.3:1), Friendly light from 2.97:1 to 6.79:1, and give at
+  least 4.68:1 in every look; the required floor remains 4.5:1. The menus' nested levels and Back consume
+  F3-632. Basic, Friendly and Glass exchange levels on one axis with their own crisp, gentle or soft voice, the
+  old level gone before the incoming text becomes visible; Retro and NieR cut the old level and step in the new.
+  The plate morphs its size and position without row reflow, keeping its bottom edge when it opens upward.
+  Reduced Motion swaps immediately. Amended 2026-10-16 (DL-214, the consistency pass): the active Home tab in
+  every look is F3-631's switcher chip, Retro's reverse-video block seated on its rule line. The add-a-tab
+  picker's search is the look's own search field, a raised surface with the look's hairline and corner, and in
+  Glass one seamless Glass field whose typing area blends into its bar (as F3-652's Find fields). Every control
+  draws only its own look's palette: Settings' primary buttons take the look's accent with its on-accent ink,
+  Retro's the reverse-video key the chat's primary buttons use; danger buttons take the look's own red and
+  attention notes its own amber; Projects, the Planning Wizard and the Orchestrator take each look's own hues;
+  Glass Dark's quieter Settings words and its toggle key take Glass's cool white, not lavender. Hues kept on
+  purpose: swatches that show a real choice, Basic's Usage good teal (its colour-blind separation from warn),
+  the approved glyph status cyan and the Usage pulse in Glass, Settings' pick-several chip toggles in the
+  palette's accent (their checkbox carries the state), and Friendly Light's own lavender borders. Amended Q22,
+  Jared 2026-10-30 (DL-257): the fifth family uses the existing theme owner; no separate override remains.
 gui_related: true
 gui_classification_reason: Defines how panels, strips, menus, dividers and drags render in each look, NieR Mode and Reduced Motion.
 split_recommended: false
@@ -2233,10 +2226,10 @@ preserved_exact_tokens:
   - "[+7]"
   - "[+]"
 negative_constraints:
-- Do not add a NieR part, or paint a NieR touch while NieR Mode is off or its part is not installed.
-- Small controls use F3-465 without card magnet; dividers use F3-657.
-- Glass panels and strips use F3-652 since the 2026-10-15 publication; the old closed blur budget is superseded.
-- Do not use an emoji as a kind icon in any look.
+  - "Do not add a NieR part, or paint a NieR touch while another family is selected or its part is not installed."
+  - "Small controls use F3-465 without card magnet; dividers use F3-657."
+  - "Glass panels and strips use F3-652 since the 2026-10-15 publication; the old closed blur budget is superseded."
+  - "Do not use an emoji as a kind icon in any look."
 compatibility_only_notes:
   - "The concept also gates some touches by its own hook names and by part keys outside this list; only the existing part keys named here are canon."
 stale_retired_dispositions:
@@ -2373,50 +2366,49 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  PMConcept7 has one Demo Studio for every concept surface, modelled on the 5.6 Pro chat's (DL-185, D26;
-  the rule is Plans/DRY_Rules.md#DR-070). The Guided Tour's and onboarding's demo controls, the chat's demo
-  controls, the home demos and, later, the Orchestrator and Planning Wizard pages' demo controls are
-  sections of that one studio; no surface draws a demo panel of its own. The Demo Studio and every control
-  in it are lab only, in the pattern of Plans/assistant-chat-design.md#ACD-474: never a product control,
-  setting, command, wiring row, saved value or test gate, never shown in the product's menus or Settings,
-  and no canon number comes from them. In the concept it opens above the one overlay root and below hover
-  tags and the Guided Tour (F3-635). It follows the bans (F3-648) and the looks (F3-647) like any surface.
-  This supersedes the concept practice of a demo panel per surface and changes no product unit. Amended
-  2026-10-29 (W8, SND1; PM7): One lab Demo Studio covers Pip/loader/sound/parts, project box states/widths,
-  expanded onboarding tips/errors and Activity/Resources/quit. Owner APIs only, missing owners unavailable;
-  no lab toolbar or magic demo errors in product. SND1 B (Jared 2026-10-30): land on the sound tools’ measured
-  level/texture numbers; Jared listens later in the product. W8
-  normative Demo Studio matrix (2026-10-29; DL-256): one lab only, strings in 75-demo-studio.json, public
-  owner APIs with unavailable controls when absent, 4.5:1 contrast in every look, Reset Everything clears
-  only OWNED keys. Pip section: marks/tiles/tray in all ten looks, mood stay-row firing on every live Pip,
-  Mark only, Swing/Think/Hop take, Every loader moment and Hold loaders. Sound board exposes
+  PMConcept7 has one Demo Studio for every concept surface, modelled on the 5.6 Pro chat's (DL-185, D26; the
+  rule is Plans/DRY_Rules.md#DR-070). The Guided Tour's and onboarding's demo controls, the chat's demo
+  controls, the home demos and, later, the Orchestrator and Planning Wizard pages' demo controls are sections of
+  that one studio; no surface draws a demo panel of its own. The Demo Studio and every control in it are lab
+  only, in the pattern of Plans/assistant-chat-design.md#ACD-474: never a product control, setting, command,
+  wiring row, saved value or test gate, never shown in the product's menus or Settings, and no canon number
+  comes from them. In the concept it opens above the one overlay root and below hover tags and the Guided Tour
+  (F3-635). It follows the bans (F3-648) and the looks (F3-647) like any surface. This supersedes the concept
+  practice of a demo panel per surface and changes no product unit. Amended 2026-10-29 (W8, SND1; PM7): One lab
+  Demo Studio covers Pip/loader/sound/parts, project box states/widths, expanded onboarding tips/errors and
+  Activity/Resources/quit. Owner APIs only, missing owners unavailable; no lab toolbar or magic demo errors in
+  product. SND1 B (Jared 2026-10-30): land on the sound tools’ measured level/texture numbers; Jared listens
+  later in the product. W8 normative Demo Studio matrix (2026-10-29; DL-256): one lab only, strings in
+  75-demo-studio.json, public owner APIs with unavailable controls when absent, 4.5:1 contrast in every look,
+  Reset Everything clears only OWNED keys. Pip section: marks/tiles/tray in all ten looks, mood stay-row firing
+  on every live Pip, Mark only, Swing/Think/Hop take, Every loader moment and Hold loaders. Sound board exposes
   kit-by-look/choice, 42 events, 5 loops and Pip says input; SND1 B uses the sound tools’ numbers for landing,
-  with Jared’s listening deferred to the product.
-  Onboarding: pip twist antigravityOnce, Oops cases returning-name tastebook, Cursor refused key ≤11
-  characters and first Antigravity sign-in failure with real retry state; Ask Pip opens a screen with its
-  chosen ? note; pipRoughDay recipe. Chat: Adjust Pip beside Adjust NieR look, Full/Quiet/Still/Plain,
-  Crew-host faces, Scheduled faces, Activity rows and Orbit moments, recorded pip Crew run queued→done;
-  remove pip-chat:v1 when product settings bind or give Reset explicit ownership while it is still a lab
-  key. Workspace/Title bar: calm, working, blocked, needs-you and unsaved as separate states, long-name
-  switch, real density widths full/1280/1024/860 and Open project menu. Activity: Busy, No asks, Quiet,
-  Many, Stale feed, After restart and Right-now; open Agents/Processes/Resources and thread Processes, with
-  several servers/environments; Quit…, Stop all and Numbers/Words. Extend busy recipe and add quitWithWork;
-  optional D9 notices use the real alert owner. No imported concept toolbar, fake product errors, second
-  Demo Studio, new product command or preference is authorized by these lab cases. Documentation retires
-  the claim that sample notices cannot fire and updates the recorded-example census from its actual
-  registry. W8 review D-1, lead-accepted PM7 Step4, 2026-10-30: the one named temporary DR-070 exception is
-  5.6 Pro/pm7-port/js/50-demo-bridge.js, inherited from main since 2026-10-22. Its lab bridge presses a hidden
+  with Jared’s listening deferred to the product. Onboarding: pip twist antigravityOnce, Oops cases
+  returning-name tastebook, Cursor refused key ≤11 characters and first Antigravity sign-in failure with real
+  retry state; Ask Pip opens a screen with its chosen ? note; pipRoughDay recipe. Chat: Adjust Pip beside Adjust
+  NieR, Full/Quiet/Still/Plain, Crew-host faces, Scheduled faces, Activity rows and Orbit moments, recorded pip
+  Crew run queued→done; remove pip-chat:v1 when product settings bind or give Reset explicit ownership while it
+  is still a lab key. Workspace/Title bar: calm, working, blocked, needs-you and unsaved as separate states,
+  long-name switch, real density widths full/1280/1024/860 and Open project menu. Activity: Busy, No asks,
+  Quiet, Many, Stale feed, After restart and Right-now; open Agents/Processes/Resources and thread Processes,
+  with several servers/environments; Quit…, Stop all and Numbers/Words. Extend busy recipe and add quitWithWork;
+  optional D9 notices use the real alert owner. No imported concept toolbar, fake product errors, second Demo
+  Studio, new product command or preference is authorized by these lab cases. Documentation retires the claim
+  that sample notices cannot fire and updates the recorded-example census from its actual registry. W8 review
+  D-1, lead-accepted PM7 Step4, 2026-10-30: the one named temporary DR-070 exception is 5.6
+  Pro/pm7-port/js/50-demo-bridge.js, inherited from main since 2026-10-22. Its lab bridge presses a hidden
   .demo-dialog .demo-trigger so PM56_EXT.action/app.js and the recorded-example/reset chains all run. This is
   tracked DOM-coupling debt, not permission for other synthetic clicks, hidden controls or product dispatch.
-  Retirement requires the chat owner to expose one PM56_APP dispatcher taking (action, dataset, {demo:true})
-  for both real clicks and the bridge; migrate every recorded example/reset chain, prove equivalent behavior,
-  then delete the hidden host/button and close this named exception. PM56_DEMO.trigger/reset alone do not run
-  all chains and are not a substitute. Current lab adapters are
+  Retirement requires the chat owner to expose one PM56_APP dispatcher taking (action, dataset, {demo:true}) for
+  both real clicks and the bridge; migrate every recorded example/reset chain, prove equivalent behavior, then
+  delete the hidden host/button and close this named exception. PM56_DEMO.trigger/reset alone do not run all
+  chains and are not a substitute. Current lab adapters are
   O55.studio.pip/pipOnboarding/titlebar/activity/looks.pip and recipes pipRoughDay/quitWithWork. Onboarding
   examples call O55.ui.act/fill/tip/open and refuse when unavailable; they do not write fields or call private
   screen definitions. Hold loaders copy names only waits ending on their button; Mark only discloses the bar
   owner’s approximately half-second layout pass per step. No lab trigger is admitted to product commands,
-  Settings or Touch.
+  Settings or Touch. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source
+  confirmation 1030182542-5544).
 gui_related: true
 gui_classification_reason: Defines the one Demo Studio for PMConcept7's concept surfaces and keeps it out of
   the product.

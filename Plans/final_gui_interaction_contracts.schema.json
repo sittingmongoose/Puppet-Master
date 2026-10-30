@@ -53,18 +53,40 @@
     "theme_order": {
       "type": "array",
       "prefixItems": [
-        {"const": "Basic Dark"},
-        {"const": "Basic Light"},
-        {"const": "Friendly Dark"},
-        {"const": "Friendly Light"},
-        {"const": "Glass Dark"},
-        {"const": "Glass Light"},
-        {"const": "Retro Dark"},
-        {"const": "Retro Light"}
+        {
+          "const": "Basic Dark"
+        },
+        {
+          "const": "Basic Light"
+        },
+        {
+          "const": "Friendly Dark"
+        },
+        {
+          "const": "Friendly Light"
+        },
+        {
+          "const": "Glass Dark"
+        },
+        {
+          "const": "Glass Light"
+        },
+        {
+          "const": "Retro Dark"
+        },
+        {
+          "const": "Retro Light"
+        },
+        {
+          "const": "NieR Dark"
+        },
+        {
+          "const": "NieR Light"
+        }
       ],
       "items": false,
-      "minItems": 8,
-      "maxItems": 8
+      "minItems": 10,
+      "maxItems": 10
     },
     "k3_geometry": {
       "type": "object",

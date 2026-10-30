@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L28080-L28516
+Source lines: L28082-L28523
 
-Source SHA256: `220d4181bffdaeb910fc6072fecd78885c71dc25830653ca8e9d16ceb17d0d93`
+Source SHA256: `7f36bba1b2ee8a701239d6b0ad57a4921dbdeae2edd3f2fcfb5e9a8d75f9a587`
 
 ---
 
@@ -445,3 +445,8 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-239, ContractName:Plans/FinalGUISpec.md#F3-594, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-586, ContractName:Plans/Settings_System.md#SSYS-056, ContractName:Plans/DRY_Rules.md#DR-072
+
+
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

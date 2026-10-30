@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31503-L32478
+Source lines: L31476-L32445
 
-Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
+Source SHA256: `4706847b6e17b5e6c0bb81de8458ecf88e5bd4f5a9b65519ca1d33b3557a9e3e`
 
 ---
 
@@ -651,42 +651,42 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  `Plans/settings_inventory.json` is the canonical inventory registry of all 1011 settings
-  across 12 categories. Its shape is owned by `Plans/settings_inventory.schema.json` with
-  schema_id `pm.settings_inventory.v1`. Registry rows carry id, label, desc, type, options,
-  default, scope, tier, recommended, curated, search, badges, and related_features, where
-  related_features is the sparse mapping vocabulary consumed by the curation service
-  usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and
-  excluded by the schema: setting values live in real settings storage, status is derived
-  live per F3-435, and src was concept scaffolding. Registry provenance pins the concept
-  sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256
-  9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only.
-  Settings surfaces, including search, category chips, bloom modals, shelves, row renderers,
-  and the Project Settings Modal, bind to this registry rather than hardcoding inventory
-  rows.
-  Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording
-  the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and
-  the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's
-  plain-language rows.d labels and help, is a proposal until adopted here.
+  `Plans/settings_inventory.json` is the canonical inventory registry of all 1010 settings across 12 categories.
+  Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`.
+  Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search,
+  badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation
+  service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded
+  by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was
+  concept scaffolding. Registry provenance pins the concept sidecar extraction
+  `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256
+  9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces,
+  including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind
+  to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc
+  and option words in this inventory are the one wording the product renders for it, on every surface that draws
+  the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording,
+  such as the onboarding Settings kit's plain-language rows.d labels and help, is a proposal until adopted here.
   Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it
   rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as
   "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label
   stays one of its search aliases, and its option words are option_labels, display words for stored option
-  values that never change what is stored (a value without an entry shows as stored). The Customize words
-  (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour",
-  "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry
-  option_labels beside options; the schema admits it.
-  Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, taking the current inventory from 1009 to 1011. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row.
+  values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill
+  and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain",
+  "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels
+  beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and
+  general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one
+  row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or
+  sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede
+  earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "Plans/settings_inventory.json parses as JSON and conforms to Plans/settings_inventory.schema.json (schema_id pm.settings_inventory.v1); schema conformance is enforced by this unit's acceptance criteria, not a machine gate."
-- "The registry contains 1011 settings across 12 categories, including the exact seven Case L Storage & Retention rows; rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, and provenance pins the concept sidecar at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d."
-- "The demo runtime fields value, status, and src appear in no registry row and are excluded by the schema."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Plans/settings_inventory.json parses as JSON and conforms to Plans/settings_inventory.schema.json (schema_id pm.settings_inventory.v1); schema conformance is enforced by this unit's acceptance criteria, not a machine gate."
+  - "The registry contains 1010 settings across 12 categories, including the exact seven Case L Storage & Retention rows; rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, and provenance pins the concept sidecar at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d."
+  - "The demo runtime fields value, status, and src appear in no registry row and are excluded by the schema."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -752,13 +752,7 @@ and `branching.worktrees.git-push-key` (scope `provider`, set per code service),
 `code.execution.server-sign-in`. Key rows name keys from the SSH key list; no row holds a private key half or a
 password.
 
-Amended 2026-09-28 (user-approved inventory wave, `Plans/Settings_System.md#SSYS-041` section 4.4 and
-`Plans/Settings_System.md#SSYS-042` section 10): the registry admits three rows for NieR Mode, bringing it to 916
-rows, all scope `global` and tier `simple`: `general.visual.nier-mode` (toggle, off by default),
-`general.visual.nier-parts` (multiselect of the 29 parts, all installed by default) and
-`general.visual.nier-background` (select of eight scenes, default City Ruins). NieR Mode is a hidden theme painted over
-the Basic family, not a ninth theme: the eight built-in variants of F3-425 are unchanged, and while it is on NieR
-decides the accent color and the app font. Its parts and background rows show only while it is on.
+Amended Q22, Jared 2026-10-30 (DL-257): the old three-row NieR admission is superseded. general.visual.nier-mode is migration-only, removed from the active inventory; family nier and its NieR Light/Dark variants use general.visual.theme. The retained 29-part general.visual.nier-parts and eight-scene general.visual.nier-background are NieR-only Adjust rows. Existing literal palette/font values, original art, motion/audio gates and the one editor are unchanged; SSYS-043 and DL-257 own migration and direction-sensitive covers.
 
 Amended 2026-10-09 (per-provider auto-switch, `Plans/Decision_Log.md#DL-174`, owner `Plans/Multi-Account.md#MA-073`):
 four rows gain the `provider` scope beside the scopes they already have, `ai.accounts.cooldown-policy` also gains
