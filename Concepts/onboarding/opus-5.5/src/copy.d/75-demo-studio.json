@@ -1408,7 +1408,7 @@
       "squeeze": {
         "title": "A squeezed title bar",
         "row": "Mark only",
-        "sub": "Narrows the bar step by step until its own density shows Pip's mark without the wordmark; the page stays live while it looks.",
+        "sub": "Narrows the bar step by step until its own density shows Pip's mark without the wordmark. Each step runs the bar's real layout pass, so the page pauses about half a second between steps.",
         "subMark": "The bar shows Pip's mark only now, at {n} px.",
         "go": "Squeeze the bar",
         "done": "The brand folds to Pip's mark at {n} px."
@@ -1435,7 +1435,7 @@
         "busySub": "This button wears the loader for a short wait.",
         "busyGo": "Check it",
         "hold": "Hold loaders",
-        "holdSub": "Waits that end keep their loader up, so it can be looked at. Off ends them.",
+        "holdSub": "Waits that end on their button (Refresh Projects, the busy button, Settings' checks) keep their loader up, so it can be looked at; off ends them. Waits drawn from their state, like the chat's Building…, end with their state.",
         "panel": "A panel waiting",
         "panelSub": "Projects › Refresh: the loader takes the button's icon place while the list is rescanned. With Hold loaders on it stays.",
         "panelGo": "Refresh Projects",
