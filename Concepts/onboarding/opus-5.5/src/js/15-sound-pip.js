@@ -275,100 +275,8 @@
     teletype: { kind: 'tick', gain: 0.2, root: 74, quant: [0, 2, 4, 5, 7, 9, 11, 12], maxSyl: 0.06, blip: 3, cps: 46 },
     nier: { kind: 'chirp', w1: 'triangle', harm: 0.16, lp: 3600, gain: 0.3, base: 560, bounce: 0.4, mono: true, step: true, att: 0.003, rel: 0.01, maxSyl: 0.07, cons: 0.06, cps: 52 }
   };
-  const VOWEL_RE = /[aeiouyàáâäèéêëìíîïòóôöùúûü]/i;
-  function vowelOf(g) {
-    g = g.toLowerCase();
-    if (/^(ee|ea|ie|ey)/.test(g)) return 'i';
-    if (/^(oo|ew)/.test(g)) return 'u';
-    if (/^(ai|ay|ei)/.test(g)) return 'e';
-    if (/^(ou|au|aw|oa)/.test(g)) return 'o';
-    const ch = g.normalize('NFD')[0];
-    return { a: 'a', e: 'e', i: 'i', y: 'i', o: 'o', u: 'u' }[ch] || 'a';
-  }
-  function onsetOf(cl) {
-    cl = cl.toLowerCase();
-    if (!cl) return null;
-    if (/(sh|ch|th)$/.test(cl)) return 's';
-    const ch = cl[cl.length - 1];
-    if ('pbtdkgcq'.indexOf(ch) >= 0) return 'p';
-    if ('szfvxj'.indexOf(ch) >= 0) return 's';
-    if (ch === 'h') return 'h';
-    if ('mn'.indexOf(ch) >= 0) return 'n';
-    return 'l';
-  }
-  function endOf(text) {
-    const s = String(text).trim();
-    if (/(…|\.\.\.)["”’)]*$/.test(s)) return 'trail';
-    if (/\?["”’)]*$/.test(s)) return 'ask';
-    if (/!["”’)]*$/.test(s)) return 'exclaim';
-    if (/\.["”’)]*$/.test(s)) return 'stop';
-    return 'open';
-  }
-  // the line's syllables, each at the moment its letters are typed: [{ t, d, v, p, p2, on, g, leg }]
-  function textScript(text, V, mood, cps) {
-    const M = MOOD[mood] || MOOD.idle, s = String(text), out = [], words = [];
-    const re = /[A-Za-zÀ-ÿ0-9']+/g; let m;
-    while ((m = re.exec(s))) words.push([m[0], m.index]);
-    words.forEach(([w, w0], wi) => {
-      const groups = [];
-      for (let j = 0; j < w.length;) {
-        if (VOWEL_RE.test(w[j]) && !(j === 0 && /y/i.test(w[j]) && w.length > 1)) { let k = j; while (k < w.length && VOWEL_RE.test(w[k])) k++; groups.push([j, k]); j = k; } else j++;
-      }
-      // a silent final e ("time", "name") is no syllable
-      if (groups.length > 1) { const [a, b] = groups[groups.length - 1]; if (b === w.length && b - a === 1 && /e/i.test(w[a]) && w.length > 3) groups.pop(); }
-      if (!groups.length) { if (/^\d+$/.test(w)) for (let k = 0; k < Math.min(w.length, 4); k++) groups.push([k, k + 1]); else groups.push([0, w.length]); }
-      groups.forEach(([a, b], gi) => {
-        const prevEnd = gi === 0 ? 0 : groups[gi - 1][1];
-        const i0 = w0 + (gi === 0 ? 0 : Math.floor((prevEnd + a) / 2));
-        const i1 = w0 + (gi === groups.length - 1 ? w.length : Math.floor((b + groups[gi + 1][0]) / 2));
-        const digit = /\d/.test(w[a]);
-        out.push({ i0, i1, v: digit ? 'i' : vowelOf(w.slice(a, b)), on: onsetOf(w.slice(prevEnd, a)), stress: gi === 0 && groups.length > 1, wi, last: gi === groups.length - 1, lastWord: wi === words.length - 1 });
-      });
-    });
-    const n = out.length, end = endOf(s), excl = /!/.test(s), maxSyl = V.maxSyl || 0.16;
-    const bounce = (V.bounce || 1) * M.bounce * (V.mono ? 0.15 : 1);
-    return out.map((q, j) => {
-      const t = q.i0 / cps, room = (q.i1 - q.i0) / cps;
-      let d = clamp(room - 0.012, 0.045, maxSyl);
-      let p = M.st + (excl ? 1.5 : 0) - 2.2 * (n > 1 ? j / (n - 1) : 0) * (V.mono ? 0.25 : 1);
-      p += (j % 2 ? 0.8 : -0.4) * bounce * 0.6 + jit(bounce * 0.7);
-      if (q.stress) p += 1.4 * (V.mono ? 0.2 : 1);
-      let p2 = p - 0.6, g = q.stress ? 1.08 : 1;
-      if (j === n - 1) {
-        const k = V.mono ? 0.25 : 1;
-        if (end === 'ask') p2 = p + 5 * k;
-        else if (end === 'exclaim') { p += 1.5 * k; p2 = p - 2 * k; g = 1.1; }
-        else if (end === 'trail') { p2 = p - 4 * k; d = Math.min(maxSyl * 1.6, d * 1.5); g = 0.8; }
-        else if (end === 'stop') p2 = p - 3 * k;
-        else p2 = p - 1.5 * k;
-      }
-      if (j === 0 && M.hum && !V.mono) q.on = 'n';
-      const next = out[j + 1], leg = !!(next && next.wi === q.wi);
-      return { t, d, v: q.v, p, p2, on: q.on, g, leg };
-    });
-  }
-  // the beeping voices (phosphor, teletype): a blip every few letters, each on a note of the scale
-  function blipScript(text, V, mood, cps) {
-    const M = MOOD[mood] || MOOD.idle, s = String(text), out = [], end = endOf(s);
-    let letters = 0;
-    for (let i = 0; i < s.length; i++) {
-      const ch = s[i];
-      if (!/[A-Za-zÀ-ÿ0-9]/.test(ch)) continue;
-      if (letters++ % (V.blip || 2)) continue;
-      const vow = VOWEL_RE.test(ch), h = (ch.toLowerCase().charCodeAt(0) * 7 + i) % 4;
-      const deg = vow ? 4 + (h % 3) : h;
-      out.push({ t: i / cps, d: V.maxSyl, deg, p: 0, p2: 0, g: vow ? 1 : 0.85 });
-    }
-    const n = out.length;
-    out.forEach((q, j) => {
-      q.deg += Math.round(M.st / 2.5);
-      if (j >= n - 2 && end === 'ask') q.deg += j === n - 1 ? 3 : 1;
-      if (j === n - 1 && end === 'exclaim') q.deg += 2;
-      if (j >= n - 2 && (end === 'stop' || end === 'trail')) q.deg -= j === n - 1 ? 2 : 1;
-      if (end === 'trail' && j === n - 1) q.d *= 2;
-    });
-    return out;
-  }
+  /* (a line Pip says is O55.sound.pip's: its voice core turns the words into syllables; the kits keep the scripted
+     one-shots below, and the crew's three voices on Ready) */
   // a scripted non-verbal sound (yawn, giggle, "hmm") for the beeping voices: blips that walk the contour
   function blipsFromScript(script, V) {
     const out = [];
@@ -1067,15 +975,7 @@
     finally { R = prevR; }
     return true;
   }
-  function sayOn(c, g, st, kitName, text, op, t, raw) {
-    const V = VOX[kitName], timing = sayTiming(kitName, text, op);
-    const prevR = R; R = st.r;
-    try {
-      const script = V.kind === 'pulse' || V.kind === 'tick' ? blipScript(text, V, op.mood, timing.cps) : textScript(text, V, op.mood, timing.cps);
-      if (!script.length) return null;
-      return voice(c, chain(c, g, kitName, 'say', op, raw), t, script, kitName, op);
-    } finally { R = prevR; }
-  }
+  /* a line's pace, for the typing it goes with, when O55.sound is not on the page (the voice is then silent) */
   function sayTiming(kitName, text, op) {
     const V = VOX[kitName], M = MOOD[(op && op.mood) || 'idle'] || MOOD.idle, C = CREW[(op && op.voice) || 'pip'] || CREW.pip;
     const cps = Math.round(V.cps * M.rate * C.rate * 10) / 10, n = String(text || '').length;
@@ -1127,7 +1027,6 @@
     const c = new OfflineAudioContext(2, Math.ceil(sr * dur), sr), g = graph(c, !!o.raw), st = newState(o.seed || 99);
     const op = Object.assign({ chapter: 2, index: 1, count: 3, len: 160 }, opts || {});
     if (kind === 'play') dispatch(c, g, st, kitName, name, op, t0, !!o.notrim);
-    else if (kind === 'say') sayOn(c, g, st, kitName, o.text || "Oh! Hi. I'm Pip. Shall we set things up?", op, t0, !!o.notrim);
     else { const L = loopInst(c, g, kitName, name, t0, st, !!o.notrim); L.set(op.level == null ? 1 : op.level, t0); L.pump(dur, true); }
     return c.startRendering();
   }
@@ -1184,7 +1083,7 @@
   const part = (id) => (O55.pipStage && O55.pipStage.h ? O55.pipStage.h.part(id) : true);
   const SND = () => O55.sound || null;
   const API = () => { const S = SND(); return S && S.pip && typeof S.pip.registerKit === 'function' ? S.pip : null; };
-  const P = { g: null, ctx: null, st: newState(), kit: 'basic', look: 'basic-dark', loops: {}, want: {}, sayH: null, pumpT: 0, muted: null, tune: null };
+  const P = { g: null, ctx: null, st: newState(), kit: 'basic', look: 'basic-dark', loops: {}, want: {}, pumpT: 0, muted: null, tune: null };
   const nier = () => document.documentElement.getAttribute('data-o55-nier') === 'on';
   const QUIET_UNLESS_NIER = new Set(['hover', 'ghost', 'tryOn']);
   /* the window's own clicks, moves and chapter sting are O55.sound's; Pip only keeps the music's chord in step */
@@ -1257,17 +1156,15 @@
     if (!attach()) return false;
     return dispatch(P.ctx, P.g, P.st, kn, name, op, tnow(), false);
   }
+  /* Pip's lines are spoken by the one voice core, O55.sound.pip (lane found): its gates (sound effects, the first
+     gesture, the parts setup-voice and app-voice, holds, the chat's mute) and its timing { ms, cps }, which the
+     bubble's typing follows. Without it a line is only timed. */
   function say(text, opts) {
     const op = opts || {}, pip = API();
     if (pip) return pip.say(text, { mood: op.mood, look: P.look, where: 'setup', pan: op.pan });
-    const kn = op.kit ? kitOf(op.kit) : P.kit, timing = sayTiming(kn, text, op);
-    hush();
-    if (!text || !part('setup-voice') || !attach()) return timing;
-    P.sayH = sayOn(P.ctx, P.g, P.st, kn, text, op, tnow(), false);
-    pumpOn();
-    return timing;
+    return sayTiming(op.kit ? kitOf(op.kit) : P.kit, text, op);
   }
-  function hush() { const pip = API(); if (pip) { pip.hush(); return; } if (P.sayH && P.ctx) { try { P.sayH.stop(P.ctx.currentTime); } catch (_) {} P.sayH = null; } }
+  function hush() { const pip = API(); if (pip) pip.hush(); }
   function loop(name, level) {
     if (LOOPS.indexOf(name) < 0) return;
     level = clamp(+level || 0, 0, 1);
@@ -1304,7 +1201,7 @@
       if (inst.next < t) inst.next = t + 0.02;
       inst.pump(t + 0.5, false);
     });
-    if (!Object.keys(P.loops).length && !Object.values(P.want).some((v) => v > 0.001) && !P.sayH) { clearInterval(P.pumpT); P.pumpT = 0; }
+    if (!Object.keys(P.loops).length && !Object.values(P.want).some((v) => v > 0.001)) { clearInterval(P.pumpT); P.pumpT = 0; }
   }
   /* a new look: its kit, its voice, and its music in place of the last one's */
   function setTheme(t) {
