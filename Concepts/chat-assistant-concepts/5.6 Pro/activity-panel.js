@@ -338,21 +338,25 @@
       });
     }
     if (domain === 'subagents') {
+      /* hosted, each record is a PM_WORK agent (app.js workSubagents, F3-2): its word, tone and ticking time are the
+         projection's, the ones the rail, Home's board and the status bar's panel show for it */
+      var WK = window.PM_WORK;
       return (sc.subagents || []).map(function (a) {
         var counts = a.counts && typeof a.counts === 'object'
           ? Object.keys(a.counts).map(function (k) { return a.counts[k] + ' ' + k; }).join(' · ') : '';
-        var sm = statusMeta(a.status, agentTone(a.status));
+        var sm = statusMeta(a.status, agentTone(a.status)), w = a.work && WK ? a.work : null;
+        var word = w ? WK.word(w) : sm.label, tone = w ? WK.tone(w) : sm.tone;
         return {
           domain: 'subagents', id: a.id, title: a.name,
           sub: [a.model, a.blocker || a.current].filter(Boolean).join(' · '),
           subHtml: (a.model ? '<u class="agent-model">' + esc(ctx, a.model) + '</u>' : '') +
             ((a.blocker || a.current) ? (a.model ? ' · ' : '') + esc(ctx, a.blocker || a.current) : ''),
-          right: sm.label + (a.elapsed ? ' · ' + a.elapsed : ''),
-          elapsed: a.elapsed || '',
+          right: word + (a.elapsed ? ' · ' + a.elapsed : ''),
+          elapsed: a.elapsed || '', timeId: w ? w.id : null,
           ledger: a.elapsed || '—',
-          tone: sm.tone,
+          tone: tone,
           progress: a.progress == null ? null : Number(a.progress) || 0,
-          state: sm.label, action: 'open-agent',
+          state: word, action: 'open-agent',
           attrs: ' data-id="' + esc(ctx, a.id) + '"',
           /* a subagent's face is its puppet mark (app.js agentPuppet, the Crew members' size), never initials */
           mark: ctx.agentPuppet ? ctx.agentPuppet('pmap-agent-mark', a, 18) : '',
@@ -526,7 +530,7 @@
         kv(ctx, 'Blocker', r.blocker) + kv(ctx, 'Updated', r.updatedAt ? relTime(ctx, r.updatedAt, '') + ' ago' : null);
     } else if (domain === 'subagents') {
       var route = r.route && typeof r.route === 'object' ? (r.route.label || [r.route.provider, r.route.account, r.route.model].filter(Boolean).join(' · ')) : r.route;
-      body = kv(ctx, 'Status', statusMeta(r.status, agentTone(r.status)).label) +
+      body = kv(ctx, 'Status', it.state) +
         (r.model ? kvHtml(ctx, 'Model', '<u class="agent-model">' + esc(ctx, r.model) + '</u>') : '') +
         kv(ctx, 'Route', route) + kv(ctx, 'Parent', r.parent) +
         kv(ctx, 'Elapsed', r.elapsed) + kv(ctx, 'Progress', (Number(r.progress) || 0) + '%') +
@@ -621,7 +625,7 @@
       '<span class="copy"><strong>' + esc(ctx, it.title) + '</strong>' +
       (it.sub ? '<span>' + (it.subHtml || esc(ctx, it.sub)) + '</span>' : '') + '</span>' +
       '<span class="right"><b>' + esc(ctx, it.state) + '</b>' +
-      (it.elapsed ? '<i>' + esc(ctx, it.elapsed) + '</i>' : '') + '</span></button>' +
+      (it.elapsed ? '<i' + (it.timeId ? ' data-work-time="' + esc(ctx, it.timeId) + '"' : '') + '>' + esc(ctx, it.elapsed) + '</i>' : '') + '</span></button>' +
       (on ? detailCard(ctx, it.domain, it.id) : '');
   }
   function domainList(ctx, id) {

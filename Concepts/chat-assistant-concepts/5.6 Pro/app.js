@@ -622,7 +622,7 @@
     if(id?.startsWith('plan:'))return window.PM56_PLANS?.editorBody(id)||'<div class="editor-empty">Plan unavailable</div>';
     if (!id) return `<div class="editor-empty">${icon('document',28)}<div><strong>No artifact open</strong><br><span>Plans, files, visual artifacts, links, and child-agent threads open here.</span></div></div>`;
     const agent=D.subagents.find(a=>`thread-${a.id}`===id);
-    if (agent) return renderAgentEditor(agent);
+    if (agent) return renderAgentEditor(subagentRecord(agent.id)||agent);
     if (id==='goal-artifact') return extReplace('goalEditor',{}, renderGoalEditor());
     const art=D.artifacts.find(a=>a.id===id);
     if (art) return renderArtifactEditor(art);
@@ -1303,8 +1303,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<article class="system-card" data-artifact-id="${esc(art.id)}"><div class="system-card-head"><span class="event-icon">${icon(art.kind==='image'?'image':art.kind==='mermaid'?'code':'artifact',14)}</span><div><span class="title">${esc(art.title)}</span><span class="sub"> · ${esc(art.kind)}</span></div><span class="spacer"></span><span class="meta-pill">${esc(lblOf('artifactStatus',art.status))}</span></div><div class="system-card-body">${preview}<div class="artifact-card"><div><strong>${esc(art.title)}</strong><p style="margin:3px 0 0;color:var(--muted);font-size:11px">${esc(art.summary)}</p></div><button class="soft-button" data-action="open-artifact" data-id="${esc(art.id)}">${icon('expand',13)} Open</button></div></div></article>`;
   }
 
+  /* the thread's child agents as its Subagents domain lists them (PM_WORK, F3-2) */
   function renderLiveAgentsCard(){
-    return `<article class="system-card"><div class="system-card-head"><span class="event-icon">${icon('users',14)}</span><div><span class="title">Live subagents</span><span class="sub"> · visible while working</span></div><span class="spacer"></span><span class="chat-state"><i class="status-dot working"></i>${(D.subagents||[]).filter(a=>a.status==='working').length} active</span></div><div class="system-card-body"><div class="live-agent-list">${(D.subagents||[]).slice(0,5).map(renderLiveAgentRow).join('')}</div></div></article>`;
+    const agents=activityScope(state.selectedThread).subagents;
+    return `<article class="system-card"><div class="system-card-head"><span class="event-icon">${icon('users',14)}</span><div><span class="title">Live subagents</span><span class="sub"> · visible while working</span></div><span class="spacer"></span><span class="chat-state"><i class="status-dot working"></i>${agents.filter(a=>a.status==='working').length} active</span></div><div class="system-card-body"><div class="live-agent-list">${agents.slice(0,5).map(renderLiveAgentRow).join('')}</div></div></article>`;
   }
 
   /* Item 14a: an agent is its puppet mark (module-shell pmxMark), never initials. The role comes from the agent's
@@ -1841,6 +1843,36 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function threadById(tid){
     return (state.threads||[]).find(t=>t.id===tid) || (D.threads||[]).find(t=>t.id===tid) || null;
   }
+  /* Subagents (D7, DR-078; final check F3-2): a thread's child agents are a filter of the one work projection, the list
+     the status bar, the rail and Home's Agents board read, so no surface disagrees with another in any scenario. Each
+     keeps the chat's own record of the same id (its transcript, route and counts) and takes its state, words and time
+     from PM_WORK; a record's finer status for the same state stays (Fallback route is working, on another route). The
+     standalone chat, with no projection, reads its fixture. */
+  const AGENT_STATUS={working:'working',reviewing:'working',blocked:'blocked',waiting:'waiting','waiting-dep':'waiting',recovering:'retrying',pending:'queued',paused:'queued',idle:'queued',off:'queued',complete:'complete',failed:'failed',warning:'failed',skipped:'failed'};
+  const AGENT_STATE={working:'working',fallback:'working',blocked:'blocked',waiting:'waiting-dep',retrying:'recovering',queued:'pending',complete:'complete',failed:'failed'};
+  function workAgent(it,rec){
+    const W=window.PM_WORK, same=!!rec&&AGENT_STATE[rec.status]===it.state;
+    const status=same?rec.status:(AGENT_STATUS[it.state]||'queued');
+    const base=rec||{group:null,route:null,counts:null,messages:[],progress:null};
+    return Object.assign({},base,{
+      id:it.id, name:it.title, model:it.model||base.model||'', status, parentThreadId:it.thread,
+      current:same&&base.current?base.current:(it.detail||base.current||''),
+      blocker:W.needsYou(it)?(it.ask||''):same?(base.blocker||''):status==='blocked'?(it.detail||''):'',
+      progress:status==='complete'?100:status==='queued'?0:(base.progress==null?null:base.progress),
+      elapsed:W.time(it), work:it
+    });
+  }
+  function workSubagents(tid){
+    const W=window.PM_WORK, all=D.subagents||[];
+    if(!W||typeof W.items!=='function') return all.filter(a=>a.parentThreadId===tid);
+    const recs=new Map(all.map(a=>[a.id,a]));
+    return W.sort(W.items({thread:tid,kind:'agent'}).filter(it=>it.role!=='main')).map(it=>workAgent(it,recs.get(it.id)||null));
+  }
+  /* one child agent by id, the same merge (its transcript tab keeps the projection's state) */
+  function subagentRecord(id){
+    const rec=(D.subagents||[]).find(a=>a.id===id)||null, W=window.PM_WORK, it=W&&typeof W.item==='function'?W.item(id):null;
+    return it&&it.kind==='agent'?workAgent(it,rec):rec;
+  }
   /* Owned collections for `tid`, plus artifacts the transcript invoked
      (`artifact` / `plan-card`). Goal stays when attached (D.goal.thread or
      thread.goalId), when the thread has a goal-receipt / durable goal artifact,
@@ -1877,7 +1909,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       }
       return (D.todos||[]).filter(t=>t.threadId===tid);
     })();
-    const subagents=(D.subagents||[]).filter(a=>a.parentThreadId===tid);
+    const subagents=workSubagents(tid);
     const hasSubagents=subagents.length>0||msgs.some(m=>m.type==='live-agents');
     const hasCrewEvent=msgs.some(m=>m.type==='crew');
     /* E-02: the crew capability is a permission (Crew Auto may call a Crew), on by default, so it no longer conjures an
@@ -5460,7 +5492,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
     /* while the Processes view or card shows, a progress step is a change too: its rows draw progress (A6) */
     const showingProcs=()=>(state.activity.open&&state.activity.domain==='processes')||!!(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes');
     const progSig=()=>{ const W=window.PM_WORK; return W.items({thread:state.selectedThread,kind:['process','scheduled']}).map(p=>p.progress&&W.isLive(p)?p.id+':'+p.progress.done:'').join(','); };
-    const sig=()=>{ const t=window.PM_WORK.thread?window.PM_WORK.thread(state.selectedThread):null; return t?JSON.stringify(t.counts)+'|'+(t.processes?1:0)+'|'+t.key+(showingProcs()?'|'+progSig():''):''; };
+    /* the thread's child agents by state: its Subagents domain is a filter of the projection (F3-2), so a state that
+       leaves the counts alone (working to retrying) still repaints it */
+    const agentSig=()=>window.PM_WORK.items({thread:state.selectedThread,kind:'agent'}).map(a=>a.id+':'+a.state).join(',');
+    const sig=()=>{ const t=window.PM_WORK.thread?window.PM_WORK.thread(state.selectedThread):null; return t?JSON.stringify(t.counts)+'|'+(t.processes?1:0)+'|'+t.key+'|'+agentSig()+(showingProcs()?'|'+progSig():''):''; };
     window.PM_WORK.on('change',why=>{
       const now=sig();
       if(why==='tick'&&now===workSig){ patchWorkTicks(); return; }
