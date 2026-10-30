@@ -60,5 +60,10 @@ body.pm-resizing .pm56-host :is(.pm-shimmer, .tx-stretch-verb.pm-shimmer, .todo-
   .status-dot.working, .status-dot.reviewing, .status-branch, .state-mark.live, .lane-wave i, .lane-pulse) {
   animation-play-state: paused;
 }
+/* Pip in the chat (W4, lane chatpip): the sheet's Pip sways at rest and the Orbit's Pip bobs its thinking dots; both
+   hold where they are during a drag */
+body.pm-resizing .pm56-host :is(.pmx-pip-host .pmx-pip-rig, .pmx-pip-host .pmx-pip-card, .orbit-core-face .pmx-pip-dot2, .orbit-core-face .pmx-pip-dot3, .orbit-core-face .pmx-pip-dot4) {
+  animation-play-state: paused;
+}
 body.pm-resizing .pm56-host .composer-box,
 body.pm-resizing .pm56-host .chat-stage .composer-box { box-shadow: none; }

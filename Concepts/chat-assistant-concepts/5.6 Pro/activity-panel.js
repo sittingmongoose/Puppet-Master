@@ -446,6 +446,9 @@
     }).join('') + '</div>';
   }
   function emptyNote(ctx, text) {
+    /* W4 (lane chatpip): the one empty-list line, a sleeping Pip where the info glyph was (PM56_SHELL.pmxEmpty) */
+    var S = window.PM56_SHELL;
+    if (S && S.pmxEmpty && window.PMLogo) return S.pmxEmpty({ tag: 'div', cls: 'pmap-empty', key: 'pmap-empty', text: '<span>' + esc(ctx, text) + '</span>' });
     return '<div class="pmap-empty" data-k="pmap-empty">' + ctx.icon('info', 12) + '<span>' + esc(ctx, text) + '</span></div>';
   }
 

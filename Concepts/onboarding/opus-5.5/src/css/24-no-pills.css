@@ -19,7 +19,7 @@ html[data-theme^="friendly"] .pm6-tb-menu-item { border-radius: var(--pm-ctl-r) 
    The project menu, the page tabs with their sliding ink, and the search field take the look's rectangle. The ink still
    springs between tabs exactly as before. Glass's ink loses its 2px lilac line across the top: selection is the
    surface itself, never an edge stripe (F3-648). */
-html[data-theme] .title-bar .project-dropdown { border-radius: var(--pm-ctl-r) !important; }
+html[data-theme] .title-bar .project-dropdown { border-radius: var(--pm-switch-r-in, var(--pm-ctl-r-in, var(--pm-ctl-r))) !important; }
 html[data-theme] .title-bar .page-tabs .page-tab, html[data-theme] .title-bar .page-tab-ink { border-radius: var(--pm-ctl-r) !important; }
 html[data-theme^="glass"] .title-bar .page-tabs { border-radius: calc(var(--pm-ctl-r) + 2px) !important; }
 /* @pm7-lg-slot onboarding/opus-5.5/src/css/24-no-pills/G0624.css */

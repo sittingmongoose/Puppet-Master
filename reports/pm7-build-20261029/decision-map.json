@@ -1,0 +1,1459 @@
+{
+  "scope": "PM7 decision application map; report only, canonical text remains Plans owner units.",
+  "packet": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md",
+  "decisions": {
+    "A1": {
+      "question": "App icon: one fixed tile, or follow the project's look",
+      "recommendation": "**One fixed tile, Basic Dark** (the first-run look)",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-235",
+        "Plans/FinalGUISpec.md#F3-034",
+        "Plans/FinalGUISpec.md#F3-035",
+        "Plans/FinalGUISpec.md#F3-468",
+        "Plans/FinalGUISpec.md#F3-660"
+      ],
+      "decision_log_units": [
+        "DL-235"
+      ]
+    },
+    "A2": {
+      "question": "Tray: always on, or only while \"minimize to tray\" is on (canon)",
+      "recommendation": "**Keep the gate**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-235",
+        "Plans/FinalGUISpec.md#F3-037",
+        "Plans/FinalGUISpec.md#F3-660"
+      ],
+      "decision_log_units": [
+        "DL-235"
+      ]
+    },
+    "A3": {
+      "question": "Tray faces → status keys",
+      "recommendation": "idle→idle, working→working, done→complete (~10 s), needs you→waiting (always wins), error→failed, paused→paused; summed over projects",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-235",
+        "Plans/FinalGUISpec.md#F3-037",
+        "Plans/FinalGUISpec.md#F3-660"
+      ],
+      "decision_log_units": [
+        "DL-235"
+      ]
+    },
+    "A4": {
+      "question": "Notification faces",
+      "recommendation": "**Pip on OS notifications and Friendly's app tile**; in-app cards keep their kind marks (F3-460)",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-235",
+        "Plans/FinalGUISpec.md#F3-037",
+        "Plans/FinalGUISpec.md#F3-447",
+        "Plans/FinalGUISpec.md#F3-460",
+        "Plans/FinalGUISpec.md#F3-660"
+      ],
+      "decision_log_units": [
+        "DL-235"
+      ]
+    },
+    "A5": {
+      "question": "Moods against the 22 pinned status keys",
+      "recommendation": "**One mood→key table; no new keys**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-051",
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-235",
+        "Plans/FinalGUISpec.md#F3-037",
+        "Plans/FinalGUISpec.md#F3-585",
+        "Plans/FinalGUISpec.md#F3-658",
+        "Plans/FinalGUISpec.md#F3-660",
+        "Plans/Glossary.md#G-031"
+      ],
+      "decision_log_units": [
+        "DL-235"
+      ]
+    },
+    "B1": {
+      "question": "Command a row pick dispatches",
+      "recommendation": "**Promote `cmd.project.switch_active_tab`** (WM-019, SMPFS-083)",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Commands_System.md#CS-105",
+        "Plans/Decision_Log.md#DL-236",
+        "Plans/FinalGUISpec.md#F3-034",
+        "Plans/FinalGUISpec.md#F3-035",
+        "Plans/FinalGUISpec.md#F3-038",
+        "Plans/FinalGUISpec.md#F3-661",
+        "Plans/Glossary.md#G-031",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-003",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-083",
+        "Plans/UI_Command_Catalog.md#UCC-209",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-019",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "decision_log_units": [
+        "DL-236"
+      ]
+    },
+    "B2": {
+      "question": "Ctrl Shift P, when canon makes the Projects view the primary switcher",
+      "recommendation": "**It opens the box's menu**; canon makes the box a secondary entry, the Projects view stays primary",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Commands_System.md#CS-105",
+        "Plans/Commands_System.md#CS-106",
+        "Plans/Decision_Log.md#DL-236",
+        "Plans/FinalGUISpec.md#F3-038",
+        "Plans/FinalGUISpec.md#F3-058",
+        "Plans/FinalGUISpec.md#F3-059",
+        "Plans/FinalGUISpec.md#F3-661",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-003",
+        "Plans/UI_Command_Catalog.md#UCC-209",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "decision_log_units": [
+        "DL-236"
+      ]
+    },
+    "B3": {
+      "question": "Where the §3.4 path summary goes",
+      "recommendation": "**The hover tag and the menu rows**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-236",
+        "Plans/FinalGUISpec.md#F3-038",
+        "Plans/FinalGUISpec.md#F3-661",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-003",
+        "Plans/UI_Wiring_Rules.md#UIW-045"
+      ],
+      "decision_log_units": [
+        "DL-236"
+      ]
+    },
+    "B4": {
+      "question": "Two chips in one strip while the menu is open",
+      "recommendation": "**Approved as shown; amend F3-652**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-236",
+        "Plans/FinalGUISpec.md#F3-038",
+        "Plans/FinalGUISpec.md#F3-652",
+        "Plans/FinalGUISpec.md#F3-661",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-003",
+        "Plans/UI_Wiring_Rules.md#UIW-045"
+      ],
+      "decision_log_units": [
+        "DL-236"
+      ]
+    },
+    "B5": {
+      "question": "Blocked and needs-you badges",
+      "recommendation": "**Separate marks**, ordered needs-you > blocked > working > unsaved > calm",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-236",
+        "Plans/FinalGUISpec.md#F3-038",
+        "Plans/FinalGUISpec.md#F3-661",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-003",
+        "Plans/UI_Wiring_Rules.md#UIW-045"
+      ],
+      "decision_log_units": [
+        "DL-236"
+      ]
+    },
+    "B6": {
+      "question": "\"Open in a new workspace tab\"",
+      "recommendation": "**Ctrl/Cmd+Enter on a row**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Commands_System.md#CS-105",
+        "Plans/Decision_Log.md#DL-236",
+        "Plans/FinalGUISpec.md#F3-038",
+        "Plans/FinalGUISpec.md#F3-059",
+        "Plans/FinalGUISpec.md#F3-661",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-003",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-083",
+        "Plans/UI_Command_Catalog.md#UCC-209",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-019",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "decision_log_units": [
+        "DL-236"
+      ]
+    },
+    "B7": {
+      "question": "NieR ignores a click on the box for ~1 s after a pick (stock PM7, not the concept)",
+      "recommendation": "**Fix it** in this build if it is the reboot cover's input guard outliving the cover; otherwise leave it and say why in the review build",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-236",
+        "Plans/FinalGUISpec.md#F3-661"
+      ],
+      "decision_log_units": [
+        "DL-236"
+      ]
+    },
+    "D1": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D1: Processes names the tenth chat Activity domain, hover card, Activity Detail and status-bar item/tab. Running is only a row state. Tasks remains To-Dos, and backgrounded remains an ObservableWork state. Authority: Jared decided D1 on 2026-10-27; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-240",
+        "Plans/FinalGUISpec.md#F3-533",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-240"
+      ]
+    },
+    "D10": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D10: always ask while live work exists. Default Keep everything running on the server; alternative Stop selected work has a target list the user may untick. The window is a client, not the work owner. Confirmation is generation-bound; keep-running never terminates server work; selected-stop waits for owner exit observations or reports truthful unresolved state. Authority: Jared decided D10 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/Commands_System.md#CS-106",
+        "Plans/DRY_Rules.md#DR-067",
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-249",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/FinalGUISpec.md#F3-665",
+        "Plans/Glossary.md#G-031",
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/Widget_System.md#WS-030",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-505",
+        "Plans/storage-plan.md#SP-330"
+      ],
+      "decision_log_units": [
+        "DL-249"
+      ]
+    },
+    "D11": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D11: collapsed System services ends the Processes tab, mirrors owner status and links System status. No Stop/Restart/Stop all in this feature may affect those services. Authority: Jared decided D11 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/Commands_System.md#CS-106",
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-250",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-250"
+      ]
+    },
+    "D12": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D12 amended by G4/G8: Resources is the third tab. Show CPU, memory, ports, sortable rows and an inspector grouped by Project/server/environment, including every environment/server of each represented Project. Samples are host-owner observations read only while the tab is open; closed tabs do not sample. Missing/stale/partial/unavailable/conflicted is explicit. Never choose one server implicitly for a CPU/RAM status-bar indicator. Authority: Jared decided D12 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/Commands_System.md#CS-106",
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-251",
+        "Plans/FinalGUISpec.md#F3-635",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-251"
+      ]
+    },
+    "D13": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D13: only a plain yes/no prompt gets quick answers, safe answer first. Other prompts use Answer in Terminal, preserving exact terminal/process identity and input generation. No synthetic terminal input, secret echo or agent answer to protected prompts. Authority: Jared decided D13 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/Commands_System.md#CS-106",
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-252",
+        "Plans/Executor_Protocol.md#EP-043",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-502",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-252"
+      ]
+    },
+    "D14": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D14 with X1: processes is a console-framed >_ glyph; robot is the existing redrawn antenna category glyph, not an individual agent figure. Live category glyphs breathe on 2200 ms, cursor/antenna move below needs-you’s motion priority. Panel heads join; list marks stay still. Reduced Motion shows the lit rest pose. Every individual agent is the one Pip primitive. Authority: Jared decided D14 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-253",
+        "Plans/FinalGUISpec.md#F3-584",
+        "Plans/FinalGUISpec.md#F3-619",
+        "Plans/FinalGUISpec.md#F3-658",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-253"
+      ]
+    },
+    "D2": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D2: the thread view lists processes, scripts, servers, watchers, browser sessions and scheduled runs started by the thread or its subagents, including finished-this-session rows. Subagents stay in Subagents and occur here only as linked owners. Platform scope includes Assistant, Orchestrator, Planning Wizard, PRD Builder, Scout and all other owners. Authority: Jared decided D2 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-241",
+        "Plans/FinalGUISpec.md#F3-452",
+        "Plans/FinalGUISpec.md#F3-533",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-476",
+        "Plans/assistant-chat-design.md#ACD-502",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-241"
+      ]
+    },
+    "D3": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D3: default thread layout By state orders Needs input, Running, Scheduled, Finished this session; By owner is the fallback with many subagents. Optional output inspection is bounded head/tail with omitted-line count. Platform live processes sit under their owning agent. Authority: Jared decided D3 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-242",
+        "Plans/FinalGUISpec.md#F3-533",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-242"
+      ]
+    },
+    "D4": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D4: show the chat icon only while a process runs or needs input; retain it while its hover card or Activity Detail is open, then remove it on close if no live/input work remains. Scheduled or finished rows alone never keep the icon. Authority: Jared decided D4 on 2026-10-27; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-243",
+        "Plans/FinalGUISpec.md#F3-533",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-243"
+      ]
+    },
+    "D5": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D5: two separated status-bar items between project folder and source control, agents/questions and processes/needs input. Numbers is default: glyph/number pairs with words on hover; general.interaction.status-bar-words switches to Words. Zero says No agents / No processes; stale data shows one stale strip, never a healthy zero. Fold the Orchestrator chip into Agents and its group; no CPU/RAM bar item (G4). Authority: Jared decided D5 on 2026-10-27 (initial) and 2026-10-28 (final); this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-244",
+        "Plans/FinalGUISpec.md#F3-034",
+        "Plans/FinalGUISpec.md#F3-035",
+        "Plans/FinalGUISpec.md#F3-441",
+        "Plans/FinalGUISpec.md#F3-448",
+        "Plans/FinalGUISpec.md#F3-631",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Settings_System.md#SSYS-044",
+        "Plans/Settings_System.md#SSYS-057",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "decision_log_units": [
+        "DL-244"
+      ]
+    },
+    "D6": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D6 amended by G4/G8: one platform panel has Agents, Processes, Resources tabs and desktop Pop out. Agents leads with Questions; Processes leads with Needs input. Side by side and the Task manager layout are retired from product; its resource table is in Resources. Home panel-tab support stays deferred (G10), no new WorkNodes. One overlay root; desktop pop-out preserves scope and selected tab; unsupported clients expose a reason. Authority: Jared decided D6 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-067",
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-245",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/UI_Wiring_Rules.md#UIW-024",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "decision_log_units": [
+        "DL-245"
+      ]
+    },
+    "D7": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D7: status panel is glance/triage; Agents rail is deep lanes, queue and lineage; Home Agents board is a filtered agent view. All share OperationalAwareness over ObservableWork and registry lineage, one row anatomy, ordering and needs-you set. No surface owns a parallel runtime list/count. Authority: Jared decided D7 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-246",
+        "Plans/FinalGUISpec.md#F3-452",
+        "Plans/FinalGUISpec.md#F3-477",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Run_Graph_View.md#RGV-001",
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/Widget_System.md#WS-030",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-246"
+      ]
+    },
+    "D8": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D8: composer Stop ends only the reply and holds its queue. cmd.work.stop stops one item, a thread or the reviewed platform target set. Stopping an agent includes its subagents and their processes. Executor sends SIGTERM then SIGKILL after 3 s to the whole process group, bound to pid plus start time. Stopping is pending with its word until exit is observed; already ended is idempotent. System services are excluded. Authority: Jared decided D8 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/CLI_Bridged_Providers.md#CBP-026",
+        "Plans/Commands_System.md#CS-106",
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-247",
+        "Plans/Executor_Protocol.md#EP-043",
+        "Plans/Executor_Protocol.md#EP-119",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Goal_Runtime_System.md#GRS-036",
+        "Plans/Run_Modes.md#RM-019",
+        "Plans/Run_Modes.md#RM-020",
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-471",
+        "Plans/assistant-chat-design.md#ACD-476",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-247"
+      ]
+    },
+    "D9": {
+      "question": "Approved background-activity source decision",
+      "recommendation": "Adopted 2026-10-29 for the PM7 build. D9: per item agent | user | quiet. Scripts/tests/builds default Tell the agent; servers/watchers/databases default Notify me. Tell the agent never wakes a user-stopped thread. Notify me uses the alert owner, one deduplicated/coalesced notice per item; Quiet makes no completion delivery. holds_reply is separate from delivery; completion/input candidates emit no unadmitted event. Authority: Jared decided D9 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.",
+      "adoption": "explicit_jared_source_decision_2026_10_27_28",
+      "owner_units": [
+        "Plans/CLI_Bridged_Providers.md#CBP-026",
+        "Plans/Commands_System.md#CS-106",
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-248",
+        "Plans/Decision_Log.md#DL-255",
+        "Plans/FinalGUISpec.md#F3-447",
+        "Plans/FinalGUISpec.md#F3-453",
+        "Plans/FinalGUISpec.md#F3-460",
+        "Plans/FinalGUISpec.md#F3-461",
+        "Plans/FinalGUISpec.md#F3-635",
+        "Plans/FinalGUISpec.md#F3-649",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Goal_Runtime_System.md#GRS-036",
+        "Plans/Run_Modes.md#RM-019",
+        "Plans/Run_Modes.md#RM-020",
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-476",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-248",
+        "DL-255"
+      ]
+    },
+    "G1": {
+      "question": "Pin, once there is no small view",
+      "recommendation": "**Remove it.** Activity Detail stays open until closed (×, Esc or the icon again).",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-075",
+        "Plans/Decision_Log.md#DL-254",
+        "Plans/FinalGUISpec.md#F3-533",
+        "Plans/FinalGUISpec.md#F3-535",
+        "Plans/FinalGUISpec.md#F3-580",
+        "Plans/FinalGUISpec.md#F3-637",
+        "Plans/Settings_System.md#SSYS-055",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-453",
+        "Plans/assistant-chat-design.md#ACD-501",
+        "Plans/assistant-chat-design.md#ACD-506",
+        "Plans/storage-plan.md#SP-330"
+      ],
+      "decision_log_units": [
+        "DL-254"
+      ]
+    },
+    "G10": {
+      "question": "Items the concept left out: keyboard shortcuts for the panel, the OS badge and notification flows, the Home panel tab",
+      "recommendation": "**Not in this build** (the Home tab is \"later\" per D6). The OS badge reads the same needs-you projection when it is built.",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Commands_System.md#CS-106",
+        "Plans/Decision_Log.md#DL-245",
+        "Plans/Decision_Log.md#DL-255",
+        "Plans/FinalGUISpec.md#F3-447",
+        "Plans/FinalGUISpec.md#F3-453",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "decision_log_units": [
+        "DL-245",
+        "DL-255"
+      ]
+    },
+    "G2": {
+      "question": "When the window can't fit the docked panel",
+      "recommendation": "**Widen the chat to make room**; past the window's limit, the panel covers the transcript at the column's full height. Never the small one.",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-075",
+        "Plans/Decision_Log.md#DL-254",
+        "Plans/FinalGUISpec.md#F3-533",
+        "Plans/FinalGUISpec.md#F3-535",
+        "Plans/FinalGUISpec.md#F3-580",
+        "Plans/FinalGUISpec.md#F3-637",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-453",
+        "Plans/assistant-chat-design.md#ACD-501",
+        "Plans/assistant-chat-design.md#ACD-506",
+        "Plans/storage-plan.md#SP-330"
+      ],
+      "decision_log_units": [
+        "DL-254"
+      ]
+    },
+    "G3": {
+      "question": "The chat width cap",
+      "recommendation": "**No fixed 760 cap**; the drag runs until the centre reaches its own floor",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-075",
+        "Plans/Decision_Log.md#DL-254",
+        "Plans/FinalGUISpec.md#F3-034",
+        "Plans/FinalGUISpec.md#F3-035",
+        "Plans/FinalGUISpec.md#F3-637",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-501",
+        "Plans/assistant-chat-design.md#ACD-506",
+        "Plans/storage-plan.md#SP-330"
+      ],
+      "decision_log_units": [
+        "DL-254"
+      ]
+    },
+    "G4": {
+      "question": "Explicit Jared ruling",
+      "recommendation": "Resources third tab; all servers/environments; no CPU/RAM bar item",
+      "adoption": "explicit_jared_ruling",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-244",
+        "Plans/Decision_Log.md#DL-245",
+        "Plans/Decision_Log.md#DL-251",
+        "Plans/FinalGUISpec.md#F3-448",
+        "Plans/FinalGUISpec.md#F3-452",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Glossary.md#G-031",
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/UI_Wiring_Rules.md#UIW-024",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-244",
+        "DL-245",
+        "DL-251"
+      ]
+    },
+    "G5": {
+      "question": "\"Stopping\"",
+      "recommendation": "**`pending` with the word**; a new mark would break the 22-key pin",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Commands_System.md#CS-106",
+        "Plans/DRY_Rules.md#DR-051",
+        "Plans/Decision_Log.md#DL-255",
+        "Plans/Executor_Protocol.md#EP-043",
+        "Plans/FinalGUISpec.md#F3-585",
+        "Plans/FinalGUISpec.md#F3-658",
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-255"
+      ]
+    },
+    "G6": {
+      "question": "`cmd.work.clear_finished`",
+      "recommendation": "**View-local:** clearing hides finished rows from this view and deletes no record",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Commands_System.md#CS-106",
+        "Plans/Decision_Log.md#DL-255",
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "decision_log_units": [
+        "DL-255"
+      ]
+    },
+    "G7": {
+      "question": "ProcessFacts shape (tracker §4)",
+      "recommendation": "**(a)**, as the tracker recommends",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Commands_System.md#CS-106",
+        "Plans/DRY_Rules.md#DR-078",
+        "Plans/Decision_Log.md#DL-255",
+        "Plans/Executor_Protocol.md#EP-043",
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-505"
+      ],
+      "decision_log_units": [
+        "DL-255"
+      ]
+    },
+    "G8": {
+      "question": "Name of the third tab",
+      "recommendation": "**\"Resources\"** (shown in the review build so you can see it in place)",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-245",
+        "Plans/Decision_Log.md#DL-251",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "decision_log_units": [
+        "DL-245",
+        "DL-251"
+      ]
+    },
+    "G9": {
+      "question": "Items the concept left out: NieR's readout styling for the new status items, narrow chat widths",
+      "recommendation": "**Designed in this build** and shown in the review build",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-067",
+        "Plans/Decision_Log.md#DL-254",
+        "Plans/FinalGUISpec.md#F3-652",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-506"
+      ],
+      "decision_log_units": [
+        "DL-254"
+      ]
+    },
+    "L1": {
+      "question": "Explicit Jared ruling",
+      "recommendation": "Pip for waits; st-working for item state",
+      "adoption": "explicit_jared_ruling",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-077",
+        "Plans/Decision_Log.md#DL-237",
+        "Plans/FinalGUISpec.md#F3-172",
+        "Plans/FinalGUISpec.md#F3-468",
+        "Plans/FinalGUISpec.md#F3-586",
+        "Plans/FinalGUISpec.md#F3-631",
+        "Plans/FinalGUISpec.md#F3-662",
+        "Plans/assistant-chat-design.md#ACD-470",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-237"
+      ]
+    },
+    "L2": {
+      "question": "Skeletons",
+      "recommendation": "**Keep F3-172's skeletons** where content has a layout to show; the loader for every other indeterminate wait; determinate progress stays a bar",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-077",
+        "Plans/Decision_Log.md#DL-237",
+        "Plans/FinalGUISpec.md#F3-172",
+        "Plans/FinalGUISpec.md#F3-662"
+      ],
+      "decision_log_units": [
+        "DL-237"
+      ]
+    },
+    "L3": {
+      "question": "Reduced motion",
+      "recommendation": "**The breath and the blink**, as a wait-signal exception (SSYS-010 keeps progress feedback)",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-077",
+        "Plans/Decision_Log.md#DL-237",
+        "Plans/FinalGUISpec.md#F3-465",
+        "Plans/FinalGUISpec.md#F3-655",
+        "Plans/FinalGUISpec.md#F3-662",
+        "Plans/Settings_System.md#SSYS-010",
+        "Plans/assistant-chat-design.md#ACD-475"
+      ],
+      "decision_log_units": [
+        "DL-237"
+      ]
+    },
+    "L4": {
+      "question": "One shared period or per-look periods",
+      "recommendation": "**Per-look**, as approved",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-077",
+        "Plans/Decision_Log.md#DL-237",
+        "Plans/FinalGUISpec.md#F3-662",
+        "Plans/assistant-chat-design.md#ACD-475"
+      ],
+      "decision_log_units": [
+        "DL-237"
+      ]
+    },
+    "L5": {
+      "question": "Choosing Swing, Think or Hop",
+      "recommendation": "**By context:** Think for the thinking placeholder, Swing otherwise, Hop for a short wait that ends in success. Never a setting.",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-077",
+        "Plans/Decision_Log.md#DL-237",
+        "Plans/FinalGUISpec.md#F3-662"
+      ],
+      "decision_log_units": [
+        "DL-237"
+      ]
+    },
+    "L6": {
+      "question": "Onboarding's own spinners (Retro `\\| / - \\`, NieR square)",
+      "recommendation": "**The system loader replaces them**; NieR keeps Diamond loaders",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-077",
+        "Plans/Decision_Log.md#DL-237",
+        "Plans/FinalGUISpec.md#F3-662"
+      ],
+      "decision_log_units": [
+        "DL-237"
+      ]
+    },
+    "L7": {
+      "question": "NieR with the Diamond loaders part off",
+      "recommendation": "**Keep today's fallback**, so Pip never animates in NieR",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-077",
+        "Plans/Decision_Log.md#DL-237",
+        "Plans/FinalGUISpec.md#F3-589",
+        "Plans/FinalGUISpec.md#F3-662"
+      ],
+      "decision_log_units": [
+        "DL-237"
+      ]
+    },
+    "L8": {
+      "question": "The menu sprout is re-implemented three times (chat `menus.js`, Usage `PMU.menu`, Home `PMW.menu`)",
+      "recommendation": "**Flagged as DRY debt, not fixed in this build** unless you add it",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-077",
+        "Plans/Decision_Log.md#DL-237",
+        "Plans/FinalGUISpec.md#F3-662"
+      ],
+      "decision_log_units": [
+        "DL-237"
+      ]
+    },
+    "LAND1": {
+      "question": "One landing per slice (the handoff's plan) or one at the end",
+      "recommendation": "**Review builds per phase in this folder; one landing after your OK on the final build**, with Plans in the same landing so canon and product stay together. The build branch is pushed after every step.",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-256"
+      ],
+      "decision_log_units": [
+        "DL-256"
+      ]
+    },
+    "O1": {
+      "question": "One Pip across every look",
+      "recommendation": "**Accept**; the worlds keep each family's material",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-238",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/FinalGUISpec.md#F3-600",
+        "Plans/FinalGUISpec.md#F3-656",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Planning_Wizard.md#PWIZ-021"
+      ],
+      "decision_log_units": [
+        "DL-238"
+      ]
+    },
+    "O10": {
+      "question": "Ready",
+      "recommendation": "**Pip hands the strings to the tour's first callout**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/Decision_Log.md#DL-238",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/FinalGUISpec.md#F3-600",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Planning_Wizard.md#PWIZ-021",
+        "Plans/Planning_Wizard.md#PWIZ-036"
+      ],
+      "decision_log_units": [
+        "DL-238"
+      ]
+    },
+    "O11": {
+      "question": "Explicit Jared ruling",
+      "recommendation": "Tour redesign waits",
+      "adoption": "explicit_jared_ruling",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/Decision_Log.md#DL-238",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/FinalGUISpec.md#F3-598",
+        "Plans/FinalGUISpec.md#F3-599",
+        "Plans/FinalGUISpec.md#F3-600",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Planning_Wizard.md#PWIZ-021",
+        "Plans/Planning_Wizard.md#PWIZ-036"
+      ],
+      "decision_log_units": [
+        "DL-238"
+      ]
+    },
+    "O12": {
+      "question": "Creating: the concept finishes when the last block lands; canon says animation never gates progress",
+      "recommendation": "**Each block lands when its owner phase completes.** The last landing is short and never delays Continue or Ready; instant under Reduced Motion.",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/Decision_Log.md#DL-238",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/FinalGUISpec.md#F3-600",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Planning_Wizard.md#PWIZ-021"
+      ],
+      "decision_log_units": [
+        "DL-238"
+      ]
+    },
+    "O2": {
+      "question": "Physics, loops and filters",
+      "recommendation": "**A bounded, transform-only solver** that stops when hidden and during drags. Blur and drop-shadow filters are replaced only if the look survives a frame-by-frame A/B.",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/DRY_Rules.md#DR-072",
+        "Plans/Decision_Log.md#DL-238",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/FinalGUISpec.md#F3-600",
+        "Plans/FinalGUISpec.md#F3-656",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Planning_Wizard.md#PWIZ-021",
+        "Plans/UI_Wiring_Rules.md#UIW-024"
+      ],
+      "decision_log_units": [
+        "DL-238"
+      ]
+    },
+    "O3": {
+      "question": "Retro Dark and Light as different worlds, six kits; re-key Friendly to G and Glass to C",
+      "recommendation": "**Accept the worlds and kits. Keep the music as you approved it** (no re-key) unless you OK the re-key.",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-043",
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/Decision_Log.md#DL-238",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/FinalGUISpec.md#F3-599",
+        "Plans/FinalGUISpec.md#F3-600",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Planning_Wizard.md#PWIZ-021"
+      ],
+      "decision_log_units": [
+        "DL-238"
+      ]
+    },
+    "O4": {
+      "question": "Voice and music: live synthesis, or rendered takes with a syllable bank",
+      "recommendation": "**Keep live synthesis** through the one player, as Pip parts, and record its recipe as the metadata.",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-043",
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/Decision_Log.md#DL-238",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/FinalGUISpec.md#F3-599",
+        "Plans/FinalGUISpec.md#F3-600",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Planning_Wizard.md#PWIZ-021",
+        "Plans/Settings_System.md#SSYS-039",
+        "Plans/Settings_System.md#SSYS-056"
+      ],
+      "decision_log_units": [
+        "DL-238"
+      ]
+    },
+    "O5": {
+      "question": "Reduced motion and sound",
+      "recommendation": "**Reduced Motion never mutes**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-043",
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/Decision_Log.md#DL-238",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/FinalGUISpec.md#F3-599",
+        "Plans/FinalGUISpec.md#F3-600",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Planning_Wizard.md#PWIZ-021",
+        "Plans/Settings_System.md#SSYS-056"
+      ],
+      "decision_log_units": [
+        "DL-238"
+      ]
+    },
+    "O6": {
+      "question": "Hovering a look tile",
+      "recommendation": "**Keep the visual; no sound**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-043",
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/Decision_Log.md#DL-238",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/FinalGUISpec.md#F3-599",
+        "Plans/FinalGUISpec.md#F3-600",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Planning_Wizard.md#PWIZ-021"
+      ],
+      "decision_log_units": [
+        "DL-238"
+      ]
+    },
+    "O7": {
+      "question": "The `?` note",
+      "recommendation": "**It is the one anchored explainer** (`pm7ob-explainer`, with aria-controls and describedby)",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/Decision_Log.md#DL-238",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/FinalGUISpec.md#F3-600",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Planning_Wizard.md#PWIZ-021"
+      ],
+      "decision_log_units": [
+        "DL-238"
+      ]
+    },
+    "O8": {
+      "question": "NieR",
+      "recommendation": "**NieR Pip replaces the NieR unit marionette** (also in the chat's NieR agents); Pod 042 stays narrator of the Tour and Chat",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-238",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/FinalGUISpec.md#F3-598",
+        "Plans/FinalGUISpec.md#F3-600",
+        "Plans/FinalGUISpec.md#F3-656",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Planning_Wizard.md#PWIZ-021"
+      ],
+      "decision_log_units": [
+        "DL-238"
+      ]
+    },
+    "O9": {
+      "question": "The chapter rail",
+      "recommendation": "**Pip is the current-chapter marker**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/Decision_Log.md#DL-238",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/FinalGUISpec.md#F3-600",
+        "Plans/FinalGUISpec.md#F3-658",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Planning_Wizard.md#PWIZ-021"
+      ],
+      "decision_log_units": [
+        "DL-238"
+      ]
+    },
+    "PC1": {
+      "question": "Idle motion in sheets",
+      "recommendation": "**Accept**, in a DL superseding DL-149's card 6",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Collaborative_Workflows.md#CWR-019",
+        "Plans/Collaborative_Workflows.md#CWR-028",
+        "Plans/DRY_Rules.md#DR-044",
+        "Plans/DRY_Rules.md#DR-067",
+        "Plans/DRY_Rules.md#DR-072",
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-566",
+        "Plans/FinalGUISpec.md#F3-580",
+        "Plans/FinalGUISpec.md#F3-588",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/FinalGUISpec.md#F3-596",
+        "Plans/UI_Wiring_Rules.md#UIW-024",
+        "Plans/assistant-chat-design.md#ACD-469",
+        "Plans/assistant-chat-design.md#ACD-475",
+        "Plans/assistant-chat-design.md#ACD-501",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "PC2": {
+      "question": "States carried by faces",
+      "recommendation": "**Accept**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Collaborative_Workflows.md#CWR-019",
+        "Plans/Collaborative_Workflows.md#CWR-028",
+        "Plans/DRY_Rules.md#DR-044",
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-566",
+        "Plans/FinalGUISpec.md#F3-580",
+        "Plans/FinalGUISpec.md#F3-593",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/FinalGUISpec.md#F3-596",
+        "Plans/assistant-chat-design.md#ACD-469",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "PC3": {
+      "question": "Status faces in Scheduled and Memory",
+      "recommendation": "**Accept**; faces map to catalog keys",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Collaborative_Workflows.md#CWR-019",
+        "Plans/Collaborative_Workflows.md#CWR-028",
+        "Plans/DRY_Rules.md#DR-044",
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-580",
+        "Plans/FinalGUISpec.md#F3-593",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/FinalGUISpec.md#F3-606",
+        "Plans/FinalGUISpec.md#F3-607",
+        "Plans/Scheduling_and_Quota_Resume.md#SQR-012",
+        "Plans/Scheduling_and_Quota_Resume.md#SQR-014",
+        "Plans/assistant-chat-design.md#ACD-469",
+        "Plans/assistant-chat-design.md#ACD-507",
+        "Plans/assistant-memory-subsystem.md#AMS-047"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "PC4": {
+      "question": "Pip in the Orbit's centre with a tool badge",
+      "recommendation": "**Accept**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Collaborative_Workflows.md#CWR-019",
+        "Plans/Collaborative_Workflows.md#CWR-028",
+        "Plans/DRY_Rules.md#DR-044",
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-580",
+        "Plans/FinalGUISpec.md#F3-586",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/assistant-chat-design.md#ACD-469",
+        "Plans/assistant-chat-design.md#ACD-470",
+        "Plans/assistant-chat-design.md#ACD-473",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "PC5": {
+      "question": "Glasses for Checker and Reviewer; gold crown and hat",
+      "recommendation": "**Accept**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Collaborative_Workflows.md#CWR-019",
+        "Plans/Collaborative_Workflows.md#CWR-028",
+        "Plans/DRY_Rules.md#DR-044",
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-580",
+        "Plans/FinalGUISpec.md#F3-584",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/FinalGUISpec.md#F3-595",
+        "Plans/FinalGUISpec.md#F3-601",
+        "Plans/FinalGUISpec.md#F3-635",
+        "Plans/assistant-chat-design.md#ACD-469",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "RM1": {
+      "question": "Reduced Motion's scope: canon (SSYS-010) stores it per Project, the settings inventory scopes it global",
+      "recommendation": "**Stored per Project as canon says, applying app-wide and following the OS preference**; no new app-global store. Say so if you want one app-wide setting instead. (Raised by the plans lane, 2026-10-29.)",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-237",
+        "Plans/FinalGUISpec.md#F3-662",
+        "Plans/Settings_System.md#SSYS-010"
+      ],
+      "decision_log_units": [
+        "DL-237"
+      ]
+    },
+    "S1": {
+      "question": "Classic preset",
+      "recommendation": "**Drop it for Plain** (Classic would keep a second puppet primitive alive, against DR-044)",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/DRY_Rules.md#DR-075",
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-441",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/FinalGUISpec.md#F3-595",
+        "Plans/FinalGUISpec.md#F3-601",
+        "Plans/Settings_System.md#SSYS-055",
+        "Plans/Settings_System.md#SSYS-056",
+        "Plans/UI_Command_Catalog.md#UCC-211",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "S2": {
+      "question": "Scope",
+      "recommendation": "**Per Project, like NieR**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/DRY_Rules.md#DR-075",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-441",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/Settings_System.md#SSYS-010",
+        "Plans/Settings_System.md#SSYS-055",
+        "Plans/Settings_System.md#SSYS-056",
+        "Plans/UI_Command_Catalog.md#UCC-211",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "S3": {
+      "question": "Voice",
+      "recommendation": "**Two parts:** \"Pip talks in setup\" (on) and \"Pip chirps in the app\" (off)",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-043",
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/DRY_Rules.md#DR-075",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-441",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/FinalGUISpec.md#F3-599",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Settings_System.md#SSYS-039",
+        "Plans/Settings_System.md#SSYS-055",
+        "Plans/Settings_System.md#SSYS-056",
+        "Plans/UI_Command_Catalog.md#UCC-211",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "S4": {
+      "question": "Music",
+      "recommendation": "**A \"Setup music\" part**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-043",
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/DRY_Rules.md#DR-075",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-441",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/FinalGUISpec.md#F3-599",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Settings_System.md#SSYS-039",
+        "Plans/Settings_System.md#SSYS-055",
+        "Plans/Settings_System.md#SSYS-056",
+        "Plans/UI_Command_Catalog.md#UCC-211",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "S5": {
+      "question": "Where the editor opens",
+      "recommendation": "**The Settings row, the wand's \"Pip…\", and \"Customize Pip…\" under NieR Mode** in the title-bar theme selector. Not inside onboarding.",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/DRY_Rules.md#DR-075",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-441",
+        "Plans/FinalGUISpec.md#F3-588",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/Settings_System.md#SSYS-044",
+        "Plans/Settings_System.md#SSYS-055",
+        "Plans/Settings_System.md#SSYS-056",
+        "Plans/UI_Command_Catalog.md#UCC-170",
+        "Plans/UI_Command_Catalog.md#UCC-211",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "S6": {
+      "question": "A Pip on/off row",
+      "recommendation": "**None**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/DRY_Rules.md#DR-075",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-441",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/Settings_System.md#SSYS-055",
+        "Plans/Settings_System.md#SSYS-056",
+        "Plans/UI_Command_Catalog.md#UCC-211",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "S7": {
+      "question": "Overlap with NieR parts",
+      "recommendation": "**NieR parts win where both draw**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/DRY_Rules.md#DR-075",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-441",
+        "Plans/FinalGUISpec.md#F3-589",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/Settings_System.md#SSYS-055",
+        "Plans/Settings_System.md#SSYS-056",
+        "Plans/UI_Command_Catalog.md#UCC-211",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "S8": {
+      "question": "The tray",
+      "recommendation": "**Faces carry its state**",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/DRY_Rules.md#DR-075",
+        "Plans/Decision_Log.md#DL-235",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-037",
+        "Plans/FinalGUISpec.md#F3-441",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/FinalGUISpec.md#F3-660",
+        "Plans/Settings_System.md#SSYS-055",
+        "Plans/Settings_System.md#SSYS-056",
+        "Plans/UI_Command_Catalog.md#UCC-211",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-235",
+        "DL-239"
+      ]
+    },
+    "S9": {
+      "question": "Explicit Jared ruling",
+      "recommendation": "parts cover chat/onboarding only",
+      "adoption": "explicit_jared_ruling",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/DRY_Rules.md#DR-075",
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-239",
+        "Plans/FinalGUISpec.md#F3-441",
+        "Plans/FinalGUISpec.md#F3-589",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/FinalGUISpec.md#F3-595",
+        "Plans/FinalGUISpec.md#F3-601",
+        "Plans/FinalGUISpec.md#F3-660",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Settings_System.md#SSYS-055",
+        "Plans/Settings_System.md#SSYS-056",
+        "Plans/UI_Command_Catalog.md#UCC-211",
+        "Plans/Wiring_Matrix.md#WM-097",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-239"
+      ]
+    },
+    "SND1": {
+      "question": "Pip's kits, voice and music pass the level and texture tools, but no agent can listen",
+      "recommendation": "**You listen once** in the review build's sound board before landing",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-256",
+        "Plans/FinalGUISpec.md#F3-649"
+      ],
+      "decision_log_units": [
+        "DL-256"
+      ]
+    },
+    "X1": {
+      "question": "Explicit Jared ruling",
+      "recommendation": "robot category / Pip individual and brand",
+      "adoption": "explicit_jared_ruling",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-044",
+        "Plans/DRY_Rules.md#DR-051",
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-235",
+        "Plans/Decision_Log.md#DL-253",
+        "Plans/FinalGUISpec.md#F3-584",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/FinalGUISpec.md#F3-619",
+        "Plans/FinalGUISpec.md#F3-658",
+        "Plans/FinalGUISpec.md#F3-660",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/assistant-chat-design.md#ACD-469",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-235",
+        "DL-253"
+      ]
+    },
+    "X2": {
+      "question": "Loop ranking and reduced motion for all Pip motion",
+      "recommendation": "**Needs-you stays the loudest loop.** Under Reduced Motion the loader keeps only the control's opacity breath and Pip's blink, with no travel.",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-077",
+        "Plans/Decision_Log.md#DL-237",
+        "Plans/FinalGUISpec.md#F3-465",
+        "Plans/FinalGUISpec.md#F3-584",
+        "Plans/FinalGUISpec.md#F3-655",
+        "Plans/FinalGUISpec.md#F3-658",
+        "Plans/FinalGUISpec.md#F3-660",
+        "Plans/FinalGUISpec.md#F3-662",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/Settings_System.md#SSYS-010",
+        "Plans/assistant-chat-design.md#ACD-475"
+      ],
+      "decision_log_units": [
+        "DL-237"
+      ]
+    },
+    "X3": {
+      "question": "NieR Pip at rest: plain band (logo kit) or eyes through the band (onboarding idea 2)",
+      "recommendation": "**Live Pips show the eyes** (onboarding stage, chat sheet host). **Static marks keep the plain band** (title bar, app icon, tray).",
+      "adoption": "adopted_recommendation_pending_any_correction",
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-076",
+        "Plans/Decision_Log.md#DL-235",
+        "Plans/FinalGUISpec.md#F3-589",
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/FinalGUISpec.md#F3-598",
+        "Plans/FinalGUISpec.md#F3-660",
+        "Plans/FinalGUISpec.md#F3-663",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "decision_log_units": [
+        "DL-235"
+      ]
+    }
+  }
+}

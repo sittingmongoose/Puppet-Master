@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1759-L2065
+Source lines: L1759-L2066
 
-Source SHA256: `db30f1ae130c83d289a9fb65d96b33a32fa853b3bcd321c3d0d1334857432214`
+Source SHA256: `671b76fafcdacda1bddb62cc8b85b15ee74a0f3beabe0b88b3c05a5da41de2a0`
 
 ---
 
@@ -184,6 +184,7 @@ canonical_text: >-
   envelope only to the project it was saved for, skips another project's envelope and leaves a custom board
   not held by that layout unchanged. F3-638 owns the header facts, Live mark, Board and Start from menu
   rows, empty-board invitation, focus return and measured sizes.
+  Amended 2026-10-29 (D7; PM7): Home Agents board remains the agent-filtered OperationalAwareness/ObservableWork projection with shared row anatomy and counts. Process ownership links reveal F3-664; no new process board or private list is added.
 gui_related: true
 gui_classification_reason: Defines which boards a person can open, make, rename and delete as dashboard tabs, what each can show, and how each board's widget layout, view and presets are kept and restored.
 split_recommended: false

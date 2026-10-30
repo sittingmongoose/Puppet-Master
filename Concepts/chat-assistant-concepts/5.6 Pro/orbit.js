@@ -245,6 +245,20 @@
   }
 
   /* ---- full stage ----------------------------------------------------- */
+  /* The core's face (W4, PC4, PM7 build 2026-10-29): Pip sits in the centre (window.PM56_SHELL.pmxPip, the one kit),
+     with its thinking dots while the run runs, happy when it is done and wondering when it waits for you; the live
+     subject's glyph (or the status mark) rides beside it as a small badge. Pip keeps one constant key, so a phase
+     handover swaps only the badge (its key is the subject's) and Pip never re-enters. Without the kit the core is the
+     glyph alone, as before. Pip here is the reply's one Pip while the work runs: the thinking placeholder's loader
+     hands over to it (turn-stream.js). */
+  function coreFace(c, rec, waiting, w, live) {
+    var esc = c.esc, icon = c.icon, S = window.PM56_SHELL, running = !rec.completed && !waiting && w.running;
+    var badge = '<span class="orbit-core-icon' + (running ? ' is-live' : '') + '" data-k="coreicon:' + esc(live.uid) + '">'
+      + (rec.completed ? statusMark(c, 'complete', 22) : waiting ? statusMark(c, 'waiting', 22) : icon(live.icon, 22)) + '</span>';
+    var pip = S && S.pmxPip ? S.pmxPip({ mood: rec.completed ? 'happy' : waiting ? 'wonder' : running ? 'working' : 'idle', size: 40, detail: true, cls: 'orbit-core-pip' }) : '';
+    if (!pip) return badge;
+    return '<span class="orbit-core-face' + (running ? ' is-live' : '') + '" data-k="coreface" data-pip="1">' + pip + badge + '</span>';
+  }
   function renderStage(c, ui) {
     var esc = c.esc, icon = c.icon, w = c.ctx;
     var rec = w.rec || c.state.work;
@@ -335,8 +349,7 @@
       /* The core is the live subject's dark disc: its glyph acts while the run runs (is-live, orbit.css PART 3); a
          finished run shows the status set's complete mark (it draws once), a run waiting for the reader the needs-you
          mark in its own rhythm. */
-      + '<span class="orbit-core-icon' + (!rec.completed && !waiting && w.running ? ' is-live' : '') + '" data-k="coreicon:' + esc(live.uid) + '">'
-      + (rec.completed ? statusMark(c, 'complete', 22) : waiting ? statusMark(c, 'waiting', 22) : icon(live.icon, 22)) + '</span>'
+      + coreFace(c, rec, waiting, w, live)
       /* CONSTANT key on purpose: a subject key here remounted the label on
          every handover and the pm-materialize entrance blanked the core for
          ~40ms mid-rotation. */

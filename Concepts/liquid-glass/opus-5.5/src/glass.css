@@ -404,7 +404,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-ab-id=
 /* ---------------------------------------------------------------------------------------------------------------
    5. Controls on a sheet: vibrant fills, the look's 6 px corners, a quiet hover; text buttons sit in their own fill
    --------------------------------------------------------------------------------------------------------------- */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#projectMenuBtn, #pm-home-more-btn, #themeSelect, #tbSearchInput, .pmu-ctlbtn, .pmu-iconbtn, .pmu-livebtn, .pmu-livechev, #fmRootBtn) {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#pm-home-more-btn, #themeSelect, #tbSearchInput, .pmu-ctlbtn, .pmu-iconbtn, .pmu-livebtn, .pmu-livechev, #fmRootBtn) {
   background: var(--lg-fill) !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important; box-shadow: none !important;
   color: var(--text-primary) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
   transition: background-color 160ms ease;
@@ -417,6 +417,21 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-livebtn) { border-rad
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-livechev) { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0 !important; margin-left: 1px; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuRefresh { border-radius: var(--pm-ctl-r) 0 0 var(--pm-ctl-r) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0 !important; margin-left: -5px; }
+/* the project box is one of the title bar's tabs (F3-661): it rests clear in a track of its own, as the page tabs rest in
+   theirs (the same fill, corners and 2 px seat), and wears a press of clear glass while its menu is open; Glass draws no
+   hairline after it, its track says the same */
+html[data-theme^="glass"]:not(#lgz) .title-bar #projectMenuWrap { padding: 2px; border-radius: var(--pm-switch-r, var(--pm-ctl-r)); background: var(--pm-switch-track, var(--lg-fill)); }
+html[data-theme^="glass"]:not(#lgz) .title-bar #projectMenuWrap::after { display: none; }
+html[data-theme^="glass"]:not(#lgz) .title-bar #projectMenuBtn {
+  border: 0 !important; background-color: transparent !important; background-image: none !important; box-shadow: none !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important; color: var(--pm-switch-ink, var(--text-secondary));
+}
+html[data-theme^="glass"]:not(#lgz) .title-bar #projectMenuBtn:hover { color: var(--text-primary); }
+html[data-theme^="glass"]:not(#lgz) .title-bar #projectMenuBtn[aria-expanded="true"] {
+  background-color: var(--lg-fill-press, rgba(255, 255, 255, .14)) !important; color: var(--text-primary);
+  box-shadow: inset 0 0 0 1px var(--rg-rim-soft, rgba(255, 255, 255, .22)), inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .22)), 0 6px 14px rgba(0, 0, 0, .12) !important;
+}
+html[data-theme^="glass"]:not(#lgz) .title-bar #projectMenuWrap[data-mode="icon"] #projectMenuBtn { padding: 0 !important; }
 /* the tab strips: a fill track on the sheet; the lens does the choosing */
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) :is(nav.page-tabs, #pmuRange, .orch-tabs) {
   background: var(--pm-switch-track, var(--lg-fill)) !important; border: 0 !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; box-shadow: none !important;
@@ -526,6 +541,13 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item {
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item:hover { background: var(--lg-fill-hover) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item.is-selected { background: var(--lg-fill-press) !important; font-weight: 650; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-chips { display: inline-flex; gap: 5px; margin-left: auto; }
+/* the project menu's rows are quiet rows too (the title bar's button fill and rim stay on the bar's own controls); the
+   chosen row is the clear lens in place (section 6) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #projectMenu .pm6-tb-menu-item {
+  border: 0 !important; background: transparent !important; box-shadow: none !important; border-radius: var(--pm-ctl-r) !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #projectMenu .pm6-tb-menu-item:hover { background: var(--lg-fill-hover) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-row { display: flex; align-items: center; gap: 6px; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-row > .pm6-tb-menu-item { flex: 1; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-adjust { margin: 0 !important; flex: none; border: 0 !important; border-radius: var(--pm-ctl-r) !important; background: var(--lg-fill) !important; box-shadow: none !important; padding: 6px 10px !important; }
@@ -599,6 +621,7 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > button:is([aria-checked="true"], [aria-pressed="true"]),
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > lg-under > .lg-lens,
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .resource-row[aria-current="true"],
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #projectMenu .pm6-tb-menu-item.is-selected,
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmt-cz :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-set[aria-pressed="true"], .pmt-cz-chipbox.pmt-cz-lit) {
   background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint)), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens)), var(--pm-switch-fill, var(--lg-tint-lens))), linear-gradient(var(--pm-switch-body, var(--lg-lens-body)), var(--pm-switch-body, var(--lg-lens-body))) !important;
   box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), inset 0 -1px 1px var(--pm-switch-bottom, var(--lg-edge-bot)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), var(--pm-switch-shadow, var(--lg-lens-drop)) !important;

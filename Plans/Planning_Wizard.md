@@ -1911,6 +1911,7 @@ canonical_text: >-
   (cmd.ssh_connection.keys.discover, cmd.ssh_connection.key.install) and enabling a free-model route
   (cmd.free_models.route.enable) have no owner command yet, so onboarding offers those steps as their owners'
   own screens, reached through cmd.settings.open, until the SSH and Models owners admit them.
+  Amended 2026-10-29 (O1–O12; PM7): Onboarding presentation is F3-663’s one Pip with family worlds, bounded transform-only physics/shared strings and optional live voice/music; its former no-physics/no-loop presentation prohibition is superseded. Preserve every stage graph, commit/recovery boundary and the fourteen ui.onboarding actions. Bubble is decorative aria-hidden; option question note is the one pm7ob-explainer. Creating’s owner phases gate progress, not animation.
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -2958,6 +2959,7 @@ canonical_text: >-
   Demo Studio's new Chat examples are independent of that accepted teaching flow. This implements
   tour isolation for the port; the tour redo, its future selectors and native completion evidence
   remain pending, and no tour chapter or saved-checkpoint contract is revised by this reconciliation.
+  Amended 2026-10-29 (O10/O11; PM7): Ready’s Pip hands strings to the existing first Tour callout. Leave Tour steps/characters unchanged until the Planning Wizard redo; base Tour has no character, NieR keeps Pod 042. No Pip Tour work in this build.
 gui_related: true
 gui_classification_reason: Keeps the visible Guided Tour teaching surface and the hosted chat mutually exclusive until the accepted redo.
 split_recommended: false

@@ -204,19 +204,29 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
 </div>
   <div class="app-shell">
     <header class="title-bar">
-      <span class="app-name">Puppet Master</span>
+      <!-- The brand (W1, F3-660): Pip's static mark, drawn by pm7-brand-mark.js below, and the look's wordmark. -->
+      <span class="app-name" data-mode="full"><span class="pm-brand-mark" aria-hidden="true"></span><span class="pm-brand-word">Puppet Master</span></span>
       <div class="pm6-tb-menu-wrap" id="projectMenuWrap" data-mode="full">
+        <!-- The project box (option A, "Tab"; F3-661): one of the title bar's tabs. Its folder, chevron and badge are drawn
+             from PMG by PM_PROJECT_BOX (pm6-js-panels.js), which also renders every row of the menu; each slot keeps its
+             size before that, so the box never changes width when they arrive. #projectMenuLabel stays the bare project
+             name: Home, Settings, the dashboard and the sound binding read it. -->
         <button type="button" class="project-dropdown pm6-tb-menu-trigger" id="projectMenuBtn"
-          aria-haspopup="menu" aria-expanded="false" aria-controls="projectMenu"
-          title="Active project: tastebook (SvelteKit + Axum + Postgres)">
+          aria-haspopup="menu" aria-expanded="false" aria-controls="projectMenu" aria-keyshortcuts="Control+Shift+P"
+          data-ui-action-id="ui.project_switcher.open" data-binding-id="shell.project.open"
+          data-pm-hover-label="tastebook" data-pm-hover-detail="~/Projects/tastebook on main · SvelteKit + Axum + Postgres. Switch project: Ctrl+Shift+P">
+          <span class="pm6-tb-project-ico" aria-hidden="true"></span>
           <span id="projectMenuLabel">tastebook</span>
-          <span class="pm6-tb-project-chevron" aria-hidden="true">&#9660;</span>
-          <svg class="pm6-tb-project-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2.2h8a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+          <span class="pm6-tb-project-badge" aria-hidden="true" hidden></span>
+          <span class="pm6-tb-project-chevron" aria-hidden="true"></span>
         </button>
-        <div class="pm6-tb-menu" id="projectMenu" role="menu" aria-label="Active project">
-          <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-project="tastebook" data-project-title="Active project: tastebook (SvelteKit + Axum + Postgres)">tastebook</button>
-          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-project="harbor" data-project-title="Active project: harbor (Next.js + Nest)">harbor</button>
-          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-project="loom" data-project-title="Active project: loom (Rust + Slint)">loom</button>
+        <div class="pm6-tb-menu" id="projectMenu" role="menu" aria-label="Projects">
+          <div class="pm6-tb-project-head" aria-hidden="true"><span>Projects</span><span class="pm6-tb-project-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd></span></div>
+          <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-project="tastebook" data-project-path="~/Projects/tastebook" data-project-branch="main" data-project-stack="SvelteKit + Axum + Postgres" data-command-id="cmd.project.switch_active_tab" data-binding-id="shell.project.pick">tastebook</button>
+          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-project="harbor" data-project-path="~/Projects/harbor" data-project-branch="develop" data-project-stack="Next.js + Nest" data-command-id="cmd.project.switch_active_tab" data-binding-id="shell.project.pick">harbor</button>
+          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-project="loom" data-project-path="~/Projects/loom" data-project-branch="main" data-project-stack="Rust + Slint" data-command-id="cmd.project.switch_active_tab" data-binding-id="shell.project.pick">loom</button>
+          <div class="pm6-tb-project-sep" role="separator"></div>
+          <button type="button" class="pm6-tb-menu-item pm6-tb-project-all" role="menuitem" data-project-all data-ui-action-id="ui.project_switcher.all_projects" data-binding-id="shell.project.all">All projects</button>
         </div>
       </div>
       <nav class="page-tabs" data-od-id="page-tabs">
@@ -301,6 +311,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
         </div>
       </div>
     </header>
+    <script id="pm7-brand-mark">@@PM7_BASE_pm7-brand-mark@@</script>
 
     <div class="main-area">
       <div class="left-panel">
