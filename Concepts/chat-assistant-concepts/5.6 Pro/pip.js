@@ -73,7 +73,7 @@
     applyGaze(st, true);
   }
   function unmount(st) {
-    clearTimeout(st.holdT); clearTimeout(st.typeT); clearTimeout(st.swapT); clearTimeout(st.backT);
+    clearTimeout(st.holdT); clearTimeout(st.typeT); clearTimeout(st.swapT); clearTimeout(st.openT); clearTimeout(st.backT);
     hosts.delete(st.el);
     if (MOOD[st.kind] && ![...hosts.values()].some(function (o) { return o.kind === st.kind; })) delete MOOD[st.kind];
   }
@@ -131,30 +131,46 @@
     else { st.el.innerHTML = fresh.innerHTML; st.face = st.el.querySelector('.pmx-pip-face'); st.gx = st.gy = 0; }
     applyGaze(st, true);
   }
+  /* One face change at a time. A change already closing lands on the newest face asked for; one already opening
+     finishes, then goes on to the next. A request for the face it is already showing or heading to does nothing, so
+     typing (an input event a key) never restarts a change. */
+  function settle(st) { clearTimeout(st.swapT); clearTimeout(st.openT); st.swapT = st.openT = 0; st.phase = null; st.target = st.next = null; }
   function setFace(st, mood, instant) {
-    if (!st.el.isConnected || mood === st.mood) return;
+    if (!st.el.isConnected) return;
+    var goal = st.phase === 'closing' ? st.target : st.phase === 'opening' && st.next ? st.next : st.mood;
+    if (mood === goal) return;
     var fam = family();
-    clearTimeout(st.swapT);
     if (fam === 'nier') {
       /* NieR cuts, with a flicker */
+      settle(st);
       swapNow(st, mood);
       if (moves('face-transitions')) anim(st.el.querySelector('.pmx-pip-pup'), [{ opacity: .2 }, { opacity: 1, offset: .5 }, { opacity: .5, offset: .75 }, { opacity: 1 }], { duration: 200, easing: 'steps(2, end)' });
       return;
     }
-    if (fam === 'retro' || instant || !moves('face-transitions') || !st.face) { swapNow(st, mood); return; }
+    if (fam === 'retro' || instant || !moves('face-transitions') || !st.face) { settle(st); swapNow(st, mood); return; }
+    if (st.phase === 'closing') { st.target = mood; return; }
+    if (st.phase === 'opening') { st.next = mood; return; }
     /* the old face closes on the eye line, the new one opens a touch past full (onboarding round 9) */
+    st.phase = 'closing'; st.target = mood;
     var parts = st.face.children;
     for (var i = 0; i < parts.length; i++) {
       var eyes = parts[i].classList.contains('pmx-pip-eyes');
       anim(parts[i], [{ transform: 'none' }, { transform: eyes ? 'scaleY(.08)' : 'scale(.2)' }], { duration: 95, easing: 'ease-in', fill: 'forwards' });
     }
     st.swapT = setTimeout(function () {
-      swapNow(st, mood);
+      var m = st.target; st.target = null; st.swapT = 0;
+      swapNow(st, m);
+      st.phase = 'opening';
       var np = st.face ? st.face.children : [];
       for (var j = 0; j < np.length; j++) {
         var e2 = np[j].classList.contains('pmx-pip-eyes');
         anim(np[j], [{ transform: e2 ? 'scaleY(.08)' : 'scale(.2)' }, { transform: e2 ? 'scaleY(1.06)' : 'scale(1.06)', offset: .7 }, { transform: 'none' }], { duration: 170, easing: 'cubic-bezier(.2, .8, .3, 1.15)' });
       }
+      st.openT = setTimeout(function () {
+        st.openT = 0; st.phase = null;
+        var n = st.next; st.next = null;
+        if (n && n !== st.mood) setFace(st, n);
+      }, Math.round(175 * speed()));
     }, Math.round(95 * speed()));
   }
   function feel(st, mood, hold, instant) {
@@ -217,7 +233,7 @@
     var st = hostIn(e.target); if (!st || !wants('wonders-while-typing')) return;
     if (!/^(TEXTAREA|INPUT)$/.test(e.target.tagName)) return;
     st.typing = true; clearTimeout(st.typeT); clearTimeout(st.holdT);
-    if (st.mood !== 'wonder') feel(st, 'wonder');
+    feel(st, 'wonder');
     st.typeT = setTimeout(function () { st.typing = false; if (st.mood === 'wonder') setFace(st, st.base); }, 1500);
   }, true);
 
