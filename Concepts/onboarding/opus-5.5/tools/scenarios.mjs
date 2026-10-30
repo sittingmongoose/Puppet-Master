@@ -1074,7 +1074,7 @@ def('x5', 'fresh', 'The look can be changed at any point from beside the sound b
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   A.eq(await d.screen(), 'begin', 'mid-flow');
   await d.click('#pm-o55-onboarding .o55-lookbtn', 'look menu button'); await d.untilElement('#pm-o55-onboarding .o55-lookmenu', 'look menu');
-  A.ok(await d.state(() => document.querySelectorAll('#pm-o55-onboarding .o55-lookopt').length === 4), 'four looks offered');
+  A.ok(await d.state(() => document.querySelectorAll('#pm-o55-onboarding .o55-lookopt[data-o55-do="lookFamily"]').length === 5), 'five looks offered (NieR the fifth, Q22)');
   if (process.env.O55_SNAP) await d.snap(process.env.O55_SNAP);
   await d.click('#pm-o55-onboarding .o55-lookopt[data-arg="retro"]', 'Retro look');
   await until(d, "document.documentElement.getAttribute('data-theme').split('-')[0] === 'retro'", 'Retro look applied'); await d.settle();
