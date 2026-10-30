@@ -4,127 +4,158 @@
       "common": {
         "provider:claude": {
           "title": "Claude",
-          "text": "Uses the Claude plan you already pay for each month. Paying as you go with the Anthropic API is a separate choice."
+          "text": "Uses the Claude plan you already pay for each month. Paying as you go with the Anthropic API is a separate choice.",
+          "expert": "Claude Code CLI signed in with your Claude subscription (OAuth); usage counts against the plan's limits. The Anthropic API (per-token billing, API key) is a separate provider."
         },
         "provider:codex": {
           "title": "ChatGPT / Codex",
-          "text": "Signs in with your ChatGPT plan, the one you pay for each month. Pick it if you already use ChatGPT."
+          "text": "Signs in with your ChatGPT plan, the one you pay for each month. Pick it if you already use ChatGPT.",
+          "expert": "OpenAI Codex CLI signed in with your ChatGPT subscription (OAuth); usage counts against the plan's limits."
         },
         "provider:antigravity": {
           "title": "Google Antigravity",
-          "text": "Uses your Antigravity plan. The Gemini API, billed by what you use, is a separate choice."
+          "text": "Uses your Antigravity plan. The Gemini API, billed by what you use, is a separate choice.",
+          "expert": "Google Antigravity signed in with its plan; the Gemini API (per-token billing, API key) is a separate provider."
         },
         "provider:cursor": {
           "title": "Cursor",
-          "text": "Connects with an API key from your Cursor account: paste it into API key for Cursor, then choose Check key. The key stays in your computer's password store, never shown again."
+          "text": "Connects with an API key from your Cursor account: paste it into API key for Cursor, then choose Check key. The key stays in your computer's password store, never shown again.",
+          "expert": "Cursor through an API key from your Cursor account, checked before it is saved; the key is stored in the OS keychain and never shown again."
         },
         "provider:grok": {
           "title": "Grok Build",
-          "text": "Uses the Grok Build plan you pay for each month. The xAI API, billed by what you use, is a separate choice."
+          "text": "Uses the Grok Build plan you pay for each month. The xAI API, billed by what you use, is a separate choice.",
+          "expert": "Grok Build subscription; the xAI API (per-token billing, API key) is a separate provider."
         },
         "provider:muse": {
           "title": "Muse Code",
-          "text": "Uses the Muse Code plan you pay for each month. The Meta Model API, billed by what you use, is a separate choice."
+          "text": "Uses the Muse Code plan you pay for each month. The Meta Model API, billed by what you use, is a separate choice.",
+          "expert": "Muse Code subscription; the Meta Model API (per-token billing, API key) is a separate provider."
         },
         "provider:copilot": {
           "title": "GitHub Copilot",
-          "text": "Signs in with the Copilot plan on your GitHub account. Pick it if you already pay for GitHub Copilot."
+          "text": "Signs in with the Copilot plan on your GitHub account. Pick it if you already pay for GitHub Copilot.",
+          "expert": "GitHub Copilot through your GitHub account's Copilot subscription (GitHub OAuth)."
         },
         "provider:qwen-coding": {
           "title": "Qwen Coding Plan",
-          "text": "Alibaba's monthly plan for coding with Qwen. It connects with a key from your Alibaba account."
+          "text": "Alibaba's monthly plan for coding with Qwen. It connects with a key from your Alibaba account.",
+          "expert": "Alibaba Cloud's Qwen Coding Plan, a monthly subscription; authenticates with an API key from your Alibaba Cloud account."
         },
         "provider:qwen-token": {
           "title": "Qwen Token Plan",
-          "text": "Alibaba's Qwen plan that is billed by what you use, not by the month. It connects with a key from your Alibaba account."
+          "text": "Alibaba's Qwen plan that is billed by what you use, not by the month. It connects with a key from your Alibaba account.",
+          "expert": "Alibaba Cloud's Qwen Token Plan, billed per token; authenticates with an API key."
         },
         "provider:zai": {
           "title": "Z.AI Coding Plan",
-          "text": "Z.AI's monthly plan for coding. It connects with a key from your Z.AI account."
+          "text": "Z.AI's monthly plan for coding. It connects with a key from your Z.AI account.",
+          "expert": "Z.AI Coding Plan, a monthly subscription (GLM models); authenticates with an API key."
         },
         "provider:kimi": {
           "title": "Kimi Code",
-          "text": "Moonshot's monthly Kimi Code plan. It connects with a key from your Kimi account."
+          "text": "Moonshot's monthly Kimi Code plan. It connects with a key from your Kimi account.",
+          "expert": "Moonshot's Kimi Code subscription; authenticates with an API key."
         },
         "provider:minimax": {
           "title": "MiniMax Coding Plan",
-          "text": "MiniMax's monthly plan for coding. It connects with a key from your MiniMax account."
+          "text": "MiniMax's monthly plan for coding. It connects with a key from your MiniMax account.",
+          "expert": "MiniMax Coding Plan, a monthly subscription; authenticates with an API key."
         },
         "provider:opencode-go": {
           "title": "OpenCode Go",
-          "text": "OpenCode's monthly plan. It connects with a key from your OpenCode account."
+          "text": "OpenCode's monthly plan. It connects with a key from your OpenCode account.",
+          "expert": "OpenCode Go, a monthly subscription; authenticates with an API key from OpenCode."
         },
         "provider:opencode-zen": {
           "title": "OpenCode Zen",
-          "text": "OpenCode's pay-as-you-go option, billed by what you use. It connects with a key from your OpenCode account."
+          "text": "OpenCode's pay-as-you-go option, billed by what you use. It connects with a key from your OpenCode account.",
+          "expert": "OpenCode Zen, billed per token; authenticates with an API key from OpenCode."
         },
         "provider:opencode-runtime": {
           "title": "OpenCode on your computer",
-          "text": "Uses the OpenCode you already installed and set up yourself, with the accounts it already has. Pick it if OpenCode is how you work today."
+          "text": "Uses the OpenCode you already installed and set up yourself, with the accounts it already has. Pick it if OpenCode is how you work today.",
+          "expert": "Your own OpenCode install, used as it is configured: its providers, models and credentials stay its own."
         },
         "provider:anthropic-api": {
           "title": "Anthropic API",
-          "text": "Pay as you go with Anthropic, billed by what you use. It is separate from a Claude plan and connects with a key."
+          "text": "Pay as you go with Anthropic, billed by what you use. It is separate from a Claude plan and connects with a key.",
+          "expert": "The Anthropic API, billed per token; authenticates with an API key. Separate from a Claude subscription."
         },
         "provider:gemini-api": {
           "title": "Gemini API",
-          "text": "Pay as you go with Google's Gemini, billed by what you use. It is separate from an Antigravity plan and connects with a key."
+          "text": "Pay as you go with Google's Gemini, billed by what you use. It is separate from an Antigravity plan and connects with a key.",
+          "expert": "The Gemini API (Google AI Studio), billed per token; authenticates with an API key. Separate from an Antigravity plan."
         },
         "provider:vertex": {
           "title": "Vertex AI",
-          "text": "Google's AI through your Google Cloud account, billed by Google Cloud. Pick it if your work already pays for Google Cloud."
+          "text": "Google's AI through your Google Cloud account, billed by Google Cloud. Pick it if your work already pays for Google Cloud.",
+          "expert": "Gemini and partner models through Vertex AI on Google Cloud, billed to your Google Cloud project; authenticates with your Google Cloud credentials."
         },
         "provider:xai-api": {
           "title": "xAI API",
-          "text": "Pay as you go with xAI, billed by what you use. It is separate from a Grok Build plan and connects with a key."
+          "text": "Pay as you go with xAI, billed by what you use. It is separate from a Grok Build plan and connects with a key.",
+          "expert": "The xAI API, billed per token; authenticates with an API key. Separate from a Grok Build plan."
         },
         "provider:meta-api": {
           "title": "Meta Model API",
-          "text": "Pay as you go with Meta's models, billed by what you use. It is separate from a Muse Code plan and connects with a key."
+          "text": "Pay as you go with Meta's models, billed by what you use. It is separate from a Muse Code plan and connects with a key.",
+          "expert": "The Meta Model API, billed per token; authenticates with an API key. Separate from a Muse Code plan."
         },
         "pairing:approval": {
           "title": "Approve from another device",
-          "text": "A device you already use with it shows a request, and you approve it there. The quickest way when that device is with you."
+          "text": "A device you already use with it shows a request, and you approve it there. The quickest way when that device is with you.",
+          "expert": "Pairing by approval: an already trusted device receives the request and approves it; this device is then trusted by the Server."
         },
         "pairing:code": {
           "title": "Enter the code it shows",
-          "text": "Open your Puppet Master's page on the other computer, read the code it shows and type it here. Good when no other device is at hand."
+          "text": "Open your Puppet Master's page on the other computer, read the code it shows and type it here. Good when no other device is at hand.",
+          "expert": "Pairing by code: the Server's page shows a short one-time code; entering it here proves this device is with you before it is trusted."
         },
         "pairing:qr": {
           "title": "Scan its QR code",
-          "text": "Point this device's camera at the square code on the other screen. Handy on a phone or tablet."
+          "text": "Point this device's camera at the square code on the other screen. Handy on a phone or tablet.",
+          "expert": "Pairing by QR code: the camera reads the one-time pairing code from the other screen."
         },
         "field:headscale": {
           "title": "Headscale address",
-          "text": "The web address of your own Headscale server, starting with https://. Only for people who run Headscale instead of using a Tailscale account."
+          "text": "The web address of your own Headscale server, starting with https://. Only for people who run Headscale instead of using a Tailscale account.",
+          "expert": "The https URL of your Headscale control server (a self-hosted Tailscale control plane). Leave it to Tailscale accounts unless you run Headscale."
         },
         "field:acc-bucket": {
           "title": "Bucket",
-          "text": "The S3 or B2 bucket made for backups, like s3://my-backups. A bucket is storage space you rent from a cloud company."
+          "text": "The S3 or B2 bucket made for backups, like s3://my-backups. A bucket is storage space you rent from a cloud company.",
+          "expert": "The S3-compatible bucket (Amazon S3 or Backblaze B2) the backup repository lives in, like s3://my-backups."
         },
         "field:acc-keyId": {
           "title": "Access key ID",
-          "text": "The name that identifies this storage key. Copy it from your storage account; the separate secret access key is its password."
+          "text": "The name that identifies this storage key. Copy it from your storage account; the separate secret access key is its password.",
+          "expert": "The access key ID of an S3-compatible key with access to that bucket; the secret access key is its password."
         },
         "field:acc-secret": {
           "title": "Secret access key",
-          "text": "The private half of the bucket's key. Kept in your computer's password store, never in Puppet Master's files."
+          "text": "The private half of the bucket's key. Kept in your computer's password store, never in Puppet Master's files.",
+          "expert": "The secret access key. Stored in the OS keychain, never in Puppet Master's files or logs."
         },
         "field:acc-address": {
           "title": "Server address",
-          "text": "Where your backup server is. Start it with sftp:// for SFTP, or https:// for WebDAV."
+          "text": "Where your backup server is. Start it with sftp:// for SFTP, or https:// for WebDAV.",
+          "expert": "The backup server's URL: sftp:// for SFTP, https:// for WebDAV."
         },
         "field:acc-user": {
           "title": "Username",
-          "text": "The name you sign in with on that backup server."
+          "text": "The name you sign in with on that backup server.",
+          "expert": "The account name on the SFTP or WebDAV server."
         },
         "field:acc-password": {
           "title": "Password",
-          "text": "The password for that backup server. Kept in your computer's password store, never in Puppet Master's files."
+          "text": "The password for that backup server. Kept in your computer's password store, never in Puppet Master's files.",
+          "expert": "The account's password on that server. Stored in the OS keychain, never in Puppet Master's files."
         },
         "field:key": {
           "title": "API key",
-          "text": "A long secret code from the AI company that lets Puppet Master use your account. Paste it, then choose Check key. It stays in your computer's password store."
+          "text": "A long secret code from the AI company that lets Puppet Master use your account. Paste it, then choose Check key. It stays in your computer's password store.",
+          "expert": "The provider's API key. Checked against the provider before it is saved, then stored in the OS keychain."
         },
         "tour": {
           "title": "Take the Guided Tour",
@@ -236,131 +267,160 @@
       "where": {
         "pick:this": {
           "title": "This computer",
-          "text": "Puppet Master does the work on this computer. You choose where its files and backups go in the next steps, and can add a Server later."
+          "text": "Puppet Master does the work on this computer, and your Projects are kept here. The AI answers from its own company's computers, and an online copy or backup goes where you choose next. You can add a Server later.",
+          "expert": "Puppet Master runs on this computer: Projects, local history and agent runs are here. AI providers, any online copy and any backup are still the services you choose."
         },
         "pick:connect": {
           "title": "Connect this device",
-          "text": "Already use Puppet Master on another computer? This device joins it and uses its Projects and AI. You confirm it is really you, once."
+          "text": "Already use Puppet Master on another computer? This device joins it and uses its Projects and AI. You confirm it is really you, once.",
+          "expert": "This device becomes a client of an existing Puppet Master Server: it uses that Server's Projects, runs and AI accounts after a one-time pairing."
         },
         "pick:server": {
           "title": "Server",
-          "text": "The computer that does the work is called a Server. One that stays on, like a NAS, can keep working while your laptop sleeps."
+          "text": "A Server is a separate computer that stays switched on and does the work, like a NAS or a rented cloud computer. Your laptop and other devices connect to it, and it can keep working while they sleep.",
+          "expert": "A Server is a separate, always-on machine (a NAS, a rented cloud machine or a spare computer) that runs Puppet Master and its agent runs; this computer and your other devices pair with it as clients."
         },
         "restoreAll": {
           "title": "Restore everything",
-          "text": "For moving from an old computer: brings back your Projects, settings and look from a backup. Nothing here is replaced without asking."
+          "text": "For moving from an old computer: brings back your Projects, settings and look from a backup. Nothing here is replaced without asking.",
+          "expert": "Restores a full backup (Projects, settings, look) from a Recovery Kit or a backup destination onto this computer, with a preview before anything changes."
         }
       },
       "c-route": {
         "group:pickServer": {
           "title": "Found on your network",
-          "text": "Puppet Masters already running on your network. Pick the one this device should use; it shows how many Projects each one has."
+          "text": "Puppet Masters already running on your network. Pick the one this device should use; it shows how many Projects each one has.",
+          "expert": "Puppet Master Servers found by discovery on your local network, and on a VPN you're connected to, each with its Project count."
         },
         "field:addr": {
           "title": "Its address",
-          "text": "The name or number other devices use to reach it, like home-nas.local or 192.168.1.20. Use it when yours is not in the list."
+          "text": "The name or number other devices use to reach it, like home-nas.local or 192.168.1.20. Use it when yours is not in the list.",
+          "expert": "The Server's hostname or IP address on your network, like home-nas.local or 192.168.1.20."
         },
         "manualOn": {
           "title": "Enter an address instead",
-          "text": "Type the address yourself when your Puppet Master does not show up on its own."
+          "text": "Type the address yourself when your Puppet Master does not show up on its own.",
+          "expert": "Enter the Server's hostname or IP address yourself when discovery doesn't find it."
         },
         "route:local_or_vpn": {
           "title": "On this network",
-          "text": "Finds it on the network you are on now. You can connect through a VPN too: Puppet Masters there show up as well."
+          "text": "Finds it on the network you are on now. You can connect through a VPN too: Puppet Masters there show up as well.",
+          "expert": "Local network or an already connected VPN: discovery on the LAN, and on the VPN's networks."
         },
         "route:tailscale": {
           "title": "Tailscale",
-          "text": "Reach it from anywhere with Tailscale, a private network for your own devices. Pick it when you are away from home."
+          "text": "Reach it from anywhere with Tailscale, a private network for your own devices. Both this device and your Puppet Master need Tailscale and the same account. Pick it when you are away from home.",
+          "expert": "Reach the Server over a Tailscale tailnet (WireGuard); both devices must be signed in to the same tailnet."
         },
         "route:reverse_proxy": {
           "title": "My own web address",
-          "text": "For a Server its owner already put on a web address, like pm.example.com. Pick it only if you were given one."
+          "text": "For a Server its owner already put on a web address, like pm.example.com. Pick it only if you were given one.",
+          "expert": "The Server behind a reverse proxy on an https domain its owner set up (DNS and a TLS certificate). The certificate protects the connection; it doesn't vouch for who runs the address."
         },
         "route:remote_link": {
           "title": "Puppet Master Remote Link",
-          "text": "A private link your Server can make for you. Paste the link it gave you; nothing else to set up."
+          "text": "A private link your Server can make for you. Paste the link it gave you; nothing else to set up.",
+          "expert": "A Puppet Master Remote Link the Server issues for reaching it from outside your network; paste it here. Nothing to set up on your side: no DNS, ports or certificates."
         },
         "tsControl:hosted": {
           "title": "Tailscale account",
-          "text": "Sign in with an ordinary Tailscale account. Right for nearly everyone."
+          "text": "Sign in with an ordinary Tailscale account. Right for nearly everyone.",
+          "expert": "Tailscale's hosted coordination server with an ordinary Tailscale account."
         },
         "tsControl:headscale": {
           "title": "My own Headscale server",
-          "text": "Headscale is a version of Tailscale you run yourself. Pick it only if you already have one."
+          "text": "Headscale is a version of Tailscale you run yourself. Pick it only if you already have one.",
+          "expert": "A self-hosted Headscale control server instead of Tailscale's; you'll give its https URL."
         },
         "field:proxy": {
           "title": "Web address",
-          "text": "The https:// address the Server owner set up, like https://pm.example.com."
+          "text": "The https:// address the Server owner set up, like https://pm.example.com.",
+          "expert": "The reverse proxy's https URL for the Server, like https://pm.example.com."
         },
         "field:link": {
           "title": "Remote Link",
-          "text": "The link your Server gave you, starting pm-remote-link:. Your Server shows it under Settings › Access."
+          "text": "The link your Server gave you, starting pm-remote-link:. Your Server shows it under Settings › Access.",
+          "expert": "The Remote Link string the Server issued (pm-remote-link:…), shown in its Settings › Access."
         }
       },
       "c-pair": {
         "field:code": {
           "title": "Code from your Puppet Master",
-          "text": "The 8 letters and numbers its page shows, like A7K9-M2Q4. It proves this device is with you."
+          "text": "The 8 letters and numbers its page shows, like A7K9-M2Q4. It proves this device is with you.",
+          "expert": "The one-time pairing code the Server's page shows (8 characters, like A7K9-M2Q4)."
         },
         "resend": {
           "title": "Send it again",
-          "text": "Asks the other device to show the request again, if you missed it or it went away."
+          "text": "Asks the other device to show the request again, if you missed it or it went away.",
+          "expert": "Re-sends the pairing approval request to your trusted devices."
         }
       },
       "c-ready": {
         "createNew": {
           "title": "Create a new Project",
-          "text": "Starts a new Project on your Puppet Master, so it lives next to the work."
+          "text": "Starts a new Project on your Puppet Master, so it lives next to the work.",
+          "expert": "Starts a new Project draft on the connected Server; its files and runs live on the Server."
         },
         "group:pickProject": {
           "title": "Projects on your Puppet Master",
-          "text": "Projects it already has. Pick one to open first; every one of them is there for you later too."
+          "text": "Projects it already has. Pick one to open first; every one of them is there for you later too.",
+          "expert": "The Server's existing Projects; the one you pick opens first."
         }
       },
       "s-kind": {
         "kind:nas": {
           "title": "A NAS or home server",
-          "text": "A storage box or home server that stays on, like Synology, TrueNAS, Unraid or QNAP. A good home for a Server."
+          "text": "A storage box or home server that stays on, like Synology, TrueNAS, Unraid or QNAP. A good home for a Server.",
+          "expert": "A NAS or home server (Synology, TrueNAS, Unraid, QNAP) running Puppet Master's Server; always on, on your LAN."
         },
         "kind:cloud": {
           "title": "A cloud computer",
-          "text": "A computer you rent online. It is always on and reachable, and costs a monthly fee from the company you rent it from."
+          "text": "A computer you rent online. It is always on and reachable, and costs a monthly fee from the company you rent it from.",
+          "expert": "A rented cloud VM (VPS) running the Server: always on and reachable from anywhere, billed monthly by the host."
         },
         "kind:pc": {
           "title": "Another computer",
-          "text": "A Windows, Mac or Linux computer you leave switched on. Fine if it does not sleep."
+          "text": "A Windows, Mac or Linux computer you leave switched on. Fine if it does not sleep.",
+          "expert": "A Windows, macOS or Linux machine running the Server; it must stay on and not sleep."
         }
       },
       "s-wait": {
         "group:platform": {
           "title": "Install Puppet Master on it",
-          "text": "Pick what that computer runs, and follow its steps there. It shows up here by itself once it is running."
+          "text": "Pick what that computer runs, and follow its steps there. It shows up here by itself once it is running.",
+          "expert": "Install the Server package for that machine's platform; it shows up here by itself once it is running."
         },
         "copy:install": {
           "title": "Copy the install line",
-          "text": "Copies the line to paste into a terminal on that computer. A terminal is the window where you type commands."
+          "text": "Copies the line to paste into a terminal on that computer. A terminal is the window where you type commands.",
+          "expert": "Copies the install command for that machine's terminal (shell)."
         },
         "group:guide": {
           "title": "Open the install guide",
-          "text": "Opens the step-by-step guide for that system in your browser."
+          "text": "Opens the step-by-step guide for that system in your browser.",
+          "expert": "Opens the official install guide for that platform."
         },
         "group:pick": {
           "title": "Waiting to be set up",
-          "text": "A computer on your network running Puppet Master that is not set up yet. Choose it to make it your Server."
+          "text": "A computer on your network running Puppet Master that is not set up yet. Choose it to make it your Server.",
+          "expert": "An unclaimed Puppet Master Server found on your network; choosing it starts the claim."
         },
         "field:addr": {
           "title": "Its address",
-          "text": "Where to reach it. A cloud computer does not show up on your home network, so enter the address its setup printed."
+          "text": "Where to reach it. A cloud computer does not show up on your home network, so enter the address its setup printed.",
+          "expert": "The Server's hostname or IP. A cloud VM isn't discoverable on your LAN: use the address its setup printed."
         },
         "manualOn": {
           "title": "Enter its address instead",
-          "text": "Type its address yourself if it does not appear on its own."
+          "text": "Type its address yourself if it does not appear on its own.",
+          "expert": "Enter the Server's hostname or IP address yourself."
         }
       },
       "s-confirm": {
         "field:name": {
           "title": "Name",
-          "text": "What you'll call this Server everywhere in Puppet Master, like Home NAS. Pick a name you'll recognise."
+          "text": "What you'll call this Server everywhere in Puppet Master, like Home NAS. Pick a name you'll recognise.",
+          "expert": "The Server's display name across your devices."
         },
         "group:suggest": {
           "title": "Suggested names",
@@ -368,37 +428,45 @@
         },
         "field:code": {
           "title": "Setup code",
-          "text": "The number shown on the Server's own setup page, like 482 913. It proves the computer is yours."
+          "text": "The number shown on the Server's own setup page, like 482 913. It proves the computer is yours.",
+          "expert": "The one-time setup code from the Server's own setup page; it proves physical access before the claim."
         },
         "selfMatch": {
           "title": "The words match",
-          "text": "Tick this only when the words here are the same as on this device. Nothing is paired until you approve."
+          "text": "Tick this only when the words here are the same as on this device. Nothing is paired until you approve.",
+          "expert": "Confirms the identity words shown here match this device's, so the pairing goes to the right device."
         }
       },
       "s-ready": {
         "newCode": {
           "title": "New code",
-          "text": "Makes a fresh code for adding a device. Devices already paired stay paired."
+          "text": "Makes a fresh code for adding a device. Devices already paired stay paired.",
+          "expert": "Rotates the device invite code; already paired devices keep their trust."
         },
         "copy:pairlink": {
           "title": "Copy the link",
-          "text": "Copies a link another device on your network can open to join."
+          "text": "Copies a link another device on your network can open to join.",
+          "expert": "Copies the invite link another device on your network can open to request pairing."
         },
         "group:approve": {
           "title": "Approve",
-          "text": "Lets that device use your Server. Approve only once its words match what the device shows."
+          "text": "Lets that device use your Server. Approve only once its words match what the device shows.",
+          "expert": "Approves the device's pairing request after its identity words match: it becomes a trusted client."
         },
         "group:deny": {
           "title": "Deny",
-          "text": "Turns the request down. Nothing is shared with that device."
+          "text": "Turns the request down. Nothing is shared with that device.",
+          "expert": "Rejects the pairing request; no trust or data is shared."
         },
         "group:match": {
           "title": "The words match",
-          "text": "Compare the words with what the other device shows, then tick this. It unlocks Approve."
+          "text": "Compare the words with what the other device shows, then tick this. It unlocks Approve.",
+          "expert": "Confirms the device's identity words match; required before Approve."
         },
         "restore": {
           "title": "Bring back old data",
-          "text": "Replacing an old Server? Brings its Projects back from a Recovery Kit or an old backup."
+          "text": "Replacing an old Server? Brings its Projects back from a Recovery Kit or an old backup.",
+          "expert": "Restores Projects onto this new Server from a Recovery Kit or a backup destination."
         }
       },
       "r-source": {
