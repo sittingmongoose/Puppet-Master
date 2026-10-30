@@ -2,7 +2,7 @@
    (window.PM_PIP_PARTS, Concepts/glyph-system/opus-5.5/src/logo/pm-pip-parts.js) is a head module and cannot reach the
    Settings engine, so it reads and writes general.visual.pip-parts through this adapter, on the same transaction and
    refusal path as a Settings row (the 28-chat-port.js pattern). The value is the current Project's: a multiselect of
-   the part labels, stored per Project as general.visual.nier-parts is. Until the Settings data has that row, ready()
+   the part ids (the inventory's options), stored per Project. Until the Settings data has that row, ready()
    is false and the registry keeps the choice in memory for the session. */
 (function o55PipPartsStore() {
   const ID = 'general.visual.pip-parts';
@@ -14,10 +14,10 @@
     const v = f ? settingValue(f.setting) : undefined;
     return Array.isArray(v) ? v.map(String) : undefined;
   }
-  function write(labels) {
-    if (!ready() || !Array.isArray(labels)) return false;
-    if (JSON.stringify(read()) === JSON.stringify(labels) && state.changed?.[ID]) return true;
-    if (!commitSettingValues({ [ID]: labels.map(String) })) return false;
+  function write(ids) {
+    if (!ready() || !Array.isArray(ids)) return false;
+    if (JSON.stringify(read()) === JSON.stringify(ids) && state.changed?.[ID]) return true;
+    if (!commitSettingValues({ [ID]: ids.map(String) })) return false;
     saveState();
     if (root.querySelector(`[id="setting-${cssEscape(ID)}"]`)) refreshSettingRow(ID);
     if (typeof o55Notify === 'function') o55Notify(ID, read());

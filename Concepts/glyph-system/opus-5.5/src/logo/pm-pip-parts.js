@@ -6,8 +6,8 @@
  * and the agent puppet, helper marks and Activity agent rows stay Pip under every preset, Plain included. Where a NieR
  * part and a Pip part both draw, the NieR part wins (S7). There is no Pip on/off row (S6).
  *
- * Storage (S2): general.visual.pip-parts, per Project, a multiselect of the part labels, stored the way
- * general.visual.nier-parts is. The Settings engine is private to its script, so the registry reads and writes it
+ * Storage (S2): general.visual.pip-parts, per Project, a multiselect of the part ids (Plans/settings_inventory.json
+ * lists the ids as its options: they stay stable when a label's copy changes; a stored label still reads). The Settings engine is private to its script, so the registry reads and writes it
  * through window.PM_PIP_PARTS_STORE (Concepts/onboarding/opus-5.5/src/settings/kit.d/28-pip-parts.js: the same
  * transaction and refusal path as a Settings row). Until the Settings data has that row, and in a sandboxed preview,
  * the choice lives in memory for the session, per Project. A Project switch re-reads the row and says so if the parts
@@ -107,7 +107,7 @@
   const current = () => (pv ? pv.slice() : stored());
   function write(ids) {
     const list = order(ids), S = store();
-    if (S) return S.write(labels(list));
+    if (S) return S.write(list);
     memory[projectId()] = list;
     return true;
   }
