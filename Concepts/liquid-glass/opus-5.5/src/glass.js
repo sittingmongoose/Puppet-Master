@@ -2338,36 +2338,13 @@
     mountMeasured(targets, true);
   }
 
-  /* ---- light: the pointer's shine on the rims, and the press ------------------------------------------------------- */
-  var ptr = null, ptrQ = false, ptrLate = false, lit = null, shine = null;
-  function shineEl() {
-    if (shine && shine.isConnected) return shine;
-    shine = el('div', { id: 'lg-shine', 'aria-hidden': 'true' }); shine.appendChild(el('i')); document.body.appendChild(shine); return shine;
-  }
-  function onPtr() {
-    ptrQ = false; if (!ptr || !isGlass()) return;
-    var g = ptr.t && ptr.t.closest ? ptr.t.closest('[data-lg-kind]') : null, sh = shineEl();
-    if (document.querySelector('#panel-usage .pmu-card:is([data-lifted],[data-settling])')) { sh.classList.remove('on'); return; }
-    /* a new sheet under the pointer is measured once; during a Usage room change that read forced the half-built room's
-       layout, so the light keeps its sheet until the change ends (boardMoment) */
-    if (g !== lit && boardMoment()) { ptrLate = true; return; }
-    if (g !== lit) {
-      if (lit) { lit.removeAttribute('data-lg-lit'); lit.style.removeProperty('--lg-px'); lit.style.removeProperty('--lg-py'); }
-      lit = g;
-      if (g) {   /* clip the light to this sheet's shape, once per sheet */
-        g.setAttribute('data-lg-lit', ''); var r = g.getBoundingClientRect(), cs = getComputedStyle(g);
-        sh.style.cssText = 'left:' + r.left + 'px;top:' + r.top + 'px;width:' + r.width + 'px;height:' + r.height + 'px;border-radius:' + cs.borderRadius;
-        sh.__r = r; sh.classList.add('on');
-      } else sh.classList.remove('on');
-    }
-    if (g && sh.__r) {
-      var lx = (ptr.x - sh.__r.left).toFixed(0) + 'px', ly = (ptr.y - sh.__r.top).toFixed(0) + 'px';
-      sh.firstChild.style.transform = 'translate3d(' + lx + ',' + ly + ',0)';
-      /* Glass Light's light is a layer of the lit sheet's own background, under its words (glass.css --lg-glow) */
-      if (root.getAttribute('data-theme') === 'glass-light' && root.getAttribute('data-lg-tier') === 'gpu') { g.style.setProperty('--lg-px', lx); g.style.setProperty('--lg-py', ly); }
-    }
-  }
-  document.addEventListener('pointermove', function (e) { ptr = { x: e.clientX, y: e.clientY, t: e.target }; if (!ptrQ) { ptrQ = true; requestAnimationFrame(onPtr); } }, { passive: true });
+  /* ---- light: the press ------------------------------------------------------------------------------------------
+     The pointer's light is the shared hover light only (18-hover.js, 22-hover.css): a sheen and an edge catch on the
+     hovered card, tile or row, as in Basic and Friendly. Glass also lit whatever sheet was under the pointer (#lg-shine,
+     a 96 px disc added over Glass Dark's panels, bars and dialogs, and Glass Light's --lg-glow under their words), so the
+     circle followed the pointer across panels with no edge light and doubled the sheen on the Usage widgets; it is gone
+     (Jared, QA round 2 Q20, 2026-10-30: "The hover glow circle around the mouse ... should be toned down. It also should be
+     on objects that have the edge glow like the usage widgets. Similar to how the friendly and basic theme does it."). */
   /* the press: buttons flex and a small light blooms under the finger. Strip items and rail icons get neither: their
      lens is the answer to a press (the white bloom read as a flash in the films). */
   document.addEventListener('pointerdown', function (e) {
@@ -2842,7 +2819,6 @@
     /* a Usage room change has ended: its board is checked once (boardMoment) */
     if (!root.hasAttribute('data-pmu-moment')) {
       if (boardStale) { boardStale = false; var area = document.querySelector(BOARD_AREA); if (area) { dirtyScope(area); lazySync(false); } }
-      if (ptrLate) { ptrLate = false; if (!ptrQ) { ptrQ = true; requestAnimationFrame(onPtr); } }
     }
     var th = root.getAttribute('data-theme'), lg = root.getAttribute('data-lg');
     var tier = root.getAttribute('data-lg-tier'), wall = root.getAttribute('data-lg-wall'), motion = root.getAttribute('data-motion');
