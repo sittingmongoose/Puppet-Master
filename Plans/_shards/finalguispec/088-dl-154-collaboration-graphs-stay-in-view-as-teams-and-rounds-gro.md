@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42938-L43065
+Source lines: L43395-L43523
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
 
 ---
 
@@ -36,6 +36,7 @@ canonical_text: >-
   width, where the sheet body is one scrolling column, the plate stays at the top of that column while its question
   is on screen, on the sheet's own surface colour, and the roster's rows pass under it. A run view's plate (F3-569)
   uses the same wrap when the run's team is too wide for one row at the view's width, so it never drops its plate.
+  Amended 2026-10-29 (PC5, S1/S9; PM7): One Pip cast primitive and optional solved straight strings replace the old figure. Turning strings off hides presentation only; no Classic fallback and no alternate agent primitive.
 gui_related: true
 gui_classification_reason: Defines how the collaboration cast plates stay visible as rosters grow in setup sheets and run views.
 split_recommended: false

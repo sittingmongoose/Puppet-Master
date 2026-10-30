@@ -1689,6 +1689,7 @@ canonical_text: >-
   head shows the roster as a cluster of the participants' puppets, each drawing its live state
   (FinalGUISpec F3-594, DL-149), never as initials; this is the People-family roster whose internals
   ACD-469 leaves to this owner.
+  Amended 2026-10-29 (PC1–PC5; PM7): Crew cast/rows use F3-594’s single Pip, including role props/seat colours and optional sheet reactions; no new participant, step or command.
 gui_related: true
 gui_classification_reason: This unit maps run state to the card's density and bounds the card's transcript slice and meta line.
 depends_on: [CWR-003, CWR-029, CWR-030]
@@ -2266,6 +2267,7 @@ canonical_text: >-
   Crew Auto teams and in Crews used for a scheduled build: the shelf shows them disabled with the
   reason, and a request that carries one is refused as invalid_request. Review has no specialists.
   In BrainStorm, Grill Me uses the shared question bank and its question allowance. In a Crew or Chat Room with Grill Me on, the coordinator or moderator grills the user, never the other helpers, and the maximum is the Grill Me extension (CWR-042, DL-218). With Grill Me off, only a decision the user alone can answer reaches the user, through the ordinary needs-you prompt, with no new allowance setting (DL-138).
+  Amended 2026-10-29 (PC1–PC5; PM7): Collaboration plates and previews consume the same Pip primitive and typed status mappings; Grill Me remains a switch with the speaking Coordinator/Moderator at the grill, not a participant.
 gui_related: true
 gui_classification_reason: This unit fixes where specialists are added, what their rows carry and where they are refused.
 depends_on: [CWR-008]

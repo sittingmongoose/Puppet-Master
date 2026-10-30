@@ -52,7 +52,7 @@
       "registry_id": "TCR-SETTINGS-PACKET-COMMANDS",
       "source_path": "Plans/settings_system_contract_fixtures.json",
       "json_pointer": "/packet_command_dispositions",
-      "source_sha256": "61eb1cae371049254621848b5145e55c81d34781a8f4914da50d23039f7fc498",
+      "source_sha256": "d77ff74645420bf3cf2421b6c20fdd9659b428ea5021450e5ac6aba900cd3468",
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-023",
       "expected_token_count": 80,
@@ -7758,6 +7758,177 @@
       "evidence_refs": [
         "static_contract_only"
       ]
+    },
+    {
+      "profile_id": "TCP-PM7-PROJECT",
+      "requirement_refs": [
+        "Plans/FinalGUISpec.md#F3-661",
+        "Plans/Commands_System.md#CS-106",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "owner_plan": "Plans/FinalGUISpec.md",
+      "plan_unit": "F3-661",
+      "dry_contract_ref": "Plans/DRY_Rules.md#DR-078",
+      "payload_schema_ref": "Plans/pm7_build_contracts.schema.json",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result",
+      "error_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result",
+      "availability_rule": "Current Project/server/environment, exact target/process identity and generation, permission, storage and available sole owner; view-local actions never mutate runtime.",
+      "permission_gate": "Owner permission and writer posture before effects; system services/protected prompts refuse; navigation remains read-only.",
+      "disabled_reason_rule": "Exact stale/PID-reused/missing/permission/storage/unsupported/owner-unavailable reason, never simulated success.",
+      "handler_owner": "CS-105/CS-106 sole future targets; concept handlers are simulation only.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner/schema/fixtures and production-intent wiring only; no native dispatcher, filesystem mutation or runtime proof.",
+      "gui_triggers": [
+        "PM7 project box",
+        "thread Processes",
+        "status work panel",
+        "quit dialog"
+      ],
+      "return_route": "Stable invoking view, Project/thread and focus; no active-tab retargeting.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md#UCC-209",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/pm7_control_bindings.json"
+      ],
+      "event_refs": [
+        "none_pending_event_authority"
+      ],
+      "receipt_refs": [
+        "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+      ],
+      "observable_work": [
+        "Owner operation ID if asynchronous; acceptance is never terminal effect proof."
+      ],
+      "persistence_refs": [
+        "Existing owner work/Settings/workspace families only; clear_finished is view-local."
+      ],
+      "migration_refs": [
+        "No schema migration or Event Authority admission claimed by static PM7 companions."
+      ],
+      "test_refs": [
+        "Plans/pm7_build_contracts.fixtures.json",
+        "scripts/pm7-build-check.py",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "evidence_refs": [
+        "static_contract_only"
+      ]
+    },
+    {
+      "profile_id": "TCP-PM7-WORK",
+      "requirement_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-054",
+        "Plans/Commands_System.md#CS-106",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "owner_plan": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit": "SIR-054",
+      "dry_contract_ref": "Plans/DRY_Rules.md#DR-078",
+      "payload_schema_ref": "Plans/pm7_build_contracts.schema.json",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result",
+      "error_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result",
+      "availability_rule": "Current Project/server/environment, exact target/process identity and generation, permission, storage and available sole owner; view-local actions never mutate runtime.",
+      "permission_gate": "Owner permission and writer posture before effects; system services/protected prompts refuse; navigation remains read-only.",
+      "disabled_reason_rule": "Exact stale/PID-reused/missing/permission/storage/unsupported/owner-unavailable reason, never simulated success.",
+      "handler_owner": "CS-105/CS-106 sole future targets; concept handlers are simulation only.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner/schema/fixtures and production-intent wiring only; no native dispatcher, filesystem mutation or runtime proof.",
+      "gui_triggers": [
+        "PM7 project box",
+        "thread Processes",
+        "status work panel",
+        "quit dialog"
+      ],
+      "return_route": "Stable invoking view, Project/thread and focus; no active-tab retargeting.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md#UCC-209",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/pm7_control_bindings.json"
+      ],
+      "event_refs": [
+        "none_pending_event_authority"
+      ],
+      "receipt_refs": [
+        "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+      ],
+      "observable_work": [
+        "Owner operation ID if asynchronous; acceptance is never terminal effect proof."
+      ],
+      "persistence_refs": [
+        "Existing owner work/Settings/workspace families only; clear_finished is view-local."
+      ],
+      "migration_refs": [
+        "No schema migration or Event Authority admission claimed by static PM7 companions."
+      ],
+      "test_refs": [
+        "Plans/pm7_build_contracts.fixtures.json",
+        "scripts/pm7-build-check.py",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "evidence_refs": [
+        "static_contract_only"
+      ]
+    },
+    {
+      "profile_id": "TCP-PM7-LOCAL",
+      "requirement_refs": [
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Commands_System.md#CS-106",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "owner_plan": "Plans/UI_Wiring_Rules.md",
+      "plan_unit": "UIW-045",
+      "dry_contract_ref": "Plans/DRY_Rules.md#DR-078",
+      "payload_schema_ref": "Plans/pm7_build_contracts.schema.json",
+      "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result",
+      "error_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result",
+      "availability_rule": "Current Project/server/environment, exact target/process identity and generation, permission, storage and available sole owner; view-local actions never mutate runtime.",
+      "permission_gate": "Owner permission and writer posture before effects; system services/protected prompts refuse; navigation remains read-only.",
+      "disabled_reason_rule": "Exact stale/PID-reused/missing/permission/storage/unsupported/owner-unavailable reason, never simulated success.",
+      "handler_owner": "CS-105/CS-106 sole future targets; concept handlers are simulation only.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner/schema/fixtures and production-intent wiring only; no native dispatcher, filesystem mutation or runtime proof.",
+      "gui_triggers": [
+        "PM7 project box",
+        "thread Processes",
+        "status work panel",
+        "quit dialog"
+      ],
+      "return_route": "Stable invoking view, Project/thread and focus; no active-tab retargeting.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md#UCC-209",
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/pm7_control_bindings.json"
+      ],
+      "event_refs": [
+        "none_pending_event_authority"
+      ],
+      "receipt_refs": [
+        "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+      ],
+      "observable_work": [
+        "Owner operation ID if asynchronous; acceptance is never terminal effect proof."
+      ],
+      "persistence_refs": [
+        "Existing owner work/Settings/workspace families only; clear_finished is view-local."
+      ],
+      "migration_refs": [
+        "No schema migration or Event Authority admission claimed by static PM7 companions."
+      ],
+      "test_refs": [
+        "Plans/pm7_build_contracts.fixtures.json",
+        "scripts/pm7-build-check.py",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "evidence_refs": [
+        "static_contract_only"
+      ]
     }
   ],
   "row_columns": [
@@ -13216,6 +13387,214 @@
       "cmd.forge.review.edit",
       "partial",
       "FGI-022 typed request and static production-intent wiring are specified; native provider handler, reverse GUI and accessibility evidence remain absent."
+    ],
+    [
+      "TOUCH-PM7CMD-001",
+      "TCP-PM7-WORK",
+      "command",
+      "cmd.agents_and_processes.pop_out",
+      "partial",
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+    ],
+    [
+      "TOUCH-PM7CMD-002",
+      "TCP-PM7-WORK",
+      "command",
+      "cmd.agents_and_processes.show",
+      "partial",
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+    ],
+    [
+      "TOUCH-PM7CMD-003",
+      "TCP-PM7-WORK",
+      "command",
+      "cmd.chat.processes.open",
+      "partial",
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+    ],
+    [
+      "TOUCH-PM7CMD-004",
+      "TCP-PM7-PROJECT",
+      "command",
+      "cmd.project.open_in_new_workspace_tab",
+      "partial",
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+    ],
+    [
+      "TOUCH-PM7CMD-005",
+      "TCP-PM7-PROJECT",
+      "command",
+      "cmd.project.switch_active_tab",
+      "partial",
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+    ],
+    [
+      "TOUCH-PM7CMD-006",
+      "TCP-PM7-WORK",
+      "command",
+      "cmd.work.clear_finished",
+      "partial",
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+    ],
+    [
+      "TOUCH-PM7CMD-007",
+      "TCP-PM7-WORK",
+      "command",
+      "cmd.work.quit",
+      "partial",
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+    ],
+    [
+      "TOUCH-PM7CMD-008",
+      "TCP-PM7-WORK",
+      "command",
+      "cmd.work.restart",
+      "partial",
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+    ],
+    [
+      "TOUCH-PM7CMD-009",
+      "TCP-PM7-WORK",
+      "command",
+      "cmd.work.send_input",
+      "partial",
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+    ],
+    [
+      "TOUCH-PM7CMD-010",
+      "TCP-PM7-WORK",
+      "command",
+      "cmd.work.set_completion_delivery",
+      "partial",
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+    ],
+    [
+      "TOUCH-PM7CMD-011",
+      "TCP-PM7-WORK",
+      "command",
+      "cmd.work.stop",
+      "partial",
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+    ],
+    [
+      "TOUCH-PM7LOC-001",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.project_switcher.open",
+      "partial",
+      "Typed no-write local view action; native focus/subscription/teardown evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-002",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.project_switcher.close",
+      "partial",
+      "Typed no-write local view action; native focus/subscription/teardown evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-003",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_panel.close",
+      "partial",
+      "Typed no-write local view action; native focus/subscription/teardown evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-004",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_panel.select_tab",
+      "partial",
+      "Typed no-write local view action; native focus/subscription/teardown evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-005",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_panel.filter",
+      "partial",
+      "Typed no-write local view action; native focus/subscription/teardown evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-006",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_panel.sort",
+      "partial",
+      "Typed no-write local view action; native focus/subscription/teardown evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-007",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_panel.expand",
+      "partial",
+      "Typed no-write local view action; native focus/subscription/teardown evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-008",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_panel.select",
+      "partial",
+      "Typed no-write local view action; native focus/subscription/teardown evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-009",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_quit.open",
+      "partial",
+      "Typed no-write local view action; native focus/subscription/teardown evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-010",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_quit.select",
+      "partial",
+      "Typed no-write local view action; native focus/subscription/teardown evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-011",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_quit.cancel",
+      "partial",
+      "Typed no-write local view action; native focus/subscription/teardown evidence absent."
+    ],
+    [
+      "TOUCH-SETLOC-009",
+      "TCP-SET-LOCAL",
+      "ui_action",
+      "ui.settings.pip_editor.open",
+      "partial",
+      "One Pip row editor local action; no write, native dialog/focus/motion evidence absent."
+    ],
+    [
+      "TOUCH-SETLOC-010",
+      "TCP-SET-LOCAL",
+      "ui_action",
+      "ui.settings.pip_editor.close",
+      "partial",
+      "One Pip row editor local action; no write, native dialog/focus/motion evidence absent."
+    ],
+    [
+      "TOUCH-SETLOC-011",
+      "TCP-SET-LOCAL",
+      "ui_action",
+      "ui.settings.pip_editor.replay",
+      "partial",
+      "One Pip row editor local action; no write, native dialog/focus/motion evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-012",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.project_switcher.all_projects",
+      "partial",
+      "Typed local focus of existing Projects route, not a side-panel command; native route/focus evidence absent."
     ]
   ],
   "excluded_tokens": [

@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L1847-L1961
+Source lines: L1847-L1962
 
-Source SHA256: `fd152e499c916023ef442a6aee30f924f7bcdf0d00b063a7bc567f86b6b081ff`
+Source SHA256: `9968da83a5c877ca320b91bf1930fa139efb3c57feff530454707fa7d0f1732c`
 
 ---
 
@@ -25,6 +25,7 @@ canonical_text: >-
   payload or a named empty stream, env is a redacted allowlist map, and every bridge emits a BridgeInvocationReceipt,
   BridgeExitReceipt, and BridgeStreamReceipt. Exit handling normalizes provider-native statuses into success,
   provider_error, usage_error, auth_required, timeout, cancelled, killed, invalid_json, protocol_error, and transport_error.
+  Amended 2026-10-29 (D8/D9; PM7): Process reaping/stop observes whole-group SIGTERM then SIGKILL after 3 s with pid/start-time identity; reconciliation names vanished work Lost and tells the owner once; no silent live-process kill on idle unload.
 gui_related: false
 gui_classification_reason: CLI bridge invocation, exit, and stream contracts are backend provider integration contracts.
 depends_on: [CBP-005, CBP-007, CBP-008, CBP-009, CBP-010, CBP-024, CBP-025]

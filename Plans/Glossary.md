@@ -2326,3 +2326,235 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FinalGUISpec.md#F3-038, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180
+
+### G-031 - PM7 Pip Project And Work Help Entries
+
+```yaml
+plan_unit_id: G-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: 'W1–W9 terms (A5/B1/D1–D14/G4, 2026-10-29). Pip: Puppet Master’s mascot/brand and single agent
+  puppet primitive. Pip is not the unrelated tour word pip-done. Project box: The title bar’s option A Tab
+  secondary Project switcher. It does not replace the primary Projects view. Processes: Thread domain and platform
+  item/tab for owner-started processes, scripts, watchers, servers, browser sessions and scheduled work. Processes
+  are not To-Dos or a list of subagents. Question: An agent needs-you item counted once in Agents and its source
+  group. A process prompt is Needs input, not another question count. Needs input: A current detected process
+  prompt requiring a person’s answer. It does not imply a new agent question or authorize protected input.
+  Completion delivery: Per-work agent/user/quiet completion routing, independent of holds_reply. It is not
+  reply blocking or permission to wake a stopped thread. Lost (work): A process absent after owner reconciliation,
+  shown with warning. It is not an invented clean exit. ObservableWork: The shared owner record of work status,
+  scope, lineage and progress; ProcessFacts is subordinate. It is not a view-private process list. Operational
+  Awareness: The owner-derived cross-surface projection of work, agents, ports and freshness. It owns no second
+  runtime or competing list/count. Backgrounded: An ObservableWork runtime state. Task names a To-Do, not background
+  processes. Resources: Third platform work-panel tab for explicit server/environment CPU, memory and ports,
+  sampled only while open. There is no CPU/RAM status-bar item or implicit single-server reading.'
+gui_related: true
+gui_classification_reason: Names user-facing PM7 characters, controls and work states.
+split_recommended: false
+depends_on:
+- F3-660
+- F3-661
+- F3-664
+- SIR-054
+unblocks: []
+acceptance_criteria:
+- Pip and Project box each have one canonical help entry and do not rename tour pips or primary Projects navigation.
+- Questions and Needs input remain distinct counts over one projection; Processes never means To-Dos/subagents.
+- Work/Resources terms point to SIR-054/F3-664 and introduce no runtime state or CPU/RAM status item.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check
+risk_class: terminology_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/Glossary.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/background-activity/opus-5.5/README.md
+preserved_exact_tokens:
+- Pip
+- Project box
+- Processes
+- Question
+- Needs input
+- Completion delivery
+- Lost (work)
+- ObservableWork
+- Operational Awareness
+- Backgrounded
+- Resources
+negative_constraints:
+- Do not use two-column definition tables or invent runtime/storage authority in help.
+owner_hints:
+- Plans/Glossary.md
+```
+
+```yaml
+record_type: help-entry
+canonical_name: Pip
+short_definition: Puppet Master’s mascot/brand and single agent puppet primitive.
+why_it_matters: Use the same owner term on every named consumer.
+what_it_is_not: Pip is not the unrelated tour word pip-done.
+common_related_states: []
+related_concepts:
+- Project box
+- Processes
+surface_examples:
+- Title-bar mark; onboarding guide; chat agent.
+owner_ref: Plans/FinalGUISpec.md#F3-660
+```
+
+```yaml
+record_type: help-entry
+canonical_name: Project box
+short_definition: The title bar’s option A Tab secondary Project switcher.
+why_it_matters: Use the same owner term on every named consumer.
+what_it_is_not: It does not replace the primary Projects view.
+common_related_states: []
+related_concepts:
+- Pip
+surface_examples:
+- Title bar; menu rows; Ctrl+Shift+P.
+owner_ref: Plans/FinalGUISpec.md#F3-661
+```
+
+```yaml
+record_type: help-entry
+canonical_name: Processes
+short_definition: Thread domain and platform item/tab for owner-started processes, scripts, watchers, servers,
+  browser sessions and scheduled work.
+why_it_matters: Use the same owner term on every named consumer.
+what_it_is_not: Processes are not To-Dos or a list of subagents.
+common_related_states: []
+related_concepts:
+- ObservableWork
+- Operational Awareness
+surface_examples:
+- Thread Activity; platform status panel.
+owner_ref: Plans/FinalGUISpec.md#F3-664
+```
+
+```yaml
+record_type: help-entry
+canonical_name: Question
+short_definition: An agent needs-you item counted once in Agents and its source group.
+why_it_matters: Use the same owner term on every named consumer.
+what_it_is_not: A process prompt is Needs input, not another question count.
+common_related_states: []
+related_concepts:
+- Needs input
+surface_examples:
+- Agents tab Questions group.
+owner_ref: Plans/FinalGUISpec.md#F3-664
+```
+
+```yaml
+record_type: help-entry
+canonical_name: Needs input
+short_definition: A current detected process prompt requiring a person’s answer.
+why_it_matters: Use the same owner term on every named consumer.
+what_it_is_not: It does not imply a new agent question or authorize protected input.
+common_related_states: []
+related_concepts:
+- Question
+surface_examples:
+- Processes tab and composer attention.
+owner_ref: Plans/FinalGUISpec.md#F3-664
+```
+
+```yaml
+record_type: help-entry
+canonical_name: Completion delivery
+short_definition: Per-work agent/user/quiet completion routing, independent of holds_reply.
+why_it_matters: Use the same owner term on every named consumer.
+what_it_is_not: It is not reply blocking or permission to wake a stopped thread.
+common_related_states: []
+related_concepts:
+- ObservableWork
+surface_examples:
+- When it ends control.
+owner_ref: Plans/Shared_Integration_Runtime.md#SIR-054
+```
+
+```yaml
+record_type: help-entry
+canonical_name: Lost (work)
+short_definition: A process absent after owner reconciliation, shown with warning.
+why_it_matters: Use the same owner term on every named consumer.
+what_it_is_not: It is not an invented clean exit.
+common_related_states: []
+related_concepts:
+- Processes
+surface_examples:
+- After restart or stale-feed recovery.
+owner_ref: Plans/Shared_Integration_Runtime.md#SIR-054
+```
+
+```yaml
+record_type: help-entry
+canonical_name: ObservableWork
+short_definition: The shared owner record of work status, scope, lineage and progress; ProcessFacts is subordinate.
+why_it_matters: Use the same owner term on every named consumer.
+what_it_is_not: It is not a view-private process list.
+common_related_states:
+- current
+- stale
+related_concepts:
+- Operational Awareness
+surface_examples:
+- Thread Processes; platform work panel.
+owner_ref: Plans/Shared_Integration_Runtime.md#SIR-054
+```
+
+```yaml
+record_type: help-entry
+canonical_name: Operational Awareness
+short_definition: The owner-derived cross-surface projection of work, agents, ports and freshness.
+why_it_matters: Use the same owner term on every named consumer.
+what_it_is_not: It owns no second runtime or competing list/count.
+common_related_states:
+- current
+- stale
+related_concepts:
+- ObservableWork
+surface_examples:
+- Status items, tray, rail and composer attention.
+owner_ref: Plans/Shared_Integration_Runtime.md#SIR-054
+```
+
+```yaml
+record_type: help-entry
+canonical_name: Backgrounded
+short_definition: An ObservableWork runtime state.
+why_it_matters: Use the same owner term on every named consumer.
+what_it_is_not: Task names a To-Do, not background processes.
+common_related_states: []
+related_concepts:
+- Processes
+surface_examples:
+- Work lifecycle labels.
+owner_ref: Plans/Shared_Integration_Runtime.md#SIR-054
+```
+
+```yaml
+record_type: help-entry
+canonical_name: Resources
+short_definition: Third platform work-panel tab for explicit server/environment CPU, memory and ports, sampled
+  only while open.
+why_it_matters: Use the same owner term on every named consumer.
+what_it_is_not: There is no CPU/RAM status-bar item or implicit single-server reading.
+common_related_states:
+- current
+- stale
+related_concepts:
+- Processes
+surface_examples:
+- Resources tab and inspector.
+owner_ref: Plans/FinalGUISpec.md#F3-664
+```
