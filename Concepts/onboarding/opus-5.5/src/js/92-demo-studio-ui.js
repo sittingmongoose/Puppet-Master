@@ -963,7 +963,8 @@
     notice: (arg) => { M.notices.fire(arg); },
     'notices-clear': () => { M.notices.clear(); },
     look: (arg) => { const [f, m] = arg.split(':'); M.looks.set(f, m); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
-    wall: (arg) => { M.looks.walls.choose(arg); real.setTimeout(refresh, 120); },
+    /* Settings refuses a wallpaper it can't save and verify (a sandboxed preview has no storage): say so, not nothing */
+    wall: (arg) => { let ok = false; try { ok = M.looks.walls.choose(arg) !== false; } catch (_) {} if (!ok) say(T('studio.looks.walls.refused')); real.setTimeout(refresh, 120); },
     'lg-tier': (arg) => { M.looks.lg.setTier(arg); real.setTimeout(refresh, 80); },
     'lg-wall': (arg) => { M.looks.lg.setWall(arg); real.setTimeout(refresh, 80); },
     'look-mode': (arg) => { M.looks.mode(arg); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
