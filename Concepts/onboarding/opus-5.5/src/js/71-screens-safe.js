@@ -105,6 +105,7 @@
     } });
   }
   def('online-signin', {
+    seed: (S) => seedOnline(S, false),
     chapter: 'project', stage: 'source_control_setup',
     scene: (S) => ({ id: 'online', beat: SI(S).state === 'done' ? 'signed' : 'signin' }),
     eyebrow: (S) => (SI(S).kind !== 'forge' ? T('safe.eyebrow') : OL(S).purpose === 'source' ? T('begin.eyebrow') : T('online.signin.eyebrow')),
@@ -251,6 +252,28 @@
     bind: { address(S, v) { OL(S).address = v; S.save(); O55.ui.refresh(); } }
   });
 
+  /* Opened straight at a later online screen (Demo Studio's Open at one screen): what the earlier screens would have
+     left, GitHub chosen, and signed in for the screens after its sign-in (QA2 hunter H1: "Sign in to {name}", "Name on
+     none", "From on none"). The repository picker brings existing work in; the others make a new online copy. */
+  function seedOnline(S, signedIn, purpose) {
+    const d = md(S), ol = OL(S);
+    if (purpose) ol.purpose = purpose;
+    if (!d.forge || d.forge === 'none') {
+      ol.forge = 'github';
+      O55.draft.set(d, { online_mode: ol.purpose === 'source' ? 'existing' : 'new', forge: 'github', forge_provider_variant: VARIANTS.github[0][0], forge_instance_url: '', forge_instance_profile: null });
+      if (ol.purpose === 'source') O55.draft.set(d, { project_mode: 'existing_online', source_more: true });
+    }
+    const si = SI(S);
+    if (si.kind !== 'forge' || si.service !== d.forge) S.sess.signin = { service: d.forge, name: forgeName(d.forge, d.forge_provider_variant), kind: 'forge', then: ol.purpose === 'source' ? 'ex-repos' : 'online-details', done: null, state: 'idle', instance_key: instanceKey(d) };
+    if (signedIn && SI(S).state !== 'done') {
+      const cur = SI(S), login = accountFor(S, d.forge) || 'jared-p';
+      cur.state = 'done'; cur.account = login; S.sess.forgeAccounts[cur.instance_key] = login;
+      O55.draft.set(d, { forge_account_action: 'sign_in_during_setup', forge_account_ref: 'account:' + U.slug(cur.instance_key) + ':' + U.slug(login) });
+      if (ol.purpose === 'source') O55.draft.set(d, { source_access_authorization_refs: Array.from(new Set(d.source_access_authorization_refs.concat(['auth:' + U.slug(cur.instance_key) + ':' + U.slug(login)]))).slice(0, 16) });
+    }
+    S.save();
+  }
+
   /* ================================================================== name, privacy, owner, advanced (a new online copy) */
   function nameTaken(S, name) { const f = S.env.forges[md(S).forge] || { taken: [] }; return f.taken.includes(String(name || '').trim().toLowerCase()); }
   const azureGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -269,6 +292,7 @@
         instance_key: instanceKey(d), operation: 'human_create_team_project', owner_verified: true } };
   }
   def('online-details', {
+    seed: (S) => seedOnline(S, true),
     chapter: 'project', stage: 'source_control_setup',
     scene: () => ({ id: 'online', beat: 'signed' }),
     eyebrow: () => T('online.details.eyebrow'),
@@ -343,6 +367,7 @@
 
   /* ================================================================== pick the online Project to bring in */
   def('ex-repos', {
+    seed: (S) => seedOnline(S, true, 'source'),
     chapter: 'project', stage: 'first_project',
     scene: () => ({ id: 'online', beat: 'signed' }),
     eyebrow: () => T('online.repos.eyebrow'),

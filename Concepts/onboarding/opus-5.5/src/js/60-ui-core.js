@@ -1006,6 +1006,10 @@
     if (opts.screen && SCREENS.defs[opts.screen]) S.sess.screen = opts.screen;
     if (!SCREENS.defs[S.sess.screen]) S.sess.screen = 'welcome';
     if (opts.screen && opts.committed !== false && POSTCOMMIT.has(S.sess.screen) && !S.ctx().committed) seedCommit();
+    /* a screen opened straight (Demo Studio's Open at one screen) gets what the screens before it would have left: the
+       screen's own seed(S), which fills only what is missing (QA2 hunter H1; opt out with seed: false) */
+    const sd = opts.screen && opts.seed !== false && SCREENS.defs[S.sess.screen].seed;
+    if (sd) { try { sd(S); } catch (e) { console.warn('O55 seed', S.sess.screen, e); } }
     S.resumedShownOn = S.resumed ? S.sess.screen : null;
     returnFocus = opts.returnFocus || document.activeElement;
     S.open = true; S.save();

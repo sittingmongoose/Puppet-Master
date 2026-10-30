@@ -781,10 +781,11 @@ def('pr26', 'fresh', 'QA round 2, Q7 and hunter H2: a choice\'s own choices sit 
   await d.act('pick', 'existing');
   const r = await d.state(() => { const L = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)'); const card = L.querySelector('[data-o55-do="pick"][data-arg="existing"]'); const opt = card.closest('.o55-opt') || card; const next = opt.nextElementSibling;
     const tray = next && next.classList.contains('o55-under') ? next : null, restore = L.querySelector('[data-o55-do="pick"][data-arg="restore"]');
-    return { tray: !!tray, subs: tray ? tray.querySelectorAll('[data-o55-do="sub"]').length : 0, above: !!(tray && restore && (tray.compareDocumentPosition(restore) & Node.DOCUMENT_POSITION_FOLLOWING)), joined: tray ? Math.round(tray.getBoundingClientRect().top - card.getBoundingClientRect().bottom) : null }; });
+    return { tray: !!tray, subs: tray ? tray.querySelectorAll('[data-o55-do="sub"]').length : 0, above: !!(tray && restore && (tray.compareDocumentPosition(restore) & Node.DOCUMENT_POSITION_FOLLOWING)), joined: tray ? (() => { const a = card.getBoundingClientRect(), t = tray.getBoundingClientRect(), cs = getComputedStyle(card); return { gap: +(t.top - a.bottom).toFixed(2), dl: +(t.left - a.left).toFixed(2), dr: +(t.right - a.right).toFixed(2), radius: cs.borderBottomLeftRadius + ' ' + cs.borderBottomRightRadius }; })() : null }; });
   A.ok(r.tray && r.subs === 3, 'the three places sit in a tray right after Use work that already exists (' + JSON.stringify(r) + ')');
   A.ok(r.above, 'above Restore a Project');
-  A.ok(r.joined !== null && Math.abs(r.joined) <= 2, 'joined to its card, no gap (' + r.joined + ' px)');
+  const j = r.joined || {};
+  A.ok(r.joined !== null && Math.abs(j.gap) <= 0.5 && Math.abs(j.dl) <= 0.5 && Math.abs(j.dr) <= 0.5 && j.radius === '0px 0px', 'joined to its card: no gap, the same edges, square lower corners (' + JSON.stringify(j) + ')');
 });
 def('pr27', 'fresh', 'QA2 hunter H8: work on an NFS share says where it is kept on Name your Project', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
@@ -795,6 +796,20 @@ def('pr27', 'fresh', 'QA2 hunter H8: work on an NFS share says where it is kept 
   A.eq(await d.screen(), 'name', 'Name your Project');
   const loc = await d.state(() => { const n = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-locline'); return n ? n.textContent.trim() : null; });
   A.ok(!!loc && /mnt\/tank\/share/.test(loc), 'the line names the share (' + loc + ')');
+});
+def('pr28', 'fresh', 'QA2 hunter H1: a screen opened straight has what the screens before it would have left', async (d, A) => {
+  await d.openOnboarding();
+  /* every screen Demo Studio can open at (all of them) */
+  const ids = await d.page.evaluate(() => Object.keys(window.O55.screens.defs));
+  A.ok(ids.length >= 40, ids.length + ' screens');
+  for (const id of ids) {
+    await d.page.evaluate((s) => window.O55.ui.open({ fresh: true, screen: s }), id);
+    await d.until(new Function(`return !!document.querySelector('#pm-o55-onboarding .o55-layer[data-screen="${id}"]:not(.o55-out)')`), { what: id, timeout: 12000 }); await sleep(700);
+    const r = await d.page.evaluate((s) => { const L = document.querySelector(`#pm-o55-onboarding .o55-layer[data-screen="${s}"]:not(.o55-out)`); const t = L.innerText;
+      const main = L.querySelector('.o55-main') || L; return { bad: (t.match(/undefined|\{[a-zA-Z]+\}|\b(?:on|from|in|to) none\b|\bNaN\b|\[object Object\]/g) || []).join(', '), body: (main.textContent || '').trim().length }; }, id);
+    A.ok(!r.bad, id + ': no placeholder or undefined (' + r.bad + ')');
+    A.ok(r.body > 10, id + ': the screen is not empty (' + r.body + ' characters)');
+  }
 });
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();

@@ -40,6 +40,25 @@
       keys: ks.length, pick: ks.findIndex((k) => k.id === sel), newKey: sel === 'new', paired: !!N(S).viaPm }, extra || {});
   };
 
+  /* Opened straight at a later step (Demo Studio's Open at one screen): what the earlier steps would have left (QA2
+     hunter H1: these screens opened with nothing on them). A Project's files on the Home NAS over SSH; its identity
+     trusted from the key step on, a key chosen from the sign-in on, the key added for the folder; a NAS running Puppet
+     Master for the pairing (or the first one with SSH where none does); a share for SMB and NFS. */
+  const SEED_STEP = { 'nas-identity': 0, 'nas-pmpair': 0, 'nas-key': 1, 'nas-signin': 2, 'nas-install': 2, 'nas-folder': 3 };
+  function seedNas(S, id) {
+    const n = N(S), d0 = md(S);
+    if (n.purpose === 'source' && d0.project_mode !== 'existing_local') O55.draft.set(d0, { project_mode: 'existing_local', project_transport: 'ssh', source_more: true });
+    if (id === 'nas-smb' || id === 'nas-nfs') { n.method = id.slice(4); if (!n.share) n.share = (S.env.shares.find((x) => x.proto === n.method) || {}).id; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
+    if (id === 'nas-mounted') { n.method = 'mounted'; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
+    n.method = 'ssh';
+    if (!dev(S)) { const pick = (id === 'nas-pmpair' && S.env.devices.find((x) => x.pm)) || S.env.devices.find((x) => x.ssh); if (pick) n.device = pick.id; }
+    const d = dev(S), step = SEED_STEP[id] || 0;
+    if (d && step >= 1 && !n.trusted) { n.trusted = true; S.env.here.knownHosts[d.address] = d.hostKey; }
+    if (d && step >= 2 && !n.key) n.key = defaultKey(S);
+    if (d && step >= 3 && !n.installed) { if (n.key === 'new') makeNewKey(S); if (!d.authorized.includes(n.key)) d.authorized.push(n.key); n.installed = true; }
+    S.save();
+  }
+
   /* ------------------------------------------------------------------ find the device */
   def('nas-find', {
     chapter: 'project', stage: 'server_storage_client',
@@ -136,6 +155,7 @@
     return known === d.hostKey ? 'known' : 'changed';
   }
   def('nas-identity', {
+    seed: (S) => seedNas(S, 'nas-identity'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'identity', params: sceneParams(S) }),
     eyebrow: () => T('nas.identity.eyebrow'),
@@ -197,6 +217,7 @@
   const keyWhere = (k) => (k.where === 'file' && k.configHost ? T('nas.key.where.config', { host: k.configHost }) : T('nas.key.where.' + k.where));
   function defaultKey(S) { const works = keyring(S).find((k) => keyStatus(S, k) === 'works'); return works ? works.id : 'new'; }
   def('nas-key', {
+    seed: (S) => seedNas(S, 'nas-key'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'keys', params: sceneParams(S) }),
     eyebrow: () => T('nas.key.eyebrow'),
@@ -246,6 +267,7 @@
 
   /* ------------------------------------------------------------------ sign in once (only when the key isn't there yet) */
   def('nas-signin', {
+    seed: (S) => seedNas(S, 'nas-signin'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'keys', params: sceneParams(S) }),
     eyebrow: () => T('nas.signin.eyebrow'),
@@ -312,6 +334,7 @@
 
   /* ------------------------------------------------------------------ automatic phases (selected-source auth) */
   def('nas-install', {
+    seed: (S) => seedNas(S, 'nas-install'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => { const st = F.state(S, installKey(S)); return { id: 'nas', beat: st && st.state === 'done' ? 'verified' : 'install', params: sceneParams(S) }; },
     eyebrow: () => T('nas.install.eyebrow'),
@@ -425,6 +448,7 @@
     F.op(S, pairKey(S), 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload, ctx, sound: { phase: { approve: 'found', qr: 'found' }, intensity: 0.8 }, onDone: () => pairDone(S) });
   }
   def('nas-pmpair', {
+    seed: (S) => seedNas(S, 'nas-pmpair'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => { const n = N(S), st = F.state(S, pairKey(S)); return { id: 'nas', beat: n.paired ? 'paired' : 'pair', params: sceneParams(S, { seed: (pmOf(S) || {}).seed, words: words((pmOf(S) || {}).seed || ''), method: n.pairing || 'approval', waiting: !!(st && st.state === 'running') }) }; },
     eyebrow: () => T('nas.pmpair.eyebrow'),
@@ -505,6 +529,7 @@
   /* ------------------------------------------------------------------ choose a folder (SFTP browser) */
   function readOnlyAt(S, path) { const d = dev(S); return (d.readOnly || []).some((p) => path === p || path.startsWith(p + '/')); }
   def('nas-folder', {
+    seed: (S) => seedNas(S, 'nas-folder'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'folder', params: sceneParams(S, { folder: (N(S).at || '').split('/').pop() || undefined }) }),
     eyebrow: () => T('nas.folder.eyebrow'),
@@ -549,6 +574,7 @@
     S.save(); O55.ui.go('name');
   }
   def('nas-smb', {
+    seed: (S) => seedNas(S, 'nas-smb'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'smb' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.smb.eyebrow'), title: () => T('nas.smb.title'), lead: () => T('nas.smb.lead'),
@@ -569,6 +595,7 @@
     bind: { user(S, v) { N(S).user = v; S.save(); O55.ui.refresh(); }, pw(S, v) { const had = !!N(S).pwTyped; N(S).pwTyped = v.length > 0; if (had !== N(S).pwTyped) { S.save(); O55.ui.refresh(); } } }
   });
   def('nas-nfs', {
+    seed: (S) => seedNas(S, 'nas-nfs'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'nfs' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.nfs.eyebrow'), title: () => T('nas.nfs.title'), lead: () => T('nas.nfs.lead'),
@@ -578,6 +605,7 @@
     do: { use(S) { const sh = S.env.shares.find((s) => s.id === N(S).share); finishMounted(S, sh.path, 'nfs:' + sh.path, 'nfs'); } }
   });
   def('nas-mounted', {
+    seed: (S) => seedNas(S, 'nas-mounted'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'mounted' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.mounted.eyebrow'), title: () => T('nas.mounted.title'), lead: () => T('nas.mounted.lead'),

@@ -62,6 +62,19 @@
     S.save();
   }
 
+  /* Opened straight at a later connect screen (Demo Studio's Open at one screen): what the earlier screens would have
+     left, the first Puppet Master found on this network chosen (step 0), the review confirmed (1), the pairing done (2)
+     (QA2 hunter H1: the picture check read "undefined · undefined" and Ready "{name} has 0 Projects") */
+  function seedConnect(S, step) {
+    S.sess.active = 'connect';
+    const d = cd(S), c = S.sess.connect;
+    if (!server(S) && S.env.pmServers[0]) choose(S, S.env.pmServers[0], { remote_mode: d.remote_mode || 'local_or_vpn', server_connection_mode: 'discover' });
+    if (!d.connection_pairing) O55.draft.set(d, { connection_pairing: 'approval' });
+    if (step >= 1 && !c.confirmed) { c.confirmed = true; O55.draft.set(d, { review_confirmed: true }); }
+    if (step >= 2 && !c.paired) { c.paired = true; O55.draft.set(d, { server_trust_confirmed: true }); }
+    S.save();
+  }
+
   /* ------------------------------------------------------------------ C1: which Puppet Master, and how to reach it */
   def('c-route', {
     chapter: 'computer', stage: 'remote_access_setup', charmSlot: 'server',
@@ -148,6 +161,7 @@
   /* ------------------------------------------------------------------ C2: review and confirm */
   const routeLabel = (d) => ({ local_or_vpn: T('connect.route.local'), tailscale: T('connect.route.tailscale.title'), reverse_proxy: T('connect.route.proxy.title'), remote_link: T('connect.route.link.title') })[d.remote_mode] || '';
   def('c-review', {
+    seed: (S) => seedConnect(S, 0),
     chapter: 'computer', stage: 'review_setup_plan',
     scene: () => ({ id: 'where', beat: 'connect' }),
     eyebrow: () => T('connect.review.eyebrow'),
@@ -194,6 +208,7 @@
     F.op(S, 'pair:' + s.id, 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload: { server: s.id, method: d.connection_pairing }, sound: PAIR_SOUND, onDone: done });
   }
   def('c-pair', {
+    seed: (S) => seedConnect(S, 1),
     chapter: 'computer', stage: 'automatic_preparation',
     scene: () => ({ id: 'where', beat: 'connect' }),
     eyebrow: () => T('connect.pair.eyebrow'),
@@ -243,6 +258,7 @@
 
   /* ------------------------------------------------------------------ C4: ready to meet your Puppet Master (Ready) */
   def('c-ready', {
+    seed: (S) => seedConnect(S, 2),
     chapter: 'ready', stage: 'ready',
     scene: () => ({ id: 'hero', beat: 'ready' }),
     eyebrow: () => T('connect.ready.eyebrow'),

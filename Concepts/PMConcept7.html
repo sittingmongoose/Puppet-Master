@@ -27034,6 +27034,10 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-sublinks { display: flex; gap: 18px; flex-wrap: wrap; padding-top: 2px; }
 .o55-details { border-radius: var(--o55-card-r); }
 .o55-detbtn { display: inline-flex; align-items: center; gap: 8px; padding: 4px 0; background: none; border: 0; color: var(--text-secondary); font: 600 13px/1.3 var(--body-font); cursor: pointer; }
+/* (the details button and a switch row answer the pointer too, like the ? and the disclosures: QA round 2, Q3's sweep) */
+.o55-detbtn:hover { color: var(--text-primary); }
+.o55-detbtn:hover .o55-q { border-color: var(--o55-accent); color: var(--o55-ink-accent); }
+.o55-toggle:hover .o55-switch { box-shadow: 0 0 0 3px color-mix(in srgb, var(--o55-accent) 22%, transparent); }
 .o55-q { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid currentColor; font-size: 11.5px; }
 #pm-o55-onboarding[data-family="retro"] .o55-q { border-radius: 0; }
 .o55-detbody { margin-top: 6px; padding: 12px 14px; border-radius: var(--o55-card-r); background: color-mix(in srgb, var(--text-primary) 5%, transparent); color: var(--text-secondary); font-size: 13.5px; line-height: 1.55; }
@@ -175418,6 +175422,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (opts.screen && SCREENS.defs[opts.screen]) S.sess.screen = opts.screen;
     if (!SCREENS.defs[S.sess.screen]) S.sess.screen = 'welcome';
     if (opts.screen && opts.committed !== false && POSTCOMMIT.has(S.sess.screen) && !S.ctx().committed) seedCommit();
+    /* a screen opened straight (Demo Studio's Open at one screen) gets what the screens before it would have left: the
+       screen's own seed(S), which fills only what is missing (QA2 hunter H1; opt out with seed: false) */
+    const sd = opts.screen && opts.seed !== false && SCREENS.defs[S.sess.screen].seed;
+    if (sd) { try { sd(S); } catch (e) { console.warn('O55 seed', S.sess.screen, e); } }
     S.resumedShownOn = S.resumed ? S.sess.screen : null;
     returnFocus = opts.returnFocus || document.activeElement;
     S.open = true; S.save();
@@ -175732,10 +175740,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           return opt(id, `<button type="button" class="o55-card${on ? ' o55-on' : ''}${opt1.quiet ? ' o55-card-quiet' : ''}${opt1.under ? ' o55-card-parent' : ''}" role="radio" aria-checked="${on}" data-o55-do="${esc(action)}" data-arg="${esc(opt1.v)}"${dis}${described(id)}${U.attrs(X)} data-key="card-${esc(opt1.key || opt1.v)}">`
             + (opt1.glyph ? glyph(opt1.glyph) : '') + `<span class="o55-cardtext"><span class="o55-cardtitle">${esc(opt1.title)}</span>`
             + (opt1.sub ? `<span class="o55-cardsub">${esc(opt1.sub)}</span>` : '') + `</span>`
-            + (opt1.tag ? `<span class="o55-tag">${esc(opt1.tag)}</span>` : '') + `<span class="o55-check" aria-hidden="true"></span></button>`, on ? 'o55-opt-on' : '')
+            + (opt1.tag ? `<span class="o55-tag">${esc(opt1.tag)}</span>` : '') + `<span class="o55-check" aria-hidden="true"></span></button>`, on ? 'o55-opt-on' : '', null, opt1.under ? { note: false } : null)
             /* opt1.under: what this choice asks next (which device, which folder, which service), directly under it and
-               part of it, never below the whole list (Jared, QA round 2, Q7) */
-            + (opt1.under ? `<div class="o55-under" role="group" aria-label="${esc(opt1.title)}" data-key="under-${esc(opt1.key || opt1.v)}">${opt1.under}</div>` : '');
+               part of it, never below the whole list (Jared, QA round 2, Q7); the choice's own note, when it opens in the
+               form, is the tray's first line, so it never parts the card from its tray */
+            + (opt1.under ? `<div class="o55-under" role="group" aria-label="${esc(opt1.title)}" data-key="under-${esc(opt1.key || opt1.v)}">${explainer(id)}${opt1.under}</div>` : '');
         }).join('') + '</div>';
     },
     /* A row with state and exactly one action. */
@@ -177702,6 +177711,19 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     S.save();
   }
 
+  /* Opened straight at a later connect screen (Demo Studio's Open at one screen): what the earlier screens would have
+     left, the first Puppet Master found on this network chosen (step 0), the review confirmed (1), the pairing done (2)
+     (QA2 hunter H1: the picture check read "undefined · undefined" and Ready "{name} has 0 Projects") */
+  function seedConnect(S, step) {
+    S.sess.active = 'connect';
+    const d = cd(S), c = S.sess.connect;
+    if (!server(S) && S.env.pmServers[0]) choose(S, S.env.pmServers[0], { remote_mode: d.remote_mode || 'local_or_vpn', server_connection_mode: 'discover' });
+    if (!d.connection_pairing) O55.draft.set(d, { connection_pairing: 'approval' });
+    if (step >= 1 && !c.confirmed) { c.confirmed = true; O55.draft.set(d, { review_confirmed: true }); }
+    if (step >= 2 && !c.paired) { c.paired = true; O55.draft.set(d, { server_trust_confirmed: true }); }
+    S.save();
+  }
+
   /* ------------------------------------------------------------------ C1: which Puppet Master, and how to reach it */
   def('c-route', {
     chapter: 'computer', stage: 'remote_access_setup', charmSlot: 'server',
@@ -177788,6 +177810,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* ------------------------------------------------------------------ C2: review and confirm */
   const routeLabel = (d) => ({ local_or_vpn: T('connect.route.local'), tailscale: T('connect.route.tailscale.title'), reverse_proxy: T('connect.route.proxy.title'), remote_link: T('connect.route.link.title') })[d.remote_mode] || '';
   def('c-review', {
+    seed: (S) => seedConnect(S, 0),
     chapter: 'computer', stage: 'review_setup_plan',
     scene: () => ({ id: 'where', beat: 'connect' }),
     eyebrow: () => T('connect.review.eyebrow'),
@@ -177834,6 +177857,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     F.op(S, 'pair:' + s.id, 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload: { server: s.id, method: d.connection_pairing }, sound: PAIR_SOUND, onDone: done });
   }
   def('c-pair', {
+    seed: (S) => seedConnect(S, 1),
     chapter: 'computer', stage: 'automatic_preparation',
     scene: () => ({ id: 'where', beat: 'connect' }),
     eyebrow: () => T('connect.pair.eyebrow'),
@@ -177883,6 +177907,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
   /* ------------------------------------------------------------------ C4: ready to meet your Puppet Master (Ready) */
   def('c-ready', {
+    seed: (S) => seedConnect(S, 2),
     chapter: 'ready', stage: 'ready',
     scene: () => ({ id: 'hero', beat: 'ready' }),
     eyebrow: () => T('connect.ready.eyebrow'),
@@ -179082,6 +179107,25 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       keys: ks.length, pick: ks.findIndex((k) => k.id === sel), newKey: sel === 'new', paired: !!N(S).viaPm }, extra || {});
   };
 
+  /* Opened straight at a later step (Demo Studio's Open at one screen): what the earlier steps would have left (QA2
+     hunter H1: these screens opened with nothing on them). A Project's files on the Home NAS over SSH; its identity
+     trusted from the key step on, a key chosen from the sign-in on, the key added for the folder; a NAS running Puppet
+     Master for the pairing (or the first one with SSH where none does); a share for SMB and NFS. */
+  const SEED_STEP = { 'nas-identity': 0, 'nas-pmpair': 0, 'nas-key': 1, 'nas-signin': 2, 'nas-install': 2, 'nas-folder': 3 };
+  function seedNas(S, id) {
+    const n = N(S), d0 = md(S);
+    if (n.purpose === 'source' && d0.project_mode !== 'existing_local') O55.draft.set(d0, { project_mode: 'existing_local', project_transport: 'ssh', source_more: true });
+    if (id === 'nas-smb' || id === 'nas-nfs') { n.method = id.slice(4); if (!n.share) n.share = (S.env.shares.find((x) => x.proto === n.method) || {}).id; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
+    if (id === 'nas-mounted') { n.method = 'mounted'; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
+    n.method = 'ssh';
+    if (!dev(S)) { const pick = (id === 'nas-pmpair' && S.env.devices.find((x) => x.pm)) || S.env.devices.find((x) => x.ssh); if (pick) n.device = pick.id; }
+    const d = dev(S), step = SEED_STEP[id] || 0;
+    if (d && step >= 1 && !n.trusted) { n.trusted = true; S.env.here.knownHosts[d.address] = d.hostKey; }
+    if (d && step >= 2 && !n.key) n.key = defaultKey(S);
+    if (d && step >= 3 && !n.installed) { if (n.key === 'new') makeNewKey(S); if (!d.authorized.includes(n.key)) d.authorized.push(n.key); n.installed = true; }
+    S.save();
+  }
+
   /* ------------------------------------------------------------------ find the device */
   def('nas-find', {
     chapter: 'project', stage: 'server_storage_client',
@@ -179178,6 +179222,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return known === d.hostKey ? 'known' : 'changed';
   }
   def('nas-identity', {
+    seed: (S) => seedNas(S, 'nas-identity'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'identity', params: sceneParams(S) }),
     eyebrow: () => T('nas.identity.eyebrow'),
@@ -179239,6 +179284,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const keyWhere = (k) => (k.where === 'file' && k.configHost ? T('nas.key.where.config', { host: k.configHost }) : T('nas.key.where.' + k.where));
   function defaultKey(S) { const works = keyring(S).find((k) => keyStatus(S, k) === 'works'); return works ? works.id : 'new'; }
   def('nas-key', {
+    seed: (S) => seedNas(S, 'nas-key'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'keys', params: sceneParams(S) }),
     eyebrow: () => T('nas.key.eyebrow'),
@@ -179288,6 +179334,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
   /* ------------------------------------------------------------------ sign in once (only when the key isn't there yet) */
   def('nas-signin', {
+    seed: (S) => seedNas(S, 'nas-signin'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'keys', params: sceneParams(S) }),
     eyebrow: () => T('nas.signin.eyebrow'),
@@ -179354,6 +179401,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
   /* ------------------------------------------------------------------ automatic phases (selected-source auth) */
   def('nas-install', {
+    seed: (S) => seedNas(S, 'nas-install'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => { const st = F.state(S, installKey(S)); return { id: 'nas', beat: st && st.state === 'done' ? 'verified' : 'install', params: sceneParams(S) }; },
     eyebrow: () => T('nas.install.eyebrow'),
@@ -179467,6 +179515,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     F.op(S, pairKey(S), 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload, ctx, sound: { phase: { approve: 'found', qr: 'found' }, intensity: 0.8 }, onDone: () => pairDone(S) });
   }
   def('nas-pmpair', {
+    seed: (S) => seedNas(S, 'nas-pmpair'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => { const n = N(S), st = F.state(S, pairKey(S)); return { id: 'nas', beat: n.paired ? 'paired' : 'pair', params: sceneParams(S, { seed: (pmOf(S) || {}).seed, words: words((pmOf(S) || {}).seed || ''), method: n.pairing || 'approval', waiting: !!(st && st.state === 'running') }) }; },
     eyebrow: () => T('nas.pmpair.eyebrow'),
@@ -179547,6 +179596,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* ------------------------------------------------------------------ choose a folder (SFTP browser) */
   function readOnlyAt(S, path) { const d = dev(S); return (d.readOnly || []).some((p) => path === p || path.startsWith(p + '/')); }
   def('nas-folder', {
+    seed: (S) => seedNas(S, 'nas-folder'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'folder', params: sceneParams(S, { folder: (N(S).at || '').split('/').pop() || undefined }) }),
     eyebrow: () => T('nas.folder.eyebrow'),
@@ -179591,6 +179641,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     S.save(); O55.ui.go('name');
   }
   def('nas-smb', {
+    seed: (S) => seedNas(S, 'nas-smb'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'smb' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.smb.eyebrow'), title: () => T('nas.smb.title'), lead: () => T('nas.smb.lead'),
@@ -179611,6 +179662,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     bind: { user(S, v) { N(S).user = v; S.save(); O55.ui.refresh(); }, pw(S, v) { const had = !!N(S).pwTyped; N(S).pwTyped = v.length > 0; if (had !== N(S).pwTyped) { S.save(); O55.ui.refresh(); } } }
   });
   def('nas-nfs', {
+    seed: (S) => seedNas(S, 'nas-nfs'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'nfs' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.nfs.eyebrow'), title: () => T('nas.nfs.title'), lead: () => T('nas.nfs.lead'),
@@ -179620,6 +179672,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     do: { use(S) { const sh = S.env.shares.find((s) => s.id === N(S).share); finishMounted(S, sh.path, 'nfs:' + sh.path, 'nfs'); } }
   });
   def('nas-mounted', {
+    seed: (S) => seedNas(S, 'nas-mounted'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'mounted' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.mounted.eyebrow'), title: () => T('nas.mounted.title'), lead: () => T('nas.mounted.lead'),
@@ -179747,6 +179800,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     } });
   }
   def('online-signin', {
+    seed: (S) => seedOnline(S, false),
     chapter: 'project', stage: 'source_control_setup',
     scene: (S) => ({ id: 'online', beat: SI(S).state === 'done' ? 'signed' : 'signin' }),
     eyebrow: (S) => (SI(S).kind !== 'forge' ? T('safe.eyebrow') : OL(S).purpose === 'source' ? T('begin.eyebrow') : T('online.signin.eyebrow')),
@@ -179893,6 +179947,28 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     bind: { address(S, v) { OL(S).address = v; S.save(); O55.ui.refresh(); } }
   });
 
+  /* Opened straight at a later online screen (Demo Studio's Open at one screen): what the earlier screens would have
+     left, GitHub chosen, and signed in for the screens after its sign-in (QA2 hunter H1: "Sign in to {name}", "Name on
+     none", "From on none"). The repository picker brings existing work in; the others make a new online copy. */
+  function seedOnline(S, signedIn, purpose) {
+    const d = md(S), ol = OL(S);
+    if (purpose) ol.purpose = purpose;
+    if (!d.forge || d.forge === 'none') {
+      ol.forge = 'github';
+      O55.draft.set(d, { online_mode: ol.purpose === 'source' ? 'existing' : 'new', forge: 'github', forge_provider_variant: VARIANTS.github[0][0], forge_instance_url: '', forge_instance_profile: null });
+      if (ol.purpose === 'source') O55.draft.set(d, { project_mode: 'existing_online', source_more: true });
+    }
+    const si = SI(S);
+    if (si.kind !== 'forge' || si.service !== d.forge) S.sess.signin = { service: d.forge, name: forgeName(d.forge, d.forge_provider_variant), kind: 'forge', then: ol.purpose === 'source' ? 'ex-repos' : 'online-details', done: null, state: 'idle', instance_key: instanceKey(d) };
+    if (signedIn && SI(S).state !== 'done') {
+      const cur = SI(S), login = accountFor(S, d.forge) || 'jared-p';
+      cur.state = 'done'; cur.account = login; S.sess.forgeAccounts[cur.instance_key] = login;
+      O55.draft.set(d, { forge_account_action: 'sign_in_during_setup', forge_account_ref: 'account:' + U.slug(cur.instance_key) + ':' + U.slug(login) });
+      if (ol.purpose === 'source') O55.draft.set(d, { source_access_authorization_refs: Array.from(new Set(d.source_access_authorization_refs.concat(['auth:' + U.slug(cur.instance_key) + ':' + U.slug(login)]))).slice(0, 16) });
+    }
+    S.save();
+  }
+
   /* ================================================================== name, privacy, owner, advanced (a new online copy) */
   function nameTaken(S, name) { const f = S.env.forges[md(S).forge] || { taken: [] }; return f.taken.includes(String(name || '').trim().toLowerCase()); }
   const azureGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -179911,6 +179987,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         instance_key: instanceKey(d), operation: 'human_create_team_project', owner_verified: true } };
   }
   def('online-details', {
+    seed: (S) => seedOnline(S, true),
     chapter: 'project', stage: 'source_control_setup',
     scene: () => ({ id: 'online', beat: 'signed' }),
     eyebrow: () => T('online.details.eyebrow'),
@@ -179985,6 +180062,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
   /* ================================================================== pick the online Project to bring in */
   def('ex-repos', {
+    seed: (S) => seedOnline(S, true, 'source'),
     chapter: 'project', stage: 'first_project',
     scene: () => ({ id: 'online', beat: 'signed' }),
     eyebrow: () => T('online.repos.eyebrow'),

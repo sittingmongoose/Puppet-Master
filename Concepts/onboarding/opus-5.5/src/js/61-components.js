@@ -141,10 +141,11 @@
           return opt(id, `<button type="button" class="o55-card${on ? ' o55-on' : ''}${opt1.quiet ? ' o55-card-quiet' : ''}${opt1.under ? ' o55-card-parent' : ''}" role="radio" aria-checked="${on}" data-o55-do="${esc(action)}" data-arg="${esc(opt1.v)}"${dis}${described(id)}${U.attrs(X)} data-key="card-${esc(opt1.key || opt1.v)}">`
             + (opt1.glyph ? glyph(opt1.glyph) : '') + `<span class="o55-cardtext"><span class="o55-cardtitle">${esc(opt1.title)}</span>`
             + (opt1.sub ? `<span class="o55-cardsub">${esc(opt1.sub)}</span>` : '') + `</span>`
-            + (opt1.tag ? `<span class="o55-tag">${esc(opt1.tag)}</span>` : '') + `<span class="o55-check" aria-hidden="true"></span></button>`, on ? 'o55-opt-on' : '')
+            + (opt1.tag ? `<span class="o55-tag">${esc(opt1.tag)}</span>` : '') + `<span class="o55-check" aria-hidden="true"></span></button>`, on ? 'o55-opt-on' : '', null, opt1.under ? { note: false } : null)
             /* opt1.under: what this choice asks next (which device, which folder, which service), directly under it and
-               part of it, never below the whole list (Jared, QA round 2, Q7) */
-            + (opt1.under ? `<div class="o55-under" role="group" aria-label="${esc(opt1.title)}" data-key="under-${esc(opt1.key || opt1.v)}">${opt1.under}</div>` : '');
+               part of it, never below the whole list (Jared, QA round 2, Q7); the choice's own note, when it opens in the
+               form, is the tray's first line, so it never parts the card from its tray */
+            + (opt1.under ? `<div class="o55-under" role="group" aria-label="${esc(opt1.title)}" data-key="under-${esc(opt1.key || opt1.v)}">${explainer(id)}${opt1.under}</div>` : '');
         }).join('') + '</div>';
     },
     /* A row with state and exactly one action. */
