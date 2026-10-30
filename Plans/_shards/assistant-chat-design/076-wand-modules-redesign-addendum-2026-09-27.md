@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26830-L27543
+Source lines: L26830-L27554
 
-Source SHA256: `8ff8cd2ffe0dc8e681ec6e6df5253dcbbea369bfbef0c0c2c07ef8aa382dae68`
+Source SHA256: `75e1c620b8a3b984d78b36c8c7b8b349e20327a9e83f95c6f5728e3d0ad12001`
 
 ---
 
@@ -45,7 +45,18 @@ canonical_text: >-
   taken only in its transcript item or the approval owner's host. The families of the records the
   dock mirrors are ACD-469's map. The dock's live-run lines and the per-reply files row replace
   the stream footer pill's helpers and files chips (ACD-482, DL-129).
-  Amended 2026-10-29 (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes to live runs; both are views of the same owner identity, not duplicate attention. Process stop differs from reply Stop; delivery never wakes a stopped thread.
+  Amended 2026-10-29 (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes
+  to live runs; both are views of the same owner identity, not duplicate attention. Process stop differs from
+  reply Stop; delivery never wakes a stopped thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30
+  (integration e9b15abc64): activity-panel.js registers one PM56_PMX.dock.provide(workDock) provider over the
+  selected thread’s PM_WORK process/agent/scheduled items. needsYou items are needs lines with Review, live
+  processes are live lines with current time, and the next pending scheduled run is comingup. These items have
+  no transcript card to wait offscreen for; existing transcript-backed providers retain their visibility
+  rules. [data-work-time] is patched by the same tick owner. Review/Show for a process or scheduled item
+  reuses cmd.chat.processes.open with that exact item selected; an agent Review selects its existing Subagents
+  Activity Detail row as local view state, not cmd.agents.open_thread and not a direct permission/answer/stop
+  action. The concept work-dock-review adapter uses PM56_DEMO.openActivity only to demonstrate those existing
+  view routes; it admits no demo command to the product.
 gui_related: true
 gui_classification_reason: "Defines the dock above the composer and the attention items it shows."
 split_recommended: false

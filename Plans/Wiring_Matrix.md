@@ -6666,7 +6666,14 @@ canonical_text: >-
   proof. W6 identity mapping: PM_WORK item delivery maps to completion_delivery, restarting maps to pending
   with Restarting words, and its clearFinished platform/thread:<id> views map to the invoking view.
   canSendInput/answer are concept projections of current prompt eligibility and owner answers; native process
-  identity, generation, permission, yes/no-only stdin and read-only-service gates remain unchanged.
+  identity, generation, permission, yes/no-only stdin and read-only-service gates remain unchanged. D2/D7, PM7
+  Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): chat.work_dock.process_open maps
+  Review/Show to existing pm7.processes_open / cmd.chat.processes.open. chat.work_dock.agent_review records
+  ordinary local Subagents row selection with no command or new action ID. Both source-anchor work-dock-review
+  in activity-panel.js and preserve exact selected-thread/work identity. Existing work controls are reused in
+  rail/Home shared rows; Resources Time reuses ui.work_panel.sort. No new production row or Touch action is
+  created by these producers; total control families become 470, of which 51 PM7 families have concept source
+  anchors.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

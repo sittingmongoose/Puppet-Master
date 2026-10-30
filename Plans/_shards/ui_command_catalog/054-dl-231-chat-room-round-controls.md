@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16288-L16655
+Source lines: L16288-L16659
 
-Source SHA256: `18cee2ec816f524c6a92436b8c8d72a258e47a2fb67ee22d3c34be0e08049e4b`
+Source SHA256: `66cfb69f35dcfa3839c5485cbbf1383fc09ecf46c86d3f892a560b8085a02a61`
 
 ---
 
@@ -282,7 +282,11 @@ canonical_text: >-
   overlay/Glass plate; unavailable owner navigation says why. G6 confines Clear finished producers to the
   thread Processes view and panel Processes tab. PM7_WORK_UI and PM_WORK demonstrate these routes in the
   concept; they are adapters to the stable catalog identities, not replacement native commands or Event
-  Authority admission.
+  Authority admission. D2/D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): composer
+  run_dock Review/Show is an additional producer of cmd.chat.processes.open for a process or scheduled item,
+  preserving Project/thread/work identity and selecting that item in Processes. Agent Review selects the
+  existing Subagents Activity Detail row as ordinary local view state; it does not open the live transcript or
+  dispatch cmd.agents.open_thread. This view selection owns no runtime mutation or new action ID.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

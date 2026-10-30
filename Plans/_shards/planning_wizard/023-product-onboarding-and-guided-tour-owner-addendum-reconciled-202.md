@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2201
+Source lines: L1781-L2205
 
-Source SHA256: `749415db98b1299309b24cc0c3588a586fc201c929bfbc56aa0d4868d4158a66`
+Source SHA256: `dc4ac54a11b119ec9c3de10aaf1697b164ecd1378b6ddac3474d10b7fd96ada9`
 
 ---
 
@@ -154,7 +154,11 @@ canonical_text: >-
   lab-facing adapters to the same real wizard actions and drafts; they confer no new product action or owner
   permission. Choice explanations keep pm7ob-explainer and the existing typed action; post-commit examples
   require the actual committed Project. Fixture twists/signinFailed are lab/source data, never alternate
-  validation or persisted event names.
+  validation or persisted event names. O10/O12, PM7 Step4 final-source alignment, 2026-10-30 (integration
+  e9b15abc64): Ready’s tour action lets the shared Pip stage’s handOff() visibly lift before calling
+  O55.finish for the unchanged Tour; its handingOff guard prevents a second press. Reduced Motion finishes the
+  handoff instantly. Creating remains gated by current owner completion and the last block landing; touchdown
+  audio is F3-599’s shared cue and is never completion evidence.
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.

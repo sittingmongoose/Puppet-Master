@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L18490
+Source lines: L14505-L18504
 
-Source SHA256: `ac9ea23a961f9865aed2860592581d99ce7de0353f8e686e00f2f5cd94b4776c`
+Source SHA256: `25d50305b16975ed931b95e770891c1c1552197df159c7914986f2c397057cc5`
 
 ---
 
@@ -3378,7 +3378,15 @@ canonical_text: >-
   and lineage; Home Agents board is a filtered agent view. All share OperationalAwareness over
   ObservableWork and registry lineage, one row anatomy, ordering and needs-you set. No surface owns a
   parallel runtime list/count. Authority: Jared decided D7 on 2026-10-28; this is an approved source-thread
-  decision, not an unanswered packet recommendation.
+  decision, not an unanswered packet recommendation. D7, PM7 Step4 final-source alignment, 2026-10-30
+  (integration e9b15abc64): PM7_WORK_UI.list(host, options), agentGroup and agentSummary in src/js/48-work.js
+  are the shared row/filter/summary adapters. The rail #panel-agents [data-work-rail] keeps its four shelves
+  (Needs you, Active with lineage, Queued, Recently completed); Home dashboard:agents in 30-dashboard.js keeps
+  its frame/filter. Both read PM_WORK and the same needs-you set; no AGENTS fixture array, private clock or
+  parallel transcript opener remains. list refreshes on change, patchTicks updates times/progress/output,
+  hidden lists catch up on show, and destroy removes subscriptions/observers. Rail uses spelled-out ages; Home
+  keeps its short time form. These source adapters demonstrate the projection boundary without certifying
+  native runtime.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -3812,10 +3820,16 @@ canonical_text: >-
   continuous and artifact-free in Friendly/Glass. NieR and narrow forms are designed in this build.
   Jared decided these packet rows on 2026-10-30; every unmodified recommendation is confirmed as his decision,
   and the decision IDs remain the amendment keys. X1, L1, S9, O11
-  and G4 retain his earlier explicit rulings. W7/C5 open investigation PM7-C5-CONTEXT-RING: the ring’s correct
-  continuous rendering is the requested acceptance outcome. The activity GUI lane must report the
-  investigated cause and actual drawing/token fix; no mechanism is claimed by this decision before that
-  report. G1 B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action (binding
+  and G4 retain his earlier explicit rulings. G9/C5, PM7 Step4 final-source reconciliation, 2026-10-30: the
+  activity lane report and pm7-port/css/20-controls.css resolve PM7-C5-CONTEXT-RING. The conic background
+  tiled into a 1 px faint border (Friendly 6 percent, Glass 9 percent alpha), exposing slivers; Glass’s clear
+  --surface middle disc exposed the meter as a pie. The hosted Basic/Friendly/Glass owner now draws the meter
+  on its own ::before layer, cut to an approximately 3 px ring with a radial mask; the middle is the header’s
+  ground and no gradient tiles into the
+  border. Retro/NieR retain their own drawings. This records the reported concept cause/drawing rule; native
+  continuous antialiased rendering at actual widths/DPR/Reduced Motion remains acceptance, not certification
+  by this source note. G1 B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action
+  (binding
   chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and reprojects
   the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only: one
   full-size docked-or-full-height-cover view, no small form. A switch cancels stale subscriptions and never

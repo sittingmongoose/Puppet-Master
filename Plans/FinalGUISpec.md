@@ -34384,7 +34384,13 @@ canonical_text: >-
   question stays readable in the collapsed row and the waiting or elapsed time appears once, in the row head; the
   economics and lane facts read as plain words and numbers, and model names are plain words, not capsules; the
   vocabulary, mapping and ordering above are unchanged.
-  Amended 2026-10-29 (D7; PM7): Its ordering, lifecycle words and stale strip are reused by F3-664’s platform panel and Home Agents board. The rail remains deep management; all named product owners are included, no Orchestrator-only narrowing.
+  Amended 2026-10-29 (D7; PM7): Its ordering, lifecycle words and stale strip are reused by F3-664’s platform
+  panel and Home Agents board. The rail remains deep management; all named product owners are included, no
+  Orchestrator-only narrowing. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): the
+  rail and Home board consume DR-078’s PM7_WORK_UI.list/agentGroup/agentSummary instead of a second agent list
+  or clock. The rail keeps this deep-view lineage/queue contract and four shelves; the Home frame and filter
+  keep their own layout. State words, needs-you identity and row actions are the same projection, with
+  spelled-out rail ages and hidden-view teardown/catch-up.
 gui_related: true
 gui_classification_reason: This unit defines the visible Agents panel lifecycle chips, queue and attention presentation, economics, staleness treatment, and icon substitution.
 split_recommended: false
@@ -43267,7 +43273,16 @@ canonical_text: >-
   metadata through the one player; no re-key to the old canon. Six setup kits coexist with the unchanged
   Tour’s existing cue mappings, not another player, switch or local registry. O6, Jared 2026-10-30: look-tile
   hover has no sound or theme change in any look, NieR included. Only click/keyboard activation selects the
-  look; this does not silence deliberate Ask Pip or other owner-routed cues.
+  look; this does not silence deliberate Ask Pip or other owner-routed cues. O3/O4/O5/O8/O9/SND1 B, PM7 Step4
+  final-source alignment, 2026-10-30 (integration e9b15abc64): the existing sound_render.mjs renders Pip’s six
+  kits with --pip-only into sound.json pip records and pip/<kit>/<key>.wav; sound_catalog.py --pip
+  measures/levels them and --write updates the shared TRIM/MAKEUP. sound_board.py --pip builds the
+  boards/spectrograms; --pip-page builds the listening page. The separate pip_sound_board.py,
+  pip_sound_levels.mjs and pip_sound_texture.mjs tools are retired in favor of these shared tools. This is one
+  recipe/catalog/player path, not a second sound registry. Land on the tools’ measured numbers as Jared
+  decided SND1 B; product listening remains his later check. Block cues occur once per touchdown, rise with
+  stack position and flourish on the last, through the same sound/mute/gesture gates; hover over a look tile
+  is silent in every look, including NieR.
 gui_related: true
 gui_classification_reason: Places onboarding and Guided Tour sound cues, their kits and the NieR kit in the
   sound settings model.
@@ -46813,7 +46828,11 @@ canonical_text: >-
   hour or Back to now, disabled with the availability reason, within F3-649's Demo Studio.
   Amended 2026-10-16 (DL-214; Jared's 2026-10-15 panel item 1): the Home board opens as the pinned 36 px
   Home tab from every path, the "+" menu, the Board menu and a page's subtab, never as a second, unpinned
-  tab at natural width.
+  tab at natural width. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64):
+  dashboard:agents uses PM7_WORK_UI.list, agentGroup and agentSummary over PM_WORK, the same rows/needs-you
+  set as the platform panel and Agents rail. Its existing frame, All/Working/Needs you/Waiting/Finished filter
+  and short time form stay with this owner; no private AGENTS list or clock owns different agents. DR-078
+  defines subscription teardown and show-time catch-up.
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
@@ -50351,6 +50370,13 @@ canonical_text: >-
   reserve the full note/bubble layout first, preserve the existing heading/choice semantics and focus
   return. O12’s landing wait is presentation completion only: it neither dispatches owner work nor
   manufactures a completed phase. Other choices and recovery controls remain responsive during Creating.
+  O6/O10/O12, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): silent look hover
+  includes the Pip voice and NieR cursor tick; click/keyboard selection may speak its selected line. Ready’s
+  handOff() lift is drawn before O55.finish({tour:true}); the joined adapter returns about 560 ms scaled by
+  Animation speed, 0 under Reduced Motion, and ignores a second press while handing off. Pip and its line lift
+  on the connected strings toward the window from which the first callout appears. This is the Ready handoff,
+  not a redesign of the deferred Tour. Creating blocks cue once at touchdown through F3-599, finished chapter
+  beads carry their check in every look, and the resume chip’s hover tag includes its existing tip.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -50469,7 +50495,15 @@ canonical_text: >-
   to the invoking view, not a new persistence key. Counts.finished/failed describe the Processes list, while
   finishedAgents belongs to Agents. Environment headings count all displayed state groups. Resource samples
   re-sort under the selected column, deferring row movement while the pointer/focus is in the table. These
-  concept APIs/fixtures do not certify native handlers or windows.
+  concept APIs/fixtures do not certify native handlers or windows. G4/D7/D9, PM7 Step4 final-source alignment,
+  2026-10-30 (integration e9b15abc64): Resources has Time after State; [data-work-time] uses the shared clock
+  and the Time sort compares startedAt with stable title ties. Sample immediately on subscription and every 2
+  s only while open/visible; unknown/stale remains explicit. Narrow Resources keeps the omitted
+  Time/Port/Started by facts reachable in the inspector and accessible description.
+  PM7_WORK_UI.list/agentGroup/agentSummary supply the rail and Home Agents consumers per DR-078. Panel drags
+  use body.pm-resizing and release/pointercancel notifies PM_DRAGEND so shared motion resumes once. Per-kind
+  completion defaults stay DL-248’s agent for scripts/tests/builds and user for server/db/watcher; Quiet
+  remains an explicit choice.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

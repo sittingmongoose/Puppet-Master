@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L28057-L28488
+Source lines: L28068-L28503
 
-Source SHA256: `8ff8cd2ffe0dc8e681ec6e6df5253dcbbea369bfbef0c0c2c07ef8aa382dae68`
+Source SHA256: `75e1c620b8a3b984d78b36c8c7b8b349e20327a9e83f95c6f5728e3d0ad12001`
 
 ---
 
@@ -304,11 +304,15 @@ canonical_text: >-
   uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu
   plate. Friendly/Glass context ring is continuous, antialiased and never segmented by broken transforms.
   All ten looks, widths 860/1024/1280/~1390/1920, narrow/short, Reduced Motion and drag budgets are
-  acceptance surfaces. W7/C5 context-ring clause is an acceptance outcome, not an asserted diagnosis: open
-  investigation PM7-C5-CONTEXT-RING remains owned by the activity GUI lane until its report identifies the
-  renderer/token cause and resulting drawing rule. Do not invent a causal fix from this prose. Recheck
-  Friendly/Glass at actual widths/DPR/Reduced Motion after that implementation; Step 4 reconciles its
-  measured mechanism. G1 B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action
+  acceptance surfaces. G9/C5, PM7 Step4 final-source reconciliation, 2026-10-30: the activity lane report and
+  pm7-port/css/20-controls.css resolve PM7-C5-CONTEXT-RING. The conic background tiled into a 1 px faint
+  border (Friendly 6 percent, Glass 9 percent alpha), exposing slivers; Glass’s clear --surface middle disc
+  exposed the meter as a pie. The hosted Basic/Friendly/Glass owner now draws the meter on its own ::before
+  layer, cut to an approximately 3 px ring with a radial mask; the
+  middle is the header’s ground and no gradient tiles into the border. Retro/NieR retain their own drawings.
+  This records the reported concept cause/drawing rule; native continuous antialiased rendering at actual
+  widths/DPR/Reduced Motion remains acceptance, not certification by this source note. G1 B (Jared
+  2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action
   (binding chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and
   reprojects the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only:
   one full-size docked-or-full-height-cover view, no small form. A switch cancels stale subscriptions and

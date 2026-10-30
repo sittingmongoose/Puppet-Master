@@ -959,6 +959,12 @@
             "application",
             "project"
           ]
+        },
+        "work_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "description": "Optional exact process/scheduled row for dock Review/Show; owner must bind to the signed Project/thread and expected generation. No title fallback."
         }
       },
       "allOf": [

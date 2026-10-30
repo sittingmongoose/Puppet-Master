@@ -4424,7 +4424,15 @@ canonical_text: >-
   badge and composer attention are filtered OperationalAwareness over ObservableWork and registry lineage.
   No consumer owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate
   ProcessFacts; host monitor owns server/environment resource samples while Resources is open only. Actions
-  route to one owner command/handler; services are read-only and stop lists are generation-bound.
+  route to one owner command/handler; services are read-only and stop lists are generation-bound. D7, PM7
+  Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): PM7_WORK_UI.list(host, options),
+  agentGroup and agentSummary in src/js/48-work.js are the shared row/filter/summary adapters. The rail
+  #panel-agents [data-work-rail] keeps its four shelves (Needs you, Active with lineage, Queued, Recently
+  completed); Home dashboard:agents in 30-dashboard.js keeps its frame/filter. Both read PM_WORK and the same
+  needs-you set; no AGENTS fixture array, private clock or parallel transcript opener remains. list refreshes
+  on change, patchTicks updates times/progress/output, hidden lists catch up on show, and destroy removes
+  subscriptions/observers. Rail uses spelled-out ages; Home keeps its short time form. These source adapters
+  demonstrate the projection boundary without certifying native runtime.
 gui_related: false
 gui_classification_reason: Defines owner authority, record semantics or lifecycle.
 split_recommended: false
@@ -4490,7 +4498,11 @@ canonical_text: >-
   (160 ms for Home/Usage/chat, 140 ms default). morph(el, from, to, opts) moves the same box between
   {left,top,width,height} geometries: height-only changes use the shared height spring/size bounce;
   a level's width/place change uses its opts.shape duration/easing, with the same motion gates.
-  Shared presentation APIs create no new product command or saved key.
+  Shared presentation APIs create no new product command or saved key. L8 B, PM7 Step4 final-source alignment,
+  2026-10-30 (integration e9b15abc64): the owner also supplies --pm6-sprout-height-ease. A growing resize may
+  overshoot; a shrinking resize or height-only morph settles without passing below its content. A drag
+  catching an in-flight morph settles it at the end. All editor overflow menus (.pm-ed-overflow-menu) use the
+  same open/close owner, and superseded local styles/lifecycles are retired.
 gui_related: true
 gui_classification_reason: Defines one visible menu motion and lifecycle owner.
 split_recommended: false

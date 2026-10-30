@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45033-L47485
+Source lines: L45048-L47504
 
-Source SHA256: `57d809e48384bd034b600817abfc91d11f8be1b62948f0bc1cb9a70c1b755ff9`
+Source SHA256: `980b5c51ff0bff61284fc6620baf9bb18aabcfb9399c34960edada13888828b2`
 
 ---
 
@@ -1791,7 +1791,11 @@ canonical_text: >-
   hour or Back to now, disabled with the availability reason, within F3-649's Demo Studio.
   Amended 2026-10-16 (DL-214; Jared's 2026-10-15 panel item 1): the Home board opens as the pinned 36 px
   Home tab from every path, the "+" menu, the Board menu and a page's subtab, never as a second, unpinned
-  tab at natural width.
+  tab at natural width. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64):
+  dashboard:agents uses PM7_WORK_UI.list, agentGroup and agentSummary over PM_WORK, the same rows/needs-you
+  set as the platform panel and Agents rail. Its existing frame, All/Working/Needs you/Waiting/Finished filter
+  and short time form stay with this owner; no private AGENTS list or clock owns different agents. DR-078
+  defines subscription teardown and show-time catch-up.
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false

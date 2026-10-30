@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L47487-L50581
+Source lines: L47506-L50615
 
-Source SHA256: `57d809e48384bd034b600817abfc91d11f8be1b62948f0bc1cb9a70c1b755ff9`
+Source SHA256: `980b5c51ff0bff61284fc6620baf9bb18aabcfb9399c34960edada13888828b2`
 
 ---
 
@@ -2875,6 +2875,13 @@ canonical_text: >-
   reserve the full note/bubble layout first, preserve the existing heading/choice semantics and focus
   return. O12’s landing wait is presentation completion only: it neither dispatches owner work nor
   manufactures a completed phase. Other choices and recovery controls remain responsive during Creating.
+  O6/O10/O12, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): silent look hover
+  includes the Pip voice and NieR cursor tick; click/keyboard selection may speak its selected line. Ready’s
+  handOff() lift is drawn before O55.finish({tour:true}); the joined adapter returns about 560 ms scaled by
+  Animation speed, 0 under Reduced Motion, and ignores a second press while handing off. Pip and its line lift
+  on the connected strings toward the window from which the first callout appears. This is the Ready handoff,
+  not a redesign of the deferred Tour. Creating blocks cue once at touchdown through F3-599, finished chapter
+  beads carry their check in every look, and the resume chip’s hover tag includes its existing tip.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2993,7 +3000,15 @@ canonical_text: >-
   to the invoking view, not a new persistence key. Counts.finished/failed describe the Processes list, while
   finishedAgents belongs to Agents. Environment headings count all displayed state groups. Resource samples
   re-sort under the selected column, deferring row movement while the pointer/focus is in the table. These
-  concept APIs/fixtures do not certify native handlers or windows.
+  concept APIs/fixtures do not certify native handlers or windows. G4/D7/D9, PM7 Step4 final-source alignment,
+  2026-10-30 (integration e9b15abc64): Resources has Time after State; [data-work-time] uses the shared clock
+  and the Time sort compares startedAt with stable title ties. Sample immediately on subscription and every 2
+  s only while open/visible; unknown/stale remains explicit. Narrow Resources keeps the omitted
+  Time/Port/Started by facts reachable in the inspector and accessible description.
+  PM7_WORK_UI.list/agentGroup/agentSummary supply the rail and Home Agents consumers per DR-078. Panel drags
+  use body.pm-resizing and release/pointercancel notifies PM_DRAGEND so shared motion resumes once. Per-kind
+  completion defaults stay DL-248’s agent for scripts/tests/builds and user for server/db/watcher; Quiet
+  remains an explicit choice.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

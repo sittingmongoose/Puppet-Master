@@ -76093,7 +76093,7 @@
     },
     "pm7.processes_open": {
       "ui_element_id": "pm7.processes_open",
-      "ui_location": "Assistant Chat > Activity bar / Activity Detail > Processes",
+      "ui_location": "Assistant Chat > Activity bar / Activity Detail > Processes; composer dock > process or scheduled Review / Show",
       "ui_command_id": "cmd.chat.processes.open",
       "handler_location": "handlers::chat::open_processes",
       "expected_event_types": [],
@@ -76101,7 +76101,8 @@
         "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
         "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
         "Reveal only this Project/thread’s Processes detail with D4 presence and full-size G1/G2 geometry.",
-        "Opening this view starts/stops no process and does not duplicate a subagent as process work."
+        "Opening this view starts/stops no process and does not duplicate a subagent as process work.",
+        "D2/D7 dock producer carries optional exact work_id with signed Project/thread and expected_generation. Resolve/select only that current process/scheduled row; foreign/stale/missing selection refuses without title fallback, cross-thread navigation or process effect. A normal bar open may omit work_id."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/assistant-chat-design.md#ACD-505",
       "state_selector": "state.pm7.processes_open.availability",

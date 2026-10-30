@@ -132,7 +132,7 @@ Faces never manufacture runtime state. Typed owner status wins over a decorative
 
 Project badge priority (B5): waiting > blocked > working > change-modified > idle. Tray (A3) aggregates every Project; waiting wins; paused applies when remaining work is paused. Never replace a stale feed with a healthy zero.
 
-Part contract (lead adopted, 2026-10-29): `Plans/pip_parts.json`, 25 options, Full = 24 on (app-voice off). Binding rows = 468; Touch = 710 rows / 137 profiles; production wiring = 1269. All projects is local `ui.project_switcher.all_projects`, not the rail-only `cmd.panel.switch`.
+Part contract (lead adopted, 2026-10-29): `Plans/pip_parts.json`, 25 options, Full = 24 on (app-voice off). Binding rows = 470; Touch = 710 rows / 137 profiles; production wiring = 1269. All projects is local `ui.project_switcher.all_projects`, not the rail-only `cmd.panel.switch`.
 
 Review completion allocation: **G-031** owns the durable PM7 help-entry records (Pip, Project box, Processes, Question, Needs input, Completion delivery, Lost, ObservableWork, Operational Awareness, Backgrounded, Resources). Resources reuses the existing **gauge** glyph. A5 per-surface face tables and A3 complete tray precedence are now explicit in canon and the catalog; the original 22 status keys remain.
 
@@ -143,3 +143,5 @@ Jared’s decision answers, 2026-10-30: all packet recommendations are confirmed
 Step4 System status: ui.system_status.open / ui.system_status.close (view-local); statusbar.system_status, existing work.open_system_status, system_status.close, system_status.service.open_settings. Service links reuse ui.settings.route.open for code.editing.lsp-server-catalog, system.mcp.server-list or web.index.enable; no write or new production command. Code-source anchors in the bindings remain concept-only evidence. PM6_SPROUT is the shared menu lifecycle (DR-079); PMLogo.MOTION is the family motion token row. B5 says Unsaved changes for dirty active-Project Home buffers, never autosaved layout.
 
 Step4 L8 B review-fix names (integration 4c49e10567): PM6_SPROUT.open(el, afterOpen, anchor, opts), close(el, done, opts), morph(el, from, to, opts); shared origin/shown/instant/fade inputs per DR-079. A4 A Friendly notification classes are .pmn-tile-pip and .pmn-kind; decorative, no binding added.
+
+Step4 final GUI e9b15abc64: PM7_WORK_UI.list / agentGroup / agentSummary supply rail and Home Agents. New binding families chat.work_dock.process_open (cmd.chat.processes.open, optional exact work_id) and chat.work_dock.agent_review (ordinary local Subagents selection, no action ID) map work-dock-review in activity-panel.js. There are 51 source-anchored PM7 families. Resources Time uses ui.work_panel.sort / startedAt and a 2 s visible-only sampler. Pip sound tooling is sound_render.mjs --pip-only, sound_catalog.py --pip, sound_board.py --pip / --pip-page; separate pip_sound_* tools are retired.

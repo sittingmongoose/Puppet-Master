@@ -561,6 +561,96 @@
         "value": true
       },
       "valid": false
+    },
+    {
+      "name": "processes_bar_open_without_selection",
+      "definition": "processes_open_request",
+      "instance": {
+        "command_id": "cmd.chat.processes.open",
+        "project_id": "project-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "pointer",
+        "thread_id": "thread-1",
+        "scope_kind": "project"
+      },
+      "valid": true
+    },
+    {
+      "name": "dock_process_open_exact_work",
+      "definition": "processes_open_request",
+      "instance": {
+        "command_id": "cmd.chat.processes.open",
+        "project_id": "project-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "pointer",
+        "thread_id": "thread-1",
+        "scope_kind": "project",
+        "work_id": "process-1"
+      },
+      "valid": true
+    },
+    {
+      "name": "dock_process_rejects_empty_work",
+      "definition": "processes_open_request",
+      "instance": {
+        "command_id": "cmd.chat.processes.open",
+        "project_id": "project-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "pointer",
+        "thread_id": "thread-1",
+        "scope_kind": "project",
+        "work_id": ""
+      },
+      "valid": false
+    },
+    {
+      "name": "dock_process_rejects_title_target",
+      "definition": "processes_open_request",
+      "instance": {
+        "command_id": "cmd.chat.processes.open",
+        "project_id": "project-1",
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "pointer",
+        "thread_id": "thread-1",
+        "scope_kind": "project",
+        "work_id": "process-1",
+        "title": "Migration"
+      },
+      "valid": false
+    },
+    {
+      "name": "dock_process_rejects_null_project",
+      "definition": "processes_open_request",
+      "instance": {
+        "command_id": "cmd.chat.processes.open",
+        "project_id": null,
+        "server_id": "srv-1",
+        "environment_id": "env-1",
+        "expected_generation": 4,
+        "actor_id": "user-1",
+        "idempotency_key": "once-1",
+        "origin": "pointer",
+        "thread_id": "thread-1",
+        "scope_kind": "project",
+        "work_id": "process-1"
+      },
+      "valid": false
     }
   ],
   "semantic_cases": [
@@ -682,12 +772,12 @@
     "status_keys": 22,
     "pip_parts": 25,
     "default_parts": 24,
-    "pm7_bindings": 468,
+    "pm7_bindings": 470,
     "touch_rows": 710,
     "touch_profiles": 137,
     "production_wiring_entries": 1269,
     "new_production_rows": 11,
-    "new_bindings": 49
+    "new_bindings": 51
   },
   "activity_detail_thread_switch_cases": [
     {

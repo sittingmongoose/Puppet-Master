@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7999-L8319
+Source lines: L7999-L8324
 
-Source SHA256: `9f39ca2167e833cfc81d6239102b9188046bab62daaae3128a1d3f9fcb72af22`
+Source SHA256: `95eb8a754e08026e38d1aa5ce180cdeb88e7fab4e4c5577645ba5abecc8ceaaa`
 
 ---
 
@@ -287,7 +287,12 @@ canonical_text: >-
   navigation carry the same explicit source scope, view and return-focus identity as other no-write local
   actions. G6 Clear finished is a Processes-view action; it never clears finished agents. Concept thread Stop
   all reviews processes/scheduled runs, while platform Stop all may include agents after review; the canonical
-  cmd.work.stop identity and per-owner permission/identity checks remain.
+  cmd.work.stop identity and per-owner permission/identity checks remain. D2/D7, PM7 Step4 final-source
+  alignment, 2026-10-30: cmd.chat.processes.open accepts optional work_id for a dock Review/Show route
+  selecting one process or scheduled row. A bar open may omit it. Resolve that ID only within the signed
+  Project/thread scope and current expected generation; missing, stale or foreign selection cannot retarget to
+  a title match or another thread. This remains navigation with no process effect. Agent dock Review selects
+  its existing Subagents detail locally and never opens a child transcript by this route.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

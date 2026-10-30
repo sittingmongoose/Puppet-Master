@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42974-L43353
+Source lines: L42980-L43368
 
-Source SHA256: `57d809e48384bd034b600817abfc91d11f8be1b62948f0bc1cb9a70c1b755ff9`
+Source SHA256: `980b5c51ff0bff61284fc6620baf9bb18aabcfb9399c34960edada13888828b2`
 
 ---
 
@@ -304,7 +304,16 @@ canonical_text: >-
   metadata through the one player; no re-key to the old canon. Six setup kits coexist with the unchanged
   Tour’s existing cue mappings, not another player, switch or local registry. O6, Jared 2026-10-30: look-tile
   hover has no sound or theme change in any look, NieR included. Only click/keyboard activation selects the
-  look; this does not silence deliberate Ask Pip or other owner-routed cues.
+  look; this does not silence deliberate Ask Pip or other owner-routed cues. O3/O4/O5/O8/O9/SND1 B, PM7 Step4
+  final-source alignment, 2026-10-30 (integration e9b15abc64): the existing sound_render.mjs renders Pip’s six
+  kits with --pip-only into sound.json pip records and pip/<kit>/<key>.wav; sound_catalog.py --pip
+  measures/levels them and --write updates the shared TRIM/MAKEUP. sound_board.py --pip builds the
+  boards/spectrograms; --pip-page builds the listening page. The separate pip_sound_board.py,
+  pip_sound_levels.mjs and pip_sound_texture.mjs tools are retired in favor of these shared tools. This is one
+  recipe/catalog/player path, not a second sound registry. Land on the tools’ measured numbers as Jared
+  decided SND1 B; product listening remains his later check. Block cues occur once per touchdown, rise with
+  stack position and flourish on the last, through the same sound/mute/gesture gates; hover over a look tile
+  is silent in every look, including NieR.
 gui_related: true
 gui_classification_reason: Places onboarding and Guided Tour sound cues, their kits and the NieR kit in the
   sound settings model.

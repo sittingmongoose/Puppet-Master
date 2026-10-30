@@ -8259,7 +8259,7 @@
     },
     {
       "control_id": "work.panel.filter",
-      "surface": "Work panel > filter",
+      "surface": "Work panel / Home Agents board > current view filter",
       "owner_ref": "Plans/FinalGUISpec.md#F3-664",
       "disposition": "local",
       "action_ids": [
@@ -8289,7 +8289,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Stable target/view identity and expected generation; CS-106.",
+      "payload": "G4 Resources: selected column title|rank|time|cpu|mem|ports|where and direction; Time compares startedAt, stable title ties; view/scope/focus only, no resource/runtime write.",
       "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
       "concept_sources": [
         {
@@ -8303,7 +8303,7 @@
     },
     {
       "control_id": "work.panel.expand",
-      "surface": "Work panel > expand",
+      "surface": "Work panel / Agents rail / Home Agents shared list > expand item",
       "owner_ref": "Plans/FinalGUISpec.md#F3-664",
       "disposition": "local",
       "action_ids": [
@@ -8325,7 +8325,7 @@
     },
     {
       "control_id": "work.panel.select",
-      "surface": "Work panel > select",
+      "surface": "Work panel / Agents rail / Home Agents shared list > select item",
       "owner_ref": "Plans/FinalGUISpec.md#F3-664",
       "disposition": "local",
       "action_ids": [
@@ -9124,6 +9124,54 @@
             "system_status.service.open_settings",
             "SERVICE_SETTING",
             "revealSetting(id)"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "chat.work_dock.process_open",
+      "surface": "Chat > composer dock > work Review / Show",
+      "owner_ref": "Plans/assistant-chat-design.md#ACD-476",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.chat.processes.open"
+      ],
+      "production_entries": [
+        "pm7.processes_open"
+      ],
+      "setting_ids": [],
+      "payload": "D2/D7 Review/Show: signed Project/thread, optional exact work_id plus expected_generation and focus; process/scheduled item only, never a title match. CS-106 processes_open_request.",
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.js",
+          "tokens": [
+            "work-dock-review",
+            "PM56_PMX.dock.provide(workDock)",
+            "PM56_DEMO.openActivity"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "chat.work_dock.agent_review",
+      "surface": "Chat > composer dock > agent Review",
+      "owner_ref": "Plans/assistant-chat-design.md#ACD-476",
+      "disposition": "local",
+      "action_ids": [],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "D2/D7 Review: current Project/thread/agent identity and generation; select the existing Subagents Activity Detail row, preserve return focus and reject stale/foreign work. No live-transcript open.",
+      "no_production_reason": "Ordinary Activity Detail domain/row selection is view state per UCC-210/ACD-476; no product command, new action ID, receipt, runtime or Settings write.",
+      "concept_sources": [
+        {
+          "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.js",
+          "tokens": [
+            "work-dock-review",
+            "PM56_PMX.dock.provide(workDock)",
+            "PM56_DEMO.openActivity"
           ],
           "concept_only": true
         }

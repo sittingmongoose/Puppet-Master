@@ -26864,7 +26864,18 @@ canonical_text: >-
   taken only in its transcript item or the approval owner's host. The families of the records the
   dock mirrors are ACD-469's map. The dock's live-run lines and the per-reply files row replace
   the stream footer pill's helpers and files chips (ACD-482, DL-129).
-  Amended 2026-10-29 (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes to live runs; both are views of the same owner identity, not duplicate attention. Process stop differs from reply Stop; delivery never wakes a stopped thread.
+  Amended 2026-10-29 (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes
+  to live runs; both are views of the same owner identity, not duplicate attention. Process stop differs from
+  reply Stop; delivery never wakes a stopped thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30
+  (integration e9b15abc64): activity-panel.js registers one PM56_PMX.dock.provide(workDock) provider over the
+  selected thread’s PM_WORK process/agent/scheduled items. needsYou items are needs lines with Review, live
+  processes are live lines with current time, and the next pending scheduled run is comingup. These items have
+  no transcript card to wait offscreen for; existing transcript-backed providers retain their visibility
+  rules. [data-work-time] is patched by the same tick owner. Review/Show for a process or scheduled item
+  reuses cmd.chat.processes.open with that exact item selected; an agent Review selects its existing Subagents
+  Activity Detail row as local view state, not cmd.agents.open_thread and not a direct permission/answer/stop
+  action. The concept work-dock-review adapter uses PM56_DEMO.openActivity only to demonstrate those existing
+  view routes; it admits no demo command to the product.
 gui_related: true
 gui_classification_reason: "Defines the dock above the composer and the attention items it shows."
 split_recommended: false
@@ -28350,11 +28361,15 @@ canonical_text: >-
   uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu
   plate. Friendly/Glass context ring is continuous, antialiased and never segmented by broken transforms.
   All ten looks, widths 860/1024/1280/~1390/1920, narrow/short, Reduced Motion and drag budgets are
-  acceptance surfaces. W7/C5 context-ring clause is an acceptance outcome, not an asserted diagnosis: open
-  investigation PM7-C5-CONTEXT-RING remains owned by the activity GUI lane until its report identifies the
-  renderer/token cause and resulting drawing rule. Do not invent a causal fix from this prose. Recheck
-  Friendly/Glass at actual widths/DPR/Reduced Motion after that implementation; Step 4 reconciles its
-  measured mechanism. G1 B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action
+  acceptance surfaces. G9/C5, PM7 Step4 final-source reconciliation, 2026-10-30: the activity lane report and
+  pm7-port/css/20-controls.css resolve PM7-C5-CONTEXT-RING. The conic background tiled into a 1 px faint
+  border (Friendly 6 percent, Glass 9 percent alpha), exposing slivers; Glass’s clear --surface middle disc
+  exposed the meter as a pie. The hosted Basic/Friendly/Glass owner now draws the meter on its own ::before
+  layer, cut to an approximately 3 px ring with a radial mask; the
+  middle is the header’s ground and no gradient tiles into the border. Retro/NieR retain their own drawings.
+  This records the reported concept cause/drawing rule; native continuous antialiased rendering at actual
+  widths/DPR/Reduced Motion remains acceptance, not certification by this source note. G1 B (Jared
+  2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action
   (binding chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and
   reprojects the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only:
   one full-size docked-or-full-height-cover view, no small form. A switch cancels stale subscriptions and

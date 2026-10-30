@@ -2,13 +2,18 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L13-L179
+Source lines: L13-L184
 
-Source SHA256: `1f4b609be77d3a73f934876ea54250d546ef8707eb1e1afe4b6c3dcca388a2f8`
+Source SHA256: `62bf7c9869390dffb4e7c128011f336cca76d2de1b52e76366db5188ad8d342e`
 
 ---
 
 ## Change Summary
+
+- 2026-10-30: PM7 Step4 closes source-name alignment at final GUI e9b15abc64: D7 rail/Home Agents share PM7_WORK_UI.list, D2/D7 composer dock producers reuse Processes navigation or local Subagents selection, G4 Resources adds Time and 2 s visible-only sampling, O6/O10/O12 preserve silent hover and drawn Ready handoff, and SND1 uses the shared sound_render/sound_catalog/sound_board Pip tooling. L8 B adds shrinking-height settle and editor overflow consumers to the one sprout owner. G9/C5 records the activity lane’s actual context-ring border-tiling/clear-disc cause and isolated ring layer in ACD-506/DL-254. Native certification and governance reseal remain separate.
+  ContractRef: ContractName:Plans/DRY_Rules.md#DR-078, ContractName:Plans/DRY_Rules.md#DR-079, ContractName:Plans/assistant-chat-design.md#ACD-476, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-663, ContractName:Plans/FinalGUISpec.md#F3-664, ContractName:Plans/Wiring_Matrix.md#WM-097
+
+
 
 - 2026-10-30: PM7 Step4 review fixes at integration 4c49e10567 align L8 B's shared sprout origin/shown/instant/fade inputs and PM6_SPROUT.morph, plus A4 A's Friendly notification Pip tile and adjacent kind mark. The loader M2 source census confirms the reported obsolete spinner selectors were removed; no remaining exception is added to DR-077.
   ContractRef: ContractName:Plans/DRY_Rules.md#DR-079, ContractName:Plans/FinalGUISpec.md#F3-460, ContractName:Plans/FinalGUISpec.md#F3-660

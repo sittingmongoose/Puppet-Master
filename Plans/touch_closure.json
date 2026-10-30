@@ -7840,7 +7840,8 @@
         "PM7 project box",
         "thread Processes",
         "status work panel",
-        "quit dialog"
+        "quit dialog",
+        "composer work dock Review / Show reuses cmd.chat.processes.open with exact work_id"
       ],
       "return_route": "Stable invoking view, Project/thread and focus; no active-tab retargeting.",
       "reverse_consumers": [
@@ -13416,7 +13417,7 @@
       "command",
       "cmd.chat.processes.open",
       "partial",
-      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent. D2/D7 composer dock producer reuses this same route with optional exact work_id; ordinary Subagents row selection introduces no additional action."
     ],
     [
       "TOUCH-PM7CMD-004",
