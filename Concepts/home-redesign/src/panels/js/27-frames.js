@@ -181,13 +181,13 @@ PMW.loader = function (o) {
   return t.content.firstElementChild;
 };
 
-/* b.busy (true, or a motion name): the button's own wait, the loader in its icon's place at the gallery's busy-button
-   size (16 px) and aria-busy on the button */
+/* b.busy (true, or a motion name): the button's own wait, the loader in its icon's place at the icon's size (14 px) and
+   aria-busy on the button */
 frames.button = function (b) {
   var el = h('button', { type: 'button', class: 'pmw-act' + (b.primary ? ' is-primary' : '') + (b.danger ? ' is-danger' : ''), 'data-pmh': 'icon',
     'data-pm-hover-label': b.label, 'data-pm-hover-detail': b.detail || '', 'data-id': b.id != null ? String(b.id) : null });
   if (b.pressed != null) el.setAttribute('aria-pressed', b.pressed ? 'true' : 'false');
-  var ld = b.busy ? PMW.loader({ motion: typeof b.busy === 'string' ? b.busy : 'swing', px: 16 }) : null;
+  var ld = b.busy ? PMW.loader({ motion: typeof b.busy === 'string' ? b.busy : 'swing', px: 14 }) : null;
   if (ld) { el.setAttribute('aria-busy', 'true'); el.appendChild(ld); }
   else if (b.icon) el.appendChild(icon(b.icon, { size: 14 }));
   el.appendChild(h('span', { text: b.label }));

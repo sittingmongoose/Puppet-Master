@@ -8,6 +8,8 @@
   PM51.style(`
 #panel-settings .pm51-doctor-row.is-focus { background: rgba(var(--accent-primary-rgb), .08); border-radius: 8px; margin: 0 -8px; padding-left: 8px; padding-right: 8px; }
 #panel-settings .pm51-doctor-checked { font-size: 11.5px; color: var(--k3-text-3); white-space: nowrap; }
+#panel-settings .pm51-doctor-wait { display: inline-flex; align-items: center; }
+#panel-settings .pm51-doctor-wait > .pml-ld { --pml-size: 14px; }
 #panel-settings .pm51-doctor-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 #panel-settings .pm51-doctor-evidence { margin-top: 10px; }
 `);
@@ -41,10 +43,17 @@
     setTimeout(() => { const again = groups().find(x => x.id === gid); if (!again) return; again.findings.forEach((f, i) => { f.state = prior[i]; f.checked = 'just now'; }); again.checking = false; PM51.s().doctorLastCheck = `${nowLabel()} · ${again.title}`; refresh(); if (done) done(); }, 700);
   }
 
+  /* Waiting (W5): one loader per wait, on what started it. A group's check is its busy Check Again button; Check
+     everything is its own busy button and the groups it walks read Checking without a loader of their own; a finding
+     re-checked by itself (the return from a fix) holds the loader where its Fix button stands. A finding's status word
+     and mark stay its state. */
+  let checkingAll = false;
+  const waitMark = () => window.PM_PIP_LOADER ? `<span class="pm51-doctor-wait" aria-hidden="true">${window.PM_PIP_LOADER.html({ motion: 'swing', px: 14 })}</span>` : '';
   function findingRow(g, f) {
     const focus = !!(PM51.s().doctorReturn && PM51.s().doctorReturn.gid === g.id && PM51.s().doctorReturn.fid === f.id && returnArmed);
     const fix = f.fix && f.state !== 'Checking' && f.state !== 'Ready' ? PM51.btn({ label: f.fix, small: true, action: 'pm51-doctor-fix', data: { gid: g.id, fid: f.id } }) : (f.fix && f.state === 'Ready' && g.id === 'updates' ? PM51.btn({ label: f.fix, small: true, action: 'pm51-doctor-fix', data: { gid: g.id, fid: f.id } }) : '');
-    return { label: PM51.serviceText(f.title), pill: PM51.pill(f.state, tone(f.state)), id: `${g.id}:${f.id}`, cls: `pm51-doctor-row${focus ? ' is-focus' : ''}`, control: `<span class="pm51-doctor-checked">checked ${h(f.checked)}</span>${fix}${PM51.iconBtn({ icon: 'chevron', label: `Open ${f.title}`, action: 'pm51-doctor-open', data: { gid: g.id, fid: f.id } })}` };
+    const wait = f.state === 'Checking' && !g.checking ? waitMark() : '';
+    return { label: PM51.serviceText(f.title), pill: PM51.pill(f.state, tone(f.state)), id: `${g.id}:${f.id}`, cls: `pm51-doctor-row${focus ? ' is-focus' : ''}`, control: `<span class="pm51-doctor-checked">checked ${h(f.checked)}</span>${wait}${fix}${PM51.iconBtn({ icon: 'chevron', label: `Open ${f.title}`, action: 'pm51-doctor-open', data: { gid: g.id, fid: f.id } })}` };
   }
 
   function render() {
@@ -57,7 +66,7 @@
     ]);
     const sections = groups().map(g => PM51.section({
       title: g.title, help: g.help,
-      action: { label: g.checking ? 'Checking…' : 'Check Again', icon: 'refresh', small: true, action: 'pm51-doctor-check', data: { gid: g.id }, disabled: !!g.checking, reason: 'A check is already running for this group.' },
+      action: { label: g.checking ? 'Checking…' : 'Check Again', icon: 'refresh', small: true, action: 'pm51-doctor-check', data: { gid: g.id }, disabled: !!g.checking || checkingAll, busy: !!g.checking && !checkingAll, reason: checkingAll ? 'Check everything is running.' : 'A check is already running for this group.' },
       body: PM51.rows(g.findings.map(f => findingRow(g, f)))
     })).join('');
     const S = PM51.s();
@@ -65,7 +74,7 @@
       PM51.section({ title: 'Cached summary', body: PM51.kv([['Last check', S.doctorLastCheck || 'Loaded from cache · 2 min ago'], ['Findings cached', String(allFindings().length)], ['Oldest result', '2 h ago (Code & Version History)'], ['Cache age limit', 'Results older than a day are marked for a re-check']]) + `<div class="pm51-doctor-actions" style="margin-top:10px">${PM51.btn({ label: 'Copy support details', small: true, icon: 'copy', action: 'pm51-doctor-copy' })}</div>` })
     ].join(''));
     /* The last checkup is a dated snapshot, not a promise; "Check everything" is the inventory's own action. */
-    const summary = `<div class="o55-toolbar o55-doctor-summary">${PM51.home('system.health.doctor-summary', `<span class="o55-doctor-last">${PM51.status(`Last checkup: ${c.Unavailable && !c.Ready ? 'Blocked' : c['Needs attention'] || c.Unavailable ? 'Ready with warnings' : 'Ready'}`, c['Needs attention'] || c.Unavailable ? 'attention' : 'ready')}<small>${h(S.doctorLastCheck || '2 min ago')}</small></span>`, 'span')}<span class="o55-toolbar-spacer"></span>${PM51.bound.action('system.health.run-doctor', { label: 'Check everything', icon: 'refresh' })}</div>`;
+    const summary = `<div class="o55-toolbar o55-doctor-summary">${PM51.home('system.health.doctor-summary', `<span class="o55-doctor-last">${PM51.status(`Last checkup: ${c.Unavailable && !c.Ready ? 'Blocked' : c['Needs attention'] || c.Unavailable ? 'Ready with warnings' : 'Ready'}`, c['Needs attention'] || c.Unavailable ? 'attention' : 'ready')}<small>${h(S.doctorLastCheck || '2 min ago')}</small></span>`, 'span')}<span class="o55-toolbar-spacer"></span>${PM51.bound.action('system.health.run-doctor', { label: checkingAll ? 'Checking…' : 'Check everything', icon: 'refresh', busy: checkingAll, reason: 'Every group is being checked.' })}</div>`;
     scheduleReturn();
     return PM51.page({ id: ID, key: KEY, body: summary + stats + sections + advanced, quiet: [
       { label: 'Export report', action: 'pm51-doctor-export' }
@@ -131,8 +140,10 @@
   /* ---------- actions ------------------------------------------------------ */
   PM51.on('doctor-check', el => recheckGroup(ds(el, 'gid')));
   PM51.on('doctor-check-all', () => {
+    if (checkingAll) return;
     const ids = groups().map(g => g.id); let i = 0;
-    const next = () => { if (i >= ids.length) { PM51.s().doctorLastCheck = `${nowLabel()} · all groups`; refresh(); PM51.toast('All checks finished', 'Example data only. Every group was re-read from the cache.', 'info'); return; } recheckGroup(ids[i++], next); };
+    checkingAll = true;
+    const next = () => { if (i >= ids.length) { checkingAll = false; PM51.s().doctorLastCheck = `${nowLabel()} · all groups`; refresh(); PM51.toast('All checks finished', 'Example data only. Every group was re-read from the cache.', 'info'); return; } recheckGroup(ids[i++], next); };
     next();
   });
   PM51.on('doctor-open', el => findingPanel(ds(el, 'gid'), ds(el, 'fid')));
