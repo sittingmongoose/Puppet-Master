@@ -414,11 +414,8 @@
     }
   }
 
-  function tbMenuIsOpen(menu) {
-    var sprout = window.PM6_SPROUT;
-    if (sprout && sprout.isOpen) return sprout.isOpen(menu);
-    return !!(menu && menu.classList.contains('is-open'));
-  }
+  /* the bar's menus open and close through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js) */
+  function tbMenuIsOpen(menu) { return window.PM6_SPROUT.isOpen(menu); }
   /* A title-bar menu hangs below the bar over the page, and the bar is a stacking context (z-index 50) beneath the
      panels' resize strips (z-index 100; it stays there so the switcher's chips, at 51, are drawn over it). The strips are
      clear, so a menu over one looked whole but gave the strip its clicks: the project menu's rows, which reach the left
@@ -432,22 +429,11 @@
     if (open !== shell.hasAttribute('data-tb-menu-open')) { if (open) shell.setAttribute('data-tb-menu-open', ''); else shell.removeAttribute('data-tb-menu-open'); }
   }
   function tbMenuOpen(menu, btn) {
-    var sprout = window.PM6_SPROUT;
-    if (sprout && sprout.open) sprout.open(menu, null, btn);
-    else if (menu) {
-      menu.classList.add('is-open');
-      menu.classList.remove('is-closing');
-      menu.style.display = 'block';
-    }
+    window.PM6_SPROUT.open(menu, null, btn);
     tbMenuShield();
   }
   function tbMenuClose(menu) {
-    var sprout = window.PM6_SPROUT;
-    if (sprout && sprout.close) sprout.close(menu);
-    else if (menu) {
-      menu.classList.remove('is-open', 'is-closing', 'active');
-      menu.style.display = 'none';
-    }
+    window.PM6_SPROUT.close(menu);
     tbMenuShield();
   }
   function tbCloseAllMenus(except) {
@@ -879,11 +865,11 @@
       } catch (e) { return false; }
     }
 
-    /* the search pop opens and closes through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js), from its own
-       corner (style-002.css); a reopen cancels a close still running */
+    /* the search pop opens and closes through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js), from the corner
+       nearest its button (style-002.css's corner while the button is folded away); a reopen cancels a close still running */
     function openPop() {
       popOpen = true;
-      window.PM6_SPROUT.open(pop);
+      window.PM6_SPROUT.open(pop, null, btn);
       btn.setAttribute('aria-expanded', 'true');
       if (popInput) {
         popInput.value = inline.value || '';

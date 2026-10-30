@@ -28,6 +28,9 @@
 .overlay-menu.model-menu {
   z-index: 1200;                         /* above --z-tip (1100) so hover cards cannot steal hits */
 }
+/* The open fade the chat's menus have always had (the sprout contract's input): 160 ms, the sidecar 140 ms. */
+.overlay-menu.pm-sprout { --pm6-sprout-fade-in: 160ms; --pm6-sprout-fade-ease: var(--ease, cubic-bezier(.2, .75, .25, 1)); }
+.overlay-menu.sidecar.pm-sprout { --pm6-sprout-fade-in: 140ms; }
 /* Side flyouts (effort / thoroughness / capability submenus) sprout from the edge facing the root menu (pm-sprout-edge). */
 .overlay-menu.sidecar {
   width: 228px; min-width: 228px; max-width: 228px;

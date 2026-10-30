@@ -174,8 +174,8 @@
       padding: var(--3xl); display: flex; flex-direction: column; gap: var(--lg);
       align-items: center; text-align: center;
     }
-    /* the wait is the system loader (W5, DR-077; PM_PIP_LOADER, glyph-system src/logo/pm-loader.js), at the old spinner's size */
-    .pm6-wiz-disc-ld { --pml-size: 44px; }
+    /* the wait is the system loader (W5, DR-077; PM_PIP_LOADER, glyph-system src/logo/pm-loader.js), at the W5 gallery's panel size (40 px, the small cut) */
+    .pm6-wiz-disc-ld { --pml-size: 40px; }
     .pm6-wiz-disc-ld[hidden] { display: none; }
     .pm6-wiz-disc-title { font-family: var(--display-font); font-size: var(--fs-xl); color: var(--text-primary); }
     .pm6-wiz-disc-sub { font-size: var(--fs-sm); color: var(--text-muted); display: flex; align-items: center; gap: var(--sm); }

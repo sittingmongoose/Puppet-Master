@@ -573,11 +573,10 @@ menu.open = function (anchor, spec) {
     }
     lastH = b.height;
     if (beforeMove) beforeMove(a, b);
-    var k0 = {}, k1 = {}, moved = false;
-    ['height', 'width', 'left', 'top'].forEach(function (p) {
-      if (Math.abs(a[p] - b[p]) > 2) { k0[p] = a[p] + 'px'; k1[p] = b[p] + 'px'; moved = true; }
-    });
-    if (moved) morphAnim = motion.animate(el, [k0, k1], { dur: 220, easing: motion.ease('slide') });
+    /* the plate moves through the menu sprout (PM6_SPROUT.morph): a height-only change (a filter, a kept-open pick, an
+       update) is its height spring with the size bounce; a level's change of width and place keeps this file's level
+       timing */
+    morphAnim = window.PM6_SPROUT.morph(el, a, b, { shape: { duration: 220, easing: motion.ease('slide') } });
   }
   function onOutside(e) {
     if (el.contains(e.target) || (anchor && anchor.contains && anchor.contains(e.target))) return;
@@ -610,7 +609,7 @@ menu.open = function (anchor, spec) {
   lastH = el.offsetHeight;
   if (marksAnchor) { anchor.setAttribute('aria-expanded', 'true'); anchor.classList.add('pmw-anchor-open'); }
   el.style.transform = '';
-  window.PM6_SPROUT.open(el, null, hnd.from);
+  window.PM6_SPROUT.open(el, null, hnd.from, { origin: 'trigger' });   // from the trigger's centre, as it always has
   menu.current = hnd;
   setTimeout(function () { if (!hnd.closed) doc.addEventListener('pointerdown', onOutside, true); }, 0);
   window.addEventListener('resize', onResize);

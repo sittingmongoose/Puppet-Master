@@ -21,7 +21,8 @@ html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-r-menu: 0px; --pmu-r-m
 #panel-usage .pmu-menu { position: absolute; z-index: 70; box-sizing: border-box; display: flex; flex-direction: column; min-width: 220px;
   max-width: min(420px, calc(100% - 16px)); padding: 6px; border: 1px solid var(--pmu-menu-border); border-radius: var(--pmu-r-menu);
   background: var(--pmu-menu-bg); box-shadow: var(--pmu-menu-shadow); color: var(--pmu-ink); font-family: var(--pmu-font); font-size: 13px;
-  line-height: 1.35; text-align: left; overflow: hidden; overscroll-behavior: contain; contain: layout; }
+  line-height: 1.35; text-align: left; overflow: hidden; overscroll-behavior: contain; contain: layout;
+  --pm6-sprout-fade-in: 160ms; --pm6-sprout-fade-ease: cubic-bezier(.2, .75, .25, 1); }
 #panel-usage .pmu-menu.has-rail { padding: 0; }
 /* the app's Glass rule for [role="menu"] gives the panel a 30 px backdrop blur and a half-transparent fill (!important);
    without a GPU every frame of the sprout then re-blurred the board behind it in software (40 ms draws, 25 fps, PERF-3):

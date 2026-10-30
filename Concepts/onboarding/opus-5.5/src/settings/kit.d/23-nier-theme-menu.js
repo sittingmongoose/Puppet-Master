@@ -59,9 +59,7 @@
   function closeMenu() {
     const menu = document.getElementById('themeMenu');
     const btn = document.getElementById('themeSelect');
-    const sprout = window.PM6_SPROUT;
-    if (menu && sprout && typeof sprout.close === 'function') sprout.close(menu);
-    else if (menu) { menu.classList.remove('is-open', 'is-closing'); menu.style.display = 'none'; }
+    if (menu) window.PM6_SPROUT.close(menu);
     if (btn) btn.setAttribute('aria-expanded', 'false');
   }
   function listItems(menu) { return [...menu.querySelectorAll(ITEM)]; }

@@ -289,7 +289,7 @@
     host.appendChild(el);
     wire(h);
     place(h);
-    window.PM6_SPROUT.open(el, null, anchor && anchor.isConnected ? anchor : h.lastAnchor);
+    window.PM6_SPROUT.open(el, null, anchor && anchor.isConnected ? anchor : h.lastAnchor, { origin: 'trigger' });
     if (reduced()) h.settled = true;
     else {
       h.settleT = setTimeout(function () { h.settled = true; }, OPEN_MS * speed() + 40);

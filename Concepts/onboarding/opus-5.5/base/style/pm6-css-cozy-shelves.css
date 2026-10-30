@@ -1470,10 +1470,10 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
 .fm-indexchip { display: inline-flex; align-items: center; gap: var(--sm); font-family: var(--mono-font); font-size: var(--rail-fs-meta); line-height: var(--rail-lh); color: var(--accent-warning); }
 .fm-indexchip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-warning); animation: shPulse 1.6s var(--ease-out) infinite; }
 
-/* ---- reskinned file context menu (sprout family) ---- */
-.fm-ctx { position: fixed; z-index: 300; min-width: 224px; padding: var(--sm); border-radius: var(--radius-md); background: var(--surface-elevated); border: 1px solid var(--border); box-shadow: var(--elev-2); display: none; transform-origin: var(--pm6-sprout-ox, 12%) var(--pm6-sprout-oy, 0%); }
-.fm-ctx.is-open { display: block; animation: fmSprout .16s var(--ease-out); }
-@keyframes fmSprout { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
+/* ---- reskinned file context menu (sprout family: the menu and its submenus are .pm-sprout, PM6_SPROUT's contract;
+   the open fade keeps its 160 ms) ---- */
+.fm-ctx { position: fixed; z-index: 300; min-width: 224px; padding: var(--sm); border-radius: var(--radius-md); background: var(--surface-elevated); border: 1px solid var(--border); box-shadow: var(--elev-2); display: none; --pm6-sprout-fade-in: 160ms; }
+.fm-ctx.is-open { display: block; }
 .fm-ctx-item { display: flex; align-items: center; gap: var(--rail-gap); width: 100%; padding: var(--sm) var(--md); border: 0; background: none; border-radius: var(--radius-xs); color: var(--text-secondary); font-size: var(--rail-fs-body); line-height: var(--rail-lh); cursor: pointer; text-align: left; }
 .fm-ctx-item:hover { background: var(--accent-soft); color: var(--text-primary); }
 .fm-ctx-item svg { width: 13px; height: 13px; flex: none; color: var(--text-muted); }
@@ -1525,7 +1525,6 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
    keep theirs. */
 .fm-ctx.pm-ctx-menu { max-height: none; overflow: visible; }
 .fm-ctx-sub { position: absolute; left: calc(100% - 4px); top: -5px; min-width: 196px; padding: var(--sm); border-radius: var(--radius-md); background: var(--surface-elevated); border: 1px solid var(--border); box-shadow: var(--elev-2); display: none; z-index: 1; }
-.fm-ctx-wrap.open > .fm-ctx-sub { display: block; animation: fmSprout .14s var(--ease-out); }
 .fm-ctx-item .fm-ctx-caret { margin-left: auto; width: 12px; height: 12px; color: var(--text-muted); flex: none; }
 
 /* width bands */
@@ -1539,7 +1538,6 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
 .side-panel-slot[data-wtier="min"] #panel-files .sh-bbranch .pm6-tb-menu-trigger .fm-root-ico { display: inline-flex; }
 .side-panel-slot[data-wtier="min"] #panel-files .sh-bbranch .pm6-tb-menu-trigger .pm6-tb-menu-label,
 .side-panel-slot[data-wtier="min"] #panel-files .sh-bbranch .pm6-tb-menu-trigger .pm-ico.sm:not(.fm-root-ico) { display: none; }
-[data-reduced-motion="1"] .fm-ctx.is-open { animation: none; }
 [data-reduced-motion="1"] .fm-indexchip .dot { animation: none; }
 [data-reduced-motion="1"] .sh-foot .fm-footstat .dot { animation: none; }
 [data-reduced-motion="1"] .fm-children, [data-reduced-motion="1"] .pm-segtab-ink, [data-reduced-motion="1"] .fm-row, [data-reduced-motion="1"] .fm-quick, [data-reduced-motion="1"] .fm-chevron, [data-reduced-motion="1"] .fm-cchev, [data-reduced-motion="1"] .fm-changerow::before { transition: none; }

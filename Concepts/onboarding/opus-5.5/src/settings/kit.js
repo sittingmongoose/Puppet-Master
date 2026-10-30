@@ -223,10 +223,10 @@ PM51.listDetail = ({ id, rosterId, rosterTitle, count, add, filter, items, detai
    its classes in pm7-sprout.css: six --pm6-sprout-* vars, is-open / is-closing). */
 let pmActive = null, popSeq = 0;
 const POP_ID = () => 'pm51-pop-' + (++popSeq);
-/* a popout with no anchor grows out of the corner it hangs from (positionPopout's stand-in trigger) */
-function sproutOpen(el, anchor) {
-  window.PM6_SPROUT.open(el, null, anchor || { left: window.innerWidth - 240, top: 16, width: 224, height: 0 });
-}
+/* a popout grows from the corner nearest its anchor; one with no anchor from its own top right corner, as Settings'
+   popouts always have (the owner takes that corner as an input) */
+const POP_CORNER = { ox: '88%', oy: '0%', tx: '0px', ty: '-10px', sx: '0.72', sy: '0.48', mark: 'tr' };
+function sproutOpen(el, anchor) { window.PM6_SPROUT.open(el, null, anchor || null, anchor ? null : { origin: POP_CORNER }); }
 function sproutClose(el, done) { window.PM6_SPROUT.close(el, done); }
 function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
   const vw = window.innerWidth, vh = window.innerHeight;
