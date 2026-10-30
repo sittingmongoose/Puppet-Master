@@ -271,6 +271,10 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-sublinks { display: flex; gap: 18px; flex-wrap: wrap; padding-top: 2px; }
 .o55-details { border-radius: var(--o55-card-r); }
 .o55-detbtn { display: inline-flex; align-items: center; gap: 8px; padding: 4px 0; background: none; border: 0; color: var(--text-secondary); font: 600 13px/1.3 var(--body-font); cursor: pointer; }
+/* (the details button and a switch row answer the pointer too, like the ? and the disclosures: QA round 2, Q3's sweep) */
+.o55-detbtn:hover { color: var(--text-primary); }
+.o55-detbtn:hover .o55-q { border-color: var(--o55-accent); color: var(--o55-ink-accent); }
+.o55-toggle:hover .o55-switch { box-shadow: 0 0 0 3px color-mix(in srgb, var(--o55-accent) 22%, transparent); }
 .o55-q { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid currentColor; font-size: 11.5px; }
 #pm-o55-onboarding[data-family="retro"] .o55-q { border-radius: 0; }
 .o55-detbody { margin-top: 6px; padding: 12px 14px; border-radius: var(--o55-card-r); background: color-mix(in srgb, var(--text-primary) 5%, transparent); color: var(--text-secondary); font-size: 13.5px; line-height: 1.55; }
@@ -465,6 +469,8 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 .o55-opt { position: relative; }
 .o55-opt > .o55-card, .o55-opt > .o55-toggle { width: 100%; }
 .o55-opt > .o55-card { padding-right: 52px; }
+/* (a quiet card keeps that room too: its own padding came later and put its radio under the ?: QA round 2, Q9) */
+.o55-opt > .o55-card.o55-card-quiet { padding-right: 49px; }
 .o55-opt > .o55-toggle { padding-right: 46px; }
 .o55-tipq { position: relative; flex: none; display: inline-grid; place-items: center; width: 22px; height: 22px; padding: 0; margin: 0; box-sizing: border-box;
   border-radius: 50%; border: 1.5px solid var(--o55-line); background: transparent; color: var(--text-secondary); font: 700 12px/1 var(--body-font); cursor: pointer;
@@ -491,6 +497,13 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 #pm-o55-onboarding[data-family="glass"] .o55-tipq { border-color: rgba(255, 255, 255, 0.34); background: rgba(255, 255, 255, 0.08); }
 #pm-o55-onboarding[data-family="glass"][data-mode="light"] .o55-tipq { border-color: rgba(40, 36, 80, 0.26); background: rgba(255, 255, 255, 0.55); }
 #pm-o55-onboarding[data-family="glass"] .o55-tipq[aria-expanded="true"] { background: var(--o55-accent); }
+/* The ? answers the pointer in every look, so it reads as something to press (Jared, QA round 2, Q3): its ring and
+   mark take the accent and it fills lightly, in each look's material; the keyboard's focus shows the same */
+#pm-o55-onboarding .o55-tipq:not([aria-expanded="true"]):is(:hover, :focus-visible) { color: var(--o55-accent); border-color: var(--o55-accent); background: color-mix(in srgb, var(--o55-accent) 16%, transparent); }
+#pm-o55-onboarding[data-family="friendly"] .o55-tipq:not([aria-expanded="true"]):is(:hover, :focus-visible) { color: #1c1624; border-color: var(--o55-ink); background: color-mix(in srgb, var(--o55-accent) 70%, transparent); }
+#pm-o55-onboarding[data-family="glass"] .o55-tipq:not([aria-expanded="true"]):is(:hover, :focus-visible) { color: #fff; border-color: rgba(255, 255, 255, 0.7); background: color-mix(in srgb, var(--o55-accent) 45%, transparent); box-shadow: 0 0 10px -2px var(--o55-accent); }
+#pm-o55-onboarding[data-family="glass"][data-mode="light"] .o55-tipq:not([aria-expanded="true"]):is(:hover, :focus-visible) { color: var(--text-primary); border-color: var(--o55-accent); background: color-mix(in srgb, var(--o55-accent) 22%, #fff); }
+#pm-o55-onboarding[data-family="retro"] .o55-tipq:not([aria-expanded="true"]):is(:hover, :focus-visible) { color: var(--o55-win-bg); border-color: var(--text-primary); background: var(--text-primary); }
 
 /* the explainer in the form */
 .o55-explainer { display: flex; gap: 10px; align-items: flex-start; margin: 2px 0 0; padding: 10px 8px 10px 12px; border-radius: var(--o55-card-r);
@@ -530,6 +543,17 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 /* The chapter rail with Pip (O9): the bar is a string between two screw eyes, Pip rides it to the current chapter
    (58-rig.js O55.pipStage.rail); the walked part is in the accent */
 .o55-rail[data-o55-pip] .o55-railbar { visibility: hidden; }
+/* One string, like the concept (QA round 2, Q4: the bar above and the beads hanging on their own strings below it read
+   as two bars). Each chapter's bead is threaded on the string Pip rides, its name under it; Pip stands in for the
+   current bead; the beads follow the string's sag (58-rig.js rail.tick). The names share one line, below Pip's feet. */
+#pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem { flex-direction: column; justify-content: flex-start; gap: 0; padding-top: calc(9px - var(--o55-node-w, 10px) / 2); }
+.o55-rail[data-o55-pip] .o55-railstring { display: none; }
+.o55-rail[data-o55-pip] .o55-raillabel { margin-top: calc(27px - var(--o55-node-w, 10px) / 2); line-height: 1.2; }
+/* (NieR's chapter box goes behind the name, where the name now is) */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem::after { top: 30px; height: 22px; }
+/* (the current bead takes no width, so the look's chip behind the current chapter, Glass's lens included, wraps its
+   name alone and never covers Pip; its centre, where Pip goes, stays the column's) */
+#pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem[data-state="current"] .o55-railnode { visibility: hidden; width: 0; border-width: 0; }
 .o55-railzip { position: absolute; left: 0; top: 0; width: 100%; height: 40px; overflow: visible; pointer-events: none; }
 .o55-railzip-str { fill: none; stroke: color-mix(in srgb, var(--text-primary) 34%, transparent); stroke-width: 1.5; stroke-linecap: round; }
 .o55-railzip-hi { fill: none; stroke: var(--o55-accent); stroke-width: 2; stroke-linecap: round; }

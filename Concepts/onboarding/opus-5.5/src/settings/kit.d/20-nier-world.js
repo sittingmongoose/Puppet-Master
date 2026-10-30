@@ -105,7 +105,7 @@
      boot's long frames. The tone is the one the person's Light or dark setting asks for, through NieR's preview scope
      (data-o55-nier-preview, styles.d/13-nier.css), because the page may still be painting the default mode. */
   const BOOT_LINES = [['check', 'System check', 'ok', 'OK'], ['settings', 'Loading your settings', 'ok', 'OK'], ['bunker', 'Connecting to the Bunker', 'ok', 'OK'],
-    ['project', 'Opening your Project', 'ok', 'OK'], ['look', 'Look', 'lookValue', 'NieR Mode']];
+    ['project', 'Opening your Project', 'ok', 'OK'], ['look', 'Look', 'lookValue', 'NieR']];
   let bootChecked = false, bootEl = null;
   /* the head's boot paint (tools/build.py first_paint_patches) holds the page under a cover of the log's own paper while
      this log will run (html[data-o55-boot-wait]), so the app never shows between the first frame and the log; it goes

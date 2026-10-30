@@ -105,6 +105,7 @@
     } });
   }
   def('online-signin', {
+    seed: (S) => seedOnline(S, false),
     chapter: 'project', stage: 'source_control_setup',
     scene: (S) => ({ id: 'online', beat: SI(S).state === 'done' ? 'signed' : 'signin' }),
     eyebrow: (S) => (SI(S).kind !== 'forge' ? T('safe.eyebrow') : OL(S).purpose === 'source' ? T('begin.eyebrow') : T('online.signin.eyebrow')),
@@ -207,15 +208,17 @@
     body(S) {
       const d = md(S), ol = OL(S), sel = ol.forge || (d.forge !== 'none' ? (d.forge === 'github' && d.forge_provider_variant === 'self_managed' ? 'github_enterprise' : d.forge) : 'github');
       let out = C.cards('pick', [{ v: 'github', glyph: 'cloud', title: T('online.service.github.title'), sub: T('online.service.github.sub'), tag: T('chrome.recommended') }], sel, { label: T('online.service.title') });
-      const others = ['gitlab', 'azure_devops', 'bitbucket_cloud', 'forgejo', 'gitea', 'github_enterprise', 'cursor_origin'].map((id) => ({ v: id, glyph: 'cloud', title: T('online.service.' + id), tag: id === 'cursor_origin' ? T('online.service.preview') : '', quiet: true }));
-      out += F.more(ol.others || sel !== 'github', T('online.service.others'), 'others', C.cards('pick', others, sel, { cls: 'o55-choices-quiet' }), 'others');
+      /* a service's own questions (which kind of it, its address) sit under its card (QA round 2, Q7) */
       const forge = sel === 'github_enterprise' ? 'github' : sel === 'bitbucket_cloud' && ol.variant === 'data_center' ? 'bitbucket_data_center' : sel;
+      let under = '';
       if (sel !== 'github' && sel !== 'github_enterprise' && sel !== 'cursor_origin') {
         const vs = sel === 'bitbucket_cloud' ? [['cloud', 'bbCloud'], ['data_center', 'bbDc']] : VARIANTS[forge] || [];
-        if (vs.length > 1) out += C.segmented({ do: 'variant', value: ol.variant || vs[0][0], label: T('online.service.others'), options: vs.map(([v, k]) => ({ v, label: k && k.includes('.') ? k : k ? T('online.service.' + k) : T('online.service.selfManaged') })) });
+        if (vs.length > 1) under += C.segmented({ do: 'variant', value: ol.variant || vs[0][0], label: T('online.service.others'), options: vs.map(([v, k]) => ({ v, label: k && k.includes('.') ? k : k ? T('online.service.' + k) : T('online.service.selfManaged') })) });
       }
       const variant = sel === 'github_enterprise' ? 'self_managed' : ol.variant || (VARIANTS[forge] || [['hosted']])[0][0];
-      if (needsAddress(forge, variant === 'data_center' ? 'data_center' : variant)) out += C.field({ bind: 'address', label: T('online.service.addressLabel'), value: ol.address || '', placeholder: 'https://git.example.com', hint: T('online.service.addressHint'), valid: F.isHttps(ol.address) });
+      if (needsAddress(forge, variant === 'data_center' ? 'data_center' : variant)) under += C.field({ bind: 'address', label: T('online.service.addressLabel'), value: ol.address || '', placeholder: 'https://git.example.com', hint: T('online.service.addressHint'), valid: F.isHttps(ol.address) });
+      const others = ['gitlab', 'azure_devops', 'bitbucket_cloud', 'forgejo', 'gitea', 'github_enterprise', 'cursor_origin'].map((id) => ({ v: id, glyph: 'cloud', title: T('online.service.' + id), tag: id === 'cursor_origin' ? T('online.service.preview') : '', quiet: true, under: id === sel ? under : '' }));
+      out += F.more(ol.others || sel !== 'github', T('online.service.others'), 'others', C.cards('pick', others, sel, { cls: 'o55-choices-quiet' }), 'others');
       return out;
     },
     foot(S) {
@@ -249,6 +252,28 @@
     bind: { address(S, v) { OL(S).address = v; S.save(); O55.ui.refresh(); } }
   });
 
+  /* Opened straight at a later online screen (Demo Studio's Open at one screen): what the earlier screens would have
+     left, GitHub chosen, and signed in for the screens after its sign-in (QA2 hunter H1: "Sign in to {name}", "Name on
+     none", "From on none"). The repository picker brings existing work in; the others make a new online copy. */
+  function seedOnline(S, signedIn, purpose) {
+    const d = md(S), ol = OL(S);
+    if (purpose) ol.purpose = purpose;
+    if (!d.forge || d.forge === 'none') {
+      ol.forge = 'github';
+      O55.draft.set(d, { online_mode: ol.purpose === 'source' ? 'existing' : 'new', forge: 'github', forge_provider_variant: VARIANTS.github[0][0], forge_instance_url: '', forge_instance_profile: null });
+      if (ol.purpose === 'source') O55.draft.set(d, { project_mode: 'existing_online', source_more: true });
+    }
+    const si = SI(S);
+    if (si.kind !== 'forge' || si.service !== d.forge) S.sess.signin = { service: d.forge, name: forgeName(d.forge, d.forge_provider_variant), kind: 'forge', then: ol.purpose === 'source' ? 'ex-repos' : 'online-details', done: null, state: 'idle', instance_key: instanceKey(d) };
+    if (signedIn && SI(S).state !== 'done') {
+      const cur = SI(S), login = accountFor(S, d.forge) || 'jared-p';
+      cur.state = 'done'; cur.account = login; S.sess.forgeAccounts[cur.instance_key] = login;
+      O55.draft.set(d, { forge_account_action: 'sign_in_during_setup', forge_account_ref: 'account:' + U.slug(cur.instance_key) + ':' + U.slug(login) });
+      if (ol.purpose === 'source') O55.draft.set(d, { source_access_authorization_refs: Array.from(new Set(d.source_access_authorization_refs.concat(['auth:' + U.slug(cur.instance_key) + ':' + U.slug(login)]))).slice(0, 16) });
+    }
+    S.save();
+  }
+
   /* ================================================================== name, privacy, owner, advanced (a new online copy) */
   function nameTaken(S, name) { const f = S.env.forges[md(S).forge] || { taken: [] }; return f.taken.includes(String(name || '').trim().toLowerCase()); }
   const azureGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -267,6 +292,7 @@
         instance_key: instanceKey(d), operation: 'human_create_team_project', owner_verified: true } };
   }
   def('online-details', {
+    seed: (S) => seedOnline(S, true),
     chapter: 'project', stage: 'source_control_setup',
     scene: () => ({ id: 'online', beat: 'signed' }),
     eyebrow: () => T('online.details.eyebrow'),
@@ -341,6 +367,7 @@
 
   /* ================================================================== pick the online Project to bring in */
   def('ex-repos', {
+    seed: (S) => seedOnline(S, true, 'source'),
     chapter: 'project', stage: 'first_project',
     scene: () => ({ id: 'online', beat: 'signed' }),
     eyebrow: () => T('online.repos.eyebrow'),
@@ -472,19 +499,22 @@
         { v: 'home', glyph: 'computer', title: T('away.home.title'), sub: T('away.home.sub') },
         { v: 'anywhere', glyph: 'globe', title: T('away.anywhere.title'), sub: T('away.anywhere.sub'), tag: T('chrome.recommended') }
       ], top === 'more' ? null : top, { label: T('away.title') });
-      let more = C.cards('route', [
-        { v: 'headscale', glyph: 'globe', title: T('away.headscale'), quiet: true },
-        { v: 'reverse_proxy', glyph: 'globe', title: T('away.proxy.title'), sub: T('away.proxy.sub'), quiet: true },
-        { v: 'remote_link', glyph: 'link', title: T('away.link.title'), sub: T('away.link.sub'), quiet: true }
-      ], mode === 'tailscale' && d.tailscale_control === 'headscale' ? 'headscale' : mode, { cls: 'o55-choices-quiet' });
-      if (mode === 'tailscale' && d.tailscale_control === 'headscale') more += C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', valid: F.isHttps(d.headscale_url) });
-      if (mode === 'reverse_proxy') {
-        more += C.field({ bind: 'proxy', label: T('away.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', valid: F.isHttps(d.proxy_hostname) });
-        more += C.segmented({ do: 'hosting', value: d.proxy_hosting || 'generate_for_server', label: T('away.proxy.hosting'), options: [{ v: 'generate_for_server', label: T('away.proxy.pm') }, { v: 'generate_only', label: T('away.proxy.generate') }, { v: 'existing_proxy', label: T('away.proxy.existing') }] });
-        if (d.proxy_hosting !== 'existing_proxy') more += C.segmented({ do: 'tls', value: d.proxy_tls || 'lets_encrypt', label: T('away.proxy.tls'), options: [{ v: 'lets_encrypt', label: T('away.proxy.free') }, { v: 'existing_certificate', label: T('away.proxy.own') }] });
-        more += C.details(S, 'proxykind', T('away.proxy.kind'), C.segmented({ do: 'kind', value: d.proxy_kind || 'caddy', label: T('away.proxy.kind'), options: [{ v: 'caddy', label: 'Caddy' }, { v: 'nginx', label: 'NGINX' }, { v: 'traefik', label: 'Traefik' }, { v: 'nginx_proxy_manager', label: 'Nginx Proxy Manager' }] }) + `<p>${U.esc(T('away.proxy.detail'))}</p>`);
+      /* each route's own questions sit under its card (QA round 2, Q7) */
+      const route = mode === 'tailscale' && d.tailscale_control === 'headscale' ? 'headscale' : mode;
+      let fields = '';
+      if (route === 'headscale') fields = C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', valid: F.isHttps(d.headscale_url) });
+      if (route === 'reverse_proxy') {
+        fields = C.field({ bind: 'proxy', label: T('away.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', valid: F.isHttps(d.proxy_hostname) });
+        fields += C.segmented({ do: 'hosting', value: d.proxy_hosting || 'generate_for_server', label: T('away.proxy.hosting'), options: [{ v: 'generate_for_server', label: T('away.proxy.pm') }, { v: 'generate_only', label: T('away.proxy.generate') }, { v: 'existing_proxy', label: T('away.proxy.existing') }] });
+        if (d.proxy_hosting !== 'existing_proxy') fields += C.segmented({ do: 'tls', value: d.proxy_tls || 'lets_encrypt', label: T('away.proxy.tls'), options: [{ v: 'lets_encrypt', label: T('away.proxy.free') }, { v: 'existing_certificate', label: T('away.proxy.own') }] });
+        fields += C.details(S, 'proxykind', T('away.proxy.kind'), C.segmented({ do: 'kind', value: d.proxy_kind || 'caddy', label: T('away.proxy.kind'), options: [{ v: 'caddy', label: 'Caddy' }, { v: 'nginx', label: 'NGINX' }, { v: 'traefik', label: 'Traefik' }, { v: 'nginx_proxy_manager', label: 'Nginx Proxy Manager' }] }) + `<p>${U.esc(T('away.proxy.detail'))}</p>`);
       }
-      if (mode === 'remote_link') more += C.field({ bind: 'link', label: T('away.link.label'), value: d.remote_endpoint, placeholder: 'pm-remote-link:home-nas/7Q2K', hint: T('away.link.hint') });
+      if (route === 'remote_link') fields = C.field({ bind: 'link', label: T('away.link.label'), value: d.remote_endpoint, placeholder: 'pm-remote-link:home-nas/7Q2K', hint: T('away.link.hint') });
+      const more = C.cards('route', [
+        { v: 'headscale', glyph: 'globe', title: T('away.headscale'), quiet: true, under: route === 'headscale' ? fields : '' },
+        { v: 'reverse_proxy', glyph: 'globe', title: T('away.proxy.title'), sub: T('away.proxy.sub'), quiet: true, under: route === 'reverse_proxy' ? fields : '' },
+        { v: 'remote_link', glyph: 'link', title: T('away.link.title'), sub: T('away.link.sub'), quiet: true, under: route === 'remote_link' ? fields : '' }
+      ], route, { cls: 'o55-choices-quiet' });
       out += F.more(d.remote_more || top === 'more', T('away.more'), 'more', more, 'more');
       return out;
     },

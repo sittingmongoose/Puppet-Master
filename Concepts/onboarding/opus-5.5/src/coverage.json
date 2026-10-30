@@ -1,5 +1,5 @@
 {
- "generated_from": "/home/sittingmongoose/pm-worktrees/testopus55-gap-motion-20260925/Plans/product_onboarding_contracts.schema.json",
+ "generated_from": "Plans/product_onboarding_contracts.schema.json at 78af23f393 (t3/plans/pm7-plans-canon, Q22)",
  "setup_plan_fields": 63,
  "conditionals": 27,
  "unmapped_fields": [],
@@ -27,8 +27,8 @@
   },
   {
    "field": "theme_family",
-   "schema": "enum [\"friendly\", \"glass\", \"retro\", \"basic\"]",
-   "mapped": "look: the four look tiles"
+   "schema": "enum [\"basic\", \"friendly\", \"glass\", \"retro\", \"nier\"]",
+   "mapped": "look: the five look tiles (NieR the wide one), the header look menu"
   },
   {
    "field": "theme_mode",

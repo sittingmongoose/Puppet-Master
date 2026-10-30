@@ -49,7 +49,9 @@
   /* Where work runs (G4). Busy uses this computer and the staging server; servers adds a GPU box and a CI runner. */
   function serversBusy() {
     return [
-      { id: 'local', name: 'This computer', kind: 'local', host: 'jared-mbp.local', project: 'tastebook',
+      /* this computer and Puppet Master's own services on it belong to no one Project: every Project's Resources shows
+         them (PM_WORK.servers keeps a server with no project for each; QA round 2, Q12) */
+      { id: 'local', name: 'This computer', kind: 'local', host: 'jared-mbp.local', project: null,
         environments: [{ id: 'dev', name: 'Development' }, { id: 'test', name: 'Tests' }, { id: 'pm', name: 'Puppet Master services' }] },
       { id: 'staging', name: 'Staging server', kind: 'remote', host: 'staging.tastebook.app', project: 'tastebook',
         environments: [{ id: 'staging', name: 'Staging' }] }
@@ -121,10 +123,10 @@
       { id: 'p-browse', kind: 'process', role: 'browser', project: P, surface: 'scout', where: 'Recipe apps survey', owner: 'sc-web1', title: 'Browser session', command: 'browser · allrecipes.com, mealie.io', cwd: '', pid: 48022, server: 'local', environment: 'dev', state: 'working', startedAt: ago(290), delivery: 'agent', waits: true, tail: OUT.browse.slice(), cpu: 12, mem: 730 },
 
       /* ---------------- System services (mirrors of System status; never owned or stopped here, D11) */
-      { id: 'sv-lsp', kind: 'service', role: 'lsp', project: P, surface: 'system', where: 'Language servers', title: 'rust-analyzer', command: 'rust-analyzer', pid: 45110, server: 'local', environment: 'pm', state: 'working', startedAt: ago(9800), cpu: 4, mem: 1260 },
-      { id: 'sv-mcp1', kind: 'service', role: 'mcp', project: P, surface: 'system', where: 'MCP servers', title: 'github MCP', command: 'github-mcp-server stdio', pid: 45220, server: 'local', environment: 'pm', state: 'working', startedAt: ago(9790), cpu: 0, mem: 52 },
-      { id: 'sv-mcp2', kind: 'service', role: 'mcp', project: P, surface: 'system', where: 'MCP servers', title: 'postgres MCP', command: 'postgres-mcp --read-only', pid: 45231, server: 'local', environment: 'pm', state: 'working', startedAt: ago(9790), cpu: 0, mem: 44 },
-      { id: 'sv-idx', kind: 'service', role: 'index', project: P, surface: 'system', where: 'Search index', title: 'Search index', detail: 'Current · last refresh 3m ago', server: 'local', environment: 'pm', state: 'idle', word: 'Current', startedAt: ago(9800) },
+      { id: 'sv-lsp', kind: 'service', role: 'lsp', project: null, surface: 'system', where: 'Language servers', title: 'rust-analyzer', command: 'rust-analyzer', pid: 45110, server: 'local', environment: 'pm', state: 'working', startedAt: ago(9800), cpu: 4, mem: 1260 },
+      { id: 'sv-mcp1', kind: 'service', role: 'mcp', project: null, surface: 'system', where: 'MCP servers', title: 'github MCP', command: 'github-mcp-server stdio', pid: 45220, server: 'local', environment: 'pm', state: 'working', startedAt: ago(9790), cpu: 0, mem: 52 },
+      { id: 'sv-mcp2', kind: 'service', role: 'mcp', project: null, surface: 'system', where: 'MCP servers', title: 'postgres MCP', command: 'postgres-mcp --read-only', pid: 45231, server: 'local', environment: 'pm', state: 'working', startedAt: ago(9790), cpu: 0, mem: 44 },
+      { id: 'sv-idx', kind: 'service', role: 'index', project: null, surface: 'system', where: 'Search index', title: 'Search index', detail: 'Current · last refresh 3m ago', server: 'local', environment: 'pm', state: 'idle', word: 'Current', startedAt: ago(9800) },
 
       /* ---------------- recently finished elsewhere */
       { id: 'o-sleuth', kind: 'agent', role: 'subagent', project: P, surface: 'orchestrator', where: 'Run #47', parent: 'o-run', title: 'Test Sleuth', detail: 'Found the flaky fixture', model: 'debug-prober', state: 'complete', startedAt: ago(600), endedAt: ago(540) },

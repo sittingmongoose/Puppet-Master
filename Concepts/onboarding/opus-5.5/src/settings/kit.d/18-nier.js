@@ -1,11 +1,15 @@
-/* O55 · NieR Mode: the engine. A hidden theme painted over the Basic family, in light or dark following Light or dark
-   (Light / Dark / Auto). It is not a ninth theme: the family the person chose stays in PM_THEME's themeState and in the
-   Theme setting, and comes back exactly when NieR Mode is turned off. Off by default; every part is installed by
-   default. The palette is styles.d/13-nier.css (generated from nier/nier-automata.json by tools/nier_palette.py); the
+/* O55 · NieR: the engine of the fifth theme. Since the PM7 build's QA round 2 (Q22, Jared 2026-10-30: "make NieR Mode a
+   new theme rather than an override") NieR is a theme family like Basic, Friendly, Glass and Retro, in light or dark
+   following Light or dark (Light / Dark / Auto): general.visual.theme is 'NieR Light' or 'NieR Dark'. It paints over
+   Basic's tokens (data-theme='basic-<mode>' plus html[data-o55-nier='on'], the marker every NieR style and reader keys
+   on), and this engine decides when the marker and that paint change, so a switch into NieR plays NieR's own moment.
+   There is no NieR on top of another family any more: an old save whose general.visual.nier-mode was on loads as the
+   NieR theme (o55NierMigrate). Every part is installed by default; the parts and the background are NieR's Adjust
+   options. The palette is styles.d/13-nier.css (generated from nier/nier-automata.json by tools/nier_palette.py); the
    parts (cursor, reboot, Pod, scenes, the chip manager ...) are other files that code against the contract below.
 
-   Settings (Plans/settings_inventory.json): general.visual.nier-mode (toggle, default off),
-   general.visual.nier-parts (multiselect of the 29 part labels, default all), general.visual.nier-background (select,
+   Settings (Plans/settings_inventory.json): general.visual.theme ('NieR Light' / 'NieR Dark' are NieR),
+   general.visual.nier-mode (retired: read once to migrate an old save), general.visual.nier-parts (multiselect of the 29 part labels, default all), general.visual.nier-background (select,
    default City Ruins).
 
    Attribute contract on <html> (nothing is written while NieR Mode is off, the look-layer rule):
@@ -131,7 +135,33 @@ let o55NierPvWithin = null;    /* the element this preview's transitions play in
 let o55NierNextRun = null;     /* options for the transition the next commit starts (set(on, { sound: false })) */
 function o55NierValue(id) { try { return state && state.settings ? PM51.value(id) : undefined; } catch (e) { return undefined; } }
 function o55NierReady() { try { return !!(state && state.settings && typeof PM51.value === 'function'); } catch (e) { return false; } }
-function o55NierStoredOn() { return o55On(o55NierValue('general.visual.nier-mode')); }
+const o55NierFamilyOf = v => String(v || '').trim().split(/[\s-]+/)[0].toLowerCase();
+const o55NierModeWord = () => { const m = String(o55NierValue('general.visual.theme-mode') || '').toLowerCase(); return m === 'light' || (m === 'auto' && o55NierMode() === 'light') ? 'Light' : m === 'dark' || m === 'auto' ? 'Dark' : (/light$/i.test(String(o55NierValue('general.visual.theme') || '')) ? 'Light' : 'Dark'); };
+/* NieR is asked for when the stored theme is NieR (Q22), or while an old save is being moved to it */
+let o55NierMigrating = '';
+function o55NierStoredOn() { return !!o55NierMigrating || o55NierFamilyOf(o55NierValue('general.visual.theme')) === 'nier'; }
+/* An old save with NieR Mode on loads as the NieR theme in its stored light or dark, and the retired switch is cleared.
+   It reads as NieR at once; the writes go through the Settings owner's own path just after this task (never from inside
+   a paint, where this is first asked). Only with a Project: no-project mode stores nothing. Idempotent and cheap. */
+function o55NierMigrate() {
+  if (o55NierMigrating || !state || !state.settings) return false;
+  const old = state.settings['general.visual.nier-mode'];
+  if (!(old === true || old === 'true' || old === 'On')) return false;
+  if (!o55NierProjectId()) return false;
+  const label = o55NierFamilyOf(state.settings['general.visual.theme']) === 'nier' ? null : 'NieR ' + o55NierModeWord();
+  o55NierMigrating = label || 'NieR';
+  window.setTimeout(() => o55NierMigrateWrite(label), 0);
+  return true;
+}
+function o55NierMigrateWrite(label) {
+  try {
+    if (label && findSettingGlobal('general.visual.theme')) commitSettingValue('general.visual.theme', label);
+    if (findSettingGlobal('general.visual.nier-mode')) commitSettingValues({ 'general.visual.nier-mode': false });
+    else if (state && state.settings) delete state.settings['general.visual.nier-mode'];
+    saveState();
+  } catch (e) { /* the theme still reads as NieR this session */ }
+  if (!label || o55NierFamilyOf(o55NierValue('general.visual.theme')) === 'nier') o55NierMigrating = '';
+}
 function o55NierWanted() { return o55NierPv && typeof o55NierPv.on === 'boolean' ? o55NierPv.on : o55NierStoredOn(); }
 function o55NierIsPainted() {
   if (o55NierPainted === null) {
@@ -140,6 +170,7 @@ function o55NierIsPainted() {
        (window.PM_O55_BOOT.install, tools/build.py first_paint_patches) and painted Basic Dark. A stored NieR Mode then
        starts as an off preview, which writes nothing (the window keeps it as its own look), and the stored look is not
        painted ahead of the window. */
+    o55NierMigrate();
     const install = o55BootInstall();
     if (install && !o55NierPv && o55NierStoredOn()) o55NierPv = { on: false };
     o55NierPainted = o55NierWanted();
@@ -237,7 +268,9 @@ function o55NierWriteAttrs() {
 }
 
 /* ---------- the paint hook (tools/build.py routes every data-theme writer through it) ---------------------------- */
-window.PM_THEME_PAINT_FAMILY = family => (o55NierIsPainted() ? 'basic' : family);
+/* NieR is painted over Basic. A theme pick of NieR reaches PM_THEME before the engine's moment has painted it: until
+   then the family on screen is kept, so the switch happens under NieR's own cover (o55NierRun). */
+window.PM_THEME_PAINT_FAMILY = family => (o55NierIsPainted() ? 'basic' : family === 'nier' ? ((document.documentElement.getAttribute('data-theme') || 'basic-dark').split('-')[0] || 'basic') : family);
 window.PM_THEME_PAINT_LABEL = () => (o55NierIsPainted() ? O55_NIER_LABEL : '');
 
 /* ---------- change events -------------------------------------------------------------------------------------- */
@@ -265,6 +298,19 @@ function o55NierEmit(forced) {
 /* ---------- turning it on and off ------------------------------------------------------------------------------ */
 const o55NierDefaultTransition = repaint => repaint();
 let o55NierTransition = o55NierDefaultTransition;
+/* Q22: a switch into NieR plays NieR's own moment (the transition its parts register) while its Reboot moment part is
+   installed; a switch into NieR without it, and every switch out of NieR, is the look cover every family change uses
+   (js/12-theme-transition.js). Inside the onboarding window the window's own look change shows it. */
+function o55NierPick(want, info) {
+  if (want && o55NierParts().includes('reboot')) return o55NierTransition;
+  if (info && info.within) return o55NierDefaultTransition;
+  if (typeof window.PM_THEME_TRANSITION !== 'function') return o55NierDefaultTransition;
+  const fam = want ? 'nier' : (() => { try { const T = window.PM_THEME; return T && T.getFamily ? T.getFamily() : 'basic'; } catch (e) { return 'basic'; } })();
+  return repaint => new Promise(done => {
+    window.PM_THEME_TRANSITION(() => { try { repaint(); } finally { done(); } }, { family: fam });
+    window.setTimeout(done, 2000);   /* the cover never holds the chain */
+  });
+}
 let o55NierChain = Promise.resolve();
 /* The chosen family comes back from PM_THEME's themeState; the hook decides what is painted. */
 function o55NierRepaintTheme() {
@@ -314,7 +360,7 @@ function o55NierRun(reason, opts) {
     if (o.from) info.from = o.from;
     if (Array.isArray(o.lines) && o.lines.length) info.lines = o.lines.slice();
     if (typeof o.onReveal === 'function') info.onReveal = phase => { if (PHASES.includes(phase)) tell(phase); };
-    try { await o55NierTransition(repaint, info); }
+    try { await o55NierPick(want, info)(repaint, info); }
     catch (e) { /* the transition is decoration; the repaint is not */ }
     finally { repaint(); o55NierEmit(); tell('gone'); }
     if (o55NierWanted() !== o55NierPainted) o55NierRun();
@@ -333,12 +379,13 @@ function o55NierPaintNow() {
 function o55NierApply() {
   /* a lingering preview ends when another Project is loaded, as the theme it was shown with does */
   if (o55NierPvLoose && o55NierProjectId() !== o55NierPvProject) o55NierPreviewDrop();
+  o55NierMigrate();
   if (o55NierIsPainted() !== o55NierWanted()) { o55NierRun(); return; }
   o55NierWriteAttrs(); o55NierEmit();
 }
 
 /* ---------- precedence: Accent color and App font ---------------------------------------------------------------- */
-/* While NieR Mode is on it decides these two; their rows keep the person's choice (for when it is off) and say so. */
+/* The NieR theme decides these two; their rows keep the person's choice (for the other themes) and say so. */
 const O55_NIER_OWNS = ['general.visual.accent-color', 'general.visual.app-font'];
 const o55NierControl = renderControl;
 renderControl = function (setting, value) {
@@ -348,44 +395,20 @@ renderControl = function (setting, value) {
      App font select in the live document, scheduling Chrome's document-wide Autofill extraction during the fade.
      Only the note changes now; the off-state wrapper contributes no box, and no hidden ownership text is retained. */
   const on = o55NierIsPainted();
-  const note = on ? `<span class="o55-auto">${icon('spark')}<span>NieR Mode decides this while it is on</span></span>` : '';
+  const note = on ? `<span class="o55-auto">${icon('spark')}<span>The NieR theme decides this</span></span>` : '';
   return `<div class="o55-nier-own" data-o55-owned="${on ? 'on' : 'off'}"><span class="o55-inherit"${on ? '' : ' hidden'}>${note}</span>${html}</div>`;
 };
-/* Rows that depend on the theme family (High contrast for Basic, the Glass rows, Retro textures) follow the family
-   being painted, so while NieR Mode is on they read Basic; their stored values are never touched. kit.d/40-bound.js
-   asks PM51.whenValue for a `when` condition's value. */
-PM51.whenValue = id => (id === 'general.visual.theme' && o55NierIsPainted() ? (o55NierMode() === 'light' ? 'Basic Light' : 'Basic Dark') : PM51.value(id));
+/* Rows that depend on the theme family read the stored theme (kit.d/40-bound.js PM51.whenValue): NieR is its own
+   value since Q22, so Basic's rows (High contrast) stay Basic-only and NieR's Adjust rows show for NieR. */
 
-/* ---------- a family picked while NieR Mode is on ---------------------------------------------------------------- */
-let o55NierNote = null;
-function o55NierNoteEnd() { const n = o55NierNote; o55NierNote = null; if (n) { window.clearTimeout(n.timer); n.bar.remove(); } }
-function o55NierNotePick(family) {
-  /* the onboarding window saves nothing until the end and says so itself (the look screen's own note) */
-  if (!o55NierIsPainted() || !o55NierWanted() || document.documentElement.hasAttribute('data-o55-open')) return;
-  o55NierNoteEnd();
-  const bar = document.createElement('div');
-  bar.className = 'o55-preview-bar o55-nier-note'; bar.setAttribute('role', 'status');
-  bar.innerHTML = `<span class="o55-preview-text">Your theme is saved. It shows when NieR Mode is off.</span><button type="button" class="o55-nier-note-off" data-o55-nier-note="off">Turn off NieR Mode</button><button type="button" data-o55-nier-note="close">OK</button>`;
-  document.body.appendChild(bar);
-  o55NierNote = { bar, family, timer: window.setTimeout(o55NierNoteEnd, 9000) };
-}
-document.addEventListener('click', e => {
-  const b = e.target && e.target.closest ? e.target.closest('[data-o55-nier-note]') : null; if (!b) return;
-  const off = b.dataset.o55NierNote === 'off';
-  o55NierNoteEnd();
-  if (off) o55NierSet(false);
-});
-/* Every family pick that is saved goes through commitSettingValue (the Settings row, the title-bar menu through
-   setSettingFromHost, the tour's look menu); a pick that changes the saved family while NieR Mode is on is noted.
-   Every write also tells the preview: a lingering one ends (Settings has written, as the theme it was shown with
-   ends), and a shown one follows a write to a NieR row, so the latest request is what is painted. */
+/* ---------- a family picked while NieR is painted: no note since Q22 (NieR is a theme, so a pick replaces it) ------ */
+function o55NierNotePick() { /* kept for callers; nothing to say */ }
+/* Every write tells the preview: a lingering one ends (Settings has written, as the theme it was shown with ends), and
+   a shown one follows a write to the theme or a NieR row, so the latest request is what is painted. */
 const o55NierCommit = commitSettingValue;
 commitSettingValue = function (id, value) {
-  const fam = v => String(v || '').trim().split(/\s+/)[0].toLowerCase();
-  const before = id === 'general.visual.theme' && state && state.settings ? fam(PM51.value(id)) : null;
   const ok = o55NierCommit.apply(this, arguments);
   if (ok) o55NierFollowWrite(id, value);
-  if (ok && before != null && fam(value) && fam(value) !== before) o55NierNotePick(fam(value));
   return ok;
 };
 function o55NierPreviewDrop() { o55NierPv = null; o55NierPvLoose = false; o55NierPvWithin = null; o55NierPvProject = ''; }
@@ -395,7 +418,7 @@ function o55NierFollowWrite(id, value) {
      turned NieR Mode on or off: that is what is saved) */
   if (o55NierPvLoose && (id === 'general.visual.nier-parts' || id === 'general.visual.nier-background')) { o55NierAdopt(id); return; }
   if (o55NierPvLoose) { o55NierPreviewDrop(); o55NierRun(); return; }
-  if (id === 'general.visual.nier-mode') o55NierPv.on = o55On(value);
+  if (id === 'general.visual.theme') o55NierPv.on = o55NierFamilyOf(value) === 'nier';
   else if (id === 'general.visual.nier-parts') o55NierPv.parts = o55NierKeys((Array.isArray(value) ? value : []).map(l => o55NierByLabel.get(String(l))));
   else if (id === 'general.visual.nier-background') o55NierPv.background = String(value);
 }
@@ -408,7 +431,7 @@ function o55NierFollowWrite(id, value) {
 function o55NierAdopt(id) {
   const pv = o55NierPv; o55NierPreviewDrop();
   const writes = {};
-  if (id !== 'general.visual.nier-mode' && typeof pv.on === 'boolean' && pv.on !== o55NierStoredOn()) writes['general.visual.nier-mode'] = pv.on;
+  if (typeof pv.on === 'boolean' && pv.on && !o55NierStoredOn()) writes['general.visual.theme'] = 'NieR ' + o55NierModeWord();
   if (id !== 'general.visual.nier-parts' && Array.isArray(pv.parts) && pv.parts.join(' ') !== o55NierStoredParts().join(' ')) writes['general.visual.nier-parts'] = o55NierLabels(pv.parts);
   if (id !== 'general.visual.nier-background' && pv.background && pv.background !== o55NierStoredBackground()) writes['general.visual.nier-background'] = pv.background;
   const ids = Object.keys(writes);
@@ -456,7 +479,9 @@ function o55NierCommitPreview() {
   const pv = o55NierPv; if (!pv) return true;
   if (!o55NierReady()) return false;
   const writes = {};
-  if (typeof pv.on === 'boolean' && pv.on !== o55NierStoredOn()) writes['general.visual.nier-mode'] = pv.on;
+  /* the theme itself is written by the onboarding's Ready (74-screens-ready.js writeLook) before this runs; a NieR
+     preview not yet stored as the theme is stored here too, so dropping the preview never repaints */
+  if (typeof pv.on === 'boolean' && pv.on && !o55NierStoredOn()) writes['general.visual.theme'] = 'NieR ' + o55NierModeWord();
   if (Array.isArray(pv.parts) && pv.parts.join(' ') !== o55NierStoredParts().join(' ')) writes['general.visual.nier-parts'] = o55NierLabels(pv.parts);
   if (pv.background && pv.background !== o55NierStoredBackground()) writes['general.visual.nier-background'] = pv.background;
   const ids = Object.keys(writes);
@@ -484,10 +509,13 @@ function o55NierCommitRow(id, value) {
   if (typeof o55Notify === 'function') o55Notify(id, value);
   return true;
 }
+/* set(on): a theme pick since Q22, kept for older callers: on picks NieR in the current light or dark; off picks Basic
+   (there is no earlier family to return to). New code picks a family (PM7_SETTINGS_TOME.setChromeThemeFamily). */
 function o55NierSet(on, opts) {
   const o = opts || {};
+  if (!!on === o55NierStoredOn()) return true;
   o55NierNextRun = o.sound === false || o.from || typeof o.onReveal === 'function' ? { sound: o.sound, from: o.from, onReveal: o.onReveal } : null;
-  const ok = o55NierCommitRow('general.visual.nier-mode', !!on);
+  const ok = o55NierCommitRow('general.visual.theme', (on ? 'NieR ' : 'Basic ') + o55NierModeWord());
   if (!ok) o55NierNextRun = null;
   return ok;
 }

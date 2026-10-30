@@ -2,7 +2,10 @@
  * concept was Concepts/background-activity/opus-5.5, its checks lived in its lab). OWNER: pm7-activity, PM7 build
  * 2026-10-29. Drives an existing GPU browser (an agent-browser or gpu-browser session; this tool never launches one):
  *
- *   node tools/work_checks.mjs <page path or url> --cdp <endpoint> [--look basic-dark] [--width 1920] [--out dir]
+ *   node tools/work_checks.mjs <page path or url> --cdp <endpoint> [--look basic-dark] [--width 1920] [--out dir] [--sandbox]
+ *
+ * --sandbox runs every check inside a sandboxed iframe the way T3's file preview shows the page (scripts allowed, an
+ * opaque origin, no storage; QA round 2): the tool writes a wrapper page into <out> and drives the frame.
  *
  * It reads the page only through its owners: PM_WORK (the work projection and its fixture scenarios), PM7_WORK_UI (the
  * status bar items and the panel, src/js/48-work.js), PM56_DEMO (the hosted chat's own demo API) and real clicks.
@@ -17,6 +20,7 @@ const { chromium } = require('playwright-core');
 const argv = process.argv.slice(2);
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const page0 = argv[0] && !argv[0].startsWith('--') ? argv[0] : null;
+const sandbox = argv.includes('--sandbox');
 const cdp = opt('cdp');
 if (!page0 || !cdp) { console.error('usage: work_checks.mjs <page path or url> --cdp <endpoint> [--look basic-dark] [--width 1920] [--out dir]'); process.exit(2); }
 const url = /^https?:|^file:/.test(page0) ? page0 : pathToFileURL(resolve(page0)).href;
@@ -36,11 +40,21 @@ async function check(n, name, fn) {
   try { const r = await fn(); ok = r === true || (r && r.ok === true); note = r && r.note ? r.note : (typeof r === 'string' ? r : ''); }
   catch (e) { note = 'threw: ' + String(e.message || e).slice(0, 200); }
   /* the look each check ended in: a check that leaves the requested look would run every later one in another */
-  const look = await page.evaluate(() => document.documentElement.getAttribute('data-theme') + (document.documentElement.getAttribute('data-o55-nier') === 'on' ? '+nier' : '')).catch(() => '?');
+  const look = await F.evaluate(() => document.documentElement.getAttribute('data-theme') + (document.documentElement.getAttribute('data-o55-nier') === 'on' ? '+nier' : '')).catch(() => '?');
   results.push({ n, name, ok, note, look });
   console.log((ok ? 'PASS ' : 'FAIL ') + String(n).padStart(2) + ' [' + look + '] ' + name + (note ? ' — ' + note : ''));
 }
-const ev = (fn, arg) => page.evaluate(fn, arg);
+let F = null;   // the frame the page runs in: the page itself, or the sandboxed iframe (--sandbox)
+const ev = (fn, arg) => F.evaluate(fn, arg);
+/* the look this run asks for, saved the way the look menu saves it; a check that switches Project (each Project carries
+   its own settings) applies it again before it ends */
+const applyLook = () => ev(([f, m]) => {
+  const fam = f === 'nier' ? 'basic' : f, tome = window.PM7_SETTINGS_TOME;
+  if (window.PM_NIER && f !== 'nier') window.PM_NIER.set(false, { sound: false });
+  window.PM_THEME.setFamily(fam, { persist: false }); window.PM_THEME.setMode(m, { persist: false });
+  if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(fam); tome.setChromeThemeMode(m); }
+  if (window.PM_NIER && f === 'nier') window.PM_NIER.set(true, { sound: false });
+}, [fam, mode]);
 const scenario = async (name) => { await ev((n) => window.PM_WORK.scenario(n), name); await sleep(500); };
 const clickAt = async (sel) => { const r = await ev((s) => { const e = [...document.querySelectorAll(s)].find((x) => x.getBoundingClientRect().width > 0); if (!e) return null; e.scrollIntoView({ block: 'nearest' }); const q = e.getBoundingClientRect(); return { x: q.left + q.width / 2, y: q.top + q.height / 2 }; }, sel); if (!r) throw new Error('nothing to click: ' + sel); await page.mouse.click(r.x, r.y); return r; };
 const hoverAt = async (sel) => { const r = await ev((s) => { const e = [...document.querySelectorAll(s)].find((x) => x.getBoundingClientRect().width > 0); if (!e) return null; const q = e.getBoundingClientRect(); return { x: q.left + q.width / 2, y: q.top + q.height / 2 }; }, sel); if (!r) throw new Error('nothing to hover: ' + sel); await page.mouse.move(r.x, r.y + 60); await sleep(60); await page.mouse.move(r.x, r.y, { steps: 5 }); return r; };
@@ -48,17 +62,25 @@ const barText = (k) => ev((k) => { const e = document.querySelector('[data-work-
 const closeActivity = () => ev(() => { const x = document.querySelector('#pmRoot .activity-panel [data-action="close-activity"]'); if (x) x.click(); });
 
 try {
-  await page.goto(url + (url.includes('?') ? '&' : '?') + 'o55=off', { waitUntil: 'load', timeout: 120000 });
-  await page.waitForFunction(() => !!(window.PM_WORK && window.PM7_WORK_UI && window.PM56_DEMO && window.PM_THEME), null, { timeout: 120000 });
+  const target = url + (url.includes('?') ? '&' : '?') + 'o55=off';
+  if (sandbox) {
+    const wrap = join(out, 'sandbox.html');
+    writeFileSync(wrap, '<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;height:100%}iframe{border:0;width:100%;height:100%;display:block}</style></head>' +
+      '<body><iframe sandbox="allow-scripts allow-popups allow-forms allow-modals allow-downloads" src="' + target + '"></iframe></body></html>');
+    await page.goto(pathToFileURL(wrap).href, { waitUntil: 'load', timeout: 120000 });
+    for (let i = 0; i < 600 && !F; i++) { F = page.frames().find((f) => f !== page.mainFrame() && f.url().startsWith(url)) || null; if (!F) await sleep(100); }
+    if (!F) throw new Error('the sandboxed frame did not load');
+  } else {
+    await page.goto(target, { waitUntil: 'load', timeout: 120000 });
+    F = page.mainFrame();
+  }
+  await F.waitForFunction(() => !!(window.PM_WORK && window.PM7_WORK_UI && window.PM56_DEMO && window.PM_THEME), null, { timeout: 120000 });
+  /* the frame's own uncaught errors (a sandboxed frame's are not the page's) */
+  await ev(() => { window.__wkErrors = []; addEventListener('error', (e) => window.__wkErrors.push(String(e.message || e.error).slice(0, 300))); addEventListener('unhandledrejection', (e) => window.__wkErrors.push('rejection: ' + String(e.reason).slice(0, 280))); });
+  if (sandbox) console.log('sandboxed frame: origin ' + await ev(() => String(window.origin)) + ', storage ' + await ev(() => { try { localStorage.getItem('x'); return 'open'; } catch (e) { return 'blocked'; } }));
   /* the look is saved the way the look menu and Demo Studio save it (PM7_SETTINGS_TOME), not only previewed: Settings
      re-applies the saved look when it opens (check 25 opens it), and a preview-only look ran every later check in Basic */
-  await ev(([f, m]) => {
-    const fam = f === 'nier' ? 'basic' : f, tome = window.PM7_SETTINGS_TOME;
-    if (window.PM_NIER && f !== 'nier') window.PM_NIER.set(false, { sound: false });
-    window.PM_THEME.setFamily(fam, { persist: false }); window.PM_THEME.setMode(m, { persist: false });
-    if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(fam); tome.setChromeThemeMode(m); }
-    if (window.PM_NIER && f === 'nier') window.PM_NIER.set(true, { sound: false });
-  }, [fam, mode]);
+  await applyLook();
   await sleep(1500);
   await ev(() => window.PM56_DEMO.selectThread('query'));
   await scenario('busy');
@@ -426,7 +448,8 @@ try {
     const quiet = await lines();
     await scenario('busy');
     const needsIds = busy.filter((l) => l.tone === 'needs').map((l) => l.id).sort().join(',');
-    return { ok: needsIds === want.needs && !!needLine && needLine.label === 'Review' && busy.some((l) => l.tone === 'live' && /\d/.test(l.time)) && opened.open && opened.domain === 'processes' && JSON.stringify(opened.sel || '').includes(needLine.id) && quiet.length < busy.length,
+    /* a running process's line leaves the dock 60 s after it first shows there (Q13, check 46), so only its time is asked of it */
+    return { ok: needsIds === want.needs && !!needLine && needLine.label === 'Review' && busy.filter((l) => l.tone === 'live').every((l) => /\d/.test(l.time)) && opened.open && opened.domain === 'processes' && JSON.stringify(opened.sel || '').includes(needLine.id) && quiet.length < busy.length,
       note: JSON.stringify({ busy, want, opened, quiet: quiet.length }) };
   });
   await check(37, 'Dragging the floating Activity panel holds body.pm-resizing and ends it, with PM_DRAGEND, on release (R-10)', async () => {
@@ -610,11 +633,77 @@ try {
     }
     return { ok: rows.length === 3 && rows.every((r) => r.open && r.cardTop != null && r.cardTop >= r.panelBottom && parseFloat(r.push) === r.panelH + 8), note: JSON.stringify(rows) };
   });
+  await check(46, 'The composer dock: a running process shows for 60 s from when it first shows, then leaves; a line that needs the person stays (Q13)', async () => {
+    await ev(() => window.PM_PAGES.go('dashboard')); await sleep(400);
+    await scenario('busy'); await ev(() => window.PM56_DEMO.selectThread('query')); await sleep(800);
+    const lines = () => ev(() => [...document.querySelectorAll('#pmRoot .composer .pmx-dock-line')].filter((l) => l.querySelector('[data-action="work-dock-review"]'))
+      .map((l) => ({ tone: l.getAttribute('data-tone'), id: l.querySelector('[data-action="work-dock-review"]').dataset.id })));
+    const more = () => ev(() => { const m = [...document.querySelectorAll('#pmRoot .composer .pmx-dock *')].find((e) => /more/.test(e.textContent || '') && e.children.length === 0); return m ? m.textContent.trim() : ''; });
+    /* a scenario starts its work over (new start times): new to the dock, so its running processes show */
+    await scenario('quiet'); await sleep(400); await scenario('busy'); await sleep(900);
+    const fresh = await lines(), freshMore = await more();
+    await sleep(61500);
+    const later = await lines(), laterMore = await more();
+    await scenario('busy'); await sleep(400);
+    const needs = (l) => l.filter((x) => x.tone === 'needs').map((x) => x.id).join(',');
+    return { ok: fresh.some((l) => l.tone === 'live') && !later.some((l) => l.tone === 'live' || l.tone === 'comingup') && needs(later) && needs(later) === needs(fresh),
+      note: JSON.stringify({ fresh, freshMore, later, laterMore }) };
+  });
+  /* ------------------------------------------------------------------------------------------- QA round 2 */
+  await check(47, 'Resources has its rows on the first frame the tab shows (first open, reopen, after a scenario switch), and a Project with nothing of its own (another, or one just made) still shows this computer and its services, never an empty tray (Q12)', async () => {
+    await scenario('busy'); await ev(() => window.PM7_WORK_UI.close()); await sleep(300);
+    const watch = () => ev(() => { window.__wkRes = []; const t0 = performance.now(); const f = () => { const p = document.getElementById('pm7-work');
+      window.__wkRes.push([Math.round(performance.now() - t0), p && p.getAttribute('data-tab'), p ? p.querySelectorAll('.wk-tr:not(.wk-th)').length : -1]); if (performance.now() - t0 < 1600) requestAnimationFrame(f); }; requestAnimationFrame(f); });
+    const read = async () => { await sleep(1800); const r = await ev(() => window.__wkRes); const shown = r.filter((x) => x[1] === 'resources'); return { frames: shown.length, empty: shown.filter((x) => x[2] <= 0).length, first: shown.length ? shown[0][2] : null }; };
+    const timings = [];
+    for (const how of ['first', 'reopen']) {
+      await clickAt('[data-status-action="agents"]'); await sleep(600);
+      await watch(); await clickAt('#pm7-work [data-work-tab="resources"]'); timings.push({ how, ...(await read()) });
+      await ev(() => window.PM7_WORK_UI.close()); await sleep(500);
+    }
+    await ev(() => window.PM7_WORK_UI.open('resources')); await sleep(600);
+    await watch(); await scenario('servers'); timings.push({ how: 'scenario', ...(await read()) });
+    await scenario('busy');
+    /* another Project, then one just made the way onboarding makes it (PM_PROJECT_BOX.add, then select), then back */
+    const proj = [];
+    for (const id of ['harbor', 'p-wk-check-new']) {
+      await ev((id) => { const b = window.PM_PROJECT_BOX; if (id.startsWith('p-')) b.add(id, { name: 'Check project' }); b.select(id); }, id); await sleep(700);
+      await ev(() => window.PM7_WORK_UI.open('resources')); await sleep(800);
+      proj.push(await ev((id) => { const p = document.getElementById('pm7-work'); return { id, rows: p.querySelectorAll('.wk-tr:not(.wk-th)').length, servers: [...p.querySelectorAll('.wk-server .wk-ghead strong')].map((e) => e.textContent), idle: !!p.querySelector('.wk-res-idle'), empty: !!p.querySelector('.wk-empty') }; }, id));
+      await ev(() => window.PM7_WORK_UI.close()); await sleep(300);
+    }
+    await ev(() => window.PM_PROJECT_BOX.select('tastebook')); await sleep(600);
+    await applyLook(); await sleep(fam === 'nier' ? 4500 : 1200);
+    return { ok: timings.every((t) => t.frames > 0 && t.empty === 0 && t.first > 0) && proj.every((p) => p.rows >= 4 && !p.empty && p.servers.includes('This computer')) && proj[1].idle,
+      note: JSON.stringify({ timings, proj }) };
+  });
+  await check(48, 'The Activity bar, the composer dock\'s lines and every floating surface of the panel are as opaque as the context ring\'s menu in this look (Q14 and its sweep)', async () => {
+    await scenario('busy'); await ev(() => window.PM56_DEMO.selectThread('query')); await sleep(700);
+    const alpha = (sel) => ev((s) => { const e = [...document.querySelectorAll(s)].filter((x) => x.getBoundingClientRect().height > 0).pop(); if (!e) return null; const c = getComputedStyle(e).backgroundColor; const m = c.match(/[\d.]+/g) || []; return { c, a: /^rgba|\/ /.test(c) && m.length >= 4 ? +m[3] : 1 }; }, sel);
+    const r = {};
+    r.bar = await alpha('#pmRoot .pm56-activity-bar');
+    r.dock = await alpha('#pmRoot .composer .pmx-dock-line');
+    await ev(() => window.PM7_WORK_UI.open('agents')); await sleep(500); r.panel = await alpha('#pm7-work'); await ev(() => window.PM7_WORK_UI.close()); await sleep(300);
+    await ev(() => window.PM7_WORK_UI.systemStatus()); await sleep(400); r.system = await alpha('#pm7-work-system'); await ev(() => window.PM7_WORK_UI.systemStatus()); await sleep(300);
+    await clickAt('#pmRoot .context-ring'); await sleep(600); r.menu = await alpha('.overlay-menu'); await page.keyboard.press('Escape'); await sleep(300);
+    const need = r.menu ? r.menu.a - 0.005 : 1;
+    return { ok: !!r.menu && ['bar', 'dock', 'panel', 'system'].every((k) => r[k] && r[k].a >= need), note: JSON.stringify(r) };
+  });
+  await check(49, 'Escape closes System status and the Stop list even when focus is not inside them, as in a sandboxed frame where their focus does not land', async () => {
+    await ev(() => window.PM7_WORK_UI.systemStatus()); await sleep(400);
+    await ev(() => { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); }); await page.keyboard.press('Escape'); await sleep(300);
+    const sys = await ev(() => !document.getElementById('pm7-work-system'));
+    await ev(() => window.PM7_WORK_UI.confirmPlatform()); await sleep(500);
+    await ev(() => { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); }); await page.keyboard.press('Escape'); await sleep(300);
+    const dlg = await ev(() => !document.getElementById('pm7-work-dialog'));
+    return { ok: sys && dlg, note: JSON.stringify({ systemClosed: sys, stopListClosed: dlg }) };
+  });
 } finally {
+  try { (await ev(() => window.__wkErrors || [])).forEach((e) => { if (!errors.includes(e)) errors.push(e); }); } catch (_) { /* the frame is gone */ }
   const failed = results.filter((r) => !r.ok).length;
   const wantLook = (fam === 'nier' ? 'basic-' + mode + '+nier' : fam + '-' + mode), drift = results.filter((r) => r.look !== wantLook);
   if (drift.length) console.log('LOOK DRIFT: ' + drift.length + ' checks ended outside ' + wantLook + ': ' + drift.slice(0, 5).map((r) => r.n + '=' + r.look).join(', '));
-  writeFileSync(join(out, 'work-checks.json'), JSON.stringify({ page: url, look: fam + '-' + mode, width: W, results, errors, drift: drift.map((r) => r.n) }, null, 1));
+  writeFileSync(join(out, 'work-checks.json'), JSON.stringify({ page: url, sandbox, look: fam + '-' + mode, width: W, results, errors, drift: drift.map((r) => r.n) }, null, 1));
   console.log(`${results.length - failed}/${results.length} passed; ${errors.length} page errors` + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));
   await ctx.close().catch(() => {});
   await browser.close().catch(() => {});

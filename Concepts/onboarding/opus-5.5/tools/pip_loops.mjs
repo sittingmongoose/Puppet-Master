@@ -117,20 +117,24 @@ try {
   await press(page, '#pmRoot .composer [data-action="send"]');
   await page.waitFor((sel) => !!document.querySelector(sel), { args: [ORBIT], timeout: 20000 });
   await sleep(700);
+  /* the pointer rests near the transcript's top left (over the transcript, clear of the Orbit's own panel), then wheels */
+  const tx = await page.evaluate(() => { const q = document.querySelector('#pmRoot .transcript').getBoundingClientRect(); return { x: q.left + 40, y: q.top + 30 }; });
+  const wheel = async (dy, n) => { await page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: tx.x, y: tx.y }); for (let i = 0; i < n; i++) { await page.send('Input.dispatchMouseEvent', { type: 'mouseWheel', x: tx.x, y: tx.y, deltaX: 0, deltaY: dy }); await sleep(60); } await sleep(500); };
+  /* wheel until the whole Orbit is inside the transcript (the transcript's height depends on what sits above the composer) */
+  const inView = async () => { const v = await sample(page, ORBIT, DOTS); return v && v.clip && v.box[0] >= v.clip[0] && v.box[1] <= v.clip[1] ? 0 : v && v.clip && v.box[0] < v.clip[0] ? -1 : 1; };
+  const bringIn = async () => { for (let i = 0, d; i < 30 && (d = await inView()) !== 0; i++) await wheel(d * 60, 1); };
+  await bringIn();
   let w = await watch(page, ORBIT, DOTS);
   record('orbit-in-view', running(w) && w.run === 'on', w);
 
   /* wheel the transcript to its top: the Orbit leaves the transcript's clip */
-  /* the pointer rests near the transcript's top left (over the transcript, clear of the Orbit's own panel), then wheels */
-  const tx = await page.evaluate(() => { const q = document.querySelector('#pmRoot .transcript').getBoundingClientRect(); return { x: q.left + 40, y: q.top + 30 }; });
-  const wheel = async (dy, n) => { await page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: tx.x, y: tx.y }); for (let i = 0; i < n; i++) { await page.send('Input.dispatchMouseEvent', { type: 'mouseWheel', x: tx.x, y: tx.y, deltaX: 0, deltaY: dy }); await sleep(60); } await sleep(500); };
   const metrics = () => page.evaluate(() => { const t = document.querySelector('#pmRoot .transcript'); return [Math.round(t.scrollTop), t.scrollHeight, t.clientHeight]; });
   const before = await metrics();
   await wheel(-600, 6);
   w = await watch(page, ORBIT, DOTS);
   w.scroll = [before, await metrics()];
   record('orbit-offscreen', !w.gone && !!w.clip && (w.box[0] >= w.clip[1] || w.box[1] <= w.clip[0]) && resting(w, 'off'), w);
-  await wheel(600, 8);
+  await bringIn();
   w = await watch(page, ORBIT, DOTS);
   w.scroll = await metrics();
   record('orbit-back', running(w) && w.run === 'on', w);

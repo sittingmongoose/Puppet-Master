@@ -651,7 +651,7 @@
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const RB = (key, fallback, vars) => (typeof o55NierCopy === 'function' ? o55NierCopy('nierSettings.reboot.' + key, fallback, vars)
     : String(fallback).replace(/\{(\w+)\}/g, (m, k) => (vars && vars[k] != null ? String(vars[k]) : m)));
-  /* the look kept for later (ticking: the family painted now) or coming back (unticking: the family NieR paints over) */
+  /* the look named on the plate: unticking, the theme picked after NieR (PM_THEME holds it while NieR is still painted) */
   function familyName() {
     let f = String(html.getAttribute('data-theme') || 'basic').split('-')[0];
     if (html.hasAttribute('data-o55-nier')) { try { const c = window.PM_THEME && window.PM_THEME.getFamily && window.PM_THEME.getFamily(); if (c) f = String(c); } catch (e) { /* the painted one */ } }
@@ -665,9 +665,9 @@
     const fam = familyName();
     const last = installed('pod') || installed('voice') ? { text: RB('pod', 'Pod 042'), stamp: RB('online', 'Online') }
       : installed('sounds') ? { text: RB('menuSounds', 'Menu sounds'), stamp: ok } : { text: RB('ready', 'Ready'), stamp: ok };
-    const keep = { text: RB('keepLook', 'Keeping {family} for later', { family: fam }), stamp: ok }, ink = { text: RB('inkParchment', 'Ink and parchment'), stamp: ok };
-    const restore = { text: RB('restoreLook', 'Restoring {family}', { family: fam }), stamp: ok }, boot = { text: RB('pageOn', 'Rebooting the interface'), stamp: ok };
-    if (kind === 'fold') return [{ text: RB('saveNier', 'Saving NieR Mode for later'), stamp: ok }, restore];
+    const keep = { text: RB('keepLook', 'Changing the theme', { family: fam }), stamp: ok }, ink = { text: RB('inkParchment', 'Ink and parchment'), stamp: ok };
+    const restore = { text: RB('restoreLook', 'Loading {family}', { family: fam }), stamp: ok }, boot = { text: RB('pageOn', 'Rebooting the interface'), stamp: ok };
+    if (kind === 'fold') return [{ text: RB('saveNier', 'Leaving NieR'), stamp: ok }, restore];
     if (kind === 'pageOff') return [{ text: RB('pageOff', 'Shutting down the unit'), stamp: ok }, restore];
     if (kind === 'replay') return [boot, ink, last, { text: RB('pageReplayDone', 'All parts reinstalled'), stamp: ok }];
     if (kind === 'pageOn') return [boot, keep, ink, last];
@@ -684,7 +684,7 @@
   function rbLog(lines) {
     const log = document.createElement('div');
     log.className = 'o55np-log';
-    log.innerHTML = `<div class="o55np-kick"><i></i><i></i><i></i><span class="o55np-kick-t">${esc(RB('kicker', 'NieR Mode'))}</span></div>`
+    log.innerHTML = `<div class="o55np-kick"><i></i><i></i><i></i><span class="o55np-kick-t">${esc(RB('kicker', 'NieR'))}</span></div>`
       + `<div class="o55np-lns">${lines.map(l => `<div class="o55np-ln"><span class="o55np-ln-t">${esc(l.text)}</span><span class="o55np-ln-dots"></span><b class="o55np-stamp">${esc(l.stamp)}</b><i class="o55np-ln-mask"></i></div>`).join('')}</div>`
       + '<div class="o55np-meter"><i></i><span class="o55np-wait" aria-hidden="true"><b></b></span></div>'
       + `<div class="o55np-ln o55np-sync"><span class="o55np-ln-t">${esc(RB('syncing', 'Synchronising'))}</span><i class="o55np-caret"></i><span class="o55np-ln-dots"></span><b class="o55np-stamp">${esc(RB('ok', 'OK'))}</b></div>`;

@@ -150,15 +150,12 @@
     }
     let enabled = projectEnabled(p);
     if (enabled === PENDING) {
-      /* A Project whose settings cannot be read yet. The one this onboarding run has just made (selected as Creating
-         publishes it, with the window open; its settings are saved by its first write, O55.shell.commitLook) keeps the
-         sound the person is hearing until they are readable, and that write reads again. Any other unreadable Project
-         is silent (fail closed). (A mute flipped on for that moment cut a block's touchdown on Creating: final check
-         F1-2.) */
-      const cm = O55.S && O55.S.open && O55.S.sess && O55.S.sess.commit;
-      const made = cm ? [cm.projectId, cm.pendingProjectId, cm.fixtureProjectId].filter(Boolean) : [];
-      if (made.indexOf(p.id) >= 0 && (!bound || bound.project_id !== p.id)) return S.binding();
-      enabled = false;
+      /* A Project whose settings cannot be read: not saved yet (the one Creating has just made, until its first
+         write), or never readable here (a page with no storage, such as a sandboxed preview). The sound stays as the
+         person has it: the factory default (on), or what they chose in this page. It used to fail closed, which muted
+         a preview with no storage at every refresh, even after the person turned sound on (QA round 2, Q1 and Q2; and
+         a block's touchdown on Creating, final check F1-2). A readable Project binds as before. */
+      return S.binding();
     }
     const changed = !bound || bound.project_id !== p.id || bound.enabled !== enabled;
     bound = { project_id: p.id, enabled };
@@ -1967,7 +1964,9 @@
     const want = !muted; /* the Settings value the control is asking for */
     const src = source || 'ui';
     const p = currentProject();
-    if (p) {
+    /* (a Project whose settings cannot be read is not bound: the choice applies for this page, as unbound) */
+    const bindable = !!p && projectEnabled(p) !== PENDING;
+    if (bindable) {
       const kimi = window.PM12_KIMI, write = kimi && typeof kimi.setSettingFromHost === 'function';
       if (!write) {
         /* the Project binding exists but the Settings dispatch is not reachable: refuse and stay at the
@@ -1993,7 +1992,7 @@
     }
     /* unbound (or freshly accepted): apply. Unbound is a session-only preview — memory for this page only. */
     S.muted = !want;
-    announce({ detail: { muted: S.muted, source: src, binding: S.binding(), outcome: p ? 'accepted' : 'preview' } });
+    announce({ detail: { muted: S.muted, source: src, binding: S.binding(), outcome: bindable ? 'accepted' : 'preview' } });
     if (!S.muted) S.play('toggleOn');
     return true;
   };

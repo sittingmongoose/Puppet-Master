@@ -30,7 +30,10 @@
  * animates in NieR. With its Diamond loaders part the loader is NieR's hollow diamond (styles.d/14-nier-parts.css);
  * with the part off it is today's fallback, the plain ink ring (pm-loader.css); under Reduced Motion both hold still
  * and the ring breathes. Animation speed scales every period (kit.d/17-look.js). Loop ranking (F3-658, X2): a loader is a wait
- * signal below needs-you: it is never put in a list row or tab for an item's state (that is st-working, L1).
+ * signal below needs-you. Its one place in a list row is a working agent's Pip in the work rows (Jared's Q11 ruling B, QA
+ * round 2: only live rows move; activity's 48-work.js row()), where html(o) gives the think by these same rules (on
+ * screen, not in a drag, not while away, still under Reduced Motion and NieR); any other item state in a row or tab is
+ * st-working (L1).
  *
  * API: html(o) -> markup; mount(root?) arms loaders now; busy(host, on, o) marks a host busy with a loader;
  *      hold(on) / held(): Demo Studio's lab hold (waits that end through busy() keep their loader until hold(false));

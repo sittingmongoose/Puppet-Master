@@ -3,7 +3,7 @@
  * product controls, and a due-time preview calls the scheduler's owner seam.
  * Playback (2026-10-22, Jared: recorded examples play on their own after Start): every example plays from Start through
  * PM56_RECPLAY, paced to read, pressing the product's own controls (lit first): Open plan, More, Build At…, One time,
- * the date and the start time, Done, Revise, the feedback typed and sent, Review, Cancel schedule, To-Dos. Schedule build
+ * the date and the start time, Done, Revise, the feedback typed and sent, Review, Cancel schedule, To-Dos. Schedule for …
  * approves the exact version to build later, so it is yours, as a plan's Build is: each example waits there, and goes on
  * by itself after you press it. The due time is the demo clock reaching the slot (the scheduler's own seam, narrated). The
  * revise example also waits where the schedule waits on your decision: a newer version stopped the V1 schedule, and Use
@@ -14,7 +14,7 @@
  'use strict';
  const E=window.PM56_EXT,S=window.PM56_SCHED,P=window.PM56_PLANS,R=window.PM56_RECPLAY;
  let active=null,player=null;
- const common=[['Open the plan','Open plan','open'],['Choose when to build','Build At…','at'],['Set a one-time schedule','Set time','time'],['Save this exact version','Schedule build','save']];
+ const common=[['Open the plan','Open plan','open'],['Choose when to build','Build At…','at'],['Set a one-time schedule','Set time','time'],['Save this exact version','Schedule for …','save']];
  const flows={
   due:{label:'Schedule and build',summary:'Bind V1 → preview due time → complete',steps:[...common,['Inspect the saved binding','Return to plan','close'],['Preview the scheduled time','Preview due time','due'],['Follow the build','Open To-Dos','todos'],['Tasks are running','Waiting for completion','wait']]},
   revise:{label:'Revise a scheduled Plan',summary:'Schedule V1 → revise → explicitly use V2',steps:[...common,['Return to the document','Return to plan','close'],['Change the planned scope','Revise','revise'],['Create a new version','Send feedback','feedback'],['Inspect the outdated binding','Review schedule','review'],['Choose the new version explicitly','Use V2','rebind'],['Inspect the updated binding','Return to plan','close'],['Preview the new scheduled build','Preview due time','due']]},
@@ -49,7 +49,7 @@
   if(kind==='time')return [press('#pmOverlayRoot '+query('sched-set-build-kind',{value:'one_time'}),PACE.kind,{dialog:true}),
    {wait:PACE.field,dialog:true,run:()=>R.choose('[data-sched-input="build-date"]',tomorrow())},
    {wait:PACE.field,dialog:true,run:()=>R.choose('[data-sched-input="build-time"]','10:00').then(ok=>{if(ok){const z=document.querySelector('[data-sched-input="build-tz"]');if(z){z.value='America/New_York';z.dispatchEvent(new Event('change',{bubbles:true}));}}return ok;})}];
-  /* Schedule build approves this exact version for a later build: yours to press (follow() sees it and moves on) */
+  /* Schedule for … (Build At's own primary) approves this exact version for a later build: yours to press (follow() sees it and moves on) */
   if(kind==='save')return [];
   if(kind==='close')return [Object.assign(press('#pmOverlayRoot '+query('sched-close-dialog'),PACE.done,{dialog:true}),{skip:()=>!visible('sched-close-dialog')}),
    Object.assign(press(more+'[aria-expanded="true"]',PACE.item),{skip:()=>!document.querySelector(more+'[aria-expanded="true"]')})];
@@ -132,7 +132,7 @@
   }catch(err){a.error=String(err.message||err);}finally{a.busy=false;if(active===a)refreshGuide();}
  }
  /* the guide follows the reader's own click: a schedule for this Plan committed with the sheet's own primary (not
-    the guide's "Schedule build") moves the guide past its save step, so Done never strands the flow */
+    the guide's "Schedule for …") moves the guide past its save step, so Done never strands the flow */
  function follow(a){
   if(!a||a.busy||a.scheduleId)return;const k=flows[a.flow].steps.map(s=>s[2]),at=k.indexOf('save');if(at<0||a.step>at)return;
   const p=plan(),b=p&&S.list().builds.find(b=>b.target_id===p.plan_id&&b.state==='active'&&!a.known.includes(b.schedule_id));
@@ -146,7 +146,7 @@
  const SAY={open:'The assistant wrote a plan. Next: you open it, then schedule its build for later instead of building now.',
   at:'Next: Build At…, from the plan’s More menu, sets a time to build this exact version.',
   time:'Build At opens. Next: you choose One time, tomorrow at 10:00.',
-  save:'Your move: Schedule build approves this exact version, V1, to build tomorrow at 10:00. Press it when you’re ready; the recording goes on from there.',
+  save:'Your move: Build At’s Schedule for … button approves this exact version, V1, to build tomorrow at 10:00. Press it when you’re ready; the recording goes on from there.',
   close:'Scheduled: V1 builds tomorrow at 10:00, exactly as it is now. Next: back to the plan.',
   revise:'Scheduled for V1. Next: you revise the plan before the slot comes.',
   feedback:'Revising: the message box writes to this plan now. Next: you type what to change and send it.',

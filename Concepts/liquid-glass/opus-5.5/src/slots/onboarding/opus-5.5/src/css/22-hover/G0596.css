@@ -4,7 +4,7 @@
   --pmf-r: 96px; --pmf-band: 10px;
   --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 45%, #fff) 85%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 38%, transparent);
-  --pmf-sheen: rgb(255 255 255 / .066);
+  --pmf-sheen: rgb(255 255 255 / .045);   /* Jared QA round 2 Q20: the circle toned down to Basic's (.066 before) */
   --pmf-in: 140ms; --pmf-out: 360ms;
   --pmf-plate: 0 14px 28px -12px rgba(0, 4, 14, .55);
   --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .2);

@@ -86,14 +86,18 @@ export async function open({ scenario = 'fresh', theme = 'basic-dark', width = 1
           if (!el) return null;
           el.scrollIntoView({ block: 'nearest' });
           const r = el.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, top = document.elementFromPoint(x, y);
-          return { x, y, w: r.width, h: r.height, hit: !!top && (top === el || el.contains(top)), disabled: el.disabled || el.getAttribute('aria-disabled') === 'true', over: top && (top.id || top.tagName) };
+          /* a finite animation still to run on the target or a box around it (a menu opening from a small frame) moves
+             it after the probes: an opening held for its first shown frame measured the same twice, the click went in,
+             and the menu grew under the pointer (x1: pointerdown on a section label, pointerup on another row) */
+          const moving = document.getAnimations().some((a) => { const t = a.effect && a.effect.target; return t && t.contains && t.contains(el) && (a.playState === 'running' || a.pending) && Number.isFinite(a.effect.getComputedTiming().endTime); });
+          return { x, y, w: r.width, h: r.height, hit: !!top && (top === el || el.contains(top)), disabled: el.disabled || el.getAttribute('aria-disabled') === 'true', over: top && (top.id || top.tagName), moving };
         }, sel);
-        if (last && prev && last.w > 0 && last.h > 0 && last.hit && !last.disabled && ['x', 'y', 'w', 'h'].every((k) => Math.abs(last[k] - prev[k]) < 0.5)) {
+        if (last && prev && last.w > 0 && last.h > 0 && last.hit && !last.disabled && !last.moving && ['x', 'y', 'w', 'h'].every((k) => Math.abs(last[k] - prev[k]) < 0.5)) {
           await page.mouse(last.x, last.y); return;
         }
         prev = last; await sleep(60); // Separate geometry probes; elapsed time alone never permits a click.
       } while (Date.now() - t0 < timeout);
-      const why = !last ? 'absent or inert' : last.disabled ? 'disabled' : !last.hit ? 'covered by ' + last.over : 'still moving';
+      const why = !last ? 'absent or inert' : last.disabled ? 'disabled' : !last.hit ? 'covered by ' + last.over : last.moving ? 'still animating' : 'still moving';
       throw new Error(`timeout after ${timeout}ms waiting for ${what}: ${why} (${await context()})`);
     },
     /* click a control in the current layer by action (and arg) with a real mouse event */

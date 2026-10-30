@@ -353,8 +353,8 @@
     const walls = WP.avail() ? block(T('studio.looks.walls.title'), `<div class="pmds-wps" role="radiogroup" aria-label="${esc(T('studio.looks.walls.title'))}">${wcell('look', T('studio.looks.walls.own'))}</div>`
       + WP.families().map((f) => `<h5 class="pmds-gtitle"><span>${esc(f.label)}</span><span class="pmds-count">${f.items.length}</span></h5><div class="pmds-wps" role="radiogroup" aria-label="${esc(f.label)}">${f.items.map((w) => wcell(w.id, w.name)).join('')}</div>`).join(''), { lead: T('studio.looks.walls.lead') }) : '';
     return head('looks') + block('', grid + mode) + walls + lg
-      + block('', sw({ id: 'nier', icon: 'pod', title: T('studio.looks.nier'), sub: T('studio.looks.nierSub'), on: L.nierOn(), do: 'nier', off: !L.nierAvail() })
-        + (L.nierOn() ? `<div class="pmds-rowacts pmds-indent">${btn(T('studio.looks.nierAdjust'), { do: 'nier-adjust', icon: 'studio' })}</div>` : '')
+      /* NieR is picked in the grid above like every look (Q22); while it is the look, its Adjust options are here */
+      + block('', (L.nierOn() ? `<div class="pmds-rowacts">${btn(T('studio.looks.nierAdjust'), { do: 'nier-adjust', icon: 'studio' })}</div>` : '')
         + pipPartsRow()
         + sw({ id: 'reduced', icon: 'motion', title: T('studio.looks.reduced'), sub: T('studio.looks.reducedSub'), on: L.reduced(), do: 'reduced', off: !L.reducedAvail() })
         + sw({ id: 'sound', icon: 'sound', title: T('studio.looks.sound'), sub: T('studio.looks.soundSub'), on: L.soundAvail() && L.sound(), do: 'sound', off: !L.soundAvail() }));
@@ -501,7 +501,7 @@
     add('usage', T('studio.usage.gallery'), T('studio.usage.gallerySub'), ['usage-gallery'], 'gallery');
     M.notices.ids.forEach((id) => add('notices', T(`studio.notices.${id}.title`), T(`studio.notices.${id}.sub`), ['notice', id], NOTICE_ICON[id]));
     M.looks.ids.forEach((f) => ['light', 'dark'].forEach((m) => add('looks', `${T(`studio.looks.families.${f}`)} ${T(`studio.looks.${m}`)}`, T('studio.looks.title'), ['look', `${f}:${m}`], m === 'light' ? 'sun' : 'moon')));
-    add('looks', T('studio.looks.nier'), T('studio.looks.nierSub'), ['nier'], 'pod');
+    add('looks', T('studio.looks.nierAdjust'), T('studio.looks.nierSub'), ['nier-adjust'], 'pod');
     ['full', 'quiet', 'still', 'plain'].forEach((v) => add('looks', `${T('studio.looks.pip.title')}: ${T(`studio.looks.pip.presets.${v}`)}`, T('studio.looks.pip.preset'), ['pip-preset', v], 'pip'));
     add('looks', T('studio.looks.pip.adjust'), T('studio.looks.pip.title'), ['pip-adjust'], 'pip');
     add('looks', T('studio.looks.reduced'), T('studio.looks.reducedSub'), ['reduced'], 'motion');
@@ -963,11 +963,13 @@
     notice: (arg) => { M.notices.fire(arg); },
     'notices-clear': () => { M.notices.clear(); },
     look: (arg) => { const [f, m] = arg.split(':'); M.looks.set(f, m); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
-    wall: (arg) => { M.looks.walls.choose(arg); real.setTimeout(refresh, 120); },
+    /* Settings refuses a wallpaper it can't save and verify (a sandboxed preview has no storage): say so, not nothing */
+    wall: (arg) => { let ok = false; try { ok = M.looks.walls.choose(arg) !== false; } catch (_) {} if (!ok) say(T('studio.looks.walls.refused')); real.setTimeout(refresh, 120); },
     'lg-tier': (arg) => { M.looks.lg.setTier(arg); real.setTimeout(refresh, 80); },
     'lg-wall': (arg) => { M.looks.lg.setWall(arg); real.setTimeout(refresh, 80); },
     'look-mode': (arg) => { M.looks.mode(arg); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
-    nier: () => { M.looks.setNier(!M.looks.nierOn()); real.setTimeout(() => { syncLook(); refresh(); }, 120); },
+    /* (an older key: NieR is a look of the grid now) */
+    nier: () => { M.looks.set(M.looks.nierOn() ? 'basic' : 'nier'); real.setTimeout(() => { syncLook(); refresh(); }, 120); },
     'nier-adjust': (arg, el) => { M.looks.adjust(el); },
     'pip-preset': (arg) => { if (!M.looks.pip.avail()) return say(T('studio.toast.unavailable')); M.looks.pip.apply(arg); real.setTimeout(refresh, 80); },
     'pip-adjust': (arg, el) => { if (!M.looks.pip.editorAvail()) return say(T('studio.toast.unavailable')); M.looks.pip.edit(el); },
@@ -1020,11 +1022,13 @@
     'onb-ask': (arg) => { if (!M.pipOnboarding.askAvail(arg)) return say(T('studio.toast.unavailable')); const pick = ST.pick; launch(() => M.pipOnboarding.ask(arg, pick)); },
     /* background activity */
     'act-scene': (arg) => { if (!M.activity.load(arg)) return say(T('studio.toast.unavailable')); real.setTimeout(refresh, 80); },
-    'act-open': (arg) => { M.activity.open(arg); real.setTimeout(refresh, 200); },
+    /* the panel, the chat's view and the owner's dialogs open where the sheet stands, so the Studio steps aside for them,
+       as it does for a screen row (QA2 hunter H7) */
+    'act-open': (arg) => { launch(() => M.activity.open(arg)); },
     /* the owner's answer decides: a thread without processes has no Processes view (D4), and the Studio says so */
-    'act-chat': () => { Promise.resolve(M.activity.processes()).then((r) => { if (!r.ok) say(T(r.reason === 'none' ? 'studio.activity.chatProcessesNone' : 'studio.activity.chatProcessesRefused')); refresh(); }); },
-    'act-stop-all': () => { M.activity.stopAll(); },
-    'act-quit': () => { M.activity.quit(); },
+    'act-chat': () => { if (!M.activity.processesAvail()) return say(T('studio.activity.chatProcessesNone')); launch(() => Promise.resolve(M.activity.processes()).then((r) => { if (!r.ok) say(T(r.reason === 'none' ? 'studio.activity.chatProcessesNone' : 'studio.activity.chatProcessesRefused')); })); },
+    'act-stop-all': () => { launch(() => M.activity.stopAll()); },
+    'act-quit': () => { launch(() => M.activity.quit()); },
     'act-words': (arg) => { M.activity.setWords(arg === 'words'); real.setTimeout(refresh, 80); },
     /* the title bar */
     'tb-state': (arg) => { if (!M.titlebar.setState(arg)) return say(T('studio.toast.unavailable')); if (arg === 'unsaved') say(T('studio.workspace.titlebar.unsavedToast')); real.setTimeout(refresh, 80); },
@@ -1033,7 +1037,12 @@
     'tb-menu': () => { M.titlebar.openMenu(); },
     'sw-load': (arg) => { ST.sw = Object.assign({}, ST.sw || M.switches.now(), { load: arg }); refresh(); },
     'sw-situation': () => { const s = ST.sw || M.switches.now(); ST.sw = Object.assign({}, s, { situation: !s.situation }); refresh(); },
-    'sw-copy': () => { const v = M.switches.url(ST.sw || M.switches.now()); try { navigator.clipboard.writeText(v).then(() => say(T('studio.switches.copied')), () => {}); } catch (_) {} },
+    /* a sandboxed preview has no clipboard: the address is selected in its field instead, and the Studio says so */
+    'sw-copy': () => {
+      const v = M.switches.url(ST.sw || M.switches.now());
+      const fallback = () => { const i = ST.sheet && ST.sheet.querySelector('#pmds-url'); if (i) { i.focus(); i.select(); } say(T('studio.switches.copyFailed')); };
+      try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(() => say(T('studio.switches.copied')), fallback); else fallback(); } catch (_) { fallback(); }
+    },
     'sw-reload': () => { M.switches.reload(ST.sw || M.switches.now()); }
   };
   function commitPick() { M.applySituation(M.joinSituation(ST.pick)); renderEntry(); refresh(); }

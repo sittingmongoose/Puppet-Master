@@ -23,15 +23,27 @@
     return value;
   }
 
+  /* A page with no storage at all (a sandboxed preview: an opaque origin, where touching localStorage throws; T3's file
+     preview is one) keeps these records in memory for the visit, so a situation chosen in Demo Studio, a run's progress
+     and the tour's checkpoint hold until the page closes instead of falling back to a fresh computer (Jared's QA round 2,
+     Q18/Q19 sweep). A page with storage behaves as before. */
+  const LS = (() => { try { const ls = window.localStorage; ls.getItem(KEYS.onboarding); return ls; } catch (_) { return null; } })();
+  const memory = LS ? null : new Map();
+  const keyOf = (name) => KEYS[name] || name;
   O55.store = {
     KEYS,
+    persistent: !!LS,
     get(name, fallback) {
-      try { const raw = localStorage.getItem(KEYS[name] || name); return raw ? JSON.parse(raw) : fallback; } catch (_) { return fallback; }
+      try { const raw = memory ? memory.get(keyOf(name)) : LS.getItem(keyOf(name)); return raw ? JSON.parse(raw) : fallback; } catch (_) { return fallback; }
     },
     set(name, value) {
-      try { localStorage.setItem(KEYS[name] || name, JSON.stringify(scrub(value, name))); return true; } catch (_) { return false; }
+      try {
+        const raw = JSON.stringify(scrub(value, name));
+        if (memory) memory.set(keyOf(name), raw); else LS.setItem(keyOf(name), raw);
+        return true;
+      } catch (_) { return false; }
     },
-    clear(name) { try { localStorage.removeItem(KEYS[name] || name); } catch (_) {} },
+    clear(name) { if (memory) { memory.delete(keyOf(name)); return; } try { LS.removeItem(keyOf(name)); } catch (_) {} },
     scrub
   };
 })();

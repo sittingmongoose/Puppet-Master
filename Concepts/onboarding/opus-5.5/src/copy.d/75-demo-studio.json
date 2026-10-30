@@ -1301,9 +1301,9 @@
       "light": "Light",
       "dark": "Dark",
       "auto": "Auto",
-      "nier": "NieR Mode",
-      "nierSub": "Ink and parchment over Basic, with Pod 042.",
-      "nierAdjust": "Adjust NieR look",
+      "nier": "NieR",
+      "nierSub": "Ink and parchment, with Pod 042. Its pieces and the scene behind the app.",
+      "nierAdjust": "Adjust NieR",
       "pip": {
         "title": "Pip's parts",
         "sub": "{preset}: {on} of {total} parts on, in the chat and in onboarding.",
@@ -1341,7 +1341,8 @@
       "walls": {
         "title": "Wallpaper",
         "lead": "Any wallpaper in any look. It shows behind the app in every look, in the print that follows light or dark.",
-        "own": "Look's own"
+        "own": "Look's own",
+        "refused": "The wallpaper didn't change: Settings couldn't save it on this page."
       }
     },
     "pip": {
@@ -1610,6 +1611,7 @@
       "reload": "Reload with these",
       "copy": "Copy the address",
       "copied": "Address copied",
+      "copyFailed": "This page can't copy, so the address is selected in its field: copy it from there.",
       "active": "On now"
     },
     "toast": {
