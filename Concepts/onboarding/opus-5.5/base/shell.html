@@ -204,7 +204,8 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
 </div>
   <div class="app-shell">
     <header class="title-bar">
-      <span class="app-name">Puppet Master</span>
+      <!-- The brand (W1, F3-660): Pip's static mark, drawn by pm7-brand-mark.js below, and the look's wordmark. -->
+      <span class="app-name" data-mode="full"><span class="pm-brand-mark" aria-hidden="true"></span><span class="pm-brand-word">Puppet Master</span></span>
       <div class="pm6-tb-menu-wrap" id="projectMenuWrap" data-mode="full">
         <!-- The project box (option A, "Tab"; F3-661): one of the title bar's tabs. Its folder, chevron and badge are drawn
              from PMG by PM_PROJECT_BOX (pm6-js-panels.js), which also renders every row of the menu; each slot keeps its
@@ -310,6 +311,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
         </div>
       </div>
     </header>
+    <script id="pm7-brand-mark">@@PM7_BASE_pm7-brand-mark@@</script>
 
     <div class="main-area">
       <div class="left-panel">

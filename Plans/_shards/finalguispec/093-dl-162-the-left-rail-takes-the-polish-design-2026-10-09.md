@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43501-L43986
+Source lines: L43986-L44472
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
 
 ---
 
@@ -117,6 +117,7 @@ canonical_text: >-
   meaning; the concept's own orange word for it is not adopted. Jared chose this on 2026-10-17 (DL-230), which
   answers the Errored-word colour question queued on 2026-10-11. The rail's remaining solid tables in the concept are a no-glyph fallback, not
   a second set of badges.
+  Amended 2026-10-29 (D14, X1; PM7): Admit processes as the console-framed category glyph and redraw robot with lit antenna; individual agents are Pip, no new status key. Live category heads use 2200 ms beat; list marks still; Reduced Motion lit/still.
 gui_related: true
 gui_classification_reason: Defines how every status and count in the left rail is drawn.
 split_recommended: false

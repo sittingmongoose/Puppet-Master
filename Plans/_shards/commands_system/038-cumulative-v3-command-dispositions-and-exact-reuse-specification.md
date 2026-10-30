@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L6270-L6415
 
-Source SHA256: `49e1a349a19e411aca0f69c9f226a8ab132a687ebe6a4a4676193f6169025c34`
+Source SHA256: `0eb128cc231dc0cd6e39e906e458b178eca62d2a5930efa8db602f62ee658b0e`
 
 ---
 
@@ -37,7 +37,7 @@ disposition rules in accordance with APR-014, APR-019, and APR-023, strictly adh
      `cmd.execution_window.cancel`.
   10. *Quota Resume Consent:* Reuses `cmd.runtime.quota_resume.set`, preserving manual stop precedence.
 - **Local Presentation Boundary:** Pure visual toggles—shared picker dropdown open/filter/selection,
-  collapsible sections, plan Rich/Markdown toggle, Activity Detail unpin/pin, and manager tabs—are
+  collapsible sections, plan Rich/Markdown toggle, Activity Detail open/close (G1), and manager tabs—are
   classified as `LOCAL_PRESENTATION`. They utilize local or shared view-state primitives and emit no
   domain command.
 - **Isolation of Demo Fixtures (APR-014):** Test fixtures, replay commands, mock simulations, and

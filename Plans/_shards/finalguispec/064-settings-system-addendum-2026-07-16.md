@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31488-L32462
+Source lines: L31499-L32474
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
 
 ---
 
@@ -651,7 +651,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  `Plans/settings_inventory.json` is the canonical inventory registry of all 828 settings
+  `Plans/settings_inventory.json` is the canonical inventory registry of all 1011 settings
   across 12 categories. Its shape is owned by `Plans/settings_inventory.schema.json` with
   schema_id `pm.settings_inventory.v1`. Registry rows carry id, label, desc, type, options,
   default, scope, tier, recommended, curated, search, badges, and related_features, where
@@ -676,6 +676,7 @@ canonical_text: >-
   (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour",
   "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry
   option_labels beside options; the schema admits it.
+  Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, taking the current inventory from 1009 to 1011. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false
@@ -683,7 +684,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - "Plans/settings_inventory.json parses as JSON and conforms to Plans/settings_inventory.schema.json (schema_id pm.settings_inventory.v1); schema conformance is enforced by this unit's acceptance criteria, not a machine gate."
-- "The registry contains 828 settings across 12 categories, including the exact seven Case L Storage & Retention rows; rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, and provenance pins the concept sidecar at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d."
+- "The registry contains 1011 settings across 12 categories, including the exact seven Case L Storage & Retention rows; rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, and provenance pins the concept sidecar at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d."
 - "The demo runtime fields value, status, and src appear in no registry row and are excluded by the schema."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -706,7 +707,7 @@ preserved_exact_tokens:
 - "Plans/settings_inventory.json"
 - "Plans/settings_inventory.schema.json"
 - "pm.settings_inventory.v1"
-- "828"
+- "1011"
 - "system.advanced.chat-history-retention"
 - "system.advanced.runtime-history-days"
 - "system.advanced.diagnostic-history-days"

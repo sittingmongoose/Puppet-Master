@@ -9,12 +9,12 @@
 Settings is a project-bound system with three coordinated layers:
 
 1. the K3 Tome Tabs Settings shell;
-2. the 828 ordinary setting rows in `Plans/settings_inventory.json`; and
+2. the 1011 ordinary setting rows in `Plans/settings_inventory.json`; and
 3. the full manager system for setup, policy, defaults, human-readable status, diagnostics, repair entry points, and owner-routed operational work.
 
 `Plans/settings_system_contracts.schema.json` is the strict Draft 2020-12 shape owner for Settings-owned records. `Plans/settings_system_contract_fixtures.json` freezes the five Settings command contracts, six route-only Onboarding/Guided Tour/Doctor UI actions, the 38-entry manager registry, three named visible-state projections, exact dispositions for all 80 older-packet command tokens, and positive/negative contract fixtures. Those machine files are canonical Plans contracts but remain schema/fixture evidence only; they do not prove a registered handler, production wiring, persistence execution, native rendering, or certification.
 
-This owner supersedes prior Settings presentation and ordinary-persistence clauses in `Plans/FinalGUISpec.md`, including the visible search-first shelves/bloom shell in F3-432 and the universal/global or inheritance implications in F3-438, F3-440, F3-442, F3-510, and F3-511. It retains the canonical 828-ID inventory, the useful F3-433 fuzzy matching behavior, live owner-derived status, typed row renderers, eight built-in themes, and owner-routed deep links where this document incorporates them.
+This owner supersedes prior Settings presentation and ordinary-persistence clauses in `Plans/FinalGUISpec.md`, including the visible search-first shelves/bloom shell in F3-432 and the universal/global or inheritance implications in F3-438, F3-440, F3-442, F3-510, and F3-511. It retains the canonical 1011-ID inventory, the useful F3-433 fuzzy matching behavior, live owner-derived status, typed row renderers, eight built-in themes, and owner-routed deep links where this document incorporates them.
 
 Every persisted ordinary setting value is Project-scoped. An untouched first open or genuinely fresh Project receives the Final GUI-owned `Basic Dark` factory seed. An existing explicit saved selection and a copied Project's detached destination snapshot always win over that seed. With no Project open, Puppet Master renders an ephemeral `Basic Dark` Settings context, creates no Settings storage, and rejects every setting mutation with a typed no-Project reason. Manager objects and operational records are not setting values; their owning docs continue to define their exact topology, identity, persistence, authority, and lifecycle.
 
@@ -42,7 +42,7 @@ ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Plan_Document_S
 
 | Domain | Canonical owner consumed by Settings | Settings role |
 |---|---|---|
-| Inventory IDs and row metadata | `Plans/settings_inventory.json` and `Plans/settings_inventory.schema.json` | Render and search all 828 IDs; do not hardcode a second inventory. |
+| Inventory IDs and row metadata | `Plans/settings_inventory.json` and `Plans/settings_inventory.schema.json` | Render and search all 1011 IDs; do not hardcode a second inventory. |
 | Theme palettes and shared GUI tokens | `Plans/FinalGUISpec.md` | Select and preview the eight built-in themes; do not fork palette truth. |
 | Physical persistence, recovery, and secret-store split | `Plans/storage-plan.md` | Submit project-bound atomic settings transactions and show receipts; do not own storage engines. |
 | Permissions, FileSafe, and secret custody policy | `Plans/Permissions_System.md`, `Plans/FileSafe.md`, `Plans/Multi-Account.md` | Show policy/effective state and non-secret references; never hold raw credentials. |
@@ -188,7 +188,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  Plans/settings_inventory.json remains the machine authority for exactly 828 ordinary setting IDs across 12
+  Plans/settings_inventory.json remains the machine authority for exactly 1011 ordinary setting IDs across 12
   categories. Settings binds rows to that registry and never substitutes K3 demo data, an embedded PMConcept snapshot,
   or manager pseudo-rows. Managers, one-shot actions, status projections, diagnostics, setup workflows, and unavailable
   capabilities are typed searchable destinations outside the ordinary-setting denominator and route to their owners.
@@ -198,9 +198,9 @@ gui_classification_reason: The inventory and destination-type split determines v
 depends_on: [SSYS-001, F3-441]
 unblocks: [SSYS-005, SSYS-006, SSYS-015]
 acceptance_criteria:
-  - A registry census finds 828 unique IDs and 12 categories.
+  - A registry census finds 1011 unique IDs and 12 categories.
   - The rendered ordinary-setting denominator matches the registry exactly.
-  - Manager/action/status/diagnostic/setup/unavailable results carry a non-setting result type and do not inflate 828.
+  - Manager/action/status/diagnostic/setup/unavailable results carry a non-setting result type and do not inflate 1011.
 validation_surfaces: [jq and schema census over Plans/settings_inventory.json, future result-type fixtures]
 risk_class: settings_inventory_or_denominator_drift
 reasoning_tier: high
@@ -211,7 +211,7 @@ source_lineage:
   - Plans/settings_inventory.json
   - Plans/settings_inventory.schema.json
   - source_ref:chat:settings-canonical-owner-lane-2026-08-31
-preserved_exact_tokens: [828, 12 categories, ordinary settings, managers]
+preserved_exact_tokens: [1011, 12 categories, ordinary settings, managers]
 negative_constraints: [Do not use K3 demo rows as runtime authority., Do not count managers as ordinary settings., Do not interpret inventory scope metadata as permission for app-global persistence.]
 owner_hints: [Plans/Settings_System.md, Plans/settings_inventory.json, Plans/settings_inventory.schema.json]
 ```
@@ -228,7 +228,7 @@ canonical_text: >-
   metadata; it preserves F3-433 multi-token case-insensitive AND subsequence matching, +40 curated, +22 simple-tier,
   and +10 non-ok owner-status boosts, an 80 ms debounce, and the best 60 search results. Facets cover category,
   exposure, control type, applicability/scope metadata, owner-derived status, and result type without changing the
-  underlying 828-ID denominator. The ordinary list uses variable-height virtualization with stable setting_id keys,
+  underlying 1011-ID denominator. The ordinary list uses variable-height virtualization with stable setting_id keys,
   cached measured heights, anchor-plus-offset preservation, overscan, latest-generation cancellation, and no manager
   hydration merely because a search row is visible. Long or localized content expands rather than clipping. Category
   group headers are rows of the same virtualized model, measured like any row and never a separate non-virtualized
@@ -242,7 +242,7 @@ acceptance_criteria:
   - Search results are deterministic for the same registry, status generation, query, and facet set.
   - Arrow navigation, Enter focus, Escape clearing, pointer activation, and screen-reader result announcements retain one active stable ID.
   - Variable-height tests preserve the anchor across expansion, wrapping, status changes, theme changes, and facet/search changes.
-  - Searching 828 settings does not instantiate or probe every manager.
+  - Searching 1011 settings does not instantiate or probe every manager.
 validation_surfaces: [future fuzzy-search fixtures, future variable-height virtualization tests, future accessibility tests]
 risk_class: settings_search_or_virtualization_drift
 reasoning_tier: high
@@ -499,53 +499,64 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  Each Project independently persists theme family, Light/Dark/Auto presentation mode, the shared
-  Wallpaper choice, Glass alpha/transparency, tooltip enablement, reduced-motion request and
-  background selection. The chat layout is no longer a Settings value (DL-180): the chat stays fixed
-  on the right, its width and pinned History live in the Project's Home layout record
-  (Plans/storage-plan.md#SP-330), the v2 record keeps no pop-out (a popped-out chat lasts only while
-  the app runs and starts back in its column, D32, SP-330), and general.visual.chat-layout-mode is
-  retired (SSYS-050) (amended 2026-10-10, DL-187; it read: its width, pinned History and popped-out
-  state live in the Project's Home layout record (Plans/storage-plan.md#SP-330)). Amended 2026-10-10
-  (DL-187, D32): the popped-out state is no longer saved anywhere: a popped-out chat starts back in
-  its column after a restart, and a stored Chat Layout value is ignored and cleared on first read,
-  with no pop-out and no notice (SSYS-050). The eight built-in variants are Friendly Dark, Friendly
-  Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, and Basic Light. Final GUI
-  owns the untouched first-open/fresh-Project Basic Dark factory selection; Settings consumes that
-  seed only when no committed Project theme exists. Existing explicit selections and copied detached
-  snapshots win. No-Project rendering is ephemeral Basic Dark. Theme family plus mode apply as the
-  SSYS-009 atomic pair. Family-specific controls (Glass transparency, Retro textures and their
-  strengths, Basic high contrast and the older Basic light/dark choice) show only while that family
-  is active (decided 2026-09-27; they were previously kept visible as `not_applicable`); Glass alpha
-  never drops below 0.35 in Dark or 0.45 in Light. Jared retired the visible Preview a theme /
-  Preview Themes Before Applying preference (general.visual.theme-preview) on 2026-10-13. It renders
-  nowhere and a stored value is ignored. Theme selection commits through
-  cmd.settings.transaction.preview then its bound apply under SSYS-009; preview here means read-only
-  transaction admission, not a visible timed trial, hover-applied app theme or expiry that restores
-  the old look. Disabling hover tooltips never removes keyboard-focus accessible descriptions or
-  Help/Details. Effective reduced motion is true when either the Project request or platform
-  preference is true; it calms nonessential entrance, hover, parallax, shimmer, and background
-  motion while retaining focus, progress, error, and state-change feedback. Background and
-  transparency apply to the current Project only and never leak through app-global local storage.
-  The application's first frame shows the committed appearance of the Project it opens on, NieR Mode
-  included, read by the pre-paint layer from that Project's Settings (F3-468, DL-153); the pre-paint
-  keeps no copy, and no app-global or cross-Project theme key or paint hint exists. SSYS-054
-  replaced the old Glass background row at the 2026-10-15 publication; Wallpaper is visible across
-  all looks. Either Glass look always uses F3-652's Liquid Glass material over that Wallpaper;
-  there is no material off state or old Glass fallback (Jared, 2026-10-19, option 1).
-  SSYS-053 owns Settings first-frame geometry and in-place update/return behavior. Glass
-  transparency has a bounded typed numeric input beside its slider; both edit the same existing
-  value through SSYS-009. No second setting or visible theme-preview timer is created.
-  Amended 2026-10-17 (DL-228): picking a named variant, such as Glass Light, while Theme Mode is Auto commits
-  that variant and its mode as one SSYS-009 transaction, even when the variant is already the stored value, so
-  the mode leaves Auto; both controls then redraw from the committed pair, and a refused write restores both,
-  the dropdown's optimistic label included. In Plans, Reduced Motion names the effective state above (the
-  Project's request OR the platform preference) and Reduce Animations names the row that requests it
-  (general.visual.reduce-animations); the two words never name two settings.
+  Each Project independently persists theme family, Light/Dark/Auto presentation mode, the shared Wallpaper
+  choice, Glass alpha/transparency, tooltip enablement, reduced-motion request and background selection.
+  The chat layout is no longer a Settings value (DL-180): the chat stays fixed on the right, its width and
+  pinned History live in the Project's Home layout record (Plans/storage-plan.md#SP-330), the v2 record
+  keeps no pop-out (a popped-out chat lasts only while the app runs and starts back in its column, D32,
+  SP-330), and general.visual.chat-layout-mode is retired (SSYS-050) (amended 2026-10-10, DL-187; it read:
+  its width, pinned History and popped-out state live in the Project's Home layout record
+  (Plans/storage-plan.md#SP-330)). Amended 2026-10-10 (DL-187, D32): the popped-out state is no longer
+  saved anywhere: a popped-out chat starts back in its column after a restart, and a stored Chat Layout
+  value is ignored and cleared on first read, with no pop-out and no notice (SSYS-050). The eight built-in
+  variants are Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark,
+  and Basic Light. Final GUI owns the untouched first-open/fresh-Project Basic Dark factory selection;
+  Settings consumes that seed only when no committed Project theme exists. Existing explicit selections and
+  copied detached snapshots win. No-Project rendering is ephemeral Basic Dark. Theme family plus mode apply
+  as the SSYS-009 atomic pair. Family-specific controls (Glass transparency, Retro textures and their
+  strengths, Basic high contrast and the older Basic light/dark choice) show only while that family is
+  active (decided 2026-09-27; they were previously kept visible as `not_applicable`); Glass alpha never
+  drops below 0.35 in Dark or 0.45 in Light. Jared retired the visible Preview a theme / Preview Themes
+  Before Applying preference (general.visual.theme-preview) on 2026-10-13. It renders nowhere and a stored
+  value is ignored. Theme selection commits through cmd.settings.transaction.preview then its bound apply
+  under SSYS-009; preview here means read-only transaction admission, not a visible timed trial,
+  hover-applied app theme or expiry that restores the old look. Disabling hover tooltips never removes
+  keyboard-focus accessible descriptions or Help/Details. Effective reduced motion is true when either the
+  Project request or platform preference is true; it calms nonessential entrance, hover, parallax, shimmer,
+  and background motion while retaining focus, progress, error, and state-change feedback. Background and
+  transparency apply to the current Project only and never leak through app-global local storage. The
+  application's first frame shows the committed appearance of the Project it opens on, NieR Mode included,
+  read by the pre-paint layer from that Project's Settings (F3-468, DL-153); the pre-paint keeps no copy,
+  and no app-global or cross-Project theme key or paint hint exists. SSYS-054 replaced the old Glass
+  background row at the 2026-10-15 publication; Wallpaper is visible across all looks. Either Glass look
+  always uses F3-652's Liquid Glass material over that Wallpaper; there is no material off state or old
+  Glass fallback (Jared, 2026-10-19, option 1). SSYS-053 owns Settings first-frame geometry and in-place
+  update/return behavior. Glass transparency has a bounded typed numeric input beside its slider; both edit
+  the same existing value through SSYS-009. No second setting or visible theme-preview timer is created.
+  Amended 2026-10-17 (DL-228): picking a named variant, such as Glass Light, while Theme Mode is Auto
+  commits that variant and its mode as one SSYS-009 transaction, even when the variant is already the
+  stored value, so the mode leaves Auto; both controls then redraw from the committed pair, and a refused
+  write restores both, the dropdown's optimistic label included. In Plans, Reduced Motion names the
+  effective state above (the Project's request OR the platform preference) and Reduce Animations names the
+  row that requests it (general.visual.reduce-animations); the two words never name two settings. Amended
+  2026-10-29 (S2, RM1, X2, L3; PM7): general.visual.reduce-animations is globally applicable as the
+  inventory says; scope metadata does not authorize a new app-global ordinary store (SSYS-002/004). Its
+  effective request is combined with OS preference in every Project. The universal wait loader retains
+  opacity breath/blink, while other nonessential motion rests. Pip parts are per Project, no brand/loader
+  override. RM1 (2026-10-29): Reduced Motion is stored per Project, applies app-wide to that active
+  Project’s surfaces and combines with OS preference. The inventory global applicability row does not
+  create an app-global ordinary store; no new setting/store is introduced.
 gui_related: true
 gui_classification_reason: Themes, Glass composition and backgrounds are directly visible.
-depends_on: [SSYS-002, SSYS-009, F3-425, DL-180, DL-187]
-unblocks: [SSYS-016, SSYS-017]
+depends_on:
+- SSYS-002
+- SSYS-009
+- F3-425
+- DL-180
+- DL-187
+unblocks:
+- SSYS-016
+- SSYS-017
 acceptance_criteria:
 - Switching Projects restores each Project's independent appearance snapshot; the chat column comes back from
   that Project's Home layout record, never from a Settings value.
@@ -558,12 +569,23 @@ acceptance_criteria:
   and state feedback.
 - The first frame of an ordinary open is the opened Project's committed appearance, NieR Mode included, read
   from its Settings, and no app-global theme key, cross-Project copy or paint hint is written (F3-468, DL-153).
-validation_surfaces: [Plans/settings_system_contract_fixtures.json, future eight-theme project-switch tests, future Glass control-state tests, future tooltip and reduced-motion tests, future no-global-local-storage tests]
+validation_surfaces:
+- Plans/settings_system_contract_fixtures.json
+- future eight-theme project-switch tests
+- future Glass control-state tests
+- future tooltip and reduced-motion tests
+- future no-global-local-storage tests
 risk_class: theme_or_layout_cross_project_leak
 reasoning_tier: high
 context_scope: project_appearance_settings
-implementation_surfaces: [Plans/Settings_System.md, Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
-node_compile_hint: {mode: project_appearance_settings_contract, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Settings_System.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: project_appearance_settings_contract
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
 - Plans/FinalGUISpec.md#F3-425
 - source_ref:chat:settings-canonical-owner-lane-2026-08-31
@@ -573,11 +595,40 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/SETTINGS-PREVIEW-RETIREMENT.md, SHA-256 327f4021cf41f627abcc2634af4e7ee2473ba75006dbb05d88dd5d8c4578ecb4
   (decision/source lineage; not native implementation evidence)
-preserved_exact_tokens: [Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light, 0.35, 0.45, tooltips, reduced motion, chat layout]
-negative_constraints: [Do not persist appearance outside the Project settings namespace., Do not store the chat column's width, History or pop-out as a Settings value., Do not hide unavailable Glass controls., Do not make no-Project Basic Dark durable., Do not remove accessible descriptions when hover tooltips are off., Do not suppress progress or error feedback under reduced motion.]
-owner_hints: [Plans/Settings_System.md, Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
-stale_retired_dispositions: ["Amended 2026-10-09 (DL-180): the chat layout setting retires; the chat column's state is the Home layout record's (SP-330), and SSYS-050 records the retired row. The title's Chat Layout is historical, kept for lineage.", "Amended 2026-10-10 (DL-187, D32): the chat's popped-out state is never saved; a stored Chat Layout value is cleared on first read with no pop-out and no notice.", "Amended 2026-10-10 (DL-187, D32, SP-330): the sentence that put the popped-out state in the Home layout record now says the v2 record keeps no pop-out; a popped-out chat lasts only while the app runs."]
-
+preserved_exact_tokens:
+- Friendly Dark
+- Friendly Light
+- Glass Dark
+- Glass Light
+- Retro Dark
+- Retro Light
+- Basic Dark
+- Basic Light
+- 0.35
+- 0.45
+- tooltips
+- reduced motion
+- chat layout
+negative_constraints:
+- Do not persist appearance outside the Project settings namespace.
+- Do not store the chat column's width
+- History or pop-out as a Settings value.
+- Do not hide unavailable Glass controls.
+- Do not make no-Project Basic Dark durable.
+- Do not remove accessible descriptions when hover tooltips are off.
+- Do not suppress progress or error feedback under reduced motion.
+owner_hints:
+- Plans/Settings_System.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): the chat layout setting retires; the chat column''s state is the Home layout
+  record''s (SP-330), and SSYS-050 records the retired row. The title''s Chat Layout is historical, kept for
+  lineage.'
+- 'Amended 2026-10-10 (DL-187, D32): the chat''s popped-out state is never saved; a stored Chat Layout value
+  is cleared on first read with no pop-out and no notice.'
+- 'Amended 2026-10-10 (DL-187, D32, SP-330): the sentence that put the popped-out state in the Home layout
+  record now says the v2 record keeps no pop-out; a popped-out chat lasts only while the app runs.'
 ```
 
 ### SSYS-011 - Provider Installation Actions And Continuation
@@ -776,7 +827,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  Settings ships as a full manager system rather than an 828-row form or provider-only demo. The manager registry
+  Settings ships as a full manager system rather than a 1011-row form or provider-only demo. The manager registry
   is frozen as the exact 38-key machine registry in Plans/settings_system_contract_fixtures.json and includes General Desktop and Appearance; Providers, Accounts, Models, and Installations; Web Routes; Media Routes;
   Back Seat Driver; Memory and Context; Goals, Crew, Personas, and Owners; Permissions and FileSafe; Commands and
   Shortcuts; Tools, MCP, Skills, Plugins, LSP, Formatters, and Toolchains; Testing and Debug policy; Files and Editor;
@@ -797,7 +848,7 @@ acceptance_criteria:
   - The exact 38-entry manager registry covers every named family with stable identity and an explicit retained owner or named owner-gap disposition.
   - Settings Home hydrates compact summaries first and one selected manager lazily; hidden managers release heavy state.
   - Every manager action resolves to a registered owner command or remains unavailable with the exact reason.
-  - Search can find all managers without counting them among the 828 ordinary settings.
+  - Search can find all managers without counting them among the 1011 ordinary settings.
 validation_surfaces: [Plans/settings_system_contracts.schema.json, Plans/settings_system_contract_fixtures.json, future lazy-hydration tests, future owner-route coverage matrix]
 risk_class: incomplete_or_parallel_settings_manager_system
 reasoning_tier: high
@@ -823,7 +874,7 @@ owner_doc: Plans/Settings_System.md
 canonical_text: >-
   PMConcept7 (Concepts/PMConcept7.html) is the Settings look-and-behaviour reference under the
   concept_fixture_only boundary; the concept is never the authored production owner. It may demonstrate the K3
-  geometry, 828-row projection, later-packet manager additions, project/no-Project defaults, and command previews, but
+  geometry, 1011-row projection, later-packet manager additions, project/no-Project defaults, and command previews, but
   fixture state, local browser storage, simulated receipts, and JavaScript handlers are not runtime proof. Production
   targets Rust stable and Slint 1.17.1 using typed models, host-width layout states, variable-height virtualization,
   explicit properties and focus state, precomputed theme tokens, native animations, and opaque or pre-blurred known
@@ -866,7 +917,7 @@ unit_type: validation
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  Settings acceptance requires fresh production evidence for exact K3 host geometry, 828 unique ordinary IDs, complete
+  Settings acceptance requires fresh production evidence for exact K3 host geometry, 1011 unique ordinary IDs, complete
   manager routing, project isolation, no-Project write rejection, eight themes, atomic theme pair and Restore Defaults,
   fuzzy search/facets, variable-height virtualization, transfer preview/apply/rollback and secret exclusion, provider
   action availability/continuation and no Uninstall, Server/Project/SSH/backup routes, Browser/SCM/container boundaries,
@@ -1353,7 +1404,7 @@ ContractRef: ContractName:Plans/settings_system_contracts.schema.json, ContractN
 Minimum production coverage includes:
 
 - Draft 2020-12 meta-schema validation, fixture-pack validation, every positive record, every negative rejection, exact five-command/five-route-action registries, exact 38-manager census, three named visible-state projections, and exact 80-token command-disposition census;
-- inventory/schema census: 828 unique IDs, 12 categories, no demo `value`, `status`, or `src` fields;
+- inventory/schema census: 1011 unique IDs, 12 categories, no demo `value`, `status`, or `src` fields;
 - exact wide and responsive host geometry at and around 1180, 960, 720, and 320 pixels;
 - project isolation, untouched first-open/fresh-Project Basic Dark factory seeding, saved/copy snapshot precedence, no-Project ephemeral Basic Dark, and write rejection with unchanged storage;
 - fuzzy search, facet combinations, keyboard/pointer parity, match highlighting, and stable variable-height anchors;
@@ -1432,7 +1483,7 @@ ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans
 ## Forge/Backup/tsnet Settings consumer addendum - 2026-09-01
 
 The K3 Tome Tabs shell geometry and the exact 38-manager registry remain authoritative. This addendum changes dynamic
-owner content, grouping, and routes only. It does not revive a Settings bakeoff, change the 828-ID ordinary-setting
+owner content, grouping, and routes only. It does not revive a Settings bakeoff, change the 1011-ID ordinary-setting
 inventory, create a manager, or promote PMConcept7 fixtures into a native/runtime claim.
 
 ### SSYS-026 - Provider, backup, and connector owner projections
@@ -2475,6 +2526,7 @@ canonical_text: >-
   control over general.interaction.sound-effects, not a new setting, which keeps sound effects a
   grouped setting rather than a per-view toggle. Production motion honours general.visual.reduce-
   animations as well as the operating system's reduced-motion preference (ACD-475).
+  Amended 2026-10-29 (O4, S3/S4; PM7): Setup voice, app chirps and setup music are options of the one pip-parts row under the existing master sound; no chat/onboarding mute, volume or voice key. The single player owns synthesis recipes and asset metadata.
 gui_related: true
 gui_classification_reason: "Changes two user-visible setting defaults."
 split_recommended: false
@@ -3040,6 +3092,7 @@ canonical_text: >-
   controls, never a read-only copy. By this same rule the Costs budget card hosts
   ai.usage.budget-warning-threshold as its alert level, and its budget line reads
   ai.usage.monthly-spend-limit, "No budget set" at 0; the card stores no copy of either (UF-107).
+  Amended 2026-10-29 (S5, D5; PM7): The wand Pip… and title-bar Customize Pip… host the same SSYS-056 row editor/transaction as Settings; not an onboarding editor. Status bar Numbers/Words uses the admitted SSYS-057 row through the same transaction.
 gui_related: true
 gui_classification_reason: Governs Settings controls drawn on the Usage page and other named surfaces, their commits, their disabled states and their way back to Settings.
 split_recommended: false
@@ -4060,6 +4113,7 @@ canonical_text: >-
   History's initial-layout seed is built and preserves a saved false or true. The Settings master
   sound, working style, naming policy and future-chat mode bindings remain as reviewed; no additional
   layout, Activity pin, stand-in or family-take setting is admitted by final reconciliation.
+  Amended 2026-10-29 (S1–S9, G1; PM7): Admit SSYS-056’s pip-parts only for chat/onboarding extras with no second sound or brand setting. Activity Detail has no Pin/unpin state and opens full size until closed (ACD-506), superseding its former temporary-unpin description; History pin remains unchanged.
 gui_related: true
 gui_classification_reason: Places and binds visible hosted chat preferences while keeping layout and chat-scoped controls separate.
 split_recommended: false
@@ -4109,3 +4163,176 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/settings_inventory.json, ContractName:Plans/assistant-chat-design.md#ACD-504, ContractName:Plans/UI_Command_Catalog.md#UCC-208
+
+
+### SSYS-056 - Pip Parts And One Editor
+
+```yaml
+plan_unit_id: SSYS-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  S1–S9, O4/O5, DL-239. Admit general.visual.pip-parts, one simple multiselect in App & Input > Theme &
+  colors after NieR. Stored per Project like NieR; scope global is applicability metadata, no
+  browser/app-global copy. The one shared registry defines parts/defaults/presets and On N / total meter:
+  Full (all except App voice), Quiet (work placements without reactions), Still (no motion), Plain (minimal
+  extras, never legacy puppets). No Classic or Pip master row. Mandatory brand, app icon, tray, universal
+  loader and notification faces are outside the part list; every individual agent/helper/Activity row
+  remains the single Pip primitive. Parts cover optional chat placements, faces/reactions, motion, look and
+  setup life/sound only. Two voice parts are Pip talks in setup (on) and Pip chirps in the app (off); Setup
+  music is on. All obey master sound and the chat mute; Reduced Motion preserves stored choices but stills
+  nonessential motion and never mutes. Animation speed scales allowed motion. NieR parts win overlapping
+  Diamond loader, Ink empty states and Pod companion/voice. First run without Project uses factory parts,
+  rerun reads its Project; no-Project preview writes nothing. Settings copy proposes the row like other
+  ordinary values, not NieR’s special transfer exclusion. The Settings row, wand Pip… and title-bar
+  Customize Pip… under NieR Mode open one editor, never inside onboarding. ui.settings.pip_editor.open,
+  ui.settings.pip_editor.close and ui.settings.pip_editor.replay are typed local actions that write
+  nothing; replay is Play: the team works. Parts and preset edits use cmd.settings.transaction.preview then
+  apply with the same value in all hosts, never pip-chat:v1. Editor focus is contained and returns to
+  opener; preview/exit timers/copies are released on close. The admitted stable part IDs/count are
+  enumerated below; Plans/pip_parts.json mirrors this contract and every GUI host reads the shared
+  registry. S1–S5 editor presentation: five groups titled Where Pip appears, Faces, Motion, Look and Sound.
+  Every part shows the one registry’s label, one-line help, displayed Size and On/Off state; On N / total
+  is derived from the admitted 25-part list below, mirrored in Plans/pip_parts.json. A live small-team
+  preview shows the Project’s current parts/look; Play: the team works runs that same team from queued to
+  working to done, obeying Reduced Motion and sound parts. Preview/replay writes nothing; preset/part picks
+  still use the transaction pair. Help/size are presentation metadata from the shared Pip registry, not new
+  settings or real resource quotas. S1–S9 admitted registry: Plans/pip_parts.json is the machine mirror of
+  this accepted list. Where Pip appears: sheet-hosts, status-faces, working-orbit, plans, wand-menu,
+  empty-lists; Faces: state-faces, watches, wonders-while-typing, cheers, oops, gaze; Motion: blinks,
+  sway-and-physics, face-transitions, thinking-dots, idle-life; Look: seat-colours, role-props, strings,
+  cheeks-and-shine, setup-world-life; Sound: setup-voice, app-voice, setup-music. All parts default on
+  except app-voice; the default meter is On 24 / 25. Full = [sheet-hosts, status-faces, working-orbit,
+  plans, wand-menu, empty-lists, state-faces, watches, wonders-while-typing, cheers, oops, gaze, blinks,
+  sway-and-physics, face-transitions, thinking-dots, idle-life, seat-colours, role-props, strings,
+  cheeks-and-shine, setup-world-life, setup-voice, setup-music]. Quiet = [status-faces, working-orbit,
+  plans, empty-lists, state-faces, seat-colours, role-props, strings]. Still = [sheet-hosts, status-faces,
+  working-orbit, plans, wand-menu, empty-lists, state-faces, watches, wonders-while-typing, cheers, oops,
+  gaze, seat-colours, role-props, strings, cheeks-and-shine, setup-voice, setup-music]. Plain = []. Presets
+  are exact values of the one multiselect; the meter always reads On N / 25. No Classic,
+  brand/tray/icon/loader/notification part or second primitive exists. S2/S3 (lead ruling 2026-10-30):
+  general.visual.pip-parts stores the shared registry’s part LABELS, such as Sheet hosts, in
+  options/default and every new Settings transaction, like general.visual.nier-parts. The 25 stable IDs and
+  ID-based presets in Plans/pip_parts.json remain registry/API identity; serialize each selected ID through
+  that same one-to-one id/label table before preview/apply. Compatibility reads may accept prior ID arrays
+  through the table, but new writes use labels. PipPartsSettingValue in
+  Plans/pm7_build_contracts.schema.json pins this label-valued multiselect; no second option table or store
+  is introduced.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-239
+- SSYS-002
+- SSYS-009
+- DR-043
+unblocks: []
+acceptance_criteria:
+- The accepted list/registry contains exactly 25 part IDs in five named groups; Full is 24 on with app-voice
+  off and all four presets match exactly.
+- 'S2: Settings options/default and new writes contain the exact registry labels; the one-to-one map preserves
+  all 25 IDs/internal presets, and compatibility ID reads never become ID writes.'
+- Every part has one registry label/help/displayed Size; meter is On N / 25 and the live small-team replay
+  runs queued→working→done.
+- Settings/wand/titlebar open one editor; local open/close/replay write nothing and restore focus/teardown.
+- All part/preset edits use one Project Settings preview/apply transaction, with no onboarding editor or browser/global
+  shadow store.
+- Reduced Motion preserves choices but calms motion, master/chat mute gate sound and overlapping NieR parts
+  win; mandatory brand/loader/agent consumers remain.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/Settings_System.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/onboarding/opus-5.5-pip/README.md
+- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
+preserved_exact_tokens:
+- general.visual.pip-parts
+- ui.settings.pip_editor.open
+- ui.settings.pip_editor.close
+- ui.settings.pip_editor.replay
+- Full
+- Quiet
+- Still
+- Plain
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-239, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/DRY_Rules.md#DR-043
+
+
+
+
+### SSYS-057 - Status Bar Numbers Or Words
+
+```yaml
+plan_unit_id: SSYS-057
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  D5, DL-244. Admit general.interaction.status-bar-words beside general.interaction.activity-bar-labels in
+  Window & panels, simple boolean false by default. False shows glyph/number pairs with complete words in
+  the shared hover tag and accessibility; true shows agents/questions and processes/needs-input words. Zero
+  remains No agents/No processes and stale is explicit. Scope global is applicability metadata and ordinary
+  storage remains Project-owned under SSYS-002. Every host edits it through Settings transaction
+  preview/apply. Visibility, stop/quit rules, CPU/RAM sampling and finished retention are rules, not extra
+  preference rows.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-244
+- SSYS-009
+unblocks: []
+acceptance_criteria:
+- The inventory row defaults false/Numbers beside activity-bar-labels.
+- Numbers and Words expose identical counts/full accessibility labels, including separate questions/input and
+  truthful zero/stale states.
+- Every host edits the same Project-owned row through preview/apply, without adding a visibility/resource/retention
+  preference.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/Settings_System.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/background-activity/opus-5.5/README.md
+- Concepts/background-activity/opus-5.5/IMPACT_TRACKER.md
+preserved_exact_tokens:
+- general.interaction.status-bar-words
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-244, ContractName:Plans/Settings_System.md#SSYS-009
+
+
