@@ -42125,7 +42125,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
  *   on     moving, in phase                     off    held at the still pose: offscreen, the tab hidden, or the
  *   still  never moves: below 12 px                      person away (window not focused for 60 s)
  *   wait   still until a busy spell ends (PM_BUSY: a page change, the look cover, a NieR switch); the onboarding
- *          window's own loaders are not held by the window being open
+ *          window's own loaders and Demo Studio's are not held by the window being open
  * Drags hold every loader where it is (body.pm-resizing and the other drag classes set --pml-ps: paused, and the clock
  * stands still with them), and the onboarding window holds the app beneath it (10-window.css).
  *
@@ -42190,7 +42190,9 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   function busyNow(el) {
     let why = '';
     try { why = typeof W.PM_BUSY === 'function' ? W.PM_BUSY() : ''; } catch (_) { why = ''; }
-    if (why === 'onboarding' && el.closest('#pm-o55-onboarding')) return '';
+    // the onboarding window holds the app beneath it, not its own loaders nor Demo Studio's (#o55-demo, the one body
+    // child the window leaves usable, drawn above it)
+    if (why === 'onboarding' && el.closest('#pm-o55-onboarding, #o55-demo')) return '';
     return why;
   }
   function set(el, run) { if (el.getAttribute('data-pml-run') !== run) el.setAttribute('data-pml-run', run); }
