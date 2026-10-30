@@ -103,6 +103,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
 <!-- PM7 SECTION 9/32: usage-accent-css - usage page accent styles (small; the main usage grid CSS is the later unlabeled usage-grid-css block) (style#pm6-css-usage) -->
 <!-- PM7 SECTION 10/32: chat-css - docked/floating chat styles incl. footer pill + FAB stack (style#pm6-css-chat) -->
   <style id="pm6-css-chat">@@PM7_BASE_0010@@</style>
+  <style id="pm7-sprout-css">@@PM7_BASE_pm7-sprout-css@@</style>
 <!-- PM7 SECTION 11/32: bottom-css - bottom panel + terminal workgroup styles (style#pm6-css-bottom) -->
 <style id="pm6-css-bottom">@@PM7_BASE_0011@@</style>
 <!-- PM7 SECTION 12/32: panels-css - side panel styles (file manager, source control, testing, agents, notifications) (style#pm6-css-panels) -->
@@ -260,7 +261,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
             <span class="rs-badge" id="rsBadge" aria-hidden="true">0</span>
           </div>
           <div class="rs-stage" id="rsStage"></div>
-          <div class="rs-panel" id="rsPanel" role="dialog" aria-label="Notification inbox">
+          <div class="rs-panel pm-sprout" id="rsPanel" role="dialog" aria-label="Notification inbox">
             <div class="rs-panel-chrome">
               <div class="rs-panel-head">
                 <span id="rsHeadLabel">Inbox</span>
@@ -277,7 +278,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
           aria-label="Search" aria-haspopup="dialog" aria-expanded="false" aria-controls="tbSearchPop" hidden>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </button>
-        <div class="pm6-tb-search-pop" id="tbSearchPop" role="dialog" aria-label="Search">
+        <div class="pm6-tb-search-pop pm-sprout" id="tbSearchPop" role="dialog" aria-label="Search">
           <input type="text" class="pm6-tb-search-pop-input" id="tbSearchPopInput" placeholder="Search files, commands, settings...">
         </div>
       </div>
@@ -3210,6 +3211,7 @@ status: completed with warnings</pre>
 <!-- PM7 SECTION 27/32: usage-bridge-js - usage page demo bridge (engine ledger/cooldown sync) (script#pm6-js-usage) -->
 <script id="pm6-js-usage">@@PM7_BASE_0049@@</script>
 <!-- PM7 SECTION 28/32: chat-data-js - pre-serialized chat thread corpus (PM6_CHAT_THREADS) (script#pm6-js-chat-data) -->
+<script id="pm7-sprout-js">@@PM7_BASE_pm7-sprout-js@@</script>
 <script id="pm6-js-chat-data">@@PM7_BASE_0050@@</script><!-- PM7 SECTION 29/32: chat-js - chat UI: threads, composer, selector row, popouts, floating layouts, footer pill + FABs (script#pm6-js-chat) -->
 <script id="pm6-js-chat">@@PM7_BASE_0051@@</script><!-- PM7 SECTION 30/32: bottom-js - bottom panel tabs, problems/ports/output, terminal demo feeds (script#pm6-js-bottom) -->
 <script id="pm6-js-bottom">@@PM7_BASE_0052@@</script>

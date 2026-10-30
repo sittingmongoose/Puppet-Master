@@ -1,0 +1,156 @@
+/* The menu sprout's class contract, the one stylesheet of PM6_SPROUT (base/script/pm7-sprout.js; ACD-439, DR-057,
+   DR-058; Jared, L8 B 2026-10-30: one sprout owner for every menu). A box grows out of the corner nearest its trigger
+   (the six --pm6-sprout-* values the owner writes per opening: origin, closed nudge, closed scale), overshoots and
+   settles; it closes back into that corner opaque, with a late fade. A menu opts in with the class pm-sprout (Usage's
+   PMU.menu, Home's PMW.menu, the 5.6 Pro chat's menus, the base inbox); the base chat's title-bar menus, pickers,
+   context pop-ups, worktree menu and Settings' popouts keep their own class names in the same lists. State: is-open, is-closing (the owner's), is-size-bounce (a content resize);
+   pm-sprout-edge marks a side flyout (it grows from the edge facing its row, and bounces harder).
+   The surfaces own everything else (place, size, plate, z-index, display before opening). NieR's Slice part
+   (src/settings/styles.d/14-nier-parts.css) turns the sprout into its slice for every class here. */
+.pm-sprout {
+  --pm6-sprout-ox: 12%;
+  --pm6-sprout-oy: 0%;
+  --pm6-sprout-tx: 0px;
+  --pm6-sprout-ty: -10px;
+  --pm6-sprout-sx: 0.72;
+  --pm6-sprout-sy: 0.48;
+}
+.pm-sprout.pm-sprout-edge {
+  --pm6-sprout-ox: 0%;
+  --pm6-sprout-oy: 28%;
+  --pm6-sprout-tx: -10px;
+  --pm6-sprout-ty: 0px;
+  --pm6-sprout-sx: 0.48;
+  --pm6-sprout-sy: 0.72;
+}
+/* closed: compressed toward the trigger corner, taller grow than wide ("fill out") */
+.pm-sprout,
+.pm6-chat-more-menu,
+.pm6-tb-menu,
+.context-hover-module,
+.context-lens-popover,
+.wt-bind-dropdown,
+.pm51-popout,
+.pm6-chat-mini-popout-portal,
+.pm6-chat-effort-popout-portal,
+.pm6-chat-mode-popout-portal,
+.pm6-chat-persona-popout-portal,
+.pm6-chat-pt-popout-portal {
+  transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
+  opacity: 0;
+  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+    scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 160ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+    visibility 0s linear 300ms,
+    height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
+  will-change: transform, opacity;
+}
+.pm-sprout.is-open,
+.pm6-chat-more-menu.is-open,
+.pm6-tb-menu.is-open,
+.context-hover-module.is-open,
+.context-lens-popover.is-open,
+.wt-bind-dropdown.is-open,
+.pm51-popout.is-open,
+.pm6-chat-mini-popout-portal.is-open,
+.pm6-chat-mode-popout-portal.is-open,
+.pm6-chat-persona-popout-portal.is-open,
+.pm6-chat-effort-popout-portal.is-open,
+.pm6-chat-pt-popout-portal.is-open {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 140ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+    visibility 0s,
+    /* springy height for search-filter resize bounce */
+    height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
+}
+/* the close: solid through most of the collapse, then a late, tiny fade, into the same corner the open set */
+.pm-sprout.is-closing,
+.pm6-chat-more-menu.is-closing,
+.pm6-tb-menu.is-closing,
+.context-hover-module.is-closing,
+.context-lens-popover.is-closing,
+.wt-bind-dropdown.is-closing,
+.pm51-popout.is-closing,
+.pm6-chat-mini-popout-portal.is-closing,
+.pm6-chat-mode-popout-portal.is-closing,
+.pm6-chat-persona-popout-portal.is-closing,
+.pm6-chat-effort-popout-portal.is-closing,
+.pm6-chat-pt-popout-portal.is-closing {
+  opacity: 0;
+  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+    scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 45ms ease-in 175ms,
+    transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
+    visibility 0s linear 220ms,
+    height 200ms cubic-bezier(0.45, 0.05, 0.55, 0.2);
+}
+/* search-filter / option-count size bounce: the stretch settles with the height spring (PM6_SPROUT.resize, .bounce) */
+@keyframes pm6-popout-size-bounce {
+  0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+  40%  { transform: translate3d(0, 0, 0) scale3d(1.012, 1.055, 1); }
+  100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+}
+/* side flyouts (effort / mode thoroughness): stronger vertical overshoot when the option count changes (3 to 4 levels) */
+@keyframes pm6-effort-size-bounce {
+  0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+  35%  { transform: translate3d(0, 0, 0) scale3d(1.018, 1.085, 1); }
+  70%  { transform: translate3d(0, 0, 0) scale3d(0.995, 0.975, 1); }
+  100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+}
+.pm-sprout.is-open.is-size-bounce,
+.pm51-popout.is-open.is-size-bounce,
+.pm6-chat-mini-popout-portal.is-open.is-size-bounce,
+.pm6-chat-persona-popout-portal.is-open.is-size-bounce {
+  animation: pm6-popout-size-bounce 380ms cubic-bezier(0.22, 1.55, 0.36, 1);
+}
+.pm-sprout.pm-sprout-edge.is-open.is-size-bounce,
+.pm6-chat-effort-popout-portal.is-open.is-size-bounce,
+.pm6-chat-pt-popout-portal.is-open.is-size-bounce {
+  animation: pm6-effort-size-bounce 420ms cubic-bezier(0.22, 1.65, 0.36, 1);
+}
+/* option-count resize: stronger height spring than search-filter bounce */
+.pm-sprout.pm-sprout-edge.is-open,
+.pm6-chat-effort-popout-portal.is-open {
+  transition:
+    opacity 140ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+    visibility 0s,
+    height 360ms cubic-bezier(0.22, 1.78, 0.36, 1);
+}
+/* Reduce motion: instant show and hide, the same end state (Settings' switch, and the system setting for .pm-sprout) */
+[data-motion="reduced"] .pm-sprout,
+[data-motion="reduced"] .pm6-chat-mini-popout-portal,
+[data-motion="reduced"] .pm6-chat-mode-popout-portal,
+[data-motion="reduced"] .pm6-chat-persona-popout-portal,
+[data-motion="reduced"] .pm6-chat-effort-popout-portal,
+[data-motion="reduced"] .pm6-chat-pt-popout-portal {
+  transition: none !important;
+  transform: none !important;
+}
+[data-motion="reduced"] .pm-sprout.is-open,
+[data-motion="reduced"] .pm6-chat-mini-popout-portal.is-open,
+[data-motion="reduced"] .pm6-chat-mode-popout-portal.is-open,
+[data-motion="reduced"] .pm6-chat-persona-popout-portal.is-open,
+[data-motion="reduced"] .pm6-chat-effort-popout-portal.is-open,
+[data-motion="reduced"] .pm6-chat-pt-popout-portal.is-open {
+  opacity: 1; visibility: visible; pointer-events: auto;
+}
+[data-motion="reduced"] .pm-sprout.is-size-bounce { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .pm-sprout { transition: none !important; transform: none !important; }
+  .pm-sprout.is-size-bounce { animation: none !important; }
+}
+/* the drag hold: no menu moves inside a resize drag (body.pm-resizing); one caught mid-flight lands at once */
+body.pm-resizing .pm-sprout { transition: none !important; animation: none !important; }

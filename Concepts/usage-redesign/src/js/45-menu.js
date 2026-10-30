@@ -6,11 +6,11 @@
      description line, a check on the active row, a rounded hover / active row highlight, small-caps section labels, an
      optional search field at the top and an optional icon rail on the left, hairline dividers; theme tokens per family
      (src/css/15-menu.css);
-   - motion: the corner-origin spring sprout (opacity 160 ms + transform 300 ms cubic-bezier(.22,1.55,.36,1) from the
-     non-uniform closed scale .72 x .48, origin at the trigger corner); the closed state is applied only AFTER the
-     untransformed box has been measured (the 5.6 Pro measuring trap: a transformed box measures 28 % / 52 % small); an
-     asymmetric close (transform 220 ms, the fade held to the last 45 ms); a height spring with a size bounce when the
-     contents change (search filter, rail, drill-in, toggles);
+   - motion: the menu sprout, PM6_SPROUT's (base/script/pm7-sprout.js, its classes in pm7-sprout.css; Jared L8 B
+     2026-10-30, one sprout owner for every menu): the panel carries pm-sprout, grows from the corner nearest its
+     trigger, closes back into it, and springs its height with a size bounce when the contents change (search filter,
+     rail, drill-in, toggles: PM6_SPROUT.resize). Placement measures layout sizes (offsetWidth / offsetHeight), which a
+     transform never changes;
    - keyboard: arrows, Home / End, Enter / Space, Escape (focus returns to the trigger), Tab closes, type-to-search
      (into the search field when there is one, type-ahead otherwise), Left / Right between the rail and the list.
    The panel is appended inside .pmu-shell (so it reads the --pmu-* tokens) and placed against the shell box; rows carry
@@ -22,7 +22,7 @@
    PMU.menu.toggle(anchor, spec); PMU.menu.close(); PMU.menu.isOpen(); PMU.menu.choice(anchor, opts). */
 (function () {
   var app = document.getElementById('pmuApp');
-  var GAP = 6, EDGE = 8, OPEN_MS = 300, CLOSE_MS = 200, SPRING_MS = 360;
+  var GAP = 6, EDGE = 8, OPEN_MS = 300;
   var current = null;          /* the open handle */
   var seq = 0;
 
@@ -140,42 +140,27 @@
     el.style.left = Math.round(left) + 'px';
     if (side === 'below') { el.style.top = Math.round(a.bottom - host.top + GAP) + 'px'; el.style.bottom = 'auto'; }
     else { el.style.top = 'auto'; el.style.bottom = Math.round(host.bottom - a.top + GAP) + 'px'; }
-    var ox = Math.max(18, Math.min(w - 18, a.left + a.width / 2 - host.left - left));
-    el.style.setProperty('--pmu-mox', Math.round(ox) + 'px');
-    el.style.setProperty('--pmu-moy', side === 'below' ? '0px' : '100%');
     el.setAttribute('data-side', side);
     h.side = side;
   }
 
-  /* ---- content changes: the height spring + the size bounce (5.6 Pro portalAnimateHeight + pm56-menu-size-bounce) ---- */
+  /* ---- content changes: the height spring + the size bounce (PM6_SPROUT.resize), once the sprout has landed ---- */
   function morph(h, mutate) {
     var el = h.el;
-    var h0 = el.offsetHeight;
     var focusIdx = document.activeElement && el.contains(document.activeElement) ? document.activeElement.getAttribute('data-mi') : null;
     var inSearch = document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('pmu-msearchin');
     var caret = inSearch ? document.activeElement.selectionStart : null;
     var scrollTop = h.listEl ? h.listEl.scrollTop : 0;
-    mutate();
-    wire(h);
-    if (inSearch) { var input = el.querySelector('.pmu-msearchin'); if (input) { input.focus(); try { input.setSelectionRange(caret, caret); } catch (e) {} } }
-    else if (focusIdx != null) { var again = el.querySelector('.pmu-mitem[data-mi="' + focusIdx + '"]'); if (again) again.focus({ preventScroll: true }); }
-    if (h.listEl && !h.resetScroll) h.listEl.scrollTop = scrollTop;
-    h.resetScroll = false;
-    if (reduced() || !h.settled) return;
-    el.style.height = 'auto';
-    var h1 = el.offsetHeight;
-    if (Math.abs(h1 - h0) < 1) { el.style.height = ''; return; }
-    el.classList.remove('pmu-m-spring');
-    el.style.height = h0 + 'px';
-    void el.offsetHeight;
-    el.classList.add('pmu-m-spring');
-    el.style.height = h1 + 'px';
-    clearTimeout(h.springT);
-    h.springT = setTimeout(function () { el.classList.remove('pmu-m-spring'); el.style.height = ''; }, SPRING_MS * speed() + 40);
-    if (el.animate) {
-      try { el.animate([{ transform: 'scale3d(1,1,1)' }, { transform: 'scale3d(1.012,1.055,1)', offset: 0.4 }, { transform: 'scale3d(1,1,1)' }],
-        { duration: 380 * speed(), easing: 'cubic-bezier(.22,1.55,.36,1)' }); } catch (e) {}
+    function apply() {
+      mutate();
+      wire(h);
+      if (inSearch) { var input = el.querySelector('.pmu-msearchin'); if (input) { input.focus(); try { input.setSelectionRange(caret, caret); } catch (e) {} } }
+      else if (focusIdx != null) { var again = el.querySelector('.pmu-mitem[data-mi="' + focusIdx + '"]'); if (again) again.focus({ preventScroll: true }); }
+      if (h.listEl && !h.resetScroll) h.listEl.scrollTop = scrollTop;
+      h.resetScroll = false;
     }
+    if (!h.settled) { apply(); return; }
+    window.PM6_SPROUT.resize(el, apply);
   }
 
   /* ---- events ---- */
@@ -288,7 +273,8 @@
     if (!host) return null;
     if (current) close(current, { focus: false, instant: false });
     var el = document.createElement('div');
-    el.className = 'pmu-pop pmu-menu' + (spec.className ? ' ' + spec.className : '') + (spec.rail && spec.rail.length ? ' has-rail' : '');
+    el.className = 'pmu-pop pmu-menu pm-sprout' + (spec.className ? ' ' + spec.className : '') + (spec.rail && spec.rail.length ? ' has-rail' : '');
+    el.setAttribute('data-portal-display', 'flex');
     el.setAttribute('role', 'menu');
     el.setAttribute('data-pm-hover-exempt', 'menu');
     el.setAttribute('data-mid', spec.id || ('m' + (++seq)));
@@ -298,22 +284,14 @@
     h.update = function (next) { h.spec = next || h.spec; refresh(h); };
     h.refresh = function () { refresh(h); };
     el.innerHTML = bodyHtml(h);
-    /* 1. measure untransformed and invisible */
-    el.setAttribute('data-mstate', 'measure');
-    el.setAttribute('data-mnomo', '');
-    el.style.setProperty('--pmu-msp', String(speed()));
+    /* placed while closed (the sprout's closed state is invisible and its sizes are layout sizes), then sprouted from
+       the corner nearest the trigger */
     host.appendChild(el);
     wire(h);
     place(h);
-    /* 2. arm the closed sprout (no transition), force it, re-enable transitions, force again, release to open */
-    if (reduced()) { el.removeAttribute('data-mnomo'); el.setAttribute('data-mstate', 'open'); h.settled = true; }
+    window.PM6_SPROUT.open(el, null, anchor && anchor.isConnected ? anchor : h.lastAnchor);
+    if (reduced()) h.settled = true;
     else {
-      el.setAttribute('data-mstate', 'closed');
-      void el.offsetWidth;
-      el.removeAttribute('data-mnomo');
-      void el.offsetWidth;
-      el.setAttribute('data-mstate', 'open');
-      el.classList.add('open');
       h.settleT = setTimeout(function () { h.settled = true; }, OPEN_MS * speed() + 40);
       materialize(h);
     }
@@ -364,17 +342,13 @@
     if (!h || !h.open) return;
     h.open = false;
     if (current === h) current = null;
-    clearTimeout(h.settleT); clearTimeout(h.springT);
+    clearTimeout(h.settleT);
     var el = h.el, anchor = h.anchor;
     if (anchor && anchor.setAttribute) { anchor.setAttribute('aria-expanded', 'false'); anchor.classList.remove('pmu-menu-anchor-open'); }
     el.classList.remove('open');
     el.setAttribute('aria-hidden', 'true');
     if (reduced() || opts.instant) { el.remove(); }
-    else {
-      /* asymmetric close: the box collapses toward the trigger corner, opaque through most of it */
-      el.setAttribute('data-mstate', 'leaving');
-      setTimeout(function () { el.remove(); }, CLOSE_MS * speed() + 20);
-    }
+    else window.PM6_SPROUT.close(el, function () { el.remove(); });
     if (opts.focus && anchor && anchor.isConnected && typeof anchor.focus === 'function') { try { anchor.focus({ preventScroll: true }); } catch (e) {} }
     if (h.spec.onClose) { try { inBoard(h, function () { h.spec.onClose(h); }); } catch (error) { console.error('[pm-usage] menu close', error); } }
   }

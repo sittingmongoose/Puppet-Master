@@ -92,8 +92,6 @@
     var patternEdit = {};
     var ttlTimers = {};
     var stackTimers = [];
-    var closeTimer = null;
-    var heightAnimGen = 0;
     var clearingAll = false;
     var stackDirty = false;
     var booted = false;
@@ -208,48 +206,15 @@
         id === 'continue_assistant';
     }
 
+    /* the inbox's sprout (open, close, height spring) is PM6_SPROUT's, the one menu sprout (base/script/pm7-sprout.js).
+       PMConcept7 replaces this engine's stack and inbox with src/js/19-notify.js, which removes #rsStack and #rsPanel
+       before this boot runs, so none of it binds there. */
     function portalIsOpen() {
-      return panelEl && panelEl.classList.contains('open') && !panelEl.classList.contains('is-closing');
+      return !!panelEl && window.PM6_SPROUT.isOpen(panelEl);
     }
 
-    function portalAnimateHeight(mutateFn, onDone) {
-      function done() { if (onDone) onDone(); }
-      if (!panelEl) { if (mutateFn) mutateFn(); done(); return; }
-      if (reduced() || !portalIsOpen()) { if (mutateFn) mutateFn(); done(); return; }
-      var gen = ++heightAnimGen;
-      var startH = panelEl.getBoundingClientRect().height;
-      panelEl.style.height = startH + 'px';
-      panelEl.style.overflow = 'hidden';
-      if (mutateFn) mutateFn();
-      panelEl.style.height = 'auto';
-      var endH = panelEl.getBoundingClientRect().height;
-      if (Math.abs(endH - startH) < 0.5) {
-        panelEl.style.height = '';
-        panelEl.style.overflow = '';
-        done();
-        return;
-      }
-      panelEl.style.height = startH + 'px';
-      void panelEl.offsetHeight;
-      panelEl.style.height = endH + 'px';
-      panelEl.classList.remove('is-size-bounce');
-      void panelEl.offsetWidth;
-      panelEl.classList.add('is-size-bounce');
-      var finished = false;
-      function clearH(ev) {
-        if (finished || gen !== heightAnimGen) return;
-        if (ev && ev.target !== panelEl) return;
-        if (ev && ev.propertyName && ev.propertyName !== 'height') return;
-        finished = true;
-        panelEl.style.height = '';
-        panelEl.style.overflow = '';
-        panelEl.classList.remove('is-size-bounce');
-        panelEl.removeEventListener('transitionend', clearH);
-        done();
-      }
-      panelEl.addEventListener('transitionend', clearH);
-      var t = setTimeout(clearH, 520);
-      stackTimers.push(t);
+    function portalAnimateHeight(mutateFn) {
+      window.PM6_SPROUT.resize(panelEl, mutateFn);
     }
 
     function fillPanelContent() {
@@ -419,34 +384,17 @@
 
     function setExpanded(on) {
       if (!panelEl) return;
-      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
       if (on) {
         expanded = true;
-        panelEl.classList.remove('is-closing');
-        panelEl.classList.add('open');
+        window.PM6_SPROUT.open(panelEl);
         panelEl.style.height = '';
         panelEl.style.overflow = '';
         renderPanel({ animateHeight: false });
         return;
       }
-      if (!expanded && !panelEl.classList.contains('open')) return;
+      if (!expanded && !panelEl.classList.contains('is-open')) return;
       expanded = false;
-      if (reduced()) {
-        panelEl.classList.remove('open', 'is-closing', 'is-size-bounce', 'is-empty');
-        panelEl.style.height = '';
-        panelEl.style.overflow = '';
-        return;
-      }
-      panelEl.classList.remove('is-size-bounce');
-      panelEl.classList.add('is-closing');
-      panelEl.classList.remove('open');
-      closeTimer = setTimeout(function () {
-        panelEl.classList.remove('is-closing');
-        panelEl.style.height = '';
-        panelEl.style.overflow = '';
-        closeTimer = null;
-      }, 240);
-      stackTimers.push(closeTimer);
+      window.PM6_SPROUT.close(panelEl);
     }
 
     function dismiss(id) {

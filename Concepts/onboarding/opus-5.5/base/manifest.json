@@ -58,6 +58,12 @@
     },
     {
       "tag": "style",
+      "id": "pm7-sprout-css",
+      "file": "style/pm7-sprout.css",
+      "slot": "@@PM7_BASE_pm7-sprout-css@@"
+    },
+    {
+      "tag": "style",
       "id": "pm6-css-bottom",
       "file": "style/pm6-css-bottom.css",
       "slot": "@@PM7_BASE_0011@@"
@@ -259,6 +265,12 @@
       "id": "pm6-js-usage",
       "file": "script/pm6-js-usage.js",
       "slot": "@@PM7_BASE_0049@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-sprout-js",
+      "file": "script/pm7-sprout.js",
+      "slot": "@@PM7_BASE_pm7-sprout-js@@"
     },
     {
       "tag": "script",

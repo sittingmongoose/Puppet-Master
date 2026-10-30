@@ -305,7 +305,10 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # NieR diamond rules go (the loader owner draws the wait and hands NieR to its Diamond loaders part) and two rules size the
 # loader and hide the icon while the button is busy; the refresh button lives only in the Usage page's own header, so a
 # hosted board never shows them: 'rewritten' 2,657.
-HOST_SCOPE_EXPECT = {'rewritten': 2657, 'compound': 20}
+# The menu sprout's owner (2026-10-30, L8 B: PMU.menu opens and closes through PM6_SPROUT and its pm7-sprout.css class
+# contract) takes sixteen anchors out: the menu's own motion states, reduced-motion rules and NieR slice copies in
+# 15-menu.css and 90-nier-shell.css: 'rewritten' 2,641.
+HOST_SCOPE_EXPECT = {'rewritten': 2641, 'compound': 20}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

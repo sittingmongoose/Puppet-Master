@@ -864,7 +864,6 @@
     var brand = bar.querySelector('.app-name');
     var fullBrandW = 0;
     var popOpen = false;
-    var closeTimer = null;
     var raf = null;
     var fullThemeW = 0;
     var fullProjectW = 0;
@@ -880,11 +879,11 @@
       } catch (e) { return false; }
     }
 
+    /* the search pop opens and closes through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js), from its own
+       corner (style-002.css); a reopen cancels a close still running */
     function openPop() {
-      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
       popOpen = true;
-      pop.classList.remove('is-closing');
-      pop.classList.add('open', 'is-open');
+      window.PM6_SPROUT.open(pop);
       btn.setAttribute('aria-expanded', 'true');
       if (popInput) {
         popInput.value = inline.value || '';
@@ -892,20 +891,11 @@
       }
     }
     function closePop() {
-      if (!popOpen && !pop.classList.contains('open') && !pop.classList.contains('is-open')) return;
+      if (!popOpen && !window.PM6_SPROUT.isOpen(pop)) return;
       popOpen = false;
       btn.setAttribute('aria-expanded', 'false');
       if (popInput && inline) inline.value = popInput.value || inline.value;
-      if (reduced()) {
-        pop.classList.remove('open', 'is-open', 'is-closing');
-        return;
-      }
-      pop.classList.add('is-closing');
-      pop.classList.remove('open', 'is-open');
-      closeTimer = setTimeout(function () {
-        pop.classList.remove('is-closing');
-        closeTimer = null;
-      }, 240);
+      window.PM6_SPROUT.close(pop);
     }
 
     window.PM_TB_SEARCH = {

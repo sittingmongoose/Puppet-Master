@@ -2473,10 +2473,56 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(a.nodeType!==b.nodeType) return false;
     return a.nodeType!==1 || a.tagName===b.tagName;
   }
+  /* The menus open and close through the one menu sprout, PM6_SPROUT (PMConcept7's base/script/pm7-sprout.js and its
+     class contract pm7-sprout.css, which build.py also puts in this page; Jared L8 B 2026-10-30: one sprout owner for
+     every menu). renderMenu's root menu and sidecar carry pm-sprout, so the patch inserts them closed; positionOverlays
+     places them and sproutOverlays opens each new one from its trigger; the patch keeps the sprout's state on a menu
+     it re-renders (pmSyncAttrs) and hands a menu it drops to sproutLeave, which collapses it into its trigger. */
+  const SPROUT=window.PM6_SPROUT||null, sprouted=new WeakSet(), sproutKey=new WeakMap();
+  function sproutOverlays(){
+    if(!SPROUT) return;
+    for(const el of document.querySelectorAll('#pmOverlayRoot > .overlay-menu.pm-sprout')){
+      const key=el.style.height||String(el.offsetHeight);
+      if(sprouted.has(el)){
+        /* a list that changed size (the model search, an effort count) springs its height: the sprout's size bounce */
+        if(sproutKey.get(el)!==key){ sproutKey.set(el,key); SPROUT.bounce(el); }
+        continue;
+      }
+      sprouted.add(el); sproutKey.set(el,key);
+      const anchor=el.getAttribute('data-overlay')==='sidecar'
+        ? document.querySelector(`#pmOverlayRoot > [data-overlay="root-menu"] [data-submenu="${CSS.escape(state.menu?.sub||'')}"]`)
+        : state.menu&&document.querySelector(`[data-menu-anchor="${CSS.escape(state.menu.anchor)}"]`);
+      SPROUT.open(el,null,anchor,{display:false});
+    }
+  }
+  /* a dropped menu leaves the overlay root (nothing finds, hovers or counts it there: its hooks go), keeps its place and
+     size, and collapses into its trigger; hosted, body.appendChild puts it in the chat's effects layer (00-host.js) */
+  function sproutLeave(n){
+    if(!SPROUT||!sprouted.has(n)) return false;
+    const w=n.offsetWidth, h=n.offsetHeight;
+    for(const x of [n,...n.querySelectorAll('*')]){
+      if(x.id) x.removeAttribute('id');
+      for(const a of [...x.attributes]) if(/^(data-|name$|title$|aria-label$|role$|tabindex$)/.test(a.name)) x.removeAttribute(a.name);
+    }
+    n.setAttribute('aria-hidden','true');
+    n.inert=true;
+    n.style.width=`${w}px`; n.style.height=`${h}px`;
+    n.classList.add('pm56-menu-leaving');
+    /* its open state is computed where it now stands, at rest, so the collapse runs from it: a move restarts animations,
+       and NieR's slice would otherwise start again from its 1px line and leave nothing to fold */
+    n.style.animation='none';
+    document.body.appendChild(n);
+    void n.offsetWidth;
+    SPROUT.close(n,()=>n.remove());
+    n.style.animation='';
+    return true;
+  }
   /* hosted: PMConcept7's hover controller adds data-pm-hover-* and aria-describedby, and moves title into its label */
   const HOSTED_KEEP_ATTR=/^(data-pm-hover|data-pmh|aria-describedby)/;
   function pmSyncAttrs(el,src){
     const skipValue = el===document.activeElement && ('value' in el);
+    /* the sprout's state (is-open, its corner) is not in the template: a menu it opened keeps it */
+    const sprout=SPROUT&&sprouted.has(el)?SPROUT.keep(el):null;
     const seen=new Set();
     for(const at of src.attributes){
       seen.add(at.name);
@@ -2508,6 +2554,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         if(opt && el.value!==opt.getAttribute('value')) el.value=opt.getAttribute('value');
       }
     }
+    if(sprout) sprout();
   }
   function pmPatchNode(el,src){
     if(el.nodeType!==1){ if(el.nodeValue!==src.nodeValue) el.nodeValue=src.nodeValue; return; }
@@ -2541,7 +2588,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(match){ used.add(match); pmPatchNode(match,nn); out.push(match); }
       else out.push(document.importNode(nn,true));
     }
-    for(const n of olds) if(!used.has(n) && n.parentNode===parent) parent.removeChild(n);
+    for(const n of olds) if(!used.has(n) && n.parentNode===parent && !sproutLeave(n)) parent.removeChild(n);
     out.forEach((n,i)=>{ const at=parent.childNodes[i]; if(at!==n) parent.insertBefore(n,at||null); });
     while(parent.childNodes.length>out.length) parent.removeChild(parent.lastChild);
   }
@@ -3552,18 +3599,21 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   let lastMenuSig='';
   function holdMenuPlacement(root, sig){
     if(!sig||sig!==lastMenuSig) return null;
-    const el=root.querySelector(':scope > [data-overlay="root-menu"]');
-    if(!el||!el.style.left) return null;
-    return {el, left:el.style.left, top:el.style.top,
-      ox:el.style.getPropertyValue('--origin-x'), oy:el.style.getPropertyValue('--origin-y')};
+    /* the root menu and its sidecar (whose template has no style at all) */
+    return ['root-menu','sidecar'].map(lane=>root.querySelector(`:scope > [data-overlay="${lane}"]`)).filter(el=>el&&el.style.left)
+      .map(el=>({el, left:el.style.left, top:el.style.top, bottom:el.style.bottom,
+        ox:el.style.getPropertyValue('--origin-x'), oy:el.style.getPropertyValue('--origin-y')}));
   }
-  function restoreMenuPlacement(root, h){
-    if(!h||root.querySelector(':scope > [data-overlay="root-menu"]')!==h.el) return;
-    const s=h.el.style;
-    if(!s.left) s.left=h.left;
-    if(!s.top&&h.top) s.top=h.top;
-    if(h.ox&&!s.getPropertyValue('--origin-x')) s.setProperty('--origin-x',h.ox);
-    if(h.oy&&!s.getPropertyValue('--origin-y')) s.setProperty('--origin-y',h.oy);
+  function restoreMenuPlacement(root, held){
+    for(const h of held||[]){
+      if(h.el.parentNode!==root) continue;
+      const s=h.el.style;
+      if(!s.left) s.left=h.left;
+      if(!s.top&&h.top) s.top=h.top;
+      if(!s.bottom&&h.bottom) s.bottom=h.bottom;
+      if(h.ox&&!s.getPropertyValue('--origin-x')) s.setProperty('--origin-x',h.ox);
+      if(h.oy&&!s.getPropertyValue('--origin-y')) s.setProperty('--origin-y',h.oy);
+    }
   }
 
   /* Text hover tips stay available while a menu/drawer is open (those surfaces
@@ -3784,8 +3834,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else if(m.type==='lens') content=extReplace('contextLensMenu',{}, '');
     else if(HOSTED&&m.type==='pm56-column') content=renderColumnMenu();
     const cls=`overlay-menu ${m.type==='model'?'model-menu':''} ${['context','thread-search'].includes(m.type)?'compact':''} ${m.type==='lens'?'lens-strip':''}`;
-    const root=`<div class="${cls}" data-overlay="root-menu" data-side="${m.side||'left'}" style="${m.type==='model'?`height:${modelMenuHeight()}px`:''}">${m.compactSub?renderCompactSubmenu(m.compactSub):content}</div>`;
-    const side=m.sub&&!m.compactSub?`<div class="overlay-menu sidecar" data-k="sidecar" data-overlay="sidecar" data-side="${m.side||'left'}">${renderSubmenu(m.sub)}</div>`:'';
+    /* each menu is its own node (data-k): a different menu is a new sprout, the old one leaves through the sprout */
+    const root=`<div class="${cls} pm-sprout" data-k="menu:${esc(m.type)}|${esc(m.anchor)}|${esc(m.compactSub||'')}" data-overlay="root-menu" data-side="${m.side||'left'}" style="${m.type==='model'?`height:${modelMenuHeight()}px`:''}">${m.compactSub?renderCompactSubmenu(m.compactSub):content}</div>`;
+    const side=m.sub&&!m.compactSub?`<div class="overlay-menu sidecar pm-sprout pm-sprout-edge" data-k="sidecar" data-overlay="sidecar" data-side="${m.side||'left'}">${renderSubmenu(m.sub)}</div>`:'';
     return root+side;
   }
 
@@ -4080,7 +4131,14 @@ suggested path                    migration 0043, reversible</div></div></sectio
         const below=window.innerHeight-ar.bottom-8, above=ar.top-8;
         let top=below>=rootH+gap?ar.bottom+gap:Math.max(8,ar.top-rootH-gap);
         top=clamp(top,8,window.innerHeight-rootH-8);
-        root.style.left=`${left}px`;root.style.top=`${top}px`;root.style.setProperty('--origin-x',`${clamp(ar.left+ar.width/2-left,18,rootW-18)}px`);root.style.setProperty('--origin-y',top>ar.bottom?'0px':'100%');
+        /* the model picker that opened above its trigger keeps its bottom edge while its list filters (its height springs
+           from the top), from its first placement until the window's height changes */
+        const pin=state.menu.type==='model'&&state.menu.pinBottom&&state.menu.pinBottom.vh===window.innerHeight?state.menu.pinBottom:null;
+        if(!pin&&state.menu.type==='model'&&top<ar.top) state.menu.pinBottom={vh:window.innerHeight,px:Math.round(window.innerHeight-top-rootH)};
+        root.style.left=`${left}px`;
+        if(state.menu.pinBottom&&state.menu.type==='model'&&state.menu.pinBottom.vh===window.innerHeight){ root.style.top='auto'; root.style.bottom=`${state.menu.pinBottom.px}px`; }
+        else { root.style.top=`${top}px`; root.style.bottom=''; }
+        root.style.setProperty('--origin-x',`${clamp(ar.left+ar.width/2-left,18,rootW-18)}px`);root.style.setProperty('--origin-y',top>ar.bottom?'0px':'100%');
         const side=document.querySelector('[data-overlay="sidecar"]');
         if(side){
           const sideW=side.offsetWidth, sideH=side.offsetHeight;
@@ -4095,7 +4153,11 @@ suggested path                    migration 0043, reversible</div></div></sectio
           }
           const row=document.querySelector(`.overlay-menu[data-overlay="root-menu"] [data-submenu="${CSS.escape(state.menu.sub||'')}"]`);
           const rowR=row&&row.getBoundingClientRect();
-          let st=rowR?rowR.bottom-sideH:top;
+          /* a root still sprouting is scaled about its corner: the row's bottom is read where the root will stand */
+          let rowBottom=rowR&&rowR.bottom;
+          if(rowR){ const cs=getComputedStyle(root), m=new DOMMatrixReadOnly(cs.transform==='none'?undefined:cs.transform);
+            if(m.d&&!m.isIdentity){ const oy=root.offsetTop+parseFloat(cs.transformOrigin.split(' ')[1]); rowBottom=oy+(rowR.bottom-m.f-oy)/m.d; } }
+          let st=rowR?rowBottom-sideH:top;
           st=clamp(st,8,window.innerHeight-sideH-8);
           side.style.left=`${sl}px`;side.style.top=`${st}px`;
           side.style.setProperty('--origin-x', state.menu.side==='right'?'0%':'100%');
@@ -4104,6 +4166,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
         }
       }
     }
+    sproutOverlays();
     if(state.hover){
       positionHoverCard();
     }

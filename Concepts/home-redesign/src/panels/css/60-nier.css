@@ -111,9 +111,7 @@ html[data-o55-nier="on"][data-o55-nier-parts~="ticks"] .pmw-panel::after {
     linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) calc(100% - 3px) calc(100% - 3px) / 1px 8px no-repeat;
   opacity: .55;
 }
-/* slice part: menus unfold from a line (the page's own keyframes) */
-html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmw-menu[data-mstate="closed"] { transform: none; scale: 1 .006; }
-html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmw-menu[data-mstate="open"] { transform: none; transition: none; animation: o55np-slice 300ms linear backwards; }
+/* slice part: menus unfold from a line and fold back: the plate is a .pm-sprout, which the Slice part covers (14-nier-parts.css) */
 /* ground part: the grid shows between panels */
 html[data-o55-nier="on"][data-o55-nier-parts~="ground"] #pm-home-centre { --pmw-gutter: transparent; }
 html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmw-mlead { background: transparent; color: var(--o55-nier-ink); }

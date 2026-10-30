@@ -2281,45 +2281,11 @@ body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st-move) { animat
       border-radius: var(--radius-md, 8px);
       box-shadow: var(--elev-3, 0 8px 24px rgba(0,0,0,.18));
       box-sizing: border-box;
-      --rs-sprout-ox: 88%;
-      --rs-sprout-oy: 0%;
-      --rs-sprout-tx: 0px;
-      --rs-sprout-ty: -8px;
-      --rs-sprout-sx: 0.72;
-      --rs-sprout-sy: 0.48;
-      transform-origin: var(--rs-sprout-ox) var(--rs-sprout-oy);
-      opacity: 0;
-      transform: translate3d(var(--rs-sprout-tx), var(--rs-sprout-ty), 0)
-        scale3d(var(--rs-sprout-sx), var(--rs-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out, ease),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms;
-      will-change: transform, opacity;
-    }
-    .title-bar .pm6-tb-search-pop.open,
-    .title-bar .pm6-tb-search-pop.is-open {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out, ease),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s;
-    }
-    .title-bar .pm6-tb-search-pop.is-closing {
-      opacity: 0;
-      transform: translate3d(var(--rs-sprout-tx), var(--rs-sprout-ty), 0)
-        scale3d(var(--rs-sprout-sx), var(--rs-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms;
+      /* its corner; the motion is the menu sprout's (PM6_SPROUT, pm7-sprout.css: the pop is a .pm-sprout) */
+      --pm6-sprout-ox: 88%;
+      --pm6-sprout-oy: 0%;
+      --pm6-sprout-tx: 0px;
+      --pm6-sprout-ty: -8px;
     }
     .title-bar .pm6-tb-search-pop-input {
       width: 100%;
@@ -6470,39 +6436,10 @@ body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st-move) { animat
       --pm6-sprout-ty: -10px;
       --pm6-sprout-sx: 0.72;
       --pm6-sprout-sy: 0.48;
-      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms;
-      will-change: transform, opacity;
+      /* the motion is PM6_SPROUT's contract (pm7-sprout.css) */
     }
     .context-hover-module.is-open {
       display: block;
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s;
-    }
-    .context-hover-module.is-closing {
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms;
     }
     .context-hover-module .chm-row { display: flex; justify-content: space-between; padding: 4px 0; }
     .context-hover-module .chm-label { color: var(--text-muted); }
@@ -6572,40 +6509,13 @@ body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st-move) { animat
       --pm6-sprout-ty: -10px;
       --pm6-sprout-sx: 0.72;
       --pm6-sprout-sy: 0.48;
-      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms;
-      will-change: transform, opacity;
+      /* the motion is PM6_SPROUT's contract (pm7-sprout.css) */
     }
     .context-lens-popover.is-open {
       display: flex;
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s;
     }
     .context-lens-popover.is-closing {
       display: flex;
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms;
     }
     .cl-popover-title {
       padding: 8px 12px 4px;
@@ -6797,40 +6707,13 @@ body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st-move) { animat
       --pm6-sprout-ty: -10px;
       --pm6-sprout-sx: 0.72;
       --pm6-sprout-sy: 0.48;
-      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms;
-      will-change: transform, opacity;
+      /* the motion is PM6_SPROUT's contract (pm7-sprout.css) */
     }
     .wt-bind-dropdown.is-open {
       display: block;
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s;
     }
     .wt-bind-dropdown.is-closing {
       display: block;
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms;
     }
     .wt-info-row { padding: 10px 14px; border-bottom: 1px solid var(--border-light); }
     .wt-branch-name { font-weight: 700; font-size: 12px; font-family: monospace; color: var(--text-primary); margin-bottom: 2px; }
@@ -14774,17 +14657,7 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
       --pm6-sprout-ty: -10px;
       --pm6-sprout-sx: 0.72;
       --pm6-sprout-sy: 0.48;
-      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms;
-      will-change: transform, opacity;
+      /* the motion is PM6_SPROUT's contract (pm7-sprout.css) */
     }
     /* Project menu sprouts from the left side of the trigger */
     #projectMenu {
@@ -14793,29 +14666,10 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
       --pm6-sprout-ox: 12%;
     }
     .pm6-chat-more-menu.is-open,
-    .pm6-tb-menu.is-open {
-      display: block;
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s;
-    }
+    .pm6-tb-menu.is-open,
     .pm6-chat-more-menu.is-closing,
     .pm6-tb-menu.is-closing {
       display: block;
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms;
     }
     /* Override .chat-panel-header .panel-actions button { width/height: 24px }
        — that rule was squashing menu item labels into a 24×24 box. */
@@ -15441,75 +15295,7 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
       --pm6-sprout-ty: 10px;
       --pm6-sprout-sx: 0.72;
       --pm6-sprout-sy: 0.48;
-      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
-      opacity: 0;
-      /* closed: compressed toward the trigger corner — taller grow than wide ("fill out") */
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms,
-        height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
-      will-change: transform, opacity, height;
-    }
-    .pm6-chat-mini-popout-portal.is-open,
-    .pm6-chat-mode-popout-portal.is-open,
-    .pm6-chat-persona-popout-portal.is-open,
-    .pm6-chat-effort-popout-portal.is-open,
-    .pm6-chat-pt-popout-portal.is-open {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s,
-        /* springy height for search-filter resize bounce */
-        height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
-    }
-    .pm6-chat-mini-popout-portal.is-closing,
-    .pm6-chat-mode-popout-portal.is-closing,
-    .pm6-chat-persona-popout-portal.is-closing,
-    .pm6-chat-effort-popout-portal.is-closing,
-    .pm6-chat-pt-popout-portal.is-closing {
-      /* video: solid through most of the collapse; only a late, tiny fade */
-      opacity: 0;
-      /* collapse into the same trigger corner set at open */
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms,
-        height 200ms cubic-bezier(0.45, 0.05, 0.55, 0.2);
-    }
-    /* search-filter / effort-option-count size bounce — stretch settles with height spring */
-    @keyframes pm6-popout-size-bounce {
-      0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-      40%  { transform: translate3d(0, 0, 0) scale3d(1.012, 1.055, 1); }
-      100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-    }
-    /* side flyouts (effort / mode thoroughness): stronger vertical overshoot —
-       matched to reference video when option count changes (e.g. 3 → 4 levels) */
-    @keyframes pm6-effort-size-bounce {
-      0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-      35%  { transform: translate3d(0, 0, 0) scale3d(1.018, 1.085, 1); }
-      70%  { transform: translate3d(0, 0, 0) scale3d(0.995, 0.975, 1); }
-      100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-    }
-    .pm6-chat-mini-popout-portal.is-open.is-size-bounce,
-    .pm6-chat-persona-popout-portal.is-open.is-size-bounce {
-      animation: pm6-popout-size-bounce 380ms cubic-bezier(0.22, 1.55, 0.36, 1);
-    }
-    .pm6-chat-effort-popout-portal.is-open.is-size-bounce,
-    .pm6-chat-pt-popout-portal.is-open.is-size-bounce {
-      animation: pm6-effort-size-bounce 420ms cubic-bezier(0.22, 1.65, 0.36, 1);
+      /* the motion is PM6_SPROUT's contract (pm7-sprout.css) */
     }
     .pm6-chat-effort-popout-portal {
       width: 148px; max-height: none; overflow: visible;
@@ -15522,14 +15308,6 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
       --pm6-sprout-ty: 0px;
       --pm6-sprout-sx: 0.48;
       --pm6-sprout-sy: 0.72;
-    }
-    /* option-count resize: stronger height spring than search-filter bounce */
-    .pm6-chat-effort-popout-portal.is-open {
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s,
-        height 360ms cubic-bezier(0.22, 1.78, 0.36, 1);
     }
     .pm6-chat-mode-popout-portal { width: 260px; z-index: 1250; }
     .pm6-chat-persona-popout-portal { width: 260px; z-index: 1240; }
@@ -15552,21 +15330,6 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
     .pm6-chat-modellist,
     .pm6-chat-modelist,
     .pm6-chat-personalist { display: flex; flex-direction: column; gap: 1px; }
-    [data-motion="reduced"] .pm6-chat-mini-popout-portal,
-    [data-motion="reduced"] .pm6-chat-mode-popout-portal,
-    [data-motion="reduced"] .pm6-chat-persona-popout-portal,
-    [data-motion="reduced"] .pm6-chat-effort-popout-portal,
-    [data-motion="reduced"] .pm6-chat-pt-popout-portal {
-      transition: none !important;
-      transform: none !important;
-    }
-    [data-motion="reduced"] .pm6-chat-mini-popout-portal.is-open,
-    [data-motion="reduced"] .pm6-chat-mode-popout-portal.is-open,
-    [data-motion="reduced"] .pm6-chat-persona-popout-portal.is-open,
-    [data-motion="reduced"] .pm6-chat-effort-popout-portal.is-open,
-    [data-motion="reduced"] .pm6-chat-pt-popout-portal.is-open {
-      opacity: 1; visibility: visible; pointer-events: auto;
-    }
     .pm6-chat-effortbtn {
       display: flex; width: 100%; align-items: center; justify-content: space-between;
       text-align: left; gap: 8px;
@@ -15818,6 +15581,163 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
     [data-motion="reduced"] .pm6-opcard-progressfill { transition: none; }
     [data-motion="reduced"] .pm6-opcard-chip-running { animation: none; }
   </style>
+  <style id="pm7-sprout-css">/* The menu sprout's class contract, the one stylesheet of PM6_SPROUT (base/script/pm7-sprout.js; ACD-439, DR-057,
+   DR-058; Jared, L8 B 2026-10-30: one sprout owner for every menu). A box grows out of the corner nearest its trigger
+   (the six --pm6-sprout-* values the owner writes per opening: origin, closed nudge, closed scale), overshoots and
+   settles; it closes back into that corner opaque, with a late fade. A menu opts in with the class pm-sprout (Usage's
+   PMU.menu, Home's PMW.menu, the 5.6 Pro chat's menus, the base inbox); the base chat's title-bar menus, pickers,
+   context pop-ups, worktree menu and Settings' popouts keep their own class names in the same lists. State: is-open, is-closing (the owner's), is-size-bounce (a content resize);
+   pm-sprout-edge marks a side flyout (it grows from the edge facing its row, and bounces harder).
+   The surfaces own everything else (place, size, plate, z-index, display before opening). NieR's Slice part
+   (src/settings/styles.d/14-nier-parts.css) turns the sprout into its slice for every class here. */
+.pm-sprout {
+  --pm6-sprout-ox: 12%;
+  --pm6-sprout-oy: 0%;
+  --pm6-sprout-tx: 0px;
+  --pm6-sprout-ty: -10px;
+  --pm6-sprout-sx: 0.72;
+  --pm6-sprout-sy: 0.48;
+}
+.pm-sprout.pm-sprout-edge {
+  --pm6-sprout-ox: 0%;
+  --pm6-sprout-oy: 28%;
+  --pm6-sprout-tx: -10px;
+  --pm6-sprout-ty: 0px;
+  --pm6-sprout-sx: 0.48;
+  --pm6-sprout-sy: 0.72;
+}
+/* closed: compressed toward the trigger corner, taller grow than wide ("fill out") */
+.pm-sprout,
+.pm6-chat-more-menu,
+.pm6-tb-menu,
+.context-hover-module,
+.context-lens-popover,
+.wt-bind-dropdown,
+.pm51-popout,
+.pm6-chat-mini-popout-portal,
+.pm6-chat-effort-popout-portal,
+.pm6-chat-mode-popout-portal,
+.pm6-chat-persona-popout-portal,
+.pm6-chat-pt-popout-portal {
+  transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
+  opacity: 0;
+  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+    scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 160ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+    visibility 0s linear 300ms,
+    height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
+  will-change: transform, opacity;
+}
+.pm-sprout.is-open,
+.pm6-chat-more-menu.is-open,
+.pm6-tb-menu.is-open,
+.context-hover-module.is-open,
+.context-lens-popover.is-open,
+.wt-bind-dropdown.is-open,
+.pm51-popout.is-open,
+.pm6-chat-mini-popout-portal.is-open,
+.pm6-chat-mode-popout-portal.is-open,
+.pm6-chat-persona-popout-portal.is-open,
+.pm6-chat-effort-popout-portal.is-open,
+.pm6-chat-pt-popout-portal.is-open {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 140ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+    visibility 0s,
+    /* springy height for search-filter resize bounce */
+    height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
+}
+/* the close: solid through most of the collapse, then a late, tiny fade, into the same corner the open set */
+.pm-sprout.is-closing,
+.pm6-chat-more-menu.is-closing,
+.pm6-tb-menu.is-closing,
+.context-hover-module.is-closing,
+.context-lens-popover.is-closing,
+.wt-bind-dropdown.is-closing,
+.pm51-popout.is-closing,
+.pm6-chat-mini-popout-portal.is-closing,
+.pm6-chat-mode-popout-portal.is-closing,
+.pm6-chat-persona-popout-portal.is-closing,
+.pm6-chat-effort-popout-portal.is-closing,
+.pm6-chat-pt-popout-portal.is-closing {
+  opacity: 0;
+  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+    scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 45ms ease-in 175ms,
+    transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
+    visibility 0s linear 220ms,
+    height 200ms cubic-bezier(0.45, 0.05, 0.55, 0.2);
+}
+/* search-filter / option-count size bounce: the stretch settles with the height spring (PM6_SPROUT.resize, .bounce) */
+@keyframes pm6-popout-size-bounce {
+  0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+  40%  { transform: translate3d(0, 0, 0) scale3d(1.012, 1.055, 1); }
+  100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+}
+/* side flyouts (effort / mode thoroughness): stronger vertical overshoot when the option count changes (3 to 4 levels) */
+@keyframes pm6-effort-size-bounce {
+  0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+  35%  { transform: translate3d(0, 0, 0) scale3d(1.018, 1.085, 1); }
+  70%  { transform: translate3d(0, 0, 0) scale3d(0.995, 0.975, 1); }
+  100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+}
+.pm-sprout.is-open.is-size-bounce,
+.pm51-popout.is-open.is-size-bounce,
+.pm6-chat-mini-popout-portal.is-open.is-size-bounce,
+.pm6-chat-persona-popout-portal.is-open.is-size-bounce {
+  animation: pm6-popout-size-bounce 380ms cubic-bezier(0.22, 1.55, 0.36, 1);
+}
+.pm-sprout.pm-sprout-edge.is-open.is-size-bounce,
+.pm6-chat-effort-popout-portal.is-open.is-size-bounce,
+.pm6-chat-pt-popout-portal.is-open.is-size-bounce {
+  animation: pm6-effort-size-bounce 420ms cubic-bezier(0.22, 1.65, 0.36, 1);
+}
+/* option-count resize: stronger height spring than search-filter bounce */
+.pm-sprout.pm-sprout-edge.is-open,
+.pm6-chat-effort-popout-portal.is-open {
+  transition:
+    opacity 140ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+    visibility 0s,
+    height 360ms cubic-bezier(0.22, 1.78, 0.36, 1);
+}
+/* Reduce motion: instant show and hide, the same end state (Settings' switch, and the system setting for .pm-sprout) */
+[data-motion="reduced"] .pm-sprout,
+[data-motion="reduced"] .pm6-chat-mini-popout-portal,
+[data-motion="reduced"] .pm6-chat-mode-popout-portal,
+[data-motion="reduced"] .pm6-chat-persona-popout-portal,
+[data-motion="reduced"] .pm6-chat-effort-popout-portal,
+[data-motion="reduced"] .pm6-chat-pt-popout-portal {
+  transition: none !important;
+  transform: none !important;
+}
+[data-motion="reduced"] .pm-sprout.is-open,
+[data-motion="reduced"] .pm6-chat-mini-popout-portal.is-open,
+[data-motion="reduced"] .pm6-chat-mode-popout-portal.is-open,
+[data-motion="reduced"] .pm6-chat-persona-popout-portal.is-open,
+[data-motion="reduced"] .pm6-chat-effort-popout-portal.is-open,
+[data-motion="reduced"] .pm6-chat-pt-popout-portal.is-open {
+  opacity: 1; visibility: visible; pointer-events: auto;
+}
+[data-motion="reduced"] .pm-sprout.is-size-bounce { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .pm-sprout { transition: none !important; transform: none !important; }
+  .pm-sprout.is-size-bounce { animation: none !important; }
+}
+/* the drag hold: no menu moves inside a resize drag (body.pm-resizing); one caught mid-flight lands at once */
+body.pm-resizing .pm-sprout { transition: none !important; animation: none !important; }
+</style>
 <!-- PM7 SECTION 11/32: bottom-css - bottom panel + terminal workgroup styles (style#pm6-css-bottom) -->
 <style id="pm6-css-bottom">
     /* ============================================================
@@ -16441,7 +16361,7 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
       to { opacity: 0; transform: translate3d(0,-42px,0) scale(.85); }
     }
 
-    /* —— Expanded: PM7 sprout open/close + height spring —— */
+    /* —— Expanded: the menu sprout's (PM6_SPROUT, pm7-sprout.css: the panel is a .pm-sprout), from its top centre —— */
     .rs-panel {
       position: absolute;
       top: calc(100% + 6px);
@@ -16449,56 +16369,10 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
       width: 312px;
       margin-left: -156px; /* center without translateX so sprout scale stays clean */
       z-index: 60;
-      --rs-sprout-ox: 50%;
-      --rs-sprout-oy: 0%;
-      --rs-sprout-tx: 0px;
-      --rs-sprout-ty: -8px;
-      --rs-sprout-sx: 0.72;
-      --rs-sprout-sy: 0.48;
-      transform-origin: var(--rs-sprout-ox) var(--rs-sprout-oy);
-      opacity: 0;
-      transform: translate3d(var(--rs-sprout-tx), var(--rs-sprout-ty), 0)
-        scale3d(var(--rs-sprout-sx), var(--rs-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms,
-        height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
-      will-change: transform, opacity, height;
-    }
-    .rs-panel.open {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s,
-        height 360ms cubic-bezier(0.22, 1.78, 0.36, 1);
-    }
-    .rs-panel.is-closing {
-      opacity: 0;
-      transform: translate3d(var(--rs-sprout-tx), var(--rs-sprout-ty), 0)
-        scale3d(var(--rs-sprout-sx), var(--rs-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms,
-        height 200ms cubic-bezier(0.45, 0.05, 0.55, 0.2);
-    }
-    @keyframes rs-effort-size-bounce {
-      0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-      35%  { transform: translate3d(0, 0, 0) scale3d(1.018, 1.085, 1); }
-      70%  { transform: translate3d(0, 0, 0) scale3d(0.995, 0.975, 1); }
-      100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-    }
-    .rs-panel.open.is-size-bounce {
-      animation: rs-effort-size-bounce 420ms cubic-bezier(0.22, 1.65, 0.36, 1);
+      --pm6-sprout-ox: 50%;
+      --pm6-sprout-oy: 0%;
+      --pm6-sprout-tx: 0px;
+      --pm6-sprout-ty: -8px;
     }
 
     /* Glass / retro / basic: boxed chrome */
@@ -22447,18 +22321,13 @@ html[data-density="compact"] #panel-settings .pm51-all .all-settings-window .set
 #panel-settings .form-field .pm51-dd-trigger, #panel-settings .pm51-dd-form .pm51-dd-trigger { width: 100%; max-width: none; min-height: 36px; }
 #panel-settings .setting-control .pm51-dd-trigger { max-width: 270px; }
 
-/* ---- popouts (dropdown lists, menus, pickers) — live in body, chat "sprout" motion ---------- */
+/* ---- popouts (dropdown lists, menus, pickers) — live in body; their motion is the menu sprout's (PM6_SPROUT's class
+   contract, base/style/pm7-sprout.css) ---------- */
 .pm51-popout { position: fixed; z-index: 1300; box-sizing: border-box; min-width: 200px; max-width: min(360px, calc(100vw - 16px)); max-height: min(420px, 70vh); overflow-y: auto; overflow-x: hidden; padding: 4px; background: var(--surface-elevated, #171b31); border: 1px solid var(--border, rgba(164,158,219,.16)); border-radius: var(--radius-md, 10px); box-shadow: var(--elev-3, 0 14px 36px rgba(0,0,0,.25)); color: var(--text-primary, #f4f2ff); font: 500 12px/1.4 var(--body-font, Inter, system-ui, sans-serif);
   --pm6-sprout-ox: 12%; --pm6-sprout-oy: 0%; --pm6-sprout-tx: 0px; --pm6-sprout-ty: -10px; --pm6-sprout-sx: .72; --pm6-sprout-sy: .48;
-  transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy); opacity: 0; visibility: hidden; pointer-events: none;
-  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0) scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-  transition: opacity 160ms var(--ease-out, cubic-bezier(.22, 1, .36, 1)), transform 300ms cubic-bezier(.22, 1.55, .36, 1), visibility 0s linear 300ms, height 340ms cubic-bezier(.22, 1.72, .36, 1); will-change: transform, opacity; scrollbar-width: thin; }
+  scrollbar-width: thin; }
 .pm51-popout[data-sprout^="b"] { --pm6-sprout-oy: 100%; --pm6-sprout-ty: 10px; }
 .pm51-popout[data-sprout$="r"] { --pm6-sprout-ox: 88%; }
-.pm51-popout.is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: translate3d(0, 0, 0) scale3d(1, 1, 1); transition: opacity 140ms var(--ease-out, cubic-bezier(.22, 1, .36, 1)), transform 300ms cubic-bezier(.22, 1.55, .36, 1), visibility 0s, height 340ms cubic-bezier(.22, 1.72, .36, 1); }
-.pm51-popout.is-closing { opacity: 0; visibility: hidden; pointer-events: none; transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0) scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1); transition: opacity 45ms ease-in 175ms, transform 220ms cubic-bezier(.45, .05, .55, .2), visibility 0s linear 220ms, height 200ms cubic-bezier(.45, .05, .55, .2); }
-@keyframes pm51-popout-size-bounce { 0% { transform: scale3d(1, 1, 1); } 40% { transform: scale3d(1.012, 1.055, 1); } 100% { transform: scale3d(1, 1, 1); } }
-.pm51-popout.is-open.is-size-bounce { animation: pm51-popout-size-bounce 380ms cubic-bezier(.22, 1.55, .36, 1); }
 .pm51-popout-item { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 32px; padding: 7px 10px; margin: 0; border: 0; border-radius: var(--radius-sm, 6px); background: transparent; color: var(--text-secondary, #c9c4e6); font: inherit; font-weight: 600; font-size: 12px; text-align: left; cursor: pointer; box-sizing: border-box; }
 .pm51-popout-item:hover, .pm51-popout-item.is-active, .pm51-popout-item:focus-visible { background: color-mix(in srgb, var(--text-primary, #f4f2ff) 8%, transparent); color: var(--text-primary, #f4f2ff); outline: 0; }
 .pm51-popout-item[aria-selected="true"] { background: var(--accent-soft, rgba(124,108,255,.18)); color: var(--text-primary, #f4f2ff); }
@@ -24043,8 +23912,9 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-ru
 @media (max-width: 520px) { #o55np-reboot .o55np-log { letter-spacing: .12em; } }
 
 /* ---- Slice open [slice]: menus, popovers and dialogs unfold from a 1px line, one flicker step, and fold back ---- */
-/* the sprouting family (the title-bar menus, Settings drop-downs, chat pickers, context pop-ups): their sprout becomes
-   identity, and scale carries the slice both ways */
+/* the sprouting family (every PM6_SPROUT menu: .pm-sprout, the title-bar menus, Settings drop-downs, chat pickers, context
+   pop-ups): their sprout becomes identity, and scale carries the slice both ways */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm-sprout),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-tb-menu),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-chat-more-menu),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm51-popout),
@@ -24064,6 +23934,7 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-tb-sear
   scale: 1 .006;
   transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms, visibility 0s linear 200ms !important;
 }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm-sprout):is(.is-open, .open):not(.is-closing),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-tb-menu):is(.is-open, .open):not(.is-closing),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-chat-more-menu):is(.is-open, .open):not(.is-closing),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm51-popout):is(.is-open, .open):not(.is-closing),
@@ -24079,10 +23950,7 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.wt-bind-dro
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-tb-search-pop):is(.is-open, .open):not(.is-closing) {
   scale: none; transition: none !important; animation: o55np-slice 300ms linear backwards;
 }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .rs-panel { --rs-sprout-ox: 50% !important; --rs-sprout-oy: 50% !important; --rs-sprout-sx: 1 !important;
-  --rs-sprout-sy: 1 !important; --rs-sprout-tx: 0px !important; --rs-sprout-ty: 0px !important; }
 /* the rest open by animation only (they close their own way) */
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :where(.rs-panel.open:not(.is-closing)):not(#t7.t7.t7:not(*)),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(#panel-settings .overlay > .dialog),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :where(.pm6-orch-modal):not(#t7.t7.t7:not(*)),
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :where(.pm-ctx-menu.is-open):not(#t7.t7.t7:not(*)),
@@ -24253,7 +24121,8 @@ html[data-o55-nier-parts~="diamonds"] :where(.thread-working-pulse):not(.t7.t7:n
 html[data-o55-nier-parts~="diamonds"] :where(.pm6-spin svg):not(.t7.t7:not(*)):not(t7:not(*)),
 html[data-o55-nier-parts~="diamonds"] :is(t7.t7.t7:not(*)) { animation: none !important; }
   html[data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
-  html[data-o55-nier-parts~="slice"] :is(.pm6-tb-menu),
+  html[data-o55-nier-parts~="slice"] :is(.pm-sprout),
+html[data-o55-nier-parts~="slice"] :is(.pm6-tb-menu),
 html[data-o55-nier-parts~="slice"] :is(.pm6-chat-more-menu),
 html[data-o55-nier-parts~="slice"] :is(.pm51-popout),
 html[data-o55-nier-parts~="slice"] :is(.pm-home-portal),
@@ -24266,7 +24135,6 @@ html[data-o55-nier-parts~="slice"] :is(.context-hover-module),
 html[data-o55-nier-parts~="slice"] :is(.context-lens-popover),
 html[data-o55-nier-parts~="slice"] :is(.wt-bind-dropdown),
 html[data-o55-nier-parts~="slice"] :is(.pm6-tb-search-pop),
-html[data-o55-nier-parts~="slice"] :is(.rs-panel),
 html[data-o55-nier-parts~="slice"] :is(.dialog),
 html[data-o55-nier-parts~="slice"] :is(.pm6-orch-modal),
 html[data-o55-nier-parts~="slice"] :is(.pm-ctx-menu),
@@ -44374,8 +44242,9 @@ html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) .o55-
 html[data-pmw-home="on"] #rsStage { top: calc(100% + 10px + var(--pmw-notice-drop, 0px)); }
 /* ---- panels/css/30-menu.css ---- */
 /* PMW.menu: the picker look every PM dropdown uses (metrics from the Usage PMU.menu, itself the 5.6 Pro chat's menus):
-   13 px type, 34 px rows (42 with a description), 8 px row radius, 13 px plate radius, the corner sprout on open and
-   an asymmetric close; instant under Reduced Motion. No pills, no side stripes. */
+   13 px type, 34 px rows (42 with a description), 8 px row radius, 13 px plate radius. Its open and close are the menu
+   sprout's (PM6_SPROUT's class contract, base/style/pm7-sprout.css: the plate carries pm-sprout). No pills, no side
+   stripes. */
 
 .pmw-pop {
   position: fixed;
@@ -44395,22 +44264,7 @@ html[data-pmw-home="on"] #rsStage { top: calc(100% + 10px + var(--pmw-notice-dro
   overscroll-behavior: contain;
   scrollbar-width: thin;
 }
-.pmw-menu { display: flex; flex-direction: column; outline: none; transform-origin: var(--pmw-mox, 24px) var(--pmw-moy, 0%); }
-.pmw-menu[data-mstate="measure"] { opacity: 0; transition: none; }
-.pmw-menu[data-mstate="closed"] { opacity: 0; transform: translate3d(0, -10px, 0) scale3d(.72, .48, 1); transition: none; }
-.pmw-menu[data-side="above"][data-mstate="closed"] { transform: translate3d(0, 10px, 0) scale3d(.72, .48, 1); }
-.pmw-menu[data-mstate="open"] {
-  opacity: 1;
-  transform: none;
-  transition: opacity 160ms cubic-bezier(.2, .75, .25, 1), transform 300ms cubic-bezier(.22, 1.55, .36, 1);
-}
-.pmw-menu[data-mstate="leaving"] {
-  transform: translate3d(0, -6px, 0) scale(.94);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform 180ms cubic-bezier(.4, 0, .2, 1), opacity 54ms linear 126ms;
-}
-.pmw-menu[data-side="above"][data-mstate="leaving"] { transform: translate3d(0, 6px, 0) scale(.94); }
+.pmw-menu { display: flex; flex-direction: column; outline: none; }
 .pmw-mhead { display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 6px 8px 7px; margin: -2px 0 4px; border-bottom: 1px solid var(--pmw-pop-line); }
 .pmw-mhead strong { font-size: 13px; font-weight: 650; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pmw-mmeta { font-size: 12px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }
@@ -46979,9 +46833,7 @@ html[data-o55-nier="on"][data-o55-nier-parts~="ticks"] .pmw-panel::after {
     linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) calc(100% - 3px) calc(100% - 3px) / 1px 8px no-repeat;
   opacity: .55;
 }
-/* slice part: menus unfold from a line (the page's own keyframes) */
-html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmw-menu[data-mstate="closed"] { transform: none; scale: 1 .006; }
-html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmw-menu[data-mstate="open"] { transform: none; transition: none; animation: o55np-slice 300ms linear backwards; }
+/* slice part: menus unfold from a line and fold back: the plate is a .pm-sprout, which the Slice part covers (14-nier-parts.css) */
 /* ground part: the grid shows between panels */
 html[data-o55-nier="on"][data-o55-nier-parts~="ground"] #pm-home-centre { --pmw-gutter: transparent; }
 html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmw-mlead { background: transparent; color: var(--o55-nier-ink); }
@@ -49692,7 +49544,6 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-empty-btn:is(:hover, :f
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-empty-btn:is(:hover, :focus-visible) :is(.pmw-empty-chev) { color: inherit; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-empty-btn),
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-empty-cell) { border-radius: 0; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-menu[data-mstate] { transition: none; transform: none; }
 /* the landing preview: a dithered half-tone with a box-drawn outline */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-landing { border: 1px solid var(--accent-lime); border-radius: 0; background: repeating-conic-gradient(color-mix(in srgb, var(--accent-lime) 22%, transparent) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-landing-label { border-radius: 0; background: var(--accent-lime); color: var(--surface); font-family: var(--pm-font-code); }
@@ -53032,11 +52883,11 @@ div.pm56-host[data-theme^="glass"]::before{ content:"";position:fixed;inset:-25%
 .pm56-host .status-bar .right{text-align:right}
 .pm56-host .status-bar span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pm56-host .overlay-menu, .pm56-host .hover-card, .pm56-host .drawer, .pm56-host .dialog, .pm56-host .history-flyout{ pointer-events:auto;position:fixed; }
-.pm56-host .overlay-menu{ min-width:190px;max-width:min(420px,calc(100vw - 16px));max-height:calc(100vh - 16px);overflow:auto;padding:6px;border:1px solid var(--border-strong);border-radius:13px;background:var(--glass);backdrop-filter:blur(20px) saturate(1.2);box-shadow:var(--shadow-float);transform-origin:var(--origin-x,50%) var(--origin-y,100%);animation:menu-pop var(--spring) both;scrollbar-gutter:stable; }
+.pm56-host .overlay-menu{ min-width:190px;max-width:min(420px,calc(100vw - 16px));max-height:calc(100vh - 16px);overflow:auto;padding:6px;border:1px solid var(--border-strong);border-radius:13px;background:var(--glass);backdrop-filter:blur(20px) saturate(1.2);box-shadow:var(--shadow-float);scrollbar-gutter:stable; }
 .pm56-host .overlay-menu.compact{ min-width:230px; }
 .pm56-host .overlay-menu.wide{width:min(390px,calc(100vw - 16px))}
-.pm56-host .overlay-menu.model-menu{width:min(360px,calc(100vw - 16px));max-width:min(360px,calc(100vw - 16px));overflow:hidden;padding:0;transition:height var(--spring),width var(--spring)}
-.pm56-host .overlay-menu.sidecar{min-width:205px;animation:sidecar-pop var(--spring) both}
+.pm56-host .overlay-menu.model-menu{width:min(360px,calc(100vw - 16px));max-width:min(360px,calc(100vw - 16px));overflow:hidden;padding:0}
+.pm56-host .overlay-menu.sidecar{min-width:205px}
 .pm56-host .overlay-menu[data-side="left"]{--side-dir:1}
 .pm56-host .overlay-menu[data-side="right"]{--side-dir:-1}
 .pm56-host .menu-head{ display:flex;align-items:center;gap:7px;padding:7px 8px;border-bottom:1px solid var(--border); }
@@ -53464,9 +53315,7 @@ div.pm56-host, .pm56-host button, .pm56-host input, .pm56-host textarea, .pm56-h
   
   min-height: 0;
   max-height: min(560px, calc(100vh - 24px));
-  transition: width 360ms cubic-bezier(.16,1.16,.3,1),
-              height 380ms cubic-bezier(.16,1.16,.3,1),
-              max-height 380ms cubic-bezier(.16,1.16,.3,1);
+  
 }
 .pm56-host .transcript, .pm56-host .history-scroll, .pm56-host .editor-body, .pm56-host .editor-tabs, .pm56-host .activity-scroll, .pm56-host .drawer-scroll, .pm56-host .dialog-body, .pm56-host .model-scroll, .pm56-host .code-block, .pm56-host .pm56-activity-bar{
   overscroll-behavior: contain;
@@ -56598,105 +56447,13 @@ body[data-ph-drawer][data-ph-resizing] div.pm56-host .history-flyout, body[data-
 /* ---- 5.6 Pro/menus.css (scoped) ---- */
 .pm56-host .overlay-menu, .pm56-host .overlay-menu.sidecar, .pm56-host .overlay-menu.model-menu{
   z-index: 1200;                         
-  animation: none;                       
-  --pm56-sx: .72;                        
-  --pm56-sy: .48;                        
-  --pm56-tx: 0px;
-  --pm56-ty: 10px;
-  transform-origin: var(--origin-x, 50%) var(--origin-y, 100%);
-  transition: opacity 160ms var(--ease),
-              transform 300ms cubic-bezier(.22, 1.55, .36, 1);
-}
-.pm56-host .overlay-menu.model-menu{
-  transition: opacity 160ms var(--ease),
-              transform 300ms cubic-bezier(.22, 1.55, .36, 1),
-              height 340ms cubic-bezier(.22, 1.72, .36, 1),
-              width 340ms cubic-bezier(.22, 1.72, .36, 1);
 }
 .pm56-host .overlay-menu.sidecar{
-  --pm56-sx: .48; --pm56-sy: .72; --pm56-ty: 0px;
   width: 228px; min-width: 228px; max-width: 228px;
   box-sizing: border-box;
-  transform-origin: var(--origin-x, 100%) var(--origin-y, 28%);
-  transition: opacity 140ms var(--ease),
-              transform 300ms cubic-bezier(.22, 1.55, .36, 1),
-              height 360ms cubic-bezier(.22, 1.78, .36, 1);
 }
-.pm56-host .overlay-menu.sidecar[data-side="right"]{ --pm56-tx: -10px; }
 .pm56-host .overlay-menu.sidecar .menu-item .menu-copy span{
   white-space: normal;
-}
-#pmOverlayRoot.pm56-host[data-pm56-sprout="b"] .overlay-menu[data-overlay="root-menu"]{ --pm56-ty: 10px; }
-#pmOverlayRoot.pm56-host[data-pm56-sprout="t"] .overlay-menu[data-overlay="root-menu"]{ --pm56-ty: -10px; }
-#pmOverlayRoot.pm56-host.pm56-r-nomo .overlay-menu[data-overlay="root-menu"], #pmOverlayRoot.pm56-host.pm56-s-nomo .overlay-menu[data-overlay="sidecar"]{
-  transition: none !important;
-  animation: none !important;
-}
-#pmOverlayRoot.pm56-host.pm56-r-hidden .overlay-menu[data-overlay="root-menu"], #pmOverlayRoot.pm56-host.pm56-s-hidden .overlay-menu[data-overlay="sidecar"]{
-  opacity: 0;
-  transform: none;
-}
-#pmOverlayRoot.pm56-host.pm56-r-pin .overlay-menu[data-overlay="root-menu"], #pmOverlayRoot.pm56-host.pm56-s-pin .overlay-menu[data-overlay="sidecar"]{
-  visibility: hidden;
-}
-#pmOverlayRoot.pm56-host.pm56-r-hold .overlay-menu[data-overlay="root-menu"]{
-  left: var(--pm56-rhold-left) !important;
-  top: var(--pm56-rhold-top) !important;
-  transform-origin: var(--pm56-rhold-ox) var(--pm56-rhold-oy) !important;
-}
-#pmOverlayRoot.pm56-host.pm56-s-hold .overlay-menu[data-overlay="sidecar"]{
-  left: var(--pm56-shold-left) !important;
-  top: var(--pm56-shold-top) !important;
-  transform-origin: var(--pm56-shold-ox) var(--pm56-shold-oy) !important;
-}
-#pmOverlayRoot.pm56-host.pm56-r-flat .overlay-menu[data-overlay="root-menu"], #pmOverlayRoot.pm56-host.pm56-s-flat .overlay-menu[data-overlay="sidecar"]{
-  transition: height 340ms cubic-bezier(.22, 1.72, .36, 1),
-              width 340ms cubic-bezier(.22, 1.72, .36, 1) !important;
-  transform: none !important;
-  opacity: 1 !important;
-}
-#pmOverlayRoot.pm56-host.pm56-r-closed .overlay-menu[data-overlay="root-menu"], #pmOverlayRoot.pm56-host.pm56-s-closed .overlay-menu[data-overlay="sidecar"]{
-  opacity: 0;
-  transform: translate3d(var(--pm56-tx), var(--pm56-ty), 0)
-             scale3d(var(--pm56-sx), var(--pm56-sy), 1);
-}
-.pm56-host .overlay-menu.pm56-menu-ghost{
-  position: fixed;
-  margin: 0;
-  pointer-events: none !important;
-  
-  z-index: var(--z-menu);
-  opacity: 1;
-  transform: none;
-  animation: none !important;
-  transition: opacity 45ms ease-in 175ms,
-              transform 220ms cubic-bezier(.45, .05, .55, .2);
-}
-.pm56-host .overlay-menu.pm56-menu-ghost.pm56-collapsing{
-  opacity: 0;
-  transform: translate3d(var(--pm56-tx), var(--pm56-ty), 0)
-             scale3d(var(--pm56-sx), var(--pm56-sy), 1);
-}
-@keyframes pm56-menu-size-bounce{
-  0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-  40%  { transform: translate3d(0, 0, 0) scale3d(1.012, 1.055, 1); }
-  100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-}
-@keyframes pm56-effort-size-bounce{
-  0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-  35%  { transform: translate3d(0, 0, 0) scale3d(1.045, 1.16, 1); }
-  70%  { transform: translate3d(0, 0, 0) scale3d(0.985, 0.93, 1); }
-  100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
-}
-#pmOverlayRoot.pm56-host.pm56-r-bounce .overlay-menu[data-overlay="root-menu"]{
-  animation: pm56-menu-size-bounce 380ms cubic-bezier(.22, 1.55, .36, 1);
-}
-#pmOverlayRoot.pm56-host.pm56-s-bounce .overlay-menu[data-overlay="sidecar"]{
-  animation: pm56-effort-size-bounce 420ms cubic-bezier(.22, 1.65, .36, 1);
-}
-#pmOverlayRoot.pm56-host.pm56-anchor-bottom .overlay-menu[data-overlay="root-menu"]{
-  top: auto !important;
-  bottom: var(--pm56-bottom, 8px);
 }
 .pm56-host .chat-header .worktree-button{ position: relative; flex: 0 0 auto; }
 .pm56-host .chat-header .worktree-button svg{ pointer-events: none; }
@@ -56727,16 +56484,6 @@ body[data-ph-drawer][data-ph-resizing] div.pm56-host .history-flyout, body[data-
 @media (max-width: 1100px){.pm56-host:where(#pmOverlayRoot, #pm56Fx) .chat-header{ gap: 3px; padding: 0 5px; }}
 @container pm56col (max-width: 301px){.pm56-host .chat-header{ gap: 3px; padding: 0 5px; }}
 @container pm56tab (max-width: 594px){.pm56-host .chat-header{ gap: 3px; padding: 0 5px; }}
-@media (prefers-reduced-motion: reduce){.pm56-host .overlay-menu, .pm56-host .overlay-menu.sidecar, .pm56-host .overlay-menu.model-menu{
-    transition: none !important;
-    animation: none !important;
-  }
-#pmOverlayRoot.pm56-host.pm56-r-closed .overlay-menu[data-overlay="root-menu"], #pmOverlayRoot.pm56-host.pm56-s-closed .overlay-menu[data-overlay="sidecar"], #pmOverlayRoot.pm56-host.pm56-r-hidden .overlay-menu[data-overlay="root-menu"], #pmOverlayRoot.pm56-host.pm56-s-hidden .overlay-menu[data-overlay="sidecar"]{
-    opacity: 1;
-    transform: none;
-  }
-#pmOverlayRoot.pm56-host.pm56-r-bounce .overlay-menu[data-overlay="root-menu"], #pmOverlayRoot.pm56-host.pm56-s-bounce .overlay-menu[data-overlay="sidecar"]{ animation: none !important; }
-.pm56-host .overlay-menu.pm56-menu-ghost{ display: none !important; }}
 /* ---- 5.6 Pro/transcript.css (scoped) ---- */
 .pm56-host .message-user{
   flex-direction: column;
@@ -67645,18 +67392,17 @@ html[data-o55-nier-parts~="diamonds"] div.pm56-host.pm56-reduced .ctx-spin, html
 @media (max-width: 520px){.pm56-host:where(#pmOverlayRoot, #pm56Fx) #o55np-reboot .o55np-log{ letter-spacing: .12em; }}
 @container pm56col (max-width: 34.2px){.pm56-host #o55np-reboot .o55np-log{ letter-spacing: .12em; }}
 @container pm56tab (max-width: 280.8px){.pm56-host #o55np-reboot .o55np-log{ letter-spacing: .12em; }}
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .overlay-menu, html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .dialog, html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .drawer, html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .pmx-sheet{
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .dialog, html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .drawer, html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .pmx-sheet{
   animation: o55np-slice 300ms linear backwards !important; transform-origin: 50% 50% !important;
 }
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .dialog:not(.demo-dialog):not(.pmx-sheet){ transform-origin: 0 0 !important; }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) div.pm56-host .overlay-menu{
-  --pm56-sx: 1 !important; --pm56-sy: 1 !important; --pm56-tx: 0px !important; --pm56-ty: 0px !important;
-  transition-property: height, width !important;
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) div.pm56-host .overlay-menu.pm-sprout{
+  --pm6-sprout-ox: 50% !important; --pm6-sprout-oy: 50% !important; --pm6-sprout-tx: 0px !important; --pm6-sprout-ty: 0px !important;
+  --pm6-sprout-sx: 1 !important; --pm6-sprout-sy: 1 !important;
+  scale: 1 .006;
+  transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms, visibility 0s linear 200ms !important;
 }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) div.pm56-host .overlay-menu.pm56-menu-ghost{
-  transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms !important; transform-origin: 50% 50% !important;
-}
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) div.pm56-host .overlay-menu.pm56-menu-ghost.pm56-collapsing{ transform: none !important; scale: 1 .006; opacity: 0; }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) div.pm56-host .overlay-menu.pm-sprout.is-open:not(.is-closing){ scale: none; transition: none !important; animation: o55np-slice 300ms linear backwards; }
 .pm56-host #o55np-wipe{ position: fixed; z-index: 900; pointer-events: none; overflow: hidden; contain: strict; display: none; }
 .pm56-host #o55np-wipe > i{ position: absolute; inset: 0; display: block; will-change: transform;
   background:
@@ -67732,8 +67478,8 @@ html:not([data-motion="reduced"]) body:not(.pm56-reduced) div.pm56-host #o55np-p
 html[data-o55-nier-parts~="icons"] .pm56-host svg path, html[data-o55-nier-parts~="icons"] .pm56-host svg line, html[data-o55-nier-parts~="icons"] .pm56-host svg polyline, html[data-o55-nier-parts~="icons"] .pm56-host svg polygon, html[data-o55-nier-parts~="icons"] .pm56-host svg rect, html[data-o55-nier-parts~="icons"] .pm56-host svg circle, html[data-o55-nier-parts~="icons"] .pm56-host svg ellipse{ stroke-linecap: square; stroke-linejoin: miter; }
 @media (prefers-reduced-motion: reduce){.pm56-host #o55np-cursor, .pm56-host #o55np-cursor > i, .pm56-host #o55np-reticle, .pm56-host #o55np-reticle > i, .pm56-host #o55np-ground > .o55np-mote, .pm56-host #o55np-pod, .pm56-host #o55np-pod *, .pm56-host #o55np-wipe > i{ animation: none !important; transition: none !important; }
 html[data-o55-nier-parts~="diamonds"] .pm56-host .ctx-spin, html[data-o55-nier-parts~="diamonds"] .pm56-host .qs-orbit{ animation: none !important; }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .overlay-menu, html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .dialog, html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .drawer, html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .pmx-sheet{ animation: none !important; scale: none !important; }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) div.pm56-host .overlay-menu.pm56-menu-ghost{ transition: none !important; }}
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .dialog, html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .drawer, html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .pmx-sheet{ animation: none !important; scale: none !important; }
+html[data-o55-nier-parts~="slice"] body:not(.pm56-reduced) div.pm56-host .overlay-menu.pm-sprout{ scale: none !important; }}
 html[data-o55-nier="on"] .pm56-host .pmx-mark, html[data-o55-nier="on"] .pm56-host .pmx-p-mark{ --pn-o: 1px; --pn-l: 1.25px; --pn-s: .75px; --pn-j: .8px; }
 html[data-o55-nier="on"] .pm56-host .pmx-mark[data-size="22"], html[data-o55-nier="on"] .pm56-host .pmx-mark[data-size="24"]{ --pn-l: 1.3px; }
 html[data-o55-nier="on"] .pm56-host .pmx-mark[data-size="28"]{ --pn-o: 1.1px; --pn-l: 1.4px; --pn-s: .8px; --pn-j: .8px; }
@@ -68137,7 +67883,7 @@ html[data-o55-nier-parts~="intel"] #pmOverlayRoot.pm56-host > .hover-card{ anima
 /* .message { position: relative } (PMConcept7's own chat) moved the containing block of the chat's message parts */
 :where(.pm56-host) .message { position: revert; }
 /* ---- generated (chat56_layer.leaked_custom_properties): the chat's fallbacks, not PMConcept7's values ---- */
-:where(.pm56-host) { --accent: initial; --accent-2: initial; --accent-lime: initial; --accent-magenta: initial; --accent-orange: initial; --accent-primary: initial; --ad: initial; --background: initial; --border: initial; --d: initial; --danger: initial; --dl: initial; --font-mono: initial; --muted: initial; --nw: initial; --nx-1: initial; --nx-bk: initial; --nx-bk-c: initial; --nx-bl-a: initial; --nx-bl-attention: initial; --nx-bl-blocked: initial; --nx-bl-changed: initial; --nx-bl-ink: initial; --nx-bl-working: initial; --nx-d1: initial; --nx-ease: initial; --nx-ease-c: initial; --nx-fl: initial; --nx-h-attention-i: initial; --nx-h-blocked-i: initial; --nx-h-bolt-i: initial; --nx-h-changed-i: initial; --nx-h-concept-i: initial; --nx-h-hover-i: initial; --nx-h-quiet-i: initial; --nx-h-spark-i: initial; --nx-h-swell-i: initial; --nx-h-working-i: initial; --nx-hi-a: initial; --nx-hi-w: initial; --nx-hiv: initial; --nx-idle: initial; --nx-idle-a: initial; --nx-ink: initial; --nx-le: initial; --nx-paused-a: initial; --nx-stroke-base: initial; --nx-tone-k: initial; --nx-wand-blue: initial; --nx-wand-gold: initial; --nx-wand-green: initial; --nx-wand-pink: initial; --nx-wand-silver: initial; --nxb-bl: initial; --nxb-blh: initial; --nxb-rest: initial; --o55-nier-active: initial; --o55-nier-code-bg: initial; --o55-nier-code-fg: initial; --o55-nier-error: initial; --o55-nier-error-surface: initial; --o55-nier-error-text: initial; --o55-nier-hover: initial; --o55-nier-ink: initial; --o55-nier-ink-rgb: initial; --o55-nier-line-strong: initial; --o55-nier-ok: initial; --o55-nier-ok-surface: initial; --o55-nier-ok-text: initial; --o55-nier-on-ink: initial; --o55-nier-overlay: initial; --o55-nier-paper: initial; --o55-nier-paper-rgb: initial; --o55-nier-raised: initial; --o55-nier-secondary: initial; --o55-nier-selected: initial; --o55-nier-shadow-rgb: initial; --o55-nier-warn: initial; --o55-nier-warn-surface: initial; --o55-nier-warn-text: initial; --o55nw-art: initial; --o55nw-cross: initial; --o55nw-dots: initial; --o55nw-hatch: initial; --o55nw-rules: initial; --o55nw-solid: initial; --o55nw-ticks: initial; --o55nw-ticks-pos: initial; --o55nw-ticks-size: initial; --pip-accent: initial; --pip-back: initial; --pip-bg: initial; --pip-cheek: initial; --pip-ctl: initial; --pip-drop: initial; --pip-edge: initial; --pip-eye: initial; --pip-frost: initial; --pip-head: initial; --pip-head0: initial; --pip-head1: initial; --pip-ink: initial; --pip-paper: initial; --pip-pin: initial; --pip-red: initial; --pip-rimbot: initial; --pip-rimtop: initial; --pip-rod: initial; --pip-rodback: initial; --pip-str: initial; --pip-tint0: initial; --pip-tint1: initial; --pip-tint2: initial; --pml-size: initial; --pmx-mark-size: initial; --positive: initial; --radius-md: initial; --radius-sm: initial; --rb-ground: initial; --rb-text: initial; --subtle: initial; --success: initial; --surface: initial; --surface-elevated: initial; --text: initial; --text-muted: initial; --text-primary: initial; --warning: initial; }
+:where(.pm56-host) { --accent: initial; --accent-2: initial; --accent-lime: initial; --accent-magenta: initial; --accent-orange: initial; --accent-primary: initial; --ad: initial; --background: initial; --border: initial; --d: initial; --danger: initial; --dl: initial; --font-mono: initial; --muted: initial; --nw: initial; --nx-1: initial; --nx-bk: initial; --nx-bk-c: initial; --nx-bl-a: initial; --nx-bl-attention: initial; --nx-bl-blocked: initial; --nx-bl-changed: initial; --nx-bl-ink: initial; --nx-bl-working: initial; --nx-d1: initial; --nx-ease: initial; --nx-ease-c: initial; --nx-fl: initial; --nx-h-attention-i: initial; --nx-h-blocked-i: initial; --nx-h-bolt-i: initial; --nx-h-changed-i: initial; --nx-h-concept-i: initial; --nx-h-hover-i: initial; --nx-h-quiet-i: initial; --nx-h-spark-i: initial; --nx-h-swell-i: initial; --nx-h-working-i: initial; --nx-hi-a: initial; --nx-hi-w: initial; --nx-hiv: initial; --nx-idle: initial; --nx-idle-a: initial; --nx-ink: initial; --nx-le: initial; --nx-paused-a: initial; --nx-stroke-base: initial; --nx-tone-k: initial; --nx-wand-blue: initial; --nx-wand-gold: initial; --nx-wand-green: initial; --nx-wand-pink: initial; --nx-wand-silver: initial; --nxb-bl: initial; --nxb-blh: initial; --nxb-rest: initial; --o55-nier-active: initial; --o55-nier-code-bg: initial; --o55-nier-code-fg: initial; --o55-nier-error: initial; --o55-nier-error-surface: initial; --o55-nier-error-text: initial; --o55-nier-hover: initial; --o55-nier-ink: initial; --o55-nier-ink-rgb: initial; --o55-nier-line-strong: initial; --o55-nier-ok: initial; --o55-nier-ok-surface: initial; --o55-nier-ok-text: initial; --o55-nier-on-ink: initial; --o55-nier-overlay: initial; --o55-nier-paper: initial; --o55-nier-paper-rgb: initial; --o55-nier-raised: initial; --o55-nier-secondary: initial; --o55-nier-selected: initial; --o55-nier-shadow-rgb: initial; --o55-nier-warn: initial; --o55-nier-warn-surface: initial; --o55-nier-warn-text: initial; --o55nw-art: initial; --o55nw-cross: initial; --o55nw-dots: initial; --o55nw-hatch: initial; --o55nw-rules: initial; --o55nw-solid: initial; --o55nw-ticks: initial; --o55nw-ticks-pos: initial; --o55nw-ticks-size: initial; --pip-accent: initial; --pip-back: initial; --pip-bg: initial; --pip-cheek: initial; --pip-ctl: initial; --pip-drop: initial; --pip-edge: initial; --pip-eye: initial; --pip-frost: initial; --pip-head: initial; --pip-head0: initial; --pip-head1: initial; --pip-ink: initial; --pip-paper: initial; --pip-pin: initial; --pip-red: initial; --pip-rimbot: initial; --pip-rimtop: initial; --pip-rod: initial; --pip-rodback: initial; --pip-str: initial; --pip-tint0: initial; --pip-tint1: initial; --pip-tint2: initial; --pm6-sprout-ox: initial; --pm6-sprout-oy: initial; --pm6-sprout-sx: initial; --pm6-sprout-sy: initial; --pm6-sprout-tx: initial; --pm6-sprout-ty: initial; --pml-size: initial; --pmx-mark-size: initial; --positive: initial; --radius-md: initial; --radius-sm: initial; --rb-ground: initial; --rb-text: initial; --subtle: initial; --success: initial; --surface: initial; --surface-elevated: initial; --text: initial; --text-muted: initial; --text-primary: initial; --warning: initial; }
 /* ---- pm7-port/css/10-tokens-host.css ---- */
 /* pm7-port/css/10-tokens-host.css (looks lane): the chat's tokens are PMConcept7's (D27: the chat's Basic, Friendly
    and Glass colours are fixed to match PMConcept7; Retro already matched). Written already scoped, not passed through
@@ -71465,7 +71211,7 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
             <span class="rs-badge" id="rsBadge" aria-hidden="true">0</span>
           </div>
           <div class="rs-stage" id="rsStage"></div>
-          <div class="rs-panel" id="rsPanel" role="dialog" aria-label="Notification inbox">
+          <div class="rs-panel pm-sprout" id="rsPanel" role="dialog" aria-label="Notification inbox">
             <div class="rs-panel-chrome">
               <div class="rs-panel-head">
                 <span id="rsHeadLabel">Inbox</span>
@@ -71482,7 +71228,7 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
           aria-label="Search" aria-haspopup="dialog" aria-expanded="false" aria-controls="tbSearchPop" hidden>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </button>
-        <div class="pm6-tb-search-pop" id="tbSearchPop" role="dialog" aria-label="Search">
+        <div class="pm6-tb-search-pop pm-sprout" id="tbSearchPop" role="dialog" aria-label="Search">
           <input type="text" class="pm6-tb-search-pop-input" id="tbSearchPopInput" placeholder="Search files, commands, settings...">
         </div>
       </div>
@@ -75564,8 +75310,8 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-livepulse { bord
 /* The shared dropdown menu (owner: engine; DECISIONS.md "Dropdown menus"): the Chat Assistant 5.6 Pro menu look and
    motion (menus.css, styles.css .overlay-menu / .menu-*), on Usage tokens. Floors: no text under 11 px; row titles 13 px,
    descriptions 12 px, section labels 11 px mono caps (5.6 Pro draws 11 / 10 / 9 px; Usage keeps its 11 px floor). No
-   backdrop blur (Usage perf rule): the panel is the plate colour, near-opaque. Motion: corner-origin spring sprout by
-   TRANSITION (never @keyframes, so the box is measured untransformed), asymmetric close, height spring. */
+   backdrop blur (Usage perf rule): the panel is the plate colour, near-opaque. Motion: the menu sprout (PM6_SPROUT's
+   class contract, base/style/pm7-sprout.css: the panel carries pm-sprout). */
 :is(#panel-usage,[data-pmu-host]) .pmu-shell {
   --pmu-menu-bg: var(--pmu-card);
   --pmu-menu-border: var(--pmu-rule-strong);
@@ -75574,7 +75320,6 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-livepulse { bord
   --pmu-menu-iconbg: color-mix(in srgb, var(--pmu-ink) 8%, transparent);
   --pmu-menu-shadow: 0 18px 65px rgba(0,0,0,.42), 0 4px 18px rgba(0,0,0,.26);
   --pmu-r-menu: 13px; --pmu-r-mitem: 8px;
-  --pmu-m-ease: cubic-bezier(.2,.75,.25,1);
 }
 html[data-theme$="-light"] :is(#panel-usage,[data-pmu-host]) .pmu-shell { --pmu-menu-shadow: 0 18px 50px rgba(21,32,43,.16), 0 4px 14px rgba(21,32,43,.08); --pmu-menu-hot: color-mix(in srgb, var(--pmu-ink) 6%, transparent); }
 html[data-theme^="friendly"] :is(#panel-usage,[data-pmu-host]) .pmu-shell { --pmu-r-menu: 16px; --pmu-r-mitem: 10px; }
@@ -75585,33 +75330,12 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-shell { --pmu-r
 :is(#panel-usage,[data-pmu-host]) .pmu-menu { position: absolute; z-index: 70; box-sizing: border-box; display: flex; flex-direction: column; min-width: 220px;
   max-width: min(420px, calc(100% - 16px)); padding: 6px; border: 1px solid var(--pmu-menu-border); border-radius: var(--pmu-r-menu);
   background: var(--pmu-menu-bg); box-shadow: var(--pmu-menu-shadow); color: var(--pmu-ink); font-family: var(--pmu-font); font-size: 13px;
-  line-height: 1.35; text-align: left; overflow: hidden; overscroll-behavior: contain; contain: layout;
-  transform-origin: var(--pmu-mox, 50%) var(--pmu-moy, 0px);
-  --pmu-m-sx: .72; --pmu-m-sy: .48; --pmu-m-ty: 10px;
-  transition: opacity calc(160ms * var(--pmu-msp, 1)) var(--pmu-m-ease), transform calc(300ms * var(--pmu-msp, 1)) cubic-bezier(.22, 1.55, .36, 1); }
+  line-height: 1.35; text-align: left; overflow: hidden; overscroll-behavior: contain; contain: layout; }
 :is(#panel-usage,[data-pmu-host]) .pmu-menu.has-rail { padding: 0; }
 /* the app's Glass rule for [role="menu"] gives the panel a 30 px backdrop blur and a half-transparent fill (!important);
    without a GPU every frame of the sprout then re-blurred the board behind it in software (40 ms draws, 25 fps, PERF-3):
    the panel keeps its own near-opaque fill there */
 html[data-pmu-soft] :is(#panel-usage,[data-pmu-host]) .pmu-menu { background: var(--pmu-menu-bg) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-/* closed nudge: toward the trigger (a menu below its trigger starts 10 px up, one above starts 10 px down) */
-:is(#panel-usage,[data-pmu-host]) .pmu-menu[data-side="below"] { --pmu-m-ty: -10px; }
-/* measured invisible by opacity, never by visibility: the app's reduced-motion rule gives every element a 0.01 ms
-   transition, so a list that inherited "hidden" here was still hidden in the frame the first row took focus, focus stayed
-   on the trigger and Escape closed nothing (FINAL-REVIEW-3 must-fix 6) */
-:is(#panel-usage,[data-pmu-host]) .pmu-menu[data-mstate="measure"] { opacity: 0; pointer-events: none; transform: none; transition: none; }
-:is(#panel-usage,[data-pmu-host]) .pmu-menu[data-mnomo] { transition: none !important; animation: none !important; }
-:is(#panel-usage,[data-pmu-host]) .pmu-menu[data-mstate="closed"] { opacity: 0; transform: translate3d(0, var(--pmu-m-ty), 0) scale3d(var(--pmu-m-sx), var(--pmu-m-sy), 1); }
-:is(#panel-usage,[data-pmu-host]) .pmu-menu[data-mstate="open"] { opacity: 1; transform: none; }
-/* the 5.6 Pro asymmetric close (WOW-SPEC 3.14, E-6): 180 ms, a UNIFORM end transform (6 px toward the trigger, scale .94),
-   fully opaque until 70 %, then faded over the last 54 ms: never a squashed opaque frame */
-:is(#panel-usage,[data-pmu-host]) .pmu-menu[data-mstate="leaving"] { pointer-events: none; opacity: 0; transform: translate3d(0, var(--pmu-m-cy, -6px), 0) scale(.94);
-  transition: opacity calc(54ms * var(--pmu-msp, 1)) linear calc(126ms * var(--pmu-msp, 1)), transform calc(180ms * var(--pmu-msp, 1)) cubic-bezier(.4, 0, .2, 1); }
-:is(#panel-usage,[data-pmu-host]) .pmu-menu[data-side="above"] { --pmu-m-cy: 6px; }
-/* height spring when the contents change (search, rail, drill-in): 340 ms with overshoot (5.6 Pro model picker) */
-:is(#panel-usage,[data-pmu-host]) .pmu-menu.pmu-m-spring { transition: opacity calc(160ms * var(--pmu-msp, 1)) var(--pmu-m-ease), transform calc(300ms * var(--pmu-msp, 1)) cubic-bezier(.22, 1.55, .36, 1),
-  height calc(340ms * var(--pmu-msp, 1)) cubic-bezier(.22, 1.72, .36, 1); }
-
 /* ---- head, search, sections, rows ---- */
 :is(#panel-usage,[data-pmu-host]) .pmu-mhead { display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 6px 8px 7px; margin-bottom: 4px; flex: none;
   border-bottom: 1px solid var(--pmu-rule); }
@@ -75678,13 +75402,8 @@ html[data-pmu-soft] :is(#panel-usage,[data-pmu-host]) .pmu-menu { background: va
 /* triggers: a menu button shows its open state while its menu is up */
 :is(#panel-usage,[data-pmu-host]) .pmu-menu-anchor-open:not(.pmu-mitem) { color: var(--pmu-ink); background: var(--pmu-menu-hot); }
 
-@media (prefers-reduced-motion: reduce) {
-  :is(#panel-usage,[data-pmu-host]) .pmu-menu, :is(#panel-usage,[data-pmu-host]) .pmu-menu.pmu-m-spring { transition: none !important; animation: none !important; }
-}
-html[data-motion="reduced"] :is(#panel-usage,[data-pmu-host]) .pmu-menu { transition: none !important; animation: none !important; }
-
 /* a menu opened from a hosted board lives in the shared layer, which takes no pointer (D10 6.4) */
-:is(#panel-usage,[data-pmu-host]) .pmu-shell.pmu-layer > .pmu-menu { pointer-events: auto; }
+:is(#panel-usage,[data-pmu-host]) .pmu-shell.pmu-layer > .pmu-menu.is-open { pointer-events: auto; }
 
 /* ---- css/20-board.css ---- */
 /* Board and card chrome (owner: engine; DESIGN-SPEC sections 2, 3, 6 and 8; DESIGN-SPEC-ATLAS sections 3 and 8).
@@ -78527,14 +78246,7 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-mitem.active :wh
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-mitem.active :where(.pmu-micon):not(.t7:not(*)):not(t7:not(*)) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-micon { color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .5); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-mcheck { color: var(--o55-nier-ink); }
-/* slice: the menu unfolds from a 1 px line with one flicker step and folds back (14-nier-parts.css o55np-slice) */
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(#panel-usage,[data-pmu-host]) .pmu-menu { transition: none; transform-origin: 50% 50%; }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(#panel-usage,[data-pmu-host]) .pmu-menu[data-mstate="closed"] { opacity: 0; transform: none; }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(#panel-usage,[data-pmu-host]) .pmu-menu[data-mstate="open"] { transform: none; animation: o55np-slice calc(300ms * var(--pmu-speed, 1)) linear backwards; }
-/* the slice close (WOW-SPEC 3.14, 5): three steps in 120 ms down to a 2 px line, then the line fades over 60 ms */
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(#panel-usage,[data-pmu-host]) .pmu-menu[data-mstate="leaving"] { opacity: 0; transform: none; scale: 1 .01;
-  transition: scale calc(120ms * var(--pmu-msp, 1)) steps(3, jump-end), opacity calc(60ms * var(--pmu-msp, 1)) linear calc(120ms * var(--pmu-msp, 1)); }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(#panel-usage,[data-pmu-host]) .pmu-menu.pmu-m-spring { transition: height calc(340ms * var(--pmu-speed, 1)) steps(5, end); }
+/* slice: the menu is a .pm-sprout, so the Slice part's own rules unfold and fold it (14-nier-parts.css) */
 
 /* empty: the machine drawing above every empty state */
 html[data-o55-nier-parts~="empty"] :is(#panel-usage,[data-pmu-host]) .pmu-empty::before { content: ""; display: block; width: 44px; height: 44px; margin: 0 auto 8px;
@@ -94529,11 +94241,11 @@ var PMU_SERIES = {
      description line, a check on the active row, a rounded hover / active row highlight, small-caps section labels, an
      optional search field at the top and an optional icon rail on the left, hairline dividers; theme tokens per family
      (src/css/15-menu.css);
-   - motion: the corner-origin spring sprout (opacity 160 ms + transform 300 ms cubic-bezier(.22,1.55,.36,1) from the
-     non-uniform closed scale .72 x .48, origin at the trigger corner); the closed state is applied only AFTER the
-     untransformed box has been measured (the 5.6 Pro measuring trap: a transformed box measures 28 % / 52 % small); an
-     asymmetric close (transform 220 ms, the fade held to the last 45 ms); a height spring with a size bounce when the
-     contents change (search filter, rail, drill-in, toggles);
+   - motion: the menu sprout, PM6_SPROUT's (base/script/pm7-sprout.js, its classes in pm7-sprout.css; Jared L8 B
+     2026-10-30, one sprout owner for every menu): the panel carries pm-sprout, grows from the corner nearest its
+     trigger, closes back into it, and springs its height with a size bounce when the contents change (search filter,
+     rail, drill-in, toggles: PM6_SPROUT.resize). Placement measures layout sizes (offsetWidth / offsetHeight), which a
+     transform never changes;
    - keyboard: arrows, Home / End, Enter / Space, Escape (focus returns to the trigger), Tab closes, type-to-search
      (into the search field when there is one, type-ahead otherwise), Left / Right between the rail and the list.
    The panel is appended inside .pmu-shell (so it reads the --pmu-* tokens) and placed against the shell box; rows carry
@@ -94545,7 +94257,7 @@ var PMU_SERIES = {
    PMU.menu.toggle(anchor, spec); PMU.menu.close(); PMU.menu.isOpen(); PMU.menu.choice(anchor, opts). */
 (function () {
   var app = document.getElementById('pmuApp');
-  var GAP = 6, EDGE = 8, OPEN_MS = 300, CLOSE_MS = 200, SPRING_MS = 360;
+  var GAP = 6, EDGE = 8, OPEN_MS = 300;
   var current = null;          /* the open handle */
   var seq = 0;
 
@@ -94663,42 +94375,27 @@ var PMU_SERIES = {
     el.style.left = Math.round(left) + 'px';
     if (side === 'below') { el.style.top = Math.round(a.bottom - host.top + GAP) + 'px'; el.style.bottom = 'auto'; }
     else { el.style.top = 'auto'; el.style.bottom = Math.round(host.bottom - a.top + GAP) + 'px'; }
-    var ox = Math.max(18, Math.min(w - 18, a.left + a.width / 2 - host.left - left));
-    el.style.setProperty('--pmu-mox', Math.round(ox) + 'px');
-    el.style.setProperty('--pmu-moy', side === 'below' ? '0px' : '100%');
     el.setAttribute('data-side', side);
     h.side = side;
   }
 
-  /* ---- content changes: the height spring + the size bounce (5.6 Pro portalAnimateHeight + pm56-menu-size-bounce) ---- */
+  /* ---- content changes: the height spring + the size bounce (PM6_SPROUT.resize), once the sprout has landed ---- */
   function morph(h, mutate) {
     var el = h.el;
-    var h0 = el.offsetHeight;
     var focusIdx = document.activeElement && el.contains(document.activeElement) ? document.activeElement.getAttribute('data-mi') : null;
     var inSearch = document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('pmu-msearchin');
     var caret = inSearch ? document.activeElement.selectionStart : null;
     var scrollTop = h.listEl ? h.listEl.scrollTop : 0;
-    mutate();
-    wire(h);
-    if (inSearch) { var input = el.querySelector('.pmu-msearchin'); if (input) { input.focus(); try { input.setSelectionRange(caret, caret); } catch (e) {} } }
-    else if (focusIdx != null) { var again = el.querySelector('.pmu-mitem[data-mi="' + focusIdx + '"]'); if (again) again.focus({ preventScroll: true }); }
-    if (h.listEl && !h.resetScroll) h.listEl.scrollTop = scrollTop;
-    h.resetScroll = false;
-    if (reduced() || !h.settled) return;
-    el.style.height = 'auto';
-    var h1 = el.offsetHeight;
-    if (Math.abs(h1 - h0) < 1) { el.style.height = ''; return; }
-    el.classList.remove('pmu-m-spring');
-    el.style.height = h0 + 'px';
-    void el.offsetHeight;
-    el.classList.add('pmu-m-spring');
-    el.style.height = h1 + 'px';
-    clearTimeout(h.springT);
-    h.springT = setTimeout(function () { el.classList.remove('pmu-m-spring'); el.style.height = ''; }, SPRING_MS * speed() + 40);
-    if (el.animate) {
-      try { el.animate([{ transform: 'scale3d(1,1,1)' }, { transform: 'scale3d(1.012,1.055,1)', offset: 0.4 }, { transform: 'scale3d(1,1,1)' }],
-        { duration: 380 * speed(), easing: 'cubic-bezier(.22,1.55,.36,1)' }); } catch (e) {}
+    function apply() {
+      mutate();
+      wire(h);
+      if (inSearch) { var input = el.querySelector('.pmu-msearchin'); if (input) { input.focus(); try { input.setSelectionRange(caret, caret); } catch (e) {} } }
+      else if (focusIdx != null) { var again = el.querySelector('.pmu-mitem[data-mi="' + focusIdx + '"]'); if (again) again.focus({ preventScroll: true }); }
+      if (h.listEl && !h.resetScroll) h.listEl.scrollTop = scrollTop;
+      h.resetScroll = false;
     }
+    if (!h.settled) { apply(); return; }
+    window.PM6_SPROUT.resize(el, apply);
   }
 
   /* ---- events ---- */
@@ -94811,7 +94508,8 @@ var PMU_SERIES = {
     if (!host) return null;
     if (current) close(current, { focus: false, instant: false });
     var el = document.createElement('div');
-    el.className = 'pmu-pop pmu-menu' + (spec.className ? ' ' + spec.className : '') + (spec.rail && spec.rail.length ? ' has-rail' : '');
+    el.className = 'pmu-pop pmu-menu pm-sprout' + (spec.className ? ' ' + spec.className : '') + (spec.rail && spec.rail.length ? ' has-rail' : '');
+    el.setAttribute('data-portal-display', 'flex');
     el.setAttribute('role', 'menu');
     el.setAttribute('data-pm-hover-exempt', 'menu');
     el.setAttribute('data-mid', spec.id || ('m' + (++seq)));
@@ -94821,22 +94519,14 @@ var PMU_SERIES = {
     h.update = function (next) { h.spec = next || h.spec; refresh(h); };
     h.refresh = function () { refresh(h); };
     el.innerHTML = bodyHtml(h);
-    /* 1. measure untransformed and invisible */
-    el.setAttribute('data-mstate', 'measure');
-    el.setAttribute('data-mnomo', '');
-    el.style.setProperty('--pmu-msp', String(speed()));
+    /* placed while closed (the sprout's closed state is invisible and its sizes are layout sizes), then sprouted from
+       the corner nearest the trigger */
     host.appendChild(el);
     wire(h);
     place(h);
-    /* 2. arm the closed sprout (no transition), force it, re-enable transitions, force again, release to open */
-    if (reduced()) { el.removeAttribute('data-mnomo'); el.setAttribute('data-mstate', 'open'); h.settled = true; }
+    window.PM6_SPROUT.open(el, null, anchor && anchor.isConnected ? anchor : h.lastAnchor);
+    if (reduced()) h.settled = true;
     else {
-      el.setAttribute('data-mstate', 'closed');
-      void el.offsetWidth;
-      el.removeAttribute('data-mnomo');
-      void el.offsetWidth;
-      el.setAttribute('data-mstate', 'open');
-      el.classList.add('open');
       h.settleT = setTimeout(function () { h.settled = true; }, OPEN_MS * speed() + 40);
       materialize(h);
     }
@@ -94887,17 +94577,13 @@ var PMU_SERIES = {
     if (!h || !h.open) return;
     h.open = false;
     if (current === h) current = null;
-    clearTimeout(h.settleT); clearTimeout(h.springT);
+    clearTimeout(h.settleT);
     var el = h.el, anchor = h.anchor;
     if (anchor && anchor.setAttribute) { anchor.setAttribute('aria-expanded', 'false'); anchor.classList.remove('pmu-menu-anchor-open'); }
     el.classList.remove('open');
     el.setAttribute('aria-hidden', 'true');
     if (reduced() || opts.instant) { el.remove(); }
-    else {
-      /* asymmetric close: the box collapses toward the trigger corner, opaque through most of it */
-      el.setAttribute('data-mstate', 'leaving');
-      setTimeout(function () { el.remove(); }, CLOSE_MS * speed() + 20);
-    }
+    else window.PM6_SPROUT.close(el, function () { el.remove(); });
     if (opts.focus && anchor && anchor.isConnected && typeof anchor.focus === 'function') { try { anchor.focus({ preventScroll: true }); } catch (e) {} }
     if (h.spec.onClose) { try { inBoard(h, function () { h.spec.onClose(h); }); } catch (error) { console.error('[pm-usage] menu close', error); } }
   }
@@ -117229,34 +116915,15 @@ PM51.listDetail = ({ id, rosterId, rosterTitle, count, add, filter, items, detai
 /* ---------- popout engine: dropdown lists, menus, pickers ------------------- */
 /* Popouts live in document.body (position:fixed) so #pm-settings-portals' overflow:hidden and the
    root's contain never clip them. Nothing in body gets the engine's event routing (ownsEvent), so
-   the engine owns its listeners here; the motion contract is the chat assistant's "sprout"
-   (six --pm6-sprout-* vars, is-open / is-closing), driven by window.PM6_SPROUT when that script has
-   loaded and by an identical local class choreography otherwise. */
+   the engine owns its listeners here; the motion is PM6_SPROUT's, the one menu sprout (base/script/pm7-sprout.js,
+   its classes in pm7-sprout.css: six --pm6-sprout-* vars, is-open / is-closing). */
 let pmActive = null, popSeq = 0;
 const POP_ID = () => 'pm51-pop-' + (++popSeq);
-const pmSprout = () => (window.PM6_SPROUT && typeof window.PM6_SPROUT.open === 'function' && typeof window.PM6_SPROUT.close === 'function') ? window.PM6_SPROUT : null;
-function setSproutLocal(el, anchor) {
-  const r = el.getBoundingClientRect(), ar = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : null;
-  const ax = ar ? ar.left + ar.width / 2 : r.left + r.width / 2, ay = ar ? ar.top + ar.height / 2 : r.top;
-  const ox = ax < r.left + r.width / 2 ? 12 : 88, above = ay > r.top + r.height / 2;
-  el.style.setProperty('--pm6-sprout-ox', ox + '%'); el.style.setProperty('--pm6-sprout-oy', above ? '100%' : '0%');
-  el.style.setProperty('--pm6-sprout-tx', '0px'); el.style.setProperty('--pm6-sprout-ty', above ? '10px' : '-10px');
-  el.style.setProperty('--pm6-sprout-sx', '0.72'); el.style.setProperty('--pm6-sprout-sy', '0.48');
-  el.dataset.sprout = (above ? 'b' : 't') + (ox === 12 ? 'l' : 'r');
-}
+/* a popout with no anchor grows out of the corner it hangs from (positionPopout's stand-in trigger) */
 function sproutOpen(el, anchor) {
-  const S = pmSprout();
-  if (S) { S.open(el, null, anchor || null); if (!anchor) setSproutLocal(el, null); return; }
-  el.classList.remove('is-closing'); el.style.display = 'block'; setSproutLocal(el, anchor); void el.offsetHeight; el.classList.add('is-open');
+  window.PM6_SPROUT.open(el, null, anchor || { left: window.innerWidth - 240, top: 16, width: 224, height: 0 });
 }
-function sproutClose(el, done) {
-  const S = pmSprout();
-  if (S) { S.close(el, done); return; }
-  let finished = false; const finish = () => { if (finished) return; finished = true; el.removeEventListener('transitionend', onEnd); el.style.display = 'none'; done && done(); };
-  const onEnd = e => { if (e.target !== el || (e.propertyName !== 'opacity' && e.propertyName !== 'transform')) return; finish(); };
-  el.classList.remove('is-open'); el.classList.add('is-closing'); el.addEventListener('transitionend', onEnd);
-  window.setTimeout(finish, motionReduced() ? 0 : 280);
-}
+function sproutClose(el, done) { window.PM6_SPROUT.close(el, done); }
 function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
   const vw = window.innerWidth, vh = window.innerHeight;
   const r = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : { left: vw - 240, right: vw - 16, top: 16, bottom: 16, width: 224 };
@@ -137877,8 +137544,6 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     var patternEdit = {};
     var ttlTimers = {};
     var stackTimers = [];
-    var closeTimer = null;
-    var heightAnimGen = 0;
     var clearingAll = false;
     var stackDirty = false;
     var booted = false;
@@ -137997,48 +137662,15 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         id === 'continue_assistant';
     }
 
+    /* the inbox's sprout (open, close, height spring) is PM6_SPROUT's, the one menu sprout (base/script/pm7-sprout.js).
+       PMConcept7 replaces this engine's stack and inbox with src/js/19-notify.js, which removes #rsStack and #rsPanel
+       before this boot runs, so none of it binds there. */
     function portalIsOpen() {
-      return panelEl && panelEl.classList.contains('open') && !panelEl.classList.contains('is-closing');
+      return !!panelEl && window.PM6_SPROUT.isOpen(panelEl);
     }
 
-    function portalAnimateHeight(mutateFn, onDone) {
-      function done() { if (onDone) onDone(); }
-      if (!panelEl) { if (mutateFn) mutateFn(); done(); return; }
-      if (reduced() || !portalIsOpen()) { if (mutateFn) mutateFn(); done(); return; }
-      var gen = ++heightAnimGen;
-      var startH = panelEl.getBoundingClientRect().height;
-      panelEl.style.height = startH + 'px';
-      panelEl.style.overflow = 'hidden';
-      if (mutateFn) mutateFn();
-      panelEl.style.height = 'auto';
-      var endH = panelEl.getBoundingClientRect().height;
-      if (Math.abs(endH - startH) < 0.5) {
-        panelEl.style.height = '';
-        panelEl.style.overflow = '';
-        done();
-        return;
-      }
-      panelEl.style.height = startH + 'px';
-      void panelEl.offsetHeight;
-      panelEl.style.height = endH + 'px';
-      panelEl.classList.remove('is-size-bounce');
-      void panelEl.offsetWidth;
-      panelEl.classList.add('is-size-bounce');
-      var finished = false;
-      function clearH(ev) {
-        if (finished || gen !== heightAnimGen) return;
-        if (ev && ev.target !== panelEl) return;
-        if (ev && ev.propertyName && ev.propertyName !== 'height') return;
-        finished = true;
-        panelEl.style.height = '';
-        panelEl.style.overflow = '';
-        panelEl.classList.remove('is-size-bounce');
-        panelEl.removeEventListener('transitionend', clearH);
-        done();
-      }
-      panelEl.addEventListener('transitionend', clearH);
-      var t = setTimeout(clearH, 520);
-      stackTimers.push(t);
+    function portalAnimateHeight(mutateFn) {
+      window.PM6_SPROUT.resize(panelEl, mutateFn);
     }
 
     function fillPanelContent() {
@@ -138208,34 +137840,17 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
 
     function setExpanded(on) {
       if (!panelEl) return;
-      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
       if (on) {
         expanded = true;
-        panelEl.classList.remove('is-closing');
-        panelEl.classList.add('open');
+        window.PM6_SPROUT.open(panelEl);
         panelEl.style.height = '';
         panelEl.style.overflow = '';
         renderPanel({ animateHeight: false });
         return;
       }
-      if (!expanded && !panelEl.classList.contains('open')) return;
+      if (!expanded && !panelEl.classList.contains('is-open')) return;
       expanded = false;
-      if (reduced()) {
-        panelEl.classList.remove('open', 'is-closing', 'is-size-bounce', 'is-empty');
-        panelEl.style.height = '';
-        panelEl.style.overflow = '';
-        return;
-      }
-      panelEl.classList.remove('is-size-bounce');
-      panelEl.classList.add('is-closing');
-      panelEl.classList.remove('open');
-      closeTimer = setTimeout(function () {
-        panelEl.classList.remove('is-closing');
-        panelEl.style.height = '';
-        panelEl.style.overflow = '';
-        closeTimer = null;
-      }, 240);
-      stackTimers.push(closeTimer);
+      window.PM6_SPROUT.close(panelEl);
     }
 
     function dismiss(id) {
@@ -151268,6 +150883,251 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
 })();
 </script>
 <!-- PM7 SECTION 28/32: chat-data-js - pre-serialized chat thread corpus (PM6_CHAT_THREADS) (script#pm6-js-chat-data) -->
+<script id="pm7-sprout-js">/* PM6_SPROUT: the menu sprout, the one owner every menu opens and closes through (ACD-439, DR-057, DR-058; Jared,
+   L8 B 2026-10-30: one sprout owner for every menu). Its class contract is base/style/pm7-sprout.css.
+   Callers: the title-bar menus (pm6-js-panels.js), the base chat's pickers and the worktree menu (pm6-js-chat.js,
+   script-038.js), Settings' popouts (src/settings/kit.js), the NieR theme menu (kit.d/23-nier-theme-menu.js), the rail
+   (PMR.menu), Usage (PMU.menu), Home (PMW.menu) and the 5.6 Pro chat's menus (app.js). The 5.6 Pro standalone page
+   reads this file and pm7-sprout.css too, so no menu draws a sprout of its own.
+
+     open(el, afterOpen, anchor, opts)  shows el (inline display: opts.display, else data-portal-display, else block;
+                                        display: false leaves it to the surface), pins the corner nearest the anchor
+                                        and adds is-open. anchor: an element, a rect ({ left, top, width, height } or
+                                        right / bottom) or a point ({ x, y }).
+     close(el, done)                    is-closing; done once the collapse has run (el is display:none by then)
+     isOpen(el)
+     aim(el, anchor)                    pins the corner again (a flyout whose row moved)
+     resize(el, mutate)                 runs mutate and springs the height from the old box to the new one, with the
+                                        size bounce (the search filter, an option count, a drill-in)
+     bounce(el)                         the size bounce alone, for a surface that sets its new height itself
+     keep(el)                           for a renderer that rewrites class and style (the 5.6 Pro chat's patch): call
+                                        it before the rewrite; the function it returns puts the sprout's state back
+     reduced()                          Reduce motion: Settings' switch (html[data-motion="reduced"]) or the system's
+
+   Timing comes from the element's own computed transitions (the contract, a look's part such as NieR's slice, and
+   Animation speed, which rescales them), never from a constant, so a close always waits for the collapse it started.
+   A close that begins inside a resize drag (body.pm-resizing) lands at once: no menu moves in a drag. Reopening a
+   closing menu cancels that close; a close called again on a closing menu finishes both callers together. */
+(function () {
+  'use strict';
+  var doc = document, root = doc.documentElement;
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var OWN_CLASS = ['is-open', 'is-closing', 'is-size-bounce'];
+  var OWN_VARS = ['--pm6-sprout-ox', '--pm6-sprout-oy', '--pm6-sprout-tx', '--pm6-sprout-ty', '--pm6-sprout-sx', '--pm6-sprout-sy'];
+  var states = typeof WeakMap === 'function' ? new WeakMap() : null;
+  var gen = 0;
+
+  function reduced() { return !!(root && root.getAttribute('data-motion') === 'reduced') || !!(mq && mq.matches); }
+  function held() { return !!(doc.body && doc.body.classList.contains('pm-resizing')); }
+  function isOpen(el) { return !!(el && el.classList.contains('is-open') && !el.classList.contains('is-closing')); }
+  function state(el) {
+    var s = states ? states.get(el) : el._pm6Sprout;
+    if (!s) { s = { g: 0, dones: [], bounceT: 0 }; if (states) states.set(el, s); else el._pm6Sprout = s; }
+    return s;
+  }
+  function ms(v) { v = String(v || '').trim(); var n = parseFloat(v); return isFinite(n) ? (/ms$/.test(v) ? n : n * 1000) : 0; }
+  /* when the element's running transitions on these properties end (ms from now), from its computed style */
+  function endOf(el, props) {
+    var cs = getComputedStyle(el);
+    var names = cs.transitionProperty.split(','), durs = cs.transitionDuration.split(','), dels = cs.transitionDelay.split(',');
+    var end = 0;
+    for (var i = 0; i < names.length; i++) {
+      var n = names[i].trim();
+      if (n !== 'all' && props.indexOf(n) < 0) continue;
+      var d = ms(durs[i % durs.length]);
+      if (d > 0) end = Math.max(end, d + ms(dels[i % dels.length]));
+    }
+    return end;
+  }
+  /* the anchor as a viewport box */
+  function boxOf(a) {
+    if (!a) return null;
+    if (typeof a.getBoundingClientRect === 'function') return a.isConnected === false ? null : a.getBoundingClientRect();
+    if (typeof a.left === 'number' && typeof a.top === 'number') {
+      return { left: a.left, top: a.top, width: typeof a.width === 'number' ? a.width : (a.right || a.left) - a.left,
+        height: typeof a.height === 'number' ? a.height : (a.bottom || a.top) - a.top };
+    }
+    if (typeof a.x === 'number' && typeof a.y === 'number') return { left: a.x, top: a.y, width: 0, height: 0 };
+    return null;
+  }
+  function edge(el) { return el.classList.contains('pm6-chat-effort-popout-portal') || el.classList.contains('pm-sprout-edge'); }
+
+  /* Pin the open/close sprout to the corner (or, for a side flyout, the edge) nearest the trigger, so the box grows out
+     of and collapses into its trigger, not a fixed origin. */
+  function aim(el, anchor) {
+    var ar = el ? boxOf(anchor) : null;
+    if (!ar) return;
+    /* neutralize closed-state scale so we measure the real layout box */
+    var prevTf = el.style.transform;
+    el.style.transform = 'none';
+    void el.offsetWidth;
+    var pr = el.getBoundingClientRect();
+    el.style.transform = prevTf;
+    if (!pr.width || !pr.height) return;
+    var ax = ar.left + ar.width / 2;
+    var ay = ar.top + ar.height / 2;
+    if (edge(el)) {
+      /* effort / side flyouts: sprout from the edge facing the parent row */
+      var fromLeft = ((pr.left + pr.right) / 2) >= ax;
+      var yPct = ((ay - pr.top) / pr.height) * 100;
+      yPct = Math.max(10, Math.min(90, yPct));
+      el.style.setProperty('--pm6-sprout-ox', fromLeft ? '0%' : '100%');
+      el.style.setProperty('--pm6-sprout-oy', yPct.toFixed(1) + '%');
+      el.style.setProperty('--pm6-sprout-tx', fromLeft ? '-10px' : '10px');
+      el.style.setProperty('--pm6-sprout-ty', '0px');
+      el.style.setProperty('--pm6-sprout-sx', '0.48');
+      el.style.setProperty('--pm6-sprout-sy', '0.72');
+      el.setAttribute('data-sprout', fromLeft ? 'l' : 'r');
+      return;
+    }
+    /* vertical popouts: snap to the corner nearest the trigger center */
+    var ox = ((ax - pr.left) / pr.width) * 100;
+    var oy = ((ay - pr.top) / pr.height) * 100;
+    var snapX = ox < 50 ? 12 : 88;
+    var snapY = oy < 50 ? 8 : 100;
+    if (ay >= pr.bottom - 2) snapY = 100;
+    else if (ay <= pr.top + 2) snapY = 0;
+    if (ax <= pr.left + 2) snapX = 8;
+    else if (ax >= pr.right - 2) snapX = 92;
+    var fromBottom = snapY >= 50;
+    var fromLeftC = snapX < 50;
+    el.style.setProperty('--pm6-sprout-ox', snapX + '%');
+    el.style.setProperty('--pm6-sprout-oy', snapY + '%');
+    el.style.setProperty('--pm6-sprout-tx', '0px');
+    el.style.setProperty('--pm6-sprout-ty', fromBottom ? '10px' : '-10px');
+    el.style.setProperty('--pm6-sprout-sx', '0.72');
+    el.style.setProperty('--pm6-sprout-sy', '0.48');
+    el.setAttribute('data-sprout', (fromBottom ? 'b' : 't') + (fromLeftC ? 'l' : 'r'));
+  }
+
+  function open(el, afterOpen, anchor, opts) {
+    if (!el) return;
+    opts = opts || {};
+    var s = state(el);
+    s.g = ++gen;
+    s.dones = [];                                   /* a close still running is cancelled, and its callback with it */
+    var closing = el.classList.contains('is-closing');
+    el.classList.remove('is-closing');
+    /* A box already drawn closed (a surface that measured it in place, or a renderer that inserted it) takes its new
+       corner with transitions off, so the entrance starts from that corner and not from where the old values were
+       heading. A closing box reverses from wherever it has got to. */
+    var prevT = el.style.transition;
+    if (!closing) el.style.transition = 'none';
+    if (opts.display !== false) el.style.display = opts.display || el.getAttribute('data-portal-display') || 'block';
+    if (anchor) aim(el, anchor);
+    void el.offsetHeight;
+    if (!closing) el.style.transition = prevT;
+    el.classList.add('is-open');
+    if (afterOpen) afterOpen();
+  }
+
+  function close(el, onDone) {
+    if (!el) { if (onDone) onDone(); return; }
+    if (!el.classList.contains('is-open') && !el.classList.contains('is-closing') && el.style.display === 'none') {
+      if (onDone) onDone();
+      return;
+    }
+    var s = state(el), g = s.g = ++gen;
+    if (onDone) s.dones.push(onDone);
+    var hold = held(), prevT = el.style.transition;
+    if (hold) el.style.transition = 'none';
+    el.classList.remove('is-open', 'is-size-bounce');
+    el.classList.add('is-closing');
+    var t = 0;
+    function finish(ev) {
+      if (ev && (ev.target !== el || (ev.propertyName !== 'opacity' && ev.propertyName !== 'transform'))) return;
+      el.removeEventListener('transitionend', finish);
+      clearTimeout(t);
+      if (hold) el.style.transition = prevT;
+      if (s.g !== g) return;                        /* reopened, or closed again: that call finishes it */
+      el.classList.remove('is-closing');
+      el.style.display = 'none';
+      el.style.height = '';
+      el.style.overflow = '';
+      var list = s.dones; s.dones = [];
+      for (var i = 0; i < list.length; i++) list[i]();
+    }
+    var end = hold ? 0 : endOf(el, ['opacity', 'transform']);
+    if (end) el.addEventListener('transitionend', finish);
+    /* cover the corner-collapse close (and a missed transitionend) */
+    t = setTimeout(finish, end ? end + 34 : 0);
+  }
+
+  function resize(el, mutateFn) {
+    if (!el) { if (mutateFn) mutateFn(); return; }
+    if (reduced() || !isOpen(el)) {
+      if (mutateFn) mutateFn();
+      return;
+    }
+    var startH = el.getBoundingClientRect().height;
+    el.style.height = startH + 'px';
+    el.style.overflow = 'hidden';
+    if (mutateFn) mutateFn();
+    el.style.height = 'auto';
+    var endH = el.getBoundingClientRect().height; /* respects max-height */
+    if (Math.abs(endH - startH) < 0.5) {
+      el.style.height = '';
+      el.style.overflow = '';
+      return;
+    }
+    el.style.height = startH + 'px';
+    void el.offsetHeight;
+    /* CSS height spring (y>1) overshoots past endH then settles: the search bounce */
+    el.style.height = endH + 'px';
+    el.classList.remove('is-size-bounce');
+    void el.offsetWidth;
+    el.classList.add('is-size-bounce');
+    var finished = false;
+    function clearH(ev) {
+      if (finished) return;
+      if (ev && ev.target !== el) return;
+      if (ev && ev.propertyName && ev.propertyName !== 'height') return;
+      finished = true;
+      el.style.height = '';
+      el.style.overflow = '';
+      el.classList.remove('is-size-bounce');
+      el.removeEventListener('transitionend', clearH);
+    }
+    el.addEventListener('transitionend', clearH);
+    /* cover the height spring and its overshoot settle */
+    setTimeout(clearH, endOf(el, ['height']) + 120);
+  }
+
+  function bounce(el) {
+    if (!el || !isOpen(el) || reduced()) return;
+    var s = state(el);
+    el.classList.remove('is-size-bounce');
+    void el.offsetWidth;
+    el.classList.add('is-size-bounce');
+    clearTimeout(s.bounceT);
+    s.bounceT = setTimeout(function () { el.classList.remove('is-size-bounce'); }, (edge(el) ? 420 : 380) + 40);
+  }
+
+  function keep(el) {
+    var cls = [], vars = [], i;
+    for (i = 0; i < OWN_CLASS.length; i++) if (el.classList.contains(OWN_CLASS[i])) cls.push(OWN_CLASS[i]);
+    for (i = 0; i < OWN_VARS.length; i++) { var v = el.style.getPropertyValue(OWN_VARS[i]); if (v) vars.push([OWN_VARS[i], v]); }
+    var disp = el.style.display, mark = el.getAttribute('data-sprout');
+    return function () {
+      for (var j = 0; j < cls.length; j++) el.classList.add(cls[j]);
+      for (var k = 0; k < vars.length; k++) el.style.setProperty(vars[k][0], vars[k][1]);
+      if (disp) el.style.display = disp;
+      if (mark != null) el.setAttribute('data-sprout', mark);
+    };
+  }
+
+  window.PM6_SPROUT = {
+    open: open,
+    close: close,
+    isOpen: isOpen,
+    aim: aim,
+    resize: resize,
+    bounce: bounce,
+    keep: keep,
+    reduced: reduced
+  };
+})();
+</script>
 <script id="pm6-js-chat-data">
 /* PMConcept6 — unified chat thread data (data only; rendered by pm6-js-chat).
    window.PM6_CHAT_THREADS: thread id -> display spec. Key order IS the roster
@@ -153834,134 +153694,13 @@ policies for tenant isolation, and add migration script.</textarea>
       '<div class="pm6-chat-personalist">' + body + '</div></div>';
   }
 
-  function motionReduced() {
-    return !!(document.documentElement && document.documentElement.getAttribute('data-motion') === 'reduced');
-  }
-  function portalIsOpen(el) {
-    return !!(el && el.classList.contains('is-open') && !el.classList.contains('is-closing'));
-  }
-  function portalAnimateHeight(el, mutateFn) {
-    if (!el) { if (mutateFn) mutateFn(); return; }
-    if (motionReduced() || !portalIsOpen(el)) {
-      if (mutateFn) mutateFn();
-      return;
-    }
-    var startH = el.getBoundingClientRect().height;
-    el.style.height = startH + 'px';
-    el.style.overflow = 'hidden';
-    if (mutateFn) mutateFn();
-    el.style.height = 'auto';
-    var endH = el.getBoundingClientRect().height; /* respects max-height */
-    if (Math.abs(endH - startH) < 0.5) {
-      el.style.height = '';
-      el.style.overflow = '';
-      return;
-    }
-    el.style.height = startH + 'px';
-    void el.offsetHeight;
-    /* CSS height spring (y>1) overshoots past endH then settles — the search bounce */
-    el.style.height = endH + 'px';
-    el.classList.remove('is-size-bounce');
-    void el.offsetWidth;
-    el.classList.add('is-size-bounce');
-    var finished = false;
-    function clearH(ev) {
-      if (finished) return;
-      if (ev && ev.target !== el) return;
-      if (ev && ev.propertyName && ev.propertyName !== 'height') return;
-      finished = true;
-      el.style.height = '';
-      el.style.overflow = '';
-      el.classList.remove('is-size-bounce');
-      el.removeEventListener('transitionend', clearH);
-    }
-    el.addEventListener('transitionend', clearH);
-    /* cover height spring + overshoot settle (effort uses ~360–420ms) */
-    setTimeout(clearH, el.classList.contains('pm6-chat-effort-popout-portal') ? 520 : 460);
-  }
-  /* Pin open/close sprout to the corner/edge nearest the trigger so the box
-     grows out of (and collapses into) its destination, not a fixed BL origin. */
-  function setPopoutSprout(el, anchorEl) {
-    if (!el || !anchorEl) return;
-    /* neutralize closed-state scale so we measure the real layout box */
-    var prevTf = el.style.transform;
-    el.style.transform = 'none';
-    void el.offsetWidth;
-    var pr = el.getBoundingClientRect();
-    el.style.transform = prevTf;
-    var ar = anchorEl.getBoundingClientRect();
-    if (!pr.width || !pr.height) return;
-    var ax = ar.left + ar.width / 2;
-    var ay = ar.top + ar.height / 2;
-    var isSide = el.classList.contains('pm6-chat-effort-popout-portal');
-    if (isSide) {
-      /* effort / side flyouts: sprout from the edge facing the parent row */
-      var fromLeft = ((pr.left + pr.right) / 2) >= ax;
-      var yPct = ((ay - pr.top) / pr.height) * 100;
-      yPct = Math.max(10, Math.min(90, yPct));
-      el.style.setProperty('--pm6-sprout-ox', fromLeft ? '0%' : '100%');
-      el.style.setProperty('--pm6-sprout-oy', yPct.toFixed(1) + '%');
-      el.style.setProperty('--pm6-sprout-tx', fromLeft ? '-10px' : '10px');
-      el.style.setProperty('--pm6-sprout-ty', '0px');
-      el.style.setProperty('--pm6-sprout-sx', '0.48');
-      el.style.setProperty('--pm6-sprout-sy', '0.72');
-      el.setAttribute('data-sprout', fromLeft ? 'l' : 'r');
-      return;
-    }
-    /* vertical popouts: snap to the corner nearest the trigger center */
-    var ox = ((ax - pr.left) / pr.width) * 100;
-    var oy = ((ay - pr.top) / pr.height) * 100;
-    var snapX = ox < 50 ? 12 : 88;
-    var snapY = oy < 50 ? 8 : 100;
-    if (ay >= pr.bottom - 2) snapY = 100;
-    else if (ay <= pr.top + 2) snapY = 0;
-    if (ax <= pr.left + 2) snapX = 8;
-    else if (ax >= pr.right - 2) snapX = 92;
-    var fromBottom = snapY >= 50;
-    var fromLeftC = snapX < 50;
-    el.style.setProperty('--pm6-sprout-ox', snapX + '%');
-    el.style.setProperty('--pm6-sprout-oy', snapY + '%');
-    el.style.setProperty('--pm6-sprout-tx', '0px');
-    el.style.setProperty('--pm6-sprout-ty', fromBottom ? '10px' : '-10px');
-    el.style.setProperty('--pm6-sprout-sx', '0.72');
-    el.style.setProperty('--pm6-sprout-sy', '0.48');
-    el.setAttribute('data-sprout', (fromBottom ? 'b' : 't') + (fromLeftC ? 'l' : 'r'));
-  }
-  function portalOpenAnim(el, afterOpen, anchorEl) {
-    if (!el) return;
-    el.classList.remove('is-closing');
-    var disp = el.getAttribute('data-portal-display') || 'block';
-    el.style.display = disp;
-    if (anchorEl) setPopoutSprout(el, anchorEl);
-    void el.offsetHeight;
-    el.classList.add('is-open');
-    if (afterOpen) afterOpen();
-  }
-  function portalCloseAnim(el, onDone) {
-    if (!el) { if (onDone) onDone(); return; }
-    if (!el.classList.contains('is-open') && el.style.display === 'none') {
-      if (onDone) onDone();
-      return;
-    }
-    el.classList.remove('is-open', 'is-size-bounce');
-    el.classList.add('is-closing');
-    var done = false;
-    function finish(ev) {
-      if (done) return;
-      if (ev && ev.target !== el) return;
-      if (ev && ev.propertyName && ev.propertyName !== 'opacity' && ev.propertyName !== 'transform') return;
-      done = true;
-      el.classList.remove('is-closing');
-      el.style.display = 'none';
-      el.style.height = '';
-      el.style.overflow = '';
-      el.removeEventListener('transitionend', finish);
-      if (onDone) onDone();
-    }
-    el.addEventListener('transitionend', finish);
-    /* cover the ~220ms corner-collapse close */
-    setTimeout(finish, motionReduced() ? 0 : 280);
-  }
+  /* The sprout (open, close, the corner pin, the height spring) is PM6_SPROUT's, the one owner every menu opens and
+     closes through (base/script/pm7-sprout.js, loaded before this script; its class contract is pm7-sprout.css). */
+  var portalIsOpen = window.PM6_SPROUT.isOpen;
+  var portalAnimateHeight = window.PM6_SPROUT.resize;
+  var setPopoutSprout = window.PM6_SPROUT.aim;
+  var portalOpenAnim = window.PM6_SPROUT.open;
+  var portalCloseAnim = window.PM6_SPROUT.close;
 
   var modePopout = null;
   var modePopoutAnchor = null;
@@ -155105,12 +154844,6 @@ policies for tenant isolation, and add migration script.</textarea>
       if (pane) pane.style.display = 'none';
       return { ok: true };
     }
-  };
-
-  window.PM6_SPROUT = {
-    open: portalOpenAnim,
-    close: portalCloseAnim,
-    isOpen: portalIsOpen
   };
 
   /* Runtime "i" popover: portal to body so it stacks above the composer/FAB. */
@@ -156689,7 +156422,6 @@ policies for tenant isolation, and add migration script.</textarea>
     var brand = bar.querySelector('.app-name');
     var fullBrandW = 0;
     var popOpen = false;
-    var closeTimer = null;
     var raf = null;
     var fullThemeW = 0;
     var fullProjectW = 0;
@@ -156705,11 +156437,11 @@ policies for tenant isolation, and add migration script.</textarea>
       } catch (e) { return false; }
     }
 
+    /* the search pop opens and closes through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js), from its own
+       corner (style-002.css); a reopen cancels a close still running */
     function openPop() {
-      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
       popOpen = true;
-      pop.classList.remove('is-closing');
-      pop.classList.add('open', 'is-open');
+      window.PM6_SPROUT.open(pop);
       btn.setAttribute('aria-expanded', 'true');
       if (popInput) {
         popInput.value = inline.value || '';
@@ -156717,20 +156449,11 @@ policies for tenant isolation, and add migration script.</textarea>
       }
     }
     function closePop() {
-      if (!popOpen && !pop.classList.contains('open') && !pop.classList.contains('is-open')) return;
+      if (!popOpen && !window.PM6_SPROUT.isOpen(pop)) return;
       popOpen = false;
       btn.setAttribute('aria-expanded', 'false');
       if (popInput && inline) inline.value = popInput.value || inline.value;
-      if (reduced()) {
-        pop.classList.remove('open', 'is-open', 'is-closing');
-        return;
-      }
-      pop.classList.add('is-closing');
-      pop.classList.remove('open', 'is-open');
-      closeTimer = setTimeout(function () {
-        pop.classList.remove('is-closing');
-        closeTimer = null;
-      }, 240);
+      window.PM6_SPROUT.close(pop);
     }
 
     window.PM_TB_SEARCH = {
@@ -199342,8 +199065,10 @@ retro.dragOn = function () { return rfxOn(); };
 /* ---- panels/js/36-menu.js ---- */
 /* PMW.menu: the picker every panels menu uses (the "+" menu, the "+N" list, panel and tab menus, the narrow switcher).
    Ported from the Usage PMU.menu (origin/concept/usage-pm7-20261009: src/js/45-menu.js, src/css/15-menu.css), itself a
-   port of the 5.6 Pro chat's menus: the same metrics, keyboard and corner sprout, so every PM dropdown looks alike
-   (Jared, 2026-10-02: "Drop down menus should use the chat assistant style drop down menus"). Rendered in #pmw-overlay.
+   port of the 5.6 Pro chat's menus: the same metrics and keyboard, so every PM dropdown looks alike (Jared, 2026-10-02:
+   "Drop down menus should use the chat assistant style drop down menus"). Rendered in #pmw-overlay. It opens and closes
+   through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js; the plate carries pm-sprout; Jared L8 B 2026-10-30:
+   one sprout owner for every menu); the levels and the plate's morph between them are this file's.
 
    open(anchor, spec) -> handle { el, close(), update(spec) }
    spec: { id, title, label (its name when it has no title, for screen readers and the next level's Back control), meta,
@@ -199418,8 +199143,10 @@ menu.open = function (anchor, spec) {
   var marksAnchor = !!(anchor && anchor.setAttribute && !spec.at);
   /* hover: rows opt into the merged hover engine (data-pmh="row"); hover TAGS stay off the rows with
      data-pm-hover-visual-suppressed (data-pm-hover-exempt would also take the rows out of the hover engine) */
-  var el = hnd.el = h('div', { class: 'pmw-menu pmw-pop' + (spec.className ? ' ' + spec.className : ''), role: 'menu', tabindex: '-1',
-    'data-pm-hover-visual-suppressed': 'true', 'data-pmh': 'off', 'data-mstate': 'measure', 'aria-label': valueOf(spec.title) || spec.label || 'Menu' });
+  var el = hnd.el = h('div', { class: 'pmw-menu pmw-pop pm-sprout' + (spec.className ? ' ' + spec.className : ''), role: 'menu', tabindex: '-1',
+    'data-pm-hover-visual-suppressed': 'true', 'data-pmh': 'off', 'data-portal-display': 'flex', 'aria-label': valueOf(spec.title) || spec.label || 'Menu' });
+  // measured at its full size: the labels' widths are read from their boxes (place()), which the closed scale would shrink
+  el.style.transform = 'none';
   overlay().appendChild(el);
   /* a level is its parts, the plate's children it rendered (head, search field, list, foot); the levels it can go back
      to stay in the plate after it, parked (data-lv="park"), so going back is a reveal and never a render. The
@@ -199629,7 +199356,6 @@ menu.open = function (anchor, spec) {
       scroll: hnd.list ? hnd.list.scrollTop : 0,
       parts: hnd.parts, items: hnd.items, search: hnd.search, list: hnd.list, titleEl: hnd.titleEl, back: hnd.back,
       at: { left: st.left, top: st.top, width: st.width, maxHeight: st.maxHeight, side: el.getAttribute('data-side'),
-        mox: st.getPropertyValue('--pmw-mox'), moy: st.getPropertyValue('--pmw-moy'),
         box: { left: parseFloat(st.left) || 0, top: parseFloat(st.top) || 0, width: parseFloat(st.width) || el.offsetWidth, height: lastH || el.offsetHeight } } };
     hnd.stack.push(lv);
     var leaving = hnd.parts;
@@ -199876,9 +199602,7 @@ menu.open = function (anchor, spec) {
     el.style.left = Math.round(x) + 'px';
     el.style.top = Math.round(y) + 'px';
     el.setAttribute('data-side', up ? 'above' : 'below');
-    var ox = clamp((ar.left + ar.width / 2) - x, 18, width - 18);
-    el.style.setProperty('--pmw-mox', ox + 'px');
-    el.style.setProperty('--pmw-moy', up ? '100%' : '0%');
+    hnd.from = at ? { x: at.x, y: at.y } : anchor;   // what the sprout grows out of
     hnd.placed = true;
     if (hnd.list) tidyLinkRows(hnd.list);
   }
@@ -199907,7 +199631,6 @@ menu.open = function (anchor, spec) {
       var st = el.style;
       st.maxHeight = to.maxHeight; st.width = to.width; st.left = to.left; st.top = to.top;
       el.setAttribute('data-side', to.side || 'below');
-      st.setProperty('--pmw-mox', to.mox); st.setProperty('--pmw-moy', to.moy);
       b = to.box;
     } else {
       place();
@@ -199941,10 +199664,9 @@ menu.open = function (anchor, spec) {
       if (sp.onClose && all.indexOf(sp) === i) try { sp.onClose(); } catch (_) {}
     });
     if (opts.instant || reducedMotion()) { el.remove(); return; }
-    // leaving: no keys, no clicks and no focus for the 200 ms the fade takes
+    // leaving: no keys, no clicks and no focus while the sprout folds back
     try { el.inert = true; } catch (_) {}
-    el.setAttribute('data-mstate', 'leaving');
-    setTimeout(function () { el.remove(); }, 200 * motion.speed() + 20);
+    window.PM6_SPROUT.close(el, function () { el.remove(); });
   }
   hnd.close = close;
   hnd.update = function (sp) { hnd.spec = sp; hnd.render(sp, true); morph(); };
@@ -199952,9 +199674,8 @@ menu.open = function (anchor, spec) {
   catch (err) { el.remove(); throw err; }   // a bad spec never leaves an invisible menu in the overlay
   lastH = el.offsetHeight;
   if (marksAnchor) { anchor.setAttribute('aria-expanded', 'true'); anchor.classList.add('pmw-anchor-open'); }
-  el.setAttribute('data-mstate', 'closed');
-  void el.offsetWidth;
-  el.setAttribute('data-mstate', 'open');
+  el.style.transform = '';
+  window.PM6_SPROUT.open(el, null, hnd.from);
   menu.current = hnd;
   setTimeout(function () { if (!hnd.closed) doc.addEventListener('pointerdown', onOutside, true); }, 0);
   window.addEventListener('resize', onResize);
@@ -251697,460 +251418,23 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
 
 })();
 
-/* menus.js — feature module.  OWNER: Wave 3 — Menus agent (item 5: corner-origin sprout, height spring, worktree in the top bar)
+/* menus.js — feature module.  OWNER: Wave 3 — Menus agent (item 5: the worktree selector in the top bar)
  *
  * Load order (see build.py): data.js, motion.js, variants-*.js, then EVERY feature
  * module, then app.js.  Modules therefore run BEFORE the app boots, so anything
  * registered here is live on the very first render — no re-render, no flash.
  *
- * ======================================================================
- * WHAT THIS MODULE DOES
- * ----------------------------------------------------------------------
- *  A. Ports PMConcept7's corner-origin spring sprout onto every overlay menu
- *     (PMConcept7.html:15563-15717 for the CSS, :48218-48300 for the JS),
- *     including its asymmetric close and its list-resize height spring
- *     (`portalAnimateHeight`, PMConcept7.html:48179-48216).
- *  B. Moves the worktree selector into the chat header via `headerExtras`,
- *     with its visual state driven from D.operational.worktrees.
- *
- * WHY THERE IS A MutationObserver HERE
- * ----------------------------------------------------------------------
- * The three things the sprout needs — "a menu just appeared", "a menu just
- * disappeared", "the list just changed height" — all live inside app.js's
- * closure.  `renderOverlays()`, `openMenu()` and `closeMenu()` are private,
- * there is no menu lifecycle slot in PM56_EXT, and app.js is closed after
- * Wave 1.  The overlay layer's DOM is the one public surface that carries
- * all three signals, so this module reads them off #pmOverlayRoot.
- *
- * The ordering that makes it work, and which the whole file depends on:
- *
- *   renderOverlays()  ->  pmPatch(root, html)                    [sync]
- *                     ->  requestAnimationFrame(positionOverlays) [queued 1st]
- *   ... task ends ...
- *   microtask checkpoint -> MutationObserver callback  (sync() below)
- *                        -> requestAnimationFrame(afterPosition)  [queued 2nd]
- *   ... next frame ...   -> positionOverlays()   then   afterPosition()
- *
- * So sync() can neutralise the transform BEFORE positionOverlays measures the
- * box, and afterPosition() can read the origin positionOverlays just wrote.
- * That ordering is the entire reason the entrance is a transition rather than
- * an @keyframes — see the long comment at the top of menus.css.
- *
- * WHY STATE LIVES ON #pmOverlayRoot AND NOT ON THE MENU
- * ----------------------------------------------------------------------
- * `pmSyncAttrs` (app.js:955) rewrites the menu's `class` and `style`
- * attributes from the template on every render, so a class or a custom
- * property parked on the menu itself is erased within a frame.
- * #pmOverlayRoot is the patch *container*; pmPatch never touches its
- * attributes.  Everything transient and everything persistent therefore
- * lives there, and menus.css targets `[data-overlay="root-menu"]` /
- * `[data-overlay="sidecar"]` descendants — attributes that ARE in the
- * template and so survive.
- * ====================================================================== */
+ * The menus' corner-origin sprout, their asymmetric close and their list-resize height spring were this module's
+ * (a MutationObserver on #pmOverlayRoot and a ghost clone for the close) until 2026-10-30 (Jared, L8 B: one sprout
+ * owner for every menu). They are PM6_SPROUT's now: PMConcept7's base/script/pm7-sprout.js and its class contract
+ * pm7-sprout.css, which build.py reads into this page; app.js opens and closes each menu through it (sproutOverlays,
+ * sproutLeave). What is left here moves the worktree selector into the chat header via `headerExtras`, with its
+ * visual state driven from D.operational.worktrees.
+ */
 (function () {
   'use strict';
 
   var EXT = window.PM56_EXT;
-  var overlayRoot = document.getElementById('pmOverlayRoot');
-  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
-  function reduced() { return !!(mq && mq.matches); }
-
-  /* Kept in sync with menus.css.  The close is deliberately longer than the
-     visible fade (opacity 45ms delayed 175ms) so the safety timer covers the
-     whole 220ms transform collapse plus a frame. */
-  var GHOST_MS = 260;
-  var BOUNCE_MS = 400;
-  /* 300ms transform + a frame: how long the entrance's placement is pinned. */
-  var HOLD_MS = 340;
-
-  /* ==================================================================
-     A. Sprout controller
-     ================================================================== */
-
-  /* Two independent lanes.  Hovering a model row adds a sidecar without
-     touching the root menu, so the sidecar has to open on its own clock. */
-  var LANES = [
-    { id: 'root', k: 'r', sel: '.overlay-menu[data-overlay="root-menu"]' },
-    { id: 'side', k: 's', sel: '.overlay-menu[data-overlay="sidecar"]' }
-  ];
-  LANES.forEach(function (L) {
-    L.el = null; L.sig = null; L.snap = null; L.opening = false;
-    L.lastHeight = ''; L.ghost = null; L.ghostTimer = 0; L.holdTimer = 0;
-  });
-
-  /* Root identity: class + side + head title, so persona / mode / model stay
-     distinct while a list is filtered. Sidecar identity is class + side only:
-     hovering another model row changes the head title and must NOT re-sprout
-     (ACD-440). */
-  function signature(el) {
-    var overlay = el.getAttribute('data-overlay') || '';
-    var side = el.getAttribute('data-side') || '';
-    if (overlay === 'sidecar') {
-      return (el.getAttribute('class') || '') + '|' + side;
-    }
-    var head = el.querySelector('.menu-head strong');
-    return (el.getAttribute('class') || '') + '|' + side + '|' +
-           (head ? head.textContent.trim() : '');
-  }
-
-  function cls(add, name) {
-    overlayRoot.classList[add ? 'add' : 'remove'](name);
-  }
-
-  var rafPending = false;
-  function scheduleAfterPosition() {
-    if (rafPending) return;
-    rafPending = true;
-    requestAnimationFrame(function () { rafPending = false; afterPosition(); });
-  }
-
-  /* ---- microtask phase: runs BEFORE positionOverlays measures ---- */
-  function sync() {
-    var work = false;
-    for (var i = 0; i < LANES.length; i++) {
-      var L = LANES[i];
-      var el = overlayRoot.querySelector(L.sel);
-
-      if (!el) {
-        if (L.el) { closeLane(L); }
-        continue;
-      }
-      var sig = signature(el);
-      /* Sidecar still present: treat as a content/height update even if
-         pmPatch swapped the node. Re-sprouting on row hover parks the box
-         at the pin origin and covers the root menu. */
-      var sidecarLive = L.id === 'side' && L.el && el;
-      if (sidecarLive) {
-        L.el = el; L.sig = sig; L.opening = false;
-        /* pmPatch rewrites the sidecar's style attribute from a template
-           with no left/top, so one frame sits at 0,0. Put the last truthful
-           placement back before paint. */
-        if (L.snap) {
-          el.style.left = L.snap.left + 'px';
-          el.style.top = L.snap.top + 'px';
-        }
-        var sprouting = overlayRoot.classList.contains('pm56-s-hold') ||
-                        overlayRoot.classList.contains('pm56-s-closed') ||
-                        overlayRoot.classList.contains('pm56-s-nomo');
-        if (!sprouting) cls(true, 'pm56-' + L.k + '-flat');
-        work = true;
-        continue;
-      }
-      if (el !== L.el || sig !== L.sig) {
-        L.el = el; L.sig = sig; L.opening = true; L.lastHeight = el.style.height || '';
-        /* Untransformed and invisible: positionOverlays must measure the real
-           box, and the pre-position frame must not flash at the static origin. */
-        cls(true, 'pm56-' + L.k + '-nomo');
-        cls(true, 'pm56-' + L.k + '-hidden');
-        cls(true, 'pm56-' + L.k + '-pin');
-        /* One transient overlay at a time, and no ambiguity for anything that
-           queries the document: a menu opening in this lane retires the
-           previous one's ghost immediately rather than letting the two coexist
-           for the remaining 260ms. */
-        dropGhost(L);
-        work = true;
-      } else {
-        L.opening = false;
-        /* Not an open, but positionOverlays is about to measure again anyway.
-           Flatten the transform for that measurement frame -- otherwise a
-           toast, a hover card or a submenu landing inside the sprout's 300ms
-           re-places the menu from a box that is at scale3d(.72,.48,1).
-           Measured before this: a persona menu re-measured mid-sprout was
-           placed overlapping its own trigger by 117px. The height/width spring
-           is deliberately kept alive; the model search filter is one of these
-           renders and its resize is the animation we want. */
-        cls(true, 'pm56-' + L.k + '-flat');
-        work = true;
-      }
-    }
-    if (work) scheduleAfterPosition();
-  }
-
-  /* ---- rAF phase: runs AFTER positionOverlays has written left/top/origin ---- */
-  function afterPosition() {
-    for (var i = 0; i < LANES.length; i++) {
-      var L = LANES[i];
-      var el = overlayRoot.querySelector(L.sel);
-      if (!el) { continue; }
-      L.el = el;
-
-      /* Drop the measurement pin FIRST, then force layout, then read. The
-         inline left/top positionOverlays just wrote take over, and the rect
-         below is the settled one -- which matters because the bottom anchor is
-         derived from it. Reading it while still pinned parked the model picker
-         at the top of the viewport instead of above its trigger. */
-      cls(false, 'pm56-' + L.k + '-pin');
-      cls(false, 'pm56-' + L.k + '-flat');
-      void el.offsetWidth;
-      /* Untransformed (opens) or at rest (updates), and now correctly placed. */
-      var rect = el.getBoundingClientRect();
-
-      if (L.id === 'root') {
-        applyOrigin(el, rect, L.opening);
-        heightBounce(L, el);
-      }
-      if (L.id === 'side') heightBounce(L, el);
-
-      if (L.opening) {
-        L.opening = false;
-        if (reduced()) {
-          cls(false, 'pm56-' + L.k + '-hidden');
-          cls(false, 'pm56-' + L.k + '-nomo');
-        } else {
-          holdGeom(L, el, rect);
-          /* Arm the closed geometry with transitions still off, force the
-             browser to compute it, re-enable transitions, force again, then
-             release.  Two reflows so the transition unambiguously starts from
-             the closed value rather than racing the class removal. */
-          cls(true, 'pm56-' + L.k + '-closed');
-          cls(false, 'pm56-' + L.k + '-hidden');
-          void el.offsetWidth;
-          cls(false, 'pm56-' + L.k + '-nomo');
-          void el.offsetWidth;
-          cls(false, 'pm56-' + L.k + '-closed');
-        }
-      }
-      snapshot(L, el, rect);
-    }
-  }
-
-  /* Corner nearest the trigger.  positionOverlays already writes --origin-x
-     (trigger centre X relative to the menu box) and --origin-y ('0px' when the
-     menu opened downward, '100%' when it opened upward); menus.css uses those
-     directly as transform-origin.  All that is left is which way the closed
-     box is nudged, and — for the one picker whose height changes — which edge
-     stays put while it resizes. */
-  function applyOrigin(el, rect, opening) {
-    var oy = (el.style.getPropertyValue('--origin-y') || '').trim();
-    var fromBottom = oy === '100%' || oy === '';
-    overlayRoot.setAttribute('data-pm56-sprout', fromBottom ? 'b' : 't');
-
-    /* Bottom-anchor only the picker that actually resizes, and only when it
-       opened upward.  A downward menu is already anchored on the edge it
-       sprouted from. Recomputed on open (and on resize), never on a filter —
-       pinning it is the whole point. */
-    if (!opening) return;
-    if (el.classList.contains('model-menu') && fromBottom) {
-      overlayRoot.style.setProperty('--pm56-bottom',
-        Math.round(window.innerHeight - rect.bottom) + 'px');
-      overlayRoot.classList.add('pm56-anchor-bottom');
-    } else {
-      clearAnchor();
-    }
-  }
-  /* Pin the placement derived from the one truthful measurement for as long as
-     the entrance runs. Every positionOverlays inside that window would be
-     measuring a transformed box, and some of those renders emit no mutations at
-     all, so there is nothing to react to -- the only reliable answer is to stop
-     listening to them for 340ms. */
-  function holdGeom(L, el, rect) {
-    if (!rect || rect.width < 8 || rect.height < 8) return;
-    if (L.id === 'side' && rect.left < 16 && rect.top < 16) return;
-    var pre = '--pm56-' + L.k + 'hold-';
-    overlayRoot.style.setProperty(pre + 'left', rect.left.toFixed(2) + 'px');
-    overlayRoot.style.setProperty(pre + 'top', rect.top.toFixed(2) + 'px');
-    overlayRoot.style.setProperty(pre + 'ox', (el.style.getPropertyValue('--origin-x') || (L.id === 'root' ? '50%' : '100%')).trim());
-    overlayRoot.style.setProperty(pre + 'oy', (el.style.getPropertyValue('--origin-y') || (L.id === 'root' ? '100%' : '28%')).trim());
-    cls(true, 'pm56-' + L.k + '-hold');
-    clearTimeout(L.holdTimer);
-    L.holdTimer = setTimeout(function () { releaseHold(L); }, HOLD_MS);
-  }
-  /* Releasing the hold has to WRITE THE HELD VALUES BACK, not just stop masking
-     them. Masking alone left the bogus inline `top` that a mid-sprout
-     positionOverlays had written sitting underneath, so the menu jumped to it
-     the moment the mask came off -- measured 559.8 for a 238.1px box, i.e. a
-     placement derived from the sprout's 1.049 overshoot. The held values are
-     the ones computed from the single truthful measurement, so they become the
-     inline values until the next legitimate positionOverlays, which by then is
-     measuring an untransformed box. */
-  function releaseHold(L) {
-    clearTimeout(L.holdTimer);
-    L.holdTimer = 0;
-    if (overlayRoot.classList.contains('pm56-' + L.k + '-hold')) {
-      var el = overlayRoot.querySelector(L.sel);
-      var pre = '--pm56-' + L.k + 'hold-';
-      if (el) {
-        var lft = overlayRoot.style.getPropertyValue(pre + 'left');
-        var tp = overlayRoot.style.getPropertyValue(pre + 'top');
-        var anchored = L.id === 'root' && overlayRoot.classList.contains('pm56-anchor-bottom');
-        if (lft) el.style.left = lft;
-        if (tp && !anchored) el.style.top = tp;
-        var ox = overlayRoot.style.getPropertyValue(pre + 'ox');
-        var oy = overlayRoot.style.getPropertyValue(pre + 'oy');
-        if (ox) el.style.setProperty('--origin-x', ox);
-        if (oy) el.style.setProperty('--origin-y', oy);
-      }
-    }
-    cls(false, 'pm56-' + L.k + '-hold');
-  }
-
-  function clearAnchor() {
-    overlayRoot.classList.remove('pm56-anchor-bottom');
-    overlayRoot.style.removeProperty('--pm56-bottom');
-  }
-
-  /* PMConcept7's `portalAnimateHeight` measures, locks, mutates, measures and
-     springs.  Here app.js has already written the target height inline
-     (`height:${modelMenuHeight()}px`) and menus.css owns the height spring, so
-     the only missing half is the stretch that sells the resize as elastic. */
-  var bounceTimers = { r: 0, s: 0 };
-  function heightBounce(L, el) {
-    var h = String(el.offsetHeight);
-    var changed = h !== L.lastHeight;
-    L.lastHeight = h;
-    if (!changed || L.opening || reduced()) return;
-    var name = 'pm56-' + L.k + '-bounce';
-    overlayRoot.classList.remove(name);
-    void el.offsetWidth;
-    overlayRoot.classList.add(name);
-    clearTimeout(bounceTimers[L.k]);
-    bounceTimers[L.k] = setTimeout(function () {
-      overlayRoot.classList.remove(name);
-    }, BOUNCE_MS);
-  }
-
-  /* ---- close: re-materialise the departing menu outside the patch root ---- */
-
-  function snapshot(L, el, rect) {
-    var cs = getComputedStyle(el);
-    var inlineH = parseFloat(el.style.height);
-    var height = isFinite(inlineH) ? inlineH : rect.height;
-    var top = rect.top;
-    /* A bottom-anchored menu's inline `top` is whatever positionOverlays last
-       computed from a mid-transition box; the truthful value is derived from
-       the pinned bottom edge instead. */
-    if (L.id === 'root' && overlayRoot.classList.contains('pm56-anchor-bottom')) {
-      var b = parseFloat(getComputedStyle(overlayRoot).getPropertyValue('--pm56-bottom'));
-      if (isFinite(b)) top = window.innerHeight - b - height;
-    }
-    var scrolls = [];
-    var all = el.querySelectorAll('*');
-    for (var i = 0; i < all.length; i++) if (all[i].scrollTop) scrolls.push([i, all[i].scrollTop]);
-    L.snap = {
-      html: el.outerHTML,
-      left: rect.left, top: top, width: rect.width, height: height,
-      scrolls: scrolls,
-      vars: {
-        '--pm56-tx': cs.getPropertyValue('--pm56-tx'),
-        '--pm56-ty': cs.getPropertyValue('--pm56-ty'),
-        '--pm56-sx': cs.getPropertyValue('--pm56-sx'),
-        '--pm56-sy': cs.getPropertyValue('--pm56-sy')
-      }
-    };
-  }
-
-  function closeLane(L) {
-    L.el = null; L.sig = null; L.opening = false; L.lastHeight = '';
-    cls(false, 'pm56-' + L.k + '-nomo');
-    cls(false, 'pm56-' + L.k + '-hidden');
-    cls(false, 'pm56-' + L.k + '-pin');
-    cls(false, 'pm56-' + L.k + '-flat');
-    cls(false, 'pm56-' + L.k + '-closed');
-    cls(false, 'pm56-' + L.k + '-bounce');
-    releaseHold(L);
-    if (L.id === 'root') {
-      overlayRoot.classList.remove('pm56-r-bounce');
-      clearAnchor();
-      overlayRoot.removeAttribute('data-pm56-sprout');
-    }
-    spawnGhost(L);
-  }
-
-  function spawnGhost(L) {
-    dropGhost(L);
-    if (reduced() || !L.snap) return;
-    var snap = L.snap;
-    L.snap = null;
-    var tpl = document.createElement('template');
-    tpl.innerHTML = snap.html;
-    var g = tpl.content.firstElementChild;
-    if (!g) return;
-
-    /* Strip every hook that makes the clone addressable BEFORE it enters the
-       document. It is a picture of a menu that is leaving, not a menu: nothing
-       should be able to find it, hover it, or count it.
-       This is not hypothetical -- the shipped audit does
-       `openRootMenu('mode') / Escape / openRootMenu('mode')` and its
-       `[data-submenu="deep-plan"]` locator resolved to TWO elements, because
-       the outgoing clone still carried the same data attributes as the new
-       menu. Classes stay, because they are what makes the ghost look like the
-       menu it is replacing. */
-    stripHooks(g);
-    var kids = g.querySelectorAll('*');
-    for (var s = 0; s < kids.length; s++) stripHooks(kids[s]);
-
-    g.classList.add('pm56-menu-ghost');
-    g.setAttribute('data-pm56-ghost', L.id);
-    g.setAttribute('aria-hidden', 'true');
-    g.style.left = snap.left + 'px';
-    g.style.top = snap.top + 'px';
-    g.style.width = snap.width + 'px';
-    g.style.height = snap.height + 'px';
-    for (var k in snap.vars) if (snap.vars[k]) g.style.setProperty(k, snap.vars[k].trim());
-
-    document.body.appendChild(g);
-    if (snap.scrolls.length) {
-      var all = g.querySelectorAll('*');
-      for (var i = 0; i < snap.scrolls.length; i++) {
-        var n = all[snap.scrolls[i][0]];
-        if (n) n.scrollTop = snap.scrolls[i][1];
-      }
-    }
-    void g.offsetWidth;
-    g.classList.add('pm56-collapsing');
-
-    L.ghost = g;
-    g.addEventListener('transitionend', function (ev) {
-      if (ev.target !== g) return;
-      if (ev.propertyName !== 'transform') return;
-      dropGhost(L);
-    });
-    L.ghostTimer = setTimeout(function () { dropGhost(L); }, GHOST_MS);
-  }
-
-  function stripHooks(n) {
-    if (n.id) n.removeAttribute('id');
-    var at = n.attributes;
-    for (var i = at.length - 1; i >= 0; i--) {
-      var nm = at[i].name;
-      if (nm.indexOf('data-') === 0 || nm === 'name' || nm === 'title' ||
-          nm === 'aria-label' || nm === 'role' || nm === 'tabindex') {
-        n.removeAttribute(nm);
-      }
-    }
-  }
-
-  function dropGhost(L) {
-    clearTimeout(L.ghostTimer);
-    L.ghostTimer = 0;
-    if (L.ghost) {
-      if (L.ghost.parentNode) L.ghost.parentNode.removeChild(L.ghost);
-      L.ghost = null;
-    }
-  }
-
-  if (overlayRoot && window.MutationObserver) {
-    new MutationObserver(sync).observe(overlayRoot, { childList: true, subtree: true });
-  }
-
-  /* A resize repositions the menu through app.js's own resize handler, but
-     only when the patch produces a structural change — a pure reposition emits
-     no mutation records, so the pinned bottom edge would keep a stale
-     viewport height.  This module's listener registers first (modules load
-     before app.js), so it releases the anchor, lets positionOverlays run in
-     the next frame, and re-pins one frame after that. */
-  window.addEventListener('resize', function () {
-    LANES.forEach(dropGhost);
-    if (!overlayRoot.classList.contains('pm56-anchor-bottom')) return;
-    clearAnchor();
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        var el = overlayRoot.querySelector(LANES[0].sel);
-        if (!el) return;
-        applyOrigin(el, el.getBoundingClientRect(), true);
-      });
-    });
-  });
 
   /* ==================================================================
      B. Worktree control in the top bar
@@ -252207,15 +251491,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
   /* Small read-only surface so a second agent's harness can assert this
      module's state without reaching into the closure. */
   window.PM56_MENUS = {
-    version: 1,
-    reduced: reduced,
-    lanes: function () {
-      return LANES.map(function (L) {
-        return { id: L.id, open: !!L.el, sig: L.sig, ghost: !!L.ghost };
-      });
-    },
-    anchored: function () { return overlayRoot.classList.contains('pm56-anchor-bottom'); },
-    sprout: function () { return overlayRoot.getAttribute('data-pm56-sprout'); },
+    version: 2,
     worktree: worktreeRecord
   };
 })();
@@ -301492,10 +300768,56 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(a.nodeType!==b.nodeType) return false;
     return a.nodeType!==1 || a.tagName===b.tagName;
   }
+  /* The menus open and close through the one menu sprout, PM6_SPROUT (PMConcept7's base/script/pm7-sprout.js and its
+     class contract pm7-sprout.css, which build.py also puts in this page; Jared L8 B 2026-10-30: one sprout owner for
+     every menu). renderMenu's root menu and sidecar carry pm-sprout, so the patch inserts them closed; positionOverlays
+     places them and sproutOverlays opens each new one from its trigger; the patch keeps the sprout's state on a menu
+     it re-renders (pmSyncAttrs) and hands a menu it drops to sproutLeave, which collapses it into its trigger. */
+  const SPROUT=window.PM6_SPROUT||null, sprouted=new WeakSet(), sproutKey=new WeakMap();
+  function sproutOverlays(){
+    if(!SPROUT) return;
+    for(const el of document.querySelectorAll('#pmOverlayRoot > .overlay-menu.pm-sprout')){
+      const key=el.style.height||String(el.offsetHeight);
+      if(sprouted.has(el)){
+        /* a list that changed size (the model search, an effort count) springs its height: the sprout's size bounce */
+        if(sproutKey.get(el)!==key){ sproutKey.set(el,key); SPROUT.bounce(el); }
+        continue;
+      }
+      sprouted.add(el); sproutKey.set(el,key);
+      const anchor=el.getAttribute('data-overlay')==='sidecar'
+        ? document.querySelector(`#pmOverlayRoot > [data-overlay="root-menu"] [data-submenu="${CSS.escape(state.menu?.sub||'')}"]`)
+        : state.menu&&document.querySelector(`[data-menu-anchor="${CSS.escape(state.menu.anchor)}"]`);
+      SPROUT.open(el,null,anchor,{display:false});
+    }
+  }
+  /* a dropped menu leaves the overlay root (nothing finds, hovers or counts it there: its hooks go), keeps its place and
+     size, and collapses into its trigger; hosted, body.appendChild puts it in the chat's effects layer (00-host.js) */
+  function sproutLeave(n){
+    if(!SPROUT||!sprouted.has(n)) return false;
+    const w=n.offsetWidth, h=n.offsetHeight;
+    for(const x of [n,...n.querySelectorAll('*')]){
+      if(x.id) x.removeAttribute('id');
+      for(const a of [...x.attributes]) if(/^(data-|name$|title$|aria-label$|role$|tabindex$)/.test(a.name)) x.removeAttribute(a.name);
+    }
+    n.setAttribute('aria-hidden','true');
+    n.inert=true;
+    n.style.width=`${w}px`; n.style.height=`${h}px`;
+    n.classList.add('pm56-menu-leaving');
+    /* its open state is computed where it now stands, at rest, so the collapse runs from it: a move restarts animations,
+       and NieR's slice would otherwise start again from its 1px line and leave nothing to fold */
+    n.style.animation='none';
+    document.body.appendChild(n);
+    void n.offsetWidth;
+    SPROUT.close(n,()=>n.remove());
+    n.style.animation='';
+    return true;
+  }
   /* hosted: PMConcept7's hover controller adds data-pm-hover-* and aria-describedby, and moves title into its label */
   const HOSTED_KEEP_ATTR=/^(data-pm-hover|data-pmh|aria-describedby)/;
   function pmSyncAttrs(el,src){
     const skipValue = el===document.activeElement && ('value' in el);
+    /* the sprout's state (is-open, its corner) is not in the template: a menu it opened keeps it */
+    const sprout=SPROUT&&sprouted.has(el)?SPROUT.keep(el):null;
     const seen=new Set();
     for(const at of src.attributes){
       seen.add(at.name);
@@ -301527,6 +300849,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         if(opt && el.value!==opt.getAttribute('value')) el.value=opt.getAttribute('value');
       }
     }
+    if(sprout) sprout();
   }
   function pmPatchNode(el,src){
     if(el.nodeType!==1){ if(el.nodeValue!==src.nodeValue) el.nodeValue=src.nodeValue; return; }
@@ -301560,7 +300883,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(match){ used.add(match); pmPatchNode(match,nn); out.push(match); }
       else out.push(document.importNode(nn,true));
     }
-    for(const n of olds) if(!used.has(n) && n.parentNode===parent) parent.removeChild(n);
+    for(const n of olds) if(!used.has(n) && n.parentNode===parent && !sproutLeave(n)) parent.removeChild(n);
     out.forEach((n,i)=>{ const at=parent.childNodes[i]; if(at!==n) parent.insertBefore(n,at||null); });
     while(parent.childNodes.length>out.length) parent.removeChild(parent.lastChild);
   }
@@ -302571,18 +301894,21 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   let lastMenuSig='';
   function holdMenuPlacement(root, sig){
     if(!sig||sig!==lastMenuSig) return null;
-    const el=root.querySelector(':scope > [data-overlay="root-menu"]');
-    if(!el||!el.style.left) return null;
-    return {el, left:el.style.left, top:el.style.top,
-      ox:el.style.getPropertyValue('--origin-x'), oy:el.style.getPropertyValue('--origin-y')};
+    /* the root menu and its sidecar (whose template has no style at all) */
+    return ['root-menu','sidecar'].map(lane=>root.querySelector(`:scope > [data-overlay="${lane}"]`)).filter(el=>el&&el.style.left)
+      .map(el=>({el, left:el.style.left, top:el.style.top, bottom:el.style.bottom,
+        ox:el.style.getPropertyValue('--origin-x'), oy:el.style.getPropertyValue('--origin-y')}));
   }
-  function restoreMenuPlacement(root, h){
-    if(!h||root.querySelector(':scope > [data-overlay="root-menu"]')!==h.el) return;
-    const s=h.el.style;
-    if(!s.left) s.left=h.left;
-    if(!s.top&&h.top) s.top=h.top;
-    if(h.ox&&!s.getPropertyValue('--origin-x')) s.setProperty('--origin-x',h.ox);
-    if(h.oy&&!s.getPropertyValue('--origin-y')) s.setProperty('--origin-y',h.oy);
+  function restoreMenuPlacement(root, held){
+    for(const h of held||[]){
+      if(h.el.parentNode!==root) continue;
+      const s=h.el.style;
+      if(!s.left) s.left=h.left;
+      if(!s.top&&h.top) s.top=h.top;
+      if(!s.bottom&&h.bottom) s.bottom=h.bottom;
+      if(h.ox&&!s.getPropertyValue('--origin-x')) s.setProperty('--origin-x',h.ox);
+      if(h.oy&&!s.getPropertyValue('--origin-y')) s.setProperty('--origin-y',h.oy);
+    }
   }
 
   /* Text hover tips stay available while a menu/drawer is open (those surfaces
@@ -302803,8 +302129,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else if(m.type==='lens') content=extReplace('contextLensMenu',{}, '');
     else if(HOSTED&&m.type==='pm56-column') content=renderColumnMenu();
     const cls=`overlay-menu ${m.type==='model'?'model-menu':''} ${['context','thread-search'].includes(m.type)?'compact':''} ${m.type==='lens'?'lens-strip':''}`;
-    const root=`<div class="${cls}" data-overlay="root-menu" data-side="${m.side||'left'}" style="${m.type==='model'?`height:${modelMenuHeight()}px`:''}">${m.compactSub?renderCompactSubmenu(m.compactSub):content}</div>`;
-    const side=m.sub&&!m.compactSub?`<div class="overlay-menu sidecar" data-k="sidecar" data-overlay="sidecar" data-side="${m.side||'left'}">${renderSubmenu(m.sub)}</div>`:'';
+    /* each menu is its own node (data-k): a different menu is a new sprout, the old one leaves through the sprout */
+    const root=`<div class="${cls} pm-sprout" data-k="menu:${esc(m.type)}|${esc(m.anchor)}|${esc(m.compactSub||'')}" data-overlay="root-menu" data-side="${m.side||'left'}" style="${m.type==='model'?`height:${modelMenuHeight()}px`:''}">${m.compactSub?renderCompactSubmenu(m.compactSub):content}</div>`;
+    const side=m.sub&&!m.compactSub?`<div class="overlay-menu sidecar pm-sprout pm-sprout-edge" data-k="sidecar" data-overlay="sidecar" data-side="${m.side||'left'}">${renderSubmenu(m.sub)}</div>`:'';
     return root+side;
   }
 
@@ -303099,7 +302426,14 @@ suggested path                    migration 0043, reversible</div></div></sectio
         const below=window.innerHeight-ar.bottom-8, above=ar.top-8;
         let top=below>=rootH+gap?ar.bottom+gap:Math.max(8,ar.top-rootH-gap);
         top=clamp(top,8,window.innerHeight-rootH-8);
-        root.style.left=`${left}px`;root.style.top=`${top}px`;root.style.setProperty('--origin-x',`${clamp(ar.left+ar.width/2-left,18,rootW-18)}px`);root.style.setProperty('--origin-y',top>ar.bottom?'0px':'100%');
+        /* the model picker that opened above its trigger keeps its bottom edge while its list filters (its height springs
+           from the top), from its first placement until the window's height changes */
+        const pin=state.menu.type==='model'&&state.menu.pinBottom&&state.menu.pinBottom.vh===window.innerHeight?state.menu.pinBottom:null;
+        if(!pin&&state.menu.type==='model'&&top<ar.top) state.menu.pinBottom={vh:window.innerHeight,px:Math.round(window.innerHeight-top-rootH)};
+        root.style.left=`${left}px`;
+        if(state.menu.pinBottom&&state.menu.type==='model'&&state.menu.pinBottom.vh===window.innerHeight){ root.style.top='auto'; root.style.bottom=`${state.menu.pinBottom.px}px`; }
+        else { root.style.top=`${top}px`; root.style.bottom=''; }
+        root.style.setProperty('--origin-x',`${clamp(ar.left+ar.width/2-left,18,rootW-18)}px`);root.style.setProperty('--origin-y',top>ar.bottom?'0px':'100%');
         const side=document.querySelector('[data-overlay="sidecar"]');
         if(side){
           const sideW=side.offsetWidth, sideH=side.offsetHeight;
@@ -303114,7 +302448,11 @@ suggested path                    migration 0043, reversible</div></div></sectio
           }
           const row=document.querySelector(`.overlay-menu[data-overlay="root-menu"] [data-submenu="${CSS.escape(state.menu.sub||'')}"]`);
           const rowR=row&&row.getBoundingClientRect();
-          let st=rowR?rowR.bottom-sideH:top;
+          /* a root still sprouting is scaled about its corner: the row's bottom is read where the root will stand */
+          let rowBottom=rowR&&rowR.bottom;
+          if(rowR){ const cs=getComputedStyle(root), m=new DOMMatrixReadOnly(cs.transform==='none'?undefined:cs.transform);
+            if(m.d&&!m.isIdentity){ const oy=root.offsetTop+parseFloat(cs.transformOrigin.split(' ')[1]); rowBottom=oy+(rowR.bottom-m.f-oy)/m.d; } }
+          let st=rowR?rowBottom-sideH:top;
           st=clamp(st,8,window.innerHeight-sideH-8);
           side.style.left=`${sl}px`;side.style.top=`${st}px`;
           side.style.setProperty('--origin-x', state.menu.side==='right'?'0%':'100%');
@@ -303123,6 +302461,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
         }
       }
     }
+    sproutOverlays();
     if(state.hover){
       positionHoverCard();
     }
