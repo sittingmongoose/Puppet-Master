@@ -140,8 +140,8 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
   win.setAttribute('data-pm-hover-exempt', 'true');
   win.setAttribute('aria-label', title);
   const rail = steps.map((s, i) => `<li class="o55g-railitem" data-i="${i}" data-state="next"><span class="o55g-railnode" aria-hidden="true"></span><span class="o55g-raillabel">${h(s.label)}</span></li>`).join('');
-  /* the header's brand is Pip, Puppet Master's static mark (W1, F3-660; NieR's plain band, X3), redrawn on a look change
-     while the window is open; the stage's emblem keeps the flow's own icon */
+  /* the header's brand is Pip, Puppet Master's static mark (W1, F3-660; NieR's eyes through the band, X3 B), redrawn on
+     a look change while the window is open; the stage's emblem keeps the flow's own icon */
   const pip = () => (window.PMLogo ? window.PMLogo.mark({ px: 19, decorative: true }) : icon(ic || 'spark'));
   win.innerHTML = `<header class="o55g-head"><div class="o55g-brand"><span class="o55g-brandicon" aria-hidden="true">${pip()}</span><span class="o55g-brandname">${h(title)}</span></div>`
     + `<nav class="o55g-railwrap" aria-label="Steps">${steps.length > 1 ? `<ol class="o55g-rail">${rail}</ol>` : ''}</nav>`

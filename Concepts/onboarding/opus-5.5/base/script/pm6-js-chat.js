@@ -1414,134 +1414,13 @@
       '<div class="pm6-chat-personalist">' + body + '</div></div>';
   }
 
-  function motionReduced() {
-    return !!(document.documentElement && document.documentElement.getAttribute('data-motion') === 'reduced');
-  }
-  function portalIsOpen(el) {
-    return !!(el && el.classList.contains('is-open') && !el.classList.contains('is-closing'));
-  }
-  function portalAnimateHeight(el, mutateFn) {
-    if (!el) { if (mutateFn) mutateFn(); return; }
-    if (motionReduced() || !portalIsOpen(el)) {
-      if (mutateFn) mutateFn();
-      return;
-    }
-    var startH = el.getBoundingClientRect().height;
-    el.style.height = startH + 'px';
-    el.style.overflow = 'hidden';
-    if (mutateFn) mutateFn();
-    el.style.height = 'auto';
-    var endH = el.getBoundingClientRect().height; /* respects max-height */
-    if (Math.abs(endH - startH) < 0.5) {
-      el.style.height = '';
-      el.style.overflow = '';
-      return;
-    }
-    el.style.height = startH + 'px';
-    void el.offsetHeight;
-    /* CSS height spring (y>1) overshoots past endH then settles — the search bounce */
-    el.style.height = endH + 'px';
-    el.classList.remove('is-size-bounce');
-    void el.offsetWidth;
-    el.classList.add('is-size-bounce');
-    var finished = false;
-    function clearH(ev) {
-      if (finished) return;
-      if (ev && ev.target !== el) return;
-      if (ev && ev.propertyName && ev.propertyName !== 'height') return;
-      finished = true;
-      el.style.height = '';
-      el.style.overflow = '';
-      el.classList.remove('is-size-bounce');
-      el.removeEventListener('transitionend', clearH);
-    }
-    el.addEventListener('transitionend', clearH);
-    /* cover height spring + overshoot settle (effort uses ~360–420ms) */
-    setTimeout(clearH, el.classList.contains('pm6-chat-effort-popout-portal') ? 520 : 460);
-  }
-  /* Pin open/close sprout to the corner/edge nearest the trigger so the box
-     grows out of (and collapses into) its destination, not a fixed BL origin. */
-  function setPopoutSprout(el, anchorEl) {
-    if (!el || !anchorEl) return;
-    /* neutralize closed-state scale so we measure the real layout box */
-    var prevTf = el.style.transform;
-    el.style.transform = 'none';
-    void el.offsetWidth;
-    var pr = el.getBoundingClientRect();
-    el.style.transform = prevTf;
-    var ar = anchorEl.getBoundingClientRect();
-    if (!pr.width || !pr.height) return;
-    var ax = ar.left + ar.width / 2;
-    var ay = ar.top + ar.height / 2;
-    var isSide = el.classList.contains('pm6-chat-effort-popout-portal');
-    if (isSide) {
-      /* effort / side flyouts: sprout from the edge facing the parent row */
-      var fromLeft = ((pr.left + pr.right) / 2) >= ax;
-      var yPct = ((ay - pr.top) / pr.height) * 100;
-      yPct = Math.max(10, Math.min(90, yPct));
-      el.style.setProperty('--pm6-sprout-ox', fromLeft ? '0%' : '100%');
-      el.style.setProperty('--pm6-sprout-oy', yPct.toFixed(1) + '%');
-      el.style.setProperty('--pm6-sprout-tx', fromLeft ? '-10px' : '10px');
-      el.style.setProperty('--pm6-sprout-ty', '0px');
-      el.style.setProperty('--pm6-sprout-sx', '0.48');
-      el.style.setProperty('--pm6-sprout-sy', '0.72');
-      el.setAttribute('data-sprout', fromLeft ? 'l' : 'r');
-      return;
-    }
-    /* vertical popouts: snap to the corner nearest the trigger center */
-    var ox = ((ax - pr.left) / pr.width) * 100;
-    var oy = ((ay - pr.top) / pr.height) * 100;
-    var snapX = ox < 50 ? 12 : 88;
-    var snapY = oy < 50 ? 8 : 100;
-    if (ay >= pr.bottom - 2) snapY = 100;
-    else if (ay <= pr.top + 2) snapY = 0;
-    if (ax <= pr.left + 2) snapX = 8;
-    else if (ax >= pr.right - 2) snapX = 92;
-    var fromBottom = snapY >= 50;
-    var fromLeftC = snapX < 50;
-    el.style.setProperty('--pm6-sprout-ox', snapX + '%');
-    el.style.setProperty('--pm6-sprout-oy', snapY + '%');
-    el.style.setProperty('--pm6-sprout-tx', '0px');
-    el.style.setProperty('--pm6-sprout-ty', fromBottom ? '10px' : '-10px');
-    el.style.setProperty('--pm6-sprout-sx', '0.72');
-    el.style.setProperty('--pm6-sprout-sy', '0.48');
-    el.setAttribute('data-sprout', (fromBottom ? 'b' : 't') + (fromLeftC ? 'l' : 'r'));
-  }
-  function portalOpenAnim(el, afterOpen, anchorEl) {
-    if (!el) return;
-    el.classList.remove('is-closing');
-    var disp = el.getAttribute('data-portal-display') || 'block';
-    el.style.display = disp;
-    if (anchorEl) setPopoutSprout(el, anchorEl);
-    void el.offsetHeight;
-    el.classList.add('is-open');
-    if (afterOpen) afterOpen();
-  }
-  function portalCloseAnim(el, onDone) {
-    if (!el) { if (onDone) onDone(); return; }
-    if (!el.classList.contains('is-open') && el.style.display === 'none') {
-      if (onDone) onDone();
-      return;
-    }
-    el.classList.remove('is-open', 'is-size-bounce');
-    el.classList.add('is-closing');
-    var done = false;
-    function finish(ev) {
-      if (done) return;
-      if (ev && ev.target !== el) return;
-      if (ev && ev.propertyName && ev.propertyName !== 'opacity' && ev.propertyName !== 'transform') return;
-      done = true;
-      el.classList.remove('is-closing');
-      el.style.display = 'none';
-      el.style.height = '';
-      el.style.overflow = '';
-      el.removeEventListener('transitionend', finish);
-      if (onDone) onDone();
-    }
-    el.addEventListener('transitionend', finish);
-    /* cover the ~220ms corner-collapse close */
-    setTimeout(finish, motionReduced() ? 0 : 280);
-  }
+  /* The sprout (open, close, the corner pin, the height spring) is PM6_SPROUT's, the one owner every menu opens and
+     closes through (base/script/pm7-sprout.js, loaded before this script; its class contract is pm7-sprout.css). */
+  var portalIsOpen = window.PM6_SPROUT.isOpen;
+  var portalAnimateHeight = window.PM6_SPROUT.resize;
+  var setPopoutSprout = window.PM6_SPROUT.aim;
+  var portalOpenAnim = window.PM6_SPROUT.open;
+  var portalCloseAnim = window.PM6_SPROUT.close;
 
   var modePopout = null;
   var modePopoutAnchor = null;
@@ -2685,12 +2564,6 @@
       if (pane) pane.style.display = 'none';
       return { ok: true };
     }
-  };
-
-  window.PM6_SPROUT = {
-    open: portalOpenAnim,
-    close: portalCloseAnim,
-    isOpen: portalIsOpen
   };
 
   /* Runtime "i" popover: portal to body so it stacks above the composer/FAB. */

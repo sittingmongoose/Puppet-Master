@@ -141,6 +141,7 @@
 }
 `);
   const refresh = () => { saveState(); PM51.refresh(ID, { swap: false }); };
+  const testing = new Set();   // servers whose Check this server is waiting for the answer (W5)
   const fingerprint = s => { let x = 0; for (const c of String(s.id + s.address)) x = (x * 31 + c.charCodeAt(0)) >>> 0; return 'SHA256:' + x.toString(16).padStart(8, '0').toUpperCase() + '…' + (x * 7 >>> 0).toString(16).slice(0, 6).toUpperCase(); };
   const runOptions = () => {
     const opts = [['Automatic', 'Automatic (Home server)']];
@@ -660,7 +661,7 @@
       PM51.section({ title: 'Claim and bootstrap', body: PM51.kv([['Claimed', isClaimed(srv) ? 'Yes · identity confirmed' : 'Not yet'], ['Identity', fingerprint(srv)], ['Trust', isClaimed(srv) ? 'Owner' : 'None until claimed'], ['Bootstrap', srv.role === 'This computer' ? 'Installed with the app' : 'Claimed from an existing install']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${PM51.btn({ label: 'Claim this server', small: true, icon: 'lock', action: 'pm51-servers-claim', data: { id: srv.id }, disabled: isClaimed(srv), reason: 'This server is already yours.' })}${PM51.btn({ label: 'Set up a new server', small: true, icon: 'plus', action: 'pm51-servers-add' })}</div>` }),
       PM51.section({ title: 'Deployment', body: PM51.kv([['How it runs', srv.deployment || 'Unknown'], ['Image', /container/i.test(srv.deployment || '') ? 'puppetmaster/server:0.8.0' : 'Not a container'], ['Environments', (srv.environments || []).join(' · ') || 'None reported']]) }),
       PM51.section({ title: 'Full server backup', help: 'Backs up everything on this server, not just this workspace.', body: PM51.rows([{ label: 'Whole-server backup', help: 'Set up and run from Backup & Restore.', action: { label: 'Open Backup & Restore', action: 'pm51-go', data: { domain: 'system', workspace: 'backup' }, icon: 'arrowRight' } }]) }),
-      PM51.section({ title: 'Host and environment details', body: `<div class="pm51-servers-actions">${PM51.btn({ label: 'Check this server', small: true, icon: 'test', action: 'pm51-servers-test', data: { id: srv.id } })}${PM51.btn({ label: 'Add another server', small: true, icon: 'plus', action: 'pm51-servers-add' })}</div>` }),
+      PM51.section({ title: 'Host and environment details', body: `<div class="pm51-servers-actions">${PM51.btn({ label: testing.has(srv.id) ? 'Checking…' : 'Check this server', small: true, icon: 'test', action: 'pm51-servers-test', data: { id: srv.id }, busy: testing.has(srv.id), reason: 'Already checking this server.' })}${PM51.btn({ label: 'Add another server', small: true, icon: 'plus', action: 'pm51-servers-add' })}</div>` }),
       PM51.section({ title: 'Topology diagnostics', body: PM51.kv([['Servers', String(S.servers.length)], ['Devices', String(S.devices.length)], ['Routes ready', String(readyRoutes().length)]]) + `<div style="margin-top:10px"></div>` })
     ].join(''));
     return PM51.listDetail({
@@ -668,7 +669,7 @@
       add: { action: 'pm51-servers-add', label: 'Add a server', data: { 'command-id': 'cmd.server.claim' } },
       items,
       detail: {
-        title: srv.name, subtitle: `${srv.role} · ${srv.address}`, pill: PM51.status(srv.state),
+        title: srv.name, subtitle: `${srv.role} · ${srv.address}`, pill: srv.state === 'Checking' ? PM51.waiting('Checking') : PM51.status(srv.state),
         primary: { label: 'Open web UI', icon: 'external', action: 'pm51-servers-webui', data: { id: srv.id } },
         menu: anchor => PM51.menu(anchor, [
           { label: 'Connect', icon: 'network', disabled: srv.state === 'Connected', meta: srv.state === 'Connected' ? 'Already connected' : '', onClick: () => { srv.state = 'Checking'; refresh(); setTimeout(() => { srv.state = 'Needs attention'; srv.lastCheck = 'Just now'; refresh(); PM51.toast('Could not confirm the connection', 'Example data only. Run Test connection to see what was checked.', 'info'); }, 600); } },
@@ -722,7 +723,7 @@
     const data = { id: r.id };
     if (r.status === 'not-set-up') return PM51.btn({ label: r.setupLabel || 'Set Up', small: true, primary: !!r.recommended, action: 'pm51-servers-remote', data });
     if (r.status === 'needs-sign-in') return PM51.btn({ label: r.kind === 'remote-link' ? 'Continue pairing' : 'Continue sign-in', small: true, primary: true, action: 'pm51-servers-remote', data });
-    if (r.status === 'testing') return PM51.btn({ label: 'Check route', small: true, icon: 'test', action: 'pm51-servers-route-check', data, disabled: true, reason: 'A check is already running.' });
+    if (r.status === 'testing') return PM51.btn({ label: 'Checking…', small: true, icon: 'test', action: 'pm51-servers-route-check', data, busy: true, reason: 'A check is already running.' });
     if (r.status === 'ready' || r.status === 'needs-attention' || r.status === 'offline') return PM51.btn({ label: 'Check route', small: true, icon: 'test', action: 'pm51-servers-route-check', data });
     return PM51.btn({ label: 'Manage', small: true, action: 'pm51-servers-remote', data });
   }
@@ -1119,15 +1120,22 @@
     if (s.default) { PM51.toast('One server must be the default', 'Turn this on for another server instead.', 'info'); return; }
     S.servers.forEach(x => { x.default = x.id === s.id; }); refresh();
   });
+  /* Check this server waits for the server's answer before it reports (W5): its button holds the system loader for the
+     fixture's 700 ms, like the route check's, then the result opens. The button waits in place (PM51.waitOn), so the
+     Advanced section it sits in stays open; testing keeps it busy if the page is drawn again meanwhile. */
   PM51.on('servers-test', el => {
-    const s = serverById(ds(el, 'id')); if (!s) return;
+    const id = ds(el, 'id'); if (!serverById(id) || testing.has(id)) return;
+    testing.add(id); PM51.waitOn(el, true, 'Checking…');
+    setTimeout(() => { testing.delete(id); if (el && el.isConnected) PM51.waitOn(el, false); else refresh(); const s = serverById(id); if (s) reportServerCheck(s); }, 700);
+  });
+  function reportServerCheck(s) {
     PM51.check({ title: `Test connection · ${s.name}`, steps: [
       { title: 'Address resolves', desc: s.address },
       { title: 'Server answers', desc: 'Puppet Master service' },
       { title: 'Identity matches', desc: fingerprint(s) },
       { title: 'Version compatible', desc: s.version === '—' ? 'Unknown until claimed' : s.version, tone: s.version === '—' ? 'attention' : 'ready', status: s.version === '—' ? 'Unknown' : 'Checked' }
     ] });
-  });
+  }
   PM51.on('servers-claim-identity', el => {
     const s = serverById(ds(el, 'id')); if (!s) return;
     openDialog({ title: 'Confirm identity', subtitle: `Compare this fingerprint with the one shown on ${s.name}. They must match exactly.`, body: `<div class="pm51-servers-conf">${h(fingerprint(s))}</div>`, saveLabel: 'They match', onSave: () => { s.claimSteps = Object.assign({}, s.claimSteps, { identity: true }); refresh(); } });

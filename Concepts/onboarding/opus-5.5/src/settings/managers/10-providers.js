@@ -1110,7 +1110,14 @@
         { title: 'Approve Puppet Master', desc: 'You choose what it may use.' },
         { title: 'Come back here', desc: 'The account appears under Accounts.' }
       ])) + PM51.note('Your password never passes through Puppet Master.'),
-      primaryLabel: 'Open browser sign-in', onPrimary: () => example('Sign-in requested', `Example data only. No browser was opened for ${service} in this preview.`)
+      /* the sign-in is a wait (W5): the button holds the system loader while the browser window would be open; this
+         preview opens none, so the wait ends after a moment and says so */
+      primaryLabel: 'Open browser sign-in', onPrimary: wrap => {
+        const btn = wrap.querySelector('.btn.primary[data-callback]');
+        PM51.waitOn(btn, true, 'Waiting for the browser…');
+        window.setTimeout(() => { if (!wrap.isConnected) return; PM51.waitOn(btn, false); closeDrawerWrap(wrap); example('Sign-in requested', `Example data only. No browser was opened for ${service} in this preview.`); }, 1400);
+        return false;
+      }
     });
   }
   function signInPanel(p, key, label) {

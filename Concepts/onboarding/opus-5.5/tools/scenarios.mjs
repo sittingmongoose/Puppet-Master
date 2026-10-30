@@ -405,6 +405,195 @@ def('m2', 'fresh', 'Each beginning lowers its own prop; a choice drops it in wit
   A.ok(s && s.mood === 'happy', 'Pip is happy at the choice (' + (s && s.mood) + ')');
 });
 
+/* The M1/M2 reviews' fixes (Astra 2026-10-30, Muse 2026-10-30), kept as regressions. */
+const ST = () => window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage'));
+const pip = (d) => d.page.evaluate(() => { const s = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')); return s ? { mood: s.curMood, sleep: !!s.sleepZ, asleep: !!s.ps.asleep, say: s.saying || '', lineId: s.spec && s.spec.lineId, oops: s.spec && s.spec.oops, work: !!(s.spec && s.spec.pip && s.spec.pip.work), props: [...s.props.values()].filter((p) => p.state !== 'out').map((p) => ({ kind: p.spec.kind, preview: !!p.spec.preview })) } : null; });
+const rest = async (d, sel, ms) => { const r = await d.page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; }, sel); for (let i = 0; i < 6; i++) { await d.page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: r.x - 30 + i * 5, y: r.y }); await sleep(30); } await sleep(ms); };
+const away = async (d) => { const r = await d.page.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) #o55-h').getBoundingClientRect(); return { x: b.left + 10, y: b.top + b.height / 2 }; }); await d.page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: r.x, y: r.y }); };
+def('pr1', 'fresh', 'NieR Mode: the checkbox is uncovered and a click turns it on and off (Muse B1)', async (d, A) => {
+  await d.openOnboarding(); await d.primary();
+  A.eq(await d.screen(), 'look', 'Pick a look');
+  const hit = await d.state(() => { const c = document.querySelector('#pm-o55-onboarding .o55-niercheck'), r = c.getBoundingClientRect(), t = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return !!t && (t === c || c.contains(t)); });
+  A.ok(hit, 'the checkbox is what a press at its middle reaches');
+  await d.act('pickNier'); await d.settle();
+  A.ok(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-niercheck').getAttribute('aria-checked') === 'true'), 'NieR Mode on');
+  await d.act('pickNier'); await d.settle();
+  A.ok(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-niercheck').getAttribute('aria-checked') === 'false'), 'NieR Mode off again');
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding [data-nier-thumb] .o55-tilepip svg')), 'its picture drawn again after the toggles');
+});
+def('pr2', 'fresh', 'Welcome: Pip sleeps until a real arrival, then is lifted (Astra M04, Muse m1)', async (d, A) => {
+  await d.openOnboarding(); await sleep(4500);
+  const a = await pip(d);
+  A.ok(a && a.sleep && a.asleep, 'still asleep after 4.5 s without input (' + JSON.stringify(a && { sleep: a.sleep, asleep: a.asleep }) + ')');
+  for (let i = 0; i < 12; i++) { await d.page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 700 + i * 9, y: 500 + i * 3 }); await sleep(40); }
+  await until(d, "!window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')).sleepZ", 'woken', 4000);
+  await sleep(1500);
+  const b = await pip(d);
+  A.ok(b && !b.asleep, 'lifted off the floor once awake');
+});
+def('pr3', 'fresh', "The rail: a finished chapter's bead takes you back to it (Astra M05)", async (d, A) => {
+  await d.openOnboarding(); await toName(d);
+  A.eq(await d.screen(), 'name', 'on Name');
+  A.ok(await d.state(() => { const b = document.querySelector('#pm-o55-onboarding .o55-railjump[data-arg="computer"]'); return !!b && b.tabIndex >= 0 && /Computer/.test(b.getAttribute('aria-label')); }), 'Computer is a button named for going back to it');
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding .o55-railjump[data-arg="ai"]')), 'a chapter not reached is not');
+  await d.click('#pm-o55-onboarding .o55-railjump[data-arg="computer"]', 'Computer on the rail'); await d.settle();
+  A.eq(await d.screen(), 'where', 'back at the first screen of Computer');
+  await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'name', 'forward again as before');
+});
+def('pr4', 'fresh', 'A previewed choice gives way to the chosen one (Astra M02)', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary();
+  A.eq(await d.screen(), 's-kind', 'kind of Server');
+  await d.act('kind', 'cloud');
+  await rest(d, '#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="kind"][data-arg="nas"]', 900);
+  let s = await pip(d);
+  A.ok(s.props.some((p) => p.kind === 'nas' && p.preview), 'the NAS previewed');
+  await away(d); await sleep(1400);
+  s = await pip(d);
+  A.ok(s.props.some((p) => p.kind === 'cloud' && !p.preview) && !s.props.some((p) => p.kind === 'nas'), 'cloud, chosen, back on the stage (' + JSON.stringify(s.props) + ')');
+});
+def('pr5', 'fresh', 'A drag holds the speech and the note where they are (Astra M03)', async (d, A) => {
+  await d.openOnboarding(); await d.primary();
+  const r = await d.page.evaluate(async () => {
+    const st = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')), wait = (ms) => new Promise((f) => setTimeout(f, ms));
+    const said = () => (st.bubble.querySelector('.pst-bt-on') || {}).textContent.length;
+    st.sayNow('A sentence long enough to be typed out for a good while, word by word, letter by letter.', 'happy');
+    await wait(250); document.body.classList.add('pm-resizing');
+    const a = said(); await wait(1100); const b = said();
+    document.body.classList.remove('pm-resizing'); await wait(120); const c = said();
+    return { a, b, c };
+  });
+  A.ok(r.a > 0 && r.b === r.a, 'held through the drag (' + r.a + ' → ' + r.b + ')');
+  A.ok(r.c > r.b && r.c - r.b < 14, 'goes on where it was, no burst (' + r.b + ' → ' + r.c + ')');
+});
+def('pr6', 'wrongPassword', 'A refused NAS password reaches Pip on the way back; the install ends happy (Astra M07, M08)', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary(); await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary(); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys', 5000); await d.primary();
+  await d.type('user', 'jared'); await d.type('pw', 'wrong'); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:new']||{}).state === 'failed'", 'failed', 8000); await d.primary();
+  A.eq(await d.screen(), 'nas-signin', 'back to sign in'); await sleep(700);
+  let s = await pip(d);
+  A.ok(s.oops === 'nas.signin.wrong' && s.mood === 'oops', 'Pip shows the refused password (' + s.oops + ', ' + s.mood + ')');
+  await d.type('pw', 'correct horse'); await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:new']||{}).state === 'done'", 'installed', 9000);
+  await sleep(1600); s = await pip(d);
+  A.ok(s.lineId === 'done' && !s.work, 'the install done line, no longer working (' + s.lineId + ')');
+});
+def('pr7', 'antigravityOnce', 'A sign-in retry: Pip waits with it, and cheers only once it has worked (Astra M01, M07)', async (d, A) => {
+  await toAi(d, 'Retry');
+  await d.act('install', 'antigravity'); await d.act('installGo', 'antigravity');
+  await until(d, "(window.O55.S.sess.ai.accounts.antigravity||{}).state === 'signin'", 'installed', 9000);
+  await d.act('signin', 'antigravity');
+  await until(d, "(window.O55.S.sess.ai.accounts.antigravity||{}).state === 'signinFailed'", 'failed once', 9000); await sleep(600);
+  let s = await pip(d);
+  A.ok(s.mood === 'oops', 'oops at the failure (' + s.mood + ')');
+  await d.act('signin', 'antigravity'); await sleep(400);
+  s = await pip(d);
+  A.ok(s.mood !== 'happy' && s.lineId === 'signingIn', 'no cheer while it is signing in (' + s.mood + ', ' + s.lineId + ')');
+  await until(d, "(window.O55.S.sess.ai.accounts.antigravity||{}).state === 'ready'", 'signed in', 9000); await sleep(500);
+  s = await pip(d);
+  A.ok(s.mood === 'happy', 'the cheer once signed in (' + s.mood + ': ' + s.say + ')');
+  const b = await bridged(d);
+  A.ok(!b.bridged && !b.native && !b.unexempt, 'AI: no bridged, natively disabled or unexempt control (' + JSON.stringify(b) + ')');
+});
+def('pr8', 'fresh', 'An empty name sent on: oops, then the cheer once named (Astra m02); radio circles line up (m03)', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary();
+  const xs = await d.state(() => [...document.querySelectorAll('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-card > .o55-check')].map((c) => Math.round(c.getBoundingClientRect().left)));
+  A.ok(xs.length > 1 && xs.every((x) => x === xs[0]), 'Where: every circle at one x (' + xs.join(',') + ')');
+  await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'name', 'Name');
+  /* (Continue is refused while the name is empty: a real press on it, as a person would make) */
+  const at = await d.state(() => { const r = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-primary').getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
+  await d.page.mouse(at.x, at.y); await sleep(900);
+  let s = await pip(d);
+  A.ok(s.oops === 'name.empty' && s.mood === 'oops', 'oops at the empty name (' + s.oops + ', ' + s.mood + ')');
+  await d.type('name', 'Garden'); await sleep(2200);
+  s = await pip(d);
+  A.ok(!s.oops, 'the error gone once named');
+});
+def('pr9', 'fresh', "A group's note describes every member: review's Edits (Astra M06)", async (d, A) => {
+  await d.openOnboarding(); await toName(d); await d.type('name', 'Describe'); 
+  for (let i = 0; i < 6 && (await d.screen()) !== 'review'; i++) await d.primary();
+  A.eq(await d.screen(), 'review', 'Review');
+  await d.act('tip', 'group:edit');
+  A.ok(await d.state(() => { const l = [...document.querySelectorAll('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-link[data-o55-do="edit"]')]; return l.length > 1 && l.every((e) => (e.getAttribute('aria-describedby') || '').split(' ').includes('pm7ob-explainer')); }), 'every Edit is described by the note');
+  A.ok(await d.state(() => !!document.getElementById('pm7ob-explainer')), 'the note is on the page');
+});
+
+def('pr10', 'fresh', 'A preview shown is kept at least 0.9 s, even when the pointer leaves at once (Astra m01)', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'where', 'Where');
+  await d.page.evaluate(() => { const w = window.__pv = { on: null, off: null }; new MutationObserver(() => { const n = document.querySelector('#pm-o55-onboarding .o55-previewing'); const t = performance.now(); if (n && w.on == null) w.on = t; if (!n && w.on != null && w.off == null) w.off = t; }).observe(document.getElementById('pm-o55-onboarding'), { subtree: true, attributes: true, attributeFilter: ['class'] }); });
+  await rest(d, '#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="pick"][data-arg="connect"]', 0);
+  await until(d, '!!(window.__pv && window.__pv.on)', 'preview shown', 3000);
+  await away(d); await sleep(1600);
+  const w = await d.state(() => window.__pv);
+  A.ok(w.off != null && w.off - w.on >= 880, 'shown for ' + Math.round((w.off || 0) - w.on) + ' ms');
+});
+/* the hover-tag scanner's disabled bridge never binds the window's controls (they are exempt and use aria-disabled) */
+const bridged = (d) => d.state(() => { const r = document.getElementById('pm-o55-onboarding'); return { bridged: r.querySelectorAll('[data-pm-hover-was-disabled], [data-pm-hover-native-title]').length, native: r.querySelectorAll('button[disabled], input[disabled]').length, unexempt: [...r.querySelectorAll('button')].filter((b) => !b.closest('[data-pm-hover-exempt]')).length }; });
+def('pr11', 'fresh', "Demo Studio's calls: O55.ui.fill types with Pip's wonder, O55.ui.act presses as a click; no hover-tag bridge in the window", async (d, A) => {
+  await d.openOnboarding(); await toName(d);
+  let b = await bridged(d);
+  A.ok(!b.bridged && !b.native && !b.unexempt, 'Name: no bridged, natively disabled or unexempt control (' + JSON.stringify(b) + ')');
+  A.ok(await d.state(() => window.O55.ui.fill('name', 'Garden')), 'fill found the field'); await sleep(500);
+  const s = await pip(d);
+  A.ok(s.mood === 'wonder', 'Pip watches the field in wonder (' + s.mood + ')');
+  A.eq((await d.draft('main')).project_name, 'Garden', 'the binding has the name');
+  A.ok(await d.state(() => window.O55.ui.act('next')), 'act pressed Continue'); await d.settle();
+  A.ok((await d.screen()) !== 'name', 'moved on from Name (' + (await d.screen()) + ')');
+  b = await bridged(d);
+  A.ok(!b.bridged && !b.native && !b.unexempt, (await d.screen()) + ': none either (' + JSON.stringify(b) + ')');
+});
+def('pr12', 'antigravityOnce', 'Opened at a post-commit screen, the run has its Project: AI detects and signs in, Ready sums it up (Demo Studio)', async (d, A) => {
+  const refused = () => d.state(() => window.O55.owners.log.filter((e) => !e.ok && e.reason === 'needs_committed_project').length);
+  for (const scr of ['ai', 'ai-all', 'ai-none', 'free', 'protect', 'ready']) {
+    await d.page.evaluate((s) => { if (window.O55.ui.S.open) window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: s }); }, scr);
+    await d.until(() => !!(window.O55.S.open && document.querySelector('#pm-o55-onboarding .o55-layer[data-screen]')), { what: 'open at ' + scr }); await d.settle();
+    A.eq(await d.screen(), scr, 'opened at ' + scr);
+    A.ok(await d.state(() => window.O55.S.sess.commit.state === 'done'), scr + ': a Project made');
+  }
+  await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 'ai' }); }); await d.settle();
+  await until(d, "(window.O55.S.sess.ops['detect:this computer']||{}).state === 'done'", 'detection', 9000); A.ok(true, 'AI: detection ran');
+  await d.act('install', 'antigravity'); await d.act('installGo', 'antigravity');
+  await until(d, "(window.O55.S.sess.ai.accounts.antigravity||{}).state === 'signin'", 'installed', 9000);
+  A.ok(await d.state(() => window.O55.ui.act('signin', 'antigravity')), 'act: Sign in');
+  await until(d, "(window.O55.S.sess.ai.accounts.antigravity||{}).state === 'signinFailed'", 'the sign-in fails once', 9000); await sleep(600);
+  A.ok((await pip(d)).mood === 'oops', 'Pip: oops');
+  A.eq(await refused(), 0, 'no command refused for want of a Project');
+  await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 'ready' }); }); await d.settle();
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-key="sum-project"]')), 'Ready: the Project in its summary');
+  await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 'ready', committed: false }); }); await d.settle();
+  A.ok(await d.state(() => window.O55.S.sess.commit.state !== 'done'), 'committed: false opts out');
+});
+def('pr13', 'fresh', "Jared's O6: hovering a look tile changes neither the window's look nor Pip's world; a click does", async (d, A) => {
+  await d.openOnboarding(); await d.primary();
+  A.eq(await d.screen(), 'look', 'Pick a look');
+  const look = () => d.state(() => { const s = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')); return { theme: document.documentElement.getAttribute('data-theme'), world: s.theme, pip: s.pipTheme, mood: s.curMood }; });
+  const before = await look();
+  await rest(d, '#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-tile[data-arg="glass"]', 1200);
+  const hover = await look();
+  A.ok(hover.theme === before.theme && hover.world === before.world && hover.pip === before.pip, 'hovering Glass: the look stays (' + JSON.stringify(hover) + ')');
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-previewing')), 'the hovered tile is marked and Pip watches it');
+  await d.act('pickFamily', 'glass'); await sleep(1500);
+  const picked = await look();
+  A.ok(/^glass/.test(picked.theme) && /^glass/.test(picked.world), 'a click changes the look (' + picked.theme + ', ' + picked.world + ')');
+});
+def('pr14', 'fresh', "Jared's O12 B: Creating's Continue waits for the last block to land on Pip's stack", async (d, A) => {
+  await d.openOnboarding(); await toName(d); await d.type('name', 'Blocks');
+  for (let i = 0; i < 6 && (await d.screen()) !== 'review'; i++) await d.primary();
+  await readyPrimary(d);
+  await d.page.evaluate(() => { const w = window.__o12 = { done: null, enabled: null, landed: [] }; const st = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage'));
+    const tick = () => { const cm = window.O55.S.sess.commit || {}, b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-primary'), t = performance.now();
+      if (cm.state === 'done' && w.done == null) w.done = t; if (w.done != null && b && b.getAttribute('aria-disabled') !== 'true' && w.enabled == null) { w.enabled = t; w.at = st.blocksLanded(); w.want = window.O55.review.phasesFor(window.O55.S).length; }
+      if (w.enabled == null) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick); });
+  await d.primary();
+  await until(d, '!!(window.__o12 && window.__o12.enabled)', 'Continue enabled', 25000);
+  const w = await d.state(() => window.__o12);
+  A.ok(w.at >= w.want, 'Continue came on with every block down (' + w.at + ' of ' + w.want + ')');
+  A.ok(w.enabled - w.done < 2600, 'and within the cap (' + Math.round(w.enabled - w.done) + ' ms after the Project was made)');
+});
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();

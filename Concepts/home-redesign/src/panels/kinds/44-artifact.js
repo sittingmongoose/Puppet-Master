@@ -969,8 +969,9 @@ function mountArtifact(host, state, api) {
         { label: 'Keep this version', run: function () { s.pinned = true; render(); api.announce('Kept this version'); } }]));
     }
     if (stt === 'loading' && !s.retrying) { out = out.concat(loadingBody()); startLoading(); return out; }
-    if (s.retrying) return out.concat([h('div', { class: 'pmw-art-loading', role: 'status' }, [h('p', { class: 'pmw-art-loadt' }, [h('b', { text: 'Drawing it again' }), h('span', { text: ' · reading the same source' })]),
-      h('div', { class: 'pmw-art-progress is-indeterminate', 'aria-hidden': 'true' }, [h('span', { class: 'pmw-art-progbar' })])])]);
+    // drawing it again is a wait of unknown length: the system loader before its words (W5), never a bar that sweeps
+    // as if it measured something; the first draw keeps its measured bar (loadingBody)
+    if (s.retrying) return out.concat([h('div', { class: 'pmw-art-loading is-wait', role: 'status', 'aria-busy': 'true' }, [h('p', { class: 'pmw-art-loadt' }, [PMW.loader({ motion: 'swing', px: 16 }), h('b', { text: 'Drawing it again' }), h('span', { text: ' · reading the same source' })])])]);
     if (stt === 'error') {
       var e = art.error;
       out.push(note('bad', 'problems', s.retries ? 'Still could not draw this view' : 'This view could not be drawn', e.reason + ' ' + e.detail, [

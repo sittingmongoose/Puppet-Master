@@ -472,7 +472,7 @@
   /* Glyphs come from the neon registry through ctx.icon (one drawing per concept: the plan decision draws the plan's
      folded map, the permission decision the shield, as the transcript cards do). They are concept or control glyphs
      with no loop, so nothing inside a decision sheet runs an infinite animation; the morph's pill face remounts, so
-     it carries no neon act of its own (its orrery is a spinner in token colour). */
+     it carries no neon act of its own (its wait is the system loader, waitHtml). */
   function iconOf(ctx, name, size) { return ctx.icon(name, size || 12); }
 
   function pills(ctx, m) {
@@ -488,7 +488,7 @@
   /* W4 (PM7 build 2026-10-29): a plan ready for review has Pip holding up the page (PM56_SHELL.pmxPip, the one kit),
      watching you read it; every other head keeps its glyph */
   function head(ctx, m, cls) {
-    var S = window.PM56_SHELL, pip = m.icon === 'plan' && S && S.pmxPip ? S.pmxPip({ prop: 'page', mood: 'watch', size: 22, detail: true, cls: 'qs-head-pip' }) : '';
+    var S = window.PM56_SHELL, pip = m.icon === 'plan' && S && S.pmxPip ? S.pmxPip({ prop: 'page', mood: 'watch', size: 22, detail: true, cls: 'qs-head-pip', part: 'plans' }) : '';
     return '<div class="qs-head' + (cls ? ' ' + cls : '') + '" data-k="qs-head">'
       + '<span class="event-icon qs-head-icon"' + (pip ? ' data-pip="1"' : '') + '>' + (pip || iconOf(ctx, m.icon, 13)) + '</span>'
       + '<strong class="qs-title">' + ctx.esc(m.title) + '</strong>'
@@ -1166,23 +1166,18 @@
       + '</section>';
   }
 
-  function orreryHtml() {
-    return '<span class="qs-orrery" aria-hidden="true">'
-      + '<span class="qs-orrery-ring qs-orrery-a"></span>'
-      + '<span class="qs-orrery-ring qs-orrery-b"></span>'
-      + '<i class="qs-orrery-bead"></i>'
-      + '<i class="qs-orrery-bead"></i>'
-      + '<i class="qs-orrery-bead"></i>'
-      + '</span>';
+  /* Preparing and submitting are waits: the system loader (W5, DR-077; window.PM_PIP_LOADER, Swing; Think is the thinking
+     placeholder's), 18 px, in a slot the reconcile leaves to it (data-pm-keep, stable data-k) so the work tick never
+     arms it again. It replaces take 8's orrery and the other takes' four-dot orbit. */
+  function waitHtml() {
+    var LD = window.PM_PIP_LOADER;
+    return LD ? '<span class="qs-wait" data-k="qs-wait" data-pm-keep aria-hidden="true">' + LD.html({ motion: 'swing', px: 18 }) + '</span>' : '';
   }
   function waitPill(ctx, m) {
     var label = m.type === 'preparing' ? 'Preparing questions…' : 'Submitting answers…';
-    var spin = (m.take === 8 || takeOf(ctx) === 8)
-      ? orreryHtml()
-      : '<span class="qs-orbit" aria-hidden="true"><i></i><i></i><i></i><i></i></span>';
-    return '<div class="qs qs-pill-beat" data-k="qs-pill">'
+    return '<div class="qs qs-pill-beat" data-k="qs-pill" aria-busy="true">'
       + '<span class="qs-pill-label">' + ctx.esc(label) + '</span>'
-      + spin
+      + waitHtml()
       + '</div>';
   }
   function wrapShell(ctx, m, html) {
@@ -1594,7 +1589,7 @@
   function pillFace(label, extraClass) {
     var face = document.createElement('div');
     face.className = 'qs-pill-beat qs-morph-face' + (extraClass ? ' ' + extraClass : '');
-    face.innerHTML = '<span class="qs-pill-label"></span>' + orreryHtml();
+    face.innerHTML = '<span class="qs-pill-label"></span>' + waitHtml();
     face.querySelector('.qs-pill-label').textContent = label;
     return face;
   }

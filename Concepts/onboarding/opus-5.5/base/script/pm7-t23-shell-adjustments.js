@@ -896,8 +896,16 @@
       bar.setAttribute('aria-label','Workspace status');
       bar.innerHTML =
         '<div class="pm7-statusbar-group">' +
-          '<button type="button" class="pm7-statusitem" data-status-action="system" title="Open system status" data-pm-hover-label="System status" data-pm-hover-detail="Everything Puppet Master needs is running. Click to see each service."><span class="pm7-status-dot"></span><strong>Ready</strong></button>' +
+          '<button type="button" class="pm7-statusitem" data-status-action="system" data-ui-action-id="ui.system_status.open" data-binding-id="statusbar.system_status" aria-haspopup="dialog" aria-expanded="false" aria-controls="pm7-work-system" title="Open system status" data-pm-hover-label="System status" data-pm-hover-detail="Everything Puppet Master needs is running. Click to see each service."><span class="pm7-status-dot"></span><strong>Ready</strong></button>' +
           '<span class="pm7-statusitem" title="Project root" data-pm-hover-label="Project folder" data-pm-hover-detail="Where this Project\'s files are kept on this computer."><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 5.5h5l1.6 1.8h8.4v8.2h-15z"/></svg>~/Puppet-Master</span>' +
+        '</div>' +
+        /* agents and processes across Puppet Master (W6, D5): their own group, framed by the bar's dividers, between the
+           project folder and source control. O55's 48-work.js paints them from the one work projection (PM_WORK) and
+           opens their panel; no CPU or RAM item (G4). */
+        '<div class="pm7-statusbar-group pm7-work-group" data-work-group hidden>' +
+          '<button type="button" class="pm7-statusitem pm7-work-item" data-status-action="agents" aria-haspopup="dialog" aria-controls="pm7-work" aria-expanded="false"></button>' +
+          '<button type="button" class="pm7-statusitem pm7-work-item" data-status-action="processes" aria-haspopup="dialog" aria-controls="pm7-work" aria-expanded="false"></button>' +
+          '<span class="pm7-statusitem pm7-work-stale" data-work-stale hidden></span>' +
         '</div>' +
         '<div class="pm7-statusbar-group">' +
           '<button type="button" class="pm7-statusitem" data-status-action="source" title="Source control" data-pm-hover-label="Source control" data-pm-hover-detail="The branch you are working on. Click to see its state."><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="4.5" r="2"/><circle cx="5" cy="15.5" r="2"/><circle cx="15" cy="10" r="2"/><path d="M5 6.5v7M7 6c4.5 0 3 4 6 4"/></svg>main</button>' +
@@ -912,6 +920,7 @@
         '</div>';
       shell.appendChild(bar);
     } else if (bar.parentNode !== shell) shell.appendChild(bar);
+    try { if (window.PM7_WORK_UI) window.PM7_WORK_UI.paintBar(); } catch (error) {}
     var hostItem = bar.querySelector('[data-status-item="host"]');   /* O55: the host item's tag (A16) */
     if (hostItem && !hostItem.hasAttribute('data-pm-hover-label')) {
       hostItem.setAttribute('data-pm-hover-label', 'Where it runs');
@@ -925,7 +934,10 @@
     updatePage();
     document.addEventListener('click', function (event) {
       var action = event.target.closest && event.target.closest('[data-status-action]');
-      if (action) statusToast(action.getAttribute('data-status-action') === 'snapshot' ? 'Snapshot details · last safe point 10 minutes ago' : action.getAttribute('data-status-action') === 'source' ? 'Source control · main · clean' : 'System status · all core services ready');
+      var which = action && action.getAttribute('data-status-action');
+      /* System status opens its popover (PM7_WORK_UI.systemStatus: the services and their Settings owners, A5) */
+      if (which === 'system' && window.PM7_WORK_UI && typeof window.PM7_WORK_UI.systemStatus === 'function') { window.PM7_WORK_UI.systemStatus(); return; }
+      if (which === 'snapshot' || which === 'source' || which === 'system') statusToast(which === 'snapshot' ? 'Snapshot details · last safe point 10 minutes ago' : which === 'source' ? 'Source control · main · clean' : 'System status · all core services ready');
       if (event.target.closest && event.target.closest('[data-page]')) setTimeout(updatePage, 0);
     });
     document.addEventListener('page.changed', updatePage);

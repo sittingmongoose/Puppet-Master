@@ -93,6 +93,10 @@
   height: 28px;
   flex: 0 0 auto;
 }
+/* Retro's monospace "Activity Detail" is 135 px at 15 px; beside the domain menu, Pin and close it had 119 and
+   ellipsized (Muse m5). Retro gives it the room from its gaps and a half step of size; the buttons keep 28 px */
+body[data-theme^="retro"] .activity-panel-head { gap: 4px; padding-left: 10px; padding-right: 6px; }
+body[data-theme^="retro"] .activity-panel-head > strong { font-size: 13.5px; letter-spacing: -.01em; }
 .activity-head-overflow { display: none; position: relative; }
 .activity-head-overflow > summary {
   display: grid;
@@ -330,6 +334,9 @@
 }
 .pmap-row:hover { background: var(--surface-3); }
 .pmap-row .pmap-row-mark { display: grid; place-items: center; width: 14px; }
+/* a row whose mark is an agent's Pip gets the agent rows' 20 px column */
+.pmap-row:has(> .pmap-row-mark .pmx-mark) { grid-template-columns: 20px minmax(0,1fr) minmax(56px,auto); }
+.pmap-row .pmap-row-mark:has(.pmx-mark) { width: 20px; line-height: 0; }
 .pmap-row .copy { min-width: 0; flex: 1; }
 .pmap-row .copy strong {
   display: block; overflow: hidden; color: var(--text); font-size: 13px; font-weight: 600;
@@ -352,6 +359,10 @@
   grid-template-columns: minmax(0,1fr) 68px;
   min-height: 48px;
 }
+/* an agent row wears its puppet (the chat's one puppet primitive, pmxMark through app.js agentPuppet; X1: each
+   individual agent is Pip, which the primitive draws) */
+.pmap-row.pmap-agent-row:has(> .pmap-agent-mark) { grid-template-columns: 20px minmax(0,1fr) 68px; }
+.pmap-agent-row > .pmap-agent-mark { display: grid; place-items: center; width: 20px; line-height: 0; }
 .pmap-agent-row .right {
   width: 68px; min-width: 68px;
   display: flex; flex-direction: column; align-items: flex-end; gap: 1px;
@@ -918,3 +929,30 @@ u.agent-model { text-decoration: underline; text-decoration-thickness: 1px; text
   }
   .pmap, .pmap * { animation-duration: 1ms !important; }
 }
+
+/* ── Processes (W6): the focused view of what this thread started ─────────
+   Rows are the panel's .pmap-row grammar with a still status mark, a word
+   and a time; an open row holds the shared detail block (48-work.js, its
+   .wk-* rules). The foot says what composer Stop does and holds Stop all. */
+.pmap-procs .pmap-focus-ident svg { flex: none; }
+.pmap-proc + .pmap-proc { margin-top: 2px; }
+.pmap-row.pmap-proc-row { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; align-items: start; gap: 8px; width: 100%; text-align: left; }
+.pmap-proc-row .pmap-proc-lead { display: inline-flex; padding-top: 2px; }
+.pmap-proc-row .copy > span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmap-proc-row > .right { display: grid; justify-items: end; gap: 1px; white-space: nowrap; }
+.pmap-proc-row > .right b[data-tone="attention"] { color: var(--warning); }
+.pmap-proc-row > .right b[data-tone="working"] { color: var(--accent); }
+.pmap-proc-row > .right b[data-tone="blocked"] { color: var(--danger); }
+.pmap-proc-row > .right b[data-tone="done"] { color: var(--positive); }
+.pmap-proc-row > .right i { font-style: normal; color: var(--subtle); font-variant-numeric: tabular-nums; }
+.pmap-proc.is-open > .pmap-proc-row { background: var(--surface-3); }
+.pmap-proc .wk-detail { padding-left: 32px; }
+.pmap-askline { font-weight: 600; color: var(--text); white-space: normal; }
+.pmap-mono { font-family: var(--font-mono); }
+.pmap-link { cursor: pointer; color: var(--accent); background: none; border: 0; padding: 0; font: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.pmap-proc-strip { display: flex; align-items: flex-start; gap: 7px; margin: 8px 0; padding: 7px 10px; border: 1px solid color-mix(in srgb, var(--warning) 45%, var(--border));
+  border-radius: 7px; background: color-mix(in srgb, var(--warning) 9%, transparent); font-size: 12px; line-height: 1.4; color: var(--text); }
+.pmap-proc-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; padding: 8px 12px 10px; border-top: 1px solid var(--border);
+  font-size: 11.5px; color: var(--subtle); }
+.pmap-proc-foot .pmap-proc-stopall { flex: none; }
+.pmap-proc-detail .wk-detail { padding-left: 0; }

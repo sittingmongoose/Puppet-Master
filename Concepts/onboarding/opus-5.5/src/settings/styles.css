@@ -96,6 +96,11 @@
 #panel-settings .pm51-btn.small { min-height: 28px; padding: 0 10px; font-size: 11.5px; }
 #panel-settings .pm51-btn .icon, #panel-settings .pm51-btn svg { width: 14px; height: 14px; }
 #panel-settings .pm51-btn[aria-disabled="true"], #panel-settings .pm51-mgr [aria-disabled="true"] { opacity: var(--k3-dim, .7); cursor: not-allowed; transform: none; }
+/* a busy button (PM51.btn busy) waits rather than refuses: full strength, the system loader at the icon's size */
+#panel-settings .btn[data-pm51-busy], #panel-settings .pm51-mgr .pm51-btn[data-pm51-busy] { opacity: 1; cursor: progress; transform: none; }
+#panel-settings .btn > .pml-ld { --pml-size: 14px; }
+#panel-settings .btn > .pml-ld > svg { width: 100%; height: 100%; }
+#panel-settings .pm51-waiting > .pml-ld { --pml-size: 14px; margin-right: 1px; }
 #panel-settings .pm51-link { border: 0; background: none; padding: 0; color: var(--k3-text-3); font: inherit; font-size: 11.5px; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; }
 #panel-settings .pm51-link:hover { color: var(--k3-text-1); }
 #panel-settings .pm51-quiet { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 10px 2px 0; margin-top: 12px; border-top: 1px solid var(--k3-line); }
@@ -346,18 +351,13 @@ html[data-density="compact"] #panel-settings .pm51-all .all-settings-window .set
 #panel-settings .form-field .pm51-dd-trigger, #panel-settings .pm51-dd-form .pm51-dd-trigger { width: 100%; max-width: none; min-height: 36px; }
 #panel-settings .setting-control .pm51-dd-trigger { max-width: 270px; }
 
-/* ---- popouts (dropdown lists, menus, pickers) — live in body, chat "sprout" motion ---------- */
+/* ---- popouts (dropdown lists, menus, pickers) — live in body; their motion is the menu sprout's (PM6_SPROUT's class
+   contract, base/style/pm7-sprout.css) ---------- */
 .pm51-popout { position: fixed; z-index: 1300; box-sizing: border-box; min-width: 200px; max-width: min(360px, calc(100vw - 16px)); max-height: min(420px, 70vh); overflow-y: auto; overflow-x: hidden; padding: 4px; background: var(--surface-elevated, #171b31); border: 1px solid var(--border, rgba(164,158,219,.16)); border-radius: var(--radius-md, 10px); box-shadow: var(--elev-3, 0 14px 36px rgba(0,0,0,.25)); color: var(--text-primary, #f4f2ff); font: 500 12px/1.4 var(--body-font, Inter, system-ui, sans-serif);
   --pm6-sprout-ox: 12%; --pm6-sprout-oy: 0%; --pm6-sprout-tx: 0px; --pm6-sprout-ty: -10px; --pm6-sprout-sx: .72; --pm6-sprout-sy: .48;
-  transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy); opacity: 0; visibility: hidden; pointer-events: none;
-  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0) scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-  transition: opacity 160ms var(--ease-out, cubic-bezier(.22, 1, .36, 1)), transform 300ms cubic-bezier(.22, 1.55, .36, 1), visibility 0s linear 300ms, height 340ms cubic-bezier(.22, 1.72, .36, 1); will-change: transform, opacity; scrollbar-width: thin; }
+  scrollbar-width: thin; }
 .pm51-popout[data-sprout^="b"] { --pm6-sprout-oy: 100%; --pm6-sprout-ty: 10px; }
 .pm51-popout[data-sprout$="r"] { --pm6-sprout-ox: 88%; }
-.pm51-popout.is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: translate3d(0, 0, 0) scale3d(1, 1, 1); transition: opacity 140ms var(--ease-out, cubic-bezier(.22, 1, .36, 1)), transform 300ms cubic-bezier(.22, 1.55, .36, 1), visibility 0s, height 340ms cubic-bezier(.22, 1.72, .36, 1); }
-.pm51-popout.is-closing { opacity: 0; visibility: hidden; pointer-events: none; transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0) scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1); transition: opacity 45ms ease-in 175ms, transform 220ms cubic-bezier(.45, .05, .55, .2), visibility 0s linear 220ms, height 200ms cubic-bezier(.45, .05, .55, .2); }
-@keyframes pm51-popout-size-bounce { 0% { transform: scale3d(1, 1, 1); } 40% { transform: scale3d(1.012, 1.055, 1); } 100% { transform: scale3d(1, 1, 1); } }
-.pm51-popout.is-open.is-size-bounce { animation: pm51-popout-size-bounce 380ms cubic-bezier(.22, 1.55, .36, 1); }
 .pm51-popout-item { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 32px; padding: 7px 10px; margin: 0; border: 0; border-radius: var(--radius-sm, 6px); background: transparent; color: var(--text-secondary, #c9c4e6); font: inherit; font-weight: 600; font-size: 12px; text-align: left; cursor: pointer; box-sizing: border-box; }
 .pm51-popout-item:hover, .pm51-popout-item.is-active, .pm51-popout-item:focus-visible { background: color-mix(in srgb, var(--text-primary, #f4f2ff) 8%, transparent); color: var(--text-primary, #f4f2ff); outline: 0; }
 .pm51-popout-item[aria-selected="true"] { background: var(--accent-soft, rgba(124,108,255,.18)); color: var(--text-primary, #f4f2ff); }

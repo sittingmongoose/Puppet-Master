@@ -86,6 +86,10 @@ PM51.mark = (key, tone) => `<span class="pm-status-mark" data-status="${a(key)}"
    PM51.pill keeps its name so every manager converts without edits. */
 PM51.status = (label, tone) => { const t = tone || PM51.tone(label); return `<span class="pm51-status tone-${a(t)}">${PM51.mark(PM51.statusKey(label, t), t)}<span>${h(label)}</span></span>`; };
 PM51.pill = PM51.status;
+/* A state that is a wait the person watches, in a single subject's header (a server's detail while it connects): the
+   status token with the system loader in its slot instead of a mark (W5, DR-077; window.PM_PIP_LOADER), aria-busy on the
+   token. The same word in a list row stays a status mark (PM51.status): an item's state there is not a loader (L1). */
+PM51.waiting = (label, motion) => { const LD = window.PM_PIP_LOADER; if (!LD) return PM51.status(label, 'info'); return `<span class="pm51-status tone-info pm51-waiting" aria-busy="true">${LD.html({ motion: motion || 'swing', px: 14 })}<span>${h(label)}</span></span>`; };
 PM51.statusPill = status => PM51.status(PM51.plain(status));
 PM51.tag = (label, { icon: ic } = {}) => `<span class="pm51-tag">${ic ? icon(ic) : ''}${h(label)}</span>`;
 PM51.kbd = key => `<kbd class="pm51-kbd">${h(key)}</kbd>`;
@@ -94,10 +98,16 @@ PM51.dot = (tone, label) => { const t = String(tone || ''); const cls = { ready:
 /* ---------- primitives -------------------------------------------------- */
 const dataAttrs = data => Object.entries(data || {}).map(([k, v]) => `data-${a(k)}="${a(v == null ? '' : v)}"`).join(' ');
 
-PM51.btn = ({ label, action, data, icon: ic, primary, small, ghost, danger, disabled, reason, ui, cls, title, callback }) => {
-  const dis = disabled ? `aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(reason || 'Not available in this concept preview.')}" data-pm-hover-label="${a(label || '')}" data-pm-hover-detail="${a(reason || 'Not available in this concept preview.')}"` : '';
+/* busy (true, or a motion name): the button is waiting on what it started. It holds the system loader in its icon's
+   place at the icon's size (W5, DR-077; window.PM_PIP_LOADER), says aria-busy, and stays unavailable with its reason
+   until the wait ends, without the disabled dimming; the manager draws it again un-busy when the result is in. */
+PM51.btn = ({ label, action, data, icon: ic, primary, small, ghost, danger, disabled, reason, ui, cls, title, callback, busy }) => {
+  const LD = busy ? window.PM_PIP_LOADER : null;
+  if (busy) { disabled = true; reason = reason || 'Still working on it.'; }
+  const dis = disabled ? `aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(reason || 'Not available in this concept preview.')}" data-pm-hover-label="${a(label || '')}" data-pm-hover-detail="${a(reason || 'Not available in this concept preview.')}"${busy ? ' aria-busy="true" data-pm51-busy="1"' : ''}` : '';
   const act = disabled ? 'data-action="pm51-disabled"' : (callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`);
-  return `<button type="button" class="btn pm51-btn${primary ? ' primary' : ''}${small ? ' small' : ''}${ghost ? ' ghost' : ''}${danger ? ' danger' : ''}${cls ? ' ' + cls : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} ${dis} ${title ? `title="${a(title)}"` : ''}>${ic ? icon(ic) : ''}${label ? `<span>${h(label)}</span>` : ''}</button>`;
+  const lead = LD ? LD.html({ motion: typeof busy === 'string' ? busy : 'swing', px: 14 }) : (ic ? icon(ic) : '');
+  return `<button type="button" class="btn pm51-btn${primary ? ' primary' : ''}${small ? ' small' : ''}${ghost ? ' ghost' : ''}${danger ? ' danger' : ''}${cls ? ' ' + cls : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} ${dis} ${title ? `title="${a(title)}"` : ''}>${lead}${label ? `<span>${h(label)}</span>` : ''}</button>`;
 };
 PM51.iconBtn = ({ action, data, icon: ic, label, cls, callback, ui, disabled, reason }) => {
   const act = disabled ? 'data-action="pm51-disabled"' : (callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`);
@@ -158,7 +168,7 @@ PM51.page = ({ id, key, tabs, active, body, quiet, cls, ui }) => {
 };
 PM51.section = ({ title, help, action, body, cls, id, tone, data }) => `<section class="panel-card pm51-section${cls ? ' ' + cls : ''}${tone ? ' tone-' + a(tone) : ''}" ${id ? `id="${a(id)}"` : ''} ${dataAttrs(data)}><div class="pm51-section-head"><div class="pm51-section-copy"><h3 class="pm51-section-title">${h(title)}</h3>${help ? `<p class="pm51-section-help">${h(help)}</p>` : ''}</div>${action ? (typeof action === 'string' ? action : PM51.btn(action)) : ''}</div>${body ? `<div class="pm51-section-body">${body}</div>` : ''}</section>`;
 PM51.grid = (cols, ...parts) => `<div class="pm51-grid cols-${a(cols)}">${parts.join('')}</div>`;
-PM51.rows = (rows, { cls } = {}) => `<div class="pm51-rows${cls ? ' ' + cls : ''}">${rows.filter(Boolean).map(r => `<div class="pm51-row${r.cls ? ' ' + r.cls : ''}" ${r.id ? `data-row="${a(r.id)}"` : ''} ${dataAttrs(r.data)}><div class="pm51-row-copy"><div class="pm51-row-label">${h(r.label)}${r.pill ? ' ' + r.pill : ''}</div>${r.help ? `<div class="pm51-row-help">${h(r.help)}</div>` : ''}</div><div class="pm51-row-control">${r.control || (r.value != null ? `<span class="pm51-row-value${r.muted ? ' is-muted' : ''}">${h(String(r.value))}</span>` : '')}${r.action ? (typeof r.action === 'string' ? r.action : PM51.btn(Object.assign({ small: true }, r.action))) : ''}</div></div>`).join('')}</div>`;
+PM51.rows = (rows, { cls } = {}) => `<div class="pm51-rows${cls ? ' ' + cls : ''}">${rows.filter(Boolean).map(r => `<div class="pm51-row${r.cls ? ' ' + r.cls : ''}" ${r.id ? `data-row="${a(r.id)}"` : ''} ${dataAttrs(r.data)}${r.busy ? ' aria-busy="true"' : ''}><div class="pm51-row-copy"><div class="pm51-row-label">${h(r.label)}${r.pill ? ' ' + r.pill : ''}</div>${r.help ? `<div class="pm51-row-help">${h(r.help)}</div>` : ''}</div><div class="pm51-row-control">${r.control || (r.value != null ? `<span class="pm51-row-value${r.muted ? ' is-muted' : ''}">${h(String(r.value))}</span>` : '')}${r.action ? (typeof r.action === 'string' ? r.action : PM51.btn(Object.assign({ small: true }, r.action))) : ''}</div></div>`).join('')}</div>`;
 PM51.stats = items => `<div class="pm51-stats">${items.map(s => `<div class="pm51-stat${s.tone ? ' tone-' + a(s.tone) : ''}"><div class="pm51-stat-label">${h(s.label)}</div><div class="pm51-stat-value">${h(String(s.value))}</div>${s.help ? `<div class="pm51-stat-help">${h(s.help)}</div>` : ''}</div>`).join('')}</div>`;
 PM51.list = (items, { cls } = {}) => `<div class="pm51-list${cls ? ' ' + cls : ''}">${items.filter(Boolean).map(it => `<div class="pm51-item${it.cls ? ' ' + it.cls : ''}${it.action || it.callback ? ' is-clickable' : ''}" ${it.action ? `data-action="${a(it.action)}"` : ''} ${it.callback ? `data-callback="${a(registerAction(it.callback))}"` : ''} ${dataAttrs(it.data)} ${it.action || it.callback ? 'role="button" tabindex="0"' : ''}>${it.avatar ? `<span class="pm51-item-avatar">${it.avatar}</span>` : ''}<div class="pm51-item-copy"><div class="pm51-item-title">${h(it.title)}${it.pill ? ' ' + it.pill : ''}</div>${it.meta ? `<div class="pm51-item-meta">${h(it.meta)}</div>` : ''}${it.sub ? `<div class="pm51-item-sub">${h(it.sub)}</div>` : ''}${it.note ? `<div class="pm51-item-note">${h(it.note)}</div>` : ''}</div><div class="pm51-item-end">${it.end || ''}</div></div>`).join('')}</div>`;
 PM51.steps = (items, { start = 1, cls } = {}) => `<ol class="pm51-steps${cls ? ' ' + cls : ''}">${items.filter(Boolean).map((s, i) => `<li class="pm51-step${s.tone ? ' tone-' + a(s.tone) : ''}${s.done ? ' is-done' : ''}"><span class="pm51-step-n">${s.done ? icon('check') : (i + start)}</span><div class="pm51-step-copy"><div class="pm51-step-title">${h(s.title)}</div>${s.desc ? `<div class="pm51-step-desc">${h(s.desc)}</div>` : ''}</div><div class="pm51-step-end">${s.status ? PM51.pill(s.status, s.tone) : ''}${s.action ? (typeof s.action === 'string' ? s.action : PM51.btn(Object.assign({ small: true }, s.action))) : ''}</div></li>`).join('')}</ol>`;
@@ -209,34 +219,15 @@ PM51.listDetail = ({ id, rosterId, rosterTitle, count, add, filter, items, detai
 /* ---------- popout engine: dropdown lists, menus, pickers ------------------- */
 /* Popouts live in document.body (position:fixed) so #pm-settings-portals' overflow:hidden and the
    root's contain never clip them. Nothing in body gets the engine's event routing (ownsEvent), so
-   the engine owns its listeners here; the motion contract is the chat assistant's "sprout"
-   (six --pm6-sprout-* vars, is-open / is-closing), driven by window.PM6_SPROUT when that script has
-   loaded and by an identical local class choreography otherwise. */
+   the engine owns its listeners here; the motion is PM6_SPROUT's, the one menu sprout (base/script/pm7-sprout.js,
+   its classes in pm7-sprout.css: six --pm6-sprout-* vars, is-open / is-closing). */
 let pmActive = null, popSeq = 0;
 const POP_ID = () => 'pm51-pop-' + (++popSeq);
-const pmSprout = () => (window.PM6_SPROUT && typeof window.PM6_SPROUT.open === 'function' && typeof window.PM6_SPROUT.close === 'function') ? window.PM6_SPROUT : null;
-function setSproutLocal(el, anchor) {
-  const r = el.getBoundingClientRect(), ar = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : null;
-  const ax = ar ? ar.left + ar.width / 2 : r.left + r.width / 2, ay = ar ? ar.top + ar.height / 2 : r.top;
-  const ox = ax < r.left + r.width / 2 ? 12 : 88, above = ay > r.top + r.height / 2;
-  el.style.setProperty('--pm6-sprout-ox', ox + '%'); el.style.setProperty('--pm6-sprout-oy', above ? '100%' : '0%');
-  el.style.setProperty('--pm6-sprout-tx', '0px'); el.style.setProperty('--pm6-sprout-ty', above ? '10px' : '-10px');
-  el.style.setProperty('--pm6-sprout-sx', '0.72'); el.style.setProperty('--pm6-sprout-sy', '0.48');
-  el.dataset.sprout = (above ? 'b' : 't') + (ox === 12 ? 'l' : 'r');
-}
+/* a popout with no anchor grows out of the corner it hangs from (positionPopout's stand-in trigger) */
 function sproutOpen(el, anchor) {
-  const S = pmSprout();
-  if (S) { S.open(el, null, anchor || null); if (!anchor) setSproutLocal(el, null); return; }
-  el.classList.remove('is-closing'); el.style.display = 'block'; setSproutLocal(el, anchor); void el.offsetHeight; el.classList.add('is-open');
+  window.PM6_SPROUT.open(el, null, anchor || { left: window.innerWidth - 240, top: 16, width: 224, height: 0 });
 }
-function sproutClose(el, done) {
-  const S = pmSprout();
-  if (S) { S.close(el, done); return; }
-  let finished = false; const finish = () => { if (finished) return; finished = true; el.removeEventListener('transitionend', onEnd); el.style.display = 'none'; done && done(); };
-  const onEnd = e => { if (e.target !== el || (e.propertyName !== 'opacity' && e.propertyName !== 'transform')) return; finish(); };
-  el.classList.remove('is-open'); el.classList.add('is-closing'); el.addEventListener('transitionend', onEnd);
-  window.setTimeout(finish, motionReduced() ? 0 : 280);
-}
+function sproutClose(el, done) { window.PM6_SPROUT.close(el, done); }
 function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
   const vw = window.innerWidth, vh = window.innerHeight;
   const r = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : { left: vw - 240, right: vw - 16, top: 16, bottom: 16, width: 224 };
@@ -575,6 +566,24 @@ openDrawer = function ({ title, subtitle = '', pill = '', status = null, eyebrow
   return wrap;
 };
 PM51.panel = opts => openDrawer(opts);
+/* A button already on screen that now waits on what it started (a drawer's primary while a sign-in finishes): the
+   system loader at its start (W5; window.PM_PIP_LOADER.busy), aria-busy, unavailable until it ends, optional words
+   for the wait; off puts its words back. */
+PM51.waitOn = (btn, on, label) => {
+  if (!btn) return;
+  const LD = window.PM_PIP_LOADER;
+  if (on) {
+    if (btn.dataset.pm51Busy === '1') return;
+    btn._pm51Words = btn.innerHTML;
+    if (label) btn.textContent = label;
+    btn.setAttribute('aria-disabled', 'true'); btn.dataset.pm51Busy = '1'; btn.dataset.pm51Disabled = '1'; btn.dataset.disabledReason = 'Still waiting.';
+    if (LD) LD.busy(btn, true, { motion: 'swing', px: 14 }); else btn.setAttribute('aria-busy', 'true');
+    return;
+  }
+  if (LD) LD.busy(btn, false); else btn.removeAttribute('aria-busy');
+  if (btn._pm51Words != null) { btn.innerHTML = btn._pm51Words; btn._pm51Words = null; }
+  btn.removeAttribute('aria-disabled'); delete btn.dataset.pm51Busy; delete btn.dataset.pm51Disabled; delete btn.dataset.disabledReason;
+};
 PM51.panelSection = (title, body, help, { icon: ic, tone } = {}) => `<section class="pm51-panel-card pm51-panel-section${tone ? ' tone-' + a(tone) : ''}"><div class="pm51-pc-head">${ic ? `<span class="pm51-pc-icon">${icon(ic)}</span>` : ''}<div class="pm51-ps-title">${h(title)}</div></div>${help ? `<p class="pm51-ps-help">${h(help)}</p>` : ''}<div class="pm51-pc-body">${body}</div></section>`;
 PM51.menu = (anchor, items, title) => openMenu(anchor, items, title || '');
 PM51.confirm = (title, message, label, onConfirm, danger) => confirmDialog(title, message, label, onConfirm, !!danger);

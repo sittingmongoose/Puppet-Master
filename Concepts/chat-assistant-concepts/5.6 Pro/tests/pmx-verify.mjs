@@ -778,15 +778,19 @@ export function inPageLint(o) {
     for (const a of live) {
       const t = a.effect.target;
       if (skipped(t)) continue;
-      /* W4 (PM7 build, PC1 accepted 2026-10-29): the sheet's Pip sways at rest (pip.css), outside the loop budget */
-      if (t.closest('.pmx-pip-host')) continue;
-      const host = t.closest('.pmx-run') || t.closest('.pmx-view') || topPmx(t);
+      /* W4 (PM7 build, PC1 accepted 2026-10-29): the sheet's Pip sways at rest (pip.css), outside the loop budget; only
+         its two named loops. The live Orbit's Pip bobs its thinking dots (pmx-pip-dot, one per dot): their own bucket,
+         budget 3. That these rest offscreen, in a hidden tab, in a drag and under Reduced Motion is
+         Concepts/onboarding/opus-5.5/tools/pip_loops.mjs. This standalone page has no window.PMLogo, so it draws no
+         Pip and these lines only bite on a page that loads the kit (PMConcept7). */
+      if ((a.animationName === 'pmx-pip-sway' || a.animationName === 'pmx-pip-card') && t.closest('.pmx-pip-host')) continue;
+      const host = (a.animationName === 'pmx-pip-dot' && t.closest('.orbit-core-face.is-live')) || t.closest('.pmx-run') || t.closest('.pmx-view') || topPmx(t);
       if (!host) continue;
       const b = buckets.get(host) || []; b.push(a.animationName || a.id || (a.effect.getKeyframes()[0] ? Object.keys(a.effect.getKeyframes()[0]).filter(k => !/^(offset|easing|composite|computedOffset)$/.test(k)).join('+') : 'animation')); buckets.set(host, b);
     }
     const bad = [], seen = [];
     for (const [host, names] of buckets) {
-      const limit = host.matches('.pmx-run[data-density="live"]') ? 2 : host.matches('.pmx-view') ? 1 : 0;
+      const limit = host.matches('.orbit-core-face') ? 3 : host.matches('.pmx-run[data-density="live"]') ? 2 : host.matches('.pmx-view') ? 1 : 0;
       const rec = { host: name(host), density: host.getAttribute('data-density'), infinite: names.length, limit, names: names.slice(0, 6) };
       seen.push(rec);
       if (names.length > limit) bad.push(rec);

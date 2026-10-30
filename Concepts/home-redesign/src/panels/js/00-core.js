@@ -97,12 +97,16 @@ var store = PMW.store = {
 };
 PMW.faults = { failNextWrite: false };
 
+/* a project's id as Home keys it: its name in the title bar, lower-case and hyphenated (the project box asks Home's
+   unsaved state by name, PMW.unsaved) */
+function projectSlug(name) { return String(name || '').trim().toLowerCase().replace(/[^a-z0-9_-]+/g, '-'); }
 function projectId() {
   var label = qs('#projectMenuLabel');
   var name = label && label.textContent ? label.textContent.trim() : '';
-  return (name || 'tastebook').toLowerCase().replace(/[^a-z0-9_-]+/g, '-');
+  return projectSlug(name || 'tastebook');
 }
 PMW.projectId = projectId;
+PMW.projectSlug = projectSlug;
 
 /* ---- look ---- */
 function look() {

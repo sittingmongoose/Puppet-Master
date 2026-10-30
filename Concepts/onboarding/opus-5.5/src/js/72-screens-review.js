@@ -224,7 +224,8 @@
     cm.projectId = id; cm.publishedVia = via;
     cm.receipts = cm.receipts || {};
     cm.receipts.project = via === 'fixture' ? 'fixture:project:' + id : cm.recovery.settled_effects.registry_publication.receipt_ref;
-    if (O55.shell && O55.shell.selectProject) O55.shell.selectProject(id, d.project_name);
+    /* the project box's row carries where its files are and, with an online repository, its branch (B3) */
+    if (O55.shell && O55.shell.selectProject) O55.shell.selectProject(id, d.project_name, { path: filesAt(S), branch: d.forge && d.forge !== 'none' ? d.repository_default_branch : '' });
     /* the new Project starts with the look chosen here: Settings loads a new Project's own settings as it is selected
        (after this task), so the look is saved into it once that load has run (its first write also makes the Project's
        own sound setting readable: the speaker stays silent until then) */
@@ -454,6 +455,19 @@
     }
     return note;
   }
+  /* O12 B (Jared, 2026-10-30: "as the concept"): once the Project is made, Continue waits for the last block to come
+     down onto Pip's stack. Each block lands in about half a second; Reduced Motion puts it there at once; and it never
+     waits longer than LAND_CAP, so a paused or missing stage cannot hold the run. The stage says when a block lands
+     (60-ui-core.js redraws Creating then). */
+  const LAND_CAP = 2500;
+  let landWait = null;
+  function landing(S) {
+    const cm = S.sess.commit || {}, host = S.root && S.root.querySelector('.o55-stage'), st = host && O55.pipStage && O55.pipStage.of ? O55.pipStage.of(host) : null;
+    if (!st || !st.blocksLanded || O55.motion.reduced() || !S.open || S.sess.screen !== 'creating') return false;
+    if (!landWait || landWait.key !== cm.key) { landWait = { key: cm.key, t: performance.now() }; O55.motion.after(LAND_CAP + 50, () => { if (S.open && S.sess.screen === 'creating') O55.ui.refresh(); }); }
+    if (performance.now() - landWait.t > LAND_CAP) return false;
+    return st.blocksLanded() < phasesFor(S).length;
+  }
   def('creating', {
     chapter: 'project', stage: 'automatic_preparation',
     /* (under NieR's art the scene carries the Project's name: its sign comes back with it, stamped) */
@@ -490,8 +504,8 @@
     },
     foot(S) {
       const cm = S.sess.commit || {};
-      /* (done is enough: while the made moment waits for the app to settle, Continue already goes on and skips it) */
-      if (cm.state === 'done') return { back: false, primary: { label: T('creating.continue'), do: 'next' } };
+      /* (done, and the last block down: while the made moment waits for the app to settle, Continue already goes on) */
+      if (cm.state === 'done') { const wait = landing(S); return { back: false, primary: { label: T('creating.continue'), do: 'next', disabled: wait, reason: wait ? T('chrome.working') : '' } }; }
       const reason = cm.state === 'failed' ? T('creating.failTitle') : cm.state === 'running' || cm.state === 'done' ? T('chrome.working') : T('creating.recovery.waiting');
       return { back: false, primary: { label: T('creating.continue'), do: 'next', disabled: true, reason } };
     },
@@ -660,7 +674,7 @@
       }
       if (!next) out += C.note(T('protect.done'), 'ok', 'check');
       const st = next && F.state(S, 'backup:' + next);
-      if (st && st.state === 'running') out += `<p class="o55-hint" data-key="work">${C.mark('working', 12, '<span class="o55-spin"></span>')} ${U.esc(T('chrome.working'))}</p>`;
+      if (st && st.state === 'running') out += `<p class="o55-hint" data-key="work">${C.loader(14)} ${U.esc(T('chrome.working'))}</p>`;
       return out;
     },
     foot(S) {

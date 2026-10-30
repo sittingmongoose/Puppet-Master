@@ -156,7 +156,7 @@
     threads:clone(D.threads), editorTabs:['plan-query'], activeEditor:'plan-query',
     historyMode:'pinned', historySearch:'', historyWidth:224, editorWidth:54, activityWidth:280,
     historySections:{pinned:true, recent:true, archived:false},
-    activity:{open:false,domain:'goal',scope:'all',filterVisible:true,expanded:['goal','todo','subagents','crew','changes','artifacts']},
+    activity:{open:false,pinned:false,domain:'goal',scope:'all',filterVisible:true,expanded:['goal','todo','subagents','crew','changes','artifacts']},
     context:{
       compact:false,details:false,compacted:false,drawerView:'curated',dispatchSeq:0,
       projections:clone(D.contextByThread||{})
@@ -496,8 +496,14 @@
      height (renderChat). Docked, the messages keep at least the 360 px isNarrow() keeps beside pinned History. */
   function activityDocked() {
     if(!state.activity.open || isPhone()) return false;
+    if(HOSTED){
+      /* the History drawer as it is drawn pinned beside the messages, its hairline included (A4: a 200 px fallback
+         let Activity dock beside 331 px of messages when the drawer was its hosted 240) */
+      const fl=document.body.dataset.phDrawer==='pinned'?document.querySelector('#pmOverlayRoot .history-flyout'):null;
+      const drawer=fl?Math.ceil(fl.getBoundingClientRect().width)+1:0;
+      return HOST.width()-drawer>=360+(state.activityWidth||280);
+    }
     const gutter=document.body.dataset.phDrawer==='pinned'?Math.min(360,parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-user-w'))||200):0;
-    if(HOSTED) return HOST.width()-gutter>=360+(state.activityWidth||280);
     return innerWidth>=821 || innerWidth-gutter>=540;
   }
   function focusActivityControl(selector) {
@@ -855,7 +861,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="thread-row ${t.id===state.selectedThread?'active':''}" data-k="thread:${esc(t.id)}" data-action="select-thread" data-id="${esc(t.id)}" tabindex="0"${hoverAttrs('thread-st-'+t.id,statusLabel(t.status))}><span class="thread-lead"><span class="thread-status-slot">${extReplace('threadRowStatus',{thread:t,variant:state.variants[1]},renderStatus(t,state.variants[1]))}</span></span><div class="thread-copy"><div class="thread-title"><span class="thread-time">${esc(t.updated)}</span><span class="thread-name">${esc(t.title)}</span></div><div class="thread-sub"><span class="summary">${esc(t.summary)}</span></div></div><button class="icon-button thread-more" data-action="thread-menu" data-id="${esc(t.id)}" data-menu-anchor="thread-${esc(t.id)}"${hoverAttrs('thread-more-'+t.id,'Thread options')}>${icon('more',14)}</button></div>`;
   }
 
-  function renderHistory(){ return `<aside class="history-panel" data-history-variant="${state.variants[1]}">${renderHistoryContent(false)}<div class="panel-resize" data-resize="history"></div></aside>`; }
+  function renderHistory(){ return `<aside class="history-panel" data-k="history-panel" data-history-variant="${state.variants[1]}">${renderHistoryContent(false)}<div class="panel-resize" data-resize="history"></div></aside>`; }
   function formatText(body){
     return esc(body).split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
   }
@@ -978,7 +984,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function renderChat(){
     const t=activeThread();
-    return `<section class="chat-stage" data-shell="${state.variants[0]}">
+    /* keyed, with the grid's other children (A1): a docked Activity Detail or a pinned History coming or going ahead
+       of it must not make the reconcile take the stage for a new node and replay the transcript */
+    return `<section class="chat-stage" data-k="chat-stage" data-shell="${state.variants[0]}">
       ${renderChatHeader(t)}
       <div class="lens-dock" data-k="context-lens-dock">${renderInlineLens()}</div>
       <div class="transcript" data-variant="${state.variants[5]}" data-voice="${motionVoice()}" data-scroll-key="transcript"><div class="tx-spine-layer" data-k="tx-spine" data-pm-keep aria-hidden="true"></div><div class="transcript-inner">${renderTranscriptItems(t)}</div></div>
@@ -1793,7 +1801,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      Crew because they are the other three collaborative kinds, and BEFORE changes/artifacts so
      the compaction tiers drop file-level domains first under width pressure. Subagents stays a
      separate domain -- a Crew member is not a subagent. */
-  const ACTIVITY_ORDER=['goal','todo','subagents','crew','brainstorm','review','chat_room','changes','artifacts'];
+  const ACTIVITY_ORDER=['goal','todo','subagents','processes','crew','brainstorm','review','chat_room','changes','artifacts'];
   const COLLAB_DOMAINS={crew:'Crew',brainstorm:'BrainStorm',review:'Review',chat_room:'Chat Room'};
   const COLLAB_ATTENTION={attention:1,limit:1,failed:1,blocked:1}, COLLAB_TONE_RANK=['attention','working','done','idle'];
   /* collaboration.js owns the runs; app.js only projects whatever is there, so the bar is
@@ -1884,14 +1892,24 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const artifacts=(D.artifacts||[]).filter(a=>a.threadId===tid||invoked.has(a.id));
     const runs=collabRuns(tid);
     const collab={brainstorm:runs.filter(r=>r.kind==='brainstorm'),review:runs.filter(r=>r.kind==='review'),chat_room:runs.filter(r=>r.kind==='chat_room'),crew:runs.filter(r=>r.kind==='crew')};
+    /* Processes (W6, D1-D4): what this thread's agent and its subagents started, from the one work projection (PM_WORK,
+       DR-078). The domain shows only while a process runs or needs input (PM_WORK.thread().processes), and stays while
+       its hover card or Activity Detail view is open, so it never vanishes under the pointer (D4). */
+    const work=window.PM_WORK;
+    const processes=work?work.items({thread:tid,kind:['process','scheduled'],view:'thread:'+tid}):[];
+    const workThread=work&&work.thread?work.thread(tid):null;
+    /* D4: shown while a process runs or needs input, and held while its view or card is open whatever its rows are (a
+       Clear that empties the view leaves an empty Processes view, never another domain; A9) */
+    const procShown=!!(workThread&&workThread.processes)||!!(work&&((state.activity.open&&state.activity.domain==='processes')||(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes')));
     return {
       tid, hasAttachedGoal, hasGoalReceipt:false, hasGoalHistory, capGoal:false, hasGoal,
       todos, subagents, hasSubagents, hasCrewEvent, hasCrew, crew, changes, artifacts,
-      collab,
+      collab, processes,
       live:{
         goal:hasGoal,
         todo:todos.length>0,
         subagents:hasSubagents,
+        processes:procShown,
         crew:hasCrew||collab.crew.length>0,
         brainstorm:collab.brainstorm.length>0,
         review:collab.review.length>0,
@@ -1921,7 +1939,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function syncActivityDomain(){
     const live=liveDomainIds();
     if(!live.length){
-      if(state.activity.open) state.activity.open=false;
+      /* pinned, it stays open in a thread with no activity yet (G1 B) and shows that, rather than closing for good */
+      if(state.activity.open&&!state.activity.pinned) state.activity.open=false;
       return live;
     }
     if(!live.includes(state.activity.domain)){
@@ -1979,12 +1998,24 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const aWorking=agents.filter(a=>a.status==='working').length;
       const aBlocked=agents.filter(a=>a.status==='blocked').length;
       const aWaiting=agents.filter(a=>a.status==='waiting').length;
-      out.subagents={icon:'users',label:'Subagents',
+      out.subagents={icon:window.PM56_NEON&&PM56_NEON.has&&PM56_NEON.has('robot')?'robot':'users',label:'Subagents',
         count:String(agents.length),
         state:aWorking?'live':'changed',
         tone:aBlocked?'blocked':aWorking?'working':aWaiting?'idle':'done',
         summary:agents.length?`${plural(aWorking,'agent','agents')} working, ${aBlocked} blocked`:'No child agents',
         detail:agents.slice(0,2).map(a=>`${a.name} ${a.status}`).join(' · ')||'No child agents'};
+    }
+    if(scope.live.processes){
+      const W=window.PM_WORK, ps=scope.processes;
+      const live=ps.filter(x=>W.isLive(x)), needs=ps.filter(x=>W.needsYou(x)).length;
+      const failed=ps.filter(x=>x.state==='failed').length, lost=ps.filter(x=>x.state==='warning').length;
+      const lead=W.sort(live)[0];
+      out.processes={icon:'processes',label:'Processes',
+        count:String(live.length),
+        state:live.length?'live':'changed',
+        tone:needs||lost?'attention':failed?'blocked':live.length?'working':'idle',
+        summary:lead?lead.title:'No processes running',
+        detail:[`${live.length} running`,needs?`${needs} ${needs===1?'needs':'need'} input`:null,failed?`${failed} failed`:null,lost?`${lost} lost`:null].filter(Boolean).join(' · ')};
     }
     /* F0b (j): the legacy domain (a crew event or "Allow Crews in this chat" on, with no Crew
        run) no longer lists invented members. A thread with Crew runs is projected by the
@@ -2097,15 +2128,24 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const cover=layout==='cover';
     const defs=activityDefs();
     const live=ACTIVITY_ORDER.filter(id=>defs[id]);
-    if(!live.length) return '';
+    if(!live.length&&!state.activity.pinned) return '';
     const d=defs[state.activity.domain]?state.activity.domain:live[0];
     const allScope=state.activity.scope!=='focus';
     const sections=allScope?live:[d];
     const n=live.length;
     const headDef=defs[d]||defs[live[0]];
+    /* Pin (G1 B, 2026-10-30): pinned, Activity Detail stays open across thread switches and shows the new thread;
+       unpinned, a thread switch closes it like the other per-thread surfaces. One size either way. */
+    const pinned=!!state.activity.pinned;
+    const pinButton=`<button class="icon-button activity-head-pin${pinned?' is-pinned':''}" data-action="toggle-activity-pin" data-ui-action-id="ui.activity_detail.pin" data-binding-id="chat.activity.pin" aria-pressed="${pinned}"${hoverAttrs('act-pin',pinned?'Unpin — close Activity Detail when you switch threads':'Pin — keep Activity Detail open when you switch threads')}>${icon(pinned?'unpin':'pin',13)}</button>`;
+    if(!live.length){
+      const S=window.PM56_SHELL, text='No activity in this thread yet. It shows here as soon as there is some.';
+      const empty=S&&S.pmxEmpty&&window.PMLogo?S.pmxEmpty({tag:'div',cls:'pmap-empty',key:'pmap-empty',text:`<span>${esc(text)}</span>`}):`<div class="pmap-empty" data-k="pmap-empty">${icon('info',12)}<span>${esc(text)}</span></div>`;
+      return `<aside class="activity-panel${cover?' cover':''}" data-k="activity-panel-${layout}" data-variant="${state.variants[4]}" data-scope="all" data-domain="" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon('info',13,'nx-t-idle')}</span><strong>Activity Detail</strong><span class="spacer"></span>${pinButton}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-scroll" data-scroll-key="activity">${empty}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    }
     const filterButton=`<button class="icon-button activity-head-filter" data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}"${hoverAttrs('act-filter','Show or hide category filter')}>${icon('filter',13)}</button>`;
     const overflow=`<details class="activity-head-overflow"><summary class="icon-button" aria-label="More Activity Detail actions">${icon('more',13)}</summary><div class="activity-head-menu"><button data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}">${icon('filter',12)} ${state.activity.filterVisible?'Hide':'Show'} domains</button></div></details>`;
-    return `<aside class="activity-panel${cover?' cover':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    return `<aside class="activity-panel${cover?' cover':''}" data-k="activity-panel-${layout}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}${pinButton}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
   }
 
   function renderActivitySection(id){
@@ -2433,10 +2473,56 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(a.nodeType!==b.nodeType) return false;
     return a.nodeType!==1 || a.tagName===b.tagName;
   }
+  /* The menus open and close through the one menu sprout, PM6_SPROUT (PMConcept7's base/script/pm7-sprout.js and its
+     class contract pm7-sprout.css, which build.py also puts in this page; Jared L8 B 2026-10-30: one sprout owner for
+     every menu). renderMenu's root menu and sidecar carry pm-sprout, so the patch inserts them closed; positionOverlays
+     places them and sproutOverlays opens each new one from its trigger; the patch keeps the sprout's state on a menu
+     it re-renders (pmSyncAttrs) and hands a menu it drops to sproutLeave, which collapses it into its trigger. */
+  const SPROUT=window.PM6_SPROUT||null, sprouted=new WeakSet(), sproutKey=new WeakMap();
+  function sproutOverlays(){
+    if(!SPROUT) return;
+    for(const el of document.querySelectorAll('#pmOverlayRoot > .overlay-menu.pm-sprout')){
+      const key=el.style.height||String(el.offsetHeight);
+      if(sprouted.has(el)){
+        /* a list that changed size (the model search, an effort count) springs its height: the sprout's size bounce */
+        if(sproutKey.get(el)!==key){ sproutKey.set(el,key); SPROUT.bounce(el); }
+        continue;
+      }
+      sprouted.add(el); sproutKey.set(el,key);
+      const anchor=el.getAttribute('data-overlay')==='sidecar'
+        ? document.querySelector(`#pmOverlayRoot > [data-overlay="root-menu"] [data-submenu="${CSS.escape(state.menu?.sub||'')}"]`)
+        : state.menu&&document.querySelector(`[data-menu-anchor="${CSS.escape(state.menu.anchor)}"]`);
+      SPROUT.open(el,null,anchor,{display:false});
+    }
+  }
+  /* a dropped menu leaves the overlay root (nothing finds, hovers or counts it there: its hooks go), keeps its place and
+     size, and collapses into its trigger; hosted, body.appendChild puts it in the chat's effects layer (00-host.js) */
+  function sproutLeave(n){
+    if(!SPROUT||!sprouted.has(n)) return false;
+    const w=n.offsetWidth, h=n.offsetHeight;
+    for(const x of [n,...n.querySelectorAll('*')]){
+      if(x.id) x.removeAttribute('id');
+      for(const a of [...x.attributes]) if(/^(data-|name$|title$|aria-label$|role$|tabindex$)/.test(a.name)) x.removeAttribute(a.name);
+    }
+    n.setAttribute('aria-hidden','true');
+    n.inert=true;
+    n.style.width=`${w}px`; n.style.height=`${h}px`;
+    n.classList.add('pm56-menu-leaving');
+    /* its open state is computed where it now stands, at rest, so the collapse runs from it: a move restarts animations,
+       and NieR's slice would otherwise start again from its 1px line and leave nothing to fold */
+    n.style.animation='none';
+    document.body.appendChild(n);
+    void n.offsetWidth;
+    SPROUT.close(n,()=>n.remove());
+    n.style.animation='';
+    return true;
+  }
   /* hosted: PMConcept7's hover controller adds data-pm-hover-* and aria-describedby, and moves title into its label */
   const HOSTED_KEEP_ATTR=/^(data-pm-hover|data-pmh|aria-describedby)/;
   function pmSyncAttrs(el,src){
     const skipValue = el===document.activeElement && ('value' in el);
+    /* the sprout's state (is-open, its corner) is not in the template: a menu it opened keeps it */
+    const sprout=SPROUT&&sprouted.has(el)?SPROUT.keep(el):null;
     const seen=new Set();
     for(const at of src.attributes){
       seen.add(at.name);
@@ -2468,6 +2554,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         if(opt && el.value!==opt.getAttribute('value')) el.value=opt.getAttribute('value');
       }
     }
+    if(sprout) sprout();
   }
   function pmPatchNode(el,src){
     if(el.nodeType!==1){ if(el.nodeValue!==src.nodeValue) el.nodeValue=src.nodeValue; return; }
@@ -2501,7 +2588,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(match){ used.add(match); pmPatchNode(match,nn); out.push(match); }
       else out.push(document.importNode(nn,true));
     }
-    for(const n of olds) if(!used.has(n) && n.parentNode===parent) parent.removeChild(n);
+    for(const n of olds) if(!used.has(n) && n.parentNode===parent && !sproutLeave(n)) parent.removeChild(n);
     out.forEach((n,i)=>{ const at=parent.childNodes[i]; if(at!==n) parent.insertBefore(n,at||null); });
     while(parent.childNodes.length>out.length) parent.removeChild(parent.lastChild);
   }
@@ -3512,18 +3599,21 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   let lastMenuSig='';
   function holdMenuPlacement(root, sig){
     if(!sig||sig!==lastMenuSig) return null;
-    const el=root.querySelector(':scope > [data-overlay="root-menu"]');
-    if(!el||!el.style.left) return null;
-    return {el, left:el.style.left, top:el.style.top,
-      ox:el.style.getPropertyValue('--origin-x'), oy:el.style.getPropertyValue('--origin-y')};
+    /* the root menu and its sidecar (whose template has no style at all) */
+    return ['root-menu','sidecar'].map(lane=>root.querySelector(`:scope > [data-overlay="${lane}"]`)).filter(el=>el&&el.style.left)
+      .map(el=>({el, left:el.style.left, top:el.style.top, bottom:el.style.bottom,
+        ox:el.style.getPropertyValue('--origin-x'), oy:el.style.getPropertyValue('--origin-y')}));
   }
-  function restoreMenuPlacement(root, h){
-    if(!h||root.querySelector(':scope > [data-overlay="root-menu"]')!==h.el) return;
-    const s=h.el.style;
-    if(!s.left) s.left=h.left;
-    if(!s.top&&h.top) s.top=h.top;
-    if(h.ox&&!s.getPropertyValue('--origin-x')) s.setProperty('--origin-x',h.ox);
-    if(h.oy&&!s.getPropertyValue('--origin-y')) s.setProperty('--origin-y',h.oy);
+  function restoreMenuPlacement(root, held){
+    for(const h of held||[]){
+      if(h.el.parentNode!==root) continue;
+      const s=h.el.style;
+      if(!s.left) s.left=h.left;
+      if(!s.top&&h.top) s.top=h.top;
+      if(!s.bottom&&h.bottom) s.bottom=h.bottom;
+      if(h.ox&&!s.getPropertyValue('--origin-x')) s.setProperty('--origin-x',h.ox);
+      if(h.oy&&!s.getPropertyValue('--origin-y')) s.setProperty('--origin-y',h.oy);
+    }
   }
 
   /* Text hover tips stay available while a menu/drawer is open (those surfaces
@@ -3534,7 +3624,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(state.hover.type==='activity') return !state.menu;
     return false;
   }
+  /* D4 holds the Processes icon while its card is open; every way a card closes (pointer, focus, Escape, a click)
+     ends here, so a card on Processes that gives way repaints the bar once, and a quiet thread's icon goes (A13) */
+  let procHover=false;
   function syncHoverCard(){
+    const nowProc=!!(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes');
+    if(procHover&&!nowProc&&!(state.activity.open&&state.activity.domain==='processes')) requestAnimationFrame(()=>renderApp());
+    procHover=nowProc;
     const root=document.getElementById('pmOverlayRoot');
     if(!root) return;
     let el=root.querySelector(':scope > [data-overlay="hover"]');
@@ -3738,8 +3834,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else if(m.type==='lens') content=extReplace('contextLensMenu',{}, '');
     else if(HOSTED&&m.type==='pm56-column') content=renderColumnMenu();
     const cls=`overlay-menu ${m.type==='model'?'model-menu':''} ${['context','thread-search'].includes(m.type)?'compact':''} ${m.type==='lens'?'lens-strip':''}`;
-    const root=`<div class="${cls}" data-overlay="root-menu" data-side="${m.side||'left'}" style="${m.type==='model'?`height:${modelMenuHeight()}px`:''}">${m.compactSub?renderCompactSubmenu(m.compactSub):content}</div>`;
-    const side=m.sub&&!m.compactSub?`<div class="overlay-menu sidecar" data-k="sidecar" data-overlay="sidecar" data-side="${m.side||'left'}">${renderSubmenu(m.sub)}</div>`:'';
+    /* each menu is its own node (data-k): a different menu is a new sprout, the old one leaves through the sprout */
+    const root=`<div class="${cls} pm-sprout" data-k="menu:${esc(m.type)}|${esc(m.anchor)}|${esc(m.compactSub||'')}" data-overlay="root-menu" data-side="${m.side||'left'}" style="${m.type==='model'?`height:${modelMenuHeight()}px`:''}">${m.compactSub?renderCompactSubmenu(m.compactSub):content}</div>`;
+    const side=m.sub&&!m.compactSub?`<div class="overlay-menu sidecar pm-sprout pm-sprout-edge" data-k="sidecar" data-overlay="sidecar" data-side="${m.side||'left'}">${renderSubmenu(m.sub)}</div>`:'';
     return root+side;
   }
 
@@ -3756,7 +3853,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
 
   function wandHead(wand){
-    const S=window.PM56_SHELL, pip=S&&S.pmxPip?S.pmxPip({mood:'watch',size:22,cls:'menu-head-pip'}):'';
+    const S=window.PM56_SHELL, pip=S&&S.pmxPip?S.pmxPip({mood:'watch',size:22,cls:'menu-head-pip',part:'wand-menu'}):'';
     return pip?`<span class="menu-head-wand" data-pip="1">${pip}${wand}</span>`:wand;
   }
   function renderWandMenu(){
@@ -4034,7 +4131,14 @@ suggested path                    migration 0043, reversible</div></div></sectio
         const below=window.innerHeight-ar.bottom-8, above=ar.top-8;
         let top=below>=rootH+gap?ar.bottom+gap:Math.max(8,ar.top-rootH-gap);
         top=clamp(top,8,window.innerHeight-rootH-8);
-        root.style.left=`${left}px`;root.style.top=`${top}px`;root.style.setProperty('--origin-x',`${clamp(ar.left+ar.width/2-left,18,rootW-18)}px`);root.style.setProperty('--origin-y',top>ar.bottom?'0px':'100%');
+        /* the model picker that opened above its trigger keeps its bottom edge while its list filters (its height springs
+           from the top), from its first placement until the window's height changes */
+        const pin=state.menu.type==='model'&&state.menu.pinBottom&&state.menu.pinBottom.vh===window.innerHeight?state.menu.pinBottom:null;
+        if(!pin&&state.menu.type==='model'&&top<ar.top) state.menu.pinBottom={vh:window.innerHeight,px:Math.round(window.innerHeight-top-rootH)};
+        root.style.left=`${left}px`;
+        if(state.menu.pinBottom&&state.menu.type==='model'&&state.menu.pinBottom.vh===window.innerHeight){ root.style.top='auto'; root.style.bottom=`${state.menu.pinBottom.px}px`; }
+        else { root.style.top=`${top}px`; root.style.bottom=''; }
+        root.style.setProperty('--origin-x',`${clamp(ar.left+ar.width/2-left,18,rootW-18)}px`);root.style.setProperty('--origin-y',top>ar.bottom?'0px':'100%');
         const side=document.querySelector('[data-overlay="sidecar"]');
         if(side){
           const sideW=side.offsetWidth, sideH=side.offsetHeight;
@@ -4049,7 +4153,11 @@ suggested path                    migration 0043, reversible</div></div></sectio
           }
           const row=document.querySelector(`.overlay-menu[data-overlay="root-menu"] [data-submenu="${CSS.escape(state.menu.sub||'')}"]`);
           const rowR=row&&row.getBoundingClientRect();
-          let st=rowR?rowR.bottom-sideH:top;
+          /* a root still sprouting is scaled about its corner: the row's bottom is read where the root will stand */
+          let rowBottom=rowR&&rowR.bottom;
+          if(rowR){ const cs=getComputedStyle(root), m=new DOMMatrixReadOnly(cs.transform==='none'?undefined:cs.transform);
+            if(m.d&&!m.isIdentity){ const oy=root.offsetTop+parseFloat(cs.transformOrigin.split(' ')[1]); rowBottom=oy+(rowR.bottom-m.f-oy)/m.d; } }
+          let st=rowR?rowBottom-sideH:top;
           st=clamp(st,8,window.innerHeight-sideH-8);
           side.style.left=`${sl}px`;side.style.top=`${st}px`;
           side.style.setProperty('--origin-x', state.menu.side==='right'?'0%':'100%');
@@ -4058,6 +4166,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
         }
       }
     }
+    sproutOverlays();
     if(state.hover){
       positionHoverCard();
     }
@@ -4147,6 +4256,9 @@ suggested path                    migration 0043, reversible</div></div></sectio
        background: owners land their end state now, so returning shows it done. */
     if(prev&&prev.id!==id) notifyTurnOwners('cancel',prev.id);
     state.selectedThread=id;t.unread=0;state.composer=state.drafts[id]||'';state.menu=null;state.hover=null;state.decision=null;decisionExit=null;
+    /* Activity Detail is per thread unless pinned (G1 B): pinned it stays and shows the new thread (a row picked in the
+       old thread does not carry over); unpinned it closes, and the column gives its width back in the same render */
+    if(state.activity.open&&prev&&prev.id!==id){ if(state.activity.pinned) state.activity.selected=null; else state.activity.open=false; }
     /* Leaving the thread abandons its work sequence; abandoning it without
        stopping the clock is the leak described above. state.work.running is
        cleared with it so the two never disagree -- a card that says "running"
@@ -4776,6 +4888,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(a==='focus-activity'){if(!activityDefs()[btn.dataset.domain])return;state.activity.domain=btn.dataset.domain;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);renderApp();return;}
     if(a==='toggle-activity-section'){const id=btn.dataset.domain;state.activity.expanded=state.activity.expanded.includes(id)?state.activity.expanded.filter(x=>x!==id):[...state.activity.expanded,id];renderApp();return;}
     if(a==='toggle-activity-filter'){state.activity.filterVisible=!state.activity.filterVisible;renderApp();return;}
+    if(a==='toggle-activity-pin'){state.activity.pinned=!state.activity.pinned;renderApp();focusActivityControl('.activity-panel [data-action="toggle-activity-pin"]');return;}
     if(a==='close-activity'){const domain=state.activity.domain;state.activity.open=false;renderApp();focusActivityBarDomain(domain);return;}
     if(a==='context-details'){state.context.details=true;state.menu=null;renderApp();return;}
     if(a==='close-context-details'){state.context.details=false;renderOverlays();return;}
@@ -5123,7 +5236,13 @@ suggested path                    migration 0043, reversible</div></div></sectio
     setRecipe:(i)=>applyRecipe(i),
     setVariant:(family,option)=>{const f=Number(family);state.variants[f]=clamp(Number(option),0,familyMax(f));state.recipe=-1;renderApp();},
     selectThread:switchThread,
-    openActivity:(domain)=>{if(activityDefs()[domain]){state.activity.open=true;state.activity.domain=domain;state.activity.scope='focus';renderApp();}},
+    pinActivity:(on=true)=>{state.activity.pinned=!!on;renderApp();},
+    /* pick (optional): a row to open with it, by id or by { title } (the work panel's owner link names a subagent by
+       its title; A5) */
+    openActivity:(domain,pick)=>{if(!activityDefs()[domain])return false;state.activity.open=true;state.activity.domain=domain;state.activity.scope='focus';
+      if(pick){const sc=activityScope(state.selectedThread),list=(domain==='subagents'?sc.subagents:domain==='processes'?sc.processes:null)||[];
+        const hit=typeof pick==='string'?list.find(x=>x.id===pick):list.find(x=>(x.name||x.title)===pick.title);if(hit)state.activity.selected={domain,id:hit.id};}
+      renderApp();return true;},
     openContext:()=>{state.context.details=true;renderOverlays();},
     openQuestionnaire:()=>{decisionExit=null;state.decision={type:'question'};renderApp();},
     openPlan:()=>{decisionExit=null;state.decision={type:'plan',mode:'review'};renderApp();},
@@ -5328,6 +5447,31 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(a==='pm56-keep-open'){ closeMenu(); try{ SC&&SC.keepOpenRow&&SC.keepOpenRow().run(); }catch(err){ console.error(err); } return true; }
     if(a==='pm56-pop'){ closeMenu(); try{ if(SC.isFloating()) SC.dockBack(); else SC.popOut(); }catch(err){ console.error(err); } return true; }
     return false;
+  }
+  /* The work projection (W6, DR-078): a change repaints the chat (the bar's Processes icon, its hover card, Activity
+     Detail). The core's 1 s tick only moves times and output tails, so unless this thread's counts changed it patches
+     those in place instead of rendering the chat each second; the core rests while hidden or dragging. */
+  if(HOSTED&&window.PM_WORK&&typeof window.PM_WORK.on==='function'){
+    let workQueued=false, workSig='';
+    /* while the Processes view or card shows, a progress step is a change too: its rows draw progress (A6) */
+    const showingProcs=()=>(state.activity.open&&state.activity.domain==='processes')||!!(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes');
+    const progSig=()=>{ const W=window.PM_WORK; return W.items({thread:state.selectedThread,kind:['process','scheduled']}).map(p=>p.progress&&W.isLive(p)?p.id+':'+p.progress.done:'').join(','); };
+    const sig=()=>{ const t=window.PM_WORK.thread?window.PM_WORK.thread(state.selectedThread):null; return t?JSON.stringify(t.counts)+'|'+(t.processes?1:0)+'|'+t.key+(showingProcs()?'|'+progSig():''):''; };
+    window.PM_WORK.on('change',why=>{
+      const now=sig();
+      if(why==='tick'&&now===workSig){ patchWorkTicks(); return; }
+      workSig=now;
+      if(workQueued) return;
+      workQueued=true;
+      requestAnimationFrame(()=>{ workQueued=false; renderApp(); });
+    });
+  }
+  /* time, progress and output tails in place: the platform panel's one patcher, over the chat and its overlays */
+  function patchWorkTicks(){
+    const UI=window.PM7_WORK_UI;
+    if(!UI||!UI.patchTicks) return;
+    UI.patchTicks(document.getElementById('pmRoot'));
+    UI.patchTicks(document.getElementById('pmOverlayRoot'));
   }
   /* the column resizes without a window resize (its divider, the narrow ladder, a pop out): the same re-render rules */
   if(HOSTED&&typeof ResizeObserver==='function'&&HOST.frame()){

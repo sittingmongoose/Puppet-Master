@@ -78,7 +78,7 @@
     else if (fromCopy) meta = T('ai.from', { project: cp.name }) + ' · ' + meta;
     else if (d && d.installed && st !== 'ready') meta = (onServer(S) ? T('ai.foundOn', { host: host(S) }) : T('ai.found')) + ' · ' + meta;
     /* inline states */
-    if (a.confirmInstall) extra = `<div class="o55-rowextra" data-key="ask-${p.id}"><span class="o55-labq">${U.esc(T('ai.installAsk', { name: pname(p), host: host(S), vendor: p.vendor }))}${O55.tips.q('group:install')}</span>${O55.ui.btn({ label: T('ai.installGo'), do: 'installGo', arg: p.id, cls: 'o55-small', tip: false }, 'o55-primary')}${O55.tips.explainer('group:install')}</div>`;
+    if (a.confirmInstall) extra = `<div class="o55-rowextra" data-key="ask-${p.id}"><span class="o55-labq">${U.esc(T('ai.installAsk', { name: pname(p), host: host(S), vendor: p.vendor }))}${O55.tips.q('group:install')}</span>${O55.ui.btn({ label: T('ai.installGo'), do: 'installGo', arg: p.id, cls: 'o55-small', tip: false, by: 'group:install' }, 'o55-primary')}${O55.tips.explainer('group:install')}</div>`;
     if (st === 'installing') { pill = ['wait', T('chrome.working')]; extra = `<div class="o55-rowextra" data-key="ph-${p.id}">${F.phases(S, 'install:' + p.id, ['download', 'install', 'verify'], { download: T('ai.installPhases.download', { vendor: p.vendor }), install: T('ai.installPhases.install'), verify: T('ai.installPhases.verify') })}</div>`; }
     if (st === 'signingIn') { pill = ['wait', T('ai.signinWait')]; }
     /* a browser sign-in that did not finish (the page was closed, or never completed): nothing connected; ask again */

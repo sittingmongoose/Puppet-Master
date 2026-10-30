@@ -19,9 +19,10 @@
    How it stays live in a chat that renders by reconciling markup (app.js pmPatch): every move is a Web Animation on
    Pip's own nodes, which the reconcile never resets, and a face change redraws exactly what module-shell.js would draw
    for the new face and records it (hostMood), so the next render draws the same and the reconcile finds nothing to do.
-   No observer, no innerHTML hook, no island: the sheet's Pip is found after each render (PM56_EXT afterRender).
-   Every loop rests during a drag (body.pm-resizing and the other drag classes), in a hidden tab and offscreen, and
-   Reduced Motion keeps every Motion part still (faces still change, in one step). Animation speed scales every move. */
+   No mutation observer, no innerHTML hook, no island: the sheet's Pip is found after each render (PM56_EXT
+   afterRender). Every loop rests during a drag (body.pm-resizing and the other drag classes), in a hidden tab and
+   offscreen (an IntersectionObserver on Pip's own looping nodes), and Reduced Motion keeps every Motion part still
+   (faces still change, in one step). Animation speed scales every move. */
 (function () {
   'use strict';
   var W = window, D = document;
@@ -40,9 +41,9 @@
   function speed() { var L = LOGO(); try { return L && L.clock ? L.clock.speed() : 1; } catch (e) { return 1; } }
   function look() { var S = SH(); return S.pmxPipLook ? S.pmxPipLook() : 'basic-dark'; }
   function family() { return look().split('-')[0]; }
-  /* the parts Pip settings switch (M2: general.visual.pip-parts through PM_PIP_PARTS); until then every part is on but
-     the app voice (S3) */
-  function wants(part) { return part !== 'app-voice'; }
+  /* Pip's parts (general.visual.pip-parts, per Project, through window.PM_PIP_PARTS): module-shell reads them once per
+     change; without the registry every part is on but the app's chirps (S3) */
+  function wants(part) { var S = SH(); return S.pmxPipOn ? S.pmxPipOn(part) : part !== 'app-voice'; }
   function moves(part) { return wants(part) && !reduced(); }
   function anim(el, frames, o) {
     if (!el || typeof el.animate !== 'function') return null;
@@ -91,7 +92,7 @@
       st.leaving = true;
       var copy = st.el.cloneNode(true), cheered = st.cheerAt && Date.now() - st.cheerAt < 4000;
       unmount(st);
-      if (!cheered || !moves('cheers')) return;
+      if (!cheered || !moves('cheers') || !moves('sway-and-physics')) return;
       /* the exit copy takes the sheet a moment later (a microtask); look again on the next frame */
       W.requestAnimationFrame(function () { liftOff(st, copy); });
     });
@@ -121,8 +122,23 @@
     t.innerHTML = S.pmxPipHost(st.kind, mood);
     return t.content.firstElementChild;
   }
+  /* "Pip chirps in the app" (S3, off by default): a small chirp with each face the sheet's Pip makes, in the look's voice,
+     through the one player (O55.sound.pip): it sounds only while the Project's sound switch is on, which the chat's
+     speaker writes (the hosted settings bridge), so a muted chat keeps Pip silent. NieR's Pod voice wins where both
+     would speak (S7). */
+  var CHIRP = { happy: 'cheer', wonder: 'alert', watch: 'think', oops: 'wake' };
+  function chirp(mood) {
+    if (!wants('app-voice') || !CHIRP[mood]) return;
+    /* html[data-o55-nier-parts] holds NieR's part ids: voice (Pod voice) and pod (Pod companion) */
+    var h = D.documentElement, nierParts = (h.getAttribute('data-o55-nier-parts') || '').split(/\s+/);
+    var nierVoice = h.getAttribute('data-o55-nier') === 'on' && (nierParts.indexOf('voice') >= 0 || nierParts.indexOf('pod') >= 0);
+    if (nierVoice) return;
+    var P = W.O55 && W.O55.sound && W.O55.sound.pip;
+    try { if (P && P.vocal) P.vocal(CHIRP[mood], { where: 'app' }); } catch (e) { /* sound is optional */ }
+  }
   function swapNow(st, mood) {
     var fresh = hostMarkup(st, mood); if (!fresh) return;
+    chirp(mood);
     MOOD[st.kind] = mood; st.mood = mood;
     st.el.setAttribute('data-pip-mood', mood);
     var nf = fresh.querySelector('.pmx-pip-face');
@@ -178,18 +194,25 @@
     setFace(st, mood, instant);
     if (hold) st.holdT = setTimeout(function () { if (!st.typing) setFace(st, st.base); }, Math.round(hold * speed()));
   }
+  /* the hop and the lift-off are travel, so they need Sway and physics as well as Cheers: under Still (no Motion part)
+     or Reduced Motion a cheer is the happy face alone, settled where Pip hangs (SSYS-056 / assistant-chat-design: Still
+     snaps to the settled state without entrance, sway, flicker or lift-off travel) */
   function hop(st) {
-    if (!moves('cheers')) return;
+    if (!moves('cheers') || !moves('sway-and-physics')) return;
     var fam = family();
     anim(st.el, [{ transform: 'none' }, { transform: 'translateY(-6px)', offset: .34 }, { transform: 'translateY(1px)', offset: .64 }, { transform: 'none' }],
       { duration: 600, easing: fam === 'retro' ? 'steps(6, end)' : fam === 'nier' ? 'steps(4, end)' : 'cubic-bezier(.3, 0, .3, 1)' });
   }
 
-  /* gaze: the eyes lean toward the last place the pointer was, and stay there */
+  /* gaze: the eyes lean toward the last place the pointer was, and stay there. With Sway and physics on (and no Reduced
+     Motion) they follow the pointer; otherwise (Still) the face doesn't travel: each new face settles, in one step,
+     looking where the pointer last was. Retro's Pip is the kit's one 24-cell sprite with its eyes cut out of the head,
+     so it has no face of its own to lean and doesn't gaze. */
   var lastPt = null, gazeQueued = false;
   var NO_GAZE = { dots: 1, working: 1, sleep: 1, happy: 1 };
   function applyGaze(st, now) {
     if (!st.face || !st.face.isConnected) return;
+    if (!now && !moves('sway-and-physics')) return;
     var x = 0, y = 0;
     if (lastPt && wants('gaze') && !NO_GAZE[st.mood] && family() !== 'retro') {
       var r = st.el.getBoundingClientRect(); if (!r.width) return;
@@ -321,7 +344,8 @@
   function syncThinking() {
     var slots = D.querySelectorAll('.tx-pending-pip');
     if (!slots.length) return;
-    var orbit = !!D.querySelector('.orbit-core-face.is-live');
+    /* the Orbit's Pip is drawn for a running run (its badge is live), whether or not its thinking dots move */
+    var orbit = !!D.querySelector('.orbit-core-face > .orbit-core-icon.is-live');
     slots.forEach(function (s) {
       if (!s.firstElementChild) { var l = loaderHtml(); if (!l) return; s.innerHTML = l; }
       var ld = s.firstElementChild;
@@ -329,8 +353,90 @@
     });
   }
 
+  /* ---------------------------------------------------------------- Pip settings (SSYS-056) in the chat
+     The wand's "Pip…" (Preferences, beside New chat defaults) opens the Pip editor (window.PM_PIP_EDITOR, the Settings
+     kit's row editor) as a dialog: the local action ui.settings.pip_editor.open, which writes nothing. A part change
+     (the registry's change event) draws the chat again, so what is on screen follows the parts at once. */
+  function editor() { return W.PM_PIP_EDITOR && typeof W.PM_PIP_EDITOR.popup === 'function' ? W.PM_PIP_EDITOR : null; }
+  function redraw() {
+    var c = EXT && EXT.ctx ? EXT.ctx() : null;
+    if (c && c.renderApp) c.renderApp();
+    if (c && c.renderOverlays) c.renderOverlays();
+  }
+  if (W.PM_PIP_PARTS && typeof W.PM_PIP_PARTS.on === 'function') W.PM_PIP_PARTS.on('change', function () { W.requestAnimationFrame(redraw); });
+  if (EXT && EXT.slot) EXT.slot('wandRows', function () {
+    if (!editor()) return '';
+    var S = SH(), mark = S.pmxPip ? S.pmxPip({ mood: 'idle', size: 15, cls: 'menu-pip' }) : '';
+    return '<button type="button" class="menu-item" data-action="pip-settings-open" data-k="pip-wand-row">' +
+      '<span class="menu-icon">' + mark + '</span><span class="menu-copy"><strong>Pip…</strong><span>Where Pip appears in the chat, the faces it makes and how it moves.</span></span></button>';
+  });
+  if (EXT && EXT.action) EXT.action('pip-settings-open', function (ctx, btn) {
+    var E = editor(); if (!E) return true;
+    if (ctx.closeMenu) ctx.closeMenu();
+    E.popup({ from: btn, returnFocus: function () { return D.querySelector('[data-menu="wand"]'); } });
+    return true;
+  });
+
+  /* ---------------------------------------------------------------- Demo Studio moments (lab only, DR-070)
+     pip-demo-faces: the Crew sheet opens and its Pip shows each reaction in turn (watch, wonder, oops, then cheers and
+     hops), the way a person's pointer, typing and presses would make it. pip-demo-activity: Activity Detail's agents,
+     each a Pip. Scheduled's status faces and the Orbit's Pip are the gallery's scheduling and work rows. */
+  var demoT = [];
+  function demoFaces() {
+    demoT.forEach(clearTimeout); demoT = [];
+    var c = EXT.ctx(), b = D.createElement('button');
+    b.dataset.kind = 'crew'; b.dataset.auto = '0';
+    EXT.run('collab-open-configure', b, new Event('click'));
+    c.renderOverlays && c.renderOverlays();
+    var steps = [['watch', 1400], ['wonder', 1400], ['oops', 1900], ['happy', 2600]], at = 900;
+    steps.forEach(function (s) {
+      demoT.push(setTimeout(function () {
+        hosts.forEach(function (st) { feel(st, s[0], s[1], s[0] === 'happy'); if (s[0] === 'happy') hop(st); });
+      }, at));
+      at += s[1] + 300;
+    });
+  }
+  function demoActivity() {
+    var X = W.PM56_DEMO;
+    if (X && typeof X.trigger === 'function') X.trigger('Live subagents');
+    if (X && typeof X.openActivity === 'function') X.openActivity('subagents');
+  }
+  if (EXT && EXT.action) {
+    EXT.action('pip-demo-faces', function () { demoFaces(); return true; });
+    EXT.action('pip-demo-activity', function () { demoActivity(); return true; });
+  }
+
+  /* ---------------------------------------------------------------- loops rest offscreen */
+  /* The sheet's sway (pip.css, PC1) and the live Orbit's thinking dots are CSS loops on Pip's own nodes. They run only
+     while that Pip is in view and the tab is shown: data-pip-run="off" pauses them (pip.css). In view is what an
+     IntersectionObserver on those nodes reports, which clips through every scrolling ancestor, so a transcript scrolled
+     past the Orbit, a closed panel or a hidden page all count as out of view. A drag (any of the drag classes, through
+     the shared clock's hold: PMLogo.clock) rests them too. The reconcile drops an attribute its markup lacks, so each
+     render puts it back from what was last seen, in the same task (no frame shows it running). Reduced Motion stops
+     them. */
+  var LOOPS = '.pmx-sheet:not(.pmx-ghost) > .pmx-head > .pmx-pip-host, .orbit-core-face.is-live';
+  var inView = new WeakMap(), looping = new Set(), io = null;
+  function setRun(el) {
+    var v = !D.hidden && !dragging() && inView.get(el) === true ? 'on' : 'off';
+    if (el.getAttribute('data-pip-run') !== v) el.setAttribute('data-pip-run', v);
+  }
+  function seen(list) { list.forEach(function (e) { inView.set(e.target, e.isIntersecting); setRun(e.target); }); }
+  var held = false;
+  function syncLoops() {
+    if (!io && W.IntersectionObserver) io = new IntersectionObserver(seen);
+    var L = LOGO();
+    if (!held && L && L.clock && typeof L.clock.on === 'function') { held = true; L.clock.on(function () { looping.forEach(setRun); }); }
+    var now = new Set(D.querySelectorAll(LOOPS));
+    looping.forEach(function (el) { if (!now.has(el)) { looping.delete(el); if (io) io.unobserve(el); } });
+    now.forEach(function (el) {
+      if (!looping.has(el)) { looping.add(el); if (io) io.observe(el); else inView.set(el, true); }
+      setRun(el);
+    });
+  }
+  D.addEventListener('visibilitychange', function () { looping.forEach(setRun); });
+
   /* ---------------------------------------------------------------- hooks */
-  if (EXT && EXT.slot) EXT.slot('afterRender', function () { scan(); syncThinking(); });
+  if (EXT && EXT.slot) EXT.slot('afterRender', function () { scan(); syncThinking(); syncLoops(); });
   startBlinks();
 
   W.PM56_PIP = Object.freeze({
@@ -340,6 +446,7 @@
     thinkingPip: thinkingPip,
     /* tests and Demo Studio: the sheet Pips on screen and a face on each */
     hosts: function () { return [...hosts.values()].map(function (s) { return { kind: s.kind, mood: s.mood }; }); },
+    loops: function () { return [...looping].map(function (el) { return { kind: el.classList.contains('orbit-core-face') ? 'orbit' : 'sheet', run: el.getAttribute('data-pip-run') }; }); },
     feel: function (mood, hold) { hosts.forEach(function (st) { feel(st, mood, hold); }); }
   });
 })();

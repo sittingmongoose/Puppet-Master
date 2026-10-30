@@ -538,3 +538,66 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 #o55-demo .pmds-sheet[data-pmds-compact] .pmds-point { grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; justify-items: start; text-align: left; width: 100%; }
 #o55-demo .pmds-sheet[data-pmds-compact] .pmds-headacts { position: static; margin-top: 10px; }
 #o55-demo .pmds-sheet[data-pmds-compact] .pmds-now { display: none; }
+
+/* ---- The title bar held in (Workspace › Title bar, Pip › Mark only): a Studio-owned width on <html>
+   (data-pmds-tbw with --pmds-tbw, 91-demo-studio.js titlebar.setWidth). The bar's own density ladder
+   (pm6-js-panels.js applyDensity) folds it for real: the brand to Pip's mark, then the project box to its folder. It is
+   never stored; Full takes it off. ---- */
+html[data-pmds-tbw] .title-bar { max-width: min(100%, var(--pmds-tbw, 100%)) !important; }
+
+/* ---- Pip (W1, W4, W5): the kit in every look, the faces, the loader wall and the sound board. The drawings are the
+   kit's (PMLogo.svg on each look's own ground, PMLogo.mark in the painted look); the controls are the Studio's
+   primitives (look tiles for the faces, quiet buttons for the events, switch rows for the loops). ---- */
+#o55-demo .pmds-ptwrap { overflow-x: auto; }
+#o55-demo .pmds-piptable { border-collapse: separate; border-spacing: 0 6px; margin: -6px 0 2px; }
+#o55-demo .pmds-piptable th { padding: 0 14px 0 0; font: 650 11px/1.3 var(--pmds-font); letter-spacing: .07em; text-transform: uppercase; color: var(--pmds-mute); text-align: left; white-space: nowrap; }
+#o55-demo .pmds-piptable tbody th { font: 600 12.5px/1.25 var(--pmds-font); letter-spacing: normal; text-transform: none; color: var(--pmds-ink); }
+#o55-demo .pmds-piptable td { padding: 0 14px 0 0; vertical-align: middle; }
+#o55-demo .pmds-ptlook { display: block; }
+#o55-demo .pmds-ptnow { display: block; margin-top: 2px; font: 650 10.5px/1.2 var(--pmds-font); letter-spacing: .06em; text-transform: uppercase; color: var(--pmds-acc-text); }
+#o55-demo .pmds-pipsw { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--pmds-line2); border-radius: var(--pmds-ctl); box-sizing: border-box; vertical-align: middle; }
+#o55-demo .pmds-pipsw > svg { display: block; flex: none; }
+#o55-demo .pmds-pipsw-tile { width: 52px; height: 52px; }
+#o55-demo .pmds-pipsw-tray { width: 26px; height: 26px; }
+#o55-demo .pmds-pttray { display: inline-flex; gap: 4px; }
+#o55-demo .pmds-faces { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); grid-auto-flow: row; grid-template-rows: none; }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-faces { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); }
+#o55-demo .pmds-facetile { justify-items: center; text-align: center; }
+#o55-demo .pmds-facetile .pmds-looklabel { justify-content: center; }
+#o55-demo .pmds-face { display: grid; place-items: center; height: 52px; }
+#o55-demo .pmds-face > svg { display: block; }
+#o55-demo .pmds-ldwall { display: grid; gap: 10px; margin: 12px 0 10px; }
+#o55-demo .pmds-ldrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; color: var(--pmds-ink); }
+#o55-demo .pmds-ldname { width: 52px; font: 600 12px/1.2 var(--pmds-font); color: var(--pmds-ink2); }
+#o55-demo .pmds-ldcell { display: inline-flex; align-items: center; gap: 7px; }
+#o55-demo .pmds-ldpx { font: 11px/1 var(--pmds-mono); color: var(--pmds-mute); }
+#o55-demo .pmds-ldwall + .pmds-fine { margin-bottom: 12px; }
+#o55-demo .pmds-holdrow { margin-top: 8px; }
+#o55-demo .pmds-seg-wrap { flex-wrap: wrap; }
+#o55-demo .pmds-evgroups { display: grid; gap: 12px; margin: 14px 0 4px; }
+#o55-demo .pmds-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+#o55-demo .pmds-sheet .pmds-btn.pmds-chip { height: 28px; padding: 0 9px; gap: 5px; font-size: 12px; }
+#o55-demo .pmds-loopstitle { margin-top: 14px !important; }
+#o55-demo .pmds-say { display: grid; gap: 8px; margin-top: 16px; }
+#o55-demo .pmds-sayrow { display: flex; gap: 8px; }
+#o55-demo .pmds-sayrow .pmds-sayq { flex: 1 1 auto; min-width: 0; font: 400 13px/1 var(--pmds-font); }
+#o55-demo .pmds-sayrow .pmds-sayq:focus-visible { outline: 2px solid var(--pmds-acc); outline-offset: 1px; }
+#o55-demo .pmds-say .pmds-rowacts { margin-top: 0; }
+/* onboarding's Pip moments: two-line rows */
+#o55-demo .pmds-pmgroups { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+#o55-demo .pmds-sheet .pmds-scrow.pmds-pmrow { min-height: 42px; padding-block: 6px; }
+#o55-demo .pmds-pmtext { display: grid; gap: 2px; }
+#o55-demo .pmds-sheet .pmds-scrow .pmds-pmsub { font-size: 11.5px; line-height: 1.35; color: var(--pmds-mute); }
+/* under the pointer or focus the row's wash darkens the ground: the second line steps up a tier (Retro Light read 4.47) */
+#o55-demo .pmds-sheet .pmds-scrow.pmds-pmrow:is(:hover, :focus-visible) .pmds-pmsub { color: var(--pmds-ink2); }
+/* Workspace › Title bar */
+#o55-demo .pmds-choices-box { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+#o55-demo .pmds-tbsays { margin-top: 8px; }
+#o55-demo .pmds-tbrows { margin-top: 14px; }
+#o55-demo .pmds-tbacts { margin-top: 8px; }
+/* Activity (W6) */
+#o55-demo .pmds-choices-scenes { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+#o55-demo .pmds-rowbtns { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+/* the tray and menu bar comparison: face names over 26 px cells */
+#o55-demo .pmds-traytable th.pmds-ptface { padding: 0 6px 0 0; font-size: 10px; letter-spacing: .04em; white-space: normal; max-width: 64px; vertical-align: bottom; }
+#o55-demo .pmds-traytable td { padding: 0 6px 0 0; }

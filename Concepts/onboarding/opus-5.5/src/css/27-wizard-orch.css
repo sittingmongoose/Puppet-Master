@@ -424,8 +424,8 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :is(.pm-e
   animation-name: wo-fade !important; animation-duration: 140ms !important; animation-delay: 0ms !important; animation-timing-function: ease-out !important;
 }
 html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :is(.pm-pop, .pm6-wiz-gate-mark, .pm6-wiz-approved-banner, .pm6-wiz-prdpack-chip, .pm6-wiz-approve.armed,
-  .pm6-wiz-schip.busy .pm6-wiz-sdot, .pm6-wiz-skel-line, .pm6-wiz-doc-status, .pm6-wiz-disc-spin, .pm6-wiz-pulse),
-html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :is(.pm-pop, .pm6-orch-dot, .pm6-orch-fresh-dot, .pm6-orch-pc-ring span) { animation: none !important; }
+  .pm6-wiz-schip.busy .pm6-wiz-sdot, .pm6-wiz-skel-line, .pm6-wiz-doc-status, .pm6-wiz-pulse),
+html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :is(.pm-pop, .pm6-orch-dot, .pm6-orch-fresh-dot, t7.t7:not(*)) { animation: none !important; }
 html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator .pm6-orch-run-mode::after { animation: none !important; }
 html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :is(.pm-press, .pm6-wiz-bigbtn, .pm6-wiz-btn, .pm6-wiz-integrate-btn, .pm6-wiz-approve, .pm6-wiz-opt, .pm6-wiz-send, .pm6-wiz-topic-card, .pm6-wiz-choice-card):is(:hover, :active),
 html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :is(.pm-press, .pm6-orch-run-chip, .pm6-orch-ctl, .pm6-orch-widget):is(:hover, :active) { transform: none !important; }
@@ -437,8 +437,8 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator .pm6-orch
     animation-name: wo-fade !important; animation-duration: 140ms !important; animation-delay: 0ms !important; animation-timing-function: ease-out !important;
   }
   #panel-wizard :is(.pm-pop, .pm6-wiz-gate-mark, .pm6-wiz-approved-banner, .pm6-wiz-prdpack-chip, .pm6-wiz-approve.armed,
-    .pm6-wiz-schip.busy .pm6-wiz-sdot, .pm6-wiz-skel-line, .pm6-wiz-doc-status, .pm6-wiz-disc-spin, .pm6-wiz-pulse),
-  #panel-orchestrator :is(.pm-pop, .pm6-orch-dot, .pm6-orch-fresh-dot, .pm6-orch-pc-ring span) { animation: none !important; }
+    .pm6-wiz-schip.busy .pm6-wiz-sdot, .pm6-wiz-skel-line, .pm6-wiz-doc-status, .pm6-wiz-pulse),
+  #panel-orchestrator :is(.pm-pop, .pm6-orch-dot, .pm6-orch-fresh-dot, t7.t7:not(*)) { animation: none !important; }
   #panel-orchestrator .pm6-orch-run-mode::after { animation: none !important; }
   #panel-wizard :is(.pm-press, .pm6-wiz-bigbtn, .pm6-wiz-btn, .pm6-wiz-integrate-btn, .pm6-wiz-approve, .pm6-wiz-opt, .pm6-wiz-send, .pm6-wiz-topic-card, .pm6-wiz-choice-card):is(:hover, :active),
   #panel-orchestrator :is(.pm-press, .pm6-orch-run-chip, .pm6-orch-ctl, .pm6-orch-widget):is(:hover, :active) { transform: none !important; }

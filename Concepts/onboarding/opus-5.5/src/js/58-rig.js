@@ -508,7 +508,7 @@
     }
     sayNow(text, mood) {
       const b = this.bubble, S = snd();
-      clearInterval(this.typeT);
+      if (this.typeT) this.typeT.cancel();
       this.saying = text;
       if (!text) { b.classList.remove('on', 'typing'); if (S && S.hush) S.hush(); return; }
       if (!b.classList.contains('on')) { b.classList.remove('on'); void b.offsetWidth; b.classList.add('on'); }
@@ -520,20 +520,16 @@
       this.btext.innerHTML = '<span class="pst-bt-on"></span><span class="pst-bt-off"></span>';
       const on = this.btext.firstChild, off = this.btext.lastChild;
       if (this.reduced) { on.textContent = text; b.classList.remove('typing'); return; }
-      let i = 0; off.textContent = text; b.classList.add('typing');
-      const t0 = performance.now();
-      this.typeT = setInterval(() => {
-        const n = Math.min(text.length, Math.floor((performance.now() - t0) / 1000 * cps) + 1);
-        if (n !== i) { i = n; on.textContent = text.slice(0, i); off.textContent = text.slice(i); }
-        if (i >= text.length) { clearInterval(this.typeT); b.classList.remove('typing'); }
-      }, 16);
+      off.textContent = text; b.classList.add('typing');
+      this.typeT = H.typer(text.length, cps, (i) => { on.textContent = text.slice(0, i); off.textContent = text.slice(i); },
+        { paused: () => !this.live(), done: () => b.classList.remove('typing') });
     }
     /* ------------------------------------------------------------- tips */
     // a tip Pip writes out when asked (the ? beside a choice): t = { title, text }, or null to put it away
     tip(t, instant) {
       const key = t ? t.title + '\n' + t.text : '';
       if (key === (this.tipKey || '')) return;
-      clearInterval(this.tipW);
+      if (this.tipW) this.tipW.cancel();
       this.tipKey = key; this.tipData = t || null; this.tipLook = 0;
       const el = this.tipEl();
       this.kick();
@@ -542,7 +538,7 @@
     }
     tipEl() { return this.overlay && this.overlay.querySelector('.pst-tip, .pst-ntip'); }
     showTip(instant) {
-      clearInterval(this.tipW);
+      if (this.tipW) this.tipW.cancel();
       const el = this.tipEl(), t = this.tipData;
       if (!el || !t) return;
       // NieR: QUEST UPDATED gives way to a tip asked for
@@ -563,13 +559,9 @@
       const cps = this.tube ? 60 : this.famName === 'nier' ? 55 : 44;
       this.tipLook = this.t + Math.min(3, t.text.length / cps);
       this.feel(this.famName === 'nier' ? 'alert' : 'happy', 900); this.nod(); this.busy();
-      let i = 0; off.textContent = t.text; el.classList.add('typing');
-      const t0 = performance.now();
-      this.tipW = setInterval(() => {
-        const n = Math.min(t.text.length, Math.floor((performance.now() - t0) / 1000 * cps) + 1);
-        if (n !== i) { i = n; on.textContent = t.text.slice(0, i); off.textContent = t.text.slice(i); }
-        if (i >= t.text.length) { clearInterval(this.tipW); el.classList.remove('typing'); }
-      }, 16);
+      off.textContent = t.text; el.classList.add('typing');
+      this.tipW = H.typer(t.text.length, cps, (i) => { on.textContent = t.text.slice(0, i); off.textContent = t.text.slice(i); },
+        { paused: () => !this.live(), done: () => el.classList.remove('typing') });
     }
     // where the note is, in stage units (for Pip's eyes)
     tipAt() {
@@ -707,7 +699,7 @@
           pr.op += (tg.op - pr.op) * Math.min(1, dt * 8);
         }
         if (!pr.settled && pr.state !== 'out' && Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30) this.settle(pr);
-        if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); }
+        if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); if (this.onLanded) this.onLanded(pr); }
         if (pr.state === 'out' && pr.len < 0 && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(id); }
       });
       // particles
@@ -898,7 +890,7 @@
       };
       flip();
     }
-    destroy() { if (this.off) this.off(); clearTimeout(this.questT); clearInterval(this.tipW); cancelAnimationFrame(this.raf); clearTimeout(this.parkT); this.dead = true; this.ro.disconnect(); clearTimeout(this.wakeT); clearInterval(this.typeT); clearInterval(this.decT); clearInterval(this.cmdT); clearInterval(this.bootT); this.root.innerHTML = ''; }
+    destroy() { if (this.off) this.off(); clearTimeout(this.questT); cancelAnimationFrame(this.raf); clearTimeout(this.parkT); this.dead = true; this.ro.disconnect(); clearTimeout(this.wakeT); [this.tipW, this.typeT, this.decT, this.cmdT, this.bootT].forEach((w) => w && w.cancel()); this.root.innerHTML = ''; }
 
     /* ------------------------------------------------------------- the product's own */
     /* Pip parts the stage's CSS reads: setup-world-life off holds the world's own loops (clouds, caustics, motes, the
@@ -926,9 +918,13 @@
       if (!this.root.hasAttribute('data-paused')) this.root.setAttribute('data-paused', '');
       if (!this.dead && this.active) this.parkT = setTimeout(() => this.kick(), 250);
     }
+    // how many blocks rest on the stack (Creating's Continue waits for the last one, O12 B)
+    blocksLanded() { let n = 0; this.props.forEach((pr) => { if (pr.spec.ground && pr.state !== 'out' && pr.landed) n++; }); return n; }
     // a screen change the window holds back a frame (60-ui-core.js transition): the scene waits with it
     hold(on) { this.held = !!on; if (!on) this.kick(); }
     release() { this.hold(false); }
+    // a letter lands on the sign (Name): it swings a little, alternately left and right (Reduced Motion: still)
+    poke(id, o) { this.busy(); const pr = id && this.props.get(id); if (!pr || this.reduced) return; pr.av += (o.dir || 1) * this.fam.kick * 0.35 * (o.amp || 1); this.kick(); }
     // a choice made (O55.ui.charm): Pip is happy through its line and the chosen prop pops
     picked() { const sp = this.spec || {}; this.busy(); this.cheer(sp.target, { mood: 'happy', hold: 2600 }); }
     celebrate(o) { o = o || {}; this.confetti(o.count || 46); this.cheer(null, { sound: o.sound || 'crew' }); }

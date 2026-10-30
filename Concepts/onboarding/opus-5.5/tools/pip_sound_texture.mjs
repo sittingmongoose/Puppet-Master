@@ -108,7 +108,7 @@ try {
   const rows = await page.evaluate(async ({ wavAll, only }) => {
     const P = window.PipSound, out = [];
     for (const kit of P.KITS) {
-      const jobs = P.EVENTS.map((e) => ['play', e]).concat([['say', 'say']], P.LOOPS.map((l) => ['loop', l]));
+      const jobs = P.EVENTS.map((e) => ['play', e]).concat(P.LOOPS.map((l) => ['loop', l])); /* (Pip's lines are O55.sound.pip's: found measures them) */
       for (const [kind, name] of jobs) {
         const key = kind === 'loop' ? 'loop:' + name : name;
         const buf = await P._render(kit, kind, name, {}, { seconds: kind === 'loop' ? 10 : undefined });

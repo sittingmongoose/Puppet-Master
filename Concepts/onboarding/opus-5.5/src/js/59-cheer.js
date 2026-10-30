@@ -42,8 +42,8 @@
       if (f !== 'nier' && f !== 'basic') setTimeout(() => this.sfx('sparkle', { x: at[0] }), 90);
     },
     wake() {
-      // the welcome: Pip asleep on slack strings. It wakes when you arrive (the first pointer move or
-      // key press) or after a moment, and the hand lifts it up.
+      // the welcome: Pip asleep on slack strings. It wakes when you arrive (the pointer travelling, a key or a
+      // press), and the hand lifts it up. Nothing else wakes it: no timer (HANDOFF W3: only on a real arrival).
       const ps = this.ps;
       this.sleepZ = true;
       this.say('');
@@ -69,10 +69,9 @@
           setTimeout(() => { this.hop(.5); if (this.spec.wakeSay) this.say(this.spec.wakeSay, 'happy'); }, this.reduced ? 0 : 450);
         }, this.reduced ? 0 : 650);
       };
-      const off = () => { document.removeEventListener('pointermove', up); document.removeEventListener('keydown', up); };
-      document.addEventListener('pointermove', up); document.addEventListener('keydown', up);
+      const off = () => { ['pointermove', 'keydown', 'pointerdown'].forEach((k) => document.removeEventListener(k, up, true)); };
+      ['pointermove', 'keydown', 'pointerdown'].forEach((k) => document.addEventListener(k, up, true));
       this.off = off;
-      this.wakeT = setTimeout(up, this.reduced ? 200 : 3200);
     },
     /* ----------------------------------------------------------- effects */
     burst(at, kinds, n) {

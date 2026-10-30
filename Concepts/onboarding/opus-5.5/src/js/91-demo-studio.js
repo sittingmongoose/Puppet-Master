@@ -13,6 +13,11 @@
      notices     PM_TITLEBAR_NOTIFY.demo (pm7-notifications), else window.toast / toast.important
      looks       PM7_SETTINGS_TOME.setChromeThemeFamily / Mode (the title-bar menu's path), PM_NIER.set,
                  PM_NIER_CHIPS.popup, PM12_KIMI.setSettingFromHost (Reduce animations), O55.sound.setMuted
+     pip         PMLogo (svg, mark, MOODS, TRAY, EXPORT), PM_PIP_LOADER (html, busy, mount, stats, hold), the live Pips'
+                 faces (O55.pipStage.of(host).feel in onboarding, PM56_PIP.feel in the chat), O55.pipVoice and
+                 O55.sound.pip (Pip's kits, loops and voice), PM_TB_DENSITY for a squeezed title bar
+     title bar   PM_PROJECT_BOX (add, select, state, open) over PM_WORK (scenario, fixture.define), PM_TB_DENSITY,
+                 PM_HOME.open for an unsaved file
    An owner that is missing on the page makes its control say so (avail() false) instead of failing. */
 (function () {
   'use strict';
@@ -26,7 +31,10 @@
     { id: 'computer', ids: ['lowResource', 'noKeys'] },
     { id: 'nas', ids: ['homeNasPm', 'keyWorks', 'hostChanged', 'wrongPassword', 'keyRefused', 'selfKeyMissing', 'readOnly'] },
     { id: 'online', ids: ['nameTaken', 'flaky'], one: true },
-    { id: 'ai', ids: ['cliMissing', 'signedOut', 'copiedUnavailable', 'remoteAi', 'noAi'], one: true }
+    { id: 'ai', ids: ['cliMissing', 'signedOut', 'copiedUnavailable', 'remoteAi', 'noAi'], one: true },
+    /* Pip's rough moments (W3): a browser sign-in that does not finish the first time; the second try works. They stack
+       with every other group (the fixtures' signin_once) */
+    { id: 'pip', ids: ['antigravityOnce', 'githubSigninOnce'] }
   ];
   /* twists that describe the same thing two ways: picking one takes the other out (symmetric) */
   const CLASH = {};
@@ -92,6 +100,66 @@
     },
     resume: () => W('PM_O55_ONBOARDING').resume(),
     screen(id, s) { applySituation(s || currentSituation()); return O55.ui.open({ fresh: true, screen: id }); }
+  };
+
+  /* ---- onboarding with Pip (W3): moments that open a screen and then do what a person would there, through the
+     window's own calls, so the real state shows (Pip's oops face and line, the warning under the field, the failed
+     sign-in). The window mounts two frames after O55.ui.open, so each step waits for its screen. O55.ui.act presses the
+     on-screen control as the click dispatcher does and O55.ui.fill types into a bound field through its binding (lane
+     onb); a page without them shows these moments unavailable (no reach into the screens' own tables). ---- */
+  const OUI = () => O55.ui || null;
+  function whenScreen(id, step, ms) {
+    const until = performance.now() + (ms || 4000);
+    const tick = () => {
+      const S = OUI() && OUI().S, on = S && S.open && S.root && S.sess && S.sess.screen === id;
+      const layer = on ? S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)') : null;
+      if (layer) { try { step(S); } catch (e) { console.error('[demo studio] onboarding step', id, e); } return; }
+      if (performance.now() < until) O55.motion.real.setTimeout(tick, 80);
+    };
+    O55.motion.real.setTimeout(tick, 120);
+  }
+  const uiAct = (name, arg) => OUI().act(name, arg);
+  const uiFill = (bind, value) => OUI().fill(bind, value);
+  /* the three oops moments (pip.oops.*): what each needs from the situation, the screen and the steps on it */
+  const CURSOR_KEY = 'sk-cur-0042';   /* 11 characters: 12 or more passes the real check (73-screens-ai.js keyCheck) */
+  const OOPS = [
+    { id: 'nameTaken', screen: 'name', base: 'returning', run: () => uiFill('name', 'Tastebook') },
+    { id: 'keyRefused', screen: 'ai', run: () => {
+      uiAct('key', 'cursor');
+      O55.motion.real.setTimeout(() => { if (uiFill('key:cursor', CURSOR_KEY)) uiAct('keyCheck', 'cursor'); }, 260);
+    } },
+    { id: 'signinOnce', screen: 'ai', twist: 'antigravityOnce', run: () => uiAct('signin', 'antigravity') }
+  ];
+  /* Ask Pip: a screen with one ? note open (O55.ui.tip, the id its ? carries: pip.tips.<screen>) */
+  const ASKS = [
+    { id: 'look', screen: 'look', tip: 'pickFamily:friendly' },
+    { id: 'where', screen: 'where', tip: 'pick:this' },
+    { id: 'name', screen: 'name', tip: 'field:name' },
+    { id: 'provider', screen: 'ai', tip: 'provider:cursor' },
+    { id: 'free', screen: 'free', tip: 'route:free-openrouter' }
+  ];
+  const pipOnboarding = {
+    OOPS, ASKS,
+    avail: () => onboarding.avail() && !!(O55.screens && O55.screens.defs) && fn(OUI(), 'act') && fn(OUI(), 'fill'),
+    oopsAvail: (id) => { const o = OOPS.find((x) => x.id === id); return !!o && pipOnboarding.avail() && hasScreen(o.screen) && (!o.twist || !!(O55.fixtures && O55.fixtures.SCENARIOS[o.twist])); },
+    askAvail: (id) => { const a = ASKS.find((x) => x.id === id); return !!a && onboarding.avail() && hasScreen(a.screen) && fn(OUI(), 'tip'); },
+    /* the situation it runs in: the one picked, with the moment's own start and twist */
+    oops(id, pick) {
+      const o = OOPS.find((x) => x.id === id); if (!o) return false;
+      const p = Object.assign({}, pick || parseSituation(currentSituation()));
+      if (o.base) p.base = o.base;
+      p.twists = (p.twists || []).slice();
+      if (o.twist && !p.twists.includes(o.twist)) p.twists = toggleTwist(p, o.twist).pick.twists;
+      onboarding.screen(o.screen, joinSituation(p));
+      whenScreen(o.screen, (S) => O55.motion.real.setTimeout(() => o.run(S), 380));
+      return true;
+    },
+    ask(id, pick) {
+      const a = ASKS.find((x) => x.id === id); if (!a) return false;
+      onboarding.screen(a.screen, pick ? joinSituation(pick) : null);
+      whenScreen(a.screen, () => O55.motion.real.setTimeout(() => OUI().tip(a.tip), 320));
+      return true;
+    }
   };
 
   /* ---- Guided Tour ---- */
@@ -207,6 +275,279 @@
       O55.motion.real.setTimeout(() => { P.agent.run(human.id, 'Builder', 'cargo test --workspace').catch(() => {}); }, 300);
       return true;
     }
+  };
+
+  /* ---- the title bar (W1, W2; option A "Tab" only). The project box's badge is the work projection's state for the
+     project (PM_PROJECT_BOX.state over PM_WORK.project, B5: needs you > blocked > working > unsaved > calm), so a state
+     here is a small scene of the Studio's own loaded into the projection (PM_WORK.fixture.define, then scenario): the
+     badge, the menu's rows, the status bar and the tray all read the same thing. Unsaved is Home's own (a tab with
+     unsaved changes): it opens a file to type into. The width is a Studio-owned attribute (html[data-pmds-tbw] with
+     --pmds-tbw, 50-demo-studio.css caps .title-bar), and the bar's own density ladder (PM_TB_DENSITY) folds it for real:
+     the brand to Pip's mark, then the box to its folder. Nothing here is stored. ---- */
+  const BOX = () => W('PM_PROJECT_BOX'), WORK = () => W('PM_WORK'), DENS = () => W('PM_TB_DENSITY');
+  const BOX_STATES = ['calm', 'working', 'blocked', 'needs', 'unsaved'];
+  const BOX_KEY = { calm: '', working: 'working', blocked: 'blocked', needs: 'waiting', unsaved: 'change-modified' };
+  const TB_WIDTHS = ['full', '1280', '1024', '860'];
+  const LONG = { id: 'tastebook-mobile-companion', path: '~/Projects/tastebook-mobile-companion', branch: 'main', stack: 'Expo + Axum + Postgres' };
+  const UNSAVED_FILE = 'src/main.rs';
+  function activeProject() {
+    try { const t = tome(), p = t && fn(t, 'project') ? t.project() : null; if (p && p.id) return p.id; } catch (_) {}
+    const row = document.querySelector('#projectMenu .pm6-tb-menu-item.is-selected[data-project]');
+    return row ? row.getAttribute('data-project') : 'tastebook';
+  }
+  /* the Studio's scenes: one item on the active project in that state (its words are the Studio's copy) */
+  const SCENE = (state) => `studio-box-${state}`;
+  function sceneItems(state) {
+    const p = activeProject(), now = Date.now(), k = `studio.workspace.titlebar.scene.${state}`;
+    if (state === 'calm') return [];
+    const it = { id: `pmds-box-${state}`, kind: 'agent', role: 'main', project: p, surface: 'assistant', where: T(`${k}.where`), title: T(`${k}.title`),
+      detail: T(`${k}.detail`), model: 'Claude Sonnet 4.6', state: BOX_KEY[state], startedAt: now - 140000 };
+    if (state === 'needs') Object.assign(it, { ask: T(`${k}.ask`), askedAt: now - 30000 });
+    return [it];
+  }
+  function ensureScene(state) {
+    const Wk = WORK(); if (!Wk || !Wk.fixture || !fn(Wk.fixture, 'define')) return false;
+    if ((Wk.SCENARIOS || []).indexOf(SCENE(state)) < 0) Wk.fixture.define(SCENE(state), () => ({ items: sceneItems(state), servers: [] }));
+    return true;
+  }
+  const brand = () => document.querySelector('.title-bar .app-name');
+  const titlebar = {
+    STATES: BOX_STATES, WIDTHS: TB_WIDTHS, LONG,
+    avail: () => !!(BOX() && fn(BOX(), 'state')),
+    stateAvail: () => titlebar.avail() && !!(WORK() && fn(WORK(), 'scenario') && WORK().fixture && fn(WORK().fixture, 'define')),
+    /* what the box shows now, as one of the five */
+    state() {
+      if (!titlebar.avail()) return null;
+      let s = { key: '', say: '' }; try { s = BOX().state(activeProject()) || s; } catch (_) {}
+      const id = BOX_STATES.find((x) => BOX_KEY[x] === (s.key || '')) || 'calm';
+      return { id, say: s.say || '' };
+    },
+    setState(state) {
+      if (!BOX_STATES.includes(state) || !ensureScene(state === 'unsaved' ? 'calm' : state)) return false;
+      WORK().scenario(SCENE(state === 'unsaved' ? 'calm' : state));
+      if (fn(BOX(), 'refresh')) BOX().refresh();
+      if (state === 'unsaved' && HOME() && fn(HOME(), 'open')) { goHome(); HOME().open({ kind: 'editor', path: UNSAVED_FILE, line: 1 }); }
+      return true;
+    },
+    /* a long name: the project the box adds for it (its one row renderer, as onboarding adds a new Project), then a
+       switch to it; off goes back to the project it came from */
+    longAvail: () => titlebar.avail() && fn(BOX(), 'add') && fn(BOX(), 'select'),
+    longOn: () => activeProject() === LONG.id,
+    setLong(on) {
+      const B = BOX();
+      if (on) {
+        if (!titlebar.longOn()) titlebar.from = activeProject();
+        /* a new Project opens in its own settings (Basic Dark): it takes the look on screen, through the title-bar
+           menu's own path, so the long name is seen in the look being reviewed */
+        const was = lookNow();
+        B.add(LONG.id, { path: LONG.path, branch: LONG.branch, stack: LONG.stack });
+        const ok = B.select(LONG.id);
+        O55.motion.real.setTimeout(() => { try { const n = lookNow(); if (titlebar.longOn() && (n.look !== was.look || n.setMode !== was.setMode)) looks.set(was.look, was.setMode); } catch (_) {} }, 360);
+        return ok;
+      }
+      return B.select(titlebar.from && titlebar.from !== LONG.id ? titlebar.from : 'tastebook');
+    },
+    from: null,
+    widthAvail: () => !!document.querySelector('.title-bar'),
+    width: () => document.documentElement.getAttribute('data-pmds-tbw') || 'full',
+    setWidth(v, o) {
+      const de = document.documentElement, px = parseInt(v, 10);
+      if (!px) { de.removeAttribute('data-pmds-tbw'); de.style.removeProperty('--pmds-tbw'); }
+      else { de.setAttribute('data-pmds-tbw', String(px)); de.style.setProperty('--pmds-tbw', `${px}px`); }
+      /* the ladder runs once for the new width: at once for a pick, or in the owner's next frame (o.later) */
+      try { const D = DENS(); if (D) { if (o && o.later && fn(D, 'schedule')) D.schedule(); else if (fn(D, 'apply')) D.apply(); } } catch (_) {}
+      return true;
+    },
+    /* the bar's folds, read off the bar: the brand (full | mark) and the project box (full | icon) */
+    folds() { const b = brand(), w = document.getElementById('projectMenuWrap'); return { brand: (b && b.getAttribute('data-mode')) || 'full', box: (w && w.getAttribute('data-mode')) || 'full' }; },
+    /* Mark only: the widest bar at which the brand folds to Pip's mark. A halving search between the bar's own width
+       and a narrow floor, to 8 px: about nine widths, each folded by one pass of the bar's own ladder in its own frame
+       (PM_TB_DENSITY.schedule), with the page painting and taking input between them. Stepping 16 px at a time with a
+       forced pass per step held the page for about 20 s (Astra R3). -> Promise<px | 0> */
+    markAvail: () => !!(document.querySelector('.title-bar .app-name .pm-brand-mark') && DENS() && fn(DENS(), 'schedule')),
+    markBusy: false,
+    async markOnly() {
+      const bar = document.querySelector('.title-bar'); if (!bar || !titlebar.markAvail() || titlebar.markBusy) return 0;
+      titlebar.markBusy = true;
+      const frames = () => new Promise((r) => O55.motion.real.raf(() => O55.motion.real.raf(() => O55.motion.real.setTimeout(r, 0))));
+      const folded = async (w) => { titlebar.setWidth(w, { later: true }); await frames(); return titlebar.folds().brand === 'mark'; };
+      try {
+        if (await folded('full')) return Math.floor(bar.getBoundingClientRect().width);
+        let hi = Math.floor(bar.getBoundingClientRect().width), lo = 560;
+        if (!(await folded(lo))) { titlebar.setWidth('full'); return 0; }
+        while (hi - lo > 8) { const mid = Math.round((hi + lo) / 2); if (await folded(mid)) lo = mid; else hi = mid; }
+        titlebar.setWidth(lo);
+        return lo;
+      } finally { titlebar.markBusy = false; }
+    },
+    /* the menu opens after the click that asked for it has finished (the bar's menus close on a click outside them) */
+    menuAvail: () => titlebar.avail() && fn(BOX(), 'open'),
+    openMenu() { O55.motion.real.setTimeout(() => { try { BOX().open(); } catch (_) {} }, 0); return true; }
+  };
+
+  /* ---- background activity (W6): the work projection's scenarios (PM_WORK.scenario: lane activity's fixture,
+     src/work/20-fixture.js), the platform panel and its dialogs (PM7_WORK_UI, src/js/48-work.js), the chat's Processes
+     view (PM56_DEMO.openActivity, the chat's own demo call) and the status bar's Numbers or Words (the setting
+     general.interaction.status-bar-words, written the way Reduce animations is). ---- */
+  const WUI = () => W('PM7_WORK_UI');
+  const ACT_SCENES = ['busy', 'no-asks', 'quiet', 'many', 'stale', 'restart', 'servers'];
+  const WORDS_KEY = 'general.interaction.status-bar-words';
+  const activity = {
+    SCENES: ACT_SCENES, TABS: ['agents', 'processes', 'resources'],
+    avail: () => !!(WORK() && fn(WORK(), 'scenario') && (WORK().SCENARIOS || []).some((x) => ACT_SCENES.includes(x))),
+    has: (name) => !!(WORK() && (WORK().SCENARIOS || []).includes(name)),
+    scene: () => (WORK() && fn(WORK(), 'scenario') ? WORK().scenario() : null),
+    load(name) { if (!activity.has(name)) return false; WORK().scenario(name); return true; },
+    counts: () => { try { return WORK().counts(); } catch (_) { return null; } },
+    feed: () => { try { return WORK().feed(); } catch (_) { return null; } },
+    panelAvail: () => fn(WUI(), 'open'),
+    panelOpen: () => !!(WUI() && fn(WUI(), 'isOpen') && WUI().isOpen()),
+    panelTab: () => (WUI() && fn(WUI(), 'tab') ? WUI().tab() : null),
+    /* the panel rises from the status bar on the Home page */
+    open(tab) { goHome(); O55.motion.real.setTimeout(() => { try { WUI().open(tab); } catch (_) {} }, 0); return true; },
+    /* the chat's tenth Activity Detail domain, shown while a process of the thread runs or needs input (D4) */
+    /* the chat's Processes view (D4: only a thread a process runs or waits in has one): the current thread when it has
+       processes, else the first of the chat's threads that does (PM_WORK.thread), selected through the chat's own
+       PM56_DEMO.selectThread; the result is read back from the chat's state -> Promise<{ ok, reason? }> */
+    procThread() {
+      const Wk = WORK(), D = W('PM56_DEMO');
+      if (!Wk || !fn(Wk, 'thread') || !D || !fn(D, 'getState')) return null;
+      let st = null; try { st = D.getState(); } catch (_) { return null; }
+      const has = (id) => { try { const t = Wk.thread(id); return !!(t && t.processes); } catch (_) { return false; } };
+      if (st && st.selectedThread && has(st.selectedThread)) return st.selectedThread;
+      return ((st && st.threads) || []).map((t) => t.id).find(has) || null;
+    },
+    processesAvail: () => chat.avail() && fn(W('PM56_DEMO'), 'openActivity') && fn(W('PM56_DEMO'), 'selectThread') && !!activity.procThread(),
+    processes() {
+      const D = W('PM56_DEMO'), id = activity.procThread();
+      if (!id) return Promise.resolve({ ok: false, reason: 'none' });
+      chat.show();
+      return new Promise((done) => O55.motion.real.setTimeout(() => {
+        try {
+          if (D.getState().selectedThread !== id) D.selectThread(id);
+          O55.motion.real.raf(() => {
+            try { D.openActivity('processes'); } catch (_) {}
+            O55.motion.real.raf(() => { let a = null; try { a = D.getState().activity; } catch (_) {} done(a && a.open && a.domain === 'processes' ? { ok: true } : { ok: false, reason: 'refused' }); });
+          });
+        } catch (_) { done({ ok: false, reason: 'refused' }); }
+      }, 320));
+    },
+    quitAvail: () => fn(WUI(), 'quit'),
+    quit() { O55.motion.real.setTimeout(() => { try { WUI().quit(); } catch (_) {} }, 0); return true; },
+    stopAllAvail: () => fn(WUI(), 'confirmPlatform'),
+    stopAll() { O55.motion.real.setTimeout(() => { try { WUI().confirmPlatform(); } catch (_) {} }, 0); return true; },
+    wordsAvail: () => fn(W('PM12_KIMI'), 'setSettingFromHost') && !!WUI(),
+    words() {
+      try { const K = W('PM12_KIMI'), st = K && K.getState && K.getState(), v = st && st.settings ? st.settings[WORDS_KEY] : undefined; if (v !== undefined) return v === true || v === 'On' || v === 'on'; } catch (_) {}
+      return document.documentElement.getAttribute('data-pm-status-words') === 'on';
+    },
+    setWords(on) {
+      const K = W('PM12_KIMI'), ok = K.setSettingFromHost(WORDS_KEY, !!on, false, false);
+      try { const t = tome(); if (t && t.applyPaint) t.applyPaint(K.getState()); } catch (_) {}
+      return ok;
+    }
+  };
+
+  /* ---- Pip (W1, W4, W5): the kit's drawings in every look, the faces on every live Pip, the loader, Pip's sound ---- */
+  const LOGO = () => W('PMLogo'), LOADER = () => W('PM_PIP_LOADER'), VOX = () => (O55.pipVoice || null);
+  const PIP_HOLD = 2600;
+  const svgCache = new Map();
+  /* the live Pips a face reaches: onboarding's stage while its window is open, and the chat's sheet hosts */
+  function liveStage() {
+    const S = OUI() && OUI().S, host = S && S.open && S.root ? S.root.querySelector('.o55-stage') : null;
+    return host && O55.pipStage && fn(O55.pipStage, 'of') ? O55.pipStage.of(host) : null;
+  }
+  const chatPip = () => { const C = W('PM56_PIP'); return C && fn(C, 'feel') ? C : null; };
+  const pip = {
+    avail: () => !!(LOGO() && fn(LOGO(), 'svg') && LOGO().LOOKS),
+    looks: () => (pip.avail() ? LOGO().LOOKS.slice() : []),
+    moods: () => (pip.avail() && LOGO().MOODS ? LOGO().MOODS.slice() : []),
+    /* the tray's faces in the order its one reducer picks them (A3), each with the face it draws */
+    tray: () => (pip.avail() && LOGO().TRAY ? LOGO().TRAY.order.map((key) => ({ key, mood: LOGO().TRAY.faces[key] })) : []),
+    ground: (look) => { const e = pip.avail() && LOGO().EXPORT ? LOGO().EXPORT[look] : null; return e ? e.bg : ''; },
+    /* a still drawing in any look (literal colours: the page paints only its own look), kept per painted look */
+    svg(o) {
+      const key = `${LOGO().look()}|${o.look}|${o.form}|${o.px}|${o.mood || 'idle'}|${o.ink || ''}`;
+      if (svgCache.has(key)) return svgCache.get(key);
+      let out = ''; try { out = LOGO().svg(Object.assign({ decorative: true, motion: null }, o)); } catch (_) { out = ''; }
+      if (svgCache.size > 400) svgCache.clear();
+      svgCache.set(key, out);
+      return out;
+    },
+    /* the tray and menu bar (A3): macOS template images in one ink on a light and a dark bar, and Windows' colour mark
+       (the app icon's Basic Dark Pip, A1) on its taskbar, at 16 px, for each face; Working is a four-frame flip, the
+       kit's micro Think loader, shown playing (PMLogo.svg with motion 'think') */
+    TRAY_BARS: [{ id: 'macLight', ground: '#f6f6f6', form: 'tray', ink: '#000000' }, { id: 'macDark', ground: '#202024', form: 'tray', ink: '#ffffff' },
+      { id: 'windows', ground: '#1c1c1c', form: 'glyph', look: 'basic-dark' }],
+    trayIcon(bar, mood, moving) {
+      const o = Object.assign({ px: 16, look: bar.look || 'basic-dark', form: bar.form, mood }, bar.ink ? { ink: bar.ink } : {});
+      if (!moving) return pip.svg(o);
+      try { return LOGO().svg(Object.assign(o, { mood: 'working', motion: 'think', decorative: true })); } catch (_) { return ''; }
+    },
+    /* the painted look's own mark (colour roles, so it repaints with the look) */
+    mark: (o) => { try { return LOGO().mark(Object.assign({ decorative: true }, o)); } catch (_) { return ''; } },
+    live() { const C = chatPip(); return { stage: !!liveStage(), chat: C && fn(C, 'hosts') ? C.hosts().length : 0 }; },
+    /* a face on every live Pip, for a moment; each goes back to its own face after it */
+    feel(mood) {
+      const st = liveStage(); if (st && fn(st, 'feel')) st.feel(mood, PIP_HOLD);
+      const C = chatPip(); if (C) C.feel(mood, PIP_HOLD);
+      return pip.live();
+    },
+    /* the loader (W5): its three motions as a take (the product picks one by context, L5, never a setting) */
+    loaderAvail: () => !!(LOADER() && fn(LOADER(), 'html')),
+    motions: () => (LOADER() && LOADER().MOTIONS ? LOADER().MOTIONS.slice() : ['swing', 'think', 'hop']),
+    loader: (motion, px) => LOADER().html({ motion, px, size: `${px}px` }),
+    arm: (root) => { try { if (LOADER() && fn(LOADER(), 'mount')) LOADER().mount(root); } catch (_) {} },
+    busy: (host, on) => (LOADER() && fn(LOADER(), 'busy') ? LOADER().busy(host, on, { slot: 'end', px: 16, motion: 'swing' }) : false),
+    stats: () => (LOADER() && fn(LOADER(), 'stats') ? LOADER().stats() : null),
+    /* a panel waiting with the loader: Projects › Refresh (pm6-js-projects.js 'proj.refresh', the action its button
+       carries, run through the base demo engine's registry, PM_DEMO.guard.attempt); Hold keeps its loader up */
+    panelAvail: () => !!(W('PM_DEMO') && W('PM_DEMO').guard && fn(W('PM_DEMO').guard, 'attempt') && W('PM_DEMO').actions && fn(W('PM_DEMO').actions, 'get') && W('PM_DEMO').actions.get('proj.refresh') && W('PM_PAGES')),
+    panel() {
+      try { W('PM_PAGES').go('projects'); } catch (_) {}
+      return new Promise((done) => O55.motion.real.setTimeout(() => { let r = null; try { r = W('PM_DEMO').guard.attempt('proj.refresh', {}); } catch (_) {} done(r && r.ok !== false && !r.disabled ? { ok: true } : { ok: false }); }, 360));
+    },
+    /* the splash: PMConcept7 paints straight into Home and has no splash screen, so there is nothing to hold */
+    splashAvail: () => false,
+    holdAvail: () => !!(LOADER() && fn(LOADER(), 'hold')),
+    held: () => !!(LOADER() && fn(LOADER(), 'held') && LOADER().held()),
+    setHold: (on) => LOADER().hold(!!on),
+    /* Pip's sound: the six kits (by the look, or one chosen), the stage and vocal events, the loops, a line said */
+    soundAvail: () => !!(VOX() && fn(VOX(), 'play') && O55.sound),
+    kits: () => (VOX() && VOX().KITS ? VOX().KITS.slice() : []),
+    kitFor: (choice) => (choice && choice !== 'look' ? choice : VOX() && fn(VOX(), 'kitOf') ? VOX().kitOf(LOGO() ? LOGO().look() : 'basic-dark') : 'basic'),
+    /* the events Pip's own kits play (the window's clicks are O55.sound's, its one vocabulary: DR-043) */
+    /* each of Pip's 42 events with the owner that plays it: the window's own clicks, its chapter sting and hover are
+       O55.sound's (the one vocabulary, DR-043; Pip's kit refuses them), Pip's voice is the kit's vocal set, and every
+       other event, the typing key included, is Pip's kit (O55.pipVoice) */
+    WINDOW_EVENTS: ['tap', 'hover', 'select', 'toggleOn', 'toggleOff', 'next', 'back', 'open', 'close', 'warn', 'chapter'],
+    VOCAL_EVENTS: ['wake', 'sleep', 'think', 'happy', 'wink', 'alert', 'cheer', 'crew'],
+    events() {
+      const V = VOX(); if (!V || !V.EVENTS) return [];
+      const win = pip.WINDOW_EVENTS, vocal = pip.VOCAL_EVENTS, snd = (O55.sound && O55.sound.EVENTS) || [];
+      return [
+        { id: 'stage', ids: V.EVENTS.filter((e) => !vocal.includes(e) && !win.includes(e)) },
+        { id: 'vocal', ids: V.EVENTS.filter((e) => vocal.includes(e)) },
+        { id: 'window', ids: win.filter((e) => V.EVENTS.includes(e) && snd.includes(e)), window: true }
+      ].filter((g) => g.ids.length);
+    },
+    loops: () => (VOX() && VOX().LOOPS ? VOX().LOOPS.slice() : []),
+    muted: () => !!(O55.sound && O55.sound.muted),
+    play(event, choice, windowOwn) {
+      if (windowOwn) return O55.sound.play(event) !== false;
+      return !!VOX().play(event, { kit: pip.kitFor(choice) });
+    },
+    loopsOn: {},
+    setKit(choice) { const V = VOX(); if (V && fn(V, 'setTheme')) V.setTheme(pip.kitFor(choice)); },
+    loop(name, on, choice) { pip.setKit(choice); VOX().loop(name, on ? 1 : 0); pip.loopsOn[name] = !!on; },
+    stopLoops() { const V = VOX(); Object.keys(pip.loopsOn).forEach((n) => { if (pip.loopsOn[n] && V) V.loop(n, 0); pip.loopsOn[n] = false; }); },
+    /* one voice (found's O55.sound.pip; onboarding's stage voice when that is all the page has) */
+    say(text, mood, choice) {
+      const kit = pip.kitFor(choice), P = O55.sound && O55.sound.pip;
+      if (P && fn(P, 'say')) return P.say(text, { mood, voice: kit, where: 'setup' }) || { played: false };
+      return Object.assign({ played: false }, VOX() && fn(VOX(), 'say') ? VOX().say(text, { mood, kit }) : null);
+    },
+    voicePart: () => { const P = W('PM_PIP_PARTS'); return !P || !fn(P, 'get') || P.get('setup-voice') !== false; }
   };
 
   /* ---- the assistant chat: the 5.6 Pro chat's demo content (DECISIONS.md D26), through PM56_PORT.demo. The lists
@@ -362,7 +703,19 @@
     },
     soundAvail: () => !!(O55.sound && fn(O55.sound, 'setMuted')),
     sound: () => !!(O55.sound && !O55.sound.muted),
-    setSound: (on) => O55.sound.setMuted(!on, 'demo_studio')
+    setSound: (on) => O55.sound.setMuted(!on, 'demo_studio'),
+    /* Pip's parts (W4, S1-S9: Pip in the chat and onboarding only), beside NieR Mode: the presets are the registry's own
+       (PM_PIP_PARTS.applyPreset, saved to the Project like a look), and Adjust Pip opens the product's editor (lane
+       chatpip, PM_PIP_EDITOR.popup: the dialog the wand's "Pip…" opens) */
+    pip: {
+      avail: () => fn(W('PM_PIP_PARTS'), 'applyPreset'),
+      presets: () => { const P = W('PM_PIP_PARTS'); return P && P.PRESETS ? Object.keys(P.PRESETS) : []; },
+      preset: () => { try { return W('PM_PIP_PARTS').preset() || 'custom'; } catch (_) { return 'custom'; } },
+      count: () => { try { return W('PM_PIP_PARTS').count(); } catch (_) { return null; } },
+      apply: (name) => W('PM_PIP_PARTS').applyPreset(name),
+      editorAvail: () => fn(W('PM_PIP_EDITOR'), 'popup'),
+      edit(from) { W('PM_PIP_EDITOR').popup({ from, returnFocus: () => from }); return true; }
+    }
   };
 
   /* ---- resets ---- */
@@ -437,6 +790,8 @@
     { id: 'learn', icon: 'tour', kind: 'launch', avail: tour.avail, run: () => tour.start() },
     { id: 'storyFinish', icon: 'flag', kind: 'stay', avail: story.avail, run: () => { goHome(); story.jump('c3_run_complete'); story.speed(2); story.play(); return true; } },
     { id: 'busy', icon: 'bell', kind: 'stay', avail: () => notices.avail(), run: () => {
+      /* the work too (W6): the Busy scenario fills the status bar, the panel and the chat's Processes domain */
+      if (activity.has('busy')) activity.load('busy');
       if (workspace.agentsAvail()) workspace.agents();
       O55.motion.real.setTimeout(() => notices.fire('burst'), 900);
       if (usage.hourAvail() && !usage.hourRunning()) usage.hour();
@@ -446,14 +801,20 @@
     /* the assistant chat: a live agent turn (a moment: the Studio stays open beside the chat) and the Wonderer and Grill
        Me showcase (a recorded example: it plays on its own) */
     { id: 'chatWork', icon: 'chat', kind: 'stay', avail: () => chat.avail(), run: () => chat.run('live', 'live-agent-turn').ok },
-    { id: 'chatGrill', icon: 'wonder', kind: 'launch', avail: () => chat.avail(), run: () => chat.runGuided('wonderer-crew').ok }
+    { id: 'chatGrill', icon: 'wonder', kind: 'launch', avail: () => chat.avail(), run: () => chat.runGuided('wonderer-crew').ok },
+    /* quitting with work running (W6, D10): the Busy scenario, then Quit asks what happens to it */
+    { id: 'quitWithWork', icon: 'activity', kind: 'stay', avail: () => activity.has('busy') && activity.quitAvail(), run: () => { activity.load('busy'); return activity.quit(); } },
+    /* Pip's rough day (W3): back with Projects from before, Antigravity's sign-in fails once, from the Name screen (the
+       name Tastebook is taken there, and the AI chapter's sign-in fails the first time) */
+    { id: 'pipRoughDay', icon: 'pip', kind: 'launch', avail: () => onboarding.avail() && hasScreen('name') && !!(O55.fixtures && O55.fixtures.SCENARIOS.antigravityOnce),
+      run: () => onboarding.screen('name', 'returning+antigravityOnce') }
   ];
 
   O55.studio = {
     BASES, GROUPS, TWISTS, CLASH, SCREEN_CHAPTERS, POINTS, RECIPES, LOOKS,
     parseSituation, joinSituation, situationLabel, situationLong, currentSituation, toggleTwist, applySituation, sitTitle,
     hasScreen, onboardingState, tourChapters, tourState, fmtClock,
-    onboarding, tour, story, workspace, chat, usage, notices, looks, reset, switches,
+    onboarding, pipOnboarding, tour, story, workspace, titlebar, activity, chat, usage, notices, looks, pip, reset, switches,
     /* open/close/toggle are filled in by the UI (92-demo-studio-ui.js) */
     open: () => false, close: () => false, toggle: () => false
   };

@@ -453,7 +453,12 @@
   function tbCloseAllMenus(except) {
     document.querySelectorAll('.pm6-tb-menu').forEach(function (m) {
       if (except && m === except) return;
-      if (tbMenuIsOpen(m)) tbMenuClose(m);
+      if (tbMenuIsOpen(m)) {
+        tbMenuClose(m);
+        /* the project menu's close is a declared local action on every path (outside click, page Esc, another menu
+           opening), not only its own keys and picks (Muse review m2) */
+        if (m.id === 'projectMenu') projectNote('ui', 'ui.project_switcher.close');
+      }
       var wrap = m.closest('.pm6-tb-menu-wrap');
       var btn = wrap && wrap.querySelector('.pm6-tb-menu-trigger');
       if (btn && btn.getAttribute('aria-expanded') !== 'false') btn.setAttribute('aria-expanded', 'false');   /* O55: only a change (T8) */
@@ -571,14 +576,15 @@
     keys.forEach(function (k) { if (PROJECT_STATES[k] && (!best || PROJECT_STATES[k].rank > PROJECT_STATES[best].rank)) best = k; });
     return { key: best, say: best ? String(v.say || '') : '' };
   }
-  /* FinalGUISpec 3.4's "unsaved shell state": a Home tab with unsaved changes. Home saves its layout by itself, so its
-     open buffers are the only unsaved state, and only the active project has its tabs open (Home fires pm7.home.unsaved
-     when a tab's mark changes) */
+  /* FinalGUISpec 3.4's "unsaved shell state": a Home tab with unsaved changes, read from the layout Home has bound to
+     that project (Home keys projects by name: PMW.unsaved). Right after a pick Home still holds the old project's layout,
+     so the new one reads calm until Home has loaded it; Home fires pm7.home.unsaved whenever the bound project or its
+     unsaved state changes (a dirty mark, a close, a restore) */
   function projectUnsaved(id) {
-    var P = window.PMW, tabs = P && P.state && P.state.layout && P.state.layout.tabs, sel = projectSelected();
-    if (!tabs || !sel || sel.getAttribute('data-project') !== id) return false;
-    for (var k in tabs) if (tabs[k] && tabs[k].dirty) return true;
-    return false;
+    var P = window.PMW;
+    if (!P || typeof P.unsaved !== 'function') return false;
+    var row = projectRows().filter(function (r) { return r.getAttribute('data-project') === id; })[0];
+    try { return !!P.unsaved(row ? projectInfo(row).name : id); } catch (e) { return false; }
   }
   function projectState(id) {
     var W = window.PM_WORK;
@@ -604,11 +610,14 @@
   /* the one row renderer: a monogram tile, the name, the path and branch, and the state in words beside its mark */
   function renderProjectRow(item) {
     var info = projectInfo(item), st = projectState(info.id), where = projectWhere(info, false), G = window.PMG;
-    var word = st.key ? PROJECT_STATES[st.key].word : '', sig = [info.name, where, st.key, !!G].join('|');
+    var cur = item.classList.contains('is-selected');
+    var word = st.key ? PROJECT_STATES[st.key].word : '', sig = [info.name, where, st.key, !!G, cur].join('|');
     if (item.__pmProjectRow === sig) return item;
     item.__pmProjectRow = sig;
+    /* the chosen row tells assistive tech it is the current project (Muse review m1), not only by its material */
+    if (cur) item.setAttribute('aria-current', 'true'); else item.removeAttribute('aria-current');
     item.setAttribute('data-state', st.key || 'idle');
-    item.setAttribute('aria-label', info.name + (where ? ', ' + projectWhere(info, true) : '') + (word ? ', ' + word : ''));
+    item.setAttribute('aria-label', info.name + (cur ? ', current project' : '') + (where ? ', ' + projectWhere(info, true) : '') + (word ? ', ' + word : ''));
     item.innerHTML = '<span class="pm6-tb-project-tile" aria-hidden="true">' + projectEsc(projectMonogram(info.name)) + '</span>' +
       '<span class="pm6-tb-project-text"><b class="pm6-tb-project-name">' + projectEsc(info.name) + '</b>' +
       (where ? '<small class="pm6-tb-project-path">' + projectEsc(where) + '</small>' : '') + '</span>' +
@@ -665,7 +674,11 @@
     var label = byId('projectMenuLabel');
     if (!item) return false;
     var info = projectInfo(item);
-    projectRows().forEach(function (el) { if (el.classList.contains('is-selected') !== (el === item)) el.classList.toggle('is-selected', el === item); });
+    /* onboarding names its project in PM_ACTIVE_PROJECT_ID, which Settings and the sound binding read before the chosen
+       row (pm4-settings-js.js projectRecord): a pick keeps it in step, before the label changes, so the reload they run on
+       that change reads the picked project (Astra W2 review, integration note) */
+    if (typeof window.PM_ACTIVE_PROJECT_ID === 'string' && window.PM_ACTIVE_PROJECT_ID !== info.id) window.PM_ACTIVE_PROJECT_ID = info.id;
+    projectRows().forEach(function (el) { if (el.classList.contains('is-selected') !== (el === item)) { el.classList.toggle('is-selected', el === item); renderProjectRow(el); } });
     if (label && label.textContent !== info.name) label.textContent = info.name;
     paintProjectButton();
     return true;
@@ -744,6 +757,11 @@
         pickProject(row, true, true);
       } else if (ev.key === 'Escape') {
         projectMenuClose(true);
+      } else if (ev.key === 'Tab') {
+        /* Tab and Shift+Tab close the menu and hand focus back to the box, as the theme menu does; walking out of an
+           open menu left it open with focus on the page tabs (Muse review M1) */
+        ev.preventDefault();
+        projectMenuClose(true);
       }
     });
     /* Ctrl+Shift+P (FinalGUISpec's keyboard table; F3-058): open the menu on the chosen row. Never under the onboarding
@@ -766,11 +784,18 @@
     window.PM_PROJECT_BOX = {
       /* the one row renderer: a row element with data-project (and data-project-name, -path, -branch, -stack) */
       row: renderProjectRow,
-      /* a project the menu does not list yet: a row from the renderer, first in the list */
+      /* a project the menu does not list yet: a row from the renderer, first in the list. A listed project takes the
+         name, path, branch and stack given (onboarding's draft can add them after the row exists) */
       add: function (id, info) {
         info = info || {};
         var found = projectRows().filter(function (r) { return r.getAttribute('data-project') === id; })[0];
-        if (found) return found;
+        if (found) {
+          if (info.name && info.name !== id) found.setAttribute('data-project-name', info.name);
+          ['path', 'branch', 'stack'].forEach(function (k) { if (info[k]) found.setAttribute('data-project-' + k, info[k]); });
+          renderProjectRow(found);
+          if (found.classList.contains('is-selected')) paintProjectButton();
+          return found;
+        }
         var item = document.createElement('button');
         item.type = 'button'; item.className = 'pm6-tb-menu-item'; item.setAttribute('role', 'menuitem');
         item.setAttribute('data-project', id);
@@ -839,7 +864,6 @@
     var brand = bar.querySelector('.app-name');
     var fullBrandW = 0;
     var popOpen = false;
-    var closeTimer = null;
     var raf = null;
     var fullThemeW = 0;
     var fullProjectW = 0;
@@ -855,11 +879,11 @@
       } catch (e) { return false; }
     }
 
+    /* the search pop opens and closes through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js), from its own
+       corner (style-002.css); a reopen cancels a close still running */
     function openPop() {
-      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
       popOpen = true;
-      pop.classList.remove('is-closing');
-      pop.classList.add('open', 'is-open');
+      window.PM6_SPROUT.open(pop);
       btn.setAttribute('aria-expanded', 'true');
       if (popInput) {
         popInput.value = inline.value || '';
@@ -867,20 +891,11 @@
       }
     }
     function closePop() {
-      if (!popOpen && !pop.classList.contains('open') && !pop.classList.contains('is-open')) return;
+      if (!popOpen && !window.PM6_SPROUT.isOpen(pop)) return;
       popOpen = false;
       btn.setAttribute('aria-expanded', 'false');
       if (popInput && inline) inline.value = popInput.value || inline.value;
-      if (reduced()) {
-        pop.classList.remove('open', 'is-open', 'is-closing');
-        return;
-      }
-      pop.classList.add('is-closing');
-      pop.classList.remove('open', 'is-open');
-      closeTimer = setTimeout(function () {
-        pop.classList.remove('is-closing');
-        closeTimer = null;
-      }, 240);
+      window.PM6_SPROUT.close(pop);
     }
 
     window.PM_TB_SEARCH = {
@@ -1237,8 +1252,16 @@
         var width = entries.length ? entries[entries.length - 1].contentRect.width : lastBarWidth;
         if (Math.abs(width - lastBarWidth) < .5) return;
         lastBarWidth = width;
-        pageInkResyncPending = true;
-        schedule();
+        /* the fold runs here, after this frame's layout and before its paint, so the frame that draws the new width also
+           draws the fold that fits it, and the tabs' chip is placed after it in the same frame (PM_LG.syncScope: the
+           brand's fold or a gap step moves the tabs without the box's width changing, which glass.js watches). Deferred
+           to the next frame, an iframe resized from 1390 to 860 px painted the chip 10 px off its tab until the fold
+           landed (Astra W2 review M2) */
+        if (raf) { cancelAnimationFrame(raf); raf = null; }
+        applyDensity();
+        pageInkResyncPending = false;
+        if (window.PM_LG && typeof window.PM_LG.syncScope === 'function' && pageStrip) window.PM_LG.syncScope(pageStrip);
+        if (window.PM7_PAGE_TAB_INK && typeof window.PM7_PAGE_TAB_INK.resync === 'function') window.PM7_PAGE_TAB_INK.resync();
       });
       ro.observe(bar);
     } else {

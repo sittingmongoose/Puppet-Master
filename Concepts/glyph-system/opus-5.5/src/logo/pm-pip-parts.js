@@ -105,9 +105,10 @@
     return m ? m.slice() : DEFAULT.slice();
   }
   const current = () => (pv ? pv.slice() : stored());
+  let writing = false;   // our own write: the adapter's notice is not a second change
   function write(ids) {
     const list = order(ids), S = store();
-    if (S) return S.write(list.map((id) => byId.get(id).label));
+    if (S) { writing = true; try { return S.write(list.map((id) => byId.get(id).label)); } finally { writing = false; } }
     memory[projectId()] = list;
     return true;
   }
@@ -127,7 +128,7 @@
   function bind() {
     if (bound || !W.PM_PIP_PARTS_STORE) return;
     bound = true;
-    W.PM_PIP_PARTS_STORE.onChange(() => emit(projectId() === lastProject ? 'settings' : 'project'));
+    W.PM_PIP_PARTS_STORE.onChange(() => { if (!writing) emit(projectId() === lastProject ? 'settings' : 'project'); });
     emit('settings');
   }
   let lastProject = '';

@@ -70,7 +70,13 @@
     W.requestAnimationFrame(function () { W.requestAnimationFrame(fire); });
   }
 
-  /* ---- the chat's click path ---- */
+  /* ---- the chat's click path ----
+     Flagged (Astra W8 review R10, 2026-10-30): this is a synthetic click on a hidden button, kept because the chat
+     exposes no public dispatcher that runs what that click runs. Its handlers are chained through PM56_EXT.action and
+     app.js's onAppClick, and several read the button itself (b14/b15 play only from '.demo-dialog .demo-trigger';
+     recorded-play.js stops the playing example on such a click; about fifty modules chain 'reset-all'). PM56_DEMO.trigger
+     and PM56_DEMO.reset run only app.js's own part and would skip those chains. The fix belongs to the chat's owner: a
+     PM56_APP dispatcher taking (action, dataset, { demo: true }) that both real clicks and this bridge call. */
   function host() {
     var h = document.getElementById('pm56-demo-host');
     if (h && h.isConnected) return h;
@@ -128,10 +134,15 @@
     ['bsd', [['survives', 'bsd12-start'], ['resolves', 'bsd12-start']]],
     ['debug', [['repair', 'debug-demo-start'], ['drift', 'debug-demo-start']]],
     ['revert', [['whole', 'revert-demo-start'], ['conflict', 'revert-demo-start']]],
-    ['attach', [['intake', 'b19-start'], ['live', 'b19-start'], ['folder', 'b19-start']]]
+    ['attach', [['intake', 'b19-start'], ['live', 'b19-start'], ['folder', 'b19-start']]],
+    /* Pip in the chat (W4, PM7 build): the Crew run from queued to done, every member drawn as Pip (Demo Studio's pip) */
+    ['pip', [['delegation', 'crew-demo-start']]]
   ];
   /* the single-surface demos (repair-demos.js 'repair-demo' scenarios, delivery-polish.js 'polish-demo-action' rows) */
   var SURFACES = [
+    /* Pip in the chat (W4, PM7 build; delivery-polish.js pip-demo-*): the sheet Pip's faces, Scheduled's status faces,
+       Activity's agents and the Orbit's Pip, the same rows as the groups below where they also belong */
+    ['pip', ['pip-demo-faces', 'schedules-overview', 'pip-demo-activity', 'work-orbit']],
     ['scheduling', ['schedules-overview', 'schedules-windows', 'schedule-new', 'schedule-edit', 'schedule-once', 'schedule-recurring']],
     ['safety', ['schedule-stop', 'schedule-race', 'schedule-duplicate', 'af-title-race-demo', 'todo-attempt-bulk-complete', 'todo-attempt-provider-proposal']],
     ['lineups', ['crew-config', 'crew-auto-config', 'chat-room-config', 'brainstorm-config', 'review-config', 'bsd-config', 'bsd-held']],

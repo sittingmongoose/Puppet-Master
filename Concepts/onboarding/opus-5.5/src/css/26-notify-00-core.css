@@ -126,7 +126,7 @@ html[data-theme$="light"] {
 #rsStage.pmn-stage {
   width: var(--pmn-w); max-width: calc(100vw - 20px);
   display: flex; flex-direction: column-reverse; gap: 8px;
-  margin-top: var(--pmn-push, 0px); margin-left: var(--pmn-stage-shift, 0px);
+  margin-top: calc(var(--pmn-push, 0px) + var(--pmn-clear, 0px)); margin-left: var(--pmn-stage-shift, 0px);
   z-index: 65; pointer-events: none;
 }
 .pmn-toast {

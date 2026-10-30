@@ -17,10 +17,12 @@
       "tour": "Guided Tour",
       "story": "Story",
       "workspace": "Workspace",
+      "activity": "Activity",
       "chat": "Chat",
       "usage": "Usage",
       "notices": "Notices",
       "looks": "Looks",
+      "pip": "Pip",
       "reset": "Reset",
       "switches": "Switches"
     },
@@ -30,10 +32,12 @@
       "tour": "{n} steps",
       "story": "Clock and five points",
       "workspace": "Layouts and agents",
+      "activity": "Agents and processes",
       "chat": "Examples, moments and takes",
       "usage": "Demo readings",
       "notices": "Sample notifications",
       "looks": "Five looks, light and dark",
+      "pip": "Marks, faces, loader, sound",
       "reset": "Three sizes",
       "switches": "Reload with switches"
     },
@@ -50,7 +54,10 @@
       "tour": "Tour",
       "tourNone": "Not started",
       "tourAt": "Step {n} of {total}",
-      "tourRunning": "Running"
+      "tourRunning": "Running",
+      "titlebar": "Title bar",
+      "titlebarPx": "{n} px wide",
+      "background": "Background"
     },
     "start": {
       "kicker": "Start here",
@@ -106,6 +113,14 @@
       "chatGrill": {
         "title": "Grill Me, then a Crew",
         "sub": "A recorded example: Grill Me asks first, then a Crew works with the Wonderer alongside."
+      },
+      "pipRoughDay": {
+        "title": "Pip's rough day",
+        "sub": "Back with Projects from before: the name Tastebook is taken, then Antigravity's sign-in fails once. From the Name screen."
+      },
+      "quitWithWork": {
+        "title": "Quit with work running",
+        "sub": "The Busy scenario, then Quit asks what happens to the agents and processes still running."
       }
     },
     "onboarding": {
@@ -122,6 +137,50 @@
       "startAs": "Start as",
       "twists": "Twists",
       "twistsNone": "No twists",
+      "pipTitle": "Pip's moments",
+      "pipLead": "Each opens its screen and does what a person would there, so the real state shows: Pip's oops face and line, or one ? note open. The Studio steps aside while it plays.",
+      "oops": {
+        "title": "Oops",
+        "items": {
+          "nameTaken": {
+            "title": "A name you already have",
+            "sub": "Returning user, Name screen, Tastebook typed: the name is taken."
+          },
+          "keyRefused": {
+            "title": "The Cursor key refused",
+            "sub": "AI accounts, Cursor's key field, an 11-character key checked: too short to pass."
+          },
+          "signinOnce": {
+            "title": "Antigravity's sign-in fails once",
+            "sub": "AI accounts, Sign in on Antigravity with that twist on: it fails, the next try works."
+          }
+        }
+      },
+      "ask": {
+        "title": "Ask Pip",
+        "items": {
+          "look": {
+            "title": "A look tile",
+            "sub": "Pick a look, with Friendly's ? open."
+          },
+          "where": {
+            "title": "Where Puppet Master lives",
+            "sub": "This computer, with its ? open."
+          },
+          "name": {
+            "title": "The Project's name",
+            "sub": "Name screen, with the name field's ? open."
+          },
+          "provider": {
+            "title": "An AI account",
+            "sub": "AI accounts, with Cursor's ? open."
+          },
+          "free": {
+            "title": "Free Models",
+            "sub": "A free route, with its ? open."
+          }
+        }
+      },
       "replaces": "Replaces {name}",
       "will": "Onboarding will run as",
       "screensTitle": "Open at one screen",
@@ -130,7 +189,8 @@
         "computer": "This computer",
         "nas": "Home NAS",
         "online": "Online copy",
-        "ai": "AI accounts"
+        "ai": "AI accounts",
+        "pip": "Sign-ins that fail once"
       },
       "chapters": {
         "welcome": "Welcome",
@@ -211,6 +271,14 @@
         "noAi": {
           "title": "No AI account anywhere",
           "sub": "Nothing signed in on this computer or the Server."
+        },
+        "antigravityOnce": {
+          "title": "Antigravity sign-in fails once",
+          "sub": "The first browser sign-in does not finish; Pip looks worried, the second try works."
+        },
+        "githubSigninOnce": {
+          "title": "GitHub sign-in fails once",
+          "sub": "The online copy's sign-in does not finish the first time; the second try works."
         }
       },
       "screens": {
@@ -317,7 +385,141 @@
       "ask": "An agent asks to type",
       "askSub": "An agent asks to type into your terminal. You allow it once, for the terminal, or say no.",
       "askGo": "Make the request",
+      "titlebar": {
+        "title": "Title bar",
+        "lead": "The project box, Pip's mark and the bar's own folds (option A, Tab). Every state is read off the work projection the box reads; nothing here is saved.",
+        "unavailable": "The project box is not on this page.",
+        "state": "Project state",
+        "states": {
+          "calm": {
+            "title": "Calm",
+            "sub": "Nothing running: the box shows no mark."
+          },
+          "working": {
+            "title": "Working",
+            "sub": "An agent runs in the background."
+          },
+          "blocked": {
+            "title": "Blocked",
+            "sub": "An agent cannot go on. Its own mark, apart from needs you."
+          },
+          "needs": {
+            "title": "Needs you",
+            "sub": "An agent asks a question. It wins over every other state."
+          },
+          "unsaved": {
+            "title": "Unsaved",
+            "sub": "Opens a file in Home: type in it and the box shows Unsaved."
+          }
+        },
+        "says": "The box says: {say}",
+        "searchState": "Project state:",
+        "width": "Title-bar width",
+        "full": "Full",
+        "px": "{n}",
+        "fullWidth": "Full width",
+        "folds": "The bar folds itself: {brand}, {box}.",
+        "custom": "Held at {n} px.",
+        "brand": {
+          "full": "Pip and the wordmark",
+          "mark": "Pip's mark only"
+        },
+        "box": {
+          "full": "the project's name",
+          "icon": "the box folded to its folder"
+        },
+        "long": "A long project name",
+        "longSub": "Adds the Project {name} and switches to it, as onboarding does for a new one, in the look on screen; the name ends in an ellipsis. Off goes back.",
+        "menu": "Open the project menu",
+        "menuSub": "Projects, with each one's state in words beside its mark.",
+        "menuGo": "Open the menu",
+        "unsavedToast": "A file is open in Home. Type in it: the box shows Unsaved.",
+        "scene": {
+          "working": {
+            "where": "Query Performance",
+            "title": "Query Performance",
+            "detail": "Reading the slow query plans"
+          },
+          "blocked": {
+            "where": "Query Performance",
+            "title": "Schema Reviewer",
+            "detail": "Production schema changes need your explicit override."
+          },
+          "needs": {
+            "where": "Query Performance",
+            "title": "Query Performance",
+            "detail": "Waiting for your answer",
+            "ask": "Run the index migration on staging first?"
+          }
+        }
+      },
       "unavailable": "Not on this page"
+    },
+    "activity": {
+      "kicker": "Activity",
+      "title": "Agents and processes in the background",
+      "lead": "Change what is running behind the person's work, then open the panel, the chat's Processes view, Stop all or Quit. The status bar, the project box and the tray read the same thing.",
+      "nowKicker": "Running in the background",
+      "none": "Not on this page",
+      "unavailableLead": "The work projection's scenarios are not on this page.",
+      "counts": "Agents {agents} · questions {questions} · processes {processes} · needing input {input}",
+      "stale": "The feed is reconnecting.",
+      "studioScene": "A title bar scene",
+      "scenesTitle": "Scenario",
+      "scenesLead": "Each is a world of its own; picking one replaces what runs now.",
+      "scenes": {
+        "busy": {
+          "title": "Busy",
+          "sub": "16 agents and 10 processes; three things wait on you."
+        },
+        "no-asks": {
+          "title": "No asks",
+          "sub": "The same work with nothing waiting on you."
+        },
+        "quiet": {
+          "title": "Quiet",
+          "sub": "Nothing running: the chat's Processes icon goes away."
+        },
+        "many": {
+          "title": "Many",
+          "sub": "34 more processes across four agents, for long lists and By owner."
+        },
+        "stale": {
+          "title": "Stale feed",
+          "sub": "Busy, last heard from 40 seconds ago; the counts stay as they were."
+        },
+        "restart": {
+          "title": "After restart",
+          "sub": "Two processes ended while Puppet Master was closed: Lost."
+        },
+        "servers": {
+          "title": "Several servers",
+          "sub": "Busy across four servers and six environments, for the Resources tab."
+        }
+      },
+      "panelTitle": "Open it",
+      "panel": "The panel",
+      "panelSub": "Rises from the status bar at one tab.",
+      "tabs": {
+        "agents": "Agents",
+        "processes": "Processes",
+        "resources": "Resources"
+      },
+      "chatProcesses": "The chat's Processes view",
+      "chatProcessesSub": "Activity Detail at Processes, on a thread with a process running or waiting on input (the current one when it has one).",
+      "chatProcessesGo": "Open it",
+      "stopAll": "Stop all",
+      "stopAllSub": "Everything running across Puppet Master, listed so any of it can be unticked first.",
+      "stopAllGo": "Stop all…",
+      "quit": "Quit",
+      "quitSub": "Quitting with work running asks: keep it running on the server, or stop what is ticked.",
+      "quitGo": "Quit…",
+      "words": "Status bar",
+      "numbers": "Numbers",
+      "wordsOn": "Words",
+      "wordsLead": "Words show only where the bar has room; otherwise the items keep their numbers and the hover tag says the words. The choice is the Project's setting.",
+      "chatProcessesNone": "No thread in the chat has a process running or waiting, so there is no Processes view: load Busy first.",
+      "chatProcessesRefused": "The chat did not open its Processes view for that thread."
     },
     "chat": {
       "kicker": "Chat",
@@ -424,6 +626,10 @@
           "more": {
             "title": "More examples",
             "lead": "Examples the chat has that this Studio has no words for yet, in the chat’s own words."
+          },
+          "pip": {
+            "title": "Pip",
+            "lead": "The chat's assistants drawn as Pip, from waiting to done."
           }
         },
         "items": {
@@ -654,12 +860,20 @@
           "attach-folder": {
             "title": "Folders stay bounded",
             "sub": "A folder is read as a fixed list of files, with its own receipt."
+          },
+          "pip-delegation": {
+            "title": "A Crew of Pips",
+            "sub": "A Crew run from queued to done, every member drawn as Pip with its role's prop."
           }
         }
       },
       "moments": {
         "lead": "One click puts the chat in that moment. The Studio stays open beside the chat, so you can step through them.",
         "groups": {
+          "pip": {
+            "title": "Pip in the chat",
+            "lead": "The sheet's Pip changing face, Scheduled's status faces, Activity's agents and the Orbit's Pip."
+          },
           "live": {
             "title": "Live turns",
             "lead": "Real sends: the message flies, the reply streams, work appears."
@@ -844,7 +1058,9 @@
           "cs-quota-demo": "Waiting for a usage limit",
           "cs-quota-source": "Where the reset time comes from",
           "af-eli5-demo": "Two ELI5 explanations",
-          "bc-open": "Browser capture"
+          "bc-open": "Browser capture",
+          "pip-demo-faces": "Crew sheet: Pip watches, wonders, oops, then cheers and hops",
+          "pip-demo-activity": "Activity Detail: the thread's agents, each a Pip"
         }
       },
       "takes": {
@@ -1088,6 +1304,20 @@
       "nier": "NieR Mode",
       "nierSub": "Ink and parchment over Basic, with Pod 042.",
       "nierAdjust": "Adjust NieR look",
+      "pip": {
+        "title": "Pip's parts",
+        "sub": "{preset}: {on} of {total} parts on, in the chat and in onboarding.",
+        "subNone": "Pip's parts are not on this page.",
+        "preset": "Preset",
+        "presets": {
+          "full": "Full",
+          "quiet": "Quiet",
+          "still": "Still",
+          "plain": "Plain",
+          "custom": "Custom"
+        },
+        "adjust": "Adjust Pip"
+      },
       "reduced": "Reduce motion",
       "reducedSub": "Movement becomes fades. The Studio, onboarding and the tour follow it.",
       "sound": "Sound effects",
@@ -1112,6 +1342,203 @@
         "title": "Wallpaper",
         "lead": "Any wallpaper in any look. It shows behind the app in every look, in the print that follows light or dark.",
         "own": "Look's own"
+      }
+    },
+    "pip": {
+      "kicker": "Pip",
+      "title": "Pip, Puppet Master's mark",
+      "lead": "Pip in every look, its faces on every live Pip, the loader and the sound board. The drawings are the kit's own; nothing here is saved.",
+      "unavailable": "Pip's kit is not on this page.",
+      "and": " and ",
+      "searchFace": "Face:",
+      "looks": {
+        "title": "Pip in every look",
+        "lead": "The title bar's still 24 px mark, the look's tile and the tray's faces at 16 px, each on its look's own ground. The app icon is the Basic Dark tile in every look.",
+        "look": "Look",
+        "mark": "Title bar",
+        "tile": "Tile",
+        "tray": "Tray faces",
+        "now": "Now",
+        "trayOrder": "Tray faces, left to right, in the order the tray picks one: {list}."
+      },
+      "tray": {
+        "waiting": "Needs you",
+        "failed": "Failed",
+        "blocked": "Blocked",
+        "working": "Working",
+        "paused": "Paused",
+        "complete": "Done",
+        "idle": "Idle"
+      },
+      "trayBar": {
+        "title": "The tray and menu bar",
+        "lead": "Each face as the system shows it at 16 px: macOS template images in one ink on a light and a dark menu bar, and the colour mark in the Windows taskbar.",
+        "bar": "Bar",
+        "bars": {
+          "macLight": "macOS, light",
+          "macDark": "macOS, dark",
+          "windows": "Windows, colour"
+        },
+        "flip": "Working flip",
+        "note": "Working is a four-frame flip a tray plays by swapping images; here it plays as the kit draws it. The colour mark is the app icon's Basic Dark Pip."
+      },
+      "moods": {
+        "title": "Faces",
+        "lead": "Pick a face: every live Pip on screen wears it for a moment, then goes back to its own.",
+        "names": {
+          "idle": "Idle",
+          "happy": "Happy",
+          "alert": "Alert",
+          "wonder": "Wonder",
+          "error": "Error",
+          "sleep": "Sleep",
+          "think": "Think",
+          "wink": "Wink",
+          "watch": "Watch",
+          "oops": "Oops",
+          "working": "Working"
+        },
+        "reach": "A face goes to {list}.",
+        "reachStage": "Pip's stage in onboarding",
+        "reachChat1": "1 Pip in the chat's sheets",
+        "reachChat": "{n} Pips in the chat's sheets",
+        "none": "No live Pip is on screen. Open onboarding, or a sheet in the chat (Chat, Moments), then pick a face.",
+        "noneToast": "No live Pip is on screen right now."
+      },
+      "squeeze": {
+        "title": "A squeezed title bar",
+        "row": "Mark only",
+        "sub": "Narrows the bar step by step until its own density shows Pip's mark without the wordmark. Each step runs the bar's real layout pass, so the page pauses about half a second between steps.",
+        "subMark": "The bar shows Pip's mark only now, at {n} px.",
+        "go": "Squeeze the bar",
+        "done": "The brand folds to Pip's mark at {n} px."
+      },
+      "loader": {
+        "title": "The loader",
+        "lead": "One loader for every wait, drawn by the loader's owner at each size. The motion here is a take: the app picks it by what is waiting.",
+        "take": "Motion",
+        "motions": {
+          "swing": "Swing",
+          "think": "Think",
+          "hop": "Hop"
+        },
+        "px": "{n} px",
+        "unavailable": "The loader is not on this page.",
+        "context": "Think waits on a reply, Hop on a short wait that ends well, Swing on every other wait.",
+        "nier": "NieR keeps its own loader: Pip never moves in NieR.",
+        "reduced": "With Reduce motion on, the control breathes and Pip blinks; nothing travels.",
+        "every": "Every loader",
+        "everySub": "All three motions at every size, the chat's thinking line on a live turn, and a busy button, at once. A panel waiting is the row below.",
+        "everyGo": "Show them all",
+        "stats": "{n} on the page, {m} moving",
+        "busy": "A busy button",
+        "busySub": "This button wears the loader for a short wait.",
+        "busyGo": "Check it",
+        "hold": "Hold loaders",
+        "holdSub": "Waits that end on their button (Refresh Projects, the busy button, Settings' checks) keep their loader up, so it can be looked at; off ends them. Waits drawn from their state, like the chat's Building…, end with their state.",
+        "panel": "A panel waiting",
+        "panelSub": "Projects › Refresh: the loader takes the button's icon place while the list is rescanned. With Hold loaders on it stays.",
+        "panelGo": "Refresh Projects",
+        "splash": "The splash",
+        "splashSub": "Not on this page: PMConcept7 paints straight into Home, with no splash screen to hold.",
+        "splashGo": "Hold the splash"
+      },
+      "sound": {
+        "title": "Pip's sound board",
+        "lead": "Pip's kits, loops and voice through the one player, under Sound effects. The kit follows the look, or try another.",
+        "unavailable": "Pip's sound is not on this page.",
+        "kit": "Kit",
+        "byLook": "The look's ({kit})",
+        "kits": {
+          "friendly": "Friendly",
+          "glass": "Glass",
+          "basic": "Basic",
+          "phosphor": "Phosphor",
+          "teletype": "Teletype",
+          "nier": "NieR"
+        },
+        "off": "Sound is off",
+        "offSub": "Pip is quiet while Sound effects is off. Turn it on to hear the board.",
+        "turnOn": "Turn sound on",
+        "groups": {
+          "stage": "Pip's stage and typing",
+          "vocal": "Pip's voice",
+          "window": "The window's own"
+        },
+        "events": {
+          "lower": "Lower",
+          "ghost": "Ghost",
+          "land": "Land",
+          "lift": "Lift",
+          "hop": "Hop",
+          "swing": "Swing",
+          "tryOn": "Try on",
+          "sparkle": "Sparkle",
+          "confetti": "Confetti",
+          "tick": "Tick",
+          "block": "Block",
+          "power": "Power",
+          "score": "Score",
+          "lock": "Lock",
+          "decode": "Decode",
+          "slice": "Slice",
+          "degauss": "Degauss",
+          "feed": "Feed",
+          "powerOn": "Power on",
+          "powerOff": "Power off",
+          "rail": "Rail",
+          "tip": "Tip",
+          "wake": "Wake",
+          "sleep": "Sleep",
+          "think": "Think",
+          "happy": "Happy",
+          "wink": "Wink",
+          "alert": "Alert",
+          "cheer": "Cheer",
+          "crew": "Crew",
+          "tap": "Tap",
+          "hover": "Hover",
+          "select": "Select",
+          "toggleOn": "Switch on",
+          "toggleOff": "Switch off",
+          "next": "Next",
+          "back": "Back",
+          "open": "Open",
+          "close": "Close",
+          "warn": "Warn",
+          "chapter": "Chapter",
+          "key": "Key"
+        },
+        "loopsTitle": "Loops",
+        "loops": {
+          "snore": {
+            "title": "Snore",
+            "sub": "Pip asleep until you arrive."
+          },
+          "work": {
+            "title": "Work",
+            "sub": "Pip busy while something runs."
+          },
+          "power": {
+            "title": "Power",
+            "sub": "Power running down Pip's strings."
+          },
+          "swing": {
+            "title": "Swing",
+            "sub": "Pip swinging on its strings."
+          },
+          "bed": {
+            "title": "Bed",
+            "sub": "The setup music's bed, with the Setup music part on."
+          }
+        },
+        "sayLabel": "Pip says",
+        "sayDefault": "Hi! I'm Pip. Let's set up your first Project.",
+        "sayGo": "Say it",
+        "sayMood": "Pip's face while it talks",
+        "offToast": "Sound effects is off. Turn it on to hear Pip.",
+        "quiet": "Pip keeps that one quiet here.",
+        "voiceOff": "Pip's setup voice part is off."
       }
     },
     "reset": {

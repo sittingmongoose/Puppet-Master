@@ -171,16 +171,10 @@
   background:var(--surface-2); color:var(--muted); border-color:var(--border);
   text-decoration:line-through; text-decoration-thickness:1px;
 }
-/* Building… breathes so "disabled" never reads as "stalled". Neon step 3E: the dot is a
-   small lit tube, a solid accent core whose glow fades out radially (the plain token, no
-   filter, no color-mix); NieR has no glow, so there it stays the flat ink dot. */
-.plan-doc .pd-build-building::after{
-  content:''; display:inline-block; width:9px; height:9px; margin:0 -2px 0 5px;
-  vertical-align:middle; border-radius:50%; background:radial-gradient(closest-side, var(--accent) 55%, transparent);
-  animation:pd-breathe 1370ms var(--spring-soft-ease) infinite;
-}
-html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:5px; margin:0 0 0 7px; background:var(--accent); }
-@keyframes pd-breathe{ 0%,100%{opacity:.25} 50%{opacity:1} }
+/* Building… is a wait, so "disabled" never reads as "stalled": the system loader leads the label (plans.js
+   buildControl), at the control's 14 px; its motion, Reduced Motion and NieR are the loader owner's. */
+.plan-doc .pd-wait{ display:inline-flex; width:14px; height:14px; margin:0 6px 0 -2px; vertical-align:-3px; line-height:0; }
+.plan-doc .pd-wait > .pml-ld{ --pml-size:14px; }
 
 /* Support copy sits BESIDE the control, never inside it — a paused build still
    reads "Building…" on the button. */
@@ -322,10 +316,9 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
 }
 
 /* --------------------------------------------------------- reduced motion
-   Decoration goes; state does not. The Building… dot stops animating but keeps
-   its accent fill, so "this Plan is running" is still legible. */
+   Decoration goes; state does not. Building…'s loader keeps the owner's breath and blink, so "this Plan is
+   running" is still legible. */
 @media (prefers-reduced-motion: reduce){
-  .plan-doc .pd-build-building::after{ animation:none; opacity:1; }
   .pd-dialog{ animation:none; }
   .plan-doc .pd-view,.plan-doc .pd-build,.plan-doc .pd-step,.plan-doc .pd-artifact{ transition:none; }
 }

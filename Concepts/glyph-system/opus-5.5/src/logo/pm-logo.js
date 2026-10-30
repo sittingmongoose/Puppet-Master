@@ -20,14 +20,15 @@
  *     ignores CSS (a tray image, Slint's SVG loader) shows the finished mark.
  *   - Every mood: idle, happy, alert (shown as wonder), error, sleep, think, wink, watch, oops, and working's dots, at
  *     every tier and in NieR.
- *   - NieR: square nodes everywhere; static marks keep the plain band; a live Pip may show its eyes through the band
- *     ({ eyes: true }, Decision X3).
+ *   - NieR: square nodes everywhere; every mark shows the eyes through the band, static marks still (Decision X3 B,
+ *     Jared 2026-10-30; the 16 px sprite's eyes are hand-placed); { eyes: false } draws the plain band.
  *   - Retro redraws its strings as pixel lines in every frame; Glass has no brow band.
  *   - The monogram direction is not carried (Jared: Pip, not the PM monogram).
  *
  * API (window.PMLogo; full reference in the build share's lanes/found/API.md)
  *   mark(o) -> svg markup for the page. o: { look?, px = 24, mood = 'idle', motion = null | 'swing' | 'think' | 'hop',
- *            form = 'glyph' | 'tray', ink? (tray), eyes? (NieR live idle eyes), title?, decorative?, cls?, vars? }
+ *            form = 'glyph' | 'tray', ink? (tray), eyes? (NieR: default true, X3 B; false = plain band), title?, decorative?,
+ *            cls?, vars? }
  *            look defaults to the painted look (look()). An animated mark animates only under an ancestor with
  *            data-pml-run="on" (pm-loader.js arms it); NieR marks never animate.
  *   svg(o) -> a self-contained file (inline <style>, literal colours), the concept's API: { theme | look, form =
@@ -325,9 +326,9 @@
 
   /* -------------------------------------------------------------- Pip, NieR */
   // YoRHa Pip: hairline line art like PMConcept7's own Pod, a blindfold band, square nodes where lines end, the diamond.
-  function nierHud(cy, mood, paper, red, cls, eyes) {
-    // idle shows a plain blindfold on still marks; a live Pip ({ eyes }) shows two eyes through it that blink (X3).
-    // Every other state lights up on the band like a HUD.
+  function nierHud(cy, mood, paper, red, cls, eyes, small) {
+    // idle shows two eyes through the blindfold on every mark (X3 B, Jared 2026-10-30): still on static marks, blinking
+    // on a live Pip; eyes: false draws the plain band. Every other state lights up on the band like a HUD.
     const cx = 32, dx = 6.5;
     const rect = (x, yy, w, h, c) => `<rect x="${R(x)}" y="${R(yy)}" width="${R(w)}" height="${R(h)}" fill="${c || paper}"/>`;
     const st = (d, w, c) => `<path d="${d}" fill="none" stroke="${c || paper}" stroke-width="${R(w)}" stroke-linecap="square" stroke-linejoin="miter"/>`;
@@ -344,9 +345,12 @@
       // worried: each eye's top edge rises toward the middle
       case 'oops': return both((x) => { const s = x < cx ? 1 : -1; return `<path d="M${R(x - 1.5 * s)} ${R(cy - .3)}L${R(x + 1.5 * s)} ${R(cy - 2)}L${R(x + 1.5 * s)} ${R(cy + 2.1)}L${R(x - 1.5 * s)} ${R(cy + 2.1)}Z" fill="${paper}"/>`; });
       case 'think': case 'dots': return [-1, 0, 1].map((i) => `<g class="${(cls.dot || '') + (i + 2)}">${rect(cx + i * 4.4 - 1.2, cy - 1.2, 2.4, 2.4)}</g>`).join('');
-      default:
+      default: {
         if (!eyes) return '';
-        return `<g class="${cls.blink || ''}">${both((x) => `<rect x="${R(x - 1.35)}" y="${R(cy - 2.4)}" width="2.7" height="4.8" rx=".8" fill="${paper}"/>`)}</g>`;
+        // the small cut (19-40 px) is heavier: wider, taller eyes so they survive 20 px
+        const w = small ? 3.8 : 2.7, h = small ? 5.4 : 4.8;
+        return `<g class="${cls.blink || ''}">${both((x) => `<rect x="${R(x - w / 2)}" y="${R(cy - h / 2)}" width="${w}" height="${h}" rx="${small ? 1 : .8}" fill="${paper}"/>`)}</g>`;
+      }
     }
   }
   function pipNier(g, th, mood, cls, ids, opts) {
@@ -386,10 +390,11 @@
       // a slice glitch: the band torn and shifted, the way NieR tears a screen
       visor = `<rect x="${R(vx0)}" y="${R(vy - vh / 2)}" width="${R(vx1 - vx0)}" height="${R(vh * .55)}" fill="${ink}"/><rect x="${R(vx0 + 2.4)}" y="${R(vy - vh / 2 + vh * .55 + .9)}" width="${R(vx1 - vx0 - 2.4)}" height="${R(vh * .45 - .9)}" fill="${ink}"/>`;
     }
-    let hud = `<g class="${cls.face || ''}">${nierHud(vy, mood, opts.tray ? '#000' : th.paper, opts.tray ? '#000' : th.red, cls, opts.eyes && !small)}</g>`;
+    const eyes = opts.eyes !== false;   // X3 B: on every mark unless a caller asks for the plain band
+    let hud = `<g class="${cls.face || ''}">${nierHud(vy, mood, opts.tray ? '#000' : th.paper, opts.tray ? '#000' : th.red, cls, eyes, small)}</g>`;
     if (opts.tray) {
       const mid = ids.face + 'v';
-      visor = `<mask id="${mid}" maskUnits="userSpaceOnUse" x="-8" y="-8" width="80" height="80"><rect x="-8" y="-8" width="80" height="80" fill="#fff"/>${nierHud(vy, mood, '#000', '#000', {}, false)}</mask><g mask="url(#${mid})">${visor}</g>`;
+      visor = `<mask id="${mid}" maskUnits="userSpaceOnUse" x="-8" y="-8" width="80" height="80"><rect x="-8" y="-8" width="80" height="80" fill="#fff"/>${nierHud(vy, mood, '#000', '#000', {}, eyes, small)}</mask><g mask="url(#${mid})">${visor}</g>`;
       hud = '';
     }
     const my = small ? 52.5 : 51, mw = small ? 8 : 6, mt = small ? 2.8 : 1.5;
@@ -517,6 +522,10 @@
       '................'
     ],
     moods: {
+      // X3 B: the eyes show through the band on every mark: two single pixels in the band's middle row, hand-placed at
+      // 16 px on the vector eyes' spacing (32 +- 6.5 of 64), the band whole above and below them so they read as eyes
+      // behind the blindfold, apart from think's four dots and sleep's notches on the band's lower edge
+      idle: { 9: '.hhvvv.vv.vvvhh.' },
       happy: { 8: '..h.vv.vv.vv.h..', 9: '.hhvv.vvvv.vvhh.', 12: '..h...m..m...h..', 13: '..h....mm....h..' },
       wink: { 8: '..h.v..vvvvv.h..', 9: '.hhvv..vv..vvhh.', 12: '..h...m..m...h..', 13: '..h....mm....h..' },
       alert: { 8: '..h.v..vv..v.h..', 9: '.hhvv..vv..vvhh.', 12: '..h....mm....h..', 13: '..h....mm....h..' },
@@ -559,6 +568,16 @@
     if (f.eyeR) f.eyeR.forEach((r) => hole(r, dx + eyeDx, false)); else (f.eye || []).forEach((r) => hole(r, dx + eyeDx, true));
     (f.mouth || []).forEach((r, i) => hole(r, dx, false, i === lift ? -Math.max(1, Math.round(Gs / 16)) : 0));
     return g.map((r) => r.join(''));
+  }
+  // lids over a sprite face's eye holes (the same rects spriteRows cuts), in one colour: Reduced Motion's blink
+  function lidRects(Gs, mood, f0, color) {
+    const { dx = 0, eyeDx = 0, dy = 0 } = f0 || {};
+    const S = SPRITES[Gs], f = S.faces[mood === 'wonder' ? 'alert' : mood] || S.faces.idle;
+    let out = '';
+    const add = (r, mirror) => { const x0 = (mirror ? Gs - r[0] - r[2] : r[0]) + dx + eyeDx; out += `<rect x="${x0}" y="${r[1] + dy}" width="${r[2]}" height="${r[3]}" fill="${color}"/>`; };
+    (f.eye || []).forEach((r) => add(r, false));
+    if (f.eyeR) f.eyeR.forEach((r) => add(r, false)); else (f.eye || []).forEach((r) => add(r, true));
+    return out;
   }
   // the sprite grid for a size: the one that lands on whole pixels at 1x (one look per size at every dpr)
   function spriteGrid(px) {
@@ -654,9 +673,11 @@
   }
   // the key of a drawing's shared stylesheet rules and defs: family x tier (pixel grids by size)
   function tierKey(family, tier, px) { return tier === 'pixel' ? 'g' + spriteGrid(px) : tier === 'micro' ? 'g16' : tier; }
+  /* One ratio per motion at every tier (Swing x1, Think x1.15, Hop x0.78), so a 12-18 px loader keeps the three motions
+     apart in time as well as in drawing; the pixel tiers' frame flips take their delays as exact fractions of the
+     period, so no period can open a gap between frames. */
   function periodOf(family, motion, tier) {
     const fam = MOTION[family] || MOTION.basic;
-    if (tier === 'micro' || tier === 'pixel') return fam.dur * ((motion === 'think' || motion === 'hop') ? .85 : 1) * 1000;
     return (motion === 'hop' ? R(fam.dur * .78) : motion === 'think' ? R(fam.dur * 1.15) : fam.dur) * 1000;
   }
 
@@ -706,7 +727,8 @@
       const colors = { c: ctl, b: back, s: solid(ink || th.str), h: solid(ink || th.headSolid || th.head), k: ink ? null : th.cheek, n: ctl, v: solid(ink || th.ink || th.ctl), m: solid(ink || th.ink || th.ctl) };
       if (th.nier) {
         const c = colors.c, col = { n: c, c, s: c, h: c, v: c, m: c };
-        return { vb: 16, defs: '', crisp: true, body: pixelRects(nier16(mood === 'dots' ? 'think' : mood === 'wonder' ? 'alert' : mood), col) };
+        const nm = mood === 'dots' ? 'think' : mood === 'wonder' ? 'alert' : mood;
+        return { vb: 16, defs: '', crisp: true, body: pixelRects(nier16(nm === 'idle' && o.eyes === false ? 'band' : nm), col) };
       }
       const Gs = tier === 'micro' ? 16 : spriteGrid(o.px);
       if (anim) {
@@ -717,14 +739,20 @@
           : o.motion === 'hop' ? [{}, { dy: -Math.ceil(n / 2) }, { dy: -n - 1 }, { dy: -Math.ceil(n / 2) }]
           : [0, 1, 2, 3, 4, 5, 6, 7].map((i) => { const dx = Math.round(Math.sin(2 * Math.PI * i / 8) * n); return { dx, eyeDx: Math.sign(dx) }; });
         const fm = o.motion === 'think' ? 'dots' : mood;
-        const body = plan.map((f, i) => `<g class="${cls.fr} ${cls.fr}${i}"${i ? ' opacity="0"' : ''}>${pixelRects(spriteRows(Gs, fm, f), colors)}</g>`).join('');
+        let body = plan.map((f, i) => `<g class="${cls.fr} ${cls.fr}${i}"${i ? ' opacity="0"' : ''}>${pixelRects(spriteRows(Gs, fm, f), colors)}</g>`).join('');
+        /* Reduced Motion's rest pose, drawn apart and shown only by the reduced rules (L3, X2): Pip and the strings
+           still, the control on its own so it alone breathes, and lids in the head's colour over the eyes so Pip
+           blinks. A sprite's eyes are holes, so the blink closes them rather than fading them. */
+        const restF = o.motion === 'think' ? {} : plan[0], rest = spriteRows(Gs, fm, restF), lids = lidRects(Gs, fm, restF, colors.h);
+        body += `<g class="${cls.fr}-rest" opacity="0"><g>${pixelRects(rest, Object.assign({}, colors, { c: null, b: null }))}</g>` +
+          `<g class="${cls.fr}-rctl">${pixelRects(rest, { c: colors.c, b: colors.b })}</g>${lids ? `<g class="${cls.fr}-rlid" opacity="0">${lids}</g>` : ''}</g>`;
         return { vb: Gs, defs: '', crisp: true, body, frames: plan.length };
       }
       return { vb: Gs, defs: '', crisp: true, body: pixelRects(spriteRows(Gs, mood), colors) };
     }
 
     const g = GEO[tier === 'small' ? 'small' : 'full'];
-    if (th.nier) { const r = pipNier(g, th, mood, cls, ids, { tray, ink, eyes: !!o.eyes }); return { vb: 64, defs: r.defs, body: r.body }; }
+    if (th.nier) { const r = pipNier(g, th, mood, cls, ids, { tray, ink, eyes: o.eyes !== false }); return { vb: 64, defs: r.defs, body: r.body }; }
 
     // strings: solved at rest for still marks; an animated mark gives each string its own transform (the rest pose)
     const attach = tray ? 'thread' : (o.attach || 'eye');
@@ -849,7 +877,7 @@
     if (tier === 'micro' || tier === 'pixel') {
       const frames = motion === 'swing' ? 8 : 4;
       css += `${s} .pml-fr{${ANIM('pml-flip' + frames, 'steps(1,end)')}}`;
-      for (let i = 0; i < frames; i++) css += `${s} .pml-fr${i}{animation-delay:calc(var(--pml-delay,0s) + var(--pml-dur) * ${R(i / frames - 1)})}`;
+      for (let i = 0; i < frames; i++) css += `${s} .pml-fr${i}{animation-delay:calc(var(--pml-delay,0s) + var(--pml-dur) * ${+(i / frames - 1).toFixed(4)})}`;
       return css;
     }
     const g = GEO[tier === 'small' ? 'small' : 'full'], k = rigFrames(motion, family, g, 'eye'), P = g.P;
@@ -960,9 +988,9 @@
   // reduced motion in a file: no travel; the control breathes in opacity and Pip blinks
   function reducedCss(p, family, px) {
     const d = (MOTION[family] || MOTION.basic).dur;
-    const keys = `@keyframes ${p}-breath{0%,100%{opacity:1}50%{opacity:.42}}@keyframes ${p}-rblink{0%,42%,58%,100%{opacity:1}50%{opacity:.15}}`;
+    const keys = `@keyframes ${p}-breath{0%,100%{opacity:1}50%{opacity:.42}}@keyframes ${p}-rblink{0%,42%,58%,100%{opacity:1}50%{opacity:.15}}@keyframes ${p}-rlid{0%,42%,58%,100%{opacity:0}50%{opacity:.85}}`;
     const rules = (pre) => px
-      ? `${pre}.${p}-fr{animation:none!important;opacity:0}${pre}.${p}-fr0{opacity:1;animation:${p}-breath ${R(d * 1.3)}s ease-in-out infinite!important}`
+      ? `${pre}.${p}-fr{animation:none!important;opacity:0}${pre}.${p}-fr-rest{opacity:1}${pre}.${p}-fr-rctl{animation:${p}-breath ${R(d * 1.3)}s ease-in-out infinite!important}${pre}.${p}-fr-rlid{animation:${p}-rlid ${R(d * 2.6)}s ease-in-out infinite!important}`
       : `${pre}.${p}-ctl{animation:${p}-breath ${R(d * 1.3)}s ease-in-out infinite!important}${pre}.${p}-blink{animation:${p}-rblink ${R(d * 2.6)}s ease-in-out infinite!important}`;
     return { keys, rules };
   }
@@ -1041,7 +1069,7 @@
         if (px) {
           const n = m.frames || 4, d = periodOf(family, o.motion, 'pixel') / 1000;
           css += `.${p}-fr{animation:${p}-flip ${R(d)}s steps(1,end) infinite}@keyframes ${p}-flip{0%{opacity:1}${R(100 / n)}%,100%{opacity:0}}`;
-          for (let i = 0; i < n; i++) css += `.${p}-fr${i}{animation-delay:${R(-d + i * d / n)}s}`;
+          for (let i = 0; i < n; i++) css += `.${p}-fr${i}{animation-delay:${+(-d + i * d / n).toFixed(4)}s}`;
         } else css += fileRigCss(p, o.motion, family, GEO[tier === 'small' ? 'small' : 'full'], o.form === 'tray' ? 'thread' : (o.attach || 'eye'));
         // a file follows the OS setting; inlined in PMConcept7 it follows its switch too
         css += red.keys + `@media (prefers-reduced-motion:reduce){.${p} *{animation:none!important}${red.rules(`.${p} `)}}`;
@@ -1072,7 +1100,9 @@
   // a still mark as a data: URL (the favicon; a static file in the painted look's colours)
   function dataUrl(opts) { return 'data:image/svg+xml,' + encodeURIComponent(svg(Object.assign({ px: 32, decorative: false }, opts || {}, { motion: null }))); }
   // The favicon is the app icon (A1: one fixed tile, Basic Dark, static); the title-bar lane writes the <link rel="icon">.
-  function favicon(px) { return dataUrl({ look: 'basic-dark', form: 'tile', px: px || 32, title: 'Puppet Master' }); }
+  // tokens: {} keeps the frozen Basic Dark export palette: without it a page painted in Basic Dark sampled its live
+  // tokens, so the favicon's colours depended on the saved look (Astra M2-A1)
+  function favicon(px) { return dataUrl({ look: 'basic-dark', form: 'tile', px: px || 32, title: 'Puppet Master', tokens: {} }); }
 
   /* ------------------------------------------------------------ the clock */
   /* One clock for every Pip motion, so loaders on screen stay in phase and a live Pip can sway with them. It runs on

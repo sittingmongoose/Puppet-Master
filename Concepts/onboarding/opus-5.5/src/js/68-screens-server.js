@@ -113,7 +113,7 @@
         if (kind === 'cloud') out += C.note(T('server.wait.cloudNote'), 'info', 'cloud');
         out += C.field({ bind: 'addr', label: T(kind === 'cloud' ? 'server.wait.cloudLabel' : 'connect.route.addressLabel'), value: sv.addr || '', placeholder: u.address, hint: hit ? T('server.wait.found', { name: u.name }) : T('connect.route.addressHint'), valid: hit });
       } else if (!unclaimedFound(S)) {
-        out += `<div class="o55-row o55-row-wait" data-key="scan">${C.spin(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
+        out += `<div class="o55-row o55-row-wait" data-key="scan">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
       }
       if (unclaimedFound(S) || (sv.manual && String(sv.addr || '').trim().toLowerCase() === u.address)) {
         out += C.cards('pick', [{ v: u.id, glyph: 'server', title: T('server.wait.found', { name: u.name }), sub: T('server.wait.notSetUp'), tag: '' }], sv.target, { label: T('server.wait.title') });

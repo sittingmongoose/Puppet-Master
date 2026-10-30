@@ -63,15 +63,12 @@
       const goal = text.toUpperCase().slice(0, 28);
       if (goal === this.decoded) return;
       this.decoded = goal;
-      let n = 0;
-      clearInterval(this.decT);
-      if (this.reduced) { d.textContent = goal; return; }
+      if (this.decT) this.decT.cancel();
+      if (this.reduced || !goal) { d.textContent = goal; return; }
       this.sfx('decode');
-      this.decT = setInterval(() => {
-        n += 1;
+      this.decT = PIP.h.typer(goal.length * 2, 1000 / 32, (n) => {
         d.textContent = goal.split('').map((ch, i) => i < n / 2 || ch === ' ' ? ch : glyphs[(i * 7 + n) % glyphs.length]).join('');
-        if (n / 2 >= goal.length) clearInterval(this.decT);
-      }, 32);
+      }, { paused: () => !this.live() });
     },
     lockOn(pr) {
       if (!pr) return;

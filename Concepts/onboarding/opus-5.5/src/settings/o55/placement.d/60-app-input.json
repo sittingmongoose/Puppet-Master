@@ -59,7 +59,8 @@
    "help": "Where the chat and panels sit, and the icons on the left.",
    "order": 70,
    "after": {
-    "general.interaction.activity-bar-labels": "general.interaction.activity-bar-order"
+    "general.interaction.activity-bar-labels": "general.interaction.activity-bar-order",
+    "general.interaction.status-bar-words": "general.interaction.activity-bar-labels"
    }
   },
   "app-startup": {
@@ -108,6 +109,7 @@
     "general.visual.nier-mode",
     "general.visual.nier-parts",
     "general.visual.nier-background",
+    "general.visual.pip-parts",
     "general.visual.glass-transparency",
     "general.visual.retro-effects",
     "general.visual.app-font"
@@ -173,6 +175,7 @@
    "ids": [
     "general.interaction.panel-dock",
     "general.interaction.activity-bar-order",
+    "general.interaction.status-bar-words",
     "general.interaction.dashboard-widgets",
     "general.interaction.minimize-to-tray",
     "general.startup.reset-home-layout"

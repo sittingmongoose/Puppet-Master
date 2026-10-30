@@ -38,6 +38,10 @@
     const ready = O55.ai ? O55.ai.readyIds(S) : [];
     return ids.map((id, i) => P('orb', 'o' + (i + 1), { id: 'o' + id, scale: 0.9, params: { lit: ready.includes(id), label: O55.ai && O55.ai.mono ? O55.ai.mono(O55.fixtures.provider(id) || { id, name: id }) : id.slice(0, 2).toUpperCase(), hue: ['e', 'b', 'c', 'd'][i] } }));
   };
+  /* the choice on show: the one previewed (h, a control id <action>:<value>) or else the one chosen; preview only when
+     the previewed choice is not the chosen one (Astra M02) */
+  const choice = (h, action, chosen) => { const v = h && h.indexOf(action + ':') === 0 ? h.slice(action.length + 1) : null; return { v: v || chosen, preview: !!v && v !== chosen }; };
+  const cdr = (S) => (S.sess.drafts && S.sess.drafts.connect) || {}, far = (m) => /^(tailscale|reverse_proxy|remote_link)$/.test(m || '');
   const WHERE = { this: 'laptop', connect: 'phone', server: 'server' };
   const BEGIN = { new: 'page', existing: 'folder', restore: 'restore' };
   const SUB = { folder: 'folder', online: 'forge', device: 'nas' };
@@ -52,15 +56,15 @@
       state(S) { const st = op(S, 'check:here'); return st && st.state === 'running' ? 'checking' : st && st.state === 'done' ? (S.env.here.internet ? 'checked' : 'offline') : 'enter'; },
       vars: (S) => ({ prop: WHERE[S.sess.ui.where || 'this'] })
     },
-    'c-route': { props: (S, h) => [P('laptop', 'pairA'), P(h && /route:(tailscale|reverse_proxy|remote_link)/.test(h) ? 'globe' : 'house', 'pairB', { preview: !!h })], state: () => 'enter' },
-    'c-review': { props: (S, h) => [P('phone', 'pairA'), P(h === 'pairing:qr' ? 'qr' : h === 'pairing:code' ? 'key' : 'idcard', 'pairB', { preview: !!h })], vars: (S) => ({ method: md(S).connection_pairing || 'approval' }) },
+    'c-route': { props: (S, h) => { const m = cdr(S).remote_mode, c = choice(h, 'route', m || 'local_or_vpn'); return [P('laptop', 'pairA'), P(far(c.v) ? 'globe' : 'house', 'pairB', { preview: c.preview && far(c.v) !== far(m) })]; }, state: () => 'enter' },
+    'c-review': { props: (S, h) => { const c = choice(h, 'pairing', cdr(S).connection_pairing || 'approval'); return [P('phone', 'pairA'), P({ qr: 'qr', code: 'key' }[c.v] || 'idcard', 'pairB', { preview: c.preview })]; }, vars: (S) => ({ method: cdr(S).connection_pairing || 'approval' }) },
     'c-pair': { props: two('idcard', 'qr') },
     'c-ready': { props: () => [P('laptop', 'pairA'), P('server', 'pairB')] },
-    's-kind': { props: (S, h) => [P(h === 'kind:cloud' ? 'cloud' : h === 'kind:pc' ? 'server' : 'nas', 'side', { preview: !!h })], vars: (S) => ({ kind: (S.sess.server && S.sess.server.kind) || 'nas' }) },
+    's-kind': { props: (S, h) => { const c = choice(h, 'kind', (S.sess.server && S.sess.server.kind) || 'nas'); return [P({ cloud: 'cloud', pc: 'server' }[c.v] || 'nas', 'side', { preview: c.preview })]; }, vars: (S) => ({ kind: (S.sess.server && S.sess.server.kind) || 'nas' }) },
     's-wait': { props: two('nas', 'key') },
     's-confirm': { props: two('server', 'key'), vars: (S) => ({ name: (S.sess.server && S.sess.server.displayName) || '' }) },
     's-ready': { props: () => [P('server', 'pairA'), P('qr', 'pairB'), P('phone', 'hi')] },
-    'r-source': { props: (S, h) => [P('restore', 'pairA'), P({ 'source:kit': 'kit', 'source:folder': 'folder', 'source:nas': 'nas', 'source:cloud': 'cloud' }[h] || 'kit', 'pairB', { preview: !!h })], vars: (S) => ({ source: (S.sess.restore && S.sess.restore.source) || 'kit' }) },
+    'r-source': { props: (S, h) => { const c = choice(h, 'source', (S.sess.restore && S.sess.restore.source) || 'kit'); return [P('restore', 'pairA'), P({ folder: 'folder', nas: 'nas', cloud: 'cloud' }[c.v] || 'kit', 'pairB', { preview: c.preview })]; }, vars: (S) => ({ source: (S.sess.restore && S.sess.restore.source) || 'kit' }) },
     'r-unlock': { props: two('kit', 'lock') },
     'r-pick': { props: two('restore', 'clipboard') },
     'r-preview': { props: one('restore'), work: true },
@@ -95,8 +99,8 @@
       vars: (S) => ({ mode: ['local_or_vpn', 'none'].includes(md(S).remote_mode) ? 'home' : 'anywhere' }) },
     review: { props: (S) => [P('clipboard', 'side', { params: { ticks: ticks(S), rows: 4 } })], state: (S) => (md(S).project_mode === 'later' ? 'later' : ticks(S) >= 4 ? 'checked' : 'enter'), vars: (S) => ({ done: ticks(S), total: 4 }) },
     creating: {
-      /* O12: a block for each owner phase that has completed, lowered onto the stack as it completes; Continue and
-         Ready never wait for a block to land (each lands in about half a second; Reduced Motion puts it there) */
+      /* O12: a block for each owner phase that has completed, lowered onto the stack as it completes; once the Project is
+         made, Continue waits for the last to land (Jared's O12 B; about half a second, at once under Reduced Motion) */
       props(S) {
         const list = O55.review ? O55.review.phasesFor(S) : [], st = op(S, (S.sess.commit || {}).key);
         const done = O55.review && O55.review.shownDone(S) ? list.length : st ? (st.phases || []).filter((p) => p.status === 'done').length : 0;
@@ -117,7 +121,15 @@
     },
     protect: { props: () => [P('lock', 'pairA'), P('kit', 'pairB'), P('backup', 'hi', { scale: 0.8 })], state: (S) => { const b = S.sess.backup || {}; return b.done && b.done.length >= 5 ? 'done' : 'enter'; },
       vars: (S) => { const b = S.sess.backup || {}, done = b.done || []; return { step: ['signin', 'test', 'kit', 'kitTest', 'policy'].find((s) => !done.includes(s)) || 'done' }; } },
-    ai: { props: ORBS, state: (S) => { const n = O55.ai ? O55.ai.readyIds(S).length : 0; const det = op(S, 'detect:' + (md(S).server_mode !== 'this_device' ? 'server' : 'this computer')); return n > 1 ? 'many' : n === 1 ? 'one' : (S.sess.ai && S.sess.ai.skipped) ? 'none' : 'checking'; }, power: true, vars: (S) => ({ n: O55.ai ? O55.ai.readyIds(S).length : 0 }) },
+    /* an account under way (installing, signing in, its key being tried) is where the screen stands, ahead of the count
+       (Astra M07) */
+    ai: { props: ORBS, state: (S) => {
+      const acc = Object.values((S.sess.ai && S.sess.ai.accounts) || {}).map((a) => a.state), n = O55.ai ? O55.ai.readyIds(S).length : 0;
+      if (acc.includes('signingIn')) return 'signingIn';
+      if (acc.includes('installing')) return 'installing';
+      if (acc.includes('keyChecking')) return 'testing';
+      return n > 1 ? 'many' : n === 1 ? 'one' : (S.sess.ai && S.sess.ai.skipped) ? 'none' : 'checking';
+    }, power: true, vars: (S) => ({ n: O55.ai ? O55.ai.readyIds(S).length : 0 }) },
     'ai-all': { props: ORBS, power: true },
     'ai-none': { props: () => [P('free', 'side')] },
     free: { props: () => [P('free', 'pairA'), P('gift', 'pairB')] },
@@ -135,7 +147,8 @@
     'nas-identity': { props: nasWith('idcard'), state: (S) => ((S.sess.nas || {}).trusted ? 'trusted' : 'enter') },
     'nas-key': { props: nasWith('key') },
     'nas-signin': { props: () => [P('nas', 'pairA'), P('key', 'pairB'), P('lock', 'hi', { scale: 0.8 })] },
-    'nas-install': { props: nasWith('key'), work: true, state: (S) => { const st = op(S, 'install:' + ((S.sess.nas || {}).device || '')); return st && st.state === 'done' ? 'done' : 'enter'; } },
+    /* the owner's own operation key (70-screens-nas.js installKey: kept from when it started) */
+    'nas-install': { props: nasWith('key'), work: true, state: (S) => { const n = S.sess.nas || {}, st = op(S, n.opKey || 'sshinstall:' + (n.device || '') + ':' + (n.key || 'new')); return (st && st.state === 'done') || n.installed ? 'done' : 'enter'; } },
     'nas-pmpair': { props: nasWith('qr') },
     'nas-folder': { props: nasWith('folder'), state: (S) => ((S.sess.nas || {}).purpose === 'storage' ? 'storage' : 'enter'), vars: (S) => ({ path: String((S.sess.nas || {}).at || '').split('/').pop() }) },
     'nas-smb': { props: nasWith('folder') },
@@ -162,10 +175,11 @@
     if (o.typing && part('wonders-while-typing')) mood = 'wonder';
     let say = line(id, lid, v), label = stg(id, 'label', v);
     const tgt = props.length ? props[props.length - 1].id : null;
-    const out = { chapter, props, pip: { mood, look: sc.look || tgt, work: !!sc.work && !(O55.review && O55.review.shownDone && id === 'creating' && O55.review.shownDone(S)) },
+    const out = { chapter, props, pip: { mood, look: sc.look || tgt, work: !!sc.work && !/^done/.test(lid) && !(O55.review && O55.review.shownDone && id === 'creating' && O55.review.shownDone(S)) },
       say, target: tgt, label, cmd: stg(id, 'cmd', Object.assign({ prop: tgt || '' }, v)) + (h ? ' --preview' : ''), lineId: lid };
     if (sc.power) out.pip.power = O55.ai ? O55.ai.readyIds(S).length : 0;
-    if (id === 'welcome') { out.pip.pose = 'asleep'; out.wakeSay = say; }
+    /* (Welcome: the stage puts Pip to sleep and wakes it on a real arrival, 59-cheer.js wake; once awake it is lifted) */
+    if (id === 'welcome') out.wakeSay = say;
     if (o.oops) {
       out.pip.mood = o.oops.face === 'oops' && !part('oops') ? 'idle' : o.oops.face;
       out.say = O55.t('pip.oops.' + o.oops.key, v);
@@ -189,12 +203,11 @@
   const FACE = {
     'server.confirm.pendingHost': 'think', 'protect.pendingHost': 'think', 'creating.recovery.pending': 'think',
     'creating.recovery.reasons.waitingHost': 'think', 'creating.recovery.reasons.claimBusy': 'think', 'creating.recovery.reasons.pending': 'think',
-    'ai.skipNote': 'sleep',
-    /* an empty name is a prompt, not a fault: Pip watches the sign wait for its words */
-    'name.empty': 'watch'
+    'ai.skipNote': 'sleep'
   };
   /* states that show as information, not as a fault, are still read where they are written (a note, a row's line) */
-  const WHERE = '.o55-err, .o55-note, .o55-banner, .o55-pill-fail, .o55-reason, .o55-rowmeta, .o55-tag, .o55-phdetail';
+  /* (a refused press's reason, .o55-reason, is told to Pip by the press itself: 60-ui-core.js renderScene's refused) */
+  const WHERE = '.o55-err, .o55-note, .o55-banner, .o55-pill-fail, .o55-rowmeta, .o55-tag, .o55-phdetail';
   let table = null;
   const flat = (node, pre, out) => {
     Object.keys(node || {}).forEach((k) => { const v = node[k], key = pre ? pre + '.' + k : k; if (typeof v === 'string') out.push(key); else if (v && typeof v === 'object') flat(v, key, out); });
