@@ -273,70 +273,9 @@ button.qs-tick.is-skipped::after{ background:var(--warning); }
   max-height:none; min-height:44px;
 }
 .qs-pill-label{ font-size:13px; font-weight:650; flex:1 1 auto; min-width:0; text-align:left; }
-.qs-orbit{
-  position:relative; width:18px; height:18px; flex:0 0 18px; flex-shrink:0;
-  margin-right:4px;
-  animation:qs-orbit-turn 900ms linear infinite;
-}
-.qs-orbit i{
-  position:absolute; width:4px; height:4px; border-radius:50%;
-  background:var(--accent); opacity:.9;
-}
-.qs-orbit i:nth-child(1){ top:0; left:50%; margin-left:-2px; }
-.qs-orbit i:nth-child(2){ top:50%; right:0; margin-top:-2px; }
-.qs-orbit i:nth-child(3){ bottom:0; left:50%; margin-left:-2px; }
-.qs-orbit i:nth-child(4){ top:50%; left:0; margin-top:-2px; }
-@keyframes qs-orbit-turn{ to{ transform:rotate(360deg); } }
-.qs-orrery{
-  position:relative; width:22px; height:22px; flex:0 0 22px; flex-shrink:0;
-  margin-right:4px; overflow:visible;
-  transform-style:preserve-3d; perspective:36px;
-}
-.qs-orrery-ring{
-  position:absolute; left:50%; top:50%;
-  border:1.5px solid color-mix(in srgb,var(--text) 40%, transparent);
-  border-radius:50%; box-sizing:border-box; pointer-events:none;
-}
-.qs-orrery-a{
-  width:20px; height:20px; margin:-10px 0 0 -10px;
-  animation:qs-orrery-spin 2.2s linear infinite;
-}
-.qs-orrery-b{
-  width:16px; height:16px; margin:-8px 0 0 -8px;
-  animation:qs-orrery-spin-rev 3.4s linear infinite;
-}
-.qs-orrery-bead{
-  position:absolute; left:50%; top:50%;
-  width:4px; height:4px; margin:-2px 0 0 -2px;
-  border-radius:50%; background:var(--accent);
-  pointer-events:none;
-}
-.qs-orrery-bead:nth-of-type(1){ animation:qs-orrery-bead-a 1.8s linear infinite; }
-.qs-orrery-bead:nth-of-type(2){ animation:qs-orrery-bead-b 2.6s linear infinite; }
-.qs-orrery-bead:nth-of-type(3){
-  width:5px; height:5px; margin:-2.5px 0 0 -2.5px;
-  animation:qs-orrery-bead-c 2.2s linear infinite 0.4s;
-}
-@keyframes qs-orrery-spin{
-  from{ transform:rotateX(68deg) rotateZ(0deg); }
-  to{ transform:rotateX(68deg) rotateZ(360deg); }
-}
-@keyframes qs-orrery-spin-rev{
-  from{ transform:rotateX(68deg) rotateZ(70deg); }
-  to{ transform:rotateX(68deg) rotateZ(-290deg); }
-}
-@keyframes qs-orrery-bead-a{
-  from{ transform:rotate(0deg) translateX(9px) rotate(0deg); }
-  to{ transform:rotate(360deg) translateX(9px) rotate(-360deg); }
-}
-@keyframes qs-orrery-bead-b{
-  from{ transform:rotate(180deg) translateX(6px) rotate(-180deg); }
-  to{ transform:rotate(540deg) translateX(6px) rotate(-540deg); }
-}
-@keyframes qs-orrery-bead-c{
-  from{ transform:rotate(90deg) translateX(9px) rotate(-90deg); }
-  to{ transform:rotate(450deg) translateX(9px) rotate(-450deg); }
-}
+/* the wait: the system loader (questions.js waitHtml), 18 px; its motion, Reduced Motion and NieR are the owner's */
+.qs-wait{ display:inline-flex; flex:0 0 18px; width:18px; height:18px; margin-right:4px; line-height:0; }
+.qs-wait > .pml-ld{ --pml-size:18px; }
 .qs-morph-face{
   position:absolute; inset:auto 0 0 0; height:44px;
   max-width:none; margin:0; border:0; background:transparent; box-shadow:none;
@@ -1328,13 +1267,7 @@ button.qs-spine-slot.is-current::after{
    loop stops, the finite entrances stay so a state change is still legible.
    ========================================================================== */
 @media (prefers-reduced-motion: reduce){
-  .qs-progress-track.is-scan i, .qs-orbit, .qs-orbit i,
-  .qs-orrery, .qs-orrery-ring, .qs-orrery-bead{ animation:none !important; }
-  .qs-orrery-a{ transform:rotateX(68deg) rotateZ(25deg); }
-  .qs-orrery-b{ transform:rotateX(68deg) rotateZ(70deg); }
-  .qs-orrery-bead:nth-of-type(1){ transform:rotate(40deg) translateX(9px); }
-  .qs-orrery-bead:nth-of-type(2){ transform:rotate(200deg) translateX(6px); }
-  .qs-orrery-bead:nth-of-type(3){ transform:rotate(110deg) translateX(9px); }
+  .qs-progress-track.is-scan i{ animation:none !important; }
   .qs-card, .qs-sheet, .qs-inspector, .qs-ask, .qs-stack-live, .qs-fold, .qs-step-live,
   .qs-shell, .qs-reel, .qs-reel-out, .qs-reel [data-k^="qs-opt"], .qs-reel .qs-other, .qs-ask-foot,
   .qs-ask-title, .qs-ask-sub, .qs-ask-opt, .qs-ask-review-row, .qs-ask-note, .qs-spine, .qs-ask-x,
