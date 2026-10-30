@@ -5,23 +5,17 @@
   const O55 = window.O55, C = O55.c, U = O55.util, T = (k, v) => O55.t(k, v), def = (id, d) => O55.screens.define(id, d);
   const md = (S) => S.sess.drafts.main;
 
-  /* Shell helpers: select a Project in the title-bar menu (adding it when the app doesn't list it yet). The Settings
+  /* Shell helpers: select a Project in the title-bar menu (adding it when the app doesn't list it yet). The project box
+     owns the menu's rows (PM_PROJECT_BOX, pm6-js-panels.js: one row renderer, the label stays the bare name). The Settings
      owner watches the menu and reloads that Project's settings. */
   O55.shell = {
     selectProject(id, name) {
-      const menu = document.getElementById('projectMenu'), label = document.getElementById('projectMenuLabel');
-      if (!menu || !id) return false;
-      let item = menu.querySelector(`[data-project="${CSS.escape(id)}"]`);
-      if (!item) {
-        const proto = menu.querySelector('[data-project]');
-        item = proto ? proto.cloneNode(false) : document.createElement('button');
-        item.setAttribute('type', 'button'); item.className = 'pm6-tb-menu-item'; item.setAttribute('role', 'menuitem');
-        item.setAttribute('data-project', id); item.setAttribute('data-project-title', 'Active project: ' + (name || id)); item.textContent = name || id;
-        menu.insertBefore(item, menu.firstChild);
-      }
-      menu.querySelectorAll('[data-project]').forEach((n) => n.classList.toggle('is-selected', n === item));
+      const box = window.PM_PROJECT_BOX;
+      if (!box || !id) return false;
+      const item = box.add(id, { name: name || id });
+      if (name && item.getAttribute('data-project-name') !== name && name !== id) { item.setAttribute('data-project-name', name); box.row(item); }
       window.PM_ACTIVE_PROJECT_ID = id;
-      if (label) label.textContent = name || id;
+      box.select(id);
       if (O55.sound && O55.sound.refresh) O55.sound.refresh('project');
       return true;
     },
@@ -118,7 +112,8 @@
 
   function summary(S) {
     const d = md(S), cm = S.sess.commit || {}, ai = O55.ai ? O55.ai.readyIds(S) : [], free = Object.values(S.sess.ai.freeRoutes || {}).filter((x) => x === 'ready').length, b = S.sess.backup;
-    const row = (k, v, ok) => `<div class="o55-revrow" data-key="sum-${k}"><span class="o55-revk">${U.esc(T('ready.' + k))}</span><span class="o55-revv">${U.esc(v)}</span>${ok ? C.pill('ready', T('ai.ready')) : ''}</div>`;
+    /* Free Models and Backup have a ? beside their name (summary:<row>), the note under the summary */
+    const row = (k, v, ok) => `<div class="o55-revrow" data-key="sum-${k}"><span class="o55-revk"><span class="o55-labq">${U.esc(T('ready.' + k))}${O55.tips.q('summary:' + k)}</span></span><span class="o55-revv">${U.esc(v)}</span>${ok ? C.pill('ready', T('ai.ready')) : ''}</div>`;
     let out = '';
     if (cm.state === 'done') out += row('project', d.project_name + ' · ' + O55.review.whereWork(S), true);
     out += row('ai', ai.length ? ai.map((id) => O55.ai.pname(O55.fixtures.provider(id))).join(', ') : T('ready.noAi'), ai.length > 0);
@@ -149,7 +144,8 @@
       const later = md(S).project_mode === 'later' || !(S.sess.commit && S.sess.commit.state === 'done');
       /* under NieR Mode's headers the summary reads as a setup card: an ink kicker band naming the Project, rows with dot
          leaders whose values type in (11-window-nier.css, O55.nierWindow); the same rows and words otherwise */
-      let out = later ? '' : `<div class="o55-summary" data-key="summary" data-o55nw-card="" data-o55nw-kicker="${U.esc(T('nierWindow.card', { name: md(S).project_name }))}">${summary(S)}</div>`;
+      let out = later ? '' : `<div class="o55-summary" data-key="summary" data-o55nw-card="" data-o55nw-kicker="${U.esc(T('nierWindow.card', { name: md(S).project_name }))}">${summary(S)}</div>`
+        + O55.tips.explainer('summary:free') + O55.tips.explainer('summary:backup');
       if (!later && O55.tour && O55.tour.start) out += C.note(T('ready.tourSub', { m: O55.tour.minutes ? O55.tour.minutes() : 4 }), 'info', 'spark');
       out += `<p class="o55-note o55-note-info" data-key="help">${C.small('person', 14)}<span>${U.esc(T('ready.help'))}</span></p>`;
       return out;

@@ -78,9 +78,11 @@
     else if (fromCopy) meta = T('ai.from', { project: cp.name }) + ' · ' + meta;
     else if (d && d.installed && st !== 'ready') meta = (onServer(S) ? T('ai.foundOn', { host: host(S) }) : T('ai.found')) + ' · ' + meta;
     /* inline states */
-    if (a.confirmInstall) extra = `<div class="o55-rowextra" data-key="ask-${p.id}"><span>${U.esc(T('ai.installAsk', { name: pname(p), host: host(S), vendor: p.vendor }))}</span>${O55.ui.btn({ label: T('ai.installGo'), do: 'installGo', arg: p.id, cls: 'o55-small' }, 'o55-primary')}</div>`;
+    if (a.confirmInstall) extra = `<div class="o55-rowextra" data-key="ask-${p.id}"><span class="o55-labq">${U.esc(T('ai.installAsk', { name: pname(p), host: host(S), vendor: p.vendor }))}${O55.tips.q('group:install')}</span>${O55.ui.btn({ label: T('ai.installGo'), do: 'installGo', arg: p.id, cls: 'o55-small', tip: false }, 'o55-primary')}${O55.tips.explainer('group:install')}</div>`;
     if (st === 'installing') { pill = ['wait', T('chrome.working')]; extra = `<div class="o55-rowextra" data-key="ph-${p.id}">${F.phases(S, 'install:' + p.id, ['download', 'install', 'verify'], { download: T('ai.installPhases.download', { vendor: p.vendor }), install: T('ai.installPhases.install'), verify: T('ai.installPhases.verify') })}</div>`; }
     if (st === 'signingIn') { pill = ['wait', T('ai.signinWait')]; }
+    /* a browser sign-in that did not finish (the page was closed, or never completed): nothing connected; ask again */
+    if (st === 'signinFailed') { pill = ['fail', T('ai.signinFail.title')]; meta = T('ai.signinFail.body', { vendor: p.vendor }); action = { label: T('ai.signinFail.retry'), do: 'signin', arg: p.id }; }
     if (st === 'keyEntry' || st === 'keyChecking') {
       const ks = F.state(S, 'key:' + p.id + ':' + (a.attempt || 0));
       pill = st === 'keyChecking' ? ['wait', T('ai.checking')] : null;
@@ -88,7 +90,7 @@
         + O55.ui.btn({ label: T('ai.verify'), do: 'keyCheck', arg: p.id, cls: 'o55-small', disabled: !a.keyTyped || st === 'keyChecking', reason: T('ai.keyLabel', { name: pname(p) }) }, 'o55-secondary') + '</div>';
     }
     const lead = `<span class="o55-plogo" style="--plh:${U.hash(p.vendor) % 360}" aria-hidden="true"><span class="o55-plogo-l">${U.esc(pname(p).slice(0, 1))}</span><span class="o55-plogo-m">${U.esc(mono(p))}</span></span>`;
-    return `<div class="o55-provider" data-key="pv-${p.id}" data-state="${st}">` + C.row({ key: p.id, lead, title: pname(p), meta, state: pill, action }) + extra + '</div>';
+    return `<div class="o55-provider" data-key="pv-${p.id}" data-state="${st}">` + C.row({ key: p.id, lead, title: pname(p), meta, state: pill, action, tip: 'provider:' + p.id }) + extra + '</div>';
   }
 
   def('ai', {
@@ -104,7 +106,7 @@
       out += `<div class="o55-sublinks" data-key="links">${C.link(T('ai.seeAll'), 'all')}${readyIds(S).length ? C.link(T('ai.another'), 'all') : C.link(T('ai.none'), 'none')}</div>`;
       if (a.skipped && !readyIds(S).length) out += C.note(T('ai.skipNote'), 'warn', 'spark');
       if (readyIds(S).length || a.skipped) {
-        out += `<button type="button" class="o55-card o55-card-link" data-o55-do="free" data-o55-sound="self" data-pm-hover-exempt="true" data-key="free">${C.glyph('stack')}<span class="o55-cardtext"><span class="o55-cardtitle">${U.esc(T('ai.free.title'))}</span><span class="o55-cardsub">${U.esc(T('ai.free.sub'))}</span></span><span class="o55-cardarrow" aria-hidden="true">›</span></button>`;
+        out += O55.tips.opt('free', `<button type="button" class="o55-card o55-card-link" data-o55-do="free" data-o55-sound="self" data-pm-hover-exempt="true" data-key="free">${C.glyph('stack')}<span class="o55-cardtext"><span class="o55-cardtitle">${U.esc(T('ai.free.title'))}</span><span class="o55-cardsub">${U.esc(T('ai.free.sub'))}</span></span><span class="o55-cardarrow" aria-hidden="true">›</span></button>`);
       }
       return out;
     },
@@ -136,7 +138,12 @@
         acc.attempt = (acc.attempt || 0) + 1; S.save();
         O55.official.open(S, { name: p.vendor, url: O55.fixtures.OFFICIAL.provider[p.id] || null });
         O55.ui.refresh();
-        F.op(S, 'signin:' + id + ':' + acc.attempt, 'cmd.integration.connection.add', [{ key: 'browser', ms: 2400 }, { key: 'verify', ms: 600 }], { quiet: true, payload: { provider: id, host: host(S), method: 'browser' }, onDone: () => { acc.state = 'ready'; acc.via = 'signin'; S.save(); O55.ui.refresh(); O55.ui.charm(S.root.querySelector(`[data-key="pv-${id}"]`), pname(p), 'spark'); } });
+        const fails = O55.fixtures.signinFails(S.env, id);
+        F.op(S, 'signin:' + id + ':' + acc.attempt, 'cmd.integration.connection.add', [{ key: 'browser', ms: fails ? 1800 : 2400, fail: () => (fails ? 'signin_incomplete' : null) }, { key: 'verify', ms: 600 }], {
+          quiet: true, payload: { provider: id, host: host(S), method: 'browser' }, sound: { fail: 'warn' },
+          onDone: () => { acc.state = 'ready'; acc.via = 'signin'; acc.recovered = !!acc.failed; acc.failed = false; S.save(); O55.ui.refresh(); O55.ui.charm(S.root.querySelector(`[data-key="pv-${id}"]`), pname(p), 'spark'); },
+          onFail: () => { acc.state = 'signinFailed'; acc.failed = true; S.save(); O55.ui.refresh(); }
+        });
       },
       key(S, id) { A(S).accounts[id] = Object.assign(A(S).accounts[id] || {}, { state: 'keyEntry' }); S.save(); O55.ui.refresh(); O55.sound.play('reveal'); const i = S.root.querySelector('#o55f-key-' + id); if (i) i.focus(); },
       keyCheck(S, id) {
@@ -170,7 +177,7 @@
       const q = String(S.sess.ui.aiQ || '').toLowerCase();
       const match = (p) => !q || (pname(p) + ' ' + p.vendor + ' ' + p.product).toLowerCase().includes(q);
       const subs = PROV().filter((p) => p.kind !== 'api' && match(p)), apis = PROV().filter((p) => p.kind === 'api' && match(p));
-      let out = C.field({ bind: 'q', label: T('chrome.search'), value: S.sess.ui.aiQ || '', placeholder: 'Claude, Gemini, OpenCode…' });
+      let out = C.field({ bind: 'q', label: T('chrome.search'), value: S.sess.ui.aiQ || '', placeholder: T('ai.searchPlaceholder') });
       if (subs.length) out += C.group(T('ai.subs'), `<p class="o55-hint">${U.esc(T('ai.subsSub'))}</p>` + subs.map((p) => rowHtml(S, p)).join(''));
       if (apis.length) out += C.group(T('ai.apis'), `<p class="o55-hint">${U.esc(T('ai.apisSub'))}</p>` + apis.map((p) => rowHtml(S, p)).join(''));
       return out;
@@ -196,8 +203,8 @@
         { v: 'api', glyph: 'key', title: T('aiNone.api.title'), sub: T('aiNone.api.sub') },
         { v: 'free', glyph: 'stack', title: T('aiNone.free.title'), sub: T('aiNone.free.sub') }
       ], S.sess.ui.aiNone, { label: T('aiNone.title') })
-        + (S.sess.ui.aiNone === 'sub' ? `<div class="o55-sublinks" data-key="su">${['Claude', 'ChatGPT'].map((n) => C.link(T('aiNone.signup', { name: n }), 'signup', n)).join('')}</div>` : '')
-        + (S.sess.ui.aiNone === 'api' ? `<div class="o55-sublinks" data-key="su">${['Anthropic', 'Google AI Studio'].map((n) => C.link(T('aiNone.signup', { name: n }), 'signup', n)).join('')}</div>` : '');
+        + (S.sess.ui.aiNone === 'sub' ? `<div class="o55-sublinks" data-key="su">${['Claude', 'ChatGPT'].map((n) => C.link(T('aiNone.signup', { name: n }), 'signup', n)).join('')}${O55.tips.q('group:signup')}</div>${O55.tips.explainer('group:signup')}` : '')
+        + (S.sess.ui.aiNone === 'api' ? `<div class="o55-sublinks" data-key="su">${['Anthropic', 'Google AI Studio'].map((n) => C.link(T('aiNone.signup', { name: n }), 'signup', n)).join('')}${O55.tips.q('group:signup')}</div>${O55.tips.explainer('group:signup')}` : '');
     },
     foot: (S) => ({ primary: { label: S.sess.ui.aiNone === 'free' ? T('ai.free.title') : T('chrome.continue'), do: 'next' } }),
     do: {
@@ -226,7 +233,7 @@
         const st = freeState(S, r);
         const pill = st === 'ready' ? ['ready', T('free.ready')] : st === 'limited' ? ['needs', T('free.limited')] : st === 'working' ? ['wait', T('chrome.working')] : ['needs', T('free.needsSignin')];
         const action = st === 'ready' || st === 'working' ? null : st === 'limited' ? { label: T('free.reconnect'), do: 'route', arg: r.id } : { label: r.needs === 'signin' ? T('free.signIn') : T('free.setup'), do: 'route', arg: r.id };
-        return C.row({ key: r.id, glyph: 'stack', title: r.name, meta: r.provider, state: pill, action });
+        return C.row({ key: r.id, glyph: 'stack', title: r.name, meta: r.provider, state: pill, action, tip: 'route:' + r.id });
       }).join('');
       if (readyIds(S).length) out += C.note(T('free.paidFirst'), 'info', 'spark');
       out += `<div class="o55-sublinks" data-key="attr">${C.link(T('free.attribution'), 'attribution')}</div>`;
@@ -245,5 +252,5 @@
     }
   });
 
-  O55.ai = { readyIds, shortlist, pname };
+  O55.ai = { readyIds, shortlist, pname, mono };
 })();

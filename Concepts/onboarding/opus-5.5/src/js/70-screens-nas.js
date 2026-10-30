@@ -252,7 +252,7 @@
         const mk = F.state(S, 'sshmake:' + d.id);
         if (n.key === 'new' && !(mk && mk.state === 'done')) return F.phases(S, 'sshmake:' + d.id, ['make'], { make: T('nas.install.phases.make') });
         const k = keyring(S).find((x) => x.id === n.key), line = k ? pubLine(k) : '';
-        let out = `<p class="o55-lead-sm">${U.esc(T('nas.signin.selfLead', { name: d.name, key: k ? k.comment : '' }))}</p><div class="o55-codeline" data-key="pub"><code>${U.esc(line)}</code>${F.copyBtn(line, 'pub')}</div>`;
+        let out = `<p class="o55-lead-sm">${U.esc(T('nas.signin.selfLead', { name: d.name, key: k ? k.comment : '' }))}</p><div class="o55-codeline" data-key="pub"><code>${U.esc(line)}</code>${F.copyBtn(line, 'pub')}</div>${F.copyNote('pub')}`;
         if (n.selfMissing) out += C.note(T('nas.signin.selfNot', { name: d.name }), 'warn', 'key');
         return out + `<div class="o55-sublinks" data-key="back">${C.link(T('nas.signin.selfOff'), 'selfOff')}</div>`;
       }
@@ -508,7 +508,7 @@
       const n = N(S), d = dev(S), root = d.roots[0], at = n.at || root;
       const kids = (S.env.folders[at] || []).map((name) => ({ name, isNew: false })).concat((n.newFolders || []).filter((f) => f.parent === at).map((f) => ({ name: f.name, isNew: true })));
       const crumbs = at.split('/').filter(Boolean).map((part, i, arr) => C.link(part, 'cd', '/' + arr.slice(0, i + 1).join('/'))).join(' <span aria-hidden="true">›</span> ');
-      let out = `<div class="o55-crumbs" data-key="crumbs">${C.small('server', 14)} ${U.esc(d.name)} <span aria-hidden="true">›</span> ${crumbs}</div>`;
+      let out = `<div class="o55-crumbs" data-key="crumbs">${C.small('server', 14)} ${U.esc(d.name)} <span aria-hidden="true">›</span> ${crumbs}${O55.tips.q('group:cd')}</div>${O55.tips.explainer('group:cd')}`;
       out += `<div class="o55-treelist" role="listbox" aria-label="${U.esc(T('nas.folder.title', { name: d.name }))}" data-key="list">`
         + (kids.length ? kids.map(({ name, isNew }) => `<button type="button" class="o55-treeitem${isNew ? ' o55-new' : ''}" role="option" data-o55-do="cd" data-arg="${U.esc(at + '/' + name)}" data-pm-hover-exempt="true" data-key="f-${U.esc(U.slug(name))}">${C.small('folder', 16)}<span>${U.esc(name)}</span>${isNew ? `<span class="o55-tag">${U.esc(T('nas.folder.newFolder'))}</span>` : ''}</button>`).join('') : `<p class="o55-hint">${U.esc(T('nas.folder.empty'))}</p>`) + '</div>';
       if (n.adding) out += `<div class="o55-fieldrow" data-key="newf">${C.field({ bind: 'newName', label: T('nas.folder.newName'), value: n.newName || '', hint: T('nas.folder.newNote') })}${O55.ui.btn({ label: T('chrome.done'), do: 'addFolder', cls: 'o55-small', disabled: !F.nonEmpty(n.newName), reason: T('nas.folder.newName') }, 'o55-secondary')}</div>`;

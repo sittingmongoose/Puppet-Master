@@ -49,6 +49,8 @@
       + row('restart-guided-tour', 'settings.guided_tour.replay', 'refresh', T('settingsRows.restart'), T('settingsRows.restartMeta'));
   };
 
+  /* the chips' hide button draws the set's close glyph (a literal times sign was a symbol glyph in the words) */
+  const closeMark = () => U.nx('close', 12, 'control') || '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   /* Resume chip: shown in the title bar area when setup was closed before finishing. */
   function chip() {
     let el = document.getElementById('o55-resume');
@@ -66,7 +68,7 @@
     }
     const committed = saved.commit && saved.commit.state === 'done';
     el.innerHTML = `<button type="button" data-o55-chip="resume" data-pm-hover-exempt="true">${O55.c.small('history', 14)}<span>${U.esc(committed ? T('chrome.resumeOptional') : T('chrome.resume'))}</span></button>`
-      + `<button type="button" class="o55-resume-x" data-o55-chip="hide" aria-label="${U.esc(T('chrome.hide'))}" data-pm-hover-exempt="true">×</button>`;
+      + `<button type="button" class="o55-resume-x" data-o55-chip="hide" aria-label="${U.esc(T('chrome.hide'))}" data-pm-hover-exempt="true">${closeMark()}</button>`;
   }
   /* A tour interrupted by a reload offers to carry on from its last safe step. */
   function tourChip() {
@@ -77,7 +79,7 @@
       el = document.createElement('div'); el.id = 'o55-tourchip'; el.className = 'o55-resume'; el.setAttribute('data-pm-hover-exempt', 'true'); document.body.appendChild(el);
       el.addEventListener('click', (e) => { const b = e.target.closest('[data-o55-chip]'); if (!b) return; el.remove(); if (b.getAttribute('data-o55-chip') === 'resume') O55.tour.start({}); });
     }
-    el.innerHTML = `<button type="button" data-o55-chip="resume" data-pm-hover-exempt="true">${O55.c.small('spark', 14)}<span>${U.esc(t.status === 'restore-pending' ? T('tour.recoveryTitle') : T('tour.resume'))}</span></button><button type="button" class="o55-resume-x" data-o55-chip="hide" aria-label="${U.esc(T('chrome.hide'))}" data-pm-hover-exempt="true">×</button>`;
+    el.innerHTML = `<button type="button" data-o55-chip="resume" data-pm-hover-exempt="true">${O55.c.small('spark', 14)}<span>${U.esc(t.status === 'restore-pending' ? T('tour.recoveryTitle') : T('tour.resume'))}</span></button><button type="button" class="o55-resume-x" data-o55-chip="hide" aria-label="${U.esc(T('chrome.hide'))}" data-pm-hover-exempt="true">${closeMark()}</button>`;
   }
   O55.boot = { chip, tourChip };
 
