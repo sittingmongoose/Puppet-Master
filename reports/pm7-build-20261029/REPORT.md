@@ -1,8 +1,20 @@
 # PM7 Plans lane — 2026-10-29
 
-Branch: `t3/plans/pm7-plans-canon`. Current focused source head: `e3f99b3992d0b8829a31993dc74ba04ec96a24c2` (Jared’s 2026-10-30 decisions). Lead: `pm7-build`.
+Branch: `t3/plans/pm7-plans-canon`. Current focused source head: `11ff2e2216fc334d83598ccbdb9a9095d25b502b` (Step4 core checkpoint; final GUI follow-ups pending). Lead: `pm7-build`.
 
-**Steps 1–3 and all 57 Jared decision cards implemented.** W1–W9 canon and companions are pushed; the 2026-10-30 decision amendment passes all focused checks. Last full gates: **exit 1**. Dry landing: **exit 2 before integration; inventory guard PASS at 543a85e5ff; republish needed after A2 copy change**, **0 Plan-attribution blockers**, **0 infrastructure results**. Full/dry aggregate attribution was run at b22d48bec8; the late label-storage ruling is covered by focused checks at the current head. The inventory-page guard passed at integration 543a85e5ff. A2’s later inventory help-text amendment now needs the lead’s integration republish before that guard is claimed current. No full aggregate rerun after that GUI integration is claimed. Step 4 and independent companion review wait for the lead’s merged-GUI signal. No landing, lock or reseal was performed.
+**Steps 1–3 and all 57 Jared decision cards implemented.** W1–W9 canon and companions are pushed; the 2026-10-30 decision amendment passes all focused checks. Last full gates: **exit 1**. Dry landing: **exit 2 before integration; inventory guard PASS at Step4 core 11ff2e2216; final follow-up pass pending**, **0 Plan-attribution blockers**, **0 infrastructure results**. Full/dry aggregate attribution was run at b22d48bec8; the late label-storage ruling is covered by focused checks at the current head. The inventory-page guard passed at integration 543a85e5ff. A2’s later inventory help-text amendment now needs the lead’s integration republish before that guard is claimed current. No full aggregate rerun after that GUI integration is claimed. Step 4 is active after lead mail 1030045708-4421 (integration bbb72b6153); independent companion review follows this alignment. No landing, lock or reseal was performed.
+
+## Step4 core checkpoint — 2026-10-30
+
+Full GUI integration bbb72b6153 merged via 23f5bd8756. Source 11ff2e2216fc334d83598ccbdb9a9095d25b502b aligns the first merged GUI’s actual project/work/Pip/editor controls and native contract adapters. **Step4 remains in progress:** the lead is integrating final audit fixes before the one full-gates/dry pass and companion review.
+
+Prose first, then companions: 25 owner units amended, no new/deleted PlanUnit. B5 uses active-Project dirty Home buffers and **Unsaved changes**; layout autosaves. System status has two typed local visibility actions and three additional binding families; its three service links reuse the existing Settings reveal action. Counts are 468 bindings, 710 Touch rows/137 profiles, 1269 production wiring rows, 1011 settings and 22 status keys. All 49 new PM7 controls have checked concept source/token anchors, with native proof still partial.
+
+Loader L-1/L-2 now records all-tier ratios and the accepted 14 px busy-button/16 px thinking sizes. Audit W1-40 locks all seven Basic Dark EXPORT values in F3-660 and preserved_exact_tokens; W5-14 names PMLogo.MOTION. DR-070 records only the inherited hidden demo-trigger bridge exception and PM56_APP retirement path. DR-079/F3-461 require the live inbox and PMMenu/File Manager to use the same sprout owner; no inbox exception is adopted.
+
+**Core checks PASS:** PM7, canon, Touch, shard generation/check, index generation/validation and the exact PM7 builder guard. Fixtures cover 31 schema, 5 B5, 4 Pin-switch, 4 identity and 11 runtime cases. All 141 release-export files match the title manifest hashes. Shards remain 2956/99 and index 7237/96. Full aggregate/dry checks have not been rerun yet. Core proofs/logs and hashes are in verification.json. Step4 scratch remains active; no browser, server, recording, landing, lock, reseal or native certification.
+
+**Still to integrate/align:** sprout review fix head 4ed26e8fd7 (origin/shown/instant/fade inputs, scaled delays, last-transition close and drag hold for every consumer); activity’s rail/Home PM_WORK projections and composer dock provider; title’s Friendly notification Pip tile; the final loader M2 dead-selector census. The earlier sprout lane claim that the live inbox is not a sprout is superseded by F3-461/DR-079 and the lead’s explicit no-exemption instruction.
 
 ## Jared’s decisions — 2026-10-30
 
@@ -48,8 +60,8 @@ Jared answered all **57** packet cards on 2026-10-30: **49** confirm the recomme
 | Settings | 1011 rows; only `general.visual.pip-parts` and `general.interaction.status-bar-words` added. Per-Project persistence; inventory global scope remains applicability metadata. |
 | Pip | 25 stable IDs / five groups / 24 default-on; app-voice off; Full, Quiet, Still, Plain use IDs internally, and Settings stores their shared-registry LABELS. Shared help and Size 1–6, total 61. |
 | Status | 22 existing keys; no new key. Mood defaults and Memory/Scheduled/13-agent subsets preserved. |
-| Bindings / production wiring | 465 bindings; 1269 wiring rows (11 new). G1 Pin is local and adds no mutation row. |
-| Touch | 708 rows / 137 profiles; all native proof residuals remain partial. |
+| Bindings / production wiring | 468 bindings; 1269 wiring rows (11 new). G1 Pin and System status are local and add no mutation row. |
+| Touch | 710 rows / 137 profiles; all native proof residuals remain partial. |
 | Derived | 2956 shards / 99 sources; 7237 PlanUnits / 96 indexed docs. |
 
 Stop all reuses `cmd.work.stop`; Clear Finished is view-local; All projects is `ui.project_switcher.all_projects`, never the side-panel command. Explicit application scope uses project_id null; target ownership/Project/server/environment permissions remain authoritative.
@@ -64,9 +76,9 @@ The c2a3acc3b4 dry run returned 26 blocking rows from one stale full-thread depe
 
 | Check | Result |
 |---|---|
-| PM7/canon | PASS at the decision source head; 22 schema cases, 4 Activity thread-switch, 4 identity and 11 runtime cases; label storage/count pins agree. |
+| PM7/canon | PASS at the Step4 core source; 31 schema, 5 B5, 4 Activity thread-switch, 4 identity and 11 runtime cases, plus 49 source mappings; label storage/count pins agree. |
 | Direct correction / reference proofs | PASS: N1–N3 semantic + rg receipts; six unchanged Goal definitions; all three stored-profile unions; unchanged Settings command/disposition data. |
-| Touch | PASS, 708 rows / 137 profiles, all native evidence residuals partial. |
+| Touch | PASS, 710 rows / 137 profiles, all native evidence residuals partial. |
 | Shards / committed extraction | PASS generation/check at the decision head, 2956 / 99. The earlier committed label extraction remains historical; no new extraction run is claimed. |
 | PlanUnit index | PASS generation and validation, 7237 / 96. Required ignored full-checkout/audit inputs installed before indexing. |
 | Standard full gates | Exit 1 at b22d48bec8; no new-contract, Touch, wiring or shard failure. Latest label-only correction passes focused checks per lead. |
@@ -93,13 +105,13 @@ Raw retained checks: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029
 | `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/schema-reference-closure-proof.json` | `c1b63a66ecdc454ebe66033f66bc0ef6d24e62bc31b6590c1addbaa146f0727f` |
 | `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/settings-disposition-pin-proof.json` | `cce5fa7208ce87c8546101c0eb244cceb6761bf9f4ffaf3b012f7a668e8c9a35` |
 | `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/label-committed-shards-check.log` | `7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f` |
-| `reports/pm7-build-20261029/verification.json` | `940da832d7fa66b4fc69da362a7ec678586e5be34669d0c773f2744cd4201052` |
+| `reports/pm7-build-20261029/verification.json` | `ff37787276b8bef8c29e65c4cd4ef466d6ccff59769e5d02d24d1937cc5c3749` |
 
 ## Step 4 inputs and open work
 
 The generated-page inventory guard was resolved at synced integration 543a85e5ff, before the current A2 inventory help-text amendment: the lead republished PM7 and its exact builder check passed at that commit; it was not rerun after A2’s newer inventory description. This lane’s earlier generation probe was restored without commit; no GUI source or generated-page edit was authored by this lane. The final 2026-10-30 label-storage ruling is already applied in inventory/prose/schema/value fixtures with all25 mappings equal to PM_PIP_PARTS; the lead requested focused checks and an immediate merge for chatpip.
 
-- **Merge signal:** still pending. Align actual GUI names/control hosts and rerun affected checks after the lead merges lanes; independent companion review follows then.
+- **Merge signal:** GO received at 2026-10-30 04:57 UTC (1030045708-4421); bbb72b6153 merged cleanly. Auditing Names introduced, B5, System status, loader review deltas, Demo bridge debt and the final sprout follow-up before prose/companions and full verification.
 - **Title input (A1/A3):** release icons and manifest are under the shared lane title/icons folder: app/puppet-master.ico, app/puppet-master.icns, app/png/16..1024.png, app/macos-1024.png, app/tile.svg; tray/macos and tray/windows state assets plus working-flip SVGs. New source names: pm7-brand-mark, .pm-brand-mark/.pm-brand-word, .app-name[data-mode=full|mark], .app-shell[data-tb-menu-open], pm7.home.unsaved. Reconcile paths with canon at Step4.
 - **L1 word drop:** Plans working.panels already omits loading (27e2c815c4); guarded by pm7-build-check.py. Loader owns the code-catalog drop; verify the joined result at Step4.
 - **Foundation names at f1e4ef8c38:** PMLogo; PM_PIP_LOADER; PM_WORK; PM_PIP_PARTS / PM_PIP_PARTS_STORE; O55.sound.pip. Preset IDs lowercase map to display names; `def` maps to default_enabled; `delivery` maps to completion_delivery. Latest canSendInput/answer, pending Restarting, trayFace and NieR diamond/ink fallback introduce no IDs.
@@ -108,7 +120,7 @@ The generated-page inventory guard was resolved at synced integration 543a85e5ff
 - **B5 correction for Step4 (lead 2026-10-30):** badge means a Home tab with dirty buffers in the active Project. Home autosaves layout; the UI word is Unsaved changes. Align the B5 canon, binding and fixture wording when the GUI merge is supplied.
 - **Decision answers:** all 57 are applied in source e3f99b3992. L8 B / DR-079 and G1 B / ui.activity_detail.pin / chat.activity.pin are current; the old no-Pin/deferred-sprout/pre-landing-listening recommendations are superseded. No decision answer waits for Step4.
 - **System status names received (activity 1030022012-4c7a):** ui.system_status.open/.close, statusbar.system_status, existing work.open_system_status (reuse instead of a duplicate work.panel.system_status) and system_status.service.open_settings. Their popover/owner-Settings route closure is queued for Step4; no new System status companion coverage is claimed in this amendment.
-- **A2 inventory copy:** the minimize-to-tray description now says the tray is always present. Lead must republish PM7 in integration before claiming its inventory-page guard current.
+- **A2 inventory copy:** core builder guard passes at 11ff2e2216; final follow-up check remains pending.
 
 No browsers, servers or media were created. Owned scratch archives/helpers and superseded logs were removed; retained checks/reviews are enumerated above.
 
