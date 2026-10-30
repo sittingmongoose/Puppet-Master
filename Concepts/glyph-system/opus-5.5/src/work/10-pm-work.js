@@ -167,7 +167,10 @@
 
   /* ------------------------------------------------------------------ counts */
   function counts(scope) {
-    const c = { agents: 0, questions: 0, processes: 0, needsInput: 0, stopping: 0, blocked: 0, failed: 0, scheduled: 0, finished: 0, services: 0,
+    /* finished / failed count what every Finished list of work shows, processes and scheduled runs (the panel's
+       Processes tab, the chat's thread view); a finished agent is a thread and counts apart, as finishedAgents (Muse m1:
+       finished had read one more than its own list) */
+    const c = { agents: 0, questions: 0, processes: 0, needsInput: 0, stopping: 0, blocked: 0, failed: 0, scheduled: 0, finished: 0, finishedAgents: 0, services: 0,
       stale: S.feed.state === 'stale', restarted: !!S.restarted };
     items(scope).forEach((x) => {
       if (x.kind === 'service') { if (isLive(x)) c.services++; return; }
@@ -176,7 +179,7 @@
       if (needsInput(x)) c.needsInput++;
       if (x.state === 'blocked' && !x.stopping) c.blocked++;
       if (x.kind === 'scheduled' && x.state === 'pending') c.scheduled++;
-      if (isDone(x)) { c.finished++; if (x.state === 'failed') c.failed++; }
+      if (isDone(x)) { if (x.kind === 'agent') c.finishedAgents++; else { c.finished++; if (x.state === 'failed') c.failed++; } }
       if (isLive(x)) { if (x.kind === 'agent') c.agents++; else c.processes++; }
     });
     return c;

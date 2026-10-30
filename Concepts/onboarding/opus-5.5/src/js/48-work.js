@@ -287,19 +287,32 @@
      the sampler only while this tab is on screen (D12). A sortable table per environment and an inspector. */
   const COLS = [['title', 'name'], ['rank', 'state'], ['cpu', 'cpu'], ['mem', 'mem'], ['ports', 'port'], ['where', 'where']];
   function liveVal(it, k) { return isLive(it) ? (it[k] == null ? null : it[k]) : null; }
+  /* the Resources sort: the column the person picked, then the title so equal values keep one order */
+  function resCmp() {
+    const w = W(), [k, dir] = ui.sort;
+    const byTitle = (a, b) => { const sa = String(a.title).toLowerCase(), sb = String(b.title).toLowerCase(); return sa < sb ? -1 : sa > sb ? 1 : 0; };
+    return (a, b) => {
+      let d = 0;
+      if (k === 'cpu' || k === 'mem') { const va = liveVal(a, k), vb = liveVal(b, k); d = dir * ((va == null ? -1 : va) - (vb == null ? -1 : vb)); }
+      else if (k === 'rank') d = dir * (w.rank(a) - w.rank(b));
+      else if (k === 'ports') d = dir * (((a.ports || [])[0] || 99999) - ((b.ports || [])[0] || 99999));
+      else { const sa = String(k === 'where' ? ownerName(a) : a.title).toLowerCase(), sb = String(k === 'where' ? ownerName(b) : b.title).toLowerCase(); d = dir * (sa < sb ? -1 : sa > sb ? 1 : 0); }
+      return d || byTitle(a, b);
+    };
+  }
+  /* an environment's head says what it lists, by state in the rows' own words (Muse m2: "3 processes" over four rows) */
+  function envSum(list) {
+    const by = {}, order = [];
+    list.forEach((x) => { const t = word(x).toLowerCase(); if (!by[t]) { by[t] = 0; order.push(t); } by[t]++; });
+    order.sort((a, b) => (list.find((x) => word(x).toLowerCase() === b && isLive(x)) ? 1 : 0) - (list.find((x) => word(x).toLowerCase() === a && isLive(x)) ? 1 : 0));
+    return order.map((t) => by[t] + ' ' + t).join(' · ');
+  }
   function resBody() {
     const w = W(); if (!w) return '';
     const servers = w.servers ? w.servers(project()) : [];
     const all = items({ project: project() }).filter((x) => x.kind === 'process' || x.kind === 'service');
     if (!servers.length || !all.length) return '<div class="wk-empty">' + T('res.empty') + '</div>';
-    const [k, dir] = ui.sort;
-    const cmp = (a, b) => {
-      if (k === 'cpu' || k === 'mem') { const va = liveVal(a, k), vb = liveVal(b, k); return dir * ((va == null ? -1 : va) - (vb == null ? -1 : vb)); }
-      if (k === 'rank') return dir * (w.rank(a) - w.rank(b));
-      if (k === 'ports') return dir * (((a.ports || [])[0] || 99999) - ((b.ports || [])[0] || 99999));
-      const sa = String(k === 'where' ? ownerName(a) : a.title).toLowerCase(), sb = String(k === 'where' ? ownerName(b) : b.title).toLowerCase();
-      return dir * (sa < sb ? -1 : sa > sb ? 1 : 0);
-    };
+    const [k, dir] = ui.sort, cmp = resCmp();
     const head = '<div class="wk-tr wk-th" role="row">' + COLS.map((c) => '<button type="button" role="columnheader" data-work-sort="' + c[0] + '" aria-sort="' +
       (k === c[0] ? (dir > 0 ? 'ascending' : 'descending') : 'none') + '">' + T('res.cols.' + c[1]) + (k === c[0] ? icon(dir > 0 ? 'arrow-up' : 'arrow-down', 9) : '') + '</button>').join('') + '</div>';
     let h = '<div class="wk-res" role="table" aria-label="' + esc(T('res.label')) + '">', any = null;
@@ -312,7 +325,7 @@
       if (!col) (sv.environments || []).forEach((env) => {
         const list = mine.filter((x) => x.environment === env.id).sort(cmp);
         h += '<div class="wk-env" role="rowgroup" aria-label="' + esc(sv.name + ' · ' + env.name) + '"><div class="wk-env-head">' + esc(env.name) + '<span class="wk-gsum">' +
-          (list.length ? plural(list.filter(isLive).length, T('bar.process'), T('bar.processes')) : T('res.envEmpty')) + '</span></div>';
+          (list.length ? esc(envSum(list)) : T('res.envEmpty')) + '</span></div>';
         if (list.length) h += head + list.map((x) => {
           if (!any) any = x;
           const sel = ui.selected === x.id;
@@ -396,6 +409,20 @@
       el.textContent = T('res.totals', { cpu: pct(mine.reduce((s, x) => s + (liveVal(x, 'cpu') || 0), 0)), mem: mb(mine.reduce((s, x) => s + (liveVal(x, 'mem') || 0), 0)) });
     });
     const note = pop.querySelector('.wk-res-note'); if (note) note.textContent = T('res.sampled');
+    resort();
+  }
+  /* each sample keeps the order the header promises (Muse m3: "CPU ↓" read 86, 38, 15, 2, 3, 3 after a few samples).
+     Rows move only while the pointer and the focus are outside the table, so a row never slides from under a click */
+  function resort() {
+    const t = pop && pop.querySelector('.wk-res');
+    if (!t || t.matches(':hover') || t.contains(doc.activeElement)) return;
+    const cmp = resCmp();
+    t.querySelectorAll('.wk-env').forEach((env) => {
+      const rows = Array.prototype.slice.call(env.querySelectorAll(':scope > .wk-tr:not(.wk-th)'));
+      if (rows.some((r) => !byId(r.getAttribute('data-work-sel')))) return;   // a row's work has gone: the next repaint has it
+      const want = rows.slice().sort((a, b) => cmp(byId(a.getAttribute('data-work-sel')), byId(b.getAttribute('data-work-sel'))));
+      if (want.some((r, i) => r !== rows[i])) want.forEach((r) => env.appendChild(r));
+    });
   }
   /* the popped-out window stays whole on screen (A7): its head, tabs and footer inside the window, above the status bar,
      whatever the window did since it was placed; measured from its own size, not a fixed handle */

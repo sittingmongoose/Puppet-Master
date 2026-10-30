@@ -93,6 +93,10 @@
   height: 28px;
   flex: 0 0 auto;
 }
+/* Retro's monospace "Activity Detail" is 135 px at 15 px; beside the domain menu, Pin and close it had 119 and
+   ellipsized (Muse m5). Retro gives it the room from its gaps and a half step of size; the buttons keep 28 px */
+body[data-theme^="retro"] .activity-panel-head { gap: 4px; padding-left: 10px; padding-right: 6px; }
+body[data-theme^="retro"] .activity-panel-head > strong { font-size: 13.5px; letter-spacing: -.01em; }
 .activity-head-overflow { display: none; position: relative; }
 .activity-head-overflow > summary {
   display: grid;
