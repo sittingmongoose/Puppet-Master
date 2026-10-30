@@ -60,9 +60,12 @@ try {
     return { ok: i > 0 && r.ids[i - 1] === 'subagents' && r.label === 'Processes' && r.count === '5', note: r.ids.join(',') + ' count ' + r.count };
   });
   await check(2, 'Quiet: nothing runs, so the chat\'s icon is gone and the bar reads No agents and No processes (D4)', async () => {
-    await scenario('quiet');
+    /* the chat repaints on the change's next frame; under a loaded VM that frame came 140-250 ms later, so wait for it */
+    const gone = await ev(() => new Promise((res) => { const t0 = performance.now(); window.PM_WORK.scenario('quiet');
+      const look = () => { const dt = performance.now() - t0; if (!document.querySelector('#pmRoot .activity-item[data-domain="processes"]')) res(Math.round(dt)); else if (dt > 3000) res(null); else setTimeout(look, 10); }; look(); }));
+    await sleep(200);
     const r = await ev(() => { const st = window.PM56_DEMO.getState(); return { icon: !!document.querySelector('#pmRoot .activity-item[data-domain="processes"]'), a: document.querySelector('[data-status-action="agents"]').textContent.trim(), p: document.querySelector('[data-status-action="processes"]').textContent.trim(), open: st.activity.open, dom: st.activity.domain, hover: st.hover }; });
-    return { ok: !r.icon && /No agents/.test(r.a) && /No processes/.test(r.p), note: JSON.stringify(r) };
+    return { ok: !r.icon && /No agents/.test(r.a) && /No processes/.test(r.p), note: JSON.stringify(r) + ' icon gone after ' + gone + ' ms' };
   });
   await check(3, 'The icon stays while its view is open after the last process ends, and goes when it closes (D4)', async () => {
     await scenario('busy'); await sleep(300);
