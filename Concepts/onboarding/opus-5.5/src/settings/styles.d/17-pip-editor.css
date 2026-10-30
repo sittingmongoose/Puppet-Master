@@ -85,7 +85,8 @@ html[data-motion="reduced"] :is(#panel-settings, .pipe-host) :is(.pipe-chip, .pi
 .pipe-pop { position: fixed; inset: 0; display: grid; place-items: center; }
 .pipe-pop-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--background) 62%, transparent); opacity: 0; transition: opacity 160ms ease-out; }
 .pipe-pop-dialog { position: relative; display: flex; flex-direction: column; width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 64px);
-  border: 1px solid var(--border); border-radius: var(--radius-lg, 14px); background: var(--surface-elevated, var(--surface)); box-shadow: 0 24px 60px rgb(0 0 0 / .32);
+  /* the look's raised surface over its own opaque ground, so a translucent Glass surface never shows the page through */
+  border: 1px solid var(--border); border-radius: var(--radius-lg, 14px); background: linear-gradient(var(--surface-elevated, var(--surface)), var(--surface-elevated, var(--surface))), var(--background); box-shadow: 0 24px 60px rgb(0 0 0 / .32);
   opacity: 0; transform: translateY(8px) scale(.985); transition: opacity 160ms ease-out, transform 200ms cubic-bezier(.2, .8, .3, 1); }
 .pipe-pop[data-open="true"] .pipe-pop-scrim { opacity: 1; }
 .pipe-pop[data-open="true"] .pipe-pop-dialog { opacity: 1; transform: none; }
