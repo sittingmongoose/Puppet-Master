@@ -102,7 +102,13 @@
   /* -------------------------------------------------------------------------------------- the status bar */
   const bar = () => doc.getElementById('pm7GlobalStatusBar');
   const group = () => { const b = bar(); return b && b.querySelector('[data-work-group]'); };
-  const words = () => doc.documentElement.getAttribute('data-pm-status-words') === 'on';
+  /* Words that do not fit fall back to Numbers; the hover tag still says them. Tried again when the setting, the look,
+     the window or the counts change, never on a tick, so a bar at the edge cannot flicker between the two */
+  const wantWords = () => doc.documentElement.getAttribute('data-pm-status-words') === 'on';
+  let wordsDontFit = false;
+  const words = () => wantWords() && !wordsDontFit;
+  /* room means nothing in the bar is cut: no group and no item of any group clipped below its content */
+  const squeezed = (b) => Array.prototype.some.call(b.querySelectorAll(':scope > *, :scope > * > *'), (x) => x.offsetParent !== null && x.scrollWidth > x.clientWidth + 1);
   function bySurface(list) {
     const by = {};
     list.forEach((x) => { const n = surfaceName(x.surface); by[n] = (by[n] || 0) + 1; });
@@ -131,14 +137,20 @@
       (!A && c.scheduled ? ' ' + T('bar.scheduled', { n: c.scheduled }) : '') + ' ' + T('bar.click'));
     b.setAttribute('aria-label', T(A ? 'bar.ariaAgents' : 'bar.ariaProcesses', { n: n, ask: ask ? ', ' + askWords : '' }));
   }
-  function paintBar() {
+  function paintBar(why) {
     const g = group(), w = W();
     if (!g) return;
     if (!w) { g.hidden = true; return; }
     g.hidden = false;
     const c = counts(), feed = w.feed ? w.feed() : { state: 'current' };
-    paintItem(g.querySelector('[data-status-action="agents"]'), 'agents', c.agents, c.questions, c);
-    paintItem(g.querySelector('[data-status-action="processes"]'), 'processes', c.processes, c.needsInput, c);
+    const paint = () => {
+      paintItem(g.querySelector('[data-status-action="agents"]'), 'agents', c.agents, c.questions, c);
+      paintItem(g.querySelector('[data-status-action="processes"]'), 'processes', c.processes, c.needsInput, c);
+      g.setAttribute('data-work-words', words() ? 'on' : 'off');
+    };
+    if (why !== 'tick') wordsDontFit = false;
+    paint();
+    if (words() && squeezed(bar())) { wordsDontFit = true; paint(); }
     const stale = g.querySelector('[data-work-stale]');
     if (stale) {
       const on = feed.state === 'stale';
@@ -584,16 +596,21 @@
     d.className = 'wk-dialog-scrim';
     d.innerHTML = '<div class="wk-dialog" id="pm7-work-dialog" role="alertdialog" aria-modal="true" aria-labelledby="wk-dialog-title" aria-describedby="wk-dialog-lead"><h2 id="wk-dialog-title">' + esc(o.title) + '</h2><p id="wk-dialog-lead">' + esc(o.lead) + '</p>' +
       (o.choice ? '<div class="wk-seg wk-choice" role="radiogroup" aria-label="' + esc(o.title) + '">' + o.choice.map((c, i) => '<button type="button" role="radio" aria-checked="' + (i === 0) + '" data-choice="' + c[0] + '">' + esc(c[1]) + '</button>').join('') + '</div>' : '') +
-      (o.items.length ? '<ul class="wk-dialog-list">' + o.items.map((it) => '<li><label><input type="checkbox" checked data-id="' + esc(it.id) + '" data-kind="' + esc(it.kind) + '">' + st(it.state, 11) + '<b>' + esc(it.title) + '</b><span>' + esc(it.where || '') + (it.command ? ' · ' + esc(it.command) : '') + '</span></label></li>').join('') + '</ul>' : '') +
+      (o.items.length ? '<ul class="wk-dialog-list">' + o.items.map((it) => '<li><label><input type="checkbox" checked data-pm-hover-exempt="true" data-id="' + esc(it.id) + '" data-kind="' + esc(it.kind) + '">' + st(it.state, 11) + '<b>' + esc(it.title) + '</b><span>' + esc(it.where || '') + (it.command ? ' · ' + esc(it.command) : '') + '</span></label></li>').join('') + '</ul>' : '') +
       (o.note ? '<p class="wk-dim">' + esc(o.note) + '</p>' : '') +
-      '<div class="wk-dialog-actions"><button type="button" class="wk-btn" data-x="cancel">' + T('stopDialog.cancel') + '</button><button type="button" class="wk-btn danger" data-x="go"></button></div></div>';
+      '<div class="wk-dialog-actions"><button type="button" class="wk-btn" data-x="cancel">' + T('stopDialog.cancel') + '</button><button type="button" class="wk-btn danger" data-x="go" data-pm-hover-exempt="true"></button></div></div>';
     root().appendChild(d);
     const go = d.querySelector('[data-x="go"]');
     const mode = () => { const c = d.querySelector('[data-choice][aria-checked="true"]'); return c ? c.getAttribute('data-choice') : 'all'; };
+    /* what a box means comes from the choice, never from its disabled state: the toggled controls are exempt from the hover
+       tags' disabled bridge (pm-hover-tags-js bridgeDisabled), which would otherwise re-enable a box and keep blocking it */
+    const off = (m, b) => m === 'keep_running' || (m === 'procs' && b.getAttribute('data-kind') === 'agent');
+    const boxes = () => Array.prototype.slice.call(d.querySelectorAll('input[type=checkbox]'));
+    const chosen = (m) => boxes().filter((b) => b.checked && !off(m, b));
     function count() {
-      const m = mode(), boxes = Array.prototype.slice.call(d.querySelectorAll('input[type=checkbox]'));
-      boxes.forEach((b) => { const off = m === 'keep_running' || (m === 'procs' && b.getAttribute('data-kind') === 'agent'); b.disabled = off; b.closest('li').classList.toggle('is-off', off); });
-      const n = boxes.filter((b) => b.checked && !b.disabled).length;
+      const m = mode();
+      boxes().forEach((b) => { b.disabled = off(m, b); b.closest('li').classList.toggle('is-off', off(m, b)); });
+      const n = chosen(m).length;
       go.textContent = o.goLabel(n, m);
       go.disabled = !n && !o.allowZero;
       go.classList.toggle('danger', !!n);
@@ -605,7 +622,7 @@
       if (c) { d.querySelectorAll('[data-choice]').forEach((b) => b.setAttribute('aria-checked', String(b === c))); count(); return; }
       const x = e.target.closest('[data-x]');
       if (!x && e.target !== d) return;
-      if (x && x.getAttribute('data-x') === 'go') o.onGo(Array.prototype.slice.call(d.querySelectorAll('input[type=checkbox]')).filter((b) => b.checked && !b.disabled).map((b) => b.getAttribute('data-id')), mode());
+      if (x && x.getAttribute('data-x') === 'go') o.onGo(chosen(mode()).map((b) => b.getAttribute('data-id')), mode());
       shut();
     });
     d.addEventListener('keydown', (e) => {
@@ -670,7 +687,7 @@
 
   /* --------------------------------------------------------------------------------------- staying current */
   function onChange(why) {
-    paintBar();
+    paintBar(why);
     notices();
     if (!ui.open || !pop) return;
     if (why === 'tick') {
@@ -688,8 +705,12 @@
     const w = W(); if (!w) return;
     w.items().forEach((it) => { seen[it.id] = isDone(it) ? 'done' : 'live'; });
     w.on('change', onChange);
-    new MutationObserver(paintBar).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-pm-status-words'] });
-    window.addEventListener('resize', () => { if (ui.open && !ui.floating) place(); });
+    /* the setting and the look repaint before the frame; a window resize or a late font refits on the next frame */
+    new MutationObserver(() => paintBar('look')).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-pm-status-words', 'data-theme', 'data-o55-nier', 'data-o55-nier-parts'] });
+    let fitFrame = 0;
+    const refit = () => { if (!fitFrame && wantWords()) fitFrame = requestAnimationFrame(() => { fitFrame = 0; paintBar('fit'); }); };
+    window.addEventListener('resize', () => { refit(); if (ui.open && !ui.floating) place(); });
+    if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', refit);
     paintBar();
   }
   window.PM7_WORK_UI = { open, close, toggle, isOpen: () => ui.open, tab: () => ui.tab, detail, tail, confirmThread, confirmPlatform, quit, paintBar, ui };

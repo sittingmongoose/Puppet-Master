@@ -139,11 +139,17 @@ try {
     const a = await barText('agents'), p = await barText('processes');
     return { ok: r.prev && r.next && !r.hidden && a === '162' && p === '101', note: JSON.stringify(r) + ' ' + a + ' / ' + p };
   });
-  await check(14, 'Words: 16 agents · 2 questions and 10 processes · 1 needs input (general.interaction.status-bar-words)', async () => {
+  await check(14, 'Words: 16 agents · 2 questions and 10 processes · 1 needs input (general.interaction.status-bar-words); Numbers where they do not fit, never overlapping', async () => {
     await ev(() => document.documentElement.setAttribute('data-pm-status-words', 'on')); await sleep(300);
     const a = await barText('agents'), p = await barText('processes');
+    const fit = await ev(() => {
+      const g = document.querySelector('[data-work-group]'), bar = g.parentElement, next = g.nextElementSibling;
+      const last = g.querySelector('[data-status-action="processes"]').getBoundingClientRect().right, start = next.getBoundingClientRect().left;
+      return { words: g.getAttribute('data-work-words'), overlap: Math.round(last - start), squeezed: [...bar.querySelectorAll(':scope > *, :scope > * > *')].filter((x) => x.offsetParent !== null && x.scrollWidth > x.clientWidth + 1).length };
+    });
     await ev(() => document.documentElement.setAttribute('data-pm-status-words', 'off'));
-    return { ok: a === '16 agents2 questions' && p === '10 processes1 needs input', note: a + ' / ' + p };
+    const said = fit.words === 'on' ? a === '16 agents2 questions' && p === '10 processes1 needs input' : a === '162' && p === '101';
+    return { ok: said && fit.overlap <= 0 && (fit.words === 'off' || fit.squeezed === 0), note: a + ' / ' + p + ' ' + JSON.stringify(fit) };
   });
   await check(15, 'Hover tags say where the agents run and how many wait on you', async () => {
     const t = await ev(() => document.querySelector('[data-status-action="agents"]').getAttribute('data-pm-hover-detail'));
@@ -212,18 +218,19 @@ try {
     const h = await ev(() => { const r = document.querySelector('#pm7-work .wk-head strong').getBoundingClientRect(); return { x: r.left + 10, y: r.top + r.height / 2 }; });
     await page.mouse.move(h.x, h.y); await page.mouse.down(); await page.mouse.move(h.x + 120, h.y + 40, { steps: 6 }); await page.mouse.up(); await sleep(200);
     const f1 = await ev(() => document.getElementById('pm7-work').offsetLeft);
-    await clickAt('#pm7-work [data-work-p="stopall"]'); await sleep(300);
-    const sa = await ev(() => { const d = document.querySelector('.wk-dialog'); const before = d.querySelectorAll('input:not(:disabled)').length; return { before, choices: [...d.querySelectorAll('[data-choice]')].map((b) => b.textContent) }; });
+    /* the waits outlast the hover tags' batched scan, whose disabled bridge once re-enabled boxes the choice had turned off */
+    await clickAt('#pm7-work [data-work-p="stopall"]'); await sleep(1500);
+    const sa = await ev(() => { const d = document.querySelector('.wk-dialog'); const before = d.querySelectorAll('input:not(:disabled)').length; return { before, agentsOn: d.querySelectorAll('input[data-kind="agent"]:not(:disabled), [data-pm-hover-was-disabled]').length, choices: [...d.querySelectorAll('[data-choice]')].map((b) => b.textContent) }; });
     await clickAt('.wk-dialog [data-choice="all"]'); await sleep(150);
     const sa2 = await ev(() => document.querySelectorAll('.wk-dialog input:not(:disabled)').length);
     await clickAt('.wk-dialog [data-x="cancel"]'); await sleep(200);
     await clickAt('#pm7-work [data-work-p="float"]'); await ev(() => window.PM7_WORK_UI.close());
-    await ev(() => window.PM7_WORK_UI.quit()); await sleep(300);
-    const q = await ev(() => { const all = document.querySelectorAll('.wk-dialog'), d = all[all.length - 1]; return { dialogs: all.length, go: d.querySelector('[data-x="go"]').textContent, enabled: d.querySelectorAll('input:not(:disabled)').length, checked: d.querySelector('[data-choice][aria-checked="true"]').getAttribute('data-choice') }; });
+    await ev(() => window.PM7_WORK_UI.quit()); await sleep(1500);
+    const q = await ev(() => { const all = document.querySelectorAll('.wk-dialog'), d = all[all.length - 1]; return { dialogs: all.length, go: d.querySelector('[data-x="go"]').textContent, enabled: d.querySelectorAll('input:not(:disabled), [data-pm-hover-was-disabled]').length, which: [...d.querySelectorAll('input:not(:disabled)')].map((i) => i.getAttribute('data-id') + ':' + i.getAttribute('data-kind')), checked: d.querySelector('[data-choice][aria-checked="true"]').getAttribute('data-choice') }; });
     await clickAt('.wk-dialog [data-choice="stop_selected"]'); await sleep(150);
     const q2 = await ev(() => document.querySelector('.wk-dialog [data-x="go"]').textContent);
     await clickAt('.wk-dialog [data-x="cancel"]');
-    return { ok: f0.floating && f1 > f0.x + 60 && sa.choices.length === 2 && sa2 > sa.before && q.checked === 'keep_running' && q.go === 'Quit' && q.enabled === 0 && /^Quit and stop \d+$/.test(q2),
+    return { ok: f0.floating && f1 > f0.x + 60 && sa.choices.length === 2 && sa.agentsOn === 0 && sa2 > sa.before && q.checked === 'keep_running' && q.go === 'Quit' && q.enabled === 0 && /^Quit and stop \d+$/.test(q2),
       note: JSON.stringify({ moved: f1 - f0.x, stopList: [sa.before, sa2], quit: q, quitStop: q2 }) };
   });
 } finally {

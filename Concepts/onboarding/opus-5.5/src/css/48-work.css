@@ -39,6 +39,8 @@ html[data-o55-nier="on"] .wk-g::before { display: none; }
    waits on you is the waiting mark and its number in the attention ink. No CPU or RAM item (G4). */
 .pm7-work-group[hidden], .pm7-work-stale[hidden] { display: none !important; }
 .pm7-work-item { gap: 5px; flex: none; }
+/* the group keeps its numbers whole in a crowded bar; the shell's own groups clip theirs, and Words fall back to Numbers */
+#pm7GlobalStatusBar .pm7-work-group { flex-shrink: 0; }
 .pm7-work-item .wk-dim { color: var(--text-muted); font-weight: 600; }
 .wk-sb-ask { display: inline-flex; align-items: center; gap: 4px; margin-left: 4px; color: var(--pmg-ink-attention, var(--accent-orange)); }
 .wk-sb-ask strong { color: inherit; }
@@ -49,6 +51,8 @@ html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-work-item::before
   font: 600 8.5px/12px var(--mono-font); letter-spacing: .14em; }
 html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-work-item[data-status-action="agents"]::before { content: "AGT"; }
 html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-work-item[data-status-action="processes"]::before { content: "PRC"; }
+/* Words say agents and processes already, so the readout labels give their room to the words */
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-work-group[data-work-words="on"] .pm7-work-item::before { content: none; }
 html[data-o55-nier="on"] .pm7-work-item .wk-g > svg { color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pm7-work-item.is-open { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pm7-work-item.is-open :is(strong, .wk-g > svg, .wk-sb-ask) { color: var(--o55-nier-on-ink); }
