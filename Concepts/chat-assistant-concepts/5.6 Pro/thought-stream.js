@@ -362,7 +362,7 @@
          elapsed time), so the loader sits in a slot the reconcile leaves to it (data-pm-keep); pip.js fills the slot and
          hands it over to the Orbit's Pip while the reply's work runs (one Pip per reply) */
       var slot = window.PM56_PIP && window.PM56_PIP.thinkingPip ? '<span class="tx-pending-pip tt-pending-pip" data-pm-keep aria-hidden="true"></span>' : '';
-      return '<span class="tt-label tt-label-live" data-k="tt-label:live:' + esc(T.id) + '"><span class="tx-pending tt-pending">' + slot + '<b>' + esc(model) + '</b>' +
+      return '<span class="tt-label tt-label-live" data-k="tt-label:live:' + esc(T.id) + '"><span class="tx-pending tt-pending" aria-busy="true">' + slot + '<b>' + esc(model) + '</b>' +
         '<span class="tx-pending-verb">is thinking</span><em class="tx-pending-t" data-tt-elapsed>' + esc(L ? elapsed(L) : '') + '</em></span></span>';
     }
     var head = th.state === 'ended' ? 'Thinking ended after ' + th.secs + 's' : 'Thought for ' + th.secs + 's';

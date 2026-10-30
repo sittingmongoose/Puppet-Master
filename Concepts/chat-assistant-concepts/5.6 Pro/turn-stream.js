@@ -219,7 +219,7 @@
     var el = st.flow && st.flow.querySelector('.tx-pending');
     if (on && !el && st.flow) {
       var c = C(), mdl = c.selectedModel ? c.selectedModel() : null;
-      el = document.createElement('span'); el.className = 'tx-pending';
+      el = document.createElement('span'); el.className = 'tx-pending'; el.setAttribute('aria-busy', 'true');
       /* W4/W5 (PM7 build): the thinking placeholder leads with the system loader's Think motion (L5); while the reply's
          work runs, Pip in the Orbit's centre takes over and this one steps aside (pip.js: one Pip per reply) */
       var pip = window.PM56_PIP && window.PM56_PIP.thinkingPip ? window.PM56_PIP.thinkingPip() : '';
