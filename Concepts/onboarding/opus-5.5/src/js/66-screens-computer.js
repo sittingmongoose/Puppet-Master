@@ -29,7 +29,7 @@
     const here = S.env.here, ck = S.sess.ui.check || { done: [] };
     const chip = (key, label) => {
       const done = (ck.done || []).includes(key);
-      return `<span class="o55-chip${done ? ' o55-chip-ok' : ''}" data-key="chip-${key}">${done ? C.done(13) : C.loader(14)}<span>${U.esc(done ? label : T('where.check.checking'))}</span></span>`;
+      return `<span class="o55-chip${done ? ' o55-chip-ok' : ''}" data-key="chip-${key}"${done ? '' : ' aria-busy="true"'}>${done ? C.done(13) : C.loader(14)}<span>${U.esc(done ? label : T('where.check.checking'))}</span></span>`;
     };
     return `<div class="o55-chiprow" data-key="check" role="status" aria-label="${U.esc(T('where.check.label'))}">`
       + chip('space', T('where.check.space', { gb: here.freeGB }))
