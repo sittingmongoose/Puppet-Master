@@ -353,8 +353,8 @@
     const walls = WP.avail() ? block(T('studio.looks.walls.title'), `<div class="pmds-wps" role="radiogroup" aria-label="${esc(T('studio.looks.walls.title'))}">${wcell('look', T('studio.looks.walls.own'))}</div>`
       + WP.families().map((f) => `<h5 class="pmds-gtitle"><span>${esc(f.label)}</span><span class="pmds-count">${f.items.length}</span></h5><div class="pmds-wps" role="radiogroup" aria-label="${esc(f.label)}">${f.items.map((w) => wcell(w.id, w.name)).join('')}</div>`).join(''), { lead: T('studio.looks.walls.lead') }) : '';
     return head('looks') + block('', grid + mode) + walls + lg
-      + block('', sw({ id: 'nier', icon: 'pod', title: T('studio.looks.nier'), sub: T('studio.looks.nierSub'), on: L.nierOn(), do: 'nier', off: !L.nierAvail() })
-        + (L.nierOn() ? `<div class="pmds-rowacts pmds-indent">${btn(T('studio.looks.nierAdjust'), { do: 'nier-adjust', icon: 'studio' })}</div>` : '')
+      /* NieR is picked in the grid above like every look (Q22); while it is the look, its Adjust options are here */
+      + block('', (L.nierOn() ? `<div class="pmds-rowacts">${btn(T('studio.looks.nierAdjust'), { do: 'nier-adjust', icon: 'studio' })}</div>` : '')
         + pipPartsRow()
         + sw({ id: 'reduced', icon: 'motion', title: T('studio.looks.reduced'), sub: T('studio.looks.reducedSub'), on: L.reduced(), do: 'reduced', off: !L.reducedAvail() })
         + sw({ id: 'sound', icon: 'sound', title: T('studio.looks.sound'), sub: T('studio.looks.soundSub'), on: L.soundAvail() && L.sound(), do: 'sound', off: !L.soundAvail() }));
@@ -501,7 +501,7 @@
     add('usage', T('studio.usage.gallery'), T('studio.usage.gallerySub'), ['usage-gallery'], 'gallery');
     M.notices.ids.forEach((id) => add('notices', T(`studio.notices.${id}.title`), T(`studio.notices.${id}.sub`), ['notice', id], NOTICE_ICON[id]));
     M.looks.ids.forEach((f) => ['light', 'dark'].forEach((m) => add('looks', `${T(`studio.looks.families.${f}`)} ${T(`studio.looks.${m}`)}`, T('studio.looks.title'), ['look', `${f}:${m}`], m === 'light' ? 'sun' : 'moon')));
-    add('looks', T('studio.looks.nier'), T('studio.looks.nierSub'), ['nier'], 'pod');
+    add('looks', T('studio.looks.nierAdjust'), T('studio.looks.nierSub'), ['nier-adjust'], 'pod');
     ['full', 'quiet', 'still', 'plain'].forEach((v) => add('looks', `${T('studio.looks.pip.title')}: ${T(`studio.looks.pip.presets.${v}`)}`, T('studio.looks.pip.preset'), ['pip-preset', v], 'pip'));
     add('looks', T('studio.looks.pip.adjust'), T('studio.looks.pip.title'), ['pip-adjust'], 'pip');
     add('looks', T('studio.looks.reduced'), T('studio.looks.reducedSub'), ['reduced'], 'motion');
@@ -967,7 +967,8 @@
     'lg-tier': (arg) => { M.looks.lg.setTier(arg); real.setTimeout(refresh, 80); },
     'lg-wall': (arg) => { M.looks.lg.setWall(arg); real.setTimeout(refresh, 80); },
     'look-mode': (arg) => { M.looks.mode(arg); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
-    nier: () => { M.looks.setNier(!M.looks.nierOn()); real.setTimeout(() => { syncLook(); refresh(); }, 120); },
+    /* (an older key: NieR is a look of the grid now) */
+    nier: () => { M.looks.set(M.looks.nierOn() ? 'basic' : 'nier'); real.setTimeout(() => { syncLook(); refresh(); }, 120); },
     'nier-adjust': (arg, el) => { M.looks.adjust(el); },
     'pip-preset': (arg) => { if (!M.looks.pip.avail()) return say(T('studio.toast.unavailable')); M.looks.pip.apply(arg); real.setTimeout(refresh, 80); },
     'pip-adjust': (arg, el) => { if (!M.looks.pip.editorAvail()) return say(T('studio.toast.unavailable')); M.looks.pip.edit(el); },

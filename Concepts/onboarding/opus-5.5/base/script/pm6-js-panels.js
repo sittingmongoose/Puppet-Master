@@ -519,7 +519,9 @@
       ev.preventDefault();
       var familyValue = row.getAttribute('data-family');   /* O55: the row answers first (B4) */
       menu.querySelectorAll('.pm6-tt-family').forEach(function (r) { var on = r === row; r.classList.toggle('is-selected', on); r.setAttribute('aria-checked', on ? 'true' : 'false'); });
-      if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue); }, { family: familyValue });
+      /* O55 Q22: a switch into or out of NieR plays NieR's own transition (settings kit.d/18-nier.js), so it is not covered twice */
+      var nierSide = familyValue === 'nier' || document.documentElement.getAttribute('data-o55-nier') === 'on';
+      if (window.PM_THEME_TRANSITION && !nierSide) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue); }, { family: familyValue });
       else window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue);
       tbMenuClose(menu);
       btn.setAttribute('aria-expanded', 'false');
