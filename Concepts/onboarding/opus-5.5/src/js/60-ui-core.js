@@ -923,6 +923,21 @@
   /* A caller that opens the window and drives it in the same turn (go, back, refresh: the demo bar, the film and
      scenario tools) gets the window built first; close before the build cancels the open. */
   function flushOpen() { const m = pendingMount; if (m) { pendingMount = null; m(); } }
+  /* Opened straight at a screen that follows the commit (Demo Studio's "open at one screen", the shot tools), the run is
+     given what the earlier screens would have left: a Project made, as a done fixture commit for the name typed or a
+     suggested one, published to the title bar as Creating publishes it, so the owners there (AI's detection, sign-in,
+     key checks; Protect; Ready's summary) answer as in a full run. open({ screen, committed: false }) opts out. */
+  const POSTCOMMIT = new Set(['ai', 'ai-all', 'ai-none', 'free', 'protect', 'ready']);
+  function seedCommit() {
+    const d = S.sess.drafts.main, sug = O55.tx('name.suggest');
+    const name = String(d.project_name || '').trim() || (Array.isArray(sug) && sug[0]) || 'Book club website';
+    O55.draft.set(d, { project_name: name, project_mode: d.project_mode && d.project_mode !== 'later' ? d.project_mode : 'new', review_confirmed: true });
+    const id = 'p-' + U.slug(name).slice(0, 24) + '-' + Date.now().toString(36);
+    S.sess.commit = { state: 'done', key: 'commit:' + d.project_draft_ref + ':r' + d.project_draft_revision, attempt: 1, revision: d.project_draft_revision,
+      projectId: id, publishedVia: 'fixture', receipts: { project: 'fixture:project:' + id }, doneAt: Date.now(), seeded: true };
+    if (S.sess.screen === 'protect' && !S.sess.backup.dest) S.sess.backup.dest = 'gdrive';
+    if (O55.shell && O55.shell.selectProject) try { O55.shell.selectProject(id, name); } catch (_) {}
+  }
   function open(opts) {
     opts = opts || {};
     /* The scrim dims on the click, and the window is mounted on the next frame. Building it in the click's own
@@ -978,6 +993,7 @@
     S.sess.status = 'active';
     if (opts.screen && SCREENS.defs[opts.screen]) S.sess.screen = opts.screen;
     if (!SCREENS.defs[S.sess.screen]) S.sess.screen = 'welcome';
+    if (opts.screen && opts.committed !== false && POSTCOMMIT.has(S.sess.screen) && !S.ctx().committed) seedCommit();
     S.resumedShownOn = S.resumed ? S.sess.screen : null;
     returnFocus = opts.returnFocus || document.activeElement;
     S.open = true; S.save();

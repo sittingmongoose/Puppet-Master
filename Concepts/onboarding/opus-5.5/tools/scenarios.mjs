@@ -545,6 +545,27 @@ def('pr11', 'fresh', "Demo Studio's calls: O55.ui.fill types with Pip's wonder, 
   b = await bridged(d);
   A.ok(!b.bridged && !b.native && !b.unexempt, (await d.screen()) + ': none either (' + JSON.stringify(b) + ')');
 });
+def('pr12', 'antigravityOnce', 'Opened at a post-commit screen, the run has its Project: AI detects and signs in, Ready sums it up (Demo Studio)', async (d, A) => {
+  const refused = () => d.state(() => window.O55.owners.log.filter((e) => !e.ok && e.reason === 'needs_committed_project').length);
+  for (const scr of ['ai', 'ai-all', 'ai-none', 'free', 'protect', 'ready']) {
+    await d.page.evaluate((s) => { if (window.O55.ui.S.open) window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: s }); }, scr);
+    await d.until(() => !!(window.O55.S.open && document.querySelector('#pm-o55-onboarding .o55-layer[data-screen]')), { what: 'open at ' + scr }); await d.settle();
+    A.eq(await d.screen(), scr, 'opened at ' + scr);
+    A.ok(await d.state(() => window.O55.S.sess.commit.state === 'done'), scr + ': a Project made');
+  }
+  await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 'ai' }); }); await d.settle();
+  await until(d, "(window.O55.S.sess.ops['detect:this computer']||{}).state === 'done'", 'detection', 9000); A.ok(true, 'AI: detection ran');
+  await d.act('install', 'antigravity'); await d.act('installGo', 'antigravity');
+  await until(d, "(window.O55.S.sess.ai.accounts.antigravity||{}).state === 'signin'", 'installed', 9000);
+  A.ok(await d.state(() => window.O55.ui.act('signin', 'antigravity')), 'act: Sign in');
+  await until(d, "(window.O55.S.sess.ai.accounts.antigravity||{}).state === 'signinFailed'", 'the sign-in fails once', 9000); await sleep(600);
+  A.ok((await pip(d)).mood === 'oops', 'Pip: oops');
+  A.eq(await refused(), 0, 'no command refused for want of a Project');
+  await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 'ready' }); }); await d.settle();
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-key="sum-project"]')), 'Ready: the Project in its summary');
+  await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 'ready', committed: false }); }); await d.settle();
+  A.ok(await d.state(() => window.O55.S.sess.commit.state !== 'done'), 'committed: false opts out');
+});
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();

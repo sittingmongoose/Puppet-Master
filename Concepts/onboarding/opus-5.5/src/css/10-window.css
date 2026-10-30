@@ -109,6 +109,12 @@ html:not([data-o55-nier="on"]) :is(#pm-o55-onboarding > .o55-win, .o55t-root > *
    is restyled by the main thread every frame) */
 #pm-o55-onboarding[data-family="retro"] .o55-railitem[data-state="current"] .o55-railnode { box-shadow: none; background: transparent; position: relative; }
 #pm-o55-onboarding[data-family="retro"] .o55-railitem[data-state="current"] .o55-railnode::after { content: ''; position: absolute; inset: 0; background: var(--o55-accent); animation: o55-pixblink 1s steps(1, end) infinite; }
+/* (the current chapter sits in the switchers' reverse-video chip, Liquid Glass's lens on the rail: its word and its
+   blinking square take the chip's ink, as the look's other switchers do; the screen's ink on the lime chip read
+   1.6:1 in Dark and 2.5:1 in Light) */
+html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-raillabel { color: var(--pm-switch-ink-on); }
+html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-railnode { border-color: var(--pm-switch-mark-on); }
+html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-railnode::after { background: var(--pm-switch-mark-on); }
 @keyframes o55-pixblink { 50% { opacity: 0; } }
 .o55-headctl { display: flex; align-items: center; gap: 4px; }
 .o55-iconbtn, .o55-sound { display: inline-flex; align-items: center; gap: 6px; height: 34px; min-width: 34px; justify-content: center; padding: 0 10px; border-radius: var(--o55-btn-r); border: 1px solid transparent;
