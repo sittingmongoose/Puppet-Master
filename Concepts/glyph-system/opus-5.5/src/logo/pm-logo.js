@@ -569,6 +569,16 @@
     (f.mouth || []).forEach((r, i) => hole(r, dx, false, i === lift ? -Math.max(1, Math.round(Gs / 16)) : 0));
     return g.map((r) => r.join(''));
   }
+  // lids over a sprite face's eye holes (the same rects spriteRows cuts), in one colour: Reduced Motion's blink
+  function lidRects(Gs, mood, f0, color) {
+    const { dx = 0, eyeDx = 0, dy = 0 } = f0 || {};
+    const S = SPRITES[Gs], f = S.faces[mood === 'wonder' ? 'alert' : mood] || S.faces.idle;
+    let out = '';
+    const add = (r, mirror) => { const x0 = (mirror ? Gs - r[0] - r[2] : r[0]) + dx + eyeDx; out += `<rect x="${x0}" y="${r[1] + dy}" width="${r[2]}" height="${r[3]}" fill="${color}"/>`; };
+    (f.eye || []).forEach((r) => add(r, false));
+    if (f.eyeR) f.eyeR.forEach((r) => add(r, false)); else (f.eye || []).forEach((r) => add(r, true));
+    return out;
+  }
   // the sprite grid for a size: the one that lands on whole pixels at 1x (one look per size at every dpr)
   function spriteGrid(px) {
     if (px >= 64) return 32;
@@ -727,7 +737,13 @@
           : o.motion === 'hop' ? [{}, { dy: -Math.ceil(n / 2) }, { dy: -n - 1 }, { dy: -Math.ceil(n / 2) }]
           : [0, 1, 2, 3, 4, 5, 6, 7].map((i) => { const dx = Math.round(Math.sin(2 * Math.PI * i / 8) * n); return { dx, eyeDx: Math.sign(dx) }; });
         const fm = o.motion === 'think' ? 'dots' : mood;
-        const body = plan.map((f, i) => `<g class="${cls.fr} ${cls.fr}${i}"${i ? ' opacity="0"' : ''}>${pixelRects(spriteRows(Gs, fm, f), colors)}</g>`).join('');
+        let body = plan.map((f, i) => `<g class="${cls.fr} ${cls.fr}${i}"${i ? ' opacity="0"' : ''}>${pixelRects(spriteRows(Gs, fm, f), colors)}</g>`).join('');
+        /* Reduced Motion's rest pose, drawn apart and shown only by the reduced rules (L3, X2): Pip and the strings
+           still, the control on its own so it alone breathes, and lids in the head's colour over the eyes so Pip
+           blinks. A sprite's eyes are holes, so the blink closes them rather than fading them. */
+        const restF = o.motion === 'think' ? {} : plan[0], rest = spriteRows(Gs, fm, restF), lids = lidRects(Gs, fm, restF, colors.h);
+        body += `<g class="${cls.fr}-rest" opacity="0"><g>${pixelRects(rest, Object.assign({}, colors, { c: null, b: null }))}</g>` +
+          `<g class="${cls.fr}-rctl">${pixelRects(rest, { c: colors.c, b: colors.b })}</g>${lids ? `<g class="${cls.fr}-rlid" opacity="0">${lids}</g>` : ''}</g>`;
         return { vb: Gs, defs: '', crisp: true, body, frames: plan.length };
       }
       return { vb: Gs, defs: '', crisp: true, body: pixelRects(spriteRows(Gs, mood), colors) };
@@ -970,9 +986,9 @@
   // reduced motion in a file: no travel; the control breathes in opacity and Pip blinks
   function reducedCss(p, family, px) {
     const d = (MOTION[family] || MOTION.basic).dur;
-    const keys = `@keyframes ${p}-breath{0%,100%{opacity:1}50%{opacity:.42}}@keyframes ${p}-rblink{0%,42%,58%,100%{opacity:1}50%{opacity:.15}}`;
+    const keys = `@keyframes ${p}-breath{0%,100%{opacity:1}50%{opacity:.42}}@keyframes ${p}-rblink{0%,42%,58%,100%{opacity:1}50%{opacity:.15}}@keyframes ${p}-rlid{0%,42%,58%,100%{opacity:0}50%{opacity:.85}}`;
     const rules = (pre) => px
-      ? `${pre}.${p}-fr{animation:none!important;opacity:0}${pre}.${p}-fr0{opacity:1;animation:${p}-breath ${R(d * 1.3)}s ease-in-out infinite!important}`
+      ? `${pre}.${p}-fr{animation:none!important;opacity:0}${pre}.${p}-fr-rest{opacity:1}${pre}.${p}-fr-rctl{animation:${p}-breath ${R(d * 1.3)}s ease-in-out infinite!important}${pre}.${p}-fr-rlid{animation:${p}-rlid ${R(d * 2.6)}s ease-in-out infinite!important}`
       : `${pre}.${p}-ctl{animation:${p}-breath ${R(d * 1.3)}s ease-in-out infinite!important}${pre}.${p}-blink{animation:${p}-rblink ${R(d * 2.6)}s ease-in-out infinite!important}`;
     return { keys, rules };
   }
@@ -1051,7 +1067,7 @@
         if (px) {
           const n = m.frames || 4, d = periodOf(family, o.motion, 'pixel') / 1000;
           css += `.${p}-fr{animation:${p}-flip ${R(d)}s steps(1,end) infinite}@keyframes ${p}-flip{0%{opacity:1}${R(100 / n)}%,100%{opacity:0}}`;
-          for (let i = 0; i < n; i++) css += `.${p}-fr${i}{animation-delay:${R(-d + i * d / n)}s}`;
+          for (let i = 0; i < n; i++) css += `.${p}-fr${i}{animation-delay:${+(-d + i * d / n).toFixed(4)}s}`;
         } else css += fileRigCss(p, o.motion, family, GEO[tier === 'small' ? 'small' : 'full'], o.form === 'tray' ? 'thread' : (o.attach || 'eye'));
         // a file follows the OS setting; inlined in PMConcept7 it follows its switch too
         css += red.keys + `@media (prefers-reduced-motion:reduce){.${p} *{animation:none!important}${red.rules(`.${p} `)}}`;
