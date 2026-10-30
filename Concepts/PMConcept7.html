@@ -79,9 +79,6 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PMConcept7 · Puppet Master</title>
-  <!-- The favicon is the app icon (A1: one fixed Basic Dark tile, static): PMLogo.favicon(32) written out here so the tab
-       has it before any script runs; pm7-brand-mark.js sets it again from the kit, which stays its source. -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20class%3D%22pm1%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2064%2064%22%20role%3D%22img%22%20aria-label%3D%22Puppet%20Master%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22pm1t%22%20gradientUnits%3D%22userSpaceOnUse%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%2264%22%20y2%3D%2264%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232D2D2D%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232D2D2D%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212.5%22%20fill%3D%22url(%23pm1t)%22%2F%3E%3Crect%20x%3D%22.5%22%20y%3D%22.5%22%20width%3D%2263%22%20height%3D%2263%22%20rx%3D%2212.1%22%20fill%3D%22none%22%20stroke%3D%22rgba(255%2C255%2C255%2C.08)%22%20stroke-width%3D%221%22%2F%3E%3Csvg%20x%3D%227.5%22%20y%3D%227%22%20width%3D%2249%22%20height%3D%2249%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cline%20x1%3D%2215.09%22%20y1%3D%2220.66%22%20x2%3D%2219%22%20y2%3D%2232.45%22%20stroke%3D%22%237A8290%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22butt%22%2F%3E%3Cline%20x1%3D%2248.91%22%20y1%3D%2220.66%22%20x2%3D%2245%22%20y2%3D%2232.45%22%20stroke%3D%22%237A8290%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22butt%22%2F%3E%3Cg%20class%3D%22%22%3E%3Cpath%20d%3D%22M23%2030.5H41Q52%2030.5%2052%2041.5V40.92Q52%2045.75%2056.2%2045.75Q52%2045.75%2052%2050.58V50Q52%2061%2041%2061H23Q12%2061%2012%2050V50.58Q12%2045.75%207.8%2045.75Q12%2045.75%2012%2040.92V41.5Q12%2030.5%2023%2030.5Z%22%20fill%3D%22%2364B5F6%22%2F%3E%3Cg%20class%3D%22%22%3E%3Cg%20class%3D%22%22%3E%3Cg%20class%3D%22%22%3E%3Ccircle%20cx%3D%2225%22%20cy%3D%2244.5%22%20r%3D%224.4%22%20fill%3D%22%23121212%22%2F%3E%3Ccircle%20cx%3D%2239%22%20cy%3D%2244.5%22%20r%3D%224.4%22%20fill%3D%22%23121212%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cpath%20d%3D%22M27.5%2053Q32%2056.8%2036.5%2053%22%20fill%3D%22none%22%20stroke%3D%22%23121212%22%20stroke-width%3D%223.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg%20class%3D%22%22%3E%3Cline%20x1%3D%2210.39%22%20y1%3D%226.63%22%20x2%3D%2253.61%22%20y2%3D%2222.37%22%20stroke%3D%22%23E8E8E8%22%20stroke-width%3D%227.5%22%20stroke-linecap%3D%22round%22%2F%3E%3Cline%20x1%3D%2210.39%22%20y1%3D%2222.37%22%20x2%3D%2253.61%22%20y2%3D%226.63%22%20stroke%3D%22%23E8E8E8%22%20stroke-width%3D%227.5%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E%3C%2Fsvg%3E">
   <!-- PM7 SECTION 1/32: theme-boot - applies persisted theme prefs (pm.theme / pm.glassBg / pm.glassAlpha) before first CSS paint (script, no id) -->
   <script>
     /* pm6 boot: apply persisted theme prefs BEFORE first CSS paint (defaults: Basic Dark; Glass always uses Liquid Glass).
@@ -71468,11 +71465,10 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
     </header>
     <script id="pm7-brand-mark">  /* W1 (F3-660, DR-076, DL-235): Pip, Puppet Master's mark, beside the look's wordmark. Drawn here, just after the title
      bar, so the bar's first paint has it (the kit, PMLogo, is a head module). Static, 24 px, the painted look's own Pip
-     (NieR's eyes show through its band: X3 B, Jared 2026-10-30). It never animates, carries no state and takes no click:
-     the notification stack stays the bar's only notification affordance (F3-460). Redrawn only when the look changes.
-     Its 24 px slot is sized in CSS (style-002.css), so drawing it never moves the project box or the tabs. A squeezed
-     bar shows the mark only (pm6-js-panels.js applyDensity). The page's favicon is the app icon (A1: one fixed Basic
-     Dark tile, static). */
+     (NieR keeps the plain band, X3). It never animates, carries no state and takes no click: the notification stack stays
+     the bar's only notification affordance (F3-460). Redrawn only when the look changes. Its 24 px slot is sized in CSS
+     (style-002.css), so drawing it never moves the project box or the tabs. A squeezed bar shows the mark only
+     (pm6-js-panels.js applyDensity). The page's favicon is the app icon (A1: one fixed Basic Dark tile, static). */
   (function () {
     var L = window.PMLogo, host = document.querySelector('.title-bar .app-name .pm-brand-mark');
     if (!L || !host) return;
@@ -71484,11 +71480,12 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
     }
     draw();
     L.onLook(draw);
-    /* the static link in shell.html's head is this same tile written out; the kit stays its source */
     try {
-      var icon = document.querySelector('link[rel~="icon"]'), href = L.favicon(32);
-      if (!icon) { icon = document.createElement('link'); icon.rel = 'icon'; icon.type = 'image/svg+xml'; document.head.appendChild(icon); }
-      if (icon.getAttribute('href') !== href) icon.setAttribute('href', href);
+      if (!document.querySelector('link[rel~="icon"]')) {
+        var icon = document.createElement('link');
+        icon.rel = 'icon'; icon.type = 'image/svg+xml'; icon.href = L.favicon(32);
+        document.head.appendChild(icon);
+      }
     } catch (e) { /* a page without a favicon still works */ }
   })();
 </script>
@@ -125625,8 +125622,8 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
   win.setAttribute('data-pm-hover-exempt', 'true');
   win.setAttribute('aria-label', title);
   const rail = steps.map((s, i) => `<li class="o55g-railitem" data-i="${i}" data-state="next"><span class="o55g-railnode" aria-hidden="true"></span><span class="o55g-raillabel">${h(s.label)}</span></li>`).join('');
-  /* the header's brand is Pip, Puppet Master's static mark (W1, F3-660; NieR's eyes through the band, X3 B), redrawn on
-     a look change while the window is open; the stage's emblem keeps the flow's own icon */
+  /* the header's brand is Pip, Puppet Master's static mark (W1, F3-660; NieR's plain band, X3), redrawn on a look change
+     while the window is open; the stage's emblem keeps the flow's own icon */
   const pip = () => (window.PMLogo ? window.PMLogo.mark({ px: 19, decorative: true }) : icon(ic || 'spark'));
   win.innerHTML = `<header class="o55g-head"><div class="o55g-brand"><span class="o55g-brandicon" aria-hidden="true">${pip()}</span><span class="o55g-brandname">${h(title)}</span></div>`
     + `<nav class="o55g-railwrap" aria-label="Steps">${steps.length > 1 ? `<ol class="o55g-rail">${rail}</ol>` : ''}</nav>`
@@ -156222,12 +156219,7 @@ policies for tenant isolation, and add migration script.</textarea>
   function tbCloseAllMenus(except) {
     document.querySelectorAll('.pm6-tb-menu').forEach(function (m) {
       if (except && m === except) return;
-      if (tbMenuIsOpen(m)) {
-        tbMenuClose(m);
-        /* the project menu's close is a declared local action on every path (outside click, page Esc, another menu
-           opening), not only its own keys and picks (Muse review m2) */
-        if (m.id === 'projectMenu') projectNote('ui', 'ui.project_switcher.close');
-      }
+      if (tbMenuIsOpen(m)) tbMenuClose(m);
       var wrap = m.closest('.pm6-tb-menu-wrap');
       var btn = wrap && wrap.querySelector('.pm6-tb-menu-trigger');
       if (btn && btn.getAttribute('aria-expanded') !== 'false') btn.setAttribute('aria-expanded', 'false');   /* O55: only a change (T8) */
@@ -156379,14 +156371,11 @@ policies for tenant isolation, and add migration script.</textarea>
   /* the one row renderer: a monogram tile, the name, the path and branch, and the state in words beside its mark */
   function renderProjectRow(item) {
     var info = projectInfo(item), st = projectState(info.id), where = projectWhere(info, false), G = window.PMG;
-    var cur = item.classList.contains('is-selected');
-    var word = st.key ? PROJECT_STATES[st.key].word : '', sig = [info.name, where, st.key, !!G, cur].join('|');
+    var word = st.key ? PROJECT_STATES[st.key].word : '', sig = [info.name, where, st.key, !!G].join('|');
     if (item.__pmProjectRow === sig) return item;
     item.__pmProjectRow = sig;
-    /* the chosen row tells assistive tech it is the current project (Muse review m1), not only by its material */
-    if (cur) item.setAttribute('aria-current', 'true'); else item.removeAttribute('aria-current');
     item.setAttribute('data-state', st.key || 'idle');
-    item.setAttribute('aria-label', info.name + (cur ? ', current project' : '') + (where ? ', ' + projectWhere(info, true) : '') + (word ? ', ' + word : ''));
+    item.setAttribute('aria-label', info.name + (where ? ', ' + projectWhere(info, true) : '') + (word ? ', ' + word : ''));
     item.innerHTML = '<span class="pm6-tb-project-tile" aria-hidden="true">' + projectEsc(projectMonogram(info.name)) + '</span>' +
       '<span class="pm6-tb-project-text"><b class="pm6-tb-project-name">' + projectEsc(info.name) + '</b>' +
       (where ? '<small class="pm6-tb-project-path">' + projectEsc(where) + '</small>' : '') + '</span>' +
@@ -156447,7 +156436,7 @@ policies for tenant isolation, and add migration script.</textarea>
        row (pm4-settings-js.js projectRecord): a pick keeps it in step, before the label changes, so the reload they run on
        that change reads the picked project (Astra W2 review, integration note) */
     if (typeof window.PM_ACTIVE_PROJECT_ID === 'string' && window.PM_ACTIVE_PROJECT_ID !== info.id) window.PM_ACTIVE_PROJECT_ID = info.id;
-    projectRows().forEach(function (el) { if (el.classList.contains('is-selected') !== (el === item)) { el.classList.toggle('is-selected', el === item); renderProjectRow(el); } });
+    projectRows().forEach(function (el) { if (el.classList.contains('is-selected') !== (el === item)) el.classList.toggle('is-selected', el === item); });
     if (label && label.textContent !== info.name) label.textContent = info.name;
     paintProjectButton();
     return true;
@@ -156525,11 +156514,6 @@ policies for tenant isolation, and add migration script.</textarea>
         ev.preventDefault();
         pickProject(row, true, true);
       } else if (ev.key === 'Escape') {
-        projectMenuClose(true);
-      } else if (ev.key === 'Tab') {
-        /* Tab and Shift+Tab close the menu and hand focus back to the box, as the theme menu does; walking out of an
-           open menu left it open with focus on the page tabs (Muse review M1) */
-        ev.preventDefault();
         projectMenuClose(true);
       }
     });
@@ -257385,10 +257369,11 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     }
     return head + '<g class="' + PIP_CLS.face + '">' + K.faceShapes(g, mood, '@eye', { cls: PIP_CLS, shine: detail && shine }) + '</g>';
   }
-  /* ---- NieR Pip (O8): the kit's YoRHa unit in ink and paper; a still mark keeps the plain band (X3) */
-  function pipNierMark(K, th, prop, mood, detail, bust, kettle, eyes, look2) {
+  /* ---- NieR Pip (O8): the kit's YoRHa unit in ink and paper; its eyes show through the band on every mark, still or
+     live (X3 B) */
+  function pipNierMark(K, th, prop, mood, detail, bust, kettle, look2) {
     var g = K.GEO[detail ? 'full' : 'small'];
-    var r = K.pipNier(g, th, mood === 'dots' ? 'think' : mood, PIP_CLS, { face: 'x' }, { parts: true, eyes: !!eyes });
+    var r = K.pipNier(g, th, mood === 'dots' ? 'think' : mood, PIP_CLS, { face: 'x' }, { parts: true, eyes: true });
     var pr = pipProp(K, prop, g, 'nier', detail), kt = kettle ? pipProp(K, 'grill', g, 'nier', detail) : { back: '', front: '' };
     var head = '<g class="' + PIP_CLS.pup + '">' + r.headInner + '</g>';
     if (bust || (look2 && !look2.strings)) return pr.back + head + pr.front + kt.front;
@@ -257437,8 +257422,9 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     return K.pixelRects(rows.map(function (r) { return r.join(''); }), look2.seat ? PIP_PX_COL : PIP_PX_COL_PLAIN);
   }
   /* pipInner(prop, mood, size, o) - Pip on the 28 grid (the inside of a mark's svg). size: the mark's px (none = a
-     plate seat, the richest detail). o.kettle: the lead behind the kettle grill (DL-218); o.eyes: a live NieR Pip's
-     eyes through its band (X3). Memoized by everything that changes the markup. */
+     plate seat, the richest detail). o.kettle: the lead behind the kettle grill (DL-218). A NieR Pip shows its eyes
+     through the band at every size, still or live (X3 B, Jared 2026-10-30). Memoized by everything that changes the
+     markup. */
   function pipInner(prop, mood, size, o) {
     var P = pipKit(); if (!P) return '';
     o = o || {};
@@ -257447,7 +257433,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     if (mood === 'working') mood = 'dots';
     pipPartsNow();
     if (!pipOn('role-props')) { prop = null; kettle = false; }
-    var key = look + '|' + prop + '|' + mood + '|' + (bust ? 'b' : detail ? 'f' : 's') + (kettle ? 'k' : '') + (o.eyes ? 'e' : '') + '|' + pipPartsSig;
+    var key = look + '|' + prop + '|' + mood + '|' + (bust ? 'b' : detail ? 'f' : 's') + (kettle ? 'k' : '') + '|' + pipPartsSig;
     var v = pipMemo[key];
     if (v) return v;
     var K = P.kit, fam = P.family(look), scheme = P.scheme(look), th = K.rolePalette(look), body;
@@ -257456,7 +257442,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       body = pipPixel(K, prop, mood, bust, kettle, look2);
       v = bust ? '<g class="pmx-pip-px" transform="translate(-3 -9.5) scale(1.42)">' + body + '</g>' : '<g class="pmx-pip-px" transform="translate(2 2)">' + body + '</g>';
     } else {
-      body = fam === 'nier' ? pipNierMark(K, th, prop, mood, detail, bust, kettle, o.eyes, look2) : pipVector(K, th, fam, scheme, prop, mood, detail, bust, kettle, look2);
+      body = fam === 'nier' ? pipNierMark(K, th, prop, mood, detail, bust, kettle, look2) : pipVector(K, th, fam, scheme, prop, mood, detail, bust, kettle, look2);
       v = bust ? '<g class="pmx-pip-v" transform="translate(-6.2 -14.6) scale(.63)">' + body + '</g>' : '<g class="pmx-pip-v" transform="scale(.4375)">' + body + '</g>';
     }
     v = K.roleStyles(v);
@@ -257631,7 +257617,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
   function pmxPip(o) {
     o = o || {};
     if (o.part && !pipOn(o.part)) return '';
-    var inner = pipInner(o.prop || null, o.mood || 'idle', num(o.size, 22), { eyes: !!o.eyes, kettle: !!o.kettle, bust: o.bust, detail: o.detail });
+    var inner = pipInner(o.prop || null, o.mood || 'idle', num(o.size, 22), { kettle: !!o.kettle, bust: o.bust, detail: o.detail });
     if (!inner) return '';
     var size = num(o.size, 22), look = pipLook(), tone = PIP_TONES[o.tone] ? ' style="--pmx-pip-tone:var(--' + o.tone + ')"' : '';
     return '<svg class="' + cls('pmx-pip-mk', o.cls) + '"' + k(o.key) + ' viewBox="0 0 28 28" width="' + size + '" height="' + size + '"' + (look.indexOf('retro') === 0 ? ' shape-rendering="crispEdges"' : '') +
@@ -257690,7 +257676,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       pup = '<g class="pmx-pip-pup pmx-pip-px" transform="translate(2 2) scale(2.5)" shape-rendering="crispEdges">' + cells + '</g>';
       strings = '<path d="M58 9H78V32" stroke="@str" stroke-width="2.5" fill="none" shape-rendering="crispEdges"/>';
     } else if (fam === 'nier') {
-      /* NieR Pip with its eyes through the band at rest (X3: a live Pip) */
+      /* NieR Pip with its eyes through the band (X3 B: every NieR Pip) */
       var r = K.pipNier(g, th, mood === 'dots' ? 'think' : mood, PIP_CLS, { face: 'x' }, { parts: true, eyes: true });
       strings = r.barNodes.map(function (q, i) { return pipLine(K, q, r.headNodes[i], 1, '@ink'); }).join('');
       pup = '<g class="pmx-pip-pup">' + r.headInner + '</g>';
@@ -306628,18 +306614,15 @@ try {
   /* During a shell/Home resize drag the rims would be re-measured and re-baked for geometry that is obsolete
      a frame later; the baked rim simply stretches with the sheet until release. Held targets (and the scopes
      they dirty) flush once the drag ends: the ResizeObserver does not refire for a size that has settled. */
-  var heldTargets = new Map(), heldScopes = [], heldTimer = 0, heldBox = false;
+  var heldTargets = new Map(), heldScopes = [], heldTimer = 0;
   function dragHeld() { return !!(document.body && document.body.classList.contains('pm-resizing')); }
   function flushHeldSoon() {
     if (heldTimer) return;
     heldTimer = setTimeout(function () {
       heldTimer = 0;
       if (dragHeld()) { flushHeldSoon(); return; }
-      var targets = heldTargets, scopes = heldScopes, box = heldBox;
-      heldTargets = new Map(); heldScopes = []; heldBox = false;
-      /* the project box changed width during the drag: its tabs' chip is placed after the next layout, never through
-         lazySync, with the tab ink under it (Muse review m4) */
-      if (box) afterLayout(function () { syncAll(); try { if (window.PM7_PAGE_TAB_INK && window.PM7_PAGE_TAB_INK.resync) window.PM7_PAGE_TAB_INK.resync(); } catch (e) { /* hidden under the switcher */ } });
+      var targets = heldTargets, scopes = heldScopes;
+      heldTargets = new Map(); heldScopes = [];
       scopes.forEach(function (s) { dirtyScope(s); });
       if (targets.size) mountMeasured(targets);
       if (targets.size || scopes.length) lazySync(false);
@@ -309207,7 +309190,7 @@ try {
         if (w === boxW) return;
         var first = boxW < 0; boxW = w;
         if (first) return;
-        if (dragHeld()) { heldBox = true; flushHeldSoon(); return; }
+        if (dragHeld()) { heldScopes.push(boxWrap.parentElement); flushHeldSoon(); return; }
         syncAll();
         try { if (window.PM7_PAGE_TAB_INK && window.PM7_PAGE_TAB_INK.resync) window.PM7_PAGE_TAB_INK.resync(); } catch (e) { /* the ink is hidden under the switcher */ }
       }).observe(boxWrap);
