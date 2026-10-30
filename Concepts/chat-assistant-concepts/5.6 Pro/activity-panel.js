@@ -1269,10 +1269,29 @@
      prompt, a subagent's question) is a needs line with Review; each live process is a live line with its time; the
      next scheduled run is a coming-up line. They carry no runId (they are not transcript cards), so they always show;
      the app's PM_WORK subscription re-renders the dock on a change and the tick patcher moves its times. */
+  /* Q13 (Jared, QA round 2, 2026-10-30: "should not stay in view unless there is one that needs user input. They should
+     stay for 60 seconds and then disappear. The user can see them in the activity bar and activity panel."): a running
+     process's line, and the next scheduled run's, shows for 60 s from when it first shows in this thread's dock, then
+     leaves; a line that needs the person stays until it is answered. One timer redraws the chat when the next one is due. */
+  var DOCK_MS = 60000, dockSeen = {}, dockTimer = 0;
+  /* keyed by the run, not only the item: a process that starts again (a restart, a scenario that starts its work over)
+     is new work and shows for its 60 s again */
+  function dockKey(tid, it) { return tid + '|' + it.id + '|' + (it.startedAt || it.at || 0); }
+  function dockFresh(tid, it, now) {
+    var k = dockKey(tid, it);
+    if (!dockSeen[k]) dockSeen[k] = now;
+    return now - dockSeen[k] < DOCK_MS;
+  }
+  function dockExpiry(ctx, tid, list, now) {
+    var due = Infinity;
+    list.forEach(function (it) { var t = dockSeen[dockKey(tid, it)]; if (t) due = Math.min(due, t + DOCK_MS - now); });
+    clearTimeout(dockTimer); dockTimer = 0;
+    if (due < Infinity && typeof ctx.renderApp === 'function') dockTimer = setTimeout(function () { dockTimer = 0; ctx.renderApp(); }, Math.max(0, due) + 30);
+  }
   function workDock(ctx) {
     var W = window.PM_WORK, S = window.PM56_SHELL, out = [];
     if (!W || !S || !S.pmxDockLine || !ctx || !ctx.state) return out;
-    var tid = ctx.state.selectedThread;
+    var tid = ctx.state.selectedThread, now = Date.now(), timed = [];
     var mine = W.items({ thread: tid, kind: ['process', 'agent', 'scheduled'], view: 'thread:' + tid });
     var mark = function (it) { return ctx.icon(it.kind === 'agent' ? 'robot' : it.kind === 'scheduled' ? 'clock' : 'processes', 16); };
     var line = function (it, tone, sentence, time, label) {
@@ -1286,10 +1305,13 @@
       out.push(line(it, 'needs', esc(ctx, it.title) + ' · ' + esc(ctx, it.ask || W.word(it)), '', wt('dock.review')));
     });
     W.sort(mine.filter(function (it) { return it.kind === 'process' && W.isLive(it) && !W.needsYou(it); })).forEach(function (it) {
+      if (!dockFresh(tid, it, now)) return;
+      timed.push(it);
       out.push(line(it, 'live', esc(ctx, it.title), W.time(it), wt('dock.show')));
     });
     var next = W.sort(mine.filter(function (it) { return it.kind === 'scheduled' && it.state === 'pending'; }))[0];
-    if (next) out.push(line(next, 'comingup', esc(ctx, next.title), W.time(next), wt('dock.show')));
+    if (next && dockFresh(tid, next, now)) { timed.push(next); out.push(line(next, 'comingup', esc(ctx, next.title), W.time(next), wt('dock.show'))); }
+    dockExpiry(ctx, tid, timed, now);
     return out;
   }
   var dockOn = false;
