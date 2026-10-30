@@ -46,6 +46,15 @@ async function check(n, name, fn) {
 }
 let F = null;   // the frame the page runs in: the page itself, or the sandboxed iframe (--sandbox)
 const ev = (fn, arg) => F.evaluate(fn, arg);
+/* the look this run asks for, saved the way the look menu saves it; a check that switches Project (each Project carries
+   its own settings) applies it again before it ends */
+const applyLook = () => ev(([f, m]) => {
+  const fam = f === 'nier' ? 'basic' : f, tome = window.PM7_SETTINGS_TOME;
+  if (window.PM_NIER && f !== 'nier') window.PM_NIER.set(false, { sound: false });
+  window.PM_THEME.setFamily(fam, { persist: false }); window.PM_THEME.setMode(m, { persist: false });
+  if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(fam); tome.setChromeThemeMode(m); }
+  if (window.PM_NIER && f === 'nier') window.PM_NIER.set(true, { sound: false });
+}, [fam, mode]);
 const scenario = async (name) => { await ev((n) => window.PM_WORK.scenario(n), name); await sleep(500); };
 const clickAt = async (sel) => { const r = await ev((s) => { const e = [...document.querySelectorAll(s)].find((x) => x.getBoundingClientRect().width > 0); if (!e) return null; e.scrollIntoView({ block: 'nearest' }); const q = e.getBoundingClientRect(); return { x: q.left + q.width / 2, y: q.top + q.height / 2 }; }, sel); if (!r) throw new Error('nothing to click: ' + sel); await page.mouse.click(r.x, r.y); return r; };
 const hoverAt = async (sel) => { const r = await ev((s) => { const e = [...document.querySelectorAll(s)].find((x) => x.getBoundingClientRect().width > 0); if (!e) return null; const q = e.getBoundingClientRect(); return { x: q.left + q.width / 2, y: q.top + q.height / 2 }; }, sel); if (!r) throw new Error('nothing to hover: ' + sel); await page.mouse.move(r.x, r.y + 60); await sleep(60); await page.mouse.move(r.x, r.y, { steps: 5 }); return r; };
@@ -71,13 +80,7 @@ try {
   if (sandbox) console.log('sandboxed frame: origin ' + await ev(() => String(window.origin)) + ', storage ' + await ev(() => { try { localStorage.getItem('x'); return 'open'; } catch (e) { return 'blocked'; } }));
   /* the look is saved the way the look menu and Demo Studio save it (PM7_SETTINGS_TOME), not only previewed: Settings
      re-applies the saved look when it opens (check 25 opens it), and a preview-only look ran every later check in Basic */
-  await ev(([f, m]) => {
-    const fam = f === 'nier' ? 'basic' : f, tome = window.PM7_SETTINGS_TOME;
-    if (window.PM_NIER && f !== 'nier') window.PM_NIER.set(false, { sound: false });
-    window.PM_THEME.setFamily(fam, { persist: false }); window.PM_THEME.setMode(m, { persist: false });
-    if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(fam); tome.setChromeThemeMode(m); }
-    if (window.PM_NIER && f === 'nier') window.PM_NIER.set(true, { sound: false });
-  }, [fam, mode]);
+  await applyLook();
   await sleep(1500);
   await ev(() => window.PM56_DEMO.selectThread('query'));
   await scenario('busy');
@@ -670,6 +673,7 @@ try {
       await ev(() => window.PM7_WORK_UI.close()); await sleep(300);
     }
     await ev(() => window.PM_PROJECT_BOX.select('tastebook')); await sleep(600);
+    await applyLook(); await sleep(fam === 'nier' ? 4500 : 1200);
     return { ok: timings.every((t) => t.frames > 0 && t.empty === 0 && t.first > 0) && proj.every((p) => p.rows >= 4 && !p.empty && p.servers.includes('This computer')) && proj[1].idle,
       note: JSON.stringify({ timings, proj }) };
   });
