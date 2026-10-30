@@ -80,8 +80,9 @@
   transition-duration: var(--pm6-sprout-fade-in, 140ms), 300ms, 0s, 340ms;
   transition-timing-function: var(--pm6-sprout-fade-ease, var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))),
     cubic-bezier(0.22, 1.55, 0.36, 1), linear,
-    /* springy height for search-filter resize bounce */
-    cubic-bezier(0.22, 1.72, 0.36, 1);
+    /* springy height for search-filter resize bounce; a shrink takes it without the overshoot (the owner's resize sets
+       --pm6-sprout-height-ease), so the box never dips below its content */
+    var(--pm6-sprout-height-ease, cubic-bezier(0.22, 1.72, 0.36, 1));
   transition-delay: 0s;
 }
 /* the close: solid through most of the collapse, then a late, tiny fade, into the same corner the open set */
@@ -137,7 +138,7 @@
 .pm6-chat-effort-popout-portal.is-open {
   transition-duration: var(--pm6-sprout-fade-in, 140ms), 300ms, 0s, 360ms;
   transition-timing-function: var(--pm6-sprout-fade-ease, var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))),
-    cubic-bezier(0.22, 1.55, 0.36, 1), linear, cubic-bezier(0.22, 1.78, 0.36, 1);
+    cubic-bezier(0.22, 1.55, 0.36, 1), linear, var(--pm6-sprout-height-ease, cubic-bezier(0.22, 1.78, 0.36, 1));
 }
 /* Reduce motion: instant show and hide, the same end state (Settings' switch, and the system setting for .pm-sprout) */
 [data-motion="reduced"] .pm-sprout,
@@ -615,8 +616,6 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 * { scrollbar-width:thin;scrollbar-color:var(--surface-4) transparent; }
 *::-webkit-scrollbar { width:9px;height:9px; }*::-webkit-scrollbar-track{background:transparent}*::-webkit-scrollbar-thumb{background:var(--surface-4);border:2px solid transparent;background-clip:padding-box;border-radius:8px}*::-webkit-scrollbar-thumb:hover{background:var(--border-strong);border:2px solid transparent;background-clip:padding-box}
 
-@keyframes menu-pop{0%{opacity:0;transform:translateY(7px) scale(.94)}55%{opacity:1}100%{opacity:1;transform:none}}
-@keyframes sidecar-pop{0%{opacity:0;transform:translateX(calc(var(--side-dir,1)*-12px)) scale(.96)}100%{opacity:1;transform:none}}
 @keyframes drawer-in{0%{opacity:0;transform:translateX(30px) scale(.985)}100%{opacity:1;transform:none}}
 @keyframes history-in{0%{opacity:0;transform:translateX(24px)}100%{opacity:1;transform:none}}
 @keyframes dialog-in{0%{opacity:0;transform:translate(-50%,-47%) scale(.97)}100%{opacity:1;transform:translate(-50%,-50%)}}
@@ -914,17 +913,16 @@ body:has(.resizer.dragging), body:has(.panel-resize.dragging) {
    instead of stalling the close for 180ms of nothing.
 
      content rows / cards      .pm-leaving                 --pm-t-exit  120ms
-     overlays (menu, sidecar,
-     hover card, drawer,
-     dialog, history flyout)   .pm-leaving on the overlay  --pm-t-overlay-exit 180ms
+     overlays (hover card,
+     drawer, dialog,
+     history flyout)           .pm-leaving on the overlay  --pm-t-overlay-exit 180ms
 
    The overlay form collapses back toward `transform-origin`, which
    positionOverlays() already points at the trigger via --origin-x/--origin-y,
    and it stays opaque through the first 70% of the collapse -- the asymmetric
-   close of canonical ACD-439. Wave 3's Menus agent replaces the *entrance*
-   (menu-pop) with the corner-origin sprout; it should override
-   `pm-overlay-out`'s end frame to the sprout's closed scale3d(.72,.48,1) at
-   the same time, and needs no other change here.
+   close of canonical ACD-439. Menus and sidecars are not in this
+   vocabulary: they open and close through the menu sprout (PM6_SPROUT and the
+   base's pm7-sprout.css; L8 B), which replaced menu-pop and sidecar-pop.
 
    pmPatch must not remove the node before the animation finishes; the
    duration read above is the wait. */
@@ -21385,11 +21383,14 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
      isOpen(el)
      aim(el, anchor, origin)            pins the corner again (a flyout whose row moved)
      resize(el, mutate)                 runs mutate and springs the height from the old box to the new one, with the
-                                        size bounce (the search filter, an option count, a drill-in, a list that grew)
+                                        size bounce (the search filter, an option count, a drill-in, a list that grew);
+                                        a box that grows passes its new size and settles back, a box that shrinks
+                                        settles onto it without passing it, so it never cuts into its own content
      morph(el, from, to, opts)          for a surface that places itself (Home's plate): the box moves from one geometry
                                         to another ({ left, top, width, height }, px). A height-only change is the
-                                        contract's height spring with the size bounce (resize's motion, and none where a
-                                        look has no height spring); a change of width or place (a level drilled into)
+                                        contract's height spring with the size bounce (resize's motion, a shrink's
+                                        without the overshoot, and none where a look has no height spring); a change
+                                        of width or place (a level drilled into)
                                         takes opts.shape { duration, easing }, the surface's own level timing. Returns
                                         the Animation, or null when nothing moves
      bounce(el)                         the size bounce alone, for a surface that sets its new height itself
@@ -21408,7 +21409,12 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
   var doc = document, root = doc.documentElement;
   var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   var OWN_CLASS = ['is-open', 'is-closing', 'is-size-bounce'];
-  var OWN_VARS = ['--pm6-sprout-ox', '--pm6-sprout-oy', '--pm6-sprout-tx', '--pm6-sprout-ty', '--pm6-sprout-sx', '--pm6-sprout-sy'];
+  var OWN_VARS = ['--pm6-sprout-ox', '--pm6-sprout-oy', '--pm6-sprout-tx', '--pm6-sprout-ty', '--pm6-sprout-sx', '--pm6-sprout-sy',
+    '--pm6-sprout-height-ease'];
+  /* the height spring overshoots (y1 > 1): a box that grows passes its new size and settles back. A box that shrinks takes
+     the same curve without the overshoot (Astra r2 R1: a filter that leaves one row dipped below it and hid it), so it
+     never ends up smaller than its content on the way. The contract's height curve reads --pm6-sprout-height-ease. */
+  var SPRING = 'cubic-bezier(0.22, 1.72, 0.36, 1)', SETTLE = 'cubic-bezier(0.22, 1, 0.36, 1)';
   var CLOSING = { opacity: 1, transform: 1, scale: 1, translate: 1, visibility: 1 };
   var states = typeof WeakMap === 'function' ? new WeakMap() : null;
   var gen = 0;
@@ -21572,6 +21578,7 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
       el.style.display = 'none';
       el.style.height = '';
       el.style.overflow = '';
+      el.style.removeProperty('--pm6-sprout-height-ease');
       var list = s.dones; s.dones = [];
       for (var i = 0; i < list.length; i++) list[i]();
     }
@@ -21605,11 +21612,14 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
     if (Math.abs(endH - startH) < 0.5) {
       el.style.height = '';
       el.style.overflow = '';
+      el.style.removeProperty('--pm6-sprout-height-ease');
       return;
     }
     el.style.height = startH + 'px';
     void el.offsetHeight;
-    /* CSS height spring (y>1) overshoots past endH then settles: the search bounce */
+    /* CSS height spring (y>1) overshoots past endH then settles: the search bounce; a shrink settles without it */
+    if (endH < startH) el.style.setProperty('--pm6-sprout-height-ease', SETTLE);
+    else el.style.removeProperty('--pm6-sprout-height-ease');
     el.style.height = endH + 'px';
     el.classList.remove('is-size-bounce');
     void el.offsetWidth;
@@ -21624,6 +21634,7 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
       if (s.hg !== hg) return;                      /* a later resize owns the height now */
       el.style.height = '';
       el.style.overflow = '';
+      el.style.removeProperty('--pm6-sprout-height-ease');
       el.classList.remove('is-size-bounce');
     }
     el.addEventListener('transitionend', clearH);
@@ -21662,9 +21673,10 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
     }
     if (!moved) return null;
     if (shape && opts.shape) return track(el.animate([k0, k1], { duration: opts.shape.duration || 220, easing: opts.shape.easing || 'ease' }));
-    /* the height spring, as resize's: where the look's contract has none (NieR's Slice part) the box just takes its size */
+    /* the height spring, as resize's (a shrink without the overshoot): where the look's contract has none (NieR's Slice
+       part) the box just takes its size */
     if (!endOf(el, { height: 1 })) return null;
-    var anim = track(el.animate([k0, k1], { duration: 340, easing: 'cubic-bezier(0.22, 1.72, 0.36, 1)' }));
+    var anim = track(el.animate([k0, k1], { duration: 340, easing: b.height < a.height - 2 ? SETTLE : SPRING }));
     bounce(el);
     return anim;
   }
