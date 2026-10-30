@@ -1549,7 +1549,12 @@
     if (same) { mono = new AudioBuffer({ length: b.length, numberOfChannels: 1, sampleRate: b.sampleRate }); mono.copyToChannel(x, 0); }
     b.__mono = mono; return mono;
   }
-  const idle = (fn) => (window.requestIdleCallback ? window.requestIdleCallback(fn, { timeout: 4000 }) : later(200, fn));
+  // the page's one admission for idle work (PM_BUSY.idle): never inside a held drag (F3-3)
+  const idle = (fn) => {
+    const B = window.PM_BUSY;
+    if (B && typeof B.idle === 'function') return B.idle(fn, 4000);
+    return window.requestIdleCallback ? window.requestIdleCallback(fn, { timeout: 4000 }) : later(200, fn);
+  };
   /* The dynamic recipes cannot be frozen as whole takes: callout follows its chapter; other sounds follow
      pitch drift, shuffle rotation, helper voice and random noise offsets. Prepare their exact expensive PCM
      ingredients instead, then schedule the original nodes through the original dry and room chains. */

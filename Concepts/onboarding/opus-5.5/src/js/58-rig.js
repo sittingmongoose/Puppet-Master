@@ -968,23 +968,47 @@
     if (!svg || !pip) return;
     if (!svg.firstChild) svg.innerHTML = '<path class="o55-railzip-str"/><path class="o55-railzip-hi"/><circle class="o55-railzip-eye" r="2.6"/><circle class="o55-railzip-eye" r="2.6"/>';
     if (pip.getAttribute('data-theme-pip') !== theme) { pip.setAttribute('data-theme-pip', theme); pip.innerHTML = K.svg({ theme, px: 24, decorative: true }); }
+    /* the rail's own size: a layout change (narrow, short, a look's labels) moves its beads after any window resize
+       event has fired, so the rail measures again whenever it changes size (final check: Pip and its rope stayed at
+       the old layout after 720x900 -> 1390x480) */
+    if (!rail.ro && window.ResizeObserver) rail.ro = new ResizeObserver(() => rail.relayout());
+    if (rail.ro && rail.observed !== nav) { rail.ro.disconnect(); rail.ro.observe(nav); rail.observed = nav; }
     rail.measure();
     if (rail.cur !== -1 && cur !== rail.cur && !O55.motion.reduced()) rail.av += (cur > rail.cur ? -1 : 1) * 0.6;
     rail.cur = cur;
     rail.kick();
   };
   /* bead x positions, read once per render and on a resize (never per frame) */
+  /* (in the rail's own, untransformed units: the window's entrance scales it, and a measure taken then would keep the
+     scaled sizes once it settles; final check F1-3, a direct open in Glass was 5 px off) */
   rail.measure = function measure() {
     const nav = rail.nav; if (!nav) return;
-    const nr = nav.getBoundingClientRect();
-    rail.W = nr.width;
-    rail.xs = Array.from(nav.querySelectorAll('.o55-railitem .o55-railnode')).map((n) => { const r = n.getBoundingClientRect(); return r.left + r.width / 2 - nr.left; });
+    const nr = nav.getBoundingClientRect(), w = nav.offsetWidth || nr.width, k = nr.width && w ? nr.width / w : 1;
+    rail.W = w;
+    rail.xs = Array.from(nav.querySelectorAll('.o55-railitem .o55-railnode')).map((n) => { const r = n.getBoundingClientRect(); return (r.left + r.width / 2 - nr.left) / k; });
+  };
+  /* measured again after a size change; a new window layout (wide, narrow, short) puts Pip at its bead at once, where a
+     chapter change lets it travel */
+  rail.relayout = function relayout() {
+    const nav = rail.nav; if (!nav || !nav.isConnected) return;
+    const win = nav.closest('[data-o55-layout]'), layout = win ? win.getAttribute('data-o55-layout') : '';
+    const at = Math.max(0, rail.cur), was = rail.xs[at];
+    rail.measure();
+    const now0 = rail.xs[at];
+    if (rail.layout !== undefined && rail.layout !== layout) rail.x = null;
+    /* the layout moved the bead (the window growing or shrinking): Pip moves with it, a journey under way goes on */
+    else if (rail.x != null && was != null && now0 != null) rail.x += now0 - was;
+    rail.layout = layout;
+    /* drawn now: a ResizeObserver runs after layout and before paint, so Pip and the rope are in place in the very
+       frame the new layout paints (final check F1-3: a frame drawn later showed Pip at the old spot) */
+    if (rail.raf) { cancelAnimationFrame(rail.raf); rail.raf = 0; }
+    rail.force = true; rail.tick(); rail.force = false;
   };
   rail.kick = function kick() { if (!rail.raf) { rail.last = now(); rail.raf = requestAnimationFrame(rail.tick); } };
   rail.tick = function tick() {
     rail.raf = 0;
     const nav = rail.nav; if (!nav || !nav.isConnected || !rail.xs.length) return;
-    if (document.body.classList.contains('pm-resizing') || document.hidden) { setTimeout(rail.kick, 250); return; }
+    if (!rail.force && (document.body.classList.contains('pm-resizing') || document.hidden)) { setTimeout(rail.kick, 250); return; }
     const tn = now(), dt = Math.min(0.04, tn - rail.last) / H.speed(); rail.last = tn;
     const fam = String(rail.theme || 'basic-dark').split('-')[0], rigid = fam === 'nier', red = O55.motion.reduced();
     const W = rail.W, y0 = 9, x0 = 6, x1 = W - 6, tx = rail.xs[Math.max(0, rail.cur)] || x0, weight = rigid ? 0 : fam === 'basic' ? 2 : 4;
@@ -995,7 +1019,7 @@
     const aA = -38 * rail.ang - 3.2 * rail.av - ax * 0.0016; rail.av += aA * dt; rail.ang += rail.av * dt;
     const moving = Math.abs(tx - rail.x) > 0.3 || Math.abs(rail.v) > 1 || Math.abs(rail.av) > 0.01 || Math.abs(rail.ang) > 0.004 || Math.abs(rail.dip - weight) > 0.05;
     /* Retro Light is paper: the rail is drawn ten times a second (the spring still runs every frame) */
-    if (rail.theme === 'retro-light' && moving && !red && tn - (rail.drawn || 0) < 0.1) { rail.kick(); return; }
+    if (rail.theme === 'retro-light' && moving && !red && !rail.force && tn - (rail.drawn || 0) < 0.1) { rail.kick(); return; }
     rail.drawn = tn;
     let px = rail.x, dip = Math.max(0, rail.dip);
     if (fam === 'retro') { px = Math.round(px / 4) * 4; dip = Math.round(dip); }
@@ -1014,7 +1038,8 @@
     if (pip) pip.style.transform = `translate(${R(px - 12)}px, ${R(y0 + dip - 5.4)}px) rotate(${R(rail.ang * 57.3)}deg)`;
     if (moving && !red) rail.kick();
   };
-  window.addEventListener('resize', () => { if (rail.nav && rail.nav.isConnected) { rail.measure(); rail.kick(); } });
+  /* (on the next frame: the window's layout class, 60-ui-core.js layoutClass, is set by a resize listener of its own) */
+  window.addEventListener('resize', () => { if (rail.nav && rail.nav.isConnected) requestAnimationFrame(rail.relayout); });
 
   Object.assign(PIP, {
     Stage, LAYOUTS, FAM,

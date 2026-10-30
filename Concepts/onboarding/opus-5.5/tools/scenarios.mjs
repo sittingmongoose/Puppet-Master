@@ -682,6 +682,76 @@ for (const look of ['retro-dark', 'retro-light', 'basic-dark']) def('pr20-' + lo
   A.ok(w.blocks.every((b) => b.r === true && !b.muted), 'every one played, the master unmuted');
   A.ok(!w.mutes.includes(true), 'no mute while Creating (' + JSON.stringify(w.mutes) + ')');
 });
+const railFit = (d) => d.state(() => {
+    const nav = document.querySelector('#pm-o55-onboarding .o55-rail'), nr = nav.getBoundingClientRect(), k = nr.width / (nav.offsetWidth || nr.width);
+    const node = nav.querySelector('.o55-railitem[data-state="current"] .o55-railnode').getBoundingClientRect();
+    const m = /translate\(([-\d.]+)px/.exec(nav.querySelector('.o55-railpip').style.transform || ''), vb = (nav.querySelector('.o55-railzip').getAttribute('viewBox') || '').split(' ');
+    return { layout: document.getElementById('pm-o55-onboarding').getAttribute('data-o55-layout'), scale: Math.round(k * 1000) / 1000, bead: Math.round((node.left + node.width / 2 - nr.left) / k), pip: m ? Math.round(+m[1] + 12) : null, w: Math.round(nav.offsetWidth), rope: Math.round(+vb[2] || 0) };
+  });
+def('pr21', 'fresh', 'Final check: after 720x900 -> 1390x480 the rail Pip sits on the current bead and the rope spans the rail', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'where', 'on Computer');
+  const fit = () => d.state(() => {
+    const nav = document.querySelector('#pm-o55-onboarding .o55-rail'), nr = nav.getBoundingClientRect();
+    const node = nav.querySelector('.o55-railitem[data-state="current"] .o55-railnode').getBoundingClientRect();
+    const m = /translate\(([-\d.]+)px/.exec(nav.querySelector('.o55-railpip').style.transform || ''), vb = (nav.querySelector('.o55-railzip').getAttribute('viewBox') || '').split(' ');
+    return { layout: document.getElementById('pm-o55-onboarding').getAttribute('data-o55-layout'), bead: Math.round(node.left + node.width / 2 - nr.left), pip: m ? Math.round(+m[1] + 12) : null, w: Math.round(nr.width), rope: Math.round(+vb[2] || 0) };
+  });
+  for (const [w, h] of [[720, 900], [1390, 480]]) {
+    await d.page.send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 1, mobile: false }); await sleep(1800);
+    const f = await fit();
+    A.ok(f.pip != null && Math.abs(f.pip - f.bead) <= 3 && Math.abs(f.rope - f.w) <= 2, `${w}x${h} (${f.layout}): Pip ${f.pip} on bead ${f.bead}, rope ${f.rope} of ${f.w}`);
+  }
+});
+/* per frame through a layout change: from the first frame the new layout is on, Pip sits on its bead and the rope
+   spans the rail in every frame (final check F1-3's residual: up to 15 frames at the old spot) */
+for (const look of ['basic-dark', 'glass-dark', 'nier-dark']) def('pr21f-' + look, 'fresh', `Final check F1-3: in ${look}, every frame of a layout change has Pip on its bead and the rope the rail's width`, async (d, A) => {
+  await d.openOnboarding();
+  await d.page.evaluate((l) => { const [f, m] = l.split('-'); if (f === 'nier') { window.O55.ui.applyLook('basic', m); if (!window.O55.nierLook.state().on) window.O55.nierLook.toggle('look', null); } else window.O55.ui.applyLook(f, m); }, look);
+  await sleep(f0(look));
+  await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'where', 'on Computer');
+  for (const [w, h] of [[720, 900], [1390, 480], [1440, 900]]) {
+    await d.page.evaluate(() => {
+      const rec = window.__rail = { on: true, frames: [] };
+      const loop = () => { if (!rec.on) return;
+        const nav = document.querySelector('#pm-o55-onboarding .o55-rail'), nr = nav.getBoundingClientRect(), k = nr.width / (nav.offsetWidth || nr.width);
+        const node = nav.querySelector('.o55-railitem[data-state="current"] .o55-railnode').getBoundingClientRect();
+        const m = /translate\(([-\d.]+)px/.exec(nav.querySelector('.o55-railpip').style.transform || ''), vb = (nav.querySelector('.o55-railzip').getAttribute('viewBox') || '').split(' ');
+        rec.frames.push({ layout: document.getElementById('pm-o55-onboarding').getAttribute('data-o55-layout'), bead: (node.left + node.width / 2 - nr.left) / k, pip: m ? +m[1] + 12 : null, w: nav.offsetWidth, rope: +vb[2] || 0 });
+        requestAnimationFrame(loop); };
+      requestAnimationFrame(loop);
+    });
+    await d.page.send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 1, mobile: false }); await sleep(1500);
+    const fr = await d.page.evaluate(() => { window.__rail.on = false; return window.__rail.frames; });
+    const want = w < 760 ? 'narrow' : h < 520 ? 'short' : 'wide', from = fr.findIndex((f) => f.layout === want);
+    const after = from >= 0 ? fr.slice(from + 1) : [];
+    const pipErr = Math.max(0, ...after.map((f) => Math.abs(f.pip - f.bead))), ropeErr = Math.max(0, ...after.map((f) => Math.abs(f.rope - f.w)));
+    A.ok(after.length > 10 && pipErr <= 2 && ropeErr <= 1, `${w}x${h} (${want}), ${after.length} frames: Pip within ${pipErr.toFixed(1)} px of its bead, rope within ${ropeErr.toFixed(1)} px`);
+  }
+});
+const f0 = (look) => (look.startsWith('nier') ? 5000 : 1500);
+def('pr22', 'fresh', 'Final check F1-3: opened straight into Glass at Computer, the rail is measured unscaled (Pip on its bead, the rope the rail\'s width)', async (d, A) => {
+  await d.page.evaluate(() => { window.O55.ui.applyLook && 0; });
+  await d.page.evaluate(() => { const [f, m] = ['glass', 'dark']; if (window.PM_THEME && window.PM_THEME.setFamily) { window.PM_THEME.setFamily(f); window.PM_THEME.setMode(m); } });
+  await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'where' }));
+  await d.until(() => !!document.querySelector('#pm-o55-onboarding .o55-layer[data-screen="where"]'), { what: 'Where' }); await d.settle(); await sleep(2500);
+  const f = await railFit(d);
+  A.ok(f.pip != null && Math.abs(f.pip - f.bead) <= 1.5 && Math.abs(f.rope - f.w) <= 1, `Glass, opened at Computer: Pip ${f.pip} on bead ${f.bead}, rope ${f.rope} of ${f.w} (scale ${f.scale})`);
+});
+def('pr23', 'fresh', 'Final check F2-2: an expired toast is gone, and never plays again when the window opens later', async (d, A) => {
+  await d.openOnboarding(); await d.primary();
+  await d.page.evaluate(() => window.O55.ui.toast('Opened the sign-in page in your browser'));
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-toast')), 'the toast shows');
+  await sleep(4200);
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding .o55-toast')), 'gone once it has expired');
+  await d.page.evaluate(() => window.O55.ui.toast('A second one'));
+  await d.page.evaluate(() => window.O55.ui.close('close')); await sleep(600);
+  await d.page.evaluate(() => window.O55.ui.open({ screen: 'name' }));
+  await d.until(() => !!document.querySelector('#pm-o55-onboarding .o55-layer[data-screen="name"]'), { what: 'Name' }); await sleep(400);
+  const t = await d.state(() => { const el = document.querySelector('#pm-o55-onboarding .o55-toast'); return el ? { text: el.textContent, running: el.getAnimations().length } : null; });
+  A.ok(!t, 'nothing replays when the window opens again (' + JSON.stringify(t) + ')');
+});
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();
@@ -693,7 +763,7 @@ def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and 
 });
 def('b5', 'homeNasPm', 'Backup to a NAS that runs Puppet Master: pairs once, then the backup finishes', async (d, A) => {
   await toProtect(d, 'nas');
-  A.ok(/pairs with it/.test(await d.state(() => document.body.textContent)), 'the step says it pairs, not a key');
+  A.ok(await d.state(() => /pairs with it/.test(document.body.textContent)), 'the step says it pairs, not a key');
   await d.primary(); A.eq(await d.screen(), 'nas-pmpair', 'pairing'); await d.primary(); await until(d, pairOk, 'paired', 10000); await d.primary();
   A.eq(await d.screen(), 'protect', 'back to Finish protecting your work');
   await until(d, "(window.O55.S.sess.backup.done||[]).includes('signin')", 'connected through the pairing', 6000);
@@ -875,7 +945,7 @@ def('n9', 'selfKeyMissing', "I'll add the key myself, but it is not there yet: t
   const line = await d.state(() => (document.querySelector('.o55-codeline code') || {}).textContent || '');
   A.ok(/ jared@MacBook-Pro$/.test(line), 'the line is the chosen key\'s (jared@MacBook-Pro)');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'failed'", 'the check fails', 9000);
-  A.ok(/isn't on Home NAS yet/.test(await d.state(() => document.body.textContent)), 'it says the key is not on Home NAS yet');
+  A.ok(await d.state(() => /isn't on Home NAS yet/.test(document.body.textContent)), 'it says the key is not on Home NAS yet');
   A.ok(!(await d.state(() => window.O55.S.env.devices[0].authorized.includes('k-ed'))), 'the check did not add the key itself');
   await d.primary(); A.eq(await d.screen(), 'nas-signin', 'back to the key, to add it');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'done'", 'passes once it is there', 9000);
@@ -899,7 +969,7 @@ def('x1', 'fresh', 'Run Onboarding Again starts over: a clean world, no finished
   A.eq(await d.state(() => window.O55.store.get('tour', null)), null, 'the saved tour is cleared');
   await d.primary(); await d.primary(); await d.primary(); await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary();
-  A.ok(!/connected to Home NAS before/.test(await d.state(() => document.body.textContent)), 'the device is new again in a clean world');
+  A.ok(await d.state(() => !/connected to Home NAS before/.test(document.body.textContent)), 'the device is new again in a clean world');
   await d.primary();
   A.eq(await d.state(() => (window.O55.S.sess.ops['keys:nas-home'] || {}).state), 'running', 'looking for keys runs again, step by step');
   await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys tested', 5000);
@@ -912,7 +982,7 @@ def('x2', 'fresh', 'Run Onboarding Again while a Project is being created waits 
   await d.click('#pm-o55-onboarding [data-o55-do="close"]', 'Close'); await d.settle();
   await d.state(() => window.PM7_ONBOARDING_CINEMATIC.replay()); await d.untilScreen('creating');
   A.eq(await d.screen(), 'creating', 'the window shows the creation instead of starting over');
-  A.ok(/still being created/.test(await d.state(() => document.body.textContent)), 'it says the Project is still being created');
+  A.ok(await d.state(() => /still being created/.test(document.body.textContent)), 'it says the Project is still being created');
   await until(d, "window.O55.S.sess.commit.state === 'done'", 'creation finishes', 25000);
   await assertPublishedProject(d, A);
   A.eq(await d.state(() => window.O55.S.sess.commit.original.key), originalKey, 'reopening Creating retains the same attempt');

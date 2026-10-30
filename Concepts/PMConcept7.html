@@ -33035,6 +33035,23 @@ html[data-theme$="-light"] .wk-dialog-scrim { background: rgba(20, 24, 32, .28);
 .wk-dialog-list label { display: grid; grid-template-columns: auto auto auto minmax(0, 1fr); align-items: center; gap: 7px; padding: 6px 10px; cursor: pointer; }
 .wk-dialog-list span { color: var(--wk-small); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .wk-dialog-list li.is-off { opacity: .45; }
+/* the Stop and Quit lists' boxes (F3-4) draw themselves in every look. The global box fills with the accent and cuts its
+   tick in --surface; Glass turns that fill into a 30 % tint and --surface into a translucent ground, so checked and
+   unchecked rows looked the same. Checked is the working ink, filled, with its tick in black or white, whichever stands
+   off that ink; unchecked is an empty box in the secondary ink. Glass's reading rule (html[data-theme^="glass"] :where(input),
+   !important) repaints every input with its soft reading ground and rim, checkboxes too, so the two colours here answer it
+   with !important of their own. */
+.wk-dialog-scrim .wk-dialog-list input[type="checkbox"] { appearance: none; -webkit-appearance: none; box-sizing: border-box; display: inline-grid;
+  place-content: center; flex: none; width: 15px; height: 15px; margin: 0; border: 1.5px solid var(--wk-ink2) !important; border-radius: 4px;
+  background: transparent !important; box-shadow: none; cursor: pointer; --wk-tick: #fff; }
+.wk-dialog-scrim .wk-dialog-list input[type="checkbox"]:checked { background: var(--wk-work) !important; border-color: var(--wk-work) !important; }
+.wk-dialog-scrim .wk-dialog-list input[type="checkbox"]:checked::after { content: ""; width: 4px; height: 8px; margin-top: -2px; border: solid var(--wk-tick);
+  border-width: 0 2px 2px 0; transform: rotate(45deg); }
+@supports (color: color(from red srgb-linear r g b)) {
+  .wk-dialog-scrim .wk-dialog-list input[type="checkbox"] { --wk-tick: color(from var(--wk-work) srgb-linear clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1)); }
+}
+.wk-dialog-scrim .wk-dialog-list input[type="checkbox"]:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: 2px; }
+html:is([data-theme^="retro"], [data-o55-nier="on"]) .wk-dialog-scrim .wk-dialog-list input[type="checkbox"] { border-radius: 0; }
 .wk-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
 
 /* ---- looks: Home's tokens carry each look's plate; these add each grammar ---- */
@@ -160376,6 +160393,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        'calm'        the Reduce Animations NieR cover (#o55np-calm), through its fade
        'theme'       the look cover (js/12-theme-transition.js), until its lift has ended
        'nier'        a NieR switch asked and not yet painted (PM_NIER.wanted() differs from on())
+       'drag'        a drag is held (body.pm-resizing, pm-ab-dragging, pmw-dragging, pmu-pointer-op, pm7u-pointer-op):
+                     no idle job runs inside a drag (PM7 build F3-3); named last, so a cover is still named first
+     PM_BUSY.drag() -> true while a drag class is on the body. PM_BUSY.idle(fn, timeout?) is the one admission for idle
+     work: fn runs in an idle callback (requestIdleCallback with that timeout), but never inside a held drag: asked
+     during one, it waits for the spell's end ('pm-idle') and asks again; a callback that lands in one does the same.
      A hidden tab is not busy by itself (callers keep their own document.hidden check). It reads attributes and ids only,
      never style or layout, so it costs nothing in any frame. 'pm-idle' is sent on window in the first frame after a
      busy spell ends: every spell this script sees begin (one of those markers appearing) or that a call finds. */
@@ -160386,6 +160408,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      never a live collection, whose length walks the whole document again after any DOM change (4.3 ms a call on
      Nas1 during an editor open, Glass lane) */
   const tourCovered = () => { for (let c = document.body && document.body.lastElementChild; c; c = c.previousElementSibling) if (c.classList.contains('o55t-bootcover')) return true; return false; };
+  const DRAG_CLASSES = ['pm-resizing', 'pm-ab-dragging', 'pmw-dragging', 'pmu-pointer-op', 'pm7u-pointer-op'];
+  const dragging = () => { const b = document.body; if (!b) return false; for (const c of DRAG_CLASSES) if (b.classList.contains(c)) return true; return false; };
   let busyFrame = 0, busyTimer = 0;
   const busyNow = () => {
     for (const [a, why] of BUSY_ATTRS) if (busyRoot.hasAttribute(a)) return why;
@@ -160393,6 +160417,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (tourCovered()) return 'boot';
     try { const t = window.PM_THEME_TRANSITION; if (t && typeof t.busy === 'function' && t.busy()) return 'theme'; } catch (_) { /* none */ }
     try { const n = window.PM_NIER; if (n && typeof n.wanted === 'function' && typeof n.on === 'function' && !!n.wanted() !== !!n.on()) return 'nier'; } catch (_) { /* none */ }
+    if (dragging()) return 'drag';
     return '';
   };
   /* A spell's end is seen where it happens (an attribute or a cover going, the theme cover's lift ending, a NieR switch
@@ -160411,12 +160436,25 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const busyEnded = () => { if (busySpell && !busyFrame) busyFrame = requestAnimationFrame(busyCheck); };
   window.PM_BUSY = function busy() { const why = busyNow(); if (why) busyArm(); return why; };
   window.PM_BUSY.ended = busyEnded;
+  window.PM_BUSY.drag = dragging;
+  /* the shared admission for idle work (F3-3): a held drag defers it to the spell's end; the spell is armed by asking */
+  const afterDrag = (ask) => { window.PM_BUSY(); window.addEventListener('pm-idle', ask, { once: true }); };
+  window.PM_BUSY.idle = function idleWhenStill(fn, timeout) {
+    if (typeof fn !== 'function') return;
+    const ask = () => {
+      const run = (dl) => { if (dragging()) { afterDrag(ask); return; } fn(dl); };
+      if (window.requestIdleCallback) window.requestIdleCallback(run, timeout ? { timeout } : undefined);
+      else setTimeout(() => run({ timeRemaining: () => 50, didTimeout: true }), 0);
+    };
+    if (dragging()) afterDrag(ask); else ask();
+  };
   /* a spell begins or ends: an attribute on html (NieR's own for a switch that paints), a cover added to or taken
      from the body */
   try {
     const seen = new MutationObserver(() => { if (busySpell) busyEnded(); else if (busyNow()) busyArm(); });
     seen.observe(busyRoot, { attributes: true, attributeFilter: BUSY_ATTRS.map((a) => a[0]).concat(['data-o55-nier']) });
-    const watchBody = () => { if (document.body) seen.observe(document.body, { childList: true }); };
+    // the body's class: a drag starting or ending (DRAG_CLASSES) begins or ends a spell
+    const watchBody = () => { if (document.body) seen.observe(document.body, { childList: true, attributes: true, attributeFilter: ['class'] }); };
     if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
   } catch (_) { /* calls still arm it */ }
 
@@ -164082,7 +164120,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (same) { mono = new AudioBuffer({ length: b.length, numberOfChannels: 1, sampleRate: b.sampleRate }); mono.copyToChannel(x, 0); }
     b.__mono = mono; return mono;
   }
-  const idle = (fn) => (window.requestIdleCallback ? window.requestIdleCallback(fn, { timeout: 4000 }) : later(200, fn));
+  // the page's one admission for idle work (PM_BUSY.idle): never inside a held drag (F3-3)
+  const idle = (fn) => {
+    const B = window.PM_BUSY;
+    if (B && typeof B.idle === 'function') return B.idle(fn, 4000);
+    return window.requestIdleCallback ? window.requestIdleCallback(fn, { timeout: 4000 }) : later(200, fn);
+  };
   /* The dynamic recipes cannot be frozen as whole takes: callout follows its chapter; other sounds follow
      pitch drift, shuffle rotation, helper voice and random noise offsets. Prepare their exact expensive PCM
      ingredients instead, then schedule the original nodes through the original dry and room chains. */
@@ -168204,7 +168247,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         if (soft !== root.hasAttribute('data-pmh-soft')) { if (soft) root.setAttribute('data-pmh-soft', ''); else root.removeAttribute('data-pmh-soft'); }
       } catch (_) {}
     }
-    var idle = window.requestIdleCallback ? function (fn) { window.requestIdleCallback(fn, { timeout: 1500 }); } : function (fn) { setTimeout(fn, 0); };
+    /* idle work goes through the page's one admission (PM_BUSY.idle, 11-motion-start.js): never inside a held drag (F3-3) */
+    var idle = function (fn) {
+      var B = window.PM_BUSY;
+      if (B && typeof B.idle === 'function') { B.idle(fn, 1500); return; }
+      if (window.requestIdleCallback) window.requestIdleCallback(fn, { timeout: 1500 }); else setTimeout(fn, 0);
+    };
     stampSoon(1200);
     setTimeout(function () { idle(askSoft); }, 2500);
     setTimeout(function () { idle(askSoft); }, 6500);
@@ -174028,23 +174076,47 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!svg || !pip) return;
     if (!svg.firstChild) svg.innerHTML = '<path class="o55-railzip-str"/><path class="o55-railzip-hi"/><circle class="o55-railzip-eye" r="2.6"/><circle class="o55-railzip-eye" r="2.6"/>';
     if (pip.getAttribute('data-theme-pip') !== theme) { pip.setAttribute('data-theme-pip', theme); pip.innerHTML = K.svg({ theme, px: 24, decorative: true }); }
+    /* the rail's own size: a layout change (narrow, short, a look's labels) moves its beads after any window resize
+       event has fired, so the rail measures again whenever it changes size (final check: Pip and its rope stayed at
+       the old layout after 720x900 -> 1390x480) */
+    if (!rail.ro && window.ResizeObserver) rail.ro = new ResizeObserver(() => rail.relayout());
+    if (rail.ro && rail.observed !== nav) { rail.ro.disconnect(); rail.ro.observe(nav); rail.observed = nav; }
     rail.measure();
     if (rail.cur !== -1 && cur !== rail.cur && !O55.motion.reduced()) rail.av += (cur > rail.cur ? -1 : 1) * 0.6;
     rail.cur = cur;
     rail.kick();
   };
   /* bead x positions, read once per render and on a resize (never per frame) */
+  /* (in the rail's own, untransformed units: the window's entrance scales it, and a measure taken then would keep the
+     scaled sizes once it settles; final check F1-3, a direct open in Glass was 5 px off) */
   rail.measure = function measure() {
     const nav = rail.nav; if (!nav) return;
-    const nr = nav.getBoundingClientRect();
-    rail.W = nr.width;
-    rail.xs = Array.from(nav.querySelectorAll('.o55-railitem .o55-railnode')).map((n) => { const r = n.getBoundingClientRect(); return r.left + r.width / 2 - nr.left; });
+    const nr = nav.getBoundingClientRect(), w = nav.offsetWidth || nr.width, k = nr.width && w ? nr.width / w : 1;
+    rail.W = w;
+    rail.xs = Array.from(nav.querySelectorAll('.o55-railitem .o55-railnode')).map((n) => { const r = n.getBoundingClientRect(); return (r.left + r.width / 2 - nr.left) / k; });
+  };
+  /* measured again after a size change; a new window layout (wide, narrow, short) puts Pip at its bead at once, where a
+     chapter change lets it travel */
+  rail.relayout = function relayout() {
+    const nav = rail.nav; if (!nav || !nav.isConnected) return;
+    const win = nav.closest('[data-o55-layout]'), layout = win ? win.getAttribute('data-o55-layout') : '';
+    const at = Math.max(0, rail.cur), was = rail.xs[at];
+    rail.measure();
+    const now0 = rail.xs[at];
+    if (rail.layout !== undefined && rail.layout !== layout) rail.x = null;
+    /* the layout moved the bead (the window growing or shrinking): Pip moves with it, a journey under way goes on */
+    else if (rail.x != null && was != null && now0 != null) rail.x += now0 - was;
+    rail.layout = layout;
+    /* drawn now: a ResizeObserver runs after layout and before paint, so Pip and the rope are in place in the very
+       frame the new layout paints (final check F1-3: a frame drawn later showed Pip at the old spot) */
+    if (rail.raf) { cancelAnimationFrame(rail.raf); rail.raf = 0; }
+    rail.force = true; rail.tick(); rail.force = false;
   };
   rail.kick = function kick() { if (!rail.raf) { rail.last = now(); rail.raf = requestAnimationFrame(rail.tick); } };
   rail.tick = function tick() {
     rail.raf = 0;
     const nav = rail.nav; if (!nav || !nav.isConnected || !rail.xs.length) return;
-    if (document.body.classList.contains('pm-resizing') || document.hidden) { setTimeout(rail.kick, 250); return; }
+    if (!rail.force && (document.body.classList.contains('pm-resizing') || document.hidden)) { setTimeout(rail.kick, 250); return; }
     const tn = now(), dt = Math.min(0.04, tn - rail.last) / H.speed(); rail.last = tn;
     const fam = String(rail.theme || 'basic-dark').split('-')[0], rigid = fam === 'nier', red = O55.motion.reduced();
     const W = rail.W, y0 = 9, x0 = 6, x1 = W - 6, tx = rail.xs[Math.max(0, rail.cur)] || x0, weight = rigid ? 0 : fam === 'basic' ? 2 : 4;
@@ -174055,7 +174127,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const aA = -38 * rail.ang - 3.2 * rail.av - ax * 0.0016; rail.av += aA * dt; rail.ang += rail.av * dt;
     const moving = Math.abs(tx - rail.x) > 0.3 || Math.abs(rail.v) > 1 || Math.abs(rail.av) > 0.01 || Math.abs(rail.ang) > 0.004 || Math.abs(rail.dip - weight) > 0.05;
     /* Retro Light is paper: the rail is drawn ten times a second (the spring still runs every frame) */
-    if (rail.theme === 'retro-light' && moving && !red && tn - (rail.drawn || 0) < 0.1) { rail.kick(); return; }
+    if (rail.theme === 'retro-light' && moving && !red && !rail.force && tn - (rail.drawn || 0) < 0.1) { rail.kick(); return; }
     rail.drawn = tn;
     let px = rail.x, dip = Math.max(0, rail.dip);
     if (fam === 'retro') { px = Math.round(px / 4) * 4; dip = Math.round(dip); }
@@ -174074,7 +174146,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (pip) pip.style.transform = `translate(${R(px - 12)}px, ${R(y0 + dip - 5.4)}px) rotate(${R(rail.ang * 57.3)}deg)`;
     if (moving && !red) rail.kick();
   };
-  window.addEventListener('resize', () => { if (rail.nav && rail.nav.isConnected) { rail.measure(); rail.kick(); } });
+  /* (on the next frame: the window's layout class, 60-ui-core.js layoutClass, is set by a resize listener of its own) */
+  window.addEventListener('resize', () => { if (rail.nav && rail.nav.isConnected) requestAnimationFrame(rail.relayout); });
 
   Object.assign(PIP, {
     Stage, LAYOUTS, FAM,
@@ -175287,6 +175360,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (SOLID && !wasShown) setSolid(true);
     O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening', 'o55-scrim-lit'); if (SOLID) setSolid(true); } });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
+    /* a transient left in the reused window from an earlier run (a toast) would play again now: none carries over */
+    r.querySelectorAll('.o55-win > .o55-toast').forEach((n) => n.remove());
     /* the stage lives with the window: reopening wakes it (Retro's tube powers on again) */
     const stage = r.querySelector('.o55-stage'), st0 = O55.pipStage.of(stage);
     if (st0) { st0.setActive(true); if (st0.tube) st0.powerOn(); } else { stage.innerHTML = ''; stage.removeAttribute('data-scene-key'); }
@@ -175343,6 +175418,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const handoff = !!(o && o.handoff);
     const def = SCREENS.defs[S.sess.screen];
     if (def && def.leave) def.leave(S);
+    S.root.querySelectorAll('.o55-win > .o55-toast').forEach((n) => n.remove()); /* (a toast is this run's moment) */
     if (O55.nierLook && O55.nierLook.closed) O55.nierLook.closed(reason); /* an unsaved NieR preview lingers like the look's */
     S.sess.status = reason === 'skip' ? 'skipped' : reason === 'done' ? 'done' : 'closed';
     S.save();
@@ -179459,10 +179535,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       return sub === 'signup' ? ((O55.fixtures.forge(service) || {}).signup || null) : (OF.forge[service] || null);
     }
   };
+  /* A toast is a moment: it leaves the window when its animation ends (or after its length, where Reduced Motion plays
+     none), so it is never left in the reused window to play again when the window next opens (final check F2-2) */
   function toast(S, text) {
     const win = S.root.querySelector('.o55-win'); let el = win.querySelector('.o55-toast');
-    if (!el) { el = document.createElement('div'); el.className = 'o55-toast'; el.setAttribute('role', 'status'); win.appendChild(el); }
+    if (!el) {
+      el = document.createElement('div'); el.className = 'o55-toast'; el.setAttribute('role', 'status'); win.appendChild(el);
+      el.addEventListener('animationend', (e) => { if (e.target === el) el.remove(); });
+    }
     el.textContent = text; el.classList.remove('o55-toast-show'); void el.offsetWidth; el.classList.add('o55-toast-show');
+    if (el.__gone) el.__gone.cancel();
+    el.__gone = O55.motion.after(3400, () => el.remove());
     U.announce(text, win);
   }
   O55.ui.toast = (text) => toast(O55.S, text);
