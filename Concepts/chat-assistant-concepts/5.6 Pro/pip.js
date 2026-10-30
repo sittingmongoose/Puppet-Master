@@ -366,6 +366,35 @@
     return true;
   });
 
+  /* ---------------------------------------------------------------- Demo Studio moments (lab only, DR-070)
+     pip-demo-faces: the Crew sheet opens and its Pip shows each reaction in turn (watch, wonder, oops, then cheers and
+     hops), the way a person's pointer, typing and presses would make it. pip-demo-activity: Activity Detail's agents,
+     each a Pip. Scheduled's status faces and the Orbit's Pip are the gallery's scheduling and work rows. */
+  var demoT = [];
+  function demoFaces() {
+    demoT.forEach(clearTimeout); demoT = [];
+    var c = EXT.ctx(), b = D.createElement('button');
+    b.dataset.kind = 'crew'; b.dataset.auto = '0';
+    EXT.run('collab-open-configure', b, new Event('click'));
+    c.renderOverlays && c.renderOverlays();
+    var steps = [['watch', 1400], ['wonder', 1400], ['oops', 1900], ['happy', 2600]], at = 900;
+    steps.forEach(function (s) {
+      demoT.push(setTimeout(function () {
+        hosts.forEach(function (st) { feel(st, s[0], s[1], s[0] === 'happy'); if (s[0] === 'happy') hop(st); });
+      }, at));
+      at += s[1] + 300;
+    });
+  }
+  function demoActivity() {
+    var X = W.PM56_DEMO;
+    if (X && typeof X.trigger === 'function') X.trigger('Live subagents');
+    if (X && typeof X.openActivity === 'function') X.openActivity('subagents');
+  }
+  if (EXT && EXT.action) {
+    EXT.action('pip-demo-faces', function () { demoFaces(); return true; });
+    EXT.action('pip-demo-activity', function () { demoActivity(); return true; });
+  }
+
   /* ---------------------------------------------------------------- hooks */
   if (EXT && EXT.slot) EXT.slot('afterRender', function () { scan(); syncThinking(); });
   startBlinks();
