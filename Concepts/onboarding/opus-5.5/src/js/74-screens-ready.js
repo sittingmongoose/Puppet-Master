@@ -112,7 +112,8 @@
 
   function summary(S) {
     const d = md(S), cm = S.sess.commit || {}, ai = O55.ai ? O55.ai.readyIds(S) : [], free = Object.values(S.sess.ai.freeRoutes || {}).filter((x) => x === 'ready').length, b = S.sess.backup;
-    const row = (k, v, ok) => `<div class="o55-revrow" data-key="sum-${k}"><span class="o55-revk">${U.esc(T('ready.' + k))}</span><span class="o55-revv">${U.esc(v)}</span>${ok ? C.pill('ready', T('ai.ready')) : ''}</div>`;
+    /* Free Models and Backup have a ? beside their name (summary:<row>), the note under the summary */
+    const row = (k, v, ok) => `<div class="o55-revrow" data-key="sum-${k}"><span class="o55-revk"><span class="o55-labq">${U.esc(T('ready.' + k))}${O55.tips.q('summary:' + k)}</span></span><span class="o55-revv">${U.esc(v)}</span>${ok ? C.pill('ready', T('ai.ready')) : ''}</div>`;
     let out = '';
     if (cm.state === 'done') out += row('project', d.project_name + ' · ' + O55.review.whereWork(S), true);
     out += row('ai', ai.length ? ai.map((id) => O55.ai.pname(O55.fixtures.provider(id))).join(', ') : T('ready.noAi'), ai.length > 0);
@@ -143,7 +144,8 @@
       const later = md(S).project_mode === 'later' || !(S.sess.commit && S.sess.commit.state === 'done');
       /* under NieR Mode's headers the summary reads as a setup card: an ink kicker band naming the Project, rows with dot
          leaders whose values type in (11-window-nier.css, O55.nierWindow); the same rows and words otherwise */
-      let out = later ? '' : `<div class="o55-summary" data-key="summary" data-o55nw-card="" data-o55nw-kicker="${U.esc(T('nierWindow.card', { name: md(S).project_name }))}">${summary(S)}</div>`;
+      let out = later ? '' : `<div class="o55-summary" data-key="summary" data-o55nw-card="" data-o55nw-kicker="${U.esc(T('nierWindow.card', { name: md(S).project_name }))}">${summary(S)}</div>`
+        + O55.tips.explainer('summary:free') + O55.tips.explainer('summary:backup');
       if (!later && O55.tour && O55.tour.start) out += C.note(T('ready.tourSub', { m: O55.tour.minutes ? O55.tour.minutes() : 4 }), 'info', 'spark');
       out += `<p class="o55-note o55-note-info" data-key="help">${C.small('person', 14)}<span>${U.esc(T('ready.help'))}</span></p>`;
       return out;

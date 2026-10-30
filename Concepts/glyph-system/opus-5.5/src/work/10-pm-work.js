@@ -183,7 +183,7 @@
   }
   const plural = (n, one, many) => n + ' ' + (n === 1 ? one : many);
 
-  /* B5, the project box: needs you > blocked > working > unsaved > calm. Unsaved layout is shell state the box passes
+  /* B5, the project box: needs you > blocked > working > unsaved > calm. Unsaved changes are shell state the box passes
      in ({ unsaved: true }), so the order lives here once. A stale feed keeps its last known state (never a healthy zero). */
   const B5 = ['waiting', 'blocked', 'working', 'change-modified'];
   function project(id, opts) {
@@ -207,7 +207,7 @@
         const rs = items({ project: id }).filter((x) => x.stopping && x.restarting).length;
         say = rs === c.stopping ? plural(rs, 'item', 'items') + ' restarting' : plural(c.stopping, 'item', 'items') + ' stopping';
       }
-    } else if (k === 'change-modified') say = 'Unsaved layout';
+    } else if (k === 'change-modified') say = 'Unsaved changes';
     return { key: k, keys, say, counts: c, stale: c.stale };
   }
   /* the composer dock and the chat's Processes domain: one thread */

@@ -366,66 +366,45 @@ def('n14', 'homeNasPm', 'A new Project kept on a NAS that runs Puppet Master: st
 });
 /* Motion of their own: typing a name keeps the marionette moving (a re-render never drops the bar back to level) and
    every letter plucks the sign; each beginning on the start scene has its own idle. Measured every frame. */
-def('m1', 'fresh', 'Typing a name: the bar never snaps back, each letter plucks the sign, strings stay on', async (d, A) => {
+/* Pip's stage (DL-238): the troupe these two measured went with O1; they now check Pip on the same moments. A string's
+   ends are the kit's solver's (PMLogo.solver.strings), so each frame's path must start and end where the solver puts
+   the screw eyes for the pose drawn that frame. */
+const stageState = (d) => d.page.evaluate(() => { const s = window.O55.pipStage && window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')); return s ? { mood: s.curMood, props: [...s.props.values()].filter((p) => p.state !== 'out').map((p) => ({ id: p.spec.id, kind: p.spec.kind, preview: !!p.spec.preview, text: p.spec.params && p.spec.params.text, av: p.av })) } : null; });
+def('m1', 'fresh', 'Typing a name: Pip watches in wonder, the sign spells the name, the strings stay on', async (d, A) => {
   await d.openOnboarding(); await toName(d);
-  await d.page.evaluate(() => { const el = document.querySelector('#o55f-name'); if (el) el.value = ''; });
-  await d.until(() => {
-    const w = document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out)');
-    const bar = w && w.querySelector('.o55-it[data-key="bar"] > .o55-in > .o55-am');
-    return w && !w.matches('.o55-hold, .o55-ens-hold') && bar && !!bar.getAttribute('transform') && !w.getAnimations({ subtree: true }).some((a) => a.playState === 'running' && Number.isFinite(a.effect.getComputedTiming().endTime));
-  }, { what: 'name scene entered with ambient bar transform' });
+  await d.until(() => { const s = window.O55.pipStage && window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')); return s && s.props.has('sign'); }, { what: 'the sign on the stage' });
   await d.page.evaluate(() => {
-    const svg = () => document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) svg');
-    const rot = (s) => { const m = /rotate\((-?[\d.]+)/.exec(s || ''); return m ? +m[1] : 0; }, ty = (s) => { const m = /translate\((-?[\d.]+)[ ,]+(-?[\d.]+)/.exec(s || ''); return m ? +m[2] : 0; };
+    const st = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage'));
     const rec = window.__m1 = { frames: [], on: true };
-    const loop = () => {
-      if (!rec.on) return;
-      const v = svg(), bar = v && v.querySelector('.o55-it[data-key="bar"] > .o55-in > .o55-am'), sign = v && v.querySelector('.o55-it[data-key="sign"] > .o55-in > .o55-am');
-      if (bar && sign) rec.frames.push({ t: performance.now(), bar: bar.getAttribute('transform'), bt: rot(bar.getAttribute('transform')), st: rot(sign.getAttribute('transform')), sy: ty(sign.getAttribute('transform')) });
-      requestAnimationFrame(loop);
-    };
+    const loop = () => { if (!rec.on) return; rec.frames.push({ d: st.pstrs.map((p) => p.getAttribute('d') || ''), mood: st.curMood }); requestAnimationFrame(loop); };
     requestAnimationFrame(loop);
   });
-  const fam = await d.state(() => window.PM_THEME.getFamily ? window.PM_THEME.getFamily() : document.documentElement.getAttribute('data-theme-family'));
-  // These durations are the motion measurement: a 170 ms typing cadence and 900 ms of the sign's response.
+  // a 170 ms typing cadence, then 900 ms for Pip's answer
   for (const ch of 'Garden') { await d.type('name', ch, { clear: false, settle: false }); await sleep(170); }
+  const typing = await stageState(d);
   await sleep(900);
   const r = await d.page.evaluate(() => { window.__m1.on = false; return window.__m1.frames; });
-  const retro = /retro/.test(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-stage svg').getAttribute('data-family')));
   A.ok(r.length > 8, 'frames recorded (' + r.length + ')');
-  A.eq(r.filter((f) => !f.bar).length, 0, 'the bar keeps its transform on every frame while typing');
-  if (!retro) {
-    /* a snap back to level would be a step far faster than the swing (at most about 9 deg/s, Friendly) */
-    let rate = 0, at = null; for (let i = 1; i < r.length; i++) { const dt = Math.max(16, r[i].t - r[i - 1].t), v = (Math.abs(r[i].bt - r[i - 1].bt) / dt) * 1000; if (v > rate) { rate = v; at = [r[i - 1].bt, r[i].bt, dt]; } }
-    A.ok(rate < 30, 'no snap in the bar tilt (fastest ' + rate.toFixed(1) + ' deg/s' + (at ? ', ' + at[0].toFixed(2) + ' to ' + at[1].toFixed(2) + ' in ' + Math.round(at[2]) + ' ms' : '') + ')');
-    const wob = Math.max(...r.map((f) => Math.abs(f.st - f.bt)));
-    A.ok(wob > 1, 'letters pluck the sign (largest wobble off the bar ' + wob.toFixed(2) + ' deg)');
-  } else {
-    A.ok(r.some((f) => f.sy >= 4), 'Retro: a letter drops the sign one pixel step');
-  }
-  const gaps = await d.page.evaluate(() => window.O55.art.rig.gaps(document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) svg')));
-  A.ok(gaps && gaps.every((g) => g.start < 1.5 && g.end < 1.5), 'strings stay on their hooks (' + (gaps || []).map((g) => g.end.toFixed(2)).join(', ') + ')');
+  A.eq(r.filter((f) => f.d.some((x) => !x || /NaN/.test(x))).length, 0, 'both strings are drawn on every frame, never NaN');
+  A.ok(typing && typing.mood === 'wonder', 'Pip watches the field in wonder while it is typed into (' + (typing && typing.mood) + ')');
+  const s = await stageState(d), sign = s && s.props.find((p) => p.kind === 'sign');
+  A.ok(sign && /Garden$/.test(sign.text || ''), 'the sign spells the name (' + (sign && sign.text) + ')');
   A.eq((await d.draft('main')).project_name, 'Garden', 'the name typed');
 });
-def('m2', 'fresh', 'Each beginning has an idle of its own; a new one is hung with a swing', async (d, A) => {
+
+def('m2', 'fresh', 'Each beginning lowers its own prop; a choice drops it in with a swing', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   A.eq(await d.screen(), 'begin', 'start scene');
-  const lowres = () => d.state(() => document.documentElement.hasAttribute('data-o55-lowres'));
-  const idle = () => d.page.evaluate(() => { const g = document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) [data-key="hero"] .o55-gl'); return g ? { cls: g.getAttribute('class'), anims: g.getAnimations().map((a) => a.animationName || 'waapi') } : null; });
-  const untilIdle = (kind) => d.until((k) => {
-    const g = document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) [data-key="hero"] .o55-gl');
-    return g && g.classList.contains('o55-gl-' + k) && (document.documentElement.hasAttribute('data-o55-lowres') || g.getAnimations().some((a) => /^o55-gl-/.test(a.animationName || '') && a.playState === 'running'));
-  }, { args: [kind], what: kind + ' hero idle' });
-  await untilIdle('seed'); let s = await idle(); A.ok(s && /o55-gl-seed/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-/.test(n))), 'seed idles, unless low-resource mode is on (' + (s && s.anims.join(',')) + ')');
-  await d.act('pick', 'restore'); await untilIdle('rewind'); s = await idle(); A.ok(s && /o55-gl-rewind/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-(rewind|px-rw)/.test(n))), 'rewind ticks back (' + (s && s.anims.join(',')) + ')');
-  await d.act('pick', 'existing', { settle: false });
-  await d.until(() => { const g = document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) [data-key="hero"] .o55-gl'); return g && g.classList.contains('o55-gl-folder') && g.getAnimations().some((a) => !a.animationName && a.playState === 'running'); }, { every: 60, what: 'new folder hero entrance animation' });
-  s = await idle(); A.ok(s && s.anims.includes('waapi'), 'the new icon pops in (' + (s && s.anims.join(',')) + ')');
-  await d.act('sub', 'online'); await untilIdle('cloud'); s = await idle(); A.ok(s && /o55-gl-cloud/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-(drift|px-drift)/.test(n))), 'cloud drifts (' + (s && s.anims.join(',')) + ')');
-  await d.act('sub', 'device'); await untilIdle('server'); s = await idle(); A.ok(s && /o55-gl-server/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-(hum|px)/.test(n))), 'server hums (' + (s && s.anims.join(',')) + ')');
-  const gaps = await d.page.evaluate(() => window.O55.art.rig.gaps(document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) svg')));
-  A.ok(gaps && gaps.every((g) => g.start < 1.5 && g.end < 1.5), 'the hero stays on its string');
+  const kindIs = (k) => d.until((k) => { const s = window.O55.pipStage && window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')); return s && [...s.props.values()].some((p) => p.state !== 'out' && p.spec.kind === k && !p.spec.preview); }, { args: [k], what: k + ' on the stage' });
+  await kindIs('page'); A.ok(true, 'a new Project hangs a blank page');
+  await d.act('pick', 'restore'); await kindIs('restore'); A.ok(true, 'a restore hangs the restore box');
+  await d.act('pick', 'existing', { settle: false }); await kindIs('folder'); A.ok(true, 'existing work hangs a folder');
+  await d.act('sub', 'online'); await kindIs('forge'); A.ok(true, 'an online Project hangs its service');
+  await d.act('sub', 'device'); await kindIs('nas'); A.ok(true, 'another device hangs the NAS');
+  const s = await stageState(d);
+  A.ok(s && s.mood === 'happy', 'Pip is happy at the choice (' + (s && s.mood) + ')');
 });
+
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();

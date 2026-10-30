@@ -146,7 +146,8 @@
         { id: 'bk-garden', project: 'Garden Planner', where: 'Google Drive', source: 'cloud', snapshots: ['Sep 22 · 7:40 AM', 'Sep 15 · 7:38 AM'] }
       ],
       fullBackups: [{ id: 'full-1', label: 'Everything from "Jared’s old laptop"', when: 'Sep 21 · 11:02 PM', projects: 3, accounts: 2, projectList: ['Tastebook', 'Harbor', 'Loom'] }],
-      failures: {}, /* e.g. { online_copy: 'name_taken' | 'network' } — one-shot owner failures for the recovery scenarios */
+      failures: {}, /* e.g. { online_copy: 'name_taken' | 'network' } — one-shot owner failures for the recovery scenarios;
+                       signin_once: { <provider or service id>: true } — that browser sign-in does not finish the first time */
       lowResource: false
     };
   }
@@ -176,7 +177,11 @@
     lowResource: { label: 'Low-resource computer', apply(e) { e.lowResource = true; } },
     keyRefused: { label: 'Home NAS refuses the key once', apply(e) { e.devices[0].homePermsOpen = true; } },
     selfKeyMissing: { label: 'Key added by hand is not there yet', apply(e) { e.failures.self_key_missing_once = true; } },
-    homeNasPm: { label: 'Home NAS already runs Puppet Master', apply(e) { e.devices[0].pm = true; } }
+    homeNasPm: { label: 'Home NAS already runs Puppet Master', apply(e) { e.devices[0].pm = true; } },
+    /* a browser sign-in closed before it finished: the row says so and offers it again (ai.signinFail,
+       online.signin.fail); the second try works */
+    antigravityOnce: { label: 'Antigravity sign-in fails once', apply(e) { e.failures.signin_once = Object.assign({}, e.failures.signin_once, { antigravity: true }); } },
+    githubSigninOnce: { label: 'GitHub sign-in fails once', apply(e) { e.failures.signin_once = Object.assign({}, e.failures.signin_once, { github: true }); } }
   };
 
   O55.fixtures = {
@@ -190,6 +195,8 @@
       return e;
     },
     provider: (id) => PROVIDERS.find((p) => p.id === id),
-    forge: (id) => FORGES.find((f) => f.id === id)
+    forge: (id) => FORGES.find((f) => f.id === id),
+    /* a one-shot sign-in failure, used up by the try it fails (signin_once) */
+    signinFails(e, id) { const f = e && e.failures && e.failures.signin_once; if (!f || !f[id]) return false; f[id] = false; return true; }
   };
 })();

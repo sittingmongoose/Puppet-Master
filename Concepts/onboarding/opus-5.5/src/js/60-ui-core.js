@@ -46,7 +46,7 @@
       + `<div class="o55-headctl"><span class="o55-lookslot"></span><span class="o55-soundslot"></span>`
       + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(T('chrome.closeHint'))}">`
       + `${U.nx('close', 18, 'control') || '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'}<span>${U.esc(T('chrome.close'))}</span></button></div></header>`
-      + `<div class="o55-body"><div class="o55-stage o55-scene-host" aria-hidden="true"></div><section class="o55-pane"></section></div>`
+      + `<div class="o55-body"><div class="o55-stage o55-scene-host"></div><section class="o55-pane"></section></div>`
       + `<div class="o55-live" aria-live="polite" role="status"></div></div>`;
     document.body.appendChild(root);
     S.root = root;
@@ -62,10 +62,30 @@
     root.addEventListener('keydown', snap, true);
     new MutationObserver(() => { if (S.open) syncTheme(true); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts'] });
     document.addEventListener('visibilitychange', () => { root.setAttribute('data-o55-ambient', document.hidden ? 'off' : 'on'); });
+    /* Pip watches what you point at (hover intent), wonders at what you type, and is happy at what you choose */
+    const pane = root.querySelector('.o55-pane');
+    pane.addEventListener('pointermove', (e) => { hv.x = e.clientX; hv.y = e.clientY; }, { passive: true });
+    pane.addEventListener('pointerover', (e) => { hv.x = e.clientX; hv.y = e.clientY; wantHover(hoverOf(e.target)); });
+    pane.addEventListener('pointerleave', () => wantHover(null));
+    pane.addEventListener('focusin', (e) => {
+      const b = e.target.closest && e.target.closest('[data-o55-bind]');
+      if (b) { const id = b.getAttribute('data-o55-bind'); if (S.pipTyping !== id) { S.pipTyping = id; renderScene(); } }
+      const h = hoverOf(e.target);
+      if (h && e.target.matches(':focus-visible')) { hv.byFocus = true; hv.want = h; setHover(h); }
+    });
+    pane.addEventListener('focusout', (e) => {
+      if (S.pipTyping && e.target.closest && e.target.closest('[data-o55-bind]')) { S.pipTyping = null; O55.motion.real.setTimeout(() => renderScene(), 0); }
+      const to = e.relatedTarget && e.relatedTarget.closest && hoverOf(e.relatedTarget);
+      if (hv.byFocus && !to) { hv.byFocus = false; wantHover(null); }
+    });
     window.addEventListener('resize', () => { if (S.open) layoutClass(); });
     return root;
   }
+  /* The window's brand mark is Pip (DL-235, DR-076: the one kit), still (the brand mark never animates) and drawn in the
+     painted look, NieR's with its plain band (X3); the old marionette glyph is kept only for a page without the kit */
   function logo() {
+    const K = window.PMLogo;
+    if (K && typeof K.mark === 'function') { try { return `<span class="o55-logo o55-logo-pip" data-look="${U.esc(K.look())}">${K.mark({ px: 22, decorative: true })}</span>`; } catch (_) {} }
     return `<svg class="o55-logo" viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path d="M5 9h22M16 4v14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>`
       + `<path d="M8 9v9M24 9v9M16 18v5" stroke="currentColor" stroke-width="1.2" stroke-dasharray="1.6 2.2"/><circle cx="8" cy="21" r="2.6" fill="currentColor"/><circle cx="24" cy="21" r="2.6" fill="currentColor"/><circle cx="16" cy="26" r="2.6" fill="currentColor"/></svg>`;
   }
@@ -81,7 +101,7 @@
   function layoutClass() {
     if (!S.root.querySelector('.o55-win')) return;
     const r = winSize(), layout = r.width < 760 ? 'narrow' : r.height < 520 ? 'short' : 'wide';
-    if (S.root.getAttribute('data-o55-layout') !== layout) S.root.setAttribute('data-o55-layout', layout);
+    if (S.root.getAttribute('data-o55-layout') !== layout) { S.root.setAttribute('data-o55-layout', layout); if (S.open && S.sess) refresh(); }
     /* the concept demo pill folds into a slim tab beside a narrow window (12-components.css) */
     const demo = document.getElementById('o55-demo');
     if (demo && demo.hasAttribute('data-o55-narrow') !== (layout === 'narrow')) demo.toggleAttribute('data-o55-narrow', layout === 'narrow');
@@ -193,6 +213,9 @@
     /* NieR Mode repaints Basic in ink without changing the painted family, so it is part of the look */
     const look = th.family + '-' + th.mode + (document.documentElement.hasAttribute('data-o55-nier') ? '-nier' : '');
     S.root.setAttribute('data-family', th.family); S.root.setAttribute('data-mode', th.mode);
+    /* the brand's Pip follows the look (its drawing differs by family: Retro's pixels, NieR's band) */
+    const lp = S.root.querySelector('.o55-brand .o55-logo-pip');
+    if (lp && window.PMLogo && lp.getAttribute('data-look') !== window.PMLogo.look()) lp.outerHTML = logo();
     S.root.querySelector('.o55-stage').setAttribute('data-family', th.family);
     /* after the attributes, before any mount: one read of the colours the new look already computed */
     warmStageTokens();
@@ -291,8 +314,11 @@
         + `<span class="o55-railstring" aria-hidden="true"></span><span class="o55-railnode" aria-hidden="true"></span>`
         + `<span class="o55-raillabel">${U.esc(T('chapters.' + ch))}</span></li>`;
     }).join('');
-    U.morph(nav, `<div class="o55-railbar o55-railbar-${fam}" aria-hidden="true"></div><ol class="o55-raillist" aria-label="${U.esc(pr.announce)}">${items}</ol>`);
+    const zip = O55.pipStage && O55.pipStage.h.kit() ? '<svg class="o55-railzip" aria-hidden="true" data-morph-skip></svg><span class="o55-railpip" aria-hidden="true" data-morph-skip></span>' : '';
+    U.morph(nav, `${zip}<div class="o55-railbar o55-railbar-${fam}" aria-hidden="true"></div><ol class="o55-raillist" aria-label="${U.esc(pr.announce)}">${items}</ol>`);
     nav.setAttribute('data-count', pr.chapters.length);
+    /* Pip rides the bar as the current chapter's marker (58-rig.js O55.pipStage.rail); the morph keeps its nodes */
+    if (O55.pipStage && O55.pipStage.rail && O55.pipStage.h.kit()) { nav.setAttribute('data-o55-pip', ''); O55.pipStage.rail.mount(nav, pr.index, O55.pipStage.h.theme()); }
   }
   /* A choice made: a helper in the scene cheers for it and the rail's marker for this chapter gives a small bump. The
      choice is still recorded per chapter. (Choices used to fly up and hang on the rail as small icons; people read
@@ -315,11 +341,15 @@
 
   /* ---------------------------------------------------------------- render */
   const val = (v) => (typeof v === 'function' ? v(S) : v);
+  /* the footer's controls that have a ? of their own (Ready's Tour and Enter, Welcome's Skip): their explainer opens at
+     the end of the screen's content, never inside the footer's row */
+  let footTips = [];
   function footHtml(foot, def, choose) {
     foot = foot || {};
+    footTips = [];
     const back = foot.back === false ? '' : `<button type="button" class="o55-btn o55-ghost o55-back" data-o55-do="back" data-pm-hover-exempt="true">${backIcon()}<span>${U.esc(T('chrome.back'))}</span></button>`;
-    const secs = (foot.secondary || []).filter(Boolean), sec = secs.map((b) => btn(b, 'o55-secondary')).join('');
-    const pri = foot.primary ? btn(foot.primary, 'o55-primary') : '';
+    const secs = (foot.secondary || []).filter(Boolean), sec = secs.map((b) => btn(b, 'o55-secondary', true)).join('');
+    const pri = foot.primary ? btn(foot.primary, 'o55-primary', true) : '';
     const note = foot.note ? `<span class="o55-footnote">${U.esc(foot.note)}</span>` : '';
     return `<footer class="o55-foot o55-st" style="--i:4">${back}${note}<span class="o55-footgrow">${secs.length || note ? '' : keysHtml(foot, choose)}</span>${sec}${pri}</footer>`;
   }
@@ -333,20 +363,30 @@
       + `${k(T('nierWindow.keys.escCap'), T('nierWindow.keys.esc'))}${choose ? k('\u2190 \u2192', T('nierWindow.keys.choose')) : ''}</span>`;
   }
   const backIcon = () => U.nx('chevron-left', 16, 'control') || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
-  function btn(b, cls) {
+  /* An action button with a tip of its own (Try again, Check again, Trust this device) has its ? beside it (b.tip: false
+     for none, or another id); in the footer the ? stays beside the button and its explainer opens in the content */
+  function btn(b, cls, inFoot) {
     const dis = b.disabled ? ` aria-disabled="true" data-disabled-reason="${U.esc(b.reason || '')}"` : '';
-    return `<button type="button" class="o55-btn ${cls}${b.cls ? ' ' + b.cls : ''}" data-o55-do="${U.esc(b.do)}"${b.arg != null ? ` data-arg="${U.esc(b.arg)}"` : ''}${dis} data-pm-hover-exempt="true"${b.id ? ` data-key="${U.esc(b.id)}"` : ''}>`
+    const tid = b.tip === false || !O55.tips ? null : b.tip || O55.tips.exact(b.do, b.arg);
+    const html = `<button type="button" class="o55-btn ${cls}${b.cls ? ' ' + b.cls : ''}" data-o55-do="${U.esc(b.do)}"${b.arg != null ? ` data-arg="${U.esc(b.arg)}"` : ''}${dis}${tid ? O55.tips.described(tid) : ''} data-pm-hover-exempt="true"${b.id ? ` data-key="${U.esc(b.id)}"` : ''}>`
       + (b.icon ? U.icon(b.icon) : '') + `<span>${U.esc(b.label)}</span></button>`;
+    if (!tid) return html;
+    if (!inFoot) return O55.tips.opt(tid, html, 'o55-opt-inline', 'span', { note: b.note });
+    const qh = O55.tips.q(tid); if (!qh) return html;
+    footTips.push(tid);
+    return `<span class="o55-opt o55-opt-inline o55-opt-foot" data-key="opt-${U.esc(tid)}">${html}${qh}</span>`;
   }
   O55.ui = { btn };
 
   function paneHtml(def) {
     const eyebrow = val(def.eyebrow), title = val(def.title), lead = val(def.lead), body = def.body ? def.body(S) : '';
+    const foot = footHtml(def.foot ? def.foot(S) : {}, def, /o55-choices|o55-tiles/.test(body));
+    const footNote = S.tip && footTips.includes(S.tip.id) ? O55.tips.explainer(S.tip.id) : '';
     return `<div class="o55-scroll" data-key="scroll"><div class="o55-content">`
       + (eyebrow ? `<p class="o55-eyebrow o55-st" style="--i:0">${U.esc(eyebrow)}</p>` : '')
       + `<h1 class="o55-title o55-st" style="--i:1" id="o55-h" tabindex="-1">${U.esc(title || '')}</h1>`
       + (lead ? `<p class="o55-lead o55-st" style="--i:2">${U.esc(lead)}</p>` : '')
-      + `<div class="o55-main o55-st" style="--i:3" data-key="main">${resumedBanner(def)}${body}</div></div></div>` + footHtml(def.foot ? def.foot(S) : {}, def, /o55-choices|o55-tiles/.test(body));
+      + `<div class="o55-main o55-st" style="--i:3" data-key="main">${resumedBanner(def)}${body}${footNote}</div></div></div>` + foot;
   }
 
   /* Reopening lands on the exact saved screen with a quiet "Picking up where you left off" and Start over; the banner
@@ -355,18 +395,112 @@
     if (!S.resumed || S.resumedShownOn !== def.id || def.id === 'welcome') return '';
     return `<div class="o55-banner" data-key="resumed">${O55.c.small('history', 18)}<span>${U.esc(T('welcome.resumed'))}</span>${O55.c.link(T('welcome.startOver'), 'startOver')}</div>`;
   }
+  /* ---------------------------------------------------------------- Pip's stage (DL-238)
+     The window keeps one stage (O55.pipStage, 58-rig.js) for its life and directs it on every render: the screen's
+     spec (O55.pipScenes, 55-scenes.js) from the session, what the pointer rests on, the field being typed into and
+     what has gone wrong (O55.pipOops). The stage follows the painted look (NieR Mode is its own world), the window's
+     layout (wide: the tall pane beside the screen; narrow: a strip above it; short: a short strip) and Reduced Motion. */
+  const LAYOUT = { wide: 'portrait', narrow: 'banner', short: 'compact' };
+  const stageLayout = () => LAYOUT[S.root.getAttribute('data-o55-layout')] || 'portrait';
+  let lastOops = null, cheering = null;
+  function stageOf() {
+    const host = S.root && S.root.querySelector('.o55-stage');
+    if (!host || !O55.pipStage || !O55.pipStage.h.kit()) return null; /* the kit is the glyph system's head module */
+    const H = O55.pipStage.h, st = O55.pipStage.ensure(host, { theme: H.theme(), layout: stageLayout(), reduced: O55.motion.reduced() });
+    st.setReduced(O55.motion.reduced()); st.setLayout(stageLayout()); st.setTheme(H.theme());
+    return st;
+  }
   function renderScene(force, hold, o) {
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
-    const sc = def.scene ? def.scene(S) : { id: 'hero' };
-    const host = S.root.querySelector('.o55-stage');
-    const th = O55.theme();
-    const band = S.root.getAttribute('data-o55-layout') === 'narrow';
-    const key = `${sc.id}|${th.family}|${th.mode}|${band}`;
-    if (force || host.getAttribute('data-scene-key') !== key || host.getAttribute('data-beat') !== (sc.beat || 'default') || JSON.stringify(sc.params || {}) !== host.getAttribute('data-params')) {
-      O55.art.mount(host, sc.id, { family: th.family, mode: th.mode, beat: sc.beat || 'default', params: sc.params || {}, band, instance: band ? 'band' : '', hold: !!hold, ensembleHold: !!(o && o.ensembleHold) });
-      host.setAttribute('data-scene-key', key); host.setAttribute('data-beat', sc.beat || 'default'); host.setAttribute('data-params', JSON.stringify(sc.params || {}));
-    }
+    const st = stageOf(); if (!st) return;
+    if (hold) st.hold(true);
+    st.setActive(!!S.open);
+    const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    /* what has gone wrong, read off the screen; once it is put right, Pip cheers (pip.cheer.<key>) */
+    const oops = layer && !(layer.classList.contains('o55-hold')) ? O55.pipOops.read(layer) : null;
+    const spec = O55.pipScenes.spec(S, { hover: S.pipHover, typing: S.pipTyping, oops, picked: o && o.picked });
+    spec.screen = S.sess.screen;
+    if (o && o.sayNow) spec.sayNow = true;
+    /* (the screen plays its own soft warning; Pip only says so, at once) */
+    if (oops && (!lastOops || lastOops.key !== oops.key || lastOops.screen !== S.sess.screen)) spec.sayNow = true;
+    const cheer = !oops && lastOops && lastOops.screen === S.sess.screen && lastOops.face === 'oops' ? lastOops.key : null;
+    lastOops = oops ? { key: oops.key, face: oops.face, screen: S.sess.screen } : null;
+    /* the cheer is said through, even while the screen settles around it (its line would otherwise be replaced by the
+       next refresh's ordinary one) */
+    if (cheer) { cheering = { text: O55.t('pip.cheer.' + cheer), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; }
+    if (cheering && (oops || cheering.screen !== S.sess.screen || performance.now() > cheering.until)) cheering = null;
+    if (cheering) { spec.say = cheering.text; spec.pip.mood = 'happy'; }
+    /* Pick a look: hovering a look makes Pip try it on (silent, O6); the world follows once it is picked */
+    if (S.sess.screen === 'look') {
+      const h = S.pipHover || '', mode = O55.theme().mode;
+      st.tryOn(/^pickFamily:/.test(h) ? h.slice(11) + '-' + mode : h === 'pickNier' ? 'nier-' + mode : null);
+    } else st.tryOn(null); /* (a look only tried on is put back once the screen is left) */
+    /* a fault shown now wins over a feeling still held from a moment before (a cheer, a pick) */
+    if (oops) st.moodOverride = null;
+    st.direct(spec);
+    if (cheer) st.cheer(spec.target, { mood: 'happy', hold: 1800 });
+    /* the ? note on the stage, when the stage can hold it (a wide window); otherwise it opens in the form */
+    const t = S.tip && holdsTip() ? O55.tips.of(S.tip.id) : null;
+    st.tip(t ? { id: S.tip.id, title: t.title, text: t.text } : null);
   }
+  function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit()); }
+  O55.pipStage.holdsTip = holdsTip;
+
+  /* Hover intent: a choice previews only once the pointer has rested on it for DWELL ms, so moving across the list to
+     find your way, or pausing on the way past, changes nothing (Jared asked twice for more delay). A preview stays at
+     least HOLD ms, and leaving a choice keeps it GRACE ms, so the gaps between rows never flicker. The keyboard is
+     deliberate: focus previews at once. The previewed choice is highlighted (o55-previewing). */
+  const STILL = 6, POLL = 60, DWELL = 420, HOLD = 900, GRACE = 600;
+  const hv = { want: null, x: 0, y: 0, px: 0, py: 0, poll: null, leaveT: null, shownAt: 0, rest: 0, byFocus: false };
+  /* a control's id, as its ? and its line know it: <data-o55-do>:<data-arg>, <data-o55-do>, or field:<bind> */
+  function hoverOf(t) {
+    const c = t && t.closest && t.closest('[data-o55-do], [data-o55-bind]');
+    if (!c || c.closest('.o55-foot') || c.classList.contains('o55-tipq') || c.classList.contains('o55-explainer-x')) return null;
+    if (c.hasAttribute('data-o55-bind')) return null; /* a field is typed into, not previewed */
+    const d = c.getAttribute('data-o55-do'), a = c.getAttribute('data-arg');
+    return a != null && a !== '' ? d + ':' + a : d;
+  }
+  function stopHover() { if (hv.poll) { hv.poll.cancel(); hv.poll = null; } if (hv.leaveT) { hv.leaveT.cancel(); hv.leaveT = null; } }
+  function setHover(h) {
+    stopHover();
+    if (h === S.pipHover) return;
+    S.pipHover = h; hv.shownAt = performance.now();
+    const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    if (layer) {
+      layer.querySelectorAll('.o55-previewing').forEach((n) => n.classList.remove('o55-previewing'));
+      const el = h && Array.from(layer.querySelectorAll('[data-o55-do]')).find((n) => hoverOf(n) === h);
+      if (el) el.classList.add('o55-previewing');
+    }
+    const st = stageOf(); if (st && h) st.busy();
+    renderScene();
+  }
+  function wantHover(h) {
+    if (h === hv.want) return;
+    hv.want = h;
+    stopHover();
+    if (!h) { hv.leaveT = O55.motion.after(GRACE, () => setHover(null)); return; }
+    if (h === S.pipHover) return;
+    hv.px = hv.x; hv.py = hv.y; hv.rest = 0;
+    const tick = () => {
+      const moved = Math.hypot(hv.x - hv.px, hv.y - hv.py);
+      hv.px = hv.x; hv.py = hv.y;
+      hv.rest = moved < STILL ? hv.rest + POLL : 0;
+      if (hv.rest >= DWELL && performance.now() - hv.shownAt > HOLD) { hv.poll = null; setHover(hv.want); return; }
+      hv.poll = O55.motion.after(POLL, tick);
+    };
+    hv.poll = O55.motion.after(POLL, tick);
+  }
+  /* a choice made: Pip says that choice's line at once, happy through it, and the chosen prop pops */
+  function picked(id) {
+    stopHover(); hv.want = null;
+    const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    if (layer) layer.querySelectorAll('.o55-previewing').forEach((n) => n.classList.remove('o55-previewing'));
+    S.pipHover = null;
+    const st = stageOf(); if (!st) return;
+    const spec = O55.pipScenes.spec(S, { hover: id, picked: true }); spec.screen = S.sess.screen; spec.sayNow = true; spec.pip.mood = 'happy';
+    st.busy(); st.direct(spec); st.cheer(spec.target, { mood: 'happy', hold: 2600 });
+  }
+
 
   /* Quiet in-screen update: morph the current layer; never replays the entrance. */
   function refresh() {
@@ -377,6 +511,7 @@
     if (!layer) return transition(null);
     const hadSheet = !!layer.querySelector('.o55-sheet[data-open="true"]');
     U.morph(layer, paneHtml(def));
+    O55.tips.write(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
     const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
     if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() || skin('stepped') ? 'auto' : 'smooth' });
@@ -415,10 +550,13 @@
     layer.setAttribute('data-screen', def.id);
     layer.innerHTML = paneHtml(def);
     pane.appendChild(layer);
+    O55.tips.write(layer);
     layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => n.style.setProperty('--ci', i));
     /* the entrance classes leave once every entrance animation has finished (never cut short, even in slow motion) */
     O55.motion.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back', 'o55-in-open'));
     renderScene(false, hold); renderRail(); renderSound();
+    /* Welcome: Pip sleeps on slack strings until a real arrival (a key, or the pointer travelling) wakes it */
+    if (def.id === 'welcome') { const st0 = stageOf(); if (st0) st0.wake(); }
     /* the end of an act: the skin may keep the old scene a moment longer (its troupe bows) before the new one shows */
     const stageWait = old && hold ? Math.max(0, +skin('stageDelay', dir) || 0) : 0;
     const stageTok = S.stageTok = (S.stageTok || 0) + 1;
@@ -495,6 +633,8 @@
     if (from && from.leave) from.leave(S);
     if (!opts.replace && S.sess.screen !== id && !opts.noHistory) S.sess.history.push(S.sess.screen);
     S.resumedShownOn = null;
+    if (S.tip) { S.tip = null; skin('tip', null); }
+    stopHover(); hv.want = null; S.pipHover = null; S.pipTyping = null;
     S.sess.screen = id; S.save();
     const def = SCREENS.defs[id];
     if (def.enter) def.enter(S, opts);
@@ -516,6 +656,33 @@
     if (!prev) return;
     go(prev, { dir: 'back', noHistory: true });
   }
+
+  /* ---------------------------------------------------------------- ? tips */
+  function tip(id, el) {
+    const was = S.tip, open = !!(was && was.id === id && was.screen === S.sess.screen);
+    const seg = !open && el && el.closest ? el.closest('[data-o55-seg]') : null;
+    S.tip = open || !id ? null : { id, screen: S.sess.screen, seg: seg ? seg.getAttribute('data-o55-seg') : null };
+    /* asking about a choice is looking at it: Pip previews it while it writes the answer */
+    if (S.tip && !/^(field|group|copy|step|summary|provider):/.test(id)) { stopHover(); hv.want = id; S.pipHover = id; }
+    refresh();
+    skin('tip', S.tip, el);
+    if (S.tip) {
+      const t = O55.tips.of(id);
+      /* Pip writes the answer with its small idea chime (its own kit; the window's reveal where Pip's sound is not) */
+      if (!(O55.pipVoice && O55.pipVoice.play('tip'))) O55.sound.play('reveal');
+      if (t) U.announce(t.title + '. ' + t.text, S.root.querySelector('.o55-win'));
+      return;
+    }
+    O55.sound.play('unsheet');
+    tipFocus(id);
+  }
+  /* focus back to the ? a closed note belonged to (the note's close button has gone with it) */
+  function tipFocus(id) {
+    const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    const qb = layer && Array.from(layer.querySelectorAll('.o55-tipq')).find((n) => n.getAttribute('data-arg') === id);
+    if (qb) qb.focus({ preventScroll: true });
+  }
+  function closeTip(focus) { if (!S.tip) return false; const id = S.tip.id; S.tip = null; refresh(); skin('tip', null); if (focus) tipFocus(id); return true; }
 
   /* ---------------------------------------------------------------- events */
   function onClick(e) {
@@ -550,6 +717,8 @@
        generic one answers by role. Controls whose handler always plays (a look tile) opt out with data-o55-sound. */
     const log = O55.sound.log, last = log[log.length - 1], checked = t.getAttribute('aria-checked'), open = t.getAttribute('aria-expanded');
     fn(S, arg, t, e);
+    const role0 = t.getAttribute('role');
+    if (S.open && (role0 === 'radio' || role0 === 'switch' || role0 === 'checkbox') && !t.closest('.o55-foot')) picked(hoverOf(t));
     if (t.classList.contains('o55-primary') || t.getAttribute('data-o55-sound') === 'self' || log[log.length - 1] !== last) return;
     const role = t.getAttribute('role');
     O55.sound.play(t.classList.contains('o55-card') || t.classList.contains('o55-tile') ? 'select'
@@ -582,6 +751,8 @@
     if (e.type !== 'keydown') return;
     if (e.key === 'Escape') {
       if (S.lookOpen) { S.lookOpen = false; renderLook(); O55.sound.play('unsheet'); e.preventDefault(); const b = S.root.querySelector('.o55-lookbtn'); if (b) b.focus(); return; }
+      /* an open ? note goes first, and focus returns to its ? */
+      if (S.tip) { e.preventDefault(); O55.sound.play('unsheet'); closeTip(true); return; }
       const pop = S.root.querySelector('.o55-sheet[data-open="true"], .o55-popover[data-open="true"]');
       if (pop) { const c = pop.querySelector('[data-o55-do="sheet-close"]'); if (c) c.click(); e.preventDefault(); return; }
       e.preventDefault(); close('escape'); return;
@@ -773,7 +944,9 @@
     if (SOLID && !wasShown) setSolid(true);
     O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening', 'o55-scrim-lit'); if (SOLID) setSolid(true); } });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
-    const stage = r.querySelector('.o55-stage'); stage.innerHTML = ''; stage.removeAttribute('data-scene-key');
+    /* the stage lives with the window: reopening wakes it (Retro's tube powers on again) */
+    const stage = r.querySelector('.o55-stage'), st0 = O55.pipStage.of(stage);
+    if (st0) { st0.setActive(true); if (st0.tube) st0.powerOn(); } else { stage.innerHTML = ''; stage.removeAttribute('data-scene-key'); }
     /* a resumed run starts on its own chapter's chord */
     const cur = SCREENS.defs[S.sess.screen];
     /* (each onboarding run is a run of the score: its chapters sting once each, O55.sound) */
@@ -830,8 +1003,9 @@
     if (O55.nierLook && O55.nierLook.closed) O55.nierLook.closed(reason); /* an unsaved NieR preview lingers like the look's */
     S.sess.status = reason === 'skip' ? 'skipped' : reason === 'done' ? 'done' : 'closed';
     S.save();
-    S.open = false;
+    S.open = false; S.tip = null;
     const r = S.root;
+    const st0 = O55.pipStage.of(r.querySelector('.o55-stage')); if (st0) { st0.powerOff(); st0.setActive(false); }
     r.classList.remove('o55-scrim-lit'); clearOpenScrim(); /* the close plays its own scrim */
     setSolid(false); /* the app is back under the scrim before the window leaves */
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
@@ -876,8 +1050,12 @@
     skip() { close('skip'); },
     'sheet-close'(S2, arg, el) { const sh = el.closest('.o55-sheet'); if (sh) { sh.setAttribute('data-open', 'false'); S.sess.ui.sheet = null; S.save(); refresh(); O55.sound.play('unsheet'); } },
     details(S2, arg, el) { const k = 'details:' + (arg || S.sess.screen); S.sess.ui[k] = !S.sess.ui[k]; S.save(); refresh(); O55.sound.play(S.sess.ui[k] ? 'reveal' : 'unsheet'); },
+    /* A ? (ui.onboarding.open_details, toggle_choice_explanation; O55.tips): one explainer at a time, for this screen
+       only (S.tip is never saved: it is a look at a choice, not a choice). Opening it asks Pip about that choice; closing
+       it, from the ? or the note's own close button, gives focus back to the ?. */
+    tip(S2, id, el) { tip(id, el); },
     startOver() { open({ fresh: true }); }
   };
 
-  Object.assign(O55.ui, { S, build, open, close, go, back, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin });
+  Object.assign(O55.ui, { S, build, open, close, go, back, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip });
 })();

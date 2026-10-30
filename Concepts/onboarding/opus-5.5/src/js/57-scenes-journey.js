@@ -1,213 +1,78 @@
-/* Journey scenes for the Project, AI and Ready chapters. Same keyed props across beats so a choice glides instead of
-   cutting; every family draws them in its own material. Portrait 480 x 600, key content inside x 60..420. */
+/* The props for the screens the concept did not draw (DL-238): a NAS, a key, an identity card, a pairing code, the
+   Recovery Kit, a lock, a copy of a Project's settings, an online service and free models. Each is drawn once with the
+   world's pen (56-scenes-flow.js), so it reads as felt, glass, a diagram, pixels or printer's ink, or NieR's line art,
+   and says where its strings tie on and how far it reaches down. */
 (function () {
   'use strict';
-  const O55 = window.O55, A = O55.art;
-  const L = (key, fb) => { const v = O55.t('art.labels.' + key); return v === 'art.labels.' + key ? fb : v; };
-  const R = (ctx) => ctx.family === 'retro';
-  const sparks = (pts, delay) => pts.map(([x, y, tone], i) => ({ key: 'sp' + i, prop: 'spark', x, y, layer: 'front', anim: 'pop', delay: (delay || 700) + i * 110, amb: 'twinkle', ambd: 2200 + i * 450, opts: { tone } }));
-  const helper = (ctx, key, x, y, variant, pose, delay, anchor) => { const m = A.metrics(ctx.family); return { key, prop: 'helper', x, y, s: m.helperScale * 0.8, layer: 'front', anim: 'drop', delay: delay || 300, amb: 'bob', ambd: 2600 + variant * 300, opts: { variant, pose, anchor, px: 5 } }; };
-  const floorY = (ctx) => A.metrics(ctx.family).floor + (R(ctx) ? 38 : 28);
-
-  /* How should your Project begin? beats: new | folder | online | device | restore */
-  A.defineScene('begin', {
-    label: 'art.where', band: [0, 150, 480, 330],
-    compose(ctx) {
-      const b = ctx.beat || 'new', s = R(ctx) ? 1 : 1.9;
-      const icon = { new: 'seed', folder: 'folder', online: 'cloud', device: 'server', restore: 'rewind', existing: 'folder' }[b] || 'seed';
-      const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise', delay: 60 },
-        { key: 'bar', prop: 'bar', x: 240, y: 128, layer: 'front', anim: 'drop' },
-        /* the beginning hangs from the control bar on a real string */
-        { key: 'hero', prop: 'node', x: 240, y: 318, s, layer: 'mid', anim: 'pop', delay: 160, opts: { icon, accent: true, tie: 'a1' } }];
-      if (b === 'online') items.push({ key: 'cl', prop: 'cloud', x: 360, y: 214, s: 0.9, layer: 'back', anim: 'drop', delay: 320, amb: 'float' });
-      /* the helper on the right steps aside for the NAS rather than standing in front of it, so the NAS and its caption
-         stay clear in every look (NieR's solid ink units hid it; elsewhere the caption ran across the puppet) */
-      const nd = b === 'device';
-      if (nd) items.push({ key: 'nas', prop: 'nas', x: 398, y: 452, s: 1, layer: 'mid', anim: 'rise', delay: 320, opts: { label: L('homeNas', 'home nas') } });
-      if (b === 'restore') items.push({ key: 'rings', prop: 'rings', x: 240, y: 318, s: 1.6, layer: 'back', anim: 'fade', delay: 300, amb: 'pulse' });
-      items.push(helper(ctx, 'h0', 110, floorY(ctx) - 20, 0, b === 'new' ? 'wave' : 'point', 380), helper(ctx, 'h2', nd ? 318 : 370, floorY(ctx) - 20, 2, 'carry', 460));
-      items.push(...sparks([[84, 110, 0], [404, 96, 2], nd ? [416, 300, 1] : [412, 380, 1]], 900));
-      return items;
-    }
-  });
-
-  /* Name your Project: the name is lettered onto a sign hanging from the control bar as it is typed. */
-  A.defineScene('name', {
-    label: 'art.hero', band: [0, 140, 480, 300],
-    compose(ctx) {
-      const name = String((ctx.params || {}).name || '').slice(0, 22) || '…';
-      /* the sign hangs from both ends of the control bar; its strings meet its corners whatever the name's length */
-      const items = [{ key: 'bar', prop: 'bar', x: 240, y: 120, layer: 'front', anim: 'drop' },
-        { key: 'sign', prop: 'badge', x: 240, y: 296, s: R(ctx) ? 2 : 2.1, layer: 'mid', anim: 'drop', delay: 180, opts: { label: name, accent: true, ties: [['a0', 'topLeft'], ['a2', 'topRight']] } },
-        { key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise', delay: 80 }];
-      items.push(helper(ctx, 'h1', 240, floorY(ctx) - 16, 1, 'point', 320));
-      items.push(...sparks([[90, 200, 0], [398, 180, 2]], 800));
-      return items;
-    }
-  });
-
-  /* Start like another Project: the settings bundle travels from the existing Project to the new one. */
-  A.defineScene('like', {
-    label: 'art.route', band: [0, 160, 480, 300],
-    compose(ctx) {
-      const copy = ctx.beat === 'copy', s = R(ctx) ? 1 : 1.5;
-      const items = [{ key: 'new', prop: 'folder', x: copy ? 340 : 240, y: 420, s, layer: 'mid', anim: 'rise', delay: 100, opts: { label: L('new', 'new') } }];
-      if (copy) {
-        const old = { key: 'old', prop: 'folder', x: 140, y: 250, s, layer: 'mid', anim: 'rise', delay: 60, opts: {} }, nw = items[0], ln = A.link(ctx, old, nw);
-        items.push(old, { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 220, opts: { pts: ln } });
-        items.push({ key: 'bundle', prop: 'node', x: (ln[0][0] + ln[1][0]) / 2, y: (ln[0][1] + ln[1][1]) / 2, s: R(ctx) ? 1 : 1.2, layer: 'front', anim: 'pop', delay: 360, opts: { icon: 'stack', accent: true } });
-      } else items.push({ key: 'seed', prop: 'node', x: 240, y: 250, s: R(ctx) ? 1 : 1.4, layer: 'front', anim: 'pop', delay: 200, opts: { icon: 'seed', accent: true } });
-      items.push(...sparks([[80, 120, 1], [410, 150, 0], [412, 520, 2]], 700));
-      return items;
-    }
-  });
-
-  /* Keep your work safe: Safe History at the centre; an online copy and a backup join when chosen. */
-  A.defineScene('safe', {
-    label: 'art.route', band: [0, 150, 480, 320],
-    compose(ctx) {
-      const pr = ctx.params || {}, s = R(ctx) ? 1 : 1.35;
-      const folder = { key: 'folder', prop: 'folder', x: 240, y: 448, s: R(ctx) ? 2 : 1.6, layer: 'mid', anim: 'rise', delay: 60 };
-      const hist = { key: 'hist', prop: 'node', x: 240, y: 268, s, layer: 'mid', anim: 'pop', delay: 160, opts: { icon: 'history', accent: true, label: L('safeHistory', 'safe history') } };
-      /* the line down to the folder starts below the node's label, not through it (NieR's node is measured without
-         its caption, which sits lower: its route starts further down) */
-      const down = A.link(ctx, hist, folder); down[0] = [down[0][0], down[0][1] + (ctx.family === 'nier' ? 30 : 20)];
-      const items = [folder, hist, { key: 'p0', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 220, opts: { pts: down } }];
-      if (pr.online) { const cl = { key: 'cl', prop: 'cloud', x: 108, y: 150, s: 1, layer: 'mid', anim: 'drop', delay: 120, amb: 'float' }; items.push(cl, { key: 'p1', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 200, opts: { pts: A.link(ctx, hist, cl) } }); }
-      if (pr.backup) { const vault = { key: 'vault', prop: 'node', x: 378, y: 150, s: R(ctx) ? 1 : 1.1, layer: 'mid', anim: 'pop', delay: 140, opts: { icon: 'vault' } }; items.push(vault, { key: 'p2', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 220, opts: { pts: A.link(ctx, hist, vault) } }); }
-      if (ctx.beat === 'protect') items.push({ key: 'lock', prop: 'lock', x: 378, y: 222, s: R(ctx) ? 1 : 1.1, layer: 'front', anim: 'pop', delay: 300, opts: { open: false } });
-      items.push(...sparks([[80, 520, 2], [410, 500, 0]], 900));
-      return items;
-    }
-  });
-
-  /* Online copy: pick a service, sign in (a person and the cloud linked), signed in (the link lights). */
-  A.defineScene('online', {
-    label: 'art.route', band: [0, 150, 480, 320],
-    compose(ctx) {
-      const b = ctx.beat || 'service', signed = b === 'signed';
-      const cl = { key: 'cl', prop: 'cloud', x: 300, y: 200, s: R(ctx) ? 2 : 1.9, layer: 'mid', anim: 'drop', delay: 60, ambd: 4200 };
-      const me = { key: 'me', prop: 'node', x: 160, y: 420, s: R(ctx) ? 1 : 1.4, layer: 'mid', anim: 'pop', delay: 160, opts: { icon: 'person', accent: signed } };
-      const items = [cl, me], ln = A.link(ctx, me, cl);
-      if (b !== 'service') items.push({ key: 'p', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: ln } }, { key: 'key', prop: 'key', x: (ln[0][0] + ln[1][0]) / 2, y: (ln[0][1] + ln[1][1]) / 2, r: R(ctx) ? 0 : -58, s: R(ctx) ? 1 : 1.1, layer: 'front', anim: 'pop', delay: 320, opts: { accent: signed } });
-      if (signed) items.push({ key: 'ok', prop: 'badge', x: 300, y: A.attach(ctx, cl, 'bottom')[1] + 34, layer: 'front', anim: 'rise', delay: 200, opts: { label: L('signedIn', 'signed in'), glyph: 'check', accent: true } });
-      items.push(...sparks([[90, 150, 0], [420, 380, 2], [96, 540, 1]], 700));
-      return items;
-    }
-  });
-
-  /* Use it away from home: home only (a quiet house of devices) or anywhere (a globe and a phone on the route). */
-  A.defineScene('away', {
-    label: 'art.where', band: [0, 150, 480, 320],
-    compose(ctx) {
-      const any = ctx.beat === 'anywhere';
-      const nas = { key: 'nas', prop: 'nas', x: 170, y: 430, s: R(ctx) ? 2 : 1.6, layer: 'mid', anim: 'rise', delay: 60, opts: { label: L('homeNas', 'home nas') } };
-      const items = [nas, { key: 'rings', prop: 'rings', x: 170, y: A.attach(ctx, nas, 'top')[1] - 26, s: 1.2, layer: 'back', anim: 'fade', delay: 200, amb: 'pulse' }];
-      if (any) {
-        /* the route runs outline to outline: home to the world, the world to the phone */
-        const globe = { key: 'globe', prop: 'node', x: 336, y: 210, s: R(ctx) ? 1 : 1.6, layer: 'mid', anim: 'pop', delay: 160, opts: { icon: 'globe', accent: true } };
-        const phone = { key: 'phone', prop: 'node', x: 372, y: 440, s: R(ctx) ? 1 : 1.1, layer: 'mid', anim: 'pop', delay: 260, opts: { icon: 'phone' } };
-        items.push(globe, phone, { key: 'p', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: A.link(ctx, nas, globe) } }, { key: 'p2', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 420, opts: { pts: A.link(ctx, globe, phone) } });
-      } else { const pc = { key: 'pc', prop: 'computer', x: 340, y: 470, s: R(ctx) ? 1 : 1.1, layer: 'mid', anim: 'rise', delay: 180, opts: {} }; items.push(pc, { key: 'p', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: A.link(ctx, nas, pc) } }); }
-      items.push(...sparks([[90, 120, 1], [412, 110, 2]], 700));
-      return items;
-    }
-  });
-
-  /* Creating: the stage is built piece by piece as real phases finish; done: the helpers take a bow. NieR draws its own
-     (creatingNier below). */
-  const NT = (k, fb) => { const v = O55.t('art.nier.' + k); return v === 'art.nier.' + k ? fb : v; };
-  A.defineScene('creating', {
-    /* (NieR's narrow band is centred on y 300: the level-hung heads and, once done, the name sign above the lowered
-       troupe's visors; see creatingNier) */
-    label: 'art.hero', band: [0, 170, 480, 280], bandNier: [0, 160, 480, 280],
-    compose(ctx) {
-      const pr = ctx.params || {}, step = pr.step || 0, total = Math.max(1, pr.total || 5), done = ctx.beat === 'done', m = A.metrics(ctx.family);
-      if (ctx.family === 'nier') return creatingNier(ctx, m, pr, step, total, done);
-      const items = [];
-      if (step >= 1 || done) items.push({ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' });
-      if (step >= 2 || done) items.push({ key: 'bar', prop: 'bar', x: 240, y: m.barY, layer: 'front', anim: 'drop', amb: 'sway', ambd: 5600 });
-      const helpers = done ? 3 : Math.max(0, Math.min(3, step - 2 + (step >= total - 1 ? 1 : 0)));
-      [-1, 0, 1].slice(0, helpers).forEach((side, i) => { const a = side < 0 ? m.anchors[0] : side > 0 ? m.anchors[2] : m.anchors[1]; items.push({ key: 'h' + i, prop: 'helper', x: 240 + side * 112, y: m.floor - (side === 0 ? 14 : 0), s: m.helperScale, layer: 'mid', anim: 'drop', amb: 'bob', ambd: 2400 + i * 380, opts: { variant: i, pose: done ? 'bow' : 'carry', anchor: step >= 2 || done ? [240 + a[0], m.barY + a[1]] : null, px: m.helperPx, tie: step >= 2 || done ? ['a0', 'a1', 'a2'][side + 1] : null, side } }); });
-      if (!done) items.push({ key: 'rings', prop: 'rings', x: 240, y: 300, s: 1.4, layer: 'back', anim: 'fade', amb: 'pulse' });
-      if (done) items.push({ key: 'ok', prop: 'badge', x: 240, y: m.signY || 72, s: R(ctx) ? 1 : 1.4, layer: 'front', anim: 'drop', delay: 200, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } }, ...sparks([[80, 200, 0], [408, 170, 1], [100, 420, 2], [396, 400, 3]], 150));
-      return items;
-    }
-  });
-
-  /* NieR's Creating (design/hero-spec.md H4a). While the work runs the whole troupe is already there, on the slab's
-     set, hanging level and still from the control unit, LEVEL above their marks; each unit comes online (its visor's
-     rest dashes give way to the scan, which sweeps once: .o55-nier-online, 30-art.css) as the phases finish, the first
-     with the first phase, the third near the end. The middle unit carries the plug-in chip (the scene's ochre).
-     Done: the same troupe lowered to the slab (the beat change glides them down) and, hung from the top of the frame at
-     signY (clear of the heads and the strings), the name sign the person lettered on the Name screen (params.name; READY
-     when the screen does not pass it), lowered on its own two strings at 840 ms (its entrance is CSS) and stamped
-     CREATED as it lands (O55.art.createdAct, 59-cheer.js, which also adds the landing, the bow, the joy, the lock-on and
-     the confetti from behind the sign; any other drawing of the scene shows the sign stamped).
-     The narrow window's 170 px band shows only about 112 units of the scene, centred on y 300 (bandNier): Pod's lane
-     along its top (to about y 269 at 760 px, lower on a narrower window), the level-hung heads below it while the work
-     runs (from y 314). Done, the troupe is lowered BAND_DROP units only (not to the slab, which the band never shows),
-     so the visors stay in view (y 336..345, clear of the window's ruler along the band's foot), and the sign hangs just
-     above their heads (y 277..318 with its stamp), below Pod's lane on any narrow window: the whole hero picture, sign,
-     stamp and troupe, is on screen. */
-  const LEVEL = 40, BAND_SIGN = 214, BAND_DROP = 10, BAND_SIGN_Y = 294;
-  function creatingNier(ctx, m, pr, step, total, done) {
-    const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }];
-    const online = done ? 3 : Math.min(3, Math.ceil((step * 3) / total));
-    A.ensemble(ctx, { poses: ['stand', 'carry', 'stand'], level: done ? (ctx.band ? LEVEL - BAND_DROP : null) : LEVEL }).forEach((it, i) => {
-      if (it.prop === 'helper') it.cls += i - 1 < online ? ' o55-nier-online' : ' o55-rest';
-      items.push(it);
-    });
-    if (done) {
-      const name = String(pr.name || '').trim().slice(0, 22), label = name || L('ready', 'ready');
-      const at = { x: 240, y: ctx.band ? BAND_SIGN_Y : m.signY || 68, s: ctx.band ? 1.2 : 1.4, layer: 'front', anim: 'hang', delay: 840, dur: 320 };
-      /* (its two strings are their own prop, lowered with it, behind it) */
-      items.push(Object.assign({ key: 'signhang', prop: 'hangs', opts: { label, hang: -30 } }, at),
-        Object.assign({ key: 'sign', prop: 'badge', opts: { label, accent: true, hang: -30, hangApart: !!(ctx.fam && ctx.fam.props.hangs), stamp: NT('stamp', 'created') } }, at));
-    }
-    return items;
-  }
-
-  /* What powers Puppet Master: the helpers wait on the stage; each connected account lights a spark on the bar;
-     Free Models brings extra helpers onto the stage. */
-  A.defineScene('power', {
-    /* (NieR's narrow band: the troupe's heads and shoulders, as at Ready, where its curtain closes over this scene) */
-    label: 'art.hero', band: [0, 170, 480, 280], bandNier: [0, 210, 480, 280],
-    compose(ctx) {
-      const pr = ctx.params || {}, n = pr.n || 0, m = A.metrics(ctx.family);
-      const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }].concat(A.ensemble(ctx, { poses: n ? ['wave', 'carry', 'stand'] : ['stand', 'stand', 'stand'] }));
-      /* each connected account lights a spark just above the bar, centred on it (they sat off the bar, left-aligned) */
-      const k = Math.min(4, n);
-      for (let i = 0; i < k; i++) items.push({ key: 'pw' + i, prop: 'node', x: 240 + (i - (k - 1) / 2) * 58, y: m.barY - 46, s: R(ctx) ? 1 : 0.7, layer: 'front', anim: 'pop', delay: 120 + i * 90, opts: { icon: 'spark', accent: true } });
-      /* NieR has a fourth unit (v3, the pauldron); the extra helpers show it and the long coat */
-      if (ctx.beat === 'free') [[70, 380], [410, 380]].forEach(([x, y], i) => items.push({ key: 'fx' + i, prop: 'helper', x, y: m.floor - 6, s: m.helperScale * 0.7, layer: 'front', anim: 'drop', delay: 300 + i * 140, amb: 'bob', opts: { variant: ctx.family === 'nier' ? [3, 0][i] : (i + 1) % 3, pose: 'wave', px: m.helperPx } }));
-      return items;
-    }
-  });
-
-  /* Ready: the curtain lifts, the helpers bow, a sign reads ready. */
-  A.defineScene('ready', {
-    /* (the narrow band frames the troupe's heads and shoulders, so the curtain call's bows read there: on the 170 px
-       band of a 760 px window the scene shows about y 318..434 of the four looks' drawing, the heads in the middle with
-       room to bow, and y 294..406 of NieR's, whose lane for Pod sits just above the heads) */
-    label: 'art.hero', band: [0, 236, 480, 280], bandNier: [0, 210, 480, 280],
-    compose(ctx) {
-      /* NieR's troupe stands in a line for its curtain call (O55.art.curtainCall bows it and rises it), and the unit
-         nearest the pane ends pointing at it: the next thing to press is the Guided Tour. The curtain opens on it
-         standing there: the set and the troupe have no entrance of their own. */
-      /* The four looks take a curtain call of their own (O55.famWindow, 66-family-window.js): their troupe ends it the
-         same way, standing in a line with h2 pointing at the next step, and each look's emblem of the call (Basic's
-         APPROVED stamp, Friendly's paper roses, Glass's spotlights, Retro's ALL CLEAR) is part of the picture, so
-         Reduced Motion and a reopened window show it; the call holds it back until its rise. */
-      const nier = ctx.family === 'nier';
-      const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: nier ? null : 'rise' }].concat(A.ensemble(ctx, { poses: ['stand', 'wave', ctx.family === 'retro' ? 'aim' : 'point'], standing: nier }));
-      if (!nier && A.famCall) items.push(...A.famCall.emblems(ctx));
-      if (!nier && A.famCall && A.famCall.inkFast && A.famCall.inkFast(ctx)) ctx.sceneCls = 'o55fm-inkfast';
-      items.push({ key: 'sign', prop: 'badge', x: 240, y: nier && ctx.band ? BAND_SIGN : A.metrics(ctx.family).signY || 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
-      items.push(...sparks([[80, 180, 0], [404, 160, 1], [96, 420, 2], [398, 410, 3], [240, 540, 0]], 900));
-      /* it opens on the troupe (NieR's, on the narrow band, is centred on what the band shows: its plate in view) */
-      items.push({ key: 'curtain', prop: 'curtain', x: 240, y: nier && ctx.band ? 350 : 300, layer: 'front' });
-      return items;
+  const O55 = window.O55, PW = O55.pipWorlds, R = O55.pipStage.h.R;
+  Object.assign(PW.PROPS, {
+    /* a two-bay NAS, its drives' lights blinking in turn */
+    nas(p) {
+      let s = p.rect(-36, -42, 72, 84, 8, 'body', 'b');
+      for (let i = 0; i < 2; i++) {
+        const x = -28 + i * 30;
+        s += p.rect(x, -32, 26, 58, 4, 'panel', 'b') + p.line(x + 6, -20, x + 20, -20) + p.line(x + 6, -12, x + 20, -12) + p.line(x + 6, -4, x + 16, -4);
+        s += `<g class="st-led" style="--dl:${-i * 0.5}s">${p.circle(x + 13, 16, 3.2, 'accent', 'c')}</g>`;
+      }
+      s += p.rect(-22, 32, 44, 4, 2, 'shade', 'b');
+      return { svg: s, ties: [[0, -42]], foot: 42 };
+    },
+    /* a key: an SSH key, a setup code, an API key or a token */
+    key(p) {
+      let s = p.circle(-20, 0, 15, 'body', 'e') + p.circle(-20, 0, 5.5, 'light');
+      s += p.rect(-7, -4.5, 42, 9, 3, 'body', 'e') + p.rect(18, 4, 6, 10, 2, 'shade', 'e') + p.rect(28, 4, 5, 7, 2, 'shade', 'e');
+      return { svg: s, ties: [[-20, -15]], foot: 15 };
+    },
+    /* an identity card: the device's picture (the identity the window shows beside the words) and its lines */
+    idcard(p, o) {
+      let s = p.rect(-42, -30, 84, 60, 7, 'body', 'a') + p.rect(-34, -22, 30, 30, 4, 'panel', 'a');
+      const seed = String((o && o.seed) || 'pip'), cells = [];
+      let h = 7; for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+      for (let y = 0; y < 3; y++) for (let x = 0; x < 2; x++) { if ((h >> (y * 2 + x)) & 1 || (x === 1 && y === 1)) { cells.push([x, y]); if (x === 0) cells.push([2, y]); } }
+      cells.forEach(([x, y]) => { s += p.rect(-31 + x * 8.4, -19 + y * 8.4, 7, 7, 1.5, 'accent', 'c'); });
+      s += p.line(4, -14, 32, -14) + p.line(4, -4, 26, -4) + p.line(4, 6, 30, 6) + p.rect(-34, 16, 68, 6, 2, 'shade', 'a');
+      return { svg: s, ties: [[0, -30]], foot: 30 };
+    },
+    /* a pairing code: the QR the other device reads, its finder corners and modules */
+    qr(p) {
+      let s = p.rect(-32, -32, 64, 64, 6, 'panel', 'd');
+      [[-26, -26], [10, -26], [-26, 10]].forEach(([x, y]) => { s += p.rect(x, y, 16, 16, 2, 'ink') + p.rect(x + 3.5, y + 3.5, 9, 9, 1, 'light') + p.rect(x + 6, y + 6, 4, 4, 1, 'ink'); });
+      const mods = [[0, -24], [4, -16], [-6, -6], [2, -4], [8, 0], [14, 4], [20, 0], [0, 6], [-10, 2], [6, 12], [14, 14], [22, 20], [10, 22], [-2, 18]];
+      mods.forEach(([x, y]) => { s += p.rect(x, y, 4.4, 4.4, 0.6, 'ink'); });
+      return { svg: s, ties: [[0, -32]], foot: 32 };
+    },
+    /* the Recovery Kit: a folder with a band and a key's emblem, the one way back in */
+    kit(p) {
+      let s = p.rect(-36, -30, 72, 62, 6, 'body', 'c') + p.path('M-36 -18H36', 'line');
+      s += p.rect(-36, -30, 72, 12, 4, 'shade', 'c') + p.circle(0, 8, 11, 'panel', 'c') + p.circle(-3, 8, 4, 'accent', 'e') + p.rect(0, 6, 9, 4, 1.5, 'accent', 'e');
+      return { svg: s, ties: [[0, -30]], foot: 32 };
+    },
+    /* a lock, shut */
+    lock(p) {
+      let s = `<path d="M-14 -6V-16A14 14 0 0 1 14 -16V-6" ${p.fam === 'basic' ? `fill="none" stroke="${p.w.line}" stroke-width="5"` : `fill="none" stroke="${p.fam === 'glass' ? p.w.ink : p.fam === 'nier' ? p.w.ink : p.fam === 'retro' ? p.w.ink : p.w.ink}" stroke-width="${p.fam === 'nier' ? 3 : 6}" stroke-linecap="${p.fam === 'retro' || p.fam === 'nier' ? 'square' : 'round'}"`}/>`;
+      s += p.rect(-24, -8, 48, 40, 7, 'body', 'd') + p.circle(0, 8, 5, 'ink') + p.rect(-2, 10, 4, 10, 1.5, 'ink');
+      return { svg: s, ties: [[0, -30]], foot: 32 };
+    },
+    /* a copy of a Project's settings: two sheets, sliders on the front one */
+    settings(p) {
+      let s = p.rect(-26, -40, 56, 70, 6, 'shade', 'b') + p.rect(-34, -32, 56, 70, 6, 'body', 'b');
+      [[-22, -18, 0.6], [-22, -2, 0.3], [-22, 14, 0.8]].forEach(([x, y, k]) => { s += p.line(x, y, x + 32, y) + p.circle(x + 32 * k, y, 4.5, 'accent', 'e'); });
+      return { svg: s, ties: [[-6, -32]], foot: 38 };
+    },
+    /* an online service (GitHub, GitLab and the rest): a card with a branch graph, three commits and a merge */
+    forge(p) {
+      let s = p.rect(-40, -34, 80, 68, 8, 'body', 'd') + p.rect(-40, -34, 80, 14, 6, 'shade', 'd');
+      s += p.circle(-30, -27, 2.6, 'light') + p.circle(-22, -27, 2.6, 'light');
+      s += p.line(-18, -8, -18, 22) + `<path d="M-18 -2C2 -2 2 8 14 8" ${p.fam === 'basic' ? `fill="none" stroke="${p.w.line}" stroke-width="2"` : `fill="none" stroke="${p.w.ink}" stroke-width="2.4" stroke-linecap="round"`}/>`;
+      s += p.circle(-18, -8, 5, 'accent', 'b') + p.circle(-18, 22, 5, 'accent', 'b') + p.circle(14, 8, 5, 'accent', 'c');
+      return { svg: s, ties: [[0, -34]], foot: 34 };
+    },
+    /* free models: a tag with a hole, three small orbs on it, and a spark */
+    free(p) {
+      let s = p.path('M-38 -18H22L40 0L22 18H-38Z', 'body', 'b') + p.circle(26, 0, 4.5, 'light');
+      [-24, -10, 4].forEach((x, i) => { s += p.circle(x, 0, 6, 'accent', 'abc'[i]); });
+      s += p.sparkle(-34, -26, 7, 'e');
+      return { svg: s, ties: [[-8, -18]], foot: 18 };
     }
   });
 })();

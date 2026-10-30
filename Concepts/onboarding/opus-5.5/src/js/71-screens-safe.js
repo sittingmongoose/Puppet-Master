@@ -86,10 +86,15 @@
      code) supersedes an older wait, so a stale wait never completes the sign-in. */
   function waitForBrowser(S, ms) {
     const si = SI(S), attempt = si.attempt || 0, identity = si.instance_key, key = 'signin:' + U.slug(identity) + ':' + attempt;
-    F.op(S, key, 'cmd.auth_profile.sign_in', [{ key: 'browser', ms: ms || 2700 }], { quiet: true, sound: { done: false }, onDone: () => {
+    /* (a sign-in that does not finish leaves the screen saying so, with Sign in again: online.signin.fail) */
+    const fails = O55.fixtures.signinFails(S.env, si.service);
+    const same = (cur) => cur.service === si.service && cur.instance_key === identity && (si.kind !== 'forge' || instanceKey(md(S)) === identity) && (cur.attempt || 0) === attempt;
+    F.op(S, key, 'cmd.auth_profile.sign_in', [{ key: 'browser', ms: fails ? 2000 : ms || 2700, fail: () => (fails ? 'signin_incomplete' : null) }], { quiet: true, sound: { done: false, fail: 'warn' }, onDone: () => {
       const cur = SI(S);
-      if (cur.service === si.service && cur.instance_key === identity && (si.kind !== 'forge' || instanceKey(md(S)) === identity) &&
-          (cur.attempt || 0) === attempt && ['waiting', 'code'].includes(cur.state)) completeSignIn(S, si.kind === 'forge' ? 'jared-p' : 'jared@example.com', 'sign_in_during_setup');
+      if (same(cur) && ['waiting', 'code'].includes(cur.state)) { cur.recovered = !!cur.failed; cur.failed = false; completeSignIn(S, si.kind === 'forge' ? 'jared-p' : 'jared@example.com', 'sign_in_during_setup'); }
+    }, onFail: () => {
+      const cur = SI(S);
+      if (same(cur) && ['waiting', 'code'].includes(cur.state)) { cur.state = 'failed'; cur.failed = true; S.save(); O55.ui.refresh(); }
     } });
   }
   def('online-signin', {
@@ -107,6 +112,10 @@
         out += C.cards('useKnown', [{ v: known, glyph: 'person', title: T('online.signin.connected', { account: known }), sub: T('online.signin.connectedSub') }], known, {});
         out += `<div class="o55-sublinks" data-key="another">${C.link(T('online.signin.another'), 'another')}</div>`;
         return out;
+      }
+      if (si.state === 'failed') {
+        out += `<div class="o55-banner o55-banner-warn" data-key="signin-fail">${C.mark('failed', 18, C.small('spark', 18))}<span><b>${U.esc(T('online.signin.fail.title'))}</b> ${U.esc(T('online.signin.fail.body', { name: si.name }))}</span></div>`
+          + `<div class="o55-actions" data-key="acts">${O55.ui.btn({ label: T('online.signin.fail.retry'), do: 'signIn', tip: 'signIn' }, 'o55-primary')}</div>`;
       }
       if (si.state === 'idle') {
         out += `<div class="o55-actions" data-key="acts">${O55.ui.btn({ label: T('online.signin.signIn'), do: 'signIn' }, 'o55-primary')}`
@@ -127,12 +136,13 @@
           const t = F.countdown(si.codeUntil || Date.now()), url = deviceFor(S, si);
           out += `<div class="o55-devicecode" data-key="dc"><span class="o55-hint">${U.esc(T('online.signin.codeLead', { url }))}</span><span class="o55-paircode">${U.esc(si.code || 'WDJB-MJHT')}</span>`
             + `<span class="o55-hint">${U.esc(t.left ? T('chrome.expiresIn', { m: t.m, s: t.s }) : T('connect.pair.expired'))}</span>`
-            + `<span class="o55-pairbtns">${F.copyBtn(si.code || 'WDJB-MJHT', 'dcode')}${O55.ui.btn({ label: T('chrome.newCode'), do: 'newCode', cls: 'o55-small' }, 'o55-secondary')}</span></div>`;
+            + `<span class="o55-pairbtns">${F.copyBtn(si.code || 'WDJB-MJHT', 'dcode')}${O55.ui.btn({ label: T('chrome.newCode'), do: 'newCode', cls: 'o55-small', note: false }, 'o55-secondary')}</span></div>`
+            + F.copyNote('dcode') + O55.tips.explainer('newCode');
         }
       }
       if (si.state === 'create') {
-        out += `<div class="o55-banner" data-key="external-signup">${C.small('globe', 18)}<span>Finish creating your account on the official ${U.esc(si.name)} page. This window does not collect provider signup details.</span></div>`
-          + `<div class="o55-actions" data-key="return-signin">${O55.ui.btn({ label: 'I returned · sign in', do: 'signupBack' }, 'o55-primary')}</div>`;
+        out += `<div class="o55-banner" data-key="external-signup">${C.small('globe', 18)}<span>${U.esc(T('online.signin.createLead', { name: si.name }))}</span></div>`
+          + `<div class="o55-actions" data-key="return-signin">${O55.ui.btn({ label: T('online.signin.createBack'), do: 'signupBack' }, 'o55-primary')}</div>`;
       }
       return out;
     },
@@ -265,13 +275,14 @@
       if (d.forge === 'azure_devops') {
         out += C.segmented({ do: 'azOrg', value: d.repository_container || env.orgs[0], label: T('online.details.container'), options: env.orgs.map((o) => ({ v: o, label: o })) });
         const projects = azureProjects(S), route = azureProjectRoute(S);
-        out += C.group(T('online.details.project'), C.cards('azProject', projects.map((p) => ({ v: p.id, glyph: 'stack', title: p.name, sub: 'Git · ' + p.id, quiet: true })), d.repository_project, { cls: 'o55-choices-quiet' }));
-        out += `<div class="o55-actions" data-key="azure-refresh">${O55.ui.btn({ label: 'Refresh projects', do: 'azRefresh' }, 'o55-secondary')}</div>`;
-        out += F.more(!!S.sess.ui.azureTeamProjectAdvanced, 'Advanced · Azure team project', 'azAdvanced',
-          (route ? O55.ui.btn({ label: 'Create a team project on Azure DevOps', do: 'azCreateTeamProject' }, 'o55-secondary')
+        out += C.group(T('online.details.project'), C.cards('azProject', projects.map((p) => ({ v: p.id, glyph: 'stack', title: p.name, sub: T('online.details.azure.gitSub', { id: p.id }), quiet: true })), d.repository_project, { cls: 'o55-choices-quiet' }));
+        out += `<div class="o55-actions" data-key="azure-refresh">${O55.ui.btn({ label: T('online.details.azure.refresh'), do: 'azRefresh', note: false }, 'o55-secondary')}</div>${O55.tips.explainer('azRefresh')}`;
+        out += F.more(!!S.sess.ui.azureTeamProjectAdvanced, T('online.details.azure.advanced'), 'azAdvanced',
+          (route ? O55.ui.btn({ label: T('online.details.azure.create'), do: 'azCreateTeamProject', note: false }, 'o55-secondary')
             .replace('data-o55-do="azCreateTeamProject"', 'data-o55-do="azCreateTeamProject" data-ui-action-id="ui.onboarding.open_owner_flow" data-command-id="cmd.auth_profile.open_official_page"')
-            : C.note('Official team-project route unavailable for this Server host and collection. You can select an existing Git project after refresh, or skip the online copy.', 'info'))
-          + C.note('Creation happens on Azure DevOps. Return here and Refresh projects; only a fresh Git project with an owner GUID can be selected.', 'info'), 'azAdvanced');
+            + O55.tips.explainer('azCreateTeamProject')
+            : C.note(T('online.details.azure.routeMissing'), 'info'))
+          + C.note(T('online.details.azure.createNote'), 'info'), 'azAdvanced');
         out += C.note(T('online.details.azurePrivacy'), 'info', 'lock');
       } else {
         const allowed = O55.draft.allowedVisibility(d).filter((v) => v !== 'internal' || d.repository_owner_scope === 'organization' || d.forge === 'cursor_origin');
@@ -298,13 +309,13 @@
       vis(S, v) { O55.draft.set(md(S), { repository_visibility: v }); S.save(); O55.ui.refresh(); },
       azOrg(S, v) { O55.draft.set(md(S), { repository_container: v, repository_project: '' }); S.sess.azureProjects = null; S.save(); O55.ui.refresh(); },
       azProject(S, v) { if (!azureProjects(S).some((p) => p.id === v)) return; O55.draft.set(md(S), { repository_project: v }); S.save(); O55.ui.refresh(); },
-      azRefresh(S) { const d = md(S), env = S.env.forges.azure_devops || {}; if (!d.forge_account_ref || !accountFor(S, 'azure_devops')) { O55.ui.toast('Sign in to this Azure DevOps instance before refreshing projects.'); return; }
+      azRefresh(S) { const d = md(S), env = S.env.forges.azure_devops || {}; if (!d.forge_account_ref || !accountFor(S, 'azure_devops')) { O55.ui.toast(T('online.details.azure.signinFirst')); return; }
         S.sess.azureProjects = { instance_key: instanceKey(d), container: d.repository_container, account_ref: d.forge_account_ref,
         fresh: true, rows: (env.projects || []).filter((p) => p && typeof p === 'object' && azureGuid.test(p.id || '') && p.kind === 'Git' && p.container === d.repository_container).map((p) => ({ id: p.id, name: p.name, kind: p.kind })) };
         if (!azureProjects(S).some((p) => p.id === d.repository_project)) O55.draft.set(d, { repository_project: '' });
         S.save(); O55.ui.refresh(); },
       azAdvanced(S) { S.sess.ui.azureTeamProjectAdvanced = !S.sess.ui.azureTeamProjectAdvanced; S.save(); O55.ui.refresh(); },
-      azCreateTeamProject(S) { const route = azureProjectRoute(S); if (!route) return; O55.official.open(S, { kind: 'page', name: 'Azure DevOps team projects', ...route }); },
+      azCreateTeamProject(S) { const route = azureProjectRoute(S); if (!route) return; O55.official.open(S, { kind: 'page', name: T('online.details.azure.pageName'), ...route }); },
       adv(S) { S.sess.ui.onlineAdv = !S.sess.ui.onlineAdv; S.save(); O55.ui.refresh(); },
       readme(S) { const on = !md(S).repository_initialize_readme; O55.draft.set(md(S), { repository_initialize_readme: on }); S.save(); O55.ui.refresh(); O55.sound.play(on ? 'toggleOn' : 'toggleOff'); },
       gitignore(S, v) { O55.draft.set(md(S), { repository_gitignore: v }); S.save(); O55.ui.refresh(); },
