@@ -1020,11 +1020,13 @@
     'onb-ask': (arg) => { if (!M.pipOnboarding.askAvail(arg)) return say(T('studio.toast.unavailable')); const pick = ST.pick; launch(() => M.pipOnboarding.ask(arg, pick)); },
     /* background activity */
     'act-scene': (arg) => { if (!M.activity.load(arg)) return say(T('studio.toast.unavailable')); real.setTimeout(refresh, 80); },
-    'act-open': (arg) => { M.activity.open(arg); real.setTimeout(refresh, 200); },
+    /* the panel, the chat's view and the owner's dialogs open where the sheet stands, so the Studio steps aside for them,
+       as it does for a screen row (QA2 hunter H7) */
+    'act-open': (arg) => { launch(() => M.activity.open(arg)); },
     /* the owner's answer decides: a thread without processes has no Processes view (D4), and the Studio says so */
-    'act-chat': () => { Promise.resolve(M.activity.processes()).then((r) => { if (!r.ok) say(T(r.reason === 'none' ? 'studio.activity.chatProcessesNone' : 'studio.activity.chatProcessesRefused')); refresh(); }); },
-    'act-stop-all': () => { M.activity.stopAll(); },
-    'act-quit': () => { M.activity.quit(); },
+    'act-chat': () => { if (!M.activity.processesAvail()) return say(T('studio.activity.chatProcessesNone')); launch(() => Promise.resolve(M.activity.processes()).then((r) => { if (!r.ok) say(T(r.reason === 'none' ? 'studio.activity.chatProcessesNone' : 'studio.activity.chatProcessesRefused')); })); },
+    'act-stop-all': () => { launch(() => M.activity.stopAll()); },
+    'act-quit': () => { launch(() => M.activity.quit()); },
     'act-words': (arg) => { M.activity.setWords(arg === 'words'); real.setTimeout(refresh, 80); },
     /* the title bar */
     'tb-state': (arg) => { if (!M.titlebar.setState(arg)) return say(T('studio.toast.unavailable')); if (arg === 'unsaved') say(T('studio.workspace.titlebar.unsavedToast')); real.setTimeout(refresh, 80); },

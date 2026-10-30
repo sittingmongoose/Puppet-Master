@@ -868,6 +868,9 @@
   let returnFocus = null, inerted = [], held = [];
   function setInert(on) {
     if (on) {
+      /* already holding the app (a screen opened over an open window): keep the first snapshot, or the exit would wake
+         nothing and leave the app inert (QA2 hunter H5) */
+      if (held.length) return;
       held = Array.from(document.body.children).filter((n) => n !== S.root && n.id !== 'pm-hover-tag-root' && n.id !== 'o55-demo' && n.tagName !== 'SCRIPT');
       inerted = held.filter((n) => !n.hasAttribute('inert'));
       held.forEach((n) => n.setAttribute('data-o55-held', ''));

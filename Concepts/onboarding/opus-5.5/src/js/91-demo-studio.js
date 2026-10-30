@@ -803,7 +803,7 @@
     { id: 'chatWork', icon: 'chat', kind: 'stay', avail: () => chat.avail(), run: () => chat.run('live', 'live-agent-turn').ok },
     { id: 'chatGrill', icon: 'wonder', kind: 'launch', avail: () => chat.avail(), run: () => chat.runGuided('wonderer-crew').ok },
     /* quitting with work running (W6, D10): the Busy scenario, then Quit asks what happens to it */
-    { id: 'quitWithWork', icon: 'activity', kind: 'stay', avail: () => activity.has('busy') && activity.quitAvail(), run: () => { activity.load('busy'); return activity.quit(); } },
+    { id: 'quitWithWork', icon: 'activity', kind: 'launch', avail: () => activity.has('busy') && activity.quitAvail(), run: () => { activity.load('busy'); return activity.quit(); } },
     /* Pip's rough day (W3): back with Projects from before, Antigravity's sign-in fails once, from the Name screen (the
        name Tastebook is taken there, and the AI chapter's sign-in fails the first time) */
     { id: 'pipRoughDay', icon: 'pip', kind: 'launch', avail: () => onboarding.avail() && hasScreen('name') && !!(O55.fixtures && O55.fixtures.SCENARIOS.antigravityOnce),
