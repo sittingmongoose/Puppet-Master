@@ -69,8 +69,11 @@ html[data-pmw-home="on"] .main-area[data-pmw-rail-peek] #sidePanelSlot[data-pm-r
   z-index: 31;
 }
 
-/* the chat folds to an edge strip below C 480 (unless pinned); its button sits over the strip */
-html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"] #chatPanel.chat-panel > * { visibility: hidden; }
+/* the chat folds to an edge strip below C 480 (unless pinned); its button sits over the strip. Its contents are skipped,
+   not only hidden: the hosted chat's root sets visibility: visible on itself, so under visibility: hidden alone the whole
+   chat, dock, composer and its buttons, was drawn crushed into the 32 px strip (QA round 2, hunter H6 at 860 px);
+   content-visibility cannot be undone below, and it keeps the chat's state for the peek */
+html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"] #chatPanel.chat-panel > * { visibility: hidden; content-visibility: hidden; }
 html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"][data-pmw-chat-peek] #chatPanel.chat-panel {
   /* the page's chat owner sets inset: auto !important (body.pm7-chat-global-owner), which left the peek at its static
      place on the left; this selector is more specific, so each side is important here too */
@@ -86,7 +89,7 @@ html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"][data-pmw-chat-peek] #
   z-index: 60 !important;
   box-shadow: -18px 0 40px -12px rgba(0, 0, 0, .45);
 }
-html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"][data-pmw-chat-peek] #chatPanel.chat-panel > * { visibility: visible; }
+html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"][data-pmw-chat-peek] #chatPanel.chat-panel > * { visibility: visible; content-visibility: visible; }
 html[data-pmw-home="on"] .main-area { position: relative; }
 .pmw-chat-strip {
   position: fixed;

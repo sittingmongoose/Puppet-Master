@@ -37,10 +37,32 @@
   const pct = (v) => (v == null ? T('res.na') : Math.round(v) + '%');
 
   /* ------------------------------------------------------------------------------------------------- glyphs */
-  function st(key, size) {
+  function st(key, size, live) {
     const G = window.PMG; if (!G || !G.status) return '';
     const k = G.hasStatus && G.hasStatus(key) ? key : 'idle';
-    return G.status(k, size || 12, 'nx-still');
+    return G.status(k, size || 12, live ? 'wk-live-st' : 'nx-still');
+  }
+  /* Q11 (Jared, QA round 2, 2026-10-30, answer B; replaces DL-253's "row marks never move"): live rows move. A working
+     agent's Pip thinks (agentMark: the system loader's think) and a running process's status mark loops in its own
+     rhythm, started on the document's clock so every row of a state moves in step. Finished, stopped, waiting (on the
+     person or on another), blocked and scheduled rows stay still. A status mark moves only while its row is on screen
+     (watchMoving): a row starts held, and one scrolled away, in a hidden tab or a folded panel holds again; drags hold
+     it (48-work.css); Reduced Motion rests it (the glyph kit's own rule) */
+  const MOVING = { working: 1, reviewing: 1, recovering: 1 };
+  const moving = (it) => !!it && !it.stopping && !!MOVING[it.state];
+  let moveIo = null;
+  function watchMoving(root) {
+    if (!root) return;
+    const rows = root.querySelectorAll('.wk-row.wk-moving');
+    if (!rows.length) return;
+    if (typeof IntersectionObserver !== 'function') { rows.forEach((r) => r.classList.remove('wk-off')); return; }
+    if (!moveIo) moveIo = new IntersectionObserver((es) => es.forEach((e) => {
+      const r = e.target;
+      if (!r.isConnected) { moveIo.unobserve(r); return; }
+      r.classList.toggle('wk-off', !e.isIntersecting);
+      if (e.isIntersecting) { const l = r.querySelector('.wk-lead'); if (l && l.getAnimations) l.getAnimations({ subtree: true }).forEach((a) => { try { if (a.startTime !== 0) a.startTime = 0; } catch (_) { /* not started */ } }); }
+    }));
+    rows.forEach((r) => moveIo.observe(r));
   }
   function icon(name, size, cls) {
     const G = window.PMG; if (!G || !G.icon) return '';
@@ -58,6 +80,11 @@
     const L = window.PMLogo;
     if (L && typeof L.mark === 'function') {
       const face = (L.STATUS_FACE && L.STATUS_FACE[it.state]) || 'idle';
+      /* a working agent's Pip thinks: the system loader's think (PM_PIP_LOADER), so it arms itself, moves on the shared
+         clock, and holds off screen, in a hidden tab, in drags and while the person is away. In NieR the loader is NieR's
+         own (its diamond; L7, Pip never moves there): ruling B covers all ten looks (pm7-build, 2026-10-30) */
+      const PL = window.PM_PIP_LOADER;
+      if (moving(it) && PL && typeof PL.html === 'function') { try { return '<span class="wk-pip" aria-hidden="true">' + PL.html({ motion: 'think', px: size || 14, size: (size || 14) + 'px' }) + '</span>'; } catch (_) { /* still */ } }
       try { return '<span class="wk-pip" aria-hidden="true">' + L.mark({ px: size || 14, mood: face, decorative: true }) + '</span>'; } catch (_) { /* fall back */ }
     }
     return icon('robot', size || 12);
@@ -197,9 +224,10 @@
     if (o.where) meta.push(esc(surfaceName(it.surface)) + (it.where && it.where !== it.title ? ' · ' + esc(it.where) : ''));
     if (it.model && it.kind === 'agent') meta.push(esc(it.model));
     if (it.owner && o.owner !== false) meta.push(esc(ownerName(it)));
-    return '<div class="wk-row' + (open ? ' is-open' : '') + '" style="--d:' + (depth || 0) + '" data-kind="' + esc(it.kind) + '" data-work-row="' + esc(it.id) + '"' + (ui.jump === it.id ? ' data-jump="1"' : '') + '>' +
+    const mv = moving(it);
+    return '<div class="wk-row' + (open ? ' is-open' : '') + (mv ? ' wk-moving wk-off' : '') + '" style="--d:' + (depth || 0) + '" data-kind="' + esc(it.kind) + '" data-work-row="' + esc(it.id) + '"' + (ui.jump === it.id ? ' data-jump="1"' : '') + '>' +
       '<button type="button" class="wk-row-btn" data-work-x="' + esc(it.id) + '" aria-expanded="' + open + '">' +
-      '<span class="wk-lead">' + st(W().key(it), 12) + '</span>' +
+      '<span class="wk-lead">' + st(W().key(it), 12, mv && it.kind !== 'agent') + '</span>' +
       '<span class="wk-kind">' + kindMark(it) + '</span>' +
       '<span class="wk-copy"><strong>' + esc(it.title) + '</strong><span class="wk-sub">' + sub + '</span>' + (meta.length ? '<span class="wk-meta">' + meta.join(' · ') + '</span>' : '') + '</span>' +
       '<span class="wk-right"><b data-tone="' + t + '">' + esc(word(it)) + '</b><i data-work-time="' + esc(it.id) + '">' + esc((o.time || time)(it)) + '</i></span></button>' +
@@ -309,15 +337,21 @@
     order.sort((a, b) => (list.find((x) => word(x).toLowerCase() === b && isLive(x)) ? 1 : 0) - (list.find((x) => word(x).toLowerCase() === a && isLive(x)) ? 1 : 0));
     return order.map((t) => by[t] + ' ' + t).join(' · ');
   }
+  /* what the Resources tab lists for the open Project: its own processes, and what belongs to no one Project (this
+     computer's Puppet Master services), which serves every Project. Scoped to the Project alone, harbor and loom showed
+     "Nothing is running" with this computer and its services gone (QA round 2, Q12) */
+  function resItems() { const p = project(); return items({}).filter((x) => (x.project === p || x.project == null) && (x.kind === 'process' || x.kind === 'service')); }
   function resBody() {
     const w = W(); if (!w) return '';
     const servers = w.servers ? w.servers(project()) : [];
-    const all = items({ project: project() }).filter((x) => x.kind === 'process' || x.kind === 'service');
+    const all = resItems();
     if (!servers.length || !all.length) return '<div class="wk-empty">' + T('res.empty') + '</div>';
+    /* a Project with nothing of its own running (one just made in onboarding) still has this computer's services */
+    const idle = all.every((x) => x.project == null) ? '<p class="wk-dim wk-res-idle">' + T('res.projectIdle') + '</p>' : '';
     const [k, dir] = ui.sort, cmp = resCmp();
     const head = '<div class="wk-tr wk-th" role="row">' + COLS.map((c) => '<button type="button" role="columnheader" data-work-sort="' + c[0] + '" aria-sort="' +
       (k === c[0] ? (dir > 0 ? 'ascending' : 'descending') : 'none') + '">' + T('res.cols.' + c[1]) + (k === c[0] ? icon(dir > 0 ? 'arrow-up' : 'arrow-down', 9) : '') + '</button>').join('') + '</div>';
-    let h = '<div class="wk-res" role="table" aria-label="' + esc(T('res.label')) + '">', any = null;
+    let h = idle + '<div class="wk-res" role="table" aria-label="' + esc(T('res.label')) + '">', any = null;
     servers.forEach((sv) => {
       const mine = all.filter((x) => x.server === sv.id);
       const cpu = mine.reduce((s, x) => s + (liveVal(x, 'cpu') || 0), 0), mem = mine.reduce((s, x) => s + (liveVal(x, 'mem') || 0), 0);
@@ -326,6 +360,7 @@
         esc(T('res.kind.' + sv.kind)) + ' · <span class="wk-mono">' + esc(sv.host || '') + '</span> · <span data-work-total="' + esc(sv.id) + '">' + T('res.totals', { cpu: pct(cpu), mem: mb(mem) }) + '</span>', null, col);
       if (!col) (sv.environments || []).forEach((env) => {
         const list = mine.filter((x) => x.environment === env.id).sort(cmp);
+        if (!list.length && sv.project == null) return;   // a shared machine lists only what runs there for this Project, and its own services
         h += '<div class="wk-env" role="rowgroup" aria-label="' + esc(sv.name + ' · ' + env.name) + '"><div class="wk-env-head">' + esc(env.name) + '<span class="wk-gsum">' +
           (list.length ? esc(envSum(list)) : T('res.envEmpty')) + '</span></div>';
         if (list.length) h += head + list.map((x) => {
@@ -380,6 +415,7 @@
       '<footer class="wk-foot">' + (ui.tab === 'processes' ? '<button type="button" class="wk-link" data-work-p="clear">' + T('clearFinished') + '</button>' : ui.tab === 'agents' ? '' : '<span class="wk-dim wk-res-note">' + T(ui.snap ? 'res.sampled' : 'res.notSampled') + '</span>') +
       '<span class="wk-grow"></span><button type="button" class="wk-btn danger" data-work-p="stopall"' + (c.agents + c.processes + c.scheduled ? '' : ' disabled') + '>' + T('stopAll') + '</button></footer>';
     if (keep) { const s2 = p.querySelector('.wk-body'); if (s2) s2.scrollTop = top; }
+    watchMoving(p);
     if (focused) { const f = p.querySelector(focused); if (f) f.focus({ preventScroll: true }); }
     const j = ui.jump && p.querySelector('[data-jump="1"]');
     if (j) { j.scrollIntoView({ block: 'nearest' }); setTimeout(() => { ui.jump = null; const g = p.querySelector('[data-jump="1"]'); if (g) g.removeAttribute('data-jump'); }, 1600); }
@@ -408,7 +444,7 @@
     pop.querySelectorAll('[data-work-cpu]').forEach((el) => { const it = byId(el.getAttribute('data-work-cpu')); if (it) el.textContent = pct(liveVal(it, 'cpu')); });
     pop.querySelectorAll('[data-work-mem]').forEach((el) => { const it = byId(el.getAttribute('data-work-mem')); if (it) el.textContent = mb(liveVal(it, 'mem')); });
     pop.querySelectorAll('[data-work-total]').forEach((el) => {
-      const id = el.getAttribute('data-work-total'), mine = items({ project: project() }).filter((x) => x.server === id && (x.kind === 'process' || x.kind === 'service'));
+      const id = el.getAttribute('data-work-total'), mine = resItems().filter((x) => x.server === id);
       el.textContent = T('res.totals', { cpu: pct(mine.reduce((s, x) => s + (liveVal(x, 'cpu') || 0), 0)), mem: mb(mine.reduce((s, x) => s + (liveVal(x, 'mem') || 0), 0)) });
     });
     const note = pop.querySelector('.wk-res-note'); if (note) note.textContent = T('res.sampled');
@@ -670,7 +706,7 @@
     close();
   }, true);
   doc.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape' || !ui.open || doc.querySelector('.wk-dialog-scrim')) return;
+    if (e.key !== 'Escape' || !ui.open || doc.querySelector('.wk-dialog-scrim') || sys) return;   // the Stop list or System status goes first
     const t = e.target;
     if (pop.contains(t) || (group() && group().contains(t)) || t === doc.body || t === doc.documentElement) { e.preventDefault(); close(); }
   });
@@ -719,8 +755,16 @@
     });
     count();
     requestAnimationFrame(() => { const c = d.querySelector('[data-x="cancel"]'); if (c) c.focus(); });
+    d.__shut = shut;
     return d;
   }
+  /* Escape closes the Stop list and System status wherever focus is: in a sandboxed frame (T3's file preview, QA round
+     2) the focus they move in on opening does not land, so their own Escape, heard only from inside, never came */
+  doc.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape' || e.defaultPrevented) return;
+    if (dlg && dlg.isConnected && dlg.__shut) { e.preventDefault(); dlg.__shut(); return; }
+    if (sys) { e.preventDefault(); closeSystem(); }
+  });
   /* Stop all in one chat thread (D8; the chat's Processes view calls this) */
   function confirmThread(threadId, where) {
     const w = W(); if (!w) return;
@@ -801,6 +845,7 @@
       const focused = doc.activeElement && host.contains(doc.activeElement) ? focusKey(doc.activeElement) : null;
       const html = groups.map((g) => (o.section ? o.section(g, rowsOf(g)) : rowsOf(g))).join('');
       host.innerHTML = html || '<p class="wk-empty">' + esc(o.empty || '') + '</p>';
+      watchMoving(host);
       if (focused) { const f = host.querySelector(focused); if (f) f.focus({ preventScroll: true }); }
       if (o.onPaint) o.onPaint(all);
     }

@@ -201,6 +201,7 @@
       },
       "totals": "CPU {cpu} · memory {mem}",
       "empty": "Nothing is running on this Project’s servers.",
+      "projectIdle": "Nothing in this Project is running yet. Below are Puppet Master’s own services on this computer, which every Project shares.",
       "na": "n/a",
       "envEmpty": "Nothing running"
     },

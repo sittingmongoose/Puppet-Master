@@ -98,9 +98,17 @@ html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^
    personas/models work"): the menus' --glass, which is PMConcept7's --pmw-pop (10-tokens-host.css), Glass's near-opaque
    menu tint. Activity Detail (docked or over the messages), the Activity bar's hover cards, History (flyout or pinned)
    and an attachment's card painted --surface-2 or --surface instead: the same colour as the menus in Basic and
-   Friendly, but in Glass a 21-28 % tint and a clear ground over the wallpaper, so they read see-through. */
-html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) :is(.hover-card.ab-card, .activity-panel, .history-flyout, .att-chrome-body) {
+   Friendly, but in Glass a 21-28 % tint and a clear ground over the wallpaper, so they read see-through. The Activity
+   bar itself joins them (Jared, QA round 2, Q14: "more opaque like context ring menu drop down in the glass themes"):
+   it was --surface-2, 28 % in Glass Dark and 21 % in Glass Light against the menu's 94 and 93 %. */
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) :is(.hover-card.ab-card, .activity-panel, .history-flyout, .att-chrome-body, .pm56-activity-bar) {
   background: var(--glass);
+}
+/* the composer dock's lines sit over the messages beside the Activity bar, so they take the same plate (QA round 2
+   sweep: --pmx-card is --surface-2 here, the same 21-28 % tint in Glass); the needs line keeps its warm wash over it */
+html:not([data-o55-nier="on"]) .pm56-host:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .pmx-dock {
+  --pmx-card: var(--glass);
+  --pmx-card-warm: color-mix(in srgb, var(--warning) 11%, var(--glass));
 }
 /* PMConcept7's menus do not blur (Glass's menu tint is near opaque, and the page's own pickers carry no filter): the
    chat's 18-24 px backdrop blurs cost a full repaint under every open menu and show nothing */
