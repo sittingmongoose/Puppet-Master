@@ -708,7 +708,7 @@ def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and 
 });
 def('b5', 'homeNasPm', 'Backup to a NAS that runs Puppet Master: pairs once, then the backup finishes', async (d, A) => {
   await toProtect(d, 'nas');
-  A.ok(/pairs with it/.test(await d.state(() => document.body.textContent)), 'the step says it pairs, not a key');
+  A.ok(await d.state(() => /pairs with it/.test(document.body.textContent)), 'the step says it pairs, not a key');
   await d.primary(); A.eq(await d.screen(), 'nas-pmpair', 'pairing'); await d.primary(); await until(d, pairOk, 'paired', 10000); await d.primary();
   A.eq(await d.screen(), 'protect', 'back to Finish protecting your work');
   await until(d, "(window.O55.S.sess.backup.done||[]).includes('signin')", 'connected through the pairing', 6000);
@@ -890,7 +890,7 @@ def('n9', 'selfKeyMissing', "I'll add the key myself, but it is not there yet: t
   const line = await d.state(() => (document.querySelector('.o55-codeline code') || {}).textContent || '');
   A.ok(/ jared@MacBook-Pro$/.test(line), 'the line is the chosen key\'s (jared@MacBook-Pro)');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'failed'", 'the check fails', 9000);
-  A.ok(/isn't on Home NAS yet/.test(await d.state(() => document.body.textContent)), 'it says the key is not on Home NAS yet');
+  A.ok(await d.state(() => /isn't on Home NAS yet/.test(document.body.textContent)), 'it says the key is not on Home NAS yet');
   A.ok(!(await d.state(() => window.O55.S.env.devices[0].authorized.includes('k-ed'))), 'the check did not add the key itself');
   await d.primary(); A.eq(await d.screen(), 'nas-signin', 'back to the key, to add it');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'done'", 'passes once it is there', 9000);
@@ -914,7 +914,7 @@ def('x1', 'fresh', 'Run Onboarding Again starts over: a clean world, no finished
   A.eq(await d.state(() => window.O55.store.get('tour', null)), null, 'the saved tour is cleared');
   await d.primary(); await d.primary(); await d.primary(); await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary();
-  A.ok(!/connected to Home NAS before/.test(await d.state(() => document.body.textContent)), 'the device is new again in a clean world');
+  A.ok(await d.state(() => !/connected to Home NAS before/.test(document.body.textContent)), 'the device is new again in a clean world');
   await d.primary();
   A.eq(await d.state(() => (window.O55.S.sess.ops['keys:nas-home'] || {}).state), 'running', 'looking for keys runs again, step by step');
   await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys tested', 5000);
@@ -927,7 +927,7 @@ def('x2', 'fresh', 'Run Onboarding Again while a Project is being created waits 
   await d.click('#pm-o55-onboarding [data-o55-do="close"]', 'Close'); await d.settle();
   await d.state(() => window.PM7_ONBOARDING_CINEMATIC.replay()); await d.untilScreen('creating');
   A.eq(await d.screen(), 'creating', 'the window shows the creation instead of starting over');
-  A.ok(/still being created/.test(await d.state(() => document.body.textContent)), 'it says the Project is still being created');
+  A.ok(await d.state(() => /still being created/.test(document.body.textContent)), 'it says the Project is still being created');
   await until(d, "window.O55.S.sess.commit.state === 'done'", 'creation finishes', 25000);
   await assertPublishedProject(d, A);
   A.eq(await d.state(() => window.O55.S.sess.commit.original.key), originalKey, 'reopening Creating retains the same attempt');
