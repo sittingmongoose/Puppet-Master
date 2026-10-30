@@ -1,3 +1,36 @@
+# PM7 Plans lane — QA round 2, 2026-10-30
+
+Branch: `t3/plans/pm7-plans-canon`. Verified canonical source: `78af23f393d730766d7a354cea57bdcf34505bea` (pushed to GitHub and NAS). **All ten focused/generation checks PASS.** Last merged GUI remains `5abe2855072ec616409f3d0d2f72564e73030066`; the QA2 GUI head is pending. No GUI source was edited.
+
+## QA round 2
+
+| Item | Where / cause | Fix / proof |
+| --- | --- | --- |
+| **Q22 — fifth theme** | Settings §4.4/SSYS-043, FinalGUI theme/onboarding units, earlier decisions and companions treated NieR as an independent Basic override. | DL-257 records Jared’s ruling: Basic, Friendly, Glass, Retro, NieR; ten variants. `general.visual.theme` owns selection. The retired boolean migrates once in the stored mode, preserving Adjust; current schemas reject its use as a setting ID or onboarding field/intent. The one editor and transaction owner remain. |
+| **Q22 — coverage** | Four-family enums, old checkbox producers, eight-theme acceptance and overlay assumptions also reached SetupDraft, storage, Goal Activity Detail, commands, wiring and sound kits. | Same-kind sweep: **20 owner docs / 69 changed or new units**, only new unit DL-257; no existing unit removed; stable IDs, source lineage, preserved tokens, status/type and gui_related flags are retained. Five ordered families in SetupDraft and closed look_choice. Goal lifecycle is untouched. Sound remains one kit per family, existing NieR part/fallback behavior and one player. |
+| **Q22 — migration and transitions** | The override stored an underlying family and used Reboot for both directions. | Seven idempotent Settings migration cases (manual/Auto, false/absent and already migrated), three legacy session conversions, six transition cases. Reboot only on entry with its part; otherwise standard cover, including exit and NieR scheme changes. |
+| **Q11 B — live rows** | DL-253 and loader/Work notes required row marks to stay still. | Live working/checking/retrying rows animate on the shared clock, capped to visible rows; other rows and offscreen/drag/hidden/Reduced Motion hold. Panel, rail and Home share it. Lead confirms all ten looks: NieR working agent uses Diamond/fallback, never animated Pip; running process marks move. **92 static eligibility cases pass.** |
+
+Q22’s focused check runs all **358 onboarding**, **60 Settings**, and **161 shared GUI contract** cases, plus the migrations/transitions above. It caught a family-without-mode widening during drafting; the existing atomic pair requirement is retained. The initial Touch failure was this lane’s ordinary fixture-source hash pin after adding Settings cases; its pin is repaired and the final check passes. The check runner’s malformed-negative ordering was corrected before the final pass. These are static checks, not native migration, browser, accessibility, audio, performance or rendering proof. GUI lanes retain those checks, including the opaque-origin preview.
+
+Current census: **1010 inventory rows**, **479 binding records** (three retired non_dispatch checkbox tombstones and two family adapters), **715 Touch rows / 140 profiles**, **1269 production entries**, **22 status keys**, **25 Pip parts**, **7238 units / 96 docs**, **2956 shards / 99 sources**. No new command, event, setting, runtime state or clock. `Adjust NieR` is the label (`Adjust NieR…` in the title menu); `nier.editor.turn_on` is retained as **Use the NieR theme**, an ordinary family pick.
+
+Prose preceded companions for Q22 and Q11. No ledger was compiled; compile witness is inapplicable. Shards/index were regenerated; only **19 groups belonging to edited source files** changed. All 17 required full-checkout inputs and the currentness symlink exist. The final runner froze source hashes and observed no changes; those hashes match the committed source. Inventory editing preserves **1007 untouched rows verbatim**, with semantic identity proved after removing formatting churn.
+
+## Checks and evidence
+
+The ten successful commands cover Q22 contracts, PM7 contracts, canon companions, Touch closure, wiring, shard generation/check, index generation/validation and bundled onboarding storage consistency. Raw logs and fingerprints: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-*`. The source proof is `qa2-source-proof.json`; the prose-first checkpoint, initial Touch failure and inventory formatting proof are retained. Verification manifest SHA-256: `3a2f96251487adca8c51350880e1e7732be5857b2fef0d452070d7874dd516a2`. All **318** retained artifact fingerprints verify, including the unchanged 295 prior artifacts.
+
+**No full gates or dry landing ran for QA2, as instructed.** The aggregate results below apply only to `586caa5fa12d30fe2ad33958d45fa62f5671aad9`; they do not certify this amendment. No protected governance artifact was changed, no lock was taken, no landing/reseal/baseline refresh occurred, and no browser/server was started. Owned scratch and unused intermediate logs are removed. Mail waiter remains off under the lead’s direct-wake instruction.
+
+## Open integration work
+
+Canon and companions for Q22/Q11 are pushed. The lead’s later QA2 GUI head will trigger name/coverage alignment and other QA deltas (including Q13); these changes do not claim the unmerged GUI already implements the new contracts. Native/runtime certification and any later full gates/dry/reseal remain separately authorized work.
+
+## Historical checkpoints — preceding source revisions
+
+All earlier “current”, count, waiter and verification statements below belong to their named historical source.
+
 # PM7 Plans lane — GUI5abe toast follow-ups, 2026-10-30
 
 Branch: `t3/plans/pm7-plans-canon`. Verified focused source: `4dc74aa46f5b05ecacf22e4e959b46181cd996ac`. GUI input: `5abe2855072ec616409f3d0d2f72564e73030066`, merged cleanly through `a047193fbb`. Lead instruction `1030142505-c4b0`: focused checks only; the next full gates/dry belongs to the landing check.

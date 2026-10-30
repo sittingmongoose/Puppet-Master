@@ -1786,6 +1786,47 @@
         "F3-6": "Authoritative inbox push after owner open/reopen, using resting/destination layout height; update on content/resize, clear on close",
         "authority": "GUI implementation alignment under existing F3-1 ruling and the separately attributed lead open-inbox exception; no new Jared decision inferred"
       }
+    },
+    "Q22": {
+      "question": "NieR Mode becomes the fifth theme family, retaining Adjust",
+      "adoption": "explicit_jared_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-257"
+      ],
+      "owner_units": [
+        "Plans/Settings_System.md#SSYS-043",
+        "Plans/FinalGUISpec.md#F3-425",
+        "Plans/DRY_Rules.md#DR-056",
+        "Plans/Goal_Runtime_System.md#GRS-054",
+        "Plans/storage-plan.md#SP-252"
+      ],
+      "final_ruling": "Five ordered families / ten variants; retired boolean migrates on load; keep parts/background Adjust; family picks reuse the existing theme owner; direction-sensitive Reboot."
+    },
+    "Q11": {
+      "question": "Live Work row motion",
+      "adoption": "explicit_jared_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "selected_option": "B",
+      "decision_log_units": [
+        "DL-253"
+      ],
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-237",
+        "Plans/FinalGUISpec.md#F3-658",
+        "Plans/FinalGUISpec.md#F3-662",
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/DRY_Rules.md#DR-077",
+        "Plans/DRY_Rules.md#DR-078"
+      ],
+      "final_ruling": "Only live rows animate, capped to on-screen rows; waiting/finished/stopped/scheduled rows stay still. Shared-clock, drag/hidden/offscreen/Reduced Motion holds.",
+      "lead_technical_clarification": {
+        "source": "pm7-build:1030183348-18bd",
+        "ruling": "No NieR exemption; working agent uses existing NieR Diamond/fallback loader, never animated Pip; running process mark moves."
+      }
     }
   },
   "answers_source": {

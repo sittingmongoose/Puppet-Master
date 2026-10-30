@@ -157,3 +157,24 @@ G2 / F3-1, Jared follow-ups 2026-10-30 (mail 1030125602-d03d): widen first; at t
 F3-1 exact final anchor, GUI 70b30f482f (lead mail 1030133128-afab): with inbox closed, first card top matches the theme menu’s resting top: #themeMenuWrap bottom + MENU_GAP (6 px), not title-bar bottom + 6 px. Negative stage drop is permitted. Without a drawn selector, the prior title-bar/nonnegative-drop fallback remains. --pmn-clear is gone; --pmn-push and the entering-card click guard remain. No new ID or persisted field.
 
 F3-1/F3-5/F3-6 final GUI5abe285507 (lead mail1030142505-c4b0): pmn-entering is set before card mount and, together with pmn-leaving, suppresses card clicks on every page including Usage; a late arrival callback never reactivates exit. The existing --pmn-push reads resting/destination layout height after PM6_SPROUT.open, on reopen and content/resize updates, and clears on close. These are existing rendering states/owners, not new commands, controls, settings or persisted fields.
+
+
+## QA round 2 — Q22 and Q11 (Jared, 2026-10-30)
+
+Canonical source: `78af23f393d730766d7a354cea57bdcf34505bea`. Q22 owner decision: **DL-257**, amending SSYS-043, F3-425/082/598, DR-056 and the existing onboarding/appearance owners.
+
+| Name | Current contract |
+| --- | --- |
+| Family order | `basic`, `friendly`, `glass`, `retro`, `nier` |
+| NieR variants | `nier-dark`, `nier-light`; Theme inventory has ten ordered Dark/Light choices |
+| Settings | `general.visual.theme` selects NieR; `general.visual.theme-mode` keeps Light/Dark/Auto. `general.visual.nier-mode` is migration-only and removed from the inventory: 1010 physical rows. |
+| Retained Adjust | `general.visual.nier-parts` (29) and `general.visual.nier-background` (8 scenes); visible for NieR themes. Label **Adjust NieR**, title menu **Adjust NieR…**. |
+| Retired checkbox bindings | `shell.nier.mode`, `tour.nier.mode`, `onboarding.nier.mode`: non_dispatch tombstones with no action/setting/production entry |
+| Family bindings | Existing `shell.theme.family`; census adapters `tour.theme.family`, `onboarding.theme.family`. Total 479 census records. |
+| Commands/actions | Existing Settings preview/apply pair. Onboarding `ui.onboarding.choose_look` / intent `choose_look`; `preview_nier` and independent `nier_mode` retire. No command added. |
+| Editor | Existing `nier.editor.*` and `ui.settings.nier_editor.*`; `nier.editor.turn_on` reads **Use the NieR theme**, a family pick. |
+| Runtime names | `PMLogo.look()` → `nier-<scheme>`; Basic CSS paint with `data-theme='basic-<scheme>'` and derived `html[data-o55-nier='on']`; no independent override |
+| Transition | Enter NieR with Reboot part → shared Reboot; all other entries/exits and NieR Light/Dark changes → standard cover |
+| Q11 | DL-253/L1/DR-077/078: live rows animate on the shared clock in all ten looks; visibility/drag/hidden/Reduced Motion holds; NieR working agent uses Diamond/fallback, never animated Pip. |
+
+Glyph ids and the 22 pinned status keys are unchanged. Q11 changes presentation eligibility, with no new state, command, event, key or clock. GUI QA2 names/coverage are reconciled after the lead’s head.
