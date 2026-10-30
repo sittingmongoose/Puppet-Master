@@ -882,3 +882,10 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-035, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Server_System.md, ContractName:Plans/Automated_Testing_System.md
+
+
+## PM7 client quit and live work (2026-10-29; D8–D12, G4)
+
+The server remains the owner of live work when a window quits. F3-665/DL-249 require a choice: keep server work (default), or stop reviewed selected work by current identities, never system services. SIR-054 owns ProcessFacts and server/environment resource observations; Resources samples only while open. Stop is whole-group SIGTERM then SIGKILL after 3 s, never a client-local kill. Restart reconciliation marks missing work Lost and tells its owner once.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-665, ContractName:Plans/Shared_Integration_Runtime.md#SIR-054

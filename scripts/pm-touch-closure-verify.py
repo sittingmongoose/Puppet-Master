@@ -579,6 +579,9 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
             "ui.settings.nier_editor.open",
             "ui.settings.nier_editor.close",
             "ui.settings.nier_editor.replay",
+            "ui.settings.pip_editor.open",
+            "ui.settings.pip_editor.close",
+            "ui.settings.pip_editor.replay",
             "ui.settings.sound_library.look.select",
             "ui.settings.sound_library.takes.toggle",
         },
@@ -662,6 +665,16 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
         )
     add("TCP-CMDSC", "ui_action", census_commands_actions)
     add("TCP-CMDSC", "ui_action", set(COMMANDSC_SETTINGS_ACTIONS))
+    # PM7 DL-235..256: exact owner/schema action enums, never ambient prose or Touch rows.
+    for profile, kind, definition in [
+        ("TCP-PM7-PROJECT", "command", "project_command_id"),
+        ("TCP-PM7-WORK", "command", "work_command_id"),
+        ("TCP-PM7-LOCAL", "ui_action", "project_local_action_id"),
+        ("TCP-PM7-LOCAL", "ui_action", "work_local_action_id"),
+        ("TCP-SET-LOCAL", "ui_action", "pip_local_action_id"),
+    ]:
+        add(profile, kind, schema_enum_actions(
+            "Plans/pm7_build_contracts.schema.json", "/$defs/" + definition + "/enum"))
     uncovered_guided_actions = sorted(effective_guided_actions - set(expected))
     if uncovered_guided_actions:
         inventory_failures.append(
@@ -1841,13 +1854,13 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # producer). No Touch row/profile, alias, exclusion, native handler or proof
     # is added.
     exact_resolved_denominators = {
-        "row_count": 681,
+        "row_count": 707,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
-        "profile_count": 134,
+        "profile_count": 137,
         "excluded_token_count": 59,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1258,
+        "production_wiring_entry_count": 1269,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

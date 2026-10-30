@@ -492,7 +492,7 @@ PM entrypoints establish the canonical shutdown root with `signal.NotifyContext`
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-Provider processes receive `SIGTERM` / `SIGINT` with a 5-second grace window. MCP and LSP subprocesses receive a 3-second grace window. `SIGHUP` reloads config. All managed subprocesses run in isolated process groups.
+Provider processes receive `SIGTERM` / `SIGINT` with a 3-second grace window (D8). cmd.work.stop sends SIGTERM to the entire identity-bound process group, then SIGKILL after 3 seconds if it is still alive; Stopping remains until exit is observed. MCP and LSP subprocesses receive a 3-second grace window. `SIGHUP` reloads config. All managed subprocesses run in isolated process groups.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 
@@ -3142,7 +3142,17 @@ plan_unit_id: EP-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: PM entrypoints establish a canonical signal.NotifyContext or equivalent once-owned fan-out before subprocess start; provider, MCP, and LSP subprocesses receive bounded graceful termination, SIGHUP reloads config, and managed subprocesses run in isolated process groups.
+canonical_text: >-
+  PM entrypoints establish a canonical signal.NotifyContext or equivalent once-owned fan-out before
+  subprocess start; provider, MCP, and LSP subprocesses receive bounded graceful termination, SIGHUP
+  reloads config, and managed subprocesses run in isolated process groups. Amended 2026-10-29 (D8/D13,
+  G5/G7; PM7): ProcessFacts is subordinate to ObservableWork (SIR-054). cmd.work.stop binds pid,
+  pid_start_time, process_group, owner and current generation, sending SIGTERM then SIGKILL after 3 s to
+  the whole group including descendants. Stopping/pending persists until observed exit; already-ended stop
+  is idempotent and system services are excluded. Windows uses CREATE_NEW_PROCESS_GROUP, CTRL_BREAK_EVENT
+  then the existing forced-termination equivalent after 3 s. Input requests bind the current detected
+  prompt and generation, with plain yes/no quick answers safe-first; all other input reveals the exact
+  Terminal. No protected input is answered here.
 gui_related: false
 gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
 split_recommended: false
@@ -3151,8 +3161,11 @@ unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
-- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions,
+  owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- D8 identity/currentness guards reject PID reuse; all managed-work Stop paths use the same 3 s whole-group
+  grace, including Windows equivalent, and observe exit before Stopped.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3178,7 +3191,9 @@ preserved_exact_tokens:
 - ContractName:Plans/Architecture_Invariants.md
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'D8 (2026-10-29): 5-second grace window is retained source lineage only; the current provider/process-group
+  grace is 3 seconds across Unix and Windows equivalents.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/Executor_Protocol.md
@@ -5313,20 +5328,21 @@ plan_unit_id: EP-087
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: >-
-  PM-native Open With stays inside the file/editor surface and carries the
-  same worktree handoff context as other executor file operations; later OS
-  handoff must be a separate explicit command such as
+canonical_text: |-
+  PM-native Open With stays inside the file/editor surface and carries the same worktree handoff context as
+  other executor file operations; later OS handoff must be a separate explicit command such as
   cmd.file.open_in_system_default.
 gui_related: true
-gui_classification_reason: This unit governs user-visible file/editor Open With behavior and its worktree handoff boundary.
+gui_classification_reason: This unit governs user-visible file/editor Open With behavior and its worktree handoff
+  boundary.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - PM-native target selection, blocked/recovery semantics, and worktree-scoped file identity remain preserved.
-- OS system-default launching remains a separate explicit command and does not dilute PM-native executor/file identity semantics.
+- OS system-default launching remains a separate explicit command and does not dilute PM-native executor/file
+  identity semantics.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -5354,7 +5370,8 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Open With UI behavior consumes the same executor worktree handoff context rather than defining a separate launch context.
+- Open With UI behavior consumes the same executor worktree handoff context rather than defining a separate
+  launch context.
 owner_hints:
 - Plans/Executor_Protocol.md
 ```
@@ -7902,7 +7919,7 @@ Stop/acceptance races remain ordered under C's actual original handoff fence. If
 
 #### Original disposable local Unix MCP process shutdown
 
-This original custody contract is owned by Executor, Run Modes, MCP lifecycle and Storage and remains only one prerequisite of D05. The supported route is an original explicitly disposable PM-managed local Unix MCP diagnostic probe using stdio and the Run Modes MCP three-second grace. It must be genuinely admitted as that diagnostic before launch and must have no shared-session beneficiaries. MCP pooling remains the canonical default; no normal tool invocation becomes a disposable probe because cancellation would be convenient. Pooled MCP, remote MCP, external-managed MCP, CLI provider shim, provider five-second route, Windows and LSP/terminal sessions require their own original source profiles. Unsupported routes remain exact members of the C v2 all-generation dispatch census.
+This original custody contract is owned by Executor, Run Modes, MCP lifecycle and Storage and remains only one prerequisite of D05. The supported route is an original explicitly disposable PM-managed local Unix MCP diagnostic probe using stdio and the Run Modes MCP three-second grace. It must be genuinely admitted as that diagnostic before launch and must have no shared-session beneficiaries. MCP pooling remains the canonical default; no normal tool invocation becomes a disposable probe because cancellation would be convenient. Pooled MCP, remote MCP, external-managed MCP, CLI provider shim, provider route (current D8 grace: 3 s), Windows and LSP/terminal sessions require their own original source profiles. Unsupported routes remain exact members of the C v2 all-generation dispatch census.
 
 #### Original source and capability boundary
 
@@ -8268,12 +8285,15 @@ plan_unit_id: EP-119
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: Original bounded safe-stop, FileSafe and disposable Process sources. Native allocation enrollment
-  precedes every reserved-run capability; the whole original census includes every generation, pre-attempt effect,
-  unknown member and actual obligation.
+canonical_text: |-
+  Original bounded safe-stop, FileSafe and disposable Process sources. Native allocation enrollment
+  precedes every reserved-run capability; the whole original census includes every generation, pre-attempt
+  effect, unknown member and actual obligation.
+  Amended 2026-10-29 (D8; PM7): Recovery reconciles observed process identity before any stop; PID reuse
+  cannot target a different process, cancellation never silently unloads live owner work.
 gui_related: false
-gui_classification_reason: Defines original runtime source, owner, storage and verification semantics without a
-  visual surface.
+gui_classification_reason: Defines original runtime source, owner, storage and verification semantics without
+  a visual surface.
 split_recommended: false
 depends_on:
 - EP-118
@@ -8285,12 +8305,12 @@ unblocks: []
 acceptance_criteria:
 - Native allocation enrollment precedes every reserved-run capability; the whole original census includes every
   generation, pre-attempt effect, unknown member and actual obligation.
-- Only genuine zero invocations or fully owned FileSafe and disposable unshared Unix MCP Process dispositions can
-  enter the bounded positive partition; unsupported effects and checkpoints remain unresolved.
-- All required flush attempts remain in authentic original history; any required flush failure remains sticky and
-  an empty event set still performs its required original barrier.
-- Every original upper/lower method, helper and reader independently enforces complete source and final native predicates;
-  sealed work queues cannot be reopened by terminal publication.
+- Only genuine zero invocations or fully owned FileSafe and disposable unshared Unix MCP Process dispositions
+  can enter the bounded positive partition; unsupported effects and checkpoints remain unresolved.
+- All required flush attempts remain in authentic original history; any required flush failure remains sticky
+  and an empty event set still performs its required original barrier.
+- Every original upper/lower method, helper and reader independently enforces complete source and final native
+  predicates; sealed work queues cannot be reopened by terminal publication.
 validation_surfaces:
 - Plans/executor_cancellation_contracts/methods.json
 - Plans/executor_cancellation_contracts/realm-entry-boundaries.json
@@ -8317,7 +8337,8 @@ source_lineage:
 source_atom_ids: []
 negative_constraints:
 - No public command, event-membership, Goal lifecycle or retention-policy expansion.
-- No fabricated source, absence, origin, receipt, current body, native authority or retrospective original enrollment.
+- No fabricated source, absence, origin, receipt, current body, native authority or retrospective original
+  enrollment.
 - No numeric coercion, lossy codec, hidden effect/census member or required-flush failure removal.
 - No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
 ```
@@ -8691,67 +8712,71 @@ plan_unit_id: EP-128
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: >-
-  A live assistant turn is presented from the coalescer's ordered partial_delta and
-  tool_call_fragment phases, the tool_use and tool_result records paired by tool_use_id (INV-001),
-  the approval events, and the final_assistant_turn. Segment roles are derived by the presenter, not
-  supplied by providers: a text segment followed by a tool call in the same turn is narration; a
-  text segment that grows past about 160 characters, or that the turn ends with, is the answer.
-  Subjects are keyed by tool_use_id and carry a status of running, completed, failed (tool_result ok
-  false or tool.denied) or waiting (an approval.requested bound to that tool_use_id, CV-355);
-  several may be running at once when a provider makes parallel tool calls. A turn's reply ends in
-  exactly one terminal state: complete, stopped, steered or error. A stopped, steered or errored
-  partial reply is persisted as a partial transcript record for display only and, as 7.2B requires,
-  is never replayed as a complete assistant turn. Narration is a durable user-facing progress
-  summary attributed to its turn. A provider tier that does not report streaming events, tool
-  boundaries or internal visibility (PROVIDER-004, PROVIDER-005) degrades to showing only what it
-  reported: its reply appears whole and no subject or narration is invented.
+canonical_text: |-
+  A live assistant turn is presented from the coalescer's ordered partial_delta and tool_call_fragment
+  phases, the tool_use and tool_result records paired by tool_use_id (INV-001), the approval events, and
+  the final_assistant_turn. Segment roles are derived by the presenter, not supplied by providers: a text
+  segment followed by a tool call in the same turn is narration; a text segment that grows past about 160
+  characters, or that the turn ends with, is the answer. Subjects are keyed by tool_use_id and carry a
+  status of running, completed, failed (tool_result ok false or tool.denied) or waiting (an
+  approval.requested bound to that tool_use_id, CV-355); several may be running at once when a provider
+  makes parallel tool calls. A turn's reply ends in exactly one terminal state: complete, stopped, steered
+  or error. A stopped, steered or errored partial reply is persisted as a partial transcript record for
+  display only and, as 7.2B requires, is never replayed as a complete assistant turn. Narration is a
+  durable user-facing progress summary attributed to its turn. A provider tier that does not report
+  streaming events, tool boundaries or internal visibility (PROVIDER-004, PROVIDER-005) degrades to showing
+  only what it reported: its reply appears whole and no subject or narration is invented.
 gui_related: false
-gui_classification_reason: "Defines the stream vocabulary the chat's live turn presentation consumes."
+gui_classification_reason: Defines the stream vocabulary the chat's live turn presentation consumes.
 split_recommended: false
-depends_on: [CV-355]
-unblocks: [ACD-470, ACD-473, DR-043]
+depends_on:
+- CV-355
+unblocks:
+- ACD-470
+- ACD-473
+- DR-043
 acceptance_criteria:
-  - "Segment roles narration and answer are derived by the presenter from phase order."
-  - "Subjects are keyed by tool_use_id with statuses running, completed, failed and waiting."
-  - "Terminal states are complete, stopped, steered and error; partial replies are never replayed as complete turns."
-  - "Degraded tiers invent no subjects or narration."
+- Segment roles narration and answer are derived by the presenter from phase order.
+- Subjects are keyed by tool_use_id with statuses running, completed, failed and waiting.
+- Terminal states are complete, stopped, steered and error; partial replies are never replayed as complete
+  turns.
+- Degraded tiers invent no subjects or narration.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: stream_vocabulary_drift
 reasoning_tier: high
 context_scope: assistant_turn_stream
 implementation_surfaces:
-  - Plans/Executor_Protocol.md
-  - Plans/Contracts_V0.md
-  - Plans/assistant-chat-design.md
+- Plans/Executor_Protocol.md
+- Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
 node_compile_hint:
   mode: stream_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-105"
-  - "Plans/Decision_Log.md#DL-106"
+- Plans/Decision_Log.md#DL-105
+- Plans/Decision_Log.md#DL-106
 preserved_exact_tokens:
-  - "narration"
-  - "answer"
-  - "tool_use_id"
-  - "running"
-  - "completed"
-  - "failed"
-  - "waiting"
-  - "complete"
-  - "stopped"
-  - "steered"
-  - "error"
+- narration
+- answer
+- tool_use_id
+- running
+- completed
+- failed
+- waiting
+- complete
+- stopped
+- steered
+- error
 negative_constraints:
-  - "Do not require providers to label narration."
-  - "Do not replay a partial reply as a complete turn."
-  - "Do not invent subjects or narration for a provider tier without that visibility."
+- Do not require providers to label narration.
+- Do not replay a partial reply as a complete turn.
+- Do not invent subjects or narration for a provider tier without that visibility.
 owner_hints:
-  - Plans/Executor_Protocol.md
-  - Plans/assistant-chat-design.md
+- Plans/Executor_Protocol.md
+- Plans/assistant-chat-design.md
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-355, ContractName:Plans/assistant-chat-design.md#ACD-470

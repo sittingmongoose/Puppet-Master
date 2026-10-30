@@ -175,7 +175,9 @@
     '</section>';
   }
   function emptyState(icon, text){
-    return '<div class="af-empty">'+icon+'<p>'+text+'</p></div>';
+    /* W4: the one empty-list line (PM56_SHELL.pmxEmpty), a sleeping Pip where the list's glyph was */
+    const S=window.PM56_SHELL, pip=S&&S.pmxEmpty&&window.PMLogo;
+    return pip?S.pmxEmpty({tag:'div',cls:'af-empty',text:'<p>'+text+'</p>'}):'<div class="af-empty">'+icon+'<p>'+text+'</p></div>';
   }
 
   /* =====================================================================

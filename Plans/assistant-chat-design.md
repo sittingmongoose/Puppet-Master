@@ -25054,32 +25054,52 @@ plan_unit_id: ACD-451
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: "Chat integration is eligibility-aware across long research, editing, debugging, model changes, pause/resume, and thread recovery. The notebook and fresh-window affordances appear only where eligible; a trivial chat uses neither and produces no notebook or helper overhead. Debug flows keep Investigation Context authority: debug notes reference investigation/target/instrumentation/cleanup records, and transition or recovery rechecks active/redacted/revoked/blocked/expired/omitted evidence and target/worktree/session drift before reuse; raw logs and media remain artifacts. Thread restore and model change never silently rebind a notebook to a different target; provider-hidden content is never shown as PM-authored notes (WNC-N17)."
+canonical_text: >-
+  Chat integration is eligibility-aware across long research, editing, debugging, model changes,
+  pause/resume, and thread recovery. The notebook and fresh-window affordances appear only where eligible;
+  a trivial chat uses neither and produces no notebook or helper overhead. Debug flows keep Investigation
+  Context authority: debug notes reference investigation/target/instrumentation/cleanup records, and
+  transition or recovery rechecks active/redacted/revoked/blocked/expired/omitted evidence and
+  target/worktree/session drift before reuse; raw logs and media remain artifacts. Thread restore and model
+  change never silently rebind a notebook to a different target; provider-hidden content is never shown as
+  PM-authored notes (WNC-N17).
 gui_related: true
 gui_classification_reason: This unit specifies chat eligibility and debug-note surface behavior.
-depends_on: [ACD-449]
+depends_on:
+- ACD-449
 unblocks: []
 acceptance_criteria:
-  - A trivial exchange creates no notebook and no fabricated usage attempt.
-  - Old debug notes never reactivate revoked evidence or imply cleanup occurred.
-  - Thread recovery rehydrates notebook access without rebinding to a different target.
+- A trivial exchange creates no notebook and no fabricated usage attempt.
+- Old debug notes never reactivate revoked evidence or imply cleanup occurred.
+- Thread recovery rehydrates notebook access without rebinding to a different target.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: evidence_staleness
 reasoning_tier: high
 context_scope: assistant_chat
-implementation_surfaces: [Plans/assistant-chat-design.md, Plans/Working_Notebook.md, Plans/Runtime_Artifacts_Panel.md]
-node_compile_hint: {mode: gui_surface_spec, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+- Plans/Working_Notebook.md
+- Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: gui_surface_spec
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-I01
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-I09
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-N17
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A02
-preserved_exact_tokens: ["Investigation Context", "trivial chat", "rehydrates"]
+- source_packet:PM-WNC-2026-09-05-v1:WNC-I01
+- source_packet:PM-WNC-2026-09-05-v1:WNC-I09
+- source_packet:PM-WNC-2026-09-05-v1:WNC-N17
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A02
+preserved_exact_tokens:
+- Investigation Context
+- trivial chat
+- rehydrates
 negative_constraints:
-  - Do not scrape hidden provider notes into the notebook UI.
-  - Do not rebind notebooks to a different target on restore.
-owner_hints: [Plans/assistant-chat-design.md, Plans/Working_Notebook.md]
+- Do not scrape hidden provider notes into the notebook UI.
+- Do not rebind notebooks to a different target on restore.
+owner_hints:
+- Plans/assistant-chat-design.md
+- Plans/Working_Notebook.md
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Working_Notebook.md, ContractName:Plans/Runtime_Artifacts_Panel.md
@@ -25089,8 +25109,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wor
 This section incorporates the cumulative v3 repairs and supersessions from the Assistant/Settings Plans Repair Packet (`APR-001` through `APR-070`), as selectively amended by the reference-layout supersession under `USER-REFERENCE-LAYOUT-ROLLBACK-20260908`. It supersedes contradictory earlier v1/v2 text and reference-video flat-row prescriptions while preserving all retained v2/correction-v4 contracts:
 
 1. **Floating Chat Activity Bar (`APR-004`)**: The styled inner Chat Activity Bar pill is restored and floats over the transcript with transparent side flanks and a transparent bottom area. Pointer pass-through (`pointer-events: none` on the transparent host container with `pointer-events: auto` on the interactive pill itself) ensures transcript items beneath the flanks remain clickable. The transcript maintains sufficient positive bottom scroll padding such that at settled bottom scroll (`scrollTop === scrollHeight - clientHeight`), the actual last child element (whether message text, rich card, decision host, or status receipt) clears the top of the floating bar completely with zero occlusion. The bar is never replaced by plain text or placed in an opaque in-flow footer strip.
-2. **Activity Detail Default Pinned Geometry (`APR-001`)**: Opening Activity Detail defaults to a pinned panel on the left. An explicit Unpin action transitions the currently open panel to a floating modal/popover. When the user subsequently clicks any activity-preview item in the Activity Bar, it opens its record PINNED by default on the left, superseding any prior unpinned/floating state. Prior unpinned state is ephemeral and never persists over the default entry rule.
-3. **History and Activity Coexistence (`APR-002`)**: Pinned History (left rail) and pinned Activity Detail must share the available viewport width dynamically rather than reserving overlapping or competing gutters. When both are open, the layout uses contiguous non-overlapping columns, preserving readable minimum widths or cleanly transitioning to occlusion with a prominent Return to chat navigation under extreme width pressure.
+2. **Activity Detail Full-Size Geometry (`APR-001`, G1/G2)**: Opening any present Activity domain opens its full-size detail on the left directly. No Activity Pin/Unpin, small transient panel or persisted pin state exists. Widen the chat inside the current centre/page floor, then cover the transcript at full column height if the dock cannot fit; close by ×, Esc or the same icon and return focus. History keeps its separate flyout/pin and actual-width rules. Hover previews remain bounded and do not scroll internally.
+3. **History and Activity Coexistence (`APR-002`)**: Pinned History (left rail) and full-size Activity Detail must share the available viewport width dynamically rather than reserving overlapping or competing gutters. When both are open, the layout uses contiguous non-overlapping columns, preserving readable minimum widths or cleanly transitioning to occlusion with a prominent Return to chat navigation under extreme width pressure.
 4. **Transcript Zero Horizontal Overflow (`APR-003`)**: The chat transcript container strictly enforces `scrollWidth <= clientWidth` (within rounding tolerance). Intrinsic-width content—including attachment chips, folder manifests, hidden preview containers, rich-plan tables, code blocks, diff hunks, and structured cards—must wrap, ellipsize, or reflow. Inaccessible content must never be concealed by horizontal clipping alone.
 5. **Activity Previews and Navigation (`APR-005`, `APR-006`, `APR-007`)**: All Activity Bar hover panels are bounded previews with zero internal scrolling (`overflow: hidden`). Each preview presents a concise, high-value summary (e.g. To-Dos show completed-over-total count and several current tasks; Goal shows objective snippet and immediate lifecycle controls). Separate "Open Activity" launch buttons are removed from every preview; clicking any preview item or row directly navigates to its corresponding Activity Detail record using canonical routing. A count or overflow summary row may navigate to the full list, but must not masquerade as a duplicate launch button.
 6. **Concise Detail and Accent Stripe Elimination (`APR-008`, `APR-009`, `APR-034`)**: Decorative left-edge accent bars, inset box accent lines, and pseudo-element colored stripes are prohibited across all Assistant surfaces—including transcript records, BSD, To-Dos, schedules, decisions, activity panels, and popup menus. Subtle gray recoloring does not satisfy this prohibition. Clean uniform perimeter borders, genuine diff indicators (+/- gutters), and functional tree-hierarchy connectors are permitted. To-Do detail prioritizes task title, state, ownership when relevant, and next action, placing secondary technical metadata behind intentional disclosure. Context More Details provides a compact first view with deeper BSD metrics behind deliberate disclosure.
@@ -25107,7 +25127,7 @@ This section incorporates the cumulative v3 repairs and supersessions from the A
 17. **Internal Work-Note Boundary (`APR-056`)**: Internal work notes (scratch notes, reasoning fragments, diagnostic traces) are behind-the-scenes diagnostic state. They must never appear as ordinary transcript message cards or standalone user artifacts. Concise user-facing progress summaries are distinct, typed projections.
 18. **History Thread Currentness and Normal Workflows (`APR-057`, `APR-058`, `APR-067`)**: All 30 fixture threads in History are inventoried and aligned to current specifications. Everyday threads predominantly show running, completed, or successful work. Failure, blocked, or recovery states are segregated into an intentional, clearly labeled recovery minority (`recovery-scheduling`, `recovery-attachments`, `recovery-collaboration`). Unfinished work is not labeled "Needs attention" unless explicitly blocked or faulted. Read-only review fixtures demonstrate inspection and findings without mutating workspace files.
 19. **Responsive Editor/Chat Split (`APR-066`)**: Opening a plan or document and resizing the split container enforces explicit grid placement and min-size rules (`min-width: 360px` for chat, DL-138; Assistant_Plan_Runtime APR-014), preventing the transcript from being squeezed into the resize handle track.
-20. **Reference-Layout Supersession (`USER-REFERENCE-LAYOUT-ROLLBACK-20260908`)**: The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`) mandating flattened row layouts and forced single-column presentations across Activity Detail (Goal, To-Dos, and all Activity families) and Context More Details is selectively superseded. Assistant surfaces restore prior native card, panel, and grid presentation by removing reference-derived CSS overrides (`narrow-review.css`). Independent requirements—including pinned Activity Detail defaults, floating Chat Activity Bar with pointer pass-through, transcript zero horizontal scrolling (`scrollWidth <= clientWidth`), in-flow Context Lens, single bounded hover previews, concise disclosures, elimination of decorative left stripes, and separate Simple Goal vs To-Do semantics—remain strictly preserved. Scoped exception (2026-09-27, DL-122): the Activity Detail body of the four collaboration kinds (Crew, Chat Room, BrainStorm, Review) is a short team list, and Back Seat Driver's section of Context Details is three plain facts and three native disclosures, because each run's full detail lives in its run view (ACD-480); FinalGUISpec F3-580 states both. Second scoped exception (2026-10-08, DL-147): the To-Do rows of Activity Detail are one-line checklist rows like the To-Do hover preview, inside the native panel (FinalGUISpec F3-593). Every other Activity Detail family and Context Details section keeps the restored native card, panel and grid presentation.
+20. **Reference-Layout Supersession (`USER-REFERENCE-LAYOUT-ROLLBACK-20260908`)**: The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`) mandating flattened row layouts and forced single-column presentations across Activity Detail (Goal, To-Dos, and all Activity families) and Context More Details is selectively superseded. Assistant surfaces restore prior native card, panel, and grid presentation by removing reference-derived CSS overrides (`narrow-review.css`). Independent requirements—including full-size Activity Detail until closed (G1/G2), floating Chat Activity Bar with pointer pass-through, transcript zero horizontal scrolling (`scrollWidth <= clientWidth`), in-flow Context Lens, single bounded hover previews, concise disclosures, elimination of decorative left stripes, and separate Simple Goal vs To-Do semantics—remain strictly preserved. Scoped exception (2026-09-27, DL-122): the Activity Detail body of the four collaboration kinds (Crew, Chat Room, BrainStorm, Review) is a short team list, and Back Seat Driver's section of Context Details is three plain facts and three native disclosures, because each run's full detail lives in its run view (ACD-480); FinalGUISpec F3-580 states both. Second scoped exception (2026-10-08, DL-147): the To-Do rows of Activity Detail are one-line checklist rows like the To-Do hover preview, inside the native panel (FinalGUISpec F3-593). Every other Activity Detail family and Context Details section keeps the restored native card, panel and grid presentation.
 
 Amended 2026-10-09 (DL-180): for Home, item 15's left editor/document tab system is the home centre's panels, where a plan or run view opens as its tab through the one opening module, and its Return to chat retires because no tab covers the chat (ACD-455, ACD-480, ACD-500); item 19's editor/chat split and its 360 px chat minimum give way to the fixed chat column of `Plans/FinalGUISpec.md#F3-637` (ACD-458). Amended 2026-10-09 (DL-184): item 1's Activity Bar keeps its floating, pass-through and clearance rules but is no longer a pill in any look (`Plans/DRY_Rules.md#DR-069`, `Plans/FinalGUISpec.md#F3-648`, ACD-452).
 
@@ -25116,47 +25136,56 @@ plan_unit_id: ACD-452
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The styled inner Chat Activity Bar floats over the transcript with transparent side flanks and transparent bottom spacing, using pointer pass-through around the central pill so underlying transcript content remains clickable. The chat transcript maintains positive bottom padding ensuring that at settled bottom scroll (scrollTop === scrollHeight - clientHeight), the final transcript child element is completely visible above the pill. The chat transcript strictly enforces scrollWidth <= clientWidth with zero horizontal scrolling; rich cards, attachments, tables, and hidden previews wrap or reflow.
-  Amended 2026-10-09 (DL-184): the Activity Bar keeps its floating, pass-through and clearance rules but is no longer
-  a pill in any look; read "pill" in this unit as the bar's centred interactive body (Plans/DRY_Rules.md#DR-069,
-  Plans/FinalGUISpec.md#F3-648).
+canonical_text: |-
+  The styled inner Chat Activity Bar floats over the transcript with transparent side flanks and
+  transparent bottom spacing, using pointer pass-through around the central pill so underlying transcript
+  content remains clickable. The chat transcript maintains positive bottom padding ensuring that at settled
+  bottom scroll (scrollTop === scrollHeight - clientHeight), the final transcript child element is
+  completely visible above the pill. The chat transcript strictly enforces scrollWidth <= clientWidth with
+  zero horizontal scrolling; rich cards, attachments, tables, and hidden previews wrap or reflow. Amended
+  2026-10-09 (DL-184): the Activity Bar keeps its floating, pass-through and clearance rules but is no
+  longer a pill in any look; read "pill" in this unit as the bar's centred interactive body
+  (Plans/DRY_Rules.md#DR-069, Plans/FinalGUISpec.md#F3-648).
 gui_related: true
-gui_classification_reason: Floating activity bar geometry, pointer pass-through, and transcript horizontal extent.
-depends_on: [ACD-448]
-unblocks: [ACD-453, ACD-454]
+gui_classification_reason: Floating activity bar geometry, pointer pass-through, and transcript horizontal
+  extent.
+depends_on:
+- ACD-448
+unblocks:
+- ACD-453
+- ACD-454
 acceptance_criteria:
-  - The Activity Bar pill floats over the transcript with transparent surrounding area and pointer pass-through.
-  - The last transcript child is fully visible above the pill at settled bottom scroll.
-  - The transcript has zero horizontal scrolling across all cards, tables, and attachments.
+- The Activity Bar pill floats over the transcript with transparent surrounding area and pointer pass-through.
+- The last transcript child is fully visible above the pill at settled bottom scroll.
+- The transcript has zero horizontal scrolling across all cards, tables, and attachments.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
-  - python3 scripts/pm-plans-verify.py lint-contractrefs
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plans-verify.py lint-contractrefs
 risk_class: visual_occlusion_and_scroll_defect
 reasoning_tier: high
 context_scope: assistant_chat_chrome
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: gui_surface_spec
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/chat-assistant-concepts/5.6 Pro/app.js (5.6 Pro prototype; behaviour reference only)"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/styles.css (5.6 Pro prototype; behaviour reference only)"
-  - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-003
-  - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-004
+- Concepts/chat-assistant-concepts/5.6 Pro/app.js (5.6 Pro prototype; behaviour reference only)
+- Concepts/chat-assistant-concepts/5.6 Pro/styles.css (5.6 Pro prototype; behaviour reference only)
+- source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-003
+- source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-004
 preserved_exact_tokens:
-  - "Chat Activity Bar"
-  - "scrollWidth <= clientWidth"
-  - "settled bottom scroll"
+- Chat Activity Bar
+- scrollWidth <= clientWidth
+- settled bottom scroll
 negative_constraints:
-  - Do not replace the floating activity bar with plain text or an opaque in-flow footer strip.
-  - Do not allow horizontal scrollbars in the transcript.
+- Do not replace the floating activity bar with plain text or an opaque in-flow footer strip.
+- Do not allow horizontal scrollbars in the transcript.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
@@ -25167,49 +25196,57 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Opening Activity Detail defaults to a pinned left panel. An explicit Unpin action converts the active panel to floating, but clicking any activity-preview item opens its record PINNED by default, superseding earlier unpinned state. Pinned History and pinned Activity Detail share the available width without overlapping gutters. Activity previews are bounded non-scrolling previews; separate Open Activity buttons are removed and clicking a preview item navigates directly to its corresponding detail view.
-  Amended 2026-10-09 (DL-180): History opens as a flyout over the chat by default, and pinning it widens the chat
-  column by the list's own width instead of narrowing the messages (Plans/FinalGUISpec.md#F3-637, ACD-500). The width
-  that pinned History and pinned Activity Detail share is the chat column's, never the window's (ACD-501), and
-  Activity Detail stays inside the chat.
+  Amended 2026-10-29 (G1/G2): Activity Detail opens directly as the full-size docked view, never a small
+  transient view and never Pin/unpin. First widen the chat inside its current centre/page floor; at the
+  window limit cover the transcript at the full column height. Keep detail until ×, Esc or its own Activity
+  icon closes it, returning focus to the opener. Switching an Activity domain selects its full detail
+  without a pin state. Hover previews keep their existing dwell, route and no-internal-scroll rule. History
+  is separately a flyout by default; its pin widens the column by its actual/user-sized width under F3-637
+  and DL-233, without narrowing messages.
 gui_related: true
 gui_classification_reason: Activity Detail panel docking, preview navigation, and sidebar coexistence.
-depends_on: [ACD-452, DL-180, ACD-500]
-unblocks: [ACD-454]
+depends_on:
+- ACD-452
+- DL-180
+- ACD-500
+unblocks:
+- ACD-454
 acceptance_criteria:
-  - Activity Detail opens pinned on the left by default; unpin makes it float; subsequent preview clicks open pinned.
-  - "History is a flyout by default and pinning it widens the chat column by its own width; pinned History and pinned Activity share the column's width cleanly (DL-180)."
-  - Hover previews do not scroll internally; clicking preview rows opens corresponding detail.
+- Every domain click opens full-size detail directly; the constrained fallback covers transcript at full column
+  height.
+- Close/×/Esc/icon-again restores focus; no Activity Pin, Unpin or persisted pin state exists.
+- History pin and its own width rule remain independent; hover previews do not scroll internally.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: panel_docking_and_navigation_defect
 reasoning_tier: high
 context_scope: assistant_chat_activity
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: gui_surface_spec
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/chat-assistant-concepts/5.6 Pro/app.js (5.6 Pro prototype; behaviour reference only)"
-  - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-001
-  - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-002
-  - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-006
-  - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-007
-preserved_exact_tokens:
-  - "pinned by default"
-  - "share available width"
-  - "bounded previews"
+- Concepts/chat-assistant-concepts/5.6 Pro/app.js (5.6 Pro prototype; behaviour reference only)
+- source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-001
+- source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-002
+- source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-006
+- source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-007
+preserved_exact_tokens: []
 negative_constraints:
-  - Do not persist prior unpinned state over the default pinned navigation rule.
-  - Do not keep separate Open Activity buttons in activity previews.
+- Do not restore the small transient Activity Detail or an Activity Pin/Unpin control.
+- Do not remove History pin or keep separate Open Activity buttons in previews.
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-180): History is a flyout by default and its pin widens the chat column; the shared width is the column's."
+- 'Amended 2026-10-09 (DL-180): History is a flyout by default and its pin widens the chat column; the shared
+  width is the column''s.'
+- G1/G2 (2026-10-29) supersede the original Activity geometry phrases pinned by default, share available width
+  and bounded previews. Full-size detail follows F3-535/ACD-506; hover previews keep their separately owned
+  dwell, bounds and no-internal-scroll behavior, and History pin remains separate.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
@@ -26134,6 +26171,7 @@ canonical_text: >-
   For scheduled-message cards, the Time-family ticket and time block identify the transcript
   family only. Scheduling_and_Quota_Resume SQR-012 owns the card's internal layout and renders its
   time in the schedule's own time zone; that layout is accepted within Time (DL-138).
+  Amended 2026-10-29 (PC1–PC5, X1; PM7): Agents use the one Pip primitive F3-594; category marks use robot. Families/states remain this owner’s; Pip adds no welcome-back or other conversation capability.
 gui_related: true
 gui_classification_reason: "Defines how every transcript item renders in the default chat presentation."
 split_recommended: false
@@ -26222,6 +26260,7 @@ canonical_text: >-
   (EP-128). Leaving the thread never cancels the reply: APR-020 invalidates the view's pending
   callbacks, not the run or the reply, which is complete when the user returns. A fallback batch
   reply (ACD-229) appears whole with the settle beat only; it is never pseudo-streamed.
+  Amended 2026-10-29 (L1, PC4; PM7): Thinking placeholder consumes the shared Think loader, handing over to Orbit’s Pip without duplication; one Pip per reply and no extra status key.
 gui_related: true
 gui_classification_reason: "Defines the visible life cycle of a streaming assistant reply."
 split_recommended: false
@@ -26294,6 +26333,7 @@ canonical_text: >-
   Send now, Edit or Remove, as section 4 already says that Stop does not clear the queue. Every
   automatic advance and every Send now goes through the same send handler as an ordinary send, so
   holds and validations run again.
+  Amended 2026-10-29 (D8; PM7): Composer Stop ends the current reply and holds the queue only. It does not stop background processes; Processes explicitly says so and offers owner-routed Stop/Stop all.
 gui_related: true
 gui_classification_reason: "Defines the visible composer behaviour while the assistant is busy."
 split_recommended: false
@@ -26433,6 +26473,7 @@ canonical_text: >-
   live cards re-render on the working clock. In a provider tier without internal visibility
   (PROVIDER-005) the card shows only subjects and narration the provider actually reported and never
   invents them.
+  Amended 2026-10-29 (PC4; PM7): Keep protected Orbit choreography, replacing centre with Pip and current tool badge; coordinate with thinking placeholder so a reply never has two visible Pips.
 gui_related: true
 gui_classification_reason: "Defines the visible behaviour of the working activity card."
 split_recommended: false
@@ -26556,197 +26597,209 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Chat motion has one voice per theme family (DL-106): Basic, Friendly, Glass and Retro, with dark
-  and light sharing a voice. Every beat (sending, the thinking placeholder, word arrival, the
-  working card's birth, the narration tuck, the fold, family entrances, thread switch) is written
-  once; a voice changes only its path, easing and texture, never its timing or order, and light
-  themes replace glows with soft shadows. Retro quantizes its steps inside the same window. Friendly
-  and Glass are each as distinct from Basic as Retro and NieR are (DL-179): Friendly soft, warm and a
-  little playful; Glass depth, focus, light and refraction. That difference lives only in path, easing
-  and texture, so it changes no timing or order, and each voice's exact values are its design tokens
-  (DL-113), not unit text. These voices are the only motion voices: every surface that moves, the
-  Usage page included, takes them from this unit and keeps no voice or per-view override of its own
-  (DR-043). Within one moment every voice keeps the beats' order and start times; on every surface,
-  as DL-138 allows for a card's own changes, a voice may also set the length of an element's own
-  travel. Basic is crisp and exact: the old view pans away, arrivals rise straight and one light floor
-  crosses the lead element. Friendly steps the old view back and tilts it away, and arrivals hop up
-  on one soft spring with an alternating lifted corner; a warm bloom rises under the lead element,
-  and travelling marks follow a hop arc and land with a small puff. Glass moves the camera in depth:
-  going forward the old view keeps its size, drifts and defocuses at the lens while the new view
-  comes toward the viewer, and going back the old view shrinks away defocused while the new view
-  settles back from in front; the focus racks to the new view, which arrives sharp with the lead
-  element first, one refraction band crosses the surface, and travelling marks rise toward the
-  viewer with a glint. Retro and NieR Mode step every motion, NieR keeping its own owners (SSYS-043,
-  F3-598), and their travelling marks take a stepped early leg rather than standing still. In every
-  voice a value never overshoots: springs, hops and arcs move plates, marks, beads and paths, never
-  a number, and a hop that lands on a number moves it a few pixels at most and never scales it. No
-  voice scales the outgoing view above 1 or draws an arriving surface through a blur. A voice may
-  blur only on a computer with a GPU, only the outgoing view's one layer, at most 6 px, ending at
-  exactly zero and removed on finish and on every interruption; without a GPU no voice blurs.
-  Continuous motion uses transform and opacity only, and nothing animates at idle. Reduced
-  motion, from the operating system or general.visual.reduce-animations, lands every beat at its end
-  state. The chat's sound cues (DL-107) are send, first word, work started, step finished, failure,
-  needs you, answer arriving, turn complete and stop. They are events of the Notifications & Sounds
-  owner, played through its sound mapping and the global general.interaction.sound-effects switch
-  (on by default), with one kit per theme family; the chat header's speaker button toggles that same
-  key. Cues are subtle, at most one per 120ms, step ticks at most one per 250ms and silent inside
-  bursts; audio starts only after a user gesture; and each cue accompanies a visible change, never
-  carrying information alone. Reduced motion does not mute sound.
-  DL-138 confirms that theme-specific durations apply to sheets and a card's own changes,
-  while transcript entrances retain this unit's shared timing and order; wand cards which opt out
-  of the family entrance do not play an additional transcript entrance.
-  Amended 2026-10-16 (DL-215; Jared's motion bar): every motion on every surface, these voices and every
-  owner's own, meets one acceptance bar: the control acknowledges the input within 100 ms (its pressed or
-  selected state shows, or the ink moves); the new state is fully drawn within 300 ms on P1000-class
-  hardware, or a deliberate transition starts within 100 ms and covers the work; no frame is held longer
-  than 100 ms mid-transition; and on M3-class hardware the click's Event Timing duration is 100 ms or
-  less. The final motion judgement, standing in for Jared, also counts any flash, blank, jump, ghost,
-  late snap or stall a person sees as a failure. Reduced Motion still
-  lands every beat at its end state. Measured concept films are evidence for this bar, not native
-  certification.
-  Amended 2026-10-16 (DL-216; Jared chose option A of the P1000 decision, in his words): keep every effect
-  and accept the P1000's GPU first-draw and raster limit. The full bar still applies to everything bound
-  to the main thread. GPU-raster-bound frames on the P1000 are recorded, not failed, as long as each
-  moment starts within 100 ms and never blanks. No low-end-GPU tier reduces effects.
-  Amended 2026-10-16 (DL-217, the shell lane): one shared busy signal answers for every surface whether
-  the app is in a page change, a Usage moment, the onboarding window, a boot cover, the NieR reboot plate
-  or calm cover, a look cover or a NieR switch not yet painted. It reads no style or layout, and an idle
-  notice follows the end of each busy spell. Background refreshes, measurements, prewarming and catch-up
-  wait on it, and no surface keeps an idle detector of its own. A second shared answer says whether a
-  look's cover hides the page; a surface it hides draws nothing new until the cover lifts, and a selection
-  chip waits only for a real cover, never for a merely busy page. A move begun in a frame that was drawn
-  late starts from its beginning once frames come on time again, at most six frames later or until a
-  page-change hold ends, so no move is spent before it is seen. In the concept these are PM_BUSY, the pm-idle event, PM_LOOK_COVERED and
-  PM_START_ON_SHOWN.
-  Amended 2026-10-17 (DL-219, DL-222): a page change may hold while the arriving page is still drawing
-  its first screen. The leaving page stays, with the click's motion still running, until the arrival is
-  ready or about 1.5 s from the click's own frame, whichever is first; then the entrance plays from the
-  start, and the exit takes over from the opacity the click's fade has reached (F3-464; amended 2026-10-17, review r1).
-  That hold is the covering transition this bar allows, and the bar itself is
-  unchanged. NieR still holds and makes no fade. Under Reduce Animations, and under a cover, the page
-  swaps at once, arrives whole, and is not held. A move held at its start, or released but not yet on
-  its first frame, still counts as running: nothing finishes, cleans up or cancels it as it starts, and
-  a held page is never shown at once with no entrance. Where the work behind a pick is heavy, the
-  control shows its new state in the input's own frame and the write or redraw follows that frame; the
-  latest pick wins, and a waiting write is applied before another input, a paint or a close. Idle
-  preparation is this one rule for every surface. It never causes a visible hitch. It runs only while
-  the page is visible, the shared busy signal is empty, the user is not interacting and nothing is
-  animating, and frames are on time. A step that makes a frame late backs off and is dropped rather
-  than hitching again; repeated late steps stop it for the session. It is best effort: dropping it
+  Chat motion has one voice per theme family (DL-106): Basic, Friendly, Glass and Retro, with dark and
+  light sharing a voice. Every beat (sending, the thinking placeholder, word arrival, the working card's
+  birth, the narration tuck, the fold, family entrances, thread switch) is written once; a voice changes
+  only its path, easing and texture, never its timing or order, and light themes replace glows with soft
+  shadows. Retro quantizes its steps inside the same window. Friendly and Glass are each as distinct from
+  Basic as Retro and NieR are (DL-179): Friendly soft, warm and a little playful; Glass depth, focus, light
+  and refraction. That difference lives only in path, easing and texture, so it changes no timing or order,
+  and each voice's exact values are its design tokens (DL-113), not unit text. These voices are the only
+  motion voices: every surface that moves, the Usage page included, takes them from this unit and keeps no
+  voice or per-view override of its own (DR-043). Within one moment every voice keeps the beats' order and
+  start times; on every surface, as DL-138 allows for a card's own changes, a voice may also set the length
+  of an element's own travel. Basic is crisp and exact: the old view pans away, arrivals rise straight and
+  one light floor crosses the lead element. Friendly steps the old view back and tilts it away, and
+  arrivals hop up on one soft spring with an alternating lifted corner; a warm bloom rises under the lead
+  element, and travelling marks follow a hop arc and land with a small puff. Glass moves the camera in
+  depth: going forward the old view keeps its size, drifts and defocuses at the lens while the new view
+  comes toward the viewer, and going back the old view shrinks away defocused while the new view settles
+  back from in front; the focus racks to the new view, which arrives sharp with the lead element first, one
+  refraction band crosses the surface, and travelling marks rise toward the viewer with a glint. Retro and
+  NieR Mode step every motion, NieR keeping its own owners (SSYS-043, F3-598), and their travelling marks
+  take a stepped early leg rather than standing still. In every voice a value never overshoots: springs,
+  hops and arcs move plates, marks, beads and paths, never a number, and a hop that lands on a number moves
+  it a few pixels at most and never scales it. No voice scales the outgoing view above 1 or draws an
+  arriving surface through a blur. A voice may blur only on a computer with a GPU, only the outgoing view's
+  one layer, at most 6 px, ending at exactly zero and removed on finish and on every interruption; without
+  a GPU no voice blurs. Continuous motion uses transform and opacity only, and nothing animates at idle.
+  Reduced motion, from the operating system or general.visual.reduce-animations, lands every beat at its
+  end state. The chat's sound cues (DL-107) are send, first word, work started, step finished, failure,
+  needs you, answer arriving, turn complete and stop. They are events of the Notifications & Sounds owner,
+  played through its sound mapping and the global general.interaction.sound-effects switch (on by default),
+  with one kit per theme family; the chat header's speaker button toggles that same key. Cues are subtle,
+  at most one per 120ms, step ticks at most one per 250ms and silent inside bursts; audio starts only after
+  a user gesture; and each cue accompanies a visible change, never carrying information alone. Reduced
+  motion does not mute sound. DL-138 confirms that theme-specific durations apply to sheets and a card's
+  own changes, while transcript entrances retain this unit's shared timing and order; wand cards which opt
+  out of the family entrance do not play an additional transcript entrance. Amended 2026-10-16 (DL-215;
+  Jared's motion bar): every motion on every surface, these voices and every owner's own, meets one
+  acceptance bar: the control acknowledges the input within 100 ms (its pressed or selected state shows, or
+  the ink moves); the new state is fully drawn within 300 ms on P1000-class hardware, or a deliberate
+  transition starts within 100 ms and covers the work; no frame is held longer than 100 ms mid-transition;
+  and on M3-class hardware the click's Event Timing duration is 100 ms or less. The final motion judgement,
+  standing in for Jared, also counts any flash, blank, jump, ghost, late snap or stall a person sees as a
+  failure. Reduced Motion still lands every beat at its end state. Measured concept films are evidence for
+  this bar, not native certification. Amended 2026-10-16 (DL-216; Jared chose option A of the P1000
+  decision, in his words): keep every effect and accept the P1000's GPU first-draw and raster limit. The
+  full bar still applies to everything bound to the main thread. GPU-raster-bound frames on the P1000 are
+  recorded, not failed, as long as each moment starts within 100 ms and never blanks. No low-end-GPU tier
+  reduces effects. Amended 2026-10-16 (DL-217, the shell lane): one shared busy signal answers for every
+  surface whether the app is in a page change, a Usage moment, the onboarding window, a boot cover, the
+  NieR reboot plate or calm cover, a look cover or a NieR switch not yet painted. It reads no style or
+  layout, and an idle notice follows the end of each busy spell. Background refreshes, measurements,
+  prewarming and catch-up wait on it, and no surface keeps an idle detector of its own. A second shared
+  answer says whether a look's cover hides the page; a surface it hides draws nothing new until the cover
+  lifts, and a selection chip waits only for a real cover, never for a merely busy page. A move begun in a
+  frame that was drawn late starts from its beginning once frames come on time again, at most six frames
+  later or until a page-change hold ends, so no move is spent before it is seen. In the concept these are
+  PM_BUSY, the pm-idle event, PM_LOOK_COVERED and PM_START_ON_SHOWN. Amended 2026-10-17 (DL-219, DL-222): a
+  page change may hold while the arriving page is still drawing its first screen. The leaving page stays,
+  with the click's motion still running, until the arrival is ready or about 1.5 s from the click's own
+  frame, whichever is first; then the entrance plays from the start, and the exit takes over from the
+  opacity the click's fade has reached (F3-464; amended 2026-10-17, review r1). That hold is the covering
+  transition this bar allows, and the bar itself is unchanged. NieR still holds and makes no fade. Under
+  Reduce Animations, and under a cover, the page swaps at once, arrives whole, and is not held. A move held
+  at its start, or released but not yet on its first frame, still counts as running: nothing finishes,
+  cleans up or cancels it as it starts, and a held page is never shown at once with no entrance. Where the
+  work behind a pick is heavy, the control shows its new state in the input's own frame and the write or
+  redraw follows that frame; the latest pick wins, and a waiting write is applied before another input, a
+  paint or a close. Idle preparation is this one rule for every surface. It never causes a visible hitch.
+  It runs only while the page is visible, the shared busy signal is empty, the user is not interacting and
+  nothing is animating, and frames are on time. A step that makes a frame late backs off and is dropped
+  rather than hitching again; repeated late steps stop it for the session. It is best effort: dropping it
   never loses the screen. Preparation for a surface's next first use comes before speculative warm-up.
-  Queued preparation is dropped when its surface goes away. The rule is the same on every machine
-  (DL-219). Having no GPU is the existing capability path, not a lower-spec tier. Concept performance
-  work stops at "not horribly slow" (DL-220); that bound does not replace this bar.
-  During a page-change hold the leaving page stays the interactive page until release.
-  The quality bar is DL-224.
-  Coordinator default, not objected by Jared (2026-10-17, DL-230): a surface drawn unseen for preparation
-  stays out of the focus order and the accessibility tree until it is shown, and focus that lands in it
-  returns where it came from.
-  Amended 2026-10-17 (DL-228): the page-change hold's rule holds inside a surface too: a leaving panel or pane
-  stays drawn where it was, inert (out of the tab order and the accessibility tree, taking no keys), until the
-  incoming view's first frame, then fades as the entrance starts; the left rail (F3-621) and the terminal card
-  consume it, NieR keeps its own erase and Reduced Motion swaps at once. Reduced Motion is instant (DL-115): a
-  room, page or tab change and an entrance land at their end state; where an owner allows a very short opacity
-  settle under Reduced Motion (F3-520's onboarding steps, F3-438's switch colour) it never moves or scales,
-  and a Usage room change takes none, so the concept's Usage dissolve under Reduced Motion is not adopted. A
-  waiting cover's calm, travel-free pulse is waiting feedback and stays (F3-077, DL-216).
+  Queued preparation is dropped when its surface goes away. The rule is the same on every machine (DL-219).
+  Having no GPU is the existing capability path, not a lower-spec tier. Concept performance work stops at
+  "not horribly slow" (DL-220); that bound does not replace this bar. During a page-change hold the leaving
+  page stays the interactive page until release. The quality bar is DL-224. Coordinator default, not
+  objected by Jared (2026-10-17, DL-230): a surface drawn unseen for preparation stays out of the focus
+  order and the accessibility tree until it is shown, and focus that lands in it returns where it came
+  from. Amended 2026-10-17 (DL-228): the page-change hold's rule holds inside a surface too: a leaving
+  panel or pane stays drawn where it was, inert (out of the tab order and the accessibility tree, taking no
+  keys), until the incoming view's first frame, then fades as the entrance starts; the left rail (F3-621)
+  and the terminal card consume it, NieR keeps its own erase and Reduced Motion swaps at once. Reduced
+  Motion is instant (DL-115): a room, page or tab change and an entrance land at their end state; where an
+  owner allows a very short opacity settle under Reduced Motion (F3-520's onboarding steps, F3-438's switch
+  colour) it never moves or scales, and a Usage room change takes none, so the concept's Usage dissolve
+  under Reduced Motion is not adopted. A waiting cover's calm, travel-free pulse is waiting feedback and
+  stays (F3-077, DL-216). Amended 2026-10-29 (X2, L3/L4, PC1; PM7): Pip’s optional sheet sway/blink/gaze
+  and bounded onboarding life supersede nothing-animates-at-idle only on those illustrative surfaces.
+  Needs-you remains louder; motion pauses hidden/offscreen/during drags. Loader uses family periods and
+  reduced-motion breath/blink exception of F3-662, no travel. App chirps use the one master player and
+  existing chat mute, default off as a Pip part. Main-button pointer/keyboard acknowledgement is within 100
+  ms with no busy stall/deferral workaround and no double commit; disabled oops never activates.
 gui_related: true
-gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
+gui_classification_reason: Defines per-theme motion and the chat's sound cues.
 split_recommended: false
-depends_on: [DL-106, DL-107, UCC-103]
-unblocks: [F3-564, DR-043]
+depends_on:
+- DL-106
+- DL-107
+- UCC-103
+unblocks:
+- F3-564
+- DR-043
 acceptance_criteria:
-  - "Per-theme card or sheet durations cannot change transcript entrance timing or order."
-  - "The same beat has the same timing and order in all four families."
-  - "Friendly and Glass motion are visibly distinct from Basic in path, easing and texture, as Retro's is, on every surface that uses the voices, chat and Usage alike."
-  - "In no voice does a value overshoot, the outgoing view scale above 1 or an arriving surface draw through a blur; a blur appears only with a GPU, only on the outgoing layer, and is gone after every finish and interruption."
-  - "Reduced motion from either source lands end states."
-  - "Chat cues route through the Notifications & Sounds owner; no chat-local sound setting or volume exists."
-  - "No more than one cue plays per 120ms and no step tick within 250ms of another; nothing plays before a user gesture."
-  - Every interaction acknowledges within 100 ms, is fully drawn within 300 ms on P1000-class hardware or
-    starts a covering transition within 100 ms, holds no frame over 100 ms mid-transition, and has an
-    Event Timing duration of 100 ms or less on M3-class hardware.
-  - On P1000-class hardware main-thread work meets the full bar; a GPU-raster-bound hold is recorded, not
-    failed, only when its moment started within 100 ms and showed no blank frame.
-  - Deferred work on every surface waits on the one shared busy signal; nothing draws new content under a
-    look cover; a move begun in a late frame is seen from its start.
-  - A page change holds the leaving page while the arrival is still drawing, for at most about 1.5 s from
-    the click's own frame, and the entrance then plays from the start. The hold is a covering transition;
-    the bar is unchanged. NieR holds and makes no fade. Under Reduce Animations, and under a cover, the
-    page arrives whole and is not held. A held or not-yet-shown move is not finished, cleaned up or
-    cancelled as it starts. During the hold the leaving page stays the interactive page until release.
-  - A heavy pick shows its new state on the control in the input's own frame; the write or redraw follows,
-    the latest pick wins, and a waiting write is applied before another input, a paint or a close.
-  - "Idle preparation is one rule. It causes no visible hitch, runs only while the page is visible, the busy signal is empty, the user is idle and nothing is animating, backs off and drops a late step, is best effort, puts first use before speculative warm-up, and is the same on every machine. No GPU is a capability path, not a lower-spec tier."
+- Per-theme card or sheet durations cannot change transcript entrance timing or order.
+- The same logical interaction beat has the same order/timing except the explicitly approved L4 universal-loader
+  family periods (F3-662, DL-138 own-travel allowance).
+- Friendly and Glass motion are visibly distinct from Basic in path, easing and texture, as Retro's is, on
+  every surface that uses the voices, chat and Usage alike.
+- In no voice does a value overshoot, the outgoing view scale above 1 or an arriving surface draw through a
+  blur; a blur appears only with a GPU, only on the outgoing layer, and is gone after every finish and interruption.
+- Reduced motion from either source lands end states.
+- Chat cues route through the Notifications & Sounds owner; no chat-local sound setting or volume exists.
+- No more than one cue plays per 120ms and no step tick within 250ms of another; nothing plays before a user
+  gesture.
+- Every interaction acknowledges within 100 ms, is fully drawn within 300 ms on P1000-class hardware or starts
+  a covering transition within 100 ms, holds no frame over 100 ms mid-transition, and has an Event Timing duration
+  of 100 ms or less on M3-class hardware.
+- On P1000-class hardware main-thread work meets the full bar; a GPU-raster-bound hold is recorded, not failed,
+  only when its moment started within 100 ms and showed no blank frame.
+- Deferred work on every surface waits on the one shared busy signal; nothing draws new content under a look
+  cover; a move begun in a late frame is seen from its start.
+- A page change holds the leaving page while the arrival is still drawing, for at most about 1.5 s from the
+  click's own frame, and the entrance then plays from the start. The hold is a covering transition; the bar
+  is unchanged. NieR holds and makes no fade. Under Reduce Animations, and under a cover, the page arrives
+  whole and is not held. A held or not-yet-shown move is not finished, cleaned up or cancelled as it starts.
+  During the hold the leaving page stays the interactive page until release.
+- A heavy pick shows its new state on the control in the input's own frame; the write or redraw follows, the
+  latest pick wins, and a waiting write is applied before another input, a paint or a close.
+- Idle preparation is one rule. It causes no visible hitch, runs only while the page is visible, the busy signal
+  is empty, the user is idle and nothing is animating, backs off and drops a late step, is best effort, puts
+  first use before speculative warm-up, and is the same on every machine. No GPU is a capability path, not
+  a lower-spec tier.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: chat_motion_and_sound_drift
 reasoning_tier: high
 context_scope: chat_motion_sound
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
-  - Plans/Settings_System.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/Settings_System.md
 node_compile_hint:
   mode: owner_presentation_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "Plans/Decision_Log.md#DL-106"
-  - "Plans/Decision_Log.md#DL-107"
-  - "Plans/Decision_Log.md#DL-179 (owner note of 2026-10-09: Friendly and Glass distinct from Basic)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/b-motion-REPORT.md, SHA-256 a1f292802f9ae740765c721f8f6196b44ad98ec3a41271f208528c7c03fed87a (the Usage port's motion lane: the voices as built, with GPU evidence for the blur and scale rules)"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
-  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md,
-    SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (the global acceptance bar
-    and the A4, A11, A13 and B9 findings; source lineage)
-  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-13-pm7-coordinator-handoff--COORDINATOR-LOG-20261016.md,
-    SHA-256 d52085df3ab4a82f323d1fd2ed0a846b8e858fcaf7ec746a2ff79cc9cf2a97ba (Jared's 2026-10-15 and
-    2026-10-16 rulings as relayed by the coordinator; decision lineage)
-  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
-    SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of
-    2026-10-16 ~12:10Z; decision lineage)
-  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--DRAFT.md,
-    SHA-256 9fe06d34054ed8510ac5df4e621b2371fc75e451f7620d09c3f43af6c01c5813 (the P1000 decision packet
-    and its measurements; source lineage)
-  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/1d44afa8ce--Concepts--onboarding--opus-5.5--src--js--11-motion-start.js,
-    SHA-256 b042bcd35aab9cd50ba71fcfd8b2330015b12e07cadff7886c2647e4648e84bf (shell lane head 1d44afa8ce, landed unchanged on main b9a08db90f,
-    the shared busy signal and on-time start; source lineage; not native certification)
-  - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
-    SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (Jared, 2026-10-17; decision lineage)
-  - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--onboarding--opus-5.5--tools--shell_motion.py,
-    SHA-256 e245b03ddc951281dc20463422fc9dddf3c5299c7f3ca3421f41b9da399ab625 (main 6a3ee2fe90, the entrance
-    wait and the NieR wipe held until release; source lineage; not native certification)
-  - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--onboarding--opus-5.5--tools--motion_finish.js,
-    SHA-256 a7a522fa4a1984cafddc45b315d23b4b7792fbab0a6e1a9069c448a6095476a4 (main 6a3ee2fe90, a held move
-    finishes; source lineage; not native certification)
-  - /mnt/Cursor/share/puppet-master/2026-10-16-p1000-speed/IDLE-WARM-RULE.md,
-    SHA-256 9a79df01751fbd98f1b4d597d40e520e662b5d584e97ef9094c27dd8aa55736d (Jared, 2026-10-17 10:27Z,
-    no platform-specific acceptance; source lineage)
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- Plans/Decision_Log.md#DL-106
+- Plans/Decision_Log.md#DL-107
+- 'Plans/Decision_Log.md#DL-179 (owner note of 2026-10-09: Friendly and Glass distinct from Basic)'
+- '/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/b-motion-REPORT.md,
+  SHA-256 a1f292802f9ae740765c721f8f6196b44ad98ec3a41271f208528c7c03fed87a (the Usage port''s motion lane:
+  the voices as built, with GPU evidence for the blur and scale rules)'
+- Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md, SHA-256
+  8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (the global acceptance bar and the A4, A11,
+  A13 and B9 findings; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-13-pm7-coordinator-handoff--COORDINATOR-LOG-20261016.md,
+  SHA-256 d52085df3ab4a82f323d1fd2ed0a846b8e858fcaf7ec746a2ff79cc9cf2a97ba (Jared's 2026-10-15 and 2026-10-16
+  rulings as relayed by the coordinator; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
+  SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of 2026-10-16
+  ~12:10Z; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--DRAFT.md, SHA-256
+  9fe06d34054ed8510ac5df4e621b2371fc75e451f7620d09c3f43af6c01c5813 (the P1000 decision packet and its measurements;
+  source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/1d44afa8ce--Concepts--onboarding--opus-5.5--src--js--11-motion-start.js,
+  SHA-256 b042bcd35aab9cd50ba71fcfd8b2330015b12e07cadff7886c2647e4648e84bf (shell lane head 1d44afa8ce, landed
+  unchanged on main b9a08db90f, the shared busy signal and on-time start; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md, SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece
+  (Jared, 2026-10-17; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--onboarding--opus-5.5--tools--shell_motion.py,
+  SHA-256 e245b03ddc951281dc20463422fc9dddf3c5299c7f3ca3421f41b9da399ab625 (main 6a3ee2fe90, the entrance wait
+  and the NieR wipe held until release; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--onboarding--opus-5.5--tools--motion_finish.js,
+  SHA-256 a7a522fa4a1984cafddc45b315d23b4b7792fbab0a6e1a9069c448a6095476a4 (main 6a3ee2fe90, a held move finishes;
+  source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-p1000-speed/IDLE-WARM-RULE.md, SHA-256 9a79df01751fbd98f1b4d597d40e520e662b5d584e97ef9094c27dd8aa55736d
+  (Jared, 2026-10-17 10:27Z, no platform-specific acceptance; source lineage)
 preserved_exact_tokens:
-  - "DL-138"
-  - "Basic"
-  - "Friendly"
-  - "Glass"
-  - "Retro"
-  - "general.visual.reduce-animations"
-  - "general.interaction.sound-effects"
-  - "Usage"
-  - "NieR Mode"
+- DL-138
+- Basic
+- Friendly
+- Glass
+- Retro
+- general.visual.reduce-animations
+- general.interaction.sound-effects
+- Usage
+- NieR Mode
 negative_constraints:
-  - "Do not let a voice change timing or order."
-  - "Do not let a voice make a value overshoot."
-  - "Do not draw an arriving surface through a blur."
-  - "Do not scale the outgoing view above 1."
-  - "Do not add a chat-local sound setting, volume or registry."
-  - "Do not let a sound carry information alone."
-  - "Do not offer a per-theme voice override as a product setting."
-  - "Do not give a lower-spec machine a different page-hold or idle-preparation rule."
+- Do not let a voice change logical ordering or non-exempt timing; F3-662’s L4 loader period is the named own-travel
+  exception.
+- Do not let a voice make a value overshoot.
+- Do not draw an arriving surface through a blur.
+- Do not scale the outgoing view above 1.
+- Do not add a chat-local sound setting, volume or registry.
+- Do not let a sound carry information alone.
+- Do not offer a per-theme voice override as a product setting.
+- Do not give a lower-spec machine a different page-hold or idle-preparation rule.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/Settings_System.md
+- Plans/assistant-chat-design.md
+- Plans/Settings_System.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-106, ContractName:Plans/Decision_Log.md#DL-107, ContractName:Plans/UI_Command_Catalog.md#UCC-103, ContractName:Plans/Decision_Log.md#DL-179
@@ -26788,6 +26841,7 @@ canonical_text: >-
   taken only in its transcript item or the approval owner's host. The families of the records the
   dock mirrors are ACD-469's map. The dock's live-run lines and the per-reply files row replace
   the stream footer pill's helpers and files chips (ACD-482, DL-129).
+  Amended 2026-10-29 (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes to live runs; both are views of the same owner identity, not duplicate attention. Process stop differs from reply Stop; delivery never wakes a stopped thread.
 gui_related: true
 gui_classification_reason: "Defines the dock above the composer and the attention items it shows."
 split_recommended: false
@@ -27812,6 +27866,7 @@ canonical_text: >-
   tab at start; the home layout is the layout record's (SP-330). Pop out keeps the chat's History and Activity Detail
   with it (F3-637); the web client offers no Pop out and the chat stays in its column (F3-637, UCC-203). This adds the port's
   requirements to the binding-by-reference of the 5.6 Pro concept and supersedes nothing else.
+  Amended 2026-10-29 (G1–G3, PC1; PM7): Pip parts/gaze/overlays reuse host owners. Chat width has no fixed 760 cap; Activity Detail has no small/Pin view, first widening then full-height covering. History and detail floating plates use one Glass menu token.
 gui_related: true
 gui_classification_reason: Lists what the 5.6 Pro chat's colours, names, sizing, layers, hover tags, bans, demo controls and keys must meet when it moves into PMConcept7.
 split_recommended: false
@@ -27912,6 +27967,7 @@ canonical_text: >-
   Terminal opens a new terminal tab in the command's folder and runs it there, as for a command with no
   session; Restart in the old tab stays the terminal's own action. A Rerun while an agent drives that terminal
   is a take-over by the person (F3-646), typed as the person.
+  Amended 2026-10-29 (D2/D13; PM7): Process rows reuse the exact Open in Terminal and Rerun in Terminal routing specified here, preserving session identity and new-invocation semantics; Answer in Terminal reveals the same input-owning session, no synthetic input.
 gui_related: true
 gui_classification_reason: Defines which terminal tab each chat card action opens or reveals, how agent-started terminals appear, and which terminal canon leaves the chat document.
 split_recommended: false
@@ -28186,3 +28242,207 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-659, ContractName:Plans/Settings_System.md#SSYS-055, ContractName:Plans/Decision_Log.md#DL-218, ContractName:Plans/Decision_Log.md#DL-231
+
+
+### ACD-505 - Processes Activity Domain
+
+```yaml
+plan_unit_id: ACD-505
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  D1–D4/D7–D14, G4/G5/G7; F3-664. Processes is the tenth domain after Subagents; it covers this
+  thread/subagents’ processes, scripts, servers, watchers, browser sessions and scheduled runs. Subagents
+  stay separate and appear only as linked owners here. Presence requires running/input work, retained while
+  card/detail open; scheduled/finished alone never keep icon. By state orders Needs input, Running,
+  Scheduled, Finished this session; many subagents can use By owner. Hover uses existing
+  dwell/compaction/tones; full detail has Stop and thread Stop all and bounded output. Footer says composer
+  Stop ends reply only. Prompt quick answers are safe-first yes/no; other input opens exact terminal.
+  Processes uses console glyph, agent category robot, individual rows Pip; glyph colour/backlight use
+  common domain tones. All consume SIR-054 and one needs-you set, no duplicate runtime.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-241
+- SIR-054
+- F3-533
+- ACD-471
+- ACD-476
+unblocks: []
+acceptance_criteria:
+- Only this thread/descendants’ eligible work appears, with subagents linked as owners rather than duplicated
+  as processes.
+- D4 presence/retention rules and By state/By owner ordering hold in hover and full detail.
+- Stop all is thread-scoped, composer Stop stays reply-only and input/terminal/delivery actions preserve exact
+  owner identity.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)
+- 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
+- python3 scripts/pm7-build-check.py
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/background-activity/opus-5.5/README.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-241, ContractName:Plans/Shared_Integration_Runtime.md#SIR-054, ContractName:Plans/FinalGUISpec.md#F3-533, ContractName:Plans/assistant-chat-design.md#ACD-471, ContractName:Plans/assistant-chat-design.md#ACD-476
+
+
+
+
+### ACD-506 - Full Activity Detail And Dynamic Chat Width
+
+```yaml
+plan_unit_id: ACD-506
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  G1–G3/G9, DL-254. Activity-bar click directly opens full-size Activity Detail, never a small transient
+  view and never Pin/unpin. Keep it until ×, Esc or icon-again. If dock does not fit, widen chat within
+  centre/page floor; at window limit cover transcript at full column height. No fixed 760 px cap; preserve
+  400 px message minimum, current centre floor/narrow ladder and History’s user-sized pin. Popped-out chat
+  uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu
+  plate. Friendly/Glass context ring is continuous, antialiased and never segmented by broken transforms.
+  All ten looks, widths 860/1024/1280/~1390/1920, narrow/short, Reduced Motion and drag budgets are
+  acceptance surfaces. W7/C5 context-ring clause is an acceptance outcome, not an asserted diagnosis: open
+  investigation PM7-C5-CONTEXT-RING remains owned by the activity GUI lane until its report identifies the
+  renderer/token cause and resulting drawing rule. Do not invent a causal fix from this prose. Recheck
+  Friendly/Glass at actual widths/DPR/Reduced Motion after that implementation; Step 4 reconciles its
+  measured mechanism.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-254
+- F3-637
+- F3-535
+- DR-067
+unblocks: []
+acceptance_criteria:
+- Every Activity domain opens full detail directly, widening then covering transcript at full height when constrained,
+  with no Pin/small view.
+- Chat drag has no fixed 760 cap and preserves the minimum, centre/page floor, user History width and narrow
+  ladder.
+- Glass Activity/History/attachment plates use the same menu token, and C5 remains an explicit measured acceptance/investigation
+  until the GUI report records its fix.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)
+- 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
+- python3 scripts/pm7-build-check.py
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/background-activity/opus-5.5/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-254, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-535, ContractName:Plans/DRY_Rules.md#DR-067
+
+
+
+
+### ACD-507 - Pip Hosts Faces And Orbit
+
+```yaml
+plan_unit_id: ACD-507
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent primitive, reached through shared
+  mark/row/empty/sheet functions rather than innerHTML hooks, observers or layered legacy drawings.
+  Cast/role props, helper marks, Activity agent rows, sheet host by Close, Scheduled/Memory faces, Plans,
+  wand and sleeping empty lists share kit/parts. Host watches at 420 ms, wonders while typing, oops on
+  unusable primary without activation and cheers on success; blink changes, stable last-pointer gaze, no
+  random wink, paused shared sway. Lift-off is one overlay-owned copy released on finish. Pip in Orbit
+  centre has current-tool badge and hands off with thinking placeholder, one Pip per reply. No added chat
+  capability/welcome-back message. Main-button keyboard/pointer acknowledgement ≤100 ms, single commit; fix
+  busy stall instead of delaying dispatch. Parts use SSYS-056’s one transaction and app voice obeys
+  master/chat mute. PC1/X3 sheet motion (2026-10-29): a host drops in when its sheet opens, using the
+  shared rig and installed parts. Dots, sleep and happy faces never follow the pointer; other gaze retains
+  the last known position. Retro entrance/face changes step; live NieR sheet changes cut with a bounded
+  flicker, no black frame. Effective Reduced Motion/Still snaps to the settled state without entrance,
+  sway, flicker or lift-off travel. Static NieR brand/tray/app marks remain static; acknowledgement stays
+  ≤100 ms with no dispatch deferral or double commit.
+gui_related: true
+gui_classification_reason: Defines visible PM7 presentation and interactions.
+split_recommended: false
+depends_on:
+- DL-239
+- F3-594
+- F3-566
+- F3-586
+- SSYS-056
+- DR-072
+unblocks: []
+acceptance_criteria:
+- Sheets use a single shared Pip host with 420 ms watch, deterministic face/gaze exceptions and family-specific
+  entrance/change/rest behavior.
+- Pointer and keyboard main-button acknowledgement are ≤100 ms with exactly one commit; disabled oops never
+  activates.
+- Orbit/thinking handoff shows one Pip per reply, and casts/lists/Plans/wand/empty surfaces use shared primitives
+  and owner states.
+- All optional placements, sound/motion and exit copies obey SSYS-056, the common player/overlay and teardown
+  gates.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)
+- 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
+- python3 scripts/pm7-build-check.py
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_build_20261029
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/pm7-build-20261029/IDS.md
+- Concepts/Icon-Concepts/Opus5.5icon/README.md
+- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not treat concept JavaScript or static fixtures as native runtime certification.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-239, ContractName:Plans/FinalGUISpec.md#F3-594, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-586, ContractName:Plans/Settings_System.md#SSYS-056, ContractName:Plans/DRY_Rules.md#DR-072
+
+

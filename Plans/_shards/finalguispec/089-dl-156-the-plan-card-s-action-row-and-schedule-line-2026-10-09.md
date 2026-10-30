@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43067-L43205
+Source lines: L43525-L43665
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
 
 ---
 
@@ -38,6 +38,7 @@ canonical_text: >-
   an action row under the copy. The theme supplies each control's corners, lines and fills (square and flat under
   Retro and NieR); no theme changes a control's size. The zone holds at every transcript width down to a 280 px
   card: the row wraps rather than shrinking its controls.
+  Amended 2026-10-29 (PC3; PM7): The build-window wait may use a 22 px sleeping hard-hat Pip and a correspondingly reserved 22 px column, superseding only the former 16 px wait-mark column. Text/actions never overlap; other state marks keep their budgets.
 gui_related: true
 gui_classification_reason: Defines the transcript Plan card's status zone and the one action row every Plan surface uses.
 split_recommended: false
@@ -103,6 +104,7 @@ canonical_text: >-
   the token and the detail stays in the text for assistive technology. On a card narrower than 360 px, Details moves
   under the sentence on the content edge. In the transcript card the line takes the status zone's hairline above it
   and has none of its own; above the editor's Plan document it keeps its own hairline below it.
+  Amended 2026-10-29 (PC3; PM7): A scheduled/waiting build may show the mapped sleeping hard-hat Pip at 22 px in the widened mark column of F3-606. Existing cadence, time-zone, Details and decision rows remain unchanged.
 gui_related: true
 gui_classification_reason: Lays out the Plan card's schedule line so its sentence and controls fit every width.
 split_recommended: false
