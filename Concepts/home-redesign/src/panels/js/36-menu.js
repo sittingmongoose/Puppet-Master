@@ -610,7 +610,7 @@ menu.open = function (anchor, spec) {
   lastH = el.offsetHeight;
   if (marksAnchor) { anchor.setAttribute('aria-expanded', 'true'); anchor.classList.add('pmw-anchor-open'); }
   el.style.transform = '';
-  window.PM6_SPROUT.open(el, null, hnd.from);
+  window.PM6_SPROUT.open(el, null, hnd.from, { origin: 'trigger' });   // from the trigger's centre, as it always has
   menu.current = hnd;
   setTimeout(function () { if (!hnd.closed) doc.addEventListener('pointerdown', onOutside, true); }, 0);
   window.addEventListener('resize', onResize);

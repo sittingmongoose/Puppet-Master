@@ -15648,12 +15648,15 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
   transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
   visibility: visible;
   pointer-events: auto;
-  transition:
-    opacity 140ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
-    transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-    visibility 0s,
+  /* the open fade is a family's input (--pm6-sprout-fade-in, --pm6-sprout-fade-ease; Home, Usage and the chat keep their
+     160 ms); written as longhands so Animation speed's sheet (kit.d/17-look.js) rescales them as it does the rest */
+  transition-property: opacity, transform, visibility, height;
+  transition-duration: var(--pm6-sprout-fade-in, 140ms), 300ms, 0s, 340ms;
+  transition-timing-function: var(--pm6-sprout-fade-ease, var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))),
+    cubic-bezier(0.22, 1.55, 0.36, 1), linear,
     /* springy height for search-filter resize bounce */
-    height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
+    cubic-bezier(0.22, 1.72, 0.36, 1);
+  transition-delay: 0s;
 }
 /* the close: solid through most of the collapse, then a late, tiny fade, into the same corner the open set */
 .pm-sprout.is-closing,
@@ -15706,11 +15709,9 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
 /* option-count resize: stronger height spring than search-filter bounce */
 .pm-sprout.pm-sprout-edge.is-open,
 .pm6-chat-effort-popout-portal.is-open {
-  transition:
-    opacity 140ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
-    transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-    visibility 0s,
-    height 360ms cubic-bezier(0.22, 1.78, 0.36, 1);
+  transition-duration: var(--pm6-sprout-fade-in, 140ms), 300ms, 0s, 360ms;
+  transition-timing-function: var(--pm6-sprout-fade-ease, var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))),
+    cubic-bezier(0.22, 1.55, 0.36, 1), linear, cubic-bezier(0.22, 1.78, 0.36, 1);
 }
 /* Reduce motion: instant show and hide, the same end state (Settings' switch, and the system setting for .pm-sprout) */
 [data-motion="reduced"] .pm-sprout,
@@ -15735,8 +15736,24 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
   .pm-sprout { transition: none !important; transform: none !important; }
   .pm-sprout.is-size-bounce { animation: none !important; }
 }
-/* the drag hold: no menu moves inside a resize drag (body.pm-resizing); one caught mid-flight lands at once */
-body.pm-resizing .pm-sprout { transition: none !important; animation: none !important; }
+/* the drag hold: no menu moves inside a resize drag (body.pm-resizing); every consumer, whatever its class, caught
+   mid-flight (opening, closing, a size bounce or NieR's slice) lands at once. :root and the doubled class lift it over
+   the Slice part's own !important transitions. */
+:root body.pm-resizing.pm-resizing :is(.pm-sprout),
+:root body.pm-resizing.pm-resizing :is(.pm6-chat-more-menu),
+:root body.pm-resizing.pm-resizing :is(.pm6-tb-menu),
+:root body.pm-resizing.pm-resizing :is(.context-hover-module),
+:root body.pm-resizing.pm-resizing :is(.context-lens-popover),
+:root body.pm-resizing.pm-resizing :is(.wt-bind-dropdown),
+:root body.pm-resizing.pm-resizing :is(.pm51-popout),
+:root body.pm-resizing.pm-resizing :is(.pm6-chat-mini-popout-portal),
+:root body.pm-resizing.pm-resizing :is(.pm6-chat-effort-popout-portal),
+:root body.pm-resizing.pm-resizing :is(.pm6-chat-mode-popout-portal),
+:root body.pm-resizing.pm-resizing :is(.pm6-chat-persona-popout-portal),
+:root body.pm-resizing.pm-resizing :is(.pm6-chat-pt-popout-portal) {
+  transition: none !important;
+  animation: none !important;
+}
 </style>
 <!-- PM7 SECTION 11/32: bottom-css - bottom panel + terminal workgroup styles (style#pm6-css-bottom) -->
 <style id="pm6-css-bottom">
@@ -18262,10 +18279,10 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
 .fm-indexchip { display: inline-flex; align-items: center; gap: var(--sm); font-family: var(--mono-font); font-size: var(--rail-fs-meta); line-height: var(--rail-lh); color: var(--accent-warning); }
 .fm-indexchip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-warning); animation: shPulse 1.6s var(--ease-out) infinite; }
 
-/* ---- reskinned file context menu (sprout family) ---- */
-.fm-ctx { position: fixed; z-index: 300; min-width: 224px; padding: var(--sm); border-radius: var(--radius-md); background: var(--surface-elevated); border: 1px solid var(--border); box-shadow: var(--elev-2); display: none; transform-origin: var(--pm6-sprout-ox, 12%) var(--pm6-sprout-oy, 0%); }
-.fm-ctx.is-open { display: block; animation: fmSprout .16s var(--ease-out); }
-@keyframes fmSprout { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
+/* ---- reskinned file context menu (sprout family: the menu and its submenus are .pm-sprout, PM6_SPROUT's contract;
+   the open fade keeps its 160 ms) ---- */
+.fm-ctx { position: fixed; z-index: 300; min-width: 224px; padding: var(--sm); border-radius: var(--radius-md); background: var(--surface-elevated); border: 1px solid var(--border); box-shadow: var(--elev-2); display: none; --pm6-sprout-fade-in: 160ms; }
+.fm-ctx.is-open { display: block; }
 .fm-ctx-item { display: flex; align-items: center; gap: var(--rail-gap); width: 100%; padding: var(--sm) var(--md); border: 0; background: none; border-radius: var(--radius-xs); color: var(--text-secondary); font-size: var(--rail-fs-body); line-height: var(--rail-lh); cursor: pointer; text-align: left; }
 .fm-ctx-item:hover { background: var(--accent-soft); color: var(--text-primary); }
 .fm-ctx-item svg { width: 13px; height: 13px; flex: none; color: var(--text-muted); }
@@ -18317,7 +18334,6 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
    keep theirs. */
 .fm-ctx.pm-ctx-menu { max-height: none; overflow: visible; }
 .fm-ctx-sub { position: absolute; left: calc(100% - 4px); top: -5px; min-width: 196px; padding: var(--sm); border-radius: var(--radius-md); background: var(--surface-elevated); border: 1px solid var(--border); box-shadow: var(--elev-2); display: none; z-index: 1; }
-.fm-ctx-wrap.open > .fm-ctx-sub { display: block; animation: fmSprout .14s var(--ease-out); }
 .fm-ctx-item .fm-ctx-caret { margin-left: auto; width: 12px; height: 12px; color: var(--text-muted); flex: none; }
 
 /* width bands */
@@ -18331,7 +18347,6 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
 .side-panel-slot[data-wtier="min"] #panel-files .sh-bbranch .pm6-tb-menu-trigger .fm-root-ico { display: inline-flex; }
 .side-panel-slot[data-wtier="min"] #panel-files .sh-bbranch .pm6-tb-menu-trigger .pm6-tb-menu-label,
 .side-panel-slot[data-wtier="min"] #panel-files .sh-bbranch .pm6-tb-menu-trigger .pm-ico.sm:not(.fm-root-ico) { display: none; }
-[data-reduced-motion="1"] .fm-ctx.is-open { animation: none; }
 [data-reduced-motion="1"] .fm-indexchip .dot { animation: none; }
 [data-reduced-motion="1"] .sh-foot .fm-footstat .dot { animation: none; }
 [data-reduced-motion="1"] .fm-children, [data-reduced-motion="1"] .pm-segtab-ink, [data-reduced-motion="1"] .fm-row, [data-reduced-motion="1"] .fm-quick, [data-reduced-motion="1"] .fm-chevron, [data-reduced-motion="1"] .fm-cchev, [data-reduced-motion="1"] .fm-changerow::before { transition: none; }
@@ -44291,7 +44306,7 @@ html[data-pmw-home="on"] #rsStage { top: calc(100% + 10px + var(--pmw-notice-dro
   overscroll-behavior: contain;
   scrollbar-width: thin;
 }
-.pmw-menu { display: flex; flex-direction: column; outline: none; }
+.pmw-menu { display: flex; flex-direction: column; outline: none; --pm6-sprout-fade-in: 160ms; --pm6-sprout-fade-ease: cubic-bezier(.2, .75, .25, 1); }
 .pmw-mhead { display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 6px 8px 7px; margin: -2px 0 4px; border-bottom: 1px solid var(--pmw-pop-line); }
 .pmw-mhead strong { font-size: 13px; font-weight: 650; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pmw-mmeta { font-size: 12px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }
@@ -56477,6 +56492,8 @@ body[data-ph-drawer][data-ph-resizing] div.pm56-host .history-flyout, body[data-
 .pm56-host .overlay-menu, .pm56-host .overlay-menu.sidecar, .pm56-host .overlay-menu.model-menu{
   z-index: 1200;                         
 }
+.pm56-host .overlay-menu.pm-sprout{ --pm6-sprout-fade-in: 160ms; --pm6-sprout-fade-ease: var(--ease, cubic-bezier(.2, .75, .25, 1)); }
+.pm56-host .overlay-menu.sidecar.pm-sprout{ --pm6-sprout-fade-in: 140ms; }
 .pm56-host .overlay-menu.sidecar{
   width: 228px; min-width: 228px; max-width: 228px;
   box-sizing: border-box;
@@ -67416,13 +67433,13 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-r
   animation: o55np-slice 300ms linear backwards !important; transform-origin: 50% 50% !important;
 }
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot.pm56-host .dialog:not(.demo-dialog):not(.pmx-sheet){ transform-origin: 0 0 !important; }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) div.pm56-host .overlay-menu.pm-sprout{
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced):not(.pm-resizing) div.pm56-host .overlay-menu.pm-sprout{
   --pm6-sprout-ox: 50% !important; --pm6-sprout-oy: 50% !important; --pm6-sprout-tx: 0px !important; --pm6-sprout-ty: 0px !important;
   --pm6-sprout-sx: 1 !important; --pm6-sprout-sy: 1 !important;
   scale: 1 .006;
   transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms, visibility 0s linear 200ms !important;
 }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) div.pm56-host .overlay-menu.pm-sprout.is-open:not(.is-closing){ scale: none; transition: none !important; animation: o55np-slice 300ms linear backwards; }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced):not(.pm-resizing) div.pm56-host .overlay-menu.pm-sprout.is-open:not(.is-closing){ scale: none; transition: none !important; animation: o55np-slice 300ms linear backwards; }
 .pm56-host #o55np-wipe{ position: fixed; z-index: 900; pointer-events: none; overflow: hidden; contain: strict; display: none; }
 .pm56-host #o55np-wipe > i{ position: absolute; inset: 0; display: block; will-change: transform;
   background:
@@ -67902,7 +67919,7 @@ html[data-o55-nier-parts~="intel"] #pmOverlayRoot.pm56-host > .hover-card{ anima
 /* .message { position: relative } (PMConcept7's own chat) moved the containing block of the chat's message parts */
 :where(.pm56-host) .message { position: revert; }
 /* ---- generated (chat56_layer.leaked_custom_properties): the chat's fallbacks, not PMConcept7's values ---- */
-:where(.pm56-host) { --accent: initial; --accent-2: initial; --accent-lime: initial; --accent-magenta: initial; --accent-orange: initial; --accent-primary: initial; --ad: initial; --background: initial; --border: initial; --d: initial; --danger: initial; --dl: initial; --font-mono: initial; --muted: initial; --nw: initial; --nx-1: initial; --nx-bk: initial; --nx-bk-c: initial; --nx-bl-a: initial; --nx-bl-attention: initial; --nx-bl-blocked: initial; --nx-bl-changed: initial; --nx-bl-ink: initial; --nx-bl-working: initial; --nx-d1: initial; --nx-ease: initial; --nx-ease-c: initial; --nx-fl: initial; --nx-h-attention-i: initial; --nx-h-blocked-i: initial; --nx-h-bolt-i: initial; --nx-h-changed-i: initial; --nx-h-concept-i: initial; --nx-h-hover-i: initial; --nx-h-quiet-i: initial; --nx-h-spark-i: initial; --nx-h-swell-i: initial; --nx-h-working-i: initial; --nx-hi-a: initial; --nx-hi-w: initial; --nx-hiv: initial; --nx-idle: initial; --nx-idle-a: initial; --nx-ink: initial; --nx-le: initial; --nx-paused-a: initial; --nx-stroke-base: initial; --nx-tone-k: initial; --nx-wand-blue: initial; --nx-wand-gold: initial; --nx-wand-green: initial; --nx-wand-pink: initial; --nx-wand-silver: initial; --nxb-bl: initial; --nxb-blh: initial; --nxb-rest: initial; --o55-nier-active: initial; --o55-nier-code-bg: initial; --o55-nier-code-fg: initial; --o55-nier-error: initial; --o55-nier-error-surface: initial; --o55-nier-error-text: initial; --o55-nier-hover: initial; --o55-nier-ink: initial; --o55-nier-ink-rgb: initial; --o55-nier-line-strong: initial; --o55-nier-ok: initial; --o55-nier-ok-surface: initial; --o55-nier-ok-text: initial; --o55-nier-on-ink: initial; --o55-nier-overlay: initial; --o55-nier-paper: initial; --o55-nier-paper-rgb: initial; --o55-nier-raised: initial; --o55-nier-secondary: initial; --o55-nier-selected: initial; --o55-nier-shadow-rgb: initial; --o55-nier-warn: initial; --o55-nier-warn-surface: initial; --o55-nier-warn-text: initial; --o55nw-art: initial; --o55nw-cross: initial; --o55nw-dots: initial; --o55nw-hatch: initial; --o55nw-rules: initial; --o55nw-solid: initial; --o55nw-ticks: initial; --o55nw-ticks-pos: initial; --o55nw-ticks-size: initial; --pip-accent: initial; --pip-back: initial; --pip-bg: initial; --pip-cheek: initial; --pip-ctl: initial; --pip-drop: initial; --pip-edge: initial; --pip-eye: initial; --pip-frost: initial; --pip-head: initial; --pip-head0: initial; --pip-head1: initial; --pip-ink: initial; --pip-paper: initial; --pip-pin: initial; --pip-red: initial; --pip-rimbot: initial; --pip-rimtop: initial; --pip-rod: initial; --pip-rodback: initial; --pip-str: initial; --pip-tint0: initial; --pip-tint1: initial; --pip-tint2: initial; --pm6-sprout-ox: initial; --pm6-sprout-oy: initial; --pm6-sprout-sx: initial; --pm6-sprout-sy: initial; --pm6-sprout-tx: initial; --pm6-sprout-ty: initial; --pml-size: initial; --pmx-mark-size: initial; --positive: initial; --radius-md: initial; --radius-sm: initial; --rb-ground: initial; --rb-text: initial; --subtle: initial; --success: initial; --surface: initial; --surface-elevated: initial; --text: initial; --text-muted: initial; --text-primary: initial; --warning: initial; }
+:where(.pm56-host) { --accent: initial; --accent-2: initial; --accent-lime: initial; --accent-magenta: initial; --accent-orange: initial; --accent-primary: initial; --ad: initial; --background: initial; --border: initial; --d: initial; --danger: initial; --dl: initial; --font-mono: initial; --muted: initial; --nw: initial; --nx-1: initial; --nx-bk: initial; --nx-bk-c: initial; --nx-bl-a: initial; --nx-bl-attention: initial; --nx-bl-blocked: initial; --nx-bl-changed: initial; --nx-bl-ink: initial; --nx-bl-working: initial; --nx-d1: initial; --nx-ease: initial; --nx-ease-c: initial; --nx-fl: initial; --nx-h-attention-i: initial; --nx-h-blocked-i: initial; --nx-h-bolt-i: initial; --nx-h-changed-i: initial; --nx-h-concept-i: initial; --nx-h-hover-i: initial; --nx-h-quiet-i: initial; --nx-h-spark-i: initial; --nx-h-swell-i: initial; --nx-h-working-i: initial; --nx-hi-a: initial; --nx-hi-w: initial; --nx-hiv: initial; --nx-idle: initial; --nx-idle-a: initial; --nx-ink: initial; --nx-le: initial; --nx-paused-a: initial; --nx-stroke-base: initial; --nx-tone-k: initial; --nx-wand-blue: initial; --nx-wand-gold: initial; --nx-wand-green: initial; --nx-wand-pink: initial; --nx-wand-silver: initial; --nxb-bl: initial; --nxb-blh: initial; --nxb-rest: initial; --o55-nier-active: initial; --o55-nier-code-bg: initial; --o55-nier-code-fg: initial; --o55-nier-error: initial; --o55-nier-error-surface: initial; --o55-nier-error-text: initial; --o55-nier-hover: initial; --o55-nier-ink: initial; --o55-nier-ink-rgb: initial; --o55-nier-line-strong: initial; --o55-nier-ok: initial; --o55-nier-ok-surface: initial; --o55-nier-ok-text: initial; --o55-nier-on-ink: initial; --o55-nier-overlay: initial; --o55-nier-paper: initial; --o55-nier-paper-rgb: initial; --o55-nier-raised: initial; --o55-nier-secondary: initial; --o55-nier-selected: initial; --o55-nier-shadow-rgb: initial; --o55-nier-warn: initial; --o55-nier-warn-surface: initial; --o55-nier-warn-text: initial; --o55nw-art: initial; --o55nw-cross: initial; --o55nw-dots: initial; --o55nw-hatch: initial; --o55nw-rules: initial; --o55nw-solid: initial; --o55nw-ticks: initial; --o55nw-ticks-pos: initial; --o55nw-ticks-size: initial; --pip-accent: initial; --pip-back: initial; --pip-bg: initial; --pip-cheek: initial; --pip-ctl: initial; --pip-drop: initial; --pip-edge: initial; --pip-eye: initial; --pip-frost: initial; --pip-head: initial; --pip-head0: initial; --pip-head1: initial; --pip-ink: initial; --pip-paper: initial; --pip-pin: initial; --pip-red: initial; --pip-rimbot: initial; --pip-rimtop: initial; --pip-rod: initial; --pip-rodback: initial; --pip-str: initial; --pip-tint0: initial; --pip-tint1: initial; --pip-tint2: initial; --pm6-sprout-fade-ease: initial; --pm6-sprout-fade-in: initial; --pm6-sprout-ox: initial; --pm6-sprout-oy: initial; --pm6-sprout-sx: initial; --pm6-sprout-sy: initial; --pm6-sprout-tx: initial; --pm6-sprout-ty: initial; --pml-size: initial; --pmx-mark-size: initial; --positive: initial; --radius-md: initial; --radius-sm: initial; --rb-ground: initial; --rb-text: initial; --subtle: initial; --success: initial; --surface: initial; --surface-elevated: initial; --text: initial; --text-muted: initial; --text-primary: initial; --warning: initial; }
 /* ---- pm7-port/css/10-tokens-host.css ---- */
 /* pm7-port/css/10-tokens-host.css (looks lane): the chat's tokens are PMConcept7's (D27: the chat's Basic, Friendly
    and Glass colours are fixed to match PMConcept7; Retro already matched). Written already scoped, not passed through
@@ -71680,13 +71697,13 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
 
           <!-- stubs so the shared shell's activity bar can switch without errors -->
 
-          <div class="fm-ctx pm-ctx-menu" id="fileContextMenu" role="menu" aria-label="File actions">
+          <div class="fm-ctx pm-ctx-menu pm-sprout" id="fileContextMenu" role="menu" aria-label="File actions">
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.new_file" data-demo-arg="cmd.file.new_file -> prompting name (single target)"><i data-ico="file" class="pm-ico"></i><span class="fm-ctx-label">New file</span></button>
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.new_folder" data-demo-arg="cmd.file.new_folder -> prompting name (single target)"><i data-ico="folder" class="pm-ico"></i><span class="fm-ctx-label">New folder</span></button>
           <div class="fm-ctx-sep" role="separator"></div>
           <div class="fm-ctx-wrap" data-sub>
           <button class="fm-ctx-item" role="menuitem" aria-haspopup="true"><i data-ico="external" class="pm-ico"></i><span class="fm-ctx-label">Open with…</span><i data-ico="chevR" class="pm-ico fm-ctx-caret"></i></button>
-          <div class="fm-ctx-sub" role="menu" aria-label="Open with">
+          <div class="fm-ctx-sub pm-sprout pm-sprout-edge" role="menu" aria-label="Open with">
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.open_with" data-demo-arg="cmd.file.open_with -> source_editor"><i data-ico="edit" class="pm-ico"></i><span class="fm-ctx-label">Source editor</span></button>
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.open_with" data-demo-arg="cmd.file.open_with -> image_viewer"><i data-ico="camera" class="pm-ico"></i><span class="fm-ctx-label">Image viewer</span></button>
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.open_with" data-demo-arg="cmd.file.open_with -> workspace_preview (rendered; source stays canonical)"><i data-ico="external" class="pm-ico"></i><span class="fm-ctx-label">Workspace preview</span></button>
@@ -71703,7 +71720,7 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
           <button class="fm-ctx-item" role="menuitem" id="fmCtxPaste" data-demo-action="cmd.file.paste_nodes" data-demo-arg="cmd.file.paste_nodes -> destination = folder/root (copy|move)"><i data-ico="clipboard" class="pm-ico"></i><span class="fm-ctx-label">Paste</span><span class="fm-ctx-key">Ctrl+V</span></button>
           <div class="fm-ctx-wrap" data-sub>
           <button class="fm-ctx-item" role="menuitem" aria-haspopup="true"><i data-ico="copy" class="pm-ico"></i><span class="fm-ctx-label">Copy path</span><i data-ico="chevR" class="pm-ico fm-ctx-caret"></i></button>
-          <div class="fm-ctx-sub" role="menu" aria-label="Copy path">
+          <div class="fm-ctx-sub pm-sprout pm-sprout-edge" role="menu" aria-label="Copy path">
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> relative (exact value via clipboard helper)"><i data-ico="copy" class="pm-ico"></i><span class="fm-ctx-label">Copy relative path</span></button>
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> absolute (exact value via clipboard helper)"><i data-ico="copy" class="pm-ico"></i><span class="fm-ctx-label">Copy full path</span></button>
           </div>
@@ -75349,7 +75366,8 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-shell { --pmu-r
 :is(#panel-usage,[data-pmu-host]) .pmu-menu { position: absolute; z-index: 70; box-sizing: border-box; display: flex; flex-direction: column; min-width: 220px;
   max-width: min(420px, calc(100% - 16px)); padding: 6px; border: 1px solid var(--pmu-menu-border); border-radius: var(--pmu-r-menu);
   background: var(--pmu-menu-bg); box-shadow: var(--pmu-menu-shadow); color: var(--pmu-ink); font-family: var(--pmu-font); font-size: 13px;
-  line-height: 1.35; text-align: left; overflow: hidden; overscroll-behavior: contain; contain: layout; }
+  line-height: 1.35; text-align: left; overflow: hidden; overscroll-behavior: contain; contain: layout;
+  --pm6-sprout-fade-in: 160ms; --pm6-sprout-fade-ease: cubic-bezier(.2, .75, .25, 1); }
 :is(#panel-usage,[data-pmu-host]) .pmu-menu.has-rail { padding: 0; }
 /* the app's Glass rule for [role="menu"] gives the panel a 30 px backdrop blur and a half-transparent fill (!important);
    without a GPU every frame of the sprout then re-blurred the board behind it in software (40 ms draws, 25 fps, PERF-3):
@@ -94543,7 +94561,7 @@ var PMU_SERIES = {
     host.appendChild(el);
     wire(h);
     place(h);
-    window.PM6_SPROUT.open(el, null, anchor && anchor.isConnected ? anchor : h.lastAnchor);
+    window.PM6_SPROUT.open(el, null, anchor && anchor.isConnected ? anchor : h.lastAnchor, { origin: 'trigger' });
     if (reduced()) h.settled = true;
     else {
       h.settleT = setTimeout(function () { h.settled = true; }, OPEN_MS * speed() + 40);
@@ -104778,33 +104796,21 @@ status: completed with warnings</pre>
     };
 
     // ── Worktree binding functions ──────────────────────────────────
-    // CSS uses .is-open / .is-closing (sprout). Prefer window.PM6_SPROUT from
-    // the chat script; fall back to .active only if sprout helpers are absent.
+    // The dropdowns open and close through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js).
     function closeAllWorktreeDropdowns() {
-      var sprout = window.PM6_SPROUT;
-      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) {
-        if (sprout && sprout.close) sprout.close(d);
-        else {
-          d.classList.remove('active', 'is-open', 'is-closing');
-          d.style.display = 'none';
-        }
-      });
+      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) { window.PM6_SPROUT.close(d); });
     }
     window.toggleWorktreeDropdown = function(btn) {
       var wrap = btn.closest('.wt-bind-wrap') || btn.parentElement;
       var dd = wrap.querySelector('.wt-bind-dropdown');
       if (!dd) return;
       var sprout = window.PM6_SPROUT;
-      if (sprout && sprout.open && sprout.close && sprout.isOpen) {
-        var open = sprout.isOpen(dd);
-        document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) {
-          if (d !== dd && sprout.isOpen(d)) sprout.close(d);
-        });
-        if (open) sprout.close(dd);
-        else sprout.open(dd, null, btn);
-        return;
-      }
-      dd.classList.toggle('active');
+      var open = sprout.isOpen(dd);
+      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) {
+        if (d !== dd && sprout.isOpen(d)) sprout.close(d);
+      });
+      if (open) sprout.close(dd);
+      else sprout.open(dd, null, btn);
     };
     window.showCreateWorktreeModal = function() {
       closeAllWorktreeDropdowns();
@@ -116938,10 +116944,10 @@ PM51.listDetail = ({ id, rosterId, rosterTitle, count, add, filter, items, detai
    its classes in pm7-sprout.css: six --pm6-sprout-* vars, is-open / is-closing). */
 let pmActive = null, popSeq = 0;
 const POP_ID = () => 'pm51-pop-' + (++popSeq);
-/* a popout with no anchor grows out of the corner it hangs from (positionPopout's stand-in trigger) */
-function sproutOpen(el, anchor) {
-  window.PM6_SPROUT.open(el, null, anchor || { left: window.innerWidth - 240, top: 16, width: 224, height: 0 });
-}
+/* a popout grows from the corner nearest its anchor; one with no anchor from its own top right corner, as Settings'
+   popouts always have (the owner takes that corner as an input) */
+const POP_CORNER = { ox: '88%', oy: '0%', tx: '0px', ty: '-10px', sx: '0.72', sy: '0.48', mark: 'tr' };
+function sproutOpen(el, anchor) { window.PM6_SPROUT.open(el, null, anchor || null, anchor ? null : { origin: POP_CORNER }); }
 function sproutClose(el, done) { window.PM6_SPROUT.close(el, done); }
 function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
   const vw = window.innerWidth, vh = window.innerHeight;
@@ -119179,7 +119185,7 @@ function o55CollectScalable() {
     for (const r of rules) {
       if (r.type === 1 && r.style) {
         const pick = {};
-        for (const p of ['font-size', 'line-height', 'transition-duration', 'animation-duration']) {
+        for (const p of ['font-size', 'line-height', 'transition-duration', 'transition-delay', 'animation-duration']) {
           const v = r.style.getPropertyValue(p); if (!v || /^(normal|inherit|initial|unset|revert|0s?|auto)$/.test(v.trim())) continue;
           pick[p] = [v.trim(), r.style.getPropertyPriority(p)];
         }
@@ -119201,13 +119207,16 @@ const o55SplitTop = v => { const parts = []; let depth = 0, cur = ''; for (const
 function o55ScaledValue(p, v, k) {
   if (p === 'line-height' && /^[\d.]+$/.test(v)) return `calc(${v} * ${k})`;
   if (p === 'font-size' && /^(?:larger|smaller|x*-?small|medium|x*-?large|\d+(?:\.\d+)?%|[\d.]+em)$/.test(v)) return null; // relative: follows the parent
-  if (/^(?:transition|animation)-duration$/.test(p)) return o55SplitTop(v).map(x => (/^0(?:\.0+)?m?s$/.test(x) ? x : `calc(${x} * ${k})`)).join(', ');
+  if (/^(?:transition-(?:duration|delay)|animation-duration)$/.test(p)) return o55SplitTop(v).map(x => (/^0(?:\.0+)?m?s$/.test(x) ? x : `calc(${x} * ${k})`)).join(', ');
   return `calc(${v} * ${k})`;
 }
 function o55PaintScales(text, line, speed) {
   const key = `${text}|${line}|${speed}`; if (key === o55ScaleKey) return; o55ScaleKey = key;
   if (text === 1 && line === 1 && speed === 1) { if (o55ScaleSheet) { o55ScaleSheet.remove(); o55ScaleSheet = null; } return; }
-  const k = { 'font-size': text, 'line-height': line, 'transition-duration': speed, 'animation-duration': speed };
+  /* a transition's delay scales with its duration, so a late fade or a visibility deadline keeps its place in the motion
+     it belongs to (the menu sprout's close: its 175 ms fade delay and 220 ms visibility deadline against its 220 ms
+     collapse) */
+  const k = { 'font-size': text, 'line-height': line, 'transition-duration': speed, 'transition-delay': speed, 'animation-duration': speed };
   const blocks = [];
   for (const r of o55CollectScalable()) {
     const decl = Object.entries(r.pick).filter(([p]) => k[p] !== 1).map(([p, [v, imp]]) => { const s = o55ScaledValue(p, v, k[p]); return s ? `${p}:${s}${imp ? ' !important' : ''}` : ''; }).filter(Boolean).join(';');
@@ -122723,9 +122732,7 @@ afterRender = function () {
   function closeMenu() {
     const menu = document.getElementById('themeMenu');
     const btn = document.getElementById('themeSelect');
-    const sprout = window.PM6_SPROUT;
-    if (menu && sprout && typeof sprout.close === 'function') sprout.close(menu);
-    else if (menu) { menu.classList.remove('is-open', 'is-closing'); menu.style.display = 'none'; }
+    if (menu) window.PM6_SPROUT.close(menu);
     if (btn) btn.setAttribute('aria-expanded', 'false');
   }
   function listItems(menu) { return [...menu.querySelectorAll(ITEM)]; }
@@ -150902,37 +150909,50 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
 })();
 </script>
 <!-- PM7 SECTION 28/32: chat-data-js - pre-serialized chat thread corpus (PM6_CHAT_THREADS) (script#pm6-js-chat-data) -->
-<script id="pm7-sprout-js">/* PM6_SPROUT: the menu sprout, the one owner every menu opens and closes through (ACD-439, DR-057, DR-058; Jared,
-   L8 B 2026-10-30: one sprout owner for every menu). Its class contract is base/style/pm7-sprout.css.
-   Callers: the title-bar menus (pm6-js-panels.js), the base chat's pickers and the worktree menu (pm6-js-chat.js,
-   script-038.js), Settings' popouts (src/settings/kit.js), the NieR theme menu (kit.d/23-nier-theme-menu.js), the rail
-   (PMR.menu), Usage (PMU.menu), Home (PMW.menu) and the 5.6 Pro chat's menus (app.js). The 5.6 Pro standalone page
-   reads this file and pm7-sprout.css too, so no menu draws a sprout of its own.
+<script id="pm7-sprout-js">/* PM6_SPROUT: the menu sprout, the one owner every menu opens and closes through (ACD-439, DR-057, DR-058, DR-079;
+   Jared, L8 B 2026-10-30: one sprout owner for every menu). Its class contract is base/style/pm7-sprout.css.
+   Callers: the title-bar menus and search pop (pm6-js-panels.js), the base chat's pickers and the worktree menu
+   (pm6-js-chat.js, script-038.js), the side panels' menus and the File Manager's context menu (PMMenu,
+   pm6-js-cozy-shelves.js), Settings' popouts (src/settings/kit.js), the NieR theme menu (kit.d/23-nier-theme-menu.js),
+   the notification inbox (src/js/19-notify.js), the rail (PMR.menu), Usage (PMU.menu), Home (PMW.menu) and the 5.6 Pro
+   chat's menus (app.js). The 5.6 Pro standalone page reads this file and pm7-sprout.css too, so no menu draws a sprout
+   of its own.
 
-     open(el, afterOpen, anchor, opts)  shows el (inline display: opts.display, else data-portal-display, else block;
-                                        display: false leaves it to the surface), pins the corner nearest the anchor
-                                        and adds is-open. anchor: an element, a rect ({ left, top, width, height } or
-                                        right / bottom) or a point ({ x, y }).
-     close(el, done)                    is-closing; done once the collapse has run (el is display:none by then)
+     open(el, afterOpen, anchor, opts)  shows el and adds is-open. Display: opts.display, else data-portal-display,
+                                        else block; display: false leaves it to the surface (and clears a display:none
+                                        this owner left). anchor: an element, a rect ({ left, top, width, height } or
+                                        right / bottom) or a point ({ x, y }); a hidden element counts as none.
+                                        The corner the box grows from (its origin, closed nudge and closed scale):
+                                          opts.origin 'corner'   (default) the corner nearest the anchor, snapped
+                                          opts.origin 'trigger'  the anchor's centre across the edge facing it (Home,
+                                                                 Usage, the chat's menus, the inbox)
+                                          opts.origin { ox, oy, tx, ty, sx, sy }  the surface's own values
+                                          no anchor and no origin object: the surface's CSS values stand
+                                        opts.shown holds the entrance until frames come on time (PM_START_ON_SHOWN)
+     close(el, done, opts)              is-closing; done once the whole collapse has run (its last transition), with
+                                        el display:none by then; opts.instant lands it at once
      isOpen(el)
-     aim(el, anchor)                    pins the corner again (a flyout whose row moved)
+     aim(el, anchor, origin)            pins the corner again (a flyout whose row moved)
      resize(el, mutate)                 runs mutate and springs the height from the old box to the new one, with the
-                                        size bounce (the search filter, an option count, a drill-in)
+                                        size bounce (the search filter, an option count, a drill-in, a list that grew)
      bounce(el)                         the size bounce alone, for a surface that sets its new height itself
      keep(el)                           for a renderer that rewrites class and style (the 5.6 Pro chat's patch): call
                                         it before the rewrite; the function it returns puts the sprout's state back
      reduced()                          Reduce motion: Settings' switch (html[data-motion="reduced"]) or the system's
 
-   Timing comes from the element's own computed transitions (the contract, a look's part such as NieR's slice, and
-   Animation speed, which rescales them), never from a constant, so a close always waits for the collapse it started.
-   A close that begins inside a resize drag (body.pm-resizing) lands at once: no menu moves in a drag. Reopening a
-   closing menu cancels that close; a close called again on a closing menu finishes both callers together. */
+   Timing comes from the element's own running transitions (the contract, a look's part such as NieR's slice, and
+   Animation speed, which rescales their durations and delays), never from a constant: a close finishes when the last
+   of them has ended, so the collapse always runs to its end, with a bounded fallback for a transition that never
+   reports. A close that begins inside a resize drag (body.pm-resizing) lands at once, and the contract holds every
+   consumer still while a drag is under way. Reopening a closing menu cancels that close; a close called again on a
+   closing menu finishes both callers together. */
 (function () {
   'use strict';
   var doc = document, root = doc.documentElement;
   var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   var OWN_CLASS = ['is-open', 'is-closing', 'is-size-bounce'];
   var OWN_VARS = ['--pm6-sprout-ox', '--pm6-sprout-oy', '--pm6-sprout-tx', '--pm6-sprout-ty', '--pm6-sprout-sx', '--pm6-sprout-sy'];
+  var CLOSING = { opacity: 1, transform: 1, scale: 1, translate: 1, visibility: 1 };
   var states = typeof WeakMap === 'function' ? new WeakMap() : null;
   var gen = 0;
 
@@ -150941,27 +150961,31 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
   function isOpen(el) { return !!(el && el.classList.contains('is-open') && !el.classList.contains('is-closing')); }
   function state(el) {
     var s = states ? states.get(el) : el._pm6Sprout;
-    if (!s) { s = { g: 0, dones: [], bounceT: 0 }; if (states) states.set(el, s); else el._pm6Sprout = s; }
+    if (!s) { s = { g: 0, dones: [], bounceT: 0, hg: 0 }; if (states) states.set(el, s); else el._pm6Sprout = s; }
     return s;
   }
   function ms(v) { v = String(v || '').trim(); var n = parseFloat(v); return isFinite(n) ? (/ms$/.test(v) ? n : n * 1000) : 0; }
-  /* when the element's running transitions on these properties end (ms from now), from its computed style */
+  /* when the element's transitions on these properties end (ms from now), from its computed style */
   function endOf(el, props) {
     var cs = getComputedStyle(el);
     var names = cs.transitionProperty.split(','), durs = cs.transitionDuration.split(','), dels = cs.transitionDelay.split(',');
     var end = 0;
     for (var i = 0; i < names.length; i++) {
       var n = names[i].trim();
-      if (n !== 'all' && props.indexOf(n) < 0) continue;
-      var d = ms(durs[i % durs.length]);
-      if (d > 0) end = Math.max(end, d + ms(dels[i % dels.length]));
+      if (n !== 'all' && !props[n]) continue;
+      var d = ms(durs[i % durs.length]), l = ms(dels[i % dels.length]);
+      if (d > 0 || l > 0) end = Math.max(end, d + l);
     }
     return end;
   }
-  /* the anchor as a viewport box */
+  /* the anchor as a viewport box; an element that is not drawn (hidden, display:none) is no anchor */
   function boxOf(a) {
     if (!a) return null;
-    if (typeof a.getBoundingClientRect === 'function') return a.isConnected === false ? null : a.getBoundingClientRect();
+    if (typeof a.getBoundingClientRect === 'function') {
+      if (a.isConnected === false) return null;
+      var r = a.getBoundingClientRect();
+      return r.width || r.height ? r : null;
+    }
     if (typeof a.left === 'number' && typeof a.top === 'number') {
       return { left: a.left, top: a.top, width: typeof a.width === 'number' ? a.width : (a.right || a.left) - a.left,
         height: typeof a.height === 'number' ? a.height : (a.bottom || a.top) - a.top };
@@ -150970,11 +150994,21 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     return null;
   }
   function edge(el) { return el.classList.contains('pm6-chat-effort-popout-portal') || el.classList.contains('pm-sprout-edge'); }
+  function put(el, o) {
+    var keys = ['ox', 'oy', 'tx', 'ty', 'sx', 'sy'];
+    for (var i = 0; i < keys.length; i++) if (o[keys[i]] != null) el.style.setProperty('--pm6-sprout-' + keys[i], String(o[keys[i]]));
+  }
 
-  /* Pin the open/close sprout to the corner (or, for a side flyout, the edge) nearest the trigger, so the box grows out
-     of and collapses into its trigger, not a fixed origin. */
-  function aim(el, anchor) {
-    var ar = el ? boxOf(anchor) : null;
+  /* Pin the open/close sprout to where the box grows from: by default the corner (or, for a side flyout, the edge)
+     nearest the trigger, so the box grows out of and collapses into its trigger, not a fixed origin. */
+  function aim(el, anchor, origin) {
+    if (!el) return;
+    if (origin && typeof origin === 'object') {
+      put(el, origin);
+      if (origin.mark) el.setAttribute('data-sprout', origin.mark);
+      return;
+    }
+    var ar = boxOf(anchor);
     if (!ar) return;
     /* neutralize closed-state scale so we measure the real layout box */
     var prevTf = el.style.transform;
@@ -150985,6 +151019,14 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     if (!pr.width || !pr.height) return;
     var ax = ar.left + ar.width / 2;
     var ay = ar.top + ar.height / 2;
+    if (origin === 'trigger' && !edge(el)) {
+      /* the trigger's centre across the edge that faces it (Home, Usage, the chat's menus, the inbox) */
+      var below = ay <= (pr.top + pr.bottom) / 2;
+      var tox = Math.max(18, Math.min(pr.width - 18, ax - pr.left));
+      put(el, { ox: Math.round(tox * 100) / 100 + 'px', oy: below ? '0%' : '100%', tx: '0px', ty: below ? '-10px' : '10px', sx: '0.72', sy: '0.48' });
+      el.setAttribute('data-sprout', (below ? 't' : 'b') + (tox < pr.width / 2 ? 'l' : 'r'));
+      return;
+    }
     if (edge(el)) {
       /* effort / side flyouts: sprout from the edge facing the parent row */
       var fromLeft = ((pr.left + pr.right) / 2) >= ax;
@@ -151033,31 +151075,41 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     var prevT = el.style.transition;
     if (!closing) el.style.transition = 'none';
     if (opts.display !== false) el.style.display = opts.display || el.getAttribute('data-portal-display') || 'block';
-    if (anchor) aim(el, anchor);
+    else if (el.style.display === 'none') el.style.display = '';
+    if (anchor || (opts.origin && typeof opts.origin === 'object')) aim(el, anchor, opts.origin);
     void el.offsetHeight;
     if (!closing) el.style.transition = prevT;
     el.classList.add('is-open');
+    /* opts.shown: a surface whose first frame is long (the inbox: its list built and, in Glass, its blur rastered) has
+       its entrance held at the start until frames come on time (PM_START_ON_SHOWN, src/js/11-motion-start.js), so the
+       sprout plays where it is seen instead of running out behind that frame */
+    if (opts.shown && typeof window.PM_START_ON_SHOWN === 'function') {
+      window.PM_START_ON_SHOWN(function () {
+        return el.classList.contains('is-open') ? el.getAnimations().filter(function (a) { return !!a.transitionProperty; }) : [];
+      }, { start: 'commit' });
+    }
     if (afterOpen) afterOpen();
   }
 
-  function close(el, onDone) {
+  function close(el, onDone, opts) {
     if (!el) { if (onDone) onDone(); return; }
+    opts = opts || {};
     if (!el.classList.contains('is-open') && !el.classList.contains('is-closing') && el.style.display === 'none') {
       if (onDone) onDone();
       return;
     }
     var s = state(el), g = s.g = ++gen;
     if (onDone) s.dones.push(onDone);
-    var hold = held(), prevT = el.style.transition;
-    if (hold) el.style.transition = 'none';
+    var still = opts.instant || held(), prevT = el.style.transition;
+    if (still) el.style.transition = 'none';
     el.classList.remove('is-open', 'is-size-bounce');
     el.classList.add('is-closing');
-    var t = 0;
-    function finish(ev) {
-      if (ev && (ev.target !== el || (ev.propertyName !== 'opacity' && ev.propertyName !== 'transform'))) return;
-      el.removeEventListener('transitionend', finish);
+    var t = 0, ended = false;
+    function finish() {
+      if (ended) return;
+      ended = true;
       clearTimeout(t);
-      if (hold) el.style.transition = prevT;
+      if (still) el.style.transition = prevT;
       if (s.g !== g) return;                        /* reopened, or closed again: that call finishes it */
       el.classList.remove('is-closing');
       el.style.display = 'none';
@@ -151066,18 +151118,27 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       var list = s.dones; s.dones = [];
       for (var i = 0; i < list.length; i++) list[i]();
     }
-    var end = hold ? 0 : endOf(el, ['opacity', 'transform']);
-    if (end) el.addEventListener('transitionend', finish);
-    /* cover the corner-collapse close (and a missed transitionend) */
-    t = setTimeout(finish, end ? end + 34 : 0);
+    if (still) { finish(); return; }
+    /* the collapse is every transition the closing state started on the box (its scale, fade, late fade and the
+       visibility deadline): the close ends when the last of them has, whatever Animation speed or a look made of them */
+    var runs = typeof el.getAnimations === 'function' ? el.getAnimations().filter(function (a) {
+      return a.transitionProperty && CLOSING[a.transitionProperty];
+    }) : [];
+    if (!runs.length) { t = setTimeout(finish, 0); return; }
+    var left = runs.length;
+    function one() { if (--left <= 0) finish(); }
+    for (var i = 0; i < runs.length; i++) runs[i].finished.then(one, one);
+    /* bounded fallback: a transition that never reports */
+    t = setTimeout(finish, Math.min(2000, endOf(el, CLOSING) + 50));
   }
 
   function resize(el, mutateFn) {
     if (!el) { if (mutateFn) mutateFn(); return; }
-    if (reduced() || !isOpen(el)) {
+    if (reduced() || held() || !isOpen(el)) {
       if (mutateFn) mutateFn();
       return;
     }
+    var s = state(el), hg = ++s.hg;
     var startH = el.getBoundingClientRect().height;
     el.style.height = startH + 'px';
     el.style.overflow = 'hidden';
@@ -151102,18 +151163,19 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       if (ev && ev.target !== el) return;
       if (ev && ev.propertyName && ev.propertyName !== 'height') return;
       finished = true;
+      el.removeEventListener('transitionend', clearH);
+      if (s.hg !== hg) return;                      /* a later resize owns the height now */
       el.style.height = '';
       el.style.overflow = '';
       el.classList.remove('is-size-bounce');
-      el.removeEventListener('transitionend', clearH);
     }
     el.addEventListener('transitionend', clearH);
     /* cover the height spring and its overshoot settle */
-    setTimeout(clearH, endOf(el, ['height']) + 120);
+    setTimeout(clearH, endOf(el, { height: 1 }) + 120);
   }
 
   function bounce(el) {
-    if (!el || !isOpen(el) || reduced()) return;
+    if (!el || !isOpen(el) || reduced() || held()) return;
     var s = state(el);
     el.classList.remove('is-size-bounce');
     void el.offsetWidth;
@@ -155991,11 +156053,8 @@ policies for tenant isolation, and add migration script.</textarea>
     }
   }
 
-  function tbMenuIsOpen(menu) {
-    var sprout = window.PM6_SPROUT;
-    if (sprout && sprout.isOpen) return sprout.isOpen(menu);
-    return !!(menu && menu.classList.contains('is-open'));
-  }
+  /* the bar's menus open and close through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js) */
+  function tbMenuIsOpen(menu) { return window.PM6_SPROUT.isOpen(menu); }
   /* A title-bar menu hangs below the bar over the page, and the bar is a stacking context (z-index 50) beneath the
      panels' resize strips (z-index 100; it stays there so the switcher's chips, at 51, are drawn over it). The strips are
      clear, so a menu over one looked whole but gave the strip its clicks: the project menu's rows, which reach the left
@@ -156009,22 +156068,11 @@ policies for tenant isolation, and add migration script.</textarea>
     if (open !== shell.hasAttribute('data-tb-menu-open')) { if (open) shell.setAttribute('data-tb-menu-open', ''); else shell.removeAttribute('data-tb-menu-open'); }
   }
   function tbMenuOpen(menu, btn) {
-    var sprout = window.PM6_SPROUT;
-    if (sprout && sprout.open) sprout.open(menu, null, btn);
-    else if (menu) {
-      menu.classList.add('is-open');
-      menu.classList.remove('is-closing');
-      menu.style.display = 'block';
-    }
+    window.PM6_SPROUT.open(menu, null, btn);
     tbMenuShield();
   }
   function tbMenuClose(menu) {
-    var sprout = window.PM6_SPROUT;
-    if (sprout && sprout.close) sprout.close(menu);
-    else if (menu) {
-      menu.classList.remove('is-open', 'is-closing', 'active');
-      menu.style.display = 'none';
-    }
+    window.PM6_SPROUT.close(menu);
     tbMenuShield();
   }
   function tbCloseAllMenus(except) {
@@ -156456,11 +156504,11 @@ policies for tenant isolation, and add migration script.</textarea>
       } catch (e) { return false; }
     }
 
-    /* the search pop opens and closes through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js), from its own
-       corner (style-002.css); a reopen cancels a close still running */
+    /* the search pop opens and closes through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js), from the corner
+       nearest its button (style-002.css's corner while the button is folded away); a reopen cancels a close still running */
     function openPop() {
       popOpen = true;
-      window.PM6_SPROUT.open(pop);
+      window.PM6_SPROUT.open(pop, null, btn);
       btn.setAttribute('aria-expanded', 'true');
       if (popInput) {
         popInput.value = inline.value || '';
@@ -157116,22 +157164,20 @@ policies for tenant isolation, and add migration script.</textarea>
       if (c.up) { menu.style.top = 'auto'; menu.style.bottom = 'calc(100% + 6px)'; }
       else { menu.style.bottom = 'auto'; menu.style.top = 'calc(100% + 6px)'; }
     }
+    /* the menus open and close through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js); this file places them
+       and writes the corner each grows from (positionRail / positionBottom / position / openAt) */
     function close(menu, instant) {
       if (!menu.classList.contains('is-open') && !menu.classList.contains('is-closing')) return;
-      menu.classList.remove('is-open');
-      menu.classList.add('is-closing');
       var trig = menu._pmTrigger;
       if (trig) trig.setAttribute('aria-expanded', 'false');
       markMenuOpen(menu, false);
-      var done = function () { menu.classList.remove('is-closing'); restoreHome(menu); };
-      if (instant || reduce()) done(); else setTimeout(done, 240);
+      window.PM6_SPROUT.close(menu, function () { restoreHome(menu); }, { instant: !!instant });
       var i = openMenus.indexOf(menu);
       if (i !== -1) openMenus.splice(i, 1);
     }
     function open(menu, anchorRect, instant) {
       closeAll(instant);
-      menu.classList.remove('is-closing');
-      menu.classList.add('is-open');
+      window.PM6_SPROUT.open(menu);
       if (inBottom(menu)) {
         positionBottom(menu);
         requestAnimationFrame(function () { positionBottom(menu); });
@@ -157197,8 +157243,7 @@ policies for tenant isolation, and add migration script.</textarea>
       menu.style.position = 'fixed';
       menu.style.left = '0px'; menu.style.top = '0px';
       menu.style.right = 'auto'; menu.style.bottom = 'auto';
-      menu.classList.remove('is-closing');
-      menu.classList.add('is-open');
+      window.PM6_SPROUT.open(menu);
       var w = menu.offsetWidth || 210, h = menu.offsetHeight || 200;
       var vw = window.innerWidth, vh = window.innerHeight;
       var fx = Math.min(x, vw - w - 8);
@@ -157207,6 +157252,7 @@ policies for tenant isolation, and add migration script.</textarea>
       menu.style.top = fy + 'px';
       menu.style.setProperty('--pm6-sprout-ox', (x > vw / 2 ? '88%' : '12%'));
       menu.style.setProperty('--pm6-sprout-oy', (fy === y ? '0%' : '100%'));
+      menu.style.setProperty('--pm6-sprout-ty', (fy === y ? '-10px' : '10px'));
       openMenus.push(menu);
     }
     document.addEventListener('click', function (ev) {
@@ -158253,16 +158299,19 @@ policies for tenant isolation, and add migration script.</textarea>
        relative to offsetParent, which breaks once the rail menu portals to
        body. PMMenu.positionRail owns FM root menu placement. */
     (function submenus() {
-      function closeAllSub() { ctx.querySelectorAll('.fm-ctx-wrap.open').forEach(function (w) { w.classList.remove('open'); }); }
+      /* a submenu opens and closes through the menu sprout too, from the edge facing its row */
+      function openSub(w) { w.classList.add('open'); var s = w.querySelector(':scope > .fm-ctx-sub'); if (s) window.PM6_SPROUT.open(s, null, w.querySelector(':scope > .fm-ctx-item')); }
+      function closeSub(w) { w.classList.remove('open'); var s = w.querySelector(':scope > .fm-ctx-sub'); if (s) window.PM6_SPROUT.close(s); }
+      function closeAllSub() { ctx.querySelectorAll('.fm-ctx-wrap.open').forEach(closeSub); }
       ctx.querySelectorAll('.fm-ctx-wrap[data-sub]').forEach(function (wrap) {
         var trig = wrap.querySelector(':scope > .fm-ctx-item');
-        wrap.addEventListener('mouseenter', function () { closeAllSub(); wrap.classList.add('open'); });
-        wrap.addEventListener('mouseleave', function () { wrap.classList.remove('open'); });
-        if (trig) trig.addEventListener('click', function (ev) { ev.stopPropagation(); wrap.classList.toggle('open'); });
+        wrap.addEventListener('mouseenter', function () { closeAllSub(); openSub(wrap); });
+        wrap.addEventListener('mouseleave', function () { closeSub(wrap); });
+        if (trig) trig.addEventListener('click', function (ev) { ev.stopPropagation(); if (wrap.classList.contains('open')) closeSub(wrap); else openSub(wrap); });
       });
       ctx.addEventListener('keydown', function (ev) {
-        if (ev.key === 'ArrowRight') { var w = ev.target.closest('.fm-ctx-wrap[data-sub]'); if (w) { w.classList.add('open'); var f = w.querySelector('.fm-ctx-sub .fm-ctx-item'); if (f) f.focus(); ev.preventDefault(); } }
-        else if (ev.key === 'ArrowLeft' || ev.key === 'Escape') { var o = ctx.querySelector('.fm-ctx-wrap.open'); if (o) { o.classList.remove('open'); var t = o.querySelector(':scope > .fm-ctx-item'); if (t) t.focus(); ev.preventDefault(); } }
+        if (ev.key === 'ArrowRight') { var w = ev.target.closest('.fm-ctx-wrap[data-sub]'); if (w) { openSub(w); var f = w.querySelector('.fm-ctx-sub .fm-ctx-item'); if (f) f.focus(); ev.preventDefault(); } }
+        else if (ev.key === 'ArrowLeft' || ev.key === 'Escape') { var o = ctx.querySelector('.fm-ctx-wrap.open'); if (o) { closeSub(o); var t = o.querySelector(':scope > .fm-ctx-item'); if (t) t.focus(); ev.preventDefault(); } }
       });
       ctx.addEventListener('pm-ctx-open', closeAllSub);
     })();
@@ -168436,7 +168485,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* ---------- DOM: the slot, the stack, the stage, the inbox ------------------------------------------------------- */
   let slot = null, host = null, stackEl = null, stageEl = null, panelEl = null, listEl = null, scrollEl = null, emptyEl = null;
   let headCount = null, frontEl = null, peekEls = [], badgeEl = null, badgeNum = null, bellEl = null, bannerEl = null;
-  let booted = false, open = false, closing = null, lastFront = null, lastUnread = 0, readTimer = 0;
+  let booted = false, open = false, lastFront = null, lastUnread = 0, readTimer = 0;
 
   function el(tag, cls, attrs) {
     const e = doc.createElement(tag);
@@ -168473,7 +168522,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
     panelEl = el('section', 'pmn-panel', { id: 'pmnPanel', role: 'dialog', 'aria-labelledby': 'pmnPanelTitle', hidden: '' });
     panelEl.innerHTML =
-      '<div class="pmn-chrome">' +
+      '<div class="pmn-chrome pm-sprout">' +
         '<header class="pmn-head"><span class="pmn-head-ico" aria-hidden="true">' + icon('bell') + '</span>' +
           '<h2 class="pmn-head-title" id="pmnPanelTitle"></h2><span class="pmn-head-count"></span><span class="pmn-head-gap"></span>' +
           '<button type="button" class="pmn-textbtn" data-pmn="readall"></button><button type="button" class="pmn-textbtn pmn-textbtn-clear" data-pmn="clear"></button></header>' +
@@ -169024,10 +169073,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     panelEl.querySelector('[data-pmn="readall"]').hidden = !unread();
     panelEl.querySelector('[data-pmn="clear"]').hidden = !list.length;
     const prev = rects(Array.prototype.slice.call(listEl.querySelectorAll('.pmn-item, .pmn-group-head, .pmn-fold')));
-    const startH = panelEl.getBoundingClientRect().height;
+    const leaving = [];
+    const mutate = () => {
     const keep = new Set(list.map((it) => it.id));
     /* rows that are gone leave in place (absolutely placed where they were) while the rest close up */
-    const leaving = [];
     rowEls.forEach((r, id) => { if (!keep.has(id)) { rowEls.delete(id); if (r.isConnected && animate && !still()) leaving.push(r); else r.remove(); } });
     leaving.forEach((r) => { liftRow(r); listEl.appendChild(r); });
     const groups = groupsOf(list), live = new Set(groups.map((g) => g.key));
@@ -169051,6 +169100,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     emptyEl.hidden = !!list.length;
     if (!list.length) fillEmpty();
     roving();
+    };
+    /* the panel's height springs to its new size, with the size bounce (F3-461): the menu sprout's, PM6_SPROUT.resize */
+    if (animate && open && !still()) window.PM6_SPROUT.resize(panelEl.querySelector('.pmn-chrome'), mutate); else mutate();
     if (!animate || still()) { leaving.forEach((r) => r.remove()); return; }
     const m = motion(), L = look();
     /* moved rows slide to their new places; new rows arrive */
@@ -169066,13 +169118,6 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         : how === 'swipe' ? [{ opacity: 1 }, { opacity: 0 }] : [{ transform: 'none', opacity: 1 }, { transform: 'translateX(48px)', opacity: 0 }];
       done(play(r, frames, { duration: L === 'retro' || L === 'nier' ? 160 : 220, easing: L === 'retro' || L === 'nier' ? 'steps(4, end)' : 'cubic-bezier(.4,0,1,1)', fill: 'forwards' })).then(() => r.remove());
     });
-    /* the panel's height springs to its new size, with the size bounce (F3-461) */
-    const endH = panelEl.getBoundingClientRect().height;
-    if (Math.abs(endH - startH) > 1 && open) {
-      const chrome = panelEl.querySelector('.pmn-chrome');
-      play(chrome, [{ height: startH + 'px' }, { height: endH + 'px' }], { duration: m.panel.duration, easing: m.panel.easing });
-      if (L !== 'retro' && L !== 'nier') play(panelEl, [{ transform: 'scale(1, 1)' }, { transform: 'scale(1.012, ' + (endH < startH ? 0.985 : 1.02) + ')', offset: 0.4 }, { transform: 'none' }], { duration: 380, easing: 'ease-out' });
-    }
   }
   function liftRow(r) {
     const rr = r.getBoundingClientRect(), lr = listEl.getBoundingClientRect();
@@ -169114,7 +169159,6 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* what is staged and lasting goes straight into the list it is about to show */
     staged.forEach((rec) => { if (rec.it.durable && !rec.leaving) { rec.leaving = true; staged.delete(rec.it.id); if (rec.bar) { try { rec.bar.cancel(); } catch (_) { /* gone */ } } rec.el.remove(); land(rec.it, true); } });
     open = true;
-    if (closing) { closing.cancel(); closing = null; }
     panelEl.hidden = false;
     panelEl.setAttribute('data-open', '');
     panelEl.querySelector('.pmn-chrome').setAttribute('data-lg-surface', 'menu');
@@ -169123,29 +169167,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     placePanel();
     pushStage();
     sound('open', 0.4);
+    /* the inbox grows out of the stack under the bell, through the menu sprout (PM6_SPROUT; F3-461's chat-popout
+       sprout, NieR's Slice part, Reduce motion and the drag hold with it), on the frames that are shown */
+    window.PM6_SPROUT.open(panelEl.querySelector('.pmn-chrome'), null, stackEl, { display: false, origin: 'trigger', shown: true });
     if (!still()) {
-      const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
-      /* every entrance below plays on the frames that are shown (11-motion-start.js; final motion QA B10): a first frame
-         that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the whole
-         entrance behind it, and the panel appeared already open */
+      const L = look();
+      /* the rows follow the panel in, one after another, on the frames that are shown (11-motion-start.js; final motion
+         QA B10): a long first frame would otherwise run them behind it */
       const opening = [], play = (el, frames, o) => { const a = playNow(el, frames, o); if (a) opening.push(a); return a; };
       if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (open ? opening : []));
-      if (L === 'retro') {
-        play(chrome, [{ transform: 'scale(1, .01)', filter: 'brightness(3)' }, { transform: 'scale(1, .01)', filter: 'brightness(2)', offset: 0.35 }, { transform: 'none', filter: 'none' }], { duration: 260, easing: 'steps(6, end)' });
-      } else if (L === 'nier') {
-        play(chrome, [{ clipPath: 'inset(0 50% calc(100% - 2px) 50%)' }, { clipPath: 'inset(0 0 calc(100% - 2px) 0)', offset: 0.4 }, { clipPath: 'inset(0 0 0 0)' }], { duration: 320, easing: 'steps(10, end)' });
-      } else {
-        const s = stackEl.getBoundingClientRect(), p = panelEl.getBoundingClientRect();
-        const ox = Math.max(0, Math.min(p.width, s.left + s.width / 2 - p.left));
-        chrome.style.transformOrigin = ox + 'px 0px';
-        play(chrome, L === 'friendly'
-          ? [{ transform: 'scale(.55, .3)', opacity: 0 }, { opacity: 1, offset: 0.2 }, { transform: 'none', opacity: 1 }]
-          : L === 'glass'
-            ? [{ transform: 'scale(' + (s.width / p.width) + ',' + (s.height / p.height) + ')', opacity: 0.4, filter: 'blur(4px)' }, { opacity: 1, filter: 'blur(0px)', offset: 0.3 }, { transform: 'none', opacity: 1, filter: 'none' }]
-            : [{ transform: 'translateY(-6px) scale(.96)', opacity: 0 }, { opacity: 1, offset: 0.35 }, { transform: 'none', opacity: 1 }],
-          { duration: m.panel.duration, easing: m.panel.easing });
-      }
-      /* the rows follow the panel in, one after another */
       listEl.querySelectorAll('.pmn-group-head, .pmn-item:not([data-under]), .pmn-fold').forEach((n, i) => {
         if (i > 9) return;
         play(n, L === 'retro' || L === 'nier' ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }],
@@ -169162,17 +169192,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     stackEl.setAttribute('aria-expanded', 'false');
     panelEl.removeAttribute('data-open');
     pushStage();
-    const finish = () => { panelEl.hidden = true; closing = null; panelEl.querySelector('.pmn-chrome').removeAttribute('data-lg-surface'); if (listStale) resetList(); };
+    const chrome = panelEl.querySelector('.pmn-chrome');
+    const finish = () => { if (open) return; panelEl.hidden = true; chrome.removeAttribute('data-lg-surface'); if (listStale) resetList(); };
     if (panelEl.contains(doc.activeElement) && !keepFocus) stackEl.focus({ preventScroll: true });
-    if (still() || quick === 'instant') { finish(); return; }
-    const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
-    const frames = L === 'retro' ? [{ transform: 'none', opacity: 1 }, { transform: 'scale(1, .01)', opacity: 1, offset: 0.7 }, { transform: 'scale(0, .01)', opacity: 0 }]
-      : L === 'nier' ? [{ clipPath: 'inset(0 0 0 0)' }, { clipPath: 'inset(0 0 calc(100% - 2px) 0)', offset: 0.6 }, { clipPath: 'inset(0 50% calc(100% - 2px) 50%)' }]
-        : L === 'friendly' ? [{ transform: 'none', opacity: 1 }, { transform: 'scale(1.02)', opacity: 1, offset: 0.25 }, { transform: 'scale(.6, .4)', opacity: 0 }]
-          : [{ transform: 'none', opacity: 1 }, { transform: 'translateY(-4px) scale(.97)', opacity: 0 }];
-    closing = play(chrome, frames, { duration: L === 'retro' || L === 'nier' ? 180 : quick ? 160 : 200, easing: L === 'retro' || L === 'nier' ? 'steps(5, end)' : 'cubic-bezier(.4,0,1,1)', fill: 'forwards' });
-    sound('close', 0.3);
-    if (closing) closing.finished.then(() => { if (!open) { closing.cancel(); finish(); } }).catch(() => null); else finish();
+    if (!still() && quick !== 'instant') sound('close', 0.3);
+    /* it folds back into the stack through the menu sprout */
+    window.PM6_SPROUT.close(chrome, finish, { instant: quick === 'instant' });
   }
   /* while the inbox is open, cards stage under it, not over it */
   function pushStage() {
@@ -187433,25 +187458,20 @@ function focusItem(entry, i) {
   list.forEach((b, k) => b.setAttribute('tabindex', k === n ? '0' : '-1'));
   list[n].focus({ preventScroll: false });
 }
+/* the list's height springs to its filtered size through the menu sprout (PM6_SPROUT.resize: the height spring and
+   the size bounce, capped by the menu's max-height) */
 function filterMenu(entry, q) {
   const query = String(q || '').trim().toLowerCase();
-  const before = entry.el.getBoundingClientRect().height;
-  entry.el.querySelectorAll('.pmr-menu-group').forEach(g => {
-    let any = false;
-    g.querySelectorAll('.pmr-mi').forEach(b => {
-      const show = !query || (b.textContent || '').toLowerCase().includes(query);
-      b.hidden = !show; if (show) any = true;
+  window.PM6_SPROUT.resize(entry.el, () => {
+    entry.el.querySelectorAll('.pmr-menu-group').forEach(g => {
+      let any = false;
+      g.querySelectorAll('.pmr-mi').forEach(b => {
+        const show = !query || (b.textContent || '').toLowerCase().includes(query);
+        b.hidden = !show; if (show) any = true;
+      });
+      g.hidden = !any;
     });
-    g.hidden = !any;
   });
-  const after = entry.el.scrollHeight;
-  if (!PMR.motion.reduced() && Math.abs(after - before) > 2) {
-    entry.el.style.height = before + 'px';
-    void entry.el.offsetHeight;
-    entry.el.style.height = Math.min(after, entry.maxH) + 'px';
-    entry.el.classList.remove('is-size-bounce'); void entry.el.offsetWidth; entry.el.classList.add('is-size-bounce');
-    clearTimeout(entry.hT); entry.hT = setTimeout(() => { entry.el.style.height = ''; }, 380);
-  }
 }
 
 function place(entry) {
@@ -187500,8 +187520,7 @@ function openMenu(def, anchor, opts) {
   anchor.setAttribute('aria-expanded', 'true');
   anchor.classList.add('is-menu-open');
   wireMenu(entry);
-  if (window.PM6_SPROUT && typeof window.PM6_SPROUT.open === 'function') window.PM6_SPROUT.open(entry.el, null, anchor);
-  else { entry.el.style.display = 'block'; entry.el.classList.add('is-open'); }
+  window.PM6_SPROUT.open(entry.el, null, anchor);
   const keyboard = opts.keyboard != null ? opts.keyboard : lastInputWasKey;
   if (entry.search && !keyboard) entry.search.focus({ preventScroll: true });
   else if (keyboard) {
@@ -187522,8 +187541,7 @@ function closeEntry(entry, opts) {
   entry.anchor.classList.remove('is-menu-open');
   const el = entry.el;
   const done = () => { if (el.parentNode) el.parentNode.removeChild(el); };
-  if (window.PM6_SPROUT && typeof window.PM6_SPROUT.close === 'function' && !PMR.motion.reduced()) window.PM6_SPROUT.close(el, done);
-  else done();
+  window.PM6_SPROUT.close(el, done, { instant: PMR.motion.reduced() });
   if (opts.returnFocus && entry.anchor && entry.anchor.isConnected) entry.anchor.focus({ preventScroll: true });
 }
 function closeAll(opts) { MENU_STACK.filter(e => !e.opts.parent).forEach(e => closeEntry(e, opts)); }
@@ -199839,7 +199857,7 @@ menu.open = function (anchor, spec) {
   lastH = el.offsetHeight;
   if (marksAnchor) { anchor.setAttribute('aria-expanded', 'true'); anchor.classList.add('pmw-anchor-open'); }
   el.style.transform = '';
-  window.PM6_SPROUT.open(el, null, hnd.from);
+  window.PM6_SPROUT.open(el, null, hnd.from, { origin: 'trigger' });   // from the trigger's centre, as it always has
   menu.current = hnd;
   setTimeout(function () { if (!hnd.closed) doc.addEventListener('pointerdown', onOutside, true); }, 0);
   window.addEventListener('resize', onResize);
@@ -300948,10 +300966,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         continue;
       }
       sprouted.add(el); sproutKey.set(el,key);
-      const anchor=el.getAttribute('data-overlay')==='sidecar'
-        ? document.querySelector(`#pmOverlayRoot > [data-overlay="root-menu"] [data-submenu="${CSS.escape(state.menu?.sub||'')}"]`)
-        : state.menu&&document.querySelector(`[data-menu-anchor="${CSS.escape(state.menu.anchor)}"]`);
-      SPROUT.open(el,null,anchor,{display:false});
+      /* a root menu grows from its trigger's centre across the edge facing it; a sidecar from the edge facing its root
+         menu, 28 % down (the corners the chat's menus have always opened from) */
+      if(el.getAttribute('data-overlay')==='sidecar'){
+        const right=state.menu?.side==='right';
+        SPROUT.open(el,null,null,{display:false,origin:{ox:right?'0%':'100%',oy:'28%',tx:right?'-10px':'0px',ty:'0px',sx:'0.48',sy:'0.72',mark:right?'l':'r'}});
+      } else {
+        SPROUT.open(el,null,state.menu&&document.querySelector(`[data-menu-anchor="${CSS.escape(state.menu.anchor)}"]`),{display:false,origin:'trigger'});
+      }
     }
   }
   /* a dropped menu leaves the overlay root (nothing finds, hovers or counts it there: its hooks go), keeps its place and

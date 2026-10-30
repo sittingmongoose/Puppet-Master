@@ -79,25 +79,20 @@ function focusItem(entry, i) {
   list.forEach((b, k) => b.setAttribute('tabindex', k === n ? '0' : '-1'));
   list[n].focus({ preventScroll: false });
 }
+/* the list's height springs to its filtered size through the menu sprout (PM6_SPROUT.resize: the height spring and
+   the size bounce, capped by the menu's max-height) */
 function filterMenu(entry, q) {
   const query = String(q || '').trim().toLowerCase();
-  const before = entry.el.getBoundingClientRect().height;
-  entry.el.querySelectorAll('.pmr-menu-group').forEach(g => {
-    let any = false;
-    g.querySelectorAll('.pmr-mi').forEach(b => {
-      const show = !query || (b.textContent || '').toLowerCase().includes(query);
-      b.hidden = !show; if (show) any = true;
+  window.PM6_SPROUT.resize(entry.el, () => {
+    entry.el.querySelectorAll('.pmr-menu-group').forEach(g => {
+      let any = false;
+      g.querySelectorAll('.pmr-mi').forEach(b => {
+        const show = !query || (b.textContent || '').toLowerCase().includes(query);
+        b.hidden = !show; if (show) any = true;
+      });
+      g.hidden = !any;
     });
-    g.hidden = !any;
   });
-  const after = entry.el.scrollHeight;
-  if (!PMR.motion.reduced() && Math.abs(after - before) > 2) {
-    entry.el.style.height = before + 'px';
-    void entry.el.offsetHeight;
-    entry.el.style.height = Math.min(after, entry.maxH) + 'px';
-    entry.el.classList.remove('is-size-bounce'); void entry.el.offsetWidth; entry.el.classList.add('is-size-bounce');
-    clearTimeout(entry.hT); entry.hT = setTimeout(() => { entry.el.style.height = ''; }, 380);
-  }
 }
 
 function place(entry) {
@@ -146,8 +141,7 @@ function openMenu(def, anchor, opts) {
   anchor.setAttribute('aria-expanded', 'true');
   anchor.classList.add('is-menu-open');
   wireMenu(entry);
-  if (window.PM6_SPROUT && typeof window.PM6_SPROUT.open === 'function') window.PM6_SPROUT.open(entry.el, null, anchor);
-  else { entry.el.style.display = 'block'; entry.el.classList.add('is-open'); }
+  window.PM6_SPROUT.open(entry.el, null, anchor);
   const keyboard = opts.keyboard != null ? opts.keyboard : lastInputWasKey;
   if (entry.search && !keyboard) entry.search.focus({ preventScroll: true });
   else if (keyboard) {
@@ -168,8 +162,7 @@ function closeEntry(entry, opts) {
   entry.anchor.classList.remove('is-menu-open');
   const el = entry.el;
   const done = () => { if (el.parentNode) el.parentNode.removeChild(el); };
-  if (window.PM6_SPROUT && typeof window.PM6_SPROUT.close === 'function' && !PMR.motion.reduced()) window.PM6_SPROUT.close(el, done);
-  else done();
+  window.PM6_SPROUT.close(el, done, { instant: PMR.motion.reduced() });
   if (opts.returnFocus && entry.anchor && entry.anchor.isConnected) entry.anchor.focus({ preventScroll: true });
 }
 function closeAll(opts) { MENU_STACK.filter(e => !e.opts.parent).forEach(e => closeEntry(e, opts)); }

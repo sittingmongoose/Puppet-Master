@@ -270,7 +270,7 @@
   /* ---------- DOM: the slot, the stack, the stage, the inbox ------------------------------------------------------- */
   let slot = null, host = null, stackEl = null, stageEl = null, panelEl = null, listEl = null, scrollEl = null, emptyEl = null;
   let headCount = null, frontEl = null, peekEls = [], badgeEl = null, badgeNum = null, bellEl = null, bannerEl = null;
-  let booted = false, open = false, closing = null, lastFront = null, lastUnread = 0, readTimer = 0;
+  let booted = false, open = false, lastFront = null, lastUnread = 0, readTimer = 0;
 
   function el(tag, cls, attrs) {
     const e = doc.createElement(tag);
@@ -307,7 +307,7 @@
 
     panelEl = el('section', 'pmn-panel', { id: 'pmnPanel', role: 'dialog', 'aria-labelledby': 'pmnPanelTitle', hidden: '' });
     panelEl.innerHTML =
-      '<div class="pmn-chrome">' +
+      '<div class="pmn-chrome pm-sprout">' +
         '<header class="pmn-head"><span class="pmn-head-ico" aria-hidden="true">' + icon('bell') + '</span>' +
           '<h2 class="pmn-head-title" id="pmnPanelTitle"></h2><span class="pmn-head-count"></span><span class="pmn-head-gap"></span>' +
           '<button type="button" class="pmn-textbtn" data-pmn="readall"></button><button type="button" class="pmn-textbtn pmn-textbtn-clear" data-pmn="clear"></button></header>' +
@@ -858,10 +858,10 @@
     panelEl.querySelector('[data-pmn="readall"]').hidden = !unread();
     panelEl.querySelector('[data-pmn="clear"]').hidden = !list.length;
     const prev = rects(Array.prototype.slice.call(listEl.querySelectorAll('.pmn-item, .pmn-group-head, .pmn-fold')));
-    const startH = panelEl.getBoundingClientRect().height;
+    const leaving = [];
+    const mutate = () => {
     const keep = new Set(list.map((it) => it.id));
     /* rows that are gone leave in place (absolutely placed where they were) while the rest close up */
-    const leaving = [];
     rowEls.forEach((r, id) => { if (!keep.has(id)) { rowEls.delete(id); if (r.isConnected && animate && !still()) leaving.push(r); else r.remove(); } });
     leaving.forEach((r) => { liftRow(r); listEl.appendChild(r); });
     const groups = groupsOf(list), live = new Set(groups.map((g) => g.key));
@@ -885,6 +885,9 @@
     emptyEl.hidden = !!list.length;
     if (!list.length) fillEmpty();
     roving();
+    };
+    /* the panel's height springs to its new size, with the size bounce (F3-461): the menu sprout's, PM6_SPROUT.resize */
+    if (animate && open && !still()) window.PM6_SPROUT.resize(panelEl.querySelector('.pmn-chrome'), mutate); else mutate();
     if (!animate || still()) { leaving.forEach((r) => r.remove()); return; }
     const m = motion(), L = look();
     /* moved rows slide to their new places; new rows arrive */
@@ -900,13 +903,6 @@
         : how === 'swipe' ? [{ opacity: 1 }, { opacity: 0 }] : [{ transform: 'none', opacity: 1 }, { transform: 'translateX(48px)', opacity: 0 }];
       done(play(r, frames, { duration: L === 'retro' || L === 'nier' ? 160 : 220, easing: L === 'retro' || L === 'nier' ? 'steps(4, end)' : 'cubic-bezier(.4,0,1,1)', fill: 'forwards' })).then(() => r.remove());
     });
-    /* the panel's height springs to its new size, with the size bounce (F3-461) */
-    const endH = panelEl.getBoundingClientRect().height;
-    if (Math.abs(endH - startH) > 1 && open) {
-      const chrome = panelEl.querySelector('.pmn-chrome');
-      play(chrome, [{ height: startH + 'px' }, { height: endH + 'px' }], { duration: m.panel.duration, easing: m.panel.easing });
-      if (L !== 'retro' && L !== 'nier') play(panelEl, [{ transform: 'scale(1, 1)' }, { transform: 'scale(1.012, ' + (endH < startH ? 0.985 : 1.02) + ')', offset: 0.4 }, { transform: 'none' }], { duration: 380, easing: 'ease-out' });
-    }
   }
   function liftRow(r) {
     const rr = r.getBoundingClientRect(), lr = listEl.getBoundingClientRect();
@@ -948,7 +944,6 @@
     /* what is staged and lasting goes straight into the list it is about to show */
     staged.forEach((rec) => { if (rec.it.durable && !rec.leaving) { rec.leaving = true; staged.delete(rec.it.id); if (rec.bar) { try { rec.bar.cancel(); } catch (_) { /* gone */ } } rec.el.remove(); land(rec.it, true); } });
     open = true;
-    if (closing) { closing.cancel(); closing = null; }
     panelEl.hidden = false;
     panelEl.setAttribute('data-open', '');
     panelEl.querySelector('.pmn-chrome').setAttribute('data-lg-surface', 'menu');
@@ -957,29 +952,15 @@
     placePanel();
     pushStage();
     sound('open', 0.4);
+    /* the inbox grows out of the stack under the bell, through the menu sprout (PM6_SPROUT; F3-461's chat-popout
+       sprout, NieR's Slice part, Reduce motion and the drag hold with it), on the frames that are shown */
+    window.PM6_SPROUT.open(panelEl.querySelector('.pmn-chrome'), null, stackEl, { display: false, origin: 'trigger', shown: true });
     if (!still()) {
-      const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
-      /* every entrance below plays on the frames that are shown (11-motion-start.js; final motion QA B10): a first frame
-         that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the whole
-         entrance behind it, and the panel appeared already open */
+      const L = look();
+      /* the rows follow the panel in, one after another, on the frames that are shown (11-motion-start.js; final motion
+         QA B10): a long first frame would otherwise run them behind it */
       const opening = [], play = (el, frames, o) => { const a = playNow(el, frames, o); if (a) opening.push(a); return a; };
       if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (open ? opening : []));
-      if (L === 'retro') {
-        play(chrome, [{ transform: 'scale(1, .01)', filter: 'brightness(3)' }, { transform: 'scale(1, .01)', filter: 'brightness(2)', offset: 0.35 }, { transform: 'none', filter: 'none' }], { duration: 260, easing: 'steps(6, end)' });
-      } else if (L === 'nier') {
-        play(chrome, [{ clipPath: 'inset(0 50% calc(100% - 2px) 50%)' }, { clipPath: 'inset(0 0 calc(100% - 2px) 0)', offset: 0.4 }, { clipPath: 'inset(0 0 0 0)' }], { duration: 320, easing: 'steps(10, end)' });
-      } else {
-        const s = stackEl.getBoundingClientRect(), p = panelEl.getBoundingClientRect();
-        const ox = Math.max(0, Math.min(p.width, s.left + s.width / 2 - p.left));
-        chrome.style.transformOrigin = ox + 'px 0px';
-        play(chrome, L === 'friendly'
-          ? [{ transform: 'scale(.55, .3)', opacity: 0 }, { opacity: 1, offset: 0.2 }, { transform: 'none', opacity: 1 }]
-          : L === 'glass'
-            ? [{ transform: 'scale(' + (s.width / p.width) + ',' + (s.height / p.height) + ')', opacity: 0.4, filter: 'blur(4px)' }, { opacity: 1, filter: 'blur(0px)', offset: 0.3 }, { transform: 'none', opacity: 1, filter: 'none' }]
-            : [{ transform: 'translateY(-6px) scale(.96)', opacity: 0 }, { opacity: 1, offset: 0.35 }, { transform: 'none', opacity: 1 }],
-          { duration: m.panel.duration, easing: m.panel.easing });
-      }
-      /* the rows follow the panel in, one after another */
       listEl.querySelectorAll('.pmn-group-head, .pmn-item:not([data-under]), .pmn-fold').forEach((n, i) => {
         if (i > 9) return;
         play(n, L === 'retro' || L === 'nier' ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }],
@@ -996,17 +977,12 @@
     stackEl.setAttribute('aria-expanded', 'false');
     panelEl.removeAttribute('data-open');
     pushStage();
-    const finish = () => { panelEl.hidden = true; closing = null; panelEl.querySelector('.pmn-chrome').removeAttribute('data-lg-surface'); if (listStale) resetList(); };
+    const chrome = panelEl.querySelector('.pmn-chrome');
+    const finish = () => { if (open) return; panelEl.hidden = true; chrome.removeAttribute('data-lg-surface'); if (listStale) resetList(); };
     if (panelEl.contains(doc.activeElement) && !keepFocus) stackEl.focus({ preventScroll: true });
-    if (still() || quick === 'instant') { finish(); return; }
-    const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
-    const frames = L === 'retro' ? [{ transform: 'none', opacity: 1 }, { transform: 'scale(1, .01)', opacity: 1, offset: 0.7 }, { transform: 'scale(0, .01)', opacity: 0 }]
-      : L === 'nier' ? [{ clipPath: 'inset(0 0 0 0)' }, { clipPath: 'inset(0 0 calc(100% - 2px) 0)', offset: 0.6 }, { clipPath: 'inset(0 50% calc(100% - 2px) 50%)' }]
-        : L === 'friendly' ? [{ transform: 'none', opacity: 1 }, { transform: 'scale(1.02)', opacity: 1, offset: 0.25 }, { transform: 'scale(.6, .4)', opacity: 0 }]
-          : [{ transform: 'none', opacity: 1 }, { transform: 'translateY(-4px) scale(.97)', opacity: 0 }];
-    closing = play(chrome, frames, { duration: L === 'retro' || L === 'nier' ? 180 : quick ? 160 : 200, easing: L === 'retro' || L === 'nier' ? 'steps(5, end)' : 'cubic-bezier(.4,0,1,1)', fill: 'forwards' });
-    sound('close', 0.3);
-    if (closing) closing.finished.then(() => { if (!open) { closing.cancel(); finish(); } }).catch(() => null); else finish();
+    if (!still() && quick !== 'instant') sound('close', 0.3);
+    /* it folds back into the stack through the menu sprout */
+    window.PM6_SPROUT.close(chrome, finish, { instant: quick === 'instant' });
   }
   /* while the inbox is open, cards stage under it, not over it */
   function pushStage() {

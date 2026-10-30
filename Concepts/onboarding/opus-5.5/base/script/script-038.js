@@ -1816,33 +1816,21 @@
     };
 
     // ── Worktree binding functions ──────────────────────────────────
-    // CSS uses .is-open / .is-closing (sprout). Prefer window.PM6_SPROUT from
-    // the chat script; fall back to .active only if sprout helpers are absent.
+    // The dropdowns open and close through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js).
     function closeAllWorktreeDropdowns() {
-      var sprout = window.PM6_SPROUT;
-      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) {
-        if (sprout && sprout.close) sprout.close(d);
-        else {
-          d.classList.remove('active', 'is-open', 'is-closing');
-          d.style.display = 'none';
-        }
-      });
+      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) { window.PM6_SPROUT.close(d); });
     }
     window.toggleWorktreeDropdown = function(btn) {
       var wrap = btn.closest('.wt-bind-wrap') || btn.parentElement;
       var dd = wrap.querySelector('.wt-bind-dropdown');
       if (!dd) return;
       var sprout = window.PM6_SPROUT;
-      if (sprout && sprout.open && sprout.close && sprout.isOpen) {
-        var open = sprout.isOpen(dd);
-        document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) {
-          if (d !== dd && sprout.isOpen(d)) sprout.close(d);
-        });
-        if (open) sprout.close(dd);
-        else sprout.open(dd, null, btn);
-        return;
-      }
-      dd.classList.toggle('active');
+      var open = sprout.isOpen(dd);
+      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) {
+        if (d !== dd && sprout.isOpen(d)) sprout.close(d);
+      });
+      if (open) sprout.close(dd);
+      else sprout.open(dd, null, btn);
     };
     window.showCreateWorktreeModal = function() {
       closeAllWorktreeDropdowns();
