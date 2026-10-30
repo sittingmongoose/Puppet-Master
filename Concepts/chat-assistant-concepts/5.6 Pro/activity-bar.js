@@ -36,7 +36,7 @@
   var EXT = window.PM56_EXT;
   if (!EXT || !EXT.slot) return;
 
-  var DOMAINS = ['goal', 'todo', 'subagents', 'crew', 'brainstorm', 'review', 'chat_room', 'changes', 'artifacts'];
+  var DOMAINS = ['goal', 'todo', 'subagents', 'processes', 'crew', 'brainstorm', 'review', 'chat_room', 'changes', 'artifacts'];
   var ROWS = 5;                 /* every list in every card caps here, then "+N more" */
 
   /* ---------------------------------------------------------------- utils */
@@ -269,6 +269,12 @@
        unclean completion, a limit or a failure need you; running and starting work; completed is done). They used to
        fall through to the subagents list below, so a thread's failed subagent painted its running Review red, and
        Crew read only the protocol Crews' members, so a seeded Crew blocked mid-run read idle (fpfix F-2, cycle 1). */
+    /* Processes (W6) light in the tone app.js's activityDefs() projects from the work projection: input needed or a
+       process lost is attention, a failure blocked, anything running working */
+    if (id === 'processes') {
+      var tp = defs.processes && defs.processes.tone;
+      return TONES.indexOf(tp) >= 0 ? tp : 'idle';
+    }
     if (id === 'crew' || id === 'brainstorm' || id === 'review' || id === 'chat_room') {
       var t3 = defs[id] && defs[id].tone;
       return TONES.indexOf(t3) >= 0 ? t3 : 'idle';
@@ -527,8 +533,35 @@
       foot(ctx, 'artifacts');
   }
 
+  /* ------------------------------------------------------------- processes
+     W6 (D1-D4): what this thread's agent and its subagents started, read from the one work projection (PM_WORK); its
+     words are the build's copy (O55 work.chat.*). Needs input leads; a row opens Activity Detail at that process. */
+  function wt(k, v) { return window.O55 && typeof window.O55.t === 'function' ? window.O55.t('work.chat.' + k, v) : k; }
+  function procCard(ctx, def) {
+    var W = window.PM_WORK;
+    if (!W) return '';
+    var ps = list(coll(ctx).processes), sorted = W.sort(ps), shown = sorted.slice(0, ROWS);
+    var live = ps.filter(W.isLive).length, needs = ps.filter(W.needsYou).length, feed = W.feed ? W.feed() : null;
+    var body = shown.length ? shown.map(function (it) {
+      var t = W.tone(it), o = W.owner(it);
+      var sub = W.needsYou(it) && it.ask ? it.ask : it.lost ? it.lost :
+        [o ? o.title : '', it.kind === 'scheduled' ? it.detail : (it.ports && it.ports.length ? it.command + ' · :' + it.ports.join(', :') : it.command)].filter(Boolean).join(' · ');
+      return row({
+        k: 'proc:' + it.id, state: t, action: 'open-process',
+        attrs: ' data-id="' + esc(it.id) + '" data-domain="processes"',
+        main: it.title, sub: sub,
+        right: '<span class="ab-row-right"><b data-tone="' + t + '">' + esc(W.word(it)) + '</b><i data-work-time="' + esc(it.id) + '">' + esc(W.time(it)) + '</i></span>',
+        title: 'Open ' + it.title
+      });
+    }).join('') : empty(wt('cardEmpty'));
+    return head(ctx, 'processes', def, live ? wt('running', { n: live }) : wt('noneRunning')) +
+      (feed && feed.state === 'stale' ? '<div class="ab-proc-strip" data-k="ab-proc-strip" data-tone="attention">' + ctx.icon('st-offline', 11) + '<span>' + esc(window.O55 && window.O55.t ? window.O55.t('work.bar.staleLabel') : 'Out of date') + '</span></div>' : '') +
+      '<div class="ab-body" data-k="ab-body">' + body + overflow(ps.length, shown.length) + '</div>' +
+      (needs ? '<div class="ab-proc-foot" data-k="ab-proc-foot" data-tone="attention">' + ctx.icon('st-waiting', 11) + '<span>' + esc(wt(needs === 1 ? 'needsFoot' : 'needsFootMany', { n: needs })) + '</span></div>' : '');
+  }
+
   var CARDS = {
-    goal: goalCard, todo: todoCard, subagents: agentCard, crew: crewCard,
+    goal: goalCard, todo: todoCard, subagents: agentCard, processes: procCard, crew: crewCard,
     changes: changeCard, artifacts: artifactCard
   };
 

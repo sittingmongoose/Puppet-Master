@@ -405,11 +405,25 @@
     var node=a.parentElement;while(node&&!node.contains(b))node=node.parentElement;return node||document;
   }
   var censusDeadline=null;   /* O55: the census runs in idle time (motion QA, 2026-10-16) */
-  function censusFrame(fn){
-    if(typeof requestIdleCallback!=='function')return requestAnimationFrame(fn);
-    return requestIdleCallback(function(deadline){censusDeadline=deadline;try{fn();}finally{censusDeadline=null;}},{timeout:900});
+  /* O55: and never during a drag (body.pm-resizing, PLAN's no-idle-job rule): a step due mid-drag is parked and runs
+     once on release through the shell's drag-end bus. A step keeps one token for its life, so the scan and live
+     flags that hold it and the cancels that clear it work across the park. */
+  var censusParked=[],censusHooked=false;
+  function censusDragging(){return !!(document.body&&document.body.classList.contains('pm-resizing'));}
+  function censusWatch(){requestAnimationFrame(function(){if(censusDragging())censusWatch();else censusResume();});}
+  function censusResume(){if(!censusParked.length)return;if(censusDragging()){censusWatch();return;}var parked=censusParked;censusParked=[];for(var i=0;i<parked.length;i++)if(!parked[i].dead)censusSchedule(parked[i]);}
+  function censusPark(token){
+    censusParked.push(token);if(censusParked.length>1)return;
+    if(typeof window.PM_ON_DRAGEND==='function'){if(!censusHooked){censusHooked=true;window.PM_ON_DRAGEND(censusResume);}return;}
+    censusWatch();
   }
-  function cancelCensusFrame(id){if(!id)return;if(typeof cancelIdleCallback==='function')cancelIdleCallback(id);else cancelAnimationFrame(id);}
+  function censusRun(token,deadline){token.id=0;if(token.dead)return;if(censusDragging()){censusPark(token);return;}censusDeadline=deadline||null;try{token.fn();}finally{censusDeadline=null;}}
+  function censusSchedule(token){
+    if(censusDragging()){censusPark(token);return;}
+    token.id=typeof requestIdleCallback==='function'?requestIdleCallback(function(deadline){censusRun(token,deadline);},{timeout:900}):requestAnimationFrame(function(){censusRun(token,null);});
+  }
+  function censusFrame(fn){var token={fn:fn,id:0,dead:false};censusSchedule(token);return token;}
+  function cancelCensusFrame(token){if(!token)return;token.dead=true;if(!token.id)return;if(typeof cancelIdleCallback==='function')cancelIdleCallback(token.id);else cancelAnimationFrame(token.id);token.id=0;}
   function censusTime(started,ms){if(performance.now()-started>=ms)return false;return !censusDeadline||censusDeadline.didTimeout||censusDeadline.timeRemaining()>1;}
   HoverTagController.prototype.scheduleScan=function(scope){
     var self=this,next=scope&&scope.isConnected?scope:document;
