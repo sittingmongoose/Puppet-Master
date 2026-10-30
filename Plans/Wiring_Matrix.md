@@ -6688,7 +6688,7 @@ canonical_text: >-
   request/result, non-Teacher Work and per-consumer return cases are focused requirements, not native
   dispatch evidence.
   G2/F3-1, Jared follow-ups 2026-10-30: static presentation companions exercise widen-first, the 360 px
-  docking/squeeze threshold and full-height-cover fallback, plus bell/theme-menu-gap notice placement on
+  docking/squeeze threshold and full-height-cover fallback, plus bell/theme-menu-resting-top placement on
   every page, the lead’s open-inbox push exception and the entering-card click guard. Notification body/action/dismiss bindings keep their owner
   contracts and record the transient no-dispatch gate. No control-clearance or chat-head placement rule, new
   binding, command, event, setting or native certification is introduced.

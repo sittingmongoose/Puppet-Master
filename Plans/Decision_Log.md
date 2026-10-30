@@ -16702,7 +16702,9 @@ canonical_text: >-
   F3-1, Jared follow-up 2026-10-30, supersedes the earlier Jared #19 rule that notices must clear
   controls. His words: "It is fine that it covers stuff up... The notifications should start below the bell.
   Like the theme selector does." On every page the stage hangs tight below the title bar at the bell, with
-  its first card the same distance below the bar as the theme selector menu. It may cover controls, the chat
+  its first card at the theme selector menu’s resting top. Final GUI 70b30f482f binds that top to the
+  selector wrapper’s bottom plus its menu gap (6 px), rather than title-bar bottom plus 6 px. A negative
+  stage drop is allowed; the title-bar fallback remains only when no selector is drawn. It may cover controls, the chat
   head included; no collision scan, Home strip offset or chat-head clearance changes that anchor. The
   lead's explicit ruling of 2026-10-30 (mail 1030131044-4c44, preserving Jared's bf5115d9d9 fix) keeps the
   existing --pmn-push exception while the shared inbox is open: the inbox hangs from the bell and the stage

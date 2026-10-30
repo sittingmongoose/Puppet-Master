@@ -75,7 +75,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6172,
+      "line_count": 6175,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -215,7 +215,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "c5ebb0990f23b6c0a242c0a5ed3447384854ea328b1c7d037b95e5609d3437f8",
+      "sha256": "c2cbfd5732997a783f168996f2cc7f3434d5f353aedeefcab27a6553eec07c73",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -5792,7 +5792,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 18520,
+      "line_count": 18522,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 235,
       "plan_unit_ids": [
@@ -6193,7 +6193,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "377087e3f5c6ecee6e88c5c8cb031fa991fab56795547044c7b3b1149000a735",
+      "sha256": "d051ddcbf74064410e673d3e00f32d6ad0453e30f44355bdac2f97da75146348",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 235
@@ -7747,7 +7747,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 50670,
+      "line_count": 50678,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 653,
       "plan_unit_ids": [
@@ -8544,7 +8544,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "b6692cc811264458a7861d64fa36dc97d82998398b28904d76ebd9840cfe121c",
+      "sha256": "5d766e9daaea6e6d1a5ca440b4f3d4284961a09edef4ad4676f5da351050e0ae",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 646,
@@ -20000,7 +20000,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 2714,
+      "line_count": 2715,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 34,
       "plan_unit_ids": [
@@ -20076,7 +20076,7 @@
         "version_exact_opener_drift",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "994825c1dd99a56365e64e2d3a79815beb52642ac3155f3b733ba03ab558b9bf",
+      "sha256": "44a761ecdc803ef40b18c23dee0b7a8d387abd252bdacf5c3a1267428283a4bc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 34
@@ -20683,7 +20683,7 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "640ba0ecb615ec211cc3cd56837f3c4978148f3f33b460ae0dc8770496ffa57e",
+      "sha256": "344e85b796471a7b8b03c7886258af765ec3aa2f890fed034a61f8b944a0bbee",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 75
@@ -21012,7 +21012,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-30T13:15:24Z",
+  "generated_at_utc": "2026-10-30T13:37:55Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

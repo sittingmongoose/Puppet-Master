@@ -1262,7 +1262,10 @@
           "avoid_controls": false,
           "accepts_clicks_during_entry": false,
           "reduced_motion_instant": true,
-          "open_inbox_placement": "under_inbox"
+          "open_inbox_placement": "under_inbox",
+          "first_card_top_source": "theme_menu_resting_top",
+          "allow_negative_stage_drop": true,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
         }
       },
       "valid": true
@@ -1286,7 +1289,10 @@
           "avoid_controls": false,
           "accepts_clicks_during_entry": false,
           "reduced_motion_instant": true,
-          "open_inbox_placement": "under_inbox"
+          "open_inbox_placement": "under_inbox",
+          "first_card_top_source": "theme_menu_resting_top",
+          "allow_negative_stage_drop": true,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
         }
       },
       "valid": false
@@ -1310,7 +1316,10 @@
           "avoid_controls": false,
           "accepts_clicks_during_entry": false,
           "reduced_motion_instant": true,
-          "open_inbox_placement": "under_inbox"
+          "open_inbox_placement": "under_inbox",
+          "first_card_top_source": "theme_menu_resting_top",
+          "allow_negative_stage_drop": true,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
         }
       },
       "valid": false
@@ -1334,7 +1343,10 @@
           "avoid_controls": false,
           "accepts_clicks_during_entry": false,
           "reduced_motion_instant": true,
-          "open_inbox_placement": "under_inbox"
+          "open_inbox_placement": "under_inbox",
+          "first_card_top_source": "theme_menu_resting_top",
+          "allow_negative_stage_drop": true,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
         }
       },
       "valid": false
@@ -1358,7 +1370,10 @@
           "avoid_controls": false,
           "accepts_clicks_during_entry": false,
           "reduced_motion_instant": true,
-          "open_inbox_placement": "under_inbox"
+          "open_inbox_placement": "under_inbox",
+          "first_card_top_source": "theme_menu_resting_top",
+          "allow_negative_stage_drop": true,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
         }
       },
       "valid": false
@@ -1382,7 +1397,10 @@
           "avoid_controls": false,
           "accepts_clicks_during_entry": false,
           "reduced_motion_instant": true,
-          "open_inbox_placement": "under_inbox"
+          "open_inbox_placement": "under_inbox",
+          "first_card_top_source": "theme_menu_resting_top",
+          "allow_negative_stage_drop": true,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
         }
       },
       "valid": false
@@ -1406,7 +1424,10 @@
           "avoid_controls": true,
           "accepts_clicks_during_entry": false,
           "reduced_motion_instant": true,
-          "open_inbox_placement": "under_inbox"
+          "open_inbox_placement": "under_inbox",
+          "first_card_top_source": "theme_menu_resting_top",
+          "allow_negative_stage_drop": true,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
         }
       },
       "valid": false
@@ -1430,7 +1451,10 @@
           "avoid_controls": false,
           "accepts_clicks_during_entry": false,
           "reduced_motion_instant": true,
-          "open_inbox_placement": "under_inbox"
+          "open_inbox_placement": "under_inbox",
+          "first_card_top_source": "theme_menu_resting_top",
+          "allow_negative_stage_drop": true,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
         }
       },
       "valid": false
@@ -1454,7 +1478,10 @@
           "avoid_controls": false,
           "accepts_clicks_during_entry": true,
           "reduced_motion_instant": true,
-          "open_inbox_placement": "under_inbox"
+          "open_inbox_placement": "under_inbox",
+          "first_card_top_source": "theme_menu_resting_top",
+          "allow_negative_stage_drop": true,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
         }
       },
       "valid": false
@@ -1478,7 +1505,10 @@
           "avoid_controls": false,
           "accepts_clicks_during_entry": false,
           "reduced_motion_instant": true,
-          "open_inbox_placement": "under_inbox"
+          "open_inbox_placement": "under_inbox",
+          "first_card_top_source": "theme_menu_resting_top",
+          "allow_negative_stage_drop": true,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
         }
       },
       "valid": false
@@ -1502,7 +1532,64 @@
           "avoid_controls": false,
           "accepts_clicks_during_entry": false,
           "reduced_motion_instant": true,
-          "open_inbox_placement": "ignore_open_inbox"
+          "open_inbox_placement": "ignore_open_inbox",
+          "first_card_top_source": "theme_menu_resting_top",
+          "allow_negative_stage_drop": true,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "titlebar_bottom_is_not_theme_menu_top",
+      "definition": "PresentationPolicy",
+      "instance": {
+        "activity_detail": {
+          "widen_first": true,
+          "minimum_remaining_messages_px": 360,
+          "below_minimum": "full_height_cover",
+          "small_panel": false
+        },
+        "notice_stage": {
+          "anchor": "titlebar_bell",
+          "first_card_gap_source": "theme_selector_menu",
+          "all_pages": true,
+          "may_cover_controls": true,
+          "clear_chat_head": false,
+          "avoid_controls": false,
+          "accepts_clicks_during_entry": false,
+          "reduced_motion_instant": true,
+          "open_inbox_placement": "under_inbox",
+          "first_card_top_source": "titlebar_bottom_plus_gap",
+          "allow_negative_stage_drop": true,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "negative_selector_drop_must_be_allowed",
+      "definition": "PresentationPolicy",
+      "instance": {
+        "activity_detail": {
+          "widen_first": true,
+          "minimum_remaining_messages_px": 360,
+          "below_minimum": "full_height_cover",
+          "small_panel": false
+        },
+        "notice_stage": {
+          "anchor": "titlebar_bell",
+          "first_card_gap_source": "theme_selector_menu",
+          "all_pages": true,
+          "may_cover_controls": true,
+          "clear_chat_head": false,
+          "avoid_controls": false,
+          "accepts_clicks_during_entry": false,
+          "reduced_motion_instant": true,
+          "open_inbox_placement": "under_inbox",
+          "first_card_top_source": "theme_menu_resting_top",
+          "allow_negative_stage_drop": false,
+          "selector_absent_fallback": "titlebar_nonnegative_drop"
         }
       },
       "valid": false
@@ -2595,7 +2682,10 @@
       "avoid_controls": false,
       "accepts_clicks_during_entry": false,
       "reduced_motion_instant": true,
-      "open_inbox_placement": "under_inbox"
+      "open_inbox_placement": "under_inbox",
+      "first_card_top_source": "theme_menu_resting_top",
+      "allow_negative_stage_drop": true,
+      "selector_absent_fallback": "titlebar_nonnegative_drop"
     }
   },
   "activity_geometry_cases": [
@@ -2654,7 +2744,7 @@
       "context": {
         "page_id": "home",
         "titlebar_bottom_px": 40,
-        "theme_menu_gap_px": 4,
+        "theme_menu_gap_px": 6,
         "phase": "settled",
         "reduced_motion": false,
         "underlying_controls_overlap": true,
@@ -2662,10 +2752,12 @@
         "home_strip_bottom_px": 132,
         "inbox_bottom_px": 300,
         "inbox_open": false,
-        "inbox_gap_px": 8
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 36,
+        "stage_base_top_px": 50
       },
       "expected": {
-        "first_card_top_px": 44,
+        "first_card_top_px": 42,
         "accepts_clicks": true
       }
     },
@@ -2674,7 +2766,7 @@
       "context": {
         "page_id": "usage",
         "titlebar_bottom_px": 46,
-        "theme_menu_gap_px": 5,
+        "theme_menu_gap_px": 6,
         "phase": "settled",
         "reduced_motion": false,
         "underlying_controls_overlap": true,
@@ -2682,10 +2774,12 @@
         "home_strip_bottom_px": 132,
         "inbox_bottom_px": 300,
         "inbox_open": false,
-        "inbox_gap_px": 8
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 39,
+        "stage_base_top_px": 56
       },
       "expected": {
-        "first_card_top_px": 51,
+        "first_card_top_px": 45,
         "accepts_clicks": true
       }
     },
@@ -2702,10 +2796,12 @@
         "home_strip_bottom_px": 132,
         "inbox_bottom_px": 300,
         "inbox_open": false,
-        "inbox_gap_px": 8
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 36,
+        "stage_base_top_px": 50
       },
       "expected": {
-        "first_card_top_px": 46,
+        "first_card_top_px": 42,
         "accepts_clicks": true
       }
     },
@@ -2714,7 +2810,7 @@
       "context": {
         "page_id": "wizard",
         "titlebar_bottom_px": 46,
-        "theme_menu_gap_px": 7,
+        "theme_menu_gap_px": 6,
         "phase": "settled",
         "reduced_motion": false,
         "underlying_controls_overlap": true,
@@ -2722,10 +2818,12 @@
         "home_strip_bottom_px": 132,
         "inbox_bottom_px": 300,
         "inbox_open": false,
-        "inbox_gap_px": 8
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 39,
+        "stage_base_top_px": 56
       },
       "expected": {
-        "first_card_top_px": 53,
+        "first_card_top_px": 45,
         "accepts_clicks": true
       }
     },
@@ -2734,7 +2832,7 @@
       "context": {
         "page_id": "projects",
         "titlebar_bottom_px": 40,
-        "theme_menu_gap_px": 8,
+        "theme_menu_gap_px": 6,
         "phase": "settled",
         "reduced_motion": false,
         "underlying_controls_overlap": true,
@@ -2742,10 +2840,12 @@
         "home_strip_bottom_px": 132,
         "inbox_bottom_px": 300,
         "inbox_open": false,
-        "inbox_gap_px": 8
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 36,
+        "stage_base_top_px": 50
       },
       "expected": {
-        "first_card_top_px": 48,
+        "first_card_top_px": 42,
         "accepts_clicks": true
       }
     },
@@ -2754,7 +2854,7 @@
       "context": {
         "page_id": "settings",
         "titlebar_bottom_px": 46,
-        "theme_menu_gap_px": 9,
+        "theme_menu_gap_px": 6,
         "phase": "settled",
         "reduced_motion": false,
         "underlying_controls_overlap": true,
@@ -2762,10 +2862,12 @@
         "home_strip_bottom_px": 132,
         "inbox_bottom_px": 300,
         "inbox_open": false,
-        "inbox_gap_px": 8
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 39,
+        "stage_base_top_px": 56
       },
       "expected": {
-        "first_card_top_px": 55,
+        "first_card_top_px": 45,
         "accepts_clicks": true
       }
     },
@@ -2774,7 +2876,7 @@
       "context": {
         "page_id": "source-control",
         "titlebar_bottom_px": 40,
-        "theme_menu_gap_px": 10,
+        "theme_menu_gap_px": 6,
         "phase": "settled",
         "reduced_motion": false,
         "underlying_controls_overlap": true,
@@ -2782,10 +2884,12 @@
         "home_strip_bottom_px": 132,
         "inbox_bottom_px": 300,
         "inbox_open": false,
-        "inbox_gap_px": 8
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 36,
+        "stage_base_top_px": 50
       },
       "expected": {
-        "first_card_top_px": 50,
+        "first_card_top_px": 42,
         "accepts_clicks": true
       }
     },
@@ -2794,7 +2898,7 @@
       "context": {
         "page_id": "files",
         "titlebar_bottom_px": 46,
-        "theme_menu_gap_px": 11,
+        "theme_menu_gap_px": 6,
         "phase": "settled",
         "reduced_motion": false,
         "underlying_controls_overlap": true,
@@ -2802,10 +2906,12 @@
         "home_strip_bottom_px": 132,
         "inbox_bottom_px": 300,
         "inbox_open": false,
-        "inbox_gap_px": 8
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 39,
+        "stage_base_top_px": 56
       },
       "expected": {
-        "first_card_top_px": 57,
+        "first_card_top_px": 45,
         "accepts_clicks": true
       }
     },
@@ -2814,7 +2920,7 @@
       "context": {
         "page_id": "home",
         "titlebar_bottom_px": 40,
-        "theme_menu_gap_px": 4,
+        "theme_menu_gap_px": 6,
         "phase": "entering",
         "reduced_motion": false,
         "underlying_controls_overlap": true,
@@ -2822,10 +2928,12 @@
         "home_strip_bottom_px": 132,
         "inbox_bottom_px": 300,
         "inbox_open": false,
-        "inbox_gap_px": 8
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 36,
+        "stage_base_top_px": 50
       },
       "expected": {
-        "first_card_top_px": 44,
+        "first_card_top_px": 42,
         "accepts_clicks": false
       }
     },
@@ -2834,7 +2942,7 @@
       "context": {
         "page_id": "home",
         "titlebar_bottom_px": 40,
-        "theme_menu_gap_px": 4,
+        "theme_menu_gap_px": 6,
         "phase": "entering",
         "reduced_motion": true,
         "underlying_controls_overlap": true,
@@ -2842,10 +2950,12 @@
         "home_strip_bottom_px": 132,
         "inbox_bottom_px": 300,
         "inbox_open": false,
-        "inbox_gap_px": 8
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 33,
+        "stage_base_top_px": 50
       },
       "expected": {
-        "first_card_top_px": 44,
+        "first_card_top_px": 39,
         "accepts_clicks": true
       }
     },
@@ -2854,7 +2964,7 @@
       "context": {
         "page_id": "home",
         "titlebar_bottom_px": 40,
-        "theme_menu_gap_px": 4,
+        "theme_menu_gap_px": 6,
         "phase": "settled",
         "reduced_motion": false,
         "underlying_controls_overlap": true,
@@ -2862,7 +2972,9 @@
         "home_strip_bottom_px": 132,
         "inbox_bottom_px": 300,
         "inbox_open": true,
-        "inbox_gap_px": 8
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 36,
+        "stage_base_top_px": 50
       },
       "expected": {
         "first_card_top_px": 308,
@@ -2874,7 +2986,7 @@
       "context": {
         "page_id": "usage",
         "titlebar_bottom_px": 46,
-        "theme_menu_gap_px": 5,
+        "theme_menu_gap_px": 6,
         "phase": "settled",
         "reduced_motion": false,
         "underlying_controls_overlap": true,
@@ -2882,10 +2994,78 @@
         "home_strip_bottom_px": 132,
         "inbox_bottom_px": 220,
         "inbox_open": true,
-        "inbox_gap_px": 8
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 39,
+        "stage_base_top_px": 56
       },
       "expected": {
         "first_card_top_px": 228,
+        "accepts_clicks": true
+      }
+    },
+    {
+      "name": "selector_absent_preserves_nonnegative_drop",
+      "context": {
+        "page_id": "home",
+        "titlebar_bottom_px": 40,
+        "theme_menu_gap_px": 6,
+        "phase": "settled",
+        "reduced_motion": false,
+        "underlying_controls_overlap": true,
+        "chat_head_bottom_px": 180,
+        "home_strip_bottom_px": 132,
+        "inbox_bottom_px": 300,
+        "inbox_open": false,
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": null,
+        "stage_base_top_px": 50
+      },
+      "expected": {
+        "first_card_top_px": 50,
+        "accepts_clicks": true
+      }
+    },
+    {
+      "name": "selector_absent_uses_bar_fallback",
+      "context": {
+        "page_id": "home",
+        "titlebar_bottom_px": 40,
+        "theme_menu_gap_px": 6,
+        "phase": "settled",
+        "reduced_motion": false,
+        "underlying_controls_overlap": true,
+        "chat_head_bottom_px": 180,
+        "home_strip_bottom_px": 132,
+        "inbox_bottom_px": 300,
+        "inbox_open": false,
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": null,
+        "stage_base_top_px": 44
+      },
+      "expected": {
+        "first_card_top_px": 46,
+        "accepts_clicks": true
+      }
+    },
+    {
+      "name": "selector_anchor_lifts_stage",
+      "context": {
+        "page_id": "home",
+        "titlebar_bottom_px": 40,
+        "theme_menu_gap_px": 6,
+        "phase": "settled",
+        "reduced_motion": false,
+        "underlying_controls_overlap": true,
+        "chat_head_bottom_px": 180,
+        "home_strip_bottom_px": 132,
+        "inbox_bottom_px": 300,
+        "inbox_open": false,
+        "inbox_gap_px": 8,
+        "theme_menu_wrap_bottom_px": 33.5,
+        "stage_base_top_px": 50
+      },
+      "expected": {
+        "first_card_top_px": 39.5,
         "accepts_clicks": true
       }
     }

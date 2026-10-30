@@ -2664,7 +2664,8 @@ canonical_text: >-
   anchors still certify no native signal or effect.
   G2/F3-1, Jared follow-ups 2026-10-30: Activity Detail widens first, then at the column limit docks and
   squeezes messages if at least 360 px remain, otherwise covers the transcript at full height. Notice stage
-  placement uses the one bell/title-bar anchor and the theme-menu gap on every page with the inbox closed;
+  placement uses the one bell anchor and the theme menu’s resting top on every page with the inbox closed
+  (selector wrapper bottom plus its gap, not title-bar bottom; negative stage drop is allowed);
   while the inbox is open the lead’s 2026-10-30 exception keeps the stage under that inbox via --pmn-push.
   Other controls and the chat head do not trigger clearance. Body/action/dismiss clicks on an entering card dispatch nothing until its arrival
   settles, instant under Reduced Motion. Bindings retain their existing owner routes and count; no geometry

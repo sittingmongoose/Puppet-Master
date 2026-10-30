@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L2103-L2712
+Source lines: L2103-L2713
 
-Source SHA256: `994825c1dd99a56365e64e2d3a79815beb52642ac3155f3b733ba03ab558b9bf`
+Source SHA256: `44a761ecdc803ef40b18c23dee0b7a8d387abd252bdacf5c3a1267428283a4bc`
 
 ---
 
@@ -572,7 +572,8 @@ canonical_text: >-
   anchors still certify no native signal or effect.
   G2/F3-1, Jared follow-ups 2026-10-30: Activity Detail widens first, then at the column limit docks and
   squeezes messages if at least 360 px remain, otherwise covers the transcript at full height. Notice stage
-  placement uses the one bell/title-bar anchor and the theme-menu gap on every page with the inbox closed;
+  placement uses the one bell anchor and the theme menu’s resting top on every page with the inbox closed
+  (selector wrapper bottom plus its gap, not title-bar bottom; negative stage drop is allowed);
   while the inbox is open the lead’s 2026-10-30 exception keeps the stage under that inbox via --pmn-push.
   Other controls and the chat head do not trigger clearance. Body/action/dismiss clicks on an entering card dispatch nothing until its arrival
   settles, instant under Reduced Motion. Bindings retain their existing owner routes and count; no geometry

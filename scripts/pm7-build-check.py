@@ -106,7 +106,9 @@ def activity_detail_geometry(policy, context):
 def notice_stage_presentation(policy, context):
     """F3-1 relational placement/click oracle; no DOM, paint or click is executed."""
     settled = context["phase"] != "entering" or (context["reduced_motion"] and policy["reduced_motion_instant"])
-    top = context["titlebar_bottom_px"] + context["theme_menu_gap_px"]
+    selector_bottom = context["theme_menu_wrap_bottom_px"]
+    top = (selector_bottom + context["theme_menu_gap_px"] if selector_bottom is not None
+           else max(context["stage_base_top_px"], context["titlebar_bottom_px"] + context["theme_menu_gap_px"]))
     if context["inbox_open"]:
         top = context["inbox_bottom_px"] + context["inbox_gap_px"]
     return {"first_card_top_px": top,
@@ -177,6 +179,34 @@ def validate():
     for case in fixtures["notice_stage_cases"]:
         require(notice_stage_presentation(policy["notice_stage"], case["context"]) == case["expected"],
                 "F3-1 stage/entry differs: " + case["name"])
+    # Execute only the actual source's pure placement helper against synthetic boxes, never a browser/paint.
+    placement_source = ROOT / "Concepts/home-redesign/src/panels/js/50-pageshell.js"
+    source_anchor_probe = r"""
+      const fs = require('fs'), vm = require('vm'), d = JSON.parse(fs.readFileSync(0, 'utf8'));
+      const src = fs.readFileSync(d.source, 'utf8');
+      const globals = src.match(/var NOTICE_GAP = [^;]+;/)[0] + src.match(/var BAR_GAP = [^;]+;/)[0];
+      const noticeGap = vm.runInNewContext(globals + '\nNOTICE_GAP');
+      const fn = src.slice(src.indexOf('function noticeDrop(host)'), src.indexOf('function applyDrop()'));
+      const rows = d.cases.filter(c => !c.context.inbox_open).map(c => {
+        const x = c.context, selector = x.theme_menu_wrap_bottom_px;
+        const box = bottom => ({getClientRects: () => [1], getBoundingClientRect: () => ({bottom, height: 20})});
+        const ctx = {doc: {getElementById: () => selector == null ? null : box(selector),
+                           querySelector: () => box(x.titlebar_bottom_px)}, host: box(x.stage_base_top_px - noticeGap)};
+        const drop = vm.runInNewContext(globals + fn + '\nnoticeDrop(host)', ctx);
+        return {name: c.name, top: x.stage_base_top_px + drop, expected: c.expected.first_card_top_px};
+      });
+      process.stdout.write(JSON.stringify(rows));
+    """
+    anchor_rows = json.loads(subprocess.run(["node", "-e", source_anchor_probe],
+        input=json.dumps({"source": str(placement_source), "cases": fixtures["notice_stage_cases"]}),
+        text=True, capture_output=True, check=True, timeout=20).stdout)
+    require(all(abs(row["top"] - row["expected"]) <= 0.11 for row in anchor_rows),
+            "F3-1 actual noticeDrop helper differs from theme-menu resting-top fixtures")
+    notification_source = (ROOT / "Concepts/onboarding/opus-5.5/src/js/19-notify.js").read_text()
+    notification_css = (ROOT / "Concepts/onboarding/opus-5.5/src/css/26-notify-00-core.css").read_text()
+    require("--pmn-clear" not in notification_source + notification_css
+            and "--pmn-push" in notification_source and "--pmn-push" in notification_css,
+            "F3-1 clearance removal or lead inbox push exception differs from GUI source")
     gui_spec = (PLANS / "FinalGUISpec.md").read_text()
     require("Keep notice content clear of nearby controls" not in gui_spec
             and "Collision avoidance tries the nearest clear position" not in gui_spec
@@ -461,6 +491,7 @@ process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
             "thread_consumer_cases": len(fixtures["thread_consumer_cases"]),
             "activity_geometry_cases": len(fixtures["activity_geometry_cases"]),
             "notice_stage_cases": len(fixtures["notice_stage_cases"]),
+            "notice_source_anchor_cases": len(anchor_rows),
             "concept_source_anchors": source_anchors, "failures": failures}
 
 

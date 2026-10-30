@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L13-L193
+Source lines: L13-L196
 
-Source SHA256: `c5ebb0990f23b6c0a242c0a5ed3447384854ea328b1c7d037b95e5609d3437f8`
+Source SHA256: `c2cbfd5732997a783f168996f2cc7f3434d5f353aedeefcab27a6553eec07c73`
 
 ---
 
 ## Change Summary
+
+- 2026-10-30: F3-1 final GUI 70b30f482f fixes the exact first-card anchor: match the theme menu’s resting top (#themeMenuWrap bottom + MENU_GAP, 6 px), not title-bar bottom + 6 px; negative drop is permitted. The lead’s open-inbox --pmn-push exception and the entering-card click guard remain. Prose and static fixtures distinguish selector geometry, absent-selector fallback and inbox state before the final gates/dry pass.
+  ContractRef: ContractName:Plans/FinalGUISpec.md#F3-447, ContractName:Plans/FinalGUISpec.md#F3-460, ContractName:Plans/Decision_Log.md#DL-228, ContractName:Plans/UI_Wiring_Rules.md#UIW-045, ContractName:Plans/Wiring_Matrix.md#WM-097
 
 - 2026-10-30: Jared's G2 follow-up approves widen-first Activity Detail, then docking/squeezing at the column limit while at least 360 px of messages remain, and full-height cover below that. His F3-1 follow-up replaces Jared #19's control-clearance rule: every page stages notices tight under the title bar at the bell with the theme-menu gap, permitting covered controls/chat head; entering cards take no clicks and Reduced Motion settles instantly. The lead’s explicit open-inbox exception retains --pmn-push below the bell-anchored inbox (bf5115d9d9), recorded separately from Jared’s quoted answer. DL-254 and DL-228 amend existing owners, bindings and static presentation fixtures; no new command, setting or native certification. The final gates/dry pass follows the lead's new GUI head.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-254, ContractName:Plans/Decision_Log.md#DL-228, ContractName:Plans/FinalGUISpec.md#F3-447, ContractName:Plans/FinalGUISpec.md#F3-535, ContractName:Plans/assistant-chat-design.md#ACD-506

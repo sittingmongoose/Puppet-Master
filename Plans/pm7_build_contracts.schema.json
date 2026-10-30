@@ -2662,7 +2662,7 @@
       "additionalProperties": true
     },
     "PresentationPolicy": {
-      "description": "Static G2/F3-1 owner policy descriptor, not a native request, runtime event, persisted value or GUI execution proof. Threshold and relative first-card anchor are approved by Jared 2026-10-30.",
+      "description": "Static G2/F3-1 owner policy descriptor, not a native request, runtime event, persisted value or GUI execution proof. Threshold and relative first-card anchor are approved by Jared 2026-10-30. Final GUI 70b30f482f aligns the first card to the theme selector wrapper bottom plus menu gap, allowing a negative drop; open-inbox placement remains the separately attributed lead exception.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -2706,7 +2706,10 @@
             "avoid_controls",
             "accepts_clicks_during_entry",
             "reduced_motion_instant",
-            "open_inbox_placement"
+            "open_inbox_placement",
+            "first_card_top_source",
+            "allow_negative_stage_drop",
+            "selector_absent_fallback"
           ],
           "properties": {
             "anchor": {
@@ -2735,6 +2738,15 @@
             },
             "open_inbox_placement": {
               "const": "under_inbox"
+            },
+            "first_card_top_source": {
+              "const": "theme_menu_resting_top"
+            },
+            "allow_negative_stage_drop": {
+              "const": true
+            },
+            "selector_absent_fallback": {
+              "const": "titlebar_nonnegative_drop"
             }
           }
         }

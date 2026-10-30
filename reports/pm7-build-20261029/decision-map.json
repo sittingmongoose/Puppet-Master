@@ -1773,6 +1773,11 @@
         "provenance": "bf5115d9d9",
         "ruling": "Keep --pmn-push: while the shared inbox is open the stage sits under it; otherwise use the tight titlebar/bell/theme-menu gap.",
         "authority": "pm7-build lead interpretation, listed for Jared; not part of his quoted answer"
+      },
+      "final_GUI_anchor": {
+        "GUI_head": "70b30f482f043a9be540f795b7b9e86b07f93cee",
+        "source_mail": "1030133128-afab",
+        "rule": "Theme menu resting top: selector wrapper bottom + MENU_GAP (6 px), negative stage drop allowed; title-bar nonnegative fallback only when selector absent; lead inbox exception retained."
       }
     }
   },

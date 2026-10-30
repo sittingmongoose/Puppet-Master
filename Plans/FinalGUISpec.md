@@ -32637,8 +32637,12 @@ canonical_text: >-
   inbox with their existing resume action. A newly presented prompt may arrive again. Tour page
   notes use the quiet staging route. F3-1, Jared 2026-10-30, replaces the earlier Jared #19 control-clearance
   rule: on every page the notice stage hangs tight below the title bar at the bell. The first card starts
-  at the same distance below the bar as the theme selector's menu, using that shared gap in the current
-  look while the inbox is closed. Home panel strips and the chat head add no vertical clearance or
+  at the theme selector menu's resting top while the inbox is closed, not at a fixed distance below
+  the title-bar bottom. F3-1 final GUI 70b30f482f maps that top to #themeMenuWrap's bottom plus MENU_GAP
+  (6 px); selector height varies by look, so title-bar-bottom plus 6 px is not equivalent. Placement may
+  lift the stage with a negative drop to match the resting top. If no selector is drawn, preserve the
+  title-bar-based nonnegative-drop fallback. Native components use equivalent owner geometry, not a new
+  persisted DOM or placement field. Home panel strips and the chat head add no vertical clearance or
   page-specific offset. Lead ruling 2026-10-30 (mail 1030131044-4c44, preserving Jared's bf5115d9d9 fix):
   while the shared inbox is open the stage sits under it, retaining the existing --pmn-push offset; the
   inbox itself hangs from the bell. This open-inbox state exception is the lead's interpretation,
@@ -32688,8 +32692,10 @@ acceptance_criteria:
   action and quietly files a lasting notice, without resolving the source by dismissal.
 - Optional setup joins the existing inbox after its reading interval or interaction elsewhere, and its
   resume action remains reachable there.
-- With the inbox closed, every page starts the first card below the title bar at the bell with the
-  theme-menu gap; controls, chat head and Home strips do not move it or cause direct filing. While the
+- With the inbox closed, every page aligns the first card with the theme menu’s resting top, the selector
+  wrapper bottom plus its menu gap (6 px in 70b30f482f), even when this requires a negative stage drop.
+  Title-bar bottom is not substituted while the selector is drawn. Controls, chat head and Home strips do
+  not move it or cause direct filing. While the
   inbox is open, the stage sits under that bell-anchored inbox using its existing push offset.
 - Entering staged cards accept no body/action/dismiss clicks and queue no later activation; Reduced Motion
   settles instantly. Settled cards keep their existing source/owner actions and read semantics.
@@ -33179,7 +33185,8 @@ canonical_text: >-
   title's text node; the tile is no additional control. Other looks retain their kind-glyph tile. Toasts,
   banners and inbox rows repaint through the same fillTile owner in src/js/19-notify.js when the look changes.
   F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page; its first card uses the
-  theme selector menu's distance below the title bar while the inbox is closed. It may cover controls
+  theme selector menu's resting top while the inbox is closed (#themeMenuWrap bottom plus MENU_GAP,
+  6 px in 70b30f482f), not title-bar bottom plus that gap. It may cover controls
   and the chat head. F3-447 owns that anchor, the lead's open-inbox push exception and the entering-card
   click guard; no per-page or control-clearance placement survives.
 gui_related: true
@@ -33293,7 +33300,8 @@ canonical_text: >-
   F3-1, Jared 2026-10-30, with the lead's explicit 2026-10-30 open-inbox exception (mail
   1030131044-4c44, preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage
   sits under it via the existing --pmn-push offset. When closed the stage returns tight below the title
-  bar at the bell with the theme-menu gap. No chat-head or control-clearance offset is added. The existing
+  bar at the bell, aligned to the theme menu’s resting top under its selector wrapper (F3-447). No
+  chat-head or control-clearance offset is added. The existing
   inbox owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead's ruling,
   not an added quote from Jared.
 gui_related: true

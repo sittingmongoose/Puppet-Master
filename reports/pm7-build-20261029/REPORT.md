@@ -1,3 +1,15 @@
+# PM7 Plans lane — final GUI anchor alignment and aggregate run, 2026-10-30
+
+Branch: `t3/plans/pm7-plans-canon`. Final GUI `70b30f482f043a9be540f795b7b9e86b07f93cee` merged cleanly through `21783035fe`. Lead authorization: mail `1030133128-afab`.
+
+**The final GUI is merged and canon uses its exact first-card anchor.** F3-447/460/461, DL-228, UIW-045, WM-097 and the dated index line now distinguish the theme menu’s resting top (selector wrapper bottom + MENU_GAP, 6 px in the concept) from title-bar bottom + 6 px. A negative stage drop is allowed; without a drawn selector the existing title-bar/nonnegative-drop fallback remains. The lead’s existing open-inbox `--pmn-push` exception remains separately attributed. `--pmn-clear` is absent from the final GUI. G2’s widen / >=360 px dock-squeeze / full-height cover rule and all source action ownership remain unchanged.
+
+Prose preceded companions again; six existing owner units change, with no unit or preserved token removed. Static policy remains outside the native command/action union. PM7 focused checks PASS: **87 schema, 6 geometry, 15 notice and 13 actual-source anchor cases**, plus all earlier 19 reused-owner/five thread-consumer cases. The source probe runs only the actual pure noticeDrop helper in a DOM-inactive Node VM with synthetic geometry; it does not certify paint, native dispatch or click delivery. Counts remain unchanged.
+
+All ten focused/generation/builder checks PASS against the merged source. Regeneration touches only the five edited owner/index groups. Native command/action union and all non-presentation definitions remain unchanged. All 17 support inputs and the currentness symlink are present. The prepared detached full-gates/dry runner is queued after the clean source commit and push, then source/base will stay frozen throughout. Current verification manifest SHA-256: `c476a9aba71c064bf70d96df19fc18d0ee68113fca10bc125d1bd91501b2b1bd`. The older aggregate results below remain historical until that run finishes. No landing, lock, reseal or GUI source edit. Indefinite waiter is armed.
+
+## Historical focused follow-up checkpoint before exact-anchor alignment
+
 # PM7 Plans lane — Jared's final G2 / F3-1 follow-ups, 2026-10-30
 
 Branch: `t3/plans/pm7-plans-canon`. Verified follow-up source: `b3ea621573c5a4c99834a383e76ee9ec183df9e4` (pushed both remotes). Amendment base: `d88ff92b04046611731f0a5f47935aedf343e7df`. Source: lead mail `1030125602-d03d`, Jared's 2026-10-30 answers. GUI amendment head is awaited from `pm7-build`.

@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L6453-L6737
 
-Source SHA256: `640ba0ecb615ec211cc3cd56837f3c4978148f3f33b460ae0dc8770496ffa57e`
+Source SHA256: `344e85b796471a7b8b03c7886258af765ec3aa2f890fed034a61f8b944a0bbee`
 
 ---
 
@@ -246,7 +246,7 @@ canonical_text: >-
   request/result, non-Teacher Work and per-consumer return cases are focused requirements, not native
   dispatch evidence.
   G2/F3-1, Jared follow-ups 2026-10-30: static presentation companions exercise widen-first, the 360 px
-  docking/squeeze threshold and full-height-cover fallback, plus bell/theme-menu-gap notice placement on
+  docking/squeeze threshold and full-height-cover fallback, plus bell/theme-menu-resting-top placement on
   every page, the lead’s open-inbox push exception and the entering-card click guard. Notification body/action/dismiss bindings keep their owner
   contracts and record the transient no-dispatch gate. No control-clearance or chat-head placement rule, new
   binding, command, event, setting or native certification is introduced.
