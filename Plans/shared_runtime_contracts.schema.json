@@ -372,23 +372,80 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "schema_id", "schema_version", "projection_id", "scope_ref", "state",
-        "source_event_refs", "source_value_refs", "currentness_refs", "readiness_summary_refs",
-        "conflict_summary_refs", "observed_at_utc", "redaction_profile"
+        "schema_id",
+        "schema_version",
+        "projection_id",
+        "scope_ref",
+        "state",
+        "source_event_refs",
+        "source_value_refs",
+        "currentness_refs",
+        "readiness_summary_refs",
+        "conflict_summary_refs",
+        "observed_at_utc",
+        "redaction_profile"
       ],
       "properties": {
-        "schema_id": { "const": "pm.shared_runtime.operational_awareness_projection.v1" },
-        "schema_version": { "const": "1.0.0" },
-        "projection_id": { "$ref": "#/$defs/non_empty_string" },
-        "scope_ref": { "$ref": "#/$defs/non_secret_ref" },
-        "state": { "enum": ["current", "partial", "stale", "unavailable", "conflicted"] },
-        "source_event_refs": { "$ref": "#/$defs/ref_list" },
-        "source_value_refs": { "$ref": "#/$defs/ref_list" },
-        "currentness_refs": { "$ref": "#/$defs/ref_list" },
-        "readiness_summary_refs": { "$ref": "#/$defs/ref_list" },
-        "conflict_summary_refs": { "$ref": "#/$defs/ref_list" },
-        "observed_at_utc": { "$ref": "#/$defs/timestamp" },
-        "redaction_profile": { "$ref": "#/$defs/non_empty_string" }
+        "schema_id": {
+          "const": "pm.shared_runtime.operational_awareness_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "projection_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "state": {
+          "enum": [
+            "current",
+            "partial",
+            "stale",
+            "unavailable",
+            "conflicted"
+          ]
+        },
+        "source_event_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "source_value_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "currentness_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "readiness_summary_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "conflict_summary_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "redaction_profile": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "process_facts_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "PM7 G4/G7, SIR-054: subordinate full_thread_runtime_contracts owner records; no embedded process facts on non-process work."
+        },
+        "server_resource_sample_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "PM7 G4/G7, SIR-054: subordinate full_thread_runtime_contracts owner records; no embedded process facts on non-process work."
+        }
       }
     },
     "prompt_runtime_projection": {

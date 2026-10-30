@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L1002-L5894
+Source lines: L1002-L5911
 
-Source SHA256: `7a1eafa8989ffd2cab6c9a85bb29f93b001a791de71b6eaa6f0986a301fdf601`
+Source SHA256: `3fd4b170772eafe0d813cf29d7e5407613a7bad1baddbb2a7d5c9f8fa649f92a`
 
 ---
 
@@ -2151,7 +2151,17 @@ plan_unit_id: EP-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: PM entrypoints establish a canonical signal.NotifyContext or equivalent once-owned fan-out before subprocess start; provider, MCP, and LSP subprocesses receive bounded graceful termination, SIGHUP reloads config, and managed subprocesses run in isolated process groups.
+canonical_text: >-
+  PM entrypoints establish a canonical signal.NotifyContext or equivalent once-owned fan-out before
+  subprocess start; provider, MCP, and LSP subprocesses receive bounded graceful termination, SIGHUP
+  reloads config, and managed subprocesses run in isolated process groups. Amended 2026-10-29 (D8/D13,
+  G5/G7; PM7): ProcessFacts is subordinate to ObservableWork (SIR-054). cmd.work.stop binds pid,
+  pid_start_time, process_group, owner and current generation, sending SIGTERM then SIGKILL after 3 s to
+  the whole group including descendants. Stopping/pending persists until observed exit; already-ended stop
+  is idempotent and system services are excluded. Windows uses CREATE_NEW_PROCESS_GROUP, CTRL_BREAK_EVENT
+  then the existing forced-termination equivalent after 3 s. Input requests bind the current detected
+  prompt and generation, with plain yes/no quick answers safe-first; all other input reveals the exact
+  Terminal. No protected input is answered here.
 gui_related: false
 gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
 split_recommended: false
@@ -2160,8 +2170,11 @@ unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
-- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions,
+  owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- D8 identity/currentness guards reject PID reuse; all managed-work Stop paths use the same 3 s whole-group
+  grace, including Windows equivalent, and observe exit before Stopped.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2187,7 +2200,9 @@ preserved_exact_tokens:
 - ContractName:Plans/Architecture_Invariants.md
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'D8 (2026-10-29): 5-second grace window is retained source lineage only; the current provider/process-group
+  grace is 3 seconds across Unix and Windows equivalents.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/Executor_Protocol.md
@@ -4322,20 +4337,21 @@ plan_unit_id: EP-087
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: >-
-  PM-native Open With stays inside the file/editor surface and carries the
-  same worktree handoff context as other executor file operations; later OS
-  handoff must be a separate explicit command such as
+canonical_text: |-
+  PM-native Open With stays inside the file/editor surface and carries the same worktree handoff context as
+  other executor file operations; later OS handoff must be a separate explicit command such as
   cmd.file.open_in_system_default.
 gui_related: true
-gui_classification_reason: This unit governs user-visible file/editor Open With behavior and its worktree handoff boundary.
+gui_classification_reason: This unit governs user-visible file/editor Open With behavior and its worktree handoff
+  boundary.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - PM-native target selection, blocked/recovery semantics, and worktree-scoped file identity remain preserved.
-- OS system-default launching remains a separate explicit command and does not dilute PM-native executor/file identity semantics.
+- OS system-default launching remains a separate explicit command and does not dilute PM-native executor/file
+  identity semantics.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -4363,7 +4379,8 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Open With UI behavior consumes the same executor worktree handoff context rather than defining a separate launch context.
+- Open With UI behavior consumes the same executor worktree handoff context rather than defining a separate
+  launch context.
 owner_hints:
 - Plans/Executor_Protocol.md
 ```

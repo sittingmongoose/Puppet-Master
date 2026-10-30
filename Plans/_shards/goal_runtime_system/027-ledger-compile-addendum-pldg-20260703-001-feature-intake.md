@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L4409-L5228
+Source lines: L4409-L5229
 
-Source SHA256: `735482f2fd785f0a576872a4f35a84b21128fd67c2cc4981d33c1558be52a7af`
+Source SHA256: `e6adce057fda7683469df87ab26c992ea8c84dc5876f31e50ef6924c49ab97b5`
 
 ---
 
@@ -311,6 +311,7 @@ owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
   P0-SUBAGENT-EXECUTION-CONTRACT (P0) is compiled as canonical Puppet Master intent for Subagent lifecycle, model/effort config, and result authority: Define SubagentExecutionContract and SubagentResultEnvelope. Child result is advisory unless marked allowed_to_write=false/true under parent policy; parent remains the only canonical writer where required. Include per-child model/effort settlement, context slice hash, tool ceiling, timeout, wait_agent/cancel semantics, and orphan reaper. The preserved PM gap/delta is: PM needs a single child execution lifecycle independent of prompt packets: spawn, admitted context, first event, heartbeat, partial result, await, cancellation, orphan reap, result settlement, and parent completion gating. The observed external-repo signal remains source-lineage evidence: Codex and OpenCode expose custom/subagent model and reasoning config gaps; Cline temporarily disabled/stabilized subagents in the SDK migration and has loop reports; Agent Zero release notes
   show child chats/parallel tools and non-destructive await timeouts.
+  Amended 2026-10-29 (D8/D9; PM7): Live processes survive idle unload; after restart owner reconciliation marks vanished process work Lost and notifies its owning agent once without restarting a user-stopped thread.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

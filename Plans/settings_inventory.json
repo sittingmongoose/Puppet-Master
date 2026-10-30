@@ -610,6 +610,81 @@
    ]
   },
   {
+    "id": "general.visual.pip-parts",
+    "label": "Customize Pip",
+    "desc": "Choose Pip’s optional chat and setup appearances, faces, motion, look and sound. Presets Full, Quiet, Still and Plain edit the same list; brand and loaders stay available. Labels and presets: Plans/pip_parts.json (S1–S9).",
+    "type": "multiselect",
+    "options": [
+        "Sheet hosts",
+        "Status faces in lists",
+        "Working orbit",
+        "Plans",
+        "Wand menu",
+        "Empty lists",
+        "State faces",
+        "Watches",
+        "Wonders while typing",
+        "Cheers",
+        "Oops",
+        "Gaze",
+        "Blinks",
+        "Sway and physics",
+        "Blinks between faces",
+        "Thinking dots",
+        "Idle life",
+        "Seat colours",
+        "Role props",
+        "Strings",
+        "Cheeks and shine",
+        "Setup world life",
+        "Pip talks in setup",
+        "Pip chirps in the app",
+        "Setup music"
+      ],
+    "default": [
+        "Sheet hosts",
+        "Status faces in lists",
+        "Working orbit",
+        "Plans",
+        "Wand menu",
+        "Empty lists",
+        "State faces",
+        "Watches",
+        "Wonders while typing",
+        "Cheers",
+        "Oops",
+        "Gaze",
+        "Blinks",
+        "Sway and physics",
+        "Blinks between faces",
+        "Thinking dots",
+        "Idle life",
+        "Seat colours",
+        "Role props",
+        "Strings",
+        "Cheeks and shine",
+        "Setup world life",
+        "Pip talks in setup",
+        "Setup music"
+      ],
+    "scope": [
+      "global"
+    ],
+    "tier": "simple",
+    "search": [
+      "Pip",
+      "mascot",
+      "puppet",
+      "setup voice",
+      "setup music",
+      "app chirps",
+      "Full",
+      "Quiet",
+      "Still",
+      "Plain"
+    ]
+  },
+  {
    "id": "general.visual.glass-background-mode",
    "label": "Glass Background",
    "desc": "Compatibility lineage only; never rendered or written. Wallpaper replaces Mesh/Depth/Minimal; SP-333 owns migration. (Superseded by SSYS-054 at the 2026-10-15 Liquid Glass/wallpaper publication.)",
@@ -1697,6 +1772,26 @@
     "icon labels",
     "Show Names Next to the Icons on the Left"
    ]
+  },
+  {
+    "id": "general.interaction.status-bar-words",
+    "label": "Show words in the status bar’s agent and process counts",
+    "desc": "Numbers shows glyph and number pairs with full words on hover. Turn this on for words beside the counts. Questions and process input stay separate (D5).",
+    "type": "toggle",
+    "default": false,
+    "scope": [
+      "global"
+    ],
+    "tier": "simple",
+    "search": [
+      "status bar",
+      "agents",
+      "questions",
+      "processes",
+      "needs input",
+      "Numbers",
+      "Words"
+    ]
   },
   {
    "id": "general.interaction.spellcheck",

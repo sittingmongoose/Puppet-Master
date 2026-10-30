@@ -27568,7 +27568,7 @@ canonical_text: >-
   keep_open, the narrow-window pin ui.chat_column.keep_open sets (UCC-203), off while absent; it is the person's
   choice, not a narrow-window state, and is written like view state.
   The chat_column fields width_px, history_pinned and keep_open default to null, false and false; width_px
-  is the message area's width, rounded into 400-760 px, an out-of-range finite value stored at the nearer
+  is the message area's width, rounded to an integer of at least 400 px without a fixed upper cap (G3), an undersized finite value stored at the minimum
   bound and null the window's default. They are layout values, never Settings values. A changed width is one
   cmd.workspace_layout.resize_surface { surface: 'chat', width } structural commit, with one receipt, one
   layout event and a new revision; a changed drag commits once on release, Escape or no movement commits
@@ -27581,6 +27581,7 @@ canonical_text: >-
   Existing non-default values survive. The old keys are dropped only after this project's layout is written,
   never while an unreadable record waits to be set aside; old defaults null, flyout and false are just
   dropped.
+  Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer width ≥400 or null for default and dynamically clamp rendering to current centre/page floors. Keep History pin/user width and narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the constrained fallback.
 gui_related: true
 gui_classification_reason: The persisted record decides the visible panels, tabs, chat column and what survives an upgrade.
 split_recommended: false
