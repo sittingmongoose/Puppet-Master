@@ -175336,6 +175336,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (SOLID && !wasShown) setSolid(true);
     O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening', 'o55-scrim-lit'); if (SOLID) setSolid(true); } });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
+    /* a transient left in the reused window from an earlier run (a toast) would play again now: none carries over */
+    r.querySelectorAll('.o55-win > .o55-toast').forEach((n) => n.remove());
     /* the stage lives with the window: reopening wakes it (Retro's tube powers on again) */
     const stage = r.querySelector('.o55-stage'), st0 = O55.pipStage.of(stage);
     if (st0) { st0.setActive(true); if (st0.tube) st0.powerOn(); } else { stage.innerHTML = ''; stage.removeAttribute('data-scene-key'); }
@@ -175392,6 +175394,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const handoff = !!(o && o.handoff);
     const def = SCREENS.defs[S.sess.screen];
     if (def && def.leave) def.leave(S);
+    S.root.querySelectorAll('.o55-win > .o55-toast').forEach((n) => n.remove()); /* (a toast is this run's moment) */
     if (O55.nierLook && O55.nierLook.closed) O55.nierLook.closed(reason); /* an unsaved NieR preview lingers like the look's */
     S.sess.status = reason === 'skip' ? 'skipped' : reason === 'done' ? 'done' : 'closed';
     S.save();
@@ -179508,10 +179511,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       return sub === 'signup' ? ((O55.fixtures.forge(service) || {}).signup || null) : (OF.forge[service] || null);
     }
   };
+  /* A toast is a moment: it leaves the window when its animation ends (or after its length, where Reduced Motion plays
+     none), so it is never left in the reused window to play again when the window next opens (final check F2-2) */
   function toast(S, text) {
     const win = S.root.querySelector('.o55-win'); let el = win.querySelector('.o55-toast');
-    if (!el) { el = document.createElement('div'); el.className = 'o55-toast'; el.setAttribute('role', 'status'); win.appendChild(el); }
+    if (!el) {
+      el = document.createElement('div'); el.className = 'o55-toast'; el.setAttribute('role', 'status'); win.appendChild(el);
+      el.addEventListener('animationend', (e) => { if (e.target === el) el.remove(); });
+    }
     el.textContent = text; el.classList.remove('o55-toast-show'); void el.offsetWidth; el.classList.add('o55-toast-show');
+    if (el.__gone) el.__gone.cancel();
+    el.__gone = O55.motion.after(3400, () => el.remove());
     U.announce(text, win);
   }
   O55.ui.toast = (text) => toast(O55.S, text);

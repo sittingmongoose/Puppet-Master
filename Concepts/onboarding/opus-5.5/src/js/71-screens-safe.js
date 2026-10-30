@@ -51,10 +51,17 @@
       return sub === 'signup' ? ((O55.fixtures.forge(service) || {}).signup || null) : (OF.forge[service] || null);
     }
   };
+  /* A toast is a moment: it leaves the window when its animation ends (or after its length, where Reduced Motion plays
+     none), so it is never left in the reused window to play again when the window next opens (final check F2-2) */
   function toast(S, text) {
     const win = S.root.querySelector('.o55-win'); let el = win.querySelector('.o55-toast');
-    if (!el) { el = document.createElement('div'); el.className = 'o55-toast'; el.setAttribute('role', 'status'); win.appendChild(el); }
+    if (!el) {
+      el = document.createElement('div'); el.className = 'o55-toast'; el.setAttribute('role', 'status'); win.appendChild(el);
+      el.addEventListener('animationend', (e) => { if (e.target === el) el.remove(); });
+    }
     el.textContent = text; el.classList.remove('o55-toast-show'); void el.offsetWidth; el.classList.add('o55-toast-show');
+    if (el.__gone) el.__gone.cancel();
+    el.__gone = O55.motion.after(3400, () => el.remove());
     U.announce(text, win);
   }
   O55.ui.toast = (text) => toast(O55.S, text);
