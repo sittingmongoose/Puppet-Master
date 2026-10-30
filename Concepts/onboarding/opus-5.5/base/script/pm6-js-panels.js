@@ -571,14 +571,15 @@
     keys.forEach(function (k) { if (PROJECT_STATES[k] && (!best || PROJECT_STATES[k].rank > PROJECT_STATES[best].rank)) best = k; });
     return { key: best, say: best ? String(v.say || '') : '' };
   }
-  /* FinalGUISpec 3.4's "unsaved shell state": a Home tab with unsaved changes. Home saves its layout by itself, so its
-     open buffers are the only unsaved state, and only the active project has its tabs open (Home fires pm7.home.unsaved
-     when a tab's mark changes) */
+  /* FinalGUISpec 3.4's "unsaved shell state": a Home tab with unsaved changes, read from the layout Home has bound to
+     that project (Home keys projects by name: PMW.unsaved). Right after a pick Home still holds the old project's layout,
+     so the new one reads calm until Home has loaded it; Home fires pm7.home.unsaved whenever the bound project or its
+     unsaved state changes (a dirty mark, a close, a restore) */
   function projectUnsaved(id) {
-    var P = window.PMW, tabs = P && P.state && P.state.layout && P.state.layout.tabs, sel = projectSelected();
-    if (!tabs || !sel || sel.getAttribute('data-project') !== id) return false;
-    for (var k in tabs) if (tabs[k] && tabs[k].dirty) return true;
-    return false;
+    var P = window.PMW;
+    if (!P || typeof P.unsaved !== 'function') return false;
+    var row = projectRows().filter(function (r) { return r.getAttribute('data-project') === id; })[0];
+    try { return !!P.unsaved(row ? projectInfo(row).name : id); } catch (e) { return false; }
   }
   function projectState(id) {
     var W = window.PM_WORK;
@@ -665,6 +666,10 @@
     var label = byId('projectMenuLabel');
     if (!item) return false;
     var info = projectInfo(item);
+    /* onboarding names its project in PM_ACTIVE_PROJECT_ID, which Settings and the sound binding read before the chosen
+       row (pm4-settings-js.js projectRecord): a pick keeps it in step, before the label changes, so the reload they run on
+       that change reads the picked project (Astra W2 review, integration note) */
+    if (typeof window.PM_ACTIVE_PROJECT_ID === 'string' && window.PM_ACTIVE_PROJECT_ID !== info.id) window.PM_ACTIVE_PROJECT_ID = info.id;
     projectRows().forEach(function (el) { if (el.classList.contains('is-selected') !== (el === item)) el.classList.toggle('is-selected', el === item); });
     if (label && label.textContent !== info.name) label.textContent = info.name;
     paintProjectButton();
@@ -766,11 +771,18 @@
     window.PM_PROJECT_BOX = {
       /* the one row renderer: a row element with data-project (and data-project-name, -path, -branch, -stack) */
       row: renderProjectRow,
-      /* a project the menu does not list yet: a row from the renderer, first in the list */
+      /* a project the menu does not list yet: a row from the renderer, first in the list. A listed project takes the
+         name, path, branch and stack given (onboarding's draft can add them after the row exists) */
       add: function (id, info) {
         info = info || {};
         var found = projectRows().filter(function (r) { return r.getAttribute('data-project') === id; })[0];
-        if (found) return found;
+        if (found) {
+          if (info.name && info.name !== id) found.setAttribute('data-project-name', info.name);
+          ['path', 'branch', 'stack'].forEach(function (k) { if (info[k]) found.setAttribute('data-project-' + k, info[k]); });
+          renderProjectRow(found);
+          if (found.classList.contains('is-selected')) paintProjectButton();
+          return found;
+        }
         var item = document.createElement('button');
         item.type = 'button'; item.className = 'pm6-tb-menu-item'; item.setAttribute('role', 'menuitem');
         item.setAttribute('data-project', id);
@@ -1237,8 +1249,16 @@
         var width = entries.length ? entries[entries.length - 1].contentRect.width : lastBarWidth;
         if (Math.abs(width - lastBarWidth) < .5) return;
         lastBarWidth = width;
-        pageInkResyncPending = true;
-        schedule();
+        /* the fold runs here, after this frame's layout and before its paint, so the frame that draws the new width also
+           draws the fold that fits it, and the tabs' chip is placed after it in the same frame (PM_LG.syncScope: the
+           brand's fold or a gap step moves the tabs without the box's width changing, which glass.js watches). Deferred
+           to the next frame, an iframe resized from 1390 to 860 px painted the chip 10 px off its tab until the fold
+           landed (Astra W2 review M2) */
+        if (raf) { cancelAnimationFrame(raf); raf = null; }
+        applyDensity();
+        pageInkResyncPending = false;
+        if (window.PM_LG && typeof window.PM_LG.syncScope === 'function' && pageStrip) window.PM_LG.syncScope(pageStrip);
+        if (window.PM7_PAGE_TAB_INK && typeof window.PM7_PAGE_TAB_INK.resync === 'function') window.PM7_PAGE_TAB_INK.resync();
       });
       ro.observe(bar);
     } else {

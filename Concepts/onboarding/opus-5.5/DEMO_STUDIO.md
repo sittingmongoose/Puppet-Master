@@ -70,9 +70,10 @@ Source: `Concepts/home-redesign/src/panels/**`.
 - Settings: Reduce animations (`general.visual.reduce-animations`), sound effects, Wallpaper and Glass transparency.
 
 ### G. Notifications
-- PMConcept7 has no way to fire sample notifications. The notifications thread's lab (eleven moments: quiet, notice,
-  attention, approval, permission, FileSafe, concern, failure, repeat, burst, setup prompt) lives only on its own
-  review page, and its branch adds `PM_TITLEBAR_NOTIFY.demo(name)` to the page.
+- When this inventory was taken (main d6afa4b281) PMConcept7 had no way to fire sample notifications; the notifications
+  thread's lab (eleven moments: quiet, notice, attention, approval, permission, FileSafe, concern, failure, repeat,
+  burst, setup prompt) lived only on its own review page. That engine has since landed: `PM_TITLEBAR_NOTIFY.demo(name)`
+  (`src/js/19-notify.js`) fires them on the page, and the Studio's Notices section calls it (section 8 below).
 
 ### H. Liquid Glass
 - Glass always uses Liquid Glass with a wallpaper. The Studio keeps its graphics-card/processor and wallpaper controls.
@@ -87,7 +88,7 @@ refinements (27) and Feature demonstrations (7), eight trigger groups (95 trigge
 what each control does and whether it is product demo content or lab-only, is
 `/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/DEMO-INVENTORY.md`. In PMConcept7 the lab chip is gone (hosted
 mode) and everything that shows a product behaviour moved into this Studio's Chat section: 55 recorded examples in 18
-feature groups, 93 triggers and 34 single-surface demos as 127 moments in 12 groups, the seven take families, recipes and
+feature groups when it was ported (57 in 19 since the Thought Stream pair, 10cf7e0a6d), 93 triggers and 34 single-surface demos as 127 moments in 12 groups, the seven take families, recipes and
 the motion voice as lab pickers (never persisted), and Reset the chat demo. Dropped: the theme list and the NieR section
 (Looks owns them), Edit and branch and Restore from point (each only toasted what it would do), the dialog's drag and
 resize. The lab-only workspaces the examples open (`order-export:`, `b16-work:`, `b17-work:`, `bsd12:`,
@@ -130,15 +131,23 @@ beside it). It rises out of the item as one sheet anchored to the bottom-left co
 2. Onboarding: the situation picker (grouped, and combinable), open at any screen, run from the start.
 3. Guided Tour: start, resume where it stopped, start over; the three chapters and their steps.
 4. Story: the demo director (clock, speed, the five story points, recent beats), no longer a hidden shortcut.
-5. Workspace: named layouts, reset the layout, agents opening things, an agent driving a terminal.
-6. Chat (added 2026-10-22): the assistant chat's recorded examples, moments and takes (section I).
-7. Usage: demo readings on or paused, Play the next hour / Back to now, the chart gallery.
-8. Notices: the notification moments.
-9. Looks: the five looks in light and dark, NieR Mode, Reduced Motion, sound.
-10. Reset: three sizes. Progress (onboarding, tour, situation); Workspace (the panel layout back to default); Everything
-   (all of the above, the saved layouts, dashboards, chat column, terminal and Usage settings), shown item by item
-   before it runs, then a reload into a fresh first run.
-11. Switches: onboarding start mode, the current situation, hover engine off, Usage readings paused, no-GPU Usage and
+5. Workspace: named layouts, reset the layout, agents opening things, an agent driving a terminal, and (2026-10-30)
+   the Title bar: the project box's state, a long name, the bar's width and the project menu.
+6. Activity (added 2026-10-30, W6): the work projection's scenarios (Busy, No asks, Quiet, Many, Stale feed, After
+   restart, Several servers), the panel at Agents, Processes or Resources, the chat's Processes view, Stop all, Quit,
+   and the status bar's Numbers or Words.
+7. Chat (added 2026-10-22): the assistant chat's recorded examples, moments and takes (section I).
+8. Usage: demo readings on or paused, Play the next hour / Back to now, the chart gallery.
+9. Notices: the notification moments.
+10. Looks: the five looks in light and dark, NieR Mode, Pip's parts (presets and Adjust Pip), Reduced Motion, sound.
+11. Pip (added 2026-10-30, the PM7 build's W8): Pip in all ten looks (the title bar's still mark, the tile, the tray's
+    faces), faces on every live Pip, Mark only for a squeezed title bar, the loader (a motion take, Every loader, Hold
+    loaders) and Pip's sound board (a kit by the look or by choice, the stage, voice and window events, the five loops,
+    Pip says).
+12. Reset: three sizes. Progress (onboarding, tour, situation); Workspace (the panel layout back to default); Everything
+    (all of the above, the saved layouts, dashboards, chat column, terminal and Usage settings), shown item by item
+    before it runs, then a reload into a fresh first run.
+13. Switches: onboarding start mode, the current situation, hover engine off, Usage readings paused, no-GPU Usage and
     the chart gallery, with "Reload with these".
 
 Ownership: the Studio is new files in the onboarding package (`src/js/9x-demo-studio*.js`,
@@ -152,7 +161,7 @@ them. Glass always uses the Liquid Glass package with a wallpaper.
 |---|---|
 | `src/js/90-demo.js` | The Concept demo item: `#o55-demo` (a child of `<body>`, the one the onboarding window leaves usable) and its toggle button, which the Home layer docks into the status bar (`Concepts/home-redesign/src/panels/js/50-pageshell.js`). |
 | `src/js/91-demo-studio.js` | `O55.studio`: the model and every action. Each control calls its owner's public API and nothing else; an owner missing from the page makes its control say "Not on this page" instead of failing. |
-| `src/js/92-demo-studio-ui.js` | The sheet: eleven sections, search, keyboard, look sync, the motion voices, the Start page's three scenes. |
+| `src/js/92-demo-studio-ui.js` | The sheet: thirteen sections, search, keyboard, look sync, the motion voices, the Start page's three scenes. |
 | `Concepts/chat-assistant-concepts/5.6 Pro/pm7-port/js/50-demo-bridge.js` | `PM56_PORT.demo`, the chat's side of the Chat section (the port's demo lane): the lists come from the chat itself, and every run goes through the chat's own click path. |
 | `src/css/50-demo-studio.css` | Structure and the Basic look. |
 | `src/css/51-demo-studio-looks.css` | Friendly, Retro, Glass and NieR, and Reduced Motion. |
@@ -162,15 +171,18 @@ Which owner each section calls:
 
 | Section | Owner and call |
 |---|---|
-| Onboarding | `PM_O55_ONBOARDING.replay` and `.resume`, `O55.ui.open({ fresh, screen })`, `O55.fixtures.make` and `O55.store` `scenario` (a situation is a start plus twists joined by `+`; twists that describe the same thing two ways replace each other) |
+| Onboarding | `PM_O55_ONBOARDING.replay` and `.resume`, `O55.ui.open({ fresh, screen })`, `O55.fixtures.make` and `O55.store` `scenario` (a situation is a start plus twists joined by `+`; twists that describe the same thing two ways replace each other; the `pip` group, Sign-ins that fail once, is `antigravityOnce` and `githubSigninOnce`). Pip's moments: Oops (a name you already have, the Cursor key refused, Antigravity's sign-in failing once) open their screen and then press and type through the window's own `O55.ui.act(doName, arg)` and `O55.ui.fill(bind, value)` (on a page without them, the screen's own action in `O55.screens.defs`); Ask Pip opens a screen with one `?` note open (`O55.ui.tip(id)`). Both step aside like a screen row. The recipe Pip's rough day is `returning+antigravityOnce` from Name |
 | Guided Tour | `PM7_GUIDED_TOUR.restart`, `.resume`, `.resumable`; a chapter start restarts the tour and then calls `O55.tour.go` on the chapter's first step (internal to the tour, guarded) |
 | Story | `PM_DEMO.clock` (play, pause, speed), `PM_DEMO.director.ensure`, `PM_DEMO.state.story`, `PM_DEMO.log`. No shortcut opens the Studio: Ctrl+Shift+D is left to Readiness & Doctor (Jared, 2026-10-14), and the engine's old unstyled director box it used to toggle is hidden, since this section replaces it |
+| Workspace › Title bar | The project box (option A): its state is what `PM_PROJECT_BOX.state` reads from `PM_WORK.project` (B5), so each state loads a small scene of the Studio's own into the projection (`PM_WORK.fixture.define`, then `PM_WORK.scenario`) and the badge, menu rows, status bar and tray agree; Unsaved opens a file in Home (`PM_HOME.open`) to type into, since Home's own unsaved tabs are the box's unsaved state. The long name adds `tastebook-mobile-companion` with `PM_PROJECT_BOX.add` and switches with `.select` (in the look on screen); Open the project menu is `PM_PROJECT_BOX.open`. The width is the Studio's `html[data-pmds-tbw]` with `--pmds-tbw` (`50-demo-studio.css` caps `.title-bar`), and `PM_TB_DENSITY.apply` runs the bar's own ladder, so the brand folds to Pip's mark and the box to its folder for real. Never stored |
 | Workspace | `PMW.NAMED`, `PMW.savedLayouts`, `PMW.applyNamed`, `PMW.resetLayout`; Agents open things on `PM_HOME.open` for the terminal, browser and file and `PM56_PORT.open(id, { by, background })` for the plan, Crew run and agent chat the assistant chat draws (D8, each in the background); `PMT.agent.open` and `.run` |
 | Chat | `PM56_PORT.demo`: `guided()` and `runGuided(id)` (the recorded examples by feature), `groups()` and `run(group, item)` (the moments), `families()`, `take`, `setTake`, `recipes`, `recipe`, `setRecipe`, `voices`, `voice`, `setVoice` (the takes), `reset()`, `showChat()`, `now()`, `avail()`. Each run brings the chat on screen on the Home page first (`PM_PAGES.go('dashboard')`, `PMW.chatCol.show()`), then clicks a hidden `<section class="demo-dialog"><button class="demo-trigger" data-action data-flow>` in `#pmOverlayRoot`, exactly as the lab gallery's buttons were clicked: modules chain `demo-trigger` and `reset-all`, two examples play their recording only from `.demo-dialog .demo-trigger`, and `recorded-play.js` stops the example already playing on that click. Without the chat on the page the section says so and its controls are unavailable |
 | Usage | `PMU.live.pause`, `.resume`, `.hour.play`, `.hour.back`; `PMU.charts.gallery`; `PM_PAGES.go('usage')` |
-| Notices | `PM_TITLEBAR_NOTIFY.demo(name)` when pm7-notifications' engine is on the page, else `window.toast` and `toast.important` with the same words; `PM_TITLEBAR_NOTIFY.clearAll` |
-| Looks | `PM7_SETTINGS_TOME.setChromeThemeFamily` and `.setChromeThemeMode` (the title-bar menu's path, saved to the Project), `PM_NIER.set`, `PM_NIER_CHIPS.popup`, `PM12_KIMI.setSettingFromHost('general.visual.reduce-animations')`, `O55.sound.setMuted`; with Liquid Glass on the page, `PM_LG.set` and `PM_LG.wall` (and `data-lg-demo-host` on `<html>` so Glass's own status button steps aside) |
-| Reset | Progress: `O55.tour.reset`, then onboarding as a new install in a Fresh computer. Workspace layout: `PMW.resetLayout`. Everything: every key this concept keeps in the browser (`pm…`, `o55…`, `widget_layout:`, `widget_presets:`, `home_workspace_layout:`, the 5.6 Pro chat demo's `pm56…` included, since that chat is ported in next, and the Studio's own place) and the terminal's saved-scrollback database, then a reload without the onboarding switches. Each size asks a second press within five seconds. |
+| Notices | `PM_TITLEBAR_NOTIFY.demo(name)` (on the page since pm7-notifications landed), else `window.toast` and `toast.important` with the same words; `PM_TITLEBAR_NOTIFY.clearAll` |
+| Pip | `PMLogo.svg` (every look's still mark, tile and tray faces, on each look's own ground; `PMLogo.EXPORT` for the grounds, `PMLogo.TRAY` for the faces' order), `PMLogo.mark` (the faces in the painted look), `PMLogo.MOODS`; a face goes to every live Pip: onboarding's stage (`O55.pipStage.of(host).feel`) and the chat's sheet hosts (`PM56_PIP.feel`); Mark only steps the Studio's title-bar width in until the brand folds (`PM_TB_DENSITY.apply`); `PM_PIP_LOADER.html`, `.mount`, `.busy`, `.stats`, `.hold` and `.held` (the motion is a take: the app picks it by context, L5); `O55.pipVoice` (`KITS`, `EVENTS`, `LOOPS`, `kitOf`, `play`, `loop`, `setTheme`), `O55.sound.play` for the window's own events, `O55.sound.pip.say` for Pip says; the loops stop when the Studio closes |
+| Activity | `PM_WORK.scenario(name)` over lane activity's fixture scenarios (`src/work/20-fixture.js`), `PM_WORK.counts` and `.feed` for the run bar and Right now; `PM7_WORK_UI.open(tab)`, `.confirmPlatform` (Stop all) and `.quit` (each the owner's own panel or dialog); `PM56_DEMO.openActivity('processes')` for the chat's Processes view (present only while a process of the thread runs or needs input, D4); `PM12_KIMI.setSettingFromHost('general.interaction.status-bar-words')` for Numbers or Words. The Start recipes: A busy afternoon also loads Busy; Quit with work running loads Busy and opens Quit |
+| Looks | `PM7_SETTINGS_TOME.setChromeThemeFamily` and `.setChromeThemeMode` (the title-bar menu's path, saved to the Project), `PM_NIER.set`, `PM_NIER_CHIPS.popup`, Pip's parts beside NieR Mode (`PM_PIP_PARTS.preset` and `.applyPreset` for Full, Quiet, Still and Plain, saved to the Project; Adjust Pip is `PM_PIP_EDITOR.popup`, lane chatpip's editor dialog, the one the wand's "Pip…" opens), `PM12_KIMI.setSettingFromHost('general.visual.reduce-animations')`, `O55.sound.setMuted`; with Liquid Glass on the page, `PM_LG.set` and `PM_LG.wall` (and `data-lg-demo-host` on `<html>` so Glass's own status button steps aside) |
+| Reset | Progress: `O55.tour.reset`, then onboarding as a new install in a Fresh computer. Workspace layout: `PMW.resetLayout`. Everything: every key this concept keeps in the browser (`pm…`, `o55…`, `widget_layout:`, `widget_presets:`, `home_workspace_layout:`, the 5.6 Pro chat demo's `pm56…` included, since that chat is ported in next, and the Studio's own place) and the terminal's saved-scrollback database, then a reload without the onboarding switches. Each size asks a second press within five seconds. The Pip and Title bar additions keep nothing of their own (lab picks, the title-bar width and the box's scenes live for the visit), and the Pip chat concept's `pip-chat:v1` is not carried into PMConcept7, so every key the page writes still matches `OWNED` (`91-demo-studio.js`). |
 | Switches | Builds the address from the page's own switches and reloads with it. |
 
 The Chat section (2026-10-22): one rail entry after Workspace, so the rail stays one list and search reaches every item.

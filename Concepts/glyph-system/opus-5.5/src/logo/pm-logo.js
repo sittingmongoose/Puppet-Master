@@ -1072,7 +1072,9 @@
   // a still mark as a data: URL (the favicon; a static file in the painted look's colours)
   function dataUrl(opts) { return 'data:image/svg+xml,' + encodeURIComponent(svg(Object.assign({ px: 32, decorative: false }, opts || {}, { motion: null }))); }
   // The favicon is the app icon (A1: one fixed tile, Basic Dark, static); the title-bar lane writes the <link rel="icon">.
-  function favicon(px) { return dataUrl({ look: 'basic-dark', form: 'tile', px: px || 32, title: 'Puppet Master' }); }
+  // tokens: {} keeps the frozen Basic Dark export palette: without it a page painted in Basic Dark sampled its live
+  // tokens, so the favicon's colours depended on the saved look (Astra M2-A1)
+  function favicon(px) { return dataUrl({ look: 'basic-dark', form: 'tile', px: px || 32, title: 'Puppet Master', tokens: {} }); }
 
   /* ------------------------------------------------------------ the clock */
   /* One clock for every Pip motion, so loaders on screen stay in phase and a live Pip can sway with them. It runs on

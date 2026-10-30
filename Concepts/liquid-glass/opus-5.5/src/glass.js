@@ -3295,7 +3295,15 @@
 
   /* Public: set({'data-lg': 'on', 'data-lg-tier': 'gpu'|'cpu', 'data-motion': 'reduced'|null}); wall(id|'look')
      chooses a wallpaper for every look; walls() lists them. Retired data-lg off/null requests normalize to on; surfaces: data-lg-surface on any element (see syncSurfaces). */
-  window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
+  /* syncScope(el): place the lenses of the strips in el now (read after the caller's layout, written before the paint);
+     the title bar's density ladder calls it on the page tabs after a fold the box's own width does not show (the brand
+     folding to its mark, a gap step), so their chip moves in the frame the tabs do (Astra W2 review M2). A drag holds it. */
+  function syncScope(el) {
+    if (!el || el.nodeType !== 1 || !el.isConnected) return;
+    if (dragHeld()) { heldScopes.push(el); flushHeldSoon(); return; }
+    dirtyScope(el); syncPending();
+  }
+  window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, syncScope: syncScope, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
     set: function (o) { for (var k in o) { if (k === 'data-lg') root.setAttribute(k, 'on'); else if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); },
     /* Decode and bake through the same bounded caches as visible sheets. Preparation changes no visible pixels. */
     /* opts.canRun (optional): asked again once the print is decoded, before its frost is encoded; false resolves false

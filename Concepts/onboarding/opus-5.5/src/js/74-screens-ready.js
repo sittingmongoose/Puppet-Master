@@ -9,11 +9,11 @@
      owns the menu's rows (PM_PROJECT_BOX, pm6-js-panels.js: one row renderer, the label stays the bare name). The Settings
      owner watches the menu and reloads that Project's settings. */
   O55.shell = {
-    selectProject(id, name) {
+    selectProject(id, name, info) {
       const box = window.PM_PROJECT_BOX;
       if (!box || !id) return false;
-      const item = box.add(id, { name: name || id });
-      if (name && item.getAttribute('data-project-name') !== name && name !== id) { item.setAttribute('data-project-name', name); box.row(item); }
+      /* info: { path, branch } from the draft, so the row and the hover tag carry the location line (B3) */
+      box.add(id, Object.assign({}, info || {}, { name: name || id }));
       window.PM_ACTIVE_PROJECT_ID = id;
       box.select(id);
       if (O55.sound && O55.sound.refresh) O55.sound.refresh('project');

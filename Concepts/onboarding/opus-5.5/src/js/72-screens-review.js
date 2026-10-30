@@ -224,7 +224,8 @@
     cm.projectId = id; cm.publishedVia = via;
     cm.receipts = cm.receipts || {};
     cm.receipts.project = via === 'fixture' ? 'fixture:project:' + id : cm.recovery.settled_effects.registry_publication.receipt_ref;
-    if (O55.shell && O55.shell.selectProject) O55.shell.selectProject(id, d.project_name);
+    /* the project box's row carries where its files are and, with an online repository, its branch (B3) */
+    if (O55.shell && O55.shell.selectProject) O55.shell.selectProject(id, d.project_name, { path: filesAt(S), branch: d.forge && d.forge !== 'none' ? d.repository_default_branch : '' });
     /* the new Project starts with the look chosen here: Settings loads a new Project's own settings as it is selected
        (after this task), so the look is saved into it once that load has run (its first write also makes the Project's
        own sound setting readable: the speaker stays silent until then) */
