@@ -255,9 +255,10 @@
     var esc = c.esc, icon = c.icon, S = window.PM56_SHELL, running = !rec.completed && !waiting && w.running;
     var badge = '<span class="orbit-core-icon' + (running ? ' is-live' : '') + '" data-k="coreicon:' + esc(live.uid) + '">'
       + (rec.completed ? statusMark(c, 'complete', 22) : waiting ? statusMark(c, 'waiting', 22) : icon(live.icon, 22)) + '</span>';
-    var pip = S && S.pmxPip ? S.pmxPip({ mood: rec.completed ? 'happy' : waiting ? 'wonder' : running ? 'working' : 'idle', size: 40, detail: true, cls: 'orbit-core-pip' }) : '';
+    var pip = S && S.pmxPip ? S.pmxPip({ mood: rec.completed ? 'happy' : waiting ? 'wonder' : running ? 'working' : 'idle', size: 40, detail: true, cls: 'orbit-core-pip', part: 'working-orbit' }) : '';
     if (!pip) return badge;
-    return '<span class="orbit-core-face' + (running ? ' is-live' : '') + '" data-k="coreface" data-pip="1">' + pip + badge + '</span>';
+    var dots = running && (!S.pmxPipOn || S.pmxPipOn('thinking-dots'));
+    return '<span class="orbit-core-face' + (dots ? ' is-live' : '') + '" data-k="coreface" data-pip="1">' + pip + badge + '</span>';
   }
   function renderStage(c, ui) {
     var esc = c.esc, icon = c.icon, w = c.ctx;

@@ -2450,7 +2450,8 @@
       if (performance.now() - refreshedAt > 250) S.refresh('synth');
       return !S.muted && !holds.size && hasGesture();
     }
-    const allowed = (where) => soundOn() && (where === 'app' ? part('app-voice', false) : part('setup-voice', true));
+    const partFor = (where) => (where === 'app' ? 'app-voice' : 'setup-voice');
+    const allowed = (where) => soundOn() && part(partFor(where), where === 'app' ? false : true);
     function voiceOf(look) {
       let lk = look;
       if (!lk) { try { lk = W.PMLogo ? W.PMLogo.look() : ''; } catch (_) { lk = ''; } }
@@ -2487,13 +2488,15 @@
       if (!script || !script.length) return false;
       const t0 = ctx.currentTime + 0.006, end = script.reduce((mx, s) => Math.max(mx, s.t + s.d * 2.2), 0) + 0.5;
       line = voice(ctx, chain(ctx, vk, name, o, end), t0, script, vk, o);
+      line.part = partFor(o.where);   // the part this line sounds under: it stops when that part goes off
       logEntry({ t: Math.round(performance.now()), event: 'pip:' + name, kit: vk, muted: false, played: true });
       return true;
     }
     function say(text, opts) {
       const o = opts || {}, vk = o.voice && VOX[o.voice] ? o.voice : voiceOf(o.look), t = timing(text, o, vk);
-      hush();
+      // a line that may not sound leaves the one speaking alone (an app chirp with app-voice off never cuts setup)
       if (!text || !allowed(o.where)) return Object.assign(t, { played: false });
+      hush();
       const V = VOX[vk];
       const played = speak(() => (V.kind === 'pulse' || V.kind === 'tick' ? blipScript(text, V, o.mood, t.cps) : textScript(text, V, o.mood, t.cps)), vk, 'say', o);
       return Object.assign(t, { played });
@@ -2512,7 +2515,9 @@
       KITS2[String(id)] = def; return true;
     }
     function play(event, opts) {
-      const o = opts || {}, kid = o.kit && KITS2[o.kit] ? String(o.kit) : voiceOf(o.look), k = KITS2[kid], fn = k && k.events[event];
+      const o = opts || {};
+      if (o.kit != null && !KITS2[o.kit]) return false;   // a kit asked for by name and not registered plays nothing
+      const kid = o.kit != null ? String(o.kit) : voiceOf(o.look), k = KITS2[kid], fn = k && k.events[event];
       if (typeof fn !== 'function' || holds.size) return false;
       if (o.motion && reducedMotion()) return false;
       const trim = k.trim && k.trim[event] != null ? +k.trim[event] : 0, int = o.intensity == null ? 1 : clamp(+o.intensity, 0, 1);
@@ -2550,7 +2555,7 @@
     function follow() {
       if (S.muted || holds.size) { hush(); stopMusic(0.2); return; }
       if (tune && !part('setup-music', true)) stopMusic(0.4);
-      if (line && !part('setup-voice', true) && !part('app-voice', false)) hush();
+      if (line && !part(line.part, line.part !== 'app-voice')) hush();
     }
     W.addEventListener('o55:sound', follow);
     W.addEventListener('pm7.pip-parts.changed', follow);
