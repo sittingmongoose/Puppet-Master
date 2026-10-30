@@ -132,3 +132,5 @@ Project badge priority (B5): waiting > blocked > working > change-modified > idl
 Part contract (lead adopted, 2026-10-29): `Plans/pip_parts.json`, 25 options, Full = 24 on (app-voice off). Binding rows = 464; Touch = 707 rows / 137 profiles; production wiring = 1269. All projects is local `ui.project_switcher.all_projects`, not the rail-only `cmd.panel.switch`.
 
 Review completion allocation: **G-031** owns the durable PM7 help-entry records (Pip, Project box, Processes, Question, Needs input, Completion delivery, Lost, ObservableWork, Operational Awareness, Backgrounded, Resources). Resources reuses the existing **gauge** glyph. A5 per-surface face tables and A3 complete tray precedence are now explicit in canon and the catalog; the original 22 status keys remain.
+
+S2 storage ruling, 2026-10-30: `general.visual.pip-parts` options/default and new Settings writes use the part LABELS from PM_PIP_PARTS (for example Sheet hosts). The 25 stable IDs and internal preset arrays remain in pip_parts.json with the one-to-one label map; compatibility reads may accept IDs.

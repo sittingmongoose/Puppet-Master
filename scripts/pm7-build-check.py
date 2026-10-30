@@ -69,7 +69,13 @@ def validate():
     settings = {row["id"]: row for row in inventory}
     require(len(settings) == len(inventory) == 1011, "Settings count differs from the two-row admission")
     pip = settings["general.visual.pip-parts"]
-    require(pip["options"] == ids and pip["default"] == parts["presets"]["Full"], "Settings and parts registry differ")
+    labels = [part["label"] for part in parts["parts"]]
+    label_by_id = {part["id"]: part["label"] for part in parts["parts"]}
+    require(len(set(labels)) == 25, "Pip labels do not map one-to-one to stable IDs")
+    require(pip["options"] == labels and pip["default"] == [label_by_id[part_id] for part_id in parts["presets"]["Full"]],
+            "Settings must store shared-registry labels, with IDs reserved for registry/API identity")
+    require(schema["$defs"]["PipPartsSettingValue"]["items"]["enum"] == labels,
+            "Pip setting value schema differs from the registry labels")
     require(settings["general.interaction.status-bar-words"]["default"] is False, "Numbers is not the default")
     glyphs = read("glyph_catalog.json")
     keys = {row["key"] for row in glyphs["status_marks"]}

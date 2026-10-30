@@ -4190,16 +4190,16 @@ canonical_text: >-
   ui.settings.pip_editor.close and ui.settings.pip_editor.replay are typed local actions that write
   nothing; replay is Play: the team works. Parts and preset edits use cmd.settings.transaction.preview then
   apply with the same value in all hosts, never pip-chat:v1. Editor focus is contained and returns to
-  opener; preview/exit timers/copies are released on close. The admitted option IDs/count are enumerated
-  below; Plans/pip_parts.json mirrors this contract and every GUI host reads the shared registry. S1–S5
-  editor presentation: five groups titled Where Pip appears, Faces, Motion, Look and Sound. Every part
-  shows the one registry’s label, one-line help, displayed Size and On/Off state; On N / total is derived
-  from the admitted 25-part list below, mirrored in Plans/pip_parts.json. A live small-team preview shows
-  the Project’s current parts/look; Play: the team works runs that same team from queued to working to
-  done, obeying Reduced Motion and sound parts. Preview/replay writes nothing; preset/part picks still use
-  the transaction pair. Help/size are presentation metadata from the shared Pip registry, not new settings
-  or real resource quotas. S1–S9 admitted registry: Plans/pip_parts.json is the machine mirror of this
-  accepted list. Where Pip appears: sheet-hosts, status-faces, working-orbit, plans, wand-menu,
+  opener; preview/exit timers/copies are released on close. The admitted stable part IDs/count are
+  enumerated below; Plans/pip_parts.json mirrors this contract and every GUI host reads the shared
+  registry. S1–S5 editor presentation: five groups titled Where Pip appears, Faces, Motion, Look and Sound.
+  Every part shows the one registry’s label, one-line help, displayed Size and On/Off state; On N / total
+  is derived from the admitted 25-part list below, mirrored in Plans/pip_parts.json. A live small-team
+  preview shows the Project’s current parts/look; Play: the team works runs that same team from queued to
+  working to done, obeying Reduced Motion and sound parts. Preview/replay writes nothing; preset/part picks
+  still use the transaction pair. Help/size are presentation metadata from the shared Pip registry, not new
+  settings or real resource quotas. S1–S9 admitted registry: Plans/pip_parts.json is the machine mirror of
+  this accepted list. Where Pip appears: sheet-hosts, status-faces, working-orbit, plans, wand-menu,
   empty-lists; Faces: state-faces, watches, wonders-while-typing, cheers, oops, gaze; Motion: blinks,
   sway-and-physics, face-transitions, thinking-dots, idle-life; Look: seat-colours, role-props, strings,
   cheeks-and-shine, setup-world-life; Sound: setup-voice, app-voice, setup-music. All parts default on
@@ -4211,7 +4211,14 @@ canonical_text: >-
   working-orbit, plans, wand-menu, empty-lists, state-faces, watches, wonders-while-typing, cheers, oops,
   gaze, seat-colours, role-props, strings, cheeks-and-shine, setup-voice, setup-music]. Plain = []. Presets
   are exact values of the one multiselect; the meter always reads On N / 25. No Classic,
-  brand/tray/icon/loader/notification part or second primitive exists.
+  brand/tray/icon/loader/notification part or second primitive exists. S2/S3 (lead ruling 2026-10-30):
+  general.visual.pip-parts stores the shared registry’s part LABELS, such as Sheet hosts, in
+  options/default and every new Settings transaction, like general.visual.nier-parts. The 25 stable IDs and
+  ID-based presets in Plans/pip_parts.json remain registry/API identity; serialize each selected ID through
+  that same one-to-one id/label table before preview/apply. Compatibility reads may accept prior ID arrays
+  through the table, but new writes use labels. PipPartsSettingValue in
+  Plans/pm7_build_contracts.schema.json pins this label-valued multiselect; no second option table or store
+  is introduced.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -4224,6 +4231,8 @@ unblocks: []
 acceptance_criteria:
 - The accepted list/registry contains exactly 25 part IDs in five named groups; Full is 24 on with app-voice
   off and all four presets match exactly.
+- 'S2: Settings options/default and new writes contain the exact registry labels; the one-to-one map preserves
+  all 25 IDs/internal presets, and compatibility ID reads never become ID writes.'
 - Every part has one registry label/help/displayed Size; meter is On N / 25 and the live small-team replay
   runs queued→working→done.
 - Settings/wand/titlebar open one editor; local open/close/replay write nothing and restore focus/teardown.

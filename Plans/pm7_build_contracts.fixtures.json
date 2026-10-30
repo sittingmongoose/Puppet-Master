@@ -283,6 +283,68 @@
         "return_focus_id": "statusbar"
       },
       "valid": false
+    },
+    {
+      "name": "pip_setting_writes_registry_labels",
+      "definition": "PipPartsSettingValue",
+      "instance": [
+        "Sheet hosts",
+        "Status faces in lists",
+        "Working orbit",
+        "Plans",
+        "Wand menu",
+        "Empty lists",
+        "State faces",
+        "Watches",
+        "Wonders while typing",
+        "Cheers",
+        "Oops",
+        "Gaze",
+        "Blinks",
+        "Sway and physics",
+        "Blinks between faces",
+        "Thinking dots",
+        "Idle life",
+        "Seat colours",
+        "Role props",
+        "Strings",
+        "Cheeks and shine",
+        "Setup world life",
+        "Pip talks in setup",
+        "Setup music"
+      ],
+      "valid": true
+    },
+    {
+      "name": "pip_setting_ids_are_read_compatibility_not_writes",
+      "definition": "PipPartsSettingValue",
+      "instance": [
+        "sheet-hosts",
+        "status-faces",
+        "working-orbit",
+        "plans",
+        "wand-menu",
+        "empty-lists",
+        "state-faces",
+        "watches",
+        "wonders-while-typing",
+        "cheers",
+        "oops",
+        "gaze",
+        "blinks",
+        "sway-and-physics",
+        "face-transitions",
+        "thinking-dots",
+        "idle-life",
+        "seat-colours",
+        "role-props",
+        "strings",
+        "cheeks-and-shine",
+        "setup-world-life",
+        "setup-voice",
+        "setup-music"
+      ],
+      "valid": false
     }
   ],
   "semantic_cases": [

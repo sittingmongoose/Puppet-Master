@@ -1843,6 +1843,42 @@
           }
         }
       ]
+    },
+    "PipPartsSettingValue": {
+      "type": "array",
+      "maxItems": 25,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "Sheet hosts",
+          "Status faces in lists",
+          "Working orbit",
+          "Plans",
+          "Wand menu",
+          "Empty lists",
+          "State faces",
+          "Watches",
+          "Wonders while typing",
+          "Cheers",
+          "Oops",
+          "Gaze",
+          "Blinks",
+          "Sway and physics",
+          "Blinks between faces",
+          "Thinking dots",
+          "Idle life",
+          "Seat colours",
+          "Role props",
+          "Strings",
+          "Cheeks and shine",
+          "Setup world life",
+          "Pip talks in setup",
+          "Pip chirps in the app",
+          "Setup music"
+        ]
+      },
+      "description": "S2: canonical Project Settings writes use registry labels. Stable part IDs remain registry/API identity; compatibility reads may map IDs to labels."
     }
   }
 }

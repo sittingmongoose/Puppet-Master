@@ -96,3 +96,9 @@ Foundation final API additions at f1e4ef8c38 introduce no IDs: canSendInput / an
 ## Settings fixture reference closure
 
 The e5d3fb2beb full aggregate passed new-contracts and cleared the 26 stored-union reference errors, but exposed one Touch fixture-pin mismatch from N2’s descriptive edit. Refreshed Touch’s one source_sha256 after proving all command contracts/dispositions and every fixture field except the All Settings purpose are unchanged. Standalone Touch and canon pass; no native evidence was promoted. The concurrent dry attempt was stopped/superseded and is not claimed complete. Final checks run on the committed one-line correction and regenerated index.
+
+Step4 steering received (B5, lead 2026-10-30): Unsaved means dirty Home-tab buffers in the active Project, with UI word “Unsaved changes”; Home autosaves layout. Lead explicitly assigns the canonical/binding/fixture wording alignment to Step4. Captured; frozen validation source is unchanged.
+
+## Immediate labels handoff
+
+Final S2 ruling applied ahead of Step4: Pip options/default persist actual shared-registry labels (25/24), while IDs and ID presets stay in pip_parts.json. All 25 mappings equal PM_PIP_PARTS at f1e4ef8c38. Fifteen schema cases now test label writes and reject ID writes; PM7, canon, Touch and shard checks pass. Only this row’s two arrays changed in inventory. Lead will merge this head immediately for chatpip’s Settings row. Full/dry attribution at b22 has zero Plan blockers /zero infrastructure results; dry exit2 is the inventory-page guard explicitly deferred by lead to merged-GUI Step4. The generated page probe was restored, no Concepts edit is committed.
