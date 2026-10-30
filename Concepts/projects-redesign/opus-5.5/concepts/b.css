@@ -1,0 +1,789 @@
+/* Projects concepts (Opus 5.5): concept B, "Ledger".
+
+   Built on Usage's own parts (the .pmu-shell grid, .pmu-rail, .pmu-stage and .pmu-stagehead, .pmu-ctlbtn, .pmu-iconbtn,
+   .pmu-card, .pmu-facts, .pmu-inspector, .pmu-textbtn) and Home's .pmw-act. Usage's rules are anchored on
+   :is(#panel-usage, [data-pmu-host]) and so carry an id's weight; every rule here starts at the concept's own shell as
+   #pjxbShell:not(#z), which outranks them without !important. This file adds only what a ledger needs: the views rail's
+   chosen row and safety summary, the head's search, the ledger grid and how it folds, the inline fix line, the
+   inspector beside the ledger (and Continue setup in it), the New Project sheet, the empty states, the title bar's
+   notes moved to the ledger's corner, and each look's own voice.
+
+   Lints kept: no :has(), no border-left of 2 px or more, no capsule corners (controls take min(radius, 8px)), no viewport
+   @media (container queries on pjx, pjxs and pjxl only), type never under 11 px, colour only for status, no hover lift
+   or glow (PMH draws hover). */
+
+#pjxbShell:not(#z) [hidden] { display: none !important; }
+/* the title bar's notes (Settings writes, run results) drop over the head while Projects shows: they take no pointer, so
+   a click on Sort, search or New Project goes through, as Usage does for its own head */
+html[data-pjx="b"] #rsStage, html[data-pjx="b"] #rsStage .rs-card { pointer-events: none !important; }
+/* and they sit at the bottom right of the ledger, not over the head (b.js watchNotices measures; Usage does the same) */
+html[data-pjx="b"] body.pjx-page-active #rsStage { translate: var(--pjxb-rs-x, 0px) var(--pjxb-rs-y, 0px); }
+html[data-pjx="b"] body.pjx-page-active #rsStage.pjxb-rs-measure { translate: none !important; transition: none !important; }
+#rsStage.pjxb-rs-still { transition: none !important; }
+
+/* ------------------------------------------------------------------ the rail: views of the one list */
+#pjxbShell:not(#z) .pjxb-rail { width: 188px; gap: 8px; padding: 14px 8px 12px; }
+#pjxbShell:not(#z) .pmu-brand { justify-content: flex-start; align-items: baseline; gap: 8px; }
+#pjxbShell:not(#z) .pmu-brand h1 { margin: 2px 0 4px 8px; }
+#pjxbShell:not(#z) .pjxb-brandcount { font-size: 12px; font-weight: 600; color: var(--pmu-ink-3); font-variant-numeric: tabular-nums; }
+#pjxbShell:not(#z) .pjxb-nav { gap: 1px; }
+#pjxbShell:not(#z) .pjxb-navsep { display: block; height: 1px; margin: 5px 8px; background: var(--pmu-rule-2, var(--pmu-rule)); }
+#pjxbShell:not(#z) .pjxb-nav .pmu-navbtn { height: 32px; border-radius: var(--pm-switch-r, 8px); }
+/* counts: plain numerals in their own column; only Need you takes the warn ink, and only when something needs you */
+#pjxbShell:not(#z) .pjxb-count { min-width: 2ch; text-align: right; color: var(--pmu-ink-3); font-weight: 550; }
+#pjxbShell:not(#z) .pjxb-count.is-warn { font-weight: 650; }
+/* the chosen view: the look's switcher material, as Usage's own nav wears it (Basic a tinted chip with an accent hairline,
+   Friendly the mint pebble, Retro reverse video, NieR the ink bar; Glass the clear lens, below). Liquid Glass's switcher
+   clears every .pmu-navbtn's fill with !important (its lens draws Usage's chosen room, and only #pmuNav joins the lens),
+   so the chip is restated here with !important at a higher weight. */
+#pjxbShell:not(#z) .pjxb-nav .pmu-navbtn:not(.active):hover { background: var(--pm-switch-hover, var(--pmu-row-hover)) !important; }
+#pjxbShell:not(#z) .pjxb-nav .pmu-navbtn.active {
+  background: linear-gradient(var(--pm-switch-fill, var(--pmu-row-sel)), var(--pm-switch-fill, var(--pmu-row-sel))), linear-gradient(var(--pm-switch-body, transparent), var(--pm-switch-body, transparent)) !important;
+  box-shadow: inset 0 0 0 1px var(--pm-switch-line, transparent), inset 0 1px 0 var(--pm-switch-top, transparent), var(--pm-switch-shadow, 0 0 0 transparent) !important;
+  color: var(--pm-switch-ink-on, var(--pmu-ink)) !important; }
+#pjxbShell:not(#z) .pjxb-nav .pmu-navbtn.active .pmu-navicon { color: var(--pm-switch-mark-on, var(--pm-switch-mark, var(--pmu-accent))) !important; }
+#pjxbShell:not(#z) .pjxb-nav .pmu-navbtn.active .pjxb-count:not(.is-warn) { color: var(--pm-switch-ink-on, var(--pmu-ink-2)) !important; }
+#pjxbShell:not(#z) .pjxb-nav .pmu-navbtn:not(.active) .pjxb-count:not(.is-warn) { color: var(--pmu-ink-3) !important; }
+#pjxbShell:not(#z) .pjxb-nav .pmu-navbtn .pjxb-count.is-warn { color: var(--pmu-ink-warn) !important; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #pjxbShell:not(#z) .pjxb-nav .pmu-navbtn.active .pjxb-count { color: var(--pm-switch-ink-on) !important; }
+/* NieR turns the chosen row's count into a paper cell with ink numerals (Usage's cursor part) */
+html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-nav .pmu-navbtn.active .pjxb-count { color: var(--o55-nier-ink) !important; }
+/* NieR's eyebrow over the list says which view of how many, as Usage's says which room */
+html[data-o55-nier-parts~="headers"] #pjxbShell:not(#z) .pjxb-nav::before { content: "VIEW 01/07"; }
+html[data-o55-nier-parts~="headers"] #pjxbShell:not(#z) .pjxb-nav[data-view="attention"]::before { content: "VIEW 02/07"; }
+html[data-o55-nier-parts~="headers"] #pjxbShell:not(#z) .pjxb-nav[data-view="working"]::before { content: "VIEW 03/07"; }
+html[data-o55-nier-parts~="headers"] #pjxbShell:not(#z) .pjxb-nav[data-view="local"]::before { content: "VIEW 04/07"; }
+html[data-o55-nier-parts~="headers"] #pjxbShell:not(#z) .pjxb-nav[data-view="device"]::before { content: "VIEW 05/07"; }
+html[data-o55-nier-parts~="headers"] #pjxbShell:not(#z) .pjxb-nav[data-view="unprotected"]::before { content: "VIEW 06/07"; }
+html[data-o55-nier-parts~="headers"] #pjxbShell:not(#z) .pjxb-nav[data-view="archived"]::before { content: "VIEW 07/07"; }
+
+/* the foot of the rail: how the listed projects are kept safe, in three lines */
+#pjxbShell:not(#z) .pjxb-railfoot { margin-top: auto; display: grid; gap: 2px; padding: 10px 8px 0; border-top: 1px solid var(--pmu-rule-2, var(--pmu-rule)); }
+#pjxbShell:not(#z) .pjxb-railfoot:empty { display: none; }
+#pjxbShell:not(#z) .pjxb-rf-head { margin-bottom: 4px; font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-rf-row { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; align-items: center; gap: 6px; height: 22px; font-size: 12px; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-rf-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-rf-n { font-size: 11.5px; color: var(--pmu-ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-rf-n b { color: var(--pmu-ink); font-weight: 650; }
+#pjxbShell:not(#z) .pjxb-rf-row[data-tone="attention"] .pjxb-rf-n b { color: var(--pmu-ink-warn); }
+
+/* the rail folds: icons with their hover labels, then away; the view's title becomes the View menu (b.js) */
+#pjxbShell:not(#z) .pjxb-viewbtn { display: none; }
+@container pjx (max-width: 720px) {
+  #pjxbShell:not(#z) .pjxb-rail { width: 52px; padding: 12px 6px; }
+  #pjxbShell:not(#z) .pjxb-rail :is(.pmu-brand, .pjxb-railfoot, .pmu-navtext, .pjxb-count) { display: none; }
+  #pjxbShell:not(#z) .pjxb-nav .pmu-navbtn { justify-content: center; padding: 0; height: 36px; }
+  #pjxbShell:not(#z) .pjxb-navsep { margin: 5px 4px; }
+}
+@container pjx (max-width: 500px) {
+  #pjxbShell:not(#z) { grid-template-columns: minmax(0, 1fr); }
+  #pjxbShell:not(#z) .pjxb-rail { display: none; }
+  /* the title, as a button: the view's name and a chevron, in the title's own type */
+  #pjxbShell:not(#z) .pjxb-viewbtn { display: inline-flex; }
+  #pjxbShell:not(#z) .pjxb-titleblock { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+}
+#pjxbShell:not(#z) .pjxb-viewbtn { align-items: center; gap: 4px; flex: 0 1 auto; min-width: 0; height: 32px; margin-left: -8px; padding: 0 6px 0 8px; border: 0; cursor: pointer;
+  border-radius: min(var(--pmu-r-card, 8px), 8px); background: transparent; color: var(--pmu-ink); font: inherit; font-size: 16.5px; font-weight: 640; letter-spacing: -.02em; }
+#pjxbShell:not(#z) .pjxb-viewbtn:hover { background: var(--pmu-row-hover); }
+#pjxbShell:not(#z) .pjxb-viewbtn:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 0; }
+#pjxbShell:not(#z) .pjxb-viewtext { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-viewchev, #pjxbShell:not(#z) .pjxb-viewchev svg { display: inline-grid; width: 14px; height: 14px; flex: none; color: var(--pmu-ink-3); }
+
+/* ------------------------------------------------------------------ the head: Usage's one line */
+#pjxbShell:not(#z) .pjxb-stage { container: pjxs / inline-size; }
+#pjxbShell:not(#z) .pjxb-head { gap: 10px; padding: 0 12px 0 18px; }
+#pjxbShell:not(#z) .pjxb-title { margin: 0; min-width: 72px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; outline: none;
+  font-size: 18px; font-weight: 640; line-height: 22px; letter-spacing: -.015em; color: var(--pmu-ink); }
+#pjxbShell:not(#z) .pjxb-head .pmu-roomdesc { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+#pjxbShell:not(#z) .pjxb-ctl { gap: 6px; }
+#pjxbShell:not(#z) .pjxb-ctl .pmu-ctlbtn .pmu-ctltext { max-width: 150px; }
+#pjxbShell:not(#z) .pjxb-search { display: inline-flex; align-items: center; gap: 6px; width: 180px; height: 30px; box-sizing: border-box; padding: 0 8px; cursor: text;
+  border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 9px), 9px); background: var(--pmu-card-2, transparent); color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-search:focus-within { border-color: color-mix(in srgb, var(--pmu-accent) 60%, var(--pmu-rule)); outline: 2px solid color-mix(in srgb, var(--pmu-accent) 30%, transparent); outline-offset: 0; }
+#pjxbShell:not(#z) .pjxb-searchico { display: inline-grid; place-items: center; width: 15px; height: 15px; flex: none; }
+#pjxbShell:not(#z) .pjxb-searchico svg { width: 15px; height: 15px; }
+#pjxbShell:not(#z) .pjxb-searchin { flex: 1 1 auto; min-width: 0; height: 100%; padding: 0; border: 0; background: transparent; color: var(--pmu-ink); font: inherit; font-size: 12.5px; outline: none; }
+#pjxbShell:not(#z) .pjxb-searchin::placeholder { color: var(--pmu-ink-3); opacity: 1; }
+#pjxbShell:not(#z) .pjxb-searchbtn { display: none; }
+#pjxbShell:not(#z) .pmu-iconbtn.spinning svg { animation: pjxb-spin 650ms cubic-bezier(.3, 1.2, .5, 1) 1; }
+@keyframes pjxb-spin { to { transform: rotate(360deg); } }
+html[data-theme^="retro"] #pjxbShell:not(#z) .pmu-iconbtn.spinning svg, html[data-o55-nier="on"] #pjxbShell:not(#z) .pmu-iconbtn.spinning svg { animation-timing-function: steps(4, end); }
+
+/* the page's one primary button: Home's .pmw-act.is-primary, at the head's 30 px */
+#pjxbShell:not(#z) .pjxb-new { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px 0 10px; flex: none; white-space: nowrap; cursor: pointer;
+  border: 1px solid transparent; border-radius: min(var(--pmu-r-card, 8px), 8px); background: var(--pmw-accent, var(--accent-primary)); color: var(--pmw-surface, #111);
+  font: inherit; font-size: 12.5px; font-weight: 640; box-shadow: none; }
+@supports (color: color(from red srgb-linear r g b)) {
+  #pjxbShell:not(#z) .pjxb-new, #pjxbShell:not(#z) .pjxb-sheet .pjx-btn.is-primary { color: color(from var(--pmw-accent, var(--accent-primary)) srgb-linear clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1)); }
+}
+#pjxbShell:not(#z) .pjxb-new:hover { background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 88%, #fff); }
+#pjxbShell:not(#z) .pjxb-new:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 2px; }
+#pjxbShell:not(#z) .pjxb-bico { display: inline-grid; place-items: center; width: 15px; height: 15px; flex: none; }
+#pjxbShell:not(#z) .pjxb-bico svg { width: 15px; height: 15px; }
+
+/* the head folds by the stage's width, never to a bare menu icon: the description first (b.js fits it whole or drops
+   it), then Sort says "Sort" instead of its order, then search becomes the universal search button, and on the
+   narrowest stage the head takes two lines (the title and New Project, then the tools) */
+#pjxbShell:not(#z) .pjxb-sortshort { display: none; }
+@container pjxs (max-width: 760px) {
+  #pjxbShell:not(#z) .pjxb-search { width: 150px; }
+}
+@container pjxs (max-width: 640px) {
+  #pjxbShell:not(#z) .pjxb-head .pmu-roomdesc { display: none; }
+  #pjxbShell:not(#z) .pjxb-ctl { gap: 4px; }
+}
+@container pjxs (max-width: 600px) {
+  #pjxbShell:not(#z) .pjxb-sortlong { display: none; }
+  #pjxbShell:not(#z) .pjxb-sortshort { display: inline; }
+}
+@container pjxs (max-width: 560px) {
+  #pjxbShell:not(#z) .pjxb-search { display: none; }
+  #pjxbShell:not(#z) .pjxb-searchbtn { display: inline-grid; }
+  #pjxbShell:not(#z) .pjxb-head[data-searching] .pjxb-searchbtn { color: var(--pmu-accent); }
+  /* search, when opened, lies over the title for as long as it is used */
+  #pjxbShell:not(#z) .pjxb-head[data-search-open] .pjxb-search { display: inline-flex; position: absolute; left: 12px; right: 12px; top: 10px; width: auto; height: 32px; z-index: 3;
+    background: var(--pmu-card); }
+  #pjxbShell:not(#z) .pjxb-head { padding-left: 14px; }
+  #pjxbShell:not(#z) .pjxb-title { font-size: 16.5px; letter-spacing: -.02em; }
+}
+#pjxbShell:not(#z) .pjxb-hbreak { display: none; }
+@container pjxs (max-width: 420px) {
+  #pjxbShell:not(#z) .pjxb-head { flex-wrap: wrap; height: auto; min-height: 52px; padding: 9px 8px 9px 12px; row-gap: 8px; column-gap: 6px; }
+  #pjxbShell:not(#z) .pjxb-ctl { display: contents; }
+  #pjxbShell:not(#z) .pjxb-viewbtn { order: 1; flex: 1 1 0; margin-right: auto; }
+  #pjxbShell:not(#z) .pjxb-titleblock { order: 2; }
+  #pjxbShell:not(#z) .pjxb-new { order: 3; }
+  #pjxbShell:not(#z) .pjxb-hbreak { display: block; order: 4; flex: 0 0 100%; height: 0; }
+  #pjxbShell:not(#z) .pjxb-search { display: inline-flex; order: 5; flex: 1 1 0; min-width: 0; width: auto; position: static; }
+  #pjxbShell:not(#z) .pjxb-searchbtn { display: none; }
+  #pjxbShell:not(#z) .pjxb-sortbtn { order: 6; }
+  #pjxbShell:not(#z) .pjxb-refresh { order: 7; }
+}
+/* the narrowest: the title (the View menu, which takes Sort and Rows too) and search, then New Project and Refresh */
+@container pjxs (max-width: 300px) {
+  #pjxbShell:not(#z) .pjxb-head { padding: 8px 6px 8px 10px; }
+  #pjxbShell:not(#z) .pjxb-sortbtn, #pjxbShell:not(#z) .pjxb-search { display: none; }
+  #pjxbShell:not(#z) .pjxb-searchbtn { display: inline-grid; order: 2; }
+  #pjxbShell:not(#z) .pjxb-new { order: 5; flex: 1 1 auto; justify-content: center; }
+  #pjxbShell:not(#z) .pjxb-refresh { order: 6; }
+  #pjxbShell:not(#z) .pjxb-head[data-search-open] .pjxb-search { display: inline-flex; position: absolute; left: 8px; right: 8px; top: 8px; width: auto; height: 32px; z-index: 3; background: var(--pmu-card); }
+}
+
+/* ------------------------------------------------------------------ the body: the ledger, and the inspector beside it */
+#pjxbShell:not(#z) .pjxb-body { position: relative; flex: 1 1 auto; min-height: 0; display: flex; }
+#pjxbShell:not(#z) .pjxb-main { position: relative; flex: 1 1 auto; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 8px; padding: 12px 8px 12px;
+  container: pjxl / inline-size; }
+#pjxbShell:not(#z) .pjxb-top:empty { display: none; }
+#pjxbShell:not(#z) .pjxb-top { flex: none; }
+#pjxbShell:not(#z) .pjxb-main[data-enter] .pjxb-rows { animation: pjxb-fade 200ms var(--pmu-ease-out, ease-out) both; }
+@keyframes pjxb-fade { from { opacity: 0; transform: translateY(4px); } }
+html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-main[data-enter] .pjxb-rows, html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-main[data-enter] .pjxb-rows { animation-timing-function: steps(3, end); }
+
+/* the plate: one Usage card holding the ledger; its rows scroll inside it under a still column header */
+#pjxbShell:not(#z) .pjxb-plate { flex: 0 1 auto; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+#pjxbShell:not(#z) .pjxb-plate::before { display: none; }
+#pjxbShell:not(#z) .pjxb-grid { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; outline: none; }
+#pjxbShell:not(#z) .pjxb-colhead { flex: none; overflow: hidden; scrollbar-gutter: stable; border-bottom: var(--pmu-bw, 1px) solid var(--pmu-rule); }
+#pjxbShell:not(#z) .pjxb-rows { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; padding: 4px 0 6px; }
+#pjxbShell:not(#z) .pjxb-foot { flex: none; margin: 0; padding: 7px 14px; font-size: 12px; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-footcount { font-variant-numeric: tabular-nums; }
+#pjxbShell:not(#z) .pjxb-keys { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; overflow: hidden; }
+#pjxbShell:not(#z) .pjxb-keys kbd { min-width: 16px; height: 18px; display: inline-grid; place-items: center; padding: 0 4px; box-sizing: border-box; border: 1px solid var(--pmu-rule); border-bottom-width: 2px;
+  border-radius: min(var(--pmu-r-card, 4px), 4px); font: 600 11px/1 var(--pmu-mono); color: var(--pmu-ink-2); background: var(--pmu-card-2, transparent); }
+
+/* ---- the ledger grid. Every row (and the header) is a grid on the same columns; what each width shows is set here
+   by the ledger's own width (pjxl), in four steps: everything; without Opened; Where folded under the name; History,
+   Online copy and Backup folded into one Kept safe column of marks; and, narrowest, a two-line entry. ---- */
+#pjxbShell:not(#z) .pjxb-plate {
+  --pjxb-act: 128px;
+  --pjxb-cols: minmax(150px, 1.5fr) minmax(130px, 1.1fr) minmax(130px, 1fr) 108px 118px 104px 84px var(--pjxb-act);
+  --pjxb-areas: "name status where hist onl bak opened act" "sub status where hist onl bak opened act" "line line line line line line line line";
+  --pjxb-areas-h: "name status where hist onl bak opened act";
+}
+#pjxbShell:not(#z) .pjxb-plate[data-view="archived"] { --pjxb-act: 152px; }
+#pjxbShell:not(#z) .pjxb-row { position: relative; display: grid; grid-template-columns: var(--pjxb-cols); grid-template-areas: var(--pjxb-areas); column-gap: 10px; row-gap: 0; align-items: center;
+  min-height: 52px; box-sizing: border-box; margin: 0 3px; padding: 8px 6px 8px 9px; border-radius: min(var(--pmu-r-card, 8px), 8px); outline: none; color: var(--pmu-ink); }
+#pjxbShell:not(#z) .pjxb-hrow { grid-template-areas: var(--pjxb-areas-h); min-height: 34px; padding-top: 0; padding-bottom: 0; }
+#pjxbShell:not(#z) .pjxb-c { min-width: 0; }
+#pjxbShell:not(#z) .pjxb-c-name { grid-area: name; display: flex; align-items: center; gap: 10px; }
+#pjxbShell:not(#z) .pjxb-c-sub { grid-area: sub; display: flex; align-items: baseline; gap: 10px; padding-left: 26px; margin-top: 1px; }
+#pjxbShell:not(#z) .pjxb-c-status { grid-area: status; }
+#pjxbShell:not(#z) .pjxb-c-where { grid-area: where; }
+#pjxbShell:not(#z) .pjxb-c-hist { grid-area: hist; }
+#pjxbShell:not(#z) .pjxb-c-onl { grid-area: onl; }
+#pjxbShell:not(#z) .pjxb-c-bak { grid-area: bak; }
+#pjxbShell:not(#z) .pjxb-c-safe { grid-area: safe; display: none; }
+#pjxbShell:not(#z) .pjxb-c-opened { grid-area: opened; }
+#pjxbShell:not(#z) .pjxb-c-act { grid-area: act; display: flex; justify-content: flex-end; align-items: center; gap: 4px; }
+#pjxbShell:not(#z) .pjxb-c-line { grid-area: line; }
+#pjxbShell:not(#z) .pjxb-hrow .pjxb-c-safe { display: none; }
+
+/* rows: a hairline between them, a quiet fill under the pointer, the chosen row in the look's material */
+#pjxbShell:not(#z) .pjxb-rows > .pjxb-row + .pjxb-row::before { content: ""; position: absolute; left: 8px; right: 8px; top: 0; height: 1px; background: var(--pmu-rule-2, var(--pmu-rule)); pointer-events: none; }
+#pjxbShell:not(#z) .pjxb-rows > .pjxb-row:is(.is-sel, :hover)::before, #pjxbShell:not(#z) .pjxb-rows > .pjxb-row:is(.is-sel, :hover) + .pjxb-row::before { opacity: 0; }
+#pjxbShell:not(#z) .pjxb-rows > .pjxb-row { cursor: default; }
+#pjxbShell:not(#z) .pjxb-rows > .pjxb-row:not(.is-sel):hover { background: var(--pm-switch-hover, var(--pmu-row-hover)); }
+#pjxbShell:not(#z) .pjxb-rows > .pjxb-row:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: -2px; }
+#pjxbShell:not(#z) .pjxb-rows > .pjxb-row.is-sel {
+  background: linear-gradient(var(--pm-switch-fill, var(--pmu-row-sel)), var(--pm-switch-fill, var(--pmu-row-sel))), linear-gradient(var(--pm-switch-body, transparent), var(--pm-switch-body, transparent));
+  box-shadow: inset 0 0 0 1px var(--pm-switch-line, transparent), inset 0 1px 0 var(--pm-switch-top, transparent); border-radius: var(--pm-switch-r, 8px); }
+/* reverse video (Retro) and the ink bar (NieR): every word and mark on the chosen row takes the chip's own ink */
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #pjxbShell:not(#z) .pjxb-rows > .pjxb-row.is-sel { color: var(--pm-switch-ink-on); }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #pjxbShell:not(#z) .pjxb-rows > .pjxb-row.is-sel :is(.pjxb-c-name, .pjxb-c-sub, .pjxb-c-status, .pjxb-c-where, .pjxb-c-hist, .pjxb-c-onl, .pjxb-c-bak, .pjxb-c-opened, .pjxb-c-safe) :is(span, b, svg) {
+  color: var(--pm-switch-ink-on) !important; --nx-ink: var(--pm-switch-ink-on) !important; }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #pjxbShell:not(#z) .pjxb-rows > .pjxb-row.is-sel .pjxb-rbtn { color: var(--pm-switch-ink-on); border-color: color-mix(in srgb, var(--pm-switch-ink-on) 60%, transparent); }
+
+/* the cells */
+#pjxbShell:not(#z) .pjxb-glyph { display: inline-grid; place-items: center; width: 16px; height: 16px; flex: none; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-glyph svg { width: 16px; height: 16px; }
+#pjxbShell:not(#z) .pjxb-l1 { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+#pjxbShell:not(#z) .pjxb-c-name > .pjxb-l1 { flex: 1 1 auto; }
+/* the name keeps its whole width first; when it was opened takes what is left of the line (a list's timestamp, at the
+   end of the name's line once the Opened column has folded away) */
+#pjxbShell:not(#z) .pjxb-name { flex: 0 0 auto; max-width: 100%; }
+#pjxbShell:not(#z) .pjxb-openedin { display: none; flex: 0 1 auto; min-width: 0; margin-left: auto; padding-left: 8px; align-items: center; gap: 4px; align-self: center; white-space: nowrap;
+  font-size: 12px; line-height: 16px; font-weight: 500; color: var(--pmu-ink-3); font-variant-numeric: tabular-nums; }
+#pjxbShell:not(#z) .pjxb-oico, #pjxbShell:not(#z) .pjxb-oico svg { display: inline-grid; width: 12px; height: 12px; flex: none; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-otext { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+#pjxbShell:not(#z) :is(.pjxb-openedin, .pjxb-actline).is-cut { visibility: hidden; }
+#pjxbShell:not(#z) .pjxb-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13.5px; line-height: 19px; font-weight: 640; letter-spacing: -.005em; }
+#pjxbShell:not(#z) .pjxb-now { display: inline-flex; align-items: center; gap: 4px; flex: none; font-size: 11.5px; font-weight: 600; color: var(--pmu-ink-2); white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-now svg { width: 12px; height: 12px; color: var(--pmu-accent); }
+#pjxbShell:not(#z) .pjxb-c-sub { font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-actline { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-opphase { display: none; flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-path { font-family: var(--pm-font-code, var(--pmu-mono)); font-size: 11.5px; letter-spacing: 0; color: var(--pmu-ink-3); white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-two { display: flex; flex-direction: column; justify-content: center; min-width: 0; gap: 1px; }
+#pjxbShell:not(#z) .pjxb-two > * { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-st { font-size: 12.5px; }
+#pjxbShell:not(#z) .pjxb-l2 { font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-stsub { padding-left: 20px; }
+#pjxbShell:not(#z) .pjxb-c-where .pjxb-l1 { font-size: 12.5px; line-height: 17px; font-weight: 600; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-c-where .pjxb-l1.is-missing { color: var(--pmg-ink-blocked, var(--pmu-ink-error)); }
+#pjxbShell:not(#z) .pjxb-c-where .pjxb-path { font-size: 11.5px; line-height: 16px; }
+/* History, Online copy, Backup: a still mark, the word in ink (toned when it needs you), its detail under it */
+#pjxbShell:not(#z) :is(.pjxb-c-hist, .pjxb-c-onl, .pjxb-c-bak) { display: grid; grid-template-columns: 14px minmax(0, 1fr); column-gap: 6px; align-items: start; }
+#pjxbShell:not(#z) :is(.pjxb-c-hist, .pjxb-c-onl, .pjxb-c-bak) > .pjx-st-mark { margin-top: 2px; }
+#pjxbShell:not(#z) .pjxb-sw { font-size: 12.5px; line-height: 17px; font-weight: 600; color: var(--pmu-ink); }
+#pjxbShell:not(#z) [data-tone="attention"] > .pjxb-two > .pjxb-sw { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); }
+#pjxbShell:not(#z) [data-tone="blocked"] > .pjxb-two > .pjxb-sw { color: var(--pmg-ink-blocked, var(--pmu-ink-error)); }
+#pjxbShell:not(#z) :is([data-tone="paused"], [data-tone="idle"]) > .pjxb-two > .pjxb-sw { color: var(--pmu-ink-2); font-weight: 550; }
+/* a backup's fix as a link under its word (and after the status once the column has folded): accent ink, underlined */
+#pjxbShell:not(#z) .pjxb-cellfix { display: inline; max-width: 100%; height: auto; margin: 0; padding: 0; border: 0; background: none; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font: inherit; font-size: 12px; line-height: 16px; font-weight: 640; color: var(--pmu-accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
+#pjxbShell:not(#z) .pjxb-cellfix:hover { text-decoration-color: currentColor; }
+#pjxbShell:not(#z) .pjxb-cellfix:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 1px; border-radius: 2px; }
+#pjxbShell:not(#z) .pjxb-l2fix { overflow: hidden; text-overflow: ellipsis; }
+/* the fix keeps its words; the status beside it gives way first */
+#pjxbShell:not(#z) .pjxb-stfix { display: none; flex: none; }
+#pjxbShell:not(#z) .pjxb-c-opened { font-size: 12px; color: var(--pmu-ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#pjxbShell:not(#z) .pjxb-c-safe { gap: 8px; align-items: center; }
+#pjxbShell:not(#z) .pjxb-mini { gap: 0; }
+html[data-theme="glass-light"] #pjxbShell:not(#z) .pjxb-sw { color: var(--pmu-ink) !important; }
+
+/* the header: Usage's micro caps, each sortable column a quiet button with its direction */
+#pjxbShell:not(#z) .pjxb-hc { display: flex; align-items: center; min-width: 0; }
+#pjxbShell:not(#z) .pjxb-hrow .pjxb-c-act { justify-content: flex-end; }
+#pjxbShell:not(#z) .pjxb-sorth, #pjxbShell:not(#z) .pjxb-hlabel { display: inline-flex; align-items: center; gap: 4px; height: 24px; max-width: 100%; margin-left: -6px; padding: 0 6px; border: 0;
+  border-radius: min(var(--pmu-r-card, 6px), 6px); background: transparent; cursor: pointer; white-space: nowrap; overflow: hidden;
+  font-family: var(--pmu-mono); font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-hlabel { cursor: default; }
+#pjxbShell:not(#z) .pjxb-sorth:hover { color: var(--pmu-ink); background: var(--pmu-row-hover); }
+#pjxbShell:not(#z) .pjxb-sorth:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: -1px; }
+#pjxbShell:not(#z) .pjxb-hc.is-sorted .pjxb-sorth { color: var(--pmu-ink); font-weight: 650; }
+#pjxbShell:not(#z) .pjxb-sortmark { display: inline-grid; width: 12px; height: 12px; }
+#pjxbShell:not(#z) .pjxb-sortmark svg { width: 12px; height: 12px; }
+
+/* row buttons: Open and More, labelled, the row's own size */
+#pjxbShell:not(#z) .pjxb-rbtn { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 9px; flex: none; white-space: nowrap; cursor: pointer;
+  border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 8px), 8px); background: transparent; color: var(--pmu-ink); font: inherit; font-size: 12.5px; font-weight: 600; }
+#pjxbShell:not(#z) .pjxb-rbtn:hover { background: var(--pmu-row-hover); border-color: var(--pmu-rule-strong, var(--pmu-rule)); }
+#pjxbShell:not(#z) .pjxb-rbtn:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 1px; }
+#pjxbShell:not(#z) .pjxb-rbtn .pjxb-bico, #pjxbShell:not(#z) .pjxb-rbtn .pjxb-bico svg { width: 14px; height: 14px; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-rbtn.pjxb-open .pjxb-bico { display: none; }
+#pjxbShell:not(#z) .pjxb-bchev { display: inline-grid; width: 12px; height: 12px; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-bchev svg { width: 12px; height: 12px; }
+#pjxbShell:not(#z) [aria-disabled="true"]:is(.pjxb-rbtn, .pjx-btn, .pjxb-arow, .pjxb-create) { opacity: .5; cursor: default; }
+#pjxbShell:not(#z) .pjxb-rbtn[aria-disabled="true"]:hover { background: transparent; }
+
+/* ---- the fix line: under a row with a problem, a tinted outline (never a side stripe) holding what is wrong and
+   its labelled actions, or, while the fix runs, the work and its phase ---- */
+#pjxbShell:not(#z) .pjxb-c-line { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; align-items: center; column-gap: 8px; row-gap: 6px; margin: 7px 0 0; padding: 5px 5px 5px 9px;
+  border: 1px solid color-mix(in srgb, var(--pjxb-tone, var(--pmu-ink-3)) 24%, var(--pmu-rule-2, var(--pmu-rule))); border-radius: min(var(--pmu-r-card, 8px), 8px);
+  background: color-mix(in srgb, var(--pjxb-tone, var(--pmu-ink-3)) 5%, transparent); }
+#pjxbShell:not(#z) .pjxb-c-line[data-tone="blocked"] { --pjxb-tone: var(--pmg-ink-blocked, var(--pmu-ink-error)); }
+#pjxbShell:not(#z) .pjxb-c-line[data-tone="attention"] { --pjxb-tone: var(--pmg-ink-attention, var(--pmu-ink-warn)); }
+#pjxbShell:not(#z) .pjxb-c-line[data-tone="working"] { --pjxb-tone: var(--pmg-ink-working, var(--pmu-accent)); }
+#pjxbShell:not(#z) .pjxb-linemark { align-self: center; }
+#pjxbShell:not(#z) .pjxb-linetext { min-width: 0; font-size: 12px; line-height: 17px; color: var(--pmu-ink-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+#pjxbShell:not(#z) .pjxb-lineacts { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px; }
+#pjxbShell:not(#z) .pjxb-lineacts .pmu-textbtn { height: 26px; padding: 0 9px; font-size: 12px; border-radius: min(var(--pmu-r-card, 7px), 7px); }
+#pjxbShell:not(#z) .pjxb-lineacts .pmu-textbtn svg { width: 14px; height: 14px; }
+#pjxbShell:not(#z) .pjxb-lineacts { min-width: 0; }
+#pjxbShell:not(#z) .pjxb-linework { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; min-width: 0; overflow: hidden; font-size: 12px; color: var(--pmu-ink-2); white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-linework > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+#pjxbShell:not(#z) .pjxb-morenote { height: 26px; padding: 0 6px; border: 0; background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+#pjxbShell:not(#z) .pjxb-morenote .pjxb-bico { display: none; }
+#pjxbShell:not(#z) .pjxb-fix.is-nudge { animation: pjxb-nudge 820ms var(--pmu-ease-out, ease-out) 1; }
+@keyframes pjxb-nudge { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 25%, 60% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--pmu-accent) 55%, transparent); } }
+html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-fix.is-nudge, html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-fix.is-nudge { animation-timing-function: steps(2, end); }
+
+/* a project that was just made washes once in the accent, then settles */
+#pjxbShell:not(#z) .pjxb-row.is-flash { animation: pjxb-flash 2200ms var(--pmu-ease-out, ease-out) 1; }
+@keyframes pjxb-flash { 0%, 30% { background-color: color-mix(in srgb, var(--pmu-accent) 18%, transparent); } 100% { background-color: transparent; } }
+html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-row.is-flash, html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-row.is-flash { animation-timing-function: steps(4, end); }
+#pjxbShell:not(#z) .pjxb-row.pjxb-pending .pjxb-name { color: var(--pmu-ink-2); }
+
+#pjxbShell:not(#z) .pjxb-stmarks { display: none; align-items: center; gap: 6px; flex: none; }
+/* how the ledger folds, by its own width (pjxl). T1: every column, what each is doing under its name. T2 drops Opened,
+   which moves to the end of the name's line. T3 (the Projects pane of a 1440 window) keeps History, Online copy and
+   Backup in words wide enough for them, and moves the status to the start of the line under the name, followed by what
+   it is doing (a problem speaks alone; its reason and fix are on the line below); paths stay in the details. T4 folds
+   the three into one Kept safe column of marks (their sentences are the hover labels), and a backup's fix follows the
+   status. T5 is a two-line entry: the name and its buttons, then the status with the three marks at its end. */
+@container pjxl (max-width: 1139px) {
+  #pjxbShell:not(#z) .pjxb-plate {
+    --pjxb-cols: minmax(150px, 1.5fr) minmax(124px, 1.1fr) minmax(128px, 1fr) 100px 112px 96px var(--pjxb-act);
+    --pjxb-areas: "name status where hist onl bak act" "sub status where hist onl bak act" "line line line line line line line";
+    --pjxb-areas-h: "name status where hist onl bak act"; }
+  #pjxbShell:not(#z) .pjxb-c-opened { display: none; }
+  #pjxbShell:not(#z) .pjxb-openedin { display: inline-flex; }
+}
+@container pjxl (max-width: 939px) {
+  #pjxbShell:not(#z) .pjxb-plate {
+    --pjxb-act: 114px;
+    /* the name's two columns: the status's own width, then what it is doing (compact rows put the status beside the
+       name instead, on columns every row shares) */
+    --pjxb-c12: auto minmax(0, 1fr);
+    --pjxb-cols: var(--pjxb-c12) 112px 114px 104px var(--pjxb-act);
+    --pjxb-areas: "name name hist onl bak act" "status sub hist onl bak act" "line line line line line line";
+    --pjxb-areas-h: "name name hist onl bak act"; }
+  #pjxbShell:not(#z) .pjxb-row { column-gap: 8px; }
+  #pjxbShell:not(#z) .pjxb-plate[data-view="archived"] { --pjxb-act: 150px; }
+  #pjxbShell:not(#z) :is(.pjxb-c-where, .pjxb-hrow .pjxb-c-status) { display: none; }
+  #pjxbShell:not(#z) .pjxb-row:not(.pjxb-hrow) .pjxb-c-status { padding-left: 26px; margin-top: 2px; align-self: start; display: flex; align-items: center; gap: 8px; min-width: 0; }
+  #pjxbShell:not(#z) .pjxb-c-status .pjxb-stsub { display: none; }
+  #pjxbShell:not(#z) .pjxb-c-sub { padding-left: 0; margin-top: 2px; align-self: start; line-height: 16px; }
+  #pjxbShell:not(#z) .pjxb-c-sub .pjxb-actline::before { content: "·"; margin-right: 6px; color: var(--pmu-ink-3); }
+  /* a problem speaks alone; a running owner operation shows its phase in place of what the project was doing */
+  #pjxbShell:not(#z) .pjxb-c-sub:is([data-src="attention"], [data-src="lifecycle"], .has-op) .pjxb-actline { display: none; }
+  #pjxbShell:not(#z) .pjxb-c-sub.has-op .pjxb-opphase { display: block; }
+  #pjxbShell:not(#z) .pjxb-opphase::before { content: "·"; margin-right: 6px; color: var(--pmu-ink-3); }
+  #pjxbShell:not(#z) .pjxb-rbtn { padding: 0 8px; }
+}
+/* T3 only: Friendly's rounder face and Retro's mono run wider, so their three columns take a little more and Retro's
+   details a size less (only in this range: narrower, the columns are marks and these widths would not apply) */
+@container pjxl (min-width: 680px) and (max-width: 939px) {
+  html[data-theme^="friendly"] #pjxbShell:not(#z) .pjxb-plate { --pjxb-cols: var(--pjxb-c12) 116px 116px 108px var(--pjxb-act); }
+  html[data-theme^="friendly"] #pjxbShell:not(#z) .pjxb-row .pjxb-cellfix { font-size: 11.5px; }
+  html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-plate { --pjxb-act: 116px; --pjxb-cols: var(--pjxb-c12) 106px 120px 106px var(--pjxb-act); }
+  html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-row { column-gap: 6px; padding-right: 3px; }
+  html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-c-name { gap: 8px; }
+  html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-row:not(.pjxb-hrow) .pjxb-c-status { padding-left: 24px; }
+  html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-plate[data-view="archived"] { --pjxb-act: 160px; }
+  html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-row :is(.pjxb-l2, .pjxb-cellfix) { font-size: 11px; }
+  html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-row .pjxb-st { font-size: 12px; }
+}
+@container pjxl (max-width: 679px) {
+  #pjxbShell:not(#z) .pjxb-plate {
+    --pjxb-cols: var(--pjxb-c12) 66px var(--pjxb-act);
+    --pjxb-areas: "name name safe act" "status sub safe act" "line line line line";
+    --pjxb-areas-h: "name name safe act"; }
+  #pjxbShell:not(#z) .pjxb-plate[data-view="archived"] { --pjxb-act: 154px; }
+  #pjxbShell:not(#z) :is(.pjxb-c-hist, .pjxb-c-onl, .pjxb-c-bak) { display: none; }
+  #pjxbShell:not(#z) .pjxb-c-safe, #pjxbShell:not(#z) .pjxb-hrow .pjxb-c-safe { display: flex; }
+  #pjxbShell:not(#z) .pjxb-stfix { display: inline; }
+}
+@container pjxl (max-width: 439px) {
+  #pjxbShell:not(#z) .pjxb-plate {
+    --pjxb-cols: minmax(0, 1fr) auto;
+    --pjxb-areas: "name act" "status status" "line line";
+    --pjxb-areas-h: "name act"; }
+  #pjxbShell:not(#z) :is(.pjxb-c-sub, .pjxb-c-safe, .pjxb-hrow, .pjxb-openedin) { display: none !important; }
+  #pjxbShell:not(#z) .pjxb-row:not(.pjxb-hrow) .pjxb-c-status { display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-top: 4px; }
+  #pjxbShell:not(#z) .pjxb-stmarks { margin-left: auto; }
+  #pjxbShell:not(#z) .pjxb-stmarks { display: inline-flex; }
+  #pjxbShell:not(#z) .pjxb-c-status .pjxb-stsub { display: block; }
+  #pjxbShell:not(#z) .pjxb-row { padding: 9px 8px 9px 10px; }
+  #pjxbShell:not(#z) .pjxb-colhead { border-bottom: 0; }
+  #pjxbShell:not(#z) .pjxb-c-line { grid-template-columns: 14px minmax(0, 1fr); }
+  #pjxbShell:not(#z) .pjxb-lineacts { grid-column: 2; justify-content: flex-start; }
+  #pjxbShell:not(#z) .pjxb-keys { display: none; }
+}
+@container pjxl (max-width: 340px) {
+  #pjxbShell:not(#z) .pjxb-row { margin: 0 2px; padding-left: 8px; padding-right: 6px; column-gap: 6px; }
+  #pjxbShell:not(#z) .pjxb-row:not(.pjxb-hrow) .pjxb-c-status { padding-left: 0; }
+  #pjxbShell:not(#z) .pjxb-now > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  #pjxbShell:not(#z) .pjxb-rbtn { padding: 0 7px; }
+}
+/* the narrowest pane (a small window beside a wide chat): the name, then the status, then Open and More on their own line */
+@container pjxl (max-width: 300px) {
+  #pjxbShell:not(#z) .pjxb-plate { --pjxb-cols: minmax(0, 1fr); --pjxb-areas: "name" "status" "act" "line"; --pjxb-areas-h: "name"; }
+  #pjxbShell:not(#z) .pjxb-row:not(.pjxb-hrow) .pjxb-c-status { padding-left: 26px; flex-wrap: wrap; justify-content: flex-start; row-gap: 4px; }
+  #pjxbShell:not(#z) .pjxb-c-act { justify-content: flex-start; margin: 8px 0 0 26px; }
+  #pjxbShell:not(#z) .pjxb-now > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  #pjxbShell:not(#z) .pjxb-c-line { grid-template-columns: minmax(0, 1fr); padding-left: 8px; }
+  #pjxbShell:not(#z) .pjxb-linemark { display: none; }
+  #pjxbShell:not(#z) .pjxb-lineacts { grid-column: 1; }
+  #pjxbShell:not(#z) .pjxb-welcome { padding: 14px 4px 18px; }
+  #pjxbShell:not(#z) .pjxb-wtitle { font-size: 17px; line-height: 22px; }
+  #pjxbShell:not(#z) .pjxb-waysub { display: none; }
+  #pjxbShell:not(#z) .pjxb-way { min-height: 44px; }
+  #pjxbShell:not(#z) .pjxb-waytitle { font-size: 13px; }
+}
+/* one line per row: the second lines step aside */
+#pjxbShell:not(#z) .pjxb-plate[data-dense] .pjxb-c-sub, #pjxbShell:not(#z) .pjxb-plate[data-dense] .pjxb-l2 { display: none; }
+/* compact rows lose the Backup cell's second line, so a backup's fix follows the status instead */
+#pjxbShell:not(#z) .pjxb-plate[data-dense] .pjxb-stfix { display: inline; }
+#pjxbShell:not(#z) .pjxb-plate[data-dense] .pjxb-row:not(.pjxb-hrow) .pjxb-c-status { display: flex; align-items: center; gap: 8px; }
+/* compact rows are one line: the status sits beside the name, on columns every row shares */
+@container pjxl (max-width: 939px) {
+  /* once the columns are tight, compact rows read: the name, its status, the three Kept safe marks, Open and More */
+  /* (two ids' weight more than the looks' own column widths above, so every look takes these) */
+  #pjxbShell:not(#z):not(#y) .pjxb-plate[data-dense] { --pjxb-cols: minmax(0, 1fr) minmax(0, 1.2fr) 66px var(--pjxb-act);
+    --pjxb-areas: "name status safe act" "line line line line"; --pjxb-areas-h: "name name safe act"; }
+  #pjxbShell:not(#z) .pjxb-plate[data-dense] :is(.pjxb-c-hist, .pjxb-c-onl, .pjxb-c-bak) { display: none; }
+  #pjxbShell:not(#z) .pjxb-plate[data-dense] :is(.pjxb-row:not(.pjxb-hrow), .pjxb-hrow) .pjxb-c-safe { display: flex; }
+  #pjxbShell:not(#z) .pjxb-plate[data-dense] .pjxb-row:not(.pjxb-hrow) .pjxb-c-status { padding-left: 0; margin-top: 0; align-self: center; }
+  #pjxbShell:not(#z) .pjxb-plate[data-dense] .pjxb-openedin { display: none; }
+}
+@container pjxl (max-width: 439px) {
+  #pjxbShell:not(#z):not(#y) .pjxb-plate[data-dense] { --pjxb-cols: minmax(0, 1fr) auto; --pjxb-areas: "name act" "status status" "line line"; --pjxb-areas-h: "name act"; }
+}
+@container pjxl (max-width: 300px) {
+  #pjxbShell:not(#z):not(#y) .pjxb-plate[data-dense] { --pjxb-cols: minmax(0, 1fr); --pjxb-areas: "name" "status" "act" "line"; --pjxb-areas-h: "name"; }
+}
+#pjxbShell:not(#z) .pjxb-plate[data-dense] .pjxb-row:not(.pjxb-hrow) { min-height: 38px; padding-top: 5px; padding-bottom: 5px; }
+#pjxbShell:not(#z) .pjxb-plate[data-dense] .pjxb-row:not(.pjxb-hrow) .pjxb-c-status { align-self: center; }
+#pjxbShell:not(#z) .pjxb-plate[data-dense] .pjxb-c-line { margin-top: 5px; }
+
+/* ------------------------------------------------------------------ the inspector: Usage's drawer, docked beside the ledger */
+#pjxbShell:not(#z) .pjxb-insp { position: relative; top: auto; right: auto; bottom: auto; flex: none; width: 360px; max-width: none; min-height: 0; transform: none; opacity: 1; visibility: visible;
+  pointer-events: auto; box-shadow: none; border-left: 1px solid var(--pmu-rule); background: var(--pmu-card);
+  transition: transform 240ms var(--pmu-ease-out, ease-out), opacity 160ms var(--pmu-ease-out, ease-out); }
+#pjxbShell:not(#z) .pjxb-insp::before { display: none; }
+#pjxbShell:not(#z) .pjxb-insp { container: pjxi / inline-size; }
+@container pjxs (min-width: 1100px) { #pjxbShell:not(#z) .pjxb-insp { width: 400px; } }
+#pjxbShell:not(#z) .pjxb-insp[data-enter] { transform: translateX(14px); opacity: 0; transition: none; }
+/* in Glass the docked inspector is a baked panel sheet: it never moves; only what is in it fades in */
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-insp, html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-insp[data-enter] { transform: none; opacity: 1; transition: none; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-insp > * { transition: opacity 180ms var(--pmu-ease-out, ease-out); }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-insp[data-enter] > * { opacity: 0; transition: none; }
+html[data-theme="friendly-dark"] #pjxbShell:not(#z) .pjxb-insp, html[data-theme="friendly-light"] #pjxbShell:not(#z) .pjxb-insp { transition-timing-function: cubic-bezier(.32, 1.12, .52, 1), ease-out; }
+html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-insp, html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-insp { transition-timing-function: steps(3, end), steps(2, end); }
+/* covering the ledger on a narrow stage: the whole stage below the head */
+#pjxbShell:not(#z) .pjxb-body[data-insp="over"] .pjxb-insp { position: absolute; inset: 0; width: auto; z-index: 30; border-left: 0; box-shadow: var(--pmu-shadow-pop, none); }
+#pjxbShell:not(#z) .pjxb-ihead { gap: 10px; padding: 10px 8px 10px 16px; min-height: 60px; }
+#pjxbShell:not(#z) .pjxb-iglyph { display: inline-grid; place-items: center; width: 32px; height: 32px; flex: none; color: var(--pmu-ink-2); border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 8px), 8px); }
+#pjxbShell:not(#z) .pjxb-iglyph svg { width: 18px; height: 18px; }
+#pjxbShell:not(#z) .pjxb-ititle { margin: 0; font-size: 15px; line-height: 20px; font-weight: 640; outline: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-isub { display: flex; align-items: center; gap: 8px; min-width: 0; margin-top: 2px; font-size: 12px; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-isub .pjx-st { min-width: 0; flex: 0 1 auto; }
+#pjxbShell:not(#z) .pjxb-iopen { height: 28px; padding: 0 10px; flex: none; }
+#pjxbShell:not(#z) .pjxb-itabwrap { padding: 10px 16px 6px; flex: none; }
+#pjxbShell:not(#z) .pjxb-itabs { display: flex; width: 100%; box-sizing: border-box; }
+#pjxbShell:not(#z) .pjxb-itabs .pjx-seg-btn { flex: 1 1 0; min-width: 0; padding: 0 6px; overflow: hidden; text-overflow: ellipsis; }
+#pjxbShell:not(#z) .pjxb-ibody { padding: 2px 16px 24px; }
+#pjxbShell:not(#z) .pjxb-insp[data-enter] .pjxb-ibody { opacity: 0; }
+#pjxbShell:not(#z) .pjxb-isec { padding: 14px 0 4px; }
+#pjxbShell:not(#z) .pjxb-isec + .pjxb-isec { border-top: 1px solid var(--pmu-rule-2, var(--pmu-rule)); margin-top: 10px; }
+#pjxbShell:not(#z) .pjxb-ih { margin: 0 0 6px; font-family: var(--pmu-mono); font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-ihrow { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+#pjxbShell:not(#z) .pjxb-notices { display: grid; gap: 8px; margin-top: 12px; }
+#pjxbShell:not(#z) .pjxb-working { margin-top: 12px; }
+#pjxbShell:not(#z) .pjx-notice[data-tone="working"] { border-color: color-mix(in srgb, var(--pmg-ink-working, var(--pmu-accent)) 45%, var(--pmu-rule)); background: color-mix(in srgb, var(--pmg-ink-working, var(--pmu-accent)) 7%, var(--pmu-card)); }
+#pjxbShell:not(#z) .pjx-notice .pmu-textbtn, #pjxbShell:not(#z) .pjx-notice .pjx-btn { height: 28px; font-size: 12px; }
+#pjxbShell:not(#z) .pjx-notice .pmu-textbtn svg { width: 14px; height: 14px; }
+#pjxbShell:not(#z) .pjxb-facts .pmu-fact { font-size: 12.5px; }
+#pjxbShell:not(#z) .pjxb-facts .pmu-fact { display: flex; min-width: 0; }
+#pjxbShell:not(#z) .pjxb-facts .pmu-factv { flex: 1 1 0; min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#pjxbShell:not(#z) .pjxb-facts .pmu-factl { white-space: nowrap; flex: none; margin-right: 12px; }
+#pjxbShell:not(#z) .pjxb-facts .pmu-factv .pjx-st { justify-content: flex-end; }
+#pjxbShell:not(#z) .pjxb-mono { font-family: var(--pm-font-code, var(--pmu-mono)); font-size: 12px; font-weight: 500; }
+#pjxbShell:not(#z) .pjxb-facts .pmu-fact[data-tone="warn"] .pmu-factv { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); }
+#pjxbShell:not(#z) .pjx-safe { margin-top: 2px; border-top: 0; border: 1px solid var(--pmu-rule-2, var(--pmu-rule)); border-radius: min(var(--pmu-r-card, 8px), 8px); }
+#pjxbShell:not(#z) .pjx-safe-cell:first-child { padding-left: 10px; }
+/* a narrow inspector reads the three as lines: mark, what it is, and its word at the right */
+@container pjxi (max-width: 420px) {
+  #pjxbShell:not(#z) .pjxb-insp .pjx-safe { grid-template-columns: minmax(0, 1fr); }
+  #pjxbShell:not(#z) .pjxb-insp .pjx-safe-cell { grid-template-columns: 14px auto minmax(0, 1fr); grid-template-rows: auto; align-items: center; padding: 6px 10px; }
+  #pjxbShell:not(#z) .pjxb-insp .pjx-safe-cell .pjx-st-mark { grid-row: auto; margin-top: 0; }
+  #pjxbShell:not(#z) .pjxb-insp .pjx-safe-cell + .pjx-safe-cell { padding-left: 10px; border-left: 0; border-top: 1px solid var(--pmu-rule-2, var(--pmu-rule)); }
+  #pjxbShell:not(#z) .pjxb-insp .pjx-safe-label { font-size: 12px; color: var(--pmu-ink-2); }
+  #pjxbShell:not(#z) .pjxb-insp .pjx-safe-word { text-align: right; }
+}
+@container pjxi (max-width: 380px) {
+  #pjxbShell:not(#z) .pjxb-itabs .pjx-seg-btn { flex: 1 1 auto; padding: 0 6px; font-size: 12px; }
+}
+@container pjxi (max-width: 340px) {
+  #pjxbShell:not(#z) .pjxb-itabwrap { padding: 8px 10px 4px; }
+  #pjxbShell:not(#z) .pjxb-itabs .pjx-seg-btn { padding: 0 4px; }
+  #pjxbShell:not(#z) .pjxb-ibody { padding: 2px 12px 20px; }
+  #pjxbShell:not(#z) .pjxb-ihead { padding-left: 12px; }
+  #pjxbShell:not(#z) .pjxb-iglyph { display: none; }
+}
+#pjxbShell:not(#z) .pjxb-dsay { margin: 4px 0 8px; font-size: 12.5px; line-height: 18px; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-note[data-tone="attention"] { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); font-weight: 600; }
+#pjxbShell:not(#z) .pjxb-sync { display: flex; align-items: flex-start; gap: 8px; margin-top: 16px; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-sync svg { width: 13px; height: 13px; flex: none; margin-top: 3px; }
+#pjxbShell:not(#z) .pjxb-iacts { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 2px; }
+#pjxbShell:not(#z) .pjxb-ibtn { height: 28px; padding: 0 10px; font-size: 12.5px; }
+#pjxbShell:not(#z) .pjxb-ibtn.is-lead { border-color: color-mix(in srgb, var(--pmu-accent) 55%, transparent); color: var(--pmu-accent); background: color-mix(in srgb, var(--pmu-accent) 10%, transparent); }
+#pjxbShell:not(#z) .pjxb-ibtn svg { width: 14px; height: 14px; }
+/* the three safety blocks: a mark, the title, and the word at the right in its tone */
+#pjxbShell:not(#z) .pjxb-shead2 { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; align-items: center; gap: 8px; margin-bottom: 4px; }
+#pjxbShell:not(#z) .pjxb-shead2 .pjx-st-mark, #pjxbShell:not(#z) .pjxb-shead2 .pjx-st-mark svg { width: 16px; height: 16px; }
+#pjxbShell:not(#z) .pjxb-shead2 .pjxb-ih { margin: 0; font-family: inherit; font-size: 13.5px; font-weight: 640; letter-spacing: -.005em; text-transform: none; color: var(--pmu-ink); }
+#pjxbShell:not(#z) .pjxb-sword { font-size: 12.5px; font-weight: 600; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-sword[data-tone="attention"] { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); }
+#pjxbShell:not(#z) .pjxb-sword[data-tone="blocked"] { color: var(--pmg-ink-blocked, var(--pmu-ink-error)); }
+#pjxbShell:not(#z) .pjxb-sword[data-tone="done"] { color: var(--pmg-ink-done, var(--pmu-ink-ok)); }
+/* the project's own actions: a menu laid open, every row labelled */
+#pjxbShell:not(#z) .pjxb-alist { display: grid; gap: 1px; margin: 0 -8px; }
+#pjxbShell:not(#z) .pjxb-arow { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; align-items: center; gap: 10px; height: 34px; padding: 0 8px; border: 0; text-align: left; cursor: pointer;
+  border-radius: min(var(--pmu-r-card, 8px), 8px); background: transparent; color: var(--pmu-ink); font: inherit; font-size: 13px; }
+#pjxbShell:not(#z) .pjxb-arow:hover { background: var(--pm-switch-hover, var(--pmu-row-hover)); }
+#pjxbShell:not(#z) .pjxb-arow:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: -2px; }
+#pjxbShell:not(#z) .pjxb-arow .pjxb-bico, #pjxbShell:not(#z) .pjxb-arow .pjxb-bico svg { width: 16px; height: 16px; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-arow .pjxb-blabel { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-ameta { font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; }
+/* Delete data: its own outlined section at the end, in the error ink, never next to Remove */
+#pjxbShell:not(#z) .pjxb-danger { margin-top: 18px !important; padding: 12px 12px 12px !important; border: 1px solid color-mix(in srgb, var(--pmu-ink-error) 38%, var(--pmu-rule)) !important;
+  border-radius: min(var(--pmu-r-card, 10px), 10px); }
+#pjxbShell:not(#z) .pjxb-danger .pjxb-ih { color: var(--pmu-ink-error); }
+#pjxbShell:not(#z) .pjxb-delbtn { height: 30px; }
+/* where it lives: the path in the code face, shortened in the middle, with Copy beside it */
+#pjxbShell:not(#z) .pjxb-pathbox { display: grid; grid-template-columns: 16px minmax(0, 1fr); align-items: center; gap: 8px; padding: 8px 10px; margin-bottom: 8px;
+  border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 8px), 8px); background: var(--pmu-card-2, transparent); }
+#pjxbShell:not(#z) .pjxb-pathico, #pjxbShell:not(#z) .pjxb-pathico svg { width: 16px; height: 16px; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-pathfull { font-size: 12.5px; color: var(--pmu-ink); overflow: hidden; text-overflow: ellipsis; }
+
+/* ------------------------------------------------------------------ the empty stage */
+#pjxbShell:not(#z) .pjxb-main[data-empty] { overflow: auto; }
+#pjxbShell:not(#z) .pjxb-none { display: grid; justify-items: center; gap: 6px; margin: 64px auto 0; max-width: 420px; padding: 0 16px; text-align: center; }
+#pjxbShell:not(#z) .pjxb-none-mark { display: inline-grid; place-items: center; width: 40px; height: 40px; color: var(--pmu-ink-3); border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 12px), 12px); margin-bottom: 6px; }
+#pjxbShell:not(#z) .pjxb-none-mark svg { width: 22px; height: 22px; }
+#pjxbShell:not(#z) .pjxb-none h3 { margin: 0; font-size: 15px; font-weight: 640; color: var(--pmu-ink); }
+#pjxbShell:not(#z) .pjxb-none p { margin: 0; font-size: 12.5px; line-height: 18px; color: var(--pmu-ink-3); }
+/* the first run: welcome, the ways in, paste */
+#pjxbShell:not(#z) .pjxb-welcome { width: 100%; max-width: 620px; margin: 0 auto; padding: 28px 8px 24px; box-sizing: border-box; }
+#pjxbShell:not(#z) .pjxb-wk { font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-wtitle { margin: 6px 0 6px; font-size: 22px; line-height: 28px; font-weight: 650; letter-spacing: -.02em; color: var(--pmu-ink); }
+#pjxbShell:not(#z) .pjxb-wlead { margin: 0; max-width: 60ch; font-size: 13px; line-height: 19px; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-ways { margin-top: 18px; padding: 4px; }
+#pjxbShell:not(#z) .pjxb-ways > [role="listitem"] { position: relative; }
+#pjxbShell:not(#z) .pjxb-ways > [role="listitem"] + [role="listitem"]::before { content: ""; position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: var(--pmu-rule-2, var(--pmu-rule)); }
+#pjxbShell:not(#z) .pjxb-way { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto 14px; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 8px 12px; box-sizing: border-box;
+  border: 0; border-radius: min(var(--pmu-r-card, 10px), 10px); background: transparent; color: var(--pmu-ink); font: inherit; text-align: left; cursor: pointer; }
+#pjxbShell:not(#z) .pjxb-way:hover { background: var(--pm-switch-hover, var(--pmu-row-hover)); }
+#pjxbShell:not(#z) .pjxb-way:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: -2px; }
+#pjxbShell:not(#z) .pjxb-wayico, #pjxbShell:not(#z) .pjxb-wayico svg { width: 20px; height: 20px; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-waytext { display: grid; min-width: 0; }
+#pjxbShell:not(#z) .pjxb-waytitle { font-size: 13.5px; line-height: 19px; font-weight: 620; }
+#pjxbShell:not(#z) .pjxb-waysub { font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-waytag { font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .04em; color: var(--pmu-ink-3); white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-waychev, #pjxbShell:not(#z) .pjxb-waychev svg { width: 14px; height: 14px; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-paste { margin-top: 20px; display: grid; gap: 6px; }
+#pjxbShell:not(#z) .pjxb-pasterow { display: flex; gap: 8px; }
+#pjxbShell:not(#z) .pjxb-pastein { flex: 1 1 auto; min-width: 0; font-family: var(--pm-font-code, var(--pmu-mono)); font-size: 12.5px; }
+#pjxbShell:not(#z) .pjxb-pastehint { min-height: 18px; }
+#pjxbShell:not(#z) .pjxb-pastehint .pjx-st { white-space: normal; }
+#pjxbShell:not(#z) .pjxb-notyet { margin: 16px 0 0; font-size: 12px; line-height: 17px; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-notyet-l { font-weight: 600; color: var(--pmu-ink-2); }
+@container pjxl (max-width: 420px) {
+  #pjxbShell:not(#z) .pjxb-welcome { padding-top: 16px; }
+  #pjxbShell:not(#z) .pjxb-wtitle { font-size: 19px; line-height: 24px; }
+  #pjxbShell:not(#z) .pjxb-waytag { display: none; }
+  #pjxbShell:not(#z) .pjxb-way { grid-template-columns: 20px minmax(0, 1fr) 14px; gap: 10px; padding: 8px 8px; }
+  #pjxbShell:not(#z) .pjxb-pasterow { flex-direction: column; }
+}
+
+/* ------------------------------------------------------------------ New Project: a sheet from the right edge of the stage */
+/* under the title bar (z 50): its menus and notes stay above the sheet, which covers only the page */
+#pjxbShell:not(#z) .pjxb-sheethost { position: absolute; inset: 0; z-index: 40; pointer-events: none; }
+#pjxbShell:not(#z) .pjxb-sheethost:empty { display: none; }
+#pjxbShell:not(#z) .pjxb-sheetwrap { position: absolute; inset: 0; pointer-events: auto; }
+#pjxbShell:not(#z) .pjxb-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--background, #000) 42%, transparent); opacity: 0; transition: opacity 220ms var(--pmu-ease-out, ease-out); }
+#pjxbShell:not(#z) .pjxb-sheetwrap[data-open] .pjxb-scrim { opacity: 1; }
+#pjxbShell:not(#z) .pjxb-sheet { position: absolute; top: 0; right: 0; bottom: 0; width: min(600px, 100%); box-sizing: border-box; display: flex; flex-direction: column; container: pjxsh / inline-size;
+  background: var(--pmu-menu-bg, var(--pmu-card)); color: var(--pmu-ink); border: 0; box-shadow: -1px 0 0 var(--pmu-rule-strong, var(--pmu-rule)), var(--pmu-shadow-pop, 0 0 0 transparent);
+  font-size: 13px; line-height: 1.45; transform: translateX(104%); transition: transform 300ms cubic-bezier(.22, 1, .36, 1); }
+#pjxbShell:not(#z) .pjxb-sheetwrap[data-open] .pjxb-sheet { transform: none; }
+#pjxbShell:not(#z) .pjxb-sheetwrap[data-leaving] .pjxb-sheet { transform: translateX(104%); transition: transform 200ms cubic-bezier(.4, 0, 1, 1); }
+#pjxbShell:not(#z) .pjxb-sheetwrap[data-leaving] .pjxb-scrim { opacity: 0; transition-duration: 180ms; }
+html[data-theme^="friendly"] #pjxbShell:not(#z) .pjxb-sheetwrap[data-open] .pjxb-sheet { transition-timing-function: cubic-bezier(.32, 1.12, .52, 1); transition-duration: 420ms; }
+html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-sheet { transition-timing-function: steps(4, end) !important; transition-duration: 200ms !important; }
+html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-sheet { transition-timing-function: steps(3, end) !important; transition-duration: 150ms !important; }
+html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-scrim, html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-scrim { transition-timing-function: steps(2, end); }
+#pjxbShell:not(#z) .pjxb-shead { display: flex; align-items: flex-start; gap: 10px; padding: 16px 12px 8px 22px; flex: none; }
+#pjxbShell:not(#z) .pjxb-stitles { flex: 1 1 auto; min-width: 0; }
+#pjxbShell:not(#z) .pjxb-stitle { margin: 0; font-size: 18px; line-height: 22px; font-weight: 640; letter-spacing: -.015em; outline: none; }
+#pjxbShell:not(#z) .pjxb-ssub { margin-top: 2px; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); min-height: 16px; }
+#pjxbShell:not(#z) .pjxb-sindex { flex: none; padding: 2px 18px 10px 20px; border-bottom: 1px solid var(--pmu-rule-2, var(--pmu-rule)); overflow-x: auto; scrollbar-width: none; }
+#pjxbShell:not(#z) .pjxb-sindex .pjx-stepper { flex-wrap: nowrap; }
+#pjxbShell:not(#z) .pjxb-sindex .pjx-stepper button { cursor: pointer; white-space: nowrap; gap: 5px; }
+#pjxbShell:not(#z) .pjxb-sindex .pjx-stepper button:not(.is-now) { color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-sindex .pjx-stepper button:not(.is-now):hover { background: var(--pmu-row-hover); color: var(--pmu-ink); }
+/* the section in view: the look's chosen material, its words and mark in that material's own ink */
+#pjxbShell:not(#z) .pjxb-sindex .pjx-stepper button.is-now { background: var(--pmu-row-sel); color: var(--pmu-ink); border-color: color-mix(in srgb, var(--pmu-accent) 40%, transparent); }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #pjxbShell:not(#z) .pjxb-sindex .pjx-stepper button.is-now { background: var(--pmu-ink); color: var(--pmu-card); border-color: var(--pmu-ink); }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]) #pjxbShell:not(#z) .pjxb-sindex .pjx-stepper button.is-now :is(span, svg) { color: var(--pmu-card) !important; --nx-ink: var(--pmu-card); }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-sindex .pjx-stepper button.is-now { background: var(--lg-sel); color: var(--lg-on-sel); border-color: transparent; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-sindex .pjx-stepper button.is-now :is(span, svg) { color: var(--lg-on-sel) !important; --nx-ink: var(--lg-on-sel); }
+#pjxbShell:not(#z) .pjxb-sindex .pjx-stepper button:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: -1px; }
+#pjxbShell:not(#z) .pjxb-ixmark { display: inline-grid; width: 12px; height: 12px; }
+#pjxbShell:not(#z) .pjxb-ixmark svg { width: 12px; height: 12px; }
+#pjxbShell:not(#z) .pjxb-sbody { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 18px 22px 28px; scroll-padding-top: 8px; }
+#pjxbShell:not(#z) .pjxb-ssteps.is-arriving { animation: pjxb-fade 300ms var(--pmu-ease-out, ease-out) both; }
+html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-ssteps.is-arriving, html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-ssteps.is-arriving { animation-timing-function: steps(3, end); }
+#pjxbShell:not(#z) .pjxb-sway + .pjxb-ssteps:not([hidden]) { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--pmu-rule-2, var(--pmu-rule)); }
+/* the ways, as a compact list on this narrow page */
+#pjxbShell:not(#z) .pjxb-sheet .pjx-choices-ways { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+#pjxbShell:not(#z) .pjxb-sheet .pjx-choices-ways .pjx-choice { min-height: 46px; padding: 7px 12px; }
+#pjxbShell:not(#z) .pjxb-sheet .pjx-choices-grid { grid-template-columns: repeat(auto-fill, minmax(min(190px, 100%), 1fr)); }
+#pjxbShell:not(#z) .pjxb-sheet .pjx-choice { font-size: 13px; }
+#pjxbShell:not(#z) .pjxb-sheet .pjx-q-title { font-size: 16px; line-height: 21px; outline: none; }
+#pjxbShell:not(#z) .pjxb-sheet .pjx-step + .pjx-step { margin-top: 24px; padding-top: 20px; }
+#pjxbShell:not(#z) .pjxb-sheet .pjx-seg { max-width: 100%; }
+/* the chosen way, folded to one row with Change */
+#pjxbShell:not(#z) .pjxb-wlabel { margin-bottom: 6px; font-size: 12px; font-weight: 640; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-wayrow { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 8px 6px 8px 12px;
+  border: var(--pmu-bw, 1px) solid color-mix(in srgb, var(--pmu-accent) 45%, var(--pmu-rule)); border-radius: min(var(--pmu-r-card, 10px), 10px); background: var(--pmu-row-sel, transparent); }
+#pjxbShell:not(#z) .pjxb-waypicked .pjxb-wayico, #pjxbShell:not(#z) .pjxb-waypicked .pjxb-wayico svg { color: var(--pmu-accent); }
+/* the foot: what will happen, then the buttons */
+#pjxbShell:not(#z) .pjxb-sfoot { flex: none; display: grid; gap: 10px; padding: 12px 16px 14px 22px; border-top: 1px solid var(--pmu-rule); background: inherit; }
+#pjxbShell:not(#z) .pjxb-sum { display: grid; gap: 6px; min-width: 0; }
+#pjxbShell:not(#z) .pjxb-sumhead { display: flex; align-items: center; gap: 8px; font-size: 12.5px; line-height: 17px; color: var(--pmu-ink); min-width: 0; }
+#pjxbShell:not(#z) .pjxb-sumhead > span:not(.pjx-st-mark) { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-sum[data-state="todo"] .pjxb-sumhead b { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); }
+/* what Create will do: one line per review group, wrapping between a label and its value, never cutting a value */
+#pjxbShell:not(#z) .pjxb-sumlines { display: grid; gap: 3px; padding-left: 22px; max-height: 128px; overflow: auto; }
+#pjxbShell:not(#z) .pjxb-sumline { margin: 0; font-size: 12px; line-height: 17px; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-sumpair { display: inline; }
+#pjxbShell:not(#z) .pjxb-sumk { white-space: nowrap; }
+#pjxbShell:not(#z) .pjxb-sumv { font-weight: 600; color: var(--pmu-ink); overflow-wrap: anywhere; }
+#pjxbShell:not(#z) .pjxb-sumsep { color: var(--pmu-ink-3); }
+@container pjxsh (max-width: 500px) { #pjxbShell:not(#z) .pjxb-sumlines { padding-left: 0; } }
+#pjxbShell:not(#z) .pjxb-fbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+@container pjxsh (max-width: 380px) {
+  #pjxbShell:not(#z) .pjxb-shead { padding: 12px 6px 6px 14px; }
+  #pjxbShell:not(#z) .pjxb-sindex { padding: 2px 10px 8px 12px; }
+  #pjxbShell:not(#z) .pjxb-sbody { padding: 14px 14px 22px; }
+  #pjxbShell:not(#z) .pjxb-sfoot { padding: 10px 12px 12px; gap: 8px; }
+  #pjxbShell:not(#z) .pjxb-sumlines { max-height: 86px; }
+  #pjxbShell:not(#z) .pjxb-sumhead { align-items: flex-start; flex-wrap: wrap; }
+  #pjxbShell:not(#z) .pjxb-sumhead > span:not(.pjx-st-mark) { flex: 1 1 0; white-space: normal; }
+  #pjxbShell:not(#z) .pjxb-sumhead > .pjx-st-mark { margin-top: 1px; }
+  #pjxbShell:not(#z) .pjxb-wayrow { grid-template-columns: 20px minmax(0, 1fr); }
+  #pjxbShell:not(#z) .pjxb-wayrow .pjxb-waysub { display: none; }
+  #pjxbShell:not(#z) .pjxb-waychange { grid-column: 2; justify-self: start; padding: 0; height: 24px; }
+  #pjxbShell:not(#z) .pjxb-fbar > .pjx-grow { display: none; }
+  #pjxbShell:not(#z) .pjxb-fbar > button { flex: 1 1 auto; }
+  #pjxbShell:not(#z) .pjxb-sheet .pjx-choices-grid, #pjxbShell:not(#z) .pjxb-sheet .pjx-choices-tiles { grid-template-columns: minmax(0, 1fr); }
+}
+#pjxbShell:not(#z) .pjxb-faildemo { justify-self: start; font-size: 12px; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-sheet .pjx-sync { display: flex; align-items: center; gap: 8px; }
+#pjxbShell:not(#z) .pjxb-sheet .pjx-sync svg { width: 13px; height: 13px; flex: none; }
+#pjxbShell:not(#z) .pjxb-faildemo.is-off { opacity: .7; cursor: default; }
+#pjxbShell:not(#z) .pjxb-fnote { font-size: 12.5px; line-height: 17px; color: var(--pmu-ink-2); }
+#pjxbShell:not(#z) .pjxb-create { max-width: 100%; }
+#pjxbShell:not(#z) .pjxb-create .pjxb-blabel { overflow: hidden; text-overflow: ellipsis; }
+/* creating, done, didn't finish */
+#pjxbShell:not(#z) .pjxb-sresult { padding-top: 4px; }
+#pjxbShell:not(#z) .pjxb-rkick { font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-rtitle { margin: 4px 0 4px; font-size: 20px; line-height: 26px; font-weight: 650; letter-spacing: -.02em; color: var(--pmu-ink); outline: none; }
+#pjxbShell:not(#z) .pjxb-creating .pjx-phases { margin-top: 18px; gap: 10px; }
+#pjxbShell:not(#z) .pjxb-creating .pjx-phase { font-size: 13.5px; }
+#pjxbShell:not(#z) .pjxb-done { display: grid; gap: 8px; justify-items: start; }
+#pjxbShell:not(#z) .pjxb-donemark { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 12px), 12px); }
+#pjxbShell:not(#z) .pjxb-donemark svg { width: 28px; height: 28px; }
+#pjxbShell:not(#z) .pjxb-done .pjx-safe { width: 100%; margin-top: 6px; border: 1px solid var(--pmu-rule-2, var(--pmu-rule)); border-radius: min(var(--pmu-r-card, 8px), 8px); }
+#pjxbShell:not(#z) .pjxb-done .pjx-notice { width: 100%; box-sizing: border-box; margin-top: 6px; }
+#pjxbShell:not(#z) .pjxb-rphases { width: 100%; margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--pmu-rule-2, var(--pmu-rule)); }
+#pjxbShell:not(#z) .pjxb-rphases .pjx-phases { margin: 0; }
+
+/* ------------------------------------------------------------------ Continue setup, in the details */
+#pjxbShell:not(#z) .pjxb-resume { display: grid; gap: 2px; margin-top: 12px; padding-bottom: 6px; }
+#pjxbShell:not(#z) .pjxb-resume .pjx-group { margin-top: 12px; }
+#pjxbShell:not(#z) .pjxb-resume .pjx-group-label { font-family: var(--pmu-mono); font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--pmu-ink-3); }
+#pjxbShell:not(#z) .pjxb-resume .pjx-phases { gap: 7px; }
+#pjxbShell:not(#z) .pjxb-resume .pjx-phase { font-size: 12.5px; }
+#pjxbShell:not(#z) .pjxb-resume .pjxb-iacts { margin-top: 12px; }
+#pjxbShell:not(#z) .pjxb-resume .pjxb-dsay { margin-top: 8px; color: var(--pmu-ink-3); font-size: 12px; }
+html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-resume .pjx-group-label { letter-spacing: .1em; }
+
+/* ------------------------------------------------------------------ light looks: toned words keep 4.5:1
+   A state's mark keeps its full tone; its word is drawn toward the text ink, as Home's looks do (H50-looks.css) and as
+   core.css does for the status slot. Glass Light already writes words in the text ink. */
+html[data-theme$="-light"]:not([data-theme^="glass"]) #pjxbShell:not(#z) :is([data-tone="attention"] > .pjxb-two > .pjxb-sw, .pjxb-sword[data-tone="attention"], .pjxb-note[data-tone="attention"], .pjxb-sum[data-state="todo"] .pjxb-sumhead b, .pjxb-rf-row[data-tone="attention"] .pjxb-rf-n b, .pjxb-facts .pmu-fact[data-tone="warn"] .pmu-factv),
+html[data-theme$="-light"]:not([data-theme^="glass"]) #pjxbShell:not(#z) .pjxb-nav .pmu-navbtn .pjxb-count.is-warn { color: color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-warn)) 58%, var(--pmu-ink)) !important; }
+html[data-theme$="-light"]:not([data-theme^="glass"]) #pjxbShell:not(#z) :is([data-tone="blocked"] > .pjxb-two > .pjxb-sw, .pjxb-sword[data-tone="blocked"], .pjxb-c-where .pjxb-l1.is-missing) { color: color-mix(in srgb, var(--pmg-ink-blocked, var(--pmu-ink-error)) 66%, var(--pmu-ink)) !important; }
+html[data-theme$="-light"]:not([data-theme^="glass"]) #pjxbShell:not(#z) .pjxb-sword[data-tone="done"] { color: color-mix(in srgb, var(--pmg-ink-done, var(--pmu-ink-ok)) 62%, var(--pmu-ink)); }
+html[data-theme$="-light"]:not([data-theme^="glass"]) #pjxbShell:not(#z) .pjx-st[data-tone="working"] .pjx-st-word { color: color-mix(in srgb, var(--pmg-ink-working, var(--pmu-accent)) 60%, var(--pmu-ink)); }
+html[data-theme$="-light"]:not([data-theme^="glass"]) #pjxbShell:not(#z) :is(.pjxb-cellfix, .pjx-link) { color: color-mix(in srgb, var(--pmu-accent) 62%, var(--pmu-ink)); }
+html[data-theme$="-light"]:not([data-theme^="glass"]) #pjxbShell:not(#z) .pjxb-danger .pjxb-ih { color: color-mix(in srgb, var(--pmu-ink-error) 70%, var(--pmu-ink)); }
+
+/* ------------------------------------------------------------------ Friendly: soft corners */
+html[data-theme^="friendly"] #pjxbShell:not(#z) :is(.pjxb-rbtn, .pjxb-search, .pjxb-new, .pjxb-c-line) { border-radius: 10px; }
+html[data-theme^="friendly"] #pjxbShell:not(#z) .pjxb-rows > .pjxb-row { border-radius: var(--pm-switch-r, 10px); }
+
+/* ------------------------------------------------------------------ Retro: square, 2 px rules, reverse video, stepped */
+html[data-theme^="retro"] #pjxbShell:not(#z) :is(.pjxb-rbtn, .pjxb-search, .pjxb-new, .pjxb-c-line, .pjxb-rows > .pjxb-row, .pjxb-nav .pmu-navbtn, .pjxb-sorth, .pjxb-arow, .pjxb-iglyph,
+  .pjxb-pathbox, .pjxb-way, .pjxb-wayrow, .pjxb-danger, .pjxb-none-mark, .pjxb-donemark, .pjx-safe, .pjxb-keys kbd, .pjxb-sheet) { border-radius: 0 !important; }
+html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-c-line { border-width: 2px; }
+html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-sheet { box-shadow: none; border: var(--pmu-bw, 2px) solid var(--pmu-rule-strong, var(--pmu-rule)); }
+html[data-theme^="retro"] #pjxbShell:not(#z) .pjxb-rows > .pjxb-row.is-sel .pjxb-c-line { background: var(--pmu-card); color: var(--pmu-ink); }
+
+/* ------------------------------------------------------------------ NieR: square, ink only, tracked capitals */
+html[data-o55-nier="on"] #pjxbShell:not(#z) :is(.pjxb-rbtn, .pjxb-search, .pjxb-new, .pjxb-c-line, .pjxb-rows > .pjxb-row, .pjxb-nav .pmu-navbtn, .pjxb-sorth, .pjxb-arow, .pjxb-iglyph,
+  .pjxb-pathbox, .pjxb-way, .pjxb-wayrow, .pjxb-danger, .pjxb-none-mark, .pjxb-donemark, .pjx-safe, .pjxb-keys kbd, .pjxb-sheet) { border-radius: 0 !important; }
+html[data-o55-nier="on"] #pjxbShell:not(#z) :is(.pjxb-title, .pmu-brand h1, .pjxb-stitle, .pjxb-wtitle, .pjxb-rtitle) { text-transform: uppercase; letter-spacing: .07em; }
+html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-title { font-size: 16px; }
+html[data-o55-nier="on"] #pjxbShell:not(#z) :is(.pjxb-sorth, .pjxb-hlabel, .pjxb-ih, .pjxb-rf-head, .pjxb-rkick, .pjxb-wk) { letter-spacing: .1em; }
+html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-c-line { border-color: rgba(var(--o55-nier-ink-rgb), .45); background: rgba(var(--o55-nier-ink-rgb), .05); }
+html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-sheet { box-shadow: none; border: 1px solid rgba(var(--o55-nier-ink-rgb), .5); background: var(--surface, var(--pmu-card)); }
+html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-rows > .pjxb-row.is-sel .pjxb-c-line { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink); border-color: var(--o55-nier-on-ink); }
+/* the inspector's head is NieR's ink band (Usage's headers part): its words and buttons read in the band's paper */
+html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-ihead :is(.pjxb-isub, .pjxb-isub *, .pjxb-iglyph, .pjxb-iopen, .pmu-iconbtn) { color: var(--o55-nier-on-ink) !important; --nx-ink: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-ihead :is(.pjxb-iopen, .pjxb-iglyph) { border-color: color-mix(in srgb, var(--o55-nier-on-ink) 55%, transparent); background: transparent; }
+html[data-o55-nier="on"] #pjxbShell:not(#z) .pjxb-ititle { text-transform: uppercase; letter-spacing: .08em; }
+
+/* ------------------------------------------------------------------ Glass: the sheets, on the wallpaper */
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) { background: transparent; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-rail { margin: 0 6px 0 2px; border: 0; border-radius: var(--lg-r-sheet, 18px) !important; position: relative; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-head { margin: 0 6px 6px; border: 0; border-radius: var(--lg-r-bar, 14px) !important; position: relative; z-index: 4; gap: 6px; padding-right: 8px; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-ctl { gap: 3px; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-main { padding: 0 6px 6px 0; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-plate { border-radius: var(--lg-r-card, 16px) !important; border-color: transparent; box-shadow: none; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-insp { margin: 0 6px 6px 0; border: 0; border-radius: var(--lg-r-sheet, 18px) !important; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-body[data-insp="over"] .pjxb-insp { margin: 0 6px 6px; box-shadow: none; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) :is(.pjxb-rail, .pjxb-head, .pjxb-plate, .pjxb-insp, .pjxb-ways)[data-lg-kind] { background: transparent; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-title { color: var(--text-primary); font-weight: 700; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-colhead { border-bottom-color: var(--lg-line); }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-rows > .pjxb-row + .pjxb-row::before { background: var(--lg-line); }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-rows > .pjxb-row:not(.is-sel):hover,
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) :is(.pjxb-arow:hover, .pjxb-way:hover) { background: var(--lg-fill-hover); }
+/* the chosen row and view: the clear lens (its hairline rim and catch light), no colour */
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) :is(.pjxb-rows > .pjxb-row.is-sel, .pjxb-nav .pmu-navbtn.active) {
+  background: var(--lg-fill-press) !important; color: var(--text-primary) !important;
+  box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 2px 8px -3px rgba(0, 0, 0, .25) !important; border-radius: var(--pm-ctl-r, 8px) !important; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-nav .pmu-navbtn.active .pmu-navicon { color: var(--accent-blue, var(--pmu-accent)) !important; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-nav .pmu-navbtn:not(.active):hover { background: var(--lg-fill-hover) !important; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) :is(.pjxb-search, .pjxb-pathbox, .pjxb-rbtn) { background: var(--lg-fill); border-color: var(--lg-line); }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-rbtn:hover { background: var(--lg-fill-hover); }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) :is(.pjx-safe, .pjxb-iglyph, .pjxb-keys kbd, .pjxb-wayrow) { border-color: var(--lg-line); }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-wayrow { background: var(--lg-fill); }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) :is(.pjxb-isec + .pjxb-isec, .pjxb-railfoot, .pjxb-sindex, .pjxb-sfoot, .pjxb-rphases) { border-color: var(--lg-line); }
+/* New Project is a dense menu sheet floating over the stage (glass.js draws its material and lens layer) */
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-sheet { top: 0; right: 6px; bottom: 6px; width: min(600px, calc(100% - 12px)); background: transparent; border: 0; box-shadow: none; border-radius: var(--lg-r-sheet, 18px); }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-sfoot { background: transparent; }
+/* a baked sheet never moves (Liquid Glass CONTRACT): it is simply there, and what is in it fades in and out */
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) :is(.pjxb-sheet, .pjxb-sheetwrap[data-open] .pjxb-sheet, .pjxb-sheetwrap[data-leaving] .pjxb-sheet) { transform: none !important; transition: none !important; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-sheet > * { opacity: 0; transition: opacity 200ms var(--pmu-ease-out, ease-out); }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-sheetwrap[data-open] .pjxb-sheet > * { opacity: 1; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-sheetwrap[data-leaving] .pjxb-sheet > * { opacity: 0; transition-duration: 140ms; }
+html[data-lg="on"][data-theme^="glass"] #pjxbShell:not(#z) .pjxb-scrim { background: color-mix(in srgb, var(--background, #000) 22%, transparent); }
+
+/* ------------------------------------------------------------------ Reduced Motion: end states at once */
+:is(html[data-motion="reduced"], html[data-reduced-motion="1"]) #pjxbShell:not(#z) * { transition: none !important; animation: none !important; }
