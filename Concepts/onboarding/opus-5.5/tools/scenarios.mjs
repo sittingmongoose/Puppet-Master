@@ -711,6 +711,19 @@ def('pr22', 'fresh', 'Final check F1-3: opened straight into Glass at Computer, 
   const f = await railFit(d);
   A.ok(f.pip != null && Math.abs(f.pip - f.bead) <= 1.5 && Math.abs(f.rope - f.w) <= 1, `Glass, opened at Computer: Pip ${f.pip} on bead ${f.bead}, rope ${f.rope} of ${f.w} (scale ${f.scale})`);
 });
+def('pr23', 'fresh', 'Final check F2-2: an expired toast is gone, and never plays again when the window opens later', async (d, A) => {
+  await d.openOnboarding(); await d.primary();
+  await d.page.evaluate(() => window.O55.ui.toast('Opened the sign-in page in your browser'));
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-toast')), 'the toast shows');
+  await sleep(4200);
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding .o55-toast')), 'gone once it has expired');
+  await d.page.evaluate(() => window.O55.ui.toast('A second one'));
+  await d.page.evaluate(() => window.O55.ui.close('close')); await sleep(600);
+  await d.page.evaluate(() => window.O55.ui.open({ screen: 'name' }));
+  await d.until(() => !!document.querySelector('#pm-o55-onboarding .o55-layer[data-screen="name"]'), { what: 'Name' }); await sleep(400);
+  const t = await d.state(() => { const el = document.querySelector('#pm-o55-onboarding .o55-toast'); return el ? { text: el.textContent, running: el.getAnimations().length } : null; });
+  A.ok(!t, 'nothing replays when the window opens again (' + JSON.stringify(t) + ')');
+});
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();

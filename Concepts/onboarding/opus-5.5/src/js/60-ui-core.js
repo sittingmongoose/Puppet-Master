@@ -1024,6 +1024,8 @@
     if (SOLID && !wasShown) setSolid(true);
     O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening', 'o55-scrim-lit'); if (SOLID) setSolid(true); } });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
+    /* a transient left in the reused window from an earlier run (a toast) would play again now: none carries over */
+    r.querySelectorAll('.o55-win > .o55-toast').forEach((n) => n.remove());
     /* the stage lives with the window: reopening wakes it (Retro's tube powers on again) */
     const stage = r.querySelector('.o55-stage'), st0 = O55.pipStage.of(stage);
     if (st0) { st0.setActive(true); if (st0.tube) st0.powerOn(); } else { stage.innerHTML = ''; stage.removeAttribute('data-scene-key'); }
@@ -1080,6 +1082,7 @@
     const handoff = !!(o && o.handoff);
     const def = SCREENS.defs[S.sess.screen];
     if (def && def.leave) def.leave(S);
+    S.root.querySelectorAll('.o55-win > .o55-toast').forEach((n) => n.remove()); /* (a toast is this run's moment) */
     if (O55.nierLook && O55.nierLook.closed) O55.nierLook.closed(reason); /* an unsaved NieR preview lingers like the look's */
     S.sess.status = reason === 'skip' ? 'skipped' : reason === 'done' ? 'done' : 'closed';
     S.save();
