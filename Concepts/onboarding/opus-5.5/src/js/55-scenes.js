@@ -99,8 +99,8 @@
       vars: (S) => ({ mode: ['local_or_vpn', 'none'].includes(md(S).remote_mode) ? 'home' : 'anywhere' }) },
     review: { props: (S) => [P('clipboard', 'side', { params: { ticks: ticks(S), rows: 4 } })], state: (S) => (md(S).project_mode === 'later' ? 'later' : ticks(S) >= 4 ? 'checked' : 'enter'), vars: (S) => ({ done: ticks(S), total: 4 }) },
     creating: {
-      /* O12: a block for each owner phase that has completed, lowered onto the stack as it completes; Continue and
-         Ready never wait for a block to land (each lands in about half a second; Reduced Motion puts it there) */
+      /* O12: a block for each owner phase that has completed, lowered onto the stack as it completes; once the Project is
+         made, Continue waits for the last to land (Jared's O12 B; about half a second, at once under Reduced Motion) */
       props(S) {
         const list = O55.review ? O55.review.phasesFor(S) : [], st = op(S, (S.sess.commit || {}).key);
         const done = O55.review && O55.review.shownDone(S) ? list.length : st ? (st.phases || []).filter((p) => p.status === 'done').length : 0;
