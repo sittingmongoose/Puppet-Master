@@ -682,6 +682,12 @@ for (const look of ['retro-dark', 'retro-light', 'basic-dark']) def('pr20-' + lo
   A.ok(w.blocks.every((b) => b.r === true && !b.muted), 'every one played, the master unmuted');
   A.ok(!w.mutes.includes(true), 'no mute while Creating (' + JSON.stringify(w.mutes) + ')');
 });
+const railFit = (d) => d.state(() => {
+    const nav = document.querySelector('#pm-o55-onboarding .o55-rail'), nr = nav.getBoundingClientRect(), k = nr.width / (nav.offsetWidth || nr.width);
+    const node = nav.querySelector('.o55-railitem[data-state="current"] .o55-railnode').getBoundingClientRect();
+    const m = /translate\(([-\d.]+)px/.exec(nav.querySelector('.o55-railpip').style.transform || ''), vb = (nav.querySelector('.o55-railzip').getAttribute('viewBox') || '').split(' ');
+    return { layout: document.getElementById('pm-o55-onboarding').getAttribute('data-o55-layout'), scale: Math.round(k * 1000) / 1000, bead: Math.round((node.left + node.width / 2 - nr.left) / k), pip: m ? Math.round(+m[1] + 12) : null, w: Math.round(nav.offsetWidth), rope: Math.round(+vb[2] || 0) };
+  });
 def('pr21', 'fresh', 'Final check: after 720x900 -> 1390x480 the rail Pip sits on the current bead and the rope spans the rail', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary();
   A.eq(await d.screen(), 'where', 'on Computer');
@@ -696,6 +702,14 @@ def('pr21', 'fresh', 'Final check: after 720x900 -> 1390x480 the rail Pip sits o
     const f = await fit();
     A.ok(f.pip != null && Math.abs(f.pip - f.bead) <= 3 && Math.abs(f.rope - f.w) <= 2, `${w}x${h} (${f.layout}): Pip ${f.pip} on bead ${f.bead}, rope ${f.rope} of ${f.w}`);
   }
+});
+def('pr22', 'fresh', 'Final check F1-3: opened straight into Glass at Computer, the rail is measured unscaled (Pip on its bead, the rope the rail\'s width)', async (d, A) => {
+  await d.page.evaluate(() => { window.O55.ui.applyLook && 0; });
+  await d.page.evaluate(() => { const [f, m] = ['glass', 'dark']; if (window.PM_THEME && window.PM_THEME.setFamily) { window.PM_THEME.setFamily(f); window.PM_THEME.setMode(m); } });
+  await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'where' }));
+  await d.until(() => !!document.querySelector('#pm-o55-onboarding .o55-layer[data-screen="where"]'), { what: 'Where' }); await d.settle(); await sleep(2500);
+  const f = await railFit(d);
+  A.ok(f.pip != null && Math.abs(f.pip - f.bead) <= 1.5 && Math.abs(f.rope - f.w) <= 1, `Glass, opened at Computer: Pip ${f.pip} on bead ${f.bead}, rope ${f.rope} of ${f.w} (scale ${f.scale})`);
 });
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();

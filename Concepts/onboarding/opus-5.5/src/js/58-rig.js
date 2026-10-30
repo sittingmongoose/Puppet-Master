@@ -979,11 +979,13 @@
     rail.kick();
   };
   /* bead x positions, read once per render and on a resize (never per frame) */
+  /* (in the rail's own, untransformed units: the window's entrance scales it, and a measure taken then would keep the
+     scaled sizes once it settles; final check F1-3, a direct open in Glass was 5 px off) */
   rail.measure = function measure() {
     const nav = rail.nav; if (!nav) return;
-    const nr = nav.getBoundingClientRect();
-    rail.W = nr.width;
-    rail.xs = Array.from(nav.querySelectorAll('.o55-railitem .o55-railnode')).map((n) => { const r = n.getBoundingClientRect(); return r.left + r.width / 2 - nr.left; });
+    const nr = nav.getBoundingClientRect(), w = nav.offsetWidth || nr.width, k = nr.width && w ? nr.width / w : 1;
+    rail.W = w;
+    rail.xs = Array.from(nav.querySelectorAll('.o55-railitem .o55-railnode')).map((n) => { const r = n.getBoundingClientRect(); return (r.left + r.width / 2 - nr.left) / k; });
   };
   /* measured again after a size change; a new window layout (wide, narrow, short) puts Pip at its bead at once, where a
      chapter change lets it travel */
