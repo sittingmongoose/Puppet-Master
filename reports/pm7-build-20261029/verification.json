@@ -586,5 +586,65 @@
     "native_certification": false,
     "independent_companion_review": "after_Step4_under_the_lead",
     "system_status_names": "Activity 1030022012-4c7a popover names received; ui.system_status.open/.close, statusbar.system_status, existing work.open_system_status and system_status.service.open_settings queued for Step4. No new popover closure claimed here."
+  },
+  "queued_step4_lane_inputs": {
+    "sprout": {
+      "message_id": "1030030102-679d",
+      "from": "pm7-sprout",
+      "decision_id": "L8",
+      "rule": "DR-079",
+      "status": "reported_by_lane; pending full GUI-merge signal and source reconciliation",
+      "owner": "window.PM6_SPROUT",
+      "modules": [
+        "base/script/pm7-sprout.js",
+        "base/style/pm7-sprout.css"
+      ],
+      "blocks": [
+        "pm7-sprout-js",
+        "pm7-sprout-css"
+      ],
+      "api": [
+        "open(el, afterOpen, anchor, opts)",
+        "close(el, done)",
+        "isOpen",
+        "aim",
+        "resize",
+        "bounce",
+        "keep",
+        "reduced"
+      ],
+      "classes": [
+        "pm-sprout",
+        "pm-sprout-edge",
+        "pm56-menu-leaving",
+        "is-open",
+        "is-closing",
+        "is-size-bounce"
+      ],
+      "tokens": "six --pm6-sprout-* values owned per opening",
+      "gates": [
+        "effective Reduced Motion",
+        "Animation speed",
+        "body.pm-resizing",
+        "NieR Slice part"
+      ],
+      "consumers": [
+        "title-bar menus",
+        "base chat pickers/worktree",
+        "Settings popouts",
+        "PMR.menu",
+        "NieR theme menu",
+        "PMU.menu",
+        "PMW.menu",
+        "5.6 Pro chat/standalone"
+      ],
+      "reported_removed": [
+        "menus.js MutationObserver/ghost sprout",
+        "Usage/Home sprout/close/spring/NieR copies",
+        "Settings local fallback"
+      ],
+      "unresolved_boundary": "Notification inbox .rs-panel reportedly retains its own sprout; lead notified. No Plans exemption or DRY closure is adopted.",
+      "native_or_GUI_verification_claim": false
+    }
   }
 }
