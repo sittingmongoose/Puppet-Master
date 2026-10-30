@@ -1424,7 +1424,10 @@
       text-align: left;
       cursor: pointer;
       overflow: visible;
-      transition: color var(--motion-fast, 160ms) ease, background-color var(--motion-fast, 160ms) ease, box-shadow var(--motion-fast, 160ms) ease;
+      /* the chosen chip comes and goes in one frame, its fill, its lines and its ink together, like the page tabs' ink: the
+         fill (a background-image) never eased, so an ink and lines easing after it left the name unreadable and a ghost
+         outline on the bar for about 3 frames after a pick (Retro, NieR; final check F1-1) */
+      transition: none;
     }
     .title-bar #projectMenuBtn:hover { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))); }
     .title-bar #projectMenuBtn[aria-expanded="true"] {
@@ -1464,8 +1467,10 @@
     :is([data-theme^="retro"], [data-o55-nier="on"]) .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition-timing-function: steps(1, end); transition-duration: 80ms; }
     [data-motion="reduced"] .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition: none; }
     @media (prefers-reduced-motion: reduce) { .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition: none; } }
-    /* a resize drag holds the badge's loop (body.pm-resizing; the badge is the shared status mark) */
-    body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st, .nx-st-move) { animation-play-state: paused; }
+    /* a resize drag holds the badge's loops (body.pm-resizing; the badge is the shared status mark). Its backlight breath
+       runs on .nx-st::before, which does not inherit animation-play-state, so it is paused by name (audit W2-24) */
+    body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st, .nx-st-move),
+    body.pm-resizing #projectMenuBtn .pm6-tb-project-badge .nx-st::before { animation-play-state: paused; }
     /* Narrow windows: the density ladder folds the box to its folder (pm6-js-panels.js applyDensity, data-mode="icon") */
     .title-bar #projectMenuWrap[data-mode="icon"] #projectMenuBtn {
       width: 28px;

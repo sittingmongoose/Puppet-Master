@@ -1974,7 +1974,10 @@ body:not(.pmu-page-active) :is(.rd-console):hover { --pm6-sb-ink: var(--pm6-sb-t
       text-align: left;
       cursor: pointer;
       overflow: visible;
-      transition: color var(--motion-fast, 160ms) ease, background-color var(--motion-fast, 160ms) ease, box-shadow var(--motion-fast, 160ms) ease;
+      /* the chosen chip comes and goes in one frame, its fill, its lines and its ink together, like the page tabs' ink: the
+         fill (a background-image) never eased, so an ink and lines easing after it left the name unreadable and a ghost
+         outline on the bar for about 3 frames after a pick (Retro, NieR; final check F1-1) */
+      transition: none;
     }
     .title-bar #projectMenuBtn:hover { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))); }
     .title-bar #projectMenuBtn[aria-expanded="true"] {
@@ -2016,9 +2019,11 @@ body:not(.pmu-page-active) :is(.rd-console):hover { --pm6-sb-ink: var(--pm6-sb-t
     :is([data-theme^="retro"], [data-o55-nier="on"]) .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition-timing-function: steps(1, end); transition-duration: 80ms; }
     [data-motion="reduced"] .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition: none; }
     @media (prefers-reduced-motion: reduce) { .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition: none; } }
-    /* a resize drag holds the badge's loop (body.pm-resizing; the badge is the shared status mark) */
+    /* a resize drag holds the badge's loops (body.pm-resizing; the badge is the shared status mark). Its backlight breath
+       runs on .nx-st::before, which does not inherit animation-play-state, so it is paused by name (audit W2-24) */
     body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st),
-body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st-move) { animation-play-state: paused; }
+body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st-move),
+body.pm-resizing #projectMenuBtn .pm6-tb-project-badge .nx-st::before { animation-play-state: paused; }
     /* Narrow windows: the density ladder folds the box to its folder (pm6-js-panels.js applyDensity, data-mode="icon") */
     .title-bar #projectMenuWrap[data-mode="icon"] #projectMenuBtn {
       width: 28px;
@@ -30261,6 +30266,17 @@ html[data-theme^="friendly"] .pmn-tile {
 html[data-theme^="friendly"] .pmn-tile::after { content: ""; position: absolute; inset: 0 0 50% 0; border-radius: inherit; background: linear-gradient(180deg, rgba(255, 255, 255, .55), rgba(255, 255, 255, .08)); pointer-events: none; }
 html[data-theme^="friendly"] .pmn-tile > .pmn-ico { position: relative; z-index: 1; stroke-width: 2.2; filter: drop-shadow(0 1px 0 rgba(0, 0, 0, .18)); }
 html[data-theme^="friendly"] .pmn-item .pmn-tile { width: 32px; height: 32px; padding: 6.5px; }
+/* A4 A: Pip is the app tile (19-notify.js fillTile): a soft vinyl ground under the gloss, the severity colour as its rim
+   and lip, Pip's face carrying the mood; the kind glyph sits beside the title as a small mark in the severity colour */
+html[data-theme^="friendly"] .pmn-tile.pmn-tile-pip {
+  padding: 3px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 16%, var(--pmn-surface)), color-mix(in srgb, var(--pmn-acc) 30%, var(--pmn-surface)));
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--pmn-acc) 55%, #2a1f3a), inset 0 0 0 1.5px color-mix(in srgb, var(--pmn-acc) 72%, transparent);
+}
+html[data-theme^="friendly"] .pmn-tile.pmn-tile-pip > svg { position: relative; z-index: 1; display: block; width: 100%; height: 100%; }
+html[data-theme^="friendly"] .pmn-kind { float: left; display: inline-flex; width: 14px; height: 14px; margin: 2px 6px 0 0; color: color-mix(in srgb, var(--pmn-acc) 62%, var(--text-primary)); }
+html[data-theme^="friendly"] .pmn-kind > .pmn-ico { width: 14px; height: 14px; stroke-width: 2.4; }
+html[data-theme^="friendly"] .pmn-banner .pmn-kind { float: none; vertical-align: -2px; margin: 0 5px 0 0; }
 
 /* ---- the stack: a little stack of channel cards, each a pastel ---- */
 html[data-theme^="friendly"] .pmn-front, html[data-theme^="friendly"] .pmn-peek { border-radius: 10px; }
@@ -168680,10 +168696,35 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     fillToast(c, it);
     return c;
   }
+  /* A4 A (Jared, 2026-10-30; F3-460, F3-660): in Friendly the app-icon tile is Pip, its face the item's mood (severity ->
+     status key -> PMLogo.moodFor: info idle, success complete, warn waiting, error failed), and the kind glyph moves
+     beside the title as a small kind mark, so the kind still sits beside its copy. Every other look keeps the glyph tile
+     and no kind mark. The title stays one text node (the kind mark is its sibling; NieR's decode reads the title). The
+     toasts, the banner and the inbox rows are drawn again when the look changes. */
+  const SEV_KEY = { info: 'idle', success: 'complete', warn: 'waiting', error: 'failed' };
+  function fillTile(root, it) {
+    const tile = root.querySelector('.pmn-tile'), title = root.querySelector('.n-title'), L = window.PMLogo;
+    if (!tile) return;
+    root.__pmnItem = it;
+    const pip = look() === 'friendly' && !!L && typeof L.mark === 'function';
+    tile.innerHTML = pip ? L.mark({ px: 24, mood: L.moodFor(SEV_KEY[it.severity] || 'idle'), decorative: true }) : icon(it.icon);
+    tile.classList.toggle('pmn-tile-pip', pip);
+    let kind = root.querySelector('.pmn-kind');
+    if (pip && title) {
+      if (!kind) { kind = el('span', 'pmn-kind', { 'aria-hidden': 'true' }); title.parentNode.insertBefore(kind, title); }
+      kind.innerHTML = icon(it.icon);
+    } else if (kind) kind.remove();
+  }
+  if (window.PMLogo && typeof window.PMLogo.onLook === 'function') {
+    window.PMLogo.onLook(() => {
+      const roots = new Set(Array.prototype.slice.call(doc.querySelectorAll('.pmn-toast, .pmn-banner')).concat(Array.from(rowEls.values())));
+      roots.forEach((r) => { if (r.__pmnItem) fillTile(r, r.__pmnItem); });
+    });
+  }
   function fillToast(c, it) {
     c.className = 'pmn-toast n-sev-' + it.severity + (c.classList.contains('pmn-leaving') ? ' pmn-leaving' : '');
     c.setAttribute('data-level', it.level); c.setAttribute('data-kind', it.kind); c.setAttribute('data-src', it.source);
-    c.querySelector('.pmn-tile').innerHTML = icon(it.icon);
+    fillTile(c, it);
     c.querySelector('.pmn-src').textContent = it.level === 'quiet' ? '' : T('src.' + it.source);
     c.querySelector('.pmn-when').textContent = it.level === 'quiet' ? '' : T('now');
     c.querySelector('.pmn-title').textContent = it.title;
@@ -169000,6 +169041,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       '<button type="button" class="pmn-btn" data-pmn="banner-open"></button><button type="button" class="pmn-x" aria-label="' + T('dismiss') + '">' + icon('x') + '</button><i class="pmn-timer" aria-hidden="true"></i>';
     bannerEl.querySelector('.n-title').textContent = it.title;
     bannerEl.querySelector('.n-body').textContent = it.body;
+    fillTile(bannerEl, it);
     const ob = bannerEl.querySelector('[data-pmn="banner-open"]'); ob.textContent = T('show');
     (bar && bar.parentElement ? bar.parentElement : doc.body).appendChild(bannerEl);
     const b = bannerEl, m = motion();
@@ -169037,7 +169079,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
     r.className = 'pmn-item n-sev-' + it.severity + ' kind-' + it.kind + (it.read ? '' : ' is-unread');
     r.setAttribute('data-level', it.level);
-    r.querySelector('.pmn-tile').innerHTML = icon(it.icon);
+    fillTile(r, it);
     r.querySelector('.pmn-item-title').textContent = it.title;
     const b = r.querySelector('.pmn-item-body'); b.textContent = it.body; b.hidden = !it.body;
     r.querySelector('.pmn-item-src').textContent = T('src.' + (it.level === 'blocking' ? 'needs' : it.source));
