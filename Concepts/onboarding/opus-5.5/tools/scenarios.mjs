@@ -410,16 +410,16 @@ const ST = () => window.O55.pipStage.of(document.querySelector('#pm-o55-onboardi
 const pip = (d) => d.page.evaluate(() => { const s = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')); return s ? { mood: s.curMood, sleep: !!s.sleepZ, asleep: !!s.ps.asleep, say: s.saying || '', lineId: s.spec && s.spec.lineId, oops: s.spec && s.spec.oops, work: !!(s.spec && s.spec.pip && s.spec.pip.work), props: [...s.props.values()].filter((p) => p.state !== 'out').map((p) => ({ kind: p.spec.kind, preview: !!p.spec.preview })) } : null; });
 const rest = async (d, sel, ms) => { const r = await d.page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; }, sel); for (let i = 0; i < 6; i++) { await d.page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: r.x - 30 + i * 5, y: r.y }); await sleep(30); } await sleep(ms); };
 const away = async (d) => { const r = await d.page.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) #o55-h').getBoundingClientRect(); return { x: b.left + 10, y: b.top + b.height / 2 }; }); await d.page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: r.x, y: r.y }); };
-def('pr1', 'fresh', 'NieR Mode: the checkbox is uncovered and a click turns it on and off (Muse B1)', async (d, A) => {
+def('pr1', 'fresh', 'NieR, the fifth look (Q22): its tile is uncovered, a press picks it and another look leaves it (Muse B1)', async (d, A) => {
   await d.openOnboarding(); await d.primary();
   A.eq(await d.screen(), 'look', 'Pick a look');
-  const hit = await d.state(() => { const c = document.querySelector('#pm-o55-onboarding .o55-niercheck'), r = c.getBoundingClientRect(), t = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return !!t && (t === c || c.contains(t)); });
-  A.ok(hit, 'the checkbox is what a press at its middle reaches');
-  await d.act('pickNier'); await d.settle();
-  A.ok(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-niercheck').getAttribute('aria-checked') === 'true'), 'NieR Mode on');
-  await d.act('pickNier'); await d.settle();
-  A.ok(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-niercheck').getAttribute('aria-checked') === 'false'), 'NieR Mode off again');
-  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding [data-nier-thumb] .o55-tilepip svg')), 'its picture drawn again after the toggles');
+  const hit = await d.state(() => { const c = document.querySelector('#pm-o55-onboarding .o55-tile[data-arg="nier"]'); c.scrollIntoView({ block: 'center' }); const r = c.getBoundingClientRect(), t = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return !!t && (t === c || c.contains(t)); });
+  A.ok(hit, 'the NieR tile is what a press at its middle reaches');
+  await d.act('pickFamily', 'nier'); await d.settle(); await sleep(2500);
+  A.ok(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-tile[data-arg="nier"]').getAttribute('aria-checked') === 'true' && window.PM_THEME.getFamily() === 'nier' && document.documentElement.getAttribute('data-o55-nier') === 'on'), 'NieR picked and painted');
+  await d.act('pickFamily', 'basic'); await d.settle(); await sleep(1000);
+  A.ok(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-tile[data-arg="nier"]').getAttribute('aria-checked') === 'false' && !document.documentElement.hasAttribute('data-o55-nier')), 'Basic again: NieR left');
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding [data-nier-thumb] .o55-tilepip svg')), 'its picture drawn again after the switches');
 });
 def('pr2', 'fresh', 'Welcome: Pip sleeps until a real arrival, then is lifted (Astra M04, Muse m1)', async (d, A) => {
   await d.openOnboarding(); await sleep(4500);
@@ -602,7 +602,7 @@ const spySound = (d) => d.page.evaluate(() => {
   const wrap = (o, k, list) => { const f = o[k]; o[k] = function (...a) { const r = f.apply(this, a); list.push({ a: a[0], r: r && typeof r === 'object' ? (r.played !== undefined ? !!r.played : true) : r, t: performance.now() }); return r; }; };
   wrap(V, 'say', w.say); wrap(V, 'sayTiming', w.timed); wrap(S, 'play', w.play); wrap(V, 'play', w.pip);
 });
-def('pr15', 'fresh', "Audit O6-b: hovering a look tile is silent, NieR Mode too; a click speaks", async (d, A) => {
+def('pr15', 'fresh', "Audit O6-b: hovering a look tile is silent, in NieR too; a click speaks", async (d, A) => {
   await d.openOnboarding(); await d.primary();
   await d.click('#pm-o55-onboarding .o55-layer:not(.o55-out) #o55-h', 'the title'); /* a real press: sound may play from here on */
   await sleep(2500); /* (the screen's own arrival, its palette lowered and landed, is over) */
@@ -611,12 +611,11 @@ def('pr15', 'fresh', "Audit O6-b: hovering a look tile is silent, NieR Mode too;
   let w = await d.state(() => window.__snd);
   A.ok(!w.say.length && w.timed.length > 0 && !w.play.some((x) => x.a === 'hover') && !w.pip.length, 'no voice, tick or kit sound on hover, the lines only timed (' + JSON.stringify({ voiced: w.say.length, timed: w.timed.length, hover: w.play.filter((x) => x.a === 'hover').length, pip: w.pip.map((x) => x.a) }) + ')');
   A.ok(await d.state(() => /\S/.test(document.querySelector('#pm-o55-onboarding .pst-bubble').textContent)), 'the bubble still types the line');
-  await d.act('pickNier'); await d.settle(); await sleep(5000); /* (NieR's switch-over and its line have played out) */
+  await d.act('pickFamily', 'nier'); await d.settle(); await sleep(5000); /* (NieR's switch-over and its line have played out) */
   await d.page.evaluate(() => { const w = window.__snd; w.say.length = 0; w.timed.length = 0; w.play.length = 0; w.pip.length = 0; });
   for (const f of ['friendly', 'glass']) await rest(d, `#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-tile[data-arg="${f}"]`, 1300);
   w = await d.state(() => window.__snd);
   A.ok(!w.say.length && !w.play.some((x) => x.a === 'hover') && !w.pip.some((x) => /hover|ghost|tryOn/.test(x.a)), 'NieR Mode: silent too (' + JSON.stringify({ voiced: w.say.length, hover: w.play.filter((x) => x.a === 'hover').length, pip: w.pip.map((x) => x.a) }) + ')');
-  await d.act('pickNier'); await d.settle(); await sleep(800);
   await d.page.evaluate(() => { window.__snd.say.length = 0; });
   await d.act('pickFamily', 'glass'); await sleep(700);
   w = await d.state(() => window.__snd);
@@ -707,7 +706,7 @@ def('pr21', 'fresh', 'Final check: after 720x900 -> 1390x480 the rail Pip sits o
    spans the rail in every frame (final check F1-3's residual: up to 15 frames at the old spot) */
 for (const look of ['basic-dark', 'glass-dark', 'nier-dark']) def('pr21f-' + look, 'fresh', `Final check F1-3: in ${look}, every frame of a layout change has Pip on its bead and the rope the rail's width`, async (d, A) => {
   await d.openOnboarding();
-  await d.page.evaluate((l) => { const [f, m] = l.split('-'); if (f === 'nier') { window.O55.ui.applyLook('basic', m); if (!window.O55.nierLook.state().on) window.O55.nierLook.toggle('look', null); } else window.O55.ui.applyLook(f, m); }, look);
+  await d.page.evaluate((l) => { const [f, m] = l.split('-'); window.O55.ui.applyLook(f, m); /* NieR is a look since Q22 */ }, look);
   await sleep(f0(look));
   await d.primary(); await d.primary();
   A.eq(await d.screen(), 'where', 'on Computer');
@@ -1075,7 +1074,7 @@ def('x5', 'fresh', 'The look can be changed at any point from beside the sound b
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   A.eq(await d.screen(), 'begin', 'mid-flow');
   await d.click('#pm-o55-onboarding .o55-lookbtn', 'look menu button'); await d.untilElement('#pm-o55-onboarding .o55-lookmenu', 'look menu');
-  A.ok(await d.state(() => document.querySelectorAll('#pm-o55-onboarding .o55-lookopt').length === 4), 'four looks offered');
+  A.ok(await d.state(() => document.querySelectorAll('#pm-o55-onboarding .o55-lookopt[data-o55-do="lookFamily"]').length === 5), 'five looks offered (NieR the fifth, Q22)');
   if (process.env.O55_SNAP) await d.snap(process.env.O55_SNAP);
   await d.click('#pm-o55-onboarding .o55-lookopt[data-arg="retro"]', 'Retro look');
   await until(d, "document.documentElement.getAttribute('data-theme').split('-')[0] === 'retro'", 'Retro look applied'); await d.settle();

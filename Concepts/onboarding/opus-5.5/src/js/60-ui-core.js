@@ -193,7 +193,7 @@
      the pair the theme never leaves the chosen look while the window is open. Nothing is stored here: the look is still
      saved at the end as before, NieR Mode's paint hook still applies, and once the window closes the selected Project
      paints the page again. */
-  const PAINT_FAMILIES = ['basic', 'friendly', 'glass', 'retro'];
+  const PAINT_FAMILIES = ['basic', 'friendly', 'glass', 'retro', 'nier'];
   window.O55_PAINT_PAIR = function paintPair() {
     const root = S.root;
     if (!S.open || !root || root.hidden || root.getAttribute('data-open') !== 'true' || !document.documentElement.hasAttribute('data-o55-open')) return null;
@@ -201,13 +201,19 @@
     if (!d || PAINT_FAMILIES.indexOf(d.theme_family) < 0 || (d.theme_mode !== 'light' && d.theme_mode !== 'dark')) return null;
     return [d.theme_family, d.theme_mode];
   };
+  /* the family asked for (PM_THEME's): during NieR's moment the painted look still shows the old one, and comparing the
+     paint with the pick put the pick back on every repaint, for ever (Q22) */
+  function askedFamily(th) {
+    try { const f = window.PM_THEME.getFamily(); if ((O55.LOOKS || []).includes(f)) return f; } catch (_) { /* the paint */ }
+    return th.chosen;
+  }
   function syncTheme(fromObserver) {
     let th = O55.theme();
     /* While the window is open its look is the one chosen here. Settings reapplies a Project's saved theme when a
        Project is selected (Creating selects the new one), which undid the preview until the look was saved at the
        end, so the look changed twice. Any change that is not the chosen look is put back in the same moment. */
     const want = S.sess && S.sess.drafts && S.sess.drafts.main;
-    if (fromObserver && S.open && want && want.theme_family && (th.chosen !== want.theme_family || th.mode !== want.theme_mode)) {
+    if (fromObserver && S.open && want && want.theme_family && (askedFamily(th) !== want.theme_family || th.mode !== want.theme_mode)) {
       try { window.PM_THEME.setFamily(want.theme_family, { persist: false }); window.PM_THEME.setMode(want.theme_mode, { persist: false }); th = O55.theme(); } catch (_) {}
     }
     /* NieR Mode repaints Basic in ink without changing the painted family, so it is part of the look */
@@ -237,6 +243,12 @@
         if (wrap) { wrap.style.animation = 'none'; wrap.setAttribute('data-o55-entered', ''); }
       }
       renderRail(); refresh(); renderLook();
+      /* into or out of NieR the window has no view transition (Q22): the colours its parts ease in from the old look
+         (NieR's ink tile and menu row fading out over Glass for up to half a second, film q22-switch) end at once, as
+         the page's look cover ends them (js/12-theme-transition.js finishColourTransitions) */
+      if (lastLook.endsWith('-nier') !== look.endsWith('-nier') && !S.vt) {
+        try { S.root.getAnimations({ subtree: true }).forEach((a) => { if (a.transitionProperty && /color|background|border|shadow|fill|stroke|outline/.test(a.transitionProperty)) a.finish(); }); } catch (_) { /* decoration only */ }
+      }
     }
     lastLook = look;
   }
@@ -250,14 +262,15 @@
     /* the look belongs to the whole onboarding, not to one journey's draft (it was lost at the end when it was picked
        while the Connect draft was active) */
     Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: family, theme_mode: mode })); S.save();
-    /* under NieR Mode a family does not change the window (it shows once NieR Mode is off, and the look screen says so):
-       no reveal over a window that stays the same, and no Settings note, because nothing is saved here; the screen and
-       the look menu redraw for the pick themselves (the painted look did not change, so nothing else redraws them) */
-    const now = O55.theme();
-    if (now.chosen === family && now.mode === mode) return;
+    /* the look asked for already (PM_THEME's family: during NieR's moment the paint still shows the old look): nothing
+       to reveal, and no Settings note, because nothing is saved here */
+    const now = O55.theme(), asked = askedFamily(now);
+    if (asked === family && now.mode === mode) return;
     /* repainting the page for a look is expected heavy work: it never counts toward low-resource mode */
     O55.motion.quiet(2500);
-    if (now.nier && now.mode === mode) { apply(); refresh(); return; }
+    /* into or out of NieR (the fifth theme, Q22), also while its moment still plays: NieR's own moment plays inside the
+       window (O55.nierLook.pick) */
+    if ((family === 'nier') !== (asked === 'nier') && O55.nierLook && O55.nierLook.pick) { O55.nierLook.pick(family, mode, originEl); return; }
     if (!document.startViewTransition || O55.motion.reduced() || O55.motion.lowResource) { apply(); return; }
     if (S.vt) { try { S.vt.skipTransition(); } catch (_) {} }
     const r = originEl ? originEl.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
@@ -1054,7 +1067,7 @@
     const n = window.PM_NIER;
     if (n && n.preview && (n.wanted ? n.wanted() : n.on())) { try { n.preview({ on: false }, { within: null, instant: true, sound: false }); } catch (_) {} }
     const th = O55.theme();
-    if (th.chosen !== 'basic' || th.mode !== 'dark') {
+    if (askedFamily(th) !== 'basic' || th.mode !== 'dark') {
       try { window.PM_THEME.setFamily('basic', { persist: false }); window.PM_THEME.setMode('dark', { persist: false }); }
       catch (_) { document.documentElement.setAttribute('data-theme', 'basic-dark'); }
     }
@@ -1068,8 +1081,11 @@
   /* A reopened run shows its own look again (a reload painted the saved theme while the drafts kept the pick): the
      family and mode from the drafts, and NieR Mode from the session (O55.nierLook), still previews */
   function reapplyLook() {
-    const d = S.sess.drafts && S.sess.drafts.main, th = O55.theme();
-    if (d && d.theme_family && (th.chosen !== d.theme_family || th.mode !== d.theme_mode)) {
+    const d = S.sess.drafts && S.sess.drafts.main, th = O55.theme(), l = S.sess.look;
+    /* a run saved before NieR was a theme (Q22) kept NieR as a switch over another look: it comes back as the NieR theme */
+    if (d && l && l.nier === true && d.theme_family !== 'nier') { Object.values(S.sess.drafts).forEach((x) => O55.draft.set(x, { theme_family: 'nier' })); S.save(); }
+    else if (d && l && l.nier === false && d.theme_family === 'nier') { l.nier = true; S.save(); }
+    if (d && d.theme_family && (askedFamily(th) !== d.theme_family || th.mode !== d.theme_mode)) {
       try { window.PM_THEME.setFamily(d.theme_family, { persist: false }); window.PM_THEME.setMode(d.theme_mode, { persist: false }); } catch (_) {}
     }
     if (O55.nierLook && O55.nierLook.reapply) O55.nierLook.reapply(S);

@@ -650,15 +650,9 @@
     ids: LOOKS,
     avail: () => fn(tome(), 'setChromeThemeFamily'),
     now: lookNow,
-    /* a look and a mode in one pick, the way onboarding's look picker writes them */
+    /* a look and a mode in one pick, the way onboarding's look picker writes them (NieR is a family since Q22) */
     set(look, mode) {
-      const N = W('PM_NIER'), t = tome();
-      if (look === 'nier') {
-        if (mode && mode !== lookNow().setMode) t.setChromeThemeMode(mode);
-        if (N && !N.on()) N.set(true);
-        return true;
-      }
-      if (N && N.on()) N.set(false);
+      const t = tome();
       t.setChromeThemeFamily(look);
       if (mode) t.setChromeThemeMode(mode);
       return true;

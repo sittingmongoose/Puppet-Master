@@ -11,7 +11,7 @@ const O55_LOOK_IDS = ['general.visual.accent-color', 'general.visual.animation-s
   'general.visual.line-height', 'general.visual.high-contrast', 'general.visual.focus-indicator', 'general.visual.app-font', 'general.visual.border-width',
   'general.visual.border-radius', 'general.visual.padding-scale', 'general.visual.scrollbar-width', 'general.visual.retro-effects',
   'general.visual.pixel-grid-opacity', 'general.visual.scanline-opacity', 'general.visual.theme', 'general.visual.theme-mode',
-  'general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background'];
+  'general.visual.nier-parts', 'general.visual.nier-background'];
 /* Accent colors: a brighter shade for dark themes, a deeper one for light themes so text on it stays readable. */
 const O55_ACCENTS = {
   Violet: { dark: ['#8b5cf6', '139,92,246'], light: ['#6d28d9', '109,40,217'] },

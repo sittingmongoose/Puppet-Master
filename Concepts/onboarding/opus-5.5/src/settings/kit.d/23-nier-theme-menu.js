@@ -1,60 +1,50 @@
-/* O55 · NieR Mode in the title-bar theme menu (#themeMenu). Injected at runtime (the pinned base is not patched).
-   After the last family row: a divider and one row. Its first line is laid out like a family row: a menuitemcheckbox
-   "NieR Mode" with its checkbox glyph, and at the right, under the families' two swatches, NieR's own swatch (ink and
-   parchment carrying the three kicker squares, hero spec H6), so it lines up with the looks and still reads as another
-   kind of option. Under it, aligned with the label, "Adjust" (named "Adjust NieR look" for assistive tech and its
-   title) opens PM_NIER_CHIPS.popup on the live store; the row adds no width to the menu. The checkbox shows the
-   requested state at once (PM_NIER.set paints on the next frame) and syncs from PM_NIER.onChange. Toggle leaves the
-   menu open; Adjust closes it. Focus never falls to <body>: Escape and Tab close the menu and give focus back to the
-   theme button, and so does picking a look (the base menu closes under the focused row). Both buttons opt out of the
-   page's hover tag: its card covered the row it described ("Choose this option."). The words are copy
-   (nierSettings.themeMenu, through o55NierCopy).
-   The menu's own click handler only acts on .pm6-tt-mode and .pm6-tt-family[data-family]; this row is neither, and
-   its clicks stop on this listener so they never reach that handler. */
+/* O55 · NieR and Pip in the title-bar theme menu (#themeMenu). Injected at runtime (the pinned base is not patched).
+   NieR is the fifth theme since the PM7 build's QA round 2 (Q22, 2026-10-30): its family row is the base menu's own
+   (shell.html, data-family="nier"), picked like the other four. This adds two rows, laid out as menu rows so their hover
+   and focus boxes fit the menu like the family rows' (Q21: the old toggle row, its bordered Adjust pill and a loose
+   "Customize Pip..." did not):
+   - "Adjust NieR..." right under the NieR row, shown while NieR is the chosen theme: NieR's own options (its parts and
+     background), PM_NIER_CHIPS.popup on the live store;
+   - after a divider, "Customize Pip..." with Pip's mark: Pip's parts editor (PM_PIP_EDITOR.popup; S5, lane chatpip).
+   Both close the menu and give focus back to the theme button; so do Escape and Tab, and picking a look (the base menu
+   closes under the focused row). Both opt out of the page's hover tag (its card covered the row it described). The words
+   are copy (nierSettings.themeMenu, pipSettings.themeMenu, through o55NierCopy). The base menu's click handler acts only
+   on .pm6-tt-mode and .pm6-tt-family[data-family]; these rows are neither, and their clicks stop on this listener. */
 (function o55NierThemeMenu() {
-  const BOX = '<svg class="o55-nier-tt-box" viewBox="0 0 14 14" width="13" height="13" aria-hidden="true" focusable="false">'
-    + '<rect x="0.7" y="0.7" width="12.6" height="12.6" fill="none" stroke="currentColor" stroke-width="1.4"/>'
-    + '<rect class="o55-nier-tt-mark" x="3.2" y="3.2" width="7.6" height="7.6" fill="currentColor"/></svg>';
-  const SLIDERS = '<svg class="o55-nier-tt-sliders" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false">'
+  const SLIDERS = '<svg class="o55-nier-tt-sliders" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">'
     + '<path d="M1.5 4h13M1.5 8h13M1.5 12h13" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/>'
     + '<rect x="3.2" y="2.2" width="3.2" height="3.6" fill="currentColor"/>'
     + '<rect x="9.2" y="6.2" width="3.2" height="3.6" fill="currentColor"/>'
     + '<rect x="5.2" y="10.2" width="3.2" height="3.6" fill="currentColor"/></svg>';
-  /* the swatch: parchment in a hairline ink frame, the kicker's three ink squares and its rule (drawn in 18-nier-theme-menu.css
-     from NieR's own tokens through the preview scope, so it shows the same in every look) */
-  const SWATCH = '<span class="o55-nier-tt-swatch" data-o55-nier-preview="light" aria-hidden="true"><i></i><i></i><i></i><b></b></span>';
   const say = (key, fallback) => (typeof o55NierCopy === 'function' ? o55NierCopy('nierSettings.themeMenu.' + key, fallback) : fallback);
   const pipSay = (key, fallback) => (typeof o55NierCopy === 'function' ? o55NierCopy('pipSettings.themeMenu.' + key, fallback) : fallback);
   const esc = v => String(v).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const ROW = () => `<div class="pm6-tt-divider" data-o55-nier-tt="divider" aria-hidden="true"></div>`
-    + `<div class="o55-nier-tt-row" data-o55-nier-tt="row" role="none">`
-    + `<button type="button" class="pm6-tb-menu-item o55-nier-tt-toggle" role="menuitemcheckbox" aria-checked="false" data-o55-nier-tt="toggle" data-pm-hover-exempt="true">${BOX}<span class="pm6-tt-name">${esc(say('toggle', 'NieR Mode'))}</span>${SWATCH}</button>`
-    + `<button type="button" class="o55-nier-tt-adjust" role="menuitem" data-o55-nier-tt="adjust" data-pm-hover-exempt="true" aria-label="${esc(say('adjust', 'Adjust NieR look'))}" title="${esc(say('adjust', 'Adjust NieR look'))}"><span>${esc(say('adjustShort', 'Adjust'))}</span>${SLIDERS}</button>`
-    + `</div>`
-    /* S5 (PM7 build, lane chatpip): under NieR Mode, "Customize Pip…" opens Pip's parts editor (PM_PIP_EDITOR.popup,
-       kit.d/29-pip-editor.js; the local action ui.settings.pip_editor.open). It is in this row's injection and key
-       list so the menu keeps one owner. */
-    + `<button type="button" class="pm6-tb-menu-item o55-pip-tt" role="menuitem" data-o55-nier-tt="pip" data-pm-hover-exempt="true" aria-label="${esc(pipSay('customizeLabel', 'Customize Pip: where it appears, its faces and how it moves'))}"><span class="pm6-tt-name">${esc(pipSay('customize', 'Customize Pip…'))}</span></button>`;
-  const ITEM = '.pm6-tt-mode, .pm6-tt-family, [data-o55-nier-tt="toggle"], [data-o55-nier-tt="adjust"], [data-o55-nier-tt="pip"]';
-  /* null follows the painted state; a boolean is the click's request, shown until onChange agrees */
-  let pending = null;
-
-  function painted() { const n = window.PM_NIER; return !!(n && n.on()); }
-  function shown() {
-    if (pending !== null && painted() === pending) pending = null;
-    return pending === null ? painted() : pending;
+  /* Pip's mark in the painted look (PMLogo, a still mark, decorative: the row's words name it) */
+  const pipMark = () => { try { return window.PMLogo ? window.PMLogo.mark({ px: 16, mood: 'idle', decorative: true }) : ''; } catch (e) { return ''; } };
+  const ADJUST = () => `<button type="button" class="pm6-tb-menu-item o55-nier-tt-adjust" role="menuitem" data-o55-nier-tt="adjust" data-pm-hover-exempt="true" aria-label="${esc(say('adjustLabel', 'Adjust NieR: its pieces and the scene behind the app'))}"${nierChosen() ? '' : ' hidden'}>`
+    + `<span class="o55-tt-ico" aria-hidden="true">${SLIDERS}</span><span class="pm6-tt-name">${esc(say('adjust', 'Adjust NieR…'))}</span></button>`;
+  const PIP = () => `<div class="pm6-tt-divider" data-o55-nier-tt="divider" aria-hidden="true"></div>`
+    + `<button type="button" class="pm6-tb-menu-item o55-pip-tt" role="menuitem" data-o55-nier-tt="pip" data-pm-hover-exempt="true" aria-label="${esc(pipSay('customizeLabel', 'Customize Pip: where it appears, its faces and how it moves'))}">`
+    + `<span class="o55-tt-ico o55-pip-tt-mark" aria-hidden="true" data-look="${esc(window.PMLogo ? window.PMLogo.look() : '')}">${pipMark()}</span><span class="pm6-tt-name">${esc(pipSay('customize', 'Customize Pip…'))}</span></button>`;
+  const ITEM = '.pm6-tt-mode, .pm6-tt-family, [data-o55-nier-tt="adjust"]:not([hidden]), [data-o55-nier-tt="pip"]';
+  /* NieR is the chosen theme (what is asked for: Adjust shows as soon as NieR is picked, before its moment has painted) */
+  function nierChosen() {
+    try { const T = window.PM_THEME; if (T && typeof T.getFamily === 'function') return T.getFamily() === 'nier'; } catch (e) { /* below */ }
+    const n = window.PM_NIER; return !!(n && (n.wanted ? n.wanted() : n.on()));
   }
   function syncBox() {
-    const el = document.querySelector('#themeMenu [data-o55-nier-tt="toggle"]');
-    if (!el) return;
-    const v = shown() ? 'true' : 'false';
-    if (el.getAttribute('aria-checked') !== v) el.setAttribute('aria-checked', v);
-    /* the copy loads after this script: the words follow it once it is there */
-    const name = el.querySelector('.pm6-tt-name'), btn = document.querySelector('#themeMenu [data-o55-nier-tt="adjust"]'), adj = btn && btn.querySelector('span');
-    const n = say('toggle', 'NieR Mode'), a = say('adjustShort', 'Adjust'), full = say('adjust', 'Adjust NieR look');
-    if (name && name.textContent !== n) name.textContent = n;
-    if (adj && adj.textContent !== a) adj.textContent = a;
-    if (btn && btn.getAttribute('aria-label') !== full) { btn.setAttribute('aria-label', full); btn.setAttribute('title', full); }
+    const menu = document.getElementById('themeMenu'); if (!menu) return;
+    const adj = menu.querySelector('[data-o55-nier-tt="adjust"]');
+    if (adj) {
+      const on = nierChosen();
+      if (adj.hidden === on) adj.hidden = !on;
+      /* the copy loads after this script: the words follow it once it is there */
+      const name = adj.querySelector('.pm6-tt-name'), n = say('adjust', 'Adjust NieR…'), full = say('adjustLabel', 'Adjust NieR: its pieces and the scene behind the app');
+      if (name && name.textContent !== n) name.textContent = n;
+      if (adj.getAttribute('aria-label') !== full) adj.setAttribute('aria-label', full);
+    }
+    const mark = menu.querySelector('.o55-pip-tt-mark');
+    if (mark && window.PMLogo && mark.getAttribute('data-look') !== window.PMLogo.look()) { mark.setAttribute('data-look', window.PMLogo.look()); mark.innerHTML = pipMark(); }
   }
   function closeMenu() {
     const menu = document.getElementById('themeMenu');
@@ -66,7 +56,7 @@
 
   function onMenuClick(e) {
     const menu = e.currentTarget;
-    const t = e.target && e.target.closest ? e.target.closest('[data-o55-nier-tt="toggle"], [data-o55-nier-tt="adjust"], [data-o55-nier-tt="pip"]') : null;
+    const t = e.target && e.target.closest ? e.target.closest('[data-o55-nier-tt="adjust"], [data-o55-nier-tt="pip"]') : null;
     if (!t || !menu.contains(t)) return;
     e.preventDefault();
     e.stopImmediatePropagation();
@@ -76,19 +66,10 @@
       if (ed && typeof ed.popup === 'function') ed.popup({ from: t, returnFocus: () => document.getElementById('themeSelect') });
       return;
     }
-    if (t.getAttribute('data-o55-nier-tt') === 'adjust') {
-      closeMenu();
-      const chips = window.PM_NIER_CHIPS, N = window.PM_NIER;
-      /* the menu is closed, so focus comes back to the theme button */
-      if (chips && typeof chips.popup === 'function' && N && typeof N.store === 'function') chips.popup({ store: N.store('live'), from: t, returnFocus: () => document.getElementById('themeSelect') });
-      return;
-    }
-    const N = window.PM_NIER;
-    if (!N || typeof N.set !== 'function') return;
-    const next = !shown();
-    pending = next;
-    syncBox();
-    if (N.set(next) === false) { pending = null; syncBox(); }
+    closeMenu();
+    const chips = window.PM_NIER_CHIPS, N = window.PM_NIER;
+    /* the menu is closed, so focus comes back to the theme button */
+    if (chips && typeof chips.popup === 'function' && N && typeof N.store === 'function') chips.popup({ store: N.store('live'), from: t, returnFocus: () => document.getElementById('themeSelect') });
   }
   /* focus goes back to the theme button when the menu has closed under it (on the next tick, after the base's close) */
   function refocus(menu, force) {
@@ -140,12 +121,14 @@
   function inject() {
     const menu = document.getElementById('themeMenu');
     if (!menu) return false;
-    if (!menu.querySelector('[data-o55-nier-tt="row"]')) {
-      menu.querySelectorAll('[data-o55-nier-tt="divider"], [data-o55-nier-tt="pip"]').forEach(n => n.remove());
-      const families = menu.querySelectorAll('.pm6-tt-family');
-      const last = families[families.length - 1];
-      if (last) last.insertAdjacentHTML('afterend', ROW());
-      else menu.insertAdjacentHTML('beforeend', ROW());
+    if (!menu.querySelector('[data-o55-nier-tt="adjust"]')) {
+      const nier = menu.querySelector('.pm6-tt-family[data-family="nier"]');
+      const families = menu.querySelectorAll('.pm6-tt-family'), last = families[families.length - 1];
+      (nier || last || menu).insertAdjacentHTML(nier || last ? 'afterend' : 'beforeend', ADJUST());
+    }
+    if (!menu.querySelector('[data-o55-nier-tt="pip"]')) {
+      menu.querySelectorAll('[data-o55-nier-tt="divider"]').forEach(n => n.remove());
+      menu.insertAdjacentHTML('beforeend', PIP());
     }
     wire(menu);
     syncBox();
@@ -195,6 +178,10 @@
     if (N && typeof N.onChange === 'function' && !boot.listening) {
       boot.listening = true;
       N.onChange(() => syncBox());
+      /* a theme pick (any family) shows or hides Adjust NieR; a look change redraws Pip's mark */
+      const T = document.getElementById('themeSelect');
+      if (T) T.addEventListener('change', () => syncBox());
+      if (window.PMLogo && typeof window.PMLogo.onLook === 'function') window.PMLogo.onLook(() => syncBox());
     }
     inject();
     watch();

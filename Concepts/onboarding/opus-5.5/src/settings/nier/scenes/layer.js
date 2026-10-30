@@ -167,17 +167,17 @@ function o55ScnFollow(on) {
 /* ---------- triggers ------------------------------------------------------------------------------------------------- */
 /* NieR switched on or off, or its parts changed: the <html> attributes (the engine writes them). */
 new MutationObserver(() => o55ScnSoon(0)).observe(document.documentElement, { attributes: true, attributeFilter: ['data-o55-nier'] });
-/* The Background row, and NieR Mode itself, changed in Settings. */
+/* The Background row, and the theme (into or out of NieR), changed in Settings. */
 const o55ScnCommit = commitSettingValue;
 commitSettingValue = function (id, value) {
   const ok = o55ScnCommit.apply(this, arguments);
-  if (id === O55_SCN_BG_ID || id === 'general.visual.nier-mode') o55ScnSoon(0);
+  if (id === O55_SCN_BG_ID || id === 'general.visual.theme') o55ScnSoon(0);
   return ok;
 };
 const o55ScnRestore = restoreSettingDefault;
 restoreSettingDefault = function (id) {
   const ok = o55ScnRestore.apply(this, arguments);
-  if (id === O55_SCN_BG_ID || id === 'general.visual.nier-mode') o55ScnSoon(0);
+  if (id === O55_SCN_BG_ID || id === 'general.visual.theme') o55ScnSoon(0);
   return ok;
 };
 /* Settings Home is ground the scene may show through (the other Settings pages keep their ground: rows and help text
