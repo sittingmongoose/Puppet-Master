@@ -147,6 +147,11 @@ html[data-o55-nier="on"] body[data-theme$="-dark"] { --pip-paper: var(--surface)
 .pmx-empty-line { display: flex; align-items: center; gap: 10px; }
 .pmx-empty-line > .pmx-empty-pip { margin: -6px 0 -4px; }
 
+/* ---------------------------------------------------------------- You (Q16)
+   Retro's You holds Pip's control in its own colours: u / v the front and back sticks of the sprite (module-shell PX_YOU) */
+.pmx-pp-xu { fill: var(--pip-ctl); }
+.pmx-pp-xv { fill: var(--pip-back); }
+
 /* ---------------------------------------------------------------- the sheet's Pip */
 /* by the close button, level with it (Jared, 2026-10-29: 10 px lower than the first cut), hanging over the sheet's head */
 .pmx-pip-host { flex: none; display: block; position: relative; width: 92px; height: 66px; margin: -10px 8px -28px 12px; align-self: flex-start; pointer-events: none; }
