@@ -686,13 +686,13 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
 
           <!-- stubs so the shared shell's activity bar can switch without errors -->
 
-          <div class="fm-ctx pm-ctx-menu" id="fileContextMenu" role="menu" aria-label="File actions">
+          <div class="fm-ctx pm-ctx-menu pm-sprout" id="fileContextMenu" role="menu" aria-label="File actions">
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.new_file" data-demo-arg="cmd.file.new_file -> prompting name (single target)"><i data-ico="file" class="pm-ico"></i><span class="fm-ctx-label">New file</span></button>
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.new_folder" data-demo-arg="cmd.file.new_folder -> prompting name (single target)"><i data-ico="folder" class="pm-ico"></i><span class="fm-ctx-label">New folder</span></button>
           <div class="fm-ctx-sep" role="separator"></div>
           <div class="fm-ctx-wrap" data-sub>
           <button class="fm-ctx-item" role="menuitem" aria-haspopup="true"><i data-ico="external" class="pm-ico"></i><span class="fm-ctx-label">Open with…</span><i data-ico="chevR" class="pm-ico fm-ctx-caret"></i></button>
-          <div class="fm-ctx-sub" role="menu" aria-label="Open with">
+          <div class="fm-ctx-sub pm-sprout pm-sprout-edge" role="menu" aria-label="Open with">
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.open_with" data-demo-arg="cmd.file.open_with -> source_editor"><i data-ico="edit" class="pm-ico"></i><span class="fm-ctx-label">Source editor</span></button>
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.open_with" data-demo-arg="cmd.file.open_with -> image_viewer"><i data-ico="camera" class="pm-ico"></i><span class="fm-ctx-label">Image viewer</span></button>
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.open_with" data-demo-arg="cmd.file.open_with -> workspace_preview (rendered; source stays canonical)"><i data-ico="external" class="pm-ico"></i><span class="fm-ctx-label">Workspace preview</span></button>
@@ -709,7 +709,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
           <button class="fm-ctx-item" role="menuitem" id="fmCtxPaste" data-demo-action="cmd.file.paste_nodes" data-demo-arg="cmd.file.paste_nodes -> destination = folder/root (copy|move)"><i data-ico="clipboard" class="pm-ico"></i><span class="fm-ctx-label">Paste</span><span class="fm-ctx-key">Ctrl+V</span></button>
           <div class="fm-ctx-wrap" data-sub>
           <button class="fm-ctx-item" role="menuitem" aria-haspopup="true"><i data-ico="copy" class="pm-ico"></i><span class="fm-ctx-label">Copy path</span><i data-ico="chevR" class="pm-ico fm-ctx-caret"></i></button>
-          <div class="fm-ctx-sub" role="menu" aria-label="Copy path">
+          <div class="fm-ctx-sub pm-sprout pm-sprout-edge" role="menu" aria-label="Copy path">
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> relative (exact value via clipboard helper)"><i data-ico="copy" class="pm-ico"></i><span class="fm-ctx-label">Copy relative path</span></button>
           <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> absolute (exact value via clipboard helper)"><i data-ico="copy" class="pm-ico"></i><span class="fm-ctx-label">Copy full path</span></button>
           </div>

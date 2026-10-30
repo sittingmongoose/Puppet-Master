@@ -233,22 +233,20 @@
       if (c.up) { menu.style.top = 'auto'; menu.style.bottom = 'calc(100% + 6px)'; }
       else { menu.style.bottom = 'auto'; menu.style.top = 'calc(100% + 6px)'; }
     }
+    /* the menus open and close through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js); this file places them
+       and writes the corner each grows from (positionRail / positionBottom / position / openAt) */
     function close(menu, instant) {
       if (!menu.classList.contains('is-open') && !menu.classList.contains('is-closing')) return;
-      menu.classList.remove('is-open');
-      menu.classList.add('is-closing');
       var trig = menu._pmTrigger;
       if (trig) trig.setAttribute('aria-expanded', 'false');
       markMenuOpen(menu, false);
-      var done = function () { menu.classList.remove('is-closing'); restoreHome(menu); };
-      if (instant || reduce()) done(); else setTimeout(done, 240);
+      window.PM6_SPROUT.close(menu, function () { restoreHome(menu); }, { instant: !!instant });
       var i = openMenus.indexOf(menu);
       if (i !== -1) openMenus.splice(i, 1);
     }
     function open(menu, anchorRect, instant) {
       closeAll(instant);
-      menu.classList.remove('is-closing');
-      menu.classList.add('is-open');
+      window.PM6_SPROUT.open(menu);
       if (inBottom(menu)) {
         positionBottom(menu);
         requestAnimationFrame(function () { positionBottom(menu); });
@@ -314,8 +312,7 @@
       menu.style.position = 'fixed';
       menu.style.left = '0px'; menu.style.top = '0px';
       menu.style.right = 'auto'; menu.style.bottom = 'auto';
-      menu.classList.remove('is-closing');
-      menu.classList.add('is-open');
+      window.PM6_SPROUT.open(menu);
       var w = menu.offsetWidth || 210, h = menu.offsetHeight || 200;
       var vw = window.innerWidth, vh = window.innerHeight;
       var fx = Math.min(x, vw - w - 8);
@@ -324,6 +321,7 @@
       menu.style.top = fy + 'px';
       menu.style.setProperty('--pm6-sprout-ox', (x > vw / 2 ? '88%' : '12%'));
       menu.style.setProperty('--pm6-sprout-oy', (fy === y ? '0%' : '100%'));
+      menu.style.setProperty('--pm6-sprout-ty', (fy === y ? '-10px' : '10px'));
       openMenus.push(menu);
     }
     document.addEventListener('click', function (ev) {
@@ -1370,16 +1368,19 @@
        relative to offsetParent, which breaks once the rail menu portals to
        body. PMMenu.positionRail owns FM root menu placement. */
     (function submenus() {
-      function closeAllSub() { ctx.querySelectorAll('.fm-ctx-wrap.open').forEach(function (w) { w.classList.remove('open'); }); }
+      /* a submenu opens and closes through the menu sprout too, from the edge facing its row */
+      function openSub(w) { w.classList.add('open'); var s = w.querySelector(':scope > .fm-ctx-sub'); if (s) window.PM6_SPROUT.open(s, null, w.querySelector(':scope > .fm-ctx-item')); }
+      function closeSub(w) { w.classList.remove('open'); var s = w.querySelector(':scope > .fm-ctx-sub'); if (s) window.PM6_SPROUT.close(s); }
+      function closeAllSub() { ctx.querySelectorAll('.fm-ctx-wrap.open').forEach(closeSub); }
       ctx.querySelectorAll('.fm-ctx-wrap[data-sub]').forEach(function (wrap) {
         var trig = wrap.querySelector(':scope > .fm-ctx-item');
-        wrap.addEventListener('mouseenter', function () { closeAllSub(); wrap.classList.add('open'); });
-        wrap.addEventListener('mouseleave', function () { wrap.classList.remove('open'); });
-        if (trig) trig.addEventListener('click', function (ev) { ev.stopPropagation(); wrap.classList.toggle('open'); });
+        wrap.addEventListener('mouseenter', function () { closeAllSub(); openSub(wrap); });
+        wrap.addEventListener('mouseleave', function () { closeSub(wrap); });
+        if (trig) trig.addEventListener('click', function (ev) { ev.stopPropagation(); if (wrap.classList.contains('open')) closeSub(wrap); else openSub(wrap); });
       });
       ctx.addEventListener('keydown', function (ev) {
-        if (ev.key === 'ArrowRight') { var w = ev.target.closest('.fm-ctx-wrap[data-sub]'); if (w) { w.classList.add('open'); var f = w.querySelector('.fm-ctx-sub .fm-ctx-item'); if (f) f.focus(); ev.preventDefault(); } }
-        else if (ev.key === 'ArrowLeft' || ev.key === 'Escape') { var o = ctx.querySelector('.fm-ctx-wrap.open'); if (o) { o.classList.remove('open'); var t = o.querySelector(':scope > .fm-ctx-item'); if (t) t.focus(); ev.preventDefault(); } }
+        if (ev.key === 'ArrowRight') { var w = ev.target.closest('.fm-ctx-wrap[data-sub]'); if (w) { openSub(w); var f = w.querySelector('.fm-ctx-sub .fm-ctx-item'); if (f) f.focus(); ev.preventDefault(); } }
+        else if (ev.key === 'ArrowLeft' || ev.key === 'Escape') { var o = ctx.querySelector('.fm-ctx-wrap.open'); if (o) { closeSub(o); var t = o.querySelector(':scope > .fm-ctx-item'); if (t) t.focus(); ev.preventDefault(); } }
       });
       ctx.addEventListener('pm-ctx-open', closeAllSub);
     })();

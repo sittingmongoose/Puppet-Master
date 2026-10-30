@@ -41,7 +41,7 @@ function o55CollectScalable() {
     for (const r of rules) {
       if (r.type === 1 && r.style) {
         const pick = {};
-        for (const p of ['font-size', 'line-height', 'transition-duration', 'animation-duration']) {
+        for (const p of ['font-size', 'line-height', 'transition-duration', 'transition-delay', 'animation-duration']) {
           const v = r.style.getPropertyValue(p); if (!v || /^(normal|inherit|initial|unset|revert|0s?|auto)$/.test(v.trim())) continue;
           pick[p] = [v.trim(), r.style.getPropertyPriority(p)];
         }
@@ -63,13 +63,16 @@ const o55SplitTop = v => { const parts = []; let depth = 0, cur = ''; for (const
 function o55ScaledValue(p, v, k) {
   if (p === 'line-height' && /^[\d.]+$/.test(v)) return `calc(${v} * ${k})`;
   if (p === 'font-size' && /^(?:larger|smaller|x*-?small|medium|x*-?large|\d+(?:\.\d+)?%|[\d.]+em)$/.test(v)) return null; // relative: follows the parent
-  if (/^(?:transition|animation)-duration$/.test(p)) return o55SplitTop(v).map(x => (/^0(?:\.0+)?m?s$/.test(x) ? x : `calc(${x} * ${k})`)).join(', ');
+  if (/^(?:transition-(?:duration|delay)|animation-duration)$/.test(p)) return o55SplitTop(v).map(x => (/^0(?:\.0+)?m?s$/.test(x) ? x : `calc(${x} * ${k})`)).join(', ');
   return `calc(${v} * ${k})`;
 }
 function o55PaintScales(text, line, speed) {
   const key = `${text}|${line}|${speed}`; if (key === o55ScaleKey) return; o55ScaleKey = key;
   if (text === 1 && line === 1 && speed === 1) { if (o55ScaleSheet) { o55ScaleSheet.remove(); o55ScaleSheet = null; } return; }
-  const k = { 'font-size': text, 'line-height': line, 'transition-duration': speed, 'animation-duration': speed };
+  /* a transition's delay scales with its duration, so a late fade or a visibility deadline keeps its place in the motion
+     it belongs to (the menu sprout's close: its 175 ms fade delay and 220 ms visibility deadline against its 220 ms
+     collapse) */
+  const k = { 'font-size': text, 'line-height': line, 'transition-duration': speed, 'transition-delay': speed, 'animation-duration': speed };
   const blocks = [];
   for (const r of o55CollectScalable()) {
     const decl = Object.entries(r.pick).filter(([p]) => k[p] !== 1).map(([p, [v, imp]]) => { const s = o55ScaledValue(p, v, k[p]); return s ? `${p}:${s}${imp ? ' !important' : ''}` : ''; }).filter(Boolean).join(';');

@@ -276,14 +276,15 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-r
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog:not(.demo-dialog):not(.pmx-sheet) { transform-origin: 0 0 !important; }
 /* the menus are the menu sprout's (.pm-sprout, PM6_SPROUT): as PMConcept7's Slice part does it for every sprouting
    menu (its 14-nier-parts.css, which this page does not carry), their sprout becomes identity and scale carries the slice
-   both ways: an opening unfolds from a 1px line with the flicker step, a closing folds back to one */
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm-sprout {
+   both ways: an opening unfolds from a 1px line with the flicker step, a closing folds back to one (not in a drag,
+   where the sprout contract's hold lands it) */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced):not(.pm-resizing) .overlay-menu.pm-sprout {
   --pm6-sprout-ox: 50% !important; --pm6-sprout-oy: 50% !important; --pm6-sprout-tx: 0px !important; --pm6-sprout-ty: 0px !important;
   --pm6-sprout-sx: 1 !important; --pm6-sprout-sy: 1 !important;
   scale: 1 .006;
   transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms, visibility 0s linear 200ms !important;
 }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm-sprout.is-open:not(.is-closing) { scale: none; transition: none !important; animation: o55np-slice 300ms linear backwards; }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced):not(.pm-resizing) .overlay-menu.pm-sprout.is-open:not(.is-closing) { scale: none; transition: none !important; animation: o55np-slice 300ms linear backwards; }
 @keyframes o55np-slice {
   0% { scale: 1 .006; opacity: 1; animation-timing-function: cubic-bezier(.2, .85, .25, 1); }
   58% { scale: 1 1; opacity: 1; animation-timing-function: step-end; }

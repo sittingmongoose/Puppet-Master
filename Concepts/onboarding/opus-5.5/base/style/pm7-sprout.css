@@ -65,12 +65,15 @@
   transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
   visibility: visible;
   pointer-events: auto;
-  transition:
-    opacity 140ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
-    transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-    visibility 0s,
+  /* the open fade is a family's input (--pm6-sprout-fade-in, --pm6-sprout-fade-ease; Home, Usage and the chat keep their
+     160 ms); written as longhands so Animation speed's sheet (kit.d/17-look.js) rescales them as it does the rest */
+  transition-property: opacity, transform, visibility, height;
+  transition-duration: var(--pm6-sprout-fade-in, 140ms), 300ms, 0s, 340ms;
+  transition-timing-function: var(--pm6-sprout-fade-ease, var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))),
+    cubic-bezier(0.22, 1.55, 0.36, 1), linear,
     /* springy height for search-filter resize bounce */
-    height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
+    cubic-bezier(0.22, 1.72, 0.36, 1);
+  transition-delay: 0s;
 }
 /* the close: solid through most of the collapse, then a late, tiny fade, into the same corner the open set */
 .pm-sprout.is-closing,
@@ -123,11 +126,9 @@
 /* option-count resize: stronger height spring than search-filter bounce */
 .pm-sprout.pm-sprout-edge.is-open,
 .pm6-chat-effort-popout-portal.is-open {
-  transition:
-    opacity 140ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
-    transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-    visibility 0s,
-    height 360ms cubic-bezier(0.22, 1.78, 0.36, 1);
+  transition-duration: var(--pm6-sprout-fade-in, 140ms), 300ms, 0s, 360ms;
+  transition-timing-function: var(--pm6-sprout-fade-ease, var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))),
+    cubic-bezier(0.22, 1.55, 0.36, 1), linear, cubic-bezier(0.22, 1.78, 0.36, 1);
 }
 /* Reduce motion: instant show and hide, the same end state (Settings' switch, and the system setting for .pm-sprout) */
 [data-motion="reduced"] .pm-sprout,
@@ -152,5 +153,12 @@
   .pm-sprout { transition: none !important; transform: none !important; }
   .pm-sprout.is-size-bounce { animation: none !important; }
 }
-/* the drag hold: no menu moves inside a resize drag (body.pm-resizing); one caught mid-flight lands at once */
-body.pm-resizing .pm-sprout { transition: none !important; animation: none !important; }
+/* the drag hold: no menu moves inside a resize drag (body.pm-resizing); every consumer, whatever its class, caught
+   mid-flight (opening, closing, a size bounce or NieR's slice) lands at once. :root and the doubled class lift it over
+   the Slice part's own !important transitions. */
+:root body.pm-resizing.pm-resizing :is(.pm-sprout, .pm6-chat-more-menu, .pm6-tb-menu, .context-hover-module, .context-lens-popover,
+  .wt-bind-dropdown, .pm51-popout, .pm6-chat-mini-popout-portal, .pm6-chat-effort-popout-portal,
+  .pm6-chat-mode-popout-portal, .pm6-chat-persona-popout-portal, .pm6-chat-pt-popout-portal) {
+  transition: none !important;
+  animation: none !important;
+}

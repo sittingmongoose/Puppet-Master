@@ -2489,10 +2489,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         continue;
       }
       sprouted.add(el); sproutKey.set(el,key);
-      const anchor=el.getAttribute('data-overlay')==='sidecar'
-        ? document.querySelector(`#pmOverlayRoot > [data-overlay="root-menu"] [data-submenu="${CSS.escape(state.menu?.sub||'')}"]`)
-        : state.menu&&document.querySelector(`[data-menu-anchor="${CSS.escape(state.menu.anchor)}"]`);
-      SPROUT.open(el,null,anchor,{display:false});
+      /* a root menu grows from its trigger's centre across the edge facing it; a sidecar from the edge facing its root
+         menu, 28 % down (the corners the chat's menus have always opened from) */
+      if(el.getAttribute('data-overlay')==='sidecar'){
+        const right=state.menu?.side==='right';
+        SPROUT.open(el,null,null,{display:false,origin:{ox:right?'0%':'100%',oy:'28%',tx:right?'-10px':'0px',ty:'0px',sx:'0.48',sy:'0.72',mark:right?'l':'r'}});
+      } else {
+        SPROUT.open(el,null,state.menu&&document.querySelector(`[data-menu-anchor="${CSS.escape(state.menu.anchor)}"]`),{display:false,origin:'trigger'});
+      }
     }
   }
   /* a dropped menu leaves the overlay root (nothing finds, hovers or counts it there: its hooks go), keeps its place and

@@ -21,7 +21,7 @@
   overscroll-behavior: contain;
   scrollbar-width: thin;
 }
-.pmw-menu { display: flex; flex-direction: column; outline: none; }
+.pmw-menu { display: flex; flex-direction: column; outline: none; --pm6-sprout-fade-in: 160ms; --pm6-sprout-fade-ease: cubic-bezier(.2, .75, .25, 1); }
 .pmw-mhead { display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 6px 8px 7px; margin: -2px 0 4px; border-bottom: 1px solid var(--pmw-pop-line); }
 .pmw-mhead strong { font-size: 13px; font-weight: 650; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pmw-mmeta { font-size: 12px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }
