@@ -35,8 +35,10 @@ async function check(n, name, fn) {
   let ok = false, note = '';
   try { const r = await fn(); ok = r === true || (r && r.ok === true); note = r && r.note ? r.note : (typeof r === 'string' ? r : ''); }
   catch (e) { note = 'threw: ' + String(e.message || e).slice(0, 200); }
-  results.push({ n, name, ok, note });
-  console.log((ok ? 'PASS ' : 'FAIL ') + String(n).padStart(2) + ' ' + name + (note ? ' — ' + note : ''));
+  /* the look each check ended in: a check that leaves the requested look would run every later one in another */
+  const look = await page.evaluate(() => document.documentElement.getAttribute('data-theme') + (document.documentElement.getAttribute('data-o55-nier') === 'on' ? '+nier' : '')).catch(() => '?');
+  results.push({ n, name, ok, note, look });
+  console.log((ok ? 'PASS ' : 'FAIL ') + String(n).padStart(2) + ' [' + look + '] ' + name + (note ? ' — ' + note : ''));
 }
 const ev = (fn, arg) => page.evaluate(fn, arg);
 const scenario = async (name) => { await ev((n) => window.PM_WORK.scenario(n), name); await sleep(500); };
@@ -48,7 +50,15 @@ const closeActivity = () => ev(() => { const x = document.querySelector('#pmRoot
 try {
   await page.goto(url + (url.includes('?') ? '&' : '?') + 'o55=off', { waitUntil: 'load', timeout: 120000 });
   await page.waitForFunction(() => !!(window.PM_WORK && window.PM7_WORK_UI && window.PM56_DEMO && window.PM_THEME), null, { timeout: 120000 });
-  await ev(([f, m]) => { if (window.PM_NIER && f !== 'nier') window.PM_NIER.set(false, { sound: false }); window.PM_THEME.setFamily(f === 'nier' ? 'basic' : f, { persist: false }); window.PM_THEME.setMode(m, { persist: false }); if (window.PM_NIER && f === 'nier') window.PM_NIER.set(true, { sound: false }); }, [fam, mode]);
+  /* the look is saved the way the look menu and Demo Studio save it (PM7_SETTINGS_TOME), not only previewed: Settings
+     re-applies the saved look when it opens (check 25 opens it), and a preview-only look ran every later check in Basic */
+  await ev(([f, m]) => {
+    const fam = f === 'nier' ? 'basic' : f, tome = window.PM7_SETTINGS_TOME;
+    if (window.PM_NIER && f !== 'nier') window.PM_NIER.set(false, { sound: false });
+    window.PM_THEME.setFamily(fam, { persist: false }); window.PM_THEME.setMode(m, { persist: false });
+    if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(fam); tome.setChromeThemeMode(m); }
+    if (window.PM_NIER && f === 'nier') window.PM_NIER.set(true, { sound: false });
+  }, [fam, mode]);
   await sleep(1500);
   await ev(() => window.PM56_DEMO.selectThread('query'));
   await scenario('busy');
@@ -504,11 +514,46 @@ try {
     const domOk = dom.every((d) => d.head && d.head === d.rail);
     return { ok: bad.length === 0 && domOk, note: (bad.length ? bad.slice(0, 3).join(' | ') + ' ' : '') + JSON.stringify(dom) };
   });
+  /* --------------------------------------------------------------- final check F3-4 (audit cycle 2) */
+  await check(42, 'The Stop and Quit lists\' boxes show their state in this look: checked is a filled box with a tick, unchecked an empty one, each at least 3:1 against what it sits on; a real click turns one off and on (F3-4)', async () => {
+    const res = [];
+    for (const which of ['stop', 'quit']) {
+      await ev((w) => (w === 'stop' ? window.PM7_WORK_UI.confirmPlatform() : window.PM7_WORK_UI.quit()), which); await sleep(600);
+      /* Quit opens on Keep running, every box off; choosing to stop some turns them on */
+      if (which === 'quit') { await clickAt('#pm7-work-dialog [data-choice="stop_selected"]'); await sleep(250); }
+      const sel = '#pm7-work-dialog .wk-dialog-list li:not(.is-off) input[type=checkbox]';
+      const id = await ev((s) => { const x = [...document.querySelectorAll(s)][1]; return x ? x.getAttribute('data-id') : null; }, sel);
+      if (!id) { await ev(() => document.querySelector('#pm7-work-dialog [data-x="cancel"]').click()); res.push({ which, none: true }); continue; }
+      const box = '#pm7-work-dialog input[data-id="' + id + '"]';
+      await clickAt(box); await sleep(250); await page.mouse.move(5, Math.round(H / 2)); await sleep(200);
+      const m = await ev(([box, sel]) => {
+        const cv = document.createElement('canvas'); cv.width = cv.height = 1; const g = cv.getContext('2d', { willReadFrequently: true });
+        const rgb = (c, under) => { g.clearRect(0, 0, 1, 1); if (under) { g.fillStyle = under; g.fillRect(0, 0, 1, 1); } g.fillStyle = c; g.fillRect(0, 0, 1, 1); return [...g.getImageData(0, 0, 1, 1).data].slice(0, 3); };
+        const lin = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+        const L = (p) => 0.2126 * lin(p[0]) + 0.7152 * lin(p[1]) + 0.0722 * lin(p[2]);
+        const cr = (a, b) => { const x = L(a), y = L(b); return +((Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05)).toFixed(2); };
+        const off = document.querySelector(box), on = [...document.querySelectorAll(sel)].find((x) => x.checked);
+        const plate = rgb(getComputedStyle(document.querySelector('#pm7-work-dialog')).backgroundColor, getComputedStyle(document.body).backgroundColor);
+        const fill = rgb(getComputedStyle(on).backgroundColor, 'rgb(' + plate + ')'), tick = rgb(getComputedStyle(on, '::after').borderRightColor, 'rgb(' + fill + ')');
+        const ring = rgb(getComputedStyle(off).borderTopColor, 'rgb(' + plate + ')'), offFill = rgb(getComputedStyle(off).backgroundColor, 'rgb(' + plate + ')');
+        return { offChecked: off.checked, fillPlate: cr(fill, plate), tickFill: cr(tick, fill), ringPlate: cr(ring, plate), offFillPlate: cr(offFill, plate), offTick: getComputedStyle(off, '::after').content };
+      }, [box, sel]);
+      await clickAt(box); await sleep(250);
+      const back = await ev((box) => document.querySelector(box).checked, box);
+      await ev(() => document.querySelector('#pm7-work-dialog [data-x="cancel"]').click()); await sleep(300);
+      res.push({ which, ...m, back });
+    }
+    const ok = res.every((r) => r.none || (r.offChecked === false && r.back === true && r.fillPlate >= 3 && r.tickFill >= 3 && r.ringPlate >= 3 && r.offFillPlate < 1.5 && /none|normal/.test(r.offTick)));
+    const theme = await ev(() => document.documentElement.getAttribute('data-theme') + (document.documentElement.getAttribute('data-o55-nier') === 'on' ? ' nier' : ''));
+    return { ok: ok && res.some((r) => !r.none), note: theme + ' ' + JSON.stringify(res) };
+  });
 } finally {
   const failed = results.filter((r) => !r.ok).length;
-  writeFileSync(join(out, 'work-checks.json'), JSON.stringify({ page: url, look: fam + '-' + mode, width: W, results, errors }, null, 1));
+  const wantLook = (fam === 'nier' ? 'basic-' + mode + '+nier' : fam + '-' + mode), drift = results.filter((r) => r.look !== wantLook);
+  if (drift.length) console.log('LOOK DRIFT: ' + drift.length + ' checks ended outside ' + wantLook + ': ' + drift.slice(0, 5).map((r) => r.n + '=' + r.look).join(', '));
+  writeFileSync(join(out, 'work-checks.json'), JSON.stringify({ page: url, look: fam + '-' + mode, width: W, results, errors, drift: drift.map((r) => r.n) }, null, 1));
   console.log(`${results.length - failed}/${results.length} passed; ${errors.length} page errors` + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));
   await ctx.close().catch(() => {});
   await browser.close().catch(() => {});
-  process.exitCode = failed || errors.length ? 1 : 0;
+  process.exitCode = failed || errors.length || drift.length ? 1 : 0;
 }
