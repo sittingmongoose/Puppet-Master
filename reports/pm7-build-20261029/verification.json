@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.pm7_plans_verification.v1",
-  "source_commit": "b3ea621573c5a4c99834a383e76ee9ec183df9e4",
-  "aggregate_attribution_commit": "d0f9a0e28ceaeb380c5a462df95e5429e0ee7331",
+  "source_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
+  "aggregate_attribution_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
   "label_plan_commit": "7b706684d8",
   "late_label_correction_checks": "Historical focused label checks at 7b706684d8/543a85e5ff; current decision-amendment checks also preserve the final label-storage contract.",
   "integration_guard": {
@@ -23,9 +23,9 @@
     "companion_fix1_guard_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.log"
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-10-30T13:39:58.542557+00:00",
+  "recorded_at_utc": "2026-10-30T14:03:43.205006+00:00",
   "native_runtime_certification": false,
-  "step4": "GUI_70b30f482f_exact_anchor_10_focused_pass_aggregate_queued",
+  "step4": "final_GUI70_Jared_rulings_exact_anchor_full_dry_complete",
   "counts": {
     "settings": 1011,
     "status_keys": 22,
@@ -161,11 +161,43 @@
       ],
       "exit": 0,
       "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-standalone-builder.log"
+    },
+    {
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "run-gates",
+        "--subcheck-timeout-seconds",
+        "600",
+        "--report",
+        "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.json"
+      ],
+      "exit": 1,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.json"
+    },
+    {
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-landing-check.py",
+        "--base",
+        "origin/main",
+        "--json",
+        "--keep-check-reports",
+        "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports"
+      ],
+      "exit": 1,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-landing.json"
     }
   ],
   "dry": {
-    "verified_commit": "d0f9a0e28ceaeb380c5a462df95e5429e0ee7331",
-    "applies_to_latest_fix": false,
+    "verified_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
+    "applies_to_latest_fix": true,
     "blocking": 0,
     "infrastructure": 0,
     "baseline_currency": {
@@ -180,7 +212,7 @@
     },
     "new_branch_nonstale": 0,
     "new_outside_branch_nonstale": 8,
-    "on_branch_stale_rows": 15428,
+    "on_branch_stale_rows": 15478,
     "on_branch_nonstale_rows": 0,
     "pre_existing_rows": 0,
     "grown_buckets": 0,
@@ -194,8 +226,8 @@
       "current_snapshot_live_bytes_mismatch": 54,
       "current_snapshot_live_line_count_mismatch": 48,
       "current_snapshot_live_sha256_mismatch": 54,
-      "current_snapshot_live_span_metadata_mismatch": 13375,
-      "current_snapshot_span_sha256_mismatch": 146,
+      "current_snapshot_live_span_metadata_mismatch": 13423,
+      "current_snapshot_span_sha256_mismatch": 148,
       "event_authority_currentness_source_drift": 74,
       "pnc019_source_hash_stale": 14,
       "stale_batch_report_sha256_after": 149,
@@ -214,8 +246,8 @@
     "validate_audit_closure"
   ],
   "protected_governance_changes": [],
-  "clean_committed_shard_check": "r2-final-shards-check.log",
-  "review_status": "Capped review closed; final G2/F3-1 owner follow-ups, no new review requested",
+  "clean_committed_shard_check": "jared-final-shards-check.log",
+  "review_status": "Astra r2 closed all11 prior findings; N1/N2 direct proof retained. Final owner follow-ups and exact GUI anchor aligned, no third review.",
   "artifacts": [
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-dry-landing.exit",
@@ -1461,6 +1493,101 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-wiring.log",
       "sha256": "aaf2b71d5fe5649837df7beb8a3b4270524729e086692ea6a2ac85d928d950d3",
       "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-aggregate-results.json",
+      "sha256": "a21cabe665f4b0ecac294519b8e53c9fae2c64ab6a48abaaaee4d66a1d49c50b",
+      "bytes": 1929
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-aggregate-runner.log",
+      "sha256": "7916a7d5f408b4b9fcc77b8cac36d9c963fe474d6c6e16ad4738d705848b00d8",
+      "bytes": 216
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-attribution.json",
+      "sha256": "8526eb2ebaba7e4c192a88dfadeb4e8d149fcf043194b29eaca417bbafb13860",
+      "bytes": 13954
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/audit-governance.json",
+      "sha256": "47752b0a3970fdc78eff6b00f7da10aa5c256f197a3214a8a48d5f9218268593",
+      "bytes": 231980
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-evidence.json",
+      "sha256": "9d0f4cb64d05fb4dd76f333b38e3801aabb2f6e9fa3f5869995b969018111a82",
+      "bytes": 629918
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-implementation-readiness.json",
+      "sha256": "225e279cdb06d3ece2585428a832e36441744030693dbf0920050fb600ee647e",
+      "bytes": 22198
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-plan-graph.json",
+      "sha256": "ae5283266da83c783752c30cb7436532fa6140c725e31de27e16e5e25e799012",
+      "bytes": 628129
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-plan-migration.json",
+      "sha256": "fdedfd83bfb51bea3570dfc1a7a9d3284b0a9a76a5729cec1b26079ce3775bfe",
+      "bytes": 46081
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-prd-planning-runtime-contracts.json",
+      "sha256": "c9a86b9ec42f207a10aa1306da4dbbd831b92b39b8863b2c5e910692e93f291e",
+      "bytes": 382073
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/plan-migration-validate.json",
+      "sha256": "e49c3efafb754b69ab380948e5c3db137d4c3bf9035298aca28004939c38c5ac",
+      "bytes": 16750816
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/run-gates.json",
+      "sha256": "4e3d3a44de09127343dd97b44d15f69c0749426233e403c02b8d6b4d57717730",
+      "bytes": 139061
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-landing.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-landing.json",
+      "sha256": "43bd9c741a59fdef1f149a707a62eefbfabdce50ad599437eaa4ccbc61635a85",
+      "bytes": 21659880
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-landing.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.json",
+      "sha256": "3585b4a527ad03e103e3212aef9ad4dcede07bdd8c509968b2c7275c25c432e0",
+      "bytes": 151961
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.stderr.log",
+      "sha256": "b77617a4a550599ce36d0ce133da6b78753a96fbf208dfd910813b5e3052482f",
+      "bytes": 4711
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.stdout.log",
+      "sha256": "8c44c7062307ce4dd47b2f1a271b3032131e68e3deaf17778eadfcd8cdd505f3",
+      "bytes": 120828
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-source-snapshot.json",
+      "sha256": "1b34edf41e405fc5c622f3f53c66080f685590f828cdc838ba68157f9177d64f",
+      "bytes": 549
     }
   ],
   "reviews": [
@@ -1506,7 +1633,7 @@
     }
   ],
   "cleanup": {
-    "owned_scratch_removed": false,
+    "owned_scratch_removed": true,
     "browsers_started": 0,
     "servers_started": 0,
     "landed": false,
@@ -1522,7 +1649,7 @@
     "r2_scratch_path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-plans-r2-final-20261030",
     "r2_scratch_removed": true,
     "final_rulings_scratch_path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-plans-final-rulings-20261030",
-    "final_rulings_scratch_removed": false
+    "final_rulings_scratch_removed": true
   },
   "latest_amendment": "Companion fix1:9 units,477 bindings/715 Touch,74 schema cases;10 focused checks pass. New full gates/dry held for lead.",
   "jared_decisions": {
@@ -2372,7 +2499,7 @@
     "G2": "approved widen then >=360px squeeze then cover",
     "F3-1": "approved bell/theme-menu gap, covered controls allowed, no entry clicks",
     "new_GUI_head": "70b30f482f043a9be540f795b7b9e86b07f93cee",
-    "aggregate_applies_to_latest_followup": false,
+    "aggregate_applies_to_latest_followup": true,
     "inbox_exception": {
       "source_mail": "1030131044-4c44",
       "authority": "lead interpretation preserving bf5115d9d9, listed for Jared; not quoted as his new words",
@@ -2388,13 +2515,18 @@
     "native_request_union_and_existing_definitions_unchanged": true,
     "source_proof": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-source-proof.json",
     "native_runtime_certification": false,
-    "source_commit": "b3ea621573c5a4c99834a383e76ee9ec183df9e4",
-    "prepared_durable_runner": "queued after clean pushed source freeze",
+    "source_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
+    "prepared_durable_runner": "completed one standalone full gates then one dry landing",
     "merge_commit": "21783035fe",
     "actual_notice_source_anchor_cases": 13,
     "exact_first_card_anchor": "theme menu resting top: selector wrapper bottom + MENU_GAP (6px); negative drop permitted; titlebar nonnegative fallback only without selector",
     "full_gates_dry_authorization": "1030133128-afab",
-    "latest_source_proof": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-source-proof.json"
+    "latest_source_proof": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-source-proof.json",
+    "full_gates_exit": 1,
+    "dry_landing_exit": 1,
+    "source_and_base_frozen": true,
+    "source_guard_pass": true,
+    "no_lane_defect_to_repair": true
   },
   "historical_final_r2_commands": [
     {

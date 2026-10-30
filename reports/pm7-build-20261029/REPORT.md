@@ -1,12 +1,39 @@
-# PM7 Plans lane — final GUI anchor alignment and aggregate run, 2026-10-30
+# PM7 Plans lane — final GUI70 / Jared-rulings close-out, 2026-10-30
 
-Branch: `t3/plans/pm7-plans-canon`. Final GUI `70b30f482f043a9be540f795b7b9e86b07f93cee` merged cleanly through `21783035fe`. Lead authorization: mail `1030133128-afab`.
+Branch: `t3/plans/pm7-plans-canon`. Verified source: `586caa5fa12d30fe2ad33958d45fa62f5671aad9`. Final GUI: `70b30f482f043a9be540f795b7b9e86b07f93cee`, merged through `21783035fe`. Lead authorization: `1030133128-afab`.
 
-**The final GUI is merged and canon uses its exact first-card anchor.** F3-447/460/461, DL-228, UIW-045, WM-097 and the dated index line now distinguish the theme menu’s resting top (selector wrapper bottom + MENU_GAP, 6 px in the concept) from title-bar bottom + 6 px. A negative stage drop is allowed; without a drawn selector the existing title-bar/nonnegative-drop fallback remains. The lead’s existing open-inbox `--pmn-push` exception remains separately attributed. `--pmn-clear` is absent from the final GUI. G2’s widen / >=360 px dock-squeeze / full-height cover rule and all source action ownership remain unchanged.
+**All 10 focused/generation/builder checks PASS. Final standalone full gates exit 1; dry landing exit 1 with 0 blockers and 0 infrastructure findings.** The durable runner completed exactly one standalone gates pass followed by one dry pass; the dry command's own gates copy is inherent. Source and base remained frozen, with guards passing after each command. No new lane defect remains to repair. No landing, lock or reseal.
 
-Prose preceded companions again; six existing owner units change, with no unit or preserved token removed. Static policy remains outside the native command/action union. PM7 focused checks PASS: **87 schema, 6 geometry, 15 notice and 13 actual-source anchor cases**, plus all earlier 19 reused-owner/five thread-consumer cases. The source probe runs only the actual pure noticeDrop helper in a DOM-inactive Node VM with synthetic geometry; it does not certify paint, native dispatch or click delivery. Counts remain unchanged.
+| Final ruling/alignment | Result |
+| --- | --- |
+| **G2, Jared 2026-10-30** | Widen first; when the column cannot widen further, dock full-size Activity Detail and squeeze messages if at least 360 px remain; below 360 px cover the transcript at full column height. No small panel. The saved message-area width floor remains 400 px. Pin and History keep their separate rules. The earlier G2 deviation is resolved. |
+| **F3-1, Jared 2026-10-30** | The notice stage hangs at the bell on every page and may cover controls/chat head. With inbox closed the first card matches the theme menu’s resting top: selector-wrapper bottom plus MENU_GAP (6 px in GUI70), not title-bar bottom plus 6 px. Negative drop is allowed; the existing title-bar/nonnegative fallback remains only without a drawn selector. `--pmn-clear` is removed. Entering cards take no body/action/dismiss clicks or queued activation; Reduced Motion settles instantly. |
+| **Lead open-inbox exception** | `--pmn-push` remains while the shared inbox is open, putting the stage below that bell-anchored inbox. This is explicitly the lead’s ruling `1030131044-4c44`, preserving bf5115d9d9 and listed for Jared; it is not attributed to Jared’s new quoted words. |
+| **Static proof** | **87 schema, 6 geometry and 15 notice cases**, plus **13 executions of the actual pure noticeDrop helper** with synthetic boxes in a DOM-inactive Node VM. The source probe checks selector geometry, negative drop and fallback; it certifies no paint, native dispatch or click delivery. Prior 19 reused-owner, five thread-consumer, Pin/B5/census/preset cases remain passing. |
 
-All ten focused/generation/builder checks PASS against the merged source. Regeneration touches only the five edited owner/index groups. Native command/action union and all non-presentation definitions remain unchanged. All 17 support inputs and the currentness symlink are present. The prepared detached full-gates/dry runner is queued after the clean source commit and push, then source/base will stay frozen throughout. Current verification manifest SHA-256: `c476a9aba71c064bf70d96df19fc18d0ee68113fca10bc125d1bd91501b2b1bd`. The older aggregate results below remain historical until that run finishes. No landing, lock, reseal or GUI source edit. Indefinite waiter is armed.
+Prose preceded companions for both follow-ups and the final exact anchor. Thirteen existing owner units plus summaries/index are amended overall; the last anchor pass changes six of those units. No unit or preserved exact token is removed. Only the five edited owner/index shard groups change in the last pass. `PresentationPolicy` remains a static descriptor outside the native command/action request union; all non-presentation definitions and command ownership remain unchanged. No new command, action, binding, setting, Touch row/profile, event or persisted geometry field is added. No ledger was compiled; compile witness is not applicable.
+
+Counts remain **477 bindings / 58 PM7 source families; 715 Touch rows / 140 profiles; 1269 production rows; 1011 settings; 22 status keys; 2956 shards / 99 sources; 7237 units / 96 indexed docs**. All 17 full-checkout inputs and the currentness symlink are present. Both source builders pass at GUI70. Astra r2 closed all 11 earlier findings; its two new minors remain directly repaired/proved, with no third review.
+
+## Final failure attribution
+
+All **15478 on-branch findings are governance staleness**; on-branch nonstale rows: 0. New nonstale branch rows: 0. New nonstale outside-path rows: **8**, naming `Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json`. Referenced missing artifacts: `Plans/_shards/settings_inventory/127-lines-25128-25234.md`, `Plans/_shards/storage_value_registry/579-lines-115418-115511.md`. Protected evidence was left untouched. The complete export-based comparison reports zero blockers and no infrastructure finding.
+
+Failing full groups: `verify_spec_lock`, `validate_plan_graph`, `validate_evidence`, `validate_prd_planning_runtime_contracts`, `validate_implementation_readiness`, `validate_plan_migration`, `validate_pm7_gui_fixtures`, `validate_audit_closure`. Baseline `6d9a072b48b3d532593ec5f996e1d7fdd2ab5270` is current against `6b88cf36dee05cf38fd8871ad2e510bec4a5a580`. Governance staleness is handed to the lead for the separately assigned reseal; this lane did not modify Spec Lock, auto-decisions, protected evidence, migration snapshots or the baseline.
+
+## Evidence and cleanup
+
+Raw root: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/`.
+
+| Artifact | SHA-256 |
+| --- | --- |
+| jared-final-source-proof.json | `be35b0852b342e523d8b067de89db7b5cfaf5461ac3d98f8435b737de88af347` |
+| jared-final-run-gates.json | `3585b4a527ad03e103e3212aef9ad4dcede07bdd8c509968b2c7275c25c432e0` |
+| jared-final-dry-landing.json | `43bd9c741a59fdef1f149a707a62eefbfabdce50ad599437eaa4ccbc61635a85` |
+| jared-final-attribution.json | `8526eb2ebaba7e4c192a88dfadeb4e8d149fcf043194b29eaca417bbafb13860` |
+| jared-final-source-snapshot.json | `1b34edf41e405fc5c622f3f53c66080f685590f828cdc838ba68157f9177d64f` |
+
+`verification.json` records exact commands, frozen source identity, complete check reports/exports and all retained artifact hashes. Owned scratch/helpers and runner markers are removed; no validation jobs remain. Verification manifest SHA-256: `0fca879f63e75e7055193f080b8c091d103744d563aec0ac4883cc9ea1b176cb`. No browser, server, recording, temporary worktree, landing, lock or reseal was created. The indefinite mailbox waiter (`--timeout 0`) remains armed for any later owner amendment.
 
 ## Historical focused follow-up checkpoint before exact-anchor alignment
 
