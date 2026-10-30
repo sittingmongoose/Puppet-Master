@@ -162611,12 +162611,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!t) return null;
     try { const p = t.project(); return p && p.id ? p : null; } catch (_) { return null; }
   }
+  const PENDING = {};
   function projectEnabled(p) {
     const t = tome();
     if (!t || typeof t.projectSnapshot !== 'function') return false;
     try {
       const snap = t.projectSnapshot(p.id);
-      if (!snap || typeof snap.then === 'function') return false; /* async/unavailable read: fail closed (silent) */
+      if (!snap || typeof snap.then === 'function') return PENDING; /* unreadable (not loaded, or not saved yet) */
       const set = snap.settings || {};
       /* a readable snapshot that never stored the row has the row's factory default */
       return Object.prototype.hasOwnProperty.call(set, SETTING_ID) ? set[SETTING_ID] === true : factoryDefault();
@@ -162663,7 +162664,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (had && S.muted !== want) { S.muted = want; announce({ detail: { muted: want, source: source || 'bind', binding: null } }); }
       return S.binding();
     }
-    const enabled = projectEnabled(p);
+    let enabled = projectEnabled(p);
+    if (enabled === PENDING) {
+      /* A Project whose settings cannot be read yet. The one this onboarding run has just made (selected as Creating
+         publishes it, with the window open; its settings are saved by its first write, O55.shell.commitLook) keeps the
+         sound the person is hearing until they are readable, and that write reads again. Any other unreadable Project
+         is silent (fail closed). (A mute flipped on for that moment cut a block's touchdown on Creating: final check
+         F1-2.) */
+      const cm = O55.S && O55.S.open && O55.S.sess && O55.S.sess.commit;
+      const made = cm ? [cm.projectId, cm.pendingProjectId, cm.fixtureProjectId].filter(Boolean) : [];
+      if (made.indexOf(p.id) >= 0 && (!bound || bound.project_id !== p.id)) return S.binding();
+      enabled = false;
+    }
     const changed = !bound || bound.project_id !== p.id || bound.enabled !== enabled;
     bound = { project_id: p.id, enabled };
     if (changed && S.muted !== !enabled) { S.muted = !enabled; announce({ detail: { muted: S.muted, source: source || 'bind', binding: S.binding() } }); }
