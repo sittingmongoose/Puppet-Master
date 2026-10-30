@@ -62,7 +62,7 @@
    8 px up toward the lead, so the tiles still end inside the first view; its help stays the checkbox's description for screen readers and its tooltip. The narrow window keeps
    the row under the tiles, where it already fits. */
 .o55-lookgrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
-#pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-lookgrid { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "mode nier" "tiles tiles"; align-items: center; gap: 12px 16px; margin-top: -8px; }
+#pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-lookgrid { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "mode ." "tiles tiles"; align-items: center; gap: 12px 16px; margin-top: -8px; }
 #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-lookgrid > .o55-lookmode { grid-area: mode; margin: 0; }
 #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-lookgrid > .o55-tiles { grid-area: tiles; }
 #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-lookgrid > .o55-nierlook { grid-area: nier; justify-self: end; margin: 0; padding: 3px 12px 3px 3px; column-gap: 11px;
@@ -170,3 +170,17 @@ html[data-motion="reduced"] .o55-nierpanel.o55-nierpanel-in { animation: none; }
   :is(.o55-nierbox, .o55-nierlook, .o55-nierthumb), .o55-nierbox::after { transition: none !important; }
   .o55-nierpanel.o55-nierpanel-in { animation: none; }
 }
+
+/* ---------------------------------------------------------------- NieR, the fifth look (Q22, 2026-10-30)
+   Its tile spans the grid's width under the other four: its scene on the left, its name and line on the right, its ? on
+   the name's line at the card's right edge, and, while it is the chosen look, Adjust NieR at the card's bottom right
+   beside its own ?. The scene is shorter than the four tiles' so the five end inside the first view. */
+.o55-opt-tile-wide { grid-column: 1 / -1; position: relative; }
+.o55-opt-tile-wide > .o55-tile { grid-template-columns: minmax(0, 42%) minmax(0, 1fr); grid-template-rows: auto auto minmax(30px, 1fr); column-gap: 12px; align-items: start; }
+.o55-opt-tile-wide > .o55-tile > .o55-tileart { grid-row: 1 / span 3; grid-column: 1; height: var(--o55-tileart-wide-h, 70px); margin-bottom: 0; }
+.o55-opt-tile-wide > .o55-tile > .o55-tilename { grid-column: 2; padding: 4px 30px 0 0; }
+.o55-opt-tile-wide > .o55-tile > .o55-tilesub { grid-column: 2; padding-right: 8px; }
+#pm-o55-onboarding .o55-opt-tile-wide > .o55-tile + .o55-tipq { top: 11px; right: 11px; }
+#pm-o55-onboarding .o55-opt-tile-wide > .o55-nieradjust { position: absolute; right: 38px; bottom: 10px; margin: 0; min-height: 0; height: 26px; padding: 0 10px; font-size: 12px; white-space: nowrap; z-index: 1; }
+#pm-o55-onboarding .o55-opt-tile-wide > .o55-tipq-adjust { position: absolute; right: 11px; bottom: 13px; width: 19px; height: 19px; font-size: 10.5px; z-index: 1; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-opt-tile-wide { --o55-tileart-wide-h: 64px; }

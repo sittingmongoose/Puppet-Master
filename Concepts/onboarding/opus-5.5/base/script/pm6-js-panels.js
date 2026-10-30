@@ -310,13 +310,16 @@
   }
 
   /* ================= theme + project title-bar sprout menus =================
-     Theme model: family (friendly|glass|retro|basic) x mode (light|dark|auto).
+     Theme model: family (friendly|glass|retro|basic|nier) x mode (light|dark|auto). NieR is the fifth family
+     (PM7 build Q22, 2026-10-30): it paints over Basic's tokens (PM_THEME_PAINT_FAMILY answers 'basic' for it, and the
+     NieR engine, settings kit.d/18-nier.js, writes html[data-o55-nier] and runs its own transition), so data-theme
+     still carries one of the 8 painted slugs.
      Persistence: pm.themeFamily + pm.themeMode, plus the resolved slug kept in
      the legacy pm.theme key for older readers. Auto follows the OS via
      prefers-color-scheme and re-resolves live on scheme change.
      data-theme on <html> ALWAYS carries one of the 8 resolved slugs, so every
      [data-theme…] CSS block and the /-light$/ glass-alpha clamps keep working. */
-  var PM_THEME_FAMILIES = { friendly: 'Friendly', glass: 'Glass', retro: 'Retro', basic: 'Basic' };
+  var PM_THEME_FAMILIES = { friendly: 'Friendly', glass: 'Glass', retro: 'Retro', basic: 'Basic', nier: 'NieR' };
   var PM_THEME_MODES = ['light', 'dark', 'auto'];
   var PM_THEME_SLUGS = {
     'friendly-dark': 'Friendly Dark',
@@ -326,9 +329,11 @@
     'retro-dark': 'Retro Dark',
     'retro-light': 'Retro Light',
     'basic-dark': 'Basic Dark',
-    'basic-light': 'Basic Light'
+    'basic-light': 'Basic Light',
+    'nier-dark': 'NieR Dark',
+    'nier-light': 'NieR Light'
   };
-  var PM_THEME_SLUG_RE = /^(friendly|glass|retro|basic)-(light|dark)$/;
+  var PM_THEME_SLUG_RE = /^(friendly|glass|retro|basic|nier)-(light|dark)$/;
   var themeState = { family: 'friendly', mode: 'dark' };
 
   function themeLsGet(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
@@ -358,7 +363,7 @@
     if (PM_THEME_MODES.indexOf(mode) < 0) mode = 'dark';
     themeState.family = family;
     themeState.mode = mode;
-    var slug = (function(f){try{var p=typeof window.PM_THEME_PAINT_FAMILY==='function'?window.PM_THEME_PAINT_FAMILY(f):f;return /^(friendly|glass|retro|basic)$/.test(p)?p:f;}catch(e){return f;}})(family) + '-' + themeResolveScheme(mode);
+    var slug = (function(f){var q=f==='nier'?'basic':f;try{var p=typeof window.PM_THEME_PAINT_FAMILY==='function'?window.PM_THEME_PAINT_FAMILY(f):q;return /^(friendly|glass|retro|basic)$/.test(p)?p:q;}catch(e){return q;}})(family) + '-' + themeResolveScheme(mode);
     var prev = document.documentElement.getAttribute('data-theme');
     document.documentElement.setAttribute('data-theme', slug);
     if (opts.persist !== false) {

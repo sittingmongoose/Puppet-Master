@@ -38,11 +38,14 @@
           var o55s = o55p && o55p.settings && typeof o55p.settings === 'object' ? o55p.settings : null;
           if (o55s) {
             var o55sel = String(o55s['general.visual.theme'] || 'Basic Dark').trim().toLowerCase().replace(/\s+/g, '-').split('-');
+            /* NieR is the fifth theme (Q22): it paints Basic's tokens plus the NieR marker; an old save with NieR Mode on
+               loads as the NieR theme */
+            var o55nierTheme = o55sel[0] === 'nier';
             fam = fams.indexOf(o55sel[0]) === -1 ? 'basic' : o55sel[0];
             tmode = String(o55s['general.visual.theme-mode'] || o55sel[1] || 'dark').toLowerCase();
             if (tmodes.indexOf(tmode) === -1) { tmode = o55sel[1] === 'light' ? 'light' : 'dark'; }
             var o55on = o55s['general.visual.nier-mode'], o55pl = o55s['general.visual.nier-parts'];
-            if (o55on === true || o55on === 'true' || o55on === 'On') {
+            if (o55nierTheme || o55on === true || o55on === 'true' || o55on === 'On') {
               var o55all = [["Square hairlines", "square"], ["Menu cursor", "cursor"], ["YoRHa headers", "headers"], ["Parchment ground", "ground"], ["Target brackets", "brackets"], ["Diamond loaders", "diamonds"], ["Reboot moment", "reboot"], ["Slice open", "slice"], ["Text decode", "decode"], ["Page wipe", "wipe"], ["Drifting particles", "particles"], ["Scan sweep", "sweep"], ["Alert glitch", "glitch"], ["Menu sounds", "sounds"], ["Pod voice", "voice"], ["Pod companion", "pod"], ["Square pointer", "pointer"], ["Boot sequence", "boot"], ["Unit readouts", "readouts"], ["Block progress", "blocks"], ["Ink charts", "charts"], ["Map ticks", "ticks"], ["Machine glyphs", "glyphs"], ["Intel tooltips", "intel"], ["Square icon strokes", "icons"], ["Pod 042 in Chat", "pod042"], ["Quest banners", "quests"], ["Ink empty states", "empty"], ["Save signal", "save"]], o55k = [];
               for (var o55i = 0; o55i < o55all.length; o55i++) { if (!Array.isArray(o55pl) || o55pl.indexOf(o55all[o55i][0]) !== -1) { o55k.push(o55all[o55i][1]); } }
               o55b.nier = true; o55b.parts = o55k.join(' '); fam = 'basic';

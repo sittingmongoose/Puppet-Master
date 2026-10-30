@@ -193,7 +193,7 @@
      the pair the theme never leaves the chosen look while the window is open. Nothing is stored here: the look is still
      saved at the end as before, NieR Mode's paint hook still applies, and once the window closes the selected Project
      paints the page again. */
-  const PAINT_FAMILIES = ['basic', 'friendly', 'glass', 'retro'];
+  const PAINT_FAMILIES = ['basic', 'friendly', 'glass', 'retro', 'nier'];
   window.O55_PAINT_PAIR = function paintPair() {
     const root = S.root;
     if (!S.open || !root || root.hidden || root.getAttribute('data-open') !== 'true' || !document.documentElement.hasAttribute('data-o55-open')) return null;
@@ -257,7 +257,8 @@
     if (now.chosen === family && now.mode === mode) return;
     /* repainting the page for a look is expected heavy work: it never counts toward low-resource mode */
     O55.motion.quiet(2500);
-    if (now.nier && now.mode === mode) { apply(); refresh(); return; }
+    /* into or out of NieR (the fifth theme, Q22): NieR's own moment plays inside the window (O55.nierLook.pick) */
+    if ((family === 'nier') !== now.nier && O55.nierLook && O55.nierLook.pick) { O55.nierLook.pick(family, mode, originEl); return; }
     if (!document.startViewTransition || O55.motion.reduced() || O55.motion.lowResource) { apply(); return; }
     if (S.vt) { try { S.vt.skipTransition(); } catch (_) {} }
     const r = originEl ? originEl.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };

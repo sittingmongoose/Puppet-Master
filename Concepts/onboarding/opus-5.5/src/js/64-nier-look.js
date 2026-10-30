@@ -1,7 +1,7 @@
-/* O55.nierLook — NieR Mode on the look surfaces: the row under the four looks on "Pick a look", the look menu (the
-   onboarding header and the Guided Tour's bar) and Adjust NieR look. Canon (Plans/Settings_System.md 4.4): NieR Mode
-   is a checkbox over the chosen look, never a fifth look, and its three rows take the same non-persistent preview and
-   scope as the theme pair. So:
+/* O55.nierLook — NieR on the look surfaces: the NieR tile on "Pick a look", NieR in the look menu (the onboarding header
+   and the Guided Tour's bar) and Adjust NieR. Since the PM7 build's QA round 2 (Q22, 2026-10-30) NieR is the fifth
+   theme, picked like the other four (pick below); its parts and background are its Adjust options, and they take the
+   same non-persistent preview and scope as the theme pair. So:
    - inside the onboarding window it is a preview (PM_NIER.preview, kit.d/18-nier.js): kept in the session
      (S.sess.look = { nier, parts, background }; the setup-plan draft is a closed schema), shown again when the window
      reopens, and saved with the look into the Project at the end (O55.shell.commitLook -> commit). Turning it on or off
@@ -16,7 +16,7 @@
   'use strict';
   const O55 = window.O55, U = O55.util, T = (k, v) => O55.t(k, v);
   const N = () => window.PM_NIER || null;
-  const IDS = Object.freeze(['general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background']);
+  const IDS = Object.freeze(['general.visual.theme', 'general.visual.nier-parts', 'general.visual.nier-background']);
   const inWindow = () => !!(O55.S && O55.S.open && O55.S.sess && O55.S.root);
   const win = () => (O55.S && O55.S.root ? O55.S.root.querySelector('.o55-win') : null);
   /* a NieR moment plays inside the window, except on a computer the window already finds slow (Reduce Motion is the
@@ -75,6 +75,17 @@
     const next = !state().on;
     if (!inWindow()) return pageFlip(n, next, el);
     return flip(next, el);
+  }
+  /* a theme pick that goes into or out of NieR (Q22): the family and mode are set first (NieR's paint hook keeps the
+     look on screen until the moment paints it), then NieR's moment plays inside the window; outside it, the pick is
+     saved and the engine plays the page's own moment */
+  function pick(family, mode, el) {
+    const n = N(); if (!n) return false;
+    const on = family === 'nier';
+    if (!inWindow()) { const tome = window.PM7_SETTINGS_TOME; try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(family); tome.setChromeThemeMode(mode); } } catch (_) {} return true; }
+    try { window.PM_THEME.setFamily(family, { persist: false }); window.PM_THEME.setMode(mode, { persist: false }); } catch (_) { /* the moment repaints it */ }
+    if (state().on === on) return true;
+    return flip(on, el);
   }
   /* after setup (the tour's look menu): Settings' page-wide moment, grown from the row pressed, with the sounds played
      here in O55's voice (they follow the tour's own sound control): the hum on the cover's first frame (its growth
@@ -340,5 +351,5 @@
     if (back) try { back.focus({ preventScroll: true }); } catch (_) {}
   }
 
-  O55.nierLook = { IDS, state, toggle, adjust, reapply, commit, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => U.nx('sliders', 14, 'control', 'o55-sg') || SLIDERS };
+  O55.nierLook = { IDS, state, toggle, pick, adjust, reapply, commit, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => U.nx('sliders', 14, 'control', 'o55-sg') || SLIDERS };
 })();
