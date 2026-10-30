@@ -2450,7 +2450,8 @@
       if (performance.now() - refreshedAt > 250) S.refresh('synth');
       return !S.muted && !holds.size && hasGesture();
     }
-    const allowed = (where) => soundOn() && (where === 'app' ? part('app-voice', false) : part('setup-voice', true));
+    const partFor = (where) => (where === 'app' ? 'app-voice' : 'setup-voice');
+    const allowed = (where) => soundOn() && part(partFor(where), where === 'app' ? false : true);
     function voiceOf(look) {
       let lk = look;
       if (!lk) { try { lk = W.PMLogo ? W.PMLogo.look() : ''; } catch (_) { lk = ''; } }
@@ -2487,6 +2488,7 @@
       if (!script || !script.length) return false;
       const t0 = ctx.currentTime + 0.006, end = script.reduce((mx, s) => Math.max(mx, s.t + s.d * 2.2), 0) + 0.5;
       line = voice(ctx, chain(ctx, vk, name, o, end), t0, script, vk, o);
+      line.part = partFor(o.where);   // the part this line sounds under: it stops when that part goes off
       logEntry({ t: Math.round(performance.now()), event: 'pip:' + name, kit: vk, muted: false, played: true });
       return true;
     }
@@ -2550,7 +2552,7 @@
     function follow() {
       if (S.muted || holds.size) { hush(); stopMusic(0.2); return; }
       if (tune && !part('setup-music', true)) stopMusic(0.4);
-      if (line && !part('setup-voice', true) && !part('app-voice', false)) hush();
+      if (line && !part(line.part, line.part !== 'app-voice')) hush();
     }
     W.addEventListener('o55:sound', follow);
     W.addEventListener('pm7.pip-parts.changed', follow);

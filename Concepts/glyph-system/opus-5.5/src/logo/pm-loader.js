@@ -53,6 +53,7 @@
      the Diamond loaders part's hollow diamond (styles.d/14-nier-parts.css), or with that part off today's fallback,
      the plain ink ring every spinner showed in NieR before (pm-loader.css). */
   const NIER = '<span class="pml-nier" aria-hidden="true"></span>';
+  const NIER_MS = Object.freeze({ diamond: 2800, ring: 800, breath: 2400 });   // pm-loader.css, 14-nier-parts.css
   const isNier = (look) => L.family(look) === 'nier';
   function draw(el) {
     const look = L.look();
@@ -65,10 +66,17 @@
   function phase(el) {
     const look = L.look(), family = L.family(look), motion = motionOf(el), px = pxOf(el), k = L.clock.speed();
     el.style.setProperty('--pml-k', String(k));
-    if (family === 'nier') return;   // NieR's part keeps its own period, scaled by --pml-k
+    const ms = (v) => Math.round(v) + 'ms', c = L.clock;
+    if (family === 'nier') {
+      // NieR's part keeps its own periods (the diamond's 2.8 s turn, the ring's 0.8 s, the 2.4 s breath), scaled by
+      // --pml-k, and joins the shared clock's phase like every other loader
+      el.style.setProperty('--pml-ndelay', ms(c.delay(NIER_MS.diamond * k)));
+      el.style.setProperty('--pml-sdelay', ms(c.delay(NIER_MS.ring * k)));
+      el.style.setProperty('--pml-nbdelay', ms(c.delay(NIER_MS.breath * k)));
+      return;
+    }
     const P = L.period({ family, motion, px }) * k, base = (L.MOTION[family] || L.MOTION.basic).dur * 1000 * k;
-    const rP = base * 1.3, bP = base * 2.6, kP = P * 2, c = L.clock;
-    const ms = (v) => Math.round(v) + 'ms';
+    const rP = base * 1.3, bP = base * 2.6, kP = P * 2;
     el.style.setProperty('--pml-dur', ms(P)); el.style.setProperty('--pml-delay', ms(c.delay(P)));
     el.style.setProperty('--pml-rdur', ms(rP)); el.style.setProperty('--pml-rdelay', ms(c.delay(rP)));
     el.style.setProperty('--pml-bdur', ms(bP)); el.style.setProperty('--pml-bdelay', ms(c.delay(bP)));
@@ -145,8 +153,13 @@
     const list = [...waiting]; waiting.clear();
     list.forEach((el) => { if (el.isConnected) { el.removeAttribute('data-pml-run'); arm(el); } });
   });
-  /* a new look: every loader is drawn again in it and joins the phase */
+  /* a new look: every loader is drawn again in it and joins the phase. So does a change that swaps a running
+     loader's animation for another: NieR's parts (the diamond or the ring), Reduced Motion (the app's or the OS's). */
   L.onLook(() => refresh());
+  let swapT = 0;
+  const swapped = () => { if (!live.size && !waiting.size) return; cancelAnimationFrame(swapT); swapT = requestAnimationFrame(() => refresh()); };
+  new MutationObserver(swapped).observe(D.documentElement, { attributes: true, attributeFilter: ['data-o55-nier-parts', 'data-motion'] });
+  try { W.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', swapped); } catch (_) { /* old engines */ }
   /* Animation speed: a change in Settings (PM51.watch), and otherwise at the next arm, after a drag, a return to the
      window or the tab, and the end of a busy spell; every loader is phased again at the new period */
   let lastSpeed = L.clock.speed();
