@@ -1,6 +1,6 @@
 /* Sound verification: offline render of every kit x event x variant (O55.sound.renderBuffer, an OfflineAudioContext,
  * so it works under --mute-audio and ignores the mute), plus live checks in the page.
- *   node tools/sound_render.mjs <out-dir> [--page <built.html>] [--no-wav] [--no-live]
+ *   node tools/sound_render.mjs <out-dir> [--page <built.html>] [--no-wav] [--no-live] [--no-pip | --pip-only]
  * Writes <out>/<kit>/<event>[-<n>].wav (16-bit mono) and sound.json:
  *   renders[kit][event] = [{ variant, peak, peakDb, rmsDb, lk, seconds, trim }]   (one per variant)
  *     rmsDb  RMS over the 10 ms windows within 20 dB of the loudest one (the sound's body, not its silence)
@@ -14,7 +14,13 @@
  *         and the hero pass's rules: runs, claimed stings and re-entry, the depth by chapter, rest, the found/success
  *         deferral, the celebration's layer after commit/finish/save, foley under texture and its Reduced Motion and
  *         landing limits, a stage sound's pan from its voice, and Pod 042's 8-bit Show Me voice
- * tools/sound_board.py then builds listening boards and spectrograms; tools/sound_catalog.py writes TRIM and DUR.
+ * tools/sound_board.py then builds listening boards and spectrograms (--pip: Pip's board); tools/sound_catalog.py writes
+ * TRIM and DUR (--pip: the TRIM and MAKEUP blocks of 15-sound-pip.js).
+ *   pip: Pip's kits (lane onb, 15-sound-pip.js), the six looks' stage events and loops as O55.sound.pip plays them (the
+ *        same registered event functions, offline, at their trims): pip.rows[] = { kit, kind, name, key, target, raw
+ *        (untrimmed stats), rmsDb, rmsZ, peakDb, dc, hfDb, dur, nan, buzz, wobble, drones } and <out>/pip/<kit>/<key>.wav;
+ *        F3-599's checks (no NaN, peak under -1 dB, not silent, no DC) and the concept's texture checks (no drone in a
+ *        loop; buzz and wobble reported). --pip-only skips everything else.
  * Chrome comes from tools/chrome.mjs (set CHROME to a GPU wrapper on the VM). */
 import { launch, sleep } from './chrome.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -62,10 +68,112 @@ const measure = async (kit, ev, v, wav, ro) => {
   return res;
 };
 
+function pipTexture() {
+  // runs in the page: window.__tex(buf) -> { buzz, wobble, drones }
+  const lp2 = (sr, fc) => { const w0 = 2 * Math.PI * fc / sr, al = Math.sin(w0) / Math.SQRT2, cw = Math.cos(w0), a0 = 1 + al; return [(1 - cw) / 2 / a0, (1 - cw) / a0, (1 - cw) / 2 / a0, -2 * cw / a0, (1 - al) / a0]; };
+  const bp2 = (sr, fc, Q) => { const w0 = 2 * Math.PI * fc / sr, al = Math.sin(w0) / (2 * Q), cw = Math.cos(w0), a0 = 1 + al; return [al / a0, 0, -al / a0, -2 * cw / a0, (1 - al) / a0]; };
+  const run = (x, c) => { const y = new Float32Array(x.length); let x1 = 0, x2 = 0, y1 = 0, y2 = 0; for (let i = 0; i < x.length; i++) { const v = c[0] * x[i] + c[1] * x1 + c[2] * x2 - c[3] * y1 - c[4] * y2; x2 = x1; x1 = x[i]; y2 = y1; y1 = v; y[i] = v; } return y; };
+  function fft(re, im) {
+    const n = re.length;
+    for (let i = 1, j = 0; i < n; i++) { let b = n >> 1; for (; j & b; b >>= 1) j ^= b; j ^= b; if (i < j) { [re[i], re[j]] = [re[j], re[i]]; [im[i], im[j]] = [im[j], im[i]]; } }
+    for (let len = 2; len <= n; len <<= 1) {
+      const a = -2 * Math.PI / len, wr = Math.cos(a), wi = Math.sin(a);
+      for (let i = 0; i < n; i += len) { let cr = 1, ci = 0; for (let k = 0; k < len / 2; k++) { const ur = re[i + k], ui = im[i + k], vr = re[i + k + len / 2] * cr - im[i + k + len / 2] * ci, vi = re[i + k + len / 2] * ci + im[i + k + len / 2] * cr; re[i + k] = ur + vr; im[i + k] = ui + vi; re[i + k + len / 2] = ur - vr; im[i + k + len / 2] = ui - vi; const t = cr * wr - ci * wi; ci = cr * wi + ci * wr; cr = t; } }
+    }
+  }
+  // the ripple depth of an envelope in a modulation band, over windows that sit inside a held sound (held: its slow
+  // envelope, the gross shape, stays up; the fast one may dip to nothing, which is the buzz being measured)
+  function ripple(e, es, er, N, f0, f1, still, floor) {
+    const w = new Float32Array(N); for (let i = 0; i < N; i++) w[i] = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / N);
+    let best = 0;
+    for (let s = 0; s + N <= e.length; s += N >> 2) {
+      let mu = 0, ms = 0, mn = Infinity; for (let i = 0; i < N; i++) { mu += e[s + i]; ms += es[s + i]; if (es[s + i] < mn) mn = es[s + i]; } mu /= N; ms /= N;
+      if (ms < floor || mn < still * ms) continue;
+      const re = new Float64Array(N), im = new Float64Array(N); for (let i = 0; i < N; i++) re[i] = (e[s + i] - mu) * w[i];
+      fft(re, im);
+      let p = 0; for (let k = Math.ceil(f0 * N / er); k <= Math.floor(f1 * N / er); k++) p += re[k] * re[k] + im[k] * im[k];
+      best = Math.max(best, (4 / N) * Math.sqrt(p / 1.5) / mu);
+    }
+    return best;
+  }
+  window.__pipTex = (buf, loop) => {
+    const sr = buf.sampleRate, n = buf.length, L = buf.getChannelData(0), Rr = buf.numberOfChannels > 1 ? buf.getChannelData(1) : L;
+    const x = new Float32Array(n); for (let i = 0; i < n; i++) x[i] = (L[i] + Rr[i]) / 2;
+    const dec = 12, er = sr / dec, bands = [125, 250, 500, 1000, 2000, 4000], env = [];
+    bands.forEach((fc) => {
+      const b = run(run(x, bp2(sr, fc, 1.41)), bp2(sr, fc, 1.41)), r = new Float32Array(n); for (let i = 0; i < n; i++) r[i] = Math.abs(b[i]);
+      const s1 = run(run(r, lp2(sr, 320)), lp2(sr, 320)), e = new Float32Array(Math.floor(n / dec)); let m = 0, sum = 0;
+      for (let i = 0; i < e.length; i++) { e[i] = Math.max(0, s1[i * dec]); m = Math.max(m, e[i]); sum += e[i]; }
+      const sl = (fc) => run(run(e, lp2(er, fc)), lp2(er, fc));
+      env.push({ fc, e, s40: sl(40), s15: sl(15), s2: sl(1.5), m, mean: sum / e.length });
+    });
+    const top = Math.max(...env.map((b) => b.mean));
+    let buzz = 0, wobble = 0, bz = 0, wb = 0;
+    env.forEach((b) => {
+      if (b.mean < top * 0.25) return; // a band 12 dB under the one that carries the sound is not what you hear
+      // buzz at two scales: 60-150 Hz inside 24 ms of a held sound (so a voice's own syllables, or a run of ticks, are
+      // not counted), and 30-60 Hz inside 64 ms; wobble inside half a second
+      const r1 = Math.max(ripple(b.e, b.s40, er, 96, 60, 150, 0.55, b.m * 0.15), ripple(b.e, b.s15, er, 256, 30, 60, 0.55, b.m * 0.15)), r2 = ripple(b.e, b.s2, er, 2048, 3, 15, 0.35, b.m * 0.15);
+      if (r1 > buzz) { buzz = r1; bz = b.fc; } if (r2 > wobble) { wobble = r2; wb = b.fc; }
+    });
+    // drones: spectral peaks that are there in nearly every frame
+    const drones = [];
+    if (loop) {
+      const N = 8192, hop = sr / 2, count = new Map(); let frames = 0;
+      for (let s = Math.floor(sr * 0.7); s + N <= n; s += hop) {
+        const re = new Float64Array(N), im = new Float64Array(N); let e = 0;
+        for (let i = 0; i < N; i++) { const v = x[s + i] * (0.5 - 0.5 * Math.cos(2 * Math.PI * i / N)); re[i] = v; e += x[s + i] * x[s + i]; }
+        if (Math.sqrt(e / N) < 1e-4) { frames++; continue; }
+        fft(re, im); frames++;
+        const mag = new Float64Array(N / 2); let mx = 0; for (let k = 1; k < N / 2; k++) { mag[k] = Math.hypot(re[k], im[k]); if (mag[k] > mx) mx = mag[k]; }
+        const seen = new Set();
+        // a tone, not noise: a peak standing well above its neighbourhood
+        const prom = (k) => { let a = 0, c = 0; for (let j = Math.max(1, k - 30); j < Math.min(N / 2, k + 31); j++) if (Math.abs(j - k) > 3) { a += mag[j]; c++; } return mag[k] / (a / c + 1e-12); };
+        for (let k = 2; k < N / 2 - 1; k++) if (mag[k] > mx * 0.25 && mag[k] >= mag[k - 1] && mag[k] >= mag[k + 1] && mag[k] * 2 / (N / 2) > 3e-4 && prom(k) > 8) { const key = Math.round(k / 2); if (!seen.has(key)) { seen.add(key); count.set(key, (count.get(key) || 0) + 1); } }
+      }
+      count.forEach((c, key) => { if (frames >= 6 && c >= frames * 0.7) drones.push(Math.round(key * 2 * sr / N)); });
+    }
+    return { buzz: +buzz.toFixed(3), buzzBand: bz, wobble: +wobble.toFixed(3), wobbleBand: wb, drones };
+  };
+}
+
+/* Pip's kits, in the page: the list of takes, then one take at a time (untrimmed for the level, and as heard, with its
+   WAV), so no single answer from the page is large */
+const pipList = () => {
+  const V = window.O55.pipVoice; if (!V || !V.render) return null;
+  const jobs = [];
+  V.KITS.forEach((kit) => V.EVENTS.map((e) => ['play', e]).concat(V.LOOPS.map((l) => ['loop', l])).forEach(([kind, name]) => jobs.push([kit, kind, name])));
+  return jobs;
+};
+const pipTake = async (kit, kind, name, wav) => {
+  const V = window.O55.pipVoice, key = kind === 'loop' ? 'loop:' + name : name, loop = kind === 'loop';
+  const subtle = (V.SUBTLE[kit] || []).indexOf(name) >= 0;
+  const target = V.TARGET[key] - (subtle ? 7 : 0) + (((V.OFFSET || {})[kit] || {})[key] || 0);
+  const raw = V.stats(await V.render(kit, kind, name, {}, { raw: true, notrim: true, seconds: loop ? 8 : undefined }), { whole: loop });
+  const buf = await V.render(kit, kind, name, {}, { seconds: loop ? 10 : undefined });
+  const r = Object.assign({ kit, kind, name, key, target, raw }, V.stats(buf, { whole: loop }), window.__pipTex(buf, loop));
+  if (wav) r.base64 = V.wav(buf);
+  return r;
+};
+
 try {
   await page.goto(pathToFileURL(pageFile).href + '?o55=off');
   await page.waitFor(() => !!(window.O55 && window.O55.sound && window.O55.sound.CATALOG), { timeout: 30000 });
   await sleep(800);
+  if (!flag('no-pip')) {
+    await page.evaluate(pipTexture);
+    const jobs = await page.evaluate(pipList);
+    if (jobs) {
+      report.pip = { kits: [...new Set(jobs.map((j) => j[0]))], rows: [] };
+      for (const [kit, kind, name] of jobs) {
+        const r = await page.evaluate(pipTake, kit, kind, name, !flag('no-wav'));
+        if (r.base64) { mkdirSync(join(out, 'pip', kit), { recursive: true }); writeFileSync(join(out, 'pip', kit, r.key.replace(':', '-') + '.wav'), Buffer.from(r.base64, 'base64')); delete r.base64; }
+        report.pip.rows.push(r);
+      }
+      Object.assign(report.pip, await page.evaluate(async () => ({ chain: await window.O55.pipVoice.chainGain(), makeup: window.O55.pipVoice.MAKEUP })));
+    }
+  }
+  if (!flag('pip-only')) {
   const { kits, events } = await page.evaluate(() => {
     const S = window.O55.sound, kits = {};
     S.KIT_NAMES.forEach((k) => { kits[k] = {}; S.EVENTS.forEach((e) => { const n = S.variants(k, e); if (n) kits[k][e] = n; }); });
@@ -112,7 +220,8 @@ try {
     return { entries: S.CATALOG.length, styles, bad, sample: S.CATALOG.filter((e, i) => i % 40 === 0).map((e) => ({ id: e.id, name: e.name, style: e.style, duration: e.duration })) };
   });
 
-  if (!flag('no-live')) {
+  }
+  if (!flag('no-live') && !flag('pip-only')) {
     /* a real click is the gesture that unlocks audio; then the onboarding preview is unmuted */
     await page.mouse(700, 450);
     report.live.start = await page.evaluate(() => ({ muted: window.O55.sound.muted, binding: window.O55.sound.binding() }));
@@ -330,3 +439,20 @@ writeFileSync(join(out, 'sound.json'), JSON.stringify(report, null, 1));
 const silent = [], loud = [];
 for (const [k, m] of Object.entries(report.renders)) for (const [e, vs] of Object.entries(m)) vs.forEach((r, i) => { if (!r || r.peak < 0.003) silent.push(`${k}:${e}:${i + 1}`); else if (r.peak >= 0.9) loud.push(`${k}:${e}:${i + 1}`); });
 console.log(JSON.stringify({ out, renders: Object.values(report.renders).reduce((a, m) => a + Object.values(m).reduce((b, v) => b + v.length, 0), 0), silent, loud, catalog: report.catalog && { entries: report.catalog.entries, bad: report.catalog.bad.length, styles: report.catalog.styles }, live: report.live, errors: report.errors }, null, 1));
+/* Pip's kits: F3-599's checks and the texture checks (tools/sound_catalog.py --pip levels them) */
+if (report.pip) {
+  const bad = [], warn = [];
+  report.pip.rows.forEach((r) => {
+    const why = [];
+    if (r.nan) why.push(`NaN x${r.nan}`);
+    if (r.peakDb > -1) why.push(`peak ${r.peakDb}`);
+    if (r.rmsDb < -70) why.push('silent');
+    if (Math.abs(r.dc) > 0.005) why.push(`DC ${r.dc}`);
+    if (r.drones && r.drones.length) why.push(`drone ${r.drones.join(', ')} Hz`);
+    if (why.length) bad.push(`${r.kit}/${r.key}: ${why.join(', ')}`);
+    if (r.hfDb > -10 && r.dur > 0.3) warn.push(`${r.kit}/${r.key}: bright above 10 kHz (${r.hfDb} dB)`);
+  });
+  const worst = (k) => report.pip.rows.reduce((a, r) => (r[k] > a[k] ? r : a), report.pip.rows[0]);
+  console.log(JSON.stringify({ pip: { takes: report.pip.rows.length, kits: report.pip.kits, failures: bad, warnings: warn, buzzMax: worst('buzz').buzz, buzzWorst: worst('buzz').kit + '/' + worst('buzz').key, wobbleMax: worst('wobble').wobble, wobbleWorst: worst('wobble').kit + '/' + worst('wobble').key, chain: report.pip.chain, makeup: report.pip.makeup } }));
+  if (bad.length) process.exitCode = 1;
+}

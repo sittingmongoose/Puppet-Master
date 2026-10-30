@@ -5,6 +5,9 @@
   python3 tools/sound_catalog.py SOUND_DIR --write    also rewrite TRIM (dB per kit and event) and DUR (seconds per
                                                       kit, event and variant) between their markers in 15-sound.js
   python3 tools/sound_catalog.py SOUND_DIR --markdown the report as a markdown table (peak and loudness per variant)
+  python3 tools/sound_catalog.py SOUND_DIR --pip [--write]   Pip's kits (sound_render.mjs `pip`): level per kit and
+                                                      event against 15-sound-pip.js's TARGET; --write rewrites its TRIM
+                                                      and MAKEUP blocks (then render again and check)
 
 Loudness is the render's K-weighted gated RMS (`lk`, see sound_render.mjs). Each event belongs to a tier with a target
 loudness, the same for every kit, so a Basic choice and a NieR choice sound equally loud and a celebration stands
@@ -57,7 +60,59 @@ def power_mean_db(values):
     return 10 * math.log10(sum(10 ** (v / 10) for v in values) / len(values))
 
 
+PIP_SRC = os.path.join(HERE, '..', 'src', 'js', '15-sound-pip.js')
+
+
+def pip_block(src, tag, value):
+    rx = re.compile(r'/\* ' + tag + r':begin \*/[\s\S]*?/\* ' + tag + r':end \*/')
+    if not rx.search(src):
+        raise SystemExit('no %s block in 15-sound-pip.js' % tag)
+    return rx.sub(lambda m: '/* %s:begin */%s/* %s:end */' % (tag, value, tag), src, count=1)
+
+
+def pip_main(d):
+    """Pip's kits: the stage's events and loops of the six looks (lane onb), levelled on their plain RMS against the
+    event's target (TARGET in 15-sound-pip.js, less 7 dB for a kit's subtle events, plus its OFFSET), never more than
+    3 dB over it in A-weighted energy (a low thump would otherwise be raised until it booms)."""
+    with open(os.path.join(d, 'sound.json')) as f:
+        pip = json.load(f).get('pip')
+    if not pip:
+        raise SystemExit('no pip renders in %s/sound.json (run tools/sound_render.mjs without --no-pip)' % d)
+    rows = pip['rows']
+    warn = []
+    for r in rows:
+        if abs(r['rmsDb'] - r['target']) > 4 and r['rmsZ'] < r['target'] + 2.5:
+            warn.append('%s/%s: %s vs %s' % (r['kit'], r['key'], r['rmsDb'], r['target']))
+    kits = pip['kits']
+    print('kit        events  rms (min/median/max)   peak max')
+    for k in kits:
+        rs = [r for r in rows if r['kit'] == k]
+        v = sorted(r['rmsDb'] for r in rs)
+        print('%-10s %6d  %s / %s / %s   %s' % (k, len(rs), v[0], v[len(v) // 2], v[-1], max(r['peakDb'] for r in rs)))
+    if warn:
+        print('\noff target:\n  ' + '\n  '.join(warn))
+    print('\n%d takes; %d off target; chain gain %.3f (MAKEUP %s)' % (len(rows), len(warn), pip['chain'], pip['makeup']))
+    if '--write' in sys.argv:
+        trim = {}
+        for r in rows:
+            raw = r['raw']
+            if raw['rmsDb'] < -150:
+                continue
+            t = max(-30, min(30, r['target'] - raw['rmsDb'], r['target'] + 3 - raw['rmsZ']))
+            t = round(t * 2) / 2
+            trim.setdefault(r['kit'], {})[r['key']] = int(t) if t == int(t) else t  # (as JSON.stringify writes it)
+        with open(PIP_SRC) as f:
+            src = f.read()
+        src = pip_block(src, 'TRIM', json.dumps(trim, separators=(',', ':')))
+        src = pip_block(src, 'MAKEUP', str(round(pip['chain'] * 1000) / 1000))
+        with open(PIP_SRC, 'w') as f:
+            f.write(src)
+        print('wrote TRIM for %d kits and MAKEUP into 15-sound-pip.js' % len(trim))
+
+
 def main():
+    if len(sys.argv) >= 2 and '--pip' in sys.argv:
+        return pip_main(sys.argv[1])
     if len(sys.argv) < 2:
         sys.exit(__doc__)
     d = sys.argv[1]

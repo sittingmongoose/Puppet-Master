@@ -161338,7 +161338,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     teletype: ['degauss', 'slice', 'decode'],
     nier: ['score', 'feed', 'degauss', 'hop', 'swing']
   };
-  /* per-kit level trims in dB, measured: tools/sound_levels.mjs --write */
+  /* per-kit level trims in dB, measured: tools/sound_render.mjs then tools/sound_catalog.py SOUND_DIR --pip --write */
   const TRIM = /* TRIM:begin */{"friendly":{"tap":2.5,"hover":2.5,"select":-4,"toggleOn":1,"toggleOff":3.5,"next":-3.5,"back":-2,"open":-0.5,"close":-2.5,"key":4,"warn":0.5,"lower":5.5,"ghost":10.5,"land":11,"lift":13.5,"hop":12,"swing":24,"tryOn":-0.5,"sparkle":2.5,"confetti":8,"chapter":-1,"tick":3.5,"block":2.5,"power":5,"score":6,"lock":5.5,"decode":9,"slice":23.5,"degauss":28.5,"feed":10.5,"powerOn":2,"powerOff":0.5,"rail":14,"tip":-0.5,"wake":-4,"sleep":2.5,"think":-12,"happy":-5,"wink":-3,"alert":-8.5,"cheer":-3,"crew":-5.5,"say":-5,"loop:snore":10,"loop:work":8,"loop:power":-6.5,"loop:swing":-11.5,"loop:bed":-5.5},"glass":{"tap":4.5,"hover":4.5,"select":2.5,"toggleOn":1.5,"toggleOff":0.5,"next":2.5,"back":5,"open":5,"close":5,"key":5,"warn":11,"lower":12.5,"ghost":8,"land":11.5,"lift":16,"hop":14,"swing":28,"tryOn":5.5,"sparkle":12,"confetti":6,"chapter":6,"tick":12.5,"block":12.5,"power":8,"score":10.5,"lock":7.5,"decode":11.5,"slice":24.5,"degauss":30,"feed":13,"powerOn":8.5,"powerOff":11,"rail":15,"tip":5,"wake":-9,"sleep":-3,"think":-14,"happy":-11.5,"wink":-10,"alert":-16.5,"cheer":-8.5,"crew":-12,"say":-13,"loop:snore":10,"loop:work":8.5,"loop:power":0,"loop:swing":-12.5,"loop:bed":-0.5},"basic":{"tap":20,"hover":18.5,"select":5.5,"toggleOn":5.5,"toggleOff":5.5,"next":6,"back":4.5,"open":8.5,"close":7.5,"key":21.5,"warn":9.5,"lower":13.5,"ghost":19,"land":11,"lift":12.5,"hop":14.5,"swing":24.5,"tryOn":8.5,"sparkle":12,"confetti":15,"chapter":8.5,"tick":10.5,"block":11.5,"power":13,"score":18.5,"lock":15.5,"decode":16.5,"slice":18,"degauss":26,"feed":22,"powerOn":14,"powerOff":12.5,"rail":14,"tip":5,"wake":-7.5,"sleep":-5.5,"think":-4.5,"happy":-8,"wink":-7.5,"alert":-9.5,"cheer":-6.5,"crew":-6.5,"say":-7,"loop:snore":24,"loop:work":23,"loop:power":4.5,"loop:swing":-18.5,"loop:bed":3},"phosphor":{"tap":8,"hover":13.5,"select":5.5,"toggleOn":5.5,"toggleOff":5,"next":8.5,"back":7.5,"open":11.5,"close":9,"key":12.5,"warn":16,"lower":17,"ghost":1.5,"land":11,"lift":9.5,"hop":9,"swing":17,"tryOn":11,"sparkle":19,"confetti":15,"chapter":11.5,"tick":11,"block":14.5,"power":16.5,"score":12.5,"lock":13.5,"decode":19,"slice":10,"degauss":11.5,"feed":29.5,"powerOn":15.5,"powerOff":8,"rail":11,"tip":8,"wake":3,"sleep":4.5,"think":2.5,"happy":2,"wink":1.5,"alert":0.5,"cheer":4,"crew":6,"say":2,"loop:snore":11.5,"loop:work":17,"loop:power":6.5,"loop:swing":-17,"loop:bed":7.5},"teletype":{"tap":20.5,"hover":28,"select":5.5,"toggleOn":18.5,"toggleOff":19.5,"next":22.5,"back":20,"open":26.5,"close":25,"key":21,"warn":-0.5,"lower":19,"ghost":26,"land":17.5,"lift":22.5,"hop":23.5,"swing":28,"tryOn":3.5,"sparkle":7,"confetti":8.5,"chapter":4.5,"tick":8.5,"block":9.5,"power":10,"score":24,"lock":27.5,"decode":18.5,"slice":18.5,"degauss":28.5,"feed":22.5,"powerOn":26.5,"powerOff":25,"rail":23.5,"tip":2.5,"wake":2,"sleep":3.5,"think":1.5,"happy":1,"wink":1.5,"alert":1.5,"cheer":4.5,"crew":3.5,"say":1.5,"loop:snore":8,"loop:work":22,"loop:power":-2,"loop:swing":-11.5,"loop:bed":-2},"nier":{"tap":9.5,"hover":7,"select":4.5,"toggleOn":10,"toggleOff":11,"next":9,"back":10,"open":17.5,"close":19,"key":18,"warn":15,"lower":20.5,"ghost":19.5,"land":19,"lift":18,"hop":15,"swing":27,"tryOn":12,"sparkle":19.5,"confetti":11.5,"chapter":5.5,"tick":14,"block":16.5,"power":13.5,"score":16,"lock":13,"decode":22.5,"slice":21.5,"degauss":21,"feed":16.5,"powerOn":13,"powerOff":19.5,"rail":17,"tip":7.5,"wake":-4,"sleep":-2.5,"think":17.5,"happy":-4.5,"wink":-4,"alert":-5.5,"cheer":14.5,"crew":-7,"say":-3.5,"loop:snore":12,"loop:work":14,"loop:power":4,"loop:swing":-19.5,"loop:bed":-1.5}}/* TRIM:end */;
   // the master chain's gain below its compressor's threshold, measured by the same tool, taken back out at the end
   const MAKEUP = /* MAKEUP:begin */1.42/* MAKEUP:end */;
@@ -162365,8 +162365,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      In PMConcept7 Pip's sound is the one player's (found's O55.sound.pip, 15-sound.js): the voice is its say() and
      vocal(), each look's kit is registered with registerKit() under the kit's own id (friendly, glass, basic, phosphor,
      teletype, nier: voiceOf(look)), and the music with registerMusic(); its switch, first-gesture rule, holds and the
-     parts setup-voice and setup-music gate them all. The sound board (tools/pip_sound_board.py), which has no one
-     player, falls back to a bus on the context it stands in. */
+     parts setup-voice and setup-music gate them all. Without the one player (a page that has not loaded 15-sound.js)
+     the kits fall back to a bus on a context of their own. The listening page (tools/sound_board.py --pip-page) carries
+     the one player. */
   const part = (id) => (O55.pipStage && O55.pipStage.h ? O55.pipStage.h.part(id) : true);
   const SND = () => O55.sound || null;
   const API = () => { const S = SND(); return S && S.pip && typeof S.pip.registerKit === 'function' ? S.pip : null; };
@@ -172502,7 +172503,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         const list = O55.review ? O55.review.phasesFor(S) : [], st = op(S, (S.sess.commit || {}).key);
         const done = O55.review && O55.review.shownDone(S) ? list.length : st ? (st.phases || []).filter((p) => p.status === 'done').length : 0;
         const ICON = { folder: 'folder', device: 'nas', clone: 'cloud', restore: 'restore', history: 'history', historyInstall: 'history', online: 'cloud', settings: 'stack', remote: 'globe', check: 'check' };
-        return list.slice(0, done).map((k, i) => ({ id: 'b' + i, kind: 'block', stack: i, ground: true, params: { icon: ICON[k] || 'check', hue: 'abcde'[i % 5] } }));
+        return list.slice(0, done).map((k, i) => ({ id: 'b' + i, kind: 'block', stack: i, ground: true, params: { icon: ICON[k] || 'check', hue: 'abcde'[i % 5], count: list.length } }));
       },
       state(S) {
         if (O55.review && O55.review.shownDone(S)) return md(S).project_mode === 'later' ? 'doneLater' : 'done';
@@ -173392,6 +173393,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* ------------------------------------------------------------ sound */
     sfx(ev, o) {
       const S = snd(); if (!S || !S.play) return;
+      // a look only hovered is silent through and through (Jared's O6): its props settle without a sound
+      if (this.spec && this.spec.mute) return;
       // a scene change lowers and lifts several props at once: one sound for the moment, not six
       const gap = { lower: .12, lift: .16, land: .1, ghost: .12, sparkle: .15, hop: .2 }[ev];
       if (gap) { this.sfxT = this.sfxT || {}; if (this.t - (this.sfxT[ev] || -9) < gap) return; this.sfxT[ev] = this.t; }
@@ -173525,6 +173528,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const b = this.bubble;
       text = text || '';
       clearTimeout(this.sayT);
+      /* the line a hover typed silently (O6) is said aloud once its choice is picked, without typing it again */
+      if (text && text === this.saying && this.sayMuted && b.classList.contains('on') && !(this.spec && this.spec.mute)) { this.sayNext = null; this.sayMuted = false; this.voice(text, mood); return; }
       if (!text || now) { this.sayNext = null; if (text !== this.saying || !b.classList.contains('on')) this.sayNow(text, mood); return; }
       if (text === this.saying && b.classList.contains('on')) { this.sayNext = null; return; }
       const tn = performance.now(), calm = tn - (this.sayCall || 0) > 380;
@@ -173543,7 +173548,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (!text) { b.classList.remove('on', 'typing'); if (S && S.hush) S.hush(); return; }
       if (!b.classList.contains('on')) { b.classList.remove('on'); void b.offsetWidth; b.classList.add('on'); }
       let r = null;
-      if (S && S.say) try { r = S.say(text, { mood: mood || (this.spec.pip && this.spec.pip.mood) || 'idle', kit: S.kitOf ? S.kitOf(this.theme) : undefined }); } catch (e) { r = null; }
+      const md = mood || (this.spec.pip && this.spec.pip.mood) || 'idle';
+      /* a muted line (a look only hovered, O6) is typed at the voice's pace without the voice */
+      this.sayMuted = !!(this.spec && this.spec.mute);
+      if (S && this.sayMuted) try { if (S.hush) S.hush(); r = S.sayTiming ? S.sayTiming(text, { mood: md }) : null; } catch (e) { r = null; }
+      else r = this.voice(text, md);
       const cps = (r && r.cps) || this.fam.cps;
       this.sayAt = performance.now(); this.sayMs = text.length / cps * 1000;
       this.minShow = Math.min(1400, 450 + text.length / cps * 1000 * .6);
@@ -173553,6 +173562,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       off.textContent = text; b.classList.add('typing');
       this.typeT = H.typer(text.length, cps, (i) => { on.textContent = text.slice(0, i); off.textContent = text.slice(i); },
         { paused: () => !this.live(), done: () => b.classList.remove('typing') });
+    }
+    // the line in Pip's voice (O55.sound.pip through O55.pipVoice): { ms, cps } for the typing
+    voice(text, mood) {
+      const S = snd(); if (!S || !S.say) return null;
+      try { return S.say(text, { mood: mood || (this.spec && this.spec.pip && this.spec.pip.mood) || 'idle', kit: S.kitOf ? S.kitOf(this.theme) : undefined }); } catch (e) { return null; }
     }
     /* ------------------------------------------------------------- tips */
     // a tip Pip writes out when asked (the ? beside a choice): t = { title, text }, or null to put it away
@@ -173959,7 +173973,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     picked() { const sp = this.spec || {}; this.busy(); this.cheer(sp.target, { mood: 'happy', hold: 2600 }); }
     celebrate(o) { o = o || {}; this.confetti(o.count || 46); this.cheer(null, { sound: o.sound || 'crew' }); }
     // Creating's end: the last block is down (or the Project was already made), Pip is pleased
-    created() { const sp = this.spec || {}; this.cheer(sp.target, { mood: 'happy', hold: 1800 }); }
+    /* the Project made: Pip cheers its last block with the block sound (the kit's flourish), at its touchdown; a block
+       already down has sounded there, so the cheer is then silent */
+    created() {
+      const sp = this.spec || {}, pr = sp.target && this.props.get(sp.target), block = pr && pr.spec.kind === 'block';
+      this.cheer(sp.target, block ? { mood: 'happy', hold: 1800, sound: pr.landed ? false : 'block', index: pr.spec.stack, count: (pr.spec.params && pr.spec.params.count) || pr.spec.stack + 1 } : { mood: 'happy', hold: 1800 });
+    }
     // Ready's curtain call: confetti, the crew bows, and Pip's one wink, at its sign-off (59-cheer.js)
     curtainCall(o) { if (this.ready) this.ready(o || {}); }
   }
@@ -174066,7 +174085,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     },
     cheerAt(pr, opts) {
       const at = pr ? this.propCentre(pr) : this.headCentre();
-      this.sfx(opts.sound || 'cheer', { x: at[0], index: opts.index, count: opts.count });
+      if (opts.sound !== false) this.sfx(opts.sound || 'cheer', { x: at[0], index: opts.index, count: opts.count });
       if (this.famName === 'nier') { this.ps.tiltv -= 1.2; } else this.hop(.8);
       if (pr && !this.reduced && !pr.spec.ground) { pr.sv -= 2.2; pr.av += this.fam.kick * .8; }
       if (this.tube) this.ok();
@@ -174186,7 +174205,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         else if (this.tube === 'phosphor') this.burst([x, y], ['pix'], 4);
         else if (this.tube === 'teletype') this.burst([x, y], ['chad'], 3);
       }
+      /* each block sounds as it comes down (the kit's 'block' rises with its place on the stack and flourishes on the
+         last); a block a cheer waits for sounds through that cheer instead */
       if (pr.onLand) { const fn = pr.onLand; pr.onLand = null; fn(); }
+      else if (pr.spec.kind === 'block') this.sfx('block', { x: pr.pos ? pr.pos[0] : pr.ax, index: pr.spec.stack, count: (pr.spec.params && pr.spec.params.count) || pr.spec.stack + 1 });
     },
     /* Ready (O10): the choices come back as charms and the crew takes its curtain call, with confetti in the look's
        own material; Pip winks once, at its sign-off, when its line is said (the only wink: none is random). Reduced
@@ -174197,10 +174219,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       this.readyT = setTimeout(() => { if (this.dead) return; this.confetti(60); this.cheer(null, { sound: 'crew' }); }, this.reduced ? 0 : 500);
       this.winkT = setTimeout(() => { if (!this.dead) this.feel('wink', 900); }, this.reduced ? 1200 : 2700);
     },
+    /* O10: Pip hands the strings to the tour's first callout. The hand lifts Pip up out of the stage on its strings
+       (they go taut and rise toward the window, the rectangle the callout grows from); Ready waits the returned ms
+       for the lift to be seen, then hands over. Reduced Motion: nothing travels, 0 ms. */
     handOff() {
-      if (this.reduced || this.dead) return;
-      this.feel('happy', 1400); this.sfx('lift', { x: this.ps.C.x });
+      if (this.reduced || this.dead || !this.live()) return 0;
+      this.feel('happy', 1400); this.sfx('lift', { x: this.ps.C.x }); this.say('', null, true); /* (its line goes with it) */
       this.ps.Ct.y = -this.L.h * .6; this.kick();
+      return Math.round(560 * H.speed());
     }
   });
 })();
@@ -174516,12 +174542,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        card's landing, the opening's header assembly) */
     const pr = S.railHold || O55.stages.progress(S, def);
     const fam = O55.theme().family, live = !S.railHold && canBack();
+    /* a finished chapter's bead holds a check (HANDOFF W3: "The check marks sit inside their beads"), in the accent's own
+       ink; NieR's headers draw theirs (11-window-nier.css). Sized from the bead itself, so no rule here keys on the bead
+       (one did and slowed the app's chat drag, see resize_perf in the lane report). */
+    const nierMark = O55.theme().nier && document.documentElement.matches('[data-o55-nier-parts~="headers"]');
+    const tick = nierMark ? '' : '<svg viewBox="0 0 12 12" aria-hidden="true" focusable="false" style="display:block;width:100%;height:100%;color:var(--o55-on-accent)"><path d="M3.2 6.3l1.9 1.9 3.8-4.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     const items = pr.chapters.map((ch, i) => {
       const state = i < pr.index ? 'done' : i === pr.index ? 'current' : 'next', name = T('chapters.' + ch);
       /* a finished chapter's bead and name take you back to its first screen (railJump) */
       const back = state === 'done' && live && backTo(ch) >= 0;
       return `<li class="o55-railitem" data-state="${state}" data-chapter="${ch}" data-key="rail-${ch}"${state === 'current' ? ' aria-current="step"' : ''}>`
-        + `<span class="o55-railstring" aria-hidden="true"></span><span class="o55-railnode" aria-hidden="true"${back ? ` data-o55-do="railJump" data-arg="${ch}"` : ''}></span>`
+        + `<span class="o55-railstring" aria-hidden="true"></span><span class="o55-railnode" aria-hidden="true"${back ? ` data-o55-do="railJump" data-arg="${ch}"` : ''}>${state === 'done' ? tick : ''}</span>`
         + (back ? `<button type="button" class="o55-raillabel o55-railjump" data-o55-do="railJump" data-arg="${ch}" aria-label="${U.esc(T('pip.stage.rail.back', { name }))}" data-pm-hover-exempt="true">${U.esc(name)}</button>`
           : `<span class="o55-raillabel">${U.esc(name)}</span>`) + '</li>';
     }).join('');
@@ -174665,6 +174696,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!oops && lastOops && lastOops.refused && lastOops.screen === S.sess.screen && still(lastOops.refused)) oops = { key: lastOops.key, face: lastOops.face, refused: lastOops.refused };
     const spec = O55.pipScenes.spec(S, { hover: S.pipHover, typing: S.pipTyping, oops, picked: o && o.picked });
     spec.screen = S.sess.screen;
+    /* a look only looked at: Pip's bubble types its line without its voice (Jared's O6, "no sound on hover"); the line
+       is voiced when the look is picked (picked()) */
+    if (S.sess.screen === 'look' && S.pipHover && !(o && o.picked)) spec.mute = true;
     if (o && o.sayNow) spec.sayNow = true;
     /* (the screen plays its own soft warning; Pip only says so, at once) */
     if (oops && (!lastOops || lastOops.key !== oops.key || lastOops.screen !== S.sess.screen)) spec.sayNow = true;
@@ -176651,7 +176685,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     curNode = F.cursor(el, true); cur = el;
     tint();
     const now = performance.now();
-    if (now - tick > 80) { tick = now; play('hover'); }
+    /* (a look tile and the NieR row on Pick a look are silent: Jared's O6, "no sound on hover") */
+    if (now - tick > 80 && !el.closest('.o55-tiles, .o55-nierlook')) { tick = now; play('hover'); }
   }
   /* the cursor's square on a choice that is not chosen is drawn in ink (the choice is tinted, not inverted) */
   let curNode = null;
@@ -181030,7 +181065,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     do: {
       enter(S) { O55.finish(S, { tour: false }); },
       /* O10: Pip hands the strings on: its hand lifts away as the tour's first callout grows out of the window */
-      tour(S) { const st = O55.pipStage && O55.pipStage.of(S.root && S.root.querySelector('.o55-stage')); if (st && st.handOff) st.handOff(); O55.finish(S, { tour: true }); },
+      /* O10: the lift is drawn before the window becomes the tour's first callout (the stage stops when the window
+         closes); a second press while it lifts does nothing */
+      tour(S) {
+        if (S.handingOff) return;
+        const st = O55.pipStage && O55.pipStage.of(S.root && S.root.querySelector('.o55-stage')), ms = st && st.handOff ? st.handOff() || 0 : 0;
+        if (!ms) { O55.finish(S, { tour: true }); return; }
+        S.handingOff = true;
+        O55.motion.after(ms, () => { S.handingOff = false; if (S.open && S.sess.screen === 'ready') O55.finish(S, { tour: true }); });
+      },
       createNow(S) { O55.draft.set(md(S), { project_mode: 'new', review_confirmed: false }); S.sess.commit = { state: 'none', attempt: 0 }; S.sess.ui.begin = 'new'; S.save(); O55.ui.go('begin'); }
     }
   });
@@ -186055,8 +186098,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         else { el.remove(); }
       });
     }
-    const committed = saved.commit && saved.commit.state === 'done';
-    el.innerHTML = `<button type="button" data-o55-chip="resume" data-pm-hover-exempt="true">${O55.c.small('history', 14)}<span>${U.esc(committed ? T('chrome.resumeOptional') : T('chrome.resume'))}</span></button>`
+    const committed = saved.commit && saved.commit.state === 'done', label = committed ? T('chrome.resumeOptional') : T('chrome.resume');
+    /* its tip (pip.tips.chrome.resume) is its hover tag, as the window's sound and close buttons have theirs */
+    const tip = O55.tips && O55.tips.of('resume', 'chrome'), title = label + (tip ? '\n' + tip.text : '');
+    el.innerHTML = `<button type="button" data-o55-chip="resume" title="${U.esc(title)}" data-pm-hover-exempt="true">${O55.c.small('history', 14)}<span>${U.esc(label)}</span></button>`
       + `<button type="button" class="o55-resume-x" data-o55-chip="hide" aria-label="${U.esc(T('chrome.hide'))}" data-pm-hover-exempt="true">${closeMark()}</button>`;
   }
   /* A tour interrupted by a reload offers to carry on from its last safe step. */
