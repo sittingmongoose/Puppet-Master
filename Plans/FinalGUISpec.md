@@ -32652,9 +32652,12 @@ canonical_text: >-
   lasting card joins it directly with its unread count retained. Only this viewport limit may shorten a
   crowded quiet note to min(normal interval, max(1800 ms, half the normal interval rounded to ms)); overlap
   with a control is not crowding or a filing reason. F3-460 owns material and F3-453 the lasting store.
-  A staged card takes no clicks while it enters: body, action and dismiss hit routing is inactive until
-  arrival settles. Reduced Motion arrives instantly and permits clicks from that settled frame. An entry
-  click is not queued for later dispatch. Once settled, activating a toast's body opens what it is about
+  F3-1/F3-5, final GUI 5abe285507, 2026-10-30: staged cards take no clicks while entering or leaving on
+  every page, Usage included. The guard applies before mounting and throughout entry/exit; delayed arrival
+  completion cannot reactivate a leaving card. Body, action and dismiss hit routing stay inactive, and the
+  pointer passes to the underlying control, subject to that control’s own availability. No entry/exit click
+  is queued for later dispatch. Reduced Motion becomes clickable only once placement has settled and
+  removes a dismissed card instantly; a still-pending or leaving card never accepts a click. Once settled, activating a toast's body opens what it is about
   through the existing source action and marks that notice read. Activating its action button runs that
   owner action and files any lasting notice quietly; it never also invokes the body's source-opening
   action. Read and filing do not acknowledge or resolve underlying work by implication. No control-avoidance
@@ -32697,8 +32700,10 @@ acceptance_criteria:
   Title-bar bottom is not substituted while the selector is drawn. Controls, chat head and Home strips do
   not move it or cause direct filing. While the
   inbox is open, the stage sits under that bell-anchored inbox using its existing push offset.
-- Entering staged cards accept no body/action/dismiss clicks and queue no later activation; Reduced Motion
-  settles instantly. Settled cards keep their existing source/owner actions and read semantics.
+- Entering and leaving cards accept no body/action/dismiss clicks on every page, Usage included; their
+  hit area passes through from first mount to settled arrival and throughout exit, with no queued activation.
+  Reduced Motion settles placement/removal instantly; pending placement is still guarded. Settled cards
+  keep their existing source/owner actions and read semantics.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -33187,8 +33192,9 @@ canonical_text: >-
   F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page; its first card uses the
   theme selector menu's resting top while the inbox is closed (#themeMenuWrap bottom plus MENU_GAP,
   6 px in 70b30f482f), not title-bar bottom plus that gap. It may cover controls
-  and the chat head. F3-447 owns that anchor, the lead's open-inbox push exception and the entering-card
-  click guard; no per-page or control-clearance placement survives.
+  and the chat head. F3-447 owns that anchor, the lead's open-inbox push exception and the entry/exit
+  click guard on every page (F3-5), including Usage's local pointer styling; no per-page or control-clearance
+  placement survives.
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
 split_recommended: false
@@ -33303,7 +33309,12 @@ canonical_text: >-
   bar at the bell, aligned to the theme menu’s resting top under its selector wrapper (F3-447). No
   chat-head or control-clearance offset is added. The existing
   inbox owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead's ruling,
-  not an added quote from Jared.
+  not an added quote from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only
+  after PM6_SPROUT has opened the inbox and restored its layout visibility, on first open and every reopen.
+  Read its resting layout height, never the opening transform’s temporary bounding rectangle; during the
+  owner’s height spring use its destination height. Recompute after content/height changes and window
+  resize, and clear the offset on close. Preserve the existing gap (8 px in this concept), menu-sprout
+  ownership and the one stage; no page-local timer, list or persisted geometry is added.
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
 split_recommended: false

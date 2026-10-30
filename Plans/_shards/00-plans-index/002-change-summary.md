@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L13-L196
+Source lines: L13-L199
 
-Source SHA256: `c2cbfd5732997a783f168996f2cc7f3434d5f353aedeefcab27a6553eec07c73`
+Source SHA256: `a4562f469c5a4f5ce3745b83f1759588a5fb0231c70eb3858eb1a7ec2efffefb`
 
 ---
 
 ## Change Summary
+
+- 2026-10-30: F3-1 final GUI 5abe285507 aligns F3-5 entry/exit click-through on every page (Usage included, first mount and late completion guarded) and F3-6 inbox push measured after owner open/reopen from resting/destination layout height, updated for content/resize and cleared on close. Prose precedes companions; no command, binding, setting or native evidence is added. Focused verification only; the lead’s landing check supplies the next full gates/dry.
+  ContractRef: ContractName:Plans/FinalGUISpec.md#F3-447, ContractName:Plans/FinalGUISpec.md#F3-461, ContractName:Plans/Commands_System.md#CS-102, ContractName:Plans/UI_Wiring_Rules.md#UIW-045, ContractName:Plans/Wiring_Matrix.md#WM-097
 
 - 2026-10-30: F3-1 final GUI 70b30f482f fixes the exact first-card anchor: match the theme menu’s resting top (#themeMenuWrap bottom + MENU_GAP, 6 px), not title-bar bottom + 6 px; negative drop is permitted. The lead’s open-inbox --pmn-push exception and the entering-card click guard remain. Prose and static fixtures distinguish selector geometry, absent-selector fallback and inbox state before the final gates/dry pass.
   ContractRef: ContractName:Plans/FinalGUISpec.md#F3-447, ContractName:Plans/FinalGUISpec.md#F3-460, ContractName:Plans/Decision_Log.md#DL-228, ContractName:Plans/UI_Wiring_Rules.md#UIW-045, ContractName:Plans/Wiring_Matrix.md#WM-097

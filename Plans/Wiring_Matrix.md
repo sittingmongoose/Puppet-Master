@@ -6689,8 +6689,11 @@ canonical_text: >-
   dispatch evidence.
   G2/F3-1, Jared follow-ups 2026-10-30: static presentation companions exercise widen-first, the 360 px
   docking/squeeze threshold and full-height-cover fallback, plus bell/theme-menu-resting-top placement on
-  every page, the lead’s open-inbox push exception and the entering-card click guard. Notification body/action/dismiss bindings keep their owner
-  contracts and record the transient no-dispatch gate. No control-clearance or chat-head placement rule, new
+  every page, the lead’s open-inbox push exception and the entry/exit click guard. F3-5/F3-6, final GUI
+  5abe285507, adds every-page/Usage first-mount and leaving-card pass-through plus inbox resting-height
+  measurement after owner open/reopen, content/height updates and resize, and offset removal on close.
+  Notification body/action/dismiss bindings keep their owner contracts and record the transient no-dispatch
+  gate; static cases and actual pure-helper probes remain distinct from native or rendered evidence. No control-clearance or chat-head placement rule, new
   binding, command, event, setting or native certification is introduced.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.

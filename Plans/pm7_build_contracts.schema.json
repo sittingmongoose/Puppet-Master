@@ -2662,7 +2662,7 @@
       "additionalProperties": true
     },
     "PresentationPolicy": {
-      "description": "Static G2/F3-1 owner policy descriptor, not a native request, runtime event, persisted value or GUI execution proof. Threshold and relative first-card anchor are approved by Jared 2026-10-30. Final GUI 70b30f482f aligns the first card to the theme selector wrapper bottom plus menu gap, allowing a negative drop; open-inbox placement remains the separately attributed lead exception.",
+      "description": "Static G2/F3-1 owner policy descriptor, not a native request, runtime event, persisted value or GUI execution proof. Threshold and relative first-card anchor are approved by Jared 2026-10-30. Final GUI 70b30f482f aligns the first card to the theme selector wrapper bottom plus menu gap, allowing a negative drop; open-inbox placement remains the separately attributed lead exception. F3-5/F3-6 on GUI5abe285507 guard entering/leaving cards on every page and measure authoritative inbox push after owner open from resting/destination layout height.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -2709,7 +2709,9 @@
             "open_inbox_placement",
             "first_card_top_source",
             "allow_negative_stage_drop",
-            "selector_absent_fallback"
+            "selector_absent_fallback",
+            "accepts_clicks_during_exit",
+            "inbox_push_geometry_source"
           ],
           "properties": {
             "anchor": {
@@ -2747,6 +2749,12 @@
             },
             "selector_absent_fallback": {
               "const": "titlebar_nonnegative_drop"
+            },
+            "accepts_clicks_during_exit": {
+              "const": false
+            },
+            "inbox_push_geometry_source": {
+              "const": "after_owner_open_resting_or_destination_height"
             }
           }
         }

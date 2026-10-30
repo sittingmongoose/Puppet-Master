@@ -1778,6 +1778,13 @@
         "GUI_head": "70b30f482f043a9be540f795b7b9e86b07f93cee",
         "source_mail": "1030133128-afab",
         "rule": "Theme menu resting top: selector wrapper bottom + MENU_GAP (6 px), negative stage drop allowed; title-bar nonnegative fallback only when selector absent; lead inbox exception retained."
+      },
+      "GUI_followups": {
+        "head": "5abe2855072ec616409f3d0d2f72564e73030066",
+        "source_mail": "1030142505-c4b0",
+        "F3-5": "Every-page first-mount entry/exit click-through, Usage override included; no queued/late reactivation",
+        "F3-6": "Authoritative inbox push after owner open/reopen, using resting/destination layout height; update on content/resize, clear on close",
+        "authority": "GUI implementation alignment under existing F3-1 ruling and the separately attributed lead open-inbox exception; no new Jared decision inferred"
       }
     }
   },

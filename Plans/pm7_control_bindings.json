@@ -5551,7 +5551,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Exact visible notice ids; dismiss_toast includes close/swipe; mark_visible_read after dwell; no source-condition resolve F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Exact visible notice ids; dismiss_toast includes close/swipe; mark_visible_read after dwell; no source-condition resolve F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": "Shared inbox presentation/read state; no domain mutation or command receipt."
     },
     {
@@ -5991,7 +5991,7 @@
         "catalog.runtime_approve"
       ],
       "setting_ids": [],
-      "payload": "Current blocked episode, approval_scope_key and owner-admitted allowed_action_ids; never a request-id substitute; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Current blocked episode, approval_scope_key and owner-admitted allowed_action_ids; never a request-id substitute; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": ""
     },
     {
@@ -6006,7 +6006,7 @@
         "catalog.runtime_decline"
       ],
       "setting_ids": [],
-      "payload": "Current blocked episode and owner-required reason; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Current blocked episode and owner-required reason; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": ""
     },
     {
@@ -6021,7 +6021,7 @@
         "catalog.runtime_approve"
       ],
       "setting_ids": [],
-      "payload": "Owner-admitted approval scope once; current permission request and runtime approval scope identity; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Owner-admitted approval scope once; current permission request and runtime approval scope identity; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": ""
     },
     {
@@ -6036,7 +6036,7 @@
         "catalog.runtime_approve"
       ],
       "setting_ids": [],
-      "payload": "Owner-admitted session scope; no approval outside that bound; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Owner-admitted session scope; no approval outside that bound; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": ""
     },
     {
@@ -6051,7 +6051,7 @@
         "catalog.runtime_approve"
       ],
       "setting_ids": [],
-      "payload": "The source approval card keeps the PS-041 Always pattern/scope review: Project or Global when valid, Global only without a Project. Its final admitted grant binds the current blocked episode and approval_scope_key through the runtime HITL command; canonical permissions storage owns the durable rule. Keep WM-062/UCC-169 producer identity, current allowed_action_ids and disabled projections; no notification-local allowlist or Project-only shortcut. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "The source approval card keeps the PS-041 Always pattern/scope review: Project or Global when valid, Global only without a Project. Its final admitted grant binds the current blocked episode and approval_scope_key through the runtime HITL command; canonical permissions storage owns the durable rule. Keep WM-062/UCC-169 producer identity, current allowed_action_ids and disabled projections; no notification-local allowlist or Project-only shortcut. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": ""
     },
     {
@@ -6066,7 +6066,7 @@
         "catalog.runtime_decline"
       ],
       "setting_ids": [],
-      "payload": "Exact current permission approval identity; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Exact current permission approval identity; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": ""
     },
     {
@@ -6092,7 +6092,7 @@
         "catalog.concern_resolve"
       ],
       "setting_ids": [],
-      "payload": "Exact concern revision and required resolution reason F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Exact concern revision and required resolution reason F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": ""
     },
     {
@@ -6109,7 +6109,7 @@
         "catalog.alert_open_source"
       ],
       "setting_ids": [],
-      "payload": "Approval-card Details uses the source card identity and cmd.permissions.review_request with approval_scope_key/requesting_context (WM-062/UCC-169/UCC-113); other alerts use cmd.alert.open_source with the exact alert source route/OpenSubject. Choose the owner-admitted route, never dispatch both or invent a page-local route. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Approval-card Details uses the source card identity and cmd.permissions.review_request with approval_scope_key/requesting_context (WM-062/UCC-169/UCC-113); other alerts use cmd.alert.open_source with the exact alert source route/OpenSubject. Choose the owner-admitted route, never dispatch both or invent a page-local route. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": ""
     },
     {
@@ -6122,7 +6122,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Read-only current source reason/validation/allowed-action projection; disclose absent facts; no invented repair or mutation F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Read-only current source reason/validation/allowed-action projection; disclose absent facts; no invented repair or mutation F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": "Read-only explanation disclosure; unchanged source authority."
     },
     {
@@ -6133,7 +6133,7 @@
       "action_ids": [],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Edit only the source approval card draft; the owner validates the normalized pattern and exact scope before any durable grant. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Edit only the source approval card draft; the owner validates the normalized pattern and exact scope before any durable grant. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": "Draft field only; the owner decision command commits the chosen grant."
     },
     {
@@ -6144,7 +6144,7 @@
       "action_ids": [],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Select only among scopes the source permission owner admits; preserve its no-Project Global-only rule and inspectable pattern. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Select only among scopes the source permission owner admits; preserve its no-Project Global-only rule and inspectable pattern. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": "Draft choice only; choosing a scope alone grants no permission and writes no setting."
     },
     {
@@ -6159,7 +6159,7 @@
         "catalog.runtime_approve"
       ],
       "setting_ids": [],
-      "payload": "FileSafe-local Approve once consumes the currently admitted runtime approval and exact blocked episode/approval_scope_key; preserve the source card producer identity, disabled reasons and guard revalidation. No new shared action enum or bypass. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "FileSafe-local Approve once consumes the currently admitted runtime approval and exact blocked episode/approval_scope_key; preserve the source card producer identity, disabled reasons and guard revalidation. No new shared action enum or bypass. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": ""
     },
     {
@@ -6174,7 +6174,7 @@
         "catalog.runtime_decline"
       ],
       "setting_ids": [],
-      "payload": "Use the source card current blocked episode and owner-required reason; retain WM-062/UCC-169 producer identity and allowed-action projection. Dismiss and expiry never substitute for this explicit decision. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Use the source card current blocked episode and owner-required reason; retain WM-062/UCC-169 producer identity and allowed-action projection. Dismiss and expiry never substitute for this explicit decision. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": ""
     },
     {
@@ -6189,7 +6189,7 @@
         "catalog.permissions_review_request"
       ],
       "setting_ids": [],
-      "payload": "Enter the existing owner approval/rule review with approval_scope_key and requesting_context when filesafe_add_rule is admitted. That owner validates pattern/scope, persists through its canonical rule commands and makes the final runtime decision; this entry itself opens the review only and never writes an ad-hoc FileSafe allowlist. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Enter the existing owner approval/rule review with approval_scope_key and requesting_context when filesafe_add_rule is admitted. That owner validates pattern/scope, persists through its canonical rule commands and makes the final runtime decision; this entry itself opens the review only and never writes an ad-hoc FileSafe allowlist. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": ""
     },
     {
@@ -6342,7 +6342,7 @@
         "catalog.alert_open_source"
       ],
       "setting_ids": [],
-      "payload": "Open the notice’s existing source through the alert owner and mark that notice read in the view projection; an action-button activation uses its own binding instead and does not bubble to this route. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry, with no queued dispatch; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
+      "payload": "Open the notice’s existing source through the alert owner and mark that notice read in the view projection; an action-button activation uses its own binding instead and does not bubble to this route. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": ""
     },
     {

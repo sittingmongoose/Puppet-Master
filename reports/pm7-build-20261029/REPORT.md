@@ -1,3 +1,17 @@
+# PM7 Plans lane — GUI5abe toast follow-ups, 2026-10-30
+
+Branch: `t3/plans/pm7-plans-canon`. GUI input: `5abe2855072ec616409f3d0d2f72564e73030066`, merged cleanly through `a047193fbb`. Lead instruction `1030142505-c4b0`: focused checks only; the next full gates/dry belongs to the landing check.
+
+**F3-5/F3-6 are aligned in prose and companions.** Entering and leaving cards accept no clicks on every page, Usage included; first mount/pending placement is guarded and a late arrival callback cannot reactivate exit. Reduced Motion settles placement/removal instantly. The existing open-inbox push is authoritative after the menu-sprout owner opens/reopens it; it uses resting/destination layout height, updates for content/height or resize, and clears on close. Exact theme-menu resting-top placement, the separate lead inbox exception and G2 remain unchanged.
+
+Seven existing owner units change, prose first: F3-447/460/461, CS-102, DL-228, UIW-045 and WM-097, plus the dated index line. No unit or preserved token is removed. Sixteen existing staged-card binding payloads and the existing alert-open-source acceptance gain exit wording. No new command, action, binding, setting, Touch row/profile, event or persisted geometry field is added; static PresentationPolicy stays outside the native request union.
+
+PM7 check PASS: **89 schema / 20 notice / 8 inbox-push cases**, with **18 actual source placement-helper and 7 push-helper probes** in a DOM-inactive Node VM with synthetic geometry. Owner-open ordering and the first-mount/all-page CSS gate are source checks, not browser/native certification. All earlier G2/Pin/B5/reused-owner/thread/census/preset checks remain passing. All ten focused/generation/builder checks PASS. Regeneration changes only the six edited owner/index groups. Counts remain 477 bindings / 58 PM7 source families, 715 Touch rows / 140 profiles, 1269 production rows, 1011 settings and 22 status keys. The native request union and all non-presentation definitions are unchanged.
+
+No new full gates or dry landing is run in this pass, as instructed. The completed full/dry evidence below applies only to source586caa5fa1 and does not certify the latest GUI follow-ups. Raw prefix: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/toast-followups-`. Source proof SHA-256: `87ec841a73b89adbdbb2a29ce9f71ff84bda08c6b66a44f70922ac901a33df47`. Scratch cleanup and the pinned source commit are recorded in the final checkpoint. No ledger compile, third review, landing, lock, reseal or GUI source edit. Indefinite mailbox waiter is armed.
+
+## Historical full/dry close-out at GUI70
+
 # PM7 Plans lane — final GUI70 / Jared-rulings close-out, 2026-10-30
 
 Branch: `t3/plans/pm7-plans-canon`. Verified source: `586caa5fa12d30fe2ad33958d45fa62f5671aad9`. Final GUI: `70b30f482f043a9be540f795b7b9e86b07f93cee`, merged through `21783035fe`. Lead authorization: `1030133128-afab`.

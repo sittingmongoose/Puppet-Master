@@ -2667,8 +2667,11 @@ canonical_text: >-
   placement uses the one bell anchor and the theme menu’s resting top on every page with the inbox closed
   (selector wrapper bottom plus its gap, not title-bar bottom; negative stage drop is allowed);
   while the inbox is open the lead’s 2026-10-30 exception keeps the stage under that inbox via --pmn-push.
-  Other controls and the chat head do not trigger clearance. Body/action/dismiss clicks on an entering card dispatch nothing until its arrival
-  settles, instant under Reduced Motion. Bindings retain their existing owner routes and count; no geometry
+  Other controls and the chat head do not trigger clearance. F3-5: body/action/dismiss clicks on entering
+  or leaving cards dispatch nothing on every page, Usage included; pointer routing passes through, with no
+  queued dispatch or late reactivation. Reduced Motion settles placement/removal instantly. F3-6: read the
+  authoritative inbox push after its sprout owner opens it, using resting/destination height, and refresh
+  it on content/height changes or resize; close clears it. Bindings retain their existing owner routes and count; no geometry
   or entry-state field becomes a persisted preference or runtime mutation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.

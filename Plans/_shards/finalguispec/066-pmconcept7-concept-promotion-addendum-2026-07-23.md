@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33139-L34004
+Source lines: L33144-L34015
 
-Source SHA256: `5d766e9daaea6e6d1a5ca440b4f3d4284961a09edef4ad4676f5da351050e0ae`
+Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
 
 ---
 
@@ -59,8 +59,9 @@ canonical_text: >-
   F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page; its first card uses the
   theme selector menu's resting top while the inbox is closed (#themeMenuWrap bottom plus MENU_GAP,
   6 px in 70b30f482f), not title-bar bottom plus that gap. It may cover controls
-  and the chat head. F3-447 owns that anchor, the lead's open-inbox push exception and the entering-card
-  click guard; no per-page or control-clearance placement survives.
+  and the chat head. F3-447 owns that anchor, the lead's open-inbox push exception and the entry/exit
+  click guard on every page (F3-5), including Usage's local pointer styling; no per-page or control-clearance
+  placement survives.
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
 split_recommended: false
@@ -175,7 +176,12 @@ canonical_text: >-
   bar at the bell, aligned to the theme menu’s resting top under its selector wrapper (F3-447). No
   chat-head or control-clearance offset is added. The existing
   inbox owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead's ruling,
-  not an added quote from Jared.
+  not an added quote from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only
+  after PM6_SPROUT has opened the inbox and restored its layout visibility, on first open and every reopen.
+  Read its resting layout height, never the opening transform’s temporary bounding rectangle; during the
+  owner’s height spring use its destination height. Recompute after content/height changes and window
+  resize, and clear the offset on close. Preserve the existing gap (8 px in this concept), menu-sprout
+  ownership and the one stage; no page-local timer, list or persisted geometry is added.
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
 split_recommended: false

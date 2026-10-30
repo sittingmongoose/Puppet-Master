@@ -105,14 +105,28 @@ def activity_detail_geometry(policy, context):
 
 def notice_stage_presentation(policy, context):
     """F3-1 relational placement/click oracle; no DOM, paint or click is executed."""
-    settled = context["phase"] != "entering" or (context["reduced_motion"] and policy["reduced_motion_instant"])
+    placed = context["placement_settled"]
+    settled = placed and (context["phase"] == "settled" or (context["phase"] == "entering"
+                         and context["reduced_motion"] and policy["reduced_motion_instant"]))
     selector_bottom = context["theme_menu_wrap_bottom_px"]
     top = (selector_bottom + context["theme_menu_gap_px"] if selector_bottom is not None
            else max(context["stage_base_top_px"], context["titlebar_bottom_px"] + context["theme_menu_gap_px"]))
     if context["inbox_open"]:
         top = context["inbox_bottom_px"] + context["inbox_gap_px"]
-    return {"first_card_top_px": top,
-            "accepts_clicks": settled or policy["accepts_clicks_during_entry"]}
+    accepts = (policy["accepts_clicks_during_exit"] if context["phase"] == "leaving"
+               else settled or (placed and policy["accepts_clicks_during_entry"]))
+    return {"first_card_top_px": top, "accepts_clicks": accepts}
+
+
+def inbox_push_disposition(context):
+    """F3-6 static ordering/geometry oracle; no owner animation or layout is executed."""
+    if not context["open"]:
+        return {"action": "clear"}
+    if not context["owner_opened"]:
+        return {"action": "defer"}
+    target = context["chrome_target_height_px"]
+    adjustment = 0 if target is None else target - context["chrome_layout_height_px"]
+    return {"action": "set", "push_px": round(context["panel_layout_height_px"] + adjustment + context["gap_px"])}
 
 
 def validate():
@@ -179,6 +193,9 @@ def validate():
     for case in fixtures["notice_stage_cases"]:
         require(notice_stage_presentation(policy["notice_stage"], case["context"]) == case["expected"],
                 "F3-1 stage/entry differs: " + case["name"])
+    for case in fixtures["inbox_push_cases"]:
+        require(inbox_push_disposition(case["context"]) == case["expected"],
+                "F3-6 inbox push differs: " + case["name"])
     # Execute only the actual source's pure placement helper against synthetic boxes, never a browser/paint.
     placement_source = ROOT / "Concepts/home-redesign/src/panels/js/50-pageshell.js"
     source_anchor_probe = r"""
@@ -207,6 +224,36 @@ def validate():
     require("--pmn-clear" not in notification_source + notification_css
             and "--pmn-push" in notification_source and "--pmn-push" in notification_css,
             "F3-1 clearance removal or lead inbox push exception differs from GUI source")
+    stage_body = notification_source.split("function stage(it)", 1)[1].split("function enter(", 1)[0]
+    open_body = notification_source.split("function openPanel()", 1)[1].split("function closePanel(", 1)[0]
+    require(stage_body.index("c.classList.add('pmn-entering')") < stage_body.index("stageEl.appendChild(c)")
+            and ".pmn-toast:is(.pmn-entering, .pmn-leaving)" in notification_css
+            and "pointer-events: none !important" in notification_css,
+            "F3-5 first-mount/all-page entry/exit pointer gate differs from GUI source")
+    require(open_body.rfind("pushStage()") > open_body.index("window.PM6_SPROUT.open("),
+            "F3-6 authoritative push is not refreshed after the sprout owner opens")
+    push_probe = r"""
+      const fs = require('fs'), vm = require('vm'), d = JSON.parse(fs.readFileSync(0, 'utf8'));
+      const src = fs.readFileSync(d.source, 'utf8'), start = src.indexOf('function pushStage()');
+      const fn = src.slice(start, src.indexOf('/* keep the stage inside the window.', start));
+      const rows = d.cases.filter(c => !c.context.open || c.context.owner_opened).map(c => {
+        const x = c.context; let push = null;
+        const chrome = {style: {height: x.chrome_target_height_px == null ? '' : x.chrome_target_height_px + 'px'},
+                        offsetHeight: x.chrome_layout_height_px};
+        const ctx = {open: x.open, panelEl: {offsetHeight: x.panel_layout_height_px,
+                     querySelector: () => chrome, getBoundingClientRect: () => ({height: x.painted_height_px})},
+                     stageEl: {style: {setProperty: (_, value) => {push = parseFloat(value);}, removeProperty: () => {push = null;}}}};
+        vm.runInNewContext(fn + '\npushStage()', ctx);
+        return {name: c.name, actual: push == null ? {action: 'clear'} : {action: 'set', push_px: push}, expected: c.expected};
+      });
+      process.stdout.write(JSON.stringify(rows));
+    """
+    push_rows = json.loads(subprocess.run(["node", "-e", push_probe],
+        input=json.dumps({"source": str(ROOT / "Concepts/onboarding/opus-5.5/src/js/19-notify.js"),
+                          "cases": fixtures["inbox_push_cases"]}),
+        text=True, capture_output=True, check=True, timeout=20).stdout)
+    require(all(row["actual"] == row["expected"] for row in push_rows),
+            "F3-6 actual pushStage helper differs from resting/destination height fixtures")
     gui_spec = (PLANS / "FinalGUISpec.md").read_text()
     require("Keep notice content clear of nearby controls" not in gui_spec
             and "Collision avoidance tries the nearest clear position" not in gui_spec
@@ -370,7 +417,7 @@ process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
         "notifications.concern.resolve", "notifications.details", "notifications.explain",
         "notifications.permission.pattern", "notifications.permission.scope", "notifications.filesafe.once",
         "notifications.filesafe.deny", "notifications.filesafe.add_rule"}
-    require(all("inactive during entry" in by_control[c]["payload"] for c in staged_notice_controls),
+    require(all("inactive during entry or exit" in by_control[c]["payload"] for c in staged_notice_controls),
             "F3-1 stage producer is missing its transient click gate")
     source_anchors = 0
     for row in bindings:
@@ -491,7 +538,9 @@ process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
             "thread_consumer_cases": len(fixtures["thread_consumer_cases"]),
             "activity_geometry_cases": len(fixtures["activity_geometry_cases"]),
             "notice_stage_cases": len(fixtures["notice_stage_cases"]),
+            "inbox_push_cases": len(fixtures["inbox_push_cases"]),
             "notice_source_anchor_cases": len(anchor_rows),
+            "inbox_source_push_cases": len(push_rows),
             "concept_source_anchors": source_anchors, "failures": failures}
 
 

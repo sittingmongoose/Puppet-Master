@@ -16709,8 +16709,11 @@ canonical_text: >-
   lead's explicit ruling of 2026-10-30 (mail 1030131044-4c44, preserving Jared's bf5115d9d9 fix) keeps the
   existing --pmn-push exception while the shared inbox is open: the inbox hangs from the bell and the stage
   sits below it. That exception is the lead's reading and is listed for Jared; it is not part of the quoted
-  answer. A card accepts no clicks during entry and no deferred click is dispatched when it settles;
-  Reduced Motion settles instantly. F3-447/F3-460/F3-461 and the shared notification bindings apply this
+  answer. F3-5/F3-6, final GUI 5abe285507, 2026-10-30, implements this ruling: entering and leaving cards
+  take no clicks on any page, Usage included, and queue no deferred activation; Reduced Motion settles
+  placement/removal instantly. The authoritative inbox push is read after the sprout owner opens it, on
+  first open and reopen, using resting/destination layout height rather than transformed height, and is
+  refreshed after content/height changes or resize and cleared on close. F3-447/F3-460/F3-461 and the shared notification bindings apply this
   presentation ruling without changing source actions, urgency, read/ack or alert-store ownership.
 gui_related: true
 gui_classification_reason: The Week Sweep Records What The Concept Built.

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32480-L33137
+Source lines: L32480-L33142
 
-Source SHA256: `5d766e9daaea6e6d1a5ca440b4f3d4284961a09edef4ad4676f5da351050e0ae`
+Source SHA256: `3cf5a6cfe6cdf5aa0f631ebd88bae605412136714fd96f3abffa7d6876d84de0`
 
 ---
 
@@ -183,9 +183,12 @@ canonical_text: >-
   lasting card joins it directly with its unread count retained. Only this viewport limit may shorten a
   crowded quiet note to min(normal interval, max(1800 ms, half the normal interval rounded to ms)); overlap
   with a control is not crowding or a filing reason. F3-460 owns material and F3-453 the lasting store.
-  A staged card takes no clicks while it enters: body, action and dismiss hit routing is inactive until
-  arrival settles. Reduced Motion arrives instantly and permits clicks from that settled frame. An entry
-  click is not queued for later dispatch. Once settled, activating a toast's body opens what it is about
+  F3-1/F3-5, final GUI 5abe285507, 2026-10-30: staged cards take no clicks while entering or leaving on
+  every page, Usage included. The guard applies before mounting and throughout entry/exit; delayed arrival
+  completion cannot reactivate a leaving card. Body, action and dismiss hit routing stay inactive, and the
+  pointer passes to the underlying control, subject to that control’s own availability. No entry/exit click
+  is queued for later dispatch. Reduced Motion becomes clickable only once placement has settled and
+  removes a dismissed card instantly; a still-pending or leaving card never accepts a click. Once settled, activating a toast's body opens what it is about
   through the existing source action and marks that notice read. Activating its action button runs that
   owner action and files any lasting notice quietly; it never also invokes the body's source-opening
   action. Read and filing do not acknowledge or resolve underlying work by implication. No control-avoidance
@@ -228,8 +231,10 @@ acceptance_criteria:
   Title-bar bottom is not substituted while the selector is drawn. Controls, chat head and Home strips do
   not move it or cause direct filing. While the
   inbox is open, the stage sits under that bell-anchored inbox using its existing push offset.
-- Entering staged cards accept no body/action/dismiss clicks and queue no later activation; Reduced Motion
-  settles instantly. Settled cards keep their existing source/owner actions and read semantics.
+- Entering and leaving cards accept no body/action/dismiss clicks on every page, Usage included; their
+  hit area passes through from first mount to settled arrival and throughout exit, with no queued activation.
+  Reduced Motion settles placement/removal instantly; pending placement is still guarded. Settled cards
+  keep their existing source/owner actions and read semantics.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"

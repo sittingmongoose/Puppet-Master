@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7648-L8000
+Source lines: L7648-L8001
 
-Source SHA256: `f807f50ad35558d9548a2c4f198216eae25676a78937df5c097fcb88d78aa84a`
+Source SHA256: `ddb63530cf5d55c9f947f4e4c61ea59a0ed3f4ee05133c1138f12cdf7b0114d8`
 
 ---
 
@@ -315,9 +315,10 @@ canonical_text: >-
   toggle, is retired with ?lg=off and Demo Studio's material on/off control (Jared, 2026-10-19,
   option 1). Neither a local action nor a command may select a material off state or old Glass
   fallback; F3-652 always supplies the Glass look's Liquid Glass material.
-  F3-1, Jared 2026-10-30: a staged notice card takes no clicks during entry. Its existing body/action/dismiss
-  click routes stay inactive until arrival settles, with no queued or duplicate dispatch. Reduced Motion
-  settles instantly. This transient presentation gate adds no action, command, receipt or domain event.
+  F3-1/F3-5, 2026-10-30: a staged notice card takes no clicks during entry or exit on every page, Usage
+  included. Its existing body/action/dismiss click routes stay inactive, with no queued or duplicate
+  dispatch and no late reactivation of a leaving card. Reduced Motion settles instantly after placement;
+  still-pending placement and exit stay guarded. This transient presentation gate adds no action, command, receipt or domain event.
 gui_related: true
 gui_classification_reason: Customize and notification local actions.
 split_recommended: false
