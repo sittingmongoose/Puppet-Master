@@ -73,7 +73,7 @@
       { id: 'p-bench', kind: 'process', role: 'script', project: P, surface: 'assistant', thread: t, where: tt, owner: 'agent-query', title: 'Benchmark: tenant read path', command: 'pgbench -c 8 -j 4 -T 120 -f bench/tenant_read.sql tastebook', cwd: '~/tastebook/api', pid: 48190, server: 'local', environment: 'dev', state: 'working', progress: { done: 54, total: 120, unit: 's', source: 'measured' }, startedAt: ago(54), delivery: 'agent', waits: true, tail: OUT.bench.slice(0, 4), gen: 'bench', cpu: 41, mem: 64 },
       { id: 'p-dev', kind: 'process', role: 'server', project: P, surface: 'assistant', thread: t, where: tt, owner: null, title: 'Web dev server', command: 'pnpm dev', cwd: '~/tastebook/web', pid: 47702, ports: [5173], server: 'local', environment: 'dev', state: 'working', startedAt: ago(852), delivery: 'user', waits: false, tail: OUT.dev.slice(0, 4), gen: 'dev', cpu: 3, mem: 212 },
       { id: 'p-db', kind: 'process', role: 'db', project: P, surface: 'assistant', thread: t, where: tt, owner: null, title: 'Postgres for benchmarks', command: 'docker compose up postgres', cwd: '~/tastebook', pid: 47655, ports: [5432], server: 'local', environment: 'dev', state: 'working', startedAt: ago(1335), delivery: 'user', waits: false, tail: OUT.db.slice(0, 2), gen: 'db', cpu: 6, mem: 486 },
-      { id: 'p-watch', kind: 'process', role: 'watcher', project: P, surface: 'assistant', thread: t, where: tt, owner: null, title: 'Test watcher: analytics', detail: 'Last run passed 2m ago', command: 'cargo watch -x "test -p analytics"', cwd: '~/tastebook/api', pid: 47811, server: 'local', environment: 'test', state: 'working', startedAt: ago(1090), delivery: 'quiet', waits: false, tail: OUT.watch.slice(), cpu: 1, mem: 140 },
+      { id: 'p-watch', kind: 'process', role: 'watcher', project: P, surface: 'assistant', thread: t, where: tt, owner: null, title: 'Test watcher: analytics', detail: 'Last run passed 2m ago', command: 'cargo watch -x "test -p analytics"', cwd: '~/tastebook/api', pid: 47811, server: 'local', environment: 'test', state: 'working', startedAt: ago(1090), delivery: 'user', waits: false, tail: OUT.watch.slice(), cpu: 1, mem: 140 },
       { id: 's-rerun', kind: 'scheduled', role: 'script', project: P, surface: 'assistant', thread: t, where: tt, owner: null, title: 'Re-run the benchmark after the index build', detail: 'Schedule Manager · runs once', at: Date.now() + 18 * 60000, state: 'pending', delivery: 'agent' },
       { id: 'p-lint', kind: 'process', role: 'script', project: P, surface: 'assistant', thread: t, where: tt, owner: null, title: 'Lint web', command: 'pnpm lint', cwd: '~/tastebook/web', pid: 47990, server: 'local', environment: 'dev', state: 'failed', exit: 1, startedAt: ago(250), endedAt: ago(204), delivery: 'agent', tail: OUT.lint.slice(), cpu: 0, mem: 0 },
       { id: 'p-test', kind: 'process', role: 'test', project: P, surface: 'assistant', thread: t, where: tt, owner: 'agent-migration', title: 'Analytics tests', command: 'cargo test -p analytics', cwd: '~/tastebook/api', pid: 47930, server: 'local', environment: 'test', state: 'complete', exit: 0, startedAt: ago(470), endedAt: ago(362), delivery: 'agent', tail: OUT.test.slice() },
@@ -114,7 +114,7 @@
       { id: 'o-docs', kind: 'agent', role: 'subagent', project: P, surface: 'orchestrator', where: 'Run #47', parent: 'o-run', title: 'Docs Writer', detail: 'Updated 3 pages', model: 'docs-writer', state: 'complete', startedAt: ago(900), endedAt: ago(720) },
 
       /* ---------------- another Project: a scheduled run only, so harbor reads calm (B5) and the counts above hold */
-      { id: 's-harbor', kind: 'scheduled', role: 'build', project: 'harbor', surface: 'orchestrator', where: 'Nightly build', owner: null, title: 'Nightly build', detail: 'Schedule Manager · every night at 02:00', at: Date.now() + 4 * 3600000, state: 'pending', delivery: 'user' }
+      { id: 's-harbor', kind: 'scheduled', role: 'build', project: 'harbor', surface: 'orchestrator', where: 'Nightly build', owner: null, title: 'Nightly build', detail: 'Schedule Manager · every night at 02:00', at: Date.now() + 4 * 3600000, state: 'pending', delivery: 'agent' }
     ];
   }
 
@@ -128,7 +128,7 @@
         title: c[0].split(' ')[0] + ' job ' + (i + 1), command: c[0] + ' ' + (i + 1), cwd: '~/tastebook', pid: 49000 + i, ports: c[1] === 'server' ? [6006 + i] : [],
         server: 'local', environment: c[1] === 'test' ? 'test' : 'dev',
         state: failed ? 'failed' : (done ? 'complete' : 'working'), exit: failed ? 2 : (done ? 0 : null),
-        startedAt: ago(30 + i * 37), endedAt: (failed || done) ? ago(10 + i) : null, delivery: 'agent', waits: false, tail: ['line ' + (i + 1)], cpu: i % 7, mem: 40 + i * 9
+        startedAt: ago(30 + i * 37), endedAt: (failed || done) ? ago(10 + i) : null, delivery: c[1] === 'server' ? 'user' : 'agent', waits: false, tail: ['line ' + (i + 1)], cpu: i % 7, mem: 40 + i * 9
       });
     }
     return list;

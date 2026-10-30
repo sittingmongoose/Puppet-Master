@@ -308,12 +308,17 @@
        card's landing, the opening's header assembly) */
     const pr = S.railHold || O55.stages.progress(S, def);
     const fam = O55.theme().family, live = !S.railHold && canBack();
+    /* a finished chapter's bead holds a check (HANDOFF W3: "The check marks sit inside their beads"), in the accent's own
+       ink; NieR's headers draw theirs (11-window-nier.css). Sized from the bead itself, so no rule here keys on the bead
+       (one did and slowed the app's chat drag, see resize_perf in the lane report). */
+    const nierMark = O55.theme().nier && document.documentElement.matches('[data-o55-nier-parts~="headers"]');
+    const tick = nierMark ? '' : '<svg viewBox="0 0 12 12" aria-hidden="true" focusable="false" style="display:block;width:100%;height:100%;color:var(--o55-on-accent)"><path d="M3.2 6.3l1.9 1.9 3.8-4.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     const items = pr.chapters.map((ch, i) => {
       const state = i < pr.index ? 'done' : i === pr.index ? 'current' : 'next', name = T('chapters.' + ch);
       /* a finished chapter's bead and name take you back to its first screen (railJump) */
       const back = state === 'done' && live && backTo(ch) >= 0;
       return `<li class="o55-railitem" data-state="${state}" data-chapter="${ch}" data-key="rail-${ch}"${state === 'current' ? ' aria-current="step"' : ''}>`
-        + `<span class="o55-railstring" aria-hidden="true"></span><span class="o55-railnode" aria-hidden="true"${back ? ` data-o55-do="railJump" data-arg="${ch}"` : ''}></span>`
+        + `<span class="o55-railstring" aria-hidden="true"></span><span class="o55-railnode" aria-hidden="true"${back ? ` data-o55-do="railJump" data-arg="${ch}"` : ''}>${state === 'done' ? tick : ''}</span>`
         + (back ? `<button type="button" class="o55-raillabel o55-railjump" data-o55-do="railJump" data-arg="${ch}" aria-label="${U.esc(T('pip.stage.rail.back', { name }))}" data-pm-hover-exempt="true">${U.esc(name)}</button>`
           : `<span class="o55-raillabel">${U.esc(name)}</span>`) + '</li>';
     }).join('');
@@ -457,6 +462,9 @@
     if (!oops && lastOops && lastOops.refused && lastOops.screen === S.sess.screen && still(lastOops.refused)) oops = { key: lastOops.key, face: lastOops.face, refused: lastOops.refused };
     const spec = O55.pipScenes.spec(S, { hover: S.pipHover, typing: S.pipTyping, oops, picked: o && o.picked });
     spec.screen = S.sess.screen;
+    /* a look only looked at: Pip's bubble types its line without its voice (Jared's O6, "no sound on hover"); the line
+       is voiced when the look is picked (picked()) */
+    if (S.sess.screen === 'look' && S.pipHover && !(o && o.picked)) spec.mute = true;
     if (o && o.sayNow) spec.sayNow = true;
     /* (the screen plays its own soft warning; Pip only says so, at once) */
     if (oops && (!lastOops || lastOops.key !== oops.key || lastOops.screen !== S.sess.screen)) spec.sayNow = true;

@@ -23,11 +23,14 @@
      isOpen(el)
      aim(el, anchor, origin)            pins the corner again (a flyout whose row moved)
      resize(el, mutate)                 runs mutate and springs the height from the old box to the new one, with the
-                                        size bounce (the search filter, an option count, a drill-in, a list that grew)
+                                        size bounce (the search filter, an option count, a drill-in, a list that grew);
+                                        a box that grows passes its new size and settles back, a box that shrinks
+                                        settles onto it without passing it, so it never cuts into its own content
      morph(el, from, to, opts)          for a surface that places itself (Home's plate): the box moves from one geometry
                                         to another ({ left, top, width, height }, px). A height-only change is the
-                                        contract's height spring with the size bounce (resize's motion, and none where a
-                                        look has no height spring); a change of width or place (a level drilled into)
+                                        contract's height spring with the size bounce (resize's motion, a shrink's
+                                        without the overshoot, and none where a look has no height spring); a change
+                                        of width or place (a level drilled into)
                                         takes opts.shape { duration, easing }, the surface's own level timing. Returns
                                         the Animation, or null when nothing moves
      bounce(el)                         the size bounce alone, for a surface that sets its new height itself
@@ -39,14 +42,19 @@
    Animation speed, which rescales their durations and delays), never from a constant: a close finishes when the last
    of them has ended, so the collapse always runs to its end, with a bounded fallback for a transition that never
    reports. A close that begins inside a resize drag (body.pm-resizing) lands at once, and the contract holds every
-   consumer still while a drag is under way. Reopening a closing menu cancels that close; a close called again on a
+   consumer still while a drag is under way; a morph that a drag catches mid-flight lands at its end. Reopening a closing menu cancels that close; a close called again on a
    closing menu finishes both callers together. */
 (function () {
   'use strict';
   var doc = document, root = doc.documentElement;
   var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   var OWN_CLASS = ['is-open', 'is-closing', 'is-size-bounce'];
-  var OWN_VARS = ['--pm6-sprout-ox', '--pm6-sprout-oy', '--pm6-sprout-tx', '--pm6-sprout-ty', '--pm6-sprout-sx', '--pm6-sprout-sy'];
+  var OWN_VARS = ['--pm6-sprout-ox', '--pm6-sprout-oy', '--pm6-sprout-tx', '--pm6-sprout-ty', '--pm6-sprout-sx', '--pm6-sprout-sy',
+    '--pm6-sprout-height-ease'];
+  /* the height spring overshoots (y1 > 1): a box that grows passes its new size and settles back. A box that shrinks takes
+     the same curve without the overshoot (Astra r2 R1: a filter that leaves one row dipped below it and hid it), so it
+     never ends up smaller than its content on the way. The contract's height curve reads --pm6-sprout-height-ease. */
+  var SPRING = 'cubic-bezier(0.22, 1.72, 0.36, 1)', SETTLE = 'cubic-bezier(0.22, 1, 0.36, 1)';
   var CLOSING = { opacity: 1, transform: 1, scale: 1, translate: 1, visibility: 1 };
   var states = typeof WeakMap === 'function' ? new WeakMap() : null;
   var gen = 0;
@@ -210,6 +218,7 @@
       el.style.display = 'none';
       el.style.height = '';
       el.style.overflow = '';
+      el.style.removeProperty('--pm6-sprout-height-ease');
       var list = s.dones; s.dones = [];
       for (var i = 0; i < list.length; i++) list[i]();
     }
@@ -243,11 +252,14 @@
     if (Math.abs(endH - startH) < 0.5) {
       el.style.height = '';
       el.style.overflow = '';
+      el.style.removeProperty('--pm6-sprout-height-ease');
       return;
     }
     el.style.height = startH + 'px';
     void el.offsetHeight;
-    /* CSS height spring (y>1) overshoots past endH then settles: the search bounce */
+    /* CSS height spring (y>1) overshoots past endH then settles: the search bounce; a shrink settles without it */
+    if (endH < startH) el.style.setProperty('--pm6-sprout-height-ease', SETTLE);
+    else el.style.removeProperty('--pm6-sprout-height-ease');
     el.style.height = endH + 'px';
     el.classList.remove('is-size-bounce');
     void el.offsetWidth;
@@ -262,11 +274,33 @@
       if (s.hg !== hg) return;                      /* a later resize owns the height now */
       el.style.height = '';
       el.style.overflow = '';
+      el.style.removeProperty('--pm6-sprout-height-ease');
       el.classList.remove('is-size-bounce');
     }
     el.addEventListener('transitionend', clearH);
     /* cover the height spring and its overshoot settle */
     setTimeout(clearH, endOf(el, { height: 1 }) + 120);
+  }
+
+  /* The drag hold for the motion this script runs itself (morph's animations; the CSS ones are the contract's): a resize
+     drag that begins while one runs (body.pm-resizing) lands it at its end at once. Heard the way the shared clock hears
+     drags (pm-logo.js watchDrags), by the body's class, and only while one of them runs. */
+  var running = [], dragWatch = null;
+  function settleAll() { if (!held()) return; running.slice().forEach(function (a) { try { a.finish(); } catch (_) { /* gone */ } }); }
+  function track(anim) {
+    if (!anim) return anim;
+    running.push(anim);
+    if (!dragWatch && doc.body && typeof MutationObserver === 'function') {
+      dragWatch = new MutationObserver(settleAll);
+      dragWatch.observe(doc.body, { attributes: true, attributeFilter: ['class'] });
+    }
+    var drop = function () {
+      var i = running.indexOf(anim);
+      if (i >= 0) running.splice(i, 1);
+      if (!running.length && dragWatch) { dragWatch.disconnect(); dragWatch = null; }
+    };
+    anim.finished.then(drop, drop);
+    return anim;
   }
 
   function morph(el, a, b, opts) {
@@ -278,10 +312,11 @@
       if (Math.abs(a[p] - b[p]) > 2) { k0[p] = a[p] + 'px'; k1[p] = b[p] + 'px'; moved = true; if (p !== 'height' && p !== 'top') shape = true; }
     }
     if (!moved) return null;
-    if (shape && opts.shape) return el.animate([k0, k1], { duration: opts.shape.duration || 220, easing: opts.shape.easing || 'ease' });
-    /* the height spring, as resize's: where the look's contract has none (NieR's Slice part) the box just takes its size */
+    if (shape && opts.shape) return track(el.animate([k0, k1], { duration: opts.shape.duration || 220, easing: opts.shape.easing || 'ease' }));
+    /* the height spring, as resize's (a shrink without the overshoot): where the look's contract has none (NieR's Slice
+       part) the box just takes its size */
     if (!endOf(el, { height: 1 })) return null;
-    var anim = el.animate([k0, k1], { duration: 340, easing: 'cubic-bezier(0.22, 1.72, 0.36, 1)' });
+    var anim = track(el.animate([k0, k1], { duration: 340, easing: b.height < a.height - 2 ? SETTLE : SPRING }));
     bounce(el);
     return anim;
   }

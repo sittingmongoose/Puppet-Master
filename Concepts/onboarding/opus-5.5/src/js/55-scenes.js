@@ -105,7 +105,7 @@
         const list = O55.review ? O55.review.phasesFor(S) : [], st = op(S, (S.sess.commit || {}).key);
         const done = O55.review && O55.review.shownDone(S) ? list.length : st ? (st.phases || []).filter((p) => p.status === 'done').length : 0;
         const ICON = { folder: 'folder', device: 'nas', clone: 'cloud', restore: 'restore', history: 'history', historyInstall: 'history', online: 'cloud', settings: 'stack', remote: 'globe', check: 'check' };
-        return list.slice(0, done).map((k, i) => ({ id: 'b' + i, kind: 'block', stack: i, ground: true, params: { icon: ICON[k] || 'check', hue: 'abcde'[i % 5] } }));
+        return list.slice(0, done).map((k, i) => ({ id: 'b' + i, kind: 'block', stack: i, ground: true, params: { icon: ICON[k] || 'check', hue: 'abcde'[i % 5], count: list.length } }));
       },
       state(S) {
         if (O55.review && O55.review.shownDone(S)) return md(S).project_mode === 'later' ? 'doneLater' : 'done';

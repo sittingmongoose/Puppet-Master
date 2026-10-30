@@ -261,7 +261,7 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-ru
 /* ---- Slice open [slice]: menus, popovers and dialogs unfold from a 1px line, one flicker step, and fold back ---- */
 /* the sprouting family (every PM6_SPROUT menu: .pm-sprout, the title-bar menus, Settings drop-downs, chat pickers, context
    pop-ups): their sprout becomes identity, and scale carries the slice both ways */
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm-sprout, .pm6-tb-menu, .pm6-chat-more-menu, .pm51-popout, .pm-home-portal, .pm6-chat-pt-popout-portal,
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm-sprout, .pm6-tb-menu, .pm6-chat-more-menu, .pm51-popout, .pm6-chat-pt-popout-portal,
   .pm6-chat-persona-popout-portal, .pm6-chat-effort-popout-portal, .pm6-chat-mini-popout-portal, .pm6-chat-mode-popout-portal, .context-hover-module,
   .context-lens-popover, .wt-bind-dropdown, .pm6-tb-search-pop) {
   /* the sprout is written inline per opening (setPopoutSprout), so identity needs !important */
@@ -270,7 +270,7 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm-sprout, 
   scale: 1 .006;
   transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms, visibility 0s linear 200ms !important;
 }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm-sprout, .pm6-tb-menu, .pm6-chat-more-menu, .pm51-popout, .pm-home-portal, .pm6-chat-pt-popout-portal,
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm-sprout, .pm6-tb-menu, .pm6-chat-more-menu, .pm51-popout, .pm6-chat-pt-popout-portal,
   .pm6-chat-persona-popout-portal, .pm6-chat-effort-popout-portal, .pm6-chat-mini-popout-portal, .pm6-chat-mode-popout-portal, .context-hover-module,
   .context-lens-popover, .wt-bind-dropdown, .pm6-tb-search-pop):is(.is-open, .open):not(.is-closing) {
   scale: none; transition: none !important; animation: o55np-slice 300ms linear backwards;
@@ -400,7 +400,7 @@ html[data-theme="basic-dark"][data-o55-nier-parts~="pointer"] :is(button, a[href
   #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
   html[data-o55-nier-parts~="diamonds"] :is(.o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse, t7.t7.t7:not(*)) { animation: none !important; }
   html[data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
-  html[data-o55-nier-parts~="slice"] :is(.pm-sprout, .pm6-tb-menu, .pm6-chat-more-menu, .pm51-popout, .pm-home-portal, .pm6-chat-pt-popout-portal, .pm6-chat-persona-popout-portal,
+  html[data-o55-nier-parts~="slice"] :is(.pm-sprout, .pm6-tb-menu, .pm6-chat-more-menu, .pm51-popout, .pm6-chat-pt-popout-portal, .pm6-chat-persona-popout-portal,
     .pm6-chat-effort-popout-portal, .pm6-chat-mini-popout-portal, .pm6-chat-mode-popout-portal, .context-hover-module, .context-lens-popover, .wt-bind-dropdown,
     .pm6-tb-search-pop, .dialog, .pm6-orch-modal, .pm-ctx-menu, .fm-ctx, .pm7ctx-pop, .pm7-dash-size-pop, .chat-dropdown-popover, .slash-command-menu,
     .dropdown-menu, .pm-ed-overflow-menu, .msg-runtime-popover, .pm6-status-pop, .popover) { scale: none !important; }

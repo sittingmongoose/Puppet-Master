@@ -348,7 +348,8 @@
     curNode = F.cursor(el, true); cur = el;
     tint();
     const now = performance.now();
-    if (now - tick > 80) { tick = now; play('hover'); }
+    /* (a look tile and the NieR row on Pick a look are silent: Jared's O6, "no sound on hover") */
+    if (now - tick > 80 && !el.closest('.o55-tiles, .o55-nierlook')) { tick = now; play('hover'); }
   }
   /* the cursor's square on a choice that is not chosen is drawn in ink (the choice is tinted, not inverted) */
   let curNode = null;

@@ -80,8 +80,9 @@
   transition-duration: var(--pm6-sprout-fade-in, 140ms), 300ms, 0s, 340ms;
   transition-timing-function: var(--pm6-sprout-fade-ease, var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))),
     cubic-bezier(0.22, 1.55, 0.36, 1), linear,
-    /* springy height for search-filter resize bounce */
-    cubic-bezier(0.22, 1.72, 0.36, 1);
+    /* springy height for search-filter resize bounce; a shrink takes it without the overshoot (the owner's resize sets
+       --pm6-sprout-height-ease), so the box never dips below its content */
+    var(--pm6-sprout-height-ease, cubic-bezier(0.22, 1.72, 0.36, 1));
   transition-delay: 0s;
 }
 /* the close: solid through most of the collapse, then a late, tiny fade, into the same corner the open set */
@@ -137,7 +138,7 @@
 .pm6-chat-effort-popout-portal.is-open {
   transition-duration: var(--pm6-sprout-fade-in, 140ms), 300ms, 0s, 360ms;
   transition-timing-function: var(--pm6-sprout-fade-ease, var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))),
-    cubic-bezier(0.22, 1.55, 0.36, 1), linear, cubic-bezier(0.22, 1.78, 0.36, 1);
+    cubic-bezier(0.22, 1.55, 0.36, 1), linear, var(--pm6-sprout-height-ease, cubic-bezier(0.22, 1.78, 0.36, 1));
 }
 /* Reduce motion: instant show and hide, the same end state (Settings' switch, and the system setting for .pm-sprout) */
 [data-motion="reduced"] .pm-sprout,
@@ -615,8 +616,6 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 * { scrollbar-width:thin;scrollbar-color:var(--surface-4) transparent; }
 *::-webkit-scrollbar { width:9px;height:9px; }*::-webkit-scrollbar-track{background:transparent}*::-webkit-scrollbar-thumb{background:var(--surface-4);border:2px solid transparent;background-clip:padding-box;border-radius:8px}*::-webkit-scrollbar-thumb:hover{background:var(--border-strong);border:2px solid transparent;background-clip:padding-box}
 
-@keyframes menu-pop{0%{opacity:0;transform:translateY(7px) scale(.94)}55%{opacity:1}100%{opacity:1;transform:none}}
-@keyframes sidecar-pop{0%{opacity:0;transform:translateX(calc(var(--side-dir,1)*-12px)) scale(.96)}100%{opacity:1;transform:none}}
 @keyframes drawer-in{0%{opacity:0;transform:translateX(30px) scale(.985)}100%{opacity:1;transform:none}}
 @keyframes history-in{0%{opacity:0;transform:translateX(24px)}100%{opacity:1;transform:none}}
 @keyframes dialog-in{0%{opacity:0;transform:translate(-50%,-47%) scale(.97)}100%{opacity:1;transform:translate(-50%,-50%)}}
@@ -914,17 +913,16 @@ body:has(.resizer.dragging), body:has(.panel-resize.dragging) {
    instead of stalling the close for 180ms of nothing.
 
      content rows / cards      .pm-leaving                 --pm-t-exit  120ms
-     overlays (menu, sidecar,
-     hover card, drawer,
-     dialog, history flyout)   .pm-leaving on the overlay  --pm-t-overlay-exit 180ms
+     overlays (hover card,
+     drawer, dialog,
+     history flyout)           .pm-leaving on the overlay  --pm-t-overlay-exit 180ms
 
    The overlay form collapses back toward `transform-origin`, which
    positionOverlays() already points at the trigger via --origin-x/--origin-y,
    and it stays opaque through the first 70% of the collapse -- the asymmetric
-   close of canonical ACD-439. Wave 3's Menus agent replaces the *entrance*
-   (menu-pop) with the corner-origin sprout; it should override
-   `pm-overlay-out`'s end frame to the sprout's closed scale3d(.72,.48,1) at
-   the same time, and needs no other change here.
+   close of canonical ACD-439. Menus and sidecars are not in this
+   vocabulary: they open and close through the menu sprout (PM6_SPROUT and the
+   base's pm7-sprout.css; L8 B), which replaced menu-pop and sidecar-pop.
 
    pmPatch must not remove the node before the animation finishes; the
    duration read above is the wait. */
@@ -21385,11 +21383,14 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
      isOpen(el)
      aim(el, anchor, origin)            pins the corner again (a flyout whose row moved)
      resize(el, mutate)                 runs mutate and springs the height from the old box to the new one, with the
-                                        size bounce (the search filter, an option count, a drill-in, a list that grew)
+                                        size bounce (the search filter, an option count, a drill-in, a list that grew);
+                                        a box that grows passes its new size and settles back, a box that shrinks
+                                        settles onto it without passing it, so it never cuts into its own content
      morph(el, from, to, opts)          for a surface that places itself (Home's plate): the box moves from one geometry
                                         to another ({ left, top, width, height }, px). A height-only change is the
-                                        contract's height spring with the size bounce (resize's motion, and none where a
-                                        look has no height spring); a change of width or place (a level drilled into)
+                                        contract's height spring with the size bounce (resize's motion, a shrink's
+                                        without the overshoot, and none where a look has no height spring); a change
+                                        of width or place (a level drilled into)
                                         takes opts.shape { duration, easing }, the surface's own level timing. Returns
                                         the Animation, or null when nothing moves
      bounce(el)                         the size bounce alone, for a surface that sets its new height itself
@@ -21401,14 +21402,19 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
    Animation speed, which rescales their durations and delays), never from a constant: a close finishes when the last
    of them has ended, so the collapse always runs to its end, with a bounded fallback for a transition that never
    reports. A close that begins inside a resize drag (body.pm-resizing) lands at once, and the contract holds every
-   consumer still while a drag is under way. Reopening a closing menu cancels that close; a close called again on a
+   consumer still while a drag is under way; a morph that a drag catches mid-flight lands at its end. Reopening a closing menu cancels that close; a close called again on a
    closing menu finishes both callers together. */
 (function () {
   'use strict';
   var doc = document, root = doc.documentElement;
   var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   var OWN_CLASS = ['is-open', 'is-closing', 'is-size-bounce'];
-  var OWN_VARS = ['--pm6-sprout-ox', '--pm6-sprout-oy', '--pm6-sprout-tx', '--pm6-sprout-ty', '--pm6-sprout-sx', '--pm6-sprout-sy'];
+  var OWN_VARS = ['--pm6-sprout-ox', '--pm6-sprout-oy', '--pm6-sprout-tx', '--pm6-sprout-ty', '--pm6-sprout-sx', '--pm6-sprout-sy',
+    '--pm6-sprout-height-ease'];
+  /* the height spring overshoots (y1 > 1): a box that grows passes its new size and settles back. A box that shrinks takes
+     the same curve without the overshoot (Astra r2 R1: a filter that leaves one row dipped below it and hid it), so it
+     never ends up smaller than its content on the way. The contract's height curve reads --pm6-sprout-height-ease. */
+  var SPRING = 'cubic-bezier(0.22, 1.72, 0.36, 1)', SETTLE = 'cubic-bezier(0.22, 1, 0.36, 1)';
   var CLOSING = { opacity: 1, transform: 1, scale: 1, translate: 1, visibility: 1 };
   var states = typeof WeakMap === 'function' ? new WeakMap() : null;
   var gen = 0;
@@ -21572,6 +21578,7 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
       el.style.display = 'none';
       el.style.height = '';
       el.style.overflow = '';
+      el.style.removeProperty('--pm6-sprout-height-ease');
       var list = s.dones; s.dones = [];
       for (var i = 0; i < list.length; i++) list[i]();
     }
@@ -21605,11 +21612,14 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
     if (Math.abs(endH - startH) < 0.5) {
       el.style.height = '';
       el.style.overflow = '';
+      el.style.removeProperty('--pm6-sprout-height-ease');
       return;
     }
     el.style.height = startH + 'px';
     void el.offsetHeight;
-    /* CSS height spring (y>1) overshoots past endH then settles: the search bounce */
+    /* CSS height spring (y>1) overshoots past endH then settles: the search bounce; a shrink settles without it */
+    if (endH < startH) el.style.setProperty('--pm6-sprout-height-ease', SETTLE);
+    else el.style.removeProperty('--pm6-sprout-height-ease');
     el.style.height = endH + 'px';
     el.classList.remove('is-size-bounce');
     void el.offsetWidth;
@@ -21624,11 +21634,33 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
       if (s.hg !== hg) return;                      /* a later resize owns the height now */
       el.style.height = '';
       el.style.overflow = '';
+      el.style.removeProperty('--pm6-sprout-height-ease');
       el.classList.remove('is-size-bounce');
     }
     el.addEventListener('transitionend', clearH);
     /* cover the height spring and its overshoot settle */
     setTimeout(clearH, endOf(el, { height: 1 }) + 120);
+  }
+
+  /* The drag hold for the motion this script runs itself (morph's animations; the CSS ones are the contract's): a resize
+     drag that begins while one runs (body.pm-resizing) lands it at its end at once. Heard the way the shared clock hears
+     drags (pm-logo.js watchDrags), by the body's class, and only while one of them runs. */
+  var running = [], dragWatch = null;
+  function settleAll() { if (!held()) return; running.slice().forEach(function (a) { try { a.finish(); } catch (_) { /* gone */ } }); }
+  function track(anim) {
+    if (!anim) return anim;
+    running.push(anim);
+    if (!dragWatch && doc.body && typeof MutationObserver === 'function') {
+      dragWatch = new MutationObserver(settleAll);
+      dragWatch.observe(doc.body, { attributes: true, attributeFilter: ['class'] });
+    }
+    var drop = function () {
+      var i = running.indexOf(anim);
+      if (i >= 0) running.splice(i, 1);
+      if (!running.length && dragWatch) { dragWatch.disconnect(); dragWatch = null; }
+    };
+    anim.finished.then(drop, drop);
+    return anim;
   }
 
   function morph(el, a, b, opts) {
@@ -21640,10 +21672,11 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
       if (Math.abs(a[p] - b[p]) > 2) { k0[p] = a[p] + 'px'; k1[p] = b[p] + 'px'; moved = true; if (p !== 'height' && p !== 'top') shape = true; }
     }
     if (!moved) return null;
-    if (shape && opts.shape) return el.animate([k0, k1], { duration: opts.shape.duration || 220, easing: opts.shape.easing || 'ease' });
-    /* the height spring, as resize's: where the look's contract has none (NieR's Slice part) the box just takes its size */
+    if (shape && opts.shape) return track(el.animate([k0, k1], { duration: opts.shape.duration || 220, easing: opts.shape.easing || 'ease' }));
+    /* the height spring, as resize's (a shrink without the overshoot): where the look's contract has none (NieR's Slice
+       part) the box just takes its size */
     if (!endOf(el, { height: 1 })) return null;
-    var anim = el.animate([k0, k1], { duration: 340, easing: 'cubic-bezier(0.22, 1.72, 0.36, 1)' });
+    var anim = track(el.animate([k0, k1], { duration: 340, easing: b.height < a.height - 2 ? SETTLE : SPRING }));
     bounce(el);
     return anim;
   }
@@ -30440,6 +30473,49 @@ window.PM56_NIER_FACES = [
     if (a.branches.indexOf(d) < 0) a.branches.push(d);
     if (a.selected && a.selected.domain !== d) a.selected = null;
     ctx.renderApp();
+    return true;
+  });
+
+  /* CC5 / ACD-476: the composer dock reads the one work projection too. What waits on you in this thread (a process's
+     prompt, a subagent's question) is a needs line with Review; each live process is a live line with its time; the
+     next scheduled run is a coming-up line. They carry no runId (they are not transcript cards), so they always show;
+     the app's PM_WORK subscription re-renders the dock on a change and the tick patcher moves its times. */
+  function workDock(ctx) {
+    var W = window.PM_WORK, S = window.PM56_SHELL, out = [];
+    if (!W || !S || !S.pmxDockLine || !ctx || !ctx.state) return out;
+    var tid = ctx.state.selectedThread;
+    var mine = W.items({ thread: tid, kind: ['process', 'agent', 'scheduled'], view: 'thread:' + tid });
+    var mark = function (it) { return ctx.icon(it.kind === 'agent' ? 'robot' : it.kind === 'scheduled' ? 'clock' : 'processes', 16); };
+    var line = function (it, tone, sentence, time, label) {
+      var d = it.kind === 'agent' ? 'subagents' : 'processes';
+      return { key: 'work:' + it.id, tone: tone, at: it.startedAt || 0, html: S.pmxDockLine({ key: 'pmx-dock:work:' + it.id, tone: tone, markHtml: mark(it),
+        kindWord: esc(ctx, wt(it.kind === 'agent' ? 'dock.agent' : it.kind === 'scheduled' ? 'dock.scheduled' : 'dock.process')), sentence: sentence,
+        time: time ? '<span data-work-time="' + esc(ctx, it.id) + '">' + esc(ctx, time) + '</span>' : '',
+        action: { action: 'work-dock-review', attrs: 'data-id="' + esc(ctx, it.id) + '" data-domain="' + d + '"', label: label } }) };
+    };
+    W.sort(mine.filter(W.needsYou)).forEach(function (it) {
+      out.push(line(it, 'needs', esc(ctx, it.title) + ' · ' + esc(ctx, it.ask || W.word(it)), '', wt('dock.review')));
+    });
+    W.sort(mine.filter(function (it) { return it.kind === 'process' && W.isLive(it) && !W.needsYou(it); })).forEach(function (it) {
+      out.push(line(it, 'live', esc(ctx, it.title), W.time(it), wt('dock.show')));
+    });
+    var next = W.sort(mine.filter(function (it) { return it.kind === 'scheduled' && it.state === 'pending'; }))[0];
+    if (next) out.push(line(next, 'comingup', esc(ctx, next.title), W.time(next), wt('dock.show')));
+    return out;
+  }
+  var dockOn = false;
+  function provideDock() {
+    if (dockOn || !(window.PM56_PMX && window.PM56_PMX.dock)) return;
+    dockOn = true;
+    window.PM56_PMX.dock.provide(workDock);
+  }
+  provideDock();
+  if (!dockOn) document.addEventListener('DOMContentLoaded', provideDock, { once: true });
+  /* a dock line's Review / Show: Activity Detail at that item (a subagent found by its title: the chat's records) */
+  EXT.action('work-dock-review', function (ctx, btn) {
+    var id = btn && btn.dataset.id, d = btn && btn.dataset.domain, W = window.PM_WORK, it = W && id ? W.item(id) : null;
+    if (!it || !window.PM56_DEMO) return true;
+    window.PM56_DEMO.openActivity(d, d === 'subagents' ? { title: it.title } : it.id);
     return true;
   });
 

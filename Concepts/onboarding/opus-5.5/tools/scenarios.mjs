@@ -594,6 +594,72 @@ def('pr14', 'fresh', "Jared's O12 B: Creating's Continue waits for the last bloc
   A.ok(w.at >= w.want, 'Continue came on with every block down (' + w.at + ' of ' + w.want + ')');
   A.ok(w.enabled - w.done < 2600, 'and within the cap (' + Math.round(w.enabled - w.done) + ' ms after the Project was made)');
 });
+/* The completeness audit's W3 items (2026-10-30), kept as regressions. */
+/* what the stage asks of Pip's sound (O55.pipVoice: say voices a line, sayTiming only times it, play a kit event) and
+   the window's own sounds (O55.sound.play) */
+const spySound = (d) => d.page.evaluate(() => {
+  const w = window.__snd = { say: [], timed: [], play: [], pip: [] }, V = window.O55.pipVoice, S = window.O55.sound;
+  const wrap = (o, k, list) => { const f = o[k]; o[k] = function (...a) { const r = f.apply(this, a); list.push({ a: a[0], r: r && typeof r === 'object' ? (r.played !== undefined ? !!r.played : true) : r, t: performance.now() }); return r; }; };
+  wrap(V, 'say', w.say); wrap(V, 'sayTiming', w.timed); wrap(S, 'play', w.play); wrap(V, 'play', w.pip);
+});
+def('pr15', 'fresh', "Audit O6-b: hovering a look tile is silent, NieR Mode too; a click speaks", async (d, A) => {
+  await d.openOnboarding(); await d.primary();
+  await d.click('#pm-o55-onboarding .o55-layer:not(.o55-out) #o55-h', 'the title'); /* a real press: sound may play from here on */
+  await sleep(2500); /* (the screen's own arrival, its palette lowered and landed, is over) */
+  await spySound(d);
+  for (const f of ['friendly', 'glass', 'retro']) await rest(d, `#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-tile[data-arg="${f}"]`, 1300);
+  let w = await d.state(() => window.__snd);
+  A.ok(!w.say.length && w.timed.length > 0 && !w.play.some((x) => x.a === 'hover') && !w.pip.length, 'no voice, tick or kit sound on hover, the lines only timed (' + JSON.stringify({ voiced: w.say.length, timed: w.timed.length, hover: w.play.filter((x) => x.a === 'hover').length, pip: w.pip.map((x) => x.a) }) + ')');
+  A.ok(await d.state(() => /\S/.test(document.querySelector('#pm-o55-onboarding .pst-bubble').textContent)), 'the bubble still types the line');
+  await d.act('pickNier'); await d.settle(); await sleep(5000); /* (NieR's switch-over and its line have played out) */
+  await d.page.evaluate(() => { const w = window.__snd; w.say.length = 0; w.timed.length = 0; w.play.length = 0; w.pip.length = 0; });
+  for (const f of ['friendly', 'glass']) await rest(d, `#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-tile[data-arg="${f}"]`, 1300);
+  w = await d.state(() => window.__snd);
+  A.ok(!w.say.length && !w.play.some((x) => x.a === 'hover') && !w.pip.some((x) => /hover|ghost|tryOn/.test(x.a)), 'NieR Mode: silent too (' + JSON.stringify({ voiced: w.say.length, hover: w.play.filter((x) => x.a === 'hover').length, pip: w.pip.map((x) => x.a) }) + ')');
+  await d.act('pickNier'); await d.settle(); await sleep(800);
+  await d.page.evaluate(() => { window.__snd.say.length = 0; });
+  await d.act('pickFamily', 'glass'); await sleep(700);
+  w = await d.state(() => window.__snd);
+  A.ok(w.say.length >= 1, 'a click says the line (' + w.say.length + ' line)');
+});
+def('pr16', 'fresh', 'Audit W3-55: every block sounds as it lands', async (d, A) => {
+  await d.openOnboarding(); await toName(d); await d.type('name', 'Stack');
+  for (let i = 0; i < 6 && (await d.screen()) !== 'review'; i++) await d.primary();
+  await readyPrimary(d); await spySound(d);
+  await d.page.evaluate(() => { const st = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')), w = window.__land = []; st.onLanded = ((f) => function (pr) { w.push({ t: performance.now(), stack: pr.spec.stack }); return f && f.call(this, pr); })(st.onLanded); });
+  await d.primary();
+  await until(d, "window.O55.S.sess.commit.state === 'done'", 'made', 25000); await sleep(2200);
+  const r = await d.state(() => ({ blocks: window.__snd.pip.filter((x) => x.a === 'block'), landed: window.__land, want: window.O55.review.phasesFor(window.O55.S).length }));
+  A.eq(r.landed.length, r.want, 'every block landed (' + r.landed.length + ' of ' + r.want + ')');
+  A.eq(r.blocks.length, r.want, 'one block sound per block (' + r.blocks.length + ')');
+  A.ok(r.blocks.every((b, i) => r.landed[i] && Math.abs(b.t - r.landed[i].t) < 60), 'each at its touchdown (' + r.blocks.map((b, i) => r.landed[i] ? Math.round(b.t - r.landed[i].t) : 'x').join(', ') + ' ms)');
+});
+def('pr17', 'fresh', 'Audit W3-66: a finished chapter bead holds its check mark in every look', async (d, A) => {
+  await d.openOnboarding(); await toName(d);
+  const marks = () => d.state(() => [...document.querySelectorAll('#pm-o55-onboarding .o55-railitem')].map((li) => li.getAttribute('data-state') + ':' + !!li.querySelector('.o55-railnode svg')).join(' '));
+  for (const look of ['basic-dark', 'friendly-light', 'glass-dark', 'retro-light', 'retro-dark']) {
+    await d.page.evaluate((l) => { const [f, m] = l.split('-'); window.O55.ui.applyLook(f, m); }, look); await sleep(900);
+    const m = await marks();
+    A.ok(/done:true/.test(m) && !/done:false/.test(m) && !/(current|next):true/.test(m), look + ': ' + m);
+  }
+});
+def('pr18', 'fresh', 'Audit O10: Ready draws Pip lifting the strings before the window becomes the tour callout', async (d, A) => {
+  await d.page.evaluate(() => { window.O55.ui.open({ fresh: true, screen: 'ready' }); });
+  await d.until(() => !!document.querySelector('#pm-o55-onboarding .o55-layer[data-screen="ready"]'), { what: 'Ready' }); await d.settle(); await sleep(3500);
+  await d.page.evaluate(() => { const st = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')), w = window.__lift = []; const loop = () => { w.push({ t: performance.now(), y: st.ps.C.y, live: st.live(), open: window.O55.S.open }); if (w.length < 240 && window.O55.S.open) requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+  await d.act('tour'); await sleep(1500);
+  const w = await d.state(() => window.__lift);
+  const live = w.filter((x) => x.live && x.open), rise = live.length ? live[0].y - Math.min(...live.map((x) => x.y)) : 0;
+  A.ok(live.length >= 8, 'the stage drew ' + live.length + ' frames of the lift before the hand-over (60 fps proof: the recording)');
+  A.ok(rise > 30, 'Pip rose ' + Math.round(rise) + ' px on its strings');
+  A.ok(await d.state(() => !window.O55.S.open), 'then the window handed over to the tour');
+});
+def('pr19', 'fresh', "Audit W3-32: the resume chip's tip is its hover tag", async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary();
+  await d.page.evaluate(() => window.O55.ui.close('close')); await sleep(1200);
+  const t = await d.state(() => { const b = document.querySelector('#o55-resume [data-o55-chip="resume"]'); return b ? b.getAttribute('title') : null; });
+  A.ok(!!t && /Finish setting up|optional setup/i.test(t) && /\n/.test(t) && /left off/.test(t), 'resume chip title: ' + JSON.stringify(t));
+});
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();

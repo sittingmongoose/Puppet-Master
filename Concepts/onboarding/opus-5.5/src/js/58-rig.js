@@ -362,6 +362,8 @@
     /* ------------------------------------------------------------ sound */
     sfx(ev, o) {
       const S = snd(); if (!S || !S.play) return;
+      // a look only hovered is silent through and through (Jared's O6): its props settle without a sound
+      if (this.spec && this.spec.mute) return;
       // a scene change lowers and lifts several props at once: one sound for the moment, not six
       const gap = { lower: .12, lift: .16, land: .1, ghost: .12, sparkle: .15, hop: .2 }[ev];
       if (gap) { this.sfxT = this.sfxT || {}; if (this.t - (this.sfxT[ev] || -9) < gap) return; this.sfxT[ev] = this.t; }
@@ -495,6 +497,8 @@
       const b = this.bubble;
       text = text || '';
       clearTimeout(this.sayT);
+      /* the line a hover typed silently (O6) is said aloud once its choice is picked, without typing it again */
+      if (text && text === this.saying && this.sayMuted && b.classList.contains('on') && !(this.spec && this.spec.mute)) { this.sayNext = null; this.sayMuted = false; this.voice(text, mood); return; }
       if (!text || now) { this.sayNext = null; if (text !== this.saying || !b.classList.contains('on')) this.sayNow(text, mood); return; }
       if (text === this.saying && b.classList.contains('on')) { this.sayNext = null; return; }
       const tn = performance.now(), calm = tn - (this.sayCall || 0) > 380;
@@ -513,7 +517,11 @@
       if (!text) { b.classList.remove('on', 'typing'); if (S && S.hush) S.hush(); return; }
       if (!b.classList.contains('on')) { b.classList.remove('on'); void b.offsetWidth; b.classList.add('on'); }
       let r = null;
-      if (S && S.say) try { r = S.say(text, { mood: mood || (this.spec.pip && this.spec.pip.mood) || 'idle', kit: S.kitOf ? S.kitOf(this.theme) : undefined }); } catch (e) { r = null; }
+      const md = mood || (this.spec.pip && this.spec.pip.mood) || 'idle';
+      /* a muted line (a look only hovered, O6) is typed at the voice's pace without the voice */
+      this.sayMuted = !!(this.spec && this.spec.mute);
+      if (S && this.sayMuted) try { if (S.hush) S.hush(); r = S.sayTiming ? S.sayTiming(text, { mood: md }) : null; } catch (e) { r = null; }
+      else r = this.voice(text, md);
       const cps = (r && r.cps) || this.fam.cps;
       this.sayAt = performance.now(); this.sayMs = text.length / cps * 1000;
       this.minShow = Math.min(1400, 450 + text.length / cps * 1000 * .6);
@@ -523,6 +531,11 @@
       off.textContent = text; b.classList.add('typing');
       this.typeT = H.typer(text.length, cps, (i) => { on.textContent = text.slice(0, i); off.textContent = text.slice(i); },
         { paused: () => !this.live(), done: () => b.classList.remove('typing') });
+    }
+    // the line in Pip's voice (O55.sound.pip through O55.pipVoice): { ms, cps } for the typing
+    voice(text, mood) {
+      const S = snd(); if (!S || !S.say) return null;
+      try { return S.say(text, { mood: mood || (this.spec && this.spec.pip && this.spec.pip.mood) || 'idle', kit: S.kitOf ? S.kitOf(this.theme) : undefined }); } catch (e) { return null; }
     }
     /* ------------------------------------------------------------- tips */
     // a tip Pip writes out when asked (the ? beside a choice): t = { title, text }, or null to put it away
@@ -929,7 +942,12 @@
     picked() { const sp = this.spec || {}; this.busy(); this.cheer(sp.target, { mood: 'happy', hold: 2600 }); }
     celebrate(o) { o = o || {}; this.confetti(o.count || 46); this.cheer(null, { sound: o.sound || 'crew' }); }
     // Creating's end: the last block is down (or the Project was already made), Pip is pleased
-    created() { const sp = this.spec || {}; this.cheer(sp.target, { mood: 'happy', hold: 1800 }); }
+    /* the Project made: Pip cheers its last block with the block sound (the kit's flourish), at its touchdown; a block
+       already down has sounded there, so the cheer is then silent */
+    created() {
+      const sp = this.spec || {}, pr = sp.target && this.props.get(sp.target), block = pr && pr.spec.kind === 'block';
+      this.cheer(sp.target, block ? { mood: 'happy', hold: 1800, sound: pr.landed ? false : 'block', index: pr.spec.stack, count: (pr.spec.params && pr.spec.params.count) || pr.spec.stack + 1 } : { mood: 'happy', hold: 1800 });
+    }
     // Ready's curtain call: confetti, the crew bows, and Pip's one wink, at its sign-off (59-cheer.js)
     curtainCall(o) { if (this.ready) this.ready(o || {}); }
   }

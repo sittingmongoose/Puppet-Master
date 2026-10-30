@@ -1,4 +1,4 @@
-/* work_checks.mjs: the background-activity concept's 22 scripted checks, rewritten for the native surfaces (W6; the
+/* work_checks.mjs: the background-activity concept's scripted checks (22, then the reviews' and the completeness audit's), rewritten for the native surfaces (W6; the
  * concept was Concepts/background-activity/opus-5.5, its checks lived in its lab). OWNER: pm7-activity, PM7 build
  * 2026-10-29. Drives an existing GPU browser (an agent-browser or gpu-browser session; this tool never launches one):
  *
@@ -369,6 +369,86 @@ try {
     await ev(() => window.PM7_WORK_UI.close()); await scenario('busy');
     const sorted = orders.every((o) => o.every((v, i) => i === 0 || (sortDir === 'ascending' ? o[i - 1] <= v : o[i - 1] >= v)));
     return { ok: heads.length > 0 && heads.every((h) => h[1] === 0 || h[0] === h[1]) && (sortDir === 'ascending' || sortDir === 'descending') && sorted, note: JSON.stringify({ heads: heads.map((h) => h[2] + ' / ' + h[1] + ' rows'), cpu: sortDir, orders }) };
+  });
+  /* ------------------------------------------------------------- completeness audit (cycle 1, 2026-10-30) */
+  await check(34, 'The rail\'s Agents panel is a filter of PM_WORK: every agent once, Needs you is the projection\'s set, times spelled the rail\'s way and steady, a change repaints (D7, DL-246)', async () => {
+    await scenario('busy');
+    await clickAt('.icon[data-ab-id="agents"]'); await sleep(900);
+    const read = () => ev(() => { const h = document.querySelector('#panel-agents [data-work-rail]'), W = window.PM_WORK, ag = W.items({ kind: 'agent' });
+      const ids = h ? [...h.querySelectorAll('.wk-row[data-work-row]')].map((r) => r.getAttribute('data-work-row')) : [];
+      const needs = h ? [...h.querySelectorAll('[data-shelf="needs"] .wk-row[data-work-row]')].map((r) => r.getAttribute('data-work-row')).sort().join(',') : '';
+      return { list: !!(h && h.classList.contains('wk-list')), rows: ids.length, unique: new Set(ids).size, agents: ag.length, same: ids.every((i) => ag.some((x) => x.id === i)),
+        needs, want: ag.filter(W.isQuestion).map((x) => x.id).sort().join(','), status: ((document.querySelector('#panel-agents [data-work-rail-status] .sh-bfull') || {}).textContent || '').trim() }; });
+    const busy = await read();
+    /* every frame for 2.5 s (two ticks): no rail time ever reads in the short form ("6m 57s"), so the rail's skin never rewrites one */
+    const short = await ev(() => new Promise((res) => { let bad = 0, frames = 0; const t0 = performance.now(); const f = () => { frames++;
+      document.querySelectorAll('#panel-agents [data-work-time]').forEach((e) => { if (/(^|\s)\d+[smhdw](\s|$)/.test(e.textContent)) bad++; });
+      if (performance.now() - t0 < 2500) requestAnimationFrame(f); else res({ bad, frames }); }; requestAnimationFrame(f); }));
+    await scenario('quiet'); await sleep(300);
+    const quiet = await read();
+    await scenario('busy');
+    const good = (r) => r.list && r.rows === r.agents && r.unique === r.rows && r.same && r.needs === r.want;
+    return { ok: good(busy) && good(quiet) && busy.rows !== quiet.rows && /2 need you/.test(busy.status) && short.bad === 0 && short.frames > 60, note: JSON.stringify({ busy, quiet, short }) };
+  });
+  await check(35, 'Home\'s Agents board is the same filter with the panel\'s rows: every agent, the same needs-you count, a change repaints (D7, DR-078)', async () => {
+    await ev(() => window.PM_HOME.open({ kind: 'dashboard', board: 'agents' })); await sleep(1200);
+    const read = () => ev(() => { const L = document.querySelector('.pmw-dash-agents .wk-list'), W = window.PM_WORK, ag = W.items({ kind: 'agent' });
+      const ids = L ? [...L.querySelectorAll('.wk-row[data-work-row]')].map((r) => r.getAttribute('data-work-row')) : [];
+      return { rows: ids.length, agents: ag.length, same: ids.every((i) => ag.some((x) => x.id === i)), needs: ag.filter(W.needsYou).length, summary: window.PM7_WORK_UI.agentSummary(),
+        bar: ((document.querySelector('[data-work-group] [data-status-action="agents"]') || {}).textContent || '').replace(/\s+/g, ' ').trim() }; });
+    const busy = await read();
+    await scenario('quiet'); await sleep(300);
+    const quiet = await read();
+    await scenario('busy');
+    const need = Number((busy.summary.match(/(\d+) need you/) || [0, 0])[1]);
+    return { ok: busy.rows === busy.agents && busy.same && quiet.rows === quiet.agents && busy.rows !== quiet.rows && need === busy.needs, note: JSON.stringify({ busy, quiet }) };
+  });
+  await check(36, 'The composer dock reads PM_WORK for the thread: needs-you lines with Review, live runs with their time, the next scheduled run; Review opens Processes at the item (CC5, ACD-476)', async () => {
+    await scenario('busy'); await ev(() => window.PM56_DEMO.selectThread('query')); await sleep(800);
+    const lines = () => ev(() => [...document.querySelectorAll('#pmRoot .composer .pmx-dock-line')].filter((l) => /^pmx-dock:work:/.test(l.getAttribute('data-key') || '') || l.querySelector('[data-action="work-dock-review"]'))
+      .map((l) => ({ tone: l.getAttribute('data-tone'), id: (l.querySelector('[data-action="work-dock-review"]') || {}).dataset && l.querySelector('[data-action="work-dock-review"]').dataset.id, label: ((l.querySelector('[data-action="work-dock-review"]') || {}).textContent || '').trim(), time: ((l.querySelector('[data-work-time]') || {}).textContent || '') })));
+    const busy = await lines();
+    const want = await ev(() => { const W = window.PM_WORK, mine = W.items({ thread: 'query', kind: ['process', 'agent', 'scheduled'], view: 'thread:query' }); return { needs: mine.filter(W.needsYou).map((x) => x.id).sort().join(','), live: mine.filter((x) => x.kind === 'process' && W.isLive(x) && !W.needsYou(x)).length }; });
+    const needLine = busy.find((l) => l.tone === 'needs');
+    if (needLine) await clickAt('#pmRoot .composer .pmx-dock-line[data-tone="needs"] [data-action="work-dock-review"]'); await sleep(700);
+    const opened = await ev(() => { const a = window.PM56_DEMO.getState().activity; return { open: a.open, domain: a.domain, sel: a.selected }; });
+    await closeActivity(); await scenario('quiet'); await sleep(500);
+    const quiet = await lines();
+    await scenario('busy');
+    const needsIds = busy.filter((l) => l.tone === 'needs').map((l) => l.id).sort().join(',');
+    return { ok: needsIds === want.needs && !!needLine && needLine.label === 'Review' && busy.some((l) => l.tone === 'live' && /\d/.test(l.time)) && opened.open && opened.domain === 'processes' && JSON.stringify(opened.sel || '').includes(needLine.id) && quiet.length < busy.length,
+      note: JSON.stringify({ busy, want, opened, quiet: quiet.length }) };
+  });
+  await check(37, 'Dragging the floating Activity panel holds body.pm-resizing and ends it, with PM_DRAGEND, on release (R-10)', async () => {
+    await openP('agents');
+    await ev(() => { window.__wkDragEnds = 0; window.PM_ON_DRAGEND(() => { window.__wkDragEnds++; }); document.querySelector('#pm7-work [data-work-p="float"]').click(); }); await sleep(400);
+    const hd = await ev(() => { const r = document.querySelector('#pm7-work .wk-head strong').getBoundingClientRect(); return { x: r.left + 10, y: r.top + r.height / 2 }; });
+    await page.mouse.move(hd.x, hd.y); await page.mouse.down(); await page.mouse.move(hd.x + 40, hd.y + 20, { steps: 5 });
+    const during = await ev(() => document.body.classList.contains('pm-resizing'));
+    await page.mouse.up(); await sleep(150);
+    const after = await ev(() => ({ cls: document.body.classList.contains('pm-resizing'), ends: window.__wkDragEnds }));
+    await ev(() => { document.querySelector('#pm7-work [data-work-p="float"]').click(); window.PM7_WORK_UI.close(); }); await sleep(300);
+    return { ok: during && !after.cls && after.ends === 1, note: JSON.stringify({ during, after }) };
+  });
+  await check(38, 'Resources has the Time column: a header, each row\'s time, and it sorts by start (W6-24)', async () => {
+    await scenario('servers'); await openP('resources'); await sleep(500);
+    const head = await ev(() => { const b = document.querySelector('#pm7-work .wk-th [data-work-sort="time"]'); return b ? b.textContent.trim() : null; });
+    await ev(() => document.querySelector('#pm7-work .wk-th [data-work-sort="time"]').click()); await sleep(300);
+    const r = await ev(() => { const W = window.PM_WORK; return [...document.querySelectorAll('#pm7-work .wk-env')].map((e) => [...e.querySelectorAll(':scope > .wk-tr:not(.wk-th) [data-work-time]')].map((c) => (W.item(c.getAttribute('data-work-time')) || {}).startedAt || 0)); });
+    const dir = await ev(() => document.querySelector('#pm7-work .wk-th [data-work-sort="time"]').getAttribute('aria-sort'));
+    await ev(() => window.PM7_WORK_UI.close()); await scenario('busy');
+    const sorted = r.every((o) => o.every((v, i) => i === 0 || (dir === 'ascending' ? o[i - 1] <= v : o[i - 1] >= v)));
+    return { ok: head === 'Time' && r.some((o) => o.length > 1) && sorted, note: JSON.stringify({ head, dir, r }) };
+  });
+  await check(39, 'Resources samples every 2 s as its copy says (W6-30); servers, databases and watchers default to Notify me, other work to the agent (D9-b)', async () => {
+    const n = await ev(() => new Promise((res) => { let k = 0; const stop = window.PM_WORK.sample(() => { k++; }, {}); setTimeout(() => { stop(); res(k); }, 6300); }));
+    const d = await ev(() => window.PM_WORK.items({ kind: ['process', 'scheduled'] }).map((x) => [x.id, x.role, x.delivery]));
+    await scenario('many'); await sleep(300);
+    const m = await ev(() => window.PM_WORK.items({ kind: ['process', 'scheduled'] }).map((x) => [x.id, x.role, x.delivery]));
+    await scenario('busy');
+    const NOTIFY = { server: 1, db: 1, watcher: 1 };
+    const bad = d.concat(m).filter(([, role, del]) => del !== (NOTIFY[role] ? 'user' : 'agent'));
+    return { ok: n >= 3 && n <= 4 && bad.length === 0 && d.length > 0, note: JSON.stringify({ samplesIn6s: n, checked: d.length + m.length, bad: bad.slice(0, 5) }) };
   });
 } finally {
   const failed = results.filter((r) => !r.ok).length;
