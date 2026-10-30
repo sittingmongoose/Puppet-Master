@@ -71,8 +71,9 @@
   transition-duration: var(--pm6-sprout-fade-in, 140ms), 300ms, 0s, 340ms;
   transition-timing-function: var(--pm6-sprout-fade-ease, var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))),
     cubic-bezier(0.22, 1.55, 0.36, 1), linear,
-    /* springy height for search-filter resize bounce */
-    cubic-bezier(0.22, 1.72, 0.36, 1);
+    /* springy height for search-filter resize bounce; a shrink takes it without the overshoot (the owner's resize sets
+       --pm6-sprout-height-ease), so the box never dips below its content */
+    var(--pm6-sprout-height-ease, cubic-bezier(0.22, 1.72, 0.36, 1));
   transition-delay: 0s;
 }
 /* the close: solid through most of the collapse, then a late, tiny fade, into the same corner the open set */
@@ -128,7 +129,7 @@
 .pm6-chat-effort-popout-portal.is-open {
   transition-duration: var(--pm6-sprout-fade-in, 140ms), 300ms, 0s, 360ms;
   transition-timing-function: var(--pm6-sprout-fade-ease, var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))),
-    cubic-bezier(0.22, 1.55, 0.36, 1), linear, cubic-bezier(0.22, 1.78, 0.36, 1);
+    cubic-bezier(0.22, 1.55, 0.36, 1), linear, var(--pm6-sprout-height-ease, cubic-bezier(0.22, 1.78, 0.36, 1));
 }
 /* Reduce motion: instant show and hide, the same end state (Settings' switch, and the system setting for .pm-sprout) */
 [data-motion="reduced"] .pm-sprout,
