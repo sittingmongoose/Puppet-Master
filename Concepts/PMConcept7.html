@@ -33035,6 +33035,23 @@ html[data-theme$="-light"] .wk-dialog-scrim { background: rgba(20, 24, 32, .28);
 .wk-dialog-list label { display: grid; grid-template-columns: auto auto auto minmax(0, 1fr); align-items: center; gap: 7px; padding: 6px 10px; cursor: pointer; }
 .wk-dialog-list span { color: var(--wk-small); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .wk-dialog-list li.is-off { opacity: .45; }
+/* the Stop and Quit lists' boxes (F3-4) draw themselves in every look. The global box fills with the accent and cuts its
+   tick in --surface; Glass turns that fill into a 30 % tint and --surface into a translucent ground, so checked and
+   unchecked rows looked the same. Checked is the working ink, filled, with its tick in black or white, whichever stands
+   off that ink; unchecked is an empty box in the secondary ink. Glass's reading rule (html[data-theme^="glass"] :where(input),
+   !important) repaints every input with its soft reading ground and rim, checkboxes too, so the two colours here answer it
+   with !important of their own. */
+.wk-dialog-scrim .wk-dialog-list input[type="checkbox"] { appearance: none; -webkit-appearance: none; box-sizing: border-box; display: inline-grid;
+  place-content: center; flex: none; width: 15px; height: 15px; margin: 0; border: 1.5px solid var(--wk-ink2) !important; border-radius: 4px;
+  background: transparent !important; box-shadow: none; cursor: pointer; --wk-tick: #fff; }
+.wk-dialog-scrim .wk-dialog-list input[type="checkbox"]:checked { background: var(--wk-work) !important; border-color: var(--wk-work) !important; }
+.wk-dialog-scrim .wk-dialog-list input[type="checkbox"]:checked::after { content: ""; width: 4px; height: 8px; margin-top: -2px; border: solid var(--wk-tick);
+  border-width: 0 2px 2px 0; transform: rotate(45deg); }
+@supports (color: color(from red srgb-linear r g b)) {
+  .wk-dialog-scrim .wk-dialog-list input[type="checkbox"] { --wk-tick: color(from var(--wk-work) srgb-linear clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1)); }
+}
+.wk-dialog-scrim .wk-dialog-list input[type="checkbox"]:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: 2px; }
+html:is([data-theme^="retro"], [data-o55-nier="on"]) .wk-dialog-scrim .wk-dialog-list input[type="checkbox"] { border-radius: 0; }
 .wk-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
 
 /* ---- looks: Home's tokens carry each look's plate; these add each grammar ---- */
