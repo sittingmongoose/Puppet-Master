@@ -19804,16 +19804,12 @@ body[data-theme^="retro"] .status-orbit,
 body[data-theme^="retro"] .status-clock,
 body[data-theme^="retro"] .context-ring,
 body[data-theme^="retro"] .ring-mini,
-body[data-theme^="retro"] .ctx-spin,
 body[data-theme^="retro"] .ctx-cap .ctx-capdot,
 body[data-theme^="retro"] .orbit-track,
 body[data-theme^="retro"] .orbit-core,
 body[data-theme^="retro"] .orbit-sat,
 body[data-theme^="retro"] .orbit-node-flag,
 body[data-theme^="retro"] .orbit-narration-mark,
-body[data-theme^="retro"] .qs-orbit i,
-body[data-theme^="retro"] .qs-orrery-ring,
-body[data-theme^="retro"] .qs-orrery-bead,
 body[data-theme^="retro"] .qs-ask-mark-radio,
 body[data-theme^="retro"] .calm-glyph,
 body[data-theme^="retro"] .calm-dots i,
@@ -19853,7 +19849,7 @@ body[data-theme^="retro"] .status-ring::after, body[data-theme^="retro"] .status
 body[data-theme^="retro"] .context-ring::after, body[data-theme^="retro"] .qs-ask-mark-radio::after,
 body[data-theme^="retro"] .pmx-bsd-ring::before, body[data-theme^="retro"] .pm-rail-item.orbit-strip-item.current::before,
 body[data-theme^="retro"] .working-variant-22 .c22-scope::before, body[data-theme^="retro"] .ribbon-item.done::after,
-body[data-theme^="retro"] .wa-chrome .wa-disc[data-action]::after, body[data-theme^="retro"] .plan-doc .pd-build-building::after,
+body[data-theme^="retro"] .wa-chrome .wa-disc[data-action]::after,
 body[data-theme^="retro"] .att-obj[data-state="failed"] > .att-tracer::after,
 body[data-theme^="retro"] .ab-card .ab-head-icon::after, body[data-theme^="retro"] .ab-card .ab-avatar::after,
 body[data-theme^="retro"] .pm-lens-trigger.is-on::before,
@@ -20703,22 +20699,11 @@ html[data-o55-nier-parts~="brackets"] :focus-visible { outline: 0 !important; bo
 html[data-motion="reduced"] #o55np-reticle > i, html[data-motion="reduced"] #o55np-reticle { transition: none; }
 body.pm56-reduced #o55np-reticle > i, body.pm56-reduced #o55np-reticle { transition: none; }
 
-/* ---- Diamond loaders [diamonds]: every spinner and loader becomes a slowly turning hollow diamond ---- */
-html[data-o55-nier-parts~="diamonds"] .ctx-spin,
-html[data-o55-nier-parts~="diamonds"] .qs-orbit {
-  color: var(--o55-nier-ink); border: 1px solid currentColor !important; background: transparent !important; box-shadow: none !important;
-  outline: 1px solid currentColor; outline-offset: -4px;
-  transform: rotateY(0deg) rotate(45deg) scale(.72);
-  animation: o55np-diamond 2.8s linear infinite !important;
-}
-html[data-o55-nier-parts~="diamonds"] .qs-orbit i { visibility: hidden; }
+/* ---- Diamond loaders [diamonds]: the chat's waits (Compacting, Preparing/Submitting, the plan's Building...) are the
+   system loader (W5), which the loader owner hands to the app's Diamond loaders part (styles.d/14-nier-parts.css) ---- */
 /* (3E2: the pmx running mark's still-diamond rule for svg.nx[data-nx="arc"] is gone: since neon 3E a pmx run status is
    the shared status set's still working mark, whose diamond is neon-icons.css section 11/14, and nothing draws arc.) */
 @keyframes o55np-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(360deg) rotate(45deg) scale(.72); } }
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .ctx-spin,
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
-html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .ctx-spin,
-html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .qs-orbit { animation: none !important; }
 
 /* ====================================================================================================== Motion */
 
@@ -20942,7 +20927,6 @@ html[data-o55-nier-parts~="icons"] svg ellipse { stroke-linecap: square; stroke-
 /* ============================================================================================ Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
-  html[data-o55-nier-parts~="diamonds"] .ctx-spin, html[data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
   /* the same selectors as the slice rules above (equal weight, later wins) */
   html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog,
   html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .drawer,

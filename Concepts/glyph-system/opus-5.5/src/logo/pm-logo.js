@@ -673,9 +673,11 @@
   }
   // the key of a drawing's shared stylesheet rules and defs: family x tier (pixel grids by size)
   function tierKey(family, tier, px) { return tier === 'pixel' ? 'g' + spriteGrid(px) : tier === 'micro' ? 'g16' : tier; }
+  /* One ratio per motion at every tier (Swing x1, Think x1.15, Hop x0.78), so a 12-18 px loader keeps the three motions
+     apart in time as well as in drawing; the pixel tiers' frame flips take their delays as exact fractions of the
+     period, so no period can open a gap between frames. */
   function periodOf(family, motion, tier) {
     const fam = MOTION[family] || MOTION.basic;
-    if (tier === 'micro' || tier === 'pixel') return fam.dur * ((motion === 'think' || motion === 'hop') ? .85 : 1) * 1000;
     return (motion === 'hop' ? R(fam.dur * .78) : motion === 'think' ? R(fam.dur * 1.15) : fam.dur) * 1000;
   }
 

@@ -193,22 +193,11 @@ html[data-o55-nier-parts~="brackets"] :focus-visible { outline: 0 !important; bo
 html[data-motion="reduced"] #o55np-reticle > i, html[data-motion="reduced"] #o55np-reticle { transition: none; }
 body.pm56-reduced #o55np-reticle > i, body.pm56-reduced #o55np-reticle { transition: none; }
 
-/* ---- Diamond loaders [diamonds]: every spinner and loader becomes a slowly turning hollow diamond ---- */
-html[data-o55-nier-parts~="diamonds"] .ctx-spin,
-html[data-o55-nier-parts~="diamonds"] .qs-orbit {
-  color: var(--o55-nier-ink); border: 1px solid currentColor !important; background: transparent !important; box-shadow: none !important;
-  outline: 1px solid currentColor; outline-offset: -4px;
-  transform: rotateY(0deg) rotate(45deg) scale(.72);
-  animation: o55np-diamond 2.8s linear infinite !important;
-}
-html[data-o55-nier-parts~="diamonds"] .qs-orbit i { visibility: hidden; }
+/* ---- Diamond loaders [diamonds]: the chat's waits (Compacting, Preparing/Submitting, the plan's Building...) are the
+   system loader (W5), which the loader owner hands to the app's Diamond loaders part (styles.d/14-nier-parts.css) ---- */
 /* (3E2: the pmx running mark's still-diamond rule for svg.nx[data-nx="arc"] is gone: since neon 3E a pmx run status is
    the shared status set's still working mark, whose diamond is neon-icons.css section 11/14, and nothing draws arc.) */
 @keyframes o55np-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(360deg) rotate(45deg) scale(.72); } }
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .ctx-spin,
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
-html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .ctx-spin,
-html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .qs-orbit { animation: none !important; }
 
 /* ====================================================================================================== Motion */
 
@@ -432,7 +421,6 @@ html[data-o55-nier-parts~="icons"] svg ellipse { stroke-linecap: square; stroke-
 /* ============================================================================================ Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
-  html[data-o55-nier-parts~="diamonds"] .ctx-spin, html[data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
   /* the same selectors as the slice rules above (equal weight, later wins) */
   html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog,
   html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .drawer,
