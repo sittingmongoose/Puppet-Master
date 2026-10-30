@@ -1176,17 +1176,11 @@ body:not(.pmu-page-active) :is(.rd-console):hover { --pm6-sb-ink: var(--pm6-sb-t
       border-radius: var(--radius-pill);
       box-shadow: inset 0 1px 0 var(--glass-edge);
     }
-    [data-theme^="glass"] .title-bar .project-dropdown {
-      padding: 3px 10px;
-      max-width: 200px;
-      overflow: hidden;
+    [data-theme^="glass"] .title-bar #projectMenuBtn {
+      font-weight: 560;
     }
-    [data-theme^="glass"] .title-bar .project-dropdown span:first-child {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    [data-theme^="glass"] .title-bar #projectMenuLabel {
       max-width: 160px;
-      display: inline-block;
     }
     [data-theme^="glass"] .title-bar .theme-select {
       padding: 3px 8px;
@@ -1917,47 +1911,183 @@ body:not(.pmu-page-active) :is(.rd-console):hover { --pm6-sb-ink: var(--pm6-sb-t
       flex: 0 0 auto;
       margin-inline-start: 0; /* inset comes only from title-bar padding */
     }
-    /* Left cluster: brand + project never shrink; gap stays title-bar gap */
+    /* The project box (option A "Tab"; F3-661, DL-236): one of the title bar's tabs. It has the page tabs' 28 px height,
+       type and resting ink, a folder and a drawn chevron from PMG, the project's badge from the shared status marks, and
+       while its menu is open it wears the chosen tab's chip (the switcher's tokens, 60-switcher-looks.css). A hairline
+       after it says it owns the pages beside it. Hover is the hover engine's (18-hover.js), in the chip's shape
+       (60-switcher-looks.css); Glass seats it in a track of its own (glass.css). The brand and the box never shrink. */
     .title-bar #projectMenuWrap {
       flex: 0 0 auto;
-    }
-    .title-bar .project-dropdown {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: var(--xs);
-      padding: 2px var(--sm);
-      background: var(--surface-elevated);
-      border: var(--border-width) solid var(--border);
-      border-radius: var(--border-radius);
-      cursor: pointer;
-      font-family: var(--body-font);
-      font-size: 13px;
-      flex: 0 0 auto;
+      position: relative;
     }
-    /* Project trigger: labeled full mode vs 32×32 folder icon */
-    .title-bar #projectMenuWrap .pm6-tb-project-ico {
-      display: none;
-      width: 16px;
+    .title-bar #projectMenuWrap::after {
+      content: "";
+      flex: none;
+      width: 1px;
       height: 16px;
-      flex-shrink: 0;
+      margin-left: 10px;
+      background: var(--border);
     }
-    .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-menu-trigger {
+    .title-bar #projectMenuBtn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-sizing: border-box;
+      height: 28px;
+      min-width: 0;
+      max-width: none;
+      margin: 0;
+      padding: 0 8px 0 7px;
+      border: 0;
+      border-radius: var(--pm-switch-r-in, var(--pm-ctl-r-in, 4px));
+      background: transparent;
+      box-shadow: none;
+      color: var(--pm-switch-ink, var(--text-secondary));
+      font-family: inherit;
+      font-size: var(--fs-xs);
+      font-weight: inherit;
+      letter-spacing: inherit;
+      line-height: 1;
+      text-align: left;
+      cursor: pointer;
+      overflow: visible;
+      transition: color var(--motion-fast, 160ms) ease, background-color var(--motion-fast, 160ms) ease, box-shadow var(--motion-fast, 160ms) ease;
+    }
+    .title-bar #projectMenuBtn:hover { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))); }
+    .title-bar #projectMenuBtn[aria-expanded="true"] {
+      background-image: linear-gradient(var(--pm-switch-fill, transparent), var(--pm-switch-fill, transparent)), linear-gradient(var(--pm-switch-body, transparent), var(--pm-switch-body, transparent));
+      box-shadow: inset 0 0 0 .5px var(--pm-switch-line, transparent), inset 0 1px 0 var(--pm-switch-top, transparent), 0 0 0 .5px var(--pm-switch-edge, transparent), var(--pm-switch-shadow, 0 0 0 0 transparent);
+      color: var(--pm-switch-ink-on, var(--text-primary));
+    }
+    /* long names end in an ellipsis; the label is still the whole name (Home, Settings and the sound binding read it) */
+    .title-bar #projectMenuLabel {
+      display: block;
+      min-width: 0;
+      max-width: 168px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      line-height: 16px;
+    }
+    /* every part keeps its size from the first paint, before PMG draws into it, so the box never changes width then */
+    .title-bar #projectMenuBtn :is(.pm6-tb-project-ico),
+.title-bar #projectMenuBtn :is(.pm6-tb-project-badge),
+.title-bar #projectMenuBtn :is(.pm6-tb-project-chevron) {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
+      flex: none;
+    }
+    .title-bar #projectMenuBtn .pm6-tb-project-ico { width: 15px; height: 15px; }
+    .title-bar #projectMenuBtn .pm6-tb-project-badge { width: 12px; height: 12px; }
+    .title-bar #projectMenuBtn .pm6-tb-project-badge[hidden] { display: none; }
+    .title-bar #projectMenuBtn .pm6-tb-project-chevron {
+      width: 12px;
+      height: 12px;
+      opacity: .75;
+      transition: transform .18s cubic-bezier(.3, .7, .3, 1), opacity .18s ease;
+    }
+    .title-bar #projectMenuBtn :is(.pm6-tb-project-ico, .pm6-tb-project-badge, .pm6-tb-project-chevron) svg { display: block; }
+    .title-bar #projectMenuBtn[aria-expanded="true"] .pm6-tb-project-chevron { transform: rotate(180deg); opacity: 1; }
+    /* Retro and NieR step the chevron (their switcher steps and cuts); Reduced Motion places it */
+    :is([data-theme^="retro"], [data-o55-nier="on"]) .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition-timing-function: steps(1, end); transition-duration: 80ms; }
+    [data-motion="reduced"] .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition: none; }
+    @media (prefers-reduced-motion: reduce) { .title-bar #projectMenuBtn .pm6-tb-project-chevron { transition: none; } }
+    /* a resize drag holds the badge's loop (body.pm-resizing; the badge is the shared status mark) */
+    body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st),
+body.pm-resizing #projectMenuBtn .pm6-tb-project-badge :is(.nx-st-move) { animation-play-state: paused; }
+    /* Narrow windows: the density ladder folds the box to its folder (pm6-js-panels.js applyDensity, data-mode="icon") */
+    .title-bar #projectMenuWrap[data-mode="icon"] #projectMenuBtn {
+      width: 28px;
       padding: 0;
       gap: 0;
+      justify-content: center;
+    }
+    .title-bar #projectMenuWrap[data-mode="icon"] :is(#projectMenuLabel),
+.title-bar #projectMenuWrap[data-mode="icon"] :where(.pm6-tb-project-chevron):not(#t7:not(*)) { display: none; }
+    .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-project-badge { position: absolute; top: -2px; right: -3px; }
+    .title-bar #projectMenuWrap[data-mode="icon"]::after { display: none; }
+    [data-theme^="retro"]:not([data-o55-nier="on"]) .title-bar #projectMenuWrap::after { width: 2px; }
+
+    /* an open title-bar menu over a panel's resize strip keeps its clicks: the strips take no pointer while it is open
+       (pm6-js-panels.js tbMenuShield; the bar stays under the strips' z-index so the switcher's chips draw over it) */
+    .app-shell[data-tb-menu-open] :is(#leftPanelResizer),
+.app-shell[data-tb-menu-open] :is(#terminalResizer),
+.app-shell[data-tb-menu-open] :is(#chatResizer),
+.app-shell[data-tb-menu-open] :where(.pane-header-drag):not(#t7:not(*)) { pointer-events: none; }
+
+    /* The menu: "Projects" with its shortcut, two-line rows (a monogram tile, the name, the path and branch, the state in
+       words beside its mark) and All projects. The chosen row keeps DL-214's chosen-row material in each look
+       (60-switcher-looks.css; Glass's clear lens in glass.css; NieR's ink bar in 14-nier-parts.css) and its tile turns
+       over with it. */
+    #projectMenu { min-width: 292px; padding: 4px; box-sizing: border-box; }
+    #projectMenu .pm6-tb-project-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 7px 8px 6px 10px;
+      font: 700 10px/1 var(--body-font);
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    #projectMenu .pm6-tb-project-keys { display: inline-flex; gap: 3px; text-transform: none; letter-spacing: 0; }
+    #projectMenu .pm6-tb-project-keys kbd {
+      font: 600 10px/1 var(--mono-font, ui-monospace, monospace);
+      padding: 3px 4px;
+      border-radius: var(--pm-switch-r-in, 3px);
+      color: var(--text-secondary);
+      background: var(--pm-switch-track, color-mix(in srgb, var(--text-primary) 6%, transparent));
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 80%, transparent);
+    }
+    #projectMenu .pm6-tb-menu-item:is([data-project], .pm6-tb-project-all) {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr) auto;
+      align-items: center;
+      column-gap: 10px;
+      width: 100%;
+      min-height: 44px;
+      padding: 6px 10px 6px 8px;
+      font-size: 12px;
+      letter-spacing: 0;
+      white-space: nowrap;
+      text-align: left;
+    }
+    #projectMenu .pm6-tb-project-all { min-height: 38px; }
+    #projectMenu .pm6-tb-project-tile {
+      display: inline-grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
       box-sizing: border-box;
+      border-radius: var(--pm-switch-r-in, 4px);
+      font: 750 11px/1 var(--display-font, var(--body-font));
+      letter-spacing: 0;
+      color: var(--text-secondary);
+      background: var(--pm-switch-track, color-mix(in srgb, var(--text-primary) 6%, transparent));
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 85%, transparent);
     }
-    .title-bar #projectMenuWrap[data-mode="icon"] #projectMenuLabel,
-    .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-project-chevron {
-      display: none;
-    }
-    .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-project-ico {
-      display: block;
-    }
+    /* the chosen row's tile turns over with its chip: clear, ringed in the row's own ink */
+    #projectMenu .pm6-tb-menu-item.is-selected .pm6-tb-project-tile { background: transparent; color: inherit; box-shadow: inset 0 0 0 1px currentColor; }
+    #projectMenu .pm6-tb-project-all .pm6-tb-project-tile { background: transparent; box-shadow: none; }
+    #projectMenu .pm6-tb-project-tile svg { display: block; width: 13px; height: 13px; }
+    #projectMenu .pm6-tb-project-text { display: grid; gap: 2px; min-width: 0; }
+    #projectMenu .pm6-tb-project-name { font-weight: 650; font-size: 12.5px; line-height: 15px; overflow: hidden; text-overflow: ellipsis; }
+    #projectMenu .pm6-tb-project-path { font-size: 11px; font-weight: 450; line-height: 13px; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; }
+    #projectMenu .pm6-tb-menu-item.is-selected .pm6-tb-project-path { color: inherit; opacity: .78; }
+    #projectMenu .pm6-tb-project-state { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; color: var(--text-secondary); }
+    #projectMenu .pm6-tb-menu-item.is-selected .pm6-tb-project-state { color: inherit; }
+    #projectMenu .pm6-tb-project-state svg { display: block; }
+    #projectMenu .pm6-tb-project-sep { height: 1px; margin: 4px 2px; background: color-mix(in srgb, var(--border) 85%, transparent); }
+    [data-theme^="retro"]:not([data-o55-nier="on"]) #projectMenu .pm6-tb-project-sep { height: 2px; }
+    [data-theme^="retro"]:not([data-o55-nier="on"]) #projectMenu :is(.pm6-tb-project-name),
+[data-theme^="retro"]:not([data-o55-nier="on"]) #projectMenu :is(.pm6-tb-project-path),
+[data-theme^="retro"]:not([data-o55-nier="on"]) #projectMenu :is(.pm6-tb-project-state),
+[data-theme^="retro"]:not([data-o55-nier="on"]) #projectMenu :is(.pm6-tb-project-tile) { font-family: var(--mono-font, var(--body-font)); }
      /* legacy; unused when notify-slot present */
     .title-bar .notify-slot {
       flex: 0 0 auto;
@@ -9041,8 +9171,10 @@ html[data-theme^="glass"] #panel-settings :is(.rail-search,.hero-search) input {
       background: var(--pm6-cozy-field);
       border: 1px solid var(--pm6-cozy-chrome-border);
     }
-    [data-theme^="friendly"] .title-bar .project-dropdown {
-      gap: var(--sm);
+    /* the project box is one of the tabs here too (style-002.css): the tabs' tracking and padding, not a field */
+    [data-theme^="friendly"] .title-bar #projectMenuBtn {
+      padding: 0 10px 0 9px;
+      letter-spacing: 0.08em;
     }
     [data-theme^="friendly"] :where(input[type="text"]),
 [data-theme^="friendly"] :where(input[type="search"]),
@@ -23540,6 +23672,7 @@ html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-ite
 html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon, .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item, .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item, .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(circle),
 html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon, .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item, .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item, .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(div),
 html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon, .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item, .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item, .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(ellipse),
+html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon, .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item, .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item, .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(g),
 html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon, .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item, .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item, .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(i),
 html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon, .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item, .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item, .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(line),
 html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon, .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item, .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item, .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(path),
@@ -23607,6 +23740,7 @@ html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-m
 html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active, .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active, .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .orch-tab.active, .fm-row.selected, .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(br),
 html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active, .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active, .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .orch-tab.active, .fm-row.selected, .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(circle),
 html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active, .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active, .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .orch-tab.active, .fm-row.selected, .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(div),
+html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active, .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active, .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .orch-tab.active, .fm-row.selected, .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(g),
 html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active, .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active, .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .orch-tab.active, .fm-row.selected, .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(i),
 html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active, .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active, .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .orch-tab.active, .fm-row.selected, .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(line),
 html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active, .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active, .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .orch-tab.active, .fm-row.selected, .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(path),
@@ -29303,7 +29437,7 @@ html[data-theme^="friendly"] .pm6-tb-menu-item { border-radius: var(--pm-ctl-r) 
    The project menu, the page tabs with their sliding ink, and the search field take the look's rectangle. The ink still
    springs between tabs exactly as before. Glass's ink loses its 2px lilac line across the top: selection is the
    surface itself, never an edge stripe (F3-648). */
-html[data-theme] .title-bar .project-dropdown { border-radius: var(--pm-ctl-r) !important; }
+html[data-theme] .title-bar .project-dropdown { border-radius: var(--pm-switch-r-in, var(--pm-ctl-r-in, var(--pm-ctl-r))) !important; }
 html[data-theme] .title-bar .page-tabs .page-tab, html[data-theme] .title-bar .page-tab-ink { border-radius: var(--pm-ctl-r) !important; }
 html[data-theme^="glass"] .title-bar .page-tabs { border-radius: calc(var(--pm-ctl-r) + 2px) !important; }
 html[data-theme^="glass"] .title-bar .page-tab-ink {
@@ -29586,10 +29720,10 @@ html[data-theme="glass-light"] .o55-demo[data-o55-narrow] .o55-demopill > svg.nx
 #pmh-frame[data-pmh-family="retro"][data-pmh-kind="ctl"][data-pmh-variant="chip"] { box-shadow: inset 0 0 0 1px var(--pm-switch-mark, var(--pmh-r-rule)); }
 /* a pressed tab is the chip's from the press on (data-lg-press, glass.js): the phosphor ink would sit on the arriving
    chip, lime on lime, until the app's click lands (Q16 review F3) */
-:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
+:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"], [aria-expanded="true"], [data-lg-press]) {
   color: var(--accent-primary) !important; transition-duration: 0s !important;
 }
-:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
+:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, #projectMenuBtn).pmh-on:not(.active, .selected, [aria-selected="true"], [aria-expanded="true"], [data-lg-press]) {
   color: var(--pm-switch-mark, var(--accent-primary)) !important;
 }
 /* the commander's bar on a rail row */
@@ -29665,6 +29799,7 @@ html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pm
 html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(.symbol),
 html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(b),
 html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(circle),
+html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(g),
 html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(line),
 html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(mask),
 html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(path),
@@ -34101,6 +34236,9 @@ html:not([data-theme^="glass"]):not(#lgz) .pmw-tab { --pmh-radius: var(--pm-swit
    the marker on a switcher's item as an echo of its chip (25-hover-controls.css) */
 html:not([data-theme^="glass"]):not(#lgz) .title-bar .page-tab { --pmh-radius: var(--pm-switch-r); --pmh-inset: -2px -2px -2px -2px; --pmh-variant: chip; }
 html:not([data-theme^="glass"]):not(#lgz) #sidePanelSlot .pm-segtab-item { --pmh-variant: chip; }
+/* the project box is one of the title bar's tabs (F3-661): its chip is its own box (it wears the chip while its menu is
+   open), so the marker takes that box and the chip's inner corners */
+html:not([data-theme^="glass"]):not(#lgz) .title-bar #projectMenuBtn { --pmh-radius: var(--pm-switch-r-in); --pmh-inset: 0px 0px 0px 0px; --pmh-variant: chip; }
 /* the chosen tab's words are the switcher's chosen ink, as on every other chip of the look */
 html:not([data-theme^="glass"]):not(#lgz) :is(#pm-home-centre),
 html:not([data-theme^="glass"]):not(#lgz) :where(.pmw-scope):not(#t7:not(*)) { --pmw-tab-active: var(--pm-switch-ink-on); }
@@ -42347,7 +42485,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   }
   const plural = (n, one, many) => n + ' ' + (n === 1 ? one : many);
 
-  /* B5, the project box: needs you > blocked > working > unsaved > calm. Unsaved layout is shell state the box passes
+  /* B5, the project box: needs you > blocked > working > unsaved > calm. Unsaved changes are shell state the box passes
      in ({ unsaved: true }), so the order lives here once. A stale feed keeps its last known state (never a healthy zero). */
   const B5 = ['waiting', 'blocked', 'working', 'change-modified'];
   function project(id, opts) {
@@ -42371,7 +42509,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
         const rs = items({ project: id }).filter((x) => x.stopping && x.restarting).length;
         say = rs === c.stopping ? plural(rs, 'item', 'items') + ' restarting' : plural(c.stopping, 'item', 'items') + ' stopping';
       }
-    } else if (k === 'change-modified') say = 'Unsaved layout';
+    } else if (k === 'change-modified') say = 'Unsaved changes';
     return { key: k, keys, say, counts: c, stale: c.stale };
   }
   /* the composer dock and the chat's Processes domain: one thread */
@@ -69057,7 +69195,6 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-ab-id=
 /* ---------------------------------------------------------------------------------------------------------------
    5. Controls on a sheet: vibrant fills, the look's 6 px corners, a quiet hover; text buttons sit in their own fill
    --------------------------------------------------------------------------------------------------------------- */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#projectMenuBtn),
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#pm-home-more-btn),
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#themeSelect),
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#tbSearchInput),
@@ -69081,6 +69218,21 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-livebtn) { border-rad
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-livechev) { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0 !important; margin-left: 1px; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuRefresh { border-radius: var(--pm-ctl-r) 0 0 var(--pm-ctl-r) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0 !important; margin-left: -5px; }
+/* the project box is one of the title bar's tabs (F3-661): it rests clear in a track of its own, as the page tabs rest in
+   theirs (the same fill, corners and 2 px seat), and wears a press of clear glass while its menu is open; Glass draws no
+   hairline after it, its track says the same */
+html[data-theme^="glass"]:not(#lgz) .title-bar #projectMenuWrap { padding: 2px; border-radius: var(--pm-switch-r, var(--pm-ctl-r)); background: var(--pm-switch-track, var(--lg-fill)); }
+html[data-theme^="glass"]:not(#lgz) .title-bar #projectMenuWrap::after { display: none; }
+html[data-theme^="glass"]:not(#lgz) .title-bar #projectMenuBtn {
+  border: 0 !important; background-color: transparent !important; background-image: none !important; box-shadow: none !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important; color: var(--pm-switch-ink, var(--text-secondary));
+}
+html[data-theme^="glass"]:not(#lgz) .title-bar #projectMenuBtn:hover { color: var(--text-primary); }
+html[data-theme^="glass"]:not(#lgz) .title-bar #projectMenuBtn[aria-expanded="true"] {
+  background-color: var(--lg-fill-press, rgba(255, 255, 255, .14)) !important; color: var(--text-primary);
+  box-shadow: inset 0 0 0 1px var(--rg-rim-soft, rgba(255, 255, 255, .22)), inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .22)), 0 6px 14px rgba(0, 0, 0, .12) !important;
+}
+html[data-theme^="glass"]:not(#lgz) .title-bar #projectMenuWrap[data-mode="icon"] #projectMenuBtn { padding: 0 !important; }
 /* the tab strips: a fill track on the sheet; the lens does the choosing */
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) :where(nav.page-tabs):not(#t7:not(*)),
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) :is(#pmuRange),
@@ -69240,6 +69392,13 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item {
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item:hover { background: var(--lg-fill-hover) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item.is-selected { background: var(--lg-fill-press) !important; font-weight: 650; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-chips { display: inline-flex; gap: 5px; margin-left: auto; }
+/* the project menu's rows are quiet rows too (the title bar's button fill and rim stay on the bar's own controls); the
+   chosen row is the clear lens in place (section 6) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #projectMenu .pm6-tb-menu-item {
+  border: 0 !important; background: transparent !important; box-shadow: none !important; border-radius: var(--pm-ctl-r) !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #projectMenu .pm6-tb-menu-item:hover { background: var(--lg-fill-hover) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-row { display: flex; align-items: center; gap: 6px; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-row > .pm6-tb-menu-item { flex: 1; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-adjust { margin: 0 !important; flex: none; border: 0 !important; border-radius: var(--pm-ctl-r) !important; background: var(--lg-fill) !important; box-shadow: none !important; padding: 6px 10px !important; }
@@ -69313,6 +69472,7 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > button:is([aria-checked="true"], [aria-pressed="true"]),
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > lg-under > .lg-lens,
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .resource-row[aria-current="true"],
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #projectMenu .pm6-tb-menu-item.is-selected,
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmt-cz :is(.pmt-cz-tile[aria-checked="true"]),
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmt-cz :is(.pmt-cz-set[aria-pressed="true"]),
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmt-cz :is(.pmt-cz-chipbox.pmt-cz-lit) {
@@ -70237,17 +70397,26 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
     <header class="title-bar">
       <span class="app-name">Puppet Master</span>
       <div class="pm6-tb-menu-wrap" id="projectMenuWrap" data-mode="full">
+        <!-- The project box (option A, "Tab"; F3-661): one of the title bar's tabs. Its folder, chevron and badge are drawn
+             from PMG by PM_PROJECT_BOX (pm6-js-panels.js), which also renders every row of the menu; each slot keeps its
+             size before that, so the box never changes width when they arrive. #projectMenuLabel stays the bare project
+             name: Home, Settings, the dashboard and the sound binding read it. -->
         <button type="button" class="project-dropdown pm6-tb-menu-trigger" id="projectMenuBtn"
-          aria-haspopup="menu" aria-expanded="false" aria-controls="projectMenu"
-          title="Active project: tastebook (SvelteKit + Axum + Postgres)">
+          aria-haspopup="menu" aria-expanded="false" aria-controls="projectMenu" aria-keyshortcuts="Control+Shift+P"
+          data-ui-action-id="ui.project_switcher.open" data-binding-id="shell.project.open"
+          data-pm-hover-label="tastebook" data-pm-hover-detail="~/Projects/tastebook on main · SvelteKit + Axum + Postgres. Switch project: Ctrl+Shift+P">
+          <span class="pm6-tb-project-ico" aria-hidden="true"></span>
           <span id="projectMenuLabel">tastebook</span>
-          <span class="pm6-tb-project-chevron" aria-hidden="true">&#9660;</span>
-          <svg class="pm6-tb-project-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2.2h8a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+          <span class="pm6-tb-project-badge" aria-hidden="true" hidden></span>
+          <span class="pm6-tb-project-chevron" aria-hidden="true"></span>
         </button>
-        <div class="pm6-tb-menu" id="projectMenu" role="menu" aria-label="Active project">
-          <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-project="tastebook" data-project-title="Active project: tastebook (SvelteKit + Axum + Postgres)">tastebook</button>
-          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-project="harbor" data-project-title="Active project: harbor (Next.js + Nest)">harbor</button>
-          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-project="loom" data-project-title="Active project: loom (Rust + Slint)">loom</button>
+        <div class="pm6-tb-menu" id="projectMenu" role="menu" aria-label="Projects">
+          <div class="pm6-tb-project-head" aria-hidden="true"><span>Projects</span><span class="pm6-tb-project-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd></span></div>
+          <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-project="tastebook" data-project-path="~/Projects/tastebook" data-project-branch="main" data-project-stack="SvelteKit + Axum + Postgres" data-command-id="cmd.project.switch_active_tab" data-binding-id="shell.project.pick">tastebook</button>
+          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-project="harbor" data-project-path="~/Projects/harbor" data-project-branch="develop" data-project-stack="Next.js + Nest" data-command-id="cmd.project.switch_active_tab" data-binding-id="shell.project.pick">harbor</button>
+          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-project="loom" data-project-path="~/Projects/loom" data-project-branch="main" data-project-stack="Rust + Slint" data-command-id="cmd.project.switch_active_tab" data-binding-id="shell.project.pick">loom</button>
+          <div class="pm6-tb-project-sep" role="separator"></div>
+          <button type="button" class="pm6-tb-menu-item pm6-tb-project-all" role="menuitem" data-project-all data-ui-action-id="ui.project_switcher.all_projects" data-binding-id="shell.project.all">All projects</button>
         </div>
       </div>
       <nav class="page-tabs" data-od-id="page-tabs">
@@ -154663,6 +154832,18 @@ policies for tenant isolation, and add migration script.</textarea>
     if (sprout && sprout.isOpen) return sprout.isOpen(menu);
     return !!(menu && menu.classList.contains('is-open'));
   }
+  /* A title-bar menu hangs below the bar over the page, and the bar is a stacking context (z-index 50) beneath the
+     panels' resize strips (z-index 100; it stays there so the switcher's chips, at 51, are drawn over it). The strips are
+     clear, so a menu over one looked whole but gave the strip its clicks: the project menu's rows, which reach the left
+     panel's edge, started a resize drag instead of a pick (Retro at full width). While one of the bar's menus is open
+     the strips take no pointer (style-002.css, .app-shell[data-tb-menu-open]). */
+  function tbMenuShield() {
+    var shell = document.querySelector('.app-shell');
+    if (!shell) return;
+    var open = false;
+    document.querySelectorAll('.title-bar .pm6-tb-menu').forEach(function (m) { if (!open && tbMenuIsOpen(m)) open = true; });
+    if (open !== shell.hasAttribute('data-tb-menu-open')) { if (open) shell.setAttribute('data-tb-menu-open', ''); else shell.removeAttribute('data-tb-menu-open'); }
+  }
   function tbMenuOpen(menu, btn) {
     var sprout = window.PM6_SPROUT;
     if (sprout && sprout.open) sprout.open(menu, null, btn);
@@ -154671,6 +154852,7 @@ policies for tenant isolation, and add migration script.</textarea>
       menu.classList.remove('is-closing');
       menu.style.display = 'block';
     }
+    tbMenuShield();
   }
   function tbMenuClose(menu) {
     var sprout = window.PM6_SPROUT;
@@ -154679,6 +154861,7 @@ policies for tenant isolation, and add migration script.</textarea>
       menu.classList.remove('is-open', 'is-closing', 'active');
       menu.style.display = 'none';
     }
+    tbMenuShield();
   }
   function tbCloseAllMenus(except) {
     document.querySelectorAll('.pm6-tb-menu').forEach(function (m) {
@@ -154773,41 +154956,253 @@ policies for tenant isolation, and add migration script.</textarea>
     } catch (e) {}
   }
 
+  /* ================= the project box (option A "Tab"; F3-661, DL-236) =================
+     One of the title bar's tabs: the page tabs' height, type and resting ink, a folder from PMG, a drawn chevron, the
+     project's badge, and the chosen tab's chip while its menu is open (style-002.css with the switcher tokens). The menu
+     lists every project in two-line rows: renderProjectRow is the one row renderer, and onboarding adds its project through
+     PM_PROJECT_BOX.add (O55.shell.selectProject). The badge and each row's state read the work projection,
+     PM_WORK.project(id), which keeps B5's order; the box passes it the active project's unsaved shell state. A pick
+     dispatches cmd.project.switch_active_tab (B1), Ctrl/Cmd+Enter or Ctrl/Cmd+click cmd.project.open_in_new_workspace_tab
+     (B6), and Ctrl+Shift+P opens the menu (ui.project_switcher.open, B2). #projectMenuLabel keeps the bare project name:
+     Home, Settings, the dashboard and the sound binding read it. The chosen tab's chip follows the box's width in the same
+     frame (glass.js, the #projectMenuWrap observer), and the density ladder runs again whenever the box changes width. */
+  /* B5: needs you > blocked > working > unsaved > calm (calm has no mark) */
+  var PROJECT_STATES = {
+    waiting: { rank: 4, word: 'Needs you' },
+    blocked: { rank: 3, word: 'Blocked' },
+    working: { rank: 2, word: 'Working' },
+    'change-modified': { rank: 1, word: 'Unsaved' }
+  };
+  var projectLog = [];
+  function projectEsc(v) { return String(v == null ? '' : v).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function projectIcon(name, px) { var G = window.PMG; return G && G.icon ? G.icon(name, px) : ''; }
+  /* one state for a project: the highest-ranked key the projection reports, with its phrase */
+  function projectNormalize(v) {
+    if (!v) return { key: '', say: '' };
+    if (typeof v === 'string') return PROJECT_STATES[v] ? { key: v, say: '' } : { key: '', say: '' };
+    var keys = Array.isArray(v.keys) ? v.keys.slice() : [v.key], best = '';
+    keys.forEach(function (k) { if (PROJECT_STATES[k] && (!best || PROJECT_STATES[k].rank > PROJECT_STATES[best].rank)) best = k; });
+    return { key: best, say: best ? String(v.say || '') : '' };
+  }
+  /* FinalGUISpec 3.4's "unsaved shell state": a Home tab with unsaved changes. Home saves its layout by itself, so its
+     open buffers are the only unsaved state, and only the active project has its tabs open (Home fires pm7.home.unsaved
+     when a tab's mark changes) */
+  function projectUnsaved(id) {
+    var P = window.PMW, tabs = P && P.state && P.state.layout && P.state.layout.tabs, sel = projectSelected();
+    if (!tabs || !sel || sel.getAttribute('data-project') !== id) return false;
+    for (var k in tabs) if (tabs[k] && tabs[k].dirty) return true;
+    return false;
+  }
+  function projectState(id) {
+    var W = window.PM_WORK;
+    if (!W || typeof W.project !== 'function') return { key: '', say: '' };
+    try { return projectNormalize(W.project(id, { unsaved: projectUnsaved(id) })); } catch (e) { return { key: '', say: '' }; }
+  }
+  function projectInfo(item) {
+    var id = item.getAttribute('data-project') || '';
+    return {
+      id: id, name: item.getAttribute('data-project-name') || id, path: item.getAttribute('data-project-path') || '',
+      branch: item.getAttribute('data-project-branch') || '', stack: item.getAttribute('data-project-stack') || ''
+    };
+  }
+  /* the path summary (FinalGUISpec 3.4, B3): the hover tag and the rows carry it, the box shows the name */
+  function projectWhere(info, on) { return info.path ? info.path + (info.branch ? (on ? ' on ' : ' · ') + info.branch : '') : info.branch; }
+  function projectMonogram(name) { var m = /[A-Za-z0-9]/.exec(name || ''); return m ? m[0].toUpperCase() : '?'; }
+  function projectRows() { var menu = byId('projectMenu'); return menu ? $all('.pm6-tb-menu-item[data-project]', menu) : []; }
+  function projectSelected() {
+    var rows = projectRows();
+    for (var i = 0; i < rows.length; i++) if (rows[i].classList.contains('is-selected')) return rows[i];
+    return rows[0] || null;
+  }
+  /* the one row renderer: a monogram tile, the name, the path and branch, and the state in words beside its mark */
+  function renderProjectRow(item) {
+    var info = projectInfo(item), st = projectState(info.id), where = projectWhere(info, false), G = window.PMG;
+    var word = st.key ? PROJECT_STATES[st.key].word : '', sig = [info.name, where, st.key, !!G].join('|');
+    if (item.__pmProjectRow === sig) return item;
+    item.__pmProjectRow = sig;
+    item.setAttribute('data-state', st.key || 'idle');
+    item.setAttribute('aria-label', info.name + (where ? ', ' + projectWhere(info, true) : '') + (word ? ', ' + word : ''));
+    item.innerHTML = '<span class="pm6-tb-project-tile" aria-hidden="true">' + projectEsc(projectMonogram(info.name)) + '</span>' +
+      '<span class="pm6-tb-project-text"><b class="pm6-tb-project-name">' + projectEsc(info.name) + '</b>' +
+      (where ? '<small class="pm6-tb-project-path">' + projectEsc(where) + '</small>' : '') + '</span>' +
+      '<span class="pm6-tb-project-state" aria-hidden="true">' + (st.key && G && G.calm ? G.calm(st.key, 12) + '<span>' + projectEsc(word) + '</span>' : '') + '</span>';
+    return item;
+  }
+  function renderProjectAll(item) {
+    if (!item || item.__pmProjectRow === 'all' || !window.PMG) return;
+    item.__pmProjectRow = 'all';
+    item.innerHTML = '<span class="pm6-tb-project-tile" aria-hidden="true">' + projectIcon('grid', 14) + '</span>' +
+      '<span class="pm6-tb-project-text"><b class="pm6-tb-project-name">All projects</b></span>' +
+      '<span class="pm6-tb-project-state" aria-hidden="true">' + projectIcon('arrow-right', 13) + '</span>';
+  }
+  /* the box: its folder and chevron once, its badge whenever the state changes, its hover tag (the name, then the path
+     summary, the stack and the state: B3) and its name for assistive tech (the folded box keeps the name) */
+  function paintProjectButton() {
+    var btn = byId('projectMenuBtn'), label = byId('projectMenuLabel'), wrap = byId('projectMenuWrap');
+    if (!btn || !label) return false;
+    var item = projectSelected(), info = item ? projectInfo(item) : { id: label.textContent.trim(), name: label.textContent.trim(), path: '', branch: '', stack: '' };
+    var name = label.textContent.trim() || info.name, st = projectState(info.id), G = window.PMG, widthMoved = false;
+    var ico = btn.querySelector('.pm6-tb-project-ico'), chev = btn.querySelector('.pm6-tb-project-chevron'), badge = btn.querySelector('.pm6-tb-project-badge');
+    if (G && ico && !ico.firstChild) ico.innerHTML = projectIcon('folder', 15);
+    if (G && chev && !chev.firstChild) chev.innerHTML = projectIcon('chevron-down', 12);
+    if (badge && G && badge.getAttribute('data-k') !== (st.key || 'idle')) {
+      badge.setAttribute('data-k', st.key || 'idle');
+      if (badge.hidden !== !st.key) widthMoved = true;
+      badge.innerHTML = st.key ? (st.key === 'change-modified' ? G.calm(st.key, 12) : G.status(st.key, 12)) : '';
+      badge.hidden = !st.key;
+    }
+    if (btn.getAttribute('data-state') !== (st.key || 'idle')) btn.setAttribute('data-state', st.key || 'idle');
+    var word = st.key ? PROJECT_STATES[st.key].word : '', say = st.say || word;
+    var detail = [projectWhere(info, true), info.stack, say].filter(Boolean).join(' · ') + '. Switch project: Ctrl+Shift+P';
+    if (btn.getAttribute('data-pm-hover-label') !== name) btn.setAttribute('data-pm-hover-label', name);
+    if (btn.getAttribute('data-pm-hover-detail') !== detail) btn.setAttribute('data-pm-hover-detail', detail);
+    var folded = wrap && wrap.getAttribute('data-mode') === 'icon';
+    var aria = folded || say ? 'Project: ' + name + (say ? ', ' + say : '') : '';
+    if (aria) { if (btn.getAttribute('aria-label') !== aria) btn.setAttribute('aria-label', aria); }
+    else if (btn.hasAttribute('aria-label')) btn.removeAttribute('aria-label');
+    return widthMoved;
+  }
+  function refreshProjectBox() {
+    var menu = byId('projectMenu');
+    projectRows().forEach(renderProjectRow);
+    if (menu) renderProjectAll(menu.querySelector('.pm6-tb-project-all'));
+    if (paintProjectButton() && window.PM_TB_DENSITY) window.PM_TB_DENSITY.apply();
+  }
+  function projectNote(kind, id, payload) {
+    var row = { kind: kind, id: id, payload: payload || {}, at: Date.now() };
+    projectLog.push(row); if (projectLog.length > 50) projectLog.shift();
+    try { window.dispatchEvent(new CustomEvent(kind === 'command' ? 'pm7.project.command' : 'pm7.project.ui_action', { detail: row })); } catch (e) {}
+  }
+  /* the shell state controller's answer in this concept: the chosen row, the label, the box */
+  function selectProjectRow(item) {
+    var label = byId('projectMenuLabel');
+    if (!item) return false;
+    var info = projectInfo(item);
+    projectRows().forEach(function (el) { if (el.classList.contains('is-selected') !== (el === item)) el.classList.toggle('is-selected', el === item); });
+    if (label && label.textContent !== info.name) label.textContent = info.name;
+    paintProjectButton();
+    return true;
+  }
+  function projectMenuOpen(focusRow) {
+    var btn = byId('projectMenuBtn'), menu = byId('projectMenu');
+    if (!btn || !menu) return;
+    if (!tbMenuIsOpen(menu)) {
+      if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
+      tbCloseAllMenus(menu);
+      refreshProjectBox();
+      tbMenuOpen(menu, btn);
+      btn.setAttribute('aria-expanded', 'true');
+      projectNote('ui', 'ui.project_switcher.open');
+    }
+    if (focusRow) { var row = projectSelected(); if (row) try { row.focus({ preventScroll: true }); } catch (e) { row.focus(); } }
+  }
+  function projectMenuClose(refocus) {
+    var btn = byId('projectMenuBtn'), menu = byId('projectMenu');
+    if (!btn || !menu) return;
+    var had = menu.contains(document.activeElement);
+    if (tbMenuIsOpen(menu)) { tbMenuClose(menu); projectNote('ui', 'ui.project_switcher.close'); }
+    if (btn.getAttribute('aria-expanded') !== 'false') btn.setAttribute('aria-expanded', 'false');
+    if (refocus || had) try { btn.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function pickProject(item, newTab, viaKey) {
+    var info = projectInfo(item);
+    projectNote('command', newTab ? 'cmd.project.open_in_new_workspace_tab' : 'cmd.project.switch_active_tab', { project_id: info.id, source: 'title_bar_project_box' });
+    selectProjectRow(item);
+    projectMenuClose(viaKey);
+  }
+
   function wireProjectMenu() {
     var btn = byId('projectMenuBtn');
     var menu = byId('projectMenu');
-    var label = byId('projectMenuLabel');
     if (!btn || !menu) return;
 
     btn.addEventListener('click', function (ev) {
       ev.preventDefault();
       ev.stopPropagation();
-      if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
-      var open = tbMenuIsOpen(menu);
-      tbCloseAllMenus(open ? null : menu);
-      if (open) {
-        tbMenuClose(menu);
-        btn.setAttribute('aria-expanded', 'false');
-      } else {
-        tbMenuOpen(menu, btn);
-        btn.setAttribute('aria-expanded', 'true');
-      }
+      if (tbMenuIsOpen(menu)) projectMenuClose(false);
+      else projectMenuOpen(ev.detail === 0);
+    });
+    btn.addEventListener('keydown', function (ev) {
+      if (ev.key !== 'ArrowDown' || ev.altKey || ev.ctrlKey || ev.metaKey) return;
+      ev.preventDefault();
+      projectMenuOpen(true);
     });
 
     menu.addEventListener('click', function (ev) {
-      var item = ev.target && ev.target.closest ? ev.target.closest('.pm6-tb-menu-item[data-project]') : null;
+      var t = ev.target && ev.target.closest ? ev.target : null;
+      if (t && t.closest('.pm6-tb-project-all')) {
+        ev.preventDefault();
+        projectNote('ui', 'ui.project_switcher.all_projects', { tab_id: 'projects' });
+        projectMenuClose(false);
+        try { if (window.PM_PAGES && window.PM_PAGES.go) window.PM_PAGES.go('projects'); } catch (e0) {}
+        return;
+      }
+      var item = t ? t.closest('.pm6-tb-menu-item[data-project]') : null;
       if (!item) return;
       ev.preventDefault();
-      var name = item.getAttribute('data-project') || '';
-      var title = item.getAttribute('data-project-title') || ('Active project: ' + name);
-      if (label) label.textContent = name;
-      btn.setAttribute('title', title);
-      menu.querySelectorAll('.pm6-tb-menu-item').forEach(function (el) {
-        el.classList.toggle('is-selected', el === item);
-      });
-      tbMenuClose(menu);
-      btn.setAttribute('aria-expanded', 'false');
+      pickProject(item, ev.ctrlKey || ev.metaKey, ev.detail === 0);
     });
+    /* the menu's keys: arrows, Home and End move between rows; Ctrl/Cmd+Enter opens a row in a new workspace tab;
+       Escape closes and hands focus back to the box (the page-wide Escape closes every other menu) */
+    menu.addEventListener('keydown', function (ev) {
+      var items = $all('.pm6-tb-menu-item', menu), i = items.indexOf(document.activeElement);
+      if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp' || ev.key === 'Home' || ev.key === 'End') {
+        ev.preventDefault();
+        var n = ev.key === 'Home' ? 0 : ev.key === 'End' ? items.length - 1 : ev.key === 'ArrowDown' ? (i + 1) % items.length : (i - 1 + items.length) % items.length;
+        if (items[n]) items[n].focus({ preventScroll: true });
+      } else if (ev.key === 'Enter' && (ev.ctrlKey || ev.metaKey)) {
+        var row = document.activeElement && document.activeElement.closest ? document.activeElement.closest('.pm6-tb-menu-item[data-project]') : null;
+        if (!row || !menu.contains(row)) return;
+        ev.preventDefault();
+        pickProject(row, true, true);
+      } else if (ev.key === 'Escape') {
+        projectMenuClose(true);
+      }
+    });
+    /* Ctrl+Shift+P (FinalGUISpec's keyboard table; F3-058): open the menu on the chosen row. Never under the onboarding
+       window or the tour, which cover the title bar. */
+    document.addEventListener('keydown', function (ev) {
+      if (!(ev.ctrlKey || ev.metaKey) || !ev.shiftKey || ev.altKey || ev.code !== 'KeyP' || ev.repeat) return;
+      var root = document.documentElement;
+      if (root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour')) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      projectMenuOpen(true);
+    }, true);
+
+    refreshProjectBox();
+    /* PMG and the work projection are head modules, so both are here first; the projection says when its states change
+       (also as the window event, which is all this listens to), and Home when a tab gains or loses unsaved changes */
+    window.addEventListener('pm7.work.changed', refreshProjectBox);
+    window.addEventListener('pm7.home.unsaved', refreshProjectBox);
+
+    window.PM_PROJECT_BOX = {
+      /* the one row renderer: a row element with data-project (and data-project-name, -path, -branch, -stack) */
+      row: renderProjectRow,
+      /* a project the menu does not list yet: a row from the renderer, first in the list */
+      add: function (id, info) {
+        info = info || {};
+        var found = projectRows().filter(function (r) { return r.getAttribute('data-project') === id; })[0];
+        if (found) return found;
+        var item = document.createElement('button');
+        item.type = 'button'; item.className = 'pm6-tb-menu-item'; item.setAttribute('role', 'menuitem');
+        item.setAttribute('data-project', id);
+        if (info.name && info.name !== id) item.setAttribute('data-project-name', info.name);
+        ['path', 'branch', 'stack'].forEach(function (k) { if (info[k]) item.setAttribute('data-project-' + k, info[k]); });
+        item.setAttribute('data-command-id', 'cmd.project.switch_active_tab');
+        item.setAttribute('data-binding-id', 'shell.project.pick');
+        var first = projectRows()[0];
+        menu.insertBefore(renderProjectRow(item), first || menu.querySelector('.pm6-tb-project-sep'));
+        return item;
+      },
+      select: function (id) { return selectProjectRow(projectRows().filter(function (r) { return r.getAttribute('data-project') === id; })[0] || null); },
+      state: projectState,
+      states: function () { return Object.keys(PROJECT_STATES); },
+      refresh: refreshProjectBox,
+      open: function () { projectMenuOpen(false); },
+      close: function () { projectMenuClose(false); },
+      log: function () { return projectLog.slice(); }
+    };
   }
 
   function wireTitleBarMenusDismiss() {
@@ -154948,12 +155343,9 @@ policies for tenant isolation, and add migration script.</textarea>
       }
     }
     function setProjectMode(mode) {
+      if (projectWrap.getAttribute('data-mode') === mode) return;
       projectWrap.setAttribute('data-mode', mode);
-      var trig = byId('projectMenuBtn');
-      if (trig) {
-        if (mode === 'icon') trig.setAttribute('aria-label', 'Active project');
-        else trig.removeAttribute('aria-label');
-      }
+      paintProjectButton();   /* the folded box keeps the project's name for assistive tech */
     }
 
     var pageStrip = document.querySelector('.title-bar .page-tabs');
@@ -155216,6 +155608,21 @@ policies for tenant isolation, and add migration script.</textarea>
     setProjectMode('full');
     resetPageTabsOverflow();
     schedule();
+
+    /* The project box changes width with the project's name and its badge, not only with the bar: the ladder runs
+       again at once, in the task that changed it (a label written anywhere: a pick, onboarding, Demo Studio), so the
+       frame that draws the new name already draws the fold that fits it, and the tabs and their chip (glass.js) move
+       once, together. */
+    function applyNow() {
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
+      applyDensity();
+      if (window.PM7_PAGE_TAB_INK && typeof window.PM7_PAGE_TAB_INK.resync === 'function' && bar.getAttribute('data-tb-tabs') === 'overflow') window.PM7_PAGE_TAB_INK.resync();
+    }
+    var projectLabel = byId('projectMenuLabel');
+    if (projectLabel && typeof MutationObserver === 'function') {
+      new MutationObserver(applyNow).observe(projectLabel, { childList: true, characterData: true, subtree: true });
+    }
+    window.PM_TB_DENSITY = { apply: applyNow, schedule: schedule };
 
     if (typeof ResizeObserver !== 'undefined') {
       var lastBarWidth = bar.getBoundingClientRect().width;
@@ -178081,23 +178488,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const O55 = window.O55, C = O55.c, U = O55.util, T = (k, v) => O55.t(k, v), def = (id, d) => O55.screens.define(id, d);
   const md = (S) => S.sess.drafts.main;
 
-  /* Shell helpers: select a Project in the title-bar menu (adding it when the app doesn't list it yet). The Settings
+  /* Shell helpers: select a Project in the title-bar menu (adding it when the app doesn't list it yet). The project box
+     owns the menu's rows (PM_PROJECT_BOX, pm6-js-panels.js: one row renderer, the label stays the bare name). The Settings
      owner watches the menu and reloads that Project's settings. */
   O55.shell = {
     selectProject(id, name) {
-      const menu = document.getElementById('projectMenu'), label = document.getElementById('projectMenuLabel');
-      if (!menu || !id) return false;
-      let item = menu.querySelector(`[data-project="${CSS.escape(id)}"]`);
-      if (!item) {
-        const proto = menu.querySelector('[data-project]');
-        item = proto ? proto.cloneNode(false) : document.createElement('button');
-        item.setAttribute('type', 'button'); item.className = 'pm6-tb-menu-item'; item.setAttribute('role', 'menuitem');
-        item.setAttribute('data-project', id); item.setAttribute('data-project-title', 'Active project: ' + (name || id)); item.textContent = name || id;
-        menu.insertBefore(item, menu.firstChild);
-      }
-      menu.querySelectorAll('[data-project]').forEach((n) => n.classList.toggle('is-selected', n === item));
+      const box = window.PM_PROJECT_BOX;
+      if (!box || !id) return false;
+      const item = box.add(id, { name: name || id });
+      if (name && item.getAttribute('data-project-name') !== name && name !== id) { item.setAttribute('data-project-name', name); box.row(item); }
       window.PM_ACTIVE_PROJECT_ID = id;
-      if (label) label.textContent = name || id;
+      box.select(id);
       if (O55.sound && O55.sound.refresh) O55.sound.refresh('project');
       return true;
     },
@@ -192466,6 +192867,8 @@ PMW.updateTab = function (tabId, fields) {
     var p = model.panelOf(L(), tabId);
     if (p) stripSoon(p.id);
     PMW.persist.saveSoon();
+    /* the title bar's project box shows the project's unsaved shell state (FinalGUISpec 3.4) */
+    if (Object.prototype.hasOwnProperty.call(fields, 'dirty')) window.dispatchEvent(new CustomEvent('pm7.home.unsaved', { detail: { tab: tabId, dirty: !!rec.dirty } }));
   }
 };
 /* a kind's push-updates (a terminal's label and exit code at each command's start and end, a dirty mark) repaint the
@@ -305139,6 +305542,25 @@ try {
     window.addEventListener('resize', function () { endFrostFade(); });
     mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { if (dragHeld()) { entries.forEach(function (en) { heldScopes.push(en.target); }); flushHeldSoon(); return; } entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
+    /* The title bar lays out the brand, the project box and then the page tabs, so whenever the box changes width (another
+       project's name, a long name, its badge, the density fold) the tabs move, and the chosen tab's chip is this lens. On
+       the shell observer above it would follow only after lazySync's 140 ms timer (23 frames on its old spot, then a jump,
+       measured at 60 fps). This observer is delivered after the frame's own layout and before its paint, so the lens and
+       the tab ink under it are placed in the frame that moved the tabs. A cover (NieR's reboot) defers the strip as every
+       sync does, and it is placed on the frame the cover reveals; a resize drag holds it like its neighbours. */
+    var boxWrap = window.ResizeObserver && document.getElementById('projectMenuWrap');
+    if (boxWrap) {
+      var boxW = -1;
+      new ResizeObserver(function (entries) {
+        var w = Math.round(entries[entries.length - 1].contentRect.width);
+        if (w === boxW) return;
+        var first = boxW < 0; boxW = w;
+        if (first) return;
+        if (dragHeld()) { heldScopes.push(boxWrap.parentElement); flushHeldSoon(); return; }
+        syncAll();
+        try { if (window.PM7_PAGE_TAB_INK && window.PM7_PAGE_TAB_INK.resync) window.PM7_PAGE_TAB_INK.resync(); } catch (e) { /* the ink is hidden under the switcher */ }
+      }).observe(boxWrap);
+    }
     window.addEventListener('resize', lazySync);
     demo();
     syncAll(); setTimeout(syncAll, 500); setTimeout(syncAll, 1500);

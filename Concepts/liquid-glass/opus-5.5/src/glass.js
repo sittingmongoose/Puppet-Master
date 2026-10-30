@@ -2894,6 +2894,25 @@
     window.addEventListener('resize', function () { endFrostFade(); });
     mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { if (dragHeld()) { entries.forEach(function (en) { heldScopes.push(en.target); }); flushHeldSoon(); return; } entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
+    /* The title bar lays out the brand, the project box and then the page tabs, so whenever the box changes width (another
+       project's name, a long name, its badge, the density fold) the tabs move, and the chosen tab's chip is this lens. On
+       the shell observer above it would follow only after lazySync's 140 ms timer (23 frames on its old spot, then a jump,
+       measured at 60 fps). This observer is delivered after the frame's own layout and before its paint, so the lens and
+       the tab ink under it are placed in the frame that moved the tabs. A cover (NieR's reboot) defers the strip as every
+       sync does, and it is placed on the frame the cover reveals; a resize drag holds it like its neighbours. */
+    var boxWrap = window.ResizeObserver && document.getElementById('projectMenuWrap');
+    if (boxWrap) {
+      var boxW = -1;
+      new ResizeObserver(function (entries) {
+        var w = Math.round(entries[entries.length - 1].contentRect.width);
+        if (w === boxW) return;
+        var first = boxW < 0; boxW = w;
+        if (first) return;
+        if (dragHeld()) { heldScopes.push(boxWrap.parentElement); flushHeldSoon(); return; }
+        syncAll();
+        try { if (window.PM7_PAGE_TAB_INK && window.PM7_PAGE_TAB_INK.resync) window.PM7_PAGE_TAB_INK.resync(); } catch (e) { /* the ink is hidden under the switcher */ }
+      }).observe(boxWrap);
+    }
     window.addEventListener('resize', lazySync);
     demo();
     syncAll(); setTimeout(syncAll, 500); setTimeout(syncAll, 1500);

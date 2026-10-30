@@ -1,7 +1,3 @@
-[data-theme^="glass"] .title-bar .project-dropdown span:first-child {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+[data-theme^="glass"] .title-bar #projectMenuLabel {
       max-width: 160px;
-      display: inline-block;
     }
