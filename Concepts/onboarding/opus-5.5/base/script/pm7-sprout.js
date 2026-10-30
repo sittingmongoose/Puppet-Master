@@ -5,9 +5,10 @@
    (PMR.menu), Usage (PMU.menu), Home (PMW.menu) and the 5.6 Pro chat's menus (app.js). The 5.6 Pro standalone page
    reads this file and pm7-sprout.css too, so no menu draws a sprout of its own.
 
-     open(el, afterOpen, anchor, opts)  shows el (inline display: opts.display, else data-portal-display, else block),
-                                        pins the corner nearest the anchor and adds is-open. anchor: an element, a rect
-                                        ({ left, top, width, height } or right / bottom) or a point ({ x, y }).
+     open(el, afterOpen, anchor, opts)  shows el (inline display: opts.display, else data-portal-display, else block;
+                                        display: false leaves it to the surface), pins the corner nearest the anchor
+                                        and adds is-open. anchor: an element, a rect ({ left, top, width, height } or
+                                        right / bottom) or a point ({ x, y }).
      close(el, done)                    is-closing; done once the collapse has run (el is display:none by then)
      isOpen(el)
      aim(el, anchor)                    pins the corner again (a flyout whose row moved)
@@ -127,7 +128,7 @@
        heading. A closing box reverses from wherever it has got to. */
     var prevT = el.style.transition;
     if (!closing) el.style.transition = 'none';
-    el.style.display = opts.display || el.getAttribute('data-portal-display') || 'block';
+    if (opts.display !== false) el.style.display = opts.display || el.getAttribute('data-portal-display') || 'block';
     if (anchor) aim(el, anchor);
     void el.offsetHeight;
     if (!closing) el.style.transition = prevT;
