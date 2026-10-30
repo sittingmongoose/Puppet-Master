@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45048-L47504
+Source lines: L45069-L47526
 
-Source SHA256: `61bd532955a9cf72ecbfbf8579ba7f61d337768b69c7d7e3f4472e8f4894442e`
+Source SHA256: `b6692cc811264458a7861d64fa36dc97d82998398b28904d76ebd9840cfe121c`
 
 ---
 
@@ -1459,9 +1459,10 @@ canonical_text: >-
   header share these controls. The earlier measured 760-cap/960-budget examples are superseded historical
   measurements, not current width limits. Activity Detail opens full size directly with view-local Pin/unpin
   and no
-  small transient view (G1 B, Jared 2026-10-30). It first asks the column for room, then covers the transcript
-  at full column height
-  if the window cannot fit it; ×, Esc or the same icon closes it. History pin is unaffected. Hosted chat
+  small transient view (G1 B, Jared 2026-10-30). G2, Jared follow-up 2026-10-30: first ask the column for
+  room. When it cannot widen further, dock full-size detail inside it and squeeze messages if at least
+  360 px remain; below 360 px cover the transcript at full column height. This constrained render does not
+  lower the 400 px saved message-area width minimum; ×, Esc or the same icon closes it. History pin is unaffected. Hosted chat
   sizes by its container and sends content opens through F3-634; one right chat and one history survive.
   This supersedes old movable chat, grips, bottom workspace mirroring and any fixed maximum-width Settings
   preference while keeping the narrow/popped-out resilience of F3-565/F3-423. The default remains exactly

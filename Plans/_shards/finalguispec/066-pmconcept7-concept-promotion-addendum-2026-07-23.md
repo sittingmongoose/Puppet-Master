@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33123-L33976
+Source lines: L33133-L33996
 
-Source SHA256: `61bd532955a9cf72ecbfbf8579ba7f61d337768b69c7d7e3f4472e8f4894442e`
+Source SHA256: `b6692cc811264458a7861d64fa36dc97d82998398b28904d76ebd9840cfe121c`
 
 ---
 
@@ -56,6 +56,10 @@ canonical_text: >-
   info→idle, success→complete, warn→waiting, error→failed. Its kind glyph remains in .pmn-kind beside the
   title's text node; the tile is no additional control. Other looks retain their kind-glyph tile. Toasts,
   banners and inbox rows repaint through the same fillTile owner in src/js/19-notify.js when the look changes.
+  F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page; its first card uses the
+  theme selector menu's distance below the title bar while the inbox is closed. It may cover controls
+  and the chat head. F3-447 owns that anchor, the lead's open-inbox push exception and the entering-card
+  click guard; no per-page or control-clearance placement survives.
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
 split_recommended: false
@@ -164,6 +168,12 @@ canonical_text: >-
   explicitly a consumer of DR-079’s PM6_SPROUT lifecycle, including open/close and size changes. Alert
   content/acknowledgment/routing/focus remain here and in F3-453; no separate per-look inbox motion owner is
   exempted. The retired #rsPanel is not evidence of live-inbox closure.
+  F3-1, Jared 2026-10-30, with the lead's explicit 2026-10-30 open-inbox exception (mail
+  1030131044-4c44, preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage
+  sits under it via the existing --pmn-push offset. When closed the stage returns tight below the title
+  bar at the bell with the theme-menu gap. No chat-head or control-clearance offset is added. The existing
+  inbox owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead's ruling,
+  not an added quote from Jared.
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
 split_recommended: false

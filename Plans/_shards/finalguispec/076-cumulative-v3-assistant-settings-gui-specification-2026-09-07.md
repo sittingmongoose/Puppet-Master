@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38349-L39075
+Source lines: L38369-L39096
 
-Source SHA256: `61bd532955a9cf72ecbfbf8579ba7f61d337768b69c7d7e3f4472e8f4894442e`
+Source SHA256: `b6692cc811264458a7861d64fa36dc97d82998398b28904d76ebd9840cfe121c`
 
 ---
 
@@ -18,8 +18,7 @@ invariants.
 ### 17. Activity Detail Geometry, History Coexistence, and Floating Activity Bar
 
 - **Full-Size Activity Detail (G1/G2, 2026-10-29; supersedes APR-001):** Every entry opens the
-  full-size detail directly under F3-535/ACD-453/ACD-506, with G1 B’s view-local Pin/unpin and no small transient form. First widen the chat within its centre/page floor; at the window limit cover the transcript
-  at the full column height. Within the current thread, the detail stays until ×, Esc or its own Activity icon closes it and
+  full-size detail directly under F3-535/ACD-453/ACD-506, with G1 B’s view-local Pin/unpin and no small transient form. G2, Jared follow-up 2026-10-30: first widen the chat within its centre/page floor; when it cannot widen further, dock detail inside the column and squeeze messages if at least 360 px remain, otherwise cover the transcript at the full column height. Within the current thread, the detail stays until ×, Esc or its own Activity icon closes it and
   returns focus. G1 B (Jared 2026-10-30): pinned detail stays open across thread switches and follows the new thread; unpinned detail closes on a switch. Another domain/record replaces that full detail. History keeps its separate pin.
 - **History and Activity Detail Coexistence (APR-002):** Pinned Thread History (left rail) and
   full-size Activity Detail share the available canvas width dynamically using a coordinated flex
@@ -269,14 +268,16 @@ canonical_text: >-
   G1 B/G2 (Jared 2026-10-30): every Activity Detail opens directly as the full-size docked view and, within the current thread, stays
   until ×,
   Esc or its Activity icon closes it. Pin is available; no small transient form remains. Widen the
-  chat to fit within current centre/page floors, then cover transcript at full column height when the
-  window cannot fit the dock. History keeps its separate flyout/pin and actual-width contract in F3-637.
+  chat to fit within current centre/page floors first. G2, Jared follow-up 2026-10-30: when it cannot
+  widen further, dock full-size detail inside the column and squeeze messages if at least 360 px remain;
+  below that threshold cover the transcript at full column height. History keeps its separate flyout/pin and actual-width contract in F3-637.
   Hover previews remain one bounded, non-scrolling preview with existing dwell and direct detail routes.
   F3-533/ACD-453/ACD-506 own content and layout; this unit adds no runtime state. The Chat Activity Bar
   remains a floating bar centred above the composer, with transparent sides/bottom and pointer pass-through
   around it; transcript bottom padding ensures the final child at settled bottom scroll clears the bar.
   This is the Activity Bar, not a floating Activity Detail fallback. History and full-size detail divide
-  the available canvas without overlapping gutters; at the window limit detail uses G2’s full-height cover. G1
+  the available canvas without overlapping gutters; at the window limit detail uses G2’s 360 px
+  docking/squeeze threshold, then full-height cover below it. G1
   B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action (binding chat.activity.pin),
   default false. Pinned Activity Detail stays open across thread switches and reprojects the selected thread’s
   data; unpinned detail closes on a thread switch. Pin changes lifetime only: one full-size
@@ -293,8 +294,8 @@ unblocks:
 - F3-537
 acceptance_criteria:
 - Clicking any of ten present domains opens full detail immediately; Processes follows D4 conditional presence.
-- When docking cannot fit, chat widens within available space then detail covers transcript at full column
-  height, never a small popup; Pin never changes the size.
+- Widen chat within available space first; at the column limit dock/squeeze if at least 360 px of messages
+  remain, otherwise cover transcript at full column height, never a small popup. Pin changes lifetime only.
 - Pin survives thread switches while data follows the selected thread; unpinned detail closes on a switch.
   Explicit close/×/Esc/icon-again returns focus; History pin remains separate.
 - The floating Chat Activity Bar keeps transparent pointer-pass-through surrounds and the settled transcript

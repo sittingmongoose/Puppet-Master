@@ -32635,22 +32635,29 @@ canonical_text: >-
   capability/permission rules. Setup/continue-tour prompts arrive under the bell, with new toasts
   above; after 4.5 s of reading or the first press, key or wheel elsewhere they join the shared bell
   inbox with their existing resume action. A newly presented prompt may arrive again. Tour page
-  notes use the quiet staging route. Placement is re-evaluated on page changes and relevant geometry
-  changes, with Home staging below its panel strip and the inbox leaving room for staged notices
-  beneath it. Keep notice content clear of nearby controls. When space runs out, older lasting
-  notices join the bell first; if still crowded, a new lasting toast joins it directly and its
-  unread badge counts it. A quiet note uses a shortened bounded reading interval rather than
-  becoming a lasting alert. The bell remains anchored in its title-bar gap; notices never retain
-  another page's coordinates. F3-460 owns material and F3-453 the lasting store. Activating a
-  toast’s body opens what it is about through the existing source action and marks that notice read.
-  Activating its action button runs that owner action and files any lasting notice quietly; it never
-  also invokes the body’s source-opening action. Read and filing do not acknowledge or resolve
-  underlying work by implication. Collision avoidance tries the nearest clear position downward,
-  then sideways, and recomputes on scroll; the stage avoids buttons, fields, links, tabs and
-  switches. Placement moves ease for 180 ms, immediate under Reduced Motion. If no position clears,
-  lasting cards join the bell; a crowded quiet note's reading interval is min(normal interval,
-  max(1800 ms, half the normal interval rounded to ms)). This tuning never changes the owner
-  operation.
+  notes use the quiet staging route. F3-1, Jared 2026-10-30, replaces the earlier Jared #19 control-clearance
+  rule: on every page the notice stage hangs tight below the title bar at the bell. The first card starts
+  at the same distance below the bar as the theme selector's menu, using that shared gap in the current
+  look while the inbox is closed. Home panel strips and the chat head add no vertical clearance or
+  page-specific offset. Lead ruling 2026-10-30 (mail 1030131044-4c44, preserving Jared's bf5115d9d9 fix):
+  while the shared inbox is open the stage sits under it, retaining the existing --pmn-push offset; the
+  inbox itself hangs from the bell. This open-inbox state exception is the lead's interpretation,
+  separate from Jared's quoted F3-1 words. Otherwise notices may cover the controls beneath them. Page changes and relevant title-bar geometry changes
+  recompute the bell anchor, never reuse another page's coordinates. The stage remains inside the viewport;
+  if viewport height cannot contain the next card, older lasting notices join the bell first, then a new
+  lasting card joins it directly with its unread count retained. Only this viewport limit may shorten a
+  crowded quiet note to min(normal interval, max(1800 ms, half the normal interval rounded to ms)); overlap
+  with a control is not crowding or a filing reason. F3-460 owns material and F3-453 the lasting store.
+  A staged card takes no clicks while it enters: body, action and dismiss hit routing is inactive until
+  arrival settles. Reduced Motion arrives instantly and permits clicks from that settled frame. An entry
+  click is not queued for later dispatch. Once settled, activating a toast's body opens what it is about
+  through the existing source action and marks that notice read. Activating its action button runs that
+  owner action and files any lasting notice quietly; it never also invokes the body's source-opening
+  action. Read and filing do not acknowledge or resolve underlying work by implication. No control-avoidance
+  scan, downward/sideways collision relocation or chat-head clearance may move this stage away from its
+  title-bar anchor, apart from the stated open-inbox exception. This supersedes the old control-clearance
+  placement rule, not urgency, reading holds, owner operations or
+  the shared inbox lifecycle.
   Amended 2026-10-17 (DL-228): in Banner mode one banner shows under the title bar at a time and the rest wait
   in arrival order. Its Show action opens the inbox at that notice. It keeps the staged reading time with the
   same hover and focus hold; a Blocking banner is announced as an alert and the others as status. It enters in
@@ -32681,8 +32688,11 @@ acceptance_criteria:
   action and quietly files a lasting notice, without resolving the source by dismissal.
 - Optional setup joins the existing inbox after its reading interval or interaction elsewhere, and its
   resume action remains reachable there.
-- Page changes, crowded controls and an open inbox preserve the shared bell anchor and lasting notices,
-  without inventing a page-private store.
+- With the inbox closed, every page starts the first card below the title bar at the bell with the
+  theme-menu gap; controls, chat head and Home strips do not move it or cause direct filing. While the
+  inbox is open, the stage sits under that bell-anchored inbox using its existing push offset.
+- Entering staged cards accept no body/action/dismiss clicks and queue no later activation; Reduced Motion
+  settles instantly. Settled cards keep their existing source/owner actions and read semantics.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -33168,6 +33178,10 @@ canonical_text: >-
   info→idle, success→complete, warn→waiting, error→failed. Its kind glyph remains in .pmn-kind beside the
   title's text node; the tile is no additional control. Other looks retain their kind-glyph tile. Toasts,
   banners and inbox rows repaint through the same fillTile owner in src/js/19-notify.js when the look changes.
+  F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page; its first card uses the
+  theme selector menu's distance below the title bar while the inbox is closed. It may cover controls
+  and the chat head. F3-447 owns that anchor, the lead's open-inbox push exception and the entering-card
+  click guard; no per-page or control-clearance placement survives.
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
 split_recommended: false
@@ -33276,6 +33290,12 @@ canonical_text: >-
   explicitly a consumer of DR-079’s PM6_SPROUT lifecycle, including open/close and size changes. Alert
   content/acknowledgment/routing/focus remain here and in F3-453; no separate per-look inbox motion owner is
   exempted. The retired #rsPanel is not evidence of live-inbox closure.
+  F3-1, Jared 2026-10-30, with the lead's explicit 2026-10-30 open-inbox exception (mail
+  1030131044-4c44, preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage
+  sits under it via the existing --pmn-push offset. When closed the stage returns tight below the title
+  bar at the bell with the theme-menu gap. No chat-head or control-clearance offset is added. The existing
+  inbox owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead's ruling,
+  not an added quote from Jared.
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
 split_recommended: false
@@ -38356,8 +38376,7 @@ invariants.
 ### 17. Activity Detail Geometry, History Coexistence, and Floating Activity Bar
 
 - **Full-Size Activity Detail (G1/G2, 2026-10-29; supersedes APR-001):** Every entry opens the
-  full-size detail directly under F3-535/ACD-453/ACD-506, with G1 B’s view-local Pin/unpin and no small transient form. First widen the chat within its centre/page floor; at the window limit cover the transcript
-  at the full column height. Within the current thread, the detail stays until ×, Esc or its own Activity icon closes it and
+  full-size detail directly under F3-535/ACD-453/ACD-506, with G1 B’s view-local Pin/unpin and no small transient form. G2, Jared follow-up 2026-10-30: first widen the chat within its centre/page floor; when it cannot widen further, dock detail inside the column and squeeze messages if at least 360 px remain, otherwise cover the transcript at the full column height. Within the current thread, the detail stays until ×, Esc or its own Activity icon closes it and
   returns focus. G1 B (Jared 2026-10-30): pinned detail stays open across thread switches and follows the new thread; unpinned detail closes on a switch. Another domain/record replaces that full detail. History keeps its separate pin.
 - **History and Activity Detail Coexistence (APR-002):** Pinned Thread History (left rail) and
   full-size Activity Detail share the available canvas width dynamically using a coordinated flex
@@ -38607,14 +38626,16 @@ canonical_text: >-
   G1 B/G2 (Jared 2026-10-30): every Activity Detail opens directly as the full-size docked view and, within the current thread, stays
   until ×,
   Esc or its Activity icon closes it. Pin is available; no small transient form remains. Widen the
-  chat to fit within current centre/page floors, then cover transcript at full column height when the
-  window cannot fit the dock. History keeps its separate flyout/pin and actual-width contract in F3-637.
+  chat to fit within current centre/page floors first. G2, Jared follow-up 2026-10-30: when it cannot
+  widen further, dock full-size detail inside the column and squeeze messages if at least 360 px remain;
+  below that threshold cover the transcript at full column height. History keeps its separate flyout/pin and actual-width contract in F3-637.
   Hover previews remain one bounded, non-scrolling preview with existing dwell and direct detail routes.
   F3-533/ACD-453/ACD-506 own content and layout; this unit adds no runtime state. The Chat Activity Bar
   remains a floating bar centred above the composer, with transparent sides/bottom and pointer pass-through
   around it; transcript bottom padding ensures the final child at settled bottom scroll clears the bar.
   This is the Activity Bar, not a floating Activity Detail fallback. History and full-size detail divide
-  the available canvas without overlapping gutters; at the window limit detail uses G2’s full-height cover. G1
+  the available canvas without overlapping gutters; at the window limit detail uses G2’s 360 px
+  docking/squeeze threshold, then full-height cover below it. G1
   B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action (binding chat.activity.pin),
   default false. Pinned Activity Detail stays open across thread switches and reprojects the selected thread’s
   data; unpinned detail closes on a thread switch. Pin changes lifetime only: one full-size
@@ -38631,8 +38652,8 @@ unblocks:
 - F3-537
 acceptance_criteria:
 - Clicking any of ten present domains opens full detail immediately; Processes follows D4 conditional presence.
-- When docking cannot fit, chat widens within available space then detail covers transcript at full column
-  height, never a small popup; Pin never changes the size.
+- Widen chat within available space first; at the column limit dock/squeeze if at least 360 px of messages
+  remain, otherwise cover transcript at full column height, never a small popup. Pin changes lifetime only.
 - Pin survives thread switches while data follows the selected thread; unpinned detail closes on a switch.
   Explicit close/×/Esc/icon-again returns focus; History pin remains separate.
 - The floating Chat Activity Bar keeps transparent pointer-pass-through surrounds and the settled transcript
@@ -46496,9 +46517,10 @@ canonical_text: >-
   header share these controls. The earlier measured 760-cap/960-budget examples are superseded historical
   measurements, not current width limits. Activity Detail opens full size directly with view-local Pin/unpin
   and no
-  small transient view (G1 B, Jared 2026-10-30). It first asks the column for room, then covers the transcript
-  at full column height
-  if the window cannot fit it; ×, Esc or the same icon closes it. History pin is unaffected. Hosted chat
+  small transient view (G1 B, Jared 2026-10-30). G2, Jared follow-up 2026-10-30: first ask the column for
+  room. When it cannot widen further, dock full-size detail inside it and squeeze messages if at least
+  360 px remain; below 360 px cover the transcript at full column height. This constrained render does not
+  lower the 400 px saved message-area width minimum; ×, Esc or the same icon closes it. History pin is unaffected. Hosted chat
   sizes by its container and sends content opens through F3-634; one right chat and one history survive.
   This supersedes old movable chat, grips, bottom workspace mirroring and any fixed maximum-width Settings
   preference while keeping the narrow/popped-out resilience of F3-565/F3-423. The default remains exactly

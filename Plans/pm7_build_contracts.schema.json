@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "pm.pm7_build.contracts.v1",
   "title": "PM7 build project, work and Pip contracts",
-  "description": "Owner contracts CS-105/CS-106, SIR-054 and SSYS-056. Static schema only; no Event Authority or native implementation admission. Current owner/permission/identity comparison is semantic validation before dispatch.",
+  "description": "Owner contracts CS-105/CS-106, SIR-054, SSYS-056 and static GUI presentation F3-447/F3-535/ACD-506. Static schema only; no Event Authority or native implementation admission. Current owner/permission/identity comparison is semantic validation before dispatch. PresentationPolicy is not part of the command/action request union.",
   "oneOf": [
     {
       "$ref": "#/$defs/project_switch_request"
@@ -2660,6 +2660,85 @@
         }
       },
       "additionalProperties": true
+    },
+    "PresentationPolicy": {
+      "description": "Static G2/F3-1 owner policy descriptor, not a native request, runtime event, persisted value or GUI execution proof. Threshold and relative first-card anchor are approved by Jared 2026-10-30.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activity_detail",
+        "notice_stage"
+      ],
+      "properties": {
+        "activity_detail": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "widen_first",
+            "minimum_remaining_messages_px",
+            "below_minimum",
+            "small_panel"
+          ],
+          "properties": {
+            "widen_first": {
+              "const": true
+            },
+            "minimum_remaining_messages_px": {
+              "const": 360
+            },
+            "below_minimum": {
+              "const": "full_height_cover"
+            },
+            "small_panel": {
+              "const": false
+            }
+          }
+        },
+        "notice_stage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "anchor",
+            "first_card_gap_source",
+            "all_pages",
+            "may_cover_controls",
+            "clear_chat_head",
+            "avoid_controls",
+            "accepts_clicks_during_entry",
+            "reduced_motion_instant",
+            "open_inbox_placement"
+          ],
+          "properties": {
+            "anchor": {
+              "const": "titlebar_bell"
+            },
+            "first_card_gap_source": {
+              "const": "theme_selector_menu"
+            },
+            "all_pages": {
+              "const": true
+            },
+            "may_cover_controls": {
+              "const": true
+            },
+            "clear_chat_head": {
+              "const": false
+            },
+            "avoid_controls": {
+              "const": false
+            },
+            "accepts_clicks_during_entry": {
+              "const": false
+            },
+            "reduced_motion_instant": {
+              "const": true
+            },
+            "open_inbox_placement": {
+              "const": "under_inbox"
+            }
+          }
+        }
+      }
     }
   }
 }

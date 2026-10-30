@@ -75,7 +75,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6169,
+      "line_count": 6172,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -215,7 +215,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "ba932a124baf20160feb67d6d451b890bd6b2e5fc21ec787f13c762bac6d7661",
+      "sha256": "c5ebb0990f23b6c0a242c0a5ed3447384854ea328b1c7d037b95e5609d3437f8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -623,7 +623,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 28516,
+      "line_count": 28518,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 491,
       "plan_unit_ids": [
@@ -1473,7 +1473,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "da1ab39e4b166c9dbb2cf09b37c3d5cadbff53944c74f8fba720003e6d870c77",
+      "sha256": "220d4181bffdaeb910fc6072fecd78885c71dc25830653ca8e9d16ceb17d0d93",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 489,
@@ -3788,7 +3788,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 8361,
+      "line_count": 8364,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 98,
       "plan_unit_ids": [
@@ -3988,7 +3988,7 @@
         "view_state_command_inflation",
         "web_slash_family_drift"
       ],
-      "sha256": "b2f192bdea8f8f387d935db7ffe1058bc9be3626f4e4250a9f919771d6c4b0da",
+      "sha256": "f807f50ad35558d9548a2c4f198216eae25676a78937df5c097fcb88d78aa84a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 98
@@ -5792,7 +5792,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 18506,
+      "line_count": 18520,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 235,
       "plan_unit_ids": [
@@ -6193,7 +6193,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "25d50305b16975ed931b95e770891c1c1552197df159c7914986f2c397057cc5",
+      "sha256": "377087e3f5c6ecee6e88c5c8cb031fa991fab56795547044c7b3b1149000a735",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 235
@@ -7747,7 +7747,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 50648,
+      "line_count": 50670,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 653,
       "plan_unit_ids": [
@@ -8544,7 +8544,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "61bd532955a9cf72ecbfbf8579ba7f61d337768b69c7d7e3f4472e8f4894442e",
+      "sha256": "b6692cc811264458a7861d64fa36dc97d82998398b28904d76ebd9840cfe121c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 646,
@@ -20000,7 +20000,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 2707,
+      "line_count": 2714,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 34,
       "plan_unit_ids": [
@@ -20076,7 +20076,7 @@
         "version_exact_opener_drift",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "84fc87cfc2d0db777405a6050081b8c315dba2f3cc16745cd04ea06e40d1dcda",
+      "sha256": "994825c1dd99a56365e64e2d3a79815beb52642ac3155f3b733ba03ab558b9bf",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 34
@@ -20562,7 +20562,7 @@
         "future UI command dispatcher fixtures",
         "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 6734,
+      "line_count": 6739,
       "path": "Plans/Wiring_Matrix.md",
       "plan_unit_count": 75,
       "plan_unit_ids": [
@@ -20683,7 +20683,7 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "e0f98066247f08c7657e7a332de37789c3f2ba6dbbeb4ad483c17b38da559aec",
+      "sha256": "640ba0ecb615ec211cc3cd56837f3c4978148f3f33b460ae0dc8770496ffa57e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 75
@@ -21012,7 +21012,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-30T11:06:37Z",
+  "generated_at_utc": "2026-10-30T13:15:24Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

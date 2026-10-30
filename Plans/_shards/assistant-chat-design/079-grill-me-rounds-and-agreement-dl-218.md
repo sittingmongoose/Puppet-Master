@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L28079-L28514
+Source lines: L28080-L28516
 
-Source SHA256: `da1ab39e4b166c9dbb2cf09b37c3d5cadbff53944c74f8fba720003e6d870c77`
+Source SHA256: `220d4181bffdaeb910fc6072fecd78885c71dc25830653ca8e9d16ceb17d0d93`
 
 ---
 
@@ -297,10 +297,11 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   G1–G3/G9, DL-254. Activity-bar click directly opens full-size Activity Detail, never a small transient
-  view; Pin/unpin changes lifetime across thread switches only. Within the current thread, keep it until ×, Esc or icon-again. If dock
-  does not fit, widen chat within
-  centre/page floor; at window limit cover transcript at full column height. No fixed 760 px cap; preserve
-  400 px message minimum, current centre floor/narrow ladder and History’s user-sized pin. Popped-out chat
+  view; Pin/unpin changes lifetime across thread switches only. Within the current thread, keep it until ×, Esc or icon-again. G2, Jared follow-up 2026-10-30: widen chat first within its centre/page floor. When the column cannot
+  widen further, dock full-size detail inside it and squeeze the messages if at least 360 px remain;
+  below 360 px cover the transcript at full column height. This is the constrained rendering exception to
+  the ordinary 400 px message minimum; the saved message-area width still has a 400 px minimum. No fixed
+  760 px cap; preserve the current centre floor/narrow ladder and History’s user-sized pin. Popped-out chat
   uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu
   plate. Friendly/Glass context ring is continuous, antialiased and never segmented by broken transforms.
   All ten looks, widths 860/1024/1280/~1390/1920, narrow/short, Reduced Motion and drag budgets are
@@ -329,8 +330,8 @@ depends_on:
 - DR-067
 unblocks: []
 acceptance_criteria:
-- Every Activity domain opens full detail directly, widening then covering transcript at full height when
-  constrained, without a small view.
+- Every Activity domain opens full detail directly. Widen first, then dock/squeeze at the column limit
+  with at least 360 px of messages; below 360 px cover at full column height, never a small view.
 - Pinned detail follows selected-thread data across switches; unpinned detail closes on a switch, and stale
   rows/actions/subscriptions are removed.
 - Chat drag has no fixed 760 cap and preserves the minimum, centre/page floor, user History width and narrow

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L18504
+Source lines: L14505-L18518
 
-Source SHA256: `25d50305b16975ed931b95e770891c1c1552197df159c7914986f2c397057cc5`
+Source SHA256: `377087e3f5c6ecee6e88c5c8cb031fa991fab56795547044c7b3b1149000a735`
 
 ---
 
@@ -2205,6 +2205,17 @@ canonical_text: >-
   (DL-230). The sizes, distances and times these
   amendments quote from the concept are tokens, not acceptance numbers (review r1). Concept evidence is not native
   certification.
+  F3-1, Jared follow-up 2026-10-30, supersedes the earlier Jared #19 rule that notices must clear
+  controls. His words: "It is fine that it covers stuff up... The notifications should start below the bell.
+  Like the theme selector does." On every page the stage hangs tight below the title bar at the bell, with
+  its first card the same distance below the bar as the theme selector menu. It may cover controls, the chat
+  head included; no collision scan, Home strip offset or chat-head clearance changes that anchor. The
+  lead's explicit ruling of 2026-10-30 (mail 1030131044-4c44, preserving Jared's bf5115d9d9 fix) keeps the
+  existing --pmn-push exception while the shared inbox is open: the inbox hangs from the bell and the stage
+  sits below it. That exception is the lead's reading and is listed for Jared; it is not part of the quoted
+  answer. A card accepts no clicks during entry and no deferred click is dispatched when it settles;
+  Reduced Motion settles instantly. F3-447/F3-460/F3-461 and the shared notification bindings apply this
+  presentation ruling without changing source actions, urgency, read/ack or alert-store ownership.
 gui_related: true
 gui_classification_reason: The Week Sweep Records What The Concept Built.
 split_recommended: false
@@ -3813,8 +3824,11 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Adopted 2026-10-29 for the PM7 build. G1–G3/G9: keep Activity Detail Pin and remove the small transient view
   (G1 B, Jared 2026-10-30).
-  Click opens full-size docked detail and keeps it until ×, Esc or that icon closes it. Widen chat to fit,
-  then cover transcript at full column height when no more room remains. Message area has no fixed 760 cap,
+  Click opens full-size docked detail and keeps it until ×, Esc or that icon closes it. G2 follow-up,
+  Jared 2026-10-30: "I think the squeeze is fine." Widen chat first within centre/page floors; when the column
+  cannot widen further, dock full-size detail inside it and squeeze messages if at least 360 px remain.
+  Below 360 px cover the transcript at full column height, never a small panel. The squeeze is approved
+  canon, superseding the earlier direct widen-to-cover sequence. Message area has no fixed 760 cap,
   preserving centre/page floors and the narrow ladder. History pin remains a different control. Floating
   Glass Activity/attachment/History plates use the persona/model menu plate; context rings must be
   continuous and artifact-free in Friendly/Glass. NieR and narrow forms are designed in this build.

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27645-L28077
+Source lines: L27645-L28078
 
-Source SHA256: `da1ab39e4b166c9dbb2cf09b37c3d5cadbff53944c74f8fba720003e6d870c77`
+Source SHA256: `220d4181bffdaeb910fc6072fecd78885c71dc25830653ca8e9d16ceb17d0d93`
 
 ---
 
@@ -278,7 +278,8 @@ canonical_text: >-
   with it (F3-637); the web client offers no Pop out and the chat stays in its column (F3-637, UCC-203). This adds the port's
   requirements to the binding-by-reference of the 5.6 Pro concept and supersedes nothing else.
   Amended 2026-10-29 (G1–G3, PC1; PM7): Pip parts/gaze/overlays reuse host owners. Chat width has no fixed 760
-  cap; Activity Detail has no small view, first widening then full-height covering. G1 B (Jared 2026-10-30):
+  cap; Activity Detail has no small view. G2, Jared follow-up 2026-10-30: widen first; at the column
+  limit dock/squeeze if at least 360 px of messages remain, otherwise cover at full column height. G1 B (Jared 2026-10-30):
   Pin preserves the full-size view across thread switches while its contents follow the new thread; unpinned
   detail closes on a switch. History and detail floating plates use one Glass menu token.
 gui_related: true

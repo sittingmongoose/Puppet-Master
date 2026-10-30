@@ -7677,7 +7677,8 @@
         "cmd.alert.open_source exposes state selector and disabled reason before dispatch.",
         "cmd.alert.open_source dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
         "cmd.alert.open_source uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
-        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification.",
+        "F3-1, Jared 2026-10-30: a staged-toast body producer dispatches nothing while its card enters and queues no click for later; after arrival settles it uses this unchanged owner route. Reduced Motion settles instantly. This stage-only guard does not block settled inbox or other owner producers."
       ],
       "evidence_required": "Production wiring contract for cmd.alert.open_source. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.alert_open_source.availability",

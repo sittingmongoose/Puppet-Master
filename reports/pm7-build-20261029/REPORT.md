@@ -1,3 +1,21 @@
+# PM7 Plans lane — Jared's final G2 / F3-1 follow-ups, 2026-10-30
+
+Branch: `t3/plans/pm7-plans-canon`. Amendment base: `d88ff92b04046611731f0a5f47935aedf343e7df`. Source: lead mail `1030125602-d03d`, Jared's 2026-10-30 answers. GUI amendment head is awaited from `pm7-build`.
+
+**Both final follow-ups are applied to prose and companions.** G2 widens first, then docks/squeezes at the column limit when at least 360 px of messages remain; below that it uses full-column-height cover, never a small panel. The stored message-area width minimum stays 400 px; 360 is the constrained rendering threshold. F3-1 replaces Jared #19's control-clearance rule: every page stages tight below the title bar at the bell; the first card uses the theme-menu gap and may cover controls/chat head. Entering cards take no clicks; Reduced Motion settles instantly.
+
+Lead clarification `1030131044-4c44` retains the existing `--pmn-push` while the shared inbox is open: it sits below that bell-anchored inbox. This state exception preserves bf5115d9d9 and is the lead’s interpretation, listed for Jared; it is not quoted as part of Jared’s new answer. Closed-inbox placement remains tight under the title bar.
+
+Thirteen existing owner units plus the narrative summaries and dated index line change, prose first. No unit or exact token is removed. F3-447/460/461, F3-535/637, ACD-453/501/506, DL-228/254, CS-102, UIW-045 and WM-097 are amended. Static `PresentationPolicy` is a fixture descriptor, not a native request, event or persisted field. Six geometry cases cover widening priority and the 359/360/361 boundary. Twelve notice cases cover every-page closed-inbox placement, covered controls/chat head, the explicit open-inbox push exception and entering/Reduced Motion clicks. Sixteen existing stage-capable binding families gain the transient click guard; inbox/bell-only controls and FileSafe expiry remain unchanged. Existing cmd.alert.open_source acceptance names its stage-only producer guard. No command, binding, action, setting, Touch row/profile or event is added.
+
+PM7 focused check PASS: 85 schema cases, six geometry and twelve notice cases, with all earlier 19 reused-owner / five thread-consumer cases retained. All eight focused/generation checks PASS: PM7, canon, Touch, wiring, shard generation/check and index generation/validation. Derived changes belong only to the seven edited owner/index groups. No GUI source was edited; builders and the final full/dry follow the lead’s new GUI head. Inventory remains 477 bindings / 58 PM7 source families, 715 Touch / 140 profiles, 1269 production rows, 1011 settings and 22 status keys. No ledger was compiled; compile witness is not applicable.
+
+Current verification manifest SHA-256: `21f088fb489fd26e319d830f67ab9535de024a5e583a155662cb6bbe1ea87d52`. Raw prefix: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-`; the source proof records all 13 changed units, preserved metadata and 18 semantic cases.
+
+**Full gates/dry is held for the new GUI head**, as the lead instructed. The completed aggregate results below verify d0f9a0e28c only and do not certify this follow-up. No current G2 deviation remains. Both final questions have answers; the lead has listed the scoped open-inbox interpretation for Jared. The waiter is re-armed indefinitely (`--timeout 0`). No landing, lock or reseal.
+
+## Historical aggregate close-out before these follow-ups
+
 # PM7 Plans lane — final GUI and companion close-out, 2026-10-30
 
 Branch: `t3/plans/pm7-plans-canon`. Verified source: `d0f9a0e28ceaeb380c5a462df95e5429e0ee7331`. Final GUI: `f99ad183d2dba7ffd272043d242ca57c977d0c70`, merged through `1d960c9a9d1aedcd629862cf428a94c9359df724`. Lead: `pm7-build`.
@@ -22,7 +40,7 @@ Failing full groups: `verify_spec_lock`, `validate_plan_graph`, `validate_eviden
 
 All 17 full-checkout support paths and the currentness symlink exist. The one shared-vs-local test-file difference is tracked source and was retained as checked source. The dry runner binds the readiness audit edition and reports no input-identity infrastructure failure.
 
-**Open follow-up decisions:** G2 squeeze canon and F3-1 toast placement remain pending Jared. Current canon is preserved; this pass pre-empts neither. Full direct responses are in `REVIEW-COMPANIONS-R2-RESPONSES.md`. Prior companion and prose closure evidence remains below.
+**Follow-ups resolved later on 2026-10-30:** Jared approved G2 squeeze and the bell/theme-menu-gap notice stage. The current amendment is recorded above. Full direct responses are in `REVIEW-COMPANIONS-R2-RESPONSES.md`. Prior companion and prose closure evidence remains below.
 
 ## Evidence and cleanup
 
@@ -136,7 +154,7 @@ The first runner ended 143 during plan migration before emitting a full report; 
 
 Original Astra/Muse prose findings and both follow-ups were repaired; the capped recheck closed all 21 prior rows, and N1–N3 were directly repaired/proved per the lead. `REVIEW-RESPONSES.md` retains the details. **Independent companion review now follows this handoff.** No additional prose-review cycle was requested.
 
-**G2 GUI deviation, reported to the lead:** activity's report/code docks inside the limited column if 360 px of transcript remains, while Jared approved widen then full-height cover. Canon retains his approved rule. This lane authored no GUI fix and does not silently ratify the deviation; mail 1030064259-79f0 flags it. Final 60 fps review and any resulting GUI delta belong to the lead. C5's former investigation placeholder is resolved from the actual source/report, with no fabricated visual/native certification.
+**G2 follow-up resolved 2026-10-30:** Jared approved the squeeze step after widening, with at least 360 px of messages remaining. The current owner amendment replaces the earlier direct widen-to-cover rule; no open G2 deviation remains. C5 remains resolved from the actual source/report, without native certification.
 
 ## Files, evidence and cleanup
 

@@ -616,7 +616,7 @@
     "G2": {
       "question": "When the window can't fit the docked panel",
       "recommendation": "**Widen the chat to make room**; past the window's limit, the panel covers the transcript at the column's full height. Never the small one.",
-      "adoption": "explicit_jared_decision_2026_10_30",
+      "adoption": "explicit_jared_followup_2026_10_30",
       "owner_units": [
         "Plans/DRY_Rules.md#DR-075",
         "Plans/Decision_Log.md#DL-254",
@@ -636,9 +636,12 @@
       ],
       "decider": "Jared",
       "decision_date": "2026-10-30",
-      "selected_option": "A",
-      "final_ruling": "Widen the chat to make room; past the window's limit, the panel covers the transcript at the column's full height. Never the small one.",
-      "differs_or_clarifies_recommendation": false
+      "selected_option": "follow-up squeeze approved",
+      "final_ruling": "Widen first; once the column cannot widen further, dock full-size Activity Detail inside it and squeeze messages if at least 360 px remain; below that cover at full column height, never the small panel.",
+      "differs_or_clarifies_recommendation": true,
+      "followup_source_mail": "1030125602-d03d",
+      "followup_quote": "I think the squeeze is fine.",
+      "prior_selected_option": "A"
     },
     "G3": {
       "question": "The chat width cap",
@@ -1746,6 +1749,31 @@
       "selected_option": "B",
       "final_ruling": "NieR Pip shows eyes through the band on static title/app/tray marks and live Pips at every size.",
       "differs_or_clarifies_recommendation": true
+    },
+    "F3-1": {
+      "question": "Notice stage placement and entering-card clicks",
+      "adoption": "explicit_jared_followup_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "final_ruling": "On every page, stage tight below the title bar at the bell, first card the same distance below the bar as the theme menu; it may cover controls/chat head. No card clicks during entry; Reduced Motion settles instantly.",
+      "supersedes": "Earlier Jared #19 control-clearance rule and the lead’s F3-1 options",
+      "followup_source_mail": "1030125602-d03d",
+      "owner_units": [
+        "Plans/Decision_Log.md#DL-228",
+        "Plans/FinalGUISpec.md#F3-447",
+        "Plans/FinalGUISpec.md#F3-460",
+        "Plans/FinalGUISpec.md#F3-461",
+        "Plans/Commands_System.md#CS-102",
+        "Plans/UI_Wiring_Rules.md#UIW-045",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "differs_or_clarifies_recommendation": true,
+      "lead_inbox_exception": {
+        "source_mail": "1030131044-4c44",
+        "provenance": "bf5115d9d9",
+        "ruling": "Keep --pmn-push: while the shared inbox is open the stage sits under it; otherwise use the tight titlebar/bell/theme-menu gap.",
+        "authority": "pm7-build lead interpretation, listed for Jared; not part of his quoted answer"
+      }
     }
   },
   "answers_source": {

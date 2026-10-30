@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32480-L33121
+Source lines: L32480-L33131
 
-Source SHA256: `61bd532955a9cf72ecbfbf8579ba7f61d337768b69c7d7e3f4472e8f4894442e`
+Source SHA256: `b6692cc811264458a7861d64fa36dc97d82998398b28904d76ebd9840cfe121c`
 
 ---
 
@@ -166,22 +166,29 @@ canonical_text: >-
   capability/permission rules. Setup/continue-tour prompts arrive under the bell, with new toasts
   above; after 4.5 s of reading or the first press, key or wheel elsewhere they join the shared bell
   inbox with their existing resume action. A newly presented prompt may arrive again. Tour page
-  notes use the quiet staging route. Placement is re-evaluated on page changes and relevant geometry
-  changes, with Home staging below its panel strip and the inbox leaving room for staged notices
-  beneath it. Keep notice content clear of nearby controls. When space runs out, older lasting
-  notices join the bell first; if still crowded, a new lasting toast joins it directly and its
-  unread badge counts it. A quiet note uses a shortened bounded reading interval rather than
-  becoming a lasting alert. The bell remains anchored in its title-bar gap; notices never retain
-  another page's coordinates. F3-460 owns material and F3-453 the lasting store. Activating a
-  toast’s body opens what it is about through the existing source action and marks that notice read.
-  Activating its action button runs that owner action and files any lasting notice quietly; it never
-  also invokes the body’s source-opening action. Read and filing do not acknowledge or resolve
-  underlying work by implication. Collision avoidance tries the nearest clear position downward,
-  then sideways, and recomputes on scroll; the stage avoids buttons, fields, links, tabs and
-  switches. Placement moves ease for 180 ms, immediate under Reduced Motion. If no position clears,
-  lasting cards join the bell; a crowded quiet note's reading interval is min(normal interval,
-  max(1800 ms, half the normal interval rounded to ms)). This tuning never changes the owner
-  operation.
+  notes use the quiet staging route. F3-1, Jared 2026-10-30, replaces the earlier Jared #19 control-clearance
+  rule: on every page the notice stage hangs tight below the title bar at the bell. The first card starts
+  at the same distance below the bar as the theme selector's menu, using that shared gap in the current
+  look while the inbox is closed. Home panel strips and the chat head add no vertical clearance or
+  page-specific offset. Lead ruling 2026-10-30 (mail 1030131044-4c44, preserving Jared's bf5115d9d9 fix):
+  while the shared inbox is open the stage sits under it, retaining the existing --pmn-push offset; the
+  inbox itself hangs from the bell. This open-inbox state exception is the lead's interpretation,
+  separate from Jared's quoted F3-1 words. Otherwise notices may cover the controls beneath them. Page changes and relevant title-bar geometry changes
+  recompute the bell anchor, never reuse another page's coordinates. The stage remains inside the viewport;
+  if viewport height cannot contain the next card, older lasting notices join the bell first, then a new
+  lasting card joins it directly with its unread count retained. Only this viewport limit may shorten a
+  crowded quiet note to min(normal interval, max(1800 ms, half the normal interval rounded to ms)); overlap
+  with a control is not crowding or a filing reason. F3-460 owns material and F3-453 the lasting store.
+  A staged card takes no clicks while it enters: body, action and dismiss hit routing is inactive until
+  arrival settles. Reduced Motion arrives instantly and permits clicks from that settled frame. An entry
+  click is not queued for later dispatch. Once settled, activating a toast's body opens what it is about
+  through the existing source action and marks that notice read. Activating its action button runs that
+  owner action and files any lasting notice quietly; it never also invokes the body's source-opening
+  action. Read and filing do not acknowledge or resolve underlying work by implication. No control-avoidance
+  scan, downward/sideways collision relocation or chat-head clearance may move this stage away from its
+  title-bar anchor, apart from the stated open-inbox exception. This supersedes the old control-clearance
+  placement rule, not urgency, reading holds, owner operations or
+  the shared inbox lifecycle.
   Amended 2026-10-17 (DL-228): in Banner mode one banner shows under the title bar at a time and the rest wait
   in arrival order. Its Show action opens the inbox at that notice. It keeps the staged reading time with the
   same hover and focus hold; a Blocking banner is announced as an alert and the others as status. It enters in
@@ -212,8 +219,11 @@ acceptance_criteria:
   action and quietly files a lasting notice, without resolving the source by dismissal.
 - Optional setup joins the existing inbox after its reading interval or interaction elsewhere, and its
   resume action remains reachable there.
-- Page changes, crowded controls and an open inbox preserve the shared bell anchor and lasting notices,
-  without inventing a page-private store.
+- With the inbox closed, every page starts the first card below the title bar at the bell with the
+  theme-menu gap; controls, chat head and Home strips do not move it or cause direct filing. While the
+  inbox is open, the stage sits under that bell-anchored inbox using its existing push offset.
+- Entering staged cards accept no body/action/dismiss clicks and queue no later activation; Reduced Motion
+  settles instantly. Settled cards keep their existing source/owner actions and read semantics.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"

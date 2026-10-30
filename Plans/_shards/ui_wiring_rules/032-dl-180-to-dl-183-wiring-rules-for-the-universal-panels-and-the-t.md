@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L2103-L2705
+Source lines: L2103-L2712
 
-Source SHA256: `84fc87cfc2d0db777405a6050081b8c315dba2f3cc16745cd04ea06e40d1dcda`
+Source SHA256: `994825c1dd99a56365e64e2d3a79815beb52642ac3155f3b733ba03ab558b9bf`
 
 ---
 
@@ -570,6 +570,13 @@ canonical_text: >-
   and terminal Rerun use UCC-210’s existing owner routes. Clipboard and owner-surface navigation are
   declared local actions. Missing control dispositions or invalid local payloads fail focused checks; source
   anchors still certify no native signal or effect.
+  G2/F3-1, Jared follow-ups 2026-10-30: Activity Detail widens first, then at the column limit docks and
+  squeezes messages if at least 360 px remain, otherwise covers the transcript at full height. Notice stage
+  placement uses the one bell/title-bar anchor and the theme-menu gap on every page with the inbox closed;
+  while the inbox is open the lead’s 2026-10-30 exception keeps the stage under that inbox via --pmn-push.
+  Other controls and the chat head do not trigger clearance. Body/action/dismiss clicks on an entering card dispatch nothing until its arrival
+  settles, instant under Reduced Motion. Bindings retain their existing owner routes and count; no geometry
+  or entry-state field becomes a persisted preference or runtime mutation.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

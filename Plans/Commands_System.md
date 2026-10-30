@@ -7952,6 +7952,9 @@ canonical_text: >-
   toggle, is retired with ?lg=off and Demo Studio's material on/off control (Jared, 2026-10-19,
   option 1). Neither a local action nor a command may select a material off state or old Glass
   fallback; F3-652 always supplies the Glass look's Liquid Glass material.
+  F3-1, Jared 2026-10-30: a staged notice card takes no clicks during entry. Its existing body/action/dismiss
+  click routes stay inactive until arrival settles, with no queued or duplicate dispatch. Reduced Motion
+  settles instantly. This transient presentation gate adds no action, command, receipt or domain event.
 gui_related: true
 gui_classification_reason: Customize and notification local actions.
 split_recommended: false

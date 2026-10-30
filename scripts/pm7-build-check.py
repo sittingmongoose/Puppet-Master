@@ -95,6 +95,24 @@ def thread_consumer_route(profile, context):
             if target else {"allowed": False})
 
 
+def activity_detail_geometry(policy, context):
+    """G2 static boundary oracle; the layout owner supplies measured remaining width."""
+    if context["can_widen"]:
+        return "widen"
+    return ("dock_squeeze" if context["remaining_messages_px"] >= policy["minimum_remaining_messages_px"]
+            else policy["below_minimum"])
+
+
+def notice_stage_presentation(policy, context):
+    """F3-1 relational placement/click oracle; no DOM, paint or click is executed."""
+    settled = context["phase"] != "entering" or (context["reduced_motion"] and policy["reduced_motion_instant"])
+    top = context["titlebar_bottom_px"] + context["theme_menu_gap_px"]
+    if context["inbox_open"]:
+        top = context["inbox_bottom_px"] + context["inbox_gap_px"]
+    return {"first_card_top_px": top,
+            "accepts_clicks": settled or policy["accepts_clicks_during_entry"]}
+
+
 def validate():
     failures = []
 
@@ -146,6 +164,24 @@ def validate():
     for case in fixtures["thread_consumer_cases"]:
         require(thread_consumer_route(touch_profiles["TCP-TEACHER-HELP"], case["context"]) == case["expected"],
                 "Thread consumer availability/return differs: " + case["name"])
+    policy = fixtures["presentation_policy"]
+    policy_schema = {**schema, "$ref": "#/$defs/PresentationPolicy"}
+    policy_schema.pop("oneOf", None)
+    require(jsonschema.Draft202012Validator(policy_schema).is_valid(policy),
+            "G2/F3-1 live static policy differs from the approved descriptor")
+    require(not jsonschema.Draft202012Validator(schema).is_valid(policy),
+            "Static presentation policy was admitted as a native command/action request")
+    for case in fixtures["activity_geometry_cases"]:
+        require(activity_detail_geometry(policy["activity_detail"], case["context"]) == case["expected"],
+                "G2 geometry differs: " + case["name"])
+    for case in fixtures["notice_stage_cases"]:
+        require(notice_stage_presentation(policy["notice_stage"], case["context"]) == case["expected"],
+                "F3-1 stage/entry differs: " + case["name"])
+    gui_spec = (PLANS / "FinalGUISpec.md").read_text()
+    require("Keep notice content clear of nearby controls" not in gui_spec
+            and "Collision avoidance tries the nearest clear position" not in gui_spec
+            and "Home staging below its panel strip" not in gui_spec,
+            "F3-1 retired control-clearance or page-offset rule remains active")
     for case in fixtures["schema_cases"]:
         scoped = {**schema, "$ref": "#/$defs/" + case["definition"]}
         # Test a definition directly, without the top-level record union.
@@ -298,6 +334,14 @@ process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
         require((not work_detail_census_errors(mutated_source, mutated_bindings, mutated_cases)) == case["valid"],
                 "Reverse control census case differs: " + case["name"])
     by_control = {row["control_id"]: row for row in bindings}
+    staged_notice_controls = {"notifications.activate_toast", "notifications.dismiss_toast",
+        "notifications.approve", "notifications.decline", "notifications.permission.once",
+        "notifications.permission.session", "notifications.permission.always", "notifications.permission.deny",
+        "notifications.concern.resolve", "notifications.details", "notifications.explain",
+        "notifications.permission.pattern", "notifications.permission.scope", "notifications.filesafe.once",
+        "notifications.filesafe.deny", "notifications.filesafe.add_rule"}
+    require(all("inactive during entry" in by_control[c]["payload"] for c in staged_notice_controls),
+            "F3-1 stage producer is missing its transient click gate")
     source_anchors = 0
     for row in bindings:
         for anchor in row.get("concept_sources", []):
@@ -415,6 +459,8 @@ process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
             "pip_preset_parity_cases": len(fixtures["pip_preset_parity_cases"]),
             "reused_owner_touch_cases": len(fixtures["reused_owner_touch_cases"]),
             "thread_consumer_cases": len(fixtures["thread_consumer_cases"]),
+            "activity_geometry_cases": len(fixtures["activity_geometry_cases"]),
+            "notice_stage_cases": len(fixtures["notice_stage_cases"]),
             "concept_source_anchors": source_anchors, "failures": failures}
 
 
