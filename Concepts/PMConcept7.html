@@ -32975,6 +32975,9 @@ html[data-motion="reduced"] #pm-o55-onboarding[data-family="glass"] .o55-btn { t
   --wk-bad: var(--pmg-ink-blocked, var(--pmw-bad, #ef5350));
   --wk-done: var(--pmg-ink-done, var(--pmw-ok, #66bb6a));
   --wk-idle: var(--pmw-text-3, var(--text-muted, #8a8f98));
+  /* small text (times, meta lines, sums, column heads) is the secondary ink: the idle tier measured 4.0-4.5:1 at 11.5 px,
+     under AA (Muse m4); the idle tier stays for glyphs and idle tones */
+  --wk-small: var(--wk-ink2);
   --wk-ink: var(--pmw-text, var(--text-primary, #e8e8e8));
   --wk-ink2: var(--pmw-text-2, var(--text-secondary, #a0a0a0));
   --wk-line: var(--pmw-pop-line, var(--border, #424242));
@@ -33080,7 +33083,7 @@ html[data-o55-nier="on"] .pm7-work-item.is-open :where(.wk-sb-ask):not(.t7:not(*
 .wk-body:focus { outline: none; }
 .wk-foot { display: flex; align-items: center; gap: 10px; padding: 8px 12px 9px; border-top: 1px solid var(--wk-line2); font-size: 11.5px; }
 .wk-empty { padding: 14px 12px; color: var(--wk-ink2); font-size: 12.5px; line-height: 1.45; }
-.wk-dim { color: var(--wk-idle); }
+.wk-dim { color: var(--wk-small); }
 .wk-mono { font-family: var(--wk-mono); }
 
 /* sections: fixed ones are headings (Questions, Needs input, Scheduled, Finished); groups fold */
@@ -33121,10 +33124,10 @@ html[data-o55-nier="on"] .pm7-work-item.is-open :where(.wk-sb-ask):not(.t7:not(*
 .wk-sub { color: var(--wk-ink2); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .wk-row:is([data-kind="process"], [data-kind="service"]) .wk-sub { font-family: var(--wk-mono); font-size: 11px; }
 .wk-askline { font-weight: 600; color: var(--wk-ink); white-space: normal; }
-.wk-meta { color: var(--wk-idle); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wk-meta { color: var(--wk-small); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .wk-right { display: grid; justify-items: end; gap: 1px; white-space: nowrap; font-size: 11.5px; }
 .wk-right b[data-tone] { color: var(--wk-t); font-weight: 600; }
-.wk-right i { font-style: normal; color: var(--wk-idle); font-variant-numeric: tabular-nums; }
+.wk-right i { font-style: normal; color: var(--wk-small); font-variant-numeric: tabular-nums; }
 
 /* ---- the detail block (also the chat's Processes view) ----
    Its controls carry an id in :is() so they out-rank the hosted chat's scoped button resets (.pm56-host button);
@@ -33132,7 +33135,7 @@ html[data-o55-nier="on"] .pm7-work-item.is-open :where(.wk-sb-ask):not(.t7:not(*
 .wk-detail { padding: 4px 10px 10px 46px; font-size: 12px; color: var(--wk-ink2); }
 .wk-what { margin: 2px 0 6px; color: var(--wk-ink); }
 :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 12px; margin: 4px 0 8px; }
-:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-facts dt { color: var(--wk-idle); }
+:is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-facts dt { color: var(--wk-small); }
 :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-facts dd { margin: 0; color: var(--wk-ink); min-width: 0; overflow-wrap: anywhere; }
 :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-facts code { font-family: var(--wk-mono); font-size: 11.5px; }
 :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-link { all: unset; cursor: pointer; color: var(--wk-work); text-decoration: underline; text-underline-offset: 2px; }
@@ -33151,7 +33154,7 @@ html[data-o55-nier="on"] .pm7-work-item.is-open :where(.wk-sb-ask):not(.t7:not(*
 :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-seg > button:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: -2px; }
 :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-tail { margin: 2px 0 8px; border: 1px solid var(--wk-line2); border-radius: 7px; background: var(--pmw-gutter, rgba(0, 0, 0, .25)); overflow: hidden; }
 :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-tail pre { margin: 0; padding: 7px 9px; font: 11px/1.45 var(--wk-mono); color: var(--wk-ink2); white-space: pre-wrap; overflow-wrap: anywhere; max-height: 9.5em; overflow: auto; }
-.wk-tail-more { padding: 4px 9px; font-size: 10.5px; color: var(--wk-idle); border-bottom: 1px dashed var(--wk-line2); }
+.wk-tail-more { padding: 4px 9px; font-size: 10.5px; color: var(--wk-small); border-bottom: 1px dashed var(--wk-line2); }
 :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-btn { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; gap: 5px; height: 24px; padding: 0 9px; border: 1px solid var(--wk-line);
   border-radius: 6px; background: var(--pmw-hover); color: var(--wk-ink); font: 500 11.5px/1 var(--body-font, Inter, system-ui, sans-serif); white-space: nowrap; cursor: pointer; flex: none; }
 :is(#pm7-work, #pm7-work-dialog, #pm7-work-system, [data-work-detail]) .wk-btn:hover { background: var(--pmw-press); }
@@ -33165,14 +33168,14 @@ html[data-o55-nier="on"] .pm7-work-item.is-open :where(.wk-sb-ask):not(.t7:not(*
 .wk-server .wk-ghead > svg:last-of-type { color: var(--wk-ink2); }
 .wk-env { margin: 2px 0 8px 22px; }
 .wk-env-head { display: flex; align-items: baseline; gap: 8px; padding: 4px 8px; font-size: 11.5px; font-weight: 650; color: var(--wk-ink); }
-.wk-env-head .wk-gsum { font-weight: 400; color: var(--wk-idle); }
+.wk-env-head .wk-gsum { font-weight: 400; color: var(--wk-small); }
 .wk-tr { all: unset; box-sizing: border-box; display: grid; grid-template-columns: minmax(160px, 1.6fr) 84px 56px 76px 56px minmax(110px, 1.2fr); gap: 8px;
   align-items: center; width: 100%; padding: 5px 8px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 .wk-tr:not(.wk-th):hover { background: var(--pmw-hover); }
 .wk-tr.is-sel { background: var(--pmw-press); }
 .wk-tr:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: -2px; }
 .wk-th { cursor: default; border-bottom: 1px solid var(--wk-line2); border-radius: 0; }
-.wk-th > button { all: unset; display: inline-flex; align-items: center; gap: 3px; cursor: pointer; color: var(--wk-idle); font-size: 11px; font-weight: 600; }
+.wk-th > button { all: unset; display: inline-flex; align-items: center; gap: 3px; cursor: pointer; color: var(--wk-small); font-size: 11px; font-weight: 600; }
 .wk-th > button:nth-child(3), .wk-th > button:nth-child(4), .wk-th > button:nth-child(5) { justify-self: end; }
 .wk-th > button:is([aria-sort="ascending"], [aria-sort="descending"]) { color: var(--wk-ink); }
 .wk-th > button:focus-visible { outline: 2px solid var(--pmw-focus, var(--wk-work)); outline-offset: 2px; }
@@ -33199,7 +33202,7 @@ html[data-theme$="-light"] .wk-dialog-scrim { background: rgba(20, 24, 32, .28);
 .wk-dialog-list { list-style: none; margin: 0 0 10px; padding: 0; border: 1px solid var(--wk-line2); border-radius: 8px; max-height: 260px; overflow: auto; }
 .wk-dialog-list li + li { border-top: 1px solid var(--wk-line2); }
 .wk-dialog-list label { display: grid; grid-template-columns: auto auto auto minmax(0, 1fr); align-items: center; gap: 7px; padding: 6px 10px; cursor: pointer; }
-.wk-dialog-list span { color: var(--wk-idle); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wk-dialog-list span { color: var(--wk-small); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .wk-dialog-list li.is-off { opacity: .45; }
 .wk-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
 
@@ -43092,7 +43095,10 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
 
   /* ------------------------------------------------------------------ counts */
   function counts(scope) {
-    const c = { agents: 0, questions: 0, processes: 0, needsInput: 0, stopping: 0, blocked: 0, failed: 0, scheduled: 0, finished: 0, services: 0,
+    /* finished / failed count what every Finished list of work shows, processes and scheduled runs (the panel's
+       Processes tab, the chat's thread view); a finished agent is a thread and counts apart, as finishedAgents (Muse m1:
+       finished had read one more than its own list) */
+    const c = { agents: 0, questions: 0, processes: 0, needsInput: 0, stopping: 0, blocked: 0, failed: 0, scheduled: 0, finished: 0, finishedAgents: 0, services: 0,
       stale: S.feed.state === 'stale', restarted: !!S.restarted };
     items(scope).forEach((x) => {
       if (x.kind === 'service') { if (isLive(x)) c.services++; return; }
@@ -43101,7 +43107,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
       if (needsInput(x)) c.needsInput++;
       if (x.state === 'blocked' && !x.stopping) c.blocked++;
       if (x.kind === 'scheduled' && x.state === 'pending') c.scheduled++;
-      if (isDone(x)) { c.finished++; if (x.state === 'failed') c.failed++; }
+      if (isDone(x)) { if (x.kind === 'agent') c.finishedAgents++; else { c.finished++; if (x.state === 'failed') c.failed++; } }
       if (isLive(x)) { if (x.kind === 'agent') c.agents++; else c.processes++; }
     });
     return c;
@@ -54766,6 +54772,8 @@ div.pm56-host.pm56-reduced .working-variant-8 .rail8-verb.pm-shimmer, div.pm56-h
   height: 28px;
   flex: 0 0 auto;
 }
+div.pm56-host[data-theme^="retro"] .activity-panel-head{ gap: 4px; padding-left: 10px; padding-right: 6px; }
+div.pm56-host[data-theme^="retro"] .activity-panel-head > strong{ font-size: 13.5px; letter-spacing: -.01em; }
 .pm56-host .activity-head-overflow{ display: none; position: relative; }
 .pm56-host .activity-head-overflow > summary{
   display: grid;
@@ -171163,19 +171171,32 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      the sampler only while this tab is on screen (D12). A sortable table per environment and an inspector. */
   const COLS = [['title', 'name'], ['rank', 'state'], ['cpu', 'cpu'], ['mem', 'mem'], ['ports', 'port'], ['where', 'where']];
   function liveVal(it, k) { return isLive(it) ? (it[k] == null ? null : it[k]) : null; }
+  /* the Resources sort: the column the person picked, then the title so equal values keep one order */
+  function resCmp() {
+    const w = W(), [k, dir] = ui.sort;
+    const byTitle = (a, b) => { const sa = String(a.title).toLowerCase(), sb = String(b.title).toLowerCase(); return sa < sb ? -1 : sa > sb ? 1 : 0; };
+    return (a, b) => {
+      let d = 0;
+      if (k === 'cpu' || k === 'mem') { const va = liveVal(a, k), vb = liveVal(b, k); d = dir * ((va == null ? -1 : va) - (vb == null ? -1 : vb)); }
+      else if (k === 'rank') d = dir * (w.rank(a) - w.rank(b));
+      else if (k === 'ports') d = dir * (((a.ports || [])[0] || 99999) - ((b.ports || [])[0] || 99999));
+      else { const sa = String(k === 'where' ? ownerName(a) : a.title).toLowerCase(), sb = String(k === 'where' ? ownerName(b) : b.title).toLowerCase(); d = dir * (sa < sb ? -1 : sa > sb ? 1 : 0); }
+      return d || byTitle(a, b);
+    };
+  }
+  /* an environment's head says what it lists, by state in the rows' own words (Muse m2: "3 processes" over four rows) */
+  function envSum(list) {
+    const by = {}, order = [];
+    list.forEach((x) => { const t = word(x).toLowerCase(); if (!by[t]) { by[t] = 0; order.push(t); } by[t]++; });
+    order.sort((a, b) => (list.find((x) => word(x).toLowerCase() === b && isLive(x)) ? 1 : 0) - (list.find((x) => word(x).toLowerCase() === a && isLive(x)) ? 1 : 0));
+    return order.map((t) => by[t] + ' ' + t).join(' · ');
+  }
   function resBody() {
     const w = W(); if (!w) return '';
     const servers = w.servers ? w.servers(project()) : [];
     const all = items({ project: project() }).filter((x) => x.kind === 'process' || x.kind === 'service');
     if (!servers.length || !all.length) return '<div class="wk-empty">' + T('res.empty') + '</div>';
-    const [k, dir] = ui.sort;
-    const cmp = (a, b) => {
-      if (k === 'cpu' || k === 'mem') { const va = liveVal(a, k), vb = liveVal(b, k); return dir * ((va == null ? -1 : va) - (vb == null ? -1 : vb)); }
-      if (k === 'rank') return dir * (w.rank(a) - w.rank(b));
-      if (k === 'ports') return dir * (((a.ports || [])[0] || 99999) - ((b.ports || [])[0] || 99999));
-      const sa = String(k === 'where' ? ownerName(a) : a.title).toLowerCase(), sb = String(k === 'where' ? ownerName(b) : b.title).toLowerCase();
-      return dir * (sa < sb ? -1 : sa > sb ? 1 : 0);
-    };
+    const [k, dir] = ui.sort, cmp = resCmp();
     const head = '<div class="wk-tr wk-th" role="row">' + COLS.map((c) => '<button type="button" role="columnheader" data-work-sort="' + c[0] + '" aria-sort="' +
       (k === c[0] ? (dir > 0 ? 'ascending' : 'descending') : 'none') + '">' + T('res.cols.' + c[1]) + (k === c[0] ? icon(dir > 0 ? 'arrow-up' : 'arrow-down', 9) : '') + '</button>').join('') + '</div>';
     let h = '<div class="wk-res" role="table" aria-label="' + esc(T('res.label')) + '">', any = null;
@@ -171188,7 +171209,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (!col) (sv.environments || []).forEach((env) => {
         const list = mine.filter((x) => x.environment === env.id).sort(cmp);
         h += '<div class="wk-env" role="rowgroup" aria-label="' + esc(sv.name + ' · ' + env.name) + '"><div class="wk-env-head">' + esc(env.name) + '<span class="wk-gsum">' +
-          (list.length ? plural(list.filter(isLive).length, T('bar.process'), T('bar.processes')) : T('res.envEmpty')) + '</span></div>';
+          (list.length ? esc(envSum(list)) : T('res.envEmpty')) + '</span></div>';
         if (list.length) h += head + list.map((x) => {
           if (!any) any = x;
           const sel = ui.selected === x.id;
@@ -171272,6 +171293,20 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       el.textContent = T('res.totals', { cpu: pct(mine.reduce((s, x) => s + (liveVal(x, 'cpu') || 0), 0)), mem: mb(mine.reduce((s, x) => s + (liveVal(x, 'mem') || 0), 0)) });
     });
     const note = pop.querySelector('.wk-res-note'); if (note) note.textContent = T('res.sampled');
+    resort();
+  }
+  /* each sample keeps the order the header promises (Muse m3: "CPU ↓" read 86, 38, 15, 2, 3, 3 after a few samples).
+     Rows move only while the pointer and the focus are outside the table, so a row never slides from under a click */
+  function resort() {
+    const t = pop && pop.querySelector('.wk-res');
+    if (!t || t.matches(':hover') || t.contains(doc.activeElement)) return;
+    const cmp = resCmp();
+    t.querySelectorAll('.wk-env').forEach((env) => {
+      const rows = Array.prototype.slice.call(env.querySelectorAll(':scope > .wk-tr:not(.wk-th)'));
+      if (rows.some((r) => !byId(r.getAttribute('data-work-sel')))) return;   // a row's work has gone: the next repaint has it
+      const want = rows.slice().sort((a, b) => cmp(byId(a.getAttribute('data-work-sel')), byId(b.getAttribute('data-work-sel'))));
+      if (want.some((r, i) => r !== rows[i])) want.forEach((r) => env.appendChild(r));
+    });
   }
   /* the popped-out window stays whole on screen (A7): its head, tabs and footer inside the window, above the status bar,
      whatever the window did since it was placed; measured from its own size, not a fixed handle */
