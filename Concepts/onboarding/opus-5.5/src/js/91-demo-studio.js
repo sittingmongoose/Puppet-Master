@@ -106,8 +106,7 @@
      window's own calls, so the real state shows (Pip's oops face and line, the warning under the field, the failed
      sign-in). The window mounts two frames after O55.ui.open, so each step waits for its screen. O55.ui.act presses the
      on-screen control as the click dispatcher does and O55.ui.fill types into a bound field through its binding (lane
-     onb); a page without them calls the same screen action its control would (O55.screens.defs[screen].do / .bind,
-     what the window's click and input handlers call). ---- */
+     onb); a page without them shows these moments unavailable (no reach into the screens' own tables). ---- */
   const OUI = () => O55.ui || null;
   function whenScreen(id, step, ms) {
     const until = performance.now() + (ms || 4000);
@@ -119,28 +118,17 @@
     };
     O55.motion.real.setTimeout(tick, 120);
   }
-  function screenAct(S, screen, name, arg) {
-    if (fn(OUI(), 'act')) return OUI().act(name, arg);
-    const d = O55.screens && O55.screens.defs[screen];
-    return d && d.do && fn(d.do, name) ? d.do[name](S, arg) : false;
-  }
-  function screenFill(S, screen, bind, value) {
-    if (fn(OUI(), 'fill')) return OUI().fill(bind, value);
-    const field = S.root.querySelector(`[data-o55-bind="${CSS.escape(bind)}"]`), d = O55.screens && O55.screens.defs[screen];
-    if (!field || !d || !d.bind) return false;
-    field.value = value;
-    const h = d.bind[bind]; if (typeof h === 'function') h(S, value, field, null);
-    return true;
-  }
+  const uiAct = (name, arg) => OUI().act(name, arg);
+  const uiFill = (bind, value) => OUI().fill(bind, value);
   /* the three oops moments (pip.oops.*): what each needs from the situation, the screen and the steps on it */
   const CURSOR_KEY = 'sk-cur-0042';   /* 11 characters: 12 or more passes the real check (73-screens-ai.js keyCheck) */
   const OOPS = [
-    { id: 'nameTaken', screen: 'name', base: 'returning', run: (S) => (fn(OUI(), 'fill') ? screenFill(S, 'name', 'name', 'Tastebook') : screenAct(S, 'name', 'suggest', 'Tastebook')) },
-    { id: 'keyRefused', screen: 'ai', run: (S) => {
-      screenAct(S, 'ai', 'key', 'cursor');
-      O55.motion.real.setTimeout(() => { if (screenFill(S, 'ai', 'key:cursor', CURSOR_KEY)) screenAct(S, 'ai', 'keyCheck', 'cursor'); }, 260);
+    { id: 'nameTaken', screen: 'name', base: 'returning', run: () => uiFill('name', 'Tastebook') },
+    { id: 'keyRefused', screen: 'ai', run: () => {
+      uiAct('key', 'cursor');
+      O55.motion.real.setTimeout(() => { if (uiFill('key:cursor', CURSOR_KEY)) uiAct('keyCheck', 'cursor'); }, 260);
     } },
-    { id: 'signinOnce', screen: 'ai', twist: 'antigravityOnce', run: (S) => screenAct(S, 'ai', 'signin', 'antigravity') }
+    { id: 'signinOnce', screen: 'ai', twist: 'antigravityOnce', run: () => uiAct('signin', 'antigravity') }
   ];
   /* Ask Pip: a screen with one ? note open (O55.ui.tip, the id its ? carries: pip.tips.<screen>) */
   const ASKS = [
@@ -152,9 +140,9 @@
   ];
   const pipOnboarding = {
     OOPS, ASKS,
-    avail: () => onboarding.avail() && !!(O55.screens && O55.screens.defs),
+    avail: () => onboarding.avail() && !!(O55.screens && O55.screens.defs) && fn(OUI(), 'act') && fn(OUI(), 'fill'),
     oopsAvail: (id) => { const o = OOPS.find((x) => x.id === id); return !!o && pipOnboarding.avail() && hasScreen(o.screen) && (!o.twist || !!(O55.fixtures && O55.fixtures.SCENARIOS[o.twist])); },
-    askAvail: (id) => { const a = ASKS.find((x) => x.id === id); return !!a && pipOnboarding.avail() && hasScreen(a.screen) && fn(OUI(), 'tip'); },
+    askAvail: (id) => { const a = ASKS.find((x) => x.id === id); return !!a && onboarding.avail() && hasScreen(a.screen) && fn(OUI(), 'tip'); },
     /* the situation it runs in: the one picked, with the moment's own start and twist */
     oops(id, pick) {
       const o = OOPS.find((x) => x.id === id); if (!o) return false;
@@ -362,24 +350,35 @@
     from: null,
     widthAvail: () => !!document.querySelector('.title-bar'),
     width: () => document.documentElement.getAttribute('data-pmds-tbw') || 'full',
-    setWidth(v) {
+    setWidth(v, o) {
       const de = document.documentElement, px = parseInt(v, 10);
       if (!px) { de.removeAttribute('data-pmds-tbw'); de.style.removeProperty('--pmds-tbw'); }
       else { de.setAttribute('data-pmds-tbw', String(px)); de.style.setProperty('--pmds-tbw', `${px}px`); }
-      try { if (DENS() && fn(DENS(), 'apply')) DENS().apply(); } catch (_) {}
+      /* the ladder runs once for the new width: at once for a pick, or in the owner's next frame (o.later) */
+      try { const D = DENS(); if (D) { if (o && o.later && fn(D, 'schedule')) D.schedule(); else if (fn(D, 'apply')) D.apply(); } } catch (_) {}
       return true;
     },
     /* the bar's folds, read off the bar: the brand (full | mark) and the project box (full | icon) */
     folds() { const b = brand(), w = document.getElementById('projectMenuWrap'); return { brand: (b && b.getAttribute('data-mode')) || 'full', box: (w && w.getAttribute('data-mode')) || 'full' }; },
-    /* Mark only: the widest bar at which the brand folds to Pip's mark, found by stepping the bar in from where it is
-       (each step runs the ladder in the same task, PM_TB_DENSITY.apply) */
-    markAvail: () => !!(document.querySelector('.title-bar .app-name .pm-brand-mark') && DENS() && fn(DENS(), 'apply')),
-    markOnly() {
-      const bar = document.querySelector('.title-bar'); if (!bar || !titlebar.markAvail()) return 0;
-      const start = Math.floor(bar.getBoundingClientRect().width);
-      for (let w = start; w >= 560; w -= 16) { titlebar.setWidth(w); if (titlebar.folds().brand === 'mark') return w; }
-      titlebar.setWidth('full');
-      return 0;
+    /* Mark only: the widest bar at which the brand folds to Pip's mark. A halving search between the bar's own width
+       and a narrow floor, to 8 px: about nine widths, each folded by one pass of the bar's own ladder in its own frame
+       (PM_TB_DENSITY.schedule), with the page painting and taking input between them. Stepping 16 px at a time with a
+       forced pass per step held the page for about 20 s (Astra R3). -> Promise<px | 0> */
+    markAvail: () => !!(document.querySelector('.title-bar .app-name .pm-brand-mark') && DENS() && fn(DENS(), 'schedule')),
+    markBusy: false,
+    async markOnly() {
+      const bar = document.querySelector('.title-bar'); if (!bar || !titlebar.markAvail() || titlebar.markBusy) return 0;
+      titlebar.markBusy = true;
+      const frames = () => new Promise((r) => O55.motion.real.raf(() => O55.motion.real.raf(() => O55.motion.real.setTimeout(r, 0))));
+      const folded = async (w) => { titlebar.setWidth(w, { later: true }); await frames(); return titlebar.folds().brand === 'mark'; };
+      try {
+        if (await folded('full')) return Math.floor(bar.getBoundingClientRect().width);
+        let hi = Math.floor(bar.getBoundingClientRect().width), lo = 560;
+        if (!(await folded(lo))) { titlebar.setWidth('full'); return 0; }
+        while (hi - lo > 8) { const mid = Math.round((hi + lo) / 2); if (await folded(mid)) lo = mid; else hi = mid; }
+        titlebar.setWidth(lo);
+        return lo;
+      } finally { titlebar.markBusy = false; }
     },
     /* the menu opens after the click that asked for it has finished (the bar's menus close on a click outside them) */
     menuAvail: () => titlebar.avail() && fn(BOX(), 'open'),
@@ -407,8 +406,32 @@
     /* the panel rises from the status bar on the Home page */
     open(tab) { goHome(); O55.motion.real.setTimeout(() => { try { WUI().open(tab); } catch (_) {} }, 0); return true; },
     /* the chat's tenth Activity Detail domain, shown while a process of the thread runs or needs input (D4) */
-    processesAvail: () => chat.avail() && fn(W('PM56_DEMO'), 'openActivity'),
-    processes() { chat.show(); O55.motion.real.setTimeout(() => { try { W('PM56_DEMO').openActivity('processes'); } catch (_) {} }, 320); return true; },
+    /* the chat's Processes view (D4: only a thread a process runs or waits in has one): the current thread when it has
+       processes, else the first of the chat's threads that does (PM_WORK.thread), selected through the chat's own
+       PM56_DEMO.selectThread; the result is read back from the chat's state -> Promise<{ ok, reason? }> */
+    procThread() {
+      const Wk = WORK(), D = W('PM56_DEMO');
+      if (!Wk || !fn(Wk, 'thread') || !D || !fn(D, 'getState')) return null;
+      let st = null; try { st = D.getState(); } catch (_) { return null; }
+      const has = (id) => { try { const t = Wk.thread(id); return !!(t && t.processes); } catch (_) { return false; } };
+      if (st && st.selectedThread && has(st.selectedThread)) return st.selectedThread;
+      return ((st && st.threads) || []).map((t) => t.id).find(has) || null;
+    },
+    processesAvail: () => chat.avail() && fn(W('PM56_DEMO'), 'openActivity') && fn(W('PM56_DEMO'), 'selectThread') && !!activity.procThread(),
+    processes() {
+      const D = W('PM56_DEMO'), id = activity.procThread();
+      if (!id) return Promise.resolve({ ok: false, reason: 'none' });
+      chat.show();
+      return new Promise((done) => O55.motion.real.setTimeout(() => {
+        try {
+          if (D.getState().selectedThread !== id) D.selectThread(id);
+          O55.motion.real.raf(() => {
+            try { D.openActivity('processes'); } catch (_) {}
+            O55.motion.real.raf(() => { let a = null; try { a = D.getState().activity; } catch (_) {} done(a && a.open && a.domain === 'processes' ? { ok: true } : { ok: false, reason: 'refused' }); });
+          });
+        } catch (_) { done({ ok: false, reason: 'refused' }); }
+      }, 320));
+    },
     quitAvail: () => fn(WUI(), 'quit'),
     quit() { O55.motion.real.setTimeout(() => { try { WUI().quit(); } catch (_) {} }, 0); return true; },
     stopAllAvail: () => fn(WUI(), 'confirmPlatform'),
@@ -451,6 +474,16 @@
       svgCache.set(key, out);
       return out;
     },
+    /* the tray and menu bar (A3): macOS template images in one ink on a light and a dark bar, and Windows' colour mark
+       (the app icon's Basic Dark Pip, A1) on its taskbar, at 16 px, for each face; Working is a four-frame flip, the
+       kit's micro Think loader, shown playing (PMLogo.svg with motion 'think') */
+    TRAY_BARS: [{ id: 'macLight', ground: '#f6f6f6', form: 'tray', ink: '#000000' }, { id: 'macDark', ground: '#202024', form: 'tray', ink: '#ffffff' },
+      { id: 'windows', ground: '#1c1c1c', form: 'glyph', look: 'basic-dark' }],
+    trayIcon(bar, mood, moving) {
+      const o = Object.assign({ px: 16, look: bar.look || 'basic-dark', form: bar.form, mood }, bar.ink ? { ink: bar.ink } : {});
+      if (!moving) return pip.svg(o);
+      try { return LOGO().svg(Object.assign(o, { mood: 'working', motion: 'think', decorative: true })); } catch (_) { return ''; }
+    },
     /* the painted look's own mark (colour roles, so it repaints with the look) */
     mark: (o) => { try { return LOGO().mark(Object.assign({ decorative: true }, o)); } catch (_) { return ''; } },
     live() { const C = chatPip(); return { stage: !!liveStage(), chat: C && fn(C, 'hosts') ? C.hosts().length : 0 }; },
@@ -467,6 +500,15 @@
     arm: (root) => { try { if (LOADER() && fn(LOADER(), 'mount')) LOADER().mount(root); } catch (_) {} },
     busy: (host, on) => (LOADER() && fn(LOADER(), 'busy') ? LOADER().busy(host, on, { slot: 'end', px: 16, motion: 'swing' }) : false),
     stats: () => (LOADER() && fn(LOADER(), 'stats') ? LOADER().stats() : null),
+    /* a panel waiting with the loader: Projects › Refresh (pm6-js-projects.js 'proj.refresh', the action its button
+       carries, run through the base demo engine's registry, PM_DEMO.guard.attempt); Hold keeps its loader up */
+    panelAvail: () => !!(W('PM_DEMO') && W('PM_DEMO').guard && fn(W('PM_DEMO').guard, 'attempt') && W('PM_DEMO').actions && fn(W('PM_DEMO').actions, 'get') && W('PM_DEMO').actions.get('proj.refresh') && W('PM_PAGES')),
+    panel() {
+      try { W('PM_PAGES').go('projects'); } catch (_) {}
+      return new Promise((done) => O55.motion.real.setTimeout(() => { let r = null; try { r = W('PM_DEMO').guard.attempt('proj.refresh', {}); } catch (_) {} done(r && r.ok !== false && !r.disabled ? { ok: true } : { ok: false }); }, 360));
+    },
+    /* the splash: PMConcept7 paints straight into Home and has no splash screen, so there is nothing to hold */
+    splashAvail: () => false,
     holdAvail: () => !!(LOADER() && fn(LOADER(), 'hold')),
     held: () => !!(LOADER() && fn(LOADER(), 'held') && LOADER().held()),
     setHold: (on) => LOADER().hold(!!on),
@@ -475,14 +517,18 @@
     kits: () => (VOX() && VOX().KITS ? VOX().KITS.slice() : []),
     kitFor: (choice) => (choice && choice !== 'look' ? choice : VOX() && fn(VOX(), 'kitOf') ? VOX().kitOf(LOGO() ? LOGO().look() : 'basic-dark') : 'basic'),
     /* the events Pip's own kits play (the window's clicks are O55.sound's, its one vocabulary: DR-043) */
+    /* each of Pip's 42 events with the owner that plays it: the window's own clicks, its chapter sting and hover are
+       O55.sound's (the one vocabulary, DR-043; Pip's kit refuses them), Pip's voice is the kit's vocal set, and every
+       other event, the typing key included, is Pip's kit (O55.pipVoice) */
+    WINDOW_EVENTS: ['tap', 'hover', 'select', 'toggleOn', 'toggleOff', 'next', 'back', 'open', 'close', 'warn', 'chapter'],
+    VOCAL_EVENTS: ['wake', 'sleep', 'think', 'happy', 'wink', 'alert', 'cheer', 'crew'],
     events() {
       const V = VOX(); if (!V || !V.EVENTS) return [];
-      const vocal = ['wake', 'sleep', 'think', 'happy', 'wink', 'alert', 'cheer', 'crew'];
-      const ui = ['tap', 'hover', 'select', 'toggleOn', 'toggleOff', 'next', 'back', 'open', 'close', 'key', 'warn', 'chapter'];
+      const win = pip.WINDOW_EVENTS, vocal = pip.VOCAL_EVENTS, snd = (O55.sound && O55.sound.EVENTS) || [];
       return [
-        { id: 'stage', ids: V.EVENTS.filter((e) => !vocal.includes(e) && !ui.includes(e)) },
+        { id: 'stage', ids: V.EVENTS.filter((e) => !vocal.includes(e) && !win.includes(e)) },
         { id: 'vocal', ids: V.EVENTS.filter((e) => vocal.includes(e)) },
-        { id: 'window', ids: ui.filter((e) => O55.sound.EVENTS && O55.sound.EVENTS.includes(e)), window: true }
+        { id: 'window', ids: win.filter((e) => V.EVENTS.includes(e) && snd.includes(e)), window: true }
       ].filter((g) => g.ids.length);
     },
     loops: () => (VOX() && VOX().LOOPS ? VOX().LOOPS.slice() : []),
