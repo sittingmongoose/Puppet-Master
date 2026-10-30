@@ -30101,7 +30101,7 @@ html[data-theme$="light"] {
 #rsStage.pmn-stage {
   width: var(--pmn-w); max-width: calc(100vw - 20px);
   display: flex; flex-direction: column-reverse; gap: 8px;
-  margin-top: var(--pmn-push, 0px); margin-left: var(--pmn-stage-shift, 0px);
+  margin-top: calc(var(--pmn-push, 0px) + var(--pmn-clear, 0px)); margin-left: var(--pmn-stage-shift, 0px);
   z-index: 65; pointer-events: none;
 }
 .pmn-toast {
@@ -168875,9 +168875,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const m = motion();
     before.forEach((r, n) => {
       if (n === skip || !n.isConnected || n.classList.contains('pmn-leaving')) return;
+      /* one move at a time: a card still moving from the last change (a card arriving) that moves again (one dismissed
+         at once) starts from where it is on screen; two added moves pulled it past its place, over the row above */
+      if (n.__pmnMove) { n.__pmnMove.cancel(); n.__pmnMove = null; }
       const r2 = n.getBoundingClientRect(), dy = r.top - r2.top, dx = r.left - r2.left;
       if (Math.abs(dy) < 0.5 && Math.abs(dx) < 0.5) return;
-      play(n, [{ transform: 'translate(' + dx + 'px,' + dy + 'px)' }, { transform: 'none' }], { duration: m.move.duration, easing: m.move.easing, composite: 'add' });
+      n.__pmnMove = play(n, [{ transform: 'translate(' + dx + 'px,' + dy + 'px)' }, { transform: 'none' }], { duration: m.move.duration, easing: m.move.easing, composite: 'add' });
     });
   }
   const stagedCards = () => Array.prototype.filter.call(stageEl.children, (c) => c.classList.contains('pmn-toast') && !c.classList.contains('pmn-leaving'));
@@ -168952,7 +168955,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   }
   function enter(c, it, delay) {
     const m = motion(), L = look();
-    const play = (e, f, o) => (e && typeof e.animate === 'function' ? e.animate(f, Object.assign({ fill: 'backwards', delay: delay || 0 }, o)) : null);
+    /* a card takes no clicks until it can be seen: while it waits out its delay and while it fades or unclips in, it
+       is invisible or nearly so, and a click meant for the control under it must reach that control (Jared #19) */
+    c.style.pointerEvents = 'none';
+    const shown = () => { if (c.isConnected && !c.classList.contains('pmn-leaving')) c.style.pointerEvents = ''; };
+    const play = (e, f, o) => {
+      const a = e && typeof e.animate === 'function' ? e.animate(f, Object.assign({ fill: 'backwards', delay: delay || 0 }, o)) : null;
+      if (e === c) { if (a && a.finished) a.finished.then(shown, shown); else shown(); }
+      return a;
+    };
     if (L === 'retro') {
       play(c, [{ transform: 'scaleY(.04)', filter: 'brightness(2.4)' }, { transform: 'scaleY(1)', filter: 'brightness(1.6)', offset: 0.6 }, { transform: 'none', filter: 'none' }], { duration: 220, easing: 'steps(5, end)' });
       typeOn(c.querySelector('.pmn-title'));
@@ -169463,11 +169474,41 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* keep the stage inside the window (its place is under the bell, tight under the title bar, on every page) */
   function clampStage() {
     stageEl.style.removeProperty('--pmn-stage-shift');
+    stageEl.style.removeProperty('--pmn-clear');
     const r = stageEl.getBoundingClientRect(), pad = 10;
     let shift = 0;
     if (r.right > innerWidth - pad) shift = innerWidth - pad - r.right;
     if (r.left + shift < pad) shift = pad - r.left;
     if (shift) stageEl.style.setProperty('--pmn-stage-shift', Math.round(shift) + 'px');
+    /* Jared #19, nothing the notices show sits over a control: the chat column's top area (its header; with Activity
+       Detail open, its head with Pin and close, its domain strip and its scope strip) can lie under the bell. Then the
+       stage stays under the bell and drops below every row of it that it would cover, row after row; where nothing
+       is under it, it does not move (pm7-build: below rather than beside the column, which covers page toolbars) */
+    const left = r.left + shift, right = r.right + shift, h = Math.max(r.height, 64);
+    const rows = Array.prototype.map.call(doc.querySelectorAll('#pmRoot .chat-header, #pmRoot .activity-panel-head, #pmRoot .activity-panel .activity-filter:not(.hidden), #pmRoot .activity-panel .pmap-scope'), (e) => e.getBoundingClientRect())
+      .filter((q) => q.width && q.height && q.right > left && q.left < right);
+    let y = r.top;
+    for (let moved = true, n = 0; moved && n < 8; n++) {
+      moved = false;
+      rows.forEach((q) => { if (q.bottom > y && q.top < y + h) { y = Math.ceil(q.bottom) + 10; moved = true; } });   /* 10: a card's entrance starts 8 px higher */
+    }
+    if (y > r.top) stageEl.style.setProperty('--pmn-clear', Math.round(y - r.top) + 'px');
+    watchChat();
+  }
+  /* the chat column's top area changes under the cards too: the column grows or pops out (Activity Detail opening, a
+     drag), or its rows change without a resize (a domain picked brings its scope strip, the domain strip shown,
+     Activity Detail opened over the messages). Look again on a resize, after a press or a key, and four times a
+     second while cards show; never during a drag (the page's idle rule) */
+  let chatWatched = false, topTimer = 0;
+  const reclamp = () => { if (staged.size && !(doc.body && doc.body.classList.contains('pm-resizing'))) clampStage(); };
+  function watchChat() {
+    if (staged.size && !topTimer) topTimer = setInterval(() => { if (!staged.size) { clearInterval(topTimer); topTimer = 0; return; } reclamp(); }, 250);
+    const c = !chatWatched && typeof ResizeObserver === 'function' && doc.getElementById('chatPanel');
+    if (!c) return;
+    chatWatched = true;
+    new ResizeObserver(reclamp).observe(c);
+    doc.addEventListener('pointerup', () => requestAnimationFrame(reclamp), true);
+    doc.addEventListener('keyup', () => requestAnimationFrame(reclamp), true);
   }
 
   /* ---------- actions (kind rows: canon F3-461; semantics as the base engine ran them) ----------------------------- */
@@ -169592,6 +169633,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     doc.addEventListener('keydown', (e) => { if (e.key === 'Escape' && open) closePanel(); }, true);
     doc.addEventListener('visibilitychange', () => { staged.forEach((rec) => { if (rec.bar && !rec.leaving) { if (doc.hidden) rec.bar.pause(); else if (!held) rec.bar.play(); } }); });
     window.addEventListener('resize', () => { if (open) placePanel(); if (staged.size) clampStage(); });
+
     /* times and lifetimes */
     setInterval(() => {
       if (!items.length) return;
