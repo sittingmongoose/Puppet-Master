@@ -524,7 +524,9 @@
   function enter(c, it, delay) {
     const m = motion(), L = look();
     /* a card takes no clicks until it can be seen: while it waits out its delay and while it fades or unclips in, it
-       is invisible or nearly so, and a click meant for the control under it must reach that control (Jared #19) */
+       is invisible or nearly so, and a click meant for the control under it must reach that control (a recording of Pin,
+       2026-10-29: a click landed on a card at opacity 0). Once shown it takes clicks, and covers what is under it (Jared,
+       2026-10-30) */
     c.style.pointerEvents = 'none';
     const shown = () => { if (c.isConnected && !c.classList.contains('pmn-leaving')) c.style.pointerEvents = ''; };
     const play = (e, f, o) => {
@@ -1016,44 +1018,19 @@
     if (open) { const h = panelEl.getBoundingClientRect().height; stageEl.style.setProperty('--pmn-push', Math.round(h + 8) + 'px'); }
     else stageEl.style.removeProperty('--pmn-push');
   }
-  /* keep the stage inside the window (its place is under the bell, tight under the title bar, on every page) */
+  /* keep the stage inside the window. Its place is under the bell, tight under the title bar, on every page and in every
+     look, with or without Activity Detail open (home-redesign 50-pageshell.js places it). Jared, 2026-10-30: "It is fine
+     that it covers stuff up ... The notifications should start below the bell. Like the theme selector does." That
+     ruling replaces the earlier one (#19, 2026-10-29) under which the stage dropped below every row of the chat
+     column's top area and looked again whenever that area changed; a card may now cover the chat head or any other
+     control while it shows */
   function clampStage() {
     stageEl.style.removeProperty('--pmn-stage-shift');
-    stageEl.style.removeProperty('--pmn-clear');
     const r = stageEl.getBoundingClientRect(), pad = 10;
     let shift = 0;
     if (r.right > innerWidth - pad) shift = innerWidth - pad - r.right;
     if (r.left + shift < pad) shift = pad - r.left;
     if (shift) stageEl.style.setProperty('--pmn-stage-shift', Math.round(shift) + 'px');
-    /* Jared #19, nothing the notices show sits over a control: the chat column's top area (its header; with Activity
-       Detail open, its head with Pin and close, its domain strip and its scope strip) can lie under the bell. Then the
-       stage stays under the bell and drops below every row of it that it would cover, row after row; where nothing
-       is under it, it does not move (pm7-build: below rather than beside the column, which covers page toolbars) */
-    const left = r.left + shift, right = r.right + shift, h = Math.max(r.height, 64);
-    const rows = Array.prototype.map.call(doc.querySelectorAll('#pmRoot .chat-header, #pmRoot .activity-panel-head, #pmRoot .activity-panel .activity-filter:not(.hidden), #pmRoot .activity-panel .pmap-scope'), (e) => e.getBoundingClientRect())
-      .filter((q) => q.width && q.height && q.right > left && q.left < right);
-    let y = r.top;
-    for (let moved = true, n = 0; moved && n < 8; n++) {
-      moved = false;
-      rows.forEach((q) => { if (q.bottom > y && q.top < y + h) { y = Math.ceil(q.bottom) + 10; moved = true; } });   /* 10: a card's entrance starts 8 px higher */
-    }
-    if (y > r.top) stageEl.style.setProperty('--pmn-clear', Math.round(y - r.top) + 'px');
-    watchChat();
-  }
-  /* the chat column's top area changes under the cards too: the column grows or pops out (Activity Detail opening, a
-     drag), or its rows change without a resize (a domain picked brings its scope strip, the domain strip shown,
-     Activity Detail opened over the messages). Look again on a resize, after a press or a key, and four times a
-     second while cards show; never during a drag (the page's idle rule) */
-  let chatWatched = false, topTimer = 0;
-  const reclamp = () => { if (staged.size && !(doc.body && doc.body.classList.contains('pm-resizing'))) clampStage(); };
-  function watchChat() {
-    if (staged.size && !topTimer) topTimer = setInterval(() => { if (!staged.size) { clearInterval(topTimer); topTimer = 0; return; } reclamp(); }, 250);
-    const c = !chatWatched && typeof ResizeObserver === 'function' && doc.getElementById('chatPanel');
-    if (!c) return;
-    chatWatched = true;
-    new ResizeObserver(reclamp).observe(c);
-    doc.addEventListener('pointerup', () => requestAnimationFrame(reclamp), true);
-    doc.addEventListener('keyup', () => requestAnimationFrame(reclamp), true);
   }
 
   /* ---------- actions (kind rows: canon F3-461; semantics as the base engine ran them) ----------------------------- */
