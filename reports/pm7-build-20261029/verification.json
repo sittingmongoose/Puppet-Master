@@ -1,0 +1,418 @@
+{
+  "schema_id": "pm.pm7_plans_verification.v1",
+  "source_commit": "543a85e5ffd2da233ac4f7a55ed35afa31a6248a",
+  "aggregate_attribution_commit": "b22d48bec8",
+  "label_plan_commit": "7b706684d8",
+  "late_label_correction_checks": "focused PM7/canon/Touch at current integration; committed shards at 7b label head",
+  "integration_guard": {
+    "raw_dry_exit": 2,
+    "current_exact_guard_exit": 0,
+    "current_exact_guard_artifact": "integration-inventory-guard.log",
+    "resolution": "lead republished merged integration; local probe restored without commit",
+    "private_regeneration_probe_restored": true
+  },
+  "branch": "t3/plans/pm7-plans-canon",
+  "recorded_at_utc": "2026-10-30T00:57:33.763561+00:00",
+  "native_runtime_certification": false,
+  "step4": "pending_lead_merged_GUI_signal_and_companion_review",
+  "counts": {
+    "settings": 1011,
+    "status_keys": 22,
+    "pip_parts": 25,
+    "default_parts": 24,
+    "pip_size_sum": 61,
+    "control_bindings": 464,
+    "touch_rows": 707,
+    "touch_profiles": 137,
+    "production_wiring_entries": 1269,
+    "plan_units": 7236,
+    "indexed_docs": 96,
+    "shards": 2956,
+    "sharded_sources": 99
+  },
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "run-gates",
+        "--subcheck-timeout-seconds",
+        "600"
+      ],
+      "exit": 1,
+      "artifact": "closed-run-gates.json"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/pm-landing-check.py",
+        "--base",
+        "origin/main",
+        "--json"
+      ],
+      "exit": 2,
+      "artifact": "closed-dry-landing.json"
+    }
+  ],
+  "dry": {
+    "blocking": 0,
+    "infrastructure": [],
+    "baseline_currency": {
+      "age_days": 0.06,
+      "ancestor": true,
+      "base": "origin/main",
+      "base_commit": "6b88cf36dee05cf38fd8871ad2e510bec4a5a580",
+      "baseline_commit": "6d9a072b48b3d532593ec5f996e1d7fdd2ab5270",
+      "max_age_days": 7,
+      "reason": "its commit 6d9a072b48b3 is an ancestor of the base origin/main (6b88cf36dee0) and 0.06 days older than it, within 7",
+      "rule_two_applies": true
+    },
+    "new_branch_nonstale": [],
+    "new_outside_branch_nonstale": [
+      {
+        "check": "run-gates",
+        "error": "missing_ref",
+        "fields": {
+          "artifact": "Plans/_shards/storage_value_registry/579-lines-115418-115511.md",
+          "artifact_ref": "Plans/_shards/storage_value_registry/579-lines-115418-115511.md"
+        },
+        "key": "run-gates|validate_plan_graph|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json|c21edcdde36f",
+        "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+        "stale": false,
+        "subcheck": "validate_plan_graph"
+      },
+      {
+        "check": "run-gates",
+        "error": "missing_ref",
+        "fields": {
+          "artifact": "Plans/_shards/settings_inventory/127-lines-25128-25234.md",
+          "artifact_ref": "Plans/_shards/settings_inventory/127-lines-25128-25234.md"
+        },
+        "key": "run-gates|validate_plan_graph|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json|9f655379e751",
+        "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+        "stale": false,
+        "subcheck": "validate_plan_graph"
+      },
+      {
+        "check": "run-gates",
+        "error": "missing_ref",
+        "fields": {
+          "artifact": "Plans/_shards/storage_value_registry/579-lines-115418-115511.md",
+          "artifact_ref": "Plans/_shards/storage_value_registry/579-lines-115418-115511.md"
+        },
+        "key": "run-gates|validate_evidence|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json|c21edcdde36f",
+        "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+        "stale": false,
+        "subcheck": "validate_evidence"
+      },
+      {
+        "check": "run-gates",
+        "error": "missing_ref",
+        "fields": {
+          "artifact": "Plans/_shards/settings_inventory/127-lines-25128-25234.md",
+          "artifact_ref": "Plans/_shards/settings_inventory/127-lines-25128-25234.md"
+        },
+        "key": "run-gates|validate_evidence|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json|9f655379e751",
+        "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+        "stale": false,
+        "subcheck": "validate_evidence"
+      },
+      {
+        "check": "audit-governance",
+        "error": "missing_ref",
+        "fields": {
+          "artifact": "Plans/_shards/storage_value_registry/579-lines-115418-115511.md",
+          "artifact_ref": "Plans/_shards/storage_value_registry/579-lines-115418-115511.md"
+        },
+        "key": "audit-governance|plan_graph|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json|c21edcdde36f",
+        "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+        "stale": false,
+        "subcheck": "plan_graph"
+      },
+      {
+        "check": "audit-governance",
+        "error": "missing_ref",
+        "fields": {
+          "artifact": "Plans/_shards/settings_inventory/127-lines-25128-25234.md",
+          "artifact_ref": "Plans/_shards/settings_inventory/127-lines-25128-25234.md"
+        },
+        "key": "audit-governance|plan_graph|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json|9f655379e751",
+        "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+        "stale": false,
+        "subcheck": "plan_graph"
+      },
+      {
+        "check": "audit-governance",
+        "error": "missing_ref",
+        "fields": {
+          "artifact": "Plans/_shards/storage_value_registry/579-lines-115418-115511.md",
+          "artifact_ref": "Plans/_shards/storage_value_registry/579-lines-115418-115511.md"
+        },
+        "key": "audit-governance|evidence|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json|c21edcdde36f",
+        "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+        "stale": false,
+        "subcheck": "evidence"
+      },
+      {
+        "check": "audit-governance",
+        "error": "missing_ref",
+        "fields": {
+          "artifact": "Plans/_shards/settings_inventory/127-lines-25128-25234.md",
+          "artifact_ref": "Plans/_shards/settings_inventory/127-lines-25128-25234.md"
+        },
+        "key": "audit-governance|evidence|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json|9f655379e751",
+        "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+        "stale": false,
+        "subcheck": "evidence"
+      }
+    ],
+    "on_branch_stale_rows": 14778,
+    "pre_existing_rows": 0,
+    "grown_buckets": 0,
+    "grown_subchecks": 11,
+    "truncated_comparisons": [
+      "audit-governance/audit_closure",
+      "run-gates/validate_audit_closure"
+    ],
+    "excused_by_kind": {
+      "artifact_hash_stale": 96,
+      "audit_closure_validator_error": 29,
+      "current_snapshot_batch_doc_invalid": 11,
+      "current_snapshot_coverage_not_exact_same_document_planunit_set": 1336,
+      "current_snapshot_live_bytes_mismatch": 54,
+      "current_snapshot_live_line_count_mismatch": 48,
+      "current_snapshot_live_sha256_mismatch": 54,
+      "current_snapshot_live_span_metadata_mismatch": 12739,
+      "current_snapshot_span_sha256_mismatch": 138,
+      "event_authority_currentness_source_drift": 70,
+      "pnc019_source_hash_stale": 14,
+      "stale_batch_report_sha256_after": 149,
+      "stale_hash": 36,
+      "storage_value_registry_spec_lock_hash_stale": 4
+    }
+  },
+  "failed_aggregate_groups": [
+    "verify_spec_lock",
+    "validate_plan_graph",
+    "validate_evidence",
+    "validate_prd_planning_runtime_contracts",
+    "validate_implementation_readiness",
+    "validate_plan_migration",
+    "validate_pm7_gui_fixtures",
+    "validate_audit_closure"
+  ],
+  "protected_governance_changes": [],
+  "clean_committed_shard_check": "label-committed-shards-check.log",
+  "review_status": {
+    "prior_rows_closed": 21,
+    "final_N1_N3_directly_repaired": true,
+    "further_prose_cycle_requested": false,
+    "companion_review": "after_step4"
+  },
+  "artifacts": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-dry-landing.exit",
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-dry-landing.json",
+      "sha256": "5e00efc75d1ce41524752c2fe5f025e63855a70dde6ac4ec0209602b38aa17cf",
+      "bytes": 20825541
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-dry-landing.stderr",
+      "sha256": "cfd4c0069b9dd4b6a091a08aaf5ff60ca077958ceea7159b6ded0d153af8b928",
+      "bytes": 50
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-run-gates.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-run-gates.json",
+      "sha256": "ca8f75e5966aacbb893fa75141a2b665741cdaa4acbefe7d6bcf546534573bec",
+      "bytes": 120516
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-run-gates.stderr",
+      "sha256": "7fd34ecb19b38b554699d327e57f52280c95758e6e64884632d7ad0c5a9d7aa7",
+      "bytes": 4713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-cycle-direct-fixes.json",
+      "sha256": "eae45b9f7cc9667a2fa2ea6f70e817718c550136b52a9d25faa965b63dae1fa6",
+      "bytes": 3333
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-plan-index-generate.log",
+      "sha256": "0f67bf1101ed457a1e1c0bece2a08711dbf3a64ddf9afc7a99d7a881688f1ced",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-pm7-build-check.json",
+      "sha256": "ce4aeef6b4b5873495fe4336ba66020981b84b15147a3652e43af47940931534",
+      "bytes": 416
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-pm7-canon-check.json",
+      "sha256": "691406c56b0ff3c57d7e4de7a6c6657dd4adcb32b3d0378d478ec039a0c865b1",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-prose-followups.json",
+      "sha256": "891569521c2e1793360769ed8d971df20f7fbd0df21c99a51bc9a86fccb37148",
+      "bytes": 606
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-touch-check.log",
+      "sha256": "7cf53ed8ffa6092fa4c0b96871bdad53fed89553f104c06a2c6b4546fbb6c519",
+      "bytes": 185
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/finalized-committed-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/finalized-run-gates.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/finalized-run-gates.json",
+      "sha256": "35142120860c22ffe9eb80841077ca0946be0b0ba749398166c6d40dcef93034",
+      "bytes": 120841
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/finalized-run-gates.stderr",
+      "sha256": "3f3376fd7cc412c7b3c94736bab1b58c95945c5f1204d57ab45b0243e1c3a170",
+      "bytes": 4713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/integration-inventory-guard.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/integration-inventory-guard.log",
+      "sha256": "0dfc105b8c4c0a7a898634108e30a7e51f12d29d871a70744304271098a5ebe9",
+      "bytes": 434
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/label-committed-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/pip-label-storage-proof.json",
+      "sha256": "3aa89680379be557921209965ff6b5c8eae72a157efa02beb2d3b0a422d3c81c",
+      "bytes": 1284
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/pm7-inventory-guard-after.log",
+      "sha256": "0dfc105b8c4c0a7a898634108e30a7e51f12d29d871a70744304271098a5ebe9",
+      "bytes": 434
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/pm7-inventory-guard.log",
+      "sha256": "7850caf74413749a19c48f80aa611a1dc70edb92ac2a0ad5f2a2e144ac01ea52",
+      "bytes": 529
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/pm7-inventory-regenerate.log",
+      "sha256": "36fe1ff117044c29cad9b2dfe4ead063dd833c49fa0612f032544765e60070b3",
+      "bytes": 695
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/schema-reference-closure-proof.json",
+      "sha256": "c1b63a66ecdc454ebe66033f66bc0ef6d24e62bc31b6590c1addbaa146f0727f",
+      "bytes": 841
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/settings-disposition-pin-proof.json",
+      "sha256": "cce5fa7208ce87c8546101c0eb244cceb6761bf9f4ffaf3b012f7a668e8c9a35",
+      "bytes": 525
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/touch-failure-probe.log",
+      "sha256": "5873f35f2eb174525e1d0802295ecad14ffcb78657f20f6761508541ebc0fc18",
+      "bytes": 216
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-dry-landing.exit",
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-dry-landing.json",
+      "sha256": "98ad146911a62486c2bf82ac554c1437c0cc11d378673f6346f79161fecc237a",
+      "bytes": 19618681
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-dry-landing.stderr",
+      "sha256": "cfd4c0069b9dd4b6a091a08aaf5ff60ca077958ceea7159b6ded0d153af8b928",
+      "bytes": 50
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-run-gates.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-run-gates.json",
+      "sha256": "75dfc9a8dea6ea1510fb8757b0851ecf2945d0263583ea3acb6248c88f91da1a",
+      "bytes": 120230
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-run-gates.stderr",
+      "sha256": "6e6891131044cb110e7d9fe809e3e968fa2051c4cfdca2f7967a5e694c4beb09",
+      "bytes": 4712
+    }
+  ],
+  "reviews": [
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/plans/REVIEW-prose-astra.md",
+      "sha256": "4c94d2af2ce8d33335e0147ef7a757dfb30c2fdfe78562483a1d9752ac5ca412"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/plans/REVIEW-prose-muse.md",
+      "sha256": "e881065089976b04b82d3206220f6081820d46cac4b03a89580ddb76adfbface"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/plans/RECHECK-prose-astra.md",
+      "sha256": "b17cb3898fdf3b103dfeff29341fac593304c9c6556e8122fcb58b24d5619e78"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/plans/RECHECK-prose-muse.md",
+      "sha256": "c7130618b767e38d0791e7fc4e775932131ab2b44b6cc67560f40200f6115d75"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/plans/RECHECK2-prose-astra.md",
+      "sha256": "2107f87de0d18a61dac90764f45ebc58a5c3d3c024476fae05dd7ac8d299cf45"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/plans/REVIEW-RESPONSES.md",
+      "sha256": "05f53e4725c7cccd8844392ce349ed67d8fb80bcac193ffb6512d6105fbd203e"
+    }
+  ],
+  "cleanup": {
+    "owned_scratch_removed": true,
+    "browsers_started": 0,
+    "servers_started": 0,
+    "landed": false,
+    "landing_lock_taken": false,
+    "resealed": false
+  }
+}
