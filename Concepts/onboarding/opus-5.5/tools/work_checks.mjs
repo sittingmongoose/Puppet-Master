@@ -349,6 +349,27 @@ try {
     return { ok: !un.open && !un.panel && pin.pressed === 'true' && pin.ui === 'ui.activity_detail.pin' && pin.bind === 'chat.activity.pin' && pinned.thread === 'subagents' && pinned.open && pinned.domains.split(',').includes(pinned.domain),
       note: JSON.stringify({ unpinned: un, pin, pinned }) };
   });
+  /* ------------------------------------------------------------------------- Muse's lane review (m1-m3) */
+  await check(32, 'Counts agree with their own lists: finished work in a thread and platform-wide, finished agents apart (m1)', async () => {
+    await scenario('many'); await sleep(300);
+    const r = await ev(() => { const W = window.PM_WORK; const t = W.thread('query').counts, all = W.counts(); const done = (f) => W.items(f).filter(W.isDone);
+      return { thread: [t.finished, done({ thread: 'query', kind: ['process', 'scheduled'] }).length], platform: [all.finished, done({ kind: ['process', 'scheduled'] }).length], agents: [all.finishedAgents, done({ kind: 'agent' }).length] }; });
+    await ev(() => window.PM56_DEMO.openActivity('processes')); await sleep(600);
+    const rows = await ev(() => { const sec = [...document.querySelectorAll('#pmRoot .pmap-proc-sec')].find((x) => /Finished/.test(x.textContent.slice(0, 60))); return sec ? sec.querySelectorAll('.pmap-proc-row').length : -1; });
+    await closeActivity(); await scenario('busy');
+    return { ok: r.thread[0] === r.thread[1] && r.platform[0] === r.platform[1] && r.agents[0] === r.agents[1] && rows === r.thread[0], note: JSON.stringify({ ...r, threadRows: rows }) };
+  });
+  await check(33, 'Resources: each environment says what it lists, and the CPU column keeps its sorted order across samples (m2, m3)', async () => {
+    await scenario('servers'); await page.mouse.move(5, Math.round(H / 2));
+    await openP('resources'); await sleep(900);
+    const heads = await ev(() => [...document.querySelectorAll('#pm7-work .wk-env')].map((e) => { const s = (e.querySelector('.wk-env-head .wk-gsum') || {}).textContent || ''; const n = (s.match(/\d+/g) || []).reduce((a, b) => a + Number(b), 0); return [n, e.querySelectorAll(':scope > .wk-tr:not(.wk-th)').length, s]; }));
+    await sleep(4600);   // two samples
+    const orders = await ev(() => [...document.querySelectorAll('#pm7-work .wk-env')].map((e) => [...e.querySelectorAll(':scope > .wk-tr:not(.wk-th) [data-work-cpu]')].map((c) => parseFloat(c.textContent)).filter((v) => !isNaN(v))));
+    const sortDir = await ev(() => (document.querySelector('#pm7-work .wk-th [data-work-sort="cpu"]') || {}).getAttribute && document.querySelector('#pm7-work .wk-th [data-work-sort="cpu"]').getAttribute('aria-sort'));
+    await ev(() => window.PM7_WORK_UI.close()); await scenario('busy');
+    const sorted = orders.every((o) => o.every((v, i) => i === 0 || (sortDir === 'ascending' ? o[i - 1] <= v : o[i - 1] >= v)));
+    return { ok: heads.length > 0 && heads.every((h) => h[1] === 0 || h[0] === h[1]) && (sortDir === 'ascending' || sortDir === 'descending') && sorted, note: JSON.stringify({ heads: heads.map((h) => h[2] + ' / ' + h[1] + ' rows'), cpu: sortDir, orders }) };
+  });
 } finally {
   const failed = results.filter((r) => !r.ok).length;
   writeFileSync(join(out, 'work-checks.json'), JSON.stringify({ page: url, look: fam + '-' + mode, width: W, results, errors }, null, 1));
