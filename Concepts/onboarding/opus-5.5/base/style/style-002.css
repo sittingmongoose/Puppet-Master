@@ -4015,21 +4015,8 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       box-shadow: var(--elev-3);
-      /* Sprout-in: body-appended fixed menu starts hidden; the builders add
-         .is-open one rAF after append so the transition reliably runs */
-      opacity: 0;
-      transform: translateY(-4px) scale(0.98);
-      transform-origin: top left;
-      transition: opacity 140ms ease, transform 180ms cubic-bezier(.2, .9, .3, 1.05);
+      /* it opens and closes as a menu sprout (.pm-sprout, PM6_SPROUT; base/style/pm7-sprout.css) */
     }
-    .pm-ed-overflow-menu.is-open {
-      opacity: 1;
-      transform: none;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .pm-ed-overflow-menu { transition: none; }
-    }
-    [data-motion="reduced"] .pm-ed-overflow-menu { transition: none; }
     .pm-ed-overflow-menu button {
       text-align: left;
       padding: 6px 12px;

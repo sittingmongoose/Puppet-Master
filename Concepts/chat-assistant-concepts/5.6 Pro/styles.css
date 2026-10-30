@@ -441,8 +441,6 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 * { scrollbar-width:thin;scrollbar-color:var(--surface-4) transparent; }
 *::-webkit-scrollbar { width:9px;height:9px; }*::-webkit-scrollbar-track{background:transparent}*::-webkit-scrollbar-thumb{background:var(--surface-4);border:2px solid transparent;background-clip:padding-box;border-radius:8px}*::-webkit-scrollbar-thumb:hover{background:var(--border-strong);border:2px solid transparent;background-clip:padding-box}
 
-@keyframes menu-pop{0%{opacity:0;transform:translateY(7px) scale(.94)}55%{opacity:1}100%{opacity:1;transform:none}}
-@keyframes sidecar-pop{0%{opacity:0;transform:translateX(calc(var(--side-dir,1)*-12px)) scale(.96)}100%{opacity:1;transform:none}}
 @keyframes drawer-in{0%{opacity:0;transform:translateX(30px) scale(.985)}100%{opacity:1;transform:none}}
 @keyframes history-in{0%{opacity:0;transform:translateX(24px)}100%{opacity:1;transform:none}}
 @keyframes dialog-in{0%{opacity:0;transform:translate(-50%,-47%) scale(.97)}100%{opacity:1;transform:translate(-50%,-50%)}}

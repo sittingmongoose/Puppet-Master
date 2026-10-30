@@ -908,8 +908,12 @@
 
   /* body-appended picker (terminal overflow-menu pattern): row click
      promotes the tab into the bar, the per-row X closes it */
+  /* the overflow pickers open and close through the menu sprout (PM6_SPROUT); a closed one leaves the page */
+  function edSproutClose(menu) {
+    if (menu) window.PM6_SPROUT.close(menu, function () { if (menu.parentNode) menu.parentNode.removeChild(menu); });
+  }
   function edCloseOverflowMenu() {
-    if (edMenuEl && edMenuEl.parentNode) edMenuEl.parentNode.removeChild(edMenuEl);
+    edSproutClose(edMenuEl);
     edMenuEl = null;
     document.removeEventListener('click', edMenuOutside, true);
     var strip = edStrip();
@@ -930,7 +934,7 @@
     var chip = strip && strip.querySelector('.pm-ed-overflow');
     if (!chip) return;
     var menu = document.createElement('div');
-    menu.className = 'pm-ed-overflow-menu';
+    menu.className = 'pm-ed-overflow-menu pm-sprout';
     edHidden.forEach(function (path) {
       var row = document.createElement('button');
       row.type = 'button';
@@ -959,10 +963,7 @@
     menu.style.left = left + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     chip.classList.add('active');
-    /* sprout-in: let the hidden initial styles paint before opening */
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { menu.classList.add('is-open'); });
-    });
+    window.PM6_SPROUT.open(menu, null, chip, { display: false });
     edMenuEl = menu;
     document.addEventListener('click', edMenuOutside, true);
   }
@@ -1216,7 +1217,7 @@
     requestAnimationFrame(run);
   }
   function ed2CloseMenu() {
-    if (ed2MenuEl && ed2MenuEl.parentNode) ed2MenuEl.parentNode.removeChild(ed2MenuEl);
+    edSproutClose(ed2MenuEl);
     ed2MenuEl = null;
     document.removeEventListener('click', ed2MenuOutside, true);
     var strip = ed2Strip();
@@ -1236,7 +1237,7 @@
     var chip = strip && strip.querySelector('.pm-ed-overflow');
     if (!chip) return;
     var menu = document.createElement('div');
-    menu.className = 'pm-ed-overflow-menu';
+    menu.className = 'pm-ed-overflow-menu pm-sprout';
     ed2Hidden.forEach(function (tab) {
       var row = document.createElement('button');
       row.type = 'button';
@@ -1256,10 +1257,7 @@
     menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     chip.classList.add('active');
-    /* sprout-in: let the hidden initial styles paint before opening */
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { menu.classList.add('is-open'); });
-    });
+    window.PM6_SPROUT.open(menu, null, chip, { display: false });
     ed2MenuEl = menu;
     document.addEventListener('click', ed2MenuOutside, true);
   }
@@ -1990,7 +1988,7 @@
 
   function edGenericCloseMenu() {
     var menu = document.getElementById('pm-ed-generic-overflow-menu');
-    if (menu && menu.parentNode) menu.parentNode.removeChild(menu);
+    if (menu) { menu.removeAttribute('id'); edSproutClose(menu); }
     document.querySelectorAll('.editor-tabs .pm-ed-overflow.active').forEach(function (c) { c.classList.remove('active'); });
   }
 
@@ -2000,7 +1998,7 @@
     if (!hidden.length) return;
     var menu = document.createElement('div');
     menu.id = 'pm-ed-generic-overflow-menu';
-    menu.className = 'pm-ed-overflow-menu';
+    menu.className = 'pm-ed-overflow-menu pm-sprout';
     hidden.forEach(function (tab) {
       var row = document.createElement('button');
       row.type = 'button';
@@ -2035,10 +2033,7 @@
     menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     chip.classList.add('active');
-    /* sprout-in: let the hidden initial styles paint before opening */
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { menu.classList.add('is-open'); });
-    });
+    window.PM6_SPROUT.open(menu, null, chip, { display: false });
     setTimeout(function () {
       document.addEventListener('click', function once(ev) {
         if (menu.contains(ev.target) || (ev.target.closest && ev.target.closest('.pm-ed-overflow'))) return;
