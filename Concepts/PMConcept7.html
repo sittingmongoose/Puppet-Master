@@ -27058,7 +27058,8 @@ html:not([data-o55-nier="on"]) :where(.o55t-root > *):not(#t7.t7:not(*)) { --tex
 .o55-railjump { margin: 0; padding: 0; border: 0; background: none; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; line-height: inherit; cursor: pointer; border-radius: 3px; }
 .o55-railjump:hover { color: var(--text-primary); text-decoration: underline; text-underline-offset: 3px; }
 .o55-railjump:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 3px; }
-.o55-railnode[data-o55-do] { cursor: pointer; }
+/* (the bead answers a press but keeps the default cursor: a pointer-cursor rule for it slowed the app's chat-edge drag
+   with the window closed, frame gap p95 100 ms -> 300 ms in tools/perf/resize_perf.py, consistently across builds) */
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-railjump { display: block; position: absolute; inset: 0; overflow: hidden; color: transparent; text-decoration: none; }
 /* rail per family */
 #pm-o55-onboarding[data-family="basic"] .o55-railitem { --o55-node-w: 9px; }
@@ -175012,7 +175013,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     S.sess.commit = { state: 'done', key: 'commit:' + d.project_draft_ref + ':r' + d.project_draft_revision, attempt: 1, revision: d.project_draft_revision,
       projectId: id, publishedVia: 'fixture', receipts: { project: 'fixture:project:' + id }, doneAt: Date.now(), seeded: true };
     if (S.sess.screen === 'protect' && !S.sess.backup.dest) S.sess.backup.dest = 'gdrive';
-    if (O55.shell && O55.shell.selectProject) try { O55.shell.selectProject(id, name); } catch (_) {}
+    if (O55.shell && O55.shell.selectProject) try { O55.shell.selectProject(id, name, { path: O55.review && O55.review.filesAt ? O55.review.filesAt(S) : '', branch: '' }); } catch (_) {}
   }
   function open(opts) {
     opts = opts || {};
