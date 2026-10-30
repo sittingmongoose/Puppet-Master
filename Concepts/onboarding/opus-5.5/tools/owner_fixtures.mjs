@@ -119,5 +119,5 @@ export async function finishBackupProtection(d, A) {
     A.ok(await d.page.evaluate(step => window.O55.S.sess.backup.done.includes(step), step), step + ': matching owner postcondition adopted');
   }
   A.eq(await d.state(() => window.O55.S.sess.backup.state), 'done', 'backups are on after the policy result');
-  A.ok(/Backups are on/.test(await d.state(() => document.body.textContent)), 'backups are on');
+  A.ok(await d.state(() => /Backups are on/.test(document.body.textContent)), 'backups are on');
 }
