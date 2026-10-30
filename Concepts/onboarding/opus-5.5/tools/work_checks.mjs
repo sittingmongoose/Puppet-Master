@@ -547,6 +547,28 @@ try {
     const theme = await ev(() => document.documentElement.getAttribute('data-theme') + (document.documentElement.getAttribute('data-o55-nier') === 'on' ? ' nier' : ''));
     return { ok: ok && res.some((r) => !r.none), note: theme + ' ' + JSON.stringify(res) };
   });
+  /* ------------------------------------------------- toast placement (Jared, 2026-10-30, replaces #19's clearance) */
+  await check(43, 'A toast starts below the bell where the theme selector\'s menu starts, on Home, Usage and Projects, and on Home with Activity Detail open; it may cover what is there (Jared, 2026-10-30)', async () => {
+    const rows = [];
+    for (const where of ['dashboard', 'usage', 'projects', 'dashboard+activity']) {
+      await ev((p) => window.PM_PAGES.go(p), where.split('+')[0]); await sleep(900);
+      if (where.endsWith('+activity')) { await ev(() => window.PM56_DEMO.openActivity('goal')); await sleep(700); }
+      await clickAt('#themeSelect'); await sleep(800);
+      if (await ev(() => document.getElementById('themeSelect').getAttribute('aria-expanded') !== 'true')) { await clickAt('#themeSelect'); await sleep(800); }
+      /* the menu's resting top, free of its opening animation: its offset in its positioned parent */
+      const menuTop = await ev(() => { const m = document.getElementById('themeMenu'), op = m.offsetParent; return op ? Math.round((op.getBoundingClientRect().top + op.clientTop + m.offsetTop) * 10) / 10 : null; });
+      await page.keyboard.press('Escape'); await sleep(400);
+      await ev(() => window.PM_TITLEBAR_NOTIFY.push({ title: 'Placement check', body: 'The first card starts under the bell', kind: 'advisory', severity: 'info', important: true, source: 'agents' }));
+      await sleep(1300);
+      const cardTop = await ev(() => { const cs = [...document.querySelectorAll('#rsStage .pmn-toast:not(.pmn-leaving)')].map((c) => c.getBoundingClientRect()).filter((r) => r.height); return cs.length ? Math.round(Math.min(...cs.map((r) => r.top)) * 10) / 10 : null; });
+      await ev(() => { try { window.PM_TITLEBAR_NOTIFY.clearAll(); } catch (e) { /* none */ } });
+      if (where.endsWith('+activity')) await closeActivity();
+      await sleep(500);
+      rows.push({ where, menuTop, cardTop });
+    }
+    await ev(() => window.PM_PAGES.go('dashboard')); await sleep(500);
+    return { ok: rows.every((r) => r.menuTop != null && r.cardTop != null && Math.abs(r.cardTop - r.menuTop) <= 0.5), note: JSON.stringify(rows) };
+  });
 } finally {
   const failed = results.filter((r) => !r.ok).length;
   const wantLook = (fam === 'nier' ? 'basic-' + mode + '+nier' : fam + '-' + mode), drift = results.filter((r) => r.look !== wantLook);
