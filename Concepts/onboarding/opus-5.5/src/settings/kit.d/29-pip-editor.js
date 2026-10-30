@@ -161,7 +161,10 @@
     return { destroy };
   }
   /* ui.settings.pip_editor.open from the Settings row: the Settings side sheet */
-  function open() {
+  /* open() from the Settings row: the editor in Settings' side sheet. open({ from, returnFocus }) from anywhere else (the
+     Demo Studio's "Adjust Pip", a menu): the same editor as the dialog popup() opens, focus going back to returnFocus */
+  function open(opts) {
+    if (opts && typeof opts === 'object' && (opts.from || opts.returnFocus)) return popup(opts);
     if (!REG()) return false;
     const wrap = PM51.panel({ title: say('title', 'Customize Pip'), eyebrow: say('kicker', 'Pip'), icon: 'sliders', size: 'wide', cls: 'pipe-panel', closeLabel: say('done', 'Done'),
       summary: say('lead', 'Choose where Pip appears in the chat and in setup, the faces it makes and how it moves. A change applies at once and is saved for this Project.'), body: body() });
