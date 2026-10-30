@@ -53,7 +53,7 @@
     const focus = !!(PM51.s().doctorReturn && PM51.s().doctorReturn.gid === g.id && PM51.s().doctorReturn.fid === f.id && returnArmed);
     const fix = f.fix && f.state !== 'Checking' && f.state !== 'Ready' ? PM51.btn({ label: f.fix, small: true, action: 'pm51-doctor-fix', data: { gid: g.id, fid: f.id } }) : (f.fix && f.state === 'Ready' && g.id === 'updates' ? PM51.btn({ label: f.fix, small: true, action: 'pm51-doctor-fix', data: { gid: g.id, fid: f.id } }) : '');
     const wait = f.state === 'Checking' && !g.checking ? waitMark() : '';
-    return { label: PM51.serviceText(f.title), pill: PM51.pill(f.state, tone(f.state)), id: `${g.id}:${f.id}`, cls: `pm51-doctor-row${focus ? ' is-focus' : ''}`, control: `<span class="pm51-doctor-checked">checked ${h(f.checked)}</span>${wait}${fix}${PM51.iconBtn({ icon: 'chevron', label: `Open ${f.title}`, action: 'pm51-doctor-open', data: { gid: g.id, fid: f.id } })}` };
+    return { label: PM51.serviceText(f.title), pill: PM51.pill(f.state, tone(f.state)), id: `${g.id}:${f.id}`, busy: !!wait, cls: `pm51-doctor-row${focus ? ' is-focus' : ''}`, control: `<span class="pm51-doctor-checked">checked ${h(f.checked)}</span>${wait}${fix}${PM51.iconBtn({ icon: 'chevron', label: `Open ${f.title}`, action: 'pm51-doctor-open', data: { gid: g.id, fid: f.id } })}` };
   }
 
   function render() {
