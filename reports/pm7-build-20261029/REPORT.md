@@ -1,6 +1,26 @@
-# PM7 Plans lane — final Step4 handoff, 2026-10-30
+# PM7 Plans lane — companion fix pass 1, 2026-10-30
 
-**Current continuation — companion fix cycle 1/2:** reviews received 1030075153-e551; GUI ff9476a5c8 merged via 2c2ae604d3. Scoped prose/companion fixes A2–A6 and Muse 1–3 are in progress, with no GUI edits. Focused checks run serially; a new full gates/dry pass is held for the lead. A1 re-export citation now uses manifest 2261d771. Prior full/dry results below remain at 8d63d284ac.
+Branch: `t3/plans/pm7-plans-canon`. Verified fix source: `4a91fa1335374263faef1cc575c2cf32aa4b3955`. GUI input: `ff9476a5c8`, merged through `2c2ae604d3`. Lead: `pm7-build`.
+
+**Cycle-1 companion fixes are implemented and ready for recheck.** All 10 focused checks pass, serially at nice 19. No GUI edits, new commands, handlers, events or native-proof promotion. A new full gates/dry pass remains held for the lead's explicit signal; the prior full/dry result below applies only to 8d63d284ac.
+
+| Finding | Result |
+|---|---|
+| Astra A1 | Title re-export verified: 141 hashes, Working flips 1.95 s and separate reduced rest/control; manifest `2261d7719089a80b40c144dc6733d55850eb9b88c1418362102c43a0fd9f9500` cited in F3-660. |
+| Astra A2/A3 | Local owner selection separated from real thread/surface opening. Copy, browser port, scheduled Cancel and terminal Rerun each have an explicit disposition; scheduling Cancel never becomes PID Stop. Reverse census covers 13 branch cases over 10 actual hooks, with 5 omission/misrouting mutations. |
+| Astra A4 | Required closed local value branches; 74 schema cases reject missing/unknown/extra/cross-branch values while preserving Pin/System restrictions. |
+| Astra A5/A6 + Muse1 | All four actual shared preset arrays compared, 5 parity cases; Plain empty. Chat Working uses public working→dots; reviewing/recovering and platform decorative differences are explicit. 22 status keys remain. |
+| Muse2/3 + nits | Exact Project/System tokens fixed and checked across 45 reserved units. Concept title lookup is disclosed separately from native signed identity. Plain-band capability is legacy/gallery-only; product X3 B still requires eyes. |
+
+Nine existing owner units amended, no unit added/deleted. Only CS-105 additionally gains one preserved token. Eight owner/index documents changed; affected shards/index were regenerated with no unrelated shard group. Native work/project command enums and WorkTarget are unchanged. Four reused production entries change locations/acceptance text only.
+
+Current counts: **477 bindings / 58 source-anchored PM7 families; 715 Touch rows / 137 profiles; 1269 production entries; 1011 settings; 22 status keys**. Seven binding families and two local actions are added; three already-existing owner commands gain missing Touch reverse coverage. New names and full responses are in `IDS.md` and `REVIEW-COMPANIONS-RESPONSES.md`.
+
+Checks: PM7, canon, Touch, wiring, shard generation/check, index generation/validation, joined builder and standalone builder **PASS**. Fixtures also retain 4 identity, 11 runtime, 4 Pin-switch and 5 B5 cases. Raw proof/log prefix: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-`. Committed source bytes match the proof. Verification manifest SHA-256: `ae73ad328476921c47a091bc43eedff0cbc7442884c5138a95ac7e3c7151688b`.
+
+The fix runners and scratch are removed. No browser, server, landing, lock or reseal. Mailbox stays armed for the lead's recheck, final GUI deltas or explicit full-check signal. G2 remains the disclosed GUI deviation; approved canon is retained.
+
+## Prior Step4 handoff — historical verification at 8d63d284ac
 
 Branch: `t3/plans/pm7-plans-canon`. Verified canon source: `8d63d284ac77b26422a5ac8211e65217dacda0ab`. Final GUI input: `e9b15abc64`, merged via `001a301549`. Lead: `pm7-build`.
 
