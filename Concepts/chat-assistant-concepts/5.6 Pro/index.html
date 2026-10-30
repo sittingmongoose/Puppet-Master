@@ -68825,8 +68825,9 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
    PM56_RECPLAY, paced to read. Your part is played on the product's own controls, lit first: a message's More menu and
    Save as a rule…, Save rule, typing /teach or a question in the message box and Send, View on a rule's receipt, Edit,
    the new wording typed into Teach, and Ask for a fix. A rule's reply tick is shown as if the pointer rested on it. The
-   examples end where the product waits for you: the missed example's request waits in the message box for your Send,
-   and the edit example stops at Turn off's confirm in the rule's row. The guide narrates; its only buttons are Replay
+   examples end where the product waits for you: the missed example's request waits in the message box for your Send
+   (Send gets a reply that keeps the compare step, checked against your rule like any other), and the edit example
+   stops at Turn off's confirm in the rule's row. The guide narrates; its only buttons are Replay
    and Close. */
 (function(){
  'use strict';const E=window.PM56_EXT,T=window.PM56_TEACH,S=window.PM56_SHELL,R=window.PM56_RECPLAY,clone=x=>JSON.parse(JSON.stringify(x));let current=null,seq=0;
@@ -68841,7 +68842,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  function start(kind){if(!flows[kind])return;const c=E.ctx(),id='teach-demo-'+kind+'-'+(++seq),t=clone(c.state.threads.find(t=>t.id==='plain')||c.state.threads[0]),at=new Date().toISOString();
   Object.assign(t,{id,title:flows[kind].label+' · recorded example',goalId:null,status:'ready',pinned:false,archived:false,projectId:'concept:teach-example:'+seq,messages:[{id:id+'-request',role:'user',type:'text',body:'Help me keep generated files consistent with their source.',time:at},{id:id+'-guidance',role:'assistant',type:'text',body:flows[kind].advice,time:at}]});
   c.state.threads.push(t);Object.assign(c.state,{mode:'Ask',menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};window.PM56_RUNTIME.composer.destination=null;
-  current={kind,threadId:id,sourceId:id+'-guidance',ids:[],asked:false,opened:false,fixed:false,previewed:false};c.switchThread(id);playback();c.renderApp();
+  current={kind,threadId:id,sourceId:id+'-guidance',ids:[],asked:false,opened:false,fixed:false,resent:false,previewed:false};c.switchThread(id);playback();c.renderApp();
  }
  document.addEventListener('pm56:teach-committed',e=>{if(current&&e.detail.threadId===current.threadId){current.ids.push(e.detail.id);T.markRecorded(e.detail.id);}});
  const thread=()=>E.ctx().state.threads.find(t=>t.id===current?.threadId);
@@ -68850,6 +68851,14 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   const m={id:current.threadId+'-answer',role:'assistant',type:'text',body:'Change the source template, then run the build so the dashboard file is generated again. Editing the generated file directly would be overwritten.',time:at};
   t.messages.push(m);current.asked=true;
   /* the ordinary reply boundary: the reply takes a note, and each rule that rode along is checked against it */
+  const M=window.PM56_AUTO_MEMORY,out=M?M.boundary(t,m):null;if(out&&out.id&&M.markRecorded)M.markRecorded(out.id);else T.noteReply(t,m);
+  c.renderApp();}
+ /* your Send of the fix request (the missed example's last move): the reply keeps the compare step and is checked at the
+    same reply boundary, so its receipt reads Followed 1 of your rules */
+ function resend(raw){const c=E.ctx(),t=thread();if(!t)return;const at=new Date().toISOString();
+  t.messages.push({id:current.threadId+'-fix-request',role:'user',type:'text',body:raw,time:at});
+  const m={id:current.threadId+'-fixed',role:'assistant',type:'text',body:'You’re right, I left out the compare step. Change the source template, run the build so the dashboard file is generated again, then compare the generated output with the previous version to confirm only what you meant changed. Editing the generated file directly would be overwritten.',time:at};
+  t.messages.push(m);current.resent=true;
   const M=window.PM56_AUTO_MEMORY,out=M?M.boundary(t,m):null;if(out&&out.id&&M.markRecorded)M.markRecorded(out.id);else T.noteReply(t,m);
   c.renderApp();}
  /* the recording: next() names the next beat from the example's own state (PM56_RECPLAY) */
@@ -68898,6 +68907,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  function stop(){if(player){player.stop();player=null;}}
  /* the example answers its own question when you send it, whoever types it: the reply boundary as before */
  window.PM56_RUNTIME.composer.preSendHooks.push((c,t,raw)=>{if(!current||t.id!==current.threadId||current.asked||raw.trim()!==QUESTION)return false;ask();return {claimed:true};});
+ window.PM56_RUNTIME.composer.preSendHooks.push((c,t,raw)=>{const text=raw.trim();if(!current||current.kind!=='missed'||t.id!==current.threadId||!current.fixed||current.resent||!/missed|fix/i.test(text))return false;resend(text);return {claimed:true};});
  function step(){
   const a=current,latest=T.get(a.ids.at(-1)),up=player&&player.upcoming();
   if(player&&player.errors.length)return {step:'This step couldn’t run, so the recording stopped here. Replay starts it again.',done:true};
@@ -68910,7 +68920,8 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     if(!a.previewed)return {step:'Your rules open beside the chat. Next: see what your next message will include.'};
     return {step:'Done · Your next message includes the rule. It rides along in this chat until you change it.',done:true};}
    if(!a.fixed)return {step:'Under the reply: Missed 1 of your rules. It left out the compare step. Next: you press Ask for a fix.'};
-   return {step:'Your move: the request to fix the reply waits in the message box. Nothing is sent until you press Send.',done:true,yours:true};}
+   if(!a.resent)return {step:'Your move: the request to fix the reply waits in the message box. Nothing is sent until you press Send.',done:true,yours:true};
+   return {step:'Done · The new reply keeps the compare step. Under it: Followed 1 of your rules.',done:true};}
   if(!latest){if(up&&up.id==='send-teach')return {step:'Typed /teach and the rule. Next: Send opens Teach with it.'};
    return {step:'Teach a rule the quick way: type /teach and the rule in the message box.'};}
   if(latest.version===1&&!latest.supersededBy&&!latest.revoked){
