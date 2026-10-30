@@ -211,7 +211,7 @@
     const d = dev(S);
     if (d && d.authorized.includes(k.id)) return 'works';
     if (/^(dsa|rsa-1024)/.test(k.type)) return 'old';
-    if (k.passphrase && !N(S).unlocked) return 'locked';
+    if (k.passphrase && N(S).unlocked !== k.id) return 'locked'; /* (unlocked for that key only: QA2 review N1's sweep) */
     return 'notAdded';
   }
   const keyWhere = (k) => (k.where === 'file' && k.configHost ? T('nas.key.where.config', { host: k.configHost }) : T('nas.key.where.' + k.where));
@@ -251,11 +251,11 @@
       pick(S, v, el) { N(S).key = v; N(S).passCancelled = false; S.save(); O55.ui.refresh(); },
       /* a deliberate cancel closes the sheet (it is not an error; the note under the keys says what it means) */
       passCancel(S) { N(S).passCancelled = true; S.sess.ui.sheet = null; S.save(); O55.sound.play('unsheet'); O55.ui.refresh(); },
-      passOk(S) { const i = S.root.querySelector('#o55f-pass'); if (!i || !i.value) { N(S).passEmpty = true; S.save(); O55.sound.play('warn'); O55.ui.refresh(); O55.ui.shake('pass'); return; } N(S).passEmpty = false; i.value = ''; N(S).unlocked = true; S.sess.ui.sheet = null; S.save(); O55.screens.defs['nas-key'].do.next(S); },
+      passOk(S) { const i = S.root.querySelector('#o55f-pass'); if (!i || !i.value) { N(S).passEmpty = true; S.save(); O55.sound.play('warn'); O55.ui.refresh(); O55.ui.shake('pass'); return; } N(S).passEmpty = false; i.value = ''; N(S).unlocked = N(S).key; S.sess.ui.sheet = null; S.save(); O55.screens.defs['nas-key'].do.next(S); },
       next(S) {
         const n = N(S); n.key = n.key || defaultKey(S);
         const k = keyring(S).find((x) => x.id === n.key);
-        if (k && k.passphrase && !n.unlocked) { S.sess.ui.sheet = 'passphrase'; S.save(); O55.ui.refresh(); seeSheet(S); return; }
+        if (k && k.passphrase && n.unlocked !== k.id) { S.sess.ui.sheet = 'passphrase'; S.save(); O55.ui.refresh(); seeSheet(S); return; }
         S.save();
         if (k && keyStatus(S, k) === 'works') return O55.ui.go('nas-install', { verifyOnly: true });
         O55.ui.go('nas-signin');
@@ -415,7 +415,7 @@
   /* connected either way: a backup source goes back to the restore (its backups are listed there), a backup
      destination back to Finish protecting your work, everything else picks a folder */
   function connected(S) {
-    if (N(S).purpose === 'backup') { const r = S.sess.restore || {}; r.nasReady = true; S.save(); return O55.ui.go(O55.restore.afterReach(S)); } /* (the phrase only if no kit unlocked it) */
+    if (N(S).purpose === 'backup') { const r = S.sess.restore || {}; r.reachedFor = 'nas:' + N(S).device; S.save(); return O55.ui.go(O55.restore.afterReach(S)); } /* (the phrase only if no kit unlocked it) */
     if (N(S).purpose === 'dest') return O55.ui.go('protect');
     O55.ui.go('nas-folder');
   }
