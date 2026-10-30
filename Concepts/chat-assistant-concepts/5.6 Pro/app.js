@@ -496,8 +496,14 @@
      height (renderChat). Docked, the messages keep at least the 360 px isNarrow() keeps beside pinned History. */
   function activityDocked() {
     if(!state.activity.open || isPhone()) return false;
+    if(HOSTED){
+      /* the History drawer as it is drawn pinned beside the messages, its hairline included (A4: a 200 px fallback
+         let Activity dock beside 331 px of messages when the drawer was its hosted 240) */
+      const fl=document.body.dataset.phDrawer==='pinned'?document.querySelector('#pmOverlayRoot .history-flyout'):null;
+      const drawer=fl?Math.ceil(fl.getBoundingClientRect().width)+1:0;
+      return HOST.width()-drawer>=360+(state.activityWidth||280);
+    }
     const gutter=document.body.dataset.phDrawer==='pinned'?Math.min(360,parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-user-w'))||200):0;
-    if(HOSTED) return HOST.width()-gutter>=360+(state.activityWidth||280);
     return innerWidth>=821 || innerWidth-gutter>=540;
   }
   function focusActivityControl(selector) {
@@ -855,7 +861,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="thread-row ${t.id===state.selectedThread?'active':''}" data-k="thread:${esc(t.id)}" data-action="select-thread" data-id="${esc(t.id)}" tabindex="0"${hoverAttrs('thread-st-'+t.id,statusLabel(t.status))}><span class="thread-lead"><span class="thread-status-slot">${extReplace('threadRowStatus',{thread:t,variant:state.variants[1]},renderStatus(t,state.variants[1]))}</span></span><div class="thread-copy"><div class="thread-title"><span class="thread-time">${esc(t.updated)}</span><span class="thread-name">${esc(t.title)}</span></div><div class="thread-sub"><span class="summary">${esc(t.summary)}</span></div></div><button class="icon-button thread-more" data-action="thread-menu" data-id="${esc(t.id)}" data-menu-anchor="thread-${esc(t.id)}"${hoverAttrs('thread-more-'+t.id,'Thread options')}>${icon('more',14)}</button></div>`;
   }
 
-  function renderHistory(){ return `<aside class="history-panel" data-history-variant="${state.variants[1]}">${renderHistoryContent(false)}<div class="panel-resize" data-resize="history"></div></aside>`; }
+  function renderHistory(){ return `<aside class="history-panel" data-k="history-panel" data-history-variant="${state.variants[1]}">${renderHistoryContent(false)}<div class="panel-resize" data-resize="history"></div></aside>`; }
   function formatText(body){
     return esc(body).split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
   }
@@ -978,7 +984,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function renderChat(){
     const t=activeThread();
-    return `<section class="chat-stage" data-shell="${state.variants[0]}">
+    /* keyed, with the grid's other children (A1): a docked Activity Detail or a pinned History coming or going ahead
+       of it must not make the reconcile take the stage for a new node and replay the transcript */
+    return `<section class="chat-stage" data-k="chat-stage" data-shell="${state.variants[0]}">
       ${renderChatHeader(t)}
       <div class="lens-dock" data-k="context-lens-dock">${renderInlineLens()}</div>
       <div class="transcript" data-variant="${state.variants[5]}" data-voice="${motionVoice()}" data-scroll-key="transcript"><div class="tx-spine-layer" data-k="tx-spine" data-pm-keep aria-hidden="true"></div><div class="transcript-inner">${renderTranscriptItems(t)}</div></div>
@@ -1793,7 +1801,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      Crew because they are the other three collaborative kinds, and BEFORE changes/artifacts so
      the compaction tiers drop file-level domains first under width pressure. Subagents stays a
      separate domain -- a Crew member is not a subagent. */
-  const ACTIVITY_ORDER=['goal','todo','subagents','crew','brainstorm','review','chat_room','changes','artifacts'];
+  const ACTIVITY_ORDER=['goal','todo','subagents','processes','crew','brainstorm','review','chat_room','changes','artifacts'];
   const COLLAB_DOMAINS={crew:'Crew',brainstorm:'BrainStorm',review:'Review',chat_room:'Chat Room'};
   const COLLAB_ATTENTION={attention:1,limit:1,failed:1,blocked:1}, COLLAB_TONE_RANK=['attention','working','done','idle'];
   /* collaboration.js owns the runs; app.js only projects whatever is there, so the bar is
@@ -1884,14 +1892,22 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const artifacts=(D.artifacts||[]).filter(a=>a.threadId===tid||invoked.has(a.id));
     const runs=collabRuns(tid);
     const collab={brainstorm:runs.filter(r=>r.kind==='brainstorm'),review:runs.filter(r=>r.kind==='review'),chat_room:runs.filter(r=>r.kind==='chat_room'),crew:runs.filter(r=>r.kind==='crew')};
+    /* Processes (W6, D1-D4): what this thread's agent and its subagents started, from the one work projection (PM_WORK,
+       DR-078). The domain shows only while a process runs or needs input (PM_WORK.thread().processes), and stays while
+       its hover card or Activity Detail view is open, so it never vanishes under the pointer (D4). */
+    const work=window.PM_WORK;
+    const processes=work?work.items({thread:tid,kind:['process','scheduled'],view:'thread:'+tid}):[];
+    const workThread=work&&work.thread?work.thread(tid):null;
+    const procShown=!!(workThread&&workThread.processes)||(processes.length>0&&((state.activity.open&&state.activity.domain==='processes')||(state.hover&&state.hover.type==='activity'&&state.hover.domain==='processes')));
     return {
       tid, hasAttachedGoal, hasGoalReceipt:false, hasGoalHistory, capGoal:false, hasGoal,
       todos, subagents, hasSubagents, hasCrewEvent, hasCrew, crew, changes, artifacts,
-      collab,
+      collab, processes,
       live:{
         goal:hasGoal,
         todo:todos.length>0,
         subagents:hasSubagents,
+        processes:procShown,
         crew:hasCrew||collab.crew.length>0,
         brainstorm:collab.brainstorm.length>0,
         review:collab.review.length>0,
@@ -1985,6 +2001,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         tone:aBlocked?'blocked':aWorking?'working':aWaiting?'idle':'done',
         summary:agents.length?`${plural(aWorking,'agent','agents')} working, ${aBlocked} blocked`:'No child agents',
         detail:agents.slice(0,2).map(a=>`${a.name} ${a.status}`).join(' · ')||'No child agents'};
+    }
+    if(scope.live.processes){
+      const W=window.PM_WORK, ps=scope.processes;
+      const live=ps.filter(x=>W.isLive(x)), needs=ps.filter(x=>W.needsYou(x)).length;
+      const failed=ps.filter(x=>x.state==='failed').length, lost=ps.filter(x=>x.state==='warning').length;
+      const lead=W.sort(live)[0];
+      out.processes={icon:'processes',label:'Processes',
+        count:String(live.length),
+        state:live.length?'live':'changed',
+        tone:needs||lost?'attention':failed?'blocked':live.length?'working':'idle',
+        summary:lead?lead.title:'No processes running',
+        detail:[`${live.length} running`,needs?`${needs} ${needs===1?'needs':'need'} input`:null,failed?`${failed} failed`:null,lost?`${lost} lost`:null].filter(Boolean).join(' · ')};
     }
     /* F0b (j): the legacy domain (a crew event or "Allow Crews in this chat" on, with no Crew
        run) no longer lists invented members. A thread with Crew runs is projected by the
@@ -2105,7 +2133,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const headDef=defs[d]||defs[live[0]];
     const filterButton=`<button class="icon-button activity-head-filter" data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}"${hoverAttrs('act-filter','Show or hide category filter')}>${icon('filter',13)}</button>`;
     const overflow=`<details class="activity-head-overflow"><summary class="icon-button" aria-label="More Activity Detail actions">${icon('more',13)}</summary><div class="activity-head-menu"><button data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}">${icon('filter',12)} ${state.activity.filterVisible?'Hide':'Show'} domains</button></div></details>`;
-    return `<aside class="activity-panel${cover?' cover':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    return `<aside class="activity-panel${cover?' cover':''}" data-k="activity-panel-${layout}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
   }
 
   function renderActivitySection(id){
@@ -5328,6 +5356,31 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(a==='pm56-keep-open'){ closeMenu(); try{ SC&&SC.keepOpenRow&&SC.keepOpenRow().run(); }catch(err){ console.error(err); } return true; }
     if(a==='pm56-pop'){ closeMenu(); try{ if(SC.isFloating()) SC.dockBack(); else SC.popOut(); }catch(err){ console.error(err); } return true; }
     return false;
+  }
+  /* The work projection (W6, DR-078): a change repaints the chat (the bar's Processes icon, its hover card, Activity
+     Detail). The core's 1 s tick only moves times and output tails, so unless this thread's counts changed it patches
+     those in place instead of rendering the chat each second; the core rests while hidden or dragging. */
+  if(HOSTED&&window.PM_WORK&&typeof window.PM_WORK.on==='function'){
+    let workQueued=false, workSig='';
+    const sig=()=>{ const t=window.PM_WORK.thread?window.PM_WORK.thread(state.selectedThread):null; return t?JSON.stringify(t.counts)+'|'+(t.processes?1:0)+'|'+t.key:''; };
+    window.PM_WORK.on('change',why=>{
+      const now=sig();
+      if(why==='tick'&&now===workSig){ patchWorkTicks(); return; }
+      workSig=now;
+      if(workQueued) return;
+      workQueued=true;
+      requestAnimationFrame(()=>{ workQueued=false; renderApp(); });
+    });
+  }
+  function patchWorkTicks(){
+    const W=window.PM_WORK, UI=window.PM7_WORK_UI;
+    document.querySelectorAll('#pmRoot [data-work-time], #pmOverlayRoot [data-work-time]').forEach(el=>{ const it=W.item(el.getAttribute('data-work-time')); if(it){ const v=W.time(it); if(el.textContent!==v) el.textContent=v; } });
+    if(!UI||!UI.tail) return;
+    document.querySelectorAll('#pmRoot [data-work-tail]').forEach(el=>{
+      const it=W.item(el.getAttribute('data-work-tail')), pre=el.querySelector('pre');
+      if(!it||!it.tail||!pre||pre.textContent===it.tail.slice(-6).join('\n')) return;
+      const tmp=document.createElement('div'); tmp.innerHTML=UI.tail(it,6); el.replaceWith(tmp.firstChild);
+    });
   }
   /* the column resizes without a window resize (its divider, the narrow ladder, a pop out): the same re-render rules */
   if(HOSTED&&typeof ResizeObserver==='function'&&HOST.frame()){

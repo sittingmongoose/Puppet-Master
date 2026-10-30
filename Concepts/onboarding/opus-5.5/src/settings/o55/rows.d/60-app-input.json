@@ -390,6 +390,10 @@
   "general.interaction.activity-bar-labels": {
    "label": "Show names next to those icons"
   },
+  "general.interaction.status-bar-words": {
+   "label": "Show words beside the status bar's agent and process counts",
+   "help": "Off: a glyph and a number for each, with the words when you point at them. On: 16 agents · 2 questions, wherever the status bar has room for them."
+  },
   "general.startup.first-screen": {
    "label": "First screen when Puppet Master opens",
    "help": "The page you land on; the side panel is chosen below."
