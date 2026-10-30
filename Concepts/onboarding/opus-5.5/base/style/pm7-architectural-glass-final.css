@@ -636,7 +636,6 @@ html[data-theme^="glass"] :is(
   #themeMenu,#projectMenu,#pageTabsMoreMenu,#fmRootMenu,
   .pm6-tb-menu,.pm6-tb-search-pop,.pm-ctx-menu,.chat-dropdown-popover,
   .popover,.dropdown-menu,.rs-panel,.pm7ctx-pop,.pm7ctx-drawer,
-  .pm-home-portal,.pm-home-flyout-portal,.pm-home-surface-menu,
   .s4-bloom,.s4-panel,.s4-psm,.pm6-proj-sheet,.project-settings-modal,
   .pm6-wiz-doc-overlay-panel,.pm6-orch-modal
 ):not(.page-tabs) {
