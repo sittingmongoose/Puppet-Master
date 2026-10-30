@@ -26,7 +26,7 @@
     },
     cheerAt(pr, opts) {
       const at = pr ? this.propCentre(pr) : this.headCentre();
-      this.sfx(opts.sound || 'cheer', { x: at[0], index: opts.index, count: opts.count });
+      if (opts.sound !== false) this.sfx(opts.sound || 'cheer', { x: at[0], index: opts.index, count: opts.count });
       if (this.famName === 'nier') { this.ps.tiltv -= 1.2; } else this.hop(.8);
       if (pr && !this.reduced && !pr.spec.ground) { pr.sv -= 2.2; pr.av += this.fam.kick * .8; }
       if (this.tube) this.ok();
@@ -146,7 +146,10 @@
         else if (this.tube === 'phosphor') this.burst([x, y], ['pix'], 4);
         else if (this.tube === 'teletype') this.burst([x, y], ['chad'], 3);
       }
+      /* each block sounds as it comes down (the kit's 'block' rises with its place on the stack and flourishes on the
+         last); a block a cheer waits for sounds through that cheer instead */
       if (pr.onLand) { const fn = pr.onLand; pr.onLand = null; fn(); }
+      else if (pr.spec.kind === 'block') this.sfx('block', { x: pr.pos ? pr.pos[0] : pr.ax, index: pr.spec.stack, count: (pr.spec.params && pr.spec.params.count) || pr.spec.stack + 1 });
     },
     /* Ready (O10): the choices come back as charms and the crew takes its curtain call, with confetti in the look's
        own material; Pip winks once, at its sign-off, when its line is said (the only wink: none is random). Reduced
@@ -157,10 +160,14 @@
       this.readyT = setTimeout(() => { if (this.dead) return; this.confetti(60); this.cheer(null, { sound: 'crew' }); }, this.reduced ? 0 : 500);
       this.winkT = setTimeout(() => { if (!this.dead) this.feel('wink', 900); }, this.reduced ? 1200 : 2700);
     },
+    /* O10: Pip hands the strings to the tour's first callout. The hand lifts Pip up out of the stage on its strings
+       (they go taut and rise toward the window, the rectangle the callout grows from); Ready waits the returned ms
+       for the lift to be seen, then hands over. Reduced Motion: nothing travels, 0 ms. */
     handOff() {
-      if (this.reduced || this.dead) return;
-      this.feel('happy', 1400); this.sfx('lift', { x: this.ps.C.x });
+      if (this.reduced || this.dead || !this.live()) return 0;
+      this.feel('happy', 1400); this.sfx('lift', { x: this.ps.C.x }); this.say('', null, true); /* (its line goes with it) */
       this.ps.Ct.y = -this.L.h * .6; this.kick();
+      return Math.round(560 * H.speed());
     }
   });
 })();

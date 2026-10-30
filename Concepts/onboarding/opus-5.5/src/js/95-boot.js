@@ -66,8 +66,10 @@
         else { el.remove(); }
       });
     }
-    const committed = saved.commit && saved.commit.state === 'done';
-    el.innerHTML = `<button type="button" data-o55-chip="resume" data-pm-hover-exempt="true">${O55.c.small('history', 14)}<span>${U.esc(committed ? T('chrome.resumeOptional') : T('chrome.resume'))}</span></button>`
+    const committed = saved.commit && saved.commit.state === 'done', label = committed ? T('chrome.resumeOptional') : T('chrome.resume');
+    /* its tip (pip.tips.chrome.resume) is its hover tag, as the window's sound and close buttons have theirs */
+    const tip = O55.tips && O55.tips.of('resume', 'chrome'), title = label + (tip ? '\n' + tip.text : '');
+    el.innerHTML = `<button type="button" data-o55-chip="resume" title="${U.esc(title)}" data-pm-hover-exempt="true">${O55.c.small('history', 14)}<span>${U.esc(label)}</span></button>`
       + `<button type="button" class="o55-resume-x" data-o55-chip="hide" aria-label="${U.esc(T('chrome.hide'))}" data-pm-hover-exempt="true">${closeMark()}</button>`;
   }
   /* A tour interrupted by a reload offers to carry on from its last safe step. */
