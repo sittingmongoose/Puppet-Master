@@ -307,37 +307,11 @@ html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) [data-lg-kind="menu"][data
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(250, 251, 253, .88); }
 html[data-lg="on"][data-theme="glass-dark"][data-lg-tier="cpu"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(12, 15, 28, .97); }
 html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(252, 253, 255, .97); }
-/* the pointer's light: one soft highlight clipped to the sheet under the pointer, moved on the compositor */
-#lg-shine { display: none; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-shine {
-  display: block; position: fixed; left: 0; top: 0; width: 0; height: 0; overflow: hidden; pointer-events: none; z-index: 2; opacity: 0;
-  transition: opacity 260ms ease;
-  /* the blend belongs on this element: it is a stacking context, so a blend on its child only mixed with its own empty
-     layer and the light painted as plain white over the text under the pointer */
-  mix-blend-mode: var(--lg-shine-blend, plus-lighter);
-}
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-shine.on { opacity: 1; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-shine > i {
-  /* the same radius as every look's hover light (pm7-hover's --pmf-r: 96 px in Glass); it was a 210 px disc */
-  position: absolute; left: calc(var(--pmf-r, 96px) * -1); top: calc(var(--pmf-r, 96px) * -1); width: calc(var(--pmf-r, 96px) * 2); height: calc(var(--pmf-r, 96px) * 2); border-radius: 50%;
-  background: radial-gradient(closest-side, var(--lg-shine-c), transparent); will-change: transform;
-}
-/* Jared #16 (2026-10-14): the circle right under the pointer turned down; the shared hover sheen (pm7-shell-polish)
-   drops to about 0.6x at the same time, the edge light stays */
+/* the pointer's light is the shared hover light only (22-hover.css: the sheen and the edge catch on a hovered card, tile or
+   row), as in Basic and Friendly; Glass's own sheet light (#lg-shine, Glass Light's --lg-glow) is gone (Jared, QA round 2
+   Q20). --lg-shine-c is still the arrival sweep's colour. */
 html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-shine-c: rgba(255, 255, 255, .06); }
-/* light: no pointer light. Any lightening blend lifts the dark letters under the pointer as much as the glass: an
-   additive light washed them to 3.6:1, and the overlay that replaced it (it roughly doubles dark values) still took a
-   chosen tab from 8.0:1 to 5.1:1 while the white-on-white glass around it showed no change at all (2026-10-14).
-   So Light's pointer light is drawn UNDER the sheet's content instead (Jared, 2026-10-14: "add a soft hover light to
-   Glass Light, drawn under the content"): a layer of the lit sheet's own background, above its tint and frost and below
-   every word, so it can only brighten the glass behind dark text (glass.js sets --lg-px / --lg-py on the lit sheet; GPU
-   tier only, since it repaints that sheet's background as the pointer moves). The edge light (the shared hover sheen)
-   is unchanged. */
-html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-shine-c: transparent; --lg-shine-blend: normal; }
-html[data-lg="on"][data-theme="glass-light"]:not(#lgz) #lg-shine { display: none; }
-html[data-lg="on"][data-lg-tier="gpu"][data-theme="glass-light"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-lit] {
-  --lg-glow: radial-gradient(circle calc(var(--pmf-r, 96px) * 1.15) at var(--lg-px, -400px) var(--lg-py, -400px), rgba(255, 255, 255, .95), rgba(255, 255, 255, .5) 38%, rgba(246, 250, 255, .16) 72%, rgba(255, 255, 255, 0) 100%);
-}
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-shine-c: transparent; }
 /* the arrival sweep: one band of light across the window as the glass condenses */
 /* calm: no light bands cross the board or the cards when a room or page changes (Jared, 2026-10-11: "The usage page
    animations are too busy... the side ways swipe across the whole screen when you change tabs can go away") */
