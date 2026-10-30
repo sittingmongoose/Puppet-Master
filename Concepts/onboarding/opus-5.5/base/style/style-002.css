@@ -1721,45 +1721,11 @@
       border-radius: var(--radius-md, 8px);
       box-shadow: var(--elev-3, 0 8px 24px rgba(0,0,0,.18));
       box-sizing: border-box;
-      --rs-sprout-ox: 88%;
-      --rs-sprout-oy: 0%;
-      --rs-sprout-tx: 0px;
-      --rs-sprout-ty: -8px;
-      --rs-sprout-sx: 0.72;
-      --rs-sprout-sy: 0.48;
-      transform-origin: var(--rs-sprout-ox) var(--rs-sprout-oy);
-      opacity: 0;
-      transform: translate3d(var(--rs-sprout-tx), var(--rs-sprout-ty), 0)
-        scale3d(var(--rs-sprout-sx), var(--rs-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out, ease),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms;
-      will-change: transform, opacity;
-    }
-    .title-bar .pm6-tb-search-pop.open,
-    .title-bar .pm6-tb-search-pop.is-open {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out, ease),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s;
-    }
-    .title-bar .pm6-tb-search-pop.is-closing {
-      opacity: 0;
-      transform: translate3d(var(--rs-sprout-tx), var(--rs-sprout-ty), 0)
-        scale3d(var(--rs-sprout-sx), var(--rs-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms;
+      /* its corner; the motion is the menu sprout's (PM6_SPROUT, pm7-sprout.css: the pop is a .pm-sprout) */
+      --pm6-sprout-ox: 88%;
+      --pm6-sprout-oy: 0%;
+      --pm6-sprout-tx: 0px;
+      --pm6-sprout-ty: -8px;
     }
     .title-bar .pm6-tb-search-pop-input {
       width: 100%;
