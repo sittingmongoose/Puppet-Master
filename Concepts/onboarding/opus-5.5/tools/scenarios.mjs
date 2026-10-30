@@ -682,6 +682,21 @@ for (const look of ['retro-dark', 'retro-light', 'basic-dark']) def('pr20-' + lo
   A.ok(w.blocks.every((b) => b.r === true && !b.muted), 'every one played, the master unmuted');
   A.ok(!w.mutes.includes(true), 'no mute while Creating (' + JSON.stringify(w.mutes) + ')');
 });
+def('pr21', 'fresh', 'Final check: after 720x900 -> 1390x480 the rail Pip sits on the current bead and the rope spans the rail', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'where', 'on Computer');
+  const fit = () => d.state(() => {
+    const nav = document.querySelector('#pm-o55-onboarding .o55-rail'), nr = nav.getBoundingClientRect();
+    const node = nav.querySelector('.o55-railitem[data-state="current"] .o55-railnode').getBoundingClientRect();
+    const m = /translate\(([-\d.]+)px/.exec(nav.querySelector('.o55-railpip').style.transform || ''), vb = (nav.querySelector('.o55-railzip').getAttribute('viewBox') || '').split(' ');
+    return { layout: document.getElementById('pm-o55-onboarding').getAttribute('data-o55-layout'), bead: Math.round(node.left + node.width / 2 - nr.left), pip: m ? Math.round(+m[1] + 12) : null, w: Math.round(nr.width), rope: Math.round(+vb[2] || 0) };
+  });
+  for (const [w, h] of [[720, 900], [1390, 480]]) {
+    await d.page.send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 1, mobile: false }); await sleep(1800);
+    const f = await fit();
+    A.ok(f.pip != null && Math.abs(f.pip - f.bead) <= 3 && Math.abs(f.rope - f.w) <= 2, `${w}x${h} (${f.layout}): Pip ${f.pip} on bead ${f.bead}, rope ${f.rope} of ${f.w}`);
+  }
+});
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();
