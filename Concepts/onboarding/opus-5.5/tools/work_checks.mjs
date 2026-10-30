@@ -140,9 +140,9 @@ try {
     await scenario('busy'); await ev(() => document.documentElement.setAttribute('data-pm-status-words', 'off')); await sleep(300);
     const r = await ev(() => { const g = document.querySelector('[data-work-group]'); const prev = g.previousElementSibling, next = g.nextElementSibling; return { prev: prev && prev.textContent.includes('Puppet-Master'), next: next && !!next.querySelector('[data-status-action="source"]'), hidden: g.hidden }; });
     const a = await barText('agents'), p = await barText('processes');
-    return { ok: r.prev && r.next && !r.hidden && a === '162' && p === '101', note: JSON.stringify(r) + ' ' + a + ' / ' + p };
+    return { ok: r.prev && r.next && !r.hidden && a === '222' && p === '101', note: JSON.stringify(r) + ' ' + a + ' / ' + p };
   });
-  await check(14, 'Words: 16 agents · 2 questions and 10 processes · 1 needs input (general.interaction.status-bar-words); Numbers where they do not fit, never overlapping', async () => {
+  await check(14, 'Words: 22 agents · 2 questions and 10 processes · 1 needs input (general.interaction.status-bar-words); Numbers where they do not fit, never overlapping', async () => {
     await ev(() => document.documentElement.setAttribute('data-pm-status-words', 'on')); await sleep(300);
     const a = await barText('agents'), p = await barText('processes');
     const fit = await ev(() => {
@@ -151,12 +151,12 @@ try {
       return { words: g.getAttribute('data-work-words'), overlap: Math.round(last - start), squeezed: [...bar.querySelectorAll(':scope > *, :scope > * > *')].filter((x) => x.offsetParent !== null && x.scrollWidth > x.clientWidth + 1).length };
     });
     await ev(() => document.documentElement.setAttribute('data-pm-status-words', 'off'));
-    const said = fit.words === 'on' ? a === '16 agents2 questions' && p === '10 processes1 needs input' : a === '162' && p === '101';
+    const said = fit.words === 'on' ? a === '22 agents2 questions' && p === '10 processes1 needs input' : a === '222' && p === '101';
     return { ok: said && fit.overlap <= 0 && (fit.words === 'off' || fit.squeezed === 0), note: a + ' / ' + p + ' ' + JSON.stringify(fit) };
   });
   await check(15, 'Hover tags say where the agents run and how many wait on you', async () => {
     const t = await ev(() => document.querySelector('[data-status-action="agents"]').getAttribute('data-pm-hover-detail'));
-    return { ok: /16 agents running across Puppet Master \(Assistant 6, Orchestrator 4, Planning Wizard 1, PRD Builder 2, Scout 3\)\. 2 questions for you\./.test(t), note: t };
+    return { ok: /22 agents running across Puppet Master \(Assistant 12, Orchestrator 4, Planning Wizard 1, PRD Builder 2, Scout 3\)\. 2 questions for you\./.test(t), note: t };
   });
   await check(16, 'The two glyphs beat while work runs; Reduced Motion shows their lit rest pose', async () => {
     const live = await ev(() => { const s = document.querySelector('[data-status-action="agents"] .pmg-beat > svg'); return s ? getComputedStyle(s).animationName : null; });
@@ -449,6 +449,60 @@ try {
     const NOTIFY = { server: 1, db: 1, watcher: 1 };
     const bad = d.concat(m).filter(([, role, del]) => del !== (NOTIFY[role] ? 'user' : 'agent'));
     return { ok: n >= 3 && n <= 4 && bad.length === 0 && d.length > 0, note: JSON.stringify({ samplesIn6s: n, checked: d.length + m.length, bad: bad.slice(0, 5) }) };
+  });
+  /* --------------------------------------------------------------- final check F3-2 (audit cycle 2) */
+  await check(40, 'The chat\'s Subagents is a filter of PM_WORK in every scenario: bar count, rows, words and the Live subagents card agree in Query performance, Architecture review and Investigate a browser issue (F3-2, D7)', async () => {
+    const bad = [], seen = [];
+    for (const s of ['busy', 'no-asks', 'quiet', 'many', 'stale', 'restart', 'servers']) {
+      await scenario(s);
+      for (const tid of ['query', 'subagents', 'debug']) {
+        await ev((t) => window.PM56_DEMO.selectThread(t), tid); await sleep(450);
+        await ev(() => window.PM56_DEMO.openActivity('subagents')); await sleep(550);
+        const r = await ev((tid) => {
+          const W = window.PM_WORK, want = W.sort(W.items({ thread: tid, kind: 'agent' }).filter((x) => x.role !== 'main'));
+          const st = window.PM56_DEMO.getState().activity, root = document.querySelector('#pmRoot');
+          const cnt = root.querySelector('.activity-item[data-domain="subagents"] .count');
+          const rows = st.open && st.domain === 'subagents' ? [...root.querySelectorAll('.activity-panel .pmap-agent-row[data-id]')] : [];
+          const card = root.querySelector('.live-agent-list') ? [...root.querySelectorAll('.live-agent-list .live-agent-row[data-id]')].map((e) => e.getAttribute('data-id')) : null;
+          const active = root.querySelector('.system-card .chat-state') ? (root.querySelector('.system-card .chat-state').textContent.match(/(\d+) active/) || [])[1] : null;
+          return { want: want.map((x) => x.id), words: want.map((x) => W.word(x)), working: want.filter((x) => x.state === 'working').length,
+            domain: st.open ? st.domain : null, count: cnt ? cnt.textContent.trim() : null,
+            rows: rows.map((e) => e.getAttribute('data-id')), rowWords: rows.map((e) => ((e.querySelector('.right b') || {}).textContent || '').trim()), card, active };
+        }, tid);
+        const ok = (r.want.length ? r.count === String(r.want.length) && r.domain === 'subagents' : (r.count === null || r.count === '0'))
+          && (r.domain !== 'subagents' || (r.rows.join() === r.want.join() && r.rowWords.join() === r.words.join()))
+          && (r.card === null || (r.card.join() === r.want.slice(0, 5).join() && (r.active == null || Number(r.active) === r.working)));
+        seen.push(s + '/' + tid + ':' + r.want.length);
+        if (!ok) bad.push({ s, tid, ...r });
+        await closeActivity(); await sleep(150);
+      }
+    }
+    await scenario('busy'); await ev(() => window.PM56_DEMO.selectThread('query')); await sleep(400);
+    return { ok: bad.length === 0 && seen.length === 21, note: bad.length ? JSON.stringify(bad.slice(0, 2)) : seen.join(' ') };
+  });
+  await check(41, 'Every agent surface names a chat thread as the chat does: PM_WORK\'s places and its main agents\' titles are the chat\'s thread titles in every scenario, and the rail and the chat header agree (F3-2 follow-up)', async () => {
+    const bad = [];
+    for (const s of ['busy', 'no-asks', 'quiet', 'many', 'stale', 'restart', 'servers']) {
+      await scenario(s);
+      const r = await ev(() => {
+        const W = window.PM_WORK, st = window.PM56_DEMO.getState(), D = window.PM56_DATA;
+        const title = (id) => { const t = (st.threads || []).find((x) => x.id === id) || (D.threads || []).find((x) => x.id === id); return t ? t.title : null; };
+        return W.items({}).filter((x) => x.thread).map((x) => ({ id: x.id, where: x.where, title: x.role === 'main' ? x.title : null, chat: title(x.thread) }))
+          .filter((x) => x.chat == null || x.where !== x.chat || (x.title != null && x.title !== x.chat));
+      });
+      r.forEach((x) => bad.push(s + ' ' + JSON.stringify(x)));
+    }
+    await scenario('busy');
+    await clickAt('.icon[data-ab-id="agents"]'); await sleep(700);
+    const dom = [];
+    for (const [tid, aid] of [['query', 'a-qp'], ['questions', 'a-onb'], ['subagents', 'a-rar'], ['debug', 'a-imp']]) {
+      await ev((t) => window.PM56_DEMO.selectThread(t), tid); await sleep(500);
+      dom.push(await ev(([aid]) => ({ head: ((document.querySelector('#pmRoot .chat-title .pmx-chat-title') || {}).textContent || '').trim(),
+        rail: ((document.querySelector('#panel-agents [data-work-row="' + aid + '"] .wk-copy strong') || {}).textContent || '').trim() }), [aid]));
+    }
+    await ev(() => window.PM56_DEMO.selectThread('query')); await sleep(300);
+    const domOk = dom.every((d) => d.head && d.head === d.rail);
+    return { ok: bad.length === 0 && domOk, note: (bad.length ? bad.slice(0, 3).join(' | ') + ' ' : '') + JSON.stringify(dom) };
   });
 } finally {
   const failed = results.filter((r) => !r.ok).length;
