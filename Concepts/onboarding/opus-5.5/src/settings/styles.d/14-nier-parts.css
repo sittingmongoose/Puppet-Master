@@ -279,10 +279,8 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm-sprout, 
   .context-lens-popover, .wt-bind-dropdown, .pm6-tb-search-pop):is(.is-open, .open):not(.is-closing) {
   scale: none; transition: none !important; animation: o55np-slice 300ms linear backwards;
 }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .rs-panel { --rs-sprout-ox: 50% !important; --rs-sprout-oy: 50% !important; --rs-sprout-sx: 1 !important;
-  --rs-sprout-sy: 1 !important; --rs-sprout-tx: 0px !important; --rs-sprout-ty: 0px !important; }
 /* the rest open by animation only (they close their own way) */
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.rs-panel.open:not(.is-closing), #panel-settings .overlay > .dialog, .pm6-orch-modal, .pm-ctx-menu.is-open,
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(#panel-settings .overlay > .dialog, .pm6-orch-modal, .pm-ctx-menu.is-open,
   .fm-ctx.is-open, .pm7ctx-pop.is-open, .pm7-dash-size-pop.open, .chat-dropdown-popover:is(.active, .is-open), .slash-command-menu.visible,
   .dropdown-menu:is(.open, .is-open), .pm-ed-overflow-menu.is-open, .msg-runtime-popover.visible, .pm6-status-pop.visible, #panel-settings .popover) {
   animation: o55np-slice 300ms linear backwards !important; transform-origin: 50% 50%;
@@ -408,6 +406,6 @@ html[data-theme="basic-dark"][data-o55-nier-parts~="pointer"] :is(button, a[href
   html[data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-run="on"] > .pml-nier { animation: pml-nier-breath calc(2.4s * var(--pml-k, 1)) ease-in-out var(--pml-nbdelay, 0s) infinite var(--pml-ps, running) !important; }
   html[data-o55-nier-parts~="slice"] :is(.pm-sprout, .pm6-tb-menu, .pm6-chat-more-menu, .pm51-popout, .pm-home-portal, .pm6-chat-pt-popout-portal, .pm6-chat-persona-popout-portal,
     .pm6-chat-effort-popout-portal, .pm6-chat-mini-popout-portal, .pm6-chat-mode-popout-portal, .context-hover-module, .context-lens-popover, .wt-bind-dropdown,
-    .pm6-tb-search-pop, .rs-panel, .dialog, .pm6-orch-modal, .pm-ctx-menu, .fm-ctx, .pm7ctx-pop, .pm7-dash-size-pop, .chat-dropdown-popover, .slash-command-menu,
+    .pm6-tb-search-pop, .dialog, .pm6-orch-modal, .pm-ctx-menu, .fm-ctx, .pm7ctx-pop, .pm7-dash-size-pop, .chat-dropdown-popover, .slash-command-menu,
     .dropdown-menu, .pm-ed-overflow-menu, .msg-runtime-popover, .pm6-status-pop, .popover) { scale: none !important; }
 }

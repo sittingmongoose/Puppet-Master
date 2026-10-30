@@ -5888,39 +5888,10 @@
       --pm6-sprout-ty: -10px;
       --pm6-sprout-sx: 0.72;
       --pm6-sprout-sy: 0.48;
-      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms;
-      will-change: transform, opacity;
+      /* the motion is PM6_SPROUT's contract (pm7-sprout.css) */
     }
     .context-hover-module.is-open {
       display: block;
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s;
-    }
-    .context-hover-module.is-closing {
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms;
     }
     .context-hover-module .chm-row { display: flex; justify-content: space-between; padding: 4px 0; }
     .context-hover-module .chm-label { color: var(--text-muted); }
@@ -5990,40 +5961,13 @@
       --pm6-sprout-ty: -10px;
       --pm6-sprout-sx: 0.72;
       --pm6-sprout-sy: 0.48;
-      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms;
-      will-change: transform, opacity;
+      /* the motion is PM6_SPROUT's contract (pm7-sprout.css) */
     }
     .context-lens-popover.is-open {
       display: flex;
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s;
     }
     .context-lens-popover.is-closing {
       display: flex;
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms;
     }
     .cl-popover-title {
       padding: 8px 12px 4px;
@@ -6215,40 +6159,13 @@
       --pm6-sprout-ty: -10px;
       --pm6-sprout-sx: 0.72;
       --pm6-sprout-sy: 0.48;
-      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 160ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s linear 300ms;
-      will-change: transform, opacity;
+      /* the motion is PM6_SPROUT's contract (pm7-sprout.css) */
     }
     .wt-bind-dropdown.is-open {
       display: block;
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-      visibility: visible;
-      pointer-events: auto;
-      transition:
-        opacity 140ms var(--ease-out),
-        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
-        visibility 0s;
     }
     .wt-bind-dropdown.is-closing {
       display: block;
-      opacity: 0;
-      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
-        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 45ms ease-in 175ms,
-        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
-        visibility 0s linear 220ms;
     }
     .wt-info-row { padding: 10px 14px; border-bottom: 1px solid var(--border-light); }
     .wt-branch-name { font-weight: 700; font-size: 12px; font-family: monospace; color: var(--text-primary); margin-bottom: 2px; }
