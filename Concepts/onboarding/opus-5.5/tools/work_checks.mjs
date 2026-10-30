@@ -569,6 +569,47 @@ try {
     await ev(() => window.PM_PAGES.go('dashboard')); await sleep(500);
     return { ok: rows.every((r) => r.menuTop != null && r.cardTop != null && Math.abs(r.cardTop - r.menuTop) <= 0.5), note: JSON.stringify(rows) };
   });
+  await check(44, 'An entering toast takes no clicks on any page, Usage included: a real click at its first frame reaches the control under it; once shown it takes clicks (F3-5)', async () => {
+    const rows = [];
+    for (const where of ['dashboard', 'usage', 'projects']) {
+      await ev((p) => window.PM_PAGES.go(p), where); await sleep(900);
+      await ev(() => { try { window.PM_TITLEBAR_NOTIFY.clearAll(); } catch (e) { /* none */ } }); await sleep(300);
+      /* the click's target, read at the window before the page acts on it, and stopped there: this check reads hit
+         testing, it does not press the page's controls */
+      await ev(() => { window.__wkHit = null; window.addEventListener('click', (e) => { window.__wkHit = e.target.closest('.pmn-toast') ? 'toast' : (e.target.id || e.target.className || e.target.tagName).toString().slice(0, 40); e.stopPropagation(); e.preventDefault(); }, { capture: true, once: true }); });
+      const t = 'Entry check ' + where;
+      await ev((t) => window.PM_TITLEBAR_NOTIFY.push({ title: t, body: 'A click at its first frame passes through', kind: 'advisory', severity: 'info', important: true, source: 'agents' }), t);
+      const p = await ev(() => { const c = [...document.querySelectorAll('#rsStage .pmn-toast:not(.pmn-leaving)')].pop(); if (!c) return null; const r = c.getBoundingClientRect(); return { x: Math.round(r.left + r.width * 0.3), y: Math.round(r.top + r.height / 2), entering: c.classList.contains('pmn-entering'), pe: getComputedStyle(c).pointerEvents }; });
+      if (p) await page.mouse.click(p.x, p.y);
+      await sleep(150);
+      const early = await ev(() => window.__wkHit);
+      await sleep(1600);
+      const late = await ev(() => { const c = [...document.querySelectorAll('#rsStage .pmn-toast:not(.pmn-leaving)')].pop(); if (!c) return null; const r = c.getBoundingClientRect(), h = document.elementFromPoint(r.left + r.width * 0.3, r.top + r.height / 2); return { entering: c.classList.contains('pmn-entering'), pe: getComputedStyle(c).pointerEvents, hitsCard: !!(h && h.closest('.pmn-toast') === c) }; });
+      await ev(() => { try { window.PM_TITLEBAR_NOTIFY.clearAll(); } catch (e) { /* none */ } }); await sleep(400);
+      rows.push({ where, at: p, early, late });
+    }
+    await ev(() => window.PM_PAGES.go('dashboard')); await sleep(500);
+    return { ok: rows.every((r) => r.at && r.at.entering && r.at.pe === 'none' && r.early && r.early !== 'toast' && r.late && !r.late.entering && r.late.pe !== 'none' && r.late.hitsCard), note: JSON.stringify(rows) };
+  });
+  await check(45, 'With the inbox open, a toast stages below it, not over it, on the first open and on every reopen (F3-6)', async () => {
+    await ev(() => window.PM_PAGES.go('dashboard')); await sleep(700);
+    await ev(() => { try { window.PM_TITLEBAR_NOTIFY.clearAll(); } catch (e) { /* none */ } });
+    const rows = [];
+    for (let n = 1; n <= 3; n++) {
+      await clickAt('#pmnStack'); await sleep(1000);
+      /* a quick note: a lasting notice goes straight into an open inbox (19-notify.js push), a quick one stages under it */
+      await ev((n) => window.PM_TITLEBAR_NOTIFY.push({ title: 'Inbox check ' + n, body: 'Stages under the open inbox', kind: 'advisory', severity: 'info', important: false, source: 'agents' }), n);
+      await sleep(1300);
+      rows.push(await ev(() => {
+        const p = document.getElementById('pmnPanel'), pr = p.getBoundingClientRect(), st = document.getElementById('rsStage');
+        const cs = [...document.querySelectorAll('#rsStage .pmn-toast:not(.pmn-leaving)')].map((c) => c.getBoundingClientRect()).filter((r) => r.height);
+        return { open: !p.hidden, panelBottom: Math.round(pr.bottom * 10) / 10, panelH: p.offsetHeight, push: st.style.getPropertyValue('--pmn-push'), cardTop: cs.length ? Math.round(Math.min(...cs.map((r) => r.top)) * 10) / 10 : null };
+      }));
+      await clickAt('#pmnStack'); await sleep(1100);   // closed all the way before the next open
+      await ev(() => { try { window.PM_TITLEBAR_NOTIFY.clearAll(); } catch (e) { /* none */ } }); await sleep(300);
+    }
+    return { ok: rows.length === 3 && rows.every((r) => r.open && r.cardTop != null && r.cardTop >= r.panelBottom && parseFloat(r.push) === r.panelH + 8), note: JSON.stringify(rows) };
+  });
 } finally {
   const failed = results.filter((r) => !r.ok).length;
   const wantLook = (fam === 'nier' ? 'basic-' + mode + '+nier' : fam + '-' + mode), drift = results.filter((r) => r.look !== wantLook);
