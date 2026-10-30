@@ -131,19 +131,23 @@ beside it). It rises out of the item as one sheet anchored to the bottom-left co
 2. Onboarding: the situation picker (grouped, and combinable), open at any screen, run from the start.
 3. Guided Tour: start, resume where it stopped, start over; the three chapters and their steps.
 4. Story: the demo director (clock, speed, the five story points, recent beats), no longer a hidden shortcut.
-5. Workspace: named layouts, reset the layout, agents opening things, an agent driving a terminal.
-6. Chat (added 2026-10-22): the assistant chat's recorded examples, moments and takes (section I).
-7. Usage: demo readings on or paused, Play the next hour / Back to now, the chart gallery.
-8. Notices: the notification moments.
-9. Looks: the five looks in light and dark, NieR Mode, Reduced Motion, sound.
-10. Pip (added 2026-10-30, the PM7 build's W8): Pip in all ten looks (the title bar's still mark, the tile, the tray's
+5. Workspace: named layouts, reset the layout, agents opening things, an agent driving a terminal, and (2026-10-30)
+   the Title bar: the project box's state, a long name, the bar's width and the project menu.
+6. Activity (added 2026-10-30, W6): the work projection's scenarios (Busy, No asks, Quiet, Many, Stale feed, After
+   restart, Several servers), the panel at Agents, Processes or Resources, the chat's Processes view, Stop all, Quit,
+   and the status bar's Numbers or Words.
+7. Chat (added 2026-10-22): the assistant chat's recorded examples, moments and takes (section I).
+8. Usage: demo readings on or paused, Play the next hour / Back to now, the chart gallery.
+9. Notices: the notification moments.
+10. Looks: the five looks in light and dark, NieR Mode, Pip's parts (presets and Adjust Pip), Reduced Motion, sound.
+11. Pip (added 2026-10-30, the PM7 build's W8): Pip in all ten looks (the title bar's still mark, the tile, the tray's
     faces), faces on every live Pip, Mark only for a squeezed title bar, the loader (a motion take, Every loader, Hold
     loaders) and Pip's sound board (a kit by the look or by choice, the stage, voice and window events, the five loops,
     Pip says).
-11. Reset: three sizes. Progress (onboarding, tour, situation); Workspace (the panel layout back to default); Everything
-   (all of the above, the saved layouts, dashboards, chat column, terminal and Usage settings), shown item by item
-   before it runs, then a reload into a fresh first run.
-12. Switches: onboarding start mode, the current situation, hover engine off, Usage readings paused, no-GPU Usage and
+12. Reset: three sizes. Progress (onboarding, tour, situation); Workspace (the panel layout back to default); Everything
+    (all of the above, the saved layouts, dashboards, chat column, terminal and Usage settings), shown item by item
+    before it runs, then a reload into a fresh first run.
+13. Switches: onboarding start mode, the current situation, hover engine off, Usage readings paused, no-GPU Usage and
     the chart gallery, with "Reload with these".
 
 Ownership: the Studio is new files in the onboarding package (`src/js/9x-demo-studio*.js`,
@@ -157,7 +161,7 @@ them. Glass always uses the Liquid Glass package with a wallpaper.
 |---|---|
 | `src/js/90-demo.js` | The Concept demo item: `#o55-demo` (a child of `<body>`, the one the onboarding window leaves usable) and its toggle button, which the Home layer docks into the status bar (`Concepts/home-redesign/src/panels/js/50-pageshell.js`). |
 | `src/js/91-demo-studio.js` | `O55.studio`: the model and every action. Each control calls its owner's public API and nothing else; an owner missing from the page makes its control say "Not on this page" instead of failing. |
-| `src/js/92-demo-studio-ui.js` | The sheet: twelve sections, search, keyboard, look sync, the motion voices, the Start page's three scenes. |
+| `src/js/92-demo-studio-ui.js` | The sheet: thirteen sections, search, keyboard, look sync, the motion voices, the Start page's three scenes. |
 | `Concepts/chat-assistant-concepts/5.6 Pro/pm7-port/js/50-demo-bridge.js` | `PM56_PORT.demo`, the chat's side of the Chat section (the port's demo lane): the lists come from the chat itself, and every run goes through the chat's own click path. |
 | `src/css/50-demo-studio.css` | Structure and the Basic look. |
 | `src/css/51-demo-studio-looks.css` | Friendly, Retro, Glass and NieR, and Reduced Motion. |
@@ -176,7 +180,8 @@ Which owner each section calls:
 | Usage | `PMU.live.pause`, `.resume`, `.hour.play`, `.hour.back`; `PMU.charts.gallery`; `PM_PAGES.go('usage')` |
 | Notices | `PM_TITLEBAR_NOTIFY.demo(name)` (on the page since pm7-notifications landed), else `window.toast` and `toast.important` with the same words; `PM_TITLEBAR_NOTIFY.clearAll` |
 | Pip | `PMLogo.svg` (every look's still mark, tile and tray faces, on each look's own ground; `PMLogo.EXPORT` for the grounds, `PMLogo.TRAY` for the faces' order), `PMLogo.mark` (the faces in the painted look), `PMLogo.MOODS`; a face goes to every live Pip: onboarding's stage (`O55.pipStage.of(host).feel`) and the chat's sheet hosts (`PM56_PIP.feel`); Mark only steps the Studio's title-bar width in until the brand folds (`PM_TB_DENSITY.apply`); `PM_PIP_LOADER.html`, `.mount`, `.busy`, `.stats`, `.hold` and `.held` (the motion is a take: the app picks it by context, L5); `O55.pipVoice` (`KITS`, `EVENTS`, `LOOPS`, `kitOf`, `play`, `loop`, `setTheme`), `O55.sound.play` for the window's own events, `O55.sound.pip.say` for Pip says; the loops stop when the Studio closes |
-| Looks | `PM7_SETTINGS_TOME.setChromeThemeFamily` and `.setChromeThemeMode` (the title-bar menu's path, saved to the Project), `PM_NIER.set`, `PM_NIER_CHIPS.popup`, `PM12_KIMI.setSettingFromHost('general.visual.reduce-animations')`, `O55.sound.setMuted`; with Liquid Glass on the page, `PM_LG.set` and `PM_LG.wall` (and `data-lg-demo-host` on `<html>` so Glass's own status button steps aside) |
+| Activity | `PM_WORK.scenario(name)` over lane activity's fixture scenarios (`src/work/20-fixture.js`), `PM_WORK.counts` and `.feed` for the run bar and Right now; `PM7_WORK_UI.open(tab)`, `.confirmPlatform` (Stop all) and `.quit` (each the owner's own panel or dialog); `PM56_DEMO.openActivity('processes')` for the chat's Processes view (present only while a process of the thread runs or needs input, D4); `PM12_KIMI.setSettingFromHost('general.interaction.status-bar-words')` for Numbers or Words. The Start recipes: A busy afternoon also loads Busy; Quit with work running loads Busy and opens Quit |
+| Looks | `PM7_SETTINGS_TOME.setChromeThemeFamily` and `.setChromeThemeMode` (the title-bar menu's path, saved to the Project), `PM_NIER.set`, `PM_NIER_CHIPS.popup`, Pip's parts beside NieR Mode (`PM_PIP_PARTS.preset` and `.applyPreset` for Full, Quiet, Still and Plain, saved to the Project; Adjust Pip is `PM_PIP_EDITOR.popup`, lane chatpip's editor dialog, the one the wand's "Pip…" opens), `PM12_KIMI.setSettingFromHost('general.visual.reduce-animations')`, `O55.sound.setMuted`; with Liquid Glass on the page, `PM_LG.set` and `PM_LG.wall` (and `data-lg-demo-host` on `<html>` so Glass's own status button steps aside) |
 | Reset | Progress: `O55.tour.reset`, then onboarding as a new install in a Fresh computer. Workspace layout: `PMW.resetLayout`. Everything: every key this concept keeps in the browser (`pm…`, `o55…`, `widget_layout:`, `widget_presets:`, `home_workspace_layout:`, the 5.6 Pro chat demo's `pm56…` included, since that chat is ported in next, and the Studio's own place) and the terminal's saved-scrollback database, then a reload without the onboarding switches. Each size asks a second press within five seconds. The Pip and Title bar additions keep nothing of their own (lab picks, the title-bar width and the box's scenes live for the visit), and the Pip chat concept's `pip-chat:v1` is not carried into PMConcept7, so every key the page writes still matches `OWNED` (`91-demo-studio.js`). |
 | Switches | Builds the address from the page's own switches and reloads with it. |
 

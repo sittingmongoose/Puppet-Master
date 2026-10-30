@@ -660,15 +660,15 @@
     setSound: (on) => O55.sound.setMuted(!on, 'demo_studio'),
     /* Pip's parts (W4, S1-S9: Pip in the chat and onboarding only), beside NieR Mode: the presets are the registry's own
        (PM_PIP_PARTS.applyPreset, saved to the Project like a look), and Adjust Pip opens the product's editor (lane
-       chatpip, PM_PIP_EDITOR.open) */
+       chatpip, PM_PIP_EDITOR.popup: the dialog the wand's "Pip…" opens) */
     pip: {
       avail: () => fn(W('PM_PIP_PARTS'), 'applyPreset'),
       presets: () => { const P = W('PM_PIP_PARTS'); return P && P.PRESETS ? Object.keys(P.PRESETS) : []; },
       preset: () => { try { return W('PM_PIP_PARTS').preset() || 'custom'; } catch (_) { return 'custom'; } },
       count: () => { try { return W('PM_PIP_PARTS').count(); } catch (_) { return null; } },
       apply: (name) => W('PM_PIP_PARTS').applyPreset(name),
-      editorAvail: () => fn(W('PM_PIP_EDITOR'), 'open'),
-      edit(from) { W('PM_PIP_EDITOR').open({ from, returnFocus: () => from }); return true; }
+      editorAvail: () => fn(W('PM_PIP_EDITOR'), 'popup'),
+      edit(from) { W('PM_PIP_EDITOR').popup({ from, returnFocus: () => from }); return true; }
     }
   };
 
