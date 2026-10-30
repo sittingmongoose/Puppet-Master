@@ -1424,7 +1424,10 @@
       text-align: left;
       cursor: pointer;
       overflow: visible;
-      transition: color var(--motion-fast, 160ms) ease, background-color var(--motion-fast, 160ms) ease, box-shadow var(--motion-fast, 160ms) ease;
+      /* the chosen chip comes and goes in one frame, its fill, its lines and its ink together, like the page tabs' ink: the
+         fill (a background-image) never eased, so an ink and lines easing after it left the name unreadable and a ghost
+         outline on the bar for about 3 frames after a pick (Retro, NieR; final check F1-1) */
+      transition: none;
     }
     .title-bar #projectMenuBtn:hover { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))); }
     .title-bar #projectMenuBtn[aria-expanded="true"] {
