@@ -29,7 +29,9 @@
 
 /* ---------- the top: the preview stage, the meter, the presets, Play ---------- */
 :is(#panel-settings, .pipe-host) .pipe-top { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; align-items: stretch; }
-:is(#panel-settings, .pipe-host) .pipe-stage { display: flex; justify-content: space-around; align-items: center; gap: 6px; min-height: 150px; padding: 12px 10px; border-radius: 12px; border: 1px solid var(--k3-line); }
+:is(#panel-settings, .pipe-host) .pipe-stage { display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 6px; min-height: 150px; padding: 12px 10px; border-radius: 12px; border: 1px solid var(--k3-line); }
+/* the Settings side sheet is narrower than the dialog: the team takes the whole width above the meter and presets */
+#panel-settings .pipe-top { grid-template-columns: 1fr; }
 :is(#panel-settings, .pipe-host) .pipe-seat { margin: 0; display: grid; justify-items: center; gap: 6px; min-width: 60px; }
 :is(#panel-settings, .pipe-host) .pipe-stage .pipe-seat .pmx-mark[data-size] { --pmx-mark-size: 54px; }
 :is(#panel-settings, .pipe-host) .pipe-seat figcaption { font-size: 12px; font-weight: 600; text-align: center; line-height: 1.25; color: var(--text); }
