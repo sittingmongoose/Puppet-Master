@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41542-L41957
+Source lines: L41855-L42296
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
 
 ---
 
@@ -20,68 +20,90 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every icon in the assistant chat (transcript, composer, thread history, activity bar and Activity Detail, working
-  activity, menus, wand sheets and module cards) is drawn from one icon registry with one drawing per concept, reused
-  everywhere; provider marks, agent puppets (F3-594), charts and illustrations are not icons (DL-140, DL-149). Anatomy: a lit tube with round
-  caps and joins over a core halo stroke of the same ink, plus a soft radial glow on the host element for the glow's
-  tail; the icon glow is never an element blur or filter, so it draws the same on the Skia CPU raster (F3-582). Roles:
-  controls draw unlit in the host ink and ignite on hover or keyboard focus (the glyph lights to the text colour, the
-  halo comes up on dark themes, and the glyph's act plays once); status icons are always lit in their tone and move by
-  status like the activity bar; concept icons (kind marks, mode glyphs) are lit steady; a pressed toggle sits on a
-  raised neutral tile with its glyph lit, never an accent tile. One control is the exception (DL-146): the composer's
-  capabilities wand, and the wand in its menu head, wears its own fixed colours at rest and on hover (F3-588), never
-  unlit grey and never a status tone, and turns to ink under NieR Mode. Acts: each glyph moves part by part in its own way,
-  the activity bar included (the goal arrow strikes the target, the To-Do ticks check in sequence, the artifact lines
-  write in, the wand's sparkles twinkle after its flick, Grill Me's kettle grill swings its lid open while smoke
-  rises); acts animate transform and opacity, a draw-on is a clip reveal with both endpoints stated, looping motion
-  returns along its path, and below 12 px no part moves. Tones are the activity bar's status tones: blocked danger,
-  attention warning, working accent, changed accent-2, done positive, idle subtle and paused muted. Colour is reserved
-  for status, apart from the capabilities wand, so menu, event-card and card-head icons sit on neutral tiles. Module
-  cards and sheets draw their marks, agent puppets included (F3-594), lit and still, with one-shot acts only, inside the live card's two-loop budget. Per-family motion voices change
-  easing only: Friendly overshoots, Glass glides, Retro steps, NieR steps. Reduced motion stops every act and loop
-  while the lit ink, the halo and the silhouette still carry each state. On light themes the halo stays faint and
-  never forms a smudge or a plate.
+  Every icon in the assistant chat (transcript, composer, thread history, activity bar and Activity Detail,
+  working activity, menus, wand sheets and module cards) is drawn from one icon registry with one drawing
+  per concept, reused everywhere; provider marks, agent puppets (F3-594), charts and illustrations are not
+  icons (DL-140, DL-149). Anatomy: a lit tube with round caps and joins over a core halo stroke of the same
+  ink, plus a soft radial glow on the host element for the glow's tail; the icon glow is never an element
+  blur or filter, so it draws the same on the Skia CPU raster (F3-582). Roles: controls draw unlit in the
+  host ink and ignite on hover or keyboard focus (the glyph lights to the text colour, the halo comes up on
+  dark themes, and the glyph's act plays once); status icons are always lit in their tone and move by
+  status like the activity bar; concept icons (kind marks, mode glyphs) are lit steady; a pressed toggle
+  sits on a raised neutral tile with its glyph lit, never an accent tile. One control is the exception
+  (DL-146): the composer's capabilities wand, and the wand in its menu head, wears its own fixed colours at
+  rest and on hover (F3-588), never unlit grey and never a status tone, and turns to ink under NieR Mode.
+  Acts: each glyph moves part by part in its own way, the activity bar included (the goal arrow strikes the
+  target, the To-Do ticks check in sequence, the artifact lines write in, the wand's sparkles twinkle after
+  its flick, Grill Me's kettle grill swings its lid open while smoke rises); acts animate transform and
+  opacity, a draw-on is a clip reveal with both endpoints stated, looping motion returns along its path,
+  and below 12 px no part moves. Tones are the activity bar's status tones: blocked danger, attention
+  warning, working accent, changed accent-2, done positive, idle subtle and paused muted. Colour is
+  reserved for status, apart from the capabilities wand, so menu, event-card and card-head icons sit on
+  neutral tiles. Module cards and sheets draw ordinary icon marks lit and still, with one-shot acts only
+  inside the live card's two-loop budget. PC1/S1–S9: optional sheet Pip under F3-594/ACD-507 is the bounded
+  exception: its drop-in, sway, blink and gaze come only from the shared rig/parts owner and obey
+  visibility, hidden-tab, drag, reduced-motion and needs-you priority gates; no host owns an extra loop.
+  Per-family motion voices change easing only: Friendly overshoots, Glass glides, Retro steps, NieR steps.
+  Reduced motion stops every act and loop while the lit ink, the halo and the silhouette still carry each
+  state. On light themes the halo stays faint and never forms a smudge or a plate. Amended 2026-10-29
+  (X1/X2, PC5, D14; PM7): robot and processes are category glyphs; individual agents are Pip. Needs-you
+  outranks all loader/idle/category loops. Crown/hat gold is an explicit role-material exception, not
+  status ink; reduced-motion categories keep a lit still pose.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
-depends_on: [DL-140, DL-146, DL-149, F3-425, F3-426, F3-582, ACD-469]
+depends_on:
+- DL-140
+- DL-146
+- DL-149
+- F3-425
+- F3-426
+- F3-582
+- ACD-469
 unblocks: []
 acceptance_criteria:
-  - "An icon census of the chat finds every icon drawn from the registry, one drawing per concept."
-  - "Controls are unlit at rest and lit on hover and keyboard focus in every theme; status icons in the chat's placements are lit and moving (F3-585), while elsewhere F3-658's still-status rule applies (amended 2026-10-17, DL-228); concept icons are lit and still."
-  - "No icon glow uses an element blur or filter."
-  - "Under reduced motion no icon act or loop runs, and every state still reads."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- An icon census of the chat finds every icon drawn from the registry, one drawing per concept.
+- Controls are unlit at rest and lit on hover and keyboard focus in every theme; status icons in the chat's
+  placements are lit and moving (F3-585), while elsewhere F3-658's still-status rule applies (amended 2026-10-17,
+  DL-228); concept icons are lit and still.
+- No icon glow uses an element blur or filter.
+- Under reduced motion no icon act or loop runs, and every state still reads.
+- PC1 sheet Pip uses only the F3-594/ACD-507 optional shared rig and parts gates; ordinary card/sheet icons
+  remain still with one-shot acts, hidden/drag consumers run no decorative loop, and Reduced Motion follows
+  the bounded F3-594/X2 behavior.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: chat_icon_family_drift
 reasoning_tier: high
 context_scope: chat_neon_icons
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: gui_promotion_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-140"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256 1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)"
+- Plans/Decision_Log.md#DL-140
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256
+  1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf
+- Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)
 preserved_exact_tokens:
-  - "one drawing per concept"
-  - "ignite on hover"
-  - "part by part"
+- one drawing per concept
+- ignite on hover
+- part by part
 negative_constraints:
-  - "Do not give a non-status glyph status colour outside a status host."
-  - "Do not draw the icon glow with an element blur or filter."
-  - "Do not give any glyph other than the capabilities wand its own colours."
+- Do not give a non-status glyph status colour outside a status host.
+- Do not draw the icon glow with an element blur or filter.
+- Do not give any glyph other than the capabilities wand its own colours.
 compatibility_only_notes: []
 stale_retired_dispositions:
-  - "DL-140's rule that colour is reserved for status admits one exception from DL-146: the capabilities wand."
-  - "Avatars are no longer named among the non-icons; agents are drawn as puppets (F3-594, DL-149)."
+- 'DL-140''s rule that colour is reserved for status admits one exception from DL-146: the capabilities wand.'
+- Avatars are no longer named among the non-icons; agents are drawn as puppets (F3-594, DL-149).
 owner_hints:
-  - Plans/FinalGUISpec.md
+- Plans/FinalGUISpec.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-140, ContractName:Plans/FinalGUISpec.md#F3-582, ContractName:Plans/assistant-chat-design.md#ACD-469
@@ -112,6 +134,7 @@ canonical_text: >-
   the chat's placements and domain states.
   Amended 2026-10-17 (DL-228): the 13 status marks are the chat's run-state subset of F3-658's one 22-key
   vocabulary (17 states and 5 file-change marks), not a separate set; the count 13 names that subset only.
+  Amended 2026-10-29 (A5, G5; PM7): Keep 22 keys. Faces project catalog status, never new meanings: agent waiting is Needs you/questions; process waiting Needs input; stopping pending, stopped skipped, lost warning, scheduled pending. working is item state, never an application loading synonym.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
@@ -173,6 +196,7 @@ canonical_text: >-
   reader shows the needs-you mark as its flag and in the centre disc (F3-585).
   The compact strip and the Step Rail follow the same rule: the current disc is a dark disc with its glyph lit, and
   finished discs are lit green. Under NieR Mode the disc is ink with a paper glyph and its pulse steps.
+  Amended 2026-10-29 (PC4, L1; PM7): Pip occupies the Orbit centre, active tool a small badge. Thinking loader hands over to it; no two Pips for a reply. Existing Orbit choreography, activity ownership and reduced-motion behavior remain.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
@@ -308,6 +332,7 @@ canonical_text: >-
   all three are lit and still. Under NieR Mode they draw no glow and no colour: the wand stays ink, its handle a
   lighter ink and its star filled, and its sparkles twinkle in held steps; the bolt's leader steps down band by band
   in ink and the bolt then flashes solid ink; and the grill's act steps.
+  Amended 2026-10-29 (S5/PC1; PM7): Wand adds Pip… as a Settings-hosted editor entry, no new chat capability. Its Pip draws through the kit; role props and kind glyphs retain their owners.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
@@ -384,6 +409,7 @@ canonical_text: >-
   swap instantly. This cross-fade applies wherever a scene changes, PMConcept7 included. The chat adds no moving
   touches inside the scenes. NieR Mode stays the Settings switch, not a ninth theme; the concept's NieR Light and NieR
   Dark Demo Studio themes are lab only (ACD-474).
+  Amended 2026-10-29 (S7/S9, L7; PM7): NieR parts win overlapping drawings: Diamond loaders (or existing fallback when off), Ink empty states, Pod companion/voice. Parts never switch the universal brand/tray/icon/notification/loader. Static NieR Pip does not animate; live sheet/onboarding Pip has eyes (X3).
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44512-L46905
+Source lines: L44998-L47429
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `360f392cbdca457fc7b4a2e6c7dc588ec2decc239742cb744004fa8f983b9985`
 
 ---
 
@@ -438,6 +438,7 @@ canonical_text: >-
   (DL-208) the marks above are the interim: the 7 px dirty dot, the 6 px hollow square and the 7 px square
   agent mark then give way to F3-658's change-modified mark in the close slot, news and the agent-driving and
   agent-cursor marks.
+  Amended 2026-10-29 (L1; PM7): A busy item’s tab state uses st-working. A tab awaiting its content may show the shared loader of F3-662, NieR routed to Diamond loaders; no bespoke tab spinner and no ambiguity with determinate progress.
 gui_related: true
 gui_classification_reason: Defines the one tab strip every panel uses, its silhouette, widths, marks, reorder and keyboard.
 split_recommended: false
@@ -932,272 +933,292 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every tab in the home centre is one of fifteen kinds (DL-180, D9), each registered once, with its
-  tab id prefixes: editor (`file:<path>`, `buffer:<n>`; a diff mode and preview tabs; F3-639);
-  terminal (`terminal:<session>`, one session per tab, the session id minted by the terminal kind;
-  F3-640, SMPFS-180); browser (`browser:<n>`, and `link:` for a page the chat fetched; DevTools
-  docked inside it and the capture toolbar); dashboard (`dashboard:<board_id>`, `dashboard:home` the
-  pinned Home dashboard; F3-638); plan (`plan:<id>`, the plan query form and `deep-discovery:<run>`;
-  the plan viewer with its sticky Build, Revise and More footer); document (`teach:`, `memory:`,
-  `revert:`, `debug:`, `lens-source:`, `lens-effective:`, `wonderer:`, `wonder-source:`,
-  `doc:<path>`: rules, memory, revert, debug investigation, lens source, wonderer); artifact
-  (`artifact:<artifact_id>`, `artifact:<artifact_id>@v<n>` and the chat's artifact ids; a subtype
-  per artifact kind, versioned; RAP-065); run (`collab-run:`, `crew-work:`, `review:`, `room:`,
-  `brainstorm:`, `review-evidence:`, `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and
-  their evidence); transcript (`thread-<agentId>`: an agent's read-only live feed); context
-  (`context:<threadId>`: thread-keyed context detail); record (`search:`, `mcp:`, `app:`,
-  `work-record:`: read-only records); output (`output`, one Output tab whose channel switches inside
-  it; `output:<channel>` only for a channel split off with "Open in new tab", showing only that
-  channel); problems (`problems`); ports (`ports`); and debug_console (`debug-console`, one Debug
-  Console tab with a sub-tab per debug session, the session shown being its view state; F3-490). The
-  document kinds are editor, plan, document, artifact, run, transcript, context and record;
-  terminal, browser, dashboard and the four tool kinds output, problems, ports and debug_console are
-  dedicated; a panel holding only tool kinds and terminals has the role tools. Problems, Ports and
-  the Debug Console are one tab each per workspace. Never a kind: the chat's Goal tab (DL-147),
-  Activity Detail (it stays inside the chat, F3-637), the chat's lab-only workspaces, and wand setup
-  sheets (they stay app modals). A tab id is opaque and stable, its prefix names its kind, and one
-  id is one tab in the whole workspace; an id with an unknown prefix opens nothing, and two kinds
-  claiming one prefix is a start-up error. Tab identity is separate from domain identity: the path,
-  terminal_session_id, board id or artifact id a tab shows is its domain reference, and moving,
-  collapsing, maximizing, hiding or restoring a tab never changes it. No internal id (tab, panel,
-  session, nonce) ever appears as text in the interface. Older canon that names one of these
-  surfaces by its former host means the kind here, placed by F3-634: the run view called an editor
-  document (ACD-480, F3-569, F3-576 and the 2026-09-03 redesign's section 10) is a run tab,
-  ACD-485's subagent transcript a transcript tab, the context-detail editor tab (section 7.16.1,
-  F3-132) a context tab, the Plan card's "normal artifact viewer" and an artifact opened from
-  section 7.12 an artifact tab (RAP-065), the Your rules document (F3-579) a document tab, and
-  F3-297's editor-tab Browser a browser tab. Each kind registers its label, its group name for the
-  "+N" list, its icon (a bundled SVG icon_id, never an emoji), its id prefixes, its content minimum,
-  whether it is dedicated, its "+" menu row and sub-row, how it makes a tab id for an open (the
-  terminal mints a new session), the older id forms it folds into one tab, the rows it adds to the
-  tab menu (F3-631), how it mounts, what it serializes and whether a tab may close now. Content
-  minimums: terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan,
-  document, artifact, transcript and context 280 x 160, and editor, record and tools 280 x 120. The
-  host mounts a tab's body only when the tab is first shown, so a restored background tab costs
-  nothing until it is opened. A kind's serialized state is at most 16 KB of plain data, with no
-  scrollback and no buffer text (Plans/storage-plan.md#SP-330); an untitled editor buffer's tab
-  state carries only the title, language and edit or read-only state of F3-639 (amended 2026-10-10).
-  Before a tab closes its kind may ask first: a dirty editor offers to save, and a running terminal
-  says what will stop (F3-640). A tab body is its own box, sized by its panel: it never sizes
-  against the window, only against its own width and height; it is told when they change, with a
-  last call once a divider drag or a layout animation has settled so costly work can wait for it; it
-  is told when it is shown, hidden, focused and blurred and when the look changes, and stops
-  animation while hidden. Every kind that needs a row of controls above its content uses the one
-  shared header row (D12): 30 px tall, 24 px targets, 12 px text and 11 px for secondary facts,
-  labels when the body is at least 520 px wide and icons with hover tags below that, and the row
-  hidden when the body is under 150 px tall; a kind draws a row of its own only when nothing in the
-  shared one fits, and its owner unit says why. Menus, the "+" menu, the "+N" list, panel menus,
-  drag ghosts and landing previews open in one overlay root (Plans/DRY_Rules.md#DR-067), one
-  stacking order: panel content, then strips and dividers, then the overlay root, which sits above
-  the status bar and below the Demo Studio's controls (F3-649), hover tags and the Guided Tour; no
-  kind appends an overlay of its own. Keys: the shell owns Ctrl+1..9 and Ctrl+K, so the panels use
-  neither and there are no Ctrl+K chords. In the desktop app: Ctrl+T a new tab of the panel's usual
-  kind, Ctrl+W close the tab, Ctrl+Shift+T reopen the last closed tab, Ctrl+Tab and Ctrl+Shift+Tab
-  step through recent tabs across panels and kinds (hold, step, release), Ctrl+Shift+Space the "+"
-  menu, Ctrl+Shift+` a new terminal, Ctrl+Shift+B a new browser, Ctrl+P open a file, Ctrl+Shift+A
-  every tab, Ctrl+PgDn and Ctrl+PgUp the next and previous tab in the panel, Alt+1..8 tab N and
-  Alt+9 the last tab, Ctrl+Shift+PgUp and Ctrl+Shift+PgDn move the tab left and right, Alt+arrows
-  focus the panel in that direction, Alt+Shift+1..9 focus panel N, Alt+Shift+arrows move the tab to
-  the panel in that direction (splitting that way when there is none and it fits), F6 and Shift+F6
-  cycle the rail, the panels and the chat composer, Ctrl+\ split right, Ctrl+Shift+\ split down,
-  Shift+Escape maximize or restore (Escape also restores while focus is in a strip), Tab to a
-  divider and then the divider keys (F3-630), the ARIA tab keys in a strip with Shift+F10 for the
-  tab menu (F3-631), and Enter on a panel grip for Move panel. Pinning is in the tab menu only; no
-  binding is a bare letter or digit; Escape closes only the innermost open thing (F3-568). The
-  panels hold these keys while focus is in the centre; while focus is inside a tab body the kind is
-  asked first, a terminal keeps the shell's keys and gives back the host keys F3-640 lists, and
-  ordinary text inputs keep their own keys. Web-client mapping rule: in a web browser the chords the
-  browser keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp, are answered as Alt+T,
-  Alt+W, Alt+Shift+T, Alt+` (Alt+Shift+` backwards) and Alt+PgDn/PgUp (panels NUMBERS 6026fa8432,
-  keyboard), and every label, menu shortcut and hover tag shows the key that works where the app
-  runs. This supersedes F3-HOME-001's typed surface kinds and F3-152's terminal-and-browser-only tab
-  identity, which now holds for every kind. The channel shown in `output` is view state, never part
-  of its id (D31). The Output tab is labelled Output and a split-off channel tab Output · <Channel>;
-  opening a channel from anywhere switches `output` to it (F3-634). The Debug Console is one tab,
-  `debug-console`, with a sub-tab for each debug session (D33, DL-187); which session it shows is
-  view state, with no command, saved with the tab (lead ruling F6), and an open that names a session
-  reveals the tab and switches it to that session. An id of the earlier one-tab-per-session form,
-  `debug-console:<session>`, folds into `debug-console` with that session shown wherever it appears:
-  in an open, in a saved layout or a named layout, and in the reopen list. A tab's typing field,
-  including the terminal input and the editor's IME field, passes the panels' navigation keys to the
-  host once the tab declines the key: Alt+1..9, Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows,
-  Alt+PgUp/PgDn in the web client (Ctrl+PgUp/PgDn in the desktop app), Ctrl+P, Ctrl+Shift+A and
-  Alt+W on Windows and Linux. On a Mac, Option+letter and Option+backtick type text in fields and
-  the editor, and never trigger the Alt stand-ins; a Dead key never triggers them on any platform.
-  Keys during IME composition are ignored. F6 is handled before the tab's key claim and reaches the
-  chat composer from every region. Browser and tool measurements: a browser body is at least 360 ×
-  200 px. DevTools docks right at body widths of 900 px or more, otherwise below. Its right width
-  defaults to 340 px, ranging from 240 px to min(60 % of body, body minus 200 px); below, its height
-  defaults to 42 % and ranges from 25-70 %. Keyboard resize moves 8 px, or 48 px with Shift. Capture
-  labels appear at 1100 px and session labels at 620 px; the shared icons-only step is below 520 px;
-  below 480 px Full, Region, Select unless armed, and Forward move into More. The address field is
-  at least 96 px. Load-line motion lasts 320 ms, 0 under Reduced Motion; shutter flash lasts 240 ms
-  and is off under Reduced Motion. History is capped at 30 entries, 20 saved; captures at 24, 12
-  saved; capture regions are at least 8 × 8 px. Browser saved view state includes URL,
-  ordinary/protected session choice, DevTools visibility, details/DevTools/captures rail choice,
-  elements/console/network/access tool choice, dock dimensions, history and index, ordinary URL,
-  captures, page title and policy differences only. The agent-access policy has 14 rows: Navigation,
-  Tabs and frames, Page structure and components, Styles, Console, Network, Source maps and files,
-  Performance, Storage and cookies, Screenshots and recording, Form input, Downloads, Viewport and
-  device sizes and Request simulation; rows cycle Off, Ask, On. Agent and browser introspection stay
-  explicit opt-in (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-092); this unit sets no row's
-  default, which is the browser owner's to set and an open question for the lead until it does
-  (amended 2026-10-10). Browser is the plus menu's order-20 kind, with Ctrl+Shift+B and
+  Every tab in the home centre is one of fifteen kinds (DL-180, D9), each registered once, with its tab id
+  prefixes: editor (`file:<path>`, `buffer:<n>`; a diff mode and preview tabs; F3-639); terminal
+  (`terminal:<session>`, one session per tab, the session id minted by the terminal kind; F3-640,
+  SMPFS-180); browser (`browser:<n>`, and `link:` for a page the chat fetched; DevTools docked inside it
+  and the capture toolbar); dashboard (`dashboard:<board_id>`, `dashboard:home` the pinned Home dashboard;
+  F3-638); plan (`plan:<id>`, the plan query form and `deep-discovery:<run>`; the plan viewer with its
+  sticky Build, Revise and More footer); document (`teach:`, `memory:`, `revert:`, `debug:`,
+  `lens-source:`, `lens-effective:`, `wonderer:`, `wonder-source:`, `doc:<path>`: rules, memory, revert,
+  debug investigation, lens source, wonderer); artifact (`artifact:<artifact_id>`,
+  `artifact:<artifact_id>@v<n>` and the chat's artifact ids; a subtype per artifact kind, versioned;
+  RAP-065); run (`collab-run:`, `crew-work:`, `review:`, `room:`, `brainstorm:`, `review-evidence:`,
+  `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and their evidence); transcript
+  (`thread-<agentId>`: an agent's read-only live feed); context (`context:<threadId>`: thread-keyed context
+  detail); record (`search:`, `mcp:`, `app:`, `work-record:`: read-only records); output (`output`, one
+  Output tab whose channel switches inside it; `output:<channel>` only for a channel split off with "Open
+  in new tab", showing only that channel); problems (`problems`); ports (`ports`); and debug_console
+  (`debug-console`, one Debug Console tab with a sub-tab per debug session, the session shown being its
+  view state; F3-490). The document kinds are editor, plan, document, artifact, run, transcript, context
+  and record; terminal, browser, dashboard and the four tool kinds output, problems, ports and
+  debug_console are dedicated; a panel holding only tool kinds and terminals has the role tools. Problems,
+  Ports and the Debug Console are one tab each per workspace. Never a kind: the chat's Goal tab (DL-147),
+  Activity Detail (it stays inside the chat, F3-637), the chat's lab-only workspaces, and wand setup sheets
+  (they stay app modals). A tab id is opaque and stable, its prefix names its kind, and one id is one tab
+  in the whole workspace; an id with an unknown prefix opens nothing, and two kinds claiming one prefix is
+  a start-up error. Tab identity is separate from domain identity: the path, terminal_session_id, board id
+  or artifact id a tab shows is its domain reference, and moving, collapsing, maximizing, hiding or
+  restoring a tab never changes it. No internal id (tab, panel, session, nonce) ever appears as text in the
+  interface. Older canon that names one of these surfaces by its former host means the kind here, placed by
+  F3-634: the run view called an editor document (ACD-480, F3-569, F3-576 and the 2026-09-03 redesign's
+  section 10) is a run tab, ACD-485's subagent transcript a transcript tab, the context-detail editor tab
+  (section 7.16.1, F3-132) a context tab, the Plan card's "normal artifact viewer" and an artifact opened
+  from section 7.12 an artifact tab (RAP-065), the Your rules document (F3-579) a document tab, and
+  F3-297's editor-tab Browser a browser tab. Each kind registers its label, its group name for the "+N"
+  list, its icon (a bundled SVG icon_id, never an emoji), its id prefixes, its content minimum, whether it
+  is dedicated, its "+" menu row and sub-row, how it makes a tab id for an open (the terminal mints a new
+  session), the older id forms it folds into one tab, the rows it adds to the tab menu (F3-631), how it
+  mounts, what it serializes and whether a tab may close now. Content minimums: terminal 320 x 120 px,
+  browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan, document, artifact, transcript and context
+  280 x 160, and editor, record and tools 280 x 120. The host mounts a tab's body only when the tab is
+  first shown, so a restored background tab costs nothing until it is opened. A kind's serialized state is
+  at most 16 KB of plain data, with no scrollback and no buffer text (Plans/storage-plan.md#SP-330); an
+  untitled editor buffer's tab state carries only the title, language and edit or read-only state of F3-639
+  (amended 2026-10-10). Before a tab closes its kind may ask first: a dirty editor offers to save, and a
+  running terminal says what will stop (F3-640). A tab body is its own box, sized by its panel: it never
+  sizes against the window, only against its own width and height; it is told when they change, with a last
+  call once a divider drag or a layout animation has settled so costly work can wait for it; it is told
+  when it is shown, hidden, focused and blurred and when the look changes, and stops animation while
+  hidden. Every kind that needs a row of controls above its content uses the one shared header row (D12):
+  30 px tall, 24 px targets, 12 px text and 11 px for secondary facts, labels when the body is at least 520
+  px wide and icons with hover tags below that, and the row hidden when the body is under 150 px tall; a
+  kind draws a row of its own only when nothing in the shared one fits, and its owner unit says why. Menus,
+  the "+" menu, the "+N" list, panel menus, drag ghosts and landing previews open in one overlay root
+  (Plans/DRY_Rules.md#DR-067), one stacking order: panel content, then strips and dividers, then the
+  overlay root, which sits above the status bar and below the Demo Studio's controls (F3-649), hover tags
+  and the Guided Tour; no kind appends an overlay of its own. Keys: the shell owns Ctrl+1..9 and Ctrl+K, so
+  the panels use neither and there are no Ctrl+K chords. In the desktop app: Ctrl+T a new tab of the
+  panel's usual kind, Ctrl+W close the tab, Ctrl+Shift+T reopen the last closed tab, Ctrl+Tab and
+  Ctrl+Shift+Tab step through recent tabs across panels and kinds (hold, step, release), Ctrl+Shift+Space
+  the "+" menu, Ctrl+Shift+` a new terminal, Ctrl+Shift+B a new browser, Ctrl+P open a file, Ctrl+Shift+A
+  every tab, Ctrl+PgDn and Ctrl+PgUp the next and previous tab in the panel, Alt+1..8 tab N and Alt+9 the
+  last tab, Ctrl+Shift+PgUp and Ctrl+Shift+PgDn move the tab left and right, Alt+arrows focus the panel in
+  that direction, Alt+Shift+1..9 focus panel N, Alt+Shift+arrows move the tab to the panel in that
+  direction (splitting that way when there is none and it fits), F6 and Shift+F6 cycle the rail, the panels
+  and the chat composer, Ctrl+\ split right, Ctrl+Shift+\ split down, Shift+Escape maximize or restore
+  (Escape also restores while focus is in a strip), Tab to a divider and then the divider keys (F3-630),
+  the ARIA tab keys in a strip with Shift+F10 for the tab menu (F3-631), and Enter on a panel grip for Move
+  panel. Pinning is in the tab menu only; no binding is a bare letter or digit; Escape closes only the
+  innermost open thing (F3-568). The panels hold these keys while focus is in the centre; while focus is
+  inside a tab body the kind is asked first, a terminal keeps the shell's keys and gives back the host keys
+  F3-640 lists, and ordinary text inputs keep their own keys. Web-client mapping rule: in a web browser the
+  chords the browser keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp, are answered as
+  Alt+T, Alt+W, Alt+Shift+T, Alt+` (Alt+Shift+` backwards) and Alt+PgDn/PgUp (panels NUMBERS 6026fa8432,
+  keyboard), and every label, menu shortcut and hover tag shows the key that works where the app runs. This
+  supersedes F3-HOME-001's typed surface kinds and F3-152's terminal-and-browser-only tab identity, which
+  now holds for every kind. The channel shown in `output` is view state, never part of its id (D31). The
+  Output tab is labelled Output and a split-off channel tab Output · <Channel>; opening a channel from
+  anywhere switches `output` to it (F3-634). The Debug Console is one tab, `debug-console`, with a sub-tab
+  for each debug session (D33, DL-187); which session it shows is view state, with no command, saved with
+  the tab (lead ruling F6), and an open that names a session reveals the tab and switches it to that
+  session. An id of the earlier one-tab-per-session form, `debug-console:<session>`, folds into
+  `debug-console` with that session shown wherever it appears: in an open, in a saved layout or a named
+  layout, and in the reopen list. A tab's typing field, including the terminal input and the editor's IME
+  field, passes the panels' navigation keys to the host once the tab declines the key: Alt+1..9,
+  Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows, Alt+PgUp/PgDn in the web client (Ctrl+PgUp/PgDn in the
+  desktop app), Ctrl+P, Ctrl+Shift+A and Alt+W on Windows and Linux. On a Mac, Option+letter and
+  Option+backtick type text in fields and the editor, and never trigger the Alt stand-ins; a Dead key never
+  triggers them on any platform. Keys during IME composition are ignored. F6 is handled before the tab's
+  key claim and reaches the chat composer from every region. Browser and tool measurements: a browser body
+  is at least 360 × 200 px. DevTools docks right at body widths of 900 px or more, otherwise below. Its
+  right width defaults to 340 px, ranging from 240 px to min(60 % of body, body minus 200 px); below, its
+  height defaults to 42 % and ranges from 25-70 %. Keyboard resize moves 8 px, or 48 px with Shift. Capture
+  labels appear at 1100 px and session labels at 620 px; the shared icons-only step is below 520 px; below
+  480 px Full, Region, Select unless armed, and Forward move into More. The address field is at least 96
+  px. Load-line motion lasts 320 ms, 0 under Reduced Motion; shutter flash lasts 240 ms and is off under
+  Reduced Motion. History is capped at 30 entries, 20 saved; captures at 24, 12 saved; capture regions are
+  at least 8 × 8 px. Browser saved view state includes URL, ordinary/protected session choice, DevTools
+  visibility, details/DevTools/captures rail choice, elements/console/network/access tool choice, dock
+  dimensions, history and index, ordinary URL, captures, page title and policy differences only. The
+  agent-access policy has 14 rows: Navigation, Tabs and frames, Page structure and components, Styles,
+  Console, Network, Source maps and files, Performance, Storage and cookies, Screenshots and recording,
+  Form input, Downloads, Viewport and device sizes and Request simulation; rows cycle Off, Ask, On. Agent
+  and browser introspection stay explicit opt-in (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-092);
+  this unit sets no row's default, which is the browser owner's to set and an open question for the lead
+  until it does (amended 2026-10-10). Browser is the plus menu's order-20 kind, with Ctrl+Shift+B and
   recent-address sub-rows. The four tools each have a 280 × 120 px minimum and follow in plus order
-  70/71/72/73. Output caps at 600 lines, turns Follow off beyond 24 px from the end, hides time
-  below 520 px, and saves channel, follow and wrap. Its channel picker is 300 px wide, with a
-  trailing Open in new tab cell; Alt+Enter opens the split-off tab and Alt+click a new panel. A
-  split-off tab has a plain channel fact and More's Show in the Output tab. Problems rows are 28 px;
-  source hides below 520 px and line/column and folder below 360 px; saved view state is
-  error/warning/info visibility and collapsed files. Ports columns are 96 px / 1fr / 1.3fr / 140 px
-  / 220 px; below 760 px Origin hides and actions become icon-only in 108 px; below 480 px rows
-  stack; actions are 32 px and rows at least 44 px. Ports saves added and removed port numbers. Each
-  Debug Console session keeps its own console, capped at 400 lines, its own state and its own frame;
-  input history keeps 30 entries, 20 of them saved, and stays per session as F3-490 says; the input
-  row is 34 px, and the tab saves the session shown and the history (amended 2026-10-10, DL-187,
-  D33). Browser and Debug Console fields have one focus ring drawn by the header row, with no second
-  field border, shadow or outline. The source's scripted Output preview begins after 700 ms, adds a
-  line every 260-680 ms and pauses 1.8-5 s; Debug Console preview Continue re-hits at 1.9 s and
-  Restart pauses at 1.7 s (60 ms under Reduced Motion). Those scripted timings describe preview
-  presentation, not actual process or debugger completion. Plans and documents have 280 × 160 px
-  content minima. The Plan or document... plus row is order 50. A plan's sticky footer uses 32 px
-  controls in one row with 10 px vertical padding, a maximum 960 px inner column, 28 px sides or 16
-  px below 720 px body width; Revise moves into More below 420 px and the footnote hides below 520
-  px. Document frames have a maximum 960 px column, 24 px vertical and 28 px horizontal padding at
-  720 px or wider, 16 px below; titles are 22 px, 18 px below 420 px; body text is 13/20 px,
-  metadata 12/18 px and fine print 11.5/17 px, never below 11 px. Step marks use a 20 px column and
-  16 px SVG marks; titles are 13/20 px at weight 600, body 12.5/19 px, metadata 12/18 px and code
-  ids 11.5 px; children indent 32 px. Step file rows use the final 32 px reference height and shift
-  left 6 px, with top margin 2 px, bottom margin -4 px and gaps 0 vertically/8 px horizontally;
-  Revert file marks and state use 8 px top padding. Tables have a 440 px minimum width, horizontal
-  scroll below it, and 7 × 12 px cell padding. Markdown uses 12 px code text at line height 1.65, a
-  14 px rail and 6 px state dots, with blank lines between blocks. Embed previews are 320 × about
-  116 px at natural size and scroll sideways below that, with 11 px tick text. Memory panes are side
-  by side from 720 px, with a 300 px list and 28 px gap, stacked with Back below that. Debug phases
-  are 4 columns from 640 px, 2 below and 1 below 340 px; debug arguments and Revert file state move
-  below their primary row below 520 px. Wonderer has an aside from 900 px and a top hairline below.
-  Document text actions are 32 px, 24 px inline; frame button radii cap at 8 px. View state saves
-  rich/markdown mode with separate scroll positions and optional older version, discovery choices
-  and disclosures, and each document's own view/model state, always within 16 KB. The source's
-  scripted Plan build advances a step every 2600 ms while visible and pauses while hidden; checking
-  previews take 1100-1200 ms, 300 ms under Reduced Motion. These scripted delays are preview
-  presentation, not actual workflow completion. Run bodies have a 360 × 200 px minimum. They place a
-  220 px aside beside the body from 900 px, otherwise below in an auto-fit grid of at least 180 px;
-  at 904 px the grid is 652 px + 32 px gap + 220 px aside, or 904 px without an aside. BrainStorm
-  options use 3 columns from 900 px, 2 from 600 px and 1 below; vote tables stack below 640 px. The
-  participant plate is one row from 720 px, or from 1200 px with 5 or more seats; below that the
-  input card has its own row, the plate wraps from 420-719 px and becomes a caption line below 420
-  px. Chat Room head actions get their own row below 900 px; team outcomes move under names and cost
-  lists hide the model column below 520 px. Puppets are 28 px in the plate, 26 px for the hub and
-  You, 22 px in team rows, 20 px in timelines and 34 px in participant views; state corner marks are
-  12 px. Five seat hues are blue, magenta, lime, orange and the page accent, all ink in NieR; hub
-  and You are neutral. Run view state saves overview/conversation/team/cost, person and filter;
+  70/71/72/73. Output caps at 600 lines, turns Follow off beyond 24 px from the end, hides time below 520
+  px, and saves channel, follow and wrap. Its channel picker is 300 px wide, with a trailing Open in new
+  tab cell; Alt+Enter opens the split-off tab and Alt+click a new panel. A split-off tab has a plain
+  channel fact and More's Show in the Output tab. Problems rows are 28 px; source hides below 520 px and
+  line/column and folder below 360 px; saved view state is error/warning/info visibility and collapsed
+  files. Ports columns are 96 px / 1fr / 1.3fr / 140 px / 220 px; below 760 px Origin hides and actions
+  become icon-only in 108 px; below 480 px rows stack; actions are 32 px and rows at least 44 px. Ports
+  saves added and removed port numbers. Each Debug Console session keeps its own console, capped at 400
+  lines, its own state and its own frame; input history keeps 30 entries, 20 of them saved, and stays per
+  session as F3-490 says; the input row is 34 px, and the tab saves the session shown and the history
+  (amended 2026-10-10, DL-187, D33). Browser and Debug Console fields have one focus ring drawn by the
+  header row, with no second field border, shadow or outline. The source's scripted Output preview begins
+  after 700 ms, adds a line every 260-680 ms and pauses 1.8-5 s; Debug Console preview Continue re-hits at
+  1.9 s and Restart pauses at 1.7 s (60 ms under Reduced Motion). Those scripted timings describe preview
+  presentation, not actual process or debugger completion. Plans and documents have 280 × 160 px content
+  minima. The Plan or document... plus row is order 50. A plan's sticky footer uses 32 px controls in one
+  row with 10 px vertical padding, a maximum 960 px inner column, 28 px sides or 16 px below 720 px body
+  width; Revise moves into More below 420 px and the footnote hides below 520 px. Document frames have a
+  maximum 960 px column, 24 px vertical and 28 px horizontal padding at 720 px or wider, 16 px below;
+  titles are 22 px, 18 px below 420 px; body text is 13/20 px, metadata 12/18 px and fine print 11.5/17 px,
+  never below 11 px. Step marks use a 20 px column and 16 px SVG marks; titles are 13/20 px at weight 600,
+  body 12.5/19 px, metadata 12/18 px and code ids 11.5 px; children indent 32 px. Step file rows use the
+  final 32 px reference height and shift left 6 px, with top margin 2 px, bottom margin -4 px and gaps 0
+  vertically/8 px horizontally; Revert file marks and state use 8 px top padding. Tables have a 440 px
+  minimum width, horizontal scroll below it, and 7 × 12 px cell padding. Markdown uses 12 px code text at
+  line height 1.65, a 14 px rail and 6 px state dots, with blank lines between blocks. Embed previews are
+  320 × about 116 px at natural size and scroll sideways below that, with 11 px tick text. Memory panes are
+  side by side from 720 px, with a 300 px list and 28 px gap, stacked with Back below that. Debug phases
+  are 4 columns from 640 px, 2 below and 1 below 340 px; debug arguments and Revert file state move below
+  their primary row below 520 px. Wonderer has an aside from 900 px and a top hairline below. Document text
+  actions are 32 px, 24 px inline; frame button radii cap at 8 px. View state saves rich/markdown mode with
+  separate scroll positions and optional older version, discovery choices and disclosures, and each
+  document's own view/model state, always within 16 KB. The source's scripted Plan build advances a step
+  every 2600 ms while visible and pauses while hidden; checking previews take 1100-1200 ms, 300 ms under
+  Reduced Motion. These scripted delays are preview presentation, not actual workflow completion. Run
+  bodies have a 360 × 200 px minimum. They place a 220 px aside beside the body from 900 px, otherwise
+  below in an auto-fit grid of at least 180 px; at 904 px the grid is 652 px + 32 px gap + 220 px aside, or
+  904 px without an aside. BrainStorm options use 3 columns from 900 px, 2 from 600 px and 1 below; vote
+  tables stack below 640 px. The participant plate is one row from 720 px, or from 1200 px with 5 or more
+  seats; below that the input card has its own row, the plate wraps from 420-719 px and becomes a caption
+  line below 420 px. Chat Room head actions get their own row below 900 px; team outcomes move under names
+  and cost lists hide the model column below 520 px. Puppets are 28 px in the plate, 26 px for the hub and
+  You, 22 px in team rows, 20 px in timelines and 34 px in participant views; state corner marks are 12 px.
+  Five seat hues are blue, magenta, lime, orange and the page accent, all ink in NieR; hub and You are
+  neutral. Run view state saves overview/conversation/team/cost, person and filter;
   paused/progress/rounds/ticks/promotions are session-only per run. Friendly controls and table-of-
-  contents/back/picker have 6 px radii; choice/seat/team rows cap at 8 px, sorting has 0 and run
-  links 3 px. File references are 24 px inline and appear only for files that exist; hover uses the
-  shared tile treatment for seats, row for team rows and quiz choices, and off for the hub. Source
-  preview timing runs only while visible and not paused: Crew ticks every 1 s; Review reader
-  previews finish at 3, 6 and 8 s and the report preview at 10 s; Chat Room reveals 2 words every 60
-  ms, arriving whole while hidden or under Reduced Motion; Write the plan preview lasts 1400 ms, 400
-  ms reduced. These scripted times do not set real agent or workflow completion deadlines.
-  Transcript and Context content minima are 280 × 160 px; records are 280 × 120 px. Transcript feed
-  columns cap at 760 px with padding 18/24/44 px, or 14/14/40 below 720 px; the spine is 1 px with 6
-  px dots and an 8 px live-dot ring. Stretch toggles are at least 30 px; step-rail discs are 16 px
-  with 10 px glyphs, fold after 10 discs into +N, and record-row glyphs are 13 px. Transcript prose
-  is 13/21 px, record title 12.5/19 px, detail 12/18 px and time 11.5 px. Follow-bottom threshold is
-  28 px, elapsed ticks every 1 s for Working, Retrying, Fallback route and Waiting, and live breathe
-  is 1.6 s or a 1-1.2 s stepped Retro/NieR blink. Step discs hide below 420 px, model below 700 px,
-  Parent below 560 px, Read-only · live words below 440 px (the lock stays), and agent name below
-  360 px. Transcript saves agent reference, follow, open stretches and scroll top. The source
-  preview streams at 3400 + ((delivered × 7) modulo 4) × 700 ms, 3.4-5.5 s, and reveals 2 words
-  every 55 ms; the new-item slide uses the shared slow motion. Context columns cap at 720 px, 960 px
-  from a 960 px body; Source composition and Context growth appear side by side and start open at
-  that width until the reader toggles them. Hero numbers are 32 px, bars 6 px, disclosures 34 px;
-  tiles use 3 columns from 360 px and 1 below; four-tile groups use 4 from 600 px, 2 below and 1
-  below 300 px. Plan-limit rows have name, bar and a 128 px figure, with the bar on its own line
-  below 460 px; the usage fact hides below 380 px. Growth charts are 168 px high; the source's
-  131,000-token-limit fixture uses an axis to 140,000, gridlines at 0/50K/100K, ceiling 131,000 and
-  turns 1/5/9. Limit tone is ok below 70 %, warn from 70 % and bad from 90 %. Context saves thread
-  reference, curated/raw view, open sections (null while width decides) and scroll top; sections are
-  tokens, sources, growth, route, limits, caps, cost and compaction. The six categorical colours are
-  dark #3987e5 #d95926 #199e70 #c98500 #d55181 #008300 and light #2a78d6 #eb6834 #1baf7a #eda100
-  #e87ba4 #008300; NieR's charts part uses ink at .92/.72/.56/.42/.30/.20 with hatching on even
-  segments. Record columns cap at 960 px; results have 10 px padding; tables scroll sideways with
-  nowrap cells and notes at least 160 px. A search query label longer than 28 characters is cut at
-  27 plus an ellipsis; MCP uses the tool label, or MCP; records save scroll top. Shared document
-  actions are 32 px and header targets 24 px, with no text below 11 px. Header labels appear at 1100
-  px for Transcript, 720 px for Context and 600 px for Record. Friendly stretch/disclosure rows use
-  the shared row radius, Parent links 6 px and Jump to latest/Source-thread buttons cap at 8 px.
-  Header-row labels default to a 520 px body threshold; kinds may set their own: Browser and
-  Transcript 1100 px, Context 720 px, Record 600 px. Icon-only buttons are 24 px wide. File
-  references are 32 px tall with a 6 px radius and 12 px code face, or 24 px inline with a 4 px
-  radius and 11.5 px code face. Their 240 ms double-click window delays preview so double click can
-  keep the file open; their hover tag says the path and line the reference names (amended 2026-10-17,
-  DL-228; it read: Open file) / Click previews it. Double-click keeps it open., or No file to open / This reference
-  names no file. without a path. In-tab view saves
-  coalesce at 250 ms. Document action radii are Friendly 8 px, Glass 8 px, Basic 6 px and Retro/NieR
-  square 0. Metadata separator slots are 16 px with 3 px wrapped-line clipping slack. The Debug
-  Console's chosen sub-tab and every segmented toggle are filled on their own box, never underlined,
-  with Friendly's, Glass's and Basic's neutral chosen-row surface, never an accent; Glass adds its 1
-  px top rim, Retro uses reverse video and NieR its ink block (F3-490). Nested Home menu and picker
-  keys consume F3-632: Escape returns one level then closes at the root; a fresh empty-query
-  Backspace returns one level, held erasure never also navigates; Left outside the field returns; Up
-  from the field reaches Back; + toggles the whole menu closed. Back/search/rows remain in that
-  arrow order, with Enter or Space activating Back. These are local navigation, with no structural
-  command or event.
-  Amended 2026-10-17 (DL-228): wherever a panel must be named (the panel menu's title, Move panel and Move to
-  panel rows, the every-tab list's sections, the narrow switcher, announcements), it is named in words by its
-  active tab and its place in the layout (left, right, top, bottom or middle, combined down the tree, or "the
-  only panel"), never by an id or a number other than the switcher's ordinal. Tool tabs' header rows: Output
-  has Follow, Clear ("Clear this channel") and More with Wrap long lines, Copy all, Open as a document (a
-  read-only editor tab titled with the channel, through cmd.panel_tab.open, the route of the terminal's Open
-  output) and Open <channel> in new tab, or Show in the Output tab on a split-off tab; Problems has Filter
-  (errors, warnings or notes) and Check again; Ports has Forward a port; the Debug Console has Continue or
-  Pause, Restart, Stop and Clear ("Clear this session's console"), disabled once its session has ended.
-  Follow, Clear, Wrap, Copy all and Filter are view-local; Check again, Forward a port and the Debug Console's
-  session controls dispatch their owners' existing Problems, Ports and Run & Debug commands. Document kinds: a
-  plan's More holds Export as Markdown, Export as PDF, Send to Planning Wizard, Copy plan link
-  (pm://plans/<id>@v<n>) and Cancel build, which confirms ("Cancel this build?", "Steps already done stay
-  done.", Cancel the build or Keep building), with Revise moving into More in a narrow tab; an artifact has
-  Versions, Open in new panel and More with Copy link to this version, Copy source, Export as image, Export
-  the data and Open the source file; a run's More holds Cancel <run> with a yes or no submenu, Change setup...
-  (on a Crew disabled until it is cancelled: "This Crew builds one plan version. Cancel it first.") or Run
-  again with changes... once finished, Run another review (Review only), Download transcript and Open in new
-  panel; a transcript has Follow, Copy transcript, Show the parent thread and Context of <thread>; a context
-  tab has Preview compact and Redacted JSON; a record has Show in chat, which reveals and marks the work row
-  in its thread or says the message is not available, and Copy. Each row dispatches its content owner's
-  existing command or is view-local; none adds a command id here.
+  contents/back/picker have 6 px radii; choice/seat/team rows cap at 8 px, sorting has 0 and run links 3
+  px. File references are 24 px inline and appear only for files that exist; hover uses the shared tile
+  treatment for seats, row for team rows and quiz choices, and off for the hub. Source preview timing runs
+  only while visible and not paused: Crew ticks every 1 s; Review reader previews finish at 3, 6 and 8 s
+  and the report preview at 10 s; Chat Room reveals 2 words every 60 ms, arriving whole while hidden or
+  under Reduced Motion; Write the plan preview lasts 1400 ms, 400 ms reduced. These scripted times do not
+  set real agent or workflow completion deadlines. Transcript and Context content minima are 280 × 160 px;
+  records are 280 × 120 px. G3: Run-view transcript feeds in centre tabs cap at 760 px; the chat column
+  instead follows F3-637 with no fixed maximum. These centre-tab feeds have padding 18/24/44 px, or
+  14/14/40 below 720 px; the spine is 1 px with 6 px dots and an 8 px live-dot ring. Stretch toggles are at
+  least 30 px; step-rail discs are 16 px with 10 px glyphs, fold after 10 discs into +N, and record-row
+  glyphs are 13 px. Transcript prose is 13/21 px, record title 12.5/19 px, detail 12/18 px and time 11.5
+  px. Follow-bottom threshold is 28 px, elapsed ticks every 1 s for Working, Retrying, Fallback route and
+  Waiting, and live breathe is 1.6 s or a 1-1.2 s stepped Retro/NieR blink. Step discs hide below 420 px,
+  model below 700 px, Parent below 560 px, Read-only · live words below 440 px (the lock stays), and agent
+  name below 360 px. Transcript saves agent reference, follow, open stretches and scroll top. The source
+  preview streams at 3400 + ((delivered × 7) modulo 4) × 700 ms, 3.4-5.5 s, and reveals 2 words every 55
+  ms; the new-item slide uses the shared slow motion. Context columns cap at 720 px, 960 px from a 960 px
+  body; Source composition and Context growth appear side by side and start open at that width until the
+  reader toggles them. Hero numbers are 32 px, bars 6 px, disclosures 34 px; tiles use 3 columns from 360
+  px and 1 below; four-tile groups use 4 from 600 px, 2 below and 1 below 300 px. Plan-limit rows have
+  name, bar and a 128 px figure, with the bar on its own line below 460 px; the usage fact hides below 380
+  px. Growth charts are 168 px high; the source's 131,000-token-limit fixture uses an axis to 140,000,
+  gridlines at 0/50K/100K, ceiling 131,000 and turns 1/5/9. Limit tone is ok below 70 %, warn from 70 % and
+  bad from 90 %. Context saves thread reference, curated/raw view, open sections (null while width decides)
+  and scroll top; sections are tokens, sources, growth, route, limits, caps, cost and compaction. The six
+  categorical colours are dark #3987e5 #d95926 #199e70 #c98500 #d55181 #008300 and light #2a78d6 #eb6834
+  #1baf7a #eda100 #e87ba4 #008300; NieR's charts part uses ink at .92/.72/.56/.42/.30/.20 with hatching on
+  even segments. Record columns cap at 960 px; results have 10 px padding; tables scroll sideways with
+  nowrap cells and notes at least 160 px. A search query label longer than 28 characters is cut at 27 plus
+  an ellipsis; MCP uses the tool label, or MCP; records save scroll top. Shared document actions are 32 px
+  and header targets 24 px, with no text below 11 px. Header labels appear at 1100 px for Transcript, 720
+  px for Context and 600 px for Record. Friendly stretch/disclosure rows use the shared row radius, Parent
+  links 6 px and Jump to latest/Source-thread buttons cap at 8 px. Header-row labels default to a 520 px
+  body threshold; kinds may set their own: Browser and Transcript 1100 px, Context 720 px, Record 600 px.
+  Icon-only buttons are 24 px wide. File references are 32 px tall with a 6 px radius and 12 px code face,
+  or 24 px inline with a 4 px radius and 11.5 px code face. Their 240 ms double-click window delays preview
+  so double click can keep the file open; their hover tag says the path and line the reference names
+  (amended 2026-10-17, DL-228; it read: Open file) / Click previews it. Double-click keeps it open., or No
+  file to open / This reference names no file. without a path. In-tab view saves coalesce at 250 ms.
+  Document action radii are Friendly 8 px, Glass 8 px, Basic 6 px and Retro/NieR square 0. Metadata
+  separator slots are 16 px with 3 px wrapped-line clipping slack. The Debug Console's chosen sub-tab and
+  every segmented toggle are filled on their own box, never underlined, with Friendly's, Glass's and
+  Basic's neutral chosen-row surface, never an accent; Glass adds its 1 px top rim, Retro uses reverse
+  video and NieR its ink block (F3-490). Nested Home menu and picker keys consume F3-632: Escape returns
+  one level then closes at the root; a fresh empty-query Backspace returns one level, held erasure never
+  also navigates; Left outside the field returns; Up from the field reaches Back; + toggles the whole menu
+  closed. Back/search/rows remain in that arrow order, with Enter or Space activating Back. These are local
+  navigation, with no structural command or event. Amended 2026-10-17 (DL-228): wherever a panel must be
+  named (the panel menu's title, Move panel and Move to panel rows, the every-tab list's sections, the
+  narrow switcher, announcements), it is named in words by its active tab and its place in the layout
+  (left, right, top, bottom or middle, combined down the tree, or "the only panel"), never by an id or a
+  number other than the switcher's ordinal. Tool tabs' header rows: Output has Follow, Clear ("Clear this
+  channel") and More with Wrap long lines, Copy all, Open as a document (a read-only editor tab titled with
+  the channel, through cmd.panel_tab.open, the route of the terminal's Open output) and Open <channel> in
+  new tab, or Show in the Output tab on a split-off tab; Problems has Filter (errors, warnings or notes)
+  and Check again; Ports has Forward a port; the Debug Console has Continue or Pause, Restart, Stop and
+  Clear ("Clear this session's console"), disabled once its session has ended. Follow, Clear, Wrap, Copy
+  all and Filter are view-local; Check again, Forward a port and the Debug Console's session controls
+  dispatch their owners' existing Problems, Ports and Run & Debug commands. Document kinds: a plan's More
+  holds Export as Markdown, Export as PDF, Send to Planning Wizard, Copy plan link (pm://plans/<id>@v<n>)
+  and Cancel build, which confirms ("Cancel this build?", "Steps already done stay done.", Cancel the build
+  or Keep building), with Revise moving into More in a narrow tab; an artifact has Versions, Open in new
+  panel and More with Copy link to this version, Copy source, Export as image, Export the data and Open the
+  source file; a run's More holds Cancel <run> with a yes or no submenu, Change setup... (on a Crew
+  disabled until it is cancelled: "This Crew builds one plan version. Cancel it first.") or Run again with
+  changes... once finished, Run another review (Review only), Download transcript and Open in new panel; a
+  transcript has Follow, Copy transcript, Show the parent thread and Context of <thread>; a context tab has
+  Preview compact and Redacted JSON; a record has Show in chat, which reveals and marks the work row in its
+  thread or says the message is not available, and Copy. Each row dispatches its content owner's existing
+  command or is view-local; none adds a command id here. Amended 2026-10-29 (PC5; PM7): Seat hues remain
+  this one owner table. Pip reads them rather than owning another palette; gold crown/hat are role material
+  and do not change the seat or status hue.
 gui_related: true
-gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
+gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header
+  row, the overlay order and the panel keyboard.
 split_recommended: false
-depends_on: [DL-180, DL-181, DL-187, DL-147, F3-568, F3-630]
-unblocks: [F3-640, SP-330, UCC-200, CS-100, RAP-065, WS-030, DR-065, DR-067, G-030, ATS-075]
+depends_on:
+- DL-180
+- DL-181
+- DL-187
+- DL-147
+- F3-568
+- F3-630
+unblocks:
+- F3-640
+- SP-330
+- UCC-200
+- CS-100
+- RAP-065
+- WS-030
+- DR-065
+- DR-067
+- G-030
+- ATS-075
 acceptance_criteria:
-  - "Exactly the fifteen kinds listed here are registered, each with the id prefixes stated, and no Goal tab, Activity Detail, lab-only workspace or setup sheet is a kind."
-  - "Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming one prefix fail at start-up."
-  - "Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab, panel or session id appears as text."
-  - "Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums."
-  - "A restored background tab is mounted only when first shown; serialized state above 16 KB is refused."
-  - "No tab body reads the window's size; each responds to its own width and height and gets a final size call after a drag or animation settles."
-  - "Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label threshold and hide threshold."
-  - "Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own overlay."
-  - "Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned chords Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that channel."
-  - "The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab dispatches nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that session shown."
-  - "Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through its registration."
-  - "Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition respected; F6 reaches the chat composer from every region."
+- Exactly the fifteen kinds listed here are registered, each with the id prefixes stated, and no Goal tab,
+  Activity Detail, lab-only workspace or setup sheet is a kind.
+- Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming
+  one prefix fail at start-up.
+- Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab,
+  panel or session id appears as text.
+- Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums.
+- A restored background tab is mounted only when first shown; serialized state above 16 KB is refused.
+- No tab body reads the window's size; each responds to its own width and height and gets a final size call
+  after a drag or animation settles.
+- Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label
+  threshold and hide threshold.
+- Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends
+  its own overlay.
+- Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare
+  letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned
+  chords Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
+- Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing
+  only that channel.
+- The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab
+  dispatches nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that
+  session shown.
+- Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through
+  its registration.
+- Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition
+  respected; F6 reaches the chat composer from every region.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: home_panels_terminal_redesign_drift
 reasoning_tier: high
 context_scope: home_panels_terminal
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/Commands_System.md
-  - Plans/home_workspace_layout_v2.schema.json
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/home_workspace_layout_v2.schema.json
 node_compile_hint:
   mode: gui_promotion_contract
   create_worknodes: false
@@ -1225,71 +1246,87 @@ source_lineage:
   SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (Debug Console, Output; concept
   lineage only)
 - '/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md,
-  SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 2 and 3: the kinds
-  and fold; concept lineage only)'
+  SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 2 and 3: the kinds and
+  fold; concept lineage only)'
 - 'Concepts/home-redesign/CONTRACT.md at c4e32ec0b7 on branch concept/home-panels-20261009, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9
   (section 3, `tabMenu`: the tab-menu rows a kind adds; concept lineage only)'
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
-  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage
-  only)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
-  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
-  certification)
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md, SHA-256
+  29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native certification)
 preserved_exact_tokens:
-  - "Open in new tab"
-  - "output:<channel>"
-  - "editor"
-  - "terminal"
-  - "browser"
-  - "dashboard"
-  - "plan"
-  - "document"
-  - "artifact"
-  - "run"
-  - "transcript"
-  - "context"
-  - "record"
-  - "output"
-  - "problems"
-  - "ports"
-  - "debug_console"
-  - "debug-console"
-  - "dashboard:home"
-  - "16 KB"
-  - "30 px"
-  - "520 px"
-  - "150 px"
-  - "Alt+T"
-  - "Alt+W"
-  - "Alt+Shift+T"
-  - "Alt+`"
+- Open in new tab
+- output:<channel>
+- editor
+- terminal
+- browser
+- dashboard
+- plan
+- document
+- artifact
+- run
+- transcript
+- context
+- record
+- output
+- problems
+- ports
+- debug_console
+- debug-console
+- dashboard:home
+- 16 KB
+- 30 px
+- 520 px
+- 150 px
+- Alt+T
+- Alt+W
+- Alt+Shift+T
+- Alt+`
 negative_constraints:
-  - "Do not make the chat, Activity Detail, the Goal tab or a setup sheet a tab kind."
-  - "Do not size a tab body against the window."
-  - "Do not show a tab, panel or session id in the interface."
-  - "Do not bind a panel action to Ctrl+K, a Ctrl+K chord, Ctrl+1..9 or a bare letter or digit."
-  - "Do not let a tab kind append its own overlay outside the one overlay root."
+- Do not make the chat, Activity Detail, the Goal tab or a setup sheet a tab kind.
+- Do not size a tab body against the window.
+- Do not show a tab, panel or session id in the interface.
+- Do not bind a panel action to Ctrl+K, a Ctrl+K chord, Ctrl+1..9 or a bare letter or digit.
+- Do not let a tab kind append its own overlay outside the one overlay root.
 compatibility_only_notes:
-  - "The concept's registration call, host API names, container name and z-index values are concept lineage; the stacking order is canon, its numbers are not."
-  - "The concept spells the tool kind debug-console in its id prefix; the kind's schema name is debug_console."
-  - "The panels concept (339203bd76) shares one Debug Console input history across its sessions; canon keeps the history per session, as F3-490 already said, and the concept's demo sessions are demo data."
-  - "The concept browser's demo agent-access defaults (panels NUMBERS 6026fa8432, browser): Navigation, Tabs and frames, Page structure and components, Styles, Console, Source maps and files, Screenshots and recording and Viewport and device sizes On; Network, Performance, Storage and cookies, Form input and Downloads Ask; Request simulation Off. They are concept lineage only, not product defaults (SMPFS-092)."
+- The concept's registration call, host API names, container name and z-index values are concept lineage; the
+  stacking order is canon, its numbers are not.
+- The concept spells the tool kind debug-console in its id prefix; the kind's schema name is debug_console.
+- The panels concept (339203bd76) shares one Debug Console input history across its sessions; canon keeps the
+  history per session, as F3-490 already said, and the concept's demo sessions are demo data.
+- 'The concept browser''s demo agent-access defaults (panels NUMBERS 6026fa8432, browser): Navigation, Tabs
+  and frames, Page structure and components, Styles, Console, Source maps and files, Screenshots and recording
+  and Viewport and device sizes On; Network, Performance, Storage and cookies, Form input and Downloads Ask;
+  Request simulation Off. They are concept lineage only, not product defaults (SMPFS-092).'
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R35 review, panels NUMBERS 6026fa8432 keyboard): The web-client mapping rule also answers Ctrl+PgDn/PgUp as Alt+PgDn/PgUp."
-  - "Amended 2026-10-10 (R35 review, SMPFS-092): The agent-access policy keeps its 14 rows and the Off, Ask, On cycle; the concept's per-row defaults move to compatibility_only_notes as lineage, and the product defaults are left to the browser owner as an open question for the lead."
-  - "Amended 2026-10-10 (R35 review, SP-330): Restores the no-buffer-text exclusion; the bounded editor-buffer text state the R35 line below permits is concept lineage; lead ruling L25 (2026-10-10): SP-330 does not admit buffer text."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses the per-kind document minima and permits the bounded editor-buffer state."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds settled browser, tool, document, run, transcript, context, record and shared-helper dimensions and timings."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Passes host navigation keys from tab typing fields and cycles F6 to the chat composer."
-  - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
-  - "Amended 2026-10-10 (DL-187, D33): The Debug Console is one tab, debug-console, with a sub-tab per session as view state; debug-console:<session> ids fold into it; each session keeps its console, state and frame, and its input history stays per session (F3-490)."
-  - "Amended 2026-10-10 (DL-180, D31 as built, panels NUMBERS 339203bd76; DL-187, D33 and D38): The Output tabs are labelled Output and Output · <Channel>; a kind may fold older ids and add tab-menu rows through its registration."
-  - "Amended 2026-10-11 (lead ruling 2026-10-11, D29): The Debug Console sub-tab passage uses the shared neutral chosen fill."
+- 'Amended 2026-10-10 (R35 review, panels NUMBERS 6026fa8432 keyboard): The web-client mapping rule also answers
+  Ctrl+PgDn/PgUp as Alt+PgDn/PgUp.'
+- 'Amended 2026-10-10 (R35 review, SMPFS-092): The agent-access policy keeps its 14 rows and the Off, Ask,
+  On cycle; the concept''s per-row defaults move to compatibility_only_notes as lineage, and the product defaults
+  are left to the browser owner as an open question for the lead.'
+- 'Amended 2026-10-10 (R35 review, SP-330): Restores the no-buffer-text exclusion; the bounded editor-buffer
+  text state the R35 line below permits is concept lineage; lead ruling L25 (2026-10-10): SP-330 does not admit
+  buffer text.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses the per-kind document minima and permits the bounded
+  editor-buffer state.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds settled browser, tool, document, run, transcript,
+  context, record and shared-helper dimensions and timings.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Passes host navigation keys from tab typing fields
+  and cycles F6 to the chat composer.'
+- 'Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel
+  split-off uses output:<channel>.'
+- 'Amended 2026-10-10 (DL-187, D33): The Debug Console is one tab, debug-console, with a sub-tab per session
+  as view state; debug-console:<session> ids fold into it; each session keeps its console, state and frame,
+  and its input history stays per session (F3-490).'
+- 'Amended 2026-10-10 (DL-180, D31 as built, panels NUMBERS 339203bd76; DL-187, D33 and D38): The Output tabs
+  are labelled Output and Output · <Channel>; a kind may fold older ids and add tab-menu rows through its registration.'
+- 'Amended 2026-10-11 (lead ruling 2026-10-11, D29): The Debug Console sub-tab passage uses the shared neutral
+  chosen fill.'
 owner_hints:
-  - Plans/FinalGUISpec.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/DRY_Rules.md
-  - Plans/Glossary.md
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/DRY_Rules.md
+- Plans/Glossary.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Commands_System.md#CS-100, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-490
@@ -1398,143 +1435,100 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The chat is a fixed column on the right of the window (DL-180, D3). It runs from the title bar to
-  the status bar, which both stay full width (Jared, 2026-08-13, PMConcept7 revision 15: "The chat
-  assistant window should be full vertical height, unless it pops out, then the user can adjust
-  it."). It is never a tab and never in the split tree, and it is never moved, docked, grabbed or
-  floated inside the window: it carries no grip and no surface menu of the home centre. Its default
-  width follows the window: clamp(400, 0.26667 x window width + 88, 640) px, so 480 px on a 1470 px
-  window, 600 px at 1920 px and 640 px from 2070 px. The user drags the column's inner edge between
-  400 and 760 px, never so wide that the centre drops below 960 px, and on the Usage page never so
-  wide that the Usage board drops below 400 px (below); the drag previews locally and commits once
-  on release as cmd.workspace_layout.resize_surface with the surface chat and its width, kept in the
-  v2 layout record (SP-330), and a width the user never set follows the window. Showing and hiding
-  the chat stay cmd.panel.switch with chat, and the left rail's Chat entry shows or hides the column
-  on every page without changing the page in front (F3-042, D40). The narrow ladder (F3-636) eases
-  it toward 400 px and, below a centre width of 480 px, folds it to a 32 px edge strip that opens it
-  again; "Keep the chat open in narrow windows" keeps it open instead. That toggle is the chat's own
-  preference, not a Settings row: it sits in the chat header's menu (ACD-442) and in the title bar's
-  Home options menu (the planning thread's ruling of 2026-10-10 under D4). Amended 2026-10-10 (lead
-  ruling): it is a check in the chat header's menu, and the concept also offers it in the Home
-  options menu; both dispatch the same typed local action, ui.chat_column.keep_open with its
-  argument keep_open, whose value is saved in the v2 record's chat column as keep_open
-  (Plans/storage-plan.md#SP-330), never a Settings row. Pop out is the only way to move it (D3: the
-  desktop app). In the desktop app Pop out opens the same chat, with its History and Activity
-  Detail, in its own window that the user sizes and places (cmd.panel.undock with chat;
-  panel.undocked, F3-527), and Dock back returns it to its column (cmd.panel.redock;
-  panel.redocked); exactly one chat exists at a time. The web client offers no Pop out; the chat
-  stays in its column. The title bar's Home options menu carries Show the chat or Hide the chat, and
-  in the desktop app Pop out the chat or Dock the chat back, and Keep the chat open in narrow
-  windows (F3-502). The 5.6 Pro chat's History list is a flyout over the chat by default; pinning it
-  widens the chat by the list's own width instead of squeezing the messages. Activity Detail stays
-  inside the chat as the 5.6 Pro chat designs it (APR-001), never a panel tab. One thread-history
-  list survives, the 5.6 Pro one. The chat sizes itself by its own column, never by the window
-  (ACD-501). Everything the chat opens lands in the centre through F3-634 (ACD-500). This supersedes
-  chat docking to any host, the chat's grip, its grab and keyboard move, floating it inside the
-  window and its Dock back to a host (F3-HOME-001, F3-HOME-002 and F3-HOME-003 as they apply to the
-  chat; F3-516's saved dock), and the four different chat minimums: F3-HOME-002's 260 px nominal
-  minimum, F3-423's floating floor (it now holds only for the desktop app's popped-out chat window),
-  F3-565's narrowest chat (its resilience rules now hold for a popped-out window narrower than 400
-  px), and the 360 px chat beside an open document of APR-038 and F3-569. After a restart the chat
-  starts in its column, also when it was popped out as the app closed (Jared, D32; F3-504): the
-  pop-out is never saved, while the column's visibility and width are (SP-330). A Chat Layout value
-  saved before this redesign, Overlay or Detached, never pops the chat out at start:
-  general.visual.chat-layout-mode retires, and a stored value is ignored and cleared on first read,
-  with no pop-out and no notice (SSYS-050). On the Usage page the chat never squeezes the Usage
-  board below 400 px, the narrowest board every Usage widget's smallest preset is checked at
-  (Plans/Widget_System.md#WS-017; the planning thread's ruling of 2026-10-10): a pinned History
-  drops back to its flyout first, then the column gives way down to its 400 px minimum, and it grows
-  back toward the person's width as the board gets room again; a width drag there stops where the
-  board would drop below 400 px. None of this is saved beyond the width the person dragged to. The
-  narrow ladder of F3-636 runs only while Home is the page shown; on any other page the column is
-  the person's width, plus a pinned History. ui.chat_column.pin_history is a typed local action
-  (view state); its value is saved in the v2 record's chat column as history_pinned, with no
-  workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize.
-  The saved width and the 400-760 px drag range describe the message area. Pinning History adds 240
-  px to the column, or 200 px while the whole column is under 540 px; the messages keep their width.
-  Amended 2026-10-23 (DL-233): the column adds the width History is drawn at, 240 px, 200 px only in
-  a capped column under 540 px (the popped-out chat or the narrow peek), or the width the person
-  dragged History's edge to within the chat's own 170-360 px and 42 percent of its pane. While that
-  drag lasts only History moves, so its edge stays under the pointer; on release the column takes the
-  new width and the messages theirs. While the narrow ladder takes pinned History's width back,
-  History shows as its flyout and the person's pin is kept; it is pinned again when the room returns.
-  The pinned column's minimum is 640 px; its drag range is 640 to 760 + 240 px, capped by the 960 px
-  centre budget. A folded chat always has History dropped to a flyout, so its peek opens at 400 px;
-  with History pinned in the peek it is 640 px, capped at the row width minus 48 px. Measured
-  History cases: at 1920 px in Friendly dark, the flyout column is 600 px, the pinned column 666 px
-  (History 240 px, messages 425 px) and C 960 px; at 1920 px in NieR, flyout is 600 px and pinned
-  681 px (History 240 px, messages 440 px), with C 960 px. At 1470 px in Glass light with the rail
-  folded, flyout is 446 px with C 960 px, and pinned is 640 px (History 240 px, messages 400 px),
-  with C 766 px (re-measured 2026-10-23, DL-233; the 2026-10-10 reading was 434 px, 399 px and C 754
-  px). At 900 px in Retro dark the chat folds to 32 px, with a 400 px flyout peek or 640 px pinned
-  peek; as built, a folded chat keeps History dropped, so its peek opens at 400 px with History as
-  its flyout either way. These measurements include centre-budget clamping, while the saved width
-  remains the message-area preference. The hosted 5.6 Pro chat and the panel redesign's scripted
-  stand-in, measured on the same page on 2026-10-23, give the same numbers in each case (DL-233).
-  The v2 layout record's chat_column keeps width_px, history_pinned and
-  keep_open (defaults null, false and false), in addition to its shown state; none is a Settings
-  value. width_px is the message area's width, rounded to an integer in 400-760 px, with an
-  out-of-range finite number stored at the nearer bound and null following the window's default;
-  other values are refused. The resize command is cmd.workspace_layout.resize_surface { surface:
-  'chat', width }: a changed release commits once with one receipt, one workspace.layout_changed and
-  a new revision; Escape or release with no movement commits nothing. Double-clicking the resizer
-  commits once with width null. The two pin actions accept their named boolean or toggle when it is
-  absent, and save like view state with no receipt, event or revision; the pin in History's list
-  header, History's close while it is pinned and Keep History open in the chat's header menu
-  dispatch ui.chat_column.pin_history. A named layout
-  and Restore home layout keep all three fields; a project switch shows that project's own record,
-  or the defaults if none exists. Once at boot, the former stored chat.width (finite, rounded and
-  clamped to 400-760), chat.history value pinned and chat.pinOpen true copy into this project's
-  layout and every other project's saved layout only where the target field still holds its default;
-  existing non-default fields stay. The three old keys are dropped only after this project's layout
-  is written, never while an unreadable record waits to be set aside; stored defaults (null, flyout
-  and false) are just dropped. The chat's header menu rows, in order, are Keep History open (checked,
-  ui.chat_column.pin_history), Keep the chat open in narrow windows (checked,
-  ui.chat_column.keep_open), and Pop out or Dock back where supported (amended 2026-10-23, DL-233: the
-  stand-in chat's Show the current chat and Clear what you sent left with it). Keep open's second
-  line says Instead of folding to a strip at the edge. At 1920 px with width_px 500,
-  History pinning grows the column from 500 to 681 px (History 240 px, centre 960 px) and unpinning
-  returns it to 500; dragging the 600 px column's inner edge 100 px right stores width_px 500, and
-  double-click resets it to 600 with width_px null. At 900 x 700, keep_open on keeps the chat at 400
-  px with centre 443 px; off it folds to the strip with centre 811 px. Jared’s 2026-10-14
-  shell-spacing direction reduces excess space between the left rail and page content and between
-  content and the chat column on all pages. Glass needs the larger reduction; other looks retain
-  their grammar with smaller adjustments where needed. The Glass landing fixes the shell row gap at
-  2 px, giving about 8 px between the painted columns. Settings ends 10 px from the chat in Glass
-  and 20 px in other looks. The Orchestrator Glass header and board are inset 6 px instead of 16 px;
-  F3-655 consumes that shell placement. This changes no chat or panel minimum, collapse threshold or
-  persistence boundary.
+  Amended 2026-10-29 (G1–G3; DL-254, retaining DL-180/DL-233). Chat is one fixed right-hand column from
+  title bar to status bar, never a tab or split-tree panel and never moved/floated inside the window. Only
+  desktop Pop out moves it to a separate window via cmd.panel.undock with chat; cmd.panel.redock returns
+  the same chat. Web has no Pop out. Pop-out is never saved: restart opens the column, ignoring/clearing
+  the retired chat-layout-mode without notice. Default message width remains clamp(400, 0.26667 × window
+  width + 88, 640) px until the user sizes it. The message-area width is a finite integer ≥400 or null
+  following the default, with no fixed 760 maximum. Drag goes until the active centre/page’s own floor;
+  Usage’s board stays ≥400. Available-space clamping changes rendering, not the saved preference. F3-636’s
+  narrow ladder and Keep open rule remain; no drag animation folds the person’s sized chat back. Release
+  commits once through cmd.workspace_layout.resize_surface {surface: chat, width}, one
+  receipt/revision/workspace.layout_changed; Escape/no-movement commits nothing; double-click sets null.
+  Legacy finite saved widths clamp only to the minimum and current available space, never to a retired
+  maximum. Storage owner SP-330 keeps shown, width_px, history_pinned and keep_open, no Settings row and no
+  pop-out. History is the one chat-owned history list, flyout by default. Pin widens the column by the
+  width History is actually drawn at rather than squeezing messages: 240 px, or 200 only in a capped column
+  under 540, or the person’s dragged width bounded to 170–360 and 42 percent of its pane (DL-233). During
+  that drag only History moves; on release the column takes its width. The narrow ladder temporarily
+  returns History to flyout while preserving the pin and restores it when space returns. A folded chat
+  peeks at 400 with History as flyout; a pinned peek starts at 640 capped by available row width minus 48.
+  ui.chat_column.pin_history(history_pinned) and ui.chat_column.keep_open(keep_open) are local saved layout
+  state without receipt/event/revision, never Settings; absent booleans toggle. Home options and chat
+  header share these controls. The earlier measured 760-cap/960-budget examples are superseded historical
+  measurements, not current width limits. Activity Detail opens full size directly, without Pin/unpin or a
+  small transient view. It first asks the column for room, then covers the transcript at full column height
+  if the window cannot fit it; ×, Esc or the same icon closes it. History pin is unaffected. Hosted chat
+  sizes by its container and sends content opens through F3-634; one right chat and one history survive.
+  This supersedes old movable chat, grips, bottom workspace mirroring and any fixed maximum-width Settings
+  preference while keeping the narrow/popped-out resilience of F3-565/F3-423. The default remains exactly
+  clamp(400, 0.26667 x window width + 88, 640) px: 480 at 1470, 600 at 1920 and 640 from 2070 px before
+  available-space rendering. The rail Chat control still uses cmd.panel.switch with panel_id chat to
+  show/hide without switching the primary page. Header/Home options retain Show the chat/Hide the chat,
+  desktop Pop out/Dock back and Keep the chat open in narrow windows, all routed to their existing
+  command/local identities. general.visual.chat-layout-mode is retired and ignored/cleared on first read,
+  never another layout store. Preserve Jared’s full-height requirement: The chat assistant window should be
+  full vertical height, unless it pops out, then the user can adjust it.
 gui_related: true
-gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
+gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout
+  and Activity Detail.
 split_recommended: false
-depends_on: [DL-180, DL-187, F3-504, F3-527, F3-630]
-unblocks: [ACD-500, ACD-501, SSYS-050, UCC-203, PWIZ-035, ATS-075]
+depends_on:
+- DL-180
+- DL-187
+- F3-504
+- F3-527
+- F3-630
+unblocks:
+- ACD-500
+- ACD-501
+- SSYS-050
+- UCC-203
+- PWIZ-035
+- ATS-075
 acceptance_criteria:
-  - "The chat column spans from the title bar to the status bar at full width of both bars, and no gesture, menu or key moves it inside the window."
-  - "The default width equals clamp(400, 0.26667 x window width + 88, 640) px (480 at 1470, 600 at 1920, 640 from 2070) until the user drags it."
-  - "A width drag stays within 400-760 px and never leaves the centre below 960 px, and commits once on release as cmd.workspace_layout.resize_surface with the surface chat."
-  - "Pop out in the desktop app opens the one chat in its own window and Dock back returns it to its column; no second chat surface ever exists."
-  - "History opens as a flyout by default and pinning it widens the column by the list's width without narrowing the messages; Activity Detail stays in the chat."
-  - "Below a centre width of 480 px the chat folds to a 32 px strip unless Keep the chat open in narrow windows is on."
-  - "Keep the chat open in narrow windows is reachable from the chat header's menu and the title bar's Home options menu and is not a Settings row."
-  - "Keep the chat open in narrow windows is a check in the chat header's menu and in the Home options menu; both dispatch ui.chat_column.keep_open with keep_open, and the value is saved in the v2 record's chat column (SP-330), never in Settings (amended 2026-10-10, lead ruling)."
-  - "After a restart a chat that was popped out shows in its column, and no stored Chat Layout value (Overlay or Detached) pops it out or shows a notice."
-  - "The left rail's Chat entry shows or hides the column on every page and never changes the page in front."
-  - "On the Usage page no chat width, drag or pinned History leaves the Usage board below 400 px: a pinned History drops to its flyout first, then the column gives way down to 400 px, and a drag stops there."
-  - "The narrow ladder acts only while Home is the page shown; on another page the column is the person's width plus a pinned History."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "History adds 240 px, or 200 px below a 540 px whole-column width, without changing the message area's width or its 400-760 px drag range; the pinned column and peek obey the stated minima and centre budget."
+- The chat column spans from the title bar to the status bar at full width of both bars, and no gesture, menu
+  or key moves it inside the window.
+- The default width equals clamp(400, 0.26667 x window width + 88, 640) px (480 at 1470, 600 at 1920, 640 from
+  2070) until the user drags it.
+- A width drag stays within at least 400 px, bounded by current centre/page space and never leaves the centre
+  below its current minimum, and commits once on release as cmd.workspace_layout.resize_surface with the surface
+  chat.
+- Pop out in the desktop app opens the one chat in its own window and Dock back returns it to its column; no
+  second chat surface ever exists.
+- History opens as a flyout by default and pinning it widens the column by the list's width without narrowing
+  the messages; Activity Detail stays in the chat.
+- Below a centre width of 480 px the chat folds to a 32 px strip unless Keep the chat open in narrow windows
+  is on.
+- Keep the chat open in narrow windows is reachable from the chat header's menu and the title bar's Home options
+  menu and is not a Settings row.
+- Keep the chat open in narrow windows is a check in the chat header's menu and in the Home options menu; both
+  dispatch ui.chat_column.keep_open with keep_open, and the value is saved in the v2 record's chat column (SP-330),
+  never in Settings (amended 2026-10-10, lead ruling).
+- After a restart a chat that was popped out shows in its column, and no stored Chat Layout value (Overlay
+  or Detached) pops it out or shows a notice.
+- The left rail's Chat entry shows or hides the column on every page and never changes the page in front.
+- 'On the Usage page no chat width, drag or pinned History leaves the Usage board below 400 px: a pinned History
+  drops to its flyout first, then the column gives way down to 400 px, and a drag stops there.'
+- The narrow ladder acts only while Home is the page shown; on another page the column is the person's width
+  plus a pinned History.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
+- History adds 240 px, or 200 px below a 540 px whole-column width, without changing the message area's width
+  or its at least 400 px, bounded by current centre/page space drag range; the pinned column and peek obey
+  the stated minima and centre budget.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: home_panels_terminal_redesign_drift
 reasoning_tier: high
 context_scope: home_panels_terminal
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - Plans/assistant-chat-design.md
-  - Plans/Settings_System.md
-  - Plans/storage-plan.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/Settings_System.md
+- Plans/storage-plan.md
 node_compile_hint:
   mode: gui_promotion_contract
   create_worknodes: false
@@ -1542,16 +1536,15 @@ node_compile_hint:
 source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
   SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
-- Plans/FinalGUISpec.md#F3-636 (the narrow ladder consumes the chat column; cited, not a dependency (lead
-  ruling L22, 2026-10-10))
+- Plans/FinalGUISpec.md#F3-636 (the narrow ladder consumes the chat column; cited, not a dependency (lead ruling
+  L22, 2026-10-10))
 - Plans/Decision_Log.md#DL-180
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
   (D3, D4)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
   SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)
-- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256
-  52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage
-  only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981
+  (the agreed anatomy; concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5
   (sections 9 and 10; audit lineage only)
 - Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)
@@ -1559,23 +1552,20 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
   SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D40)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md,
-  SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (chat column, D32 and D40;
-  concept lineage only)
+  SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (chat column, D32 and D40; concept
+  lineage only)
 - 'The planning thread''s rulings of 2026-10-10: the Usage board''s 400 px floor (pm-mail 1010142236-fced)
   and Chat Layout''s retirement with the narrow-window pin on the chat''s header menu (pm-mail 1010211322-7b6c)'
 - Concepts/home-redesign/src/panels/js/44-narrow.js and 46-chat.js at 7ad8442ad4 on branch concept/home-panels-20261009
   (the Usage board floor as built; concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
-  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage
-  only)
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
-  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage
-  only)
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
   (decision/source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--LANDING-HANDOFF.md,
-  SHA-256 b920b1435478aaf5723b8051acc0aa07247680ed3d231fa6e5a67e1cfd11f48f (source lineage; not native
-  certification)
+  SHA-256 b920b1435478aaf5723b8051acc0aa07247680ed3d231fa6e5a67e1cfd11f48f (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/SPACING-4511b2c0eb.patch, SHA-256 57d02d7bfe773a8bde37c5c0aee4ade312a29d7530124c3e2e7ebc70629f147d
   (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/SPACING-84997e7cad.patch, SHA-256 2b5acd7b306e3133fa64dec16ff4c32a95fd229e2b89b563cf367f2c05cf96c3
@@ -1583,43 +1573,61 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/SPACING-dc743c7320.patch, SHA-256 d88a28be144814a3c486e810afcf8c3dd348b06ebef611bbbf44fd4d5095a20b
   (source lineage; not native certification)
 preserved_exact_tokens:
-  - "clamp(400, 0.26667 x window width + 88, 640)"
-  - "400"
-  - "760"
-  - "600"
-  - "Pop out"
-  - "Dock back"
-  - "cmd.panel.switch"
-  - "cmd.panel.undock"
-  - "cmd.panel.redock"
-  - "Keep the chat open in narrow windows"
-  - "general.visual.chat-layout-mode"
-  - "The chat assistant window should be full vertical height, unless it pops out, then the user can adjust it."
+- clamp(400, 0.26667 x window width + 88, 640)
+- '400'
+- '760'
+- '600'
+- Pop out
+- Dock back
+- cmd.panel.switch
+- cmd.panel.undock
+- cmd.panel.redock
+- Keep the chat open in narrow windows
+- general.visual.chat-layout-mode
+- The chat assistant window should be full vertical height, unless it pops out, then the user can adjust it.
 negative_constraints:
-  - "Do not dock, grab, float or move the chat inside the window or, in the web client, inside the page, or make it a tab."
-  - "Do not size the chat against the window inside its column."
-  - "Do not make Activity Detail or the History list a panel tab."
-  - "Do not keep a second thread-history list."
-  - "Do not save the chat's pop-out across a restart, or let a stored Chat Layout value pop it out."
-  - "Do not let the chat leave the Usage page's board below 400 px."
+- Do not dock, grab, float or move the chat inside the window or, in the web client, inside the page, or make
+  it a tab.
+- Do not size the chat against the window inside its column.
+- Do not make Activity Detail or the History list a panel tab.
+- Do not keep a second thread-history list.
+- Do not save the chat's pop-out across a restart, or let a stored Chat Layout value pop it out.
+- Do not let the chat leave the Usage page's board below 400 px.
 compatibility_only_notes:
-  - "The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back; that is the concept's browser stand-in, not a canon size."
+- The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back;
+  that is the concept's browser stand-in, not a canon size.
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds pinned History widths, keeps the width and drag range tied to the messages, and records the measured pinned History column and message widths from NUMBERS; a folded chat's peek opens at 400 px with History dropped, and is 640 px only with History pinned in the peek."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Saves History pin as view state with no layout event, revision advance or receipt."
-  - "Amended 2026-10-10 (lead ruling L9, corrected): The History pin is the typed local action ui.chat_column.pin_history, view state saved in the v2 record's chat column as history_pinned with no event; this supersedes the earlier L9 wording 'commits history_pinned with chat_column_changed'."
-  - "Amended 2026-10-10 (lead ruling L7): After restart the chat starts in its column; reopening popped out remains an open question for Jared."
-  - "Amended 2026-10-10 (lead ruling L6): Pop out is desktop only; the web chat stays in its column."
-  - "Amended 2026-10-10 (DL-187, D32): Jared answered L7's question: a popped-out chat starts back in its column after a restart, the pop-out is never saved, and a stored Chat Layout value (general.visual.chat-layout-mode, retired) never pops it out."
-  - "Amended 2026-10-10 (DL-187, D40): The left rail's Chat entry shows or hides the column on every page (F3-042)."
-  - "Amended 2026-10-10 (DL-187, the planning thread's rulings): Keep the chat open in narrow windows is the chat's own preference in its header menu and the Home options menu, not a Settings row; on the Usage page the chat never leaves the board below 400 px; the narrow ladder runs only while Home is the page shown."
-  - "Amended 2026-10-10 (lead ruling): Keep the chat open in narrow windows is a check in the chat header's menu, also offered in the Home options menu, both dispatching ui.chat_column.keep_open, saved in the v2 chat column."
-  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The layout chat column keeps the rounded message width and pins, migrates former preferences once, and owns the More rows."
-  - "Amended 2026-10-23 (DL-233): pinned History adds the width it is drawn at, a dragged width included, and drops to its flyout while the ladder takes that width back; the chat's header menu rows follow the hosted 5.6 Pro chat, the stand-in's rows (Show the current chat, Clear what you sent) leaving with the stand-in."
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds pinned History widths, keeps the width and drag
+  range tied to the messages, and records the measured pinned History column and message widths from NUMBERS;
+  a folded chat''s peek opens at 400 px with History dropped, and is 640 px only with History pinned in the
+  peek.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Saves History pin as view state with no layout event,
+  revision advance or receipt.'
+- 'Amended 2026-10-10 (lead ruling L9, corrected): The History pin is the typed local action ui.chat_column.pin_history,
+  view state saved in the v2 record''s chat column as history_pinned with no event; this supersedes the earlier
+  L9 wording ''commits history_pinned with chat_column_changed''.'
+- 'Amended 2026-10-10 (lead ruling L7): After restart the chat starts in its column; reopening popped out remains
+  an open question for Jared.'
+- 'Amended 2026-10-10 (lead ruling L6): Pop out is desktop only; the web chat stays in its column.'
+- 'Amended 2026-10-10 (DL-187, D32): Jared answered L7''s question: a popped-out chat starts back in its column
+  after a restart, the pop-out is never saved, and a stored Chat Layout value (general.visual.chat-layout-mode,
+  retired) never pops it out.'
+- 'Amended 2026-10-10 (DL-187, D40): The left rail''s Chat entry shows or hides the column on every page (F3-042).'
+- 'Amended 2026-10-10 (DL-187, the planning thread''s rulings): Keep the chat open in narrow windows is the
+  chat''s own preference in its header menu and the Home options menu, not a Settings row; on the Usage page
+  the chat never leaves the board below 400 px; the narrow ladder runs only while Home is the page shown.'
+- 'Amended 2026-10-10 (lead ruling): Keep the chat open in narrow windows is a check in the chat header''s
+  menu, also offered in the Home options menu, both dispatching ui.chat_column.keep_open, saved in the v2 chat
+  column.'
+- 'Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The layout chat column keeps the rounded message
+  width and pins, migrates former preferences once, and owns the More rows.'
+- 'Amended 2026-10-23 (DL-233): pinned History adds the width it is drawn at, a dragged width included, and
+  drops to its flyout while the ladder takes that width back; the chat''s header menu rows follow the hosted
+  5.6 Pro chat, the stand-in''s rows (Show the current chat, Clear what you sent) leaving with the stand-in.'
 owner_hints:
-  - Plans/FinalGUISpec.md
-  - Plans/assistant-chat-design.md
-  - Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/UI_Command_Catalog.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/assistant-chat-design.md#ACD-500, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/FinalGUISpec.md#F3-504, ContractName:Plans/UI_Command_Catalog.md#UCC-203, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-042, ContractName:Plans/Widget_System.md#WS-017, ContractName:Plans/Settings_System.md#SSYS-050
@@ -2354,51 +2362,81 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  PMConcept7 has one Demo Studio for every concept surface, modelled on the 5.6 Pro chat's (DL-185, D26; the rule is
-  Plans/DRY_Rules.md#DR-070). The Guided Tour's and onboarding's demo controls, the chat's demo controls, the home demos
-  and, later, the Orchestrator and Planning Wizard pages' demo controls are sections of that one studio; no surface
-  draws a demo panel of its own. The Demo Studio and every control in it are lab only, in the pattern of
-  Plans/assistant-chat-design.md#ACD-474: never a product control, setting, command, wiring row, saved value or test
-  gate, never shown in the product's menus or Settings, and no canon number comes from them. In the concept it opens
-  above the one overlay root and below hover tags and the Guided Tour (F3-635). It follows the bans (F3-648) and the
-  looks (F3-647) like any surface. This supersedes the concept practice of a demo panel per surface and changes no
-  product unit.
+  PMConcept7 has one Demo Studio for every concept surface, modelled on the 5.6 Pro chat's (DL-185, D26;
+  the rule is Plans/DRY_Rules.md#DR-070). The Guided Tour's and onboarding's demo controls, the chat's demo
+  controls, the home demos and, later, the Orchestrator and Planning Wizard pages' demo controls are
+  sections of that one studio; no surface draws a demo panel of its own. The Demo Studio and every control
+  in it are lab only, in the pattern of Plans/assistant-chat-design.md#ACD-474: never a product control,
+  setting, command, wiring row, saved value or test gate, never shown in the product's menus or Settings,
+  and no canon number comes from them. In the concept it opens above the one overlay root and below hover
+  tags and the Guided Tour (F3-635). It follows the bans (F3-648) and the looks (F3-647) like any surface.
+  This supersedes the concept practice of a demo panel per surface and changes no product unit. Amended
+  2026-10-29 (W8, SND1; PM7): One lab Demo Studio covers Pip/loader/sound/parts, project box states/widths,
+  expanded onboarding tips/errors and Activity/Resources/quit. Owner APIs only, missing owners unavailable;
+  no lab toolbar or magic demo errors in product. Jared listens to the sound board before landing. W8
+  normative Demo Studio matrix (2026-10-29; DL-256): one lab only, strings in 75-demo-studio.json, public
+  owner APIs with unavailable controls when absent, 4.5:1 contrast in every look, Reset Everything clears
+  only OWNED keys. Pip section: marks/tiles/tray in all ten looks, mood stay-row firing on every live Pip,
+  Mark only, Swing/Think/Hop take, Every loader moment and Hold loaders. Sound board exposes
+  kit-by-look/choice, 42 events, 5 loops and Pip says input; Jared listens before landing (SND1).
+  Onboarding: pip twist antigravityOnce, Oops cases returning-name tastebook, Cursor refused key ≤11
+  characters and first Antigravity sign-in failure with real retry state; Ask Pip opens a screen with its
+  chosen ? note; pipRoughDay recipe. Chat: Adjust Pip beside Adjust NieR look, Full/Quiet/Still/Plain,
+  Crew-host faces, Scheduled faces, Activity rows and Orbit moments, recorded pip Crew run queued→done;
+  remove pip-chat:v1 when product settings bind or give Reset explicit ownership while it is still a lab
+  key. Workspace/Title bar: calm, working, blocked, needs-you and unsaved as separate states, long-name
+  switch, real density widths full/1280/1024/860 and Open project menu. Activity: Busy, No asks, Quiet,
+  Many, Stale feed, After restart and Right-now; open Agents/Processes/Resources and thread Processes, with
+  several servers/environments; Quit…, Stop all and Numbers/Words. Extend busy recipe and add quitWithWork;
+  optional D9 notices use the real alert owner. No imported concept toolbar, fake product errors, second
+  Demo Studio, new product command or preference is authorized by these lab cases. Documentation retires
+  the claim that sample notices cannot fire and updates the recorded-example census from its actual
+  registry.
 gui_related: true
-gui_classification_reason: Defines the one Demo Studio for PMConcept7's concept surfaces and keeps it out of the product.
+gui_classification_reason: Defines the one Demo Studio for PMConcept7's concept surfaces and keeps it out of
+  the product.
 split_recommended: false
-depends_on: [DL-185, ACD-474]
-unblocks: [DR-070, ACD-501]
+depends_on:
+- DL-185
+- ACD-474
+unblocks:
+- DR-070
+- ACD-501
 acceptance_criteria:
-  - "Every PMConcept7 concept surface's demo controls are sections of the one Demo Studio, and no surface draws its own demo panel."
-  - "No product catalog, settings inventory, wiring matrix, persisted key or test gate names the Demo Studio or a control in it."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- Every PMConcept7 concept surface's demo controls are sections of the one Demo Studio, and no surface draws
+  its own demo panel.
+- No product catalog, settings inventory, wiring matrix, persisted key or test gate names the Demo Studio or
+  a control in it.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: home_panels_terminal_redesign_drift
 reasoning_tier: high
 context_scope: home_panels_terminal
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - Plans/DRY_Rules.md
-  - Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/DRY_Rules.md
+- Plans/assistant-chat-design.md
 node_compile_hint:
   mode: gui_promotion_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D26)"
+- Plans/Decision_Log.md#DL-185
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D26)
 preserved_exact_tokens:
-  - "Demo Studio"
+- Demo Studio
 negative_constraints:
-  - "Do not give the Demo Studio or any demo control a command, setting, wiring row, saved value or test gate."
-  - "Do not draw a separate demo panel per surface."
+- Do not give the Demo Studio or any demo control a command, setting, wiring row, saved value or test gate.
+- Do not draw a separate demo panel per surface.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-  - Plans/FinalGUISpec.md
-  - Plans/DRY_Rules.md
+- Plans/FinalGUISpec.md
+- Plans/DRY_Rules.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/DRY_Rules.md#DR-070, ContractName:Plans/assistant-chat-design.md#ACD-474

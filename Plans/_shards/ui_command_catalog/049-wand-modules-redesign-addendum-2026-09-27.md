@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L13699-L14811
+Source lines: L13699-L14837
 
-Source SHA256: `c14181f8a6fbc45bf628a3dd7404309ebd191fbec9962524c46d8f1d77bf8876`
+Source SHA256: `25a1861131d0a324e7980c383abe6234f482ed81f0a409f32c851240ef749abe`
 
 ---
 
@@ -64,94 +64,118 @@ canonical_text: >-
   The controls this unit covers add source surfaces, not commands; the redesign's nine new command
   identities are registered in UCC-171 and UCC-174 (CDRY-022, CDRY-023). New surfaces: run_dock,
   wonderer_workspace, memory_proposal_line, bsd_note, schedule_sheet, scheduled_message_card,
-  schedule_manager, memory_sheet, message_files_row, revert_confirm and chat_header. Existing
-  surfaces join more rows: mode_menu, natural_language and plan_schedule produce
-  cmd.collaboration.configure; wand produces cmd.chat.teach.open_memory and cmd.chat.teach.capture;
-  brainstorm_card and run_dock produce cmd.questionnaire.resume for BrainStorm "Answer now", disabled
-  with command_not_registered while the family is candidate_not_registered; workflow_card alone
-  produces cmd.runtime.approve, cmd.runtime.decline and cmd.permissions.review_request; review and
-  Chat Room cards and panels produce cmd.chat.todos.open. memory_sheet produces
-  cmd.chat.memory.preview_capsule, a preview computation with no persisted domain event.
-  cmd.chat.plan.build_with_crew is produced by the Crew sheet in Build With Crew mode and never decomposes into cmd.collaboration.start.
-  cmd.chat.revert is dispatched only by revert_confirm, whose expected_turn_manifest_sha256 is the
-  hash of the manifest it shows; there is no kept or conflict-dismissal outcome. chat_header produces
-  cmd.chat.thread.regenerate_title, whose label UCC-173 sets. cmd.chat.teach.capture carries mode new
-  or correct; the Teach sheet saves through cmd.chat.teach.confirm and closes through
-  cmd.chat.teach.cancel. Every added surface takes the UCC-156 availability and disabled-reason
-  obligation.
-  The Plan card's Cancel schedule control produces cmd.execution_window.cancel from plan_card
-  (SQR-013, DL-138), alongside schedule_manager; it cancels only the future execution schedule
-  through the existing request, never an already-running plan.
+  schedule_manager, memory_sheet, message_files_row, revert_confirm and chat_header. Existing surfaces join
+  more rows: mode_menu, natural_language and plan_schedule produce cmd.collaboration.configure; wand
+  produces cmd.chat.teach.open_memory and cmd.chat.teach.capture; brainstorm_card and run_dock produce
+  cmd.questionnaire.resume for BrainStorm "Answer now", disabled with command_not_registered while the
+  family is candidate_not_registered; workflow_card alone produces cmd.runtime.approve, cmd.runtime.decline
+  and cmd.permissions.review_request; review and Chat Room cards and panels produce cmd.chat.todos.open.
+  memory_sheet produces cmd.chat.memory.preview_capsule, a preview computation with no persisted domain
+  event. cmd.chat.plan.build_with_crew is produced by the Crew sheet in Build With Crew mode and never
+  decomposes into cmd.collaboration.start. cmd.chat.revert is dispatched only by revert_confirm, whose
+  expected_turn_manifest_sha256 is the hash of the manifest it shows; there is no kept or
+  conflict-dismissal outcome. chat_header produces cmd.chat.thread.regenerate_title, whose label UCC-173
+  sets. cmd.chat.teach.capture carries mode new or correct; the Teach sheet saves through
+  cmd.chat.teach.confirm and closes through cmd.chat.teach.cancel. Every added surface takes the UCC-156
+  availability and disabled-reason obligation. The Plan card's Cancel schedule control produces
+  cmd.execution_window.cancel from plan_card (SQR-013, DL-138), alongside schedule_manager; it cancels only
+  the future execution schedule through the existing request, never an already-running plan. PM7 S5: wand
+  Pip… is one Settings-editor producer, ui.settings.pip_editor.open; part/preset changes reuse UCC-120
+  Settings transactions, no chat capability or new mutation command.
 gui_related: true
-gui_classification_reason: "Names the visible sheets, cards, dock lines and header that produce existing commands, and their disabled states."
+gui_classification_reason: Names the visible sheets, cards, dock lines and header that produce existing commands,
+  and their disabled states.
 split_recommended: false
-depends_on: [UCC-156, ACD-476, ACD-477, ACD-478, ACD-479, CWR-020, CWR-031, BSD-030, SQR-012, SQR-013, AMS-047]
-unblocks: [WM-062, CDRY-021, UCC-170, UCC-171, UCC-172, CS-086]
+depends_on:
+- UCC-156
+- ACD-476
+- ACD-477
+- ACD-478
+- ACD-479
+- CWR-020
+- CWR-031
+- BSD-030
+- SQR-012
+- SQR-013
+- AMS-047
+unblocks:
+- WM-062
+- CDRY-021
+- UCC-170
+- UCC-171
+- UCC-172
+- CS-086
 acceptance_criteria:
-  - "The Plan card and schedule manager are admitted producers of cmd.execution_window.cancel, with unchanged cancellation custody."
-  - "Each surface in the two tables appears in the production wiring surface list of every row it names, and in no other row because of this addendum."
-  - "run_dock never produces cmd.runtime.approve, cmd.runtime.decline or cmd.permissions.review_request."
-  - "Build With Crew mode dispatches cmd.chat.plan.build_with_crew and never cmd.collaboration.start."
-  - "cmd.chat.revert has no kept outcome and is dispatched only from revert_confirm."
-  - "BrainStorm Answer now renders disabled with command_not_registered while the questionnaire family is candidate_not_registered."
+- The Plan card and schedule manager are admitted producers of cmd.execution_window.cancel, with unchanged
+  cancellation custody.
+- Each surface in the two tables appears in the production wiring surface list of every row it names, and in
+  no other row because of this addendum.
+- run_dock never produces cmd.runtime.approve, cmd.runtime.decline or cmd.permissions.review_request.
+- Build With Crew mode dispatches cmd.chat.plan.build_with_crew and never cmd.collaboration.start.
+- cmd.chat.revert has no kept outcome and is dispatched only from revert_confirm.
+- BrainStorm Answer now renders disabled with command_not_registered while the questionnaire family is candidate_not_registered.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 risk_class: wand_module_surface_drift
 reasoning_tier: high
 context_scope: assistant_wand_module_commands
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.production.json
-  - Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
+- Plans/Commands_System.md
 node_compile_hint:
   mode: static_command_catalog_surfaces
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 7.4, 7.12, 8.1, 8.4, 8.10, 8.12, 8.14, 8.15"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-03, B-CMD-04, B-ACD-12"
-  - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de
+  sections 7.4, 7.12, 8.1, 8.4, 8.10, 8.12, 8.14, 8.15
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493
+  lines B-CMD-03, B-CMD-04, B-ACD-12
+- Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
 preserved_exact_tokens:
-  - "cmd.execution_window.cancel"
-  - "plan_card"
-  - "run_dock"
-  - "wonderer_workspace"
-  - "memory_proposal_line"
-  - "bsd_note"
-  - "schedule_sheet"
-  - "scheduled_message_card"
-  - "schedule_manager"
-  - "memory_sheet"
-  - "message_files_row"
-  - "revert_confirm"
-  - "chat_header"
-  - "brainstorm_card"
-  - "workflow_card"
-  - "cmd.questionnaire.resume"
-  - "command_not_registered"
-  - "candidate_not_registered"
-  - "cmd.chat.plan.build_with_crew"
-  - "cmd.collaboration.start"
-  - "cmd.chat.revert"
-  - "expected_turn_manifest_sha256"
-  - "cmd.chat.thread.regenerate_title"
-  - "cmd.chat.teach.capture"
-  - "cmd.chat.teach.open_memory"
-  - "cmd.chat.memory.preview_capsule"
-  - "cmd.chat.todos.open"
-  - "cmd.runtime.approve"
-  - "cmd.runtime.decline"
+- cmd.execution_window.cancel
+- plan_card
+- run_dock
+- wonderer_workspace
+- memory_proposal_line
+- bsd_note
+- schedule_sheet
+- scheduled_message_card
+- schedule_manager
+- memory_sheet
+- message_files_row
+- revert_confirm
+- chat_header
+- brainstorm_card
+- workflow_card
+- cmd.questionnaire.resume
+- command_not_registered
+- candidate_not_registered
+- cmd.chat.plan.build_with_crew
+- cmd.collaboration.start
+- cmd.chat.revert
+- expected_turn_manifest_sha256
+- cmd.chat.thread.regenerate_title
+- cmd.chat.teach.capture
+- cmd.chat.teach.open_memory
+- cmd.chat.memory.preview_capsule
+- cmd.chat.todos.open
+- cmd.runtime.approve
+- cmd.runtime.decline
 negative_constraints:
-  - "Do not mint a command for opening a sheet, the Revert confirm sheet, or a view toggle."
-  - "Do not take a permission decision from run_dock."
-  - "Do not add a kept or conflict-dismissal outcome to cmd.chat.revert."
-  - "This unit does not change the Crew Auto open-config surfaces, the Crew Auto set payload, the Regenerate Title label, the Teach lock field, what /teach opens, or the ELI5, Teach document, Teach receipt and Crew Auto receipt surfaces; UCC-172, UCC-173 and UCC-175 carry the owner's answers and the lead's rulings on these."
+- Do not mint a command for opening a sheet, the Revert confirm sheet, or a view toggle.
+- Do not take a permission decision from run_dock.
+- Do not add a kept or conflict-dismissal outcome to cmd.chat.revert.
+- This unit does not change the Crew Auto open-config surfaces, the Crew Auto set payload, the Regenerate Title
+  label, the Teach lock field, what /teach opens, or the ELI5, Teach document, Teach receipt and Crew Auto
+  receipt surfaces; UCC-172, UCC-173 and UCC-175 carry the owner's answers and the lead's rulings on these.
 owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-476, ContractName:Plans/assistant-chat-design.md#ACD-478, ContractName:Plans/Collaborative_Workflows.md#MODAL-013, ContractName:Plans/Commands_System.md#CDRY-021, ContractName:Plans/Wiring_Matrix.md#WM-062
@@ -170,7 +194,7 @@ In the closure wave on 2026-09-27, three of them were settled. The owner confirm
 
 ### UCC-170 - Wand Module Command Census
 
-The census classifies the redesign's product controls: the sheets, cards, dock lines, run view, header, managers and documents of the redesigned Assistant wand modules. The redesign's commands audit counts 197 controls. 188 of them are product controls; the other nine are concept demo controls, which stay `CONCEPT_DEMO_ONLY` under CS-079 and are not listed here. The owner's closure answers add three product controls that the audit did not count. Two come from DL-126: the ELI5 dot by the message box, and "Explain this reply simply" on a finished reply. The third comes from DL-136: the "Pause all automations" switch, which the design had shown read-only. DL-138 adds See which rule and Ask for a fix on the taught-rule note, bringing the census to 193 controls. DL-231 adds the Chat Room setup check and the run switch for Pause between rounds, bringing the census to 195; the retired Ask Everyone remains classified as No producer.
+The census classifies the redesign's product controls: the sheets, cards, dock lines, run view, header, managers and documents of the redesigned Assistant wand modules. The redesign's commands audit counts 197 controls. 188 of them are product controls; the other nine are concept demo controls, which stay `CONCEPT_DEMO_ONLY` under CS-079 and are not listed here. The owner's closure answers add three product controls that the audit did not count. Two come from DL-126: the ELI5 dot by the message box, and "Explain this reply simply" on a finished reply. The third comes from DL-136: the "Pause all automations" switch, which the design had shown read-only. DL-138 adds See which rule and Ask for a fix on the taught-rule note, bringing the census to 193 controls. DL-231 adds the Chat Room setup check and the run switch for Pause between rounds, bringing that historical census to 195; S5 adds Pip… as a Settings disposition for the current total of 196; the retired Ask Everyone remains classified as No producer.
 
 Each control has exactly one of these dispositions:
 - **Command**: it dispatches the named row unchanged.
@@ -459,6 +483,7 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | "Name it for me" in the thread menu and the header | Command, `cmd.chat.thread.regenerate_title` (label from UCC-173) | `thread_menu`, `chat_header` |
 | Rename | Command, `cmd.chat.rename` | `thread_menu` |
 | "Choose another way" on the header warning | Settings (it opens New chat defaults) | `chat_header` |
+| Pip… | Settings: opens the one SSYS-056 editor through ui.settings.pip_editor.open; parts/presets use the Settings transaction. | `wand` |
 
 ```yaml
 plan_unit_id: UCC-170
@@ -466,7 +491,7 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  The wand-module command census classifies all 195 product controls of the redesigned Assistant wand
+  The wand-module command census classifies all 196 product controls of the redesigned Assistant wand
   modules: the commands audit's 197 less nine CONCEPT_DEMO_ONLY demo controls, plus the ELI5 dot,
   "Explain this reply simply" and the "Pause all automations" switch, which the closure answers add
   (DL-126, DL-136), plus See which rule and Ask for a fix on the taught-rule note (DL-138), plus the Chat Room setup check and run switch for
@@ -498,6 +523,7 @@ canonical_text: >-
   The Followed or Missed note is saved reply metadata, not an extra action. See which rule is view
   state; Ask for a fix on message_chrome dispatches cmd.review.send_findings_to_agent with
   taught_rule_check and obeys UCC-172's empty-composer, source-thread and no-send contract (DL-138).
+  Amended 2026-10-29 (PM7): S5: census now has 196 dispositions, adding wand Pip… → SSYS-056 editor (Settings disposition, no command). Earlier 195 totals are historical.
 gui_related: true
 gui_classification_reason: "Classifies every visible control of the redesigned sheets, cards, dock, run view, header and managers."
 split_recommended: false

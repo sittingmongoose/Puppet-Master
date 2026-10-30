@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L379-L491
 
-Source SHA256: `c02ebd69937ed9a53ae6c47e151123f6da410c3d572c2e2c60518019ced1b6af`
+Source SHA256: `ffdfb4e7786d3b56f787c3fa10ae10a48da8b35d7b7259f52eb5e5eeede37e59`
 
 ---
 
@@ -16,8 +16,8 @@ Amended 2026-10-09 (DL-180, DL-181): a terminal is one tab kind with one session
 
 | UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
 |---|---|---|---|---|
-| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
-| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette / title-bar project box (B1) | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette / title-bar row Ctrl/Cmd+Enter (B6) | shell state controller | Open target project in a new workspace tab |
 | Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
 | Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header Compact Now action | chat runtime controller | Dispatch only after explicit user choice; project the receipt/result as started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed; no `context.compaction.*` EventRecord family is currently registered |
 | Goal button/chip/icon or slash `/goal` | `cmd.chat.goal.start` | Assistant Chat composer / Goal chip / slash-command dispatcher | Goal Runtime controller | Start visible Goal Mode from the current thread using the Goal Runtime event envelope; concrete Goal event names and payload schemas remain owner-registered in Goal_Runtime_System, Contracts_V0, and storage-plan |
