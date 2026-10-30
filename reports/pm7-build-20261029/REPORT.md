@@ -1,6 +1,6 @@
 # PM7 Plans lane — Jared's final G2 / F3-1 follow-ups, 2026-10-30
 
-Branch: `t3/plans/pm7-plans-canon`. Amendment base: `d88ff92b04046611731f0a5f47935aedf343e7df`. Source: lead mail `1030125602-d03d`, Jared's 2026-10-30 answers. GUI amendment head is awaited from `pm7-build`.
+Branch: `t3/plans/pm7-plans-canon`. Verified follow-up source: `b3ea621573c5a4c99834a383e76ee9ec183df9e4` (pushed both remotes). Amendment base: `d88ff92b04046611731f0a5f47935aedf343e7df`. Source: lead mail `1030125602-d03d`, Jared's 2026-10-30 answers. GUI amendment head is awaited from `pm7-build`.
 
 **Both final follow-ups are applied to prose and companions.** G2 widens first, then docks/squeezes at the column limit when at least 360 px of messages remain; below that it uses full-column-height cover, never a small panel. The stored message-area width minimum stays 400 px; 360 is the constrained rendering threshold. F3-1 replaces Jared #19's control-clearance rule: every page stages tight below the title bar at the bell; the first card uses the theme-menu gap and may cover controls/chat head. Entering cards take no clicks; Reduced Motion settles instantly.
 
@@ -10,7 +10,7 @@ Thirteen existing owner units plus the narrative summaries and dated index line 
 
 PM7 focused check PASS: 85 schema cases, six geometry and twelve notice cases, with all earlier 19 reused-owner / five thread-consumer cases retained. All eight focused/generation checks PASS: PM7, canon, Touch, wiring, shard generation/check and index generation/validation. Derived changes belong only to the seven edited owner/index groups. No GUI source was edited; builders and the final full/dry follow the lead’s new GUI head. Inventory remains 477 bindings / 58 PM7 source families, 715 Touch / 140 profiles, 1269 production rows, 1011 settings and 22 status keys. No ledger was compiled; compile witness is not applicable.
 
-Current verification manifest SHA-256: `21f088fb489fd26e319d830f67ab9535de024a5e583a155662cb6bbe1ea87d52`. Raw prefix: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-`; the source proof records all 13 changed units, preserved metadata and 18 semantic cases.
+Current verification manifest SHA-256: `aeb609f71ffb4363ef31b992599f31d4e485133e7f3d62d21fe82978a7ca3ea6`. Raw prefix: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-`; the source proof records all 13 changed units, preserved metadata and 18 semantic cases.
 
 **Full gates/dry is held for the new GUI head**, as the lead instructed. The completed aggregate results below verify d0f9a0e28c only and do not certify this follow-up. No current G2 deviation remains. Both final questions have answers; the lead has listed the scoped open-inbox interpretation for Jared. The waiter is re-armed indefinitely (`--timeout 0`). No landing, lock or reseal.
 

@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.pm7_plans_verification.v1",
-  "source_commit": "d0f9a0e28ceaeb380c5a462df95e5429e0ee7331",
+  "source_commit": "b3ea621573c5a4c99834a383e76ee9ec183df9e4",
   "aggregate_attribution_commit": "d0f9a0e28ceaeb380c5a462df95e5429e0ee7331",
   "label_plan_commit": "7b706684d8",
   "late_label_correction_checks": "Historical focused label checks at 7b706684d8/543a85e5ff; current decision-amendment checks also preserve the final label-storage contract.",
@@ -23,7 +23,7 @@
     "companion_fix1_guard_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.log"
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-10-30T11:29:31.578641+00:00",
+  "recorded_at_utc": "2026-10-30T13:20:19.633593+00:00",
   "native_runtime_certification": false,
   "step4": "final_rulings_8_focused_pass_GUI_head_awaited",
   "counts": {
@@ -1316,6 +1316,11 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-wiring.log",
       "sha256": "1164cc75c7f1eb096a6b56af349f2487902422f81c53d991c18055246335aadb",
       "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-focused-source-snapshot.json",
+      "sha256": "32a963dc2d82aac9685ad2d136ea885d4f3c168550da9edc3f6b918f4bfde0b8",
+      "bytes": 526
     }
   ],
   "reviews": [
@@ -2242,7 +2247,9 @@
     "new_commands_bindings_settings_events": [],
     "native_request_union_and_existing_definitions_unchanged": true,
     "source_proof": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-source-proof.json",
-    "native_runtime_certification": false
+    "native_runtime_certification": false,
+    "source_commit": "b3ea621573c5a4c99834a383e76ee9ec183df9e4",
+    "prepared_durable_runner": "not_started_pending_GUI_head"
   },
   "historical_final_r2_commands": [
     {
