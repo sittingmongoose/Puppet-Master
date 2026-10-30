@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Read-only PM7 owner-contract checks; never runtime or rendering evidence."""
 from copy import deepcopy
+import ast
 import json
 import hashlib
 from pathlib import Path
@@ -95,6 +96,16 @@ def validate():
     require(set(parts["presets"]["Full"]) == set(ids) - {"app-voice"}, "Full/default voice contract drifted")
     require({part["id"] for part in parts["parts"] if part["default_enabled"]} == set(parts["presets"]["Full"]),
             "Registry default flags disagree with Full")
+    code_parts = []
+    part_source = (ROOT / "Concepts/glyph-system/opus-5.5/src/logo/pm-pip-parts.js").read_text()
+    for match in re.finditer(r"\['([^']+)', '([^']+)', '([^']+)', (true|false), (\d+), '((?:\\.|[^'])*)'\]", part_source):
+        code_parts.append({"id": match[1], "label": match[2], "group": match[3],
+                           "default_enabled": match[4] == "true", "size": int(match[5]),
+                           "help": ast.literal_eval("'" + match[6] + "'")})
+    require(len(code_parts) == 25 and all(
+        all(canon.get(key) == value for key, value in actual.items())
+        for canon, actual in zip(parts["parts"], code_parts)),
+        "S1-S9 parts IDs/labels/groups/defaults/sizes/help differ from the joined one registry")
     require(not set(parts["presets"]["Still"]) & {
         part["id"] for part in parts["parts"] if part["group"] == "Motion" or part["id"] == "setup-world-life"
     }, "Still enables motion or living worlds")
@@ -135,6 +146,12 @@ def validate():
             next(row for row in glyphs["status_marks"] if row["key"] == "working")["surface_words"]["panels"],
             "L1 joined code and canon disagree on working panels words")
     kit = (ROOT / "Concepts/glyph-system/opus-5.5/src/logo/pm-logo.js").read_text()
+    # A5: each real kit mood has its own alias; sharing the working status adds no status key.
+    mood_row = re.search(r"const MOOD_STATUS = Object.freeze\(\{(.*?)\}\)", kit, re.S)
+    code_moods = dict(re.findall(r"(\w+):\s*'([^']+)'", mood_row[1])) if mood_row else {}
+    require(bool(code_moods) and all(glyphs["pip_mood_status_mappings"].get(mood) == key
+                                    for mood, key in code_moods.items()),
+            "A5 code mood aliases differ from the canonical mood-to-status table")
     period = re.search(r"function periodOf\([^)]*\)\s*\{(.*?)\n  \}", kit, re.S)
     require(bool(period) and "tier" not in period[1] and "fam.dur * .78" in period[1]
             and "fam.dur * 1.15" in period[1], "L-1 motion ratios differ by tier or from the accepted values")
