@@ -116960,10 +116960,22 @@ PM51.listDetail = ({ id, rosterId, rosterTitle, count, add, filter, items, detai
    its classes in pm7-sprout.css: six --pm6-sprout-* vars, is-open / is-closing). */
 let pmActive = null, popSeq = 0;
 const POP_ID = () => 'pm51-pop-' + (++popSeq);
-/* a popout grows from the corner nearest its anchor; one with no anchor from its own top right corner, as Settings'
-   popouts always have (the owner takes that corner as an input) */
-const POP_CORNER = { ox: '88%', oy: '0%', tx: '0px', ty: '-10px', sx: '0.72', sy: '0.48', mark: 'tr' };
-function sproutOpen(el, anchor) { window.PM6_SPROUT.open(el, null, anchor || null, anchor ? null : { origin: POP_CORNER }); }
+/* The corner a popout grows from, as Settings' popouts have always had it (the owner takes it as an input). The side is
+   the one positionPopout put it on (data-sprout: t below its trigger, b above); across, it is the corner nearest the
+   trigger's centre measured against the popout at its closed scale from its CSS corner (data-sprout's r or l), which is
+   how the first sprout measured a popout already on the page: a dropdown under a row's trigger grows from its right
+   corner, a wider search list from its left. A popout with no anchor grows from its top right. */
+function sproutCorner(el, anchor) {
+  const tag = el.dataset.sprout || 'tl', below = tag[0] !== 'b', ar = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : null;
+  let right = true;
+  if (ar && (ar.width || ar.height)) {
+    const w = el.offsetWidth, placed = parseFloat(el.style.left), x0 = isFinite(placed) ? placed : el.offsetLeft, cx = tag[1] === 'r' ? 0.88 : 0.12;
+    const sl = x0 + cx * w * (1 - 0.72), sw = w * 0.72;
+    right = (ar.left + ar.width / 2 - sl) / sw >= 0.5;
+  }
+  return { ox: right ? '88%' : '12%', oy: below ? '0%' : '100%', tx: '0px', ty: below ? '-10px' : '10px', sx: '0.72', sy: '0.48', mark: (below ? 't' : 'b') + (right ? 'r' : 'l') };
+}
+function sproutOpen(el, anchor) { window.PM6_SPROUT.open(el, null, null, { origin: sproutCorner(el, anchor) }); }
 function sproutClose(el, done) { window.PM6_SPROUT.close(el, done); }
 function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
   const vw = window.innerWidth, vh = window.innerHeight;
