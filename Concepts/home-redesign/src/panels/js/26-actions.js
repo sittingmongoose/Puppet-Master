@@ -116,10 +116,30 @@ PMW.updateTab = function (tabId, fields) {
     var p = model.panelOf(L(), tabId);
     if (p) stripSoon(p.id);
     PMW.persist.saveSoon();
-    /* the title bar's project box shows the project's unsaved shell state (FinalGUISpec 3.4) */
-    if (Object.prototype.hasOwnProperty.call(fields, 'dirty')) window.dispatchEvent(new CustomEvent('pm7.home.unsaved', { detail: { tab: tabId, dirty: !!rec.dirty } }));
+    if (Object.prototype.hasOwnProperty.call(fields, 'dirty')) PMW.noteUnsaved();
   }
 };
+/* The project's unsaved shell state, which the title bar's project box shows (FinalGUISpec 3.4): a tab with unsaved
+   changes in the layout bound to that project. Home saves its layout by itself, so open buffers are its only unsaved
+   state, and only the bound project has its tabs here. noteUnsaved() is the one notice: it runs after every committed
+   layout (a close, the restore on a project switch, any structural change) and when a tab's dirty mark changes, and
+   fires pm7.home.unsaved when the bound project or its aggregate changes (Astra W2 review M1). */
+var unsavedSeen = '';
+PMW.unsaved = function (name) {
+  var l = PMW.state && PMW.state.layout, tabs = l && l.tabs, bound = PMW.persist && PMW.persist.boundId;
+  if (!tabs || !bound || bound !== PMW.projectSlug(name)) return false;
+  for (var k in tabs) if (tabs[k] && tabs[k].dirty) return true;
+  return false;
+};
+PMW.noteUnsaved = function () {
+  var bound = (PMW.persist && PMW.persist.boundId) || '', l = PMW.state && PMW.state.layout, tabs = l && l.tabs, dirty = false;
+  if (tabs && bound) for (var k in tabs) if (tabs[k] && tabs[k].dirty) { dirty = true; break; }
+  var key = bound + '|' + dirty;
+  if (key === unsavedSeen) return;
+  unsavedSeen = key;
+  try { window.dispatchEvent(new CustomEvent('pm7.home.unsaved', { detail: { project: bound || null, unsaved: dirty } })); } catch (_) {}
+};
+bus.on('layout', function () { PMW.noteUnsaved(); });
 /* a kind's push-updates (a terminal's label and exit code at each command's start and end, a dirty mark) repaint the
    panel's strip once, in the next frame, after the kind's own writes: never a fit pass inside the kind's write task,
    which forced the page's layout mid-task (home-terminal's profile: about 50 ms twice per command on Nas1) */

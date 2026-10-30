@@ -42347,7 +42347,9 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   // a still mark as a data: URL (the favicon; a static file in the painted look's colours)
   function dataUrl(opts) { return 'data:image/svg+xml,' + encodeURIComponent(svg(Object.assign({ px: 32, decorative: false }, opts || {}, { motion: null }))); }
   // The favicon is the app icon (A1: one fixed tile, Basic Dark, static); the title-bar lane writes the <link rel="icon">.
-  function favicon(px) { return dataUrl({ look: 'basic-dark', form: 'tile', px: px || 32, title: 'Puppet Master' }); }
+  // tokens: {} keeps the frozen Basic Dark export palette: without it a page painted in Basic Dark sampled its live
+  // tokens, so the favicon's colours depended on the saved look (Astra M2-A1)
+  function favicon(px) { return dataUrl({ look: 'basic-dark', form: 'tile', px: px || 32, title: 'Puppet Master', tokens: {} }); }
 
   /* ------------------------------------------------------------ the clock */
   /* One clock for every Pip motion, so loaders on screen stay in phase and a live Pip can sway with them. It runs on
@@ -156342,14 +156344,15 @@ policies for tenant isolation, and add migration script.</textarea>
     keys.forEach(function (k) { if (PROJECT_STATES[k] && (!best || PROJECT_STATES[k].rank > PROJECT_STATES[best].rank)) best = k; });
     return { key: best, say: best ? String(v.say || '') : '' };
   }
-  /* FinalGUISpec 3.4's "unsaved shell state": a Home tab with unsaved changes. Home saves its layout by itself, so its
-     open buffers are the only unsaved state, and only the active project has its tabs open (Home fires pm7.home.unsaved
-     when a tab's mark changes) */
+  /* FinalGUISpec 3.4's "unsaved shell state": a Home tab with unsaved changes, read from the layout Home has bound to
+     that project (Home keys projects by name: PMW.unsaved). Right after a pick Home still holds the old project's layout,
+     so the new one reads calm until Home has loaded it; Home fires pm7.home.unsaved whenever the bound project or its
+     unsaved state changes (a dirty mark, a close, a restore) */
   function projectUnsaved(id) {
-    var P = window.PMW, tabs = P && P.state && P.state.layout && P.state.layout.tabs, sel = projectSelected();
-    if (!tabs || !sel || sel.getAttribute('data-project') !== id) return false;
-    for (var k in tabs) if (tabs[k] && tabs[k].dirty) return true;
-    return false;
+    var P = window.PMW;
+    if (!P || typeof P.unsaved !== 'function') return false;
+    var row = projectRows().filter(function (r) { return r.getAttribute('data-project') === id; })[0];
+    try { return !!P.unsaved(row ? projectInfo(row).name : id); } catch (e) { return false; }
   }
   function projectState(id) {
     var W = window.PM_WORK;
@@ -156436,6 +156439,10 @@ policies for tenant isolation, and add migration script.</textarea>
     var label = byId('projectMenuLabel');
     if (!item) return false;
     var info = projectInfo(item);
+    /* onboarding names its project in PM_ACTIVE_PROJECT_ID, which Settings and the sound binding read before the chosen
+       row (pm4-settings-js.js projectRecord): a pick keeps it in step, before the label changes, so the reload they run on
+       that change reads the picked project (Astra W2 review, integration note) */
+    if (typeof window.PM_ACTIVE_PROJECT_ID === 'string' && window.PM_ACTIVE_PROJECT_ID !== info.id) window.PM_ACTIVE_PROJECT_ID = info.id;
     projectRows().forEach(function (el) { if (el.classList.contains('is-selected') !== (el === item)) el.classList.toggle('is-selected', el === item); });
     if (label && label.textContent !== info.name) label.textContent = info.name;
     paintProjectButton();
@@ -156537,11 +156544,18 @@ policies for tenant isolation, and add migration script.</textarea>
     window.PM_PROJECT_BOX = {
       /* the one row renderer: a row element with data-project (and data-project-name, -path, -branch, -stack) */
       row: renderProjectRow,
-      /* a project the menu does not list yet: a row from the renderer, first in the list */
+      /* a project the menu does not list yet: a row from the renderer, first in the list. A listed project takes the
+         name, path, branch and stack given (onboarding's draft can add them after the row exists) */
       add: function (id, info) {
         info = info || {};
         var found = projectRows().filter(function (r) { return r.getAttribute('data-project') === id; })[0];
-        if (found) return found;
+        if (found) {
+          if (info.name && info.name !== id) found.setAttribute('data-project-name', info.name);
+          ['path', 'branch', 'stack'].forEach(function (k) { if (info[k]) found.setAttribute('data-project-' + k, info[k]); });
+          renderProjectRow(found);
+          if (found.classList.contains('is-selected')) paintProjectButton();
+          return found;
+        }
         var item = document.createElement('button');
         item.type = 'button'; item.className = 'pm6-tb-menu-item'; item.setAttribute('role', 'menuitem');
         item.setAttribute('data-project', id);
@@ -157008,8 +157022,16 @@ policies for tenant isolation, and add migration script.</textarea>
         var width = entries.length ? entries[entries.length - 1].contentRect.width : lastBarWidth;
         if (Math.abs(width - lastBarWidth) < .5) return;
         lastBarWidth = width;
-        pageInkResyncPending = true;
-        schedule();
+        /* the fold runs here, after this frame's layout and before its paint, so the frame that draws the new width also
+           draws the fold that fits it, and the tabs' chip is placed after it in the same frame (PM_LG.syncScope: the
+           brand's fold or a gap step moves the tabs without the box's width changing, which glass.js watches). Deferred
+           to the next frame, an iframe resized from 1390 to 860 px painted the chip 10 px off its tab until the fold
+           landed (Astra W2 review M2) */
+        if (raf) { cancelAnimationFrame(raf); raf = null; }
+        applyDensity();
+        pageInkResyncPending = false;
+        if (window.PM_LG && typeof window.PM_LG.syncScope === 'function' && pageStrip) window.PM_LG.syncScope(pageStrip);
+        if (window.PM7_PAGE_TAB_INK && typeof window.PM7_PAGE_TAB_INK.resync === 'function') window.PM7_PAGE_TAB_INK.resync();
       });
       ro.observe(bar);
     } else {
@@ -179812,7 +179834,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     cm.projectId = id; cm.publishedVia = via;
     cm.receipts = cm.receipts || {};
     cm.receipts.project = via === 'fixture' ? 'fixture:project:' + id : cm.recovery.settled_effects.registry_publication.receipt_ref;
-    if (O55.shell && O55.shell.selectProject) O55.shell.selectProject(id, d.project_name);
+    /* the project box's row carries where its files are and, with an online repository, its branch (B3) */
+    if (O55.shell && O55.shell.selectProject) O55.shell.selectProject(id, d.project_name, { path: filesAt(S), branch: d.forge && d.forge !== 'none' ? d.repository_default_branch : '' });
     /* the new Project starts with the look chosen here: Settings loads a new Project's own settings as it is selected
        (after this task), so the look is saved into it once that load has run (its first write also makes the Project's
        own sound setting readable: the speaker stays silent until then) */
@@ -180605,11 +180628,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      owns the menu's rows (PM_PROJECT_BOX, pm6-js-panels.js: one row renderer, the label stays the bare name). The Settings
      owner watches the menu and reloads that Project's settings. */
   O55.shell = {
-    selectProject(id, name) {
+    selectProject(id, name, info) {
       const box = window.PM_PROJECT_BOX;
       if (!box || !id) return false;
-      const item = box.add(id, { name: name || id });
-      if (name && item.getAttribute('data-project-name') !== name && name !== id) { item.setAttribute('data-project-name', name); box.row(item); }
+      /* info: { path, branch } from the draft, so the row and the hover tag carry the location line (B3) */
+      box.add(id, Object.assign({}, info || {}, { name: name || id }));
       window.PM_ACTIVE_PROJECT_ID = id;
       box.select(id);
       if (O55.sound && O55.sound.refresh) O55.sound.refresh('project');
@@ -192131,12 +192154,16 @@ var store = PMW.store = {
 };
 PMW.faults = { failNextWrite: false };
 
+/* a project's id as Home keys it: its name in the title bar, lower-case and hyphenated (the project box asks Home's
+   unsaved state by name, PMW.unsaved) */
+function projectSlug(name) { return String(name || '').trim().toLowerCase().replace(/[^a-z0-9_-]+/g, '-'); }
 function projectId() {
   var label = qs('#projectMenuLabel');
   var name = label && label.textContent ? label.textContent.trim() : '';
-  return (name || 'tastebook').toLowerCase().replace(/[^a-z0-9_-]+/g, '-');
+  return projectSlug(name || 'tastebook');
 }
 PMW.projectId = projectId;
+PMW.projectSlug = projectSlug;
 
 /* ---- look ---- */
 function look() {
@@ -195519,10 +195546,30 @@ PMW.updateTab = function (tabId, fields) {
     var p = model.panelOf(L(), tabId);
     if (p) stripSoon(p.id);
     PMW.persist.saveSoon();
-    /* the title bar's project box shows the project's unsaved shell state (FinalGUISpec 3.4) */
-    if (Object.prototype.hasOwnProperty.call(fields, 'dirty')) window.dispatchEvent(new CustomEvent('pm7.home.unsaved', { detail: { tab: tabId, dirty: !!rec.dirty } }));
+    if (Object.prototype.hasOwnProperty.call(fields, 'dirty')) PMW.noteUnsaved();
   }
 };
+/* The project's unsaved shell state, which the title bar's project box shows (FinalGUISpec 3.4): a tab with unsaved
+   changes in the layout bound to that project. Home saves its layout by itself, so open buffers are its only unsaved
+   state, and only the bound project has its tabs here. noteUnsaved() is the one notice: it runs after every committed
+   layout (a close, the restore on a project switch, any structural change) and when a tab's dirty mark changes, and
+   fires pm7.home.unsaved when the bound project or its aggregate changes (Astra W2 review M1). */
+var unsavedSeen = '';
+PMW.unsaved = function (name) {
+  var l = PMW.state && PMW.state.layout, tabs = l && l.tabs, bound = PMW.persist && PMW.persist.boundId;
+  if (!tabs || !bound || bound !== PMW.projectSlug(name)) return false;
+  for (var k in tabs) if (tabs[k] && tabs[k].dirty) return true;
+  return false;
+};
+PMW.noteUnsaved = function () {
+  var bound = (PMW.persist && PMW.persist.boundId) || '', l = PMW.state && PMW.state.layout, tabs = l && l.tabs, dirty = false;
+  if (tabs && bound) for (var k in tabs) if (tabs[k] && tabs[k].dirty) { dirty = true; break; }
+  var key = bound + '|' + dirty;
+  if (key === unsavedSeen) return;
+  unsavedSeen = key;
+  try { window.dispatchEvent(new CustomEvent('pm7.home.unsaved', { detail: { project: bound || null, unsaved: dirty } })); } catch (_) {}
+};
+bus.on('layout', function () { PMW.noteUnsaved(); });
 /* a kind's push-updates (a terminal's label and exit code at each command's start and end, a dirty mark) repaint the
    panel's strip once, in the next frame, after the kind's own writes: never a fit pass inside the kind's write task,
    which forced the page's layout mid-task (home-terminal's profile: about 50 ms twice per command on Nas1) */
@@ -309473,7 +309520,15 @@ try {
 
   /* Public: set({'data-lg': 'on', 'data-lg-tier': 'gpu'|'cpu', 'data-motion': 'reduced'|null}); wall(id|'look')
      chooses a wallpaper for every look; walls() lists them. Retired data-lg off/null requests normalize to on; surfaces: data-lg-surface on any element (see syncSurfaces). */
-  window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
+  /* syncScope(el): place the lenses of the strips in el now (read after the caller's layout, written before the paint);
+     the title bar's density ladder calls it on the page tabs after a fold the box's own width does not show (the brand
+     folding to its mark, a gap step), so their chip moves in the frame the tabs do (Astra W2 review M2). A drag holds it. */
+  function syncScope(el) {
+    if (!el || el.nodeType !== 1 || !el.isConnected) return;
+    if (dragHeld()) { heldScopes.push(el); flushHeldSoon(); return; }
+    dirtyScope(el); syncPending();
+  }
+  window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, syncScope: syncScope, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
     set: function (o) { for (var k in o) { if (k === 'data-lg') root.setAttribute(k, 'on'); else if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); },
     /* Decode and bake through the same bounded caches as visible sheets. Preparation changes no visible pixels. */
     /* opts.canRun (optional): asked again once the print is decoded, before its frost is encoded; false resolves false
