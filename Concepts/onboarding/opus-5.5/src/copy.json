@@ -1428,7 +1428,8 @@
         "discover": "Finding its models"
       },
       "failTitle": "Couldn't connect",
-      "fail": "No OpenCode server answered at that address. Check it's running, then try again."
+      "fail": "No OpenCode server answered at that address. Check it's running, then try again.",
+      "passHint": "The OpenCode server's own password, not a key from an AI company. Kept in {where}. Never shown again."
     },
     "expired": {
       "title": "Sign-in expired",
