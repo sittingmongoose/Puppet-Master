@@ -111250,9 +111250,11 @@ function migrateGlassWallpaper(preference) {
     if(id==='general.visual.theme'){
       const mode=String(value||'').trim().split(/\s+/).pop();
       if(/^(light|dark)$/i.test(mode))writes['general.visual.theme-mode']=cap(mode);
-    }else if(id==='general.visual.theme-mode'&&!/^auto$/i.test(String(value))){
+    }else if(id==='general.visual.theme-mode'){
+      /* Auto (QA2 m2): the Theme's word follows what the computer paints, written in the same batch, so Auto stays */
       const family=String(state.settings['general.visual.theme']||'Basic Dark').trim().split(/\s+/)[0]||'Basic';
-      writes['general.visual.theme']=family+' '+cap(value);
+      const scheme=/^auto$/i.test(String(value))?(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):String(value);
+      writes['general.visual.theme']=family+' '+cap(scheme);
     }
     if(id==='general.visual.theme'||id==='general.visual.theme-mode'){
       const candidate={...(state.settings||{}),...writes},current=Number(state.settings['general.visual.glass-transparency']);
@@ -119497,6 +119499,34 @@ document.addEventListener('focusout', e => {
   const el = e.target;
   if (el && el.matches && el.matches('input[data-action="o55-glass-alpha"]')) el.value = String(o55GlassPercent(o55GlassShownAlpha()));
 });
+
+/* Light or dark on Auto (QA2 m2): the Theme's word never contradicts the screen. While the mode is Auto the stored Theme
+   follows what the computer paints ("Glass Light" on a light computer, in every family, NieR included), when a Project
+   opens and when the computer's setting changes, even with Settings open. Only the Theme is written (commitSettingValues,
+   not the paired commit), so the person's Auto stays Auto. Choosing Auto writes the matching word itself
+   (pm4-settings-js.js commitSettingValue). A read-only owner projection is left alone. */
+const o55AutoMq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+function o55AutoThemeWord() {
+  if (!state || !state.settings || state.settingsProjectionReadOnly) return null;
+  if (!/^auto$/i.test(String(state.settings['general.visual.theme-mode'] || ''))) return null;
+  const cur = String(state.settings['general.visual.theme'] || 'Basic Dark').trim();
+  const want = (cur.split(/\s+/)[0] || 'Basic') + ' ' + (o55AutoMq && o55AutoMq.matches ? 'Dark' : 'Light');
+  return want === cur ? null : want;
+}
+let o55AutoPending = 0;
+function o55AutoFollow() {
+  o55AutoPending = 0;
+  const want = o55AutoThemeWord(); if (!want) return;
+  if (!commitSettingValues({ 'general.visual.theme': want })) return;
+  saveState();
+  o55SyncThemeControls();
+  if (typeof PM51.refreshSavedRow === 'function') PM51.refreshSavedRow('general.visual.theme');
+}
+/* never inside a render or a paint: the next task */
+function o55AutoFollowSoon() { if (!o55AutoPending && o55AutoThemeWord()) o55AutoPending = window.setTimeout(o55AutoFollow, 0); }
+if (o55AutoMq) { if (o55AutoMq.addEventListener) o55AutoMq.addEventListener('change', o55AutoFollowSoon); else if (o55AutoMq.addListener) o55AutoMq.addListener(o55AutoFollowSoon); }
+const o55AutoRender = renderApp;
+renderApp = function () { const r = o55AutoRender.apply(this, arguments); o55AutoFollowSoon(); return r; };
 
 /* ---- kit.d/18-nier.js ---- */
 /* O55 · NieR: the engine of the fifth theme. Since the PM7 build's QA round 2 (Q22, Jared 2026-10-30: "make NieR Mode a
