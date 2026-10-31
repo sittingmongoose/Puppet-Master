@@ -267,8 +267,8 @@
       "where": {
         "pick:this": {
           "title": "This computer",
-          "text": "Puppet Master does the work on this computer, and your Projects are kept here. The AI answers from its own company's computers, and an online copy or backup goes where you choose next. You can add a Server later.",
-          "expert": "Puppet Master runs on this computer: Projects, local history and agent runs are here. AI providers, any online copy and any backup are still the services you choose."
+          "text": "Puppet Master does the work on this computer. The AI, an online copy and a backup are separate choices, made next.",
+          "expert": "Puppet Master runs on this computer: Projects, local history and agent runs are here. AI providers, online copies and backups are the services you choose."
         },
         "pick:connect": {
           "title": "Connect this device",
@@ -309,8 +309,8 @@
         },
         "route:tailscale": {
           "title": "Tailscale",
-          "text": "Reach it from anywhere with Tailscale, a private network for your own devices. Both this device and your Puppet Master need Tailscale and the same account. Pick it when you are away from home.",
-          "expert": "Reach the Server over a Tailscale tailnet (WireGuard); both devices must be signed in to the same tailnet."
+          "text": "Reach it from anywhere with Tailscale, a private network for your own devices. It's built into Puppet Master: sign in once.",
+          "expert": "Tailscale is built into Puppet Master's apps: sign in once with your Tailscale account. A plain browser tab reaches it with a Remote Link, or with the device's own Tailscale."
         },
         "route:reverse_proxy": {
           "title": "My own web address",
@@ -893,8 +893,8 @@
       "safe": {
         "group:backend": {
           "title": "Git or Jujutsu",
-          "text": "Both keep earlier versions of your Project on this computer, with no account. Git saves a version each time a piece of work is marked done, and almost every service expects it. Jujutsu also records each change as it happens and can undo any step. If you're not sure, pick Git.",
-          "expert": "The local version-control backend. Git: commits, branches and the staging index; the default everywhere. Jujutsu (jj): the working copy is itself a commit, changes keep stable change IDs, and every operation is logged and reversible (jj undo, jj op restore). Puppet Master runs Jujutsu colocated with a Git repository, so any Git remote works with either."
+          "text": "Both keep earlier versions of your Project, with no account. Git is the usual choice and works everywhere. Jujutsu also lets you undo any step. If you're not sure, pick Git.",
+          "expert": "The local version-control backend. Git: commits, branches, the index; the default everywhere. Jujutsu: the working copy is a commit, with an operation log you can undo (jj undo, jj op restore); colocated with Git, so Git remotes work."
         },
         "backend:git": {
           "title": "Git",
@@ -908,13 +908,13 @@
         },
         "filesafe": {
           "title": "FileSafe",
-          "text": "A safety guard for when the AI works on your Project. It stops commands that could wipe or damage files, keeps the AI's changes inside this Project, keeps passwords and keys out of what it reads, and keeps a copy of a file before changing it. Leave it on unless you know you need it off.",
-          "expert": "FileSafe is the guard layer for agent runs: a command blocklist that stops destructive shell commands before they run, a write scope that keeps writes to the run's allowed files, a security filter that keeps secrets and sensitive files out of tool access and the compiled prompt, and a recoverable pre-write safe point before an existing file is overwritten. Every block and override is logged. On by default."
+          "text": "Guards your files while the AI works: it stops risky commands, keeps changes inside this Project, keeps passwords out, and copies a file before changing it. This one switch covers all of it; Settings has each part on its own. Leave it on.",
+          "expert": "The guard layer for agent runs: command blocklist, write scope, security filter, and pre-write safe points before a file is overwritten; blocks are logged. This switch turns all of them on or off together; each has its own setting in Settings."
         },
         "online": {
           "title": "Online copy",
-          "text": "A copy of your Project on a website such as GitHub: a second copy, a way to work from another computer, and a way to share it if you choose. Only you can see it unless you share it. Puppet Master only asks for access to the Project you pick.",
-          "expert": "A remote repository on the service you choose, pushed from your local history. Visibility (private, internal, public) is set when it is created. Access is scoped to that repository where the service allows it."
+          "text": "A copy of your Project on a website such as GitHub: a second copy, and a way to work from another computer or share it. Only you see it unless you share it.",
+          "expert": "A remote repository on the service you choose, pushed from your local history; its visibility is set when it is created."
         },
         "backup": {
           "title": "Backup",
@@ -1211,8 +1211,8 @@
       "ready": {
         "summary:free": {
           "title": "Free Models",
-          "text": "Free options with limits, good for trying things out. Your paid accounts are preferred by default; you can change that in Settings.",
-          "expert": "Free model routes with rate limits. Paid accounts are preferred by default; change the priorities in Settings."
+          "text": "Free options with limits, good for trying things out.",
+          "expert": "Free model routes with rate limits."
         },
         "summary:backup": {
           "title": "Backup",
@@ -1297,8 +1297,8 @@
       "nas-key": {
         "group:pick": {
           "title": "Choose a key",
-          "text": "A key lets Puppet Master connect without a password. Choose a key marked Already works if there is one; otherwise make a new key just for Puppet Master. Only the public half of a key is read, and a private key never leaves where it is.",
-          "expert": "SSH keys on the computer that will connect (files under ~/.ssh and keys from an SSH agent), each tested. Only public keys are read; private keys never leave where they are."
+          "text": "A key lets Puppet Master connect without a password. Pick one marked Already works, or make a new key. Only the safe-to-share half of a key is read.",
+          "expert": "SSH keys on the computer that will connect (~/.ssh files and agent keys), each tested; only public keys are read."
         },
         "pick:new": {
           "title": "Make a new key",
