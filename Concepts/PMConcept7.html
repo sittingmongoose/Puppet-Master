@@ -27927,6 +27927,11 @@ html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-opt > .o55-card.o55-
   background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / calc(100% - 46px) 100% no-repeat, var(--o55-card-bg); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-opt > .o55-card.o55-on::after { content: ''; position: absolute; top: 6px; bottom: 6px; right: 46px; width: 1px; background: var(--o55-nier-ink); opacity: .35; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-opt > .o55-card { position: relative; }
+/* NieR's menu cursor (05-nier-fx.css) paints a hovered or focused row's whole width in ink with !important, and a card
+   keeps it after the click that chose it, so it covered the strip above and the ? was ink on ink (FO-5). On a card or a
+   switch row whose ? sits at its right edge the cursor's bar stops at the strip too: the ? stays on paper, visible and
+   clickable, chosen or not, in NieR Light and Dark. */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-opt > :is(.o55-card, .o55-toggle)[data-o55fx-cursor] { background-size: calc(100% - 46px) 100% !important; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-explainer { border-radius: 0; border: 1px solid var(--o55-nier-ink); background: color-mix(in srgb, var(--o55-win-bg) 70%, #fff 6%);
   color: var(--text-primary); font-family: var(--mono-font, var(--display-font)); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-explainer-h { font-family: var(--mono-font, var(--display-font)); letter-spacing: .08em; text-transform: uppercase; font-size: 12px; }
@@ -160273,8 +160278,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     window.setTimeout(() => { live.textContent = text; }, 30);
   };
 
+  /* A page whose permissions policy blocks the clipboard (a sandboxed preview, T3's file preview) logs a policy
+     violation on every writeText even though the rejection is caught: there it goes straight to the fallback */
+  const clipboardBlocked = () => { try { const p = document.permissionsPolicy || document.featurePolicy; return !!p && typeof p.allowsFeature === 'function' && !p.allowsFeature('clipboard-write'); } catch (_) { return false; } };
   U.copyText = async function copyText(text) {
-    try { await navigator.clipboard.writeText(text); return true; } catch (_) {
+    try { if (clipboardBlocked() || !navigator.clipboard) throw new Error('blocked'); await navigator.clipboard.writeText(text); return true; } catch (_) {
       const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
       document.body.appendChild(ta); ta.select(); let ok = false; try { ok = document.execCommand('copy'); } catch (_) {} ta.remove(); return ok;
     }
