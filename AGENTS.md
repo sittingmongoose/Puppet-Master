@@ -119,7 +119,7 @@ Use the repo skill `$pm-bootstrap-planning-ledger` when available. If skills are
 <!-- agent-rules: start (managed by `agent-rules install` in the Cursor share Inbox folder; edits inside are overwritten) -->
 ## Browser testing and recording
 
-Use `browser-check` for browser tests and test videos (GPU Chrome, short pass/fail summary, logs in a run folder). `browser-check slots` shows free browser and recording slots on all four machines. Read `Agent-Guides/browser-check.md` on the Cursor share before your first run. Never use Playwright `recordVideo`, CPU screen recorders, `--disable-gpu` or SwiftShader.
+Use `browser-check` for browser tests and test videos, in a GPU Chrome. `browser-check audit <url> --login user:pass` needs no code. `browser-check slots` shows what is free on all four machines. Run `browser-check guide` once before your first check file (`Agent-Guides/browser-check.md` on the Cursor share). Never use Playwright `recordVideo`, CPU screen recorders, `--disable-gpu` or SwiftShader.
 
 ## Extra worker agents
 
