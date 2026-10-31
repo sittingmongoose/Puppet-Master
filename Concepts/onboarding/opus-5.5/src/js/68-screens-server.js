@@ -83,6 +83,7 @@
     if (reason === 'stale_generation' || reason === 'stale_nonce') return T('server.ready.staleAdopt');
     if (reason === 'wrong_target' || reason === 'wrong_operation') return T('server.ready.wrongTarget');
     if (reason === 'duplicate_replay') return T('server.ready.replayAdopt');
+    if (reason === 'waiting_pairing_identity_missing') return T('server.ready.wordsMissing'); /* (a request without its identity words: pm7-onb) */
     if (reason === 'postcondition_missing' || reason === 'postcondition_not_separate') return T('server.confirm.evidenceMissing');
     return T('server.confirm.ownerFail', { reason: String(reason || 'refused') });
   };
@@ -409,7 +410,7 @@
   }
   def('s-ready', {
     /* opened straight (Demo Studio): a new Server set up and this computer trusted, as Set up the Server leaves it */
-    seed: (S) => { if (O55.away) O55.away.seedServer(S); },
+    seed: (S) => { if (O55.away) O55.away.seedServer(S); const sv = S.sess.server; if (!sv.pairUntil || Date.now() > sv.pairUntil) newInvite(S); },
     chapter: 'computer', stage: 'server_storage_client',
     scene: (S) => ({ id: 'where', beat: 'server' }),
     eyebrow: () => T('server.ready.eyebrow'),
@@ -443,7 +444,7 @@
             + `<span class="o55-pairbtns">${O55.ui.btn({ label: T('server.ready.approve'), do: 'approve', arg: c.id, cls: 'o55-small', disabled: !canApprove, reason: c.confirmed ? T('chrome.working') : T('server.ready.confirmWords'), tip: 'group:approve', note: false }, 'o55-primary')}${O55.ui.btn({ label: T('server.ready.deny'), do: 'deny', arg: c.id, cls: 'o55-small', tip: 'group:deny', note: false }, 'o55-secondary')}</span></div>`
             + O55.tips.explainer('group:approve') + O55.tips.explainer('group:deny');
           card += `<p class="o55-hint" data-key="candhint-${U.esc(U.slug(c.id))}">${U.esc(T('server.ready.waitingHint', { name: c.name }))}</p>`;
-          card += `<div class="o55-checkline" data-key="match-${U.esc(U.slug(c.id))}"><button type="button" role="checkbox" aria-checked="${c.confirmed ? 'true' : 'false'}" class="o55-check${c.confirmed ? ' is-on' : ''}" data-o55-do="match" data-o55-arg="${U.esc(c.id)}" data-pm-hover-exempt="true">${c.confirmed ? C.small('check', 13) : ''}</button><span>${U.esc(T('server.ready.confirmWords'))}</span>${O55.tips.q('group:match')}</div>${O55.tips.explainer('group:match')}`;
+          card += `<div class="o55-checkline" data-key="match-${U.esc(U.slug(c.id))}"><button type="button" role="checkbox" aria-checked="${c.confirmed ? 'true' : 'false'}" class="o55-check${c.confirmed ? ' is-on' : ''}" data-o55-do="match" data-arg="${U.esc(c.id)}" data-pm-hover-exempt="true">${c.confirmed ? C.small('check', 13) : ''}</button><span>${U.esc(T('server.ready.confirmWords'))}</span>${O55.tips.q('group:match')}</div>${O55.tips.explainer('group:match')}`;
           if (running) card += F.phases(S, 'approve:' + c.id, ['approve'], { approve: T('chrome.working') });
           if (sv.approveErr) card += C.note(pendingCopy(sv.approveErr), 'warn', 'phone');
         } else if (c.state === 'waiting') {
