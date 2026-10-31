@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L13-L164
+Source lines: L13-L167
 
-Source SHA256: `0e67f6c9aa98812f9535e44cfef93ed0c83adf111c31c0dfda063095b4228cea`
+Source SHA256: `dd5622cb242fb525d48b8e94420be29588c1728f0a9864317412c766a02ea8d8`
 
 ---
 
 ## Change Summary
+
+- 2026-10-31: DL-270 records Jared's answers to the storage review's 13 decision cards: the recommended option on each. The event log compresses sealed segments, with the format ready for more; an ordinary batch takes one disk sync and key moments a full flush; large payloads are stored once by fingerprint; chats open from ready-made pages under a CI speed gate, with load-older paging mandatory; the always-on JSON copies give way to dump, inspect, tail and export commands; redb gets value limits, two files, quick repair and scheduled compaction; a Parquet archive with DuckDB on demand keeps every usage record and daily totals; backups copy in the background; the SQLite ban is written as Jared's four requirements and gated on every OS; remote streams use zstd; screenshots become lossless WebP; and data sits where desktop indexers don't look.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-335, ContractName:Plans/storage-plan.md#SP-345, ContractName:Plans/assistant-chat-design.md#ACD-242, ContractName:Plans/usage-feature.md#UF-108, ContractName:Plans/Backup_Restore_System.md#BRS-031, ContractName:Plans/Remote_Access_System.md#RAS-016
 
 - 2026-10-23: DL-233 records Jared's answers on two of the 5.6 Pro port's open items. The scripted stand-in chat is removed, with its value, its Home options row and its Demo Studio row; the hosted 5.6 Pro chat is the Home column's only chat surface. Pinned History follows the panel redesign: 240 px, or 200 px only in a capped column under 540 px, and the column grows by the width History is drawn at, a width the person dragged included, so the messages keep theirs; while the narrow ladder takes that width back History shows as its flyout and the pin is kept. DL-232, F3-637, F3-659, ACD-504 and SSYS-055 are amended in place. Concept checks supply no native or governance certification.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-233, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-659, ContractName:Plans/assistant-chat-design.md#ACD-504, ContractName:Plans/Settings_System.md#SSYS-055

@@ -1005,3 +1005,53 @@ The TSN-001..020 and TSX-001..005 runtime, packaging, WAN, security, backup/rest
 scenarios remain `NOT_RUN`. This amendment and its JSON Schema fixtures prove static contract shape only. They do not
 prove a helper binary, signature/notarization, IPC authentication, persistent state, tailnet enrollment, listener,
 Funnel, Headscale compatibility, route deduplication, backup exclusion at runtime, native/web presentation, or readiness.
+
+### RAS-016 - Compressed Remote Streams
+
+```yaml
+plan_unit_id: RAS-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Remote_Access_System.md
+canonical_text: >-
+  DL-270 card 10. PM's own remote clients negotiate a zstd stream for event and transcript traffic at level 3 with
+  a 1 MiB window; plain browsers fall back to brotli or permessage-deflate; the in-app UI uses no compression.
+  Negotiation never changes what is authenticated, authorized or exposed under RAS-015 and the existing route
+  rules. Measured: zstd compressed 4.53 times at 162 MB/s, against permessage-deflate's 3.62 times at 31 MB/s, the
+  scheme T3 Code uses.
+gui_related: false
+gui_classification_reason: "Transport encoding only; no visible surface."
+split_recommended: false
+depends_on: [RAS-015]
+unblocks: []
+acceptance_criteria:
+  - "A PM client and server that both support zstd use it at level 3 with a 1 MiB window."
+  - "A browser without zstd support still connects, using brotli or permessage-deflate."
+  - "Compression negotiation adds no route, credential or exposure."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: remote_bandwidth_and_latency
+reasoning_tier: high
+context_scope: dl270_transport
+implementation_surfaces:
+  - "Plans/Remote_Access_System.md"
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-270"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
+preserved_exact_tokens:
+  - "zstd"
+  - "permessage-deflate"
+negative_constraints:
+  - "Do not compress the in-app UI channel."
+owner_hints:
+  - "Plans/Remote_Access_System.md"
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/Remote_Access_System.md#RAS-015

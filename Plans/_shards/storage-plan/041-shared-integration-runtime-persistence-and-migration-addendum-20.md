@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18238-L18412
+Source lines: L18251-L18425
 
-Source SHA256: `cce7b8d8b0cf5548ce56220a1f4a21225b7a5ba992f89025f6d60611ba3fb117`
+Source SHA256: `ca68ac358108653694afff0c685514c0b2d893fd5edc0e7344b19960a4d384b6`
 
 ---
 
@@ -22,7 +22,7 @@ Shared runtime uses the existing storage stack and creates no peer database:
 | Search | Tantivy derived indexes over redacted labels, summaries, and stable refs only; raw catalogs, logs, paths, request bytes, secrets, and inventories are excluded. |
 | Diagnostics/export | JSON/JSONL only; import-only legacy lineage is never live authority. |
 
-SQLite is prohibited as Puppet Master storage. Provider dispatch evidence stores
+SQLite is prohibited as Puppet Master storage (Amended 2026-10-31 (DL-270): the reasons are Jared's four requirements in SP-342, which also allows read-only import of other tools' SQLite files and an optional `pm export --sqlite`). Provider dispatch evidence stores
 the finalized request and structured attachment-manifest SHA-256 values plus
 artifact/decision/resource-admission/lineage refs, never their raw bytes. Opaque provider-owned SQLite files
 remain outside Puppet Master authority and are neither imported nor queried.

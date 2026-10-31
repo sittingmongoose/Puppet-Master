@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3614-L22455
+Source lines: L3614-L22459
 
-Source SHA256: `c0c6409fa65d05d98a600d5145ecae0efae9602af2b85f17b5f91023a204798c`
+Source SHA256: `44c7177b629ed6e31da9f1403de68c166d89f9924b95cfb744731d033adc541f`
 
 ---
 
@@ -11444,14 +11444,18 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-### ACD-242 - Load Older Optional
+### ACD-242 - Load Older Paging
 
 ```yaml
 plan_unit_id: ACD-242
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Optional load-older pagination may bound extreme thread display while preserving full history in storage.
+canonical_text: >-
+  Optional load-older pagination may bound extreme thread display while preserving full history in storage.
+  Amended 2026-10-31 (DL-270): load-older paging is mandatory, not optional: the chat opens from SP-338's
+  thread_head, hot tail and newest page and fetches older 50-item pages on demand, and a CI gate holds a
+  100k-event thread's first page within 150 ms p95 warm and 500 ms cold.
 gui_related: true
 gui_classification_reason: Load older pagination is visible long-thread UI behavior.
 depends_on: [ACD-236]

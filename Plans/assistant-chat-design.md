@@ -2319,7 +2319,7 @@ This section addresses **long chat threads**: keeping them performant, using **v
 ### 24.3 Additional performance measures
 
 - **Lazy content for collapsed sections:** When a section is **collapsed** (thought stream, bash output, diff, web links), the full content need not be **rendered** until the user expands it. Store full content in the thread model for persistence and search; for the virtual list, collapsed items can render only the summary line (e.g. "Thought stream (expand)", "Ran: `cargo test`") so layout and paint are cheap.
-- **Pagination or "load older" (optional):** For very long threads, consider **loading older messages on demand** (e.g. "Load 50 older" or load when user scrolls near the top). The virtual list then has a bounded "window" of loaded items that grows as the user scrolls up. Full history remains in storage (§11); the UI layer fetches a slice. This is an enhancement if virtualization alone is insufficient for extreme thread lengths.
+- **Pagination or "load older" (optional):** For very long threads, consider **loading older messages on demand** (e.g. "Load 50 older" or load when user scrolls near the top). The virtual list then has a bounded "window" of loaded items that grows as the user scrolls up. Full history remains in storage (§11); the UI layer fetches a slice. This is an enhancement if virtualization alone is insufficient for extreme thread lengths. Amended 2026-10-31 (DL-270): load-older paging is mandatory, over SP-338's render pages; opening a thread never replays its events (ACD-242).
 - **Bounded in-memory size for "current thread":** Even with virtualization, avoid holding the entire thread's message blobs in hot memory if the thread is huge. Stream or page message content from storage (seglog/redb/projection per rewrite-tie-in-memo) into the visible window. In-memory cap: last **200 messages** or **8 MB** (whichever limit is reached first). Older messages are paged from storage on demand. Config: `ui.chat.in_memory_cap_messages` (default `200`), `ui.chat.in_memory_cap_bytes` (default `8388608`).
 
 ### 24.4 Enhancements (MVP -- fleshed out)
@@ -2345,7 +2345,7 @@ These enhancements are **MVP** requirements. They must integrate with virtualiza
 | **Expand/collapse and virtual list** | Expanding a block changes its height; the list must reflow and possibly adjust scroll. | Recompute visible slice and scroll offset after expand/collapse; preserve "anchor" (e.g. first visible item id) so the list doesn't jump arbitrarily. Consider keeping expanded height in a cache so re-expand is instant. |
 | **Scroll position restore** | When user switches threads and back, or reopens app, restore scroll position. | Persist scroll position (e.g. last visible message id or offset) with the thread or session; on load, scroll virtual list to that position after first paint. |
 | **Streaming at bottom** | While streaming, user expects to see the tail. If virtual list only has a fixed window, the "tail" might be off-screen. | Keep the **currently streaming** message in the visible window (e.g. scroll to bottom when streaming starts, or ensure the last item is always in the overscan). When user has scrolled up during stream, do not auto-scroll; only auto-scroll when already at bottom. |
-| **Max thread length (display)** | Is there an upper bound on thread length for display? Persistence stores full thread (§11). | No hard limit for persistence. For display, virtualization and optional "load older" keep the UI bounded. Document that threads with 10k+ messages may need pagination or load-older in addition to virtualization. |
+| **Max thread length (display)** | Is there an upper bound on thread length for display? Persistence stores full thread (§11). | No hard limit for persistence. For display, virtualization and mandatory "load older" (DL-270; it was optional before) keep the UI bounded. Document that threads with 10k+ messages may need pagination or load-older in addition to virtualization. |
 
 ---
 
@@ -15047,14 +15047,18 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-### ACD-242 - Load Older Optional
+### ACD-242 - Load Older Paging
 
 ```yaml
 plan_unit_id: ACD-242
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Optional load-older pagination may bound extreme thread display while preserving full history in storage.
+canonical_text: >-
+  Optional load-older pagination may bound extreme thread display while preserving full history in storage.
+  Amended 2026-10-31 (DL-270): load-older paging is mandatory, not optional: the chat opens from SP-338's
+  thread_head, hot tail and newest page and fetches older 50-item pages on demand, and a CI gate holds a
+  100k-event thread's first page within 150 ms p95 warm and 500 ms cold.
 gui_related: true
 gui_classification_reason: Load older pagination is visible long-thread UI behavior.
 depends_on: [ACD-236]

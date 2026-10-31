@@ -1831,3 +1831,54 @@ owner_hints: [Plans/Backup_Restore_System.md]
 ```
 
 ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-030, SchemaID:pm.backup_restore_system.contracts.v2
+
+### BRS-031 - Background Backup Capture And The Shown Loss Window
+
+```yaml
+plan_unit_id: BRS-031
+unit_type: contract_requirement
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: >-
+  DL-270 card 8. BRS-005's capture barrier is brief: it records a consistent point across the stores, the seglog
+  sequence, the redb read snapshots and the payload references, and then releases, well under a second. Sealed
+  segments and payload packs are immutable and copy in the background, incrementally, while PM keeps running; redb
+  copies from a read snapshot; derived families are not backed up and rebuild on restore. No backup holds the
+  writer lock for its copy. PM shows the last verified backup and what a restore from it would lose: its time and
+  its last event. A test proves the captured point is consistent across every store.
+gui_related: true
+gui_classification_reason: "Shows the last verified backup and what a restore would lose."
+split_recommended: false
+depends_on: [BRS-005]
+unblocks: []
+acceptance_criteria:
+  - "A backup never holds the writer lock while it copies."
+  - "The capture barrier records one consistent point across all stores."
+  - "The user can see the last verified backup and what a restore would lose."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: backup_writer_pause
+reasoning_tier: high
+context_scope: dl270_backup_capture
+implementation_surfaces:
+  - "Plans/Backup_Restore_System.md"
+  - "Plans/storage-plan.md"
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-270"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
+preserved_exact_tokens:
+  - "BRS-005"
+negative_constraints:
+  - "Do not pause writers for the length of a backup copy."
+owner_hints:
+  - "Plans/Backup_Restore_System.md"
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/Backup_Restore_System.md#BRS-005, ContractName:Plans/storage-plan.md#SP-336

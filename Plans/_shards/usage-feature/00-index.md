@@ -1,50 +1,50 @@
 # Shard Index: Plans/usage-feature.md
 
-Generated: 2026-10-19T00:58:45Z
+Generated: 2026-10-31T19:17:27Z
 
-Source SHA256: `c5ef8b5e3bc9d71f2a0b1d1f6f2a41c48af06695c2d153114ab6e0e7bf685b07`
+Source SHA256: `046c8e1a0293d770e19de008e04f677efcf86daee6e414639c1ef4ba0d415d71`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `f31e6342c608a76d57d2070566931077a58518a2d426e2c6dc1e3c2ae282d83b`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L18 `aab7aefe25352c18cb5ae9afad5aa54a2caf2be391fe672fcde606d9c06e3f16`
-- [003 - Plan Document Status](003-plan-document-status.md) L21-L27 `b389ef0485076b2407ba04b3aaa4d566a10c59265403f3ac8c049fe9ef5ae7f1`
-- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L29-L33 `11e9c000fe7b1782c118de8eb97718969eed0a655875c78303c1182e6d9e49b1`
-- [005 - Storage dependency (implementation)](005-storage-dependency-implementation.md) L35-L94 `aa670e02d8b9ec841aa785f04791c6fb8c5bd10b0ab6e53f41082fb955cb6179`
-- [006 - Executive Summary](006-executive-summary.md) L96-L98 `92905d25e00fbe6bd5dcf2dd5be6169b8b338090e9111ec1ea12be049283576b`
-- [007 - Relationship to Existing Docs](007-relationship-to-existing-docs.md) L100-L117 `c42b5313650e1019e9dc1fc4359035e5ef33cecd7732bdf709a28bd7b71eae3e`
-- [008 - External References (Competitive & Ecosystem)](008-external-references-competitive-ecosystem.md) L119-L127 `3b5a8682a8c4e84aa0d21ea5bcf4b7eeece2f54858122a3f65c09db7103c51f5`
-- [009 - Scope of the Usage Feature](009-scope-of-the-usage-feature.md) L129-L373 `4d8b932a3832a4431c9aa67f0a84143d86550d21314c606b50e0864a37fc6372`
-- [010 - Data and Backend (conceptual)](010-data-and-backend-conceptual.md) L374-L414 `3bd9baa8a4396c7ecb930f6f7d6d429d8376c6ecb1c738f73c57714c9553924d`
-- [011 - GUI Placement Options](011-gui-placement-options.md) L415-L432 `91be1be748231f569e71a98b553e6c6f55a16a4fbb15318f7173fe6dc252ae8b`
-- [012 - Gaps (Current State vs. Desired)](012-gaps-current-state-vs.-desired.md) L433-L645 `4f4161a0c115b5a8af1a6adb13f1b8c25008afcc498bcf66fd963e9eec7d0dbd`
-- [013 - Enhancements (Beyond Minimum)](013-enhancements-beyond-minimum.md) L647-L730 `de58b45038719666fc151017e598efde2ec1bf103b1ef24dac1174134f72a567`
-- [014 - Out of Scope for This Plan](014-out-of-scope-for-this-plan.md) L732-L736 `6ae6c54e6eb194cfe8b79fe373b66eec7854a074a40c7f974bac7180f30fb3ea`
-- [015 - Success Criteria](015-success-criteria.md) L738-L745 `1a3145f00a491775c036b3f8fac998cf12629fdb48d162d310bbfb89a512d9a1`
-- [016 - Version History](016-version-history.md) L747-L762 `688302da128995586316943fba359bd9c018d13e7a770a007f214159a5fa6d66`
-- [017 - Widget-Composed Page Layout (Addendum -- 2026-02-23)](017-widget-composed-page-layout-addendum-2026-02-23.md) L763-L868 `d02afaa34cca6e43d89abddec5ff14fa0c4ca5637a8e0ddd7615e9562bad01a7`
-- [018 - Runtime Scheduler / Recovery Observability Addendum (2026-03-09)](018-runtime-scheduler-recovery-observability-addendum-2026-03-09.md) L870-L883 `72e5cb99a219d2a12084f57d8fa371900d638ca398666d5db047aa17ccf44bf8`
-- [019 - Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)](019-source-control-github-actions-and-docker-manager-cost-attributio.md) L884-L901 `f0876a6a6afc45dada2173b4ffdc50bf7b5a92773d66aba34a8e431203abae39`
-- [020 - Cross-Surface Usage Routing Clarifications](020-cross-surface-usage-routing-clarifications.md) L903-L920 `c4118906d7daebeb8a9e32ea4a80a53f94a4e974f9f91d137cf9cd953ecf82c9`
-- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L922-L926 `1b36ca2c487a4cc7c7a295756d48bb2e5590be005d1ee299737dac6489911e56`
-- [022 - PlanUnits](022-planunits.md) L928-L5024 `0368fb8db8bb90447c990defb9e580802ec515e0efce7c92d7481ab09df19546`
-- [023 - Migration Coverage](023-migration-coverage.md) L5026-L5036 `cf54e5be6af4fb0b304882b52b3c15e867488ab1d378a66a2604199b8434b153`
-- [024 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](024-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L5038-L5126 `40d253fd8f18438b696c924e6b7ff81c9526aba45d3cde9e2d6d83227603123e`
-- [025 - Ledger Compile Addendum - pldg-20260626-001-feature-name](025-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L5129-L5221 `0bc517165e530187238c2f7bc8f097da171f0b94a374499be42355dbe6a27761`
-- [026 - Ledger Compile Addendum - pldg-20260629-001-feature-name](026-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L5223-L5339 `4687cd390edb33a27aaad11c2a99c9a16c5ff4e75216be9d61dbac01202d7428`
-- [027 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L5341-L5424 `077f6f29447e5abd99b49b7f5ce8c14d17634deeca1b9356a87ff9b58955e362`
-- [028 - Usage GUI Propagation Addendum - 2026-07-09](028-usage-gui-propagation-addendum-2026-07-09.md) L5426-L5614 `d1aab8ce347c464b66bc61f354e5cefff452ba68c6cbe294decfece053f08cf8`
-- [029 - Usage Implementation-Ready Evidence Addendum - 2026-07-09](029-usage-implementation-ready-evidence-addendum-2026-07-09.md) L5616-L5813 `c1fa1b98efce7a8fa1e32cccaa8e1b84d1ac269adb2b9015f88e9d341110ca20`
-- [030 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](030-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L5815-L6180 `9a7b0f6ba4ec5fe0c7bea88e3a542e86d076ffec80823167e0e89846048955ca`
-- [031 - PMConcept7 Concept Promotion Addendum - 2026-07-23](031-pmconcept7-concept-promotion-addendum-2026-07-23.md) L6182-L6261 `b0b731e378519a4ee9f588531904b64bf5a336a4817e5d103ef3c03291d130a1`
-- [032 - Shared runtime attribution addendum (2026-08-13)](032-shared-runtime-attribution-addendum-2026-08-13.md) L6263-L6342 `393d1f9fc51be53eedaae9613a834fd57c06847f423de22bb40b6dea025a61ed`
-- [033 - u11 Prism II Usage Concept Promotion Addendum - 2026-08-18](033-u11-prism-ii-usage-concept-promotion-addendum-2026-08-18.md) L6344-L6439 `ea639c51f8be41198d3829673497b0b4426365b7bc980f1e006e59624b746a83`
-- [034 - PMConcept7 Recovery Canonical Integration Addendum - 2026-08-27](034-pmconcept7-recovery-canonical-integration-addendum-2026-08-27.md) L6441-L6573 `16562905b74f2f6c6933a474c6df840eea9b0367befb73b2bca5a4be88d7e7e5`
-- [035 - Full-Thread Runtime Projection And Gate Attribution Addendum - 2026-08-31](035-full-thread-runtime-projection-and-gate-attribution-addendum-202.md) L6575-L6958 `72b2aea2cac127e5975a30abc9014c45fc7cb672419ab58cfbb7123b71c85d43`
-- [036 - Additive Correction v4 — Attempt-Level Attribution (2026-09-03)](036-additive-correction-v4-attempt-level-attribution-2026-09-03.md) L6960-L6975 `22532a1aa1f4bb6abf30dac33216080eb673de388c9fdb1e746532fbe2992edf`
-- [037 - Working Notebook Usage Fidelity Addendum (2026-09-05)](037-working-notebook-usage-fidelity-addendum-2026-09-05.md) L6977-L7121 `70c8b619afc7016195d6deac508a4541ac0d0cd8d84b605d85416516e9a991e5`
-- [038 - Run-start attribution context consumer - 2026-09-11](038-run-start-attribution-context-consumer-2026-09-11.md) L7123-L7187 `9ed7db83728b0ab26abdd0089e4181a3ef7431935e9a103f9d6bbe1518fec773`
-- [039 - Wand Modules Redesign Addendum (2026-09-27)](039-wand-modules-redesign-addendum-2026-09-27.md) L7189-L7314 `adf6ae01acafe654ce36da752607a8c53e20b0370e3d59a45b9e23b590722e55`
-- [040 - Usage Page Redesign In PMConcept7 Addendum (2026-10-09)](040-usage-page-redesign-in-pmconcept7-addendum-2026-10-09.md) L7316-L7541 `38559deacc9af183ed2392fe79834074e95b2258763a1d5ec198af215185fd43`
+- [001 - Preamble](001-preamble.md) L1-L1 `0f5af8d253f0620f50a76cd917fdfd50c75103f8a5d12b3425f4cd57bf3d02ec`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L18 `40cf42a54d7191d7ee9b9d70340e2d75fddd69879a2c5c2cd88dae8c74c778c4`
+- [003 - Plan Document Status](003-plan-document-status.md) L21-L27 `46c2cb67d2f0e51f7752a7729a9a278d07fc53875ca4379c01e5b7795d2b3822`
+- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L29-L33 `f288c50cc64ad7b67be68a6d5bb9bc147da0cca48d912040ab1b08d925b3f099`
+- [005 - Storage dependency (implementation)](005-storage-dependency-implementation.md) L35-L94 `57530f2d34642881aaa7b6ea4bd03f69ad9fa2c725dc73404753be8aa83a7a20`
+- [006 - Executive Summary](006-executive-summary.md) L96-L98 `2250818bd856b8d0c861ff72f70af011f64a2083eb098679fb998818a630a34a`
+- [007 - Relationship to Existing Docs](007-relationship-to-existing-docs.md) L100-L117 `a53a7fa795807e76d65c196ceb76215ddaea9abfbee547f98fa016c0ab2d612a`
+- [008 - External References (Competitive & Ecosystem)](008-external-references-competitive-ecosystem.md) L119-L127 `04cbe7406beae34bf9b808f8cd5d5611203b41f5f61cb6c5b933ff63fcc2095c`
+- [009 - Scope of the Usage Feature](009-scope-of-the-usage-feature.md) L129-L373 `345459de88afed0d01616825c510078132fc8981db9cd7188629915bb925b6fb`
+- [010 - Data and Backend (conceptual)](010-data-and-backend-conceptual.md) L374-L414 `f9507cd1c3be634fe3e877134071a622109789c72d40bb28a3d1867406df6894`
+- [011 - GUI Placement Options](011-gui-placement-options.md) L415-L432 `a1710645ffc8bc239e19029c7a1228b921a5962087b0e84b70cc1448b8678cdc`
+- [012 - Gaps (Current State vs. Desired)](012-gaps-current-state-vs.-desired.md) L433-L645 `ab3896bfc576fcf911c6da7904887e11866cd70dbc8a9a56d7dc076b65de9b6a`
+- [013 - Enhancements (Beyond Minimum)](013-enhancements-beyond-minimum.md) L647-L730 `dd3355b17981e70d5c7d11ceec8d0c1beaf61eb560a8acd95ee42108749e27ca`
+- [014 - Out of Scope for This Plan](014-out-of-scope-for-this-plan.md) L732-L736 `6081165a3ac5420b72a17f22e196646e8c30ab64dc48b0428539fddd816cb3d1`
+- [015 - Success Criteria](015-success-criteria.md) L738-L745 `308398406720884aa9803fd0f7c9afb5c740dde65031b19490a71da0054890c5`
+- [016 - Version History](016-version-history.md) L747-L762 `2d0b6660676228afcbcabdb91b44bc2bae4b96e104768ade2674a678ded6cc6c`
+- [017 - Widget-Composed Page Layout (Addendum -- 2026-02-23)](017-widget-composed-page-layout-addendum-2026-02-23.md) L763-L868 `1d02364a438a245efa0e5a6921a2899d6fe03ae392724e1167016c0876463752`
+- [018 - Runtime Scheduler / Recovery Observability Addendum (2026-03-09)](018-runtime-scheduler-recovery-observability-addendum-2026-03-09.md) L870-L883 `3d2cfeaac26a8cea8d578c6b673d6ce897bb6f72951f51e130b3c61d696a7747`
+- [019 - Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)](019-source-control-github-actions-and-docker-manager-cost-attributio.md) L884-L901 `54ca1769b3f2ff615059761de4554d6cd9e395511121d9d16ac2506a8315aa54`
+- [020 - Cross-Surface Usage Routing Clarifications](020-cross-surface-usage-routing-clarifications.md) L903-L920 `c674b6770334be0f80755aab6d519440592f1ab8a4beb50ac0e169f700a187cf`
+- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L922-L926 `0017d1d4758215286470e4ef4efdd9080852c1e97e1082f63110525b088a277f`
+- [022 - PlanUnits](022-planunits.md) L928-L5024 `e2f154c627c614924052dcb2da2bdc622a75ecd7614ab37e9cbda41693010400`
+- [023 - Migration Coverage](023-migration-coverage.md) L5026-L5036 `78b5996ecc4f82f319fb5663975e8995dcdacf52a4a53c47ea4c17c92b4e0b76`
+- [024 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](024-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L5038-L5126 `73f4ededa16bb919388ca24d27ad993e2cae0474b2815384599d90a61096e5ff`
+- [025 - Ledger Compile Addendum - pldg-20260626-001-feature-name](025-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L5129-L5221 `652c2bbaa258d5f861954f41e3854d0818ab32a93faf6f089301ef34b0efd86f`
+- [026 - Ledger Compile Addendum - pldg-20260629-001-feature-name](026-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L5223-L5339 `473f92572b94c4408888a22a0f1a59b9ed987d21eb5cdd7db5b0f887348d6ac8`
+- [027 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L5341-L5424 `5b05ac6090cd2a61bf3893b3febf71af3a8f85b601634282daa370451eb05d47`
+- [028 - Usage GUI Propagation Addendum - 2026-07-09](028-usage-gui-propagation-addendum-2026-07-09.md) L5426-L5614 `dae61aea2b1cbd9fef423079a44d978331d22fb08fb5ed4493497c2abdcd328e`
+- [029 - Usage Implementation-Ready Evidence Addendum - 2026-07-09](029-usage-implementation-ready-evidence-addendum-2026-07-09.md) L5616-L5813 `6085bed1f39a06807fbcf8126ff2c6cfa897e50c71241cac54ccd8898cbca005`
+- [030 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](030-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L5815-L6180 `2363e8ce8e344ecc254faba76967e989ee543a91724c4a84fff3f4b48d983884`
+- [031 - PMConcept7 Concept Promotion Addendum - 2026-07-23](031-pmconcept7-concept-promotion-addendum-2026-07-23.md) L6182-L6261 `08373c6aa99af9669f4e099dbc22a4bcc1c64ece17544fbb79de99247bb39d0c`
+- [032 - Shared runtime attribution addendum (2026-08-13)](032-shared-runtime-attribution-addendum-2026-08-13.md) L6263-L6342 `e5934ab1092bd0e3350a9d951fcd1d65c046b2288f115cea4dbf284fce322d5e`
+- [033 - u11 Prism II Usage Concept Promotion Addendum - 2026-08-18](033-u11-prism-ii-usage-concept-promotion-addendum-2026-08-18.md) L6344-L6439 `d9cc1a4cc85992f08544cbd309d97d4c363faf7c5e6e6b947fddd76ac335d150`
+- [034 - PMConcept7 Recovery Canonical Integration Addendum - 2026-08-27](034-pmconcept7-recovery-canonical-integration-addendum-2026-08-27.md) L6441-L6573 `61f85fc4e21096093f8f24e3b12ea53e2562d0ab47a2c97d4d21b8972ae39861`
+- [035 - Full-Thread Runtime Projection And Gate Attribution Addendum - 2026-08-31](035-full-thread-runtime-projection-and-gate-attribution-addendum-202.md) L6575-L6958 `fb1d900de6e6937042a5fa2592ca6c314b29a1a733952057db1a6a038939f171`
+- [036 - Additive Correction v4 — Attempt-Level Attribution (2026-09-03)](036-additive-correction-v4-attempt-level-attribution-2026-09-03.md) L6960-L6975 `e64098d3d37768eb5dd0e427277ea570f6fd947cff17c1adf04acbff923975c6`
+- [037 - Working Notebook Usage Fidelity Addendum (2026-09-05)](037-working-notebook-usage-fidelity-addendum-2026-09-05.md) L6977-L7121 `ff2b6bace128d0af7be8e7a68fdc97580d43d7a0d5c782e99ab9abe15600f8e2`
+- [038 - Run-start attribution context consumer - 2026-09-11](038-run-start-attribution-context-consumer-2026-09-11.md) L7123-L7187 `3e881a5990d3f26442c635ca3ce4e7b4ee219a181a2f2508d83ec27b33a67e06`
+- [039 - Wand Modules Redesign Addendum (2026-09-27)](039-wand-modules-redesign-addendum-2026-09-27.md) L7189-L7314 `6ada7d867e929c8c3fad7ceba0b798112fe5107d92282dcb136c263dd401a093`
+- [040 - Usage Page Redesign In PMConcept7 Addendum (2026-10-09)](040-usage-page-redesign-in-pmconcept7-addendum-2026-10-09.md) L7316-L7597 `664e9b2af68b537ff0547bf817226c0bbf3538ef8fa3c0d5ee276cf5a3264422`

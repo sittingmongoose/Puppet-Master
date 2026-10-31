@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L17042-L18002
+Source lines: L17052-L18015
 
-Source SHA256: `cce7b8d8b0cf5548ce56220a1f4a21225b7a5ba992f89025f6d60611ba3fb117`
+Source SHA256: `ca68ac358108653694afff0c685514c0b2d893fd5edc0e7344b19960a4d384b6`
 
 ---
 
@@ -211,7 +211,7 @@ Validation order is mandatory:
 
 1. Check magic.
 2. Require all 48 prefix bytes and validate prefix CRC before trusting lengths.
-3. Admit frame version, require reserved zero, and admit `flags=0`; unsupported frame or flags stops compatibility admission.
+3. Admit frame version, require reserved zero, and admit `flags=0`; unsupported frame or flags stops compatibility admission. Amended 2026-10-31 (DL-270): the frame also admits SP-335's compressed profile, a flags bit with a codec id and a dictionary id, for sealed segments; the active segment stays `flags=0`.
 4. Enforce header/payload caps and checked remaining-file bounds.
 5. Match selected segment generation and strict sequence progression.
 6. Validate header CRC, canonical MessagePack, header-version dispatch, and tuple arity/types.
@@ -665,6 +665,9 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
   The exact Case L-2 SeglogFrameV2 first-writer profile defines a packed 48-byte prefix, eight-element header, uncompressed full EventRecord payload and canonical MessagePack; it independently protects framing, header metadata, and payload; resynchronizes only through fully validated candidates; acknowledges only after segment and manifest barriers plus directory durability and SP-286 durable first-receipt custody; never reuses sequence IDs; and converges rotation, truncation, recovery, janitor, and compaction through deterministic intents while disclosing every canonical-history gap and rebuilding projections from the survivor set.
+  Amended 2026-10-31 (DL-270): SP-336 acknowledges an ordinary group after one data sync of its segment, keeps the
+  watermark in the segment, syncs the manifest at rotation, gives barrier-class events a full flush, and creates
+  stores atomically.
 gui_related: true
 gui_classification_reason: Integrity loss and recovery create persistent blocked/read-only disclosure and recovery-report actions.
 split_recommended: false

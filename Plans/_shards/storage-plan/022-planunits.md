@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2387-L15092
+Source lines: L2387-L15102
 
-Source SHA256: `cce7b8d8b0cf5548ce56220a1f4a21225b7a5ba992f89025f6d60611ba3fb117`
+Source SHA256: `ca68ac358108653694afff0c685514c0b2d893fd5edc0e7344b19960a4d384b6`
 
 ---
 
@@ -1375,7 +1375,11 @@ plan_unit_id: SP-023
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Frequency-table, path compatibility, and validation rules preserve The Stack Smol base matrix, static binary embedding, project blend rule, fixed 3-gram fallback, path normalization, case sensitivity, startup validation, Windows MAX_PATH mitigation, and OS indexer exclusions."
+canonical_text: >-
+  Frequency-table, path compatibility, and validation rules preserve The Stack Smol base matrix, static binary
+  embedding, project blend rule, fixed 3-gram fallback, path normalization, case sensitivity, startup validation,
+  Windows MAX_PATH mitigation, and OS indexer exclusions. Amended 2026-10-31 (DL-270): the OS indexer markers are
+  kept but not relied on; SP-345 places data where indexers do not look.
 gui_related: false
 gui_classification_reason: "This unit preserves backend indexing, compatibility, and validation requirements."
 split_recommended: false
@@ -1555,7 +1559,13 @@ plan_unit_id: SP-026
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "The first writer uses the exact SeglogFrameV2 profile in Case L-2: a packed 48-byte prefix, eight-element MessagePack header, canonical full EventRecord payload, flags zero and no compression, with independently validated prefix/header/payload CRCs. Generation-1 SeglogRecord/SeglogHeader and payload-only compression remain separate reader/source-lineage compatibility; JSON diagnostics remain non-authoritative mirrors."
+canonical_text: >-
+  The first writer uses the exact SeglogFrameV2 profile in Case L-2: a packed 48-byte prefix, eight-element
+  MessagePack header, canonical full EventRecord payload, flags zero and no compression, with independently
+  validated prefix/header/payload CRCs. Generation-1 SeglogRecord/SeglogHeader and payload-only compression remain
+  separate reader/source-lineage compatibility; JSON diagnostics remain non-authoritative mirrors. Amended
+  2026-10-31 (DL-270): SP-335 adds a compressed profile for sealed segments, and SP-339 retires the always-on JSON
+  mirrors; the active segment keeps flags zero.
 gui_related: false
 gui_classification_reason: "This unit preserves backend on-disk seglog wire-format requirements."
 split_recommended: false

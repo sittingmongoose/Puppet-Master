@@ -615,10 +615,10 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Models_Syst
 - **Impact**
   - Slow UI refresh for 5h/7d windows, elevated memory during rollup recalculation, or degraded startup when the seglog requires extended CRC validation.
 - **Mitigation**
-  - Retention policy: keep raw seglog events for a configurable window (default 90 days); archive or compact older events with an optional export-first step.
+  - Retention policy: keep raw seglog events for a configurable window (default 90 days); archive or compact older events with an optional export-first step. Amended 2026-10-31 (DL-270): this window does not apply to `usage.event`, which is never pruned; daily usage totals are kept forever (UF-108).
   - Seglog compaction: periodic background job consolidates older fine-grained events into daily summary records, reducing scan time while preserving attribution fidelity.
   - Rollup freshness: 5h/7d windows are served from redb rollups, not from raw event scans. Background analytics jobs refresh rollups incrementally; UI shows the last committed rollup plus an explicit freshness cue when a refresh is in progress.
-  - `usage.jsonl` is a human-readable mirror only and MUST NOT be used for aggregation, rollup computation, or 5h/7d window serving. If retained for debugging, it follows the same retention policy as seglog.
+  - `usage.jsonl` is a human-readable mirror only and MUST NOT be used for aggregation, rollup computation, or 5h/7d window serving. If retained for debugging, it follows the same retention policy as seglog. Amended 2026-10-31 (DL-270): `usage.jsonl` is retired as a live file; `pm export` produces it on request (SP-339).
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
@@ -7539,3 +7539,59 @@ owner_hints: [Plans/usage-feature.md, Plans/Multi-Account.md, Plans/FinalGUISpec
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-173, ContractName:Plans/Decision_Log.md#DL-174, ContractName:Plans/Decision_Log.md#DL-175, ContractName:Plans/Decision_Log.md#DL-176, ContractName:Plans/Decision_Log.md#DL-177, ContractName:Plans/Multi-Account.md#MA-049, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/Settings_System.md#SSYS-044, ContractName:Plans/Widget_System.md#WS-019, ContractName:Plans/Widget_System.md#WS-020, ContractName:Plans/assistant-chat-design.md#ACD-474, ContractName:Plans/DRY_Rules.md#DR-038, ContractName:Plans/FinalGUISpec.md#F3-628
+
+### UF-108 - Usage History Is Kept And Loads From Rollups
+
+```yaml
+plan_unit_id: UF-108
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  DL-270, Jared's card 7 note. The Usage page and every usage widget read redb rollups that update as each
+  usage.event lands; nothing on them scans raw events. usage.event records are exempt from raw-event pruning: they
+  stay in seglog's cold tier and in SP-341's Parquet archive, where SQL can query them. Daily usage totals per
+  account, provider and model are kept forever. This amends Problem 5's 90-day raw-event window, which no longer
+  applies to usage.event. usage.jsonl is retired as a live file (SP-339). Jared, 2026-10-31, verbatim: "Do we need
+  to tie the usage data to this?  In my work on AAC, the usage data takes a long time to load and doesn’t keep its
+  data, I know there is a lot of data there so just want to make sure that is accounted for."
+gui_related: true
+gui_classification_reason: "Usage loads from rollups and keeps its full history."
+split_recommended: false
+depends_on: [UF-107, SP-339, SP-341]
+unblocks: []
+acceptance_criteria:
+  - "No usage view or widget scans raw usage events."
+  - "No usage.event is pruned."
+  - "Daily usage totals per account, provider and model are kept forever."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: usage_history_loss_or_slow_load
+reasoning_tier: high
+context_scope: dl270_usage_history
+implementation_surfaces:
+  - "Plans/usage-feature.md"
+  - "Plans/storage-plan.md"
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-270"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answer-replies-2026-10-31.json, SHA-256 c51138b79bba5efa55662f3cd7ef04bd67f8afc6c9dc76fb34e42d1de99d0db4 (the reply to the card 7 note)"
+preserved_exact_tokens:
+  - "usage.event"
+  - "usage.jsonl"
+  - "Do we need to tie the usage data to this?  In my work on AAC, the usage data takes a long time to load and doesn’t keep its data, I know there is a lot of data there so just want to make sure that is accounted for."
+negative_constraints:
+  - "Do not prune usage.event records."
+  - "Do not serve usage windows from raw scans."
+owner_hints:
+  - "Plans/usage-feature.md"
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-341, ContractName:Plans/storage-plan.md#SP-339
