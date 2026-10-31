@@ -974,9 +974,13 @@
       "restore": {
         "source": "cloud",
         "cloud": "s3",
-        "reachedFor": "cloud:gdrive"
+        "reachedFor": "cloud:gdrive",
+        "sub": "aws_s3",
+        "access": {
+          "bucket": "current-backup"
+        }
       },
-      "expected_key": "cloud:s3",
+      "expected_key": "cloud:s3:aws_s3:current-backup",
       "reached": false
     },
     {
@@ -984,9 +988,13 @@
       "restore": {
         "source": "cloud",
         "cloud": "s3",
-        "reachedFor": "cloud:s3"
+        "reachedFor": "cloud:s3:aws_s3:current-backup",
+        "sub": "aws_s3",
+        "access": {
+          "bucket": "current-backup"
+        }
       },
-      "expected_key": "cloud:s3",
+      "expected_key": "cloud:s3:aws_s3:current-backup",
       "reached": true
     },
     {
@@ -1052,6 +1060,34 @@
       },
       "expected_key": "cloud:gdrive",
       "reached": false
+    },
+    {
+      "name": "s3_other_bucket_not_reached",
+      "restore": {
+        "source": "cloud",
+        "cloud": "s3",
+        "sub": "aws_s3",
+        "access": {
+          "bucket": "new-backup"
+        },
+        "reachedFor": "cloud:s3:aws_s3:old-backup"
+      },
+      "expected_key": "cloud:s3:aws_s3:new-backup",
+      "reached": false
+    },
+    {
+      "name": "s3_other_family_not_reached",
+      "restore": {
+        "source": "cloud",
+        "cloud": "s3",
+        "sub": "backblaze_b2",
+        "access": {
+          "bucket": "current-backup"
+        },
+        "reachedFor": "cloud:s3:aws_s3:current-backup"
+      },
+      "expected_key": "cloud:s3:backblaze_b2:current-backup",
+      "reached": false
     }
   ],
   "ssh_key_unlock_cases": [
@@ -1097,5 +1133,13 @@
       "mode": "remote_link",
       "expected": "pm://signed-endpoint"
     }
-  ]
+  ],
+  "integration_source_alignment": {
+    "decision_ref": "Plans/Decision_Log.md#DL-259",
+    "head": "cf0ae92b9acffe4b80203e9c147ac7073cb2224b",
+    "restore_repoint": "generation_fenced_cancel_and_reset_existing_check",
+    "restore_reach": "selected_service_family_and_bucket",
+    "SSH_unlock": "selected_key_under_current_account_scope",
+    "claim": "source_helper_conformance_only_not_native_or_rendering_proof"
+  }
 }

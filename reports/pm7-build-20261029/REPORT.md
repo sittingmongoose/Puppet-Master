@@ -1,3 +1,26 @@
+# Plans lane — integration cf0ae92b9a and four late product rules, 2026-10-31
+
+**Complete and verified.** Branch `t3/plans/pm7-plans-canon`; merged GUI baseline `cf0ae92b9acffe4b80203e9c147ac7073cb2224b` by fast-forward. The resulting full head is mailed after push. GLM independently closed all 13 earlier coverage findings at `17e87e52e0`, with zero new blockers; it sampled 32/133 rows and ran the shard check. That review applies to its pinned canon, not a new exhaustive audit of these later changes.
+
+| Product rule | Owners and companions |
+|---|---|
+| **Name destination** | F3-520/PWIZ-024: no chosen folder leaf until a name is typed or a suggestion explicitly selected; clearing restores the generic line. Factory copy is “Kept in Documents › Puppet Master, in a folder with your Project's name”. Existing source locations remain exact. |
+| **Service addresses** | PWIZ-024: text remains scoped to service/variant; only the current choice enters the reviewed plan. Switching targets invalidates incompatible auth/repository/currentness proof. Remembered text is no readiness evidence. |
+| **AI phase skip** | PWIZ-021/F3-520: Skip for now immediately reveals skipped-state feedback at the step start, without waiting for checks. Optional Free Models remains available; no account becomes Ready through skip. |
+| **Validation parity** | PWIZ-024; UIW-015/WM-041; CS-069/UCC-106; DR-020: display, button availability/reason and activation use one current choice/validation contract. Protect Connect and restore Continue likewise recheck their own prerequisites. Domain owner authority remains. |
+
+**Coverage:** 137 real product rows / 685 required cells, with four INT-CF0-* rows. The static LateOnboardingPolicy and six refusal vectors accompany the rules; existing production entries retain their command/handler identities. No Settings row, command, handler, control, runtime request field, storage family or event is added. Inventory stays 1,010 settings, 22 status keys, 25 Pip parts, 483 bindings, 715 Touch rows / 140 profiles, 1,269 production entries.
+
+**Checks:** **14/14 current focused/regeneration/guard checks PASS.** PM7 has 132 schema cases. Onboarding129/241, Tour24/59, Remote110/109, Server89/52 and FinalGUI1/160 remain passing. The merged-source probe needed updated isolated dependencies: it now executes the actual Backup family and SSH-account authorization helpers, verifies restore cancellation/generation, and checks family/bucket-bound reach with 11 cases. Its initial harness failure is retained as a resolved diagnostic; the final canon/source check passes. This proves static/source-helper conformance, not native/browser/rendering behavior.
+
+**Derived/preservation:** index and shard generation/checks pass at 7,243 PlanUnits / 96 indexed documents / 2,958 shards / 99 configured sources. Nine units in nine source documents changed; nine regenerated source groups all correspond to edited owners. Every prior 569 artifact hash and historical Decision Log byte outside DL-259 is unchanged. Protected governance artifacts remain untouched; runtime certification remains incomplete in the index.
+
+**Manifest:** `/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/plans/verification.json`, SHA-256 `0f03b83b2adfead7c2615ce2cababe22e41140bed6be5f067e8b1ab65c9e3889`; 586 immutable artifact records (17 new). Exact command outputs, source fingerprints, paths and SHA-256 values are recorded there; cf0-integration-guard.json anchors the current bytes. The two check helpers are retained for reproduction.
+
+**Remaining:** no numbered FS-/FO- findings were posted at this snapshot; the lead will forward accepted product changes. Demo Studio step-aside and hint timing remain excluded. No full gates, dry landing, landing, lock, baseline refresh or reseal ran. The lead schedules landing checks after Jared’s go-ahead. No ledger was compiled. Mailbox stays armed.
+
+---
+
 # Plans lane — coverage audit and Server C1–C4 correction, 2026-10-31
 
 **Complete and ready for the lead’s independent re-check.** Branch `t3/plans/pm7-plans-canon`; parent `a447a7c7e0`. The resulting full head is mailed after push. All 13 Astra findings are confirmed and fixed under DL-259, DL-257/Q22 and DL-260. [COVERAGE-AUDIT-RESPONSE.md](COVERAGE-AUDIT-RESPONSE.md) records every finding and all four Server deltas.

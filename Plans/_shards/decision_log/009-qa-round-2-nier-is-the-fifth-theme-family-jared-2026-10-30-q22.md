@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L18594-L19237
+Source lines: L18594-L19254
 
-Source SHA256: `4936295e89588932f8861abbc3aa972ce4f9c497e69d79fe78fbb67bcae3e349`
+Source SHA256: `276967521505a96660a716e6f31cfab84b6e64d476f9a1364c2b7e2b6afd7521`
 
 ---
 
@@ -426,7 +426,12 @@ canonical_text: 'Jared 2026-10-31: canonical Plans specify real product behavior
   its category on return. Provider key rows use the exact official key console/guide through the existing protected official-page
   command and explain key versus password. Grouped First Project criteria, D7 shared consumers and five-family/ten-variant
   acceptance are reconciled in their owners. Concept API spellings move to source lineage under DL-260; they add no product
-  request, persisted state or authority.'
+  request, persisted state or authority. Late integration amendment, 2026-10-31: automatic local Name previews never
+  treat a placeholder/suggestion as a chosen folder; typed service addresses remain scoped to their service/variant;
+  AI phase Skip immediately reveals its skipped-state feedback; and the online-copy/import view, Continue button and
+  activation use one current choice/validation result, including the Protect/restore action-prerequisite sweep. These
+  retain existing local actions, owner admission/commit and readiness truth. The GLM re-check at 17e87e52e0 closed all
+  13 coverage findings; that static re-check is not native/runtime proof.'
 gui_related: true
 gui_classification_reason: Sets actual onboarding choices, shared explanation controls, native connection setup and Pip/notice
   presentation.
@@ -591,6 +596,12 @@ acceptance_criteria:
   the existing protected official-page command and explain key versus password. Grouped First Project criteria, D7 shared
   consumers and five-family/ten-variant acceptance are reconciled in their owners. Concept API spellings move to source
   lineage under DL-260; they add no product request, persisted state or authority.'
+- 'Late integration amendment, 2026-10-31: automatic local Name previews never treat a placeholder/suggestion as a chosen
+  folder; typed service addresses remain scoped to their service/variant; AI phase Skip immediately reveals its skipped-state
+  feedback; and the online-copy/import view, Continue button and activation use one current choice/validation result,
+  including the Protect/restore action-prerequisite sweep. These retain existing local actions, owner admission/commit
+  and readiness truth. The GLM re-check at 17e87e52e0 closed all 13 coverage findings; that static re-check is not native/runtime
+  proof.'
 validation_surfaces:
 - python3 scripts/pm7-onboarding-rulings-check.py
 - python3 scripts/pm-new-contracts-verify.py
@@ -624,6 +635,12 @@ source_lineage:
   rules, no hints.
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/COVERAGE-AUDIT-astra.md — confirmed M1–M7, F1/F2, C1–C3
   and D1; source coverage only, no native proof.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
+  product behavior only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
+  sweep; source implementation serviceChoice and address map are lineage only.
+- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
+  visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 preserved_exact_tokens:
 - D1 A
 - D2 A

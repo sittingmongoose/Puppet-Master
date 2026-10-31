@@ -7844,7 +7844,12 @@ canonical_text: 'UCC-106 retains eleven historical cmd.onboarding.* identifiers 
   domain owners, approvals and truthful results. Later always finishes onboarding and leaves the committed Project intact:
   it does not wait for optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred;
   any already-started work obeys the owner’s existing cancel/background rules, and the app shows its actual result or
-  pending state. Existing whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
+  pending state. Existing whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.
+  DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and validation
+  result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
+  restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
+  and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
+  fences remain unchanged.'
 gui_related: true
 gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed owner-local Product Onboarding actions.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, UCC-102, CS-053]
@@ -7935,6 +7940,11 @@ acceptance_criteria:
   optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started
   work obeys the owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing
   whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
+- 'DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and validation
+  result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
+  restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
+  and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
+  fences remain unchanged.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
@@ -7968,6 +7978,12 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
   rules, no hints.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
+  product behavior only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
+  sweep; source implementation serviceChoice and address map are lineage only.
+- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
+  visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 source_atom_ids: [atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:

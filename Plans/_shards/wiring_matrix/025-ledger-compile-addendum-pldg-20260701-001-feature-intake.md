@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3496-L4086
+Source lines: L3496-L4102
 
-Source SHA256: `b21a57b9cdea7200278d09fa59bb646371fc30b6005228545e375d42408e39fd`
+Source SHA256: `b4528e0898f2d8ebf3281f3d90e2c6f0e8fc991a36ff49a78d2830fe795bb86d`
 
 ---
 
@@ -170,7 +170,12 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   console one-time-code handoff; DESKTOP-RESTORE-1 uses protected native local handoff with no code to type. Both consume
   Server-owned initial claim authorization through the existing exact claim tuple before separate bootstrap/full restore.
   REMOTE-CODE-1 is an accepted pre-build protocol check alongside D4; no code grammar, new resolver command or wizard
-  caveat is invented. Existing public-exposure consent and truthful reachability/identity/pairing checks remain.'
+  caveat is invented. Existing public-exposure consent and truthful reachability/identity/pairing checks remain. DL-259
+  late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and validation result
+  for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and restore
+  Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing and
+  dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return fences
+  remain unchanged.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
@@ -361,6 +366,11 @@ acceptance_criteria:
   separate bootstrap/full restore. REMOTE-CODE-1 is an accepted pre-build protocol check alongside D4; no code grammar,
   new resolver command or wizard caveat is invented. Existing public-exposure consent and truthful reachability/identity/pairing
   checks remain.'
+- 'DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and validation
+  result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
+  restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
+  and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
+  fences remain unchanged.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
@@ -400,6 +410,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
   rules, no hints.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
+  product behavior only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
+  sweep; source implementation serviceChoice and address map are lineage only.
+- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
+  visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 source_atom_ids: [atom-0016, atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:

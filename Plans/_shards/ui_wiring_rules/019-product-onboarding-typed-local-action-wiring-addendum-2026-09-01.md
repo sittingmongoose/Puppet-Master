@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1024-L1336
+Source lines: L1024-L1351
 
-Source SHA256: `725dc022d5120a2d2045672a9c078530aa3b62e531ae560774065754796fd2fd`
+Source SHA256: `3daa032fca5f273b5c258c758f33249f982824ddc887ad16384493c0793caeab`
 
 ---
 
@@ -172,7 +172,11 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   uses protected native local handoff with no code to type. Both consume Server-owned initial claim authorization through
   the existing exact claim tuple before separate bootstrap/full restore. REMOTE-CODE-1 is an accepted pre-build protocol
   check alongside D4; no code grammar, new resolver command or wizard caveat is invented. Existing public-exposure consent
-  and truthful reachability/identity/pairing checks remain.'
+  and truthful reachability/identity/pairing checks remain. DL-259 late integration, 2026-10-31: consume PWIZ-024’s one
+  current resolved service/variant/address and validation result for the online-copy/import view, its Continue availability/reason
+  and activation. Recheck Protect Connect and restore Continue prerequisites through the same existing owners at activation.
+  Invalid or stale input advances nothing and dispatches no owner action. Existing local onboarding IDs, reviewed commit,
+  protected auth, permission and return fences remain unchanged.'
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
@@ -296,6 +300,11 @@ acceptance_criteria:
   separate bootstrap/full restore. REMOTE-CODE-1 is an accepted pre-build protocol check alongside D4; no code grammar,
   new resolver command or wizard caveat is invented. Existing public-exposure consent and truthful reachability/identity/pairing
   checks remain.'
+- 'DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and validation
+  result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
+  restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
+  and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
+  fences remain unchanged.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
@@ -311,6 +320,12 @@ source_lineage:
   rules, no hints.
 - 'DL-260 source lineage only: C.cards with its under slot and o55-under/o55-card-parent classes implement the shared
   joined-choice tray; these source APIs/classes are not native product contracts.'
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
+  product behavior only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
+  sweep; source implementation serviceChoice and address map are lineage only.
+- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
+  visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, ui.onboarding.choose_look, look_choice, look_previewed, preview_nier, toggle_look_menu, toggle_look_editor, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
 negative_constraints:
   - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.
