@@ -1357,7 +1357,6 @@
     "where": "The AI works on {host}. Sign-ins open here on this device, and are kept on {host}.",
     "keychainHere": "this computer's keychain",
     "keychainOn": "the keychain on {host}",
-    "connect": "Connect",
     "setUp": "Set up",
     "notSetUp": "Not set up",
     "keyFrom": "Get a key from {name}",
@@ -1386,20 +1385,6 @@
     "removeGo": "Remove",
     "keep": "Keep it",
     "dup": "That's {who}, already connected. To add a different one, sign in with another account.",
-    "way": {
-      "codex": {
-        "main": "Sign in with ChatGPT",
-        "mainSub": "Uses Codex through your ChatGPT plan limits.",
-        "alt": "Use an OpenAI API key",
-        "altSub": "Separate from ChatGPT."
-      },
-      "cursor": {
-        "main": "Use a Cursor API key",
-        "mainSub": "From your Cursor dashboard. Uses your Cursor plan.",
-        "alt": "Sign in in the browser instead",
-        "altSub": "Installs Cursor's command-line tool, then signs in."
-      }
-    },
     "ctx": {
       "billing": {
         "title": "Whose Copilot plan should Puppet Master use?",
@@ -1449,7 +1434,15 @@
       "body": "{who} · that sign-in has expired. Sign in again to keep using it."
     },
     "keyRevoked": "That key was revoked or has expired. Make a new key, then paste it here.",
-    "skipped": "Skipped for now."
+    "skipped": "Skipped for now.",
+    "alt": {
+      "codex": "Use an OpenAI API key instead",
+      "cursor": "Sign in in the browser instead"
+    },
+    "main": {
+      "codex": "Sign in with ChatGPT instead",
+      "cursor": "Use an API key instead"
+    }
   },
   "aiNone": {
     "eyebrow": "AI",

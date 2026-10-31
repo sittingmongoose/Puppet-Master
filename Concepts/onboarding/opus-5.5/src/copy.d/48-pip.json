@@ -169,26 +169,6 @@
           "title": "Start over",
           "text": "Clears the choices from last time and begins setup again from the first page."
         },
-        "way:codex|main": {
-          "title": "Sign in with ChatGPT",
-          "text": "Uses your ChatGPT plan.",
-          "expert": "ChatGPT OAuth account row."
-        },
-        "way:codex|alt": {
-          "title": "Use an OpenAI API key",
-          "text": "A key from the OpenAI API dashboard, separate from any ChatGPT plan.",
-          "expert": "API-key account row, separate from the ChatGPT sign-in."
-        },
-        "way:cursor|main": {
-          "title": "Use a Cursor API key",
-          "text": "Make a key in your Cursor dashboard under API Keys, then paste it here.",
-          "expert": "Cursor SDK with a user or service-account API key; no CLI needed."
-        },
-        "way:cursor|alt": {
-          "title": "Sign in in the browser instead",
-          "text": "Installs Cursor's command-line tool on the computer that does the work, then you sign in to Cursor in your browser.",
-          "expert": "cursor-agent login in a Puppet Master profile root on the execution host; needs the CLI installed."
-        },
         "field:paste": {
           "title": "Code from the page",
           "text": "After you sign in on the company's page, it shows a code. Paste it here so the sign-in reaches the computer that does the work.",

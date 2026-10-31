@@ -20,6 +20,9 @@ mkdirSync(out, { recursive: true });
 const SC = [];
 const def = (id, scenario, title, fn) => SC.push({ id, scenario, title, fn });
 const until = (d, js, what, timeout) => d.until(new Function('return ' + js), { what, timeout: timeout || 15000 });
+/* AI detection is cached per work computer, keyed by that computer's id (73-screens-ai.js detKey: detect:server:this on
+   this computer), never its display name; read the key the page itself uses */
+const DETECTED = "(((window.O55.S.sess.ops || {})['detect:' + window.O55.ai.host(window.O55.S).id]) || {}).state === 'done'";
 const readyPrimary = (d) => d.until(() => { const b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-primary'); return b && b.getAttribute('aria-disabled') !== 'true'; }, { what: 'primary enabled', timeout: 15000 });
 async function connectRoutes(d) {
   // Discovery grows the list above More ways and can move it between a geometry probe and real input.
@@ -159,7 +162,7 @@ def('s09b', 'flaky', 'Network failure before a remote effect: review a fresh att
   await d.act('reviewAgain'); A.eq(await d.screen(), 'review', 'fresh creation requires review');
   A.ok(await githubAttempt(d, A) !== failedKey, 'fresh review creates a distinct attempt key');
 });
-async function toAi(d, name) { await d.openOnboarding(); await toName(d); await d.type('name', name || 'AI test'); await d.primary(); if ((await d.screen()) === 'like') await d.primary(); await d.primary(); await reviewAndCreate(d); await d.primary(); await until(d, "(window.O55.S.sess.ops||{})['detect:this computer'] && window.O55.S.sess.ops['detect:this computer'].state === 'done'", 'detection', 8000); await d.settle(); }
+async function toAi(d, name) { await d.openOnboarding(); await toName(d); await d.type('name', name || 'AI test'); await d.primary(); if ((await d.screen()) === 'like') await d.primary(); await d.primary(); await reviewAndCreate(d); await d.primary(); await until(d, DETECTED, 'detection', 8000); await d.settle(); }
 def('s10', 'returning', 'Provider already installed and signed in: Ready automatically', async (d, A) => {
   await toAi(d); A.ok(await d.state(() => window.O55.S.sess.ai.accounts.claude && window.O55.S.sess.ai.accounts.claude.state === 'ready'), 'Claude Ready with no action');
   A.ok(!(await d.state(() => [...document.querySelectorAll('.o55-pane button')].some((b) => /^(Connect|Use This Installation|Use This Provider|Open Installer)$/.test(b.textContent.trim())))), 'no forbidden action labels');
@@ -555,7 +558,7 @@ def('pr12', 'antigravityOnce', 'Opened at a post-commit screen, the run has its 
     A.ok(await d.state(() => window.O55.S.sess.commit.state === 'done'), scr + ': a Project made');
   }
   await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 'ai' }); }); await d.settle();
-  await until(d, "(window.O55.S.sess.ops['detect:this computer']||{}).state === 'done'", 'detection', 9000); A.ok(true, 'AI: detection ran');
+  await until(d, DETECTED, 'detection', 9000); A.ok(true, 'AI: detection ran');
   await d.act('install', 'antigravity'); await d.act('installGo', 'antigravity');
   await until(d, "(window.O55.S.sess.ai.accounts.antigravity||{}).state === 'signin'", 'installed', 9000);
   A.ok(await d.state(() => window.O55.ui.act('signin', 'antigravity')), 'act: Sign in');
