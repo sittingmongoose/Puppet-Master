@@ -363,5 +363,45 @@ export const tests = {
 		const msg = await rowText(W, 'anthropic-api');
 		await t.check('refused key: no "a Anthropic" (a/an)', /wasn't accepted/.test(msg) && !/\ba (?:[AEIOU])/.test(msg), msg);
 	}
+	,
+	// Astra RV-1: every "Browser didn't open?" names its page: the address, Open the page (one main action) and Copy
+	async 'every sign-in fallback names its page: address, Open, Copy'(t) {
+		const W = await toAll(t);
+		const ROWS = [
+			['codex', 'auth.openai.com/codex/device', 'code', null],
+			['copilot', 'github.com/login/device', 'code', null],
+			['claude', 'claude.ai/login', 'paste', 'install'],
+			['antigravity', 'accounts.google.com', 'paste', 'install'],
+			['grok', 'accounts.x.ai/device', 'code', 'install'],
+			['muse', 'dev.meta.ai/login', 'link', 'install'],
+			['cursor', 'cursor.com/login', 'link', 'alt']
+		];
+		for (const [id, url, mode, first] of ROWS) {
+			if (first === 'alt') { await W.$(`[data-o55-do="useAlt"][data-arg="${id}"]`).click(); await screenDone(W); }
+			if (first) {
+				if (await act(W, id, 'install').count()) { await act(W, id, 'install').click(); await screenDone(W); await W.$(`[data-o55-do="installGo"][data-arg="${id}"]`).click(); }
+				await waitRow(t, W, id, /Not signed in/, `${id}: installed, ready to sign in`, 12000);
+			}
+			await act(W, id, 'signin').click();
+			await waitRow(t, W, id, /Waiting for you/, `${id}: waiting for the browser`, 5000);
+			await W.$(`[data-o55-do="noBrowser"][data-arg="${id}"]`).click(); await screenDone(W);
+			const txt = await rowText(W, id);
+			await t.check(`${id}: names its page (${url})`, txt.includes(url), txt.slice(0, 300));
+			await t.check(`${id}: Open the page and Copy beside it`, (await W.$(`[data-key="addr-${id}"] [data-o55-do="openSigninPage"]`).count()) === 1 && (await W.$(`[data-key="addr-${id}"] [data-o55-do="copySigninPage"]`).count()) === 1, txt.slice(0, 200));
+			if (mode === 'code') await t.check(`${id}: the code is shown with the address`, /WDJB-MJHT/.test(txt), txt.slice(0, 200));
+			if (mode === 'paste') await t.visible(W.$(`#o55f-paste-${id}`), `${id}: the code from the page is pasted here`);
+			await W.$(`[data-key="addr-${id}"] [data-o55-do="copySigninPage"]`).click(); await W.frame.waitForTimeout(400);
+			const copied = (await W.frame.locator(`${ROOT} .o55-toast`).innerText().catch(() => '')) || '';
+			await t.check(`${id}: Copy address copies that address`, copied.includes(url), copied);
+			await W.$(`[data-key="addr-${id}"] [data-o55-do="openSigninPage"]`).click(); await W.frame.waitForTimeout(400);
+			const toast = (await W.frame.locator(`${ROOT} .o55-toast`).innerText().catch(() => '')) || '';
+			await t.check(`${id}: Open the page opens that address`, toast.includes(url), toast);
+			if (id === 'codex') await t.crop('fallback-codex', W.$('[data-key="pv-codex"]'), 'Codex "Browser didn\'t open?": the device page, Open the page, Copy, and the code');
+			if (id === 'muse') await t.crop('fallback-muse', W.$('[data-key="pv-muse"]'), 'Muse "Browser didn\'t open?": its sign-in page with Open the page and Copy');
+			await W.$(`[data-o55-do="cancelSignin"][data-arg="${id}"]`).click(); await screenDone(W);
+		}
+		const all = await W.frame.locator(ROOT).innerText();
+		await t.check('no fallback without a destination', !/Open your browser and sign in there, then come back/.test(all), 'generic toast text present');
+	}
 };
 

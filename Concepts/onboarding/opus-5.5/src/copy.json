@@ -1404,9 +1404,7 @@
       }
     },
     "needsChoice": "Needs a choice",
-    "deviceLead": "On any device, open {vendor}'s sign-in page and enter this code.",
-    "pasteLead": "Open the sign-in link in any browser and finish there. The page then shows a code: paste it here.",
-    "copyLink": "Copy sign-in link",
+    "pasteLead": "On any device, open {url} and finish signing in. The page then shows a code: paste it here.",
     "pasteLabel": "Code from the page",
     "pasteGo": "Use this code",
     "pasteBad": "That code wasn't accepted. Copy it again from the page.",
@@ -1444,6 +1442,13 @@
     "main": {
       "codex": "Sign in with ChatGPT instead",
       "cursor": "Use an API key instead"
+    },
+    "remote": {
+      "open": "Open the page",
+      "codeLead": "On any device, go to {url} and enter this code:",
+      "linkLead": "On any device, open {url} and finish signing in there. This row carries on by itself.",
+      "copy": "Copy address",
+      "copied": "Address copied: {url}. Paste it into a browser on any device."
     }
   },
   "aiNone": {
