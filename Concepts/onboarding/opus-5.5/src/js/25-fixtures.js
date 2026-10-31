@@ -319,7 +319,7 @@
         { id: 'full-nas', label: 'Everything from "Jared’s old laptop"', when: 'Sep 21 · 11:40 PM', projects: 3, accounts: 2, projectList: ['Tastebook', 'Harbor', 'Loom'], source: 'nas', device: 'nas-home' },
         { id: 'full-gdrive', label: 'Everything from "Jared’s old laptop"', when: 'Sep 20 · 10:15 PM', projects: 3, accounts: 2, projectList: ['Tastebook', 'Harbor', 'Loom'], source: 'cloud', cloud: 'gdrive' }
       ],
-      failures: {}, /* e.g. { online_copy: 'name_taken' | 'network' } — one-shot owner failures for the recovery scenarios;
+      failures: {}, /* e.g. { online_copy: 'name_taken' | 'network', online_partial: true } — one-shot owner failures for the recovery scenarios;
                        signin_once: { <provider or service id>: true } — that browser sign-in does not finish the first time */
       lowResource: false
     };
@@ -341,6 +341,8 @@
     readOnly: { label: 'Read-only NAS folder', apply(e) { e.devices[0].readOnly = ['/volume1/projects']; } },
     nameTaken: { label: 'GitHub name taken at creation', apply(e) { e.failures.online_copy = 'name_taken'; } },
     flaky: { label: 'Flaky network', apply(e) { e.failures.online_copy = 'network'; } },
+    /* GitHub makes the copy, then this computer's part stops once (PJCT-008's recovery: Continue Setup or Delete) */
+    githubHalfMade: { label: 'GitHub copy made, setup stops once', apply(e) { e.failures.online_partial = true; } },
     cliMissing: { label: 'Claude not installed', apply(e) { delete e.here.providers.claude; } },
     signedOut: { label: 'Claude installed, signed out', apply(e) { e.here.providers.claude = { installed: true, version: '2.4.1', signedIn: false }; } },
     copiedUnavailable: { label: 'Copied account unavailable here', apply(e) {

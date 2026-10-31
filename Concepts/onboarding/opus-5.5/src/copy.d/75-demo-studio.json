@@ -190,7 +190,9 @@
         "nas": "Home NAS",
         "online": "Online copy",
         "ai": "AI accounts",
-        "pip": "Sign-ins that fail once"
+        "pip": "Sign-ins that fail once",
+        "restore": "Restoring Projects",
+        "pairing": "Pairing"
       },
       "chapters": {
         "welcome": "Welcome",
@@ -243,6 +245,18 @@
         "readOnly": {
           "title": "Read-only NAS folder",
           "sub": "The projects folder on the NAS cannot be written."
+        },
+        "smbWrong": {
+          "title": "Shared folder refuses the first password",
+          "sub": "On Sign in to the shared folder, Check access fails once; the second try works."
+        },
+        "restoreFails": {
+          "title": "A restore stops part-way once",
+          "sub": "The first Restore stops while bringing Projects back; nothing is replaced; Try again works."
+        },
+        "pairExpires": {
+          "title": "A pairing request expires",
+          "sub": "On Pairing, the approval request runs out after a few seconds; Send it again works."
         },
         "nameTaken": {
           "title": "GitHub name taken",
@@ -328,6 +342,7 @@
         "away": "While you are away",
         "review": "Review the setup",
         "creating": "Creating the Project",
+        "away-setup": "Set up reaching it away from home",
         "protect": "Protect the Project",
         "ai": "Choose what powers it",
         "ai-all": "Every AI option",

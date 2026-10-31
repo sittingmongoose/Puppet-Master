@@ -571,14 +571,17 @@
       tx.innerHTML = '<span class="pst-bt-on"></span><span class="pst-bt-off"></span>';
       const on = tx.firstChild, off = tx.lastChild;
       this.tipRect = null;
-      if (instant || this.reduced) { el.classList.add('on'); el.classList.remove('typing'); on.textContent = t.text; return; }
+      /* placed at once from Pip's last pose: a stage parked for a moment (the window held, its opening) drew a new note at
+         its corner until the next frame, past Friendly's tilted edge (tools/tip_fit.mjs, Welcome and Pick a look) */
+      const place = () => { if (this.tipBox && this.tipH) this.placeTip(this.tipH, this.tipAng || 0, 0); };
+      if (instant || this.reduced) { el.classList.add('on'); el.classList.remove('typing'); on.textContent = t.text; place(); return; }
       el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
       this.sfx('tip');
       // Pip is pleased to be asked, and reads along while it writes
       const cps = this.tube ? 60 : this.famName === 'nier' ? 55 : 44;
       this.tipLook = this.t + Math.min(3, t.text.length / cps);
       this.feel(this.famName === 'nier' ? 'alert' : 'happy', 900); this.nod(); this.busy();
-      off.textContent = t.text; el.classList.add('typing');
+      off.textContent = t.text; el.classList.add('typing'); place();
       this.tipW = H.typer(t.text.length, cps, (i) => { on.textContent = t.text.slice(0, i); off.textContent = t.text.slice(i); },
         { paused: () => !this.live(), done: () => el.classList.remove('typing') });
     }
@@ -595,8 +598,9 @@
     placeTip(H, ang, dt) {
       const el = this.tipBox;
       if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; this.bubble.classList.remove('pst-hush'); return; }
-      // it holds still while the pointer is on it, so its close button is easy to hit
-      if (el.matches(':hover')) return;
+      // it holds still while the pointer is on it, so its close button is easy to hit (once it has its place: a new note
+      // that opens under a resting pointer was left at the stage's corner, past its edge in Friendly's tilt; tip_fit)
+      if (this.tipXY && el.matches(':hover')) return;
       const p = this.toScreen(this.headXf([32, 63], H, ang, 1, 1)), w = el.offsetWidth || 180, h = el.offsetHeight || 40, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
       // under Pip, kept to the left of the stage where the props do not hang, above a tube's command line, and
       // always whole on the stage. A long note on a small stage: the hand lifts Pip to make room for it
@@ -864,6 +868,7 @@
       if (f === 'nier') { this.renderBrackets(); this.renderSlice(); }
       // the speech bubble follows Pip (NieR's dialogue box sits at the foot of the stage instead)
       if (f !== 'nier') this.placeBubble(H, ang);
+      this.tipH = H; this.tipAng = ang;
       if (this.tipBox) this.placeTip(H, ang, this.t - (this.tipLast || this.t)); this.tipLast = this.t;
       // big swings can be heard
       if (!this.reduced && this.t - (this.swT || 0) > .07) { this.swT = this.t; this.loopSnd('swing', clamp((Math.abs(ps.thv) - .25) / 1.6, 0, 1)); }

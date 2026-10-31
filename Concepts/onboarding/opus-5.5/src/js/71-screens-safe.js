@@ -230,6 +230,23 @@
   };
   /* a server the person names: a self-managed one, Data Center, and a team's own Gitea Cloud (FF-08: never an example) */
   const needsAddress = (forge, variant) => O55.fixtures.needsAddress(forge, variant);
+  /* The service, variant and address this screen shows, its Continue checks and next() uses: one reading, so the button is
+     never enabled for a choice next() reads differently (GLM review: Gitea Cloud's untouched variant needed an address
+     next() read and foot() didn't). Unset, it is the plan's own service, variant and address (a Review Fix, a resumed
+     run), else GitHub; an untouched variant is the service's first. */
+  function serviceChoice(S) {
+    const d = md(S), ol = OL(S);
+    const planned = d.forge && d.forge !== 'none' ? (d.forge === 'github' && d.forge_provider_variant === 'self_managed' ? 'github_enterprise' : d.forge === 'bitbucket_data_center' ? 'bitbucket_cloud' : d.forge) : null;
+    const sel = ol.forge || planned || 'github', same = !!planned && sel === planned;
+    let variant = sel === 'github_enterprise' ? 'self_managed' : ol.variant || (same ? (d.forge === 'bitbucket_data_center' ? 'data_center' : d.forge_provider_variant) : null);
+    const forge = sel === 'github_enterprise' ? 'github' : sel === 'bitbucket_cloud' && variant === 'data_center' ? 'bitbucket_data_center' : sel;
+    if (!variant || (sel !== 'bitbucket_cloud' && !(VARIANTS[forge] || []).some(([v]) => v === variant))) variant = sel === 'bitbucket_cloud' ? 'cloud' : (VARIANTS[forge] || [['hosted']])[0][0];
+    /* an address belongs to the server it was typed for: one per service and variant, never carried to another */
+    const key = sel + '|' + variant, typed = (ol.addresses || {})[key];
+    const raw = typed != null ? typed : same && d.forge_instance_url && needsAddress(forge, variant) ? d.forge_instance_url : '';
+    const address = String(raw || '').trim(), asks = needsAddress(forge, variant);
+    return { sel, forge, variant, key, typed, asks, address, ok: !asks || F.isHttps(address), tenant: variant === 'gitea_cloud' };
+  }
   def('online-service', {
     chapter: 'project', stage: 'source_control_setup', charmSlot: 'online',
     scene: () => ({ id: 'online', beat: 'service' }),
@@ -237,32 +254,27 @@
     title: (S) => (OL(S).purpose === 'source' ? T('online.service.titleSource') : T('online.service.title')),
     lead: () => T('online.service.lead'),
     body(S) {
-      const d = md(S), ol = OL(S), sel = ol.forge || (d.forge !== 'none' ? (d.forge === 'github' && d.forge_provider_variant === 'self_managed' ? 'github_enterprise' : d.forge) : 'github');
+      const ol = OL(S), c = serviceChoice(S), sel = c.sel, forge = c.forge, variant = c.variant, tenant = c.tenant;
       let out = C.cards('pick', [{ v: 'github', glyph: 'cloud', title: T('online.service.github.title'), sub: T('online.service.github.sub'), tag: T('chrome.recommended') }], sel, { label: T('online.service.title') });
       /* a service's own questions (which kind of it, its address) sit under its card (QA round 2, Q7) */
-      const forge = sel === 'github_enterprise' ? 'github' : sel === 'bitbucket_cloud' && ol.variant === 'data_center' ? 'bitbucket_data_center' : sel;
       let under = '';
       if (sel !== 'github' && sel !== 'github_enterprise' && sel !== 'cursor_origin') {
         const vs = sel === 'bitbucket_cloud' ? [['cloud', 'bbCloud'], ['data_center', 'bbDc']] : VARIANTS[forge] || [];
-        if (vs.length > 1) under += C.segmented({ do: 'variant', value: ol.variant || vs[0][0], label: T('online.service.others'), options: vs.map(([v, k]) => ({ v, label: k && k.includes('.') ? k : k ? T('online.service.' + k) : T('online.service.selfManaged') })) });
+        if (vs.length > 1) under += C.segmented({ do: 'variant', value: variant, label: T('online.service.others'), options: vs.map(([v, k]) => ({ v, label: k && k.includes('.') ? k : k ? T('online.service.' + k) : T('online.service.selfManaged') })) });
       }
-      const variant = sel === 'github_enterprise' ? 'self_managed' : ol.variant || (VARIANTS[forge] || [['hosted']])[0][0];
-      const tenant = variant === 'gitea_cloud';
-      if (needsAddress(forge, variant)) {
-        under += C.field({ bind: 'address', label: T(tenant ? 'online.service.tenantLabel' : 'online.service.addressLabel'), value: ol.address || '', placeholder: tenant ? 'https://' : 'https://git.example.com', hint: T(tenant ? 'online.service.tenantHint' : 'online.service.addressHint'), valid: F.isHttps(ol.address) });
+      if (c.asks) {
+        under += C.field({ bind: 'address', label: T(tenant ? 'online.service.tenantLabel' : 'online.service.addressLabel'), value: c.typed != null ? c.typed : c.address, placeholder: tenant ? 'https://' : 'https://git.example.com', hint: T(tenant ? 'online.service.tenantHint' : 'online.service.addressHint'), valid: c.ok });
         const good = tenant ? 'https://platyr.gitea.test' : 'https://git.platyr.test';
-        under += demo('online-service:address', [{ label: good, outcome: 'works', fills: [['address', good]] }, { label: 'http://git.platyr.test', outcome: 'wrong', fills: [['address', 'http://git.platyr.test']] }], !F.isHttps(ol.address));
+        under += demo('online-service:address', [{ label: good, outcome: 'works', fills: [['address', good]] }, { label: 'http://git.platyr.test', outcome: 'wrong', fills: [['address', 'http://git.platyr.test']] }], !c.ok);
       }
       const others = ['gitlab', 'azure_devops', 'bitbucket_cloud', 'forgejo', 'gitea', 'github_enterprise', 'cursor_origin'].map((id) => ({ v: id, glyph: 'cloud', title: T('online.service.' + id), tag: id === 'cursor_origin' ? T('online.service.preview') : '', quiet: true, under: id === sel ? under : '' }));
       out += F.more(ol.others || sel !== 'github', T('online.service.others'), 'others', C.cards('pick', others, sel, { cls: 'o55-choices-quiet' }), 'others');
       return out;
     },
     foot(S) {
-      const ol = OL(S), sel = ol.forge || 'github', variant = sel === 'github_enterprise' ? 'self_managed' : ol.variant;
-      const forge = sel === 'github_enterprise' ? 'github' : sel === 'bitbucket_cloud' && variant === 'data_center' ? 'bitbucket_data_center' : sel;
-      const bad = needsAddress(forge, variant) && !F.isHttps(ol.address);
+      const ol = OL(S), c = serviceChoice(S);
       const sec = ol.purpose === 'copy' ? [{ label: T('safe.notNow'), do: 'notNow', cls: 'o55-ghost' }] : [];
-      return { secondary: sec, primary: { label: T('chrome.continue'), do: 'next', disabled: bad, reason: T('online.service.addressHint') } };
+      return { secondary: sec, primary: { label: T('chrome.continue'), do: 'next', disabled: !c.ok, reason: T(c.tenant ? 'online.service.tenantHint' : 'online.service.addressHint') } };
     },
     do: {
       pick(S, v, el) { const ol = OL(S); ol.forge = v; ol.variant = null; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('online.service.' + (v === 'github' ? 'github.title' : v)), 'cloud'); },
@@ -270,12 +282,9 @@
       variant(S, v) { OL(S).variant = v; S.save(); O55.ui.refresh(); },
       notNow(S) { O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.go('safe', { dir: 'back' }); },
       next(S) {
-        const ol = OL(S), d = md(S), sel = ol.forge || 'github';
-        let forge = sel, variant = ol.variant;
-        if (sel === 'github_enterprise') { forge = 'github'; variant = 'self_managed'; }
-        if (sel === 'bitbucket_cloud' && variant === 'data_center') { forge = 'bitbucket_data_center'; variant = 'data_center'; }
-        if (!variant) variant = (VARIANTS[forge] || [['hosted']])[0][0];
-        const url = needsAddress(forge, variant) ? ol.address.trim() : '';
+        const ol = OL(S), d = md(S), c = serviceChoice(S), forge = c.forge, variant = c.variant;
+        if (!c.ok) return; /* (refused with its reason, as the button shows) */
+        const url = c.asks ? c.address : '';
         const patch = { online_mode: ol.purpose === 'source' ? 'existing' : 'new', forge, forge_provider_variant: variant,
           forge_instance_profile: null, forge_account_action: null, forge_account_ref: '', repository_ref: '', source_access_authorization_refs: [], forge_instance_url: url };
         /* another service or server: its owner, project, visibility and sign-in method go with the old one, together
@@ -289,7 +298,7 @@
         O55.official.signIn(S, { service: forge, name: forgeName(forge, variant), kind: 'forge', then: ol.purpose === 'source' ? 'ex-repos' : 'online-details' });
       }
     },
-    bind: { address(S, v) { OL(S).address = v; S.save(); O55.ui.refresh(); } }
+    bind: { address(S, v) { const ol = OL(S), k = serviceChoice(S).key; ol.addresses = Object.assign({}, ol.addresses, { [k]: v }); S.save(); O55.ui.refresh(); } }
   });
 
   /* Opened straight at a later online screen (Demo Studio's Open at one screen): what the earlier screens would have

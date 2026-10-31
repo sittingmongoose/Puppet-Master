@@ -639,7 +639,7 @@
         }
         if (place === 'cloud' && r.cloud === 's3' && !reached(S)) {
           const key = reachKey(S), fam = bucketFam(S);
-          if (!O55.backup.accessTake(S, fam, racc(S))) { O55.sound.play('warn'); return O55.ui.refresh(); } /* a secret field was empty: Continue waits for it */
+          if (!O55.backup.accessReady(fam, racc(S)) || !O55.backup.accessTake(S, fam, racc(S))) { O55.sound.play('warn'); return O55.ui.refresh(); } /* a secret field was empty: Continue waits for it */
           const gen = r.reachGen || 0; /* (a check for access details the person has since replaced counts for nothing) */
           return F.op(S, 'restore-s3', 'cmd.auth_profile.sign_in', [{ key: 'check', ms: 900 }], { payload: { service: fam, method: 'access_key', locator: O55.backup.locator(S, 's3', r.sub, racc(S)), credential_ref: 'credential:restore:' + fam },
             /* (not if the person has since chosen another place, service or bucket: the result belongs to the bucket it

@@ -1226,7 +1226,7 @@
       "failedLead": "Nothing was created yet.",
       "freshAttempt": "A new reviewed attempt starts a fresh request. The old one is never reused.",
       "deleteConfirm": "Delete {repo} on {service}?",
-      "deleteWarn": "This deletes the online copy only, and can't be undone. Setup still needs its own answer.",
+      "deleteWarn": "This deletes only the online copy, and it can't be undone. Nothing on this computer is removed.",
       "deleteYes": "Delete the online copy",
       "deleteNo": "Keep it",
       "reasons": {
@@ -1240,7 +1240,7 @@
         "mismatch": "That answer didn't match this setup. Nothing changed.",
         "pending": "Waiting for the setup answer.",
         "armed": "Watching for the setup answer.",
-        "deleted": "The online copy was deleted separately. Setup still needs its own answer.",
+        "deleted": "{repo} is deleted from {service}. Review the setup to start again.",
         "confirmFirst": "Confirm the exact online copy first.",
         "openUnavailable": "Opening isn't available in this preview.",
         "other": "That isn't available right now. Nothing changed."
