@@ -113,7 +113,12 @@
     if (!a.hasAttribute('data-morph-skip')) for (const { name } of Array.from(a.attributes)) if (!b.hasAttribute(name)) a.removeAttribute(name);
     for (const { name, value } of Array.from(b.attributes)) if (a.getAttribute(name) !== value) a.setAttribute(name, value);
     if (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.tagName === 'SELECT') {
-      if (document.activeElement !== a && 'value' in b && a.value !== b.value) a.value = b.value;
+      /* A protected field's template never carries what was typed (it is never stored), so a same-screen redraw (typing
+         in another field, a ? note, Plain English or Expert, a demo hint) keeps what the person typed there; it is
+         emptied only when the screen says nothing was typed (data-o55-typed="false"), when its action reads it, or with
+         the screen itself (a new screen, Back) (final check FO-6). */
+      const kept = a.hasAttribute('data-o55-protected') && b.hasAttribute('data-o55-protected') && b.value === '' && b.getAttribute('data-o55-typed') !== 'false';
+      if (document.activeElement !== a && 'value' in b && a.value !== b.value && !kept) a.value = b.value;
       if (a.type === 'checkbox' || a.type === 'radio') a.checked = b.hasAttribute('checked');
     }
   }

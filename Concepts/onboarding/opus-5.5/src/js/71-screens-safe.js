@@ -151,7 +151,7 @@
         const ts = F.state(S, 'token:' + si.service), d = md(S), host = (() => { try { return new URL(d.forge_instance_url).host; } catch (_) { return si.name; } })();
         const purpose = OL(S).purpose === 'source' ? 'existing' : 'new';
         if (methods[0] === 'token') out += `<p class="o55-hint" data-key="toklead">${U.esc(T('online.signin.tokenLead', { host }))}</p>`;
-        out += C.field({ bind: 'token', type: 'password', protected: true, label: T('online.signin.tokenLabel'), value: '', hint: T('online.signin.tokenHow.' + si.service, { host }) + ' ' + O55.talk.t('online.signin.scopes.' + si.service + '.detail' + (purpose === 'new' ? 'New' : 'Existing')), error: ts && ts.state === 'failed' ? T('online.signin.tokenBad') : '' });
+        out += C.field({ bind: 'token', type: 'password', protected: true, typed: !!si.tokenTyped, label: T('online.signin.tokenLabel'), value: '', hint: T('online.signin.tokenHow.' + si.service, { host }) + ' ' + O55.talk.t('online.signin.scopes.' + si.service + '.detail' + (purpose === 'new' ? 'New' : 'Existing')), error: ts && ts.state === 'failed' ? T('online.signin.tokenBad') : '' });
         out += `<div class="o55-inline" data-key="tokbtn">${O55.ui.btn({ label: T('ai.verify'), do: 'tokenCheck', cls: 'o55-small', disabled: !si.tokenTyped, reason: T('online.signin.tokenLabel') }, 'o55-secondary')}</div>`;
         out += demo('online-signin:token', [{ label: T('online.signin.demo.good'), outcome: 'works', fills: [['token', 'pm-demo-token-7f3a9c41']], act: ['tokenCheck'] }, { label: T('online.signin.demo.bad'), outcome: 'refused', fills: [['token', 'abc']], act: ['tokenCheck'] }], !(ts && ts.state === 'running'));
         if (methods[0] === 'token' && si.state === 'idle') {
@@ -578,7 +578,7 @@
   const shown = (kind, st) => (ACCESS[kind] || []).filter((f) => f[3] !== 'temp' || st.temp);
   const bad = (f, st) => !!(f[2] && F.nonEmpty(st[f[0]]) && !CHECK[f[2]](st[f[0]]));
   const accessFields = (S, kind, st, o) => shown(kind, st).map((f) => { const [k, type] = f, key = 'access.' + kind + '.' + k;
-    return C.field({ bind: 'acc-' + k, type, protected: type === 'password', label: T(key), value: type === 'password' ? '' : (st[k] || ''), placeholder: O55.tx(key + 'Ph') || '',
+    return C.field({ bind: 'acc-' + k, type, protected: type === 'password', typed: type === 'password' ? !!st[k + 'Typed'] : undefined, label: T(key), value: type === 'password' ? '' : (st[k] || ''), placeholder: O55.tx(key + 'Ph') || '',
       hint: O55.tx(key + 'Hint') || '', error: bad(f, st) ? T(key + 'Bad') : '', invalid: bad(f, st), autocomplete: type === 'password' ? 'off' : undefined }); }).join('')
     + (kind === 'aws_s3' ? `<div class="o55-sublinks" data-key="acc-temp">${C.link(T(st.temp ? 'access.aws_s3.tempOff' : 'access.aws_s3.tempOn'), 'accTemp')}</div>` : '')
     + demo('access:' + kind, (DEMO_ACCESS[kind] || []).filter(([outcome]) => outcome !== 'nothingThere' || (o && o.restore)).map(([outcome, fills]) => ({ label: (fills.find(([k]) => k === 'bucket') || fills[0])[1], outcome, fills: fills.map(([k, v]) => ['acc-' + k, v]) })), !accessReady(kind, st));
