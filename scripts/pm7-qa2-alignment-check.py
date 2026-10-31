@@ -67,10 +67,19 @@ def check():
         source = {"status": "fail", "counts": {}, "failures": [result.stderr.strip() or result.stdout.strip()]}
     failures.extend("source helper: " + item for item in source["failures"])
     require(result.returncode == 0, "Isolated source probe exited " + str(result.returncode))
+    final_command = ["node", str(ROOT / "scripts/pm7-final-review-source-probe.cjs")]
+    final_result = subprocess.run(final_command, cwd=ROOT, capture_output=True, text=True, timeout=30)
+    try:
+        final_source = json.loads(final_result.stdout)
+    except json.JSONDecodeError:
+        final_source = {"status": "fail", "counts": {},
+                        "failures": [final_result.stderr.strip() or final_result.stdout.strip()]}
+    failures.extend("final source helper: " + item for item in final_source["failures"])
+    require(final_result.returncode == 0, "Final isolated source probe exited " + str(final_result.returncode))
     return {"check": "pm7-qa2-alignment", "status": "fail" if failures else "pass",
             "claim_boundary": "static_contracts_and_isolated_source_helpers_only_no_native_or_rendering_proof",
             "counts": {"restore_cases": len(fixtures["restore_cases"]),
-                       "source": source["counts"]},
+                       "source": source["counts"], "final_source": final_source["counts"]},
             "source_probe_sha256": hashlib.sha256((ROOT / "scripts/pm7-qa2-source-probe.cjs").read_bytes()).hexdigest(),
             "failures": failures}
 

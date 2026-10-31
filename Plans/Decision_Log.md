@@ -19014,7 +19014,53 @@ canonical_text: 'Jared 2026-10-31: canonical Plans specify real product behavior
   AI phase Skip immediately reveals its skipped-state feedback; and the online-copy/import view, Continue button and
   activation use one current choice/validation result, including the Protect/restore action-prerequisite sweep. These
   retain existing local actions, owner admission/commit and readiness truth. The GLM re-check at 17e87e52e0 closed all
-  13 coverage findings; that static re-check is not native/runtime proof.'
+  13 coverage findings; that static re-check is not native/runtime proof. DL-259 FO-4, 2026-10-31: onboarding provider
+  rows and connected-account summaries show the category and concise product/account identity without billing explanations,
+  prices, limits or extra-usage pitches. Retain useful category names and exact account/product distinctions; this presentation
+  rule does not alter the provider owner’s charging model, auth surface, account identity or credential custody. DL-259
+  FO-5, 2026-10-31: a choice’s question control stays visible, readable and reachable when its card is selected, hovered
+  or keyboard-focused in every family. NieR’s selected/cursor ink stops before the help region or uses contrasting inverse
+  ink there, without hiding the question, radio or selected state. DL-259 FO-6, 2026-10-31: a protected field keeps its
+  typed value through redraws of the same screen and field identity, including typing in another field, opening help
+  and changing Plain English/Expert. A blank rendering template alone must not erase it. The action clears the field
+  when it consumes the input; leaving/recreating the screen, changing its service/method/target or explicit cancel/reset
+  clears it too. Keep that input only in the protected entry control until consumption, never in ordinary draft/session
+  persistence, receipts or logs. A filled/masked flag is not a credential or validation proof; submission reads the current
+  protected value and rechecks its existing owner requirements. DL-259 FO-7, 2026-10-31: accepting an owner’s approval
+  or rejection finishes that exact pairing request/generation in the view. Clear its obsolete warning and render the
+  answered result; later refreshes must not re-adopt the consumed result as a new request or show a false used-answer
+  warning. The answered view offers a fresh code/request rather than Check again for the completed one. A fresh invitation
+  starts a new generation; exact Server/Client/session/generation, matching-identity confirmation, permission, expiry
+  and genuine replay rejection remain. Rejecting a later request cannot remove a Client already approved by an earlier
+  request. A view marker never grants trust or bypasses the Server owner. DL-259 FO-8, 2026-10-31: after actual clipboard
+  success, Copy’s transient Copied acknowledgment holds for its full feedback interval across redraws of that same control,
+  including countdown updates. Another successful copy starts a fresh full interval; an older timeout cannot clear its
+  newer acknowledgment. Failure reports no success. Feedback is local presentation state and does not retain the copied
+  protected value or become a saved preference, owner receipt or proof of any other operation. DL-259 FO-9, 2026-10-31:
+  Creating’s checklist and block stack share the accepted owner’s phase/effect projection. When GitHub creation only
+  partly settles, show only verified completed phases as checked or landed blocks; the phase proven to have failed may
+  show failure and unexecuted/unproven phases remain pending. Transport completion and animation never prove the later
+  registration, settings or connection steps. The recovery banner/actions, Continue availability and Ready use that same
+  current owner result; O12’s last-block landing condition is additional to owner completion, never a replacement for
+  it. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its
+  affects region, including an embedded plate control; plain text, empty space and the picture alone trigger none. Affected
+  marks take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines
+  and the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another
+  cast part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state
+  quietness remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated
+  marks. Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or
+  owner state. One shared affects/partner owner serves every sheet; there is no per-sheet hover engine. DL-259 FS-2 /
+  plate text, 2026-10-31: the input paper’s fixed label and supporting fixed words (including The job and Your latest
+  changes) fit their actual inner text box in each family, counting its padding/insets before sizing or fitting text.
+  User-supplied job text retains the existing bounded fit. BrainStorm’s final chapter name keeps a visible gap from You
+  after all placement offsets; labels never run together. Preserve the richest-mode-that-fits and no-scale/no-scroll
+  yield rules: compact means names only and intentionally omits model lines, including Retro; full mode retains its model
+  line. This adds no new plate mode, glyph, status or model-selection behavior. DL-259 FX-1 final, 2026-10-31: an export/print
+  attempt that fails before producing a PDF closes any unusable temporary print window and says plainly in its result/receipt
+  and visible failure notice that no PDF was made. Opening the print flow alone is not proof that a file was created.
+  A receipt records only the artifact owner’s actual result and never claims a successful PDF that was not made; failure
+  or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback rule, not a new export command,
+  receipt family or platform-detection mechanism.'
 gui_related: true
 gui_classification_reason: Sets actual onboarding choices, shared explanation controls, native connection setup and Pip/notice
   presentation.
@@ -19185,6 +19231,59 @@ acceptance_criteria:
   including the Protect/restore action-prerequisite sweep. These retain existing local actions, owner admission/commit
   and readiness truth. The GLM re-check at 17e87e52e0 closed all 13 coverage findings; that static re-check is not native/runtime
   proof.'
+- 'DL-259 FO-4, 2026-10-31: onboarding provider rows and connected-account summaries show the category and concise product/account
+  identity without billing explanations, prices, limits or extra-usage pitches. Retain useful category names and exact
+  account/product distinctions; this presentation rule does not alter the provider owner’s charging model, auth surface,
+  account identity or credential custody. DL-259 FO-5, 2026-10-31: a choice’s question control stays visible, readable
+  and reachable when its card is selected, hovered or keyboard-focused in every family. NieR’s selected/cursor ink stops
+  before the help region or uses contrasting inverse ink there, without hiding the question, radio or selected state.
+  DL-259 FO-6, 2026-10-31: a protected field keeps its typed value through redraws of the same screen and field identity,
+  including typing in another field, opening help and changing Plain English/Expert. A blank rendering template alone
+  must not erase it. The action clears the field when it consumes the input; leaving/recreating the screen, changing
+  its service/method/target or explicit cancel/reset clears it too. Keep that input only in the protected entry control
+  until consumption, never in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential
+  or validation proof; submission reads the current protected value and rechecks its existing owner requirements. DL-259
+  FO-7, 2026-10-31: accepting an owner’s approval or rejection finishes that exact pairing request/generation in the
+  view. Clear its obsolete warning and render the answered result; later refreshes must not re-adopt the consumed result
+  as a new request or show a false used-answer warning. The answered view offers a fresh code/request rather than Check
+  again for the completed one. A fresh invitation starts a new generation; exact Server/Client/session/generation, matching-identity
+  confirmation, permission, expiry and genuine replay rejection remain. Rejecting a later request cannot remove a Client
+  already approved by an earlier request. A view marker never grants trust or bypasses the Server owner. DL-259 FO-8,
+  2026-10-31: after actual clipboard success, Copy’s transient Copied acknowledgment holds for its full feedback interval
+  across redraws of that same control, including countdown updates. Another successful copy starts a fresh full interval;
+  an older timeout cannot clear its newer acknowledgment. Failure reports no success. Feedback is local presentation
+  state and does not retain the copied protected value or become a saved preference, owner receipt or proof of any other
+  operation. DL-259 FO-9, 2026-10-31: Creating’s checklist and block stack share the accepted owner’s phase/effect projection.
+  When GitHub creation only partly settles, show only verified completed phases as checked or landed blocks; the phase
+  proven to have failed may show failure and unexecuted/unproven phases remain pending. Transport completion and animation
+  never prove the later registration, settings or connection steps. The recovery banner/actions, Continue availability
+  and Ready use that same current owner result; O12’s last-block landing condition is additional to owner completion,
+  never a replacement for it. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at
+  an actual control in its affects region, including an embedded plate control; plain text, empty space and the picture
+  alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in
+  NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus
+  never lowers another cast part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours.
+  Genuine owner-state quietness remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner
+  and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis
+  changes no layout or owner state. One shared affects/partner owner serves every sheet; there is no per-sheet hover
+  engine. DL-259 FS-2 / plate text, 2026-10-31: the input paper’s fixed label and supporting fixed words (including The
+  job and Your latest changes) fit their actual inner text box in each family, counting its padding/insets before sizing
+  or fitting text. User-supplied job text retains the existing bounded fit. BrainStorm’s final chapter name keeps a visible
+  gap from You after all placement offsets; labels never run together. Preserve the richest-mode-that-fits and no-scale/no-scroll
+  yield rules: compact means names only and intentionally omits model lines, including Retro; full mode retains its model
+  line. This adds no new plate mode, glyph, status or model-selection behavior. DL-259 FX-1 product portion, 2026-10-31:
+  editing a terminal’s name stays in its own tab context menu, with Rename/Enter accepting the changed label and Cancel/Escape
+  leaving it unchanged. Use the existing cmd.panel_tab.rename once; clearing the label still restores the terminal’s
+  own name. DL-181’s retirement of workgroups and their commands remains in force. DL-259 FX-1 product portion, 2026-10-31:
+  PDF export/print feedback names what actually happened. Opening the print flow is not proof that a PDF was written.
+  If export or printing is unavailable, blocked or fails before producing a file, say plainly that no PDF was made and
+  keep the exact Plan revision unchanged. The existing artifact owner’s verified result is the only success evidence;
+  cancellation and failure cannot produce a successful export receipt.'
+- 'DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary
+  print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print
+  flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
+  claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
+  an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
 validation_surfaces:
 - python3 scripts/pm7-onboarding-rulings-check.py
 - python3 scripts/pm-new-contracts-verify.py
@@ -19224,6 +19323,11 @@ source_lineage:
   sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- 'PM7 final product delta at 44d0d3a1b1: final-onb FO-4–9, srv/fields/found/chatpip reports; FO-9 b75da99bef and FX-1
+  229cbf9eae are WIP source evidence, not final implementation acceptance. Historical DL-258 Q17 is superseded by FS-1;
+  DL-181 workgroup retirement remains.'
+- 'PM7 foundations FX-1 final d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b: plans.js PDF export outcome/error cleanup; lead
+  1031173939-a128. Source implementation/preview mechanics do not become product requirements.'
 preserved_exact_tokens:
 - D1 A
 - D2 A

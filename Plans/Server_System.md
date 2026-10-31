@@ -162,24 +162,35 @@ plan_unit_id: SRV-004
 unit_type: security_requirement
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: >-
-  Pairing uses an explicit pairing_session_id, explicit pairing_candidate_id, and verified Server identity through LAN
-  discovery, QR, short code, fingerprint/certificate confirmation, manual URL, or approval by an already trusted
-  Server-side Client. cmd.client.pair.start starts the selected method without granting trust; approve, reject, and
-  cancel are distinct expected-generation-fenced transitions. QR and code material is consumed through an ephemeral
+canonical_text: 'Pairing uses an explicit pairing_session_id, explicit pairing_candidate_id, and verified Server identity
+  through LAN discovery, QR, short code, fingerprint/certificate confirmation, manual URL, or approval by an already
+  trusted Server-side Client. cmd.client.pair.start starts the selected method without granting trust; approve, reject,
+  and cancel are distinct expected-generation-fenced transitions. QR and code material is consumed through an ephemeral
   handle, only its digest may be durable, and raw pairing secrets are never persisted. Reachability, localhost, LAN,
-  tailnet, Funnel, proxy, Remote Link, or VPN never implies authorization. ClientTrustRecord and ClientAccessPolicy
-  grant least-privilege scopes and bind protocol range, trust generation, expiry, and revocation. cmd.client.revoke
-  increments authority generation, terminates all current sessions, rejects future sessions and stale commands, and
-  remains restart-decidable from durable receipts.
+  tailnet, Funnel, proxy, Remote Link, or VPN never implies authorization. ClientTrustRecord and ClientAccessPolicy grant
+  least-privilege scopes and bind protocol range, trust generation, expiry, and revocation. cmd.client.revoke increments
+  authority generation, terminates all current sessions, rejects future sessions and stale commands, and remains restart-decidable
+  from durable receipts. DL-259 FO-7, 2026-10-31: accepting an owner’s approval or rejection finishes that exact pairing
+  request/generation in the view. Clear its obsolete warning and render the answered result; later refreshes must not
+  re-adopt the consumed result as a new request or show a false used-answer warning. The answered view offers a fresh
+  code/request rather than Check again for the completed one. A fresh invitation starts a new generation; exact Server/Client/session/generation,
+  matching-identity confirmation, permission, expiry and genuine replay rejection remain. Rejecting a later request cannot
+  remove a Client already approved by an earlier request. A view marker never grants trust or bypasses the Server owner.'
 gui_related: true
 gui_classification_reason: Pairing prompts, fingerprint confirmation, Client lists, access scopes, expiry, and revocation are user-visible workflows.
 depends_on: [SRV-002, SRV-003]
 unblocks: [SRV-005, SRV-007, RAS-007]
 acceptance_criteria:
-  - Pairing cannot complete without explicit user or trusted-Client approval and identity confirmation.
-  - A revoked or expired Client cannot reconnect, reuse a session, or publish a late command.
-  - Sessions bind client_id, server_id, access-policy generation, protocol version, expiry, and non-secret currentness evidence.
+- Pairing cannot complete without explicit user or trusted-Client approval and identity confirmation.
+- A revoked or expired Client cannot reconnect, reuse a session, or publish a late command.
+- Sessions bind client_id, server_id, access-policy generation, protocol version, expiry, and non-secret currentness
+  evidence.
+- 'DL-259 FO-7, 2026-10-31: accepting an owner’s approval or rejection finishes that exact pairing request/generation
+  in the view. Clear its obsolete warning and render the answered result; later refreshes must not re-adopt the consumed
+  result as a new request or show a false used-answer warning. The answered view offers a fresh code/request rather than
+  Check again for the completed one. A fresh invitation starts a new generation; exact Server/Client/session/generation,
+  matching-identity confirmation, permission, expiry and genuine replay rejection remain. Rejecting a later request cannot
+  remove a Client already approved by an earlier request. A view marker never grants trust or bypasses the Server owner.'
 validation_surfaces: [Plans/server_system_contract_fixtures.json, future stolen expired revoked access tests]
 risk_class: client_trust_or_revocation_bypass
 reasoning_tier: high
@@ -187,8 +198,9 @@ context_scope: client_trust_and_sessions
 implementation_surfaces: [Plans/server_system_contracts.schema.json, future trust and session services]
 node_compile_hint: {mode: client_trust_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:normalized-register:server-first-2026-08-31:R03
-  - source_ref:packet:10_SERVER_REMOTE_ACCESS_DEPLOYMENT_CONTRACT.md
+- source_ref:normalized-register:server-first-2026-08-31:R03
+- source_ref:packet:10_SERVER_REMOTE_ACCESS_DEPLOYMENT_CONTRACT.md
+- 'PM7 srv FO-7 40899806fb: endGuestRun/runDone/pollGuestRun source-only terminal-view guard.'
 preserved_exact_tokens: [ClientTrustRecord, PairingRun, pairing_candidate_id, ClientAccessPolicy, ServerTrustRecord, RevocationRecord, SessionRecord, cmd.client.pair.start, cmd.client.pair.approve, cmd.client.pair.reject, cmd.client.pair.cancel, cmd.client.revoke]
 negative_constraints: [Do not treat route possession as trust., Do not leave revoked sessions active., Do not persist raw pairing or session secrets in ordinary events.]
 owner_hints: [Plans/Server_System.md, Plans/Permissions_System.md, Plans/FileSafe.md]

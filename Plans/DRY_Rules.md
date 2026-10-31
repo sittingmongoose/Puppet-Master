@@ -1155,7 +1155,12 @@ canonical_text: 'UI /behavior docs need owner-defined operational policy before 
   integration, 2026-10-31: Product Onboarding consumes PWIZ-024’s current choice and validation contract for display,
   Continue availability/reason and activation. The service/variant/address resolver and owner prerequisites are shared;
   a screen does not own a separate button-only or action-only interpretation. Domain permission/currentness validation
-  remains with its existing owner. UIW-015 and UCC-106 are consumers, not peer validation authorities.'
+  remains with its existing owner. UIW-015 and UCC-106 are consumers, not peer validation authorities. DL-259 FX-1 final,
+  2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary print window and
+  says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print flow alone is
+  not proof that a file was created. A receipt records only the artifact owner’s actual result and never claims a successful
+  PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback
+  rule, not a new export command, receipt family or platform-detection mechanism.'
 gui_related: true
 gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
 split_recommended: false
@@ -1171,6 +1176,11 @@ acceptance_criteria:
   for display, Continue availability/reason and activation. The service/variant/address resolver and owner prerequisites
   are shared; a screen does not own a separate button-only or action-only interpretation. Domain permission/currentness
   validation remains with its existing owner. UIW-015 and UCC-106 are consumers, not peer validation authorities.'
+- 'DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary
+  print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print
+  flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
+  claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
+  an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1190,6 +1200,8 @@ source_lineage:
   sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- 'PM7 foundations FX-1 final d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b: plans.js PDF export outcome/error cleanup; lead
+  1031173939-a128. Source implementation/preview mechanics do not become product requirements.'
 preserved_exact_tokens:
 - UI `/behavior` docs
 - owner-defined operational policy layer
@@ -2771,38 +2783,52 @@ plan_unit_id: DR-044
 unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  The wand modules' presentation grammar has exactly one GUI owner, FinalGUISpec F3-566 with F3-567 through
-  F3-577, F3-592, F3-594, F3-595, F3-601 and F3-602: the configuration sheet anatomy, sizes and yield rules, the
-  plate and the cast plate (its floor and wrap, with the shared parts DR-045 names), kind marks and the agent
-  puppets (one puppet primitive draws every agent everywhere, DL-149), run card budgets and width tiers, the
-  one-line receipt, the dock, the one-line reply traces and the run view as a run tab in a home panel (ACD-480,
-  F3-635). Every implementation builds these from one shared set of primitives; a module owner supplies content
-  only and never forks or restyles a primitive. Every module's finished trace uses the one receipt grammar, and
-  time, cost and token phrases each come from one shared formatter (there is no stand-in phrase, DL-121), with
-  one time-zone implementation for the app. Behaviour stays with the module owners (Collaborative_Workflows,
-  Back_Seat_Driver, Scheduling_and_Quota_Resume, assistant-memory-subsystem, assistant-chat-design). DR-043's
-  owners stand: the transcript family map is ACD-469's and the accent budget is a theme-token role rule, and the
-  assistant-turn vocabulary is EP-128's. The wand grammar consumes them and never restates them, and DR-043's
-  owners do not restate this grammar. Amended 2026-10-29 (X1, PC1–PC5; PM7): Pip redraws the one agent primitive
-  (F3-594), no second legacy puppet or Classic preset. Small robot denotes the agent category only, never an
-  alternate figure. Sheet hosts and empty marks use this kit rather than layered replacements. QA round 2, Jared
-  2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its
-  affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words,
-  empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same
-  feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner
-  on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no
-  per-sheet hover engine.
+canonical_text: 'The wand modules'' presentation grammar has exactly one GUI owner, FinalGUISpec F3-566 with F3-567 through
+  F3-577, F3-592, F3-594, F3-595, F3-601 and F3-602: the configuration sheet anatomy, sizes and yield rules, the plate
+  and the cast plate (its floor and wrap, with the shared parts DR-045 names), kind marks and the agent puppets (one
+  puppet primitive draws every agent everywhere, DL-149), run card budgets and width tiers, the one-line receipt, the
+  dock, the one-line reply traces and the run view as a run tab in a home panel (ACD-480, F3-635). Every implementation
+  builds these from one shared set of primitives; a module owner supplies content only and never forks or restyles a
+  primitive. Every module''s finished trace uses the one receipt grammar, and time, cost and token phrases each come
+  from one shared formatter (there is no stand-in phrase, DL-121), with one time-zone implementation for the app. Behaviour
+  stays with the module owners (Collaborative_Workflows, Back_Seat_Driver, Scheduling_and_Quota_Resume, assistant-memory-subsystem,
+  assistant-chat-design). DR-043''s owners stand: the transcript family map is ACD-469''s and the accent budget is a
+  theme-token role rule, and the assistant-turn vocabulary is EP-128''s. The wand grammar consumes them and never restates
+  them, and DR-043''s owners do not restate this grammar. Amended 2026-10-29 (X1, PC1–PC5; PM7): Pip redraws the one
+  agent primitive (F3-594), no second legacy puppet or Classic preset. Small robot denotes the agent category only, never
+  an alternate figure. Sheet hosts and empty marks use this kit rather than layered replacements. DL-259 FS-1, 2026-10-31,
+  supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects region, including an
+  embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks take a one-pixel
+  theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and the job-card edge
+  take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast part’s opacity or
+  recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness remains independent
+  of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus
+  uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner state. One shared
+  affects/partner owner serves every sheet; there is no per-sheet hover engine. DL-259 FS-2, 2026-10-31: one cast-plate
+  sizing/fit owner counts real text insets and final placement offsets for fixed input labels and BrainStorm/You spacing.
+  Compact’s intentional names-only grammar remains F3-595’s; no Retro-specific second fit engine or forced model line
+  is added.'
 gui_related: true
 gui_classification_reason: "Fixes one owner for the wand modules' presentation grammar."
 split_recommended: false
 depends_on: [DR-043, F3-566, DL-109, DL-180]
 unblocks: []
 acceptance_criteria:
-  - "No second sheet grammar, receipt grammar, dock or time formatter exists for a wand module."
-  - "No wand-module owner restates the family map, the accent rule or EP-128's vocabulary."
-  - "The run view opens as a run tab in a home panel through the one opening module (F3-635, DR-071), with the grammar above unchanged."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine."
+- No second sheet grammar, receipt grammar, dock or time formatter exists for a wand module.
+- No wand-module owner restates the family map, the accent rule or EP-128's vocabulary.
+- The run view opens as a run tab in a home panel through the one opening module (F3-635, DR-071), with the grammar above
+  unchanged.
+- 'DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects
+  region, including an embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks
+  take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and
+  the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast
+  part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness
+  remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks.
+  Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner
+  state. One shared affects/partner owner serves every sheet; there is no per-sheet hover engine.'
+- 'DL-259 FS-2, 2026-10-31: one cast-plate sizing/fit owner counts real text insets and final placement offsets for fixed
+  input labels and BrainStorm/You spacing. Compact’s intentional names-only grammar remains F3-595’s; no Retro-specific
+  second fit engine or forced model line is added.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -2818,9 +2844,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.0, 4.3 (A2-14), 7.14"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/COORDINATION.md (SHA-256 0bbcd8a1649f0e90dd93a5a18966c7a344442a8a99d1bb714afe91f8d168f076)"
-  - "CANON-PLAN coordination item DR-044"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  sections 4.0, 4.3 (A2-14), 7.14
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/COORDINATION.md (SHA-256 0bbcd8a1649f0e90dd93a5a18966c7a344442a8a99d1bb714afe91f8d168f076)
+- CANON-PLAN coordination item DR-044
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
+  source evidence, not native APIs.'
 preserved_exact_tokens:
   - "F3-566"
   - "DR-043"
@@ -4659,7 +4688,12 @@ canonical_text: 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q7/H2/H8:
   system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use
   protected flow; never reuse its never-saved hint for SMB. DL-260: one shared component renders the option question
   affordance, expanded note and joined tray in every family; no screen appends a second tray, disclosure grammar, pointer
-  engine or sibling-level follow-up. Source API/class names remain lineage only.'
+  engine or sibling-level follow-up. Source API/class names remain lineage only. DL-259 FO-5/FO-6/FO-8/FO-9, 2026-10-31:
+  the shared choice/help owner preserves question visibility through selected/hover/focus states, NieR included. One
+  protected-field reconciliation owner preserves same-field live input through redraw and performs explicit consumption/reset
+  clearing (PWIZ-022); a screen never copies the secret into its draft to survive redraw. Copy feedback uses one per-control
+  acknowledgment deadline (F3-182), and Creating checks/blocks read one verified phase/effect projection (PWIZ-021),
+  rather than separate timer-driven completion state.'
 gui_related: true
 gui_classification_reason: Fixes shared joined-choice tray and option hint grammar across onboarding screens.
 split_recommended: false
@@ -4676,6 +4710,11 @@ acceptance_criteria:
   not overlap inputs.
 - Functional sections and data remain; explanation-only duplicates use the shared tips.
 - No new setting, command, local action, persisted field or permission is created.
+- 'DL-259 FO-5/FO-6/FO-8/FO-9, 2026-10-31: the shared choice/help owner preserves question visibility through selected/hover/focus
+  states, NieR included. One protected-field reconciliation owner preserves same-field live input through redraw and
+  performs explicit consumption/reset clearing (PWIZ-022); a screen never copies the secret into its draft to survive
+  redraw. Copy feedback uses one per-control acknowledgment deadline (F3-182), and Creating checks/blocks read one verified
+  phase/effect projection (PWIZ-021), rather than separate timer-driven completion state.'
 validation_surfaces:
 - python3 scripts/pm7-qa2-alignment-check.py
 - python3 scripts/pm-shard-plans.py --check

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5562-L27142
+Source lines: L5562-L27153
 
-Source SHA256: `adb38593194fb49cd9cbcbc9e02affc60eb29403654dfd8c46b3ae7cd43ef023`
+Source SHA256: `554a3e44f283353e36c4e7e4aac06544dff2a7ec0b7a2e00cccd84b5abd72f0f`
 
 ---
 
@@ -10048,9 +10048,12 @@ plan_unit_id: F3-182
 unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Clipboard actions provide lightweight success feedback for non-obvious values and never copy
-  redacted or hidden-secret placeholders as though they were the real value.
+canonical_text: 'Clipboard actions provide lightweight success feedback for non-obvious values and never copy redacted
+  or hidden-secret placeholders as though they were the real value. DL-259 FO-8, 2026-10-31: after actual clipboard success,
+  Copy’s transient Copied acknowledgment holds for its full feedback interval across redraws of that same control, including
+  countdown updates. Another successful copy starts a fresh full interval; an older timeout cannot clear its newer acknowledgment.
+  Failure reports no success. Feedback is local presentation state and does not retain the copied protected value or
+  become a saved preference, owner receipt or proof of any other operation.'
 gui_related: true
 gui_classification_reason: >-
   This unit constrains visible clipboard feedback and secret redaction behavior despite the
@@ -10059,10 +10062,16 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259 FO-8, 2026-10-31: after actual clipboard success, Copy’s transient Copied acknowledgment holds for its full
+  feedback interval across redraws of that same control, including countdown updates. Another successful copy starts
+  a fresh full interval; an older timeout cannot clear its newer acknowledgment. Failure reports no success. Feedback
+  is local presentation state and does not retain the copied protected value or become a saved preference, owner receipt
+  or proof of any other operation.'
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -10075,7 +10084,9 @@ node_compile_hint:
   mode: clipboard_safety_feedback
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0120"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0120
+- 'PM7 final FO-8: 62-flow.js per-control Copied deadline (source timing 1400 ms); source names/timer implementation
+  are not native APIs.'
 preserved_exact_tokens:
 - "Clipboard actions"
 - "lightweight success feedback"

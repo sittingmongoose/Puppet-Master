@@ -3660,7 +3660,11 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and restore
   Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing and
   dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return fences
-  remain unchanged.'
+  remain unchanged. DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: redraw/Copy feedback and answered pairing are local view
+  state, not extra onboarding commands or owner transitions. Follow PWIZ-022’s protected-field lifetime, SRV-004’s terminal
+  pairing-result handling, F3-182’s acknowledgment interval and PWIZ-021’s verified Creating phases. Existing typed local
+  actions and domain approval/recovery/export routes remain; refresh never resubmits a consumed result or marks an unexecuted
+  phase complete.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
@@ -3856,6 +3860,11 @@ acceptance_criteria:
   restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
   and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
   fences remain unchanged.'
+- 'DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: redraw/Copy feedback and answered pairing are local view state, not extra
+  onboarding commands or owner transitions. Follow PWIZ-022’s protected-field lifetime, SRV-004’s terminal pairing-result
+  handling, F3-182’s acknowledgment interval and PWIZ-021’s verified Creating phases. Existing typed local actions and
+  domain approval/recovery/export routes remain; refresh never resubmits a consumed result or marks an unexecuted phase
+  complete.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
@@ -6803,17 +6812,20 @@ canonical_text: 'The hosted 5.6 Pro chat reuses the production-intent rows of it
   the existing Settings pair and the conditional Processes domain through UCC-210. Existing file/terminal/thread routes
   retain exact identity; no private opener or small Activity Detail returns. G1 B (Jared 2026-10-30) restores the view-local
   ui.activity_detail.pin / chat.activity.pin contract: pinned detail follows the new thread across switches, and unpinned
-  detail closes on a switch. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts
-  only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox
-  semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard
-  focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks
-  with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior,
-  with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle
-  ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours.
-  The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone,
-  head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding
-  arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology,
-  not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional
+  detail closes on a switch. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an
+  actual control in its affects region, including an embedded plate control; plain text, empty space and the picture
+  alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in
+  NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus
+  never lowers another cast part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours.
+  Genuine owner-state quietness remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner
+  and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis
+  changes no layout or owner state. One shared affects/partner owner serves every sheet; there is no per-sheet hover
+  engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and
+  that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s
+  kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and
+  shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control
+  or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not
+  puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional
   agent strings and the single Pip primitive retain their existing meaning. Amended DL-260, Jared 2026-10-31: only real
   product behavior remains an implementation requirement.'
 gui_related: true
@@ -6830,9 +6842,23 @@ depends_on:
 - WM-095
 unblocks: []
 acceptance_criteria:
-  - "The changed production-intent entries identify the hosted producers and retain their existing commands and handlers."
-  - "No duplicate rows are added for local History pin, Keep open, modal opening or concept demos."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
+- The changed production-intent entries identify the hosted producers and retain their existing commands and handlers.
+- No duplicate rows are added for local History pin, Keep open, modal opening or concept demos.
+- 'DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects
+  region, including an embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks
+  take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and
+  the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast
+  part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness
+  remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks.
+  Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner
+  state. One shared affects/partner owner serves every sheet; there is no per-sheet hover engine. Q15: the menu head
+  and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s
+  own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet
+  head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s
+  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
+  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  retain their existing meaning.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -6851,12 +6877,14 @@ source_lineage:
   (D3, D4, D7, D8, D9, D26, D27, D28)
 - /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b
   (concept integration lineage, not native API authority)
-- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md,
-  SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated
-  against concept source; not native or final visual verification)
-- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md,
-  SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer
-  destination gap; corrects the broad integrated capture claim)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256
+  108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept
+  source; not native or final visual verification)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md, SHA-256
+  9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer destination gap;
+  corrects the broad integrated capture claim)
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
+  source evidence, not native APIs.'
 preserved_exact_tokens:
 - Keep open
 negative_constraints:

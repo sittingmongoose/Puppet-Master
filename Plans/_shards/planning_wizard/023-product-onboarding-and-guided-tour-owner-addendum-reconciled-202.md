@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2419
+Source lines: L1781-L2451
 
-Source SHA256: `2f6e4421fd4caa0caee0084020e3d170c35879cbf8de60f0a2a860eabb0ae4da`
+Source SHA256: `d66a14c8f897a622a65a62a78e9c77a4c7a3d9219a41523e197d3d9d9d216e73`
 
 ---
 
@@ -210,7 +210,16 @@ canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage
   than leaving the feedback below a long provider list. It does not wait for detection, sign-in or key checks. Optional
   Free Models remains available and continuation reflects the explicit phase skip. No account becomes Ready from skipping;
   current paid/free account usability still comes from its owner. This phase skip remains distinct from whole-session
-  Skip. Reduced Motion reveals the feedback in its settled position.'
+  Skip. Reduced Motion reveals the feedback in its settled position. DL-259 FO-4, 2026-10-31: onboarding provider rows
+  and connected-account summaries show the category and concise product/account identity without billing explanations,
+  prices, limits or extra-usage pitches. Retain useful category names and exact account/product distinctions; this presentation
+  rule does not alter the provider owner’s charging model, auth surface, account identity or credential custody. DL-259
+  FO-9, 2026-10-31: Creating’s checklist and block stack share the accepted owner’s phase/effect projection. When GitHub
+  creation only partly settles, show only verified completed phases as checked or landed blocks; the phase proven to
+  have failed may show failure and unexecuted/unproven phases remain pending. Transport completion and animation never
+  prove the later registration, settings or connection steps. The recovery banner/actions, Continue availability and
+  Ready use that same current owner result; O12’s last-block landing condition is additional to owner completion, never
+  a replacement for it.'
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -338,6 +347,15 @@ acceptance_criteria:
   available and continuation reflects the explicit phase skip. No account becomes Ready from skipping; current paid/free
   account usability still comes from its owner. This phase skip remains distinct from whole-session Skip. Reduced Motion
   reveals the feedback in its settled position.'
+- 'DL-259 FO-4, 2026-10-31: onboarding provider rows and connected-account summaries show the category and concise product/account
+  identity without billing explanations, prices, limits or extra-usage pitches. Retain useful category names and exact
+  account/product distinctions; this presentation rule does not alter the provider owner’s charging model, auth surface,
+  account identity or credential custody. DL-259 FO-9, 2026-10-31: Creating’s checklist and block stack share the accepted
+  owner’s phase/effect projection. When GitHub creation only partly settles, show only verified completed phases as checked
+  or landed blocks; the phase proven to have failed may show failure and unexecuted/unproven phases remain pending. Transport
+  completion and animation never prove the later registration, settings or connection steps. The recovery banner/actions,
+  Continue availability and Ready use that same current owner result; O12’s last-block landing condition is additional
+  to owner completion, never a replacement for it.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -378,6 +396,8 @@ source_lineage:
   sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- PM7 final-onb FO-4/FO-9; source 73-screens-ai/copy and b75da99bef shownPhases; WIP helper names are source lineage
+  only.
 preserved_exact_tokens:
 - Continue Setup
 - Open Repository
@@ -455,7 +475,13 @@ canonical_text: 'Product Onboarding uses one bounded modal window over the visib
   Mandatory policy and effective guard state win; a refused change stays refused with a clear reason. No failure silently
   turns a guard off. DL-259 P10 / QA2 M7, 2026-10-31: retain the provider category the person chose under No account
   yet when returning to AI setup, and present that category’s providers first. This is reversible local navigation/draft
-  state, not a persisted preference, account connection, provider readiness result or owner mutation.'
+  state, not a persisted preference, account connection, provider readiness result or owner mutation. DL-259 FO-6, 2026-10-31:
+  a protected field keeps its typed value through redraws of the same screen and field identity, including typing in
+  another field, opening help and changing Plain English/Expert. A blank rendering template alone must not erase it.
+  The action clears the field when it consumes the input; leaving/recreating the screen, changing its service/method/target
+  or explicit cancel/reset clears it too. Keep that input only in the protected entry control until consumption, never
+  in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential or validation proof;
+  submission reads the current protected value and rechecks its existing owner requirements.'
 gui_related: true
 gui_classification_reason: Defines user-visible motion, responsive layout, focus, copy, error, resume, and migration
   behavior.
@@ -507,6 +533,12 @@ acceptance_criteria:
 - 'DL-259 P10 / QA2 M7, 2026-10-31: retain the provider category the person chose under No account yet when returning
   to AI setup, and present that category’s providers first. This is reversible local navigation/draft state, not a persisted
   preference, account connection, provider readiness result or owner mutation.'
+- 'DL-259 FO-6, 2026-10-31: a protected field keeps its typed value through redraws of the same screen and field identity,
+  including typing in another field, opening help and changing Plain English/Expert. A blank rendering template alone
+  must not erase it. The action clears the field when it consumes the input; leaving/recreating the screen, changing
+  its service/method/target or explicit cancel/reset clears it too. Keep that input only in the protected entry control
+  until consumption, never in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential
+  or validation proof; submission reads the current protected value and rechecks its existing owner requirements.'
 validation_surfaces:
 - future native six-width visual fixtures
 - Reduced Motion traces
