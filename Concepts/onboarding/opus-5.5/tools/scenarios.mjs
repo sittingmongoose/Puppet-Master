@@ -668,24 +668,28 @@ def('pr19', 'fresh', "Audit W3-32: the resume chip's tip is its hover tag", asyn
 });
 /* Final check F1-2: every block's touchdown sound plays in Retro (a mute flipped on while Creating published the new
    Project landed on the middle block); also one other look */
-for (const look of ['retro-dark', 'retro-light', 'basic-dark']) def('pr20-' + look, 'fresh', `Final check F1-2: in ${look} all of Creating's block sounds play, the master never muted`, async (d, A) => {
+/* (every look since FO-2: Retro Dark's last two blocks landed together and the second sound was merged away) */
+for (const look of ['retro-dark', 'retro-light', 'basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'nier-dark']) def('pr20-' + look, 'fresh', `Final check F1-2: in ${look} all of Creating's block sounds play, the master never muted`, async (d, A) => {
   await d.openOnboarding();
-  await d.page.evaluate((l) => { const [f, m] = l.split('-'); window.O55.ui.applyLook(f, m); }, look); await sleep(1500);
+  await d.page.evaluate((l) => { const [f, m] = l.split('-'); window.O55.ui.applyLook(f, m); }, look); await sleep(look.startsWith('nier') ? 4000 : 1500);
   await d.click('#pm-o55-onboarding .o55-layer:not(.o55-out) #o55-h', 'the title'); /* a real press: sound may play */
   await toName(d); await d.type('name', 'Blocks ' + look);
   for (let i = 0; i < 6 && (await d.screen()) !== 'review'; i++) await d.primary();
   await readyPrimary(d);
   await d.page.evaluate(() => {
     const w = window.__f12 = { blocks: [], mutes: [] }, V = window.O55.pipVoice, S = window.O55.sound, f = V.play;
-    V.play = function (name, o) { const r = f.apply(this, arguments); if (name === 'block') w.blocks.push({ r, muted: S.muted, index: o && o.index }); return r; };
+    V.play = function (name, o) { const t = Math.round(performance.now()), r = f.apply(this, arguments); if (name === 'block') w.blocks.push({ r, muted: S.muted, index: o && o.index, t }); return r; };
     window.addEventListener('o55:sound', (e) => w.mutes.push(e.detail && e.detail.muted));
+    w.logFrom = S.log.length;
   });
   A.ok(await d.state(() => !window.O55.sound.muted), 'sound on before Creating');
   await d.primary();
   await until(d, "window.O55.S.sess.commit.state === 'done'", 'made', 25000); await sleep(2500);
-  const w = await d.state(() => window.__f12);
-  A.eq(w.blocks.length, 3, 'three touchdowns (' + JSON.stringify(w.blocks) + ')');
-  A.ok(w.blocks.every((b) => b.r === true && !b.muted), 'every one played, the master unmuted');
+  const w = await d.state(() => Object.assign({}, window.__f12, { log: window.O55.sound.log.slice(window.__f12.logFrom).map((e) => [e.t, e.name || e.event, e.played ? 1 : 0, e.dropped || '', e.ms || '']) }));
+  A.eq(w.blocks.length, 3, 'three touchdowns (' + JSON.stringify(w.blocks.map((b) => ({ r: b.r, muted: b.muted, index: b.index, t: b.t }))) + ')');
+  /* (a refused touchdown names what the sound core heard in the 1.2 s before it) */
+  const near = w.blocks.filter((b) => b.r !== true).map((b) => ({ index: b.index, t: b.t, before: w.log.filter((e) => e[0] <= b.t + 5 && e[0] > b.t - 1200) }));
+  A.ok(w.blocks.every((b) => b.r === true && !b.muted), 'every one played, the master unmuted' + (near.length ? ' ' + JSON.stringify(near) : ''));
   A.ok(!w.mutes.includes(true), 'no mute while Creating (' + JSON.stringify(w.mutes) + ')');
 });
 const railFit = (d) => d.state(() => {
