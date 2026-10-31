@@ -37194,98 +37194,170 @@ plan_unit_id: F3-521
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Guided Tour teaches through successful actions over the mounted Puppet Master application in one stable
-  chapter order: Assistant Chat with Teacher, workspace practice, then Planning Wizard. Chat opens through its
-  real control; the learner sends the supplied local question, sees Teacher's answer stream in the same labeled
-  guided-example conversation, and then sees that same answer in simple words through Explain this reply simply
-  (`cmd.chat.eli5.explain_reply`), which adds one extra, simpler reply after the example answer and never
-  rewrites or regenerates the original; the callout then points to the quick dot by the message box, which makes
-  later replies simple, and names the ELI5 popup behind the wand's ELI5 row (the ELI5 sheet, F3-581), where the
-  chat's choice is set (DL-126, ACD-484). Workspace practice explains navigation and panels and follows the
-  workspace chapter named in the 2026-10-09 amendment below (PWIZ-035). Every important action offers Try it and
-  Show Me; both invoke the same mounted owner handler and satisfy the same observed success predicate. Show Me
-  uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation or a second
-  implementation. Planning Wizard is about half of meaningful actions and dwell time. Amended 2026-10-17
-  (DL-230, Jared): the bar is that Planning is about half of the tour's actions and time (it read: at least
-  half); the accepted 20-step tour, Planning at 44 percent of actions and 49 percent of dwell, meets it. Jared
-  will redo the tour completely once chat is rolled in and the Planning Wizard is redesigned, so no other tour
-  work is planned until then. A book-club goal becomes three outcomes, the learner answers who may edit, sees
-  why it matters, reviews decisions/assumptions/ unresolved choices, edits one answer, and watches only the
-  affected shared-access consequence change before the approval boundary. Teacher retains a broad discoverable
-  beginner question library. ELI5 remains beside Pause and Skip and is called out in the first scene; the same
-  opening moment explains that people who prefer less animation can enable Reduced Motion later in Settings. All
-  visible copy is written for a person who has never coded or used an IDE and never calls the application a
-  `shell` or exposes command IDs, owners, providers, models, tokens, receipts, routes, or implementation terms.
-  The overlay tracks and highlights mounted controls without cloning them, intercepting owner work, or
-  fabricating success. Automatic scene transitions focus the current scene heading, never an action, and do not
-  open a visual hover tag without user intent. Pause, Back, Skip, interruption, resize, theme change, and
-  effective Reduced Motion preserve real state and focus. The Tour bar carries the same persistent Look menu
-  (`Change the look`) and sound control beyond setup on every step: Look choices, family nier and its Adjust
-  NieR editor included (F3-598), apply through the Settings owner at once only with a verified current Project
-  binding, and the Tour follows that Project's effective theme. Neither control is a `ui.guided_tour.*` action
-  (DL-153): a family/mode Look choice or live edit in the editor and the sound control's write of
-  `general.interaction.sound-effects` compose cmd.settings.transaction.preview then
-  cmd.settings.transaction.apply, and Adjust NieR is ui.settings.nier_editor.open. Project switching invalidates
-  stale bindings and rebinds both controls before persistence; without a Project they offer ephemeral preview
-  and no durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects`
-  effective pref with a keyboard-accessible sound-off state. Both are shared chrome controls, not tour-specific
-  preference toggles, and audio is never the sole status signal; the Tour's cues are the onboarding and Guided
-  Tour cue category of F3-599. Back and forward movement follow the valid story state and never become inert or
-  skip required practice. Basic, Friendly, Glass, Retro and NieR (F3-598), direct the film with substantially
-  different callout composition, illustration, typography, target treatment, and motion--not one recolored
-  overlay--while never using a left-edge accent rail. Transitions preserve the mounted application continuously
-  without a black or empty flash. Skip restores captured layout, Chat state, and focus. While any restore runs,
-  the application's own notices about it (a widget removed, a persona applied from the next turn) stay quiet in
-  every look, and the Tour's own closing note says what was put back (DL-153). Finish restores the temporary
-  arrangement by default or keeps it only on explicit selection, removes practice content, and lands on the real
-  Planning Wizard with the committed Project selected and no work auto-started. Close/reload resumes a safe
-  checkpoint after owner revalidation. Amended 2026-10-09 (DL-180): the workspace practice no longer asks the
-  learner to move or dock the chat, which is a fixed column (F3-637). It teaches opening a tab from the "+" menu
-  (F3-632), opening a file from the rail into a panel (F3-634), splitting by dragging a tab to a panel's edge
-  (F3-630), and adding a widget to the dashboard (F3-638); Skip and Finish restore the captured v2 Home layout.
-  The steps and their contracts are PWIZ-035's. Amended 2026-10-10 (DL-186, P1 B and P10): the old Home widgets
-  have left Home, so the widget step now teaches a Usage widget: it opens the Home dashboard and asks the
-  learner to add Upcoming resets with Add widget and then move it to where they can glance at it (F3-638); it is
-  finished by the Home board's own accepted add of that widget followed by a move or resize of it, never by a
-  timer, highlighting or a generic Next. The step and its contract are PWIZ-035's. Amended Q22, Jared 2026-10-30
-  (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained
-  Adjust controls. Retained historical/source tokens (not active overrides): NieR Mode. Q22 visible copy is
-  Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation 1030182542-5544). The
-  earlier label Adjust NieR look is retained as historical source text only.
+canonical_text: 'Guided Tour teaches through successful actions over the mounted Puppet Master application in one stable
+  chapter order: Assistant Chat with Teacher, workspace practice, then Planning Wizard. Chat opens through its real control;
+  the learner sends the supplied local question, sees Teacher''s answer stream in the same labeled guided-example conversation,
+  and then sees that same answer in simple words through Explain this reply simply (`cmd.chat.eli5.explain_reply`), which
+  adds one extra, simpler reply after the example answer and never rewrites or regenerates the original; the callout
+  then points to the quick dot by the message box, which makes later replies simple, and names the ELI5 popup behind
+  the wand''s ELI5 row (the ELI5 sheet, F3-581), where the chat''s choice is set (DL-126, ACD-484). Workspace practice
+  explains navigation and panels and follows the workspace chapter named in the 2026-10-09 amendment below (PWIZ-035).
+  Every important action offers Try it and Show Me; both invoke the same mounted owner handler and satisfy the same observed
+  success predicate. Show Me uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation
+  or a second implementation. Planning Wizard is about half of meaningful actions and dwell time. Amended 2026-10-17
+  (DL-230, Jared): the bar is that Planning is about half of the tour''s actions and time (it read: at least half); the
+  accepted 20-step tour, Planning at 44 percent of actions and 49 percent of dwell, meets it. Jared will redo the tour
+  completely once chat is rolled in and the Planning Wizard is redesigned, so no other tour work is planned until then.
+  A book-club goal becomes three outcomes, the learner answers who may edit, sees why it matters, reviews decisions/assumptions/
+  unresolved choices, edits one answer, and watches only the affected shared-access consequence change before the approval
+  boundary. Teacher retains a broad discoverable beginner question library. The shared Plain English / Expert control
+  remains beside Pause and Skip and is called out in the first scene; the same opening moment explains that people who
+  prefer less animation can enable Reduced Motion later in Settings. All visible copy is written for a person who has
+  never coded or used an IDE and never calls the application a `shell` or exposes command IDs, owners, providers, models,
+  tokens, receipts, routes, or implementation terms. The overlay tracks and highlights mounted controls without cloning
+  them, intercepting owner work, or fabricating success. Automatic scene transitions focus the current scene heading,
+  never an action, and do not open a visual hover tag without user intent. Pause, Back, Skip, interruption, resize, theme
+  change, and effective Reduced Motion preserve real state and focus. The Tour bar carries the same persistent Look menu
+  (`Change the look`) and sound control beyond setup on every step: Look choices, family nier and its Adjust NieR editor
+  included (F3-598), apply through the Settings owner at once only with a verified current Project binding, and the Tour
+  follows that Project''s effective theme. Neither control is a `ui.guided_tour.*` action (DL-153): a family/mode Look
+  choice or live edit in the editor and the sound control''s write of `general.interaction.sound-effects` compose cmd.settings.transaction.preview
+  then cmd.settings.transaction.apply, and Adjust NieR is ui.settings.nier_editor.open. Project switching invalidates
+  stale bindings and rebinds both controls before persistence; without a Project they offer ephemeral preview and no
+  durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with
+  a keyboard-accessible sound-off state. Both are shared chrome controls, not tour-specific preference toggles, and audio
+  is never the sole status signal; the Tour''s cues are the onboarding and Guided Tour cue category of F3-599. Back and
+  forward movement follow the valid story state and never become inert or skip required practice. Basic, Friendly, Glass,
+  Retro and NieR (F3-598), direct the film with substantially different callout composition, illustration, typography,
+  target treatment, and motion--not one recolored overlay--while never using a left-edge accent rail. Transitions preserve
+  the mounted application continuously without a black or empty flash. Skip restores captured layout, Chat state, and
+  focus. While any restore runs, the application''s own notices about it (a widget removed, a persona applied from the
+  next turn) stay quiet in every look, and the Tour''s own closing note says what was put back (DL-153). Finish restores
+  the temporary arrangement by default or keeps it only on explicit selection, removes practice content, and lands on
+  the real Planning Wizard with the committed Project selected and no work auto-started. Close/reload resumes a safe
+  checkpoint after owner revalidation. Amended 2026-10-09 (DL-180): the workspace practice no longer asks the learner
+  to move or dock the chat, which is a fixed column (F3-637). It teaches opening a tab from the "+" menu (F3-632), opening
+  a file from the rail into a panel (F3-634), splitting by dragging a tab to a panel''s edge (F3-630), and adding a widget
+  to the dashboard (F3-638); Skip and Finish restore the captured v2 Home layout. The steps and their contracts are PWIZ-035''s.
+  Amended 2026-10-10 (DL-186, P1 B and P10): the old Home widgets have left Home, so the widget step now teaches a Usage
+  widget: it opens the Home dashboard and asks the learner to add Upcoming resets with Add widget and then move it to
+  where they can glance at it (F3-638); it is finished by the Home board''s own accepted add of that widget followed
+  by a move or resize of it, never by a timer, highlighting or a generic Next. The step and its contract are PWIZ-035''s.
+  Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns
+  migration and retained Adjust controls. Retained historical/source tokens (not active overrides): NieR Mode. Q22 visible
+  copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation 1030182542-5544). The earlier
+  label Adjust NieR look is retained as historical source text only. DL-259, Jared 2026-10-31: the wizard and Guided
+  Tour bars read and write one global general.interaction.mode, default ELI5, with the labels Plain English and Expert.
+  Existing cmd.settings.transaction.preview/apply owns the write. ui.guided_tour.toggle_eli5 is a compatibility local
+  adapter to this shared setting, not a tour-specific preference. Both bars reflect the same effective value; neither
+  seeds a separate Off state. Dual copy stays limited to tips/help under DL-126, and the mode change does not rewrite,
+  regenerate or send a chat reply.'
 gui_related: true
 gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
 split_recommended: false
 depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581, DL-180, DL-186, PWIZ-035]
 unblocks: [F3-524, F3-598, F3-599]
 acceptance_criteria:
-  - "The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current story."
-  - "Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped, and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's observed action rather than from unrelated clicks, elapsed time, or a generic forward control."
-  - "The brief opening introduces `ui.guided_tour.toggle_eli5` (labelled `ELI5: Off` until turned on) beside Pause and Skip Tour and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
-  - "The Tour bar keeps the persistent Look menu (`Change the look`: five families including NieR plus Light/Dark and the retained Adjust NieR button (Q22) whose editor opens as a popup dialog above the Tour) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR the retained `general.visual.nier-parts` and `general.visual.nier-background` (Q22)) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: five-family Look choices (Q22), live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply, and Adjust NieR emits ui.settings.nier_editor.open (DL-153)."
-  - "Workspace practice explains page navigation and panel purpose, then has the learner open a tab from the \"+\" menu, open a file from the rail into a panel, split a panel by dragging a tab to its edge and add a widget to the dashboard, and makes each destination and persisted owner result readable; the temporary layout is reversible and the chat is never moved (amended 2026-10-09, DL-180; PWIZ-035). The widget practice adds Upcoming resets to the Home dashboard and moves or resizes it there, finished only by the board's accepted add and then move or resize of that widget (amended 2026-10-10, DL-186; F3-638)."
-  - "Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
-  - "Planning receives about half of meaningful action count and meaningful dwell time, measured against a declared step census; the accepted 20-step tour (44 percent of actions, 49 percent of dwell) meets it, and the tour contracts' floor is 40 percent (amended 2026-10-17, DL-230). The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
-  - "The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved."
-  - "Assistant Chat opens first through its real shell action and keeps the same conversation throughout; successful Finish lands on the real Planning Wizard, not Chat, without starting work (amended 2026-10-09, DL-180: the chat is not moved by the Tour)."
-  - "Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution."
-  - "Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner detail; ELI5 uses clearer words, shorter structure, and less assumed knowledge without baby talk, forced metaphors, or inaccurate simplification. The already-visible answer never changes; the ELI5 version is one extra reply written by Explain this reply simply (`cmd.chat.eli5.explain_reply`, DL-126)."
-  - "Every one of the current 47 supported Teacher topics is discoverable through compact categories, search, or grouped sample questions in the real Chat surface; the initial suggestions stay calm, but the full corpus is not hidden behind knowledge of an exact phrase. Unsupported questions offer relevant categories and examples rather than one tiny hard-coded list or an unrelated fallback answer."
-  - "Teacher starts with the supplied question `What happens before Puppet Master changes my files?`; optional grouped questions remain discoverable without a checklist wall. An expanded library yields the callout where needed, stays keyboard-reachable, and restores the same beat on close without clipping or losing the target."
-  - "Teacher says Safe History is local, Git or Jujutsu organizes that local timeline without a Git/Jujutsu account, FileSafe is complementary, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin can hold a separate optional online copy; it never calls Git or Jujutsu a shared home, account, website, or hosted copy."
-  - "The opening Teacher practice uses the real guide selector, Teacher selection, supplied prompt sent through the real composer, a streamed local same-conversation answer, and same-answer ELI5 (Explain this reply simply adds one extra, simpler reply; the original reply is not rewritten, DL-126) before workspace practice; the thread is subtly labeled Guided example."
-  - "The Guided example label is visible on the mounted conversation, not only its backing record. Guided text remains local when paused, in another chapter, or retained after completion/replay; composer shortcuts cannot dispatch web/tool/provider work. Late local-stream callbacks are fenced to their original session and conversation, and missing usage telemetry is not zero-use proof. Ordinary conversations keep their normal behavior."
-  - "Every automatic non-interaction scene transition puts programmatic focus on the current h2 scene heading with tabindex=-1 and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual PMHoverTag, while exact coached interactions wait for the person to focus or activate the real target."
-  - "Teacher practice uses the exact novice composer placeholder `Ask Teacher anything about Puppet Master…`; Skip reinstates the exact pre-tour placeholder and pre-tour layout rather than leaving Teacher copy or a partial tour arrangement behind."
-  - "Visible headings, instructions, results, unavailable reasons, and buttons use novice-friendly outcome language; the internal term `shell`, raw command/route/schema IDs, receipt labels, and owner/provider/model/token jargon never appear in product copy."
-  - "Pause, Back, valid forward navigation, and Skip remain reachable and operational. Close/reload resumes the last safe step after owner-state revalidation. Skip restores captured layout/Chat state/focus; Finish tour restores by default and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard. Failed restoration exposes recovery, never false completion."
-  - "Effective Reduced Motion uses restrained transitions that preserve sequence and cause/effect, focus, hierarchy, announcements, and action parity. Settings changes are honored without discarding the step; hidden/collapsed surfaces stop decorative work and duplicate subscriptions."
-  - "Callout and halo geometry is measured against the live target and viewport, remeasures after real layout changes, clamps to every edge, and never covers the target whenever any safe above/below/side placement or bounded callout shrink can avoid it; short/narrow fallback keeps both target and callout usable instead of accepting a misleading offset highlight."
-  - "Guided Tour uses no left-edge color-rail callouts. Basic uses an exact instructional/blueprint director, Friendly an organic illustrated guide, Glass a spatial layered lens, and Retro a terminal/pixel director, and while NieR Mode is painted a NieR ink director (YoRHa headers, ink target brackets, the menu cursor and Pod narration, each under its installed part) replaces Basic's; these systems differ in silhouette, typography, target treatment, and choreography rather than just color."
-  - "Scene, route, target, theme, pause, Back, and forward transitions preserve a continuously painted application frame; no black/empty full-screen flash, stale halo, off-target box, text clipping, oversized heading, or callout edge outside the viewport is accepted."
-  - "Protected AuthBrowserSession content is never highlighted, captured, inspected, or described."
-  - "Skip, Restore my layout and Keep this layout raise none of the application's own notices about the restore in any look (no widget-removed or persona notice); the Tour's own closing note still shows (DL-153)."
-  - "PMConcept7 browser behavior, effect receipts, and observed mounted-owner results remain concept_fixture_only evidence; they are not production command receipts, native Slint wiring, runtime certification, or product-readiness proof."
+- The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction
+  supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current
+  story.
+- Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped,
+  and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's
+  observed action rather than from unrelated clicks, elapsed time, or a generic forward control.
+- The brief opening introduces the shared Plain English / Expert mode beside Pause and Skip Tour, default ELI5, with
+  ui.guided_tour.toggle_eli5 as the compatibility adapter to general.interaction.mode through Settings preview/apply.
+  It also explains Reduced Motion, reads general.visual.reduce-animations and directs changes to Settings without a separate
+  toggle or detour (DL-259).
+- 'The Tour bar keeps the persistent Look menu (`Change the look`: five families including NieR plus Light/Dark and the
+  retained Adjust NieR button (Q22) whose editor opens as a popup dialog above the Tour) and sound control reachable
+  by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`,
+  and for NieR the retained `general.visual.nier-parts` and `general.visual.nier-background` (Q22)) at once with presentation-only
+  effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds
+  both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds
+  to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn
+  on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference
+  toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: five-family Look choices (Q22),
+  live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply,
+  and Adjust NieR emits ui.settings.nier_editor.open (DL-153).'
+- Workspace practice explains page navigation and panel purpose, then has the learner open a tab from the "+" menu, open
+  a file from the rail into a panel, split a panel by dragging a tab to its edge and add a widget to the dashboard, and
+  makes each destination and persisted owner result readable; the temporary layout is reversible and the chat is never
+  moved (amended 2026-10-09, DL-180; PWIZ-035). The widget practice adds Upcoming resets to the Home dashboard and moves
+  or resizes it there, finished only by the board's accepted add and then move or resize of that widget (amended 2026-10-10,
+  DL-186; F3-638).
+- Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and
+  success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never
+  count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible.
+- Planning receives about half of meaningful action count and meaningful dwell time, measured against a declared step
+  census; the accepted 20-step tour (44 percent of actions, 49 percent of dwell) meets it, and the tour contracts' floor
+  is 40 percent (amended 2026-10-17, DL-230). The book-club goal becomes next-meeting/current-book/how-to-join outcomes,
+  followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current
+  Wizard names/modes.
+- The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access
+  consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved.
+- 'Assistant Chat opens first through its real shell action and keeps the same conversation throughout; successful Finish
+  lands on the real Planning Wizard, not Chat, without starting work (amended 2026-10-09, DL-180: the chat is not moved
+  by the Tour).'
+- Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real
+  Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution.
+- 'Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner
+  detail; ELI5 uses clearer words, shorter structure, and less assumed knowledge without baby talk, forced metaphors,
+  or inaccurate simplification. The already-visible answer never changes; the ELI5 version is one extra reply written
+  by Explain this reply simply (`cmd.chat.eli5.explain_reply`, DL-126).'
+- Every one of the current 47 supported Teacher topics is discoverable through compact categories, search, or grouped
+  sample questions in the real Chat surface; the initial suggestions stay calm, but the full corpus is not hidden behind
+  knowledge of an exact phrase. Unsupported questions offer relevant categories and examples rather than one tiny hard-coded
+  list or an unrelated fallback answer.
+- Teacher starts with the supplied question `What happens before Puppet Master changes my files?`; optional grouped questions
+  remain discoverable without a checklist wall. An expanded library yields the callout where needed, stays keyboard-reachable,
+  and restores the same beat on close without clipping or losing the target.
+- Teacher says Safe History is local, Git or Jujutsu organizes that local timeline without a Git/Jujutsu account, FileSafe
+  is complementary, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin can hold a separate optional
+  online copy; it never calls Git or Jujutsu a shared home, account, website, or hosted copy.
+- The opening Teacher practice uses the real guide selector, Teacher selection, supplied prompt sent through the real
+  composer, a streamed local same-conversation answer, and same-answer ELI5 (Explain this reply simply adds one extra,
+  simpler reply; the original reply is not rewritten, DL-126) before workspace practice; the thread is subtly labeled
+  Guided example.
+- The Guided example label is visible on the mounted conversation, not only its backing record. Guided text remains local
+  when paused, in another chapter, or retained after completion/replay; composer shortcuts cannot dispatch web/tool/provider
+  work. Late local-stream callbacks are fenced to their original session and conversation, and missing usage telemetry
+  is not zero-use proof. Ordinary conversations keep their normal behavior.
+- Every automatic non-interaction scene transition puts programmatic focus on the current h2 scene heading with tabindex=-1
+  and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual PMHoverTag,
+  while exact coached interactions wait for the person to focus or activate the real target.
+- Teacher practice uses the exact novice composer placeholder `Ask Teacher anything about Puppet Master…`; Skip reinstates
+  the exact pre-tour placeholder and pre-tour layout rather than leaving Teacher copy or a partial tour arrangement behind.
+- Visible headings, instructions, results, unavailable reasons, and buttons use novice-friendly outcome language; the
+  internal term `shell`, raw command/route/schema IDs, receipt labels, and owner/provider/model/token jargon never appear
+  in product copy.
+- Pause, Back, valid forward navigation, and Skip remain reachable and operational. Close/reload resumes the last safe
+  step after owner-state revalidation. Skip restores captured layout/Chat state/focus; Finish tour restores by default
+  and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard. Failed restoration
+  exposes recovery, never false completion.
+- Effective Reduced Motion uses restrained transitions that preserve sequence and cause/effect, focus, hierarchy, announcements,
+  and action parity. Settings changes are honored without discarding the step; hidden/collapsed surfaces stop decorative
+  work and duplicate subscriptions.
+- Callout and halo geometry is measured against the live target and viewport, remeasures after real layout changes, clamps
+  to every edge, and never covers the target whenever any safe above/below/side placement or bounded callout shrink can
+  avoid it; short/narrow fallback keeps both target and callout usable instead of accepting a misleading offset highlight.
+- Guided Tour uses no left-edge color-rail callouts. Basic uses an exact instructional/blueprint director, Friendly an
+  organic illustrated guide, Glass a spatial layered lens, and Retro a terminal/pixel director, and while NieR Mode is
+  painted a NieR ink director (YoRHa headers, ink target brackets, the menu cursor and Pod narration, each under its
+  installed part) replaces Basic's; these systems differ in silhouette, typography, target treatment, and choreography
+  rather than just color.
+- Scene, route, target, theme, pause, Back, and forward transitions preserve a continuously painted application frame;
+  no black/empty full-screen flash, stale halo, off-target box, text clipping, oversized heading, or callout edge outside
+  the viewport is accepted.
+- Protected AuthBrowserSession content is never highlighted, captured, inspected, or described.
+- Skip, Restore my layout and Keep this layout raise none of the application's own notices about the restore in any look
+  (no widget-removed or persona notice); the Tour's own closing note still shows (DL-153).
+- PMConcept7 browser behavior, effect receipts, and observed mounted-owner results remain concept_fixture_only evidence;
+  they are not production command receipts, native Slint wiring, runtime certification, or product-readiness proof.
+- 'DL-259, Jared 2026-10-31: the wizard and Guided Tour bars read and write one global general.interaction.mode, default
+  ELI5, with the labels Plain English and Expert. Existing cmd.settings.transaction.preview/apply owns the write. ui.guided_tour.toggle_eli5
+  is a compatibility local adapter to this shared setting, not a tour-specific preference. Both bars reflect the same
+  effective value; neither seeds a separate Off state. Dual copy stays limited to tips/help under DL-126, and the mode
+  change does not rewrite, regenerate or send a chat reply.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)"
   - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5 as one extra, simpler reply with the original reply unchanged, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)"
@@ -37299,30 +37371,73 @@ implementation_surfaces:
   - future native Slint Guided Tour overlay components
 node_compile_hint: {mode: guided_tour_directed_beginner_film_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - Plans/Planning_Wizard.md#PWIZ-023
-  - Plans/assistant-chat-design.md#ACD-431
-  - Concepts/pm7-tools/guided_tour_source.py
-  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md"
-  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md"
-  - Plans/Decision_Log.md#DL-186
-  - "Concepts/home-redesign/src/panels/js/52-tour.js and NUMBERS.md (widget_action) at c4e32ec0b7 on branch concept/home-panels-20261009 (the widget step as built; concept lineage only)"
-preserved_exact_tokens: [Planning Wizard, Assistant Chat, Teacher, Guided example, "What happens before Puppet Master changes my files?", "Ask Teacher anything about Puppet Master…", ELI5, "ELI5: Off", Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, ui.guided_tour.show_me, programmatic-focus-landmark, Pause, Skip Tour, Back, Try it, Show Me, Finish tour, "Change the look", "Sound off — click to turn on", general.visual.theme, general.visual.theme-mode, general.interaction.sound-effects, Explain this reply simply, cmd.chat.eli5.explain_reply, NieR Mode, Adjust NieR look, Upcoming resets]
+- Plans/Planning_Wizard.md#PWIZ-023
+- Plans/assistant-chat-design.md#ACD-431
+- Concepts/pm7-tools/guided_tour_source.py
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md
+- Plans/Decision_Log.md#DL-186
+- Concepts/home-redesign/src/panels/js/52-tour.js and NUMBERS.md (widget_action) at c4e32ec0b7 on branch concept/home-panels-20261009
+  (the widget step as built; concept lineage only)
+- Plans/Decision_Log.md#DL-259 (Jared 2026-10-31; shared interaction mode)
+preserved_exact_tokens:
+- Planning Wizard
+- Assistant Chat
+- Teacher
+- Guided example
+- What happens before Puppet Master changes my files?
+- Ask Teacher anything about Puppet Master…
+- ELI5
+- Reduced Motion
+- general.visual.reduce-animations
+- ui.guided_tour.toggle_eli5
+- ui.guided_tour.show_me
+- programmatic-focus-landmark
+- Pause
+- Skip Tour
+- Back
+- Try it
+- Show Me
+- Finish tour
+- Change the look
+- Sound off — click to turn on
+- general.visual.theme
+- general.visual.theme-mode
+- general.interaction.sound-effects
+- Explain this reply simply
+- cmd.chat.eli5.explain_reply
+- NieR Mode
+- Adjust NieR look
+- Upcoming resets
+- general.interaction.mode
+- Plain English
+- Expert
+- DL-259
 negative_constraints:
-  - "Do not build a tooltip carousel, parallel demo application, or five-chapter tour."
-  - "Do not rewrite, regenerate or replace the Teacher example answer for ELI5; its simpler version is one extra reply from Explain this reply simply (DL-126)."
-  - "Do not clone live controls, fabricate success, or cancel owner work when a view closes."
-  - "Do not use a provider, model, token budget, or protected AuthBrowserSession content for the deterministic lesson."
-  - "Do not retain the superseded Usage-first/Chat-final film or revive the old five-chapter controller."
-  - "Do not omit navigation or the real widget practice; do not turn workspace instruction into a long feature checklist (amended 2026-10-10: the chat is never moved, F3-637, so no Chat movement is practised)."
-  - "Do not put Reduced Motion into a separate tour chapter; keep the brief introduction with ELI5 and preference ownership in Settings."
-  - "Do not restore `ui.guided_tour.toggle_reduced_motion`; ELI5 is the only tour-specific top-bar preference toggle."
-  - "Do not persist Tour-bar Look or sound choices outside the Settings-owned effective prefs or invent new settings keys for them."
-  - "Do not retain an independent NieR checkbox; the Tour Look menu includes family nier (Q22)."
-  - "Do not expose the internal word `shell`, raw action identifiers, receipts, owners, routes, or developer jargon in visible tour copy."
-  - "Do not auto-focus a tour action on scene entry or leave the Teacher-practice placeholder installed after Skip."
-  - "Do not use left-edge accent rails, paint-only theme variants, target-covering callouts when a safe placement exists, or any black/empty transition frame."
-  - "Do not silently keep the demonstrated layout, auto-start work, or leave a practice surface over the final real Planning Wizard."
-  - "Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence, native Slint, or certification claims."
+- Do not build a tooltip carousel, parallel demo application, or five-chapter tour.
+- Do not rewrite, regenerate or replace the Teacher example answer for ELI5; its simpler version is one extra reply from
+  Explain this reply simply (DL-126).
+- Do not clone live controls, fabricate success, or cancel owner work when a view closes.
+- Do not use a provider, model, token budget, or protected AuthBrowserSession content for the deterministic lesson.
+- Do not retain the superseded Usage-first/Chat-final film or revive the old five-chapter controller.
+- 'Do not omit navigation or the real widget practice; do not turn workspace instruction into a long feature checklist
+  (amended 2026-10-10: the chat is never moved, F3-637, so no Chat movement is practised).'
+- Do not put Reduced Motion into a separate tour chapter; keep the brief introduction with ELI5 and preference ownership
+  in Settings.
+- Do not restore ui.guided_tour.toggle_reduced_motion or create a Tour-specific mode preference; the bar mode uses shared
+  general.interaction.mode (DL-259).
+- Do not persist Tour-bar Look or sound choices outside the Settings-owned effective prefs or invent new settings keys
+  for them.
+- Do not retain an independent NieR checkbox; the Tour Look menu includes family nier (Q22).
+- Do not expose the internal word `shell`, raw action identifiers, receipts, owners, routes, or developer jargon in visible
+  tour copy.
+- Do not auto-focus a tour action on scene entry or leave the Teacher-practice placeholder installed after Skip.
+- Do not use left-edge accent rails, paint-only theme variants, target-covering callouts when a safe placement exists,
+  or any black/empty transition frame.
+- Do not silently keep the demonstrated layout, auto-start work, or leave a practice surface over the final real Planning
+  Wizard.
+- Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence,
+  native Slint, or certification claims.
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the move-or-dock-chat step and the docked/undocked chat state sharing are retired from the workspace practice (PWIZ-035 owns the new steps)."
   - "Amended 2026-10-10 (DL-186, P1 B, P10): the widget step teaches adding Upcoming resets to the Home dashboard and moving it; the old Home widgets are gone; the negative constraint no longer asks for Chat movement, which DL-180 retired."

@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3509-L4736
+Source lines: L3509-L4749
 
-Source SHA256: `51ea5c28ab0dfa2857389d192d2855126ea5d58c0f3ff79bbe28ac2531f8a1c7`
+Source SHA256: `bd38fd260c02668a9b6dc6d95fcc465af0f37763e3c69e222aecaa3ea0ef76f9`
 
 ---
 
@@ -709,22 +709,31 @@ plan_unit_id: DR-074
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  Added 2026-10-17 (DL-228). Two rules are restated in many owners and have drifted. Widget_System WS-019
-  alone owns how a board commits: gravity inside the one move, resize, add or remove that caused it, and Tidy as
-  one cmd.widget.move with its arrange field, one receipt, the repack computed by the owner. Settings_System
-  SSYS-044 owns which surface may host which row, the bound value and the preview-then-apply transaction;
-  Multi-Account MA-073 owns the switch and warning hold rules, and SSYS-044 consumes them (review r1).
-  usage-feature UF-092, UF-093 and UF-107, UI_Command_Catalog UCC-147, UI_Wiring_Rules UIW-012, Wiring_Matrix
-  WM-043 and WM-045, Commands_System CS-067 and FinalGUISpec F3-514, F3-515 and F3-628 consume them; where a consumer's wording differs from its owner, the
-  owner wins, and a later edit cites the owner by id instead of restating it.
+canonical_text: 'Added 2026-10-17 (DL-228). Two rules are restated in many owners and have drifted. Widget_System WS-019
+  alone owns how a board commits: gravity inside the one move, resize, add or remove that caused it, and Tidy as one
+  cmd.widget.move with its arrange field, one receipt, the repack computed by the owner. Settings_System SSYS-044 owns
+  which surface may host which row, the bound value and the preview-then-apply transaction; Multi-Account MA-073 owns
+  the switch and warning hold rules, and SSYS-044 consumes them (review r1). usage-feature UF-092, UF-093 and UF-107,
+  UI_Command_Catalog UCC-147, UI_Wiring_Rules UIW-012, Wiring_Matrix WM-043 and WM-045, Commands_System CS-067 and FinalGUISpec
+  F3-514, F3-515 and F3-628 consume them; where a consumer''s wording differs from its owner, the owner wins, and a later
+  edit cites the owner by id instead of restating it. DL-259, Jared 2026-10-31: onboarding.interaction.mode and tour.interaction.mode
+  are two controls over the same Settings-owned global general.interaction.mode, default ELI5, labelled Plain English
+  / Expert. They use the existing Settings preview/apply pair; neither keeps a copied preference, independent default
+  or second writer. The legacy ui.guided_tour.toggle_eli5 adapter forwards to that owner. Chat reply ELI5 and one-extra-reply
+  explanation keep their separate DL-126 owners; tips/help dual copy does not duplicate or rewrite replies.'
 gui_related: true
 gui_classification_reason: One owner for the board commit shape and for hosted Settings controls.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- A board commit or a hosted Settings control is judged by WS-019 or SSYS-044, and a switch or warning hold by MA-073; a differing consumer sentence does not create a second rule.
+- A board commit or a hosted Settings control is judged by WS-019 or SSYS-044, and a switch or warning hold by MA-073;
+  a differing consumer sentence does not create a second rule.
+- 'DL-259, Jared 2026-10-31: onboarding.interaction.mode and tour.interaction.mode are two controls over the same Settings-owned
+  global general.interaction.mode, default ELI5, labelled Plain English / Expert. They use the existing Settings preview/apply
+  pair; neither keeps a copied preference, independent default or second writer. The legacy ui.guided_tour.toggle_eli5
+  adapter forwards to that owner. Chat reply ELI5 and one-extra-reply explanation keep their separate DL-126 owners;
+  tips/help dual copy does not duplicate or rewrite replies.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -741,9 +750,13 @@ node_compile_hint:
 source_lineage:
 - Plans/Widget_System.md#WS-019
 - Plans/Settings_System.md#SSYS-044
-- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-OPUS-B.md, SHA-256
-  a74054b4fea13526b56a1e0a395b6ad434d62828bb407cd1a79b228e8f2ef144 (OB-47, OB-48, OB-30; source lineage)
-preserved_exact_tokens: []
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-OPUS-B.md, SHA-256 a74054b4fea13526b56a1e0a395b6ad434d62828bb407cd1a79b228e8f2ef144
+  (OB-47, OB-48, OB-30; source lineage)
+- Plans/Decision_Log.md#DL-259 (Jared 2026-10-31; shared interaction mode)
+preserved_exact_tokens:
+- general.interaction.mode
+- onboarding.interaction.mode
+- tour.interaction.mode
 negative_constraints:
 - "Do not restate the board commit shape or the hosted-control rule in a consumer; cite WS-019 or SSYS-044."
 owner_hints:

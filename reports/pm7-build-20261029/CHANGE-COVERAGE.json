@@ -1236,12 +1236,12 @@
     {
       "id": "ELI5-control",
       "change": "Wizard/Tour bars share one Plain English/Expert state, default ELI5",
-      "owner": "PWIZ-022; PWIZ-023; SSYS-016; F3-663",
+      "owner": "PWIZ-022; PWIZ-023; SSYS-016; F3-521; F3-663",
       "wiring": "UIW-014; catalog.settings_transaction_preview; catalog.settings_transaction_apply; onboarding.interaction.mode; tour.interaction.mode",
       "commands": "CS-069; UCC-106; cmd.settings.transaction.preview; cmd.settings.transaction.apply; UCC-175",
       "settings": "general.interaction.mode; option_labels Plain English/Expert",
-      "dry": "DR-043",
-      "companions": "guided_tour_presentation_contract.eli5; x-product-rulings.interaction_mode",
+      "dry": "DR-074 (one Settings value/writer across both bars)",
+      "companions": "guided_tour_presentation_contract.eli5; x-product-rulings.interaction_mode; three owner-consumer assertions in pm7-onboarding-rulings-check.py",
       "state": "covered_by_current_contract"
     },
     {
@@ -1251,7 +1251,7 @@
       "wiring": "UIW-015; WM-041",
       "commands": "none needed: no chat reply command or new effect",
       "settings": "general.interaction.mode",
-      "dry": "DR-043; DR-076",
+      "dry": "DR-074 (shared preference); none additional: DL-126 owns tips/help-only copy limit",
       "companions": "choice_help_presentation; guided Tour no-rewrite constraints",
       "state": "covered_by_current_contract"
     },

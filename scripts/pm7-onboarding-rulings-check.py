@@ -2,10 +2,12 @@
 """DL-259 static onboarding, credential and connector contract checks."""
 from pathlib import Path
 import json
+import re
 import runpy
 import sys
 
 import jsonschema
+import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / 'Plans'
@@ -87,6 +89,30 @@ def check():
         require(binding['setting_ids'] == ['general.interaction.mode'] and
                 binding['action_ids'] == ['cmd.settings.transaction.preview', 'cmd.settings.transaction.apply'],
                 cid + ': shared mode bypasses Settings')
+    # The owner contracts can agree while an older consumer still promises an
+    # independent Off state. Check the consumer unit as well as the typed policy.
+    def owner_unit(document, unit_id):
+        for block in re.finditer(r'^```yaml\n(.*?)^```', (PLANS / document).read_text(), re.M | re.S):
+            if re.search(r'^plan_unit_id: ' + re.escape(unit_id) + r'$', block[1], re.M):
+                return yaml.load(block[1], Loader=yaml.BaseLoader)
+        raise ValueError('Missing owner unit ' + unit_id)
+
+    tour_unit = owner_unit('FinalGUISpec.md', 'F3-521')
+    tour_contract = json.dumps({key: tour_unit[key] for key in
+                               ('canonical_text', 'acceptance_criteria', 'negative_constraints',
+                                'preserved_exact_tokens')})
+    require(all(token in tour_contract for token in
+                ('general.interaction.mode', 'Plain English', 'Expert', 'DL-259')) and
+            'ELI5: Off' not in tour_contract and 'only tour-specific' not in tour_contract,
+            'F3-521 retains a separate/default-Off Tour preference')
+    shared_rule = owner_unit('DRY_Rules.md', 'DR-074')['canonical_text']
+    require(all(token in shared_rule for token in ('general.interaction.mode',
+                'onboarding.interaction.mode', 'tour.interaction.mode')),
+            'DR-074 omits the shared mode owner/consumers')
+    catalog_text = (PLANS / 'UI_Command_Catalog.md').read_text()
+    require("top-bar ELI5 control changes the tour's narration only" not in catalog_text,
+            'Catalog consumer still promises narration-only Tour mode')
+    counts['shared_mode_consumer_checks'] = 3
     remote = read('remote_access_system_contracts.schema.json')
     require(remote['$defs']['reverse_proxy_configuration']['properties']['proxy_family']['enum'] ==
             ['caddy', 'nginx', 'traefik'], 'Generated proxy families differ')

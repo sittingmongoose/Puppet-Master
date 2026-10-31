@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L13838-L14982
 
-Source SHA256: `3491bf4ac2c3af84873a492558a50a7dfb1a2fab9f0c9eab5859c035297ee24c`
+Source SHA256: `3d51d4b0f7c8cf04a00dae7b1bdcd90d295e175d69650ad15bfaed440de1cdeb`
 
 ---
 
@@ -1068,7 +1068,7 @@ This supersedes the row's description, "Sets the ELI5 conversation override for 
 
 **Other rules.**
 - Expert and ELI5 dual copy exists only for tooltips and help, not for every helper line. It adds no command and no surface.
-- The guided tour shows its example answer in simple words only as one extra, simpler reply from `cmd.chat.eli5.explain_reply`, and the original reply is never changed (WM-041, DL-126). Where the tour uses `cmd.chat.eli5.set`, it is the quick dot, and it changes only later replies. The tour's own top-bar ELI5 control changes the tour's narration only. The tour's own units belong to their owner and are not changed here.
+- The guided tour shows its example answer in simple words only as one extra, simpler reply from `cmd.chat.eli5.explain_reply`, and the original reply is never changed (WM-041, DL-126). Where the tour uses `cmd.chat.eli5.set`, it is the quick dot, and it changes only later replies. DL-259, Jared 2026-10-31: the Tour bar uses the shared global general.interaction.mode, default ELI5, labelled Plain English / Expert. The compatibility ui.guided_tour.toggle_eli5 adapter forwards to the same cmd.settings.transaction.preview/apply pair as the wizard bar; tips/help dual copy never rewrites or sends a chat reply. F3-521 and PWIZ-023 consume that same owner.
 
 ```yaml
 plan_unit_id: UCC-175

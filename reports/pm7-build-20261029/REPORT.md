@@ -1,3 +1,19 @@
+# DL-259 shared ELI5 consumer alignment — 2026-10-31
+
+**All 11 focused/generation/guard checks PASS.** Final sweep fixed two residual copies after pushed DL-260 (`203455bdfa`): F3-521 still labelled the Tour bar “ELI5: Off” and called it tour-specific, and the catalog’s non-unit paragraph still promised narration only. F3-521 now consumes global **general.interaction.mode**, default **ELI5**, labelled **Plain English / Expert**. DR-074 explicitly requires one Settings value/writer across wizard and Tour. DL-126 still limits dual copy to tips/help; the control never rewrites or sends a reply.
+
+**Prose first, then companions:** four owner/index docs; two unit bodies. Existing Settings inventory, binding pair, transaction commands and typed onboarding/Tour contracts already matched Jared’s DL-259 ruling and remain unchanged. The focused checker now verifies all three consumer seams, so the typed contract alone cannot hide older copy. No new product command, setting, local action, event, schema field or PlanUnit. CHANGE-COVERAGE’s two ELI5 rows now name F3-521 and DR-074.
+
+**All current product rounds remain traced:** DL-259 provider/fields/ELI5/FileSafe/Tailscale/free-catalog/Pip voice/toast rulings; separate DL-260 cleanup with its [14-document table](DEMO-CLEANUP.md); srv and fields final reports; **126 real product rows**. Fields final `fe981f3b38` is read in full and its four canon requests were already DL-259; six coverage mappings use the exact existing routes. No demo-only row or O55 API is canon.
+
+**Proof:** existing onboarding **125/236**, Tour **24/59**, Remote **110/107**, provider-policy **2/2** cases and three new consumer assertions pass; canon/wiring, coverage, shards/index, full historical-prefix and source guards pass. Only **four edited-source shard groups** differ from this checkpoint. All **520 prior artifact hashes remain unchanged**; **535** retained artifacts are recorded in verification.json. Raw prefix: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-`.
+
+**Census:** 1010 settings; 483 bindings / 61 source families; 715 Touch rows / 140 profiles; 1269 production entries; 7243 units / 96 indexed docs; 2958 shards / 99 sources. No native/visual/audio acceptance is inferred. Owned scratch directories are removed; no browser or server was started.
+
+**Open:** CERT-1, CLOUD-1, DESKTOP-RESTORE-1 and REMOTE-CODE-1 remain report-only owner admissions in OWNER-QUESTIONS.md; the lead’s final GUI names/head, onboarding’s small follow-up and independent coverage audit remain. **No full gates, dry landing, landing, lock, reseal, baseline refresh or protected-governance edit.** Waiter remains off under direct-wake instruction. Earlier checkpoint sections below are history.
+
+---
+
 # DL-260 mainline cleanup — 2026-10-31
 
 **All 17 focused/generation/guard checks PASS.** Jared’s **Q3 B** cleanup is separate from pushed DL-259. **18 owner/index documents, 39 existing units amended/retired, one new DL-260.** Prose preceded companions; no ledger compiled. [DEMO-CLEANUP.md](DEMO-CLEANUP.md) has the requested 14-document table, counts, removals and preserved product rules, plus companion actions.

@@ -1,5 +1,8 @@
 # Plans Index (authoritative map)
 
+- 2026-10-31: DL-259 consumer alignment removes the stale Tour Off/narration-only wording from F3-521 and the catalog preamble. The bar uses global general.interaction.mode, default ELI5, labelled Plain English / Expert; DR-074 makes the one setting/writer explicit. Existing bindings, Settings pair and typed presentation contracts already carry that ruling.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/UI_Command_Catalog.md#UCC-175, ContractName:Plans/DRY_Rules.md#DR-074
+
 - 2026-10-31: DL-260 applies Jared’s Q3 B product-only canon rule to inherited material. Retired lab contracts retain historical IDs only; real Guided Tour, shared chat, Usage Live/Pause and Settings ownership remain. Product companions remove prototype-only admission and acceptance obligations. Historical decision entries remain unchanged.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-260, ContractName:Plans/Planning_Wizard.md#PWIZ-023, ContractName:Plans/DRY_Rules.md#DR-075
 

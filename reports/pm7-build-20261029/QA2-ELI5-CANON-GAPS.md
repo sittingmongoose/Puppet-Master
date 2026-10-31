@@ -1,6 +1,8 @@
 # Shared ELI5 gaps — resolved in canon by DL-259 (2026-10-31)
 
-Jared’s ruling is applied. Wizard and Guided Tour share global `general.interaction.mode`, default `ELI5`, labelled **Plain English / Expert**, through existing Settings preview/apply. Bindings are `onboarding.interaction.mode` and `tour.interaction.mode`. PWIZ-022/023, UCC-175, CS-069, WM-041, UIW-015, onboarding/Tour contracts and fixtures now agree. `ui.guided_tour.toggle_eli5` is a compatibility local adapter, not a second preference. DL-126’s tips/help-only limit and no rewrite of replies remain. Final GUI source anchors follow the lead’s GUI-head signal.
+Jared’s ruling is applied. Wizard and Guided Tour share global `general.interaction.mode`, default `ELI5`, labelled **Plain English / Expert**, through existing Settings preview/apply. Bindings are `onboarding.interaction.mode` and `tour.interaction.mode`. PWIZ-022/023, F3-521, DR-074, UCC-175, CS-069, WM-041, UIW-015, onboarding/Tour contracts and fixtures now agree. `ui.guided_tour.toggle_eli5` is a compatibility local adapter, not a second preference. DL-126’s tips/help-only limit and no rewrite of replies remain. Final GUI source anchors follow the lead’s GUI-head signal.
+
+Final consumer sweep after DL-260 found two residual copies: F3-521 still labelled the bar ELI5: Off and called it tour-specific; the catalog’s non-unit DL-126 paragraph still said narration only. Both now consume Jared’s DL-259 shared global mode. DR-074 explicitly requires one value/writer for both bars, and the focused owner check covers these consumers. Existing typed policy, global inventory row and binding pair already agreed; no new setting, action or schema field was needed.
 
 The table below records the gaps before this amendment. The field audit has since been read; its real product corrections are included in DL-259. Historical snapshot line numbers remain locators for that audit, not current line pins.
 
