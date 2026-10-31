@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L47904-L51087
+Source lines: L47913-L51107
 
-Source SHA256: `554a3e44f283353e36c4e7e4aac06544dff2a7ec0b7a2e00cccd84b5abd72f0f`
+Source SHA256: `266ef12dd89bed0609723a4656865e115e9f79b9e1888e22e07001fe700b33b5`
 
 ---
 
@@ -2873,7 +2873,11 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   intentional floor contact. The clearance is a presentation invariant, not a new owner phase or completion signal. DL-259
   FO-5, 2026-10-31: a choice’s question control stays visible, readable and reachable when its card is selected, hovered
   or keyboard-focused in every family. NieR’s selected/cursor ink stops before the help region or uses contrasting inverse
-  ink there, without hiding the question, radio or selected state.'
+  ink there, without hiding the question, radio or selected state. DL-259 FO-9 final, 2026-10-31: Creating’s blocks and
+  progress consume the same verified owner-phase projection as its checklist (PWIZ-021). An incomplete or unclear GitHub
+  result cannot produce completed blocks for unproven phases; settled phases keep their corresponding blocks through
+  recheck/resume. Later accepted owner results may settle the rest. O12’s final landing condition and instant Reduced
+  Motion settlement remain additional to real owner completion.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2934,6 +2938,10 @@ acceptance_criteria:
 - 'DL-259 FO-5, 2026-10-31: a choice’s question control stays visible, readable and reachable when its card is selected,
   hovered or keyboard-focused in every family. NieR’s selected/cursor ink stops before the help region or uses contrasting
   inverse ink there, without hiding the question, radio or selected state.'
+- 'DL-259 FO-9 final, 2026-10-31: Creating’s blocks and progress consume the same verified owner-phase projection as
+  its checklist (PWIZ-021). An incomplete or unclear GitHub result cannot produce completed blocks for unproven phases;
+  settled phases keep their corresponding blocks through recheck/resume. Later accepted owner results may settle the
+  rest. O12’s final landing condition and instant Reduced Motion settlement remain additional to real owner completion.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -2960,6 +2968,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — Pattern review long-note and prop fixes
   (QA2 M5/M6). Six layout units is source geometry only; settled/untransformed measurement and internal note scrolling
   preserve product readability.
+- 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
+  report FO-9 final.'
 preserved_exact_tokens:
 - ui.onboarding.open_details
 - Sound on — click to mute

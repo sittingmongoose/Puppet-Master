@@ -36883,13 +36883,16 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   erase it. The action clears the field when it consumes the input; leaving/recreating the screen, changing its service/method/target
   or explicit cancel/reset clears it too. Keep that input only in the protected entry control until consumption, never
   in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential or validation proof;
-  submission reads the current protected value and rechecks its existing owner requirements. DL-259 FO-9, 2026-10-31:
+  submission reads the current protected value and rechecks its existing owner requirements. DL-259 FO-9 final, 2026-10-31:
   Creating’s checklist and block stack share the accepted owner’s phase/effect projection. When GitHub creation only
   partly settles, show only verified completed phases as checked or landed blocks; the phase proven to have failed may
-  show failure and unexecuted/unproven phases remain pending. Transport completion and animation never prove the later
-  registration, settings or connection steps. The recovery banner/actions, Continue availability and Ready use that same
-  current owner result; O12’s last-block landing condition is additional to owner completion, never a replacement for
-  it.'
+  show failure and unexecuted/unproven phases remain pending. Unexecuted or unproven phases stay pending through an incomplete
+  or unclear result until a later accepted owner result from Continue Setup or Check again proves those effects settled.
+  The checklist, stage block count and stage progress use that same result; a settled phase keeps its block and an unproven
+  phase has no completed block. Refresh alone neither completes a phase nor repeats a settled remote create. Transport
+  completion and animation never prove the later registration, settings or connection steps. The recovery banner/actions,
+  Continue availability and Ready use that same current owner result; O12’s last-block landing condition is additional
+  to owner completion, never a replacement for it.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -37156,12 +37159,15 @@ acceptance_criteria:
   the screen, changing its service/method/target or explicit cancel/reset clears it too. Keep that input only in the
   protected entry control until consumption, never in ordinary draft/session persistence, receipts or logs. A filled/masked
   flag is not a credential or validation proof; submission reads the current protected value and rechecks its existing
-  owner requirements. DL-259 FO-9, 2026-10-31: Creating’s checklist and block stack share the accepted owner’s phase/effect
-  projection. When GitHub creation only partly settles, show only verified completed phases as checked or landed blocks;
-  the phase proven to have failed may show failure and unexecuted/unproven phases remain pending. Transport completion
-  and animation never prove the later registration, settings or connection steps. The recovery banner/actions, Continue
-  availability and Ready use that same current owner result; O12’s last-block landing condition is additional to owner
-  completion, never a replacement for it.'
+  owner requirements. DL-259 FO-9 final, 2026-10-31: Creating’s checklist and block stack share the accepted owner’s
+  phase/effect projection. When GitHub creation only partly settles, show only verified completed phases as checked or
+  landed blocks; the phase proven to have failed may show failure and unexecuted/unproven phases remain pending. Unexecuted
+  or unproven phases stay pending through an incomplete or unclear result until a later accepted owner result from Continue
+  Setup or Check again proves those effects settled. The checklist, stage block count and stage progress use that same
+  result; a settled phase keeps its block and an unproven phase has no completed block. Refresh alone neither completes
+  a phase nor repeats a settled remote create. Transport completion and animation never prove the later registration,
+  settings or connection steps. The recovery banner/actions, Continue availability and Ready use that same current owner
+  result; O12’s last-block landing condition is additional to owner completion, never a replacement for it.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
@@ -37209,6 +37215,9 @@ source_lineage:
   sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
+  report FO-9 final.'
 preserved_exact_tokens:
 - welcome
 - simple_path
@@ -50766,7 +50775,11 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   intentional floor contact. The clearance is a presentation invariant, not a new owner phase or completion signal. DL-259
   FO-5, 2026-10-31: a choice’s question control stays visible, readable and reachable when its card is selected, hovered
   or keyboard-focused in every family. NieR’s selected/cursor ink stops before the help region or uses contrasting inverse
-  ink there, without hiding the question, radio or selected state.'
+  ink there, without hiding the question, radio or selected state. DL-259 FO-9 final, 2026-10-31: Creating’s blocks and
+  progress consume the same verified owner-phase projection as its checklist (PWIZ-021). An incomplete or unclear GitHub
+  result cannot produce completed blocks for unproven phases; settled phases keep their corresponding blocks through
+  recheck/resume. Later accepted owner results may settle the rest. O12’s final landing condition and instant Reduced
+  Motion settlement remain additional to real owner completion.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -50827,6 +50840,10 @@ acceptance_criteria:
 - 'DL-259 FO-5, 2026-10-31: a choice’s question control stays visible, readable and reachable when its card is selected,
   hovered or keyboard-focused in every family. NieR’s selected/cursor ink stops before the help region or uses contrasting
   inverse ink there, without hiding the question, radio or selected state.'
+- 'DL-259 FO-9 final, 2026-10-31: Creating’s blocks and progress consume the same verified owner-phase projection as
+  its checklist (PWIZ-021). An incomplete or unclear GitHub result cannot produce completed blocks for unproven phases;
+  settled phases keep their corresponding blocks through recheck/resume. Later accepted owner results may settle the
+  rest. O12’s final landing condition and instant Reduced Motion settlement remain additional to real owner completion.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -50853,6 +50870,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — Pattern review long-note and prop fixes
   (QA2 M5/M6). Six layout units is source geometry only; settled/untransformed measurement and internal note scrolling
   preserve product readability.
+- 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
+  report FO-9 final.'
 preserved_exact_tokens:
 - ui.onboarding.open_details
 - Sound on — click to mute

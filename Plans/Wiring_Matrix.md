@@ -3664,7 +3664,12 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   state, not extra onboarding commands or owner transitions. Follow PWIZ-022’s protected-field lifetime, SRV-004’s terminal
   pairing-result handling, F3-182’s acknowledgment interval and PWIZ-021’s verified Creating phases. Existing typed local
   actions and domain approval/recovery/export routes remain; refresh never resubmits a consumed result or marks an unexecuted
-  phase complete.'
+  phase complete. DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s current accepted
+  owner result. Continue Setup retains the existing cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery
+  fence, never the original creation key. Check again consumes the applicable current owner observation/recovery result;
+  neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block
+  count and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
+  and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
@@ -3865,6 +3870,12 @@ acceptance_criteria:
   handling, F3-182’s acknowledgment interval and PWIZ-021’s verified Creating phases. Existing typed local actions and
   domain approval/recovery/export routes remain; refresh never resubmits a consumed result or marks an unexecuted phase
   complete.'
+- 'DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s current accepted owner result.
+  Continue Setup retains the existing cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery
+  fence, never the original creation key. Check again consumes the applicable current owner observation/recovery result;
+  neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block
+  count and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
+  and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
@@ -3910,6 +3921,9 @@ source_lineage:
   sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
+  report FO-9 final.'
 source_atom_ids: [atom-0016, atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:

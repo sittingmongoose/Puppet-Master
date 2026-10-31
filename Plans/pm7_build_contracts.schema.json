@@ -3401,7 +3401,11 @@
           "checks_and_blocks_share_verified_owner_effects": true,
           "unexecuted_unproven_phase": "pending",
           "transport_or_animation_proves_owner_completion": false,
-          "last_block_landing_additional_to_owner_completion": true
+          "last_block_landing_additional_to_owner_completion": true,
+          "pending_until_later_accepted_owner_result": true,
+          "stage_progress_uses_same_owner_projection": true,
+          "settled_phase_retains_corresponding_block": true,
+          "unproven_phase_has_completed_block": false
         },
         "cast_emphasis": {
           "owner_ref": "Plans/FinalGUISpec.md#F3-595",

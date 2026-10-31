@@ -1984,12 +1984,15 @@ canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage
   and connected-account summaries show the category and concise product/account identity without billing explanations,
   prices, limits or extra-usage pitches. Retain useful category names and exact account/product distinctions; this presentation
   rule does not alter the provider owner’s charging model, auth surface, account identity or credential custody. DL-259
-  FO-9, 2026-10-31: Creating’s checklist and block stack share the accepted owner’s phase/effect projection. When GitHub
-  creation only partly settles, show only verified completed phases as checked or landed blocks; the phase proven to
-  have failed may show failure and unexecuted/unproven phases remain pending. Transport completion and animation never
-  prove the later registration, settings or connection steps. The recovery banner/actions, Continue availability and
-  Ready use that same current owner result; O12’s last-block landing condition is additional to owner completion, never
-  a replacement for it.'
+  FO-9 final, 2026-10-31: Creating’s checklist and block stack share the accepted owner’s phase/effect projection. When
+  GitHub creation only partly settles, show only verified completed phases as checked or landed blocks; the phase proven
+  to have failed may show failure and unexecuted/unproven phases remain pending. Unexecuted or unproven phases stay pending
+  through an incomplete or unclear result until a later accepted owner result from Continue Setup or Check again proves
+  those effects settled. The checklist, stage block count and stage progress use that same result; a settled phase keeps
+  its block and an unproven phase has no completed block. Refresh alone neither completes a phase nor repeats a settled
+  remote create. Transport completion and animation never prove the later registration, settings or connection steps.
+  The recovery banner/actions, Continue availability and Ready use that same current owner result; O12’s last-block landing
+  condition is additional to owner completion, never a replacement for it.'
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -2120,12 +2123,16 @@ acceptance_criteria:
 - 'DL-259 FO-4, 2026-10-31: onboarding provider rows and connected-account summaries show the category and concise product/account
   identity without billing explanations, prices, limits or extra-usage pitches. Retain useful category names and exact
   account/product distinctions; this presentation rule does not alter the provider owner’s charging model, auth surface,
-  account identity or credential custody. DL-259 FO-9, 2026-10-31: Creating’s checklist and block stack share the accepted
-  owner’s phase/effect projection. When GitHub creation only partly settles, show only verified completed phases as checked
-  or landed blocks; the phase proven to have failed may show failure and unexecuted/unproven phases remain pending. Transport
-  completion and animation never prove the later registration, settings or connection steps. The recovery banner/actions,
-  Continue availability and Ready use that same current owner result; O12’s last-block landing condition is additional
-  to owner completion, never a replacement for it.'
+  account identity or credential custody. DL-259 FO-9 final, 2026-10-31: Creating’s checklist and block stack share the
+  accepted owner’s phase/effect projection. When GitHub creation only partly settles, show only verified completed phases
+  as checked or landed blocks; the phase proven to have failed may show failure and unexecuted/unproven phases remain
+  pending. Unexecuted or unproven phases stay pending through an incomplete or unclear result until a later accepted
+  owner result from Continue Setup or Check again proves those effects settled. The checklist, stage block count and
+  stage progress use that same result; a settled phase keeps its block and an unproven phase has no completed block.
+  Refresh alone neither completes a phase nor repeats a settled remote create. Transport completion and animation never
+  prove the later registration, settings or connection steps. The recovery banner/actions, Continue availability and
+  Ready use that same current owner result; O12’s last-block landing condition is additional to owner completion, never
+  a replacement for it.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -2168,6 +2175,9 @@ source_lineage:
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 - PM7 final-onb FO-4/FO-9; source 73-screens-ai/copy and b75da99bef shownPhases; WIP helper names are source lineage
   only.
+- 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
+  report FO-9 final.'
 preserved_exact_tokens:
 - Continue Setup
 - Open Repository

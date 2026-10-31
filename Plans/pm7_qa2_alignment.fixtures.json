@@ -1249,5 +1249,156 @@
       "expected_owner_reads": 1,
       "expected_error": "duplicate_consumption"
     }
+  ],
+  "Creating_phase_cases": [
+    {
+      "name": "partial_remote_create",
+      "settled_effects": {
+        "source_preparation": true,
+        "remote_repository_create": true
+      },
+      "remote_effect_state": "verified_created",
+      "expected": {
+        "folder": "done",
+        "history": "waiting",
+        "online": "done",
+        "check": "waiting"
+      },
+      "done_keys": [
+        "folder",
+        "online"
+      ]
+    },
+    {
+      "name": "unclear_remote_create",
+      "settled_effects": {},
+      "remote_effect_state": "unknown",
+      "expected": {
+        "folder": "waiting",
+        "history": "waiting",
+        "online": "waiting",
+        "check": "waiting"
+      },
+      "done_keys": []
+    },
+    {
+      "name": "failed_before_remote_effect",
+      "settled_effects": {
+        "source_preparation": true
+      },
+      "remote_effect_state": "failed_before_effect",
+      "expected": {
+        "folder": "done",
+        "history": "waiting",
+        "online": "failed",
+        "check": "waiting"
+      },
+      "done_keys": [
+        "folder"
+      ]
+    },
+    {
+      "name": "settings_and_publication_unsettled",
+      "settings_copy": true,
+      "settled_effects": {
+        "source_preparation": true,
+        "history_init": true,
+        "remote_repository_create": true
+      },
+      "remote_effect_state": "verified_created",
+      "expected": {
+        "folder": "done",
+        "history": "done",
+        "online": "done",
+        "settings": "waiting",
+        "check": "waiting"
+      },
+      "done_keys": [
+        "folder",
+        "history",
+        "online"
+      ]
+    },
+    {
+      "name": "accepted_complete_result",
+      "owner_done": true,
+      "settled_effects": {
+        "source_preparation": true,
+        "history_init": true,
+        "remote_repository_create": true,
+        "registry_publication": true
+      },
+      "remote_effect_state": "verified_created",
+      "expected": {
+        "folder": "done",
+        "history": "done",
+        "online": "done",
+        "check": "done"
+      },
+      "done_keys": [
+        "folder",
+        "history",
+        "online",
+        "check"
+      ]
+    },
+    {
+      "name": "accepted_resume_keeps_settled_blocks",
+      "resume": true,
+      "settled_effects": {
+        "source_preparation": true,
+        "remote_repository_create": true
+      },
+      "remote_effect_state": "verified_created",
+      "expected": {
+        "folder": "done",
+        "history": "waiting",
+        "online": "done",
+        "check": "waiting"
+      },
+      "done_keys": [
+        "folder",
+        "online"
+      ]
+    },
+    {
+      "name": "missing_transport_rows_still_uses_owner",
+      "empty_transport": true,
+      "settled_effects": {
+        "source_preparation": true,
+        "remote_repository_create": true
+      },
+      "remote_effect_state": "verified_created",
+      "expected": {
+        "folder": "done",
+        "history": "waiting",
+        "online": "done",
+        "check": "waiting"
+      },
+      "done_keys": [
+        "folder",
+        "online"
+      ]
+    },
+    {
+      "name": "mounted_source_missing_history_tool",
+      "project_mode": "existing_local",
+      "history_installed": false,
+      "settled_effects": {
+        "source_preparation": true,
+        "remote_repository_create": true
+      },
+      "remote_effect_state": "verified_created",
+      "expected": {
+        "device": "done",
+        "historyInstall": "waiting",
+        "online": "done",
+        "check": "waiting"
+      },
+      "done_keys": [
+        "device",
+        "online"
+      ]
+    }
   ]
 }
