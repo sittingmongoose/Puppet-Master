@@ -120,7 +120,8 @@
       method(S, v) { N(S).method = v; S.save(); O55.ui.refresh(); },
       device(S, v, el) {
         const [id, cfg] = v.split('|'), n = N(S), h = cfg ? S.env.here.sshConfigHosts.find((x) => S.env.devices.find((d) => d.id === id && d.address === x.host)) : null;
-        if (n.device !== id) { Object.assign(n, { trusted: false, installed: false, key: null, paired: false, viaPm: false, pairAsked: false, useSsh: false, pairing: null, code: '' }); }
+        /* another device ends what was started for the one before (its pairing request is cancelled with the owner) */
+        if (n.device !== id) { if (n.pairAsked && !n.paired) O55.nas.endPair(S, 'target_changed'); Object.assign(n, { trusted: false, installed: false, key: null, paired: false, viaPm: false, pairAsked: false, useSsh: false, pairing: null, pairFail: null }); delete n.code; }
         n.device = id; n.fromConfig = !!cfg; if (h) { n.user = h.user; n.key = h.key; }
         S.save(); O55.ui.refresh(); O55.ui.charm(el, dev(S).name, 'server');
       },
@@ -427,26 +428,62 @@
   const pmOf = (S) => { const d = dev(S); if (!d) return null; return S.env.pmServers.find((p) => p.device === d.id) || { id: 'pm:' + d.id, name: d.name, address: d.address, seed: d.hostKey, approver: '', code: '' }; };
   const pairKey = (S, part) => 'pmpair' + (part || '') + ':' + N(S).device + ':' + (N(S).pairTry || 0);
   const PAIR_MS = 600000;
-  function pairDone(S) {
+  /* One pairing request at a time, for one device and one try (SRV-004 §4.2, as on Connect: SCR-01). A result is adopted
+     only while that device and that try are still the ones on screen; choosing another device, Another device, Use SSH
+     instead or a new request ends it, and an answer that arrives afterwards changes nothing. Its code lives only in
+     this page's memory (SCR-02); a request from before a reload is gone, and Pair sends a new one. */
+  const livePairs = new Set(), pairCodes = new Map();
+  const tryId = (S) => N(S).device + ':' + (N(S).pairTry || 0) + ':' + (N(S).pairNonce || '');
+  const pairLive = (S) => livePairs.has(tryId(S));
+  const pairExpired = (S) => !!N(S).pairStart && Date.now() - N(S).pairStart > PAIR_MS;
+  function stillThis(S, at) { const n = N(S); return n.pairAsked && !n.paired && tryId(S) === at.id && n.purpose === at.purpose && pairLive(S) && !pairExpired(S); }
+  function endPair(S, reason) {
+    const n = N(S), p = pmOf(S);
+    ['', 'reach', 'code'].forEach((part) => { O55.owners.cancelOp(pairKey(S, part)); F.reset(S, pairKey(S, part)); });
+    if (n.pairAsked && !n.paired && p) O55.owners.dispatch('cmd.client.pair.cancel', { server: p.id, reason }, Object.assign(S.ctx(), { sourcePairConfirmed: true }));
+    livePairs.delete(tryId(S)); pairCodes.delete(tryId(S));
+    n.pairTry = (n.pairTry || 0) + 1; n.pairNonce = ''; n.pairFail = null; delete n.code;
+  }
+  function pairDone(S, at) {
+    if (!stillThis(S, at)) return;
     const n = N(S), d = dev(S), dd = md(S);
+    livePairs.delete(at.id); pairCodes.delete(at.id);
     n.paired = true; n.viaPm = true; n.installed = true;
     O55.draft.set(dd, { source_access_authorization_refs: Array.from(new Set(dd.source_access_authorization_refs.concat(['pairing:' + U.slug(d.name) + ':source-read']))).slice(0, 16),
       preflight_result_refs: Array.from(new Set(dd.preflight_result_refs.concat(['preflight:paired-source:' + U.slug(d.name)]))).slice(0, 32) });
-    S.save(); checkFolders(S);
+    S.save(); checkFolders(S); O55.ui.refresh();
   }
   /* read-only: can this computer see the folders it will be offered (the write test waits for Creating); idempotent,
      so a reopen resumes it */
   function checkFolders(S) { F.op(S, pairKey(S, 'perms'), 'cmd.project.source_location.test', [{ key: 'perms', ms: 700 }], { payload: { device: N(S).device, readOnly: true }, sound: FOUND_SOUND }); }
+  /* a fixture owner's terminal answer other than approval (Demo Studio's failures.pair_once, shared with Connect) */
+  const PM_FAIL_AT = { reach: ['unreachable', 'identity_mismatch', 'protocol_mismatch'], approve: ['denied', 'expired'], qr: ['denied', 'expired'] };
+  function pmFailOnce(S, phase) { const f = S.env.failures || {}, code = f.pair_once; if (!code || !(PM_FAIL_AT[phase] || []).includes(code)) return null; f.pair_once = null; return code; }
   function startPmPair(S) {
     const n = N(S), p = pmOf(S), m = n.pairing || 'approval', ctx = { sourcePairConfirmed: true };
-    if (!n.pairAsked || n.paired) return;
-    if (!n.pairStart || Date.now() - n.pairStart > PAIR_MS) { n.pairStart = Date.now(); S.save(); }
-    const payload = { server: p.id, method: m, scope: 'selected_source_read', purpose: n.purpose };
-    if (m === 'code') return F.op(S, pairKey(S, 'reach'), 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }], { payload, ctx });
-    const mid = m === 'qr' ? { key: 'qr', ms: 1900 } : { key: 'approve', ms: 2800 };
+    /* (a request that ended, refused or ran out stays ended until the person sends a new one) */
+    if (!n.pairAsked || n.paired || n.pairFail) return;
+    /* a request this page did not send (saved before a reload) is not resumed: a new one is sent */
+    if (!pairLive(S)) {
+      if (n.pairNonce) endPair(S, 'page_closed');
+      n.pairNonce = Math.random().toString(36).slice(2, 8); n.pairStart = Date.now(); n.pairFail = null; livePairs.add(tryId(S)); S.save();
+    }
+    if (pairExpired(S)) return;
+    const at = { id: tryId(S), purpose: n.purpose };
+    const payload = { server: p.id, method: m, scope: 'selected_source_read', purpose: n.purpose, pairing_run: 'pairingrun:' + at.id };
+    const onFail = (S2, st) => { if (stillThis(S, at)) { N(S).pairFail = st.code; S.save(); O55.ui.refresh(); } };
+    if (m === 'code') return F.op(S, pairKey(S, 'reach'), 'cmd.client.pair.start', [{ key: 'reach', ms: 700, fail: () => pmFailOnce(S, 'reach') }], { payload, ctx, sound: { fail: 'warn' }, onFail });
+    const mid = m === 'qr' ? { key: 'qr', ms: 1900, fail: () => pmFailOnce(S, 'qr') } : { key: 'approve', ms: 2800, fail: () => pmFailOnce(S, 'approve') };
     /* the approval on the other device (or the QR read) is a finding; trust done is the pairing's success */
-    F.op(S, pairKey(S), 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload, ctx, sound: { phase: { approve: 'found', qr: 'found' }, intensity: 0.8 }, onDone: () => pairDone(S) });
+    F.op(S, pairKey(S), 'cmd.client.pair.start', [{ key: 'reach', ms: 700, fail: () => pmFailOnce(S, 'reach') }, mid, { key: 'trust', ms: 800 }], { payload, ctx, sound: { phase: { approve: 'found', qr: 'found' }, intensity: 0.8 }, onDone: () => pairDone(S, at), onFail });
   }
+  const PM_FAIL_ACTIONS = {
+    unreachable: [{ label: 'connect.pair.fail.retry', do: 'newRequest' }, { label: 'nas.pmpair.useSsh', do: 'useSsh' }],
+    denied: [{ label: 'connect.pair.fail.askAgain', do: 'newRequest' }, { label: 'nas.pmpair.another', do: 'another' }],
+    expired: [{ label: 'connect.pair.fail.newRequest', do: 'newRequest' }],
+    identity_mismatch: [{ label: 'nas.pmpair.another', do: 'another' }],
+    protocol_mismatch: [{ label: 'connect.pair.fail.retry', do: 'newRequest' }, { label: 'nas.pmpair.useSsh', do: 'useSsh' }]
+  };
   def('nas-pmpair', {
     seed: (S) => seedNas(S, 'nas-pmpair'),
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
@@ -454,35 +491,44 @@
     eyebrow: () => T('nas.pmpair.eyebrow'),
     title: (S) => (N(S).paired ? T('nas.pmpair.doneTitle', { name: dname(S) }) : T('nas.pmpair.title', { name: dname(S) })),
     lead: (S) => T(N(S).paired ? 'nas.pmpair.doneLead' : N(S).pairAsked ? 'connect.pair.lead' : 'nas.pmpair.lead', { name: dname(S) }),
+    /* a code typed before a reload is not kept anywhere (SCR-02): older sessions saved it, so it goes */
+    enter(S) { delete N(S).code; S.save(); },
     body(S) {
       const n = N(S), p = pmOf(S), m = n.pairing || 'approval';
-      const labels = { reach: T('connect.pair.phases.reach', { name: p.name }), approve: T('connect.pair.phases.approve', { device: p.approver }), code: T('connect.pair.phases.code'), qr: T('connect.pair.phases.qr'), trust: T('nas.pmpair.trust'), perms: T('nas.install.phases.perms') };
+      const labels = { reach: T('connect.pair.phases.reach', { name: p.name }), approve: T('connect.pair.phases.approveAny', { name: p.name }), code: T('connect.pair.phases.code'), qr: T('connect.pair.phases.qr'), trust: T('nas.pmpair.trust'), perms: T('nas.install.phases.perms') };
       let out = C.identity(p.seed, words(p.seed), p.name + ' · ' + p.address);
       if (!n.pairAsked) {
         out += C.note(T('nas.pmpair.why', { name: p.name }), 'info', 'link');
         return out + C.group(T('connect.review.confirmTitle'), C.cards('pairing', [
-          { v: 'approval', glyph: 'phone', title: T('connect.review.approve.title'), sub: T('connect.review.approve.sub', { device: p.approver || '' }), tag: T('chrome.recommended') },
+          { v: 'approval', glyph: 'phone', title: T('connect.review.approve.title'), sub: T('connect.review.approve.subAny', { name: p.name }), tag: T('chrome.recommended') },
           { v: 'code', glyph: 'key', title: T('connect.review.code.title'), sub: T('connect.review.code.sub', { name: p.name }) },
           { v: 'qr', glyph: 'spark', title: T('connect.review.qr.title'), sub: T('connect.review.qr.sub') }
         ], m, { label: T('connect.review.confirmTitle') }));
       }
+      const fail = !n.paired && pairLive(S) ? n.pairFail || (pairExpired(S) ? 'expired' : null) : null;
       if (m === 'code' && !n.paired) {
         out += F.phases(S, pairKey(S, 'reach'), ['reach'], labels);
         const reached = (F.state(S, pairKey(S, 'reach')) || {}).state === 'done', cs = F.state(S, pairKey(S, 'code'));
-        if (reached) {
-          out += C.field({ bind: 'pmcode', label: T('connect.pair.codeLabel', { name: p.name }), value: n.code || '', placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: p.name }) : '', invalid: !!(cs && cs.state === 'failed') });
-          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(n.code), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
+        if (reached && !fail) {
+          const v = pairCodes.get(tryId(S)) || '';
+          out += C.field({ bind: 'pmcode', label: T('connect.pair.codeLabel', { name: p.name }), value: v, placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: p.name }) : '', invalid: !!(cs && cs.state === 'failed') });
+          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
         }
-        if (cs) out += F.phases(S, pairKey(S, 'code'), ['code', 'trust'], labels);
+        if (cs && !fail) out += F.phases(S, pairKey(S, 'code'), ['code', 'trust'], labels);
       } else if (!n.paired) {
         out += F.phases(S, pairKey(S), ['reach', m === 'qr' ? 'qr' : 'approve', 'trust'], labels);
         const st = F.state(S, pairKey(S));
-        const waiting = st && st.state === 'running' && (st.phases || []).some((ph) => (ph.key === 'approve' || ph.key === 'qr') && ph.status === 'active');
+        const waiting = !fail && st && st.state === 'running' && (st.phases || []).some((ph) => (ph.key === 'approve' || ph.key === 'qr') && ph.status === 'active');
         if (waiting && m === 'approval') {
           const c = F.countdown((n.pairStart || Date.now()) + PAIR_MS);
           out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: c.m, s: c.s }))}</p><div class="o55-sublinks" data-key="resend">${C.link(T('connect.pair.resend'), 'resend')}</div>`;
         }
         if (waiting && m === 'qr') out += `<div class="o55-viewfinder" data-key="vf" aria-label="${U.esc(T('connect.pair.qrAim', { name: p.name }))}"><span class="o55-vf-line"></span><span class="o55-vf-text">${U.esc(T('connect.pair.qrAim', { name: p.name }))}</span></div>`;
+      }
+      if (fail) {
+        const acts = PM_FAIL_ACTIONS[fail] || PM_FAIL_ACTIONS.unreachable;
+        out += `<div class="o55-banner o55-banner-warn" data-key="pairfail-${U.esc(fail)}">${C.small('lock', 18)}<span>${U.esc(T('connect.pair.fail.' + fail, { name: p.name }))}</span></div>`
+          + `<div class="o55-inline" data-key="pairfail-acts">${acts.map((a, i) => O55.ui.btn({ label: T(a.label), do: a.do, cls: 'o55-small', tip: false }, i ? 'o55-ghost' : 'o55-secondary')).join('')}</div>`;
       }
       if (n.paired) {
         out += F.phases(S, pairKey(S, 'perms'), ['perms'], labels);
@@ -492,37 +538,37 @@
     },
     mounted(S) {
       const n = N(S);
-      if (n.pairAsked && !n.paired) { startPmPair(S); if ((n.pairing || 'approval') === 'approval') F.ticker(S, 'nas-pmpair', 1000, () => N(S).paired); }
+      if (n.pairAsked && !n.paired) { startPmPair(S); F.ticker(S, 'nas-pmpair', 1000, () => N(S).paired); }
       if (n.paired) checkFolders(S);
     },
     foot(S) {
       const n = N(S);
       if (!n.pairAsked) return { secondary: [{ label: T('nas.pmpair.useSsh'), do: 'useSsh' }], primary: { label: T('nas.pmpair.pair'), do: 'pair' } };
-      if (!n.paired) return { secondary: [{ label: T('nas.pmpair.another'), do: 'another' }], primary: { label: T('chrome.continue'), do: 'next', disabled: true, reason: T('connect.pair.phases.approve', { device: (pmOf(S) || {}).approver || '' }) } };
+      if (!n.paired) return { secondary: [{ label: T('nas.pmpair.another'), do: 'another' }], primary: { label: T('chrome.continue'), do: 'next', disabled: true, reason: n.pairFail || pairExpired(S) ? T('connect.pair.fail.reason') : T('connect.pair.phases.approveAny', { name: (pmOf(S) || {}).name || '' }) } };
       const ps = F.state(S, pairKey(S, 'perms'));
       return { primary: { label: T('chrome.continue'), do: 'next', disabled: !(ps && ps.state === 'done'), reason: T('chrome.working') } };
     },
     do: {
       pairing(S, v) { if (N(S).pairAsked) return; N(S).pairing = v; S.save(); O55.ui.refresh(); },
-      pair(S) { const n = N(S); n.pairAsked = true; n.useSsh = false; n.pairStart = Date.now(); S.save(); O55.ui.refresh(); O55.sound.play('tap'); startPmPair(S); if ((n.pairing || 'approval') === 'approval') F.ticker(S, 'nas-pmpair', 1000, () => N(S).paired); },
-      resend(S) { N(S).pairStart = Date.now(); S.save(); O55.ui.refresh(); U.announce(T('connect.pair.phases.approve', { device: (pmOf(S) || {}).approver || '' }), S.root.querySelector('.o55-win')); },
+      pair(S) { const n = N(S); n.pairAsked = true; n.useSsh = false; S.save(); O55.ui.refresh(); O55.sound.play('tap'); startPmPair(S); F.ticker(S, 'nas-pmpair', 1000, () => N(S).paired); },
+      /* a new request, never the old one's timer reset: the old try ends and its answers no longer count (SCR-15) */
+      resend(S) { endPair(S, 'resend'); S.save(); startPmPair(S); O55.ui.refresh(); U.announce(T('connect.pair.phases.approveAny', { name: (pmOf(S) || {}).name || '' }), S.root.querySelector('.o55-win')); },
+      newRequest(S) { endPair(S, 'retry'); S.save(); startPmPair(S); O55.ui.refresh(); O55.sound.play('tap'); },
       checkCode(S) {
-        const n = N(S), p = pmOf(S), ok = String(n.code || '').replace(/[\s-]/g, '').toUpperCase() === String(p.code || '').replace(/-/g, '');
+        const n = N(S), p = pmOf(S), at = { id: tryId(S), purpose: n.purpose };
+        if (!stillThis(S, at)) return O55.ui.refresh();
+        const ok = String(pairCodes.get(at.id) || '').replace(/[\s-]/g, '').toUpperCase() === String(p.code || '').replace(/-/g, '');
         F.reset(S, pairKey(S, 'code'));
         F.op(S, pairKey(S, 'code'), 'cmd.client.pair.start', [{ key: 'code', ms: 500, fail: () => (ok ? null : 'code_mismatch') }, { key: 'trust', ms: 800 }],
-          { payload: { server: p.id, method: 'code', scope: 'selected_source_read' }, ctx: { sourcePairConfirmed: true }, sound: { fail: 'warn', intensity: 0.8 }, onDone: () => pairDone(S) });
+          { payload: { server: p.id, method: 'code', scope: 'selected_source_read', pairing_run: 'pairingrun:' + at.id }, ctx: { sourcePairConfirmed: true }, sound: { fail: 'warn', intensity: 0.8 }, onDone: () => pairDone(S, at) });
       },
       /* turning away cancels the owner's pairing run and records nothing */
-      another(S) {
-        const n = N(S), p = pmOf(S);
-        ['', 'reach', 'code'].forEach((part) => { O55.owners.cancelOp(pairKey(S, part)); F.reset(S, pairKey(S, part)); });
-        O55.owners.dispatch('cmd.client.pair.cancel', { server: p.id }, Object.assign(S.ctx(), { sourcePairConfirmed: true }));
-        n.pairAsked = false; n.pairTry = (n.pairTry || 0) + 1; n.code = ''; S.save(); O55.ui.refresh();
-      },
-      useSsh(S) { const n = N(S); n.useSsh = true; n.viaPm = false; S.save(); O55.ui.go('nas-identity'); },
+      another(S) { const n = N(S); endPair(S, 'cancelled'); n.pairAsked = false; S.save(); O55.ui.refresh(); },
+      useSsh(S) { const n = N(S); if (n.pairAsked && !n.paired) endPair(S, 'cancelled'); n.pairAsked = false; n.useSsh = true; n.viaPm = false; S.save(); O55.ui.go('nas-identity'); },
       next(S) { connected(S); }
     },
-    bind: { pmcode(S, v) { N(S).code = v; S.save(); O55.ui.refresh(); } },
+    /* the code stays in this page's memory beside its try: never in the session, never saved */
+    bind: { pmcode(S, v) { const id = tryId(S), had = F.nonEmpty(pairCodes.get(id)); pairCodes.set(id, String(v || '')); if (had !== F.nonEmpty(v)) O55.ui.refresh(); } },
     skipOnBack: (S) => !!N(S).paired
   });
 
@@ -622,5 +668,5 @@
     if (n.key === 'k-pm' && !keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
     if (S.sess.ops && S.sess.ops['sshcheck:' + d.id] && S.sess.ops['sshcheck:' + d.id].state === 'done') d.ssh = true;
   }]);
-  O55.nas = { dev, N, pubLine, entry, transport };
+  O55.nas = { dev, N, pubLine, entry, transport, endPair };
 })();

@@ -89,7 +89,10 @@
     O55.shell.commitLook(S, { defer: true });
     const cm = S.sess.commit || {}, d = md(S);
     const projectId = o.project || cm.projectId, name = o.projectName || (cm.projectId === projectId ? d.project_name : null) || projectId;
-    if (projectId) O55.shell.selectProject(projectId, name);
+    /* what was set up goes to the app first (Server, route, this device, the Project: O55.handoff), so the Settings
+       reload that selecting the Project starts already finds it (SCR-03) */
+    if (O55.handoff) O55.handoff.publish(S, { project: projectId || null, projectName: name || null });
+    if (projectId) O55.shell.selectProject(projectId, name, o.projectInfo);
     S.sess.finished = { at: new Date().toISOString(), tour: !!o.tour, project: projectId || null };
     const tour = !!(o.tour && O55.tour && O55.tour.start);
     /* the tour path: the window becomes the tour's first callout (a morph from its rectangle; under NieR Mode one ink

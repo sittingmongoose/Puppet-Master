@@ -223,9 +223,9 @@ def('c1', 'fresh', 'Connect this device, then Create a new Project on it', async
 def('c2', 'fresh', 'Connect by code, with a wrong code first', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:home\"]')", 'found', 6000); await d.act('pickServer', 'pm:home'); await d.primary();
-  await d.act('pairing', 'code'); await d.primary(); await until(d, "(window.O55.S.sess.ops['pairreach:pm:home']||{}).state === 'done'", 'reached', 5000);
+  await d.act('pairing', 'code'); await d.primary(); await until(d, "Object.keys(window.O55.S.sess.ops).some((k) => /^pairreach:pm:home:/.test(k) && window.O55.S.sess.ops[k].state === 'done')", 'reached', 5000);
   await d.type('code', 'AAAA-BBBB'); await d.act('checkCode', null);
-  await until(d, "(window.O55.S.sess.ops['paircode:pm:home']||{}).state === 'failed'", 'wrong pairing code rejected', 8000);
+  await until(d, "Object.keys(window.O55.S.sess.ops).some((k) => /^paircode:pm:home:/.test(k) && window.O55.S.sess.ops[k].state === 'failed')", 'wrong pairing code rejected', 8000);
   A.ok(await d.state(() => /doesn't match/.test(document.body.textContent)), 'wrong code explained');
   await d.type('code', 'A7K9-M2Q4'); await d.act('checkCode', null);
   await until(d, 'window.O55.S.sess.connect.paired', 'paired by code', 8000); A.ok(await d.state(() => window.O55.S.sess.connect.paired), 'paired by code');

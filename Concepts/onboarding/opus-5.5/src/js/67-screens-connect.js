@@ -54,12 +54,99 @@
     if (kind === 'link') return /^[a-z][a-z0-9._:/#-]*$/.test(v) && v.length > 8 ? S.env.pmServers[0] : null;
     return null;
   }
+  /* A different Server ends what was started for the one before: its pairing request (cancelled with the owner), the
+     review's confirmation and this device's trust in the draft. A trust record already issued by a Server stays with
+     that Server (picking it again finds it), but it never carries over to another one (SCR-01). */
   function choose(S, srv, patch) {
-    const d = cd(S), c = S.sess.connect;
-    if (c.paired && c.server !== (srv && srv.id)) { c.paired = false; c.confirmed = false; F.reset(S, 'pair:' + c.server); F.reset(S, 'paircode:' + c.server); }
-    c.server = srv ? srv.id : null;
-    O55.draft.set(d, Object.assign({ server_ref: srv ? srv.id : '' }, patch || {}));
+    const d = cd(S), c = S.sess.connect, id = srv ? srv.id : null;
+    if (id !== (d.server_ref || null)) { endRun(S, 'target_changed'); unconfirm(S); }
+    c.server = id;
+    O55.draft.set(d, Object.assign({ server_ref: id || '' }, patch || {}));
+    syncTrust(S);
     S.save();
+  }
+  /* the review is confirmed for one Server, one route and one way of confirming: changing any of them asks again */
+  function unconfirm(S) { const c = S.sess.connect; c.confirmed = false; O55.draft.set(cd(S), { review_confirmed: false }); }
+
+  /* ------------------------------------------------------------------ the pairing run (SRV-004, §4.2)
+     One request at a time, bound to the Server, the way of confirming and a generation, with its own id. Going back to
+     the review or the route, choosing another Server, route or way, its ten minutes running out, or the page closing
+     ends it: the owner is told (cmd.client.pair.cancel) and nothing reported for it afterwards counts. Only a result for
+     the current run of the Server on screen is adopted, as a trust record for that Server, never as a shared yes/no that
+     a later choice inherits (SCR-01). A code typed for it lives in memory beside the run and is never saved; after a
+     reload the old request is gone and a new one is sent, with an empty code field (SCR-02). */
+  const RUN_MS = 600000;
+  const live = new Set(); /* runs started in this page */
+  const typed = new Map(); /* run id -> the code typed for it, memory only */
+  const runKey = (r, part) => 'pair' + (part || '') + ':' + r.server + ':' + r.gen + ':' + r.nonce;
+  const PARTS = ['', 'reach', 'code'];
+  function runOf(S) {
+    const r = S.sess.connect.run, d = cd(S);
+    return r && live.has(r.id) && r.server === d.server_ref && r.method === d.connection_pairing && r.route === d.remote_mode ? r : null;
+  }
+  const expired = (r) => !!r && Date.now() > r.until;
+  const trustOf = (S, id) => ((S.sess.connect.trusts || {})[id || cd(S).server_ref]) || null;
+  /* the draft and the old flag (read by the scenario tools) follow the trust record of the Server chosen now */
+  function syncTrust(S) {
+    const c = S.sess.connect, d = cd(S), t = d.server_ref ? trustOf(S, d.server_ref) : null;
+    c.paired = !!t;
+    if (d.server_trust_confirmed !== !!t) O55.draft.set(d, { server_trust_confirmed: !!t });
+  }
+  const paired = (S) => !!trustOf(S) && cd(S).server_trust_confirmed;
+  function startRun(S) {
+    const c = S.sess.connect, d = cd(S), s = server(S);
+    if (!s || paired(S)) return null;
+    c.pairGen = (c.pairGen || 0) + 1;
+    const r = { id: 'pairingrun:' + s.id + ':' + c.pairGen + ':' + Math.random().toString(36).slice(2, 8), server: s.id, method: d.connection_pairing, route: d.remote_mode, gen: c.pairGen, started: Date.now(), until: Date.now() + RUN_MS };
+    r.nonce = r.id.split(':').pop();
+    c.run = r; c.fail = null; live.add(r.id); S.save();
+    kick(S, r);
+    return r;
+  }
+  function endRun(S, reason) {
+    const c = S.sess.connect, r = c.run; if (!r) return;
+    PARTS.forEach((part) => { O55.owners.cancelOp(runKey(r, part)); F.reset(S, runKey(r, part)); });
+    /* the requesting device's own abort before trust is issued (never a rejection, which is the approver's) */
+    if (live.has(r.id) && !trustOf(S, r.server)) O55.owners.dispatch('cmd.client.pair.cancel', { server: r.server, pairing_run: r.id, generation: r.gen, reason }, S.ctx());
+    live.delete(r.id); typed.delete(r.id); c.run = null; c.fail = null; S.save();
+  }
+  /* the fence every completion passes: the run is still the current one, for the Server, route and way on screen */
+  function current(S, r) { const now = runOf(S); return !!now && now.id === r.id && now.gen === r.gen && !expired(r) && S.sess.active === 'connect'; }
+  function adopt(S, r) {
+    if (!current(S, r)) return false;
+    const c = S.sess.connect;
+    c.trusts = Object.assign({}, c.trusts, { [r.server]: { id: 'clienttrust:' + S.env.client.id + ':' + r.server + ':' + r.gen, server: r.server, client: S.env.client.id, run: r.id, gen: r.gen, method: r.method, at: Date.now() } });
+    live.delete(r.id); typed.delete(r.id); c.run = null; c.fail = null;
+    syncTrust(S); S.save(); O55.ui.refresh();
+    return true;
+  }
+  /* A fixture owner's terminal answer that is not approval (Demo Studio sets one with failures.pair_once; the published
+     page has no owner host). Each keeps the run's identity, so a later answer cannot touch a new request. */
+  const FAIL_AT = { reach: ['unreachable', 'identity_mismatch', 'protocol_mismatch'], approve: ['denied', 'expired'], qr: ['denied', 'expired'] };
+  function failOnce(S, phase) {
+    const f = S.env.failures || {}, code = f.pair_once;
+    if (!code || !(FAIL_AT[phase] || []).includes(code)) return null;
+    f.pair_once = null; return code;
+  }
+  function failed(S, r, code) { if (!current(S, r)) return; S.sess.connect.fail = { run: r.id, code }; S.save(); O55.ui.refresh(); }
+  function kick(S, r) {
+    const s = server(S); if (!s) return;
+    const payload = { server: r.server, method: r.method, pairing_run: r.id, generation: r.gen, route: r.route };
+    if (r.method === 'code') {
+      F.op(S, runKey(r, 'reach'), 'cmd.client.pair.start', [{ key: 'reach', ms: 700, fail: () => failOnce(S, 'reach') }], { payload, sound: CODE_SOUND, onFail: (S2, st) => failed(S, r, st.code) });
+      return;
+    }
+    const mid = r.method === 'qr' ? { key: 'qr', ms: 1900, fail: () => failOnce(S, 'qr') } : { key: 'approve', ms: 2800, fail: () => failOnce(S, 'approve') };
+    F.op(S, runKey(r), 'cmd.client.pair.start', [{ key: 'reach', ms: 700, fail: () => failOnce(S, 'reach') }, mid, { key: 'trust', ms: 800 }],
+      { payload, sound: PAIR_SOUND, onDone: () => adopt(S, r), onFail: (S2, st) => failed(S, r, st.code) });
+  }
+  /* c-pair on arrival: the current run, or a new one when there is none (first arrival, after a reload, after Back) */
+  function ensureRun(S) {
+    if (paired(S)) return null;
+    const r = runOf(S);
+    if (r) return r;
+    if (S.sess.connect.run) endRun(S, 'page_closed');
+    return startRun(S);
   }
 
   /* Opened straight at a later connect screen (Demo Studio's Open at one screen): what the earlier screens would have
@@ -71,7 +158,8 @@
     if (!server(S) && S.env.pmServers[0]) choose(S, S.env.pmServers[0], { remote_mode: d.remote_mode || 'local_or_vpn', server_connection_mode: 'discover' });
     if (!d.connection_pairing) O55.draft.set(d, { connection_pairing: 'approval' });
     if (step >= 1 && !c.confirmed) { c.confirmed = true; O55.draft.set(d, { review_confirmed: true }); }
-    if (step >= 2 && !c.paired) { c.paired = true; O55.draft.set(d, { server_trust_confirmed: true }); }
+    /* (a seeded trust record, as the pairing screen would have left it: Demo Studio's Open at one screen) */
+    if (step >= 2 && !paired(S)) { const id = d.server_ref; c.trusts = Object.assign({}, c.trusts, { [id]: { id: 'clienttrust:' + S.env.client.id + ':' + id + ':seed', server: id, client: S.env.client.id, run: null, gen: 0, method: d.connection_pairing, at: Date.now(), seeded: true } }); syncTrust(S); }
     S.save();
   }
 
@@ -79,7 +167,8 @@
   def('c-route', {
     chapter: 'computer', stage: 'remote_access_setup', charmSlot: 'server',
     scene: (S) => ({ id: 'where', beat: 'connect' }),
-    enter(S) { S.sess.active = 'connect'; },
+    /* (back here from the pairing, by Back or the rail: the request it left waiting ends) */
+    enter(S) { S.sess.active = 'connect'; if (S.sess.connect.run && !paired(S)) endRun(S, 'back'); },
     eyebrow: () => T('connect.route.eyebrow'),
     title: () => T('connect.route.title'),
     lead: () => T('connect.route.lead'),
@@ -94,7 +183,9 @@
         } else {
           const list = found(S), st = F.state(S, scanKey(S));
           if (!list.length) out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('connect.route.looking'))}</span></span></div>`;
-          else out += C.cards('pickServer', list.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: s.address + ' · ' + nProjects(s.projects.length), tag: s.via === 'vpn' ? 'VPN' : '' })), d.server_ref, { label: T('connect.route.found') });
+          /* only what discovery may say (SRV-003): a name and an address; how many Projects a Server has is shown once
+             this device is paired with it (SCR-16) */
+          else out += C.cards('pickServer', list.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: s.address, tag: s.via === 'vpn' ? 'VPN' : '' })), d.server_ref, { label: T('connect.route.found') });
           if (st && st.state === 'done' && !list.length) out += C.note(T('connect.route.none'), 'warn');
           out += C.note(T('connect.route.vpnLine'), 'info', 'link');
           out += `<div class="o55-sublinks" data-key="l-addr">${C.link(T('connect.route.address'), 'manualOn')}</div>`;
@@ -106,7 +197,7 @@
       if (mode === 'tailscale') {
         under += C.segmented({ do: 'tsControl', value: d.tailscale_control || 'hosted', label: T('connect.route.tailscale.title'), options: [{ v: 'hosted', label: T('connect.route.tailscale.hosted') }, { v: 'headscale', label: T('connect.route.tailscale.headscale') }] });
         if (d.tailscale_control === 'headscale') under += C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: F.isHttps(d.headscale_url) ? '' : 'https://…', valid: F.isHttps(d.headscale_url) });
-        under += C.cards('pickServer', S.env.pmServers.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: 'Tailscale · ' + nProjects(s.projects.length), quiet: true })), d.server_ref, { cls: 'o55-choices-quiet', label: T('connect.route.found') });
+        under += C.cards('pickServer', S.env.pmServers.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: 'Tailscale', quiet: true })), d.server_ref, { cls: 'o55-choices-quiet', label: T('connect.route.found') });
       } else if (mode === 'reverse_proxy') {
         const hit = resolveAddress(S, d.proxy_hostname, 'proxy');
         under += C.field({ bind: 'proxy', label: T('connect.route.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: hit ? hit.name : 'https://…', valid: !!hit });
@@ -147,7 +238,8 @@
         choose(S, null, patch);
         O55.ui.refresh();
       },
-      tsControl(S, v) { O55.draft.set(cd(S), { tailscale_control: v }); S.save(); O55.ui.refresh(); },
+      /* another control server is another way in: a request sent the other way ends and the review asks again */
+      tsControl(S, v) { if (cd(S).tailscale_control !== v) { endRun(S, 'route_changed'); unconfirm(S); } O55.draft.set(cd(S), { tailscale_control: v }); S.save(); O55.ui.refresh(); },
       next(S) { O55.ui.go('c-review'); }
     },
     bind: {
@@ -164,29 +256,32 @@
     seed: (S) => seedConnect(S, 0),
     chapter: 'computer', stage: 'review_setup_plan',
     scene: () => ({ id: 'where', beat: 'connect' }),
+    /* back from the pairing: the request it left waiting ends, and Connect sends a new one (SCR-01) */
+    enter(S) { if (S.sess.connect.run && !paired(S)) endRun(S, 'back'); },
     eyebrow: () => T('connect.review.eyebrow'),
     title: (S) => T('connect.review.title', { name: (server(S) || {}).name || '' }),
     lead: (S) => T('connect.review.lead', { name: (server(S) || {}).name || '' }),
     body(S) {
-      const d = cd(S), s = server(S) || {}, c = S.sess.connect;
+      const d = cd(S), s = server(S) || {};
       let out = '';
-      if (c.paired) out += `<div class="o55-banner" data-key="done">${C.done(18)}<span>${U.esc(T('chrome.alreadyDone') + ' — ' + T('connect.pair.done', { name: s.name }))}</span></div>`;
+      if (paired(S)) out += `<div class="o55-banner" data-key="done">${C.done(18)}<span>${U.esc(T('chrome.alreadyDone') + ' — ' + T('connect.pair.done', { name: s.name }))}</span></div>`;
       out += `<div class="o55-routeline" data-key="routeline" aria-label="${U.esc(T('connect.review.route'))}">`
         + `<span class="o55-routenode">${C.small('computer', 18)}<span>${U.esc(S.env.client.name)}</span></span>`
         + `<span class="o55-routelink"><span>${U.esc(routeLabel(d))}</span></span>`
         + `<span class="o55-routenode">${C.small('server', 18)}<span>${U.esc(s.name || '')}</span></span></div>`;
       out += C.group(T('connect.review.confirmTitle'), C.cards('pairing', [
-        { v: 'approval', glyph: 'phone', title: T('connect.review.approve.title'), sub: T('connect.review.approve.sub', { device: s.approver || '' }), tag: T('chrome.recommended') },
+        /* (which device approves is the Server's to say, once it knows this one: before pairing nothing names it, SCR-16) */
+        { v: 'approval', glyph: 'phone', title: T('connect.review.approve.title'), sub: T('connect.review.approve.subAny', { name: s.name || '' }), tag: T('chrome.recommended') },
         { v: 'code', glyph: 'key', title: T('connect.review.code.title'), sub: T('connect.review.code.sub', { name: s.name || '' }) },
         { v: 'qr', glyph: 'spark', title: T('connect.review.qr.title'), sub: T('connect.review.qr.sub') }
       ], d.connection_pairing, { label: T('connect.review.confirmTitle') }));
       return out;
     },
-    foot: (S) => ({ primary: { label: S.sess.connect.paired ? T('chrome.continue') : T('connect.review.button'), do: 'connect' } }),
+    foot: (S) => ({ primary: { label: paired(S) ? T('chrome.continue') : T('connect.review.button'), do: 'connect' } }),
     do: {
-      pairing(S, v) { if (S.sess.connect.paired) return; O55.draft.set(cd(S), { connection_pairing: v }); S.save(); O55.ui.refresh(); },
+      pairing(S, v) { if (paired(S)) return; if (cd(S).connection_pairing !== v) { endRun(S, 'method_changed'); unconfirm(S); } O55.draft.set(cd(S), { connection_pairing: v }); S.save(); O55.ui.refresh(); },
       connect(S) {
-        if (S.sess.connect.paired) return O55.ui.go('c-ready');
+        if (paired(S)) return O55.ui.go('c-ready');
         S.sess.connect.confirmed = true; O55.draft.set(cd(S), { review_confirmed: true }); S.save();
         /* the connect journey's one confirmation: its own sound carries the screen change (one moment, not two) */
         O55.sound.play('commit', SND.connect);
@@ -196,16 +291,19 @@
   });
 
   /* ------------------------------------------------------------------ C3: pairing (owner work after confirmation) */
-  function startPair(S) {
-    const s = server(S), d = cd(S), c = S.sess.connect; if (!s || c.paired) return;
-    if (!c.pairStart || Date.now() - c.pairStart > 600000) { c.pairStart = Date.now(); S.save(); }
-    const done = () => { c.paired = true; O55.draft.set(d, { server_trust_confirmed: true }); S.save(); O55.ui.refresh(); };
-    if (d.connection_pairing === 'code') {
-      F.op(S, 'pairreach:' + s.id, 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }], { payload: { server: s.id, method: 'code' } });
-      return;
-    }
-    const mid = d.connection_pairing === 'qr' ? { key: 'qr', ms: 1900 } : { key: 'approve', ms: 2800 };
-    F.op(S, 'pair:' + s.id, 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload: { server: s.id, method: d.connection_pairing }, sound: PAIR_SOUND, onDone: done });
+  /* What a request that did not end in approval leaves: what happened in plain words, and what to do next. Each answer
+     has its own way on (SRV-004/007: rejected, cancelled, expired, unreachable, identity and version are distinct). */
+  const FAIL_ACTIONS = {
+    unreachable: [{ label: 'connect.pair.fail.retry', do: 'newRequest' }, { label: 'connect.pair.fail.otherWay', do: 'toRoute' }],
+    denied: [{ label: 'connect.pair.fail.askAgain', do: 'newRequest' }, { label: 'connect.pair.fail.useCode', do: 'useCode' }],
+    expired: [{ label: 'connect.pair.fail.newRequest', do: 'newRequest' }],
+    identity_mismatch: [{ label: 'connect.pair.fail.toList', do: 'toRoute' }],
+    protocol_mismatch: [{ label: 'connect.pair.fail.retry', do: 'newRequest' }, { label: 'connect.pair.fail.toList', do: 'toRoute' }]
+  };
+  function failPane(S, s, code) {
+    const acts = FAIL_ACTIONS[code] || FAIL_ACTIONS.unreachable;
+    return `<div class="o55-banner o55-banner-warn" data-key="pairfail-${U.esc(code)}">${C.small('lock', 18)}<span>${U.esc(T('connect.pair.fail.' + code, { name: s.name || '' }))}</span></div>`
+      + `<div class="o55-inline" data-key="pairfail-acts">${acts.map((a, i) => O55.ui.btn({ label: T(a.label), do: a.do, cls: 'o55-small', tip: false }, i ? 'o55-ghost' : 'o55-secondary')).join('')}</div>`;
   }
   def('c-pair', {
     seed: (S) => seedConnect(S, 1),
@@ -214,49 +312,71 @@
     eyebrow: () => T('connect.pair.eyebrow'),
     title: () => T('connect.pair.title'),
     lead: (S) => T('connect.pair.lead', { name: (server(S) || {}).name || '' }),
+    /* a code typed before a reload is not kept anywhere (SCR-02): older sessions saved it, so it goes */
+    enter(S) { delete S.sess.connect.code; S.save(); },
     body(S) {
-      const s = server(S) || {}, d = cd(S), c = S.sess.connect, m = d.connection_pairing;
-      const labels = { reach: T('connect.pair.phases.reach', { name: s.name }), approve: T('connect.pair.phases.approve', { device: s.approver }), code: T('connect.pair.phases.code'), qr: T('connect.pair.phases.qr'), trust: T('connect.pair.phases.trust') };
+      const s = server(S) || {}, d = cd(S), c = S.sess.connect, m = d.connection_pairing, r = runOf(S);
+      const labels = { reach: T('connect.pair.phases.reach', { name: s.name }), approve: T('connect.pair.phases.approveAny', { name: s.name }), code: T('connect.pair.phases.code'), qr: T('connect.pair.phases.qr'), trust: T('connect.pair.phases.trust') };
       let out = C.identity(s.seed || s.id, words(s.seed || s.id), s.name + ' · ' + s.address);
+      if (paired(S)) return out + C.note(T('connect.pair.done', { name: s.name }), 'ok', 'check');
+      if (!r) return out;
+      const fail = c.fail && c.fail.run === r.id ? c.fail.code : expired(r) ? 'expired' : null;
       if (m === 'code') {
-        out += F.phases(S, 'pairreach:' + s.id, ['reach'], labels);
-        const reached = (F.state(S, 'pairreach:' + s.id) || {}).state === 'done';
-        const cs = F.state(S, 'paircode:' + s.id);
-        if (reached && !c.paired) {
-          out += C.field({ bind: 'code', label: T('connect.pair.codeLabel', { name: s.name }), value: c.code || '', placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: s.name }) : '', invalid: cs && cs.state === 'failed' });
-          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(c.code), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
+        out += F.phases(S, runKey(r, 'reach'), ['reach'], labels);
+        const reached = (F.state(S, runKey(r, 'reach')) || {}).state === 'done';
+        const cs = F.state(S, runKey(r, 'code'));
+        if (reached && !fail) {
+          const v = typed.get(r.id) || '';
+          out += C.field({ bind: 'code', label: T('connect.pair.codeLabel', { name: s.name }), value: v, placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: s.name }) : '', invalid: cs && cs.state === 'failed' });
+          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
+          const t = F.countdown(r.until);
+          out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: t.m, s: t.s }))}</p>`;
         }
-        if (cs) out += F.phases(S, 'paircode:' + s.id, ['code', 'trust'], labels);
+        if (cs && !fail) out += F.phases(S, runKey(r, 'code'), ['code', 'trust'], labels);
       } else {
-        out += F.phases(S, 'pair:' + s.id, ['reach', m === 'qr' ? 'qr' : 'approve', 'trust'], labels);
-        const st = F.state(S, 'pair:' + s.id);
-        const waiting = st && st.state === 'running' && (st.phases || []).some((p) => (p.key === 'approve' || p.key === 'qr') && p.status === 'active');
+        out += F.phases(S, runKey(r), ['reach', m === 'qr' ? 'qr' : 'approve', 'trust'], labels);
+        const st = F.state(S, runKey(r));
+        const waiting = !fail && st && st.state === 'running' && (st.phases || []).some((p) => (p.key === 'approve' || p.key === 'qr') && p.status === 'active');
         if (waiting && m === 'approval') {
-          const t = F.countdown((c.pairStart || Date.now()) + 600000);
+          const t = F.countdown(r.until);
           out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: t.m, s: t.s }))}</p><div class="o55-sublinks" data-key="resend">${C.link(T('connect.pair.resend'), 'resend')}</div>`;
         }
         if (waiting && m === 'qr') out += `<div class="o55-viewfinder" data-key="vf" aria-label="${U.esc(T('connect.pair.qrAim', { name: s.name }))}"><span class="o55-vf-line"></span><span class="o55-vf-text">${U.esc(T('connect.pair.qrAim', { name: s.name }))}</span></div>`;
       }
-      if (c.paired) out += C.note(T('connect.pair.done', { name: s.name }), 'ok', 'check');
+      if (fail) out += failPane(S, s, fail);
       return out;
     },
-    mounted(S) { startPair(S); if (!S.sess.connect.paired && cd(S).connection_pairing === 'approval') F.ticker(S, 'c-pair', 1000, () => S.sess.connect.paired); },
-    foot: (S) => ({ primary: { label: T('chrome.continue'), do: 'next', disabled: !S.sess.connect.paired, reason: T('connect.pair.phases.approve', { device: (server(S) || {}).approver || '' }) } }),
-    do: {
-      resend(S) { const s = server(S); S.sess.connect.pairStart = Date.now(); S.save(); O55.ui.refresh(); U.announce(T('connect.pair.phases.approve', { device: s.approver }), S.root.querySelector('.o55-win')); },
-      checkCode(S) {
-        const s = server(S), c = S.sess.connect;
-        const ok = String(c.code || '').replace(/[\s-]/g, '').toUpperCase() === String(s.code).replace(/-/g, '');
-        F.reset(S, 'paircode:' + s.id);
-        F.op(S, 'paircode:' + s.id, 'cmd.client.pair.start', [{ key: 'code', ms: 500, fail: () => (ok ? null : 'code_mismatch') }, { key: 'trust', ms: 800 }],
-          { payload: { server: s.id, method: 'code' }, sound: CODE_SOUND, onDone: () => { c.paired = true; O55.draft.set(cd(S), { server_trust_confirmed: true }); S.save(); O55.ui.refresh(); } });
-      },
-      next(S) { O55.ui.go('c-ready'); }
+    mounted(S) { ensureRun(S); if (!paired(S)) F.ticker(S, 'c-pair', 1000, () => paired(S)); },
+    foot: (S) => {
+      const r = runOf(S), c = S.sess.connect, fail = r && ((c.fail && c.fail.run === r.id) || expired(r));
+      return { primary: { label: T('chrome.continue'), do: 'next', disabled: !paired(S), reason: fail ? T('connect.pair.fail.reason') : T('connect.pair.phases.approveAny', { name: (server(S) || {}).name || '' }) } };
     },
-    bind: { code(S, v) { S.sess.connect.code = v; S.save(); O55.ui.refresh(); } }
+    do: {
+      /* a new request, not the old one shown again: the old run ends and its answers no longer count (SCR-15) */
+      resend(S) { endRun(S, 'resend'); startRun(S); O55.ui.refresh(); U.announce(T('connect.pair.phases.approveAny', { name: (server(S) || {}).name || '' }), S.root.querySelector('.o55-win')); },
+      newRequest(S) { endRun(S, 'retry'); startRun(S); O55.ui.refresh(); O55.sound.play('tap'); },
+      useCode(S) { endRun(S, 'method_changed'); unconfirm(S); O55.draft.set(cd(S), { connection_pairing: 'code' }); S.save(); O55.ui.back(); },
+      toRoute(S) { endRun(S, 'back'); unconfirm(S); S.save(); const h = S.sess.history || [], at = h.lastIndexOf('c-route'); if (at >= 0) S.sess.history = h.slice(0, at); O55.ui.go('c-route', { dir: 'back', noHistory: true }); },
+      checkCode(S) {
+        const s = server(S), r = runOf(S);
+        if (!s || !r || expired(r)) return O55.ui.refresh();
+        const ok = String(typed.get(r.id) || '').replace(/[\s-]/g, '').toUpperCase() === String(s.code).replace(/-/g, '');
+        F.reset(S, runKey(r, 'code'));
+        F.op(S, runKey(r, 'code'), 'cmd.client.pair.start', [{ key: 'code', ms: 500, fail: () => (ok ? null : 'code_mismatch') }, { key: 'trust', ms: 800 }],
+          { payload: { server: r.server, method: 'code', pairing_run: r.id, generation: r.gen }, sound: CODE_SOUND, onDone: () => adopt(S, r) });
+      },
+      next(S) { if (paired(S)) O55.ui.go('c-ready'); }
+    },
+    /* the code stays in this page's memory beside its run: never in the session, never saved */
+    bind: { code(S, v) { const r = runOf(S); if (!r) return; const had = F.nonEmpty(typed.get(r.id)); typed.set(r.id, String(v || '')); if (had !== F.nonEmpty(v)) O55.ui.refresh(); } }
   });
 
   /* ------------------------------------------------------------------ C4: ready to meet your Puppet Master (Ready) */
+  /* the Project opened goes to the app with its own name and the Server it is on, never its id as a name (SCR-18) */
+  function opened(S) {
+    const s = server(S) || { projects: [] }, id = S.sess.connect.openProject || (s.projects[0] || {}).id, p = s.projects.find((x) => x.id === id);
+    return { project: id, projectName: p ? p.name : null, projectInfo: s.name ? { path: s.name } : null };
+  }
   def('c-ready', {
     seed: (S) => seedConnect(S, 2),
     chapter: 'ready', stage: 'ready',
@@ -301,8 +421,8 @@
         O55.ui.charm(el, T('begin.new.title'), 'seed');
         O55.ui.go('begin');
       },
-      enter(S) { O55.finish(S, { tour: false, project: S.sess.connect.openProject || ((server(S) || {}).projects[0] || {}).id }); },
-      tour(S) { O55.finish(S, { tour: true, project: S.sess.connect.openProject || ((server(S) || {}).projects[0] || {}).id }); }
+      enter(S) { O55.finish(S, Object.assign({ tour: false }, opened(S))); },
+      tour(S) { O55.finish(S, Object.assign({ tour: true }, opened(S))); }
     }
   });
 

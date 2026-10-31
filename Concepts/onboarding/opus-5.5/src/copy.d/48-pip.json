@@ -289,8 +289,8 @@
       "c-route": {
         "group:pickServer": {
           "title": "Found on your network",
-          "text": "Puppet Masters already running on your network. Pick the one this device should use; it shows how many Projects each one has.",
-          "expert": "Puppet Master Servers found by discovery on your local network, and on a VPN you're connected to, each with its Project count."
+          "text": "Puppet Masters already running on your network. Pick the one this device should use. You'll see its Projects once this device is paired with it.",
+          "expert": "Puppet Master Servers found by discovery on your local network, and on a VPN you're connected to. Discovery shows only a name, an address and an ID; Project details come after pairing."
         },
         "field:addr": {
           "title": "Its address",
@@ -350,9 +350,9 @@
           "expert": "The one-time pairing code the Server's page shows (8 characters, like A7K9-M2Q4)."
         },
         "resend": {
-          "title": "Send it again",
-          "text": "Asks the other device to show the request again, if you missed it or it went away.",
-          "expert": "Re-sends the pairing approval request to your trusted devices."
+          "title": "Send a new one",
+          "text": "Ends the request that went missing and sends a fresh one. Only the new one can be approved.",
+          "expert": "Cancels the current pairing request and starts a new one; an answer to the old request is ignored."
         }
       },
       "c-ready": {
@@ -1214,8 +1214,9 @@
           "text": "The 8 letters and numbers its Puppet Master shows, like A7K9-M2Q4."
         },
         "resend": {
-          "title": "Send it again",
-          "text": "Asks for the request to be shown again, if you missed it."
+          "title": "Send a new one",
+          "text": "Ends the request that went missing and sends a fresh one. Only the new one can be approved.",
+          "expert": "Cancels the current pairing request and starts a new one; an answer to the old request is ignored."
         }
       },
       "nas-folder": {
