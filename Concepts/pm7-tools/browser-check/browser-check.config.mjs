@@ -1,5 +1,5 @@
 // browser-check config for PuppetMaster's published page (Concepts/PMConcept7.html), per the PM7 plan's browser rules:
-// file:// (agent-browser's Chrome can't reliably reach a local http.server), a cache-buster on every load, ?o55=off,
+// file:// (the page is self-contained), a cache-buster on every load, ?o55=off,
 // reduced motion re-applied and confirmed after each navigation, one browser per run.
 //   browser-check run Concepts/pm7-tools/browser-check/checks
 //   browser-check run Concepts/pm7-tools/browser-check/checks --set page=/tmp/private-build.html
@@ -15,7 +15,8 @@ export default (ctx) => {
 	// A URL scheme has 2+ letters; "C:\..." is a Windows path
 	const url = /^[a-z][a-z0-9+.-]+:/i.test(page) ? page : pathToFileURL(path.resolve(page)).href;
 	if (!/^file:/.test(url) || fs.existsSync(new URL(url))) ctx.log(`page ${url}`);
-	else throw new Error(`no built page at ${page}; build it (tools/build.py --publish-pm7) or pass --set page=<path>`);
+	else throw new Error(`no built page at ${page}; build it (python3 Concepts/onboarding/opus-5.5/tools/build.py --out <path>) and pass --set page=<path>`);
+	if (ctx.fleet && /^file:/.test(url)) throw new Error('--host: a browser on another machine can\'t open this machine\'s file:// page. Use ssh and a checkout of the branch on that machine.');
 	let cb = 0;
 	return {
 		name: 'puppetmaster',
